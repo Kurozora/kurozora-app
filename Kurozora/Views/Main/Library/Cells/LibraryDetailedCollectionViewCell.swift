@@ -23,16 +23,10 @@ class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 	// MARK: - Functions
 	override func configureCell() {
 		super.configureCell()
-		guard let showDetailsElement = showDetailsElement else { return }
 
 		self.titleLabel.textColor = .white
-
-		self.userProgressLabel?.text = showDetailsElement.informationStringShort
-
-		if let bannerImage = showDetailsElement.banner {
-			self.episodeImageView?.setImage(with: bannerImage, placeholder: R.image.placeholders.showBanner()!)
-		}
-
-		posterShadowView?.applyShadow()
+		self.userProgressLabel.text = show.attributes.informationStringShort
+		self.episodeImageView.image = show.attributes.bannerImage
+		self.posterShadowView?.applyShadow()
 	}
 }

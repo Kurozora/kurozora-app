@@ -10,7 +10,7 @@ import UIKit
 import KurozoraKit
 
 class FeedPostCell: BaseFeedPostCell {
-	var feedPostElement: FeedPostElement? {
+	var feedPost: FeedPost! {
 		didSet {
 			configureCell()
 		}
@@ -19,43 +19,34 @@ class FeedPostCell: BaseFeedPostCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
-		guard let feedPostElement = feedPostElement else { return }
+		if let user = feedPost.relationships.user.data.first {
+			// Username
+			usernameLabel?.text = user.attributes.username
 
-		// Username
-		usernameLabel?.text = feedPostElement.posterUsername
+			// Profile Image
+			profileImageView?.image = user.attributes.profileImage
+		}
 
 		// Post content
-		postTextView?.text = feedPostElement.content
+		postTextView?.text = feedPost.attributes.content
 
 		// Date time
-		dateTimeLabel?.text = feedPostElement.creationDate?.timeAgo
+		dateTimeLabel?.text = feedPost.attributes.createdAt.timeAgo
 
 		// Post
-		if let postText = feedPostElement.content {
-			postTextView?.text = postText
-		}
+		postTextView?.text = feedPost.attributes.content
 
 		// Likes
-		if let heartsCount = feedPostElement.heartsCount {
-			heartButton?.setTitle(String(heartsCount), for: .normal)
-		}
+		let heartsCount = feedPost.attributes.heartsCount
+		heartButton?.setTitle("\(heartsCount)", for: .normal)
+
 		// Comments
-		if let replyCount = feedPostElement.replyCount {
-			heartButton?.setTitle(String(replyCount), for: .normal)
-		}
+		let replyCount = feedPost.attributes.replyCount
+		heartButton?.setTitle("\(replyCount)", for: .normal)
 
 		// ReShare
-		if let shareCount = feedPostElement.shareCount {
-			shareButton?.setTitle(String(shareCount), for: .normal)
-		}
-
-		// Profile Image
-		if let profileImage = feedPostElement.profileImage {
-			if let usernameInitials = feedPostElement.posterUsername?.initials {
-				let placeholderImage = usernameInitials.toImage(placeholder: R.image.placeholders.userProfile()!)
-				profileImageView?.setImage(with: profileImage, placeholder: placeholderImage)
-			}
-		}
+		let shareCount = feedPost.attributes.shareCount
+		shareButton?.setTitle("\(shareCount)", for: .normal)
 
 		// Other Username
 //		if let otherUsername = posts?[indexPath.row]["other_username"].stringValue, !otherUsername.isEmpty {

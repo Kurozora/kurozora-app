@@ -1,6 +1,6 @@
 //
 //  KurozoraKit+Session.swift
-//  Kurozora
+//  KurozoraKit
 //
 //  Created by Khoren Katklian on 29/09/2019.
 //  Copyright © 2019 Kurozora. All rights reserved.
@@ -20,9 +20,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func signIn(_ kurozoraID: String, _ password: String, completion completionHandler: @escaping (_ result: Result<String, KKError>) -> Void) {
+	public func signIn(_ kurozoraID: String, _ password: String, completion completionHandler: @escaping (_ result: Result<String, KKAPIError>) -> Void) {
 		let sessions = self.kurozoraKitEndpoints.sessions
-		let request: APIRequest<User, KKError> = tron.swiftyJSON.request(sessions)
+		let request: APIRequest<SignInResponse, KKAPIError> = tron.codable.request(sessions)
 		request.headers = headers
 		request.method = .post
 		request.parameters = [
@@ -34,15 +34,21 @@ extension KurozoraKit {
 			"device_model": UIDevice.modelName
 		]
 
-		request.perform(withSuccess: { user in
-			self.authenticationKey = user.kuroAuthToken ?? ""
+		request.perform(withSuccess: { [weak self] signInResponse in
+			guard let self = self else { return }
+			self.authenticationKey = signInResponse.authToken
+			User.current = signInResponse.data.first
 			completionHandler(.success(self.authenticationKey))
 			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
-		}, failure: { error in
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't sign in 😔", subTitle: error.message)
 			}
-			print("Received sign in error: \(error.message ?? "No message available")")
+			print("❌ Received sign in error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}
@@ -55,9 +61,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func updateSession(_ sessionID: Int, withToken apnDeviceToken: String, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKError>) -> Void) {
+	public func updateSession(_ sessionID: Int, withToken apnDeviceToken: String, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) {
 		let sessionsUpdate = self.kurozoraKitEndpoints.sessionsUpdate.replacingOccurrences(of: "?", with: "\(sessionID)")
-		let request: APIRequest<KKSuccess, KKError> = tron.swiftyJSON.request(sessionsUpdate)
+		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(sessionsUpdate)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -74,7 +80,10 @@ extension KurozoraKit {
 //			if self.services.showAlerts {
 //				SCLAlertView().showError("Can't update session 😔", subTitle: error.message)
 //			}
-			print("Received update session error: \(error.message ?? "No message available")")
+			print("❌ Received update session error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}
@@ -86,9 +95,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func deleteSession(_ sessionID: Int, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKError>) -> Void) {
+	public func deleteSession(_ sessionID: Int, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) {
 		let sessionsDelete = self.kurozoraKitEndpoints.sessionsDelete.replacingOccurrences(of: "?", with: "\(sessionID)")
-		let request: APIRequest<KKSuccess, KKError> = tron.swiftyJSON.request(sessionsDelete)
+		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(sessionsDelete)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -98,11 +107,15 @@ extension KurozoraKit {
 		request.method = .post
 		request.perform(withSuccess: { success in
 			completionHandler(.success(success))
-		}, failure: { error in
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't delete session 😔", subTitle: error.message)
 			}
-			print("Received delete session error: \(error.message ?? "No message available")")
+			print("❌ Received delete session error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}
@@ -117,9 +130,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func signOut(ofSessionID sessionID: Int, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKError>) -> Void) {
+	public func signOut(ofSessionID sessionID: Int, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) {
 		let sessionsDelete = self.kurozoraKitEndpoints.sessionsDelete.replacingOccurrences(of: "?", with: "\(sessionID)")
-		let request: APIRequest<KKSuccess, KKError> = tron.swiftyJSON.request(sessionsDelete)
+		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(sessionsDelete)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -131,11 +144,15 @@ extension KurozoraKit {
 			User.current = nil
 			completionHandler(.success(success))
 			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
-		}, failure: { error in
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't sign out 😔", subTitle: error.message)
 			}
-			print("Received sign out error: \(error.message ?? "No message available")")
+			print("❌ Received sign out error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}

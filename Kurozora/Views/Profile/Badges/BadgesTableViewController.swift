@@ -11,16 +11,12 @@ import KurozoraKit
 
 class BadgesTableViewController: KTableViewController {
 	// MARK: - Properties
-	var badgeElements: [BadgeElement]? {
+	var badges: [Badge] = [] {
 		didSet {
 			_prefersActivityIndicatorHidden = true
 		}
 	}
-	var userProfile: UserProfile? {
-		didSet {
-			self.badgeElements = userProfile?.badges
-		}
-	}
+	var user: User!
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -35,21 +31,25 @@ class BadgesTableViewController: KTableViewController {
 	// MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
+
+		self.badges = self.user.relationships?.badges?.data ?? []
     }
 
 	// MARK: - Functions
 	override func setupEmptyDataSetView() {
-		tableView.emptyDataSetView { (view) in
-			if let username = self.userProfile?.username {
-				let detailLabelString = self.userProfile?.id != User.current?.id ? "\(username) has no badges to show." : "Badges you earn show up here."
-				view.titleLabelString(NSAttributedString(string: "No Badges", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
-					.detailLabelString(NSAttributedString(string: detailLabelString, attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-					.image(R.image.empty.badge())
-					.imageTintColor(KThemePicker.textColor.colorValue)
-					.verticalOffset(-50)
-					.verticalSpace(5)
-					.isScrollAllowed(true)
-			}
+		tableView.emptyDataSetView { [weak self] (view) in
+			guard let self = self else { return }
+
+			let username = self.user.attributes.username
+			let detailLabelString = self.user?.id != User.current?.id ? "\(username) has no badges to show." : "Badges you earn show up here."
+
+			view.titleLabelString(NSAttributedString(string: "No Badges", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
+				.detailLabelString(NSAttributedString(string: detailLabelString, attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
+				.image(R.image.empty.badge())
+				.imageTintColor(KThemePicker.textColor.colorValue)
+				.verticalOffset(-50)
+				.verticalSpace(5)
+				.isScrollAllowed(true)
 		}
 	}
 }
@@ -57,8 +57,7 @@ class BadgesTableViewController: KTableViewController {
 // MARK: - UITableViewDataSource
 extension BadgesTableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		guard let badgeElementsCount = badgeElements?.count else { return 0 }
-        return badgeElementsCount
+		return badges.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -74,6 +73,6 @@ extension BadgesTableViewController {
 extension BadgesTableViewController {
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 		let badgeTableViewCell = cell as? BadgeTableViewCell
-		badgeTableViewCell?.badgeElement = self.badgeElements?[indexPath.row]
+		badgeTableViewCell?.badge = self.badges[indexPath.row]
 	}
 }

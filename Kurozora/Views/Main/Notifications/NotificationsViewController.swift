@@ -23,9 +23,9 @@ class NotificationsViewController: KTableViewController {
 	var kSearchController: KSearchController = KSearchController()
 	var grouping: KNotification.GroupStyle = KNotification.GroupStyle(rawValue: UserSettings.notificationsGrouping) ?? .automatic
 	var oldGrouping: Int? = nil
-	var userNotificationsElement: [UserNotificationElement]? {
+	var userNotifications: [UserNotification] = [] {
 		didSet {
-			self.groupNotifications(userNotificationsElement)
+			self.groupNotifications(userNotifications)
 
 			_prefersActivityIndicatorHidden = true
 
@@ -102,7 +102,9 @@ class NotificationsViewController: KTableViewController {
 	}
 
 	override func setupEmptyDataSetView() {
-		tableView.emptyDataSetView { (view) in
+		tableView.emptyDataSetView { [weak self] (view) in
+			guard let self = self else { return }
+
 			let detailLabelString = User.isSignedIn ? "When you have notifications, you will see them here!" : "Notifications is only available to registered Kurozora users."
 			view.titleLabelString(NSAttributedString(string: "No Notifications", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: detailLabelString, attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
@@ -139,18 +141,18 @@ class NotificationsViewController: KTableViewController {
 			}
 
 			guard let userID = User.current?.id else { return }
-			KService.getNotifications(forUserID: userID) { result in
+			KService.getNotifications(forUserID: userID) { [weak self] result in
+				guard let self = self else { return }
 				switch result {
 				case .success(let notifications):
-					self.userNotificationsElement = []
-					DispatchQueue.main.async {
-						self.userNotificationsElement = notifications
-					}
+					// HERE
+//					self.userNotifications = []
+					self.userNotifications = notifications
 				case .failure: break
 				}
 			}
 		} else {
-			self.userNotificationsElement = nil
+			self.userNotifications = []
 			self.groupedNotifications = []
 			DispatchQueue.main.async {
 				self.tableView.reloadData()
@@ -163,46 +165,47 @@ class NotificationsViewController: KTableViewController {
 
 		- Parameter userNotifications: The array of the fetched notifications.
 	*/
-	func groupNotifications(_ userNotifications: [UserNotificationElement]?) {
+	func groupNotifications(_ userNotifications: [UserNotification]) {
 		switch self.grouping {
 		case .automatic:
-			// Group notifications by date and assign a group title as key (Recent, Last Week, Yesterday etc.)
 			self.groupedNotifications = []
-			let groupedNotifications = userNotifications?.reduce(into: [String: [UserNotificationElement]](), { (result, userNotificationsElement) in
-				guard let creationDate = userNotificationsElement.creationDate else { return }
+
+			// Group notifications by date and assign a group title as key (Recent, Last Week, Yesterday etc.)
+			let groupedNotifications = userNotifications.reduce(into: [String: [UserNotification]](), { (result, userNotification) in
+				let creationDate = userNotification.attributes.createdAt
 				let timeKey = creationDate.groupTime
 
-				result[timeKey, default: []].append(userNotificationsElement)
+				result[timeKey, default: []].append(userNotification)
 			})
 
 			// Append the grouped elements to the grouped notifications array
-			guard let groupedNotificationsArray = groupedNotifications else { return }
+			let groupedNotificationsArray = groupedNotifications
 			for (key, value) in groupedNotificationsArray {
 				self.groupedNotifications.append(GroupedNotifications(sectionTitle: key, sectionNotifications: value))
 			}
 
 			// Reorder grouped notifiactions so the recent one is at the top (Recent, Earlier Today, Yesterday, etc.)
-			self.groupedNotifications.sort(by: { $0.sectionNotifications.first?.creationDate?.dateTime ?? Date() > $1.sectionNotifications.first?.creationDate?.dateTime ?? Date() })
+			self.groupedNotifications.sort(by: { $0.sectionNotifications.first?.attributes.createdAt.dateTime ?? Date() > $1.sectionNotifications.first?.attributes.createdAt.dateTime ?? Date() })
 		case .byType:
 			self.groupedNotifications = []
 
 			// Group notifications by type and assign a group title as key (Sessions, Messages etc.)
-			let groupedNotifications = userNotifications?.reduce(into: [String: [UserNotificationElement]](), { (result, userNotificationsElement) in
-				guard let type = userNotificationsElement.type else { return }
+			let groupedNotifications = userNotifications.reduce(into: [String: [UserNotification]](), { (result, userNotification) in
+				let type = userNotification.attributes.type
 				guard let notificationType = KNotification.CustomType(rawValue: type) else { return }
 				let timeKey = notificationType.stringValue
 
-				result[timeKey, default: []].append(userNotificationsElement)
+				result[timeKey, default: []].append(userNotification)
 			})
 
 			// Append the grouped elements to the grouped notifications array
-			guard let groupedNotificationsArray = groupedNotifications else { return }
+			let groupedNotificationsArray = groupedNotifications
 			for (key, value) in groupedNotificationsArray {
 				self.groupedNotifications.append(GroupedNotifications(sectionTitle: key, sectionNotifications: value))
 			}
 
 			// Reorder grouped notifiactions so the recent one is at the top (Recent, Earlier Today, Yesterday, etc.)
-			self.groupedNotifications.sort(by: { $0.sectionNotifications.first?.creationDate?.dateTime ?? Date() > $1.sectionNotifications.first?.creationDate?.dateTime ?? Date() })
+			self.groupedNotifications.sort(by: { $0.sectionNotifications.first?.attributes.createdAt.dateTime ?? Date() > $1.sectionNotifications.first?.attributes.createdAt.dateTime ?? Date() })
 		case .off:
 			self.groupedNotifications = []
 		}
@@ -216,26 +219,35 @@ class NotificationsViewController: KTableViewController {
 		- Parameter readStatus: The `ReadStatus` value indicating whether to mark the notification as read or unread.
 	*/
 	func updateNotification(at indexPaths: [IndexPath]? = nil, for notificationID: String, withReadStatus readStatus: ReadStatus) {
-		KService.updateNotification(notificationID, withReadStatus: readStatus) { result in
+		KService.updateNotification(notificationID, withReadStatus: readStatus) { [weak self] result in
+			guard let self = self else { return }
+
 			switch result {
 			case .success(let readStatus):
-				if indexPaths == nil {
-					for userNotificationElement in self.userNotificationsElement ?? [] {
-						userNotificationElement.readStatus = readStatus
-					}
-					self.tableView.reloadData()
-				} else {
-					for indexPath in indexPaths ?? [] {
+				if let indexPaths = indexPaths {
+					let shouldUpdateIndividually = indexPaths.count == 1
+					for indexPath in indexPaths {
 						switch self.grouping {
 						case .automatic, .byType:
-							self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].readStatus = readStatus
+							self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].attributes.readStatus = readStatus
 						case .off:
-							self.userNotificationsElement?[indexPath.row].readStatus = readStatus
+							self.userNotifications[indexPath.row].attributes.readStatus = readStatus
 						}
 
-						let baseNotificationCell = self.tableView.cellForRow(at: indexPath) as? BaseNotificationCell
-						baseNotificationCell?.updateReadStatus(animated: indexPaths?.count == 1)
+						if shouldUpdateIndividually {
+							let baseNotificationCell = self.tableView.cellForRow(at: indexPath) as? BaseNotificationCell
+							baseNotificationCell?.updateReadStatus(with: readStatus, animated: true)
+						}
 					}
+
+					if !shouldUpdateIndividually {
+						self.tableView.reloadData()
+					}
+				} else {
+					for index in self.userNotifications.indices {
+						self.userNotifications[index].attributes.readStatus = readStatus
+					}
+					self.tableView.reloadData()
 				}
 			case .failure: break
 			}
@@ -255,7 +267,7 @@ class NotificationsViewController: KTableViewController {
 		let markAllAsRead = UIAlertAction.init(title: "Mark all as read", style: .default, handler: { (_) in
 			self.updateNotification(for: "all", withReadStatus: .read)
 		})
-		markAllAsRead.setValue(R.image.symbols.checkmark_circle_fill()!, forKey: "image")
+		markAllAsRead.setValue(R.image.symbols.checkmark_circle()!, forKey: "image")
 		markAllAsRead.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 		alertController.addAction(markAllAsRead)
 
@@ -263,7 +275,7 @@ class NotificationsViewController: KTableViewController {
 		let markAllAsUnread = UIAlertAction.init(title: "Mark all as unread", style: .default, handler: { (_) in
 			self.updateNotification(for: "all", withReadStatus: .unread)
 		})
-		markAllAsUnread.setValue(R.image.symbols.checkmark_circle()!, forKey: "image")
+		markAllAsUnread.setValue(R.image.symbols.checkmark_circle_fill()!, forKey: "image")
 		markAllAsUnread.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 		alertController.addAction(markAllAsUnread)
 
@@ -295,26 +307,30 @@ class NotificationsViewController: KTableViewController {
 		for row in 0..<numberOfRows {
 			switch self.grouping {
 			case .automatic, .byType:
-				if let notificationStatus = groupedNotifications[section].sectionNotifications[row].readStatus, notificationStatus == .unread && readStatus == .unread {
+				let notificationStatus = self.groupedNotifications[section].sectionNotifications[row].attributes.readStatus
+				if notificationStatus == .unread && readStatus == .unread {
 					readStatus = .read
 				}
-				if row == groupedNotifications[section].sectionNotifications.count - 1 {
-					if let notificationID = groupedNotifications[section].sectionNotifications[row].id {
-						notificationIDs += "\(notificationID)"
-					}
-				} else if let notificationID = groupedNotifications[section].sectionNotifications[row].id {
+
+				let userNotificationsCount = self.groupedNotifications[section].sectionNotifications.count
+				if row == userNotificationsCount - 1 {
+					let notificationID = self.groupedNotifications[section].sectionNotifications[row].id
+					notificationIDs += "\(notificationID)"
+				} else {
+					let notificationID = self.groupedNotifications[section].sectionNotifications[row].id
 					notificationIDs += "\(notificationID),"
 				}
 			case .off:
-				if let notificationStatus = userNotificationsElement?[row].readStatus, notificationStatus == .read {
+				let notificationStatus = self.userNotifications[row].attributes.readStatus
+				if notificationStatus == .read {
 					readStatus = .unread
 				}
-				if let userNotificationsElementCount = userNotificationsElement?.count, row == userNotificationsElementCount - 1 {
-					if let notificationID = userNotificationsElement?[row].id {
-						notificationIDs += "\(notificationID)"
-					}
-				} else if let notificationID = userNotificationsElement?[row].id {
-					notificationIDs += "\(notificationID),"
+
+				let userNotificationsCount = self.userNotifications.count
+				if row == userNotificationsCount - 1 {
+					notificationIDs += "\(self.userNotifications[row].id)"
+				} else {
+					notificationIDs += "\(self.userNotifications[row].id),"
 				}
 			}
 
@@ -330,7 +346,7 @@ extension NotificationsViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
 		switch self.grouping {
 		case .automatic, .byType:
-			return groupedNotifications.count
+			return self.groupedNotifications.count
 		case .off:
 			return 1
 		}
@@ -339,16 +355,16 @@ extension NotificationsViewController {
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		switch self.grouping {
 		case .automatic, .byType:
-			return groupedNotifications[section].sectionNotifications.count
+			return self.groupedNotifications[section].sectionNotifications.count
 		case .off:
-			return userNotificationsElement?.count ?? 0
+			return self.userNotifications.count
 		}
 	}
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		switch self.grouping {
 		case .automatic, .byType:
-			return groupedNotifications[section].sectionTitle
+			return self.groupedNotifications[section].sectionTitle
 		case .off: break
 		}
 
@@ -363,8 +379,8 @@ extension NotificationsViewController {
 		switch self.grouping {
 		case .automatic, .byType:
 			notificationTitleCell?.notificationTitleLabel.text = groupedNotifications[section].sectionTitle
-			let allNotificationsRead = groupedNotifications[section].sectionNotifications.contains(where: { $0.readStatus == .read })
-			notificationTitleCell?.notificationMarkButton.setTitle(allNotificationsRead ? "Mark as unread" : "Marks as read", for: .normal)
+			let allNotificationsRead = groupedNotifications[section].sectionNotifications.contains(where: { $0.attributes.readStatus == .read })
+			notificationTitleCell?.notificationMarkButton.setTitle(allNotificationsRead ? "Mark as unread" : "Mark as read", for: .normal)
 			return notificationTitleCell?.contentView
 		case .off: break
 		}
@@ -377,17 +393,16 @@ extension NotificationsViewController {
 		var notificationType: KNotification.CustomType = .other
 		var notificationCellIdentifier: String = notificationType.identifierString
 
-		let notifications = (self.grouping == .off) ? userNotificationsElement?[indexPath.row] : groupedNotifications[indexPath.section].sectionNotifications[indexPath.row]
-		if let notificationsType = notifications?.type, !notificationsType.isEmpty {
-			notificationType = KNotification.CustomType(rawValue: notificationsType) ?? notificationType
-			notificationCellIdentifier = notificationType.identifierString
-		}
+		let userNotification = (self.grouping == .off) ? self.userNotifications[indexPath.row] : groupedNotifications[indexPath.section].sectionNotifications[indexPath.row]
+		let notificationsType = userNotification.attributes.type
+		notificationType = KNotification.CustomType(rawValue: notificationsType) ?? notificationType
+		notificationCellIdentifier = notificationType.identifierString
 
 		// Setup cell
 		let baseNotificationCell = self.tableView.dequeueReusableCell(withIdentifier: notificationCellIdentifier, for: indexPath) as! BaseNotificationCell
 		baseNotificationCell.delegate = self
 		baseNotificationCell.notificationType = notificationType
-		baseNotificationCell.userNotificationElement = notifications
+		baseNotificationCell.userNotification = userNotification
 		return baseNotificationCell
 	}
 }
@@ -397,7 +412,7 @@ extension NotificationsViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let baseNotificationCell = tableView.cellForRow(at: indexPath) as? BaseNotificationCell
 		// Change notification status to read
-		guard let notificationID = baseNotificationCell?.userNotificationElement?.id else { return }
+		guard let notificationID = baseNotificationCell?.userNotification?.id else { return }
 		self.updateNotification(at: [indexPath], for: notificationID, withReadStatus: .read)
 
 		if baseNotificationCell?.notificationType == .session {
@@ -405,9 +420,9 @@ extension NotificationsViewController {
 			WorkflowController.shared.showSessions()
 		} else if baseNotificationCell?.notificationType == .follower {
 			// Change notification status to read
-			guard let userID = baseNotificationCell?.userNotificationElement?.data?.userID else { return }
+			guard let userID = baseNotificationCell?.userNotification?.attributes.payload.userID else { return }
 			if let profileViewController = R.storyboard.profile.profileTableViewController() {
-				profileViewController.userProfile = try? UserProfile(json: ["id": userID])
+				profileViewController.userID = userID
 				profileViewController.dismissButtonIsEnabled = true
 
 				let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
@@ -422,33 +437,36 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 	func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
 		switch orientation {
 		case .right:
-			let deleteAction = SwipeAction(style: .destructive, title: "Delete") { _, indexPath in
+			let deleteAction = SwipeAction(style: .destructive, title: "Delete") { [weak self] _, indexPath in
+				guard let self = self else { return }
 				switch self.grouping {
 				case .automatic, .byType:
-					guard let notificationID = self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].id else { return }
-					KService.deleteNotification(notificationID) { result in
+					let notificationID = self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].id
+					KService.deleteNotification(notificationID) { [weak self] result in
+						guard let self = self else { return }
 						switch result {
 						case .success:
-							DispatchQueue.main.async {
+//							DispatchQueue.main.async {
 								self.groupedNotifications[indexPath.section].sectionNotifications.remove(at: indexPath.row)
 								tableView.deleteRows(at: [indexPath], with: .left)
 
 								if self.groupedNotifications[indexPath.section].sectionNotifications.count == 0 {
 									self.groupedNotifications.remove(at: indexPath.section)
-									tableView.deleteSections(IndexSet(arrayLiteral: indexPath.section), with: .left)
+									tableView.deleteSections([indexPath.section], with: .left)
 								}
 								tableView.endUpdates()
-							}
+//							}
 						case .failure:
 							break
 						}
 					}
 				case .off:
-					guard let notificationID = self.userNotificationsElement?[indexPath.row].id else { return }
-					KService.deleteNotification(notificationID) { result in
+					KService.deleteNotification(self.userNotifications[indexPath.row].id) { [weak self] result in
+						guard let self = self else { return }
+
 						switch result {
 						case .success:
-							self.userNotificationsElement?.remove(at: indexPath.row)
+							self.userNotifications.remove(at: indexPath.row)
 							tableView.beginUpdates()
 							tableView.deleteRows(at: [indexPath], with: .left)
 							tableView.endUpdates()
@@ -459,7 +477,7 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 				}
 			}
 			deleteAction.backgroundColor = .clear
-			deleteAction.image = R.image.trash_circle()!
+			deleteAction.image = R.image.trash_circle()
 			deleteAction.textColor = .kLightRed
 			deleteAction.font = .systemFont(ofSize: 13)
 			deleteAction.transitionDelegate = ScaleTransition.default
@@ -468,11 +486,13 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 			var readStatus: ReadStatus = .unread
 			switch self.grouping {
 			case .automatic, .byType:
-				if let notificationReadStatus = self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].readStatus, notificationReadStatus == .unread {
+				let notificationReadStatus = self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].attributes.readStatus
+				if notificationReadStatus == .unread {
 					readStatus = .read
 				}
 			case .off:
-				if let notificationReadStatus = self.userNotificationsElement?[indexPath.row].readStatus, notificationReadStatus == .unread {
+				let notificationReadStatus = self.userNotifications[indexPath.row].attributes.readStatus
+				if notificationReadStatus == .unread {
 					readStatus = .read
 				}
 			}
@@ -482,22 +502,18 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 
 				switch self.grouping {
 				case .automatic, .byType:
-					if let userNotificationID = self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].id {
-						notificationID = userNotificationID
-					}
+					notificationID = self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].id
 				case .off:
-					if let userNotificationID = self.userNotificationsElement?[indexPath.row].id {
-						notificationID = userNotificationID
-					}
+					notificationID = self.userNotifications[indexPath.row].id
 				}
 
 				self.updateNotification(at: [indexPath], for: notificationID, withReadStatus: readStatus)
 			}
-			let statusIsRead = readStatus == .read
+			let isRead = readStatus == .read
 			markedAction.backgroundColor = .clear
-			markedAction.title = statusIsRead ? "Mark as Unread" : "Mark as Read"
-			markedAction.image = statusIsRead ? R.image.watched_circle()! : R.image.unwatched_circle()!
-			markedAction.textColor = statusIsRead ? .kurozora : #colorLiteral(red: 0.6078431373, green: 0.6078431373, blue: 0.6078431373, alpha: 1)
+			markedAction.title = isRead ? "Mark as Read" : "Mark as Unread"
+			markedAction.image = isRead ? R.image.unwatched_circle()! : R.image.watched_circle()!
+			markedAction.textColor = isRead ? #colorLiteral(red: 0.6078431373, green: 0.6078431373, blue: 0.6078431373, alpha: 1) : .kurozora
 			markedAction.font = .systemFont(ofSize: 16, weight: .semibold)
 			markedAction.transitionDelegate = ScaleTransition.default
 			return [markedAction]

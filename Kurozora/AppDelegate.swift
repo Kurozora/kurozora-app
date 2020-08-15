@@ -166,7 +166,7 @@ extension AppDelegate {
 		let apnDeviceToken = tokenParts.joined()
 
 		if User.isSignedIn {
-			guard let sessionID = User.current?.session?.id else { return }
+			guard let sessionID = User.current?.relationships?.sessions?.data.first?.id else { return }
 			KService.updateSession(sessionID, withToken: apnDeviceToken) { _ in
 			}
 		}

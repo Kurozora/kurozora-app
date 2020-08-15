@@ -6,8 +6,6 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
-import Foundation
-
 /**
 	The set of available watch status types.
 
@@ -17,7 +15,7 @@ import Foundation
 	case watched = 1
 	```
 */
-public enum WatchStatus: Int {
+public enum WatchStatus: Int, Codable {
 	// MARK: - Cases
 	/// The episode is not watched.
 	case notWatched = -1
@@ -27,4 +25,20 @@ public enum WatchStatus: Int {
 
 	/// The episode is watched.
 	case watched = 1
+
+	// MARK: - Functions
+	/**
+		Initializes an instance of `WatchStatus` with the given bool value.
+
+		If `nil` is given, then an instance of `.disabled` is initialized.
+
+		- Parameter bool: The boolean value used to initialize an instance of `WatchStatus`.
+	*/
+	public init(_ bool: Bool?) {
+		if let bool = bool {
+			self = bool ? .watched : .notWatched
+		} else {
+			self = .disabled
+		}
+	}
 }

@@ -12,14 +12,10 @@ import KurozoraKit
 class LibraryStatisticsCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var primaryLabel: KLabel!
-	@IBOutlet weak var secondaryLabel: UILabel! {
-		didSet {
-			self.secondaryLabel.theme_textColor = KThemePicker.subTextColor.rawValue
-		}
-	}
+	@IBOutlet weak var secondaryLabel: KSecondaryLabel!
 
 	// MARK: - Properties
-	var showDetailsElements: [ShowDetailsElement]? {
+	var shows: [Show] = [] {
 		didSet {
 			configureCell()
 		}
@@ -28,16 +24,24 @@ class LibraryStatisticsCollectionViewCell: UICollectionViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
-		let tvCount = getOccurancesOf(string: "Tv")
-		let movieCount = getOccurancesOf(string: "Movie")
-		let undefinedCount = getOccurancesOf(string: "undefined")
-		secondaryLabel.text = "\(tvCount) TV · \(movieCount) Movie · \(undefinedCount) OVA/ONA/Specials"
+		let tvCount = self.getOccurancesOf(strings: ["Tv"])
+		let movieCount = self.getOccurancesOf(strings: ["Movie"])
+		let ovaCount = self.getOccurancesOf(strings: ["OVA"])
+		let undefinedCount = self.getOccurancesOfNot(strings: ["Tv", "Movie"])
+		secondaryLabel.text = "\(tvCount) TV · \(movieCount) Movie · \(ovaCount) OVA · \(undefinedCount) Music/ONA/Specials"
 	}
 
-	/// Gets number of occurances of the given string in the showDetailesElements array.
-	func getOccurancesOf(string: String) -> Int {
-		return showDetailsElements?.filter({ (showDetailElement) -> Bool in
-			showDetailElement.type == string
-		}).count ?? 0
+	/// Gets number of occurances of the given string in the shows array.
+	func getOccurancesOf(strings: [String]) -> Int {
+		return shows.filter({ show -> Bool in
+			strings.contains(show.type)
+		}).count
+	}
+
+	/// Gets number of occurances that doesn't match of the given string in the shows array.
+	func getOccurancesOfNot(strings: [String]) -> Int {
+		return shows.filter({ show -> Bool in
+			!strings.contains(show.type)
+		}).count
 	}
 }

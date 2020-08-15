@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17132.0.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="pQB-9h-1e8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17140" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="pQB-9h-1e8">
     <device id="retina6_5" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17105.1.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17115"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -471,6 +471,7 @@
                         <segue destination="N8r-ci-sq3" kind="show" identifier="SeasonSegue" id="pUW-ps-RKJ"/>
                         <segue destination="hjy-D0-s0a" kind="show" identifier="StudioSegue" id="NXi-4T-3RO"/>
                         <segue destination="Aon-Tb-Www" kind="show" identifier="ShowDetailsSegue" id="KuE-Kz-8mc"/>
+                        <segue destination="vaf-Ko-Gzu" kind="show" identifier="ShowListSegue" id="0ZE-jf-Bzm"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CeS-tf-WrS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -526,6 +527,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GFz-wY-GSd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1317" y="-1195"/>
+        </scene>
+        <!--ShowList-->
+        <scene sceneID="JhO-6y-G6a">
+            <objects>
+                <viewControllerPlaceholder storyboardName="ShowList" id="vaf-Ko-Gzu" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="vHF-GK-WP5"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Or7-My-egM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1214" y="-1154"/>
         </scene>
     </scenes>
     <designables>

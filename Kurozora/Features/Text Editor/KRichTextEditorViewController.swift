@@ -12,7 +12,7 @@ import SCLAlertView
 import SwiftyJSON
 
 protocol KRichTextEditorViewDelegate: class {
-	func updateThreadsList(with thread: ForumsThreadElement)
+	func updateThreadsList(with forumsThreads: [ForumsThread])
 }
 
 class KRichTextEditorViewController: KViewController {
@@ -61,28 +61,13 @@ class KRichTextEditorViewController: KViewController {
 		}
 		print("Input: \(content)")
 
-		KService.postThread(inSection: sectionID, withTitle: title, content: content) { result in
-			switch result {
-			case .success(let threadID):
-				DispatchQueue.main.async {
-					guard let userID = User.current?.id else { return }
-					guard let username = User.current?.username else { return }
+		KService.postThread(inSection: sectionID, withTitle: title, content: content) {[weak self] result in
+			guard let self = self else { return }
 
-					let creationDate = Date().string(withFormat: "yyyy-MM-dd HH:mm:ss")
-					let forumThreadJSON: JSON = [
-						"id": threadID,
-						"title": title,
-						"content": content,
-						"locked": false,
-						"poster_user_id": userID,
-						"poster_username": username,
-						"creation_date": creationDate,
-						"reply_count": 0,
-						"score": 0
-						]
-					if let forumThreadsElement = try? ForumsThreadElement(json: forumThreadJSON) {
-						self.delegate?.updateThreadsList(with: forumThreadsElement)
-					}
+			switch result {
+			case .success(let forumsThreads):
+				DispatchQueue.main.async {
+					self.delegate?.updateThreadsList(with: forumsThreads)
 				}
 				self.dismiss(animated: true, completion: nil)
 			case .failure: break

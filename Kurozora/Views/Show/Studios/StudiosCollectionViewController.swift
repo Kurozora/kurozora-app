@@ -12,7 +12,7 @@ import KurozoraKit
 class StudiosCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var studioID: Int = 0
-	var studioElement: StudioElement? = nil {
+	var studio: Studio! {
 		didSet {
 			_prefersActivityIndicatorHidden = true
 			configureDataSource()
@@ -41,12 +41,12 @@ class StudiosCollectionViewController: KCollectionViewController {
 
 	// MARK: - Functions
 	func fetchStudios() {
-		KService.getDetails(forStudioID: studioID, includesShows: true) { result in
+		KService.getDetails(forStudioID: studioID, including: ["shows"]) { [weak self] result in
+			guard let self = self else { return }
+
 			switch result {
-			case .success(let studioElement):
-				DispatchQueue.main.async {
-					self.studioElement = studioElement
-				}
+			case .success(let studios):
+				self.studio = studios.first
 			case .failure: break
 			}
 		}
@@ -56,10 +56,8 @@ class StudiosCollectionViewController: KCollectionViewController {
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == R.segue.studiosCollectionViewController.showDetailsSegue.identifier {
 			if let showDetailCollectionViewController = segue.destination as? ShowDetailCollectionViewController {
-				if let selectedCell = sender as? BaseLockupCollectionViewCell {
-					showDetailCollectionViewController.showDetailsElement = selectedCell.showDetailsElement
-				} else if let showID = sender as? Int {
-					showDetailCollectionViewController.showID = showID
+				if let show = (sender as? BaseLockupCollectionViewCell)?.show {
+					showDetailCollectionViewController.showID = show.id
 				}
 			}
 		}
@@ -89,21 +87,21 @@ extension StudiosCollectionViewController {
 
 			switch studioSection {
 			case .main:
-				(studioCollectionViewCell as? StudioHeaderCollectionViewCell)?.studioElement = self.studioElement
+				(studioCollectionViewCell as? StudioHeaderCollectionViewCell)?.studio = self.studio
 			case .about:
 				let textViewCollectionViewCell = studioCollectionViewCell as? TextViewCollectionViewCell
 				textViewCollectionViewCell?.textViewCollectionViewCellType = .about
-				textViewCollectionViewCell?.textViewContent = self.studioElement?.about
+				textViewCollectionViewCell?.textViewContent = self.studio.attributes.about
 			case .information:
 				if let informationCollectionViewCell = studioCollectionViewCell as? InformationCollectionViewCell {
 					informationCollectionViewCell.studioInformationSection = StudioInformationSection(rawValue: indexPath.item) ?? .founded
-					informationCollectionViewCell.studioElement = self.studioElement
+					informationCollectionViewCell.studio = self.studio
 				} else if let informationButtonCollectionViewCell = studioCollectionViewCell as? InformationButtonCollectionViewCell {
 					informationButtonCollectionViewCell.studioInformationSection = StudioInformationSection(rawValue: indexPath.item)
-					informationButtonCollectionViewCell.studioElement = self.studioElement
+					informationButtonCollectionViewCell.studio = self.studio
 				}
 			case .shows:
-				(studioCollectionViewCell as? SmallLockupCollectionViewCell)?.showDetailsElement = self.studioElement?.shows?[indexPath.item]
+				(studioCollectionViewCell as? SmallLockupCollectionViewCell)?.show = self.studio.relationships?.shows.data[indexPath.item]
 			}
 
 			return studioCollectionViewCell
@@ -119,7 +117,7 @@ extension StudiosCollectionViewController {
 		var snapshot = NSDiffableDataSourceSnapshot<StudioSection, Int>()
 		StudioSection.allCases.forEach {
 			snapshot.appendSections([$0])
-			let rowCount = $0 == .shows ? studioElement?.shows?.count ?? $0.rowCount : $0.rowCount
+			let rowCount = $0 == .shows ? studio.relationships?.shows.data.count ?? $0.rowCount : $0.rowCount
 			let itemOffset = $0.rawValue * rowCount
 			let itemUpperbound = itemOffset + rowCount
 			snapshot.appendItems(Array(itemOffset..<itemUpperbound))
@@ -193,7 +191,7 @@ extension StudiosCollectionViewController {
 				let fullSection = self.fullSection(for: section, layoutEnvironment: layoutEnvironment)
 				sectionLayout = fullSection
 			case .about:
-				if let about = self.studioElement?.about, !about.isEmpty {
+				if let about = self.studio.attributes.about, !about.isEmpty {
 					let fullSection = self.fullSection(for: section, layoutEnvironment: layoutEnvironment)
 					sectionLayout = fullSection
 					hasSectionHeader = true
@@ -203,9 +201,13 @@ extension StudiosCollectionViewController {
 				sectionLayout = listSection
 				hasSectionHeader = true
 			case .shows:
-				let listSection = self.listSection(for: section, layoutEnvironment: layoutEnvironment)
-				sectionLayout = listSection
-				hasSectionHeader = true
+				if let studioShowsCount = self.studio.relationships?.shows.data.count {
+					if studioShowsCount != 0 {
+						let listSection = self.listSection(for: section, layoutEnvironment: layoutEnvironment)
+						sectionLayout = listSection
+						hasSectionHeader = true
+					}
+				}
 			}
 
 			if hasSectionHeader {

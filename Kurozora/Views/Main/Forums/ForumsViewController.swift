@@ -11,19 +11,36 @@ import KurozoraKit
 import Tabman
 import Pageboy
 
+protocol ForumsViewControllerDelegate: class {
+	/**
+		Tells your `ForumsViewControllerDelegate` to order the forums with the specified order type.
+
+		- Parameter forumOrder: The order type by which the forums should be ordered.
+	*/
+	func orderForums(by forumOrder: ForumOrder)
+
+	/**
+		Tells your `ForumsViewControllerDelegate` the current order value used to order the items in the forums.
+
+		- Returns: The current order value used to order the items in the forums.
+	*/
+	func orderValue() -> ForumOrder
+}
+
 class ForumsViewController: KTabbedViewController {
 	// MARK: - IBOutlets
     @IBOutlet weak var createThreadBarButtonItem: UIBarButtonItem!
 	@IBOutlet weak var sortingBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Properties
-	var sections: [ForumsSectionElement]? {
+	var forumsSections: [ForumsSection] = [] {
 		didSet {
 			self.reloadData()
 		}
 	}
-	var forumOrder: ForumOrder = .top
 	var kSearchController: KSearchController = KSearchController()
+
+	weak var forumsViewControllerDelegate: ForumsViewControllerDelegate?
 
 	// MARK: - View
 	override func viewDidLoad() {
@@ -44,10 +61,17 @@ class ForumsViewController: KTabbedViewController {
 		navigationItem.searchController = kSearchController
 	}
 
+	/// Updates the sort type button icon to reflect the current sort type when switching between views.
+	fileprivate func updateForumOrderBarButtonItem(_ forumOrder: ForumOrder) {
+		sortingBarButtonItem.title = forumOrder.rawValue
+		sortingBarButtonItem.image = forumOrder.imageValue
+	}
+
 	// MARK: - IBActions
 	@IBAction func sortingBarButtonItemPressed(_ sender: UIBarButtonItem) {
-		let alertController = UIAlertController.actionSheetWithItems(items: ForumOrder.alertControllerItems, currentSelection: forumOrder, action: { (title, value, image)  in
-			self.forumOrder = value
+		let alertController = UIAlertController.actionSheetWithItems(items: ForumOrder.alertControllerItems, currentSelection: self.forumsViewControllerDelegate?.orderValue(), action: { [weak self] (title, value, image)  in
+			guard let self = self else { return }
+			self.forumsViewControllerDelegate?.orderForums(by: value)
 
 			let currentSection = self.currentViewController as? ForumsListViewController
 			currentSection?.nextPageURL = nil
@@ -86,20 +110,23 @@ class ForumsViewController: KTabbedViewController {
 
 	// MARK: - TMBarDataSource
 	override func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
-		guard let sectionTitle = sections?[index].name else { return TMBarItem(title: "Section \(index)") }
-		return TMBarItem(title: sectionTitle)
+		return TMBarItem(title: forumsSections[index].attributes.name)
 	}
 
 	// MARK: - PageboyViewControllerDataSource
 	override func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
-		if let sectionsCount = sections?.count, sectionsCount != 0 {
-			return sectionsCount
-		}
-		return 0
+		return forumsSections.count
 	}
 
 	override func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
 		return .at(index: UserSettings.forumsPage)
+	}
+}
+
+// MARK: - ForumsListViewControllerDelegate
+extension ForumsViewController: ForumsListViewControllerDelegate {
+	func updateForumOrderButton(with orderType: ForumOrder) {
+		updateForumOrderBarButtonItem(orderType)
 	}
 }
 
@@ -110,13 +137,10 @@ extension ForumsViewController {
 
 		for index in 0 ..< count {
 			if let forumsListViewController = R.storyboard.forums.forumsListViewController() {
-				guard let sectionTitle = sections?[index].name else { return nil }
-				forumsListViewController.sectionTitle = sectionTitle
-
-				if let sectionID = sections?[index].id, sectionID != 0 {
-					forumsListViewController.sectionID = sectionID
-				}
+				forumsListViewController.sectionTitle = forumsSections[index].attributes.name
+				forumsListViewController.sectionID = forumsSections[index].id
 				forumsListViewController.sectionIndex = index
+				forumsListViewController.delegate = self
 				viewControllers.append(forumsListViewController)
 			}
 		}
@@ -125,11 +149,13 @@ extension ForumsViewController {
 	}
 
 	override func fetchSections() {
-		KService.getForumSections { result in
+		KService.getForumSections { [weak self] result in
+			guard let self = self else { return }
+
 			switch result {
-			case .success(let sections):
+			case .success(let forumsSections):
 				DispatchQueue.main.async {
-					self.sections = sections
+					self.forumsSections = forumsSections
 				}
 			case .failure: break
 			}

@@ -19,7 +19,7 @@ class EpisodesCollectionViewController: KCollectionViewController {
 
 	// MARK: - Properties
 	var seasonID: Int = 0
-	var episodeElements: [EpisodeElement]? {
+	var episodes: [Episode] = [] {
 		didSet {
 			_prefersActivityIndicatorHidden = true
 			self.configureDataSource()
@@ -65,12 +65,11 @@ class EpisodesCollectionViewController: KCollectionViewController {
 
 	/// Fetches the episodes from the server.
 	func fetchEpisodes() {
-		KService.getEpisodes(forSeasonID: seasonID) { result in
+		KService.getEpisodes(forSeasonID: seasonID) { [weak self] result in
+			guard let self = self else { return }
 			switch result {
 			case .success(let episodes):
-				DispatchQueue.main.async {
-					self.episodeElements = episodes.episodes
-				}
+				self.episodes = episodes
 			case .failure: break
 			}
 		}
@@ -84,15 +83,14 @@ class EpisodesCollectionViewController: KCollectionViewController {
 
 	/// Goes to the last item in the presented collection view.
 	fileprivate func goToLastEpisode() {
-		guard let episodes = episodeElements else { return }
 		collectionView.scrollToItem(at: IndexPath(row: episodes.count - 1, section: 0), at: .centeredVertically, animated: true)
 		goToButton.image = R.image.symbols.chevron_up_circle()
 	}
 
 	/// Goes to the last watched episode in the presented collection view.
 	fileprivate func goToLastWatchedEpisode() {
-		guard let lastWatchedEpisode = episodeElements?.closestMatch(index: 0, predicate: {
-			if let episodeWatchStatus = $0.currentUser?.watchStatus {
+		guard let lastWatchedEpisode = episodes.closestMatch(index: 0, predicate: { episode in
+			if let episodeWatchStatus = episode.attributes.watchStatus {
 				return episodeWatchStatus == .notWatched
 			}
 			return false
@@ -144,7 +142,7 @@ class EpisodesCollectionViewController: KCollectionViewController {
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == R.segue.episodesCollectionViewController.episodeDetailSegue.identifier, let episodeCell = sender as? EpisodeLockupCollectionViewCell {
 			if let episodeDetailViewController = segue.destination as? EpisodeDetailCollectionViewControlle, let indexPath = collectionView.indexPath(for: episodeCell) {
-				episodeDetailViewController.episodeElement = episodeElements?[indexPath.row]
+				episodeDetailViewController.episode = episodes[indexPath.row]
 			}
 		}
 	}
@@ -195,11 +193,11 @@ extension EpisodesCollectionViewController {
 			guard let episodesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.episodeLockupCollectionViewCell, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.episodeLockupCollectionViewCell.identifier)")
 			}
-			episodesCollectionViewCell.episodeElement = self.episodeElements?[indexPath.row]
+			episodesCollectionViewCell.episode = self.episodes[indexPath.row]
 			return episodesCollectionViewCell
 		}
 
-		let itemsPerSection = episodeElements?.count ?? 0
+		let itemsPerSection = episodes.count
 		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
 		SectionLayoutKind.allCases.forEach {
 			snapshot.appendSections([$0])

@@ -1,15 +1,16 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
-      "filename" : "hand_thumbsdown_fill.pdf"
+      "filename" : "hand_thumbsdown_fill.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   },
   "properties" : {
+    "preserves-vector-representation" : true,
     "template-rendering-intent" : "template"
   }
 }

@@ -1,6 +1,6 @@
 //
 //  KurozoraKit+Reply.swift
-//  Kurozora
+//  KurozoraKit
 //
 //  Created by Khoren Katklian on 29/09/2019.
 //  Copyright © 2019 Kurozora. All rights reserved.
@@ -18,9 +18,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func voteOnReply(_ replyID: Int, withVoteStatus voteStatus: VoteStatus, completion completionHandler: @escaping (_ result: Result<VoteStatus, KKError>) -> Void) {
+	public func voteOnReply(_ replyID: Int, withVoteStatus voteStatus: VoteStatus, completion completionHandler: @escaping (_ result: Result<VoteStatus, KKAPIError>) -> Void) {
 		let forumsRepliesVote = self.kurozoraKitEndpoints.forumsRepliesVote.replacingOccurrences(of: "?", with: "\(replyID)")
-		let request: APIRequest<VoteThread, KKError> = tron.swiftyJSON.request(forumsRepliesVote)
+		let request: APIRequest<ForumsVoteResponse, KKAPIError> = tron.codable.request(forumsRepliesVote)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -31,9 +31,10 @@ extension KurozoraKit {
 		request.parameters = [
 			"vote": voteStatus.voteValue
 		]
-		request.perform(withSuccess: { voteThread in
-			completionHandler(.success(voteThread.voteStatus ?? .noVote))
-		}, failure: { error in
+		request.perform(withSuccess: { forumsVoteResponse in
+			completionHandler(.success(forumsVoteResponse.data.voteAction))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't vote on this reply 😔", subTitle: error.message)
 			}

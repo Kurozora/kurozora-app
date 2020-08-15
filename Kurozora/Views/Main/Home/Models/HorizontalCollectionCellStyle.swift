@@ -1,5 +1,5 @@
 //
-//  HorizontalCollectionCellStyle.swift
+//  ExploreCategorySize.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 28/03/2019.
@@ -19,7 +19,7 @@ import UIKit
 	case video = "VideoLockupCollectionViewCell"
 	```
 */
-enum HorizontalCollectionCellStyle: String {
+enum ExploreCategorySize: String, Codable {
 	/**
 		Indicates that the cell has the `banner` style.
 
@@ -143,7 +143,7 @@ enum HorizontalCollectionCellStyle: String {
 }
 
 // MARK: - Properties
-extension HorizontalCollectionCellStyle {
+extension ExploreCategorySize {
 	/// The cell identifier string of a horizontal collection cell style.
 	var identifierString: String {
 		switch self {

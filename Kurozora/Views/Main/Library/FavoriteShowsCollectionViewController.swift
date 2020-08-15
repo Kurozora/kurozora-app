@@ -11,19 +11,19 @@ import KurozoraKit
 
 class FavoriteShowsCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var showDetailsElements: [ShowDetailsElement]? {
+	var shows: [Show] = [] {
 		didSet {
 			_prefersActivityIndicatorHidden = true
 			self.configureDataSource()
 		}
 	}
-	var _userProfile: UserProfile? = User.current
-	var userProfile: UserProfile? {
+	var _user: User? = User.current
+	var user: User? {
 		get {
-			return _userProfile
+			return _user
 		}
 		set {
-			self._userProfile = newValue
+			self._user = newValue
 		}
 	}
 	var dismissButtonIsEnabled: Bool = false {
@@ -49,7 +49,7 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Observe NotificationCenter for an update.
-		if userProfile?.id == User.current?.id {
+		if user?.id == User.current?.id {
 			NotificationCenter.default.addObserver(self, selector: #selector(fetchFavoritesList), name: .KFavoriteShowsListDidChange, object: nil)
 		}
 
@@ -72,7 +72,7 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 
 	override func setupEmptyDataSetView() {
 		collectionView.emptyDataSetView { view in
-			let detailLabel = self.userProfile?.id == User.current?.id ? "Favorited shows will show up on this page!" : "\(self.userProfile?.username ?? "This user") hasn't favorited shows yet."
+			let detailLabel = self.user?.id == User.current?.id ? "Favorited shows will show up on this page!" : "\(self.user?.attributes.username ?? "This user") hasn't favorited shows yet."
 			view.titleLabelString(NSAttributedString(string: "No Favorites", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: detailLabel, attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
 				.image(R.image.empty.favorites()!)
@@ -85,13 +85,12 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 
 	/// Fetches the user's favorite list.
 	@objc fileprivate func fetchFavoritesList() {
-		guard let userID = self.userProfile?.id else { return }
-		KService.getFavourites(forUserID: userID) { result in
+		guard let userID = self.user?.id else { return }
+		KService.getFavourites(forUserID: userID) { [weak self] result in
+			guard let self = self else { return }
 			switch result {
-			case .success(let showDetailsElements):
-				DispatchQueue.main.async {
-					self.showDetailsElements = showDetailsElements
-				}
+			case .success(let shows):
+				self.shows = shows
 			case .failure: break
 			}
 		}
@@ -99,8 +98,8 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if let currentCell = sender as? SmallLockupCollectionViewCell, let showDetailCollectionViewController = segue.destination as? ShowDetailCollectionViewController {
-			showDetailCollectionViewController.showDetailsElement = currentCell.showDetailsElement
+		if let show = (sender as? SmallLockupCollectionViewCell)?.show, let showDetailCollectionViewController = segue.destination as? ShowDetailCollectionViewController {
+			showDetailCollectionViewController.showID = show.id
 		}
 	}
 }
@@ -125,7 +124,7 @@ extension FavoriteShowsCollectionViewController {
 		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, identifier: Int) -> UICollectionViewCell? in
 			if indexPath.section == 0 {
 				if let libraryStatisticsCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.libraryStatisticsCollectionViewCell, for: indexPath) {
-					libraryStatisticsCollectionViewCell.showDetailsElements = self.showDetailsElements
+					libraryStatisticsCollectionViewCell.shows = self.shows
 					return libraryStatisticsCollectionViewCell
 				} else {
 					fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.libraryStatisticsCollectionViewCell.identifier)")
@@ -133,13 +132,13 @@ extension FavoriteShowsCollectionViewController {
 			}
 
 			let smallLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: SmallLockupCollectionViewCell.self, for: indexPath)
-			smallLockupCollectionViewCell.showDetailsElement = self.showDetailsElements?[indexPath.row]
+			smallLockupCollectionViewCell.show = self.shows[indexPath.row]
 			return smallLockupCollectionViewCell
 		}
 
 		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
 		SectionLayoutKind.allCases.forEach {
-			let itemsPerSection = $0 == .statistics ? 1: showDetailsElements?.count ?? 0
+			let itemsPerSection = $0 == .statistics ? 1 : shows.count
 
 			snapshot.appendSections([$0])
 			let itemOffset = $0.rawValue * itemsPerSection

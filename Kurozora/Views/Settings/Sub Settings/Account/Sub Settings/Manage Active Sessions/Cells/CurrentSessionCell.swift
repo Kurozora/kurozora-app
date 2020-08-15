@@ -25,7 +25,7 @@ class CurrentSessionCell: KTableViewCell {
 	@IBOutlet weak var separatorView: SeparatorView!
 
 	// MARK: - Properties
-	var session: UserSessionsElement? {
+	var session: Session! {
 		didSet {
 			configureCell()
 		}
@@ -33,18 +33,7 @@ class CurrentSessionCell: KTableViewCell {
 
 	// MARK: - Functions
 	override func configureCell() {
-		guard let session = session else { return }
-
-		if let sessionIP = session.ip, !sessionIP.isEmpty {
-			ipAddressValueLabel.text = sessionIP
-		} else {
-			ipAddressValueLabel.text = "-"
-		}
-
-		if let deviceName = session.platform?.deviceName, !deviceName.isEmpty {
-			deviceValueLabel.text = deviceName
-		} else {
-			deviceValueLabel.text = "-"
-		}
+		ipAddressValueLabel.text = session.attributes.ip
+		deviceValueLabel.text = session.relationships.platform.data.first?.attributes.deviceModel
 	}
 }

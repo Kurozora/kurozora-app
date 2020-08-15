@@ -12,7 +12,7 @@ import KurozoraKit
 class SeasonsCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var showID: Int = 0
-	var seasonsElements: [SeasonElement]? {
+	var seasons: [Season] = [] {
 		didSet {
 			_prefersActivityIndicatorHidden = true
 			self.configureDataSource()
@@ -35,12 +35,9 @@ class SeasonsCollectionViewController: KCollectionViewController {
         super.viewDidLoad()
 
 		// Stop activity indicator in case user doesn't need to fetch actors details.
-		if seasonsElements != nil {
+		if !seasons.isEmpty {
 			_prefersActivityIndicatorHidden = true
-		}
-
-		// Fetch seasons
-		if seasonsElements == nil {
+		} else {
 			DispatchQueue.global(qos: .background).async {
 				self.fetchSeasons()
 			}
@@ -62,11 +59,13 @@ class SeasonsCollectionViewController: KCollectionViewController {
 
 	/// Fetch seasons for the current show.
     fileprivate func fetchSeasons() {
-		KService.getSeasons(forShowID: showID) { result in
+		KService.getSeasons(forShowID: showID) { [weak self] result in
+			guard let self = self else { return }
+
 			switch result {
 			case .success(let seasons):
 				DispatchQueue.main.async {
-					self.seasonsElements = seasons
+					self.seasons = seasons
 				}
 			case .failure: break
 			}
@@ -77,9 +76,7 @@ class SeasonsCollectionViewController: KCollectionViewController {
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == R.segue.seasonsCollectionViewController.episodeSegue.identifier, let lockupCollectionViewCell = sender as? LockupCollectionViewCell {
 			if let episodesCollectionViewController = segue.destination as? EpisodesCollectionViewController, let indexPath = collectionView.indexPath(for: lockupCollectionViewCell) {
-				if let seasonID = seasonsElements?[indexPath.item].id {
-					episodesCollectionViewController.seasonID = seasonID
-				}
+				episodesCollectionViewController.seasonID = seasons[indexPath.item].id
 			}
 		}
 	}
@@ -126,7 +123,7 @@ extension SeasonsCollectionViewController {
 	override func configureDataSource() {
 		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, identifier: Int) -> UICollectionViewCell? in
 			if let lockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.lockupCollectionViewCell, for: indexPath) {
-				lockupCollectionViewCell.seasonsElement = self.seasonsElements?[indexPath.row]
+				lockupCollectionViewCell.season = self.seasons[indexPath.row]
 				if collectionView.indexPathForLastItem == indexPath {
 					lockupCollectionViewCell.separatorView.isHidden = true
 				} else {
@@ -138,7 +135,7 @@ extension SeasonsCollectionViewController {
 			}
 		}
 
-		let itemsPerSection = seasonsElements?.count ?? 0
+		let itemsPerSection = seasons.count
 		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
 		SectionLayoutKind.allCases.forEach {
 			snapshot.appendSections([$0])

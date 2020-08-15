@@ -61,14 +61,11 @@ class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	// MARK: - Functions
 	override func configureCell() {
 		super.configureCell()
-		guard let showDetailsElement = showDetailsElement else { return }
+		guard let show = show else { return }
 
 		// Configure tagline
-		self.taglineLabel?.text = showDetailsElement.tagline
-
-		if let bannerThumbnail = showDetailsElement.banner {
-			thumbnailPlaceholder.setImage(with: bannerThumbnail, placeholder: R.image.placeholders.showBanner()!)
-		}
+		self.taglineLabel?.text = show.attributes.tagline
+		self.thumbnailPlaceholder.image = show.attributes.bannerImage
 
 		// Configure video player
 		configureVideoPlayer()
@@ -76,7 +73,7 @@ class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 
 	/// Configures the video player with the defined settings.
 	func configureVideoPlayer() {
-		if let videoUrlString = showDetailsElement?.videoUrl, !videoUrlString.isEmpty {
+		if let videoUrlString = show?.attributes.videoUrl, !videoUrlString.isEmpty {
 			if let videoUrl = URL(string: videoUrlString) {
 				let avPlayerItem = AVPlayerItem(url: videoUrl)
 				self.avPlayerViewController.player?.replaceCurrentItem(with: avPlayerItem)

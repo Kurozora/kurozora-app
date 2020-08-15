@@ -31,3 +31,6 @@
 @_exported import class Alamofire.MultipartFormData
 @_exported import protocol Alamofire.DataResponseSerializerProtocol
 @_exported import protocol Alamofire.DownloadResponseSerializerProtocol
+@_exported import protocol Alamofire.ParameterEncoding
+@_exported import struct Alamofire.URLEncoding
+@_exported import struct Alamofire.JSONEncoding

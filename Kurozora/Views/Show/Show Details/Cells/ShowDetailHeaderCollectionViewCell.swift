@@ -23,6 +23,7 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var moreButton: UIButton!
 
 	// Action buttons
+	@IBOutlet weak var favoriteButton: UIButton!
 	@IBOutlet weak var libraryStatusButton: KTintedButton!
 	@IBOutlet weak var reminderButton: UIButton!
 
@@ -33,93 +34,114 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var statusButton: UIButton!
 	@IBOutlet weak var shadowView: UIView!
 	@IBOutlet weak var posterImageView: UIImageView!
-	@IBOutlet weak var favoriteButton: UIButton!
 
 	// MARK: - Properties
 	weak var delegate: ShowDetailCollectionViewControllerDelegate?
 
-	var baseLockupCollectionViewCell: BaseLockupCollectionViewCell? = nil
 	var libraryBaseCollectionViewCell: LibraryBaseCollectionViewCell? = nil
-	var showDetailsElement: ShowDetailsElement? {
+	var show: Show! {
 		didSet {
-			self.libraryStatus = showDetailsElement?.currentUser?.libraryStatus
+			self.libraryStatus = show.attributes.libraryStatus ?? .none
 			updateDetails()
 		}
 	}
-	var libraryStatus: String?
+	var libraryStatus: KKLibrary.Status = .none
 }
 
 // MARK: - Functions
 extension ShowDetailHeaderCollectionViewCell {
 	/// Updates the view with the details fetched from the server.
 	fileprivate func updateDetails() {
-		guard let showDetailsElement = showDetailsElement else { return }
-		guard let currentUser = showDetailsElement.currentUser else { return }
-
 		// Configure library status
-		if let libraryStatus = currentUser.libraryStatus, !libraryStatus.isEmpty {
-			self.libraryStatusButton?.setTitle("\(libraryStatus.capitalized) ▾", for: .normal)
-		} else {
-			libraryStatusButton.setTitle("ADD", for: .normal)
+		if let libraryStatus = self.show.attributes.libraryStatus {
+			self.libraryStatus = libraryStatus
 		}
+		updateLibraryActions()
 
 		// Configure title label
-		if let title = showDetailsElement.title, !title.isEmpty {
-			showTitleLabel.text = title
-		} else {
-			showTitleLabel.text = "Unknown"
-		}
+		self.showTitleLabel.text = self.show.attributes.title
 
 		// Configure tags label
-		tagsLabel.text = showDetailsElement.informationString
+		self.tagsLabel.text = self.show.attributes.informationString
 
 		// Configure airStatus label
-		if let status = showDetailsElement.airStatus, !status.isEmpty {
-			statusButton.setTitle(status, for: .normal)
-			if status == "Ended" {
-				statusButton.backgroundColor = .dropped
-			} else {
-				statusButton.backgroundColor = .planning
-			}
-		} else {
-			statusButton.setTitle("TBA", for: .normal)
-			statusButton.backgroundColor = .onHold
-		}
-
-		if let airingStatus = ShowDetail.AiringStatus(rawValue: showDetailsElement.airStatus ?? "Ended") {
-			statusButton.setTitle(airingStatus.stringValue, for: .normal)
-			statusButton.backgroundColor = airingStatus.colorValue
+		if let airingStatus = ShowDetail.AiringStatus(rawValue: self.show.attributes.airStatus) {
+			self.statusButton.setTitle(airingStatus.stringValue, for: .normal)
+			self.statusButton.backgroundColor = airingStatus.colorValue
 		}
 
 		// Configure poster view
-		if let posterImage = showDetailsElement.poster {
-			posterImageView.setImage(with: posterImage, placeholder: R.image.placeholders.showPoster()!)
-		}
+		self.posterImageView.image = self.show.attributes.posterImage
 
 		// Configure banner view
-		if let bannerImage = showDetailsElement.banner {
-			bannerImageView.setImage(with: bannerImage, placeholder: R.image.placeholders.showBanner()!)
-		}
-
-		// Configre favorite status
-		updateFavoriteStatus(with: showDetailsElement)
+		self.bannerImageView.image = self.show.attributes.bannerImage
 
 		// Configure shadows
-		shadowView.applyShadow()
-		reminderButton.applyShadow()
-		favoriteButton.applyShadow()
+		self.shadowView.applyShadow()
+		self.reminderButton.applyShadow()
+		self.favoriteButton.applyShadow()
 
 		// Display details
-		quickDetailsView.isHidden = false
+		self.quickDetailsView.isHidden = false
 	}
 
-	func updateFavoriteStatus(with showDetailsElement: ShowDetailsElement? = nil, withFavoriteStatus favoriteStatus: FavoriteStatus = .unfavorite) {
-		let showIsFavorite = showDetailsElement?.currentUser?.isFavorite ?? (favoriteStatus == .favorite)
-		self.showDetailsElement?.currentUser?.isFavorite = showIsFavorite
-		let favoriteImage = showIsFavorite ? R.image.symbols.heart_fill() : R.image.symbols.heart()
-		favoriteButton.tag = showIsFavorite ? 1 : 0
-		favoriteButton.setImage(favoriteImage, for: .normal)
-		NotificationCenter.default.post(name: .KFavoriteShowsListDidChange, object: nil)
+	func updateLibraryStatus() {
+		self.libraryStatusButton.setTitle(libraryStatus != .none ? "\(libraryStatus.stringValue.capitalized) ▾" : "ADD", for: .normal)
+	}
+
+	/**
+		Updates the `favoriteButton` appearance with the favorite status of the show.
+
+		- Parameter animated: A boolean value indicating whether to update changes with animations.
+	*/
+	func updateFavoriteStatus(animated: Bool = false) {
+		let favoriteStatus = self.show.attributes.favoriteStatus
+		if self.libraryStatus == .none || favoriteStatus == .disabled {
+			self.favoriteButton.isHidden = true
+			self.favoriteButton.isUserInteractionEnabled = false
+		} else {
+			if animated {
+				self.favoriteButton.animateBounce()
+			}
+			self.favoriteButton.isHidden = false
+			self.favoriteButton.isUserInteractionEnabled = true
+
+			self.favoriteButton.setImage(favoriteStatus.imageValue, for: .normal)
+			NotificationCenter.default.post(name: .KFavoriteShowsListDidChange, object: nil)
+		}
+	}
+
+	/**
+		Updates the `reminderButton` appearance with the reminder status of the show.
+
+		- Parameter animated: A boolean value indicating whether to update changes with animations.
+	*/
+	func updateReminderStatus(animated: Bool = false) {
+		let reminderStatus = self.show.attributes.reminderStatus
+		if self.libraryStatus == .none || reminderStatus == .disabled {
+			self.reminderButton.isHidden = true
+			self.reminderButton.isUserInteractionEnabled = false
+		} else {
+			if animated {
+				self.reminderButton.animateBounce()
+			}
+			self.reminderButton.isHidden = false
+			self.reminderButton.isUserInteractionEnabled = true
+
+			self.reminderButton.setImage(reminderStatus.imageValue, for: .normal)
+			NotificationCenter.default.post(name: .KFavoriteShowsListDidChange, object: nil)
+		}
+	}
+
+	/**
+		Updates `favoriteButton`, `reminderButton` and `libraryStatusButton` with the attributes of the show.
+
+		- Parameter animated: A boolean value indicating whether to update changes with animations.
+	*/
+	func updateLibraryActions(animated: Bool = false) {
+		self.updateLibraryStatus()
+		self.updateFavoriteStatus(animated: animated)
+		self.updateReminderStatus(animated: animated)
 	}
 }
 
@@ -130,14 +152,8 @@ extension ShowDetailHeaderCollectionViewCell {
 	}
 
 	@IBAction func moreButtonPressed(_ sender: AnyObject) {
-		guard let showID = showDetailsElement?.id else { return }
-		var shareText: [String] = ["https://kurozora.app/anime/\(showID)\nYou should watch this anime via @KurozoraApp"]
-
-		if let title = showDetailsElement?.title, !title.isEmpty {
-			shareText = ["https://kurozora.app/anime/\(showID)\nYou should watch \"\(title)\" via @KurozoraApp"]
-		}
-
-		let activityViewController = UIActivityViewController(activityItems: shareText, applicationActivities: [])
+		let shareText = "https://kurozora.app/anime/\(show.id)\nYou should watch \"\(show.attributes.title)\" via @KurozoraApp"
+		let activityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
 
 		if let popoverController = activityViewController.popoverPresentationController {
 			if let sender = sender as? UIBarButtonItem {
@@ -152,24 +168,23 @@ extension ShowDetailHeaderCollectionViewCell {
 
 	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
 		WorkflowController.shared.isSignedIn {
-			guard let libraryStatusString = self.libraryStatus else { return }
-			guard let showID = self.showDetailsElement?.id else { return }
-			guard let userID = User.current?.id else { return }
-
-			let libraryStatus = KKLibrary.Status.fromString(libraryStatusString)
-			let alertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: libraryStatus, action: { (title, value)  in
-				if libraryStatus != value {
-					KService.addToLibrary(forUserID: userID, withLibraryStatus: value, showID: showID) { result in
+			let oldLibraryStatus = self.libraryStatus
+			let alertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: oldLibraryStatus, action: { [weak self] (_, value)  in
+				guard let self = self else { return }
+				if oldLibraryStatus != value {
+					KService.addToLibrary(withLibraryStatus: value, showID: self.show.id) { [weak self] result in
+						guard let self = self else { return }
 						switch result {
-						case .success:
+						case .success(let libraryUpdate):
+							self.show.attributes.update(using: libraryUpdate)
+
 							// Update entry in library
-							self.libraryStatus = value.stringValue
+							self.libraryStatus = value
 							self.delegate?.updateShowInLibrary(for: self.libraryBaseCollectionViewCell)
+							self.updateLibraryActions(animated: oldLibraryStatus == .none)
 
 							let libraryUpdateNotificationName = Notification.Name("Update\(value.sectionValue)Section")
 							NotificationCenter.default.post(name: libraryUpdateNotificationName, object: nil)
-
-							self.libraryStatusButton?.setTitle("\(title) ▾", for: .normal)
 						case .failure:
 							break
 						}
@@ -177,14 +192,17 @@ extension ShowDetailHeaderCollectionViewCell {
 				}
 			})
 
-			if !libraryStatusString.isEmpty {
-				alertController.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { (_) in
-					KService.removeFromLibrary(forUserID: userID, showID: showID) { result in
+			if self.libraryStatus != .none {
+				alertController.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { [weak self] _ in
+					guard let self = self else { return }
+					KService.removeFromLibrary(showID: self.show.id) { [weak self] result in
+						guard let self = self else { return }
 						switch result {
-						case .success:
-							self.libraryStatus = ""
+						case .success(let libraryUpdate):
+							self.show.attributes.update(using: libraryUpdate)
+							self.libraryStatus = .none
 							self.delegate?.updateShowInLibrary(for: self.libraryBaseCollectionViewCell)
-							self.libraryStatusButton.setTitle("ADD", for: .normal)
+							self.updateLibraryActions(animated: true)
 						case .failure:
 							break
 						}
@@ -207,17 +225,13 @@ extension ShowDetailHeaderCollectionViewCell {
 
 	@IBAction func favoriteButtonPressed(_ sender: UIButton) {
 		WorkflowController.shared.isSignedIn {
-			guard let showID = self.showDetailsElement?.id else { return }
-			var isFavoriteBoolValue = self.showDetailsElement?.currentUser?.isFavorite ?? false
-			isFavoriteBoolValue = !isFavoriteBoolValue
-
-			if let favoriteStatus = FavoriteStatus(rawValue: isFavoriteBoolValue.int), let userID = User.current?.id {
-				KService.updateFavoriteStatus(forUserID: userID, forShow: showID, withFavoriteStatus: favoriteStatus) { result in
+			if let userID = User.current?.id {
+				KService.updateFavoriteStatus(forUserID: userID, forShow: self.show.id) { [weak self] result in
+					guard let self = self else { return }
 					switch result {
 					case .success(let favoriteStatus):
-						DispatchQueue.main.async {
-							self.updateFavoriteStatus(withFavoriteStatus: favoriteStatus)
-						}
+						self.show.attributes.favoriteStatus = favoriteStatus
+						self.updateFavoriteStatus()
 					case .failure:
 						break
 					}
@@ -227,90 +241,19 @@ extension ShowDetailHeaderCollectionViewCell {
 	}
 
 	@IBAction func raminderButtonPressed(_ sender: UIButton) {
-		let eventStore = EKEventStore()
-
-		switch EKEventStore.authorizationStatus(for: .event) {
-		case .authorized:
-			insertEvent(to: eventStore)
-		case .denied:
-			print("Access denied")
-		case .notDetermined:
-			eventStore.requestAccess(to: .event) { [weak self] granted, _ in
-				guard let self = self else { return }
-
-				if granted {
-					self.insertEvent(to: eventStore)
-				} else {
-					print("----- Access denied")
+		WorkflowController.shared.isSignedIn {
+			if let userID = User.current?.id {
+				KService.updateReminderStatus(forUserID: userID, forShow: self.show.id) { [weak self] result in
+					guard let self = self else { return }
+					switch result {
+					case .success(let reminderStatus):
+						self.show.attributes.reminderStatus = reminderStatus
+						self.updateReminderStatus()
+					case .failure:
+						break
+					}
 				}
 			}
-		default:
-			print("----- Case default")
 		}
-	}
-
-	func createCalendar(for eventStore: EKEventStore) {
-		let calendar: EKCalendar = EKCalendar(for: .event, eventStore: eventStore)
-		calendar.title = "Kurozora"
-		calendar.source = eventStore.defaultCalendarForNewReminders()?.source
-		do {
-			try eventStore.saveCalendar(calendar, commit: true)
-		} catch {
-			print("---- failed to save calendar with err:", error)
-		}
-
-
-	}
-
-	func getCalendar(for eventStore: EKEventStore) -> EKCalendar? {
-		var calendar = eventStore.calendar(withIdentifier: "Kurozora")
-
-		if calendar == nil {
-			calendar = EKCalendar(for: .event, eventStore: eventStore)
-
-			calendar?.title = "Kurozora"
-			calendar?.cgColor = UIColor.kurozora.cgColor
-			calendar?.source = eventStore.defaultCalendarForNewEvents?.source
-
-			do {
-				try eventStore.saveCalendar(calendar!, commit: true)
-			} catch {
-				print("---- failed to save calendar with err:", error)
-			}
-		}
-
-		return calendar
-	}
-
-	func insertEvent(to eventStore: EKEventStore) {
-		guard let startDate = showDetailsElement?.startDateTime?.dateTime else { return }
-		let endTimeInterval = TimeInterval(60 * (showDetailsElement?.runtime ?? 25))
-		let endDate = startDate.addingTimeInterval(endTimeInterval)
-
-		let event: EKEvent = EKEvent(eventStore: eventStore)
-		event.calendar = getCalendar(for: eventStore)
-		event.title = showDetailsElement?.title
-		event.startDate = startDate
-		event.endDate = endDate
-
-		var recurrenceEnd: EKRecurrenceEnd? = nil
-		if let episodeCount = showDetailsElement?.episodes, episodeCount != 0 {
-			recurrenceEnd = EKRecurrenceEnd(occurrenceCount: episodeCount)
-		}
-		if let airDay = showDetailsElement?.airDay, let weekDay = EKWeekday(rawValue: airDay + 1) { // TODO: Remove 1
-			event.addRecurrenceRule(.init(recurrenceWith: .weekly, interval: 1, daysOfTheWeek: [.init(weekDay)], daysOfTheMonth: nil, monthsOfTheYear: nil, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: recurrenceEnd))
-		}
-		event.notes = "This is a note"
-		if let showID = showDetailsElement?.id {
-			event.url = URL(string: "https://kurozora.app/anime/\(showID)")
-		}
-
-		do {
-			try eventStore.save(event, span: .futureEvents)
-		} catch {
-			print("----- failed to save event with error :", error)
-		}
-
-		print("----- Saved Event")
 	}
 }

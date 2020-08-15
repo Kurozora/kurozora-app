@@ -268,7 +268,7 @@ extension SettingsTableViewController {
 		var primaryStringValue: String {
 			switch self {
 			case .account:
-				return User.current?.username ?? "Sign in to your Kurozora account"
+				return User.current?.attributes.username ?? "Sign in to your Kurozora account"
 			case .switchAccount:
 				return "Switch Account"
 			case .keychain:
@@ -326,7 +326,7 @@ extension SettingsTableViewController {
 		var imageValue: UIImage? {
 			switch self {
 			case .account:
-				return User.current?.profileImage ?? R.image.placeholders.userProfile()
+				return User.current?.attributes.profileImage ?? R.image.placeholders.userProfile()
 			case .switchAccount:
 				return R.image.icons.accountSwitch()
 			case .keychain:

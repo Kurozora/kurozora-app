@@ -22,7 +22,7 @@ class ShowDetail {
 		case seasons
 		case cast
 		case moreByStudio
-		case related
+		case relatedShows
 		case sosumi
 
 		// MARK: - Properties
@@ -45,7 +45,7 @@ class ShowDetail {
 				return "Cast"
 			case .moreByStudio:
 				return "More by "
-			case .related:
+			case .relatedShows:
 				return "Related"
 			case .sosumi:
 				return "Copyright"
@@ -71,8 +71,8 @@ class ShowDetail {
 				return R.reuseIdentifier.castCollectionViewCell.identifier
 			case .moreByStudio:
 				return R.reuseIdentifier.smallLockupCollectionViewCell.identifier
-			case .related:
-				return "RelatedShowCollectionViewCell" // R.reuseIdentifier.relatedShowCollectionViewCell.identifier
+			case .relatedShows:
+				return R.reuseIdentifier.lockupCollectionViewCell.identifier
 			case .sosumi:
 				return R.reuseIdentifier.sosumiShowCollectionViewCell.identifier
 			}
@@ -97,8 +97,8 @@ class ShowDetail {
 				return R.segue.showDetailCollectionViewController.castSegue.identifier
 			case .moreByStudio:
 				return R.segue.showDetailCollectionViewController.studioSegue.identifier
-			case .related:
-				return "RelatedSegue" //R.segue.showDetailCollectionViewController.relatedSegue.identifier
+			case .relatedShows:
+				return R.segue.showDetailCollectionViewController.showListSegue.identifier
 			case .sosumi:
 				return ""
 			}
@@ -165,10 +165,10 @@ class ShowDetail {
 		case broadcast
 		case genres
 		case rating
-		case seasonsCount
-		case episodesCount
+		case seasonCount
+		case episodeCount
 		case duration
-		case languages
+//		case languages
 
 		// MARK: - Properties
 		/// The string value of an information type.
@@ -190,14 +190,14 @@ class ShowDetail {
 				return "Genres"
 			case .rating:
 				return "Rating"
-			case .seasonsCount:
+			case .seasonCount:
 				return "Seasons"
-			case .episodesCount:
+			case .episodeCount:
 				return "Episodes"
 			case .duration:
 				return "Duration"
-			case .languages:
-				return "Languages"
+//			case .languages:
+//				return "Languages"
 			}
 		}
 
@@ -205,79 +205,81 @@ class ShowDetail {
 		/**
 			Returns the required information from the given object.
 
-			- Parameter showDetailselement: The object used to extract the infromation from.
+			- Parameter show: The object used to extract the infromation from.
 
 			Returns: the required information from the given object.
 		*/
-		func information(from showDetailsElement: ShowDetailsElement) -> String {
+		func information(from show: Show) -> String {
 			switch self {
 			case .id:
-				if let showID = showDetailsElement.id {
-					return showID.string
-				}
+				return "\(show.id)"
 			case .studio:
-				if let studioName = showDetailsElement.studio?.name, !studioName.isEmpty {
-					return studioName
+				if let studios = show.relationships?.studios?.data, studios.count != 0 {
+					var studioNames = ""
+					for (index, studio) in studios.enumerated() {
+						let studioName = studio.attributes.name
+						if index == studios.count - 1 {
+							studioNames += "\(studioName)"
+							continue
+						}
+						studioNames += "\(studioName), "
+					}
+					return studioNames
 				}
 			case .network:
-				if let network = showDetailsElement.network, !network.isEmpty {
+				if let network = show.attributes.network {
 					return network
 				}
 			case .type:
-				if let type = showDetailsElement.type, !type.isEmpty {
-					return type
-				}
+				return show.attributes.type
 			case .aireDates:
 				var dateInfo: String = "-"
-				if let startDateTime = showDetailsElement.startDateTime {
-					dateInfo = startDateTime.isEmpty ? "N/A - " : startDateTime.mediumDate + " - "
-				}
-				if let endDateTime = showDetailsElement.endDateTime {
-					dateInfo += endDateTime.isEmpty ? "N/A" : endDateTime.mediumDate
-				}
+
+				let startDateTime = show.attributes.startDateTime
+				dateInfo = (startDateTime?.mediumDate ?? "N/A") + " - "
+
+				let endDateTime = show.attributes.endDateTime
+				dateInfo += (endDateTime?.mediumDate ?? "N/A")
+
 				return dateInfo
 			case .broadcast:
-				var broadcastInfo: String = "-"
-				if let airDay = showDetailsElement.airDay {
-					broadcastInfo = Calendar.current.weekdaySymbols[airDay]
-				}
-				if let airTime = showDetailsElement.airTime {
-					broadcastInfo += airTime.isEmpty ? "-" : " at " + airTime
+				var broadcastInfo = show.attributes.airDay ?? "-"
+				if let airTime = show.attributes.airTime {
+					broadcastInfo += airTime.isEmpty ? "" : " at " + airTime
 				}
 				return broadcastInfo
 			case .genres:
-				if let genres = showDetailsElement.genres, !genres.isEmpty {
-					var genreText = ""
+				if let genres = show.relationships?.genres?.data, genres.count != 0 {
+					var genreNames = ""
 					for (index, genre) in genres.enumerated() {
-						if let genreName = genre.name {
-							if index == genres.count - 1 {
-								genreText += "\(genreName)"
-								continue
-							}
-							genreText += "\(genreName), "
+						let genreName = genre.attributes.name
+						if index == genres.count - 1 {
+							genreNames += "\(genreName)"
+							continue
 						}
+						genreNames += "\(genreName), "
 					}
-					return genreText
+					return genreNames
 				}
 			case .rating:
-				if let watchRating = showDetailsElement.watchRating, !watchRating.isEmpty {
+				let watchRating = show.attributes.watchRating
+				if !watchRating.isEmpty {
 					return watchRating
 				}
-			case .seasonsCount:
-				if let seasons = showDetailsElement.seasons, seasons > 0 {
-					return seasons.description
+			case .seasonCount:
+				let seasonCount = show.attributes.seasonCount
+				if seasonCount > 0 {
+					return "\(seasonCount)"
 				}
-			case .episodesCount:
-				if let episode = showDetailsElement.episodes, episode > 0 {
-					return episode.description
+			case .episodeCount:
+				let episodeCount = show.attributes.episodeCount
+				if episodeCount > 0 {
+					return "\(episodeCount)"
 				}
 			case .duration:
-				if let duration = showDetailsElement.runtime, duration > 0 {
+				let duration = show.attributes.runtime
+				if duration > 0 {
 					return "\(duration) min"
-				}
-			case .languages:
-				if let languages = showDetailsElement.languages, !languages.isEmpty {
-					return languages
 				}
 			}
 			return "-"

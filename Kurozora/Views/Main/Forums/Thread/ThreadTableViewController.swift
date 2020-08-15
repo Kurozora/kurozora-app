@@ -75,10 +75,10 @@ class ThreadTableViewController: KTableViewController {
 
 	// MARK: - Properties
 	var forumThreadID: Int = 0
-	var forumsThreadElement: ForumsThreadElement? {
+	var forumsThread: ForumsThread! {
 		didSet {
 			_prefersActivityIndicatorHidden = true
-			self.forumThreadID = forumsThreadElement?.id ?? self.forumThreadID
+			self.forumThreadID = forumsThread?.id ?? self.forumThreadID
 		}
 	}
 	var replyID: Int?
@@ -87,7 +87,7 @@ class ThreadTableViewController: KTableViewController {
 	var sectionTitle = "Discussion"
 
 	// Reply variables
-	var replies: [ThreadRepliesElement] = [] {
+	var threadReplies: [ThreadReply] = [] {
 		didSet {
 			tableView.reloadData()
 		}
@@ -110,7 +110,7 @@ class ThreadTableViewController: KTableViewController {
 		super.viewDidLoad()
 
 		// Fetch thread details
-		if forumsThreadElement != nil {
+		if forumsThread != nil {
 			_prefersActivityIndicatorHidden = true
 			DispatchQueue.main.async {
 				self.updateThreadDetails()
@@ -139,7 +139,9 @@ class ThreadTableViewController: KTableViewController {
 
 	// MARK: - Functions
 	override func setupEmptyDataSetView() {
-		tableView.emptyDataSetView { (view) in
+		tableView.emptyDataSetView { [weak self] (view) in
+			guard let self = self else { return }
+
 			let verticalOffset = (self.tableView.tableHeaderView?.height ?? 0 - self.view.height) / 2
 			view.titleLabelString(NSAttributedString(string: "No Replies", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: "Be the first to reply on this thread!", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
@@ -162,55 +164,48 @@ class ThreadTableViewController: KTableViewController {
 
 	/// Update the thread view with the fetched details.
 	func updateThreadDetails() {
-		guard let forumsThreadElement = forumsThreadElement else { return }
 		// Set topic label
 		topicLabel.text = "In \(sectionTitle) by"
 
 		// Set thread title
-		self.title = forumsThreadElement.title
-		self.threadTitleLabel.text = forumsThreadElement.title
+		self.title = forumsThread.attributes.title
+		self.threadTitleLabel.text = forumsThread.attributes.title
 
 		// Set thread content
-		if let contentText = forumsThreadElement.content {
-			self.richTextView.text = contentText
-		}
+		self.richTextView.text = forumsThread.attributes.content
 
-		// Set poster username
-		self.posterUsernameLabel.setTitle(forumsThreadElement.posterUsername, for: .normal)
+		if let user = forumsThread.relationships.user.data.first {
+			// Set poster username
+			self.posterUsernameLabel.setTitle(user.attributes.username, for: .normal)
+		}
 
 		// Set thread stats
-		if let voteCount = forumsThreadElement.voteCount {
-			voteCountButton.setTitle("\((voteCount >= 1000) ? voteCount.kFormatted : voteCount.string) · ", for: .normal)
-		}
+		let voteCount = forumsThread.attributes.metrics.weight
+		voteCountButton.setTitle("\((voteCount >= 1000) ? voteCount.kFormatted : voteCount.string) · ", for: .normal)
 
-		if let commentCount = forumsThreadElement.commentCount {
-			commentCountButton.setTitle("\((commentCount >= 1000) ? commentCount.kFormatted : commentCount.string) · ", for: .normal)
-		}
+		let commentCount = forumsThread.attributes.replyCount
+		commentCountButton.setTitle("\((commentCount >= 1000) ? commentCount.kFormatted : commentCount.string) · ", for: .normal)
 
-		if let creationDate = forumsThreadElement.creationDate {
-			dateTimeButton.setTitle(creationDate.timeAgo, for: .normal)
-		}
+		dateTimeButton.setTitle(forumsThread.attributes.createdAt.timeAgo, for: .normal)
 
 		// Thread vote state
-		updateVoting(with: forumsThreadElement.currentUser?.likeAction)
+//		updateVoting(with: forumsThread.currentUser?.voteAction)
 
 		// Set locked state
 		lockImageView.tintColor = .kLightRed
-		if let locked = forumsThreadElement.locked {
-			isLocked(locked)
-		}
+		isLocked(forumsThread.attributes.lockStatus)
 	}
 
 	/// Fetch thread details for the current thread.
 	func fetchDetails() {
-		if forumsThreadElement == nil {
+		if forumsThread == nil {
 			KService.getDetails(forThread: forumThreadID) {[weak self] result in
 				guard let self = self else { return }
 
 				switch result {
-				case .success(let thread):
+				case .success(let threads):
 					DispatchQueue.main.async {
-						self.forumsThreadElement = thread
+						self.forumsThread = threads.first
 						self.updateThreadDetails()
 					}
 				case .failure: break
@@ -226,18 +221,16 @@ class ThreadTableViewController: KTableViewController {
 			guard let self = self else { return }
 
 			switch result {
-			case .success(let replies):
+			case .success(let threadRepliesResponse):
 				DispatchQueue.main.async {
-					// Prepare `replies` if necessary
+					// Prepare `threadReplies` if necessary
 					if self.nextPageURL == nil {
-						self.replies = []
+						self.threadReplies = []
 					}
 
-					// Append new replies data and save next page url
-					if let replies = replies.replies {
-						self.replies.append(contentsOf: replies)
-					}
-					self.nextPageURL = replies.nextPageURL
+					// Append new threadReplies data and save next page url
+					self.threadReplies.append(contentsOf: threadRepliesResponse.data)
+					self.nextPageURL = threadRepliesResponse.next
 				}
 			case .failure: break
 			}
@@ -245,29 +238,25 @@ class ThreadTableViewController: KTableViewController {
 	}
 
 	/**
-		Vote the current thread with the given vote.
+		Vote on the current thread with the given vote.
 
 		- Parameter voteStatus: The `VoteStatus` value indicating whether to upvote, downvote or novote a thread.
 	*/
 	func voteOnThread(withVoteStatus voteStatus: VoteStatus) {
 		WorkflowController.shared.isSignedIn {
-			guard var threadScore = self.forumsThreadElement?.voteCount else { return }
+			KService.voteOnThread(self.forumThreadID, withVoteStatus: voteStatus) {[weak self] result in
+				guard let self = self else { return }
 
-			KService.voteOnThread(self.forumThreadID, withVoteStatus: voteStatus) { result in
 				switch result {
 				case .success(let voteStatus):
 					DispatchQueue.main.async {
+						var threadScore = self.forumsThread.attributes.metrics.weight
+
+						self.updateVoting(withVoteStatus: voteStatus)
 						if voteStatus == .upVote {
 							threadScore += 1
-							self.upvoteButton.tintColor = .kGreen
-							self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-						} else if voteStatus == .noVote {
-							self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-							self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
 						} else if voteStatus == .downVote {
 							threadScore -= 1
-							self.downvoteButton.tintColor = .kLightRed
-							self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
 						}
 
 						self.voteCountButton.setTitle("\((threadScore >= 1000) ? threadScore.kFormatted : threadScore.string) · ", for: .normal)
@@ -279,18 +268,18 @@ class ThreadTableViewController: KTableViewController {
 	}
 
 	/**
-		Update the voting state of the reply.
+		Update the voting status of the thread.
 
-		- Parameter action: The integer indicating whether to upvote, downvote or remove vote.
+		- Parameter voteStatus: The `VoteStatus` value indicating whether to upvote, downvote or novote a thread.
 	*/
-	fileprivate func updateVoting(with action: Int?) {
-		if action == 1 { // upvote
+	fileprivate func updateVoting(withVoteStatus voteStatus: VoteStatus) {
+		if voteStatus == .upVote {
 			self.upvoteButton.tintColor = .kGreen
 			self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-		} else if action == 0 { // no vote
+		} else if voteStatus == .noVote {
 			self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
 			self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-		} else if action == -1 { // downvote
+		} else if voteStatus == .downVote {
 			self.downvoteButton.tintColor = .kLightRed
 			self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
 		}
@@ -301,7 +290,7 @@ class ThreadTableViewController: KTableViewController {
 		WorkflowController.shared.isSignedIn {
 			let kCommentEditorViewController = R.storyboard.textEditor.kCommentEditorViewController()
 			kCommentEditorViewController?.delegate = self
-			kCommentEditorViewController?.forumsThreadElement = self.forumsThreadElement
+			kCommentEditorViewController?.forumsThread = self.forumsThread
 
 			let kurozoraNavigationController = KNavigationController.init(rootViewController: kCommentEditorViewController!)
 			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
@@ -312,9 +301,9 @@ class ThreadTableViewController: KTableViewController {
 
 	/// Presents the profile view for the thread poster.
 	func visitPosterProfilePage() {
-		if let posterUserID = forumsThreadElement?.posterUserID, posterUserID != 0 {
+		if let user = forumsThread.relationships.user.data.first {
 			if let profileViewController = R.storyboard.profile.profileTableViewController() {
-				profileViewController.userProfile = try? UserProfile(json: ["id": posterUserID])
+				profileViewController.userID = user.id
 				profileViewController.dismissButtonIsEnabled = true
 
 				let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
@@ -329,7 +318,7 @@ class ThreadTableViewController: KTableViewController {
 		- Parameter lockStatus: The `LockStatus` value indicating whather to show or hide some views.
 	*/
 	func isLocked(_ lockStatus: LockStatus) {
-		forumsThreadElement?.locked = lockStatus
+		forumsThread.attributes.lockStatus = lockStatus
 		lockImageView.isHidden = !lockStatus.boolValue
 		actionsStackView.isHidden = lockStatus.boolValue
 		tableView.reloadData()
@@ -337,11 +326,11 @@ class ThreadTableViewController: KTableViewController {
 
 	/// Builds and presents an action sheet.
 	func showActionList(_ sender: UIBarButtonItem) {
-		guard let forumsThreadElement = forumsThreadElement else { return }
+		guard let forumsThread = forumsThread else { return }
 		let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
 		// Upvote, downvote and reply actions
-		if let threadID = forumsThreadElement.id, threadID != 0 && forumsThreadElement.locked == .unlocked {
+		if forumsThread.attributes.lockStatus == .unlocked {
 			let upvoteAction = UIAlertAction.init(title: "Upvote", style: .default, handler: { _ in
 				self.voteOnThread(withVoteStatus: .upVote)
 			})
@@ -365,7 +354,8 @@ class ThreadTableViewController: KTableViewController {
 		}
 
 		// Username action
-		if let posterUsername = forumsThreadElement.posterUsername, !posterUsername.isEmpty {
+		if let user = forumsThread.relationships.user.data.first {
+			let posterUsername = user.attributes.username
 			let userAction = UIAlertAction.init(title: posterUsername + "'s profile", style: .default, handler: { (_) in
 				self.visitPosterProfilePage()
 			})
@@ -406,13 +396,7 @@ class ThreadTableViewController: KTableViewController {
 	func shareThread(_ sender: UIButton? = nil, barButtonItem: UIBarButtonItem? = nil) {
 		let threadURLString = "https://kurozora.app/thread/\(forumThreadID)"
 		let threadURL: Any = URL(string: threadURLString) ?? threadURLString
-		var shareText: String = ""
-
-		if let title = forumsThreadElement?.title, !title.isEmpty {
-			shareText = "You should read \"\(title)\" via @KurozoraApp"
-		} else {
-			shareText = "You should read this thread via @KurozoraApp"
-		}
+		let shareText = "You should read \"\(forumsThread.attributes.title)\" via @KurozoraApp"
 
 		let activityItems: [Any] = [threadURL, shareText]
 		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])
@@ -466,7 +450,7 @@ class ThreadTableViewController: KTableViewController {
 // MARK: - UITableViewDataSource
 extension ThreadTableViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return replies.count
+		return threadReplies.count
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -477,8 +461,8 @@ extension ThreadTableViewController {
 		guard let replyCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.replyCell, for: indexPath) else {
 			fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.replyCell.identifier)")
 		}
-		replyCell.forumsThreadElement = forumsThreadElement
-		replyCell.threadRepliesElement = replies[indexPath.section]
+		replyCell.forumsThread = forumsThread
+		replyCell.threadReply = threadReplies[indexPath.section]
 		replyCell.threadViewController = self
 		return replyCell
 	}
@@ -490,7 +474,7 @@ extension ThreadTableViewController {
 		let numberOfSections = tableView.numberOfSections
 
 		if indexPath.section == numberOfSections - 5 {
-			if nextPageURL != "" {
+			if nextPageURL != nil {
 				getThreadReplies()
 			}
 		}
@@ -499,9 +483,11 @@ extension ThreadTableViewController {
 
 // MARK: - KCommentEditorViewDelegate
 extension ThreadTableViewController: KCommentEditorViewDelegate {
-	func updateReplies(with threadRepliesElement: ThreadRepliesElement) {
+	func updateReplies(with threadReplies: [ThreadReply]) {
 		DispatchQueue.main.async {
-			self.replies.prepend(threadRepliesElement)
+			for threadReply in threadReplies {
+				self.threadReplies.prepend(threadReply)
+			}
 		}
 	}
 }

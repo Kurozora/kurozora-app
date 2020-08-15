@@ -24,9 +24,9 @@ extension KKLibrary.SortType.Options {
 		case .oldest:
 			return R.image.symbols.calendar_badge_arrowshape_turn_up_left()!
 		case .best:
-			return R.image.symbols.hand_thumbsup_fill()!
+			return R.image.symbols.hand_thumbsup()!
 		case .worst:
-			return R.image.symbols.hand_thumbsdown_fill()!
+			return R.image.symbols.hand_thumbsdown()!
 		}
 	}
 }

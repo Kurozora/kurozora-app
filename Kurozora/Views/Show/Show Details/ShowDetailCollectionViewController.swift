@@ -18,16 +18,17 @@ protocol ShowDetailCollectionViewControllerDelegate: class {
 class ShowDetailCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var showID: Int = 0
-	var showDetailsElement: ShowDetailsElement? = nil {
+	private var show: Show! {
 		didSet {
 			_prefersActivityIndicatorHidden = true
-			self.title = showDetailsElement?.title
-			self.showID = showDetailsElement?.id ?? self.showID
+			self.title = show.attributes.title
+			self.showID = show.id
 		}
 	}
-	var seasons: [SeasonElement]?
-	var cast: [CastElement]?
-	var studioElement: StudioElement?
+	var seasons: [Season] = []
+	var cast: [Cast] = []
+	var studios: [Studio] = []
+	var relatedShows: [RelatedShow] = []
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -39,7 +40,7 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 		return _prefersActivityIndicatorHidden
 	}
 
-	// MARK: - View
+	// MARK: - Properties
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
@@ -47,28 +48,8 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 		navigationController?.navigationBar.prefersLargeTitles = false
 	}
 
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-
-		// Donate suggestion to Siri
-		userActivity = NSUserActivity(activityType: "OpenAnimeIntent")
-		if let title = showDetailsElement?.title {
-			let title = "Open \(title)"
-			userActivity?.title = title
-			userActivity?.userInfo = ["showID": self.showID]
-			userActivity?.suggestedInvocationPhrase = title
-			userActivity?.isEligibleForPrediction = true
-			userActivity?.isEligibleForSearch = true
-		}
-	}
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
-		// Stop activity indicator in case user doesn't need to fetch show details.
-		if showDetailsElement != nil {
-			_prefersActivityIndicatorHidden = true
-		}
 
 		// Fetch show details.
 		DispatchQueue.global(qos: .background).async {
@@ -88,63 +69,21 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 	/// Fetches details for the currently viewed show.
 	func fetchDetails() {
 		// If the air status is empty then the details are incomplete and should be fetched anew.
-		if showDetailsElement?.airStatus == "" {
-			KService.getDetails(forShowID: self.showID) { result in
-				switch result {
-				case .success(let showDetailsElement):
-					DispatchQueue.main.async {
-						self.showDetailsElement = showDetailsElement
-						self.collectionView.reloadData()
-						self.fetchStudio()
-					}
-				case .failure: break
-				}
-			}
-		}
+		KService.getDetails(forShowID: self.showID, including: ["genres", "seasons", "cast", "studios", "related-shows"]) { [weak self] result in
+			guard let self = self else { return }
 
-		if seasons == nil {
-			KService.getSeasons(forShowID: self.showID) { result in
-				switch result {
-				case .success(let seasons):
-					DispatchQueue.main.async {
-						self.seasons = seasons
-						self.collectionView.reloadData()
-					}
-				case .failure: break
-				}
-			}
-		}
+			switch result {
+			case .success(let shows):
+				self.show = shows.first
+				self.seasons = shows.first?.relationships?.seasons?.data ?? []
+				self.cast = shows.first?.relationships?.cast?.data ?? []
+				self.studios = shows.first?.relationships?.studios?.data ?? []
+				self.relatedShows = shows.first?.relationships?.relatedShows?.data ?? []
+				self.collectionView.reloadData()
 
-		if cast == nil {
-			KService.getCast(forShowID: self.showID) { result in
-				switch result {
-				case .success(let cast):
-					DispatchQueue.main.async {
-						self.cast = cast
-						self.collectionView.reloadData()
-					}
-				case .failure: break
-				}
-			}
-		}
-
-		if showDetailsElement?.airStatus != "" {
-			self.fetchStudio()
-		}
-	}
-
-	/// Fetches studio details for the currently viewed show.
-	func fetchStudio() {
-		if studioElement == nil, let studioID = self.showDetailsElement?.studio?.id, studioID != 0 {
-			KService.getDetails(forStudioID: studioID, includesShows: true, limit: 10) { result in
-				switch result {
-				case .success(let studioElement):
-					DispatchQueue.main.async {
-						self.studioElement = studioElement
-						self.collectionView.reloadData()
-					}
-				case .failure: break
-				}
+				// Donate suggestion to Siri
+				self.userActivity = self.show.openDetailUserActivity
+			case .failure: break
 			}
 		}
 	}
@@ -153,31 +92,38 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == R.segue.showDetailCollectionViewController.seasonSegue.identifier {
 			if let seasonsCollectionViewController = segue.destination as? SeasonsCollectionViewController {
-				seasonsCollectionViewController.seasonsElements = seasons
+				seasonsCollectionViewController.seasons = seasons
 			}
 		} else if segue.identifier == R.segue.showDetailCollectionViewController.castSegue.identifier {
 			if let castCollectionViewController = segue.destination as? CastCollectionViewController {
-				castCollectionViewController.castElements = cast
+				castCollectionViewController.showID = self.show.id
 			}
 		} else if segue.identifier == R.segue.showDetailCollectionViewController.episodeSegue.identifier {
 			if let episodesCollectionViewController = segue.destination as? EpisodesCollectionViewController {
-				if let lockupCollectionViewCell = sender as? LockupCollectionViewCell, let seasonID = lockupCollectionViewCell.seasonsElement?.id {
-					episodesCollectionViewController.seasonID = seasonID
+				if let lockupCollectionViewCell = sender as? LockupCollectionViewCell {
+					episodesCollectionViewController.seasonID = lockupCollectionViewCell.season.id
 				}
 			}
 		} else if segue.identifier == R.segue.showDetailCollectionViewController.showDetailsSegue.identifier {
 			if let showDetailCollectionViewController = segue.destination as? ShowDetailCollectionViewController {
-				if let selectedCell = sender as? BaseLockupCollectionViewCell {
-					showDetailCollectionViewController.showDetailsElement = selectedCell.showDetailsElement
-				} else if let showID = sender as? Int {
-					showDetailCollectionViewController.showID = showID
+				if let show = (sender as? BaseLockupCollectionViewCell)?.show {
+					showDetailCollectionViewController.showID = show.id
+				} else if let relatedShow = (sender as? LockupCollectionViewCell)?.relatedShow {
+					showDetailCollectionViewController.showID = relatedShow.show.id
 				}
 			}
 		} else if segue.identifier == R.segue.showDetailCollectionViewController.studioSegue.identifier {
 			if let studiosCollectionViewController = segue.destination as? StudiosCollectionViewController {
-				if let studioID = studioElement?.id {
+				if let studioID = studios.first?.id {
 					studiosCollectionViewController.studioID = studioID
 				}
+			}
+		} else if segue.identifier == R.segue.showDetailCollectionViewController.showListSegue.identifier {
+			if let showListCollectionViewController = segue.destination as? ShowListCollectionViewController {
+				showListCollectionViewController.title = "Related"
+				showListCollectionViewController.shows = self.relatedShows.compactMap({ relatedShow -> Show? in
+					return relatedShow.show
+				})
 			}
 		}
 	}
@@ -186,10 +132,10 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 // MARK: - UICollectionViewDataSource
 extension ShowDetailCollectionViewController {
 	override func numberOfSections(in collectionView: UICollectionView) -> Int {
-		var numberOfSections = showDetailsElement != nil ? ShowDetail.Section.allCases.count : 0
+		var numberOfSections = show != nil ? ShowDetail.Section.allCases.count : 0
 
 		if numberOfSections != 0 {
-			if let copyrightIsEmpty = showDetailsElement?.copyright?.isEmpty, copyrightIsEmpty {
+			if let copyrightIsEmpty = show.attributes.copyright?.isEmpty, copyrightIsEmpty {
 				numberOfSections -= 1
 			}
 		}
@@ -198,45 +144,40 @@ extension ShowDetailCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		var numberOfRows = 0
-
 		switch ShowDetail.Section(rawValue: section) {
 		case .header:
-			numberOfRows = 1
+			return 1
 		case .badge:
-			numberOfRows = 1
+			return 1
 		case .synopsis:
-			if let synopsis = showDetailsElement?.synopsis, !synopsis.isEmpty {
-				numberOfRows = 1
+			if let synopsis = show.attributes.synopsis, !synopsis.isEmpty {
+				return 1
 			}
 		case .rating:
-			numberOfRows = 1
+			return 1
 		case .information:
-			numberOfRows = ShowDetail.Information.allCases.count
+			return ShowDetail.Information.allCases.count
 //			if !User.isAdmin {
 //				numberOfRows -= 1
 //			}
 		case .seasons:
-			if let seasonsCount = seasons?.count {
-				numberOfRows = seasonsCount >= 10 ? 10 : seasonsCount
-			}
+			return seasons.count
 		case .cast:
-			if let castCount = cast?.count {
-				numberOfRows = castCount >= 10 ? 10 : castCount
-			}
+			return cast.count
 		case .moreByStudio:
-			if let studioShowsCount = studioElement?.shows?.count {
-				numberOfRows = studioShowsCount
+			if let studioShowsCount = studios.first?.relationships?.shows.data.count {
+				return studioShowsCount
 			}
-		case .related: break
+		case .relatedShows:
+			return relatedShows.count
 		case .sosumi:
-			if let copyrightIsEmpty = showDetailsElement?.copyright?.isEmpty, !copyrightIsEmpty {
-				numberOfRows = 1
+			if let copyrightIsEmpty = show.attributes.copyright?.isEmpty, !copyrightIsEmpty {
+				return 1
 			}
 		default: break
 		}
 
-		return numberOfRows
+		return 0
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -249,7 +190,7 @@ extension ShowDetailCollectionViewController {
 		let showSection = ShowDetail.Section(rawValue: indexPath.section) ?? .header
 		let titleHeaderCollectionReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
 		titleHeaderCollectionReusableView.segueID = showSection.segueIdentifier
-		titleHeaderCollectionReusableView.title = showSection != .moreByStudio ? showSection.stringValue : showSection.stringValue + (studioElement?.name ?? "this Studio")
+		titleHeaderCollectionReusableView.title = showSection != .moreByStudio ? showSection.stringValue : showSection.stringValue + (studios.first?.attributes.name ?? "this Studio")
 		titleHeaderCollectionReusableView.indexPath = indexPath
 		return titleHeaderCollectionReusableView
 	}
@@ -265,7 +206,7 @@ extension ShowDetailCollectionViewController {
 		switch showDetailSection {
 		case .seasons:
 			segueIdentifier = R.segue.showDetailCollectionViewController.episodeSegue.identifier
-		case .moreByStudio:
+		case .moreByStudio, .relatedShows:
 			segueIdentifier = R.segue.showDetailCollectionViewController.showDetailsSegue.identifier
 		default: return
 		}
@@ -278,35 +219,37 @@ extension ShowDetailCollectionViewController {
 		switch showDetailSection {
 		case .header:
 			let showDetailHeaderCollectionViewCell = cell as? ShowDetailHeaderCollectionViewCell
-			showDetailHeaderCollectionViewCell?.showDetailsElement = self.showDetailsElement
+			showDetailHeaderCollectionViewCell?.show = self.show
 		case .badge:
 			let badgeCollectionViewCell = cell as? BadgeCollectionViewCell
-			badgeCollectionViewCell?.showDetailsElement = self.showDetailsElement
+			badgeCollectionViewCell?.collectionView = collectionView
+			badgeCollectionViewCell?.show = self.show
 		case .synopsis:
 			let textViewCollectionViewCell = cell as? TextViewCollectionViewCell
 			textViewCollectionViewCell?.textViewCollectionViewCellType = .synopsis
-			textViewCollectionViewCell?.textViewContent = self.showDetailsElement?.synopsis
+			textViewCollectionViewCell?.textViewContent = self.show.attributes.synopsis
 		case .rating:
 			let ratingCollectionViewCell = cell as? RatingCollectionViewCell
-			ratingCollectionViewCell?.showDetailsElement = self.showDetailsElement
+			ratingCollectionViewCell?.show = self.show
 		case .information:
 			let informationCollectionViewCell = cell as? InformationCollectionViewCell
 			informationCollectionViewCell?.showDetailInformation = ShowDetail.Information(rawValue: indexPath.item) ?? .id
-			informationCollectionViewCell?.showDetailsElement = self.showDetailsElement
+			informationCollectionViewCell?.show = self.show
 		case .seasons:
 			let lockupCollectionViewCell = cell as? LockupCollectionViewCell
-			lockupCollectionViewCell?.seasonsElement = self.seasons?[indexPath.item]
+			lockupCollectionViewCell?.season = self.seasons[indexPath.item]
 		case .cast:
 			let castCollectionViewCell = cell as? CastCollectionViewCell
-			castCollectionViewCell?.castElement = self.cast?[indexPath.item]
+			castCollectionViewCell?.cast = self.cast[indexPath.item]
 		case .moreByStudio:
 			let smallLockupCollectionViewCell = cell as? SmallLockupCollectionViewCell
-			smallLockupCollectionViewCell?.showDetailsElement = self.studioElement?.shows?[indexPath.item]
-		case .related: break
-//			let relatedShowCollectionViewCell = cell as? RelatedShowCollectionViewCell
+			smallLockupCollectionViewCell?.show = self.studios.first?.relationships?.shows.data[indexPath.item]
+		case .relatedShows:
+			let lockupCollectionViewCell = cell as? LockupCollectionViewCell
+			lockupCollectionViewCell?.relatedShow = self.relatedShows[indexPath.item]
 		case .sosumi:
 			let sosumiShowCollectionViewCell = cell as? SosumiShowCollectionViewCell
-			sosumiShowCollectionViewCell?.copyrightText = self.showDetailsElement?.copyright
+			sosumiShowCollectionViewCell?.copyrightText = self.show.attributes.copyright
 		}
 	}
 }
@@ -347,7 +290,7 @@ extension ShowDetailCollectionViewController {
 				}
 			}
 			return 1
-		case .seasons, .cast, .moreByStudio:
+		case .seasons, .cast, .moreByStudio, .relatedShows:
 			var columnCount = 1
 			if width >= 414 {
 				columnCount = (width / 414).rounded().int
@@ -369,16 +312,23 @@ extension ShowDetailCollectionViewController {
 		var itemsCount = 0
 		switch showDetailSection {
 		case .seasons:
-			if let seasonsCount = seasons?.count, seasonsCount != 0 {
+			let seasonsCount = seasons.count
+			if seasonsCount != 0 {
 				itemsCount = seasonsCount
 			}
 		case .cast:
-			if let castCount = cast?.count, castCount != 0 {
+			let castCount = cast.count
+			if castCount != 0 {
 				itemsCount = castCount
 			}
 		case .moreByStudio:
-			if let studioShowsCount = studioElement?.shows?.count, studioShowsCount != 0 {
+			if let studioShowsCount = studios.first?.relationships?.shows.data.count, studioShowsCount != 0 {
 				itemsCount = studioShowsCount
+			}
+		case .relatedShows:
+			let relatedShowsCount = relatedShows.count
+			if relatedShowsCount != 0 {
+				itemsCount = relatedShowsCount
 			}
 		default: break
 		}
@@ -386,8 +336,6 @@ extension ShowDetailCollectionViewController {
 	}
 
 	func heightDimension(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutDimension {
-		let width = layoutEnvironment.container.effectiveContentSize.width
-
 		switch ShowDetail.Section(rawValue: section) {
 		case .header:
 			return .fractionalHeight(0.90)
@@ -399,12 +347,9 @@ extension ShowDetailCollectionViewController {
 			return .absolute(88)
 		case .information:
 			return .estimated(55)
-		case .seasons, .cast, .moreByStudio:
+		case .seasons, .cast, .moreByStudio, .relatedShows:
 			let verticalColumnCount = self.verticalColumnCount(for: section)
-			if width >= 414 {
-				return verticalColumnCount == 2 ? .absolute(440) : .absolute(220)
-			}
-			return verticalColumnCount == 2 ? .absolute(300) : .absolute(150)
+			return verticalColumnCount == 2 ? .estimated(400) : .estimated(200)
 		case .sosumi:
 			return .estimated(50)
 		default:
@@ -415,7 +360,7 @@ extension ShowDetailCollectionViewController {
 
 	func widthDimension(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutDimension {
 		switch ShowDetail.Section(rawValue: section) {
-		case .seasons, .cast, .moreByStudio, .related:
+		case .seasons, .cast, .moreByStudio, .relatedShows:
 			let columnsCount = columnsCount <= 1 ? columnsCount : columnsCount - 1
 			let widthFraction = self.groupWidthFraction(forSection: section, with: columnsCount, layout: layoutEnvironment)
 			return .fractionalWidth(widthFraction)
@@ -427,18 +372,21 @@ extension ShowDetailCollectionViewController {
 	func groupWidthFraction(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> CGFloat {
 		switch ShowDetail.Section(rawValue: section) {
 		case .seasons:
-			if let seasonsCount = seasons?.count, seasonsCount != 0 {
+			if seasons.count != 0 {
 				return (0.90 / columnsCount.double).cgFloat
 			}
 		case .cast:
-			if let castCount = cast?.count, castCount != 0 {
+			if cast.count != 0 {
 				return (0.90 / columnsCount.double).cgFloat
 			}
 		case .moreByStudio:
-			if let showsCount = studioElement?.shows?.count, showsCount != 0 {
+			if let showsCount = studios.first?.relationships?.shows.data.count, showsCount != 0 {
 				return (0.90 / columnsCount.double).cgFloat
 			}
-		case .related: break
+		case .relatedShows:
+			if relatedShows.count != 0 {
+				return (0.90 / columnsCount.double).cgFloat
+			}
 		default: break
 		}
 		return .zero
@@ -477,7 +425,7 @@ extension ShowDetailCollectionViewController {
 				let fullSection = self.fullSection(for: section, layoutEnvironment: layoutEnvironment)
 				sectionLayout = fullSection
 			case .synopsis:
-				if let synopsis = self.showDetailsElement?.synopsis, !synopsis.isEmpty {
+				if let synopsis = self.show.attributes.synopsis, !synopsis.isEmpty {
 					let fullSection = self.fullSection(for: section, layoutEnvironment: layoutEnvironment)
 					sectionLayout = fullSection
 					hasSectionHeader = true
@@ -491,25 +439,36 @@ extension ShowDetailCollectionViewController {
 				sectionLayout = listSection
 				hasSectionHeader = true
 			case .seasons:
-				if let seasonsCount = self.seasons?.count, seasonsCount != 0 {
+				let seasonsCount = self.seasons.count
+				if seasonsCount != 0 {
 					let gridSection = self.gridSection(for: section, layoutEnvironment: layoutEnvironment)
 					sectionLayout = gridSection
 					hasSectionHeader = true
 				}
 			case .cast:
-				if let castCount = self.cast?.count, castCount != 0 {
+				let castCount = self.cast.count
+				if castCount != 0 {
 					let gridSection = self.gridSection(for: section, layoutEnvironment: layoutEnvironment)
 					sectionLayout = gridSection
 					hasSectionHeader = true
 				}
 			case .moreByStudio:
-				if let studioShowCount = self.studioElement?.shows?.count, studioShowCount != 0 {
+				if let studioShowsCount = self.studios.first?.relationships?.shows.data.count {
+					if studioShowsCount != 0 {
+						let gridSection = self.gridSection(for: section, layoutEnvironment: layoutEnvironment)
+						sectionLayout = gridSection
+						hasSectionHeader = true
+						hasBackgroundDecoration = true
+					}
+				}
+			case .relatedShows:
+				let relatedShowsCount = self.relatedShows.count
+				if relatedShowsCount != 0 {
 					let gridSection = self.gridSection(for: section, layoutEnvironment: layoutEnvironment)
 					sectionLayout = gridSection
 					hasSectionHeader = true
 					hasBackgroundDecoration = true
 				}
-			case .related: break
 			case .sosumi:
 				let fullSection = self.fullSection(for: section, layoutEnvironment: layoutEnvironment)
 				sectionLayout = fullSection

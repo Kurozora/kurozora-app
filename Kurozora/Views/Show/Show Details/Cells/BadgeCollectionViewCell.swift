@@ -52,7 +52,8 @@ class BadgeCollectionViewCell: UICollectionViewCell {
 	}
 
 	// MARK: - Properties
-	var showDetailsElement: ShowDetailsElement? {
+	var collectionView: UICollectionView!
+	var show: Show! {
 		didSet {
 			updateDetails()
 		}
@@ -61,33 +62,27 @@ class BadgeCollectionViewCell: UICollectionViewCell {
 	// MARK: - Functions
 	/// Updates the view with the details fetched from the server.
 	fileprivate func updateDetails() {
-		guard let showDetailsElement = showDetailsElement else { return }
-
 		// Configure rating
-		if let averageRating = showDetailsElement.averageRating, let ratingCount = showDetailsElement.ratingCount, averageRating > 0.00 {
-			cosmosView.rating = averageRating
-			ratingScoreLabel.text = "\(averageRating)"
-			ratingTitleLabel.text = "\(ratingCount) Ratings"
-			ratingTitleLabel.adjustsFontSizeToFitWidth = true
-		} else {
-			cosmosView.rating = 0.0
-			ratingScoreLabel.text = "0.0"
-			ratingTitleLabel.text = "Not enough ratings"
-			ratingTitleLabel.adjustsFontSizeToFitWidth = true
-		}
+		let averageRating = show.attributes.averageRating
+		let ratingCount = show.attributes.ratingCount
+
+		cosmosView.rating = averageRating
+		ratingScoreLabel.text = "\(averageRating)"
+		ratingTitleLabel.text = averageRating >= 0.00 ? "Not enough ratings" : "\(ratingCount) Ratings"
+		ratingTitleLabel.adjustsFontSizeToFitWidth = true
 
 		// Configure rank label
-		if let rankScore = showDetailsElement.rank {
-			rankScoreLabel.text = rankScore > 0 ? "#\(rankScore)" : "-"
-		}
+//		if let rankScore = show.attributes.rank {
+//			rankScoreLabel.text = rankScore > 0 ? "#\(rankScore)" : "-"
+//		}
 
 		// Configure age label
-		if let ageScore = showDetailsElement.age {
-			ageScoreLabel.text = !ageScore.isEmpty ? ageScore : "-"
-		}
+//		if let ageScore = show.attributes.age {
+//			ageScoreLabel.text = !ageScore.isEmpty ? ageScore : "-"
+//		}
 	}
 
 	@objc func showRating(_ gestureRecognizer: UIGestureRecognizer) {
-		parentCollectionView?.safeScrollToItem(at: IndexPath(row: 0, section: ShowDetail.Section.rating.rawValue), at: .centeredVertically, animated: true)
+		collectionView.safeScrollToItem(at: IndexPath(row: 0, section: ShowDetail.Section.rating.rawValue), at: .centeredVertically, animated: true)
 	}
 }

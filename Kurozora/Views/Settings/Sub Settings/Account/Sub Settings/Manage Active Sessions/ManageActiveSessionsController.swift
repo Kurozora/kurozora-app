@@ -19,7 +19,7 @@ class ManageActiveSessionsController: KTableViewController {
 
 	// MARK: - Properties
 	var dismissEnabled: Bool = false
-	var sessions: UserSessions? {
+	var sessions: [Session] = [] {
 		didSet {
 			createAnnotations()
 			_prefersActivityIndicatorHidden = true
@@ -44,7 +44,12 @@ class ManageActiveSessionsController: KTableViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		if dismissEnabled {
-			let closeButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(dismiss(_:)))
+			let closeButton: UIBarButtonItem
+			if #available(iOS 13.0, macCatalyst 13.0, *) {
+				closeButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss(_:)))
+			} else {
+				closeButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(dismiss(_:)))
+			}
 			self.navigationItem.leftBarButtonItem = closeButton
 		}
 	}
@@ -74,7 +79,7 @@ class ManageActiveSessionsController: KTableViewController {
 			default: break
 			}
 
-			locationManager.desiredAccuracy = 1.0
+			locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
 			locationManager.delegate = self
 			locationManager.startUpdatingLocation()
 
@@ -102,12 +107,12 @@ class ManageActiveSessionsController: KTableViewController {
 	/// Fetches sessions for the current user from the server.
 	private func fetchSessions() {
 		guard let userID = User.current?.id else { return }
-		KService.getSessions(forUserID: userID) { result in
+		KService.getSessions(forUserID: userID) { [weak self] result in
+			guard let self = self else { return }
+
 			switch result {
 			case .success(let sessions):
-			DispatchQueue.main.async {
 				self.sessions = sessions
-			}
 			case .failure: break
 			}
 		}
@@ -124,11 +129,11 @@ class ManageActiveSessionsController: KTableViewController {
 
 	/// Creates annotations and adds them to the map view.
 	private func createAnnotations() {
-		guard let otherSessions = sessions?.otherSessions else { return }
+		let otherUserSessions = sessions
 
-		for session in otherSessions {
+		for userSession in otherUserSessions {
 			let annotation = ImageAnnotation()
-			if let deviceName = session.platform?.deviceName {
+			if let deviceName = userSession.relationships.platform.data.first?.attributes.deviceModel {
 				annotation.title = deviceName
 
 				switch deviceName {
@@ -145,8 +150,10 @@ class ManageActiveSessionsController: KTableViewController {
 				}
 			}
 
-			if let latitude = session.location?.latitude, let longitude = session.location?.longitude {
-				annotation.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+			if let userSessionLocation = userSession.relationships.location.data.first {
+				if let latitude = userSessionLocation.attributes.latitude, let longitude = userSessionLocation.attributes.longitude {
+					annotation.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+				}
 			}
 
 			mapView.addAnnotation(annotation)
@@ -167,15 +174,20 @@ class ManageActiveSessionsController: KTableViewController {
 		alertView.addButton("Yes!", action: {
 			guard let sessionID = otherSessionsCell.session?.id else { return }
 
-			KService.deleteSession(sessionID) { result in
+			KService.deleteSession(sessionID) { [weak self] result in
+				guard let self = self else { return }
+
 				switch result {
 				case .success:
 					// Get index path for cell
 					if let indexPath = otherSessionsCell.indexPath {
 						// Start delete process
 						self.tableView.beginUpdates()
-						self.sessions?.otherSessions?.remove(at: indexPath.row)
+						self.sessions.remove(at: indexPath.row)
 						self.tableView.deleteRows(at: [indexPath], with: .left)
+						if self.sessions.count == 0 {
+							self.tableView.deleteSections([1], with: .left)
+						}
 						self.tableView.endUpdates()
 					}
 				case .failure: break
@@ -185,49 +197,6 @@ class ManageActiveSessionsController: KTableViewController {
 
 		alertView.showNotice("Confirm deletion", subTitle: "Are you sure you want to delete this session?", closeButtonTitle: "Maybe not now")
 	}
-
-//	/**
-//		Removes session from the table view with the given notification object.
-//
-//		- Parameter notification: The notification object from which the data is fetched to decide which session to remove.
-//	*/
-//	@objc func removeSession(_ notification: NSNotification) {
-//		if let sessionID = notification.userInfo?["session_id"] as? Int {
-//			self.tableView.beginUpdates()
-//			let sessionIndex = self.sessions?.otherSessions?.firstIndex(where: { (json) -> Bool in
-//				return json.id == sessionID
-//			})
-//
-//			if let sessionIndex = sessionIndex, sessionIndex != 0 {
-//				self.sessions?.otherSessions?.remove(at: sessionIndex)
-//				self.tableView.deleteRows(at: [IndexPath(row: 0, section: sessionIndex)], with: .left)
-//			}
-//			self.tableView.endUpdates()
-//		}
-//	}
-//
-//	/**
-//		Adds a new session to the table view from the given notification object.
-//
-//		- Parameter notification: the notification object from which a new notification cell is added to the table view.
-//	*/
-//	@objc func addSession(_ notification: NSNotification) {
-//		if let sessionID = notification.userInfo?["id"] as? Int, let device = notification.userInfo?["device"] as? String, let ip = notification.userInfo?["ip"] as? String, let lastValidated = notification.userInfo?["last_validated"] as? String {
-//			guard let sessionsCount = sessions?.otherSessions?.count else { return }
-//			let newSession: JSON = ["id": sessionID,
-//									"device": device,
-//									"ip": ip,
-//									"last_validated": lastValidated
-//			]
-//
-//			if let newSessionElement = try? UserSessionsElement(json: newSession) {
-//				self.tableView.beginUpdates()
-//				self.sessions?.otherSessions?.append(newSessionElement)
-//				self.tableView.insertRows(at: [[1, sessionsCount]], with: .right)
-//				self.tableView.endUpdates()
-//			}
-//		}
-//	}
 }
 
 // MARK: - UITableViewDataSource
@@ -241,16 +210,11 @@ extension ManageActiveSessionsController {
 	}
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return 2
+		return sessions.isEmpty ? 1 : 2
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if section == 0 {
-			return 1
-		} else {
-			guard let sessionsCount = sessions?.otherSessions?.count else { return 1 }
-			return sessionsCount
-		}
+		return section == 0 ? 1 : sessions.count
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -258,13 +222,13 @@ extension ManageActiveSessionsController {
 			guard let currentSessionCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.currentSessionCell, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.currentSessionCell.identifier)")
 			}
-			currentSessionCell.session = sessions?.currentSession
+			currentSessionCell.session = User.current?.relationships?.sessions?.data.first
 			return currentSessionCell
 		} else {
-			let otherSessionsCount = sessions?.otherSessions?.count
+			let otherSessionsCount = self.sessions.count
 
 			// No other sessions
-			if otherSessionsCount == nil || otherSessionsCount == 0 {
+			if otherSessionsCount == 0 {
 				guard let noSessionsCell = self.tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.noSessionsCell, for: indexPath) else {
 					fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.noSessionsCell.identifier)")
 				}
@@ -276,7 +240,7 @@ extension ManageActiveSessionsController {
 					fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.otherSessionsCell.identifier)")
 			}
 			otherSessionsCell.delegate = self
-			otherSessionsCell.session = sessions?.otherSessions?[indexPath.row]
+			otherSessionsCell.session = self.sessions[indexPath.row]
 			return otherSessionsCell
 		}
 	}
@@ -291,13 +255,14 @@ extension ManageActiveSessionsController: SwipeTableViewCellDelegate {
 	func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
 		switch orientation {
 		case .right:
-			let deleteAction = SwipeAction(style: .destructive, title: "Delete") { _, indexPath in
+			let deleteAction = SwipeAction(style: .destructive, title: "Delete") { [weak self] _, indexPath in
+				guard let self = self else { return }
 				if let otherSessionsCell = tableView.cellForRow(at: indexPath) as? OtherSessionsCell {
 					self.removeSession(otherSessionsCell)
 				}
 			}
 			deleteAction.backgroundColor = .clear
-			deleteAction.image = R.image.trash_circle()!
+			deleteAction.image = R.image.trash_circle()
 			deleteAction.textColor = .kLightRed
 			deleteAction.font = .systemFont(ofSize: 13)
 			deleteAction.transitionDelegate = ScaleTransition.default

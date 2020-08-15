@@ -9,21 +9,26 @@
 import UIKit
 import KurozoraKit
 
+protocol ForumsListViewControllerDelegate: class {
+	func updateForumOrderButton(with orderType: ForumOrder)
+}
+
 class ForumsListViewController: KTableViewController {
 	// MARK: - Properties
 	var refreshController = UIRefreshControl()
 
 	var sectionTitle: String = ""
-	var sectionID: Int?
-	var sectionIndex: Int?
-	var forumThreadsElements: [ForumsThreadElement] = [] {
+	var sectionID: Int!
+	var sectionIndex: Int!
+	var forumsThreads: [ForumsThread] = [] {
 		didSet {
 			_prefersActivityIndicatorHidden = true
 			tableView.reloadData()
 		}
 	}
 	var nextPageURL: String?
-	var forumOrder: ForumOrder = .top
+	var forumOrder: ForumOrder = .best
+	weak var delegate: ForumsListViewControllerDelegate?
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -38,7 +43,14 @@ class ForumsListViewController: KTableViewController {
 	// MARK: - View
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		// Save current page index
 		UserSettings.set(sectionIndex, forKey: .forumsPage)
+
+		// Setup library view controller delegate
+		(tabmanParent as? ForumsViewController)?.forumsViewControllerDelegate = self
+
+		// Update forum order button to reflect page settings
+		delegate?.updateForumOrderButton(with: forumOrder)
 	}
 
 	override func viewDidLoad() {
@@ -72,7 +84,9 @@ class ForumsListViewController: KTableViewController {
 	}
 
 	override func setupEmptyDataSetView() {
-		tableView.emptyDataSetView { (view) in
+		tableView.emptyDataSetView { [weak self] (view) in
+			guard let self = self else { return }
+
 			view.titleLabelString(NSAttributedString(string: "No Threads", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: "Be the first to post in the \(self.sectionTitle.lowercased()) forums!", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
 				.image(R.image.empty.comment())
@@ -85,28 +99,22 @@ class ForumsListViewController: KTableViewController {
 
 	/// Fetch threads list for the current section.
 	func fetchThreads() {
-		guard let sectionID = sectionID else { return }
-
-		KService.getForumsThreads(forSection: sectionID, orderedBy: forumOrder, next: nextPageURL) {[weak self] result in
+		KService.getForumsThreads(forSection: sectionID, orderedBy: forumOrder, next: nextPageURL) { [weak self] result in
 			guard let self = self else { return }
 
 			switch result {
-			case .success(let threads):
-				DispatchQueue.main.async {
-					// Prepare `forumThreadsElements` if necessary
-					if self.nextPageURL == nil {
-						self.forumThreadsElements = []
-					}
-
-					// Append new threads data and save next page url
-					if let forumThreadsElements = threads.threads {
-						self.forumThreadsElements.append(contentsOf: forumThreadsElements)
-					}
-					self.nextPageURL = threads.nextPageURL
-
-					// Reset refresh controller title
-					self.refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh \(self.sectionTitle) threads.", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+			case .success(let forumsThreadResponse):
+				// Prepare `forumsThreads` if necessary
+				if self.nextPageURL == nil {
+					self.forumsThreads = []
 				}
+
+				// Append new threads data and save next page url
+				self.forumsThreads.append(contentsOf: forumsThreadResponse.data)
+				self.nextPageURL = forumsThreadResponse.next
+
+				// Reset refresh controller title
+				self.refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh \(self.sectionTitle) threads.", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
 			case .failure: break
 			}
 		}
@@ -122,7 +130,7 @@ class ForumsListViewController: KTableViewController {
 			let threadViewController = segue.destination as? ThreadTableViewController
 			threadViewController?.hidesBottomBarWhenPushed = true
 			threadViewController?.sectionTitle = sectionTitle
-			threadViewController?.forumsThreadElement = sender as? ForumsThreadElement
+			threadViewController?.forumsThread = sender as? ForumsThread
 		}
 	}
 }
@@ -130,14 +138,14 @@ class ForumsListViewController: KTableViewController {
 // MARK: - UITableViewDataSource
 extension ForumsListViewController {
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return self.forumThreadsElements.count
+		return self.forumsThreads.count
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let forumsCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.forumsCell, for: indexPath) else {
 			fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.forumsCell.identifier)")
 		}
-		forumsCell.forumsThreadElement = self.forumThreadsElements[indexPath.row]
+		forumsCell.forumsThread = self.forumsThreads[indexPath.row]
 		forumsCell.forumsChildViewController = self
 		return forumsCell
 	}
@@ -146,28 +154,39 @@ extension ForumsListViewController {
 // MARK: - UITableViewDelegate
 extension ForumsListViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		performSegue(withIdentifier: R.segue.forumsListViewController.threadSegue, sender: self.forumThreadsElements[indexPath.row])
+		performSegue(withIdentifier: R.segue.forumsListViewController.threadSegue, sender: self.forumsThreads[indexPath.row])
 	}
 
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 		let numberOfRows = tableView.numberOfRows()
 
 		if indexPath.row == numberOfRows - 5 {
-			if nextPageURL != "" {
+			if nextPageURL != nil {
 				fetchThreads()
 			}
 		}
 	}
 }
 
+// MARK: - LibraryViewControllerDelegate
+extension ForumsListViewController: ForumsViewControllerDelegate {
+	func orderForums(by forumOrder: ForumOrder) {
+		self.forumOrder = forumOrder
+		self.fetchThreads()
+	}
+
+	func orderValue() -> ForumOrder {
+		return self.forumOrder
+	}
+}
+
 // MARK: - KRichTextEditorViewDelegate
 extension ForumsListViewController: KRichTextEditorViewDelegate {
-//	func updateFeedPosts(with thread: FeedPostsElement) {
-//	}
-
-	func updateThreadsList(with thread: ForumsThreadElement) {
+	func updateThreadsList(with forumsThreads: [ForumsThread]) {
 		DispatchQueue.main.async {
-			self.forumThreadsElements.prepend(thread)
+			for forumsThread in forumsThreads {
+				self.forumsThreads.prepend(forumsThread)
+			}
 		}
 	}
 }

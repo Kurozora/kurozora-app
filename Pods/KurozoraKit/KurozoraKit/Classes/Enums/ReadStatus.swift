@@ -16,7 +16,7 @@ import Foundation
 	case read = 1
 	```
 */
-public enum ReadStatus: Int {
+public enum ReadStatus: Int, Codable {
 	// MARK: - Cases
 	/// The notification is unread.
 	case unread = 0
@@ -34,14 +34,14 @@ public enum ReadStatus: Int {
 		self = bool ? .read : .unread
 	}
 
-	// MARK: - Properties
-	/// The boolean value of a read status tpye.
-	var boolValue: Bool {
-		switch self {
-		case .read:
-			return true
-		case .unread:
-			return false
-		}
-	}
+//	// MARK: - Properties
+//	/// The boolean value of a read status tpye.
+//	public var boolValue: Bool {
+//		switch self {
+//		case .read:
+//			return true
+//		case .unread:
+//			return false
+//		}
+//	}
 }

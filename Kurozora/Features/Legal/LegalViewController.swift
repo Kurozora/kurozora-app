@@ -53,12 +53,11 @@ class LegalViewController: KViewController {
 	// MARK: - Functions
 	/// Makes an API request to fetch the relevant data for the view.
 	func fetchData() {
-		KService.getPrivacyPolicy { result in
+		KService.getPrivacyPolicy { [weak self] result in
+			guard let self = self else { return }
 			switch result {
 			case .success(let privacyPolicy):
-				if let privacyPolicyText = privacyPolicy.text {
-					self.privacyPolicyTextView.attributedText = privacyPolicyText.htmlAttributedString()?.colored(with: KThemePicker.textColor.colorValue)
-				}
+				self.privacyPolicyTextView.attributedText = privacyPolicy.attributes.text.htmlAttributedString()?.colored(with: KThemePicker.textColor.colorValue)
 			case .failure: break
 			}
 		}

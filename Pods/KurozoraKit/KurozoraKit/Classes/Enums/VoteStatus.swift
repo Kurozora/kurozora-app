@@ -6,8 +6,6 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
-import Foundation
-
 /**
 	The set of available vote status types.
 
@@ -17,7 +15,7 @@ import Foundation
 	case upVote = 1
 	```
 */
-public enum VoteStatus: Int {
+public enum VoteStatus: Int, Codable {
 	// MARK: - Cases
 	/// The thread/reply is downvoted.
 	case downVote = -1
@@ -31,13 +29,6 @@ public enum VoteStatus: Int {
 	// MARK: - Properties
 	/// The vote value of a vote status type.
 	public var voteValue: Int {
-		switch self {
-		case .upVote:
-			return 1
-		case .downVote:
-			return 0
-		case .noVote:
-			return 0
-		}
+		return self.rawValue
 	}
 }

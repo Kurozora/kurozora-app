@@ -18,15 +18,15 @@ class ReplyCell: UITableViewCell {
 			profileImageView.addGestureRecognizer(gestureRecognizer)
 		}
 	}
-	@IBOutlet weak var usernameLabel: UILabel? {
+	@IBOutlet weak var usernameLabel: UILabel! {
 		didSet {
-			usernameLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			usernameLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
 
 			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(usernameLabelPressed))
 			gestureRecognizer.numberOfTouchesRequired = 1
 			gestureRecognizer.numberOfTapsRequired = 1
-			usernameLabel?.addGestureRecognizer(gestureRecognizer)
-			usernameLabel?.isUserInteractionEnabled = true
+			usernameLabel.addGestureRecognizer(gestureRecognizer)
+			usernameLabel.isUserInteractionEnabled = true
 		}
 	}
 	@IBOutlet weak var dateTimeButton: UIButton! {
@@ -69,44 +69,36 @@ class ReplyCell: UITableViewCell {
 		}
 	}
 
-	var threadViewController: ThreadTableViewController?
-	var forumsThreadElement: ForumsThreadElement?
-	var threadRepliesElement: ThreadRepliesElement? {
+	var threadViewController: ThreadTableViewController!
+	var forumsThread: ForumsThread!
+	var threadReply: ThreadReply! {
 		didSet {
 			configureCell()
 		}
 	}
-	var previousVote = 0
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
-		guard let threadRepliesElement = threadRepliesElement else { return }
+		if let user = threadReply.relationships.user.data.first {
+			// Configure username
+			usernameLabel.text = user.attributes.username
 
-		// Configure profile image
-		profileImageView.image = threadRepliesElement.userProfile?.profileImage
-
-		// Configure username
-		usernameLabel?.text = threadRepliesElement.userProfile?.username
+			// Configure profile image
+			profileImageView.image = user.attributes.profileImage
+		}
 
 		// Configure
-		if let contentText = threadRepliesElement.content {
-			contentTextView.text = contentText
-		}
+		contentTextView.text = threadReply.attributes.content
 
 		// Set thread stats
-		if let replyScore = threadRepliesElement.score {
-			voteCountButton.setTitle("\((replyScore >= 1000) ? replyScore.kFormatted : replyScore.string) · ", for: .normal)
-		}
+		let replyScore = threadReply.attributes.metrics.weight
+		voteCountButton.setTitle("\((replyScore >= 1000) ? replyScore.kFormatted : replyScore.string) · ", for: .normal)
 
-		if let creationDate = threadRepliesElement.postedAt, !creationDate.isEmpty {
-			dateTimeButton.setTitle(creationDate.timeAgo, for: .normal)
-		}
+		dateTimeButton.setTitle(threadReply.attributes.createdAt.timeAgo, for: .normal)
 
 		// Check if thread is locked
-		if let locked = forumsThreadElement?.locked {
-			isLocked(locked)
-		}
+		isLocked(forumsThread.attributes.lockStatus)
 
 		// Add gesture to cell
 		let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(showCellOptions(_:)))
@@ -115,32 +107,25 @@ class ReplyCell: UITableViewCell {
 	}
 
 	/**
-		Upvote or downvote a thread according to the given integer.
+		Vote on the reply with the given vote.
 
-		- Parameter vote: The integer indicating whether to downvote or upvote a reply.  (0 = downvote, 1 = upvote)
+		- Parameter voteStatus: The `VoteStatus` value indicating whether to upvote, downvote or novote a reply.
 	*/
-	fileprivate func voteForReply(with vote: Int) {
-		guard let voteStatus: VoteStatus = VoteStatus(rawValue: vote) else { return }
-		guard let replyID = self.threadRepliesElement?.id else { return }
-
+	fileprivate func voteOnReply(withVoteStatus voteStatus: VoteStatus) {
 		WorkflowController.shared.isSignedIn {
-			guard var replyScore = self.threadRepliesElement?.score else { return }
+			KService.voteOnReply(self.threadReply.id, withVoteStatus: voteStatus) { [weak self] result in
+				guard let self = self else { return }
 
-			KService.voteOnReply(replyID, withVoteStatus: voteStatus) { result in
 				switch result {
 				case .success(let voteStatus):
 					DispatchQueue.main.async {
+						var replyScore = self.threadReply.attributes.metrics.weight
+
+						self.updateVoting(withVoteStatus: voteStatus)
 						if voteStatus == .upVote {
 							replyScore += 1
-							self.upvoteButton.tintColor = .kGreen
-							self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-						} else if voteStatus == .noVote {
-							self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-							self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
 						} else if voteStatus == .downVote {
 							replyScore -= 1
-							self.downvoteButton.tintColor = .kLightRed
-							self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
 						}
 
 						self.voteCountButton.setTitle("\((replyScore >= 1000) ? replyScore.kFormatted : replyScore.string) · ", for: .normal)
@@ -157,18 +142,36 @@ class ReplyCell: UITableViewCell {
 		}
 	}
 
+	/**
+		Update the voting status of the reply.
+
+		- Parameter voteStatus: The `VoteStatus` value indicating whether to upvote, downvote or novote a reply.
+	*/
+	fileprivate func updateVoting(withVoteStatus voteStatus: VoteStatus) {
+		if voteStatus == .upVote {
+			self.upvoteButton.tintColor = .kGreen
+			self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+		} else if voteStatus == .noVote {
+			self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+			self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+		} else if voteStatus == .downVote {
+			self.downvoteButton.tintColor = .kLightRed
+			self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+		}
+	}
+
 	/// Presents the profile view for the thread poster.
 	fileprivate func visitPosterProfilePage() {
-		if let userID = threadRepliesElement?.userProfile?.id, userID != 0 {
+		if let user = threadReply.relationships.user.data.first {
 			if let profileViewController = R.storyboard.profile.profileTableViewController() {
-				profileViewController.userProfile = threadRepliesElement?.userProfile
+				profileViewController.userID = user.id
 				profileViewController.dismissButtonIsEnabled = true
 
 				let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
 				if #available(iOS 13.0, macCatalyst 13.0, *) {
-					threadViewController?.present(kurozoraNavigationController, animated: true, completion: nil)
+					threadViewController.present(kurozoraNavigationController, animated: true, completion: nil)
 				} else {
-					threadViewController?.presentAsStork(kurozoraNavigationController, height: nil, showIndicator: false, showCloseButton: false)
+					threadViewController.presentAsStork(kurozoraNavigationController, height: nil, showIndicator: false, showCloseButton: false)
 				}
 			}
 		}
@@ -195,19 +198,18 @@ class ReplyCell: UITableViewCell {
 
 	/// Builds and presents an action sheet.
 	fileprivate func showActionList() {
-		guard let threadViewController = threadViewController else { return }
-		guard let threadRepliesElement = threadRepliesElement else { return }
+//		guard let threadReply = threadReply else { return }
 		let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
 		// Mod and Admin features actions
 
 		// Upvote, downvote and reply actions
-		if let replyID = threadRepliesElement.id, replyID != 0 && forumsThreadElement?.locked == .unlocked {
+		if forumsThread.attributes.lockStatus == .unlocked {
 			let upvoteAction = UIAlertAction.init(title: "Upvote", style: .default, handler: { (_) in
-				self.voteForReply(with: 1)
+				self.voteOnReply(withVoteStatus: .upVote)
 			})
 			let downvoteAction = UIAlertAction.init(title: "Downvote", style: .default, handler: { (_) in
-				self.voteForReply(with: 0)
+				self.voteOnReply(withVoteStatus: .downVote)
 			})
 //			let replyAction = UIAlertAction.init(title: "Reply", style: .default, handler: { (_) in
 //				self.replyThread()
@@ -226,7 +228,8 @@ class ReplyCell: UITableViewCell {
 		}
 
 		// Username action
-		if let username = threadRepliesElement.userProfile?.username, !username.isEmpty {
+		if let user = threadReply.relationships.user.data.first {
+			let username = user.attributes.username
 			let userAction = UIAlertAction.init(title: username + "'s profile", style: .default, handler: { (_) in
 				self.visitPosterProfilePage()
 			})
@@ -266,16 +269,12 @@ class ReplyCell: UITableViewCell {
 
 	/// Presents a share sheet to share the selected reply.
 	func shareReply() {
-		guard let threadViewController = threadViewController else { return }
-		guard let threadRepliesElement = threadRepliesElement else { return }
-
-		var shareText: [String] = [""]
-
-		if let replyContent = threadRepliesElement.content, let posterUsername = threadRepliesElement.userProfile?.username {
-			shareText = ["\"\(replyContent)\"-\(posterUsername)"]
+		var shareText = "\"\(threadReply.attributes.content)\""
+		if let user = threadReply.relationships.user.data.first {
+			shareText += "-\(user.attributes.username)"
 		}
 
-		let activityViewController = UIActivityViewController(activityItems: shareText, applicationActivities: [])
+		let activityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
 
 		if let popoverController = activityViewController.popoverPresentationController {
 			popoverController.sourceView = moreButton
@@ -295,14 +294,12 @@ class ReplyCell: UITableViewCell {
 	}
 
 	@IBAction func upvoteButtonPressed(_ sender: UIButton) {
-		previousVote = 1
-		voteForReply(with: 1)
+		voteOnReply(withVoteStatus: .upVote)
 		sender.animateBounce()
 	}
 
 	@IBAction func downvoteButtonPressed(_ sender: UIButton) {
-		previousVote = 0
-		voteForReply(with: 0)
+		voteOnReply(withVoteStatus: .downVote)
 		sender.animateBounce()
 	}
 

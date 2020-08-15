@@ -1,9 +1,8 @@
 //
 //  KurozoraKit.swift
-//  Kurozora
+//  KurozoraKit
 //
 //  Created by Khoren Katklian on 11/07/2018.
-//  Copyright © 2018 Kurozora. All rights reserved.
 //
 
 import Alamofire
@@ -24,8 +23,7 @@ public class KurozoraKit {
 	/// The current user's authentication key.
 	public var authenticationKey: String {
 		get {
-			let authenticationKey = User.current?.authenticationKey ?? self._authenticationKey
-			return self._authenticationKey.isEmpty ? authenticationKey : self._authenticationKey
+			return self._authenticationKey
 		}
 		set {
 			self._authenticationKey = newValue
@@ -64,7 +62,14 @@ public class KurozoraKit {
 		- Parameter services: The desired [KKServices](x-source-tag://KKServices) to be used.
 	*/
 	public init(debugURL: String? = nil, authenticationKey: String = "", services: KKServices = KKServices()) {
-		self.tron = TRON(baseURL: debugURL ?? "https://kurozora.app/api/v1/", plugins: [NetworkActivityPlugin(application: UIApplication.shared)])
+		var plugins: [Plugin] = debugURL != nil ? [NetworkLoggerPlugin()] : []
+
+		if #available(iOS 13.0, macCatalyst 13.0, *) {
+		} else {
+			plugins.append(NetworkActivityPlugin(application: UIApplication.shared))
+		}
+
+		self.tron = TRON(baseURL: debugURL ?? "https://kurozora.app/api/v1/", plugins: plugins)
 		self.authenticationKey = authenticationKey
 		self.services = services
 	}

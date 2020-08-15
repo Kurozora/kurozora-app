@@ -11,14 +11,14 @@ import KurozoraKit
 
 class FollowTableViewController: KTableViewController {
 	// MARK: - Properties
-	var userFollow: [UserProfile] = [] {
+	var userFollow: [User] = [] {
 		didSet {
 			_prefersActivityIndicatorHidden = true
 			tableView.reloadData()
 		}
 	}
 	var followList: FollowList = .followers
-	var user: UserProfile?
+	var user: User?
 	var nextPageURL: String?
 
 	// Activity indicator
@@ -45,8 +45,10 @@ class FollowTableViewController: KTableViewController {
 
 	// MARK: - Functions
 	override func setupEmptyDataSetView() {
-		tableView.emptyDataSetView { (view) in
-			if let username = self.user?.username, let userID = User.current?.id {
+		tableView.emptyDataSetView { [weak self] (view) in
+			guard let self = self else { return }
+
+			if let username = self.user?.attributes.username, let userID = User.current?.id {
 				if self.followList == .followers {
 					let detailLabelString = self.user?.id != userID ? "Be the first to follow \(username)!" : "Follow other users so they will follow you back. Who knows, you might meet your next BFF!"
 
@@ -58,7 +60,7 @@ class FollowTableViewController: KTableViewController {
 						.verticalSpace(5)
 						.isScrollAllowed(true)
 
-					if self.user?.id != userID, !(self.user?.following ?? true) {
+					if self.user?.id != userID {
 						view.buttonTitle(NSAttributedString(string: "＋ Follow \(username)", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.tintColor.colorValue]), for: .normal)
 							.buttonTitle(NSAttributedString(string: "＋ Follow \(username)", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.tintColor.colorValue.darken()]), for: .highlighted)
 							.didTapDataButton {
@@ -84,9 +86,11 @@ class FollowTableViewController: KTableViewController {
 	func followUser() {
 		guard let userID = user?.id else { return }
 
-		KService.updateFollowStatus(userID, withFollowStatus: .follow) { result in
+		KService.updateFollowStatus(userID) { [weak self] result in
+			guard let self = self else { return }
 			switch result {
-			case .success:
+			case .success(let followUpdate):
+				self.user?.attributes.update(using: followUpdate)
 				self.fetchFollowList()
 			case .failure: break
 			}
@@ -109,10 +113,9 @@ class FollowTableViewController: KTableViewController {
 					}
 
 					// Append new user follow data and save next page url
-					if let userFollow = userFollow.following?.isEmpty ?? true ? userFollow.followers : userFollow.following {
-						self.userFollow.append(contentsOf: userFollow)
-					}
-					self.nextPageURL = userFollow.nextPageURL
+					self.userFollow.append(contentsOf: userFollow.data)
+
+					self.nextPageURL = userFollow.next
 				}
 			case .failure: break
 			}
@@ -124,7 +127,7 @@ class FollowTableViewController: KTableViewController {
 		if let currentCell = sender as? FollowCell {
 			if segue.identifier == R.segue.followTableViewController.profileSegue.identifier {
 				if let profileTableViewController = segue.destination as? ProfileTableViewController {
-					profileTableViewController.userProfile = currentCell.userProfile
+					profileTableViewController.userID = currentCell.user.id
 				}
 			}
 		}
@@ -141,7 +144,7 @@ extension FollowTableViewController {
 		guard let followCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.followCell, for: indexPath) else {
 			fatalError("Cannot dequeue cell with reuse identifier \(R.reuseIdentifier.followCell.identifier)")
 		}
-		followCell.userProfile = userFollow[indexPath.row]
+		followCell.user = userFollow[indexPath.row]
         return followCell
     }
 }
@@ -152,7 +155,7 @@ extension FollowTableViewController {
 		let numberOfRows = tableView.numberOfRows()
 
 		if indexPath.row == numberOfRows - 5 {
-			if nextPageURL != "" {
+			if nextPageURL != nil {
 				fetchFollowList()
 			}
 		}

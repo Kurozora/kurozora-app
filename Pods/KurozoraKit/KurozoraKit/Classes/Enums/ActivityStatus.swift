@@ -1,6 +1,6 @@
 //
 //  ActivityStatus.swift
-//  Alamofire
+//  KurozoraKit
 //
 //  Created by Khoren Katklian on 20/04/2020.
 //
@@ -16,7 +16,7 @@ import Foundation
 	case offline
 	```
 */
-public enum ActivityStatus: String {
+public enum ActivityStatus: String, Codable {
 	// MARK: - Cases
 	/// The user is currently online.
 	case online = "Online"

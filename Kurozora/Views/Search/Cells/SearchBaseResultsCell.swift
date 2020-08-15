@@ -22,12 +22,14 @@ class SearchBaseResultsCell: UICollectionViewCell {
 	@IBOutlet weak var searchImageView: UIImageView!
 	@IBOutlet weak var separatorView: UIVisualEffectView?
 
+	// MARK: - Properties
+	var indexPath: IndexPath!
+	var numberOfItems: Int!
+
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	func configureCell() {
-		if let numberOfItems = parentCollectionView?.numberOfItems() {
-			separatorView?.isHidden = indexPath?.item == numberOfItems - 1
-		}
+		separatorView?.isHidden = indexPath.item == numberOfItems - 1
 	}
 
 	// MARK: - IBActions

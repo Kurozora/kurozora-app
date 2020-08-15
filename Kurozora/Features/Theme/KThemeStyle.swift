@@ -232,13 +232,8 @@ extension KThemeStyle {
 		- Parameter successHandler: A closure returning a boolean indicating whether remove is successful.
 		- Parameter isSuccess: A boolean value indicating whether the remove is successful.
 	*/
-	static func removeThemeTask(for theme: ThemeElement?, _ successHandler:@escaping (_ isSuccess: Bool) -> Void) {
-		guard let themeID = theme?.id else {
-			DispatchQueue.main.async {
-				successHandler(false)
-			}
-			return
-		}
+	static func removeThemeTask(for theme: Theme, _ successHandler:@escaping (_ isSuccess: Bool) -> Void) {
+		let themeID = theme.id
 		guard let themesDirectoryUrl = themesDirectoryUrl else {
 			DispatchQueue.main.async {
 				successHandler(false)
@@ -266,19 +261,9 @@ extension KThemeStyle {
 		- Parameter successHandler: A closure returning a boolean indicating whether download is successful.
 		- Parameter isSuccess: A boolean value indicating whether the download is successful.
 	*/
-	static func downloadThemeTask(for theme: ThemeElement?, _ successHandler:@escaping (_ isSuccess: Bool) -> Void) {
-		guard let urlString = theme?.downloadLink, !urlString.isEmpty else {
-			DispatchQueue.main.async {
-				successHandler(false)
-			}
-			return
-		}
-		guard let themeID = theme?.id else {
-			DispatchQueue.main.async {
-				successHandler(false)
-			}
-			return
-		}
+	static func downloadThemeTask(for theme: Theme, _ successHandler:@escaping (_ isSuccess: Bool) -> Void) {
+		let urlString = theme.attributes.downloadLink
+		let themeID = theme.id
 		guard let libraryDirectoryUrl = libraryDirectoryUrl else {
 			DispatchQueue.main.async {
 				successHandler(false)
@@ -443,9 +428,10 @@ extension KThemeStyle {
 
 	/// Wheather it's currently night time.
 	static var isSolarNighttime: Bool {
-		guard let currentUser = User.current else { return false }
-		guard let latitude = currentUser.session?.location?.latitude else { return false }
-		guard let longitude = currentUser.session?.location?.longitude else { return false }
+		guard let currentUserSession = User.current?.relationships?.sessions?.data.first else { return false }
+		guard let userSessionLocation = currentUserSession.relationships.location.data.first else { return false }
+		guard let latitude = userSessionLocation.attributes.latitude else { return false }
+		guard let longitude = userSessionLocation.attributes.longitude else { return false }
 		guard let solar = Solar(coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude)) else { return false }
 		let isNighttime = solar.isNighttime
 

@@ -26,40 +26,39 @@ class EpisodeLockupCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - Properties
 	var simpleModeEnabled: Bool = false
-	var episodeElement: EpisodeElement? = nil {
+	var episode: Episode! {
 		didSet {
-			self.configureCell()
+			self.configureWatchButton()
 		}
 	}
+	var watchStatus: WatchStatus = .disabled
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
-	fileprivate func configureCell() {
-		guard let episodeElement = episodeElement else { return }
-
-		if let episodeScreenshot = episodeElement.screenshot {
-			self.episodeImageView.setImage(with: episodeScreenshot, placeholder: R.image.placeholders.showEpisode()!)
+	fileprivate func configureWatchButton() {
+		if let episodePreviewImage = self.episode.attributes.previewImage {
+			self.episodeImageView.setImage(with: episodePreviewImage, placeholder: R.image.placeholders.showEpisode()!)
 		}
 
-		self.episodeNumberLabel.isHidden = simpleModeEnabled
-		self.episodeTitleLabel.isHidden = simpleModeEnabled
-		self.myRatingLabel.isHidden = simpleModeEnabled
-		self.episodeFirstAiredLabel.isHidden = simpleModeEnabled
-		self.cosmosView.isHidden = simpleModeEnabled
+		self.episodeNumberLabel.isHidden = self.simpleModeEnabled
+		self.episodeTitleLabel.isHidden = self.simpleModeEnabled
+		self.myRatingLabel.isHidden = self.simpleModeEnabled
+		self.episodeFirstAiredLabel.isHidden = self.simpleModeEnabled
+		self.cosmosView.isHidden = self.simpleModeEnabled
 
-		if let episodeWatchStatus = episodeElement.currentUser?.watchStatus {
-			configureCell(with: episodeWatchStatus)
+		if let watchStatus = self.episode.attributes.watchStatus {
+			self.watchStatus = watchStatus
 		}
+		self.configureWatchButton(with: self.watchStatus)
 
-		if !simpleModeEnabled {
+		if !self.simpleModeEnabled {
 			self.cornerView.cornerRadius = 10
 
-			if let episodeNumber = episodeElement.number {
-				self.episodeNumberLabel.text = "Episode \(episodeNumber)"
-			}
+			let episodeNumber = self.episode.attributes.number
+			self.episodeNumberLabel.text = "Episode \(episodeNumber)"
 
-			self.episodeTitleLabel.text = episodeElement.name
-			self.episodeFirstAiredLabel.text = episodeElement.firstAired
+			self.episodeTitleLabel.text = self.episode.attributes.title
+			self.episodeFirstAiredLabel.text = self.episode.attributes.firstAired
 
 			self.shadowView.applyShadow()
 		} else {
@@ -68,7 +67,7 @@ class EpisodeLockupCollectionViewCell: UICollectionViewCell {
 		}
 	}
 
-	func configureCell(with watchStatus: WatchStatus) {
+	func configureWatchButton(with watchStatus: WatchStatus) {
         switch watchStatus {
         case .disabled:
             self.episodeWatchedButton.isEnabled = false
@@ -87,14 +86,6 @@ class EpisodeLockupCollectionViewCell: UICollectionViewCell {
 			self.episodeWatchedButton.tintColor = #colorLiteral(red: 0.5019607843, green: 0.5019607843, blue: 0.5019607843, alpha: 1).withAlphaComponent(0.80)
         }
     }
-
-	func configureCell(with watchStatus: WatchStatus, shouldUpdate: Bool = false) {
-		configureCell(with: watchStatus)
-
-		if shouldUpdate {
-			self.episodeElement?.currentUser?.watchStatus = watchStatus
-		}
-	}
 
 	/**
 		Populate an action sheet for the given episode.
@@ -123,16 +114,10 @@ class EpisodeLockupCollectionViewCell: UICollectionViewCell {
 	}
 
 	func populateShareSheet() {
-		guard let episodeID = episodeElement?.id else { return }
 		var activityItems: [Any] = []
-		var shareText: String = ""
+		let shareText = "https://kurozora.app/episode/\(episode.id)\nYou should watch \"\(episode.attributes.title)\" via @KurozoraApp"
 
 		// Episode title
-		if let episodeTitle = episodeElement?.name, !episodeTitle.isEmpty {
-			shareText = "https://kurozora.app/episode/\(episodeID)\nYou should watch \"\(episodeTitle)\" via @KurozoraApp"
-		} else {
-			shareText = "https://kurozora.app/episode/\(episodeID)\nYou should watch this episode via @KurozoraApp"
-		}
 		activityItems.append(shareText)
 
 		// Episode image
@@ -152,15 +137,11 @@ class EpisodeLockupCollectionViewCell: UICollectionViewCell {
 	}
 
 	func watchedButtonPressed() {
-		guard let episodeID = episodeElement?.id else { return }
-		let watchStatus: WatchStatus = self.episodeWatchedButton.tag == 0 ? .watched : .notWatched
-
-		KService.updateEpisodeWatchStatus(episodeID, withWatchStatus: watchStatus) { result in
+		KService.updateEpisodeWatchStatus(self.episode.id) { [weak self] result in
+			guard let self = self else { return }
 			switch result {
 			case .success(let watchStatus):
-				DispatchQueue.main.async {
-					self.configureCell(with: watchStatus, shouldUpdate: true)
-				}
+				self.configureWatchButton(with: watchStatus)
 			case .failure: break
 			}
 		}

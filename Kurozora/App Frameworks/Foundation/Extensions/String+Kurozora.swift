@@ -42,14 +42,14 @@ extension String {
 	}
 
 	/// Returns a string with a medium fomatted date.
-	var mediumDate: String {
-		guard let date = self.dateTime else { return "" }
+	var mediumDate: String? {
+		guard let date = self.date else { return nil }
 		return mediumFormatter.string(from: date)
 	}
 
 	/// Returns a string with a medium fomatted date and time.
-	var mediumDateTime: String {
-		guard let dateTime = self.dateTime else { return "" }
+	var mediumDateTime: String? {
+		guard let dateTime = self.dateTime else { return nil }
 		return mediumDateTimeFormatter.string(from: dateTime)
 	}
 
@@ -80,7 +80,7 @@ extension String {
 		return Static.instance
 	}
 
-	/// Retunrs string representing how much time has passed since given date.
+	/// Returns string representing how much time has passed since given date.
 	var timeAgo: String {
 		guard let dateTime = self.dateTime else { return "" }
 		let timeInterval = Int(-dateTime.timeIntervalSince(Date()))

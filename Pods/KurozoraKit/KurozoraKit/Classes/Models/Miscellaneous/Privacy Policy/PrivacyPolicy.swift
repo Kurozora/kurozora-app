@@ -1,24 +1,21 @@
 //
-//  PrivacyPolicys.swift
-//  Kurozora
+//  PrivacyPolicy.swift
+//  KurozoraKit
 //
-//  Created by Khoren Katklian on 09/09/2018.
-//  Copyright © 2018 Kurozora. All rights reserved.
+//  Created by Khoren Katklian on 27/04/2020.
 //
-
-import SwiftyJSON
-import TRON
 
 /**
-	A mutable object that stores information about a single privacy policy object.
+	A root object that stores information about a privacy policy resource.
 */
-public class PrivacyPolicy: JSONDecodable {
+public struct PrivacyPolicy: Codable {
 	// MARK: - Properties
-	/// The single privacy policy object.
-	public let privacyPolicy: PrivacyPolicyElement?
+	/// The type of the privacy policy.
+	public let type: String
 
-	// MARK: - Initializers
-    required public init(json: JSON) throws {
-		self.privacyPolicy = try? PrivacyPolicyElement(json: json["privacy_policy"])
-    }
+	/// The relative link to where the privacy policy is located.
+	public let href: String
+
+	/// The attributes belonging to the privacy policy.
+	public let attributes: PrivacyPolicy.Attributes
 }

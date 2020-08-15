@@ -8,7 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import TRON
 
 /**
 	The collection view controller in charge of providing the necessary functionalities for searching shows, threads and users.
@@ -16,7 +15,7 @@ import TRON
 class SearchResultsCollectionViewController: UICollectionViewController {
 	// MARK: - Properties
 	/// The collection of results fetched by the search request.
-	var searchResults: [JSONDecodable]? {
+	var searchResults: [Codable]? {
 		didSet {
 			if searchResults != nil {
 				self.collectionView.reloadData()
@@ -31,7 +30,7 @@ class SearchResultsCollectionViewController: UICollectionViewController {
 	var currentScope: SearchScope = .show
 
 	/// The collection of suggested shows.
-	var suggestionElements: [ShowDetailsElement]? {
+	var suggestionElements: [Show]? {
 		didSet {
 			if suggestionElements != nil {
 				self.collectionView.reloadData()
@@ -86,12 +85,11 @@ class SearchResultsCollectionViewController: UICollectionViewController {
 		if !text.isEmpty {
 			switch searchScope {
 			case .show:
-				KService.search(forShow: text) { result in
+				KService.search(forShow: text) { [weak self] result in
+					guard let self = self else { return }
 					switch result {
 					case .success(let showResults):
-						DispatchQueue.main.async {
-							self.searchResults = showResults
-						}
+						self.searchResults = showResults
 					case .failure:
 						break
 					}
@@ -99,35 +97,32 @@ class SearchResultsCollectionViewController: UICollectionViewController {
 			case .myLibrary:
 				WorkflowController.shared.isSignedIn {
 					guard let userID = User.current?.id else { return }
-					KService.search(inUserLibrary: userID, forShow: text) { result in
+					KService.search(inUserLibrary: userID, forShow: text) { [weak self] result in
+						guard let self = self else { return }
 						switch result {
 						case .success(let showResults):
-							DispatchQueue.main.async {
-								self.searchResults = showResults
-							}
+							self.searchResults = showResults
 						case .failure:
 							break
 						}
 					}
 				}
 			case .thread:
-				KService.search(forThread: text) { result in
+				KService.search(forThread: text) { [weak self] result in
+					guard let self = self else { return }
 					switch result {
 					case .success(let threadResults):
-						DispatchQueue.main.async {
-							self.searchResults = threadResults
-						}
+						self.searchResults = threadResults
 					case .failure:
 						break
 					}
 				}
 			case .user:
-				KService.search(forUsername: text) { result in
+				KService.search(forUsername: text) { [weak self] result in
+					guard let self = self else { return }
 					switch result {
 					case .success(let userResults):
-						DispatchQueue.main.async {
-							self.searchResults = userResults
-						}
+						self.searchResults = userResults
 					case .failure:
 						break
 					}
@@ -173,13 +168,15 @@ extension SearchResultsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		if searchResults != nil {
 			let searchBaseResultsCell = collectionView.dequeueReusableCell(withReuseIdentifier: currentScope.identifierString, for: indexPath) as! SearchBaseResultsCell
+			searchBaseResultsCell.indexPath = indexPath
+			searchBaseResultsCell.numberOfItems = collectionView.numberOfItems()
 			switch currentScope {
 			case .show, .myLibrary:
-				(searchBaseResultsCell as? SearchShowResultsCell)?.showDetailsElement = searchResults?[indexPath.row] as? ShowDetailsElement
+				(searchBaseResultsCell as? SearchShowResultsCell)?.show = searchResults?[indexPath.row] as? Show
 			case .thread:
-				(searchBaseResultsCell as? SearchForumsResultsCell)?.forumsThreadElement = searchResults?[indexPath.row] as? ForumsThreadElement
+				(searchBaseResultsCell as? SearchForumsResultsCell)?.forumsThread = searchResults?[indexPath.row] as? ForumsThread
 			case .user:
-				(searchBaseResultsCell as? SearchUserResultsCell)?.userProfile = searchResults?[indexPath.row] as? UserProfile
+				(searchBaseResultsCell as? SearchUserResultsCell)?.user = searchResults?[indexPath.row] as? User
 			}
 			return searchBaseResultsCell
 		}
@@ -187,7 +184,7 @@ extension SearchResultsCollectionViewController {
 		guard let searchResultsCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.searchSuggestionResultCell, for: indexPath) else {
 			fatalError("Cannot dequeue cell with reuse identifier \(R.reuseIdentifier.searchSuggestionResultCell.identifier)")
 		}
-		searchResultsCell.showDetailsElement = suggestionElements?[indexPath.row]
+		searchResultsCell.show = suggestionElements?[indexPath.row]
 		return searchResultsCell
 	}
 }
@@ -200,26 +197,29 @@ extension SearchResultsCollectionViewController {
 			switch currentScope {
 			case .show, .myLibrary:
 				if let showDetailsViewController = R.storyboard.showDetails.showDetailCollectionViewController() {
-					let showDetailsElement = (searchBaseResultsCell as? SearchShowResultsCell)?.showDetailsElement
-					showDetailsViewController.showDetailsElement = showDetailsElement
-					SearchHistory.saveContentsOf(showDetailsElement)
-					presentingViewController?.show(showDetailsViewController, sender: nil)
+					if let show = (searchBaseResultsCell as? SearchShowResultsCell)?.show {
+						showDetailsViewController.showID = show.id
+						SearchHistory.saveContentsOf(show)
+						self.presentingViewController?.show(showDetailsViewController, sender: nil)
+					}
 				}
 			case .thread:
 				if let threadTableViewController = R.storyboard.forums.threadTableViewController() {
-					threadTableViewController.forumsThreadElement = (searchBaseResultsCell as? SearchForumsResultsCell)?.forumsThreadElement
-					presentingViewController?.show(threadTableViewController, sender: nil)
+					threadTableViewController.forumsThread = (searchBaseResultsCell as? SearchForumsResultsCell)?.forumsThread
+					self.presentingViewController?.show(threadTableViewController, sender: nil)
 				}
 			case .user:
 				if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
-					profileTableViewController.userProfile = (searchBaseResultsCell as? SearchUserResultsCell)?.userProfile
-					presentingViewController?.show(profileTableViewController, sender: nil)
+					if let user = (searchBaseResultsCell as? SearchUserResultsCell)?.user {
+						profileTableViewController.userID = user.id
+						self.presentingViewController?.show(profileTableViewController, sender: nil)
+					}
 				}
 			}
 		} else {
-			if let showDetailsViewController = R.storyboard.showDetails.showDetailCollectionViewController() {
-				showDetailsViewController.showDetailsElement = (searchBaseResultsCell as? SearchSuggestionResultCell)?.showDetailsElement
-				presentingViewController?.show(showDetailsViewController, sender: nil)
+			if let showDetailsViewController = R.storyboard.showDetails.showDetailCollectionViewController(), let show = (searchBaseResultsCell as? SearchSuggestionResultCell)?.show {
+				showDetailsViewController.showID = show.id
+				self.presentingViewController?.show(showDetailsViewController, sender: nil)
 			}
 		}
 	}

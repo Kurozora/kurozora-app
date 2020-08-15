@@ -13,10 +13,18 @@ extension ForumOrder {
 	/// The image value of a forum order type.
 	var imageValue: UIImage {
 		switch self {
+		case .best:
+			return R.image.symbols.hand_thumbsup()!
 		case .top:
 			return R.image.symbols.arrow_up_line_horizontal_3_decrease()!
-		case .recent:
-			return R.image.symbols.clock()!
+		case .new:
+			return R.image.symbols.calendar_badge_arrowshape_turn_up_right()!
+		case .old:
+			return R.image.symbols.calendar_badge_arrowshape_turn_up_left()!
+		case .poor:
+			return R.image.symbols.arrow_down_line_horizontal_3_increase()!
+		case .controversial:
+			return R.image.symbols.hand_thumbsdown()!
 		}
 	}
 
@@ -24,9 +32,8 @@ extension ForumOrder {
 	static var alertControllerItems: [(String, ForumOrder, UIImage)] {
 		var items = [(String, ForumOrder, UIImage)]()
 		for sortType in ForumOrder.allCases {
-			var title = sortType.rawValue
-			title.firstCharacterUppercased()
-			items.append((title, sortType, sortType.imageValue))
+			let title = sortType.rawValue
+			items.append((title.capitalized, sortType, sortType.imageValue))
 		}
 		return items
 	}

@@ -19,15 +19,11 @@ class MediumLockupCollectionViewCell: BaseLockupCollectionViewCell {
 
 	// MARK: - Functions
 	override func configureCell() {
-		guard let genreElement = genreElement else { return }
-		guard let genreColor = genreElement.color else { return }
+		guard let genre = genre else { return }
 
-		primaryLabel?.text = genreElement.name
-		backgroundColorView?.backgroundColor = UIColor(hexString: genreColor)
-
-		if let symbol = genreElement.symbol {
-			bannerImageView?.setImage(with: symbol, placeholder: R.image.kurozoraIcon()!)
-		}
+		primaryLabel?.text = genre.attributes.name
+		backgroundColorView?.backgroundColor = UIColor(hexString: genre.attributes.color)
+		bannerImageView?.image = genre.attributes.symbolImage
 
 		shadowView?.applyShadow()
 	}

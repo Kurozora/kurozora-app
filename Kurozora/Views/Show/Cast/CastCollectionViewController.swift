@@ -12,7 +12,7 @@ import KurozoraKit
 class CastCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var showID: Int = 0
-	var castElements: [CastElement]? {
+	var cast: [Cast] = [] {
 		didSet {
 			_prefersActivityIndicatorHidden = true
 			self.configureDataSource()
@@ -34,16 +34,9 @@ class CastCollectionViewController: KCollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-		// Stop activity indicator in case user doesn't need to fetch cast details.
-		if castElements != nil {
-			_prefersActivityIndicatorHidden = true
-		}
-
 		// Fetch cast
-		if castElements == nil {
-			DispatchQueue.global(qos: .background).async {
-				self.fetchCast()
-			}
+		DispatchQueue.global(qos: .background).async {
+			self.fetchCast()
 		}
     }
 
@@ -61,12 +54,11 @@ class CastCollectionViewController: KCollectionViewController {
 
 	/// Fetch cast for the current show.
 	fileprivate func fetchCast() {
-		KService.getCast(forShowID: showID) { result in
+		KService.getCast(forShowID: self.showID) { [weak self] result in
+			guard let self = self else { return }
 			switch result {
 			case .success(let cast):
-				DispatchQueue.main.async {
-					self.castElements = cast
-				}
+				self.self.cast = cast
 			case .failure: break
 			}
 		}
@@ -82,7 +74,7 @@ extension CastCollectionViewController {
 	override func configureDataSource() {
 		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, identifier: Int) -> UICollectionViewCell? in
 			if let castCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.castCollectionViewCell, for: indexPath) {
-				castCollectionViewCell.castElement = self.castElements?[indexPath.row]
+				castCollectionViewCell.cast = self.cast[indexPath.row]
 
 				if collectionView.indexPathForLastItem == indexPath {
 					castCollectionViewCell.separatorView.isHidden = true
@@ -95,7 +87,7 @@ extension CastCollectionViewController {
 			}
 		}
 
-		let itemsPerSection = castElements?.count ?? 0
+		let itemsPerSection = self.cast.count
 		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
 		SectionLayoutKind.allCases.forEach {
 			snapshot.appendSections([$0])

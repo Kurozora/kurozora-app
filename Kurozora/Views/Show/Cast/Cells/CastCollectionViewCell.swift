@@ -22,7 +22,7 @@ class CastCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var separatorView: SeparatorView!
 
 	// MARK: - Properties
-	var castElement: CastElement? {
+	var cast: Cast! {
 		didSet {
 			configureCell()
 		}
@@ -32,29 +32,16 @@ class CastCollectionViewCell: UICollectionViewCell {
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
 		// Configure actor
-		self.actorNameLabel.text = castElement?.actor?.fullName ?? "Unknown"
-
-		if let actorImage = castElement?.actor?.imageString {
-			if let nameInitials = castElement?.actor?.fullName?.initials {
-				let placeholderImage = nameInitials.toImage(withFrameSize: actorImageView.frame, placeholder: R.image.placeholders.showPerson()!)
-				self.actorImageView.setImage(with: actorImage, placeholder: placeholderImage)
-			}
-		}
+		self.actorNameLabel.text = cast.relationships.actors.data.first?.attributes.fullName ?? "Unknown"
+		self.actorImageView.image = self.cast.relationships.actors.data.first?.attributes.personalImage
 		self.actorShadowView.applyShadow()
 
 		// Configure character
-		if let characterName = castElement?.character?.name {
+		if let characterName = cast.relationships.characters.data.first?.attributes.name {
 			self.characterNameLabel.text = !characterName.isEmpty ? "as \(characterName)" : ""
 		}
-
-		self.characterRoleLabel.text = castElement?.role
-
-		if let characterImage = castElement?.character?.imageString {
-			if let nameInitials = castElement?.character?.name?.initials {
-				let placeholderImage = nameInitials.toImage(withFrameSize: characterImageView.frame, placeholder: R.image.placeholders.showPerson()!)
-				self.characterImageView.setImage(with: characterImage, placeholder: placeholderImage)
-			}
-		}
+		self.characterRoleLabel.text = cast.attributes.role
+		self.characterImageView.image = self.cast.relationships.characters.data.first?.attributes.personalImage
 		self.characterShadowView.applyShadow()
 	}
 }

@@ -20,37 +20,36 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - Properties
 	var showDetailCollectionViewController: ShowDetailCollectionViewController?
-	var showDetailsElement: ShowDetailsElement? = nil {
+	var show: Show! {
 		didSet {
 			configureCell()
 		}
 	}
-	var genreElement: GenreElement? = nil {
+	var genre: Genre! = nil {
 		didSet {
-			showDetailsElement = nil
+			self.show = nil
 			configureCell()
 		}
 	}
-	var libraryStatus: String?
+	var libraryStatus: KKLibrary.Status = .none
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	func configureCell() {
-		guard let showDetailsElement = showDetailsElement else { return }
+		guard let show = self.show else { return }
 
-		self.primaryLabel?.text = showDetailsElement.title
+		self.primaryLabel?.text = show.attributes.title
 
 		// Configure genres
-		if let genres = showDetailsElement.genres, genres.count != 0 {
+		if let genres = show.relationships?.genres?.data, genres.count != 0 {
 			var genreNames = ""
-			for (genreIndex, genreItem) in genres.enumerated() {
-				if let genreName = genreItem.name {
-					genreNames += genreName
+			for (index, genre) in genres.enumerated() {
+				let genreName = genre.attributes.name
+				if index == genres.count - 1 {
+					genreNames += "\(genreName)"
+					continue
 				}
-
-				if genreIndex != genres.endIndex-1 {
-					genreNames += ", "
-				}
+				genreNames += "\(genreName), "
 			}
 
 			self.secondaryLabel?.text = genreNames
@@ -59,22 +58,16 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 		}
 
 		// Configure banner
-		if let bannerThumbnail = showDetailsElement.banner {
-			self.bannerImageView?.setImage(with: bannerThumbnail, placeholder: R.image.placeholders.showBanner()!)
-		}
+		self.bannerImageView?.image = self.show.attributes.bannerImage
 
 		// Configure poster
-		if let posterThumbnail = showDetailsElement.posterThumbnail {
-			self.posterImageView?.setImage(with: posterThumbnail, placeholder: R.image.placeholders.showPoster()!)
-		}
+		self.posterImageView?.image = self.show.attributes.posterImage
 
 		// Configure library status
-		self.libraryStatus = showDetailsElement.currentUser?.libraryStatus
-		if let libraryStatus = showDetailsElement.currentUser?.libraryStatus, !libraryStatus.isEmpty {
-			self.libraryStatusButton?.setTitle("\(libraryStatus.capitalized) ▾", for: .normal)
-		} else {
-			self.libraryStatusButton?.setTitle("ADD", for: .normal)
+		if let libraryStatus = self.show.attributes.libraryStatus {
+			self.libraryStatus = libraryStatus
 		}
+		self.libraryStatusButton?.setTitle(self.libraryStatus != .none ? "\(self.libraryStatus.stringValue.capitalized) ▾" : "ADD", for: .normal)
 
 		// Add shadow
 		shadowView?.applyShadow()
@@ -83,20 +76,14 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBActions
 	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
 		WorkflowController.shared.isSignedIn {
-			guard let libraryStatusString = self.libraryStatus else { return }
-			guard let showID = self.showDetailsElement?.id else { return }
-			guard let userID = User.current?.id else { return }
-
-			let libraryStatus = KKLibrary.Status.fromString(libraryStatusString)
-			let alertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: libraryStatus, action: { (title, value)  in
-				guard let showID = self.showDetailsElement?.id else {return}
-
-				KService.addToLibrary(forUserID: userID, withLibraryStatus: value, showID: showID) { result in
+			let alertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: self.libraryStatus, action: { [weak self] (title, value)  in
+				guard let self = self else { return }
+				KService.addToLibrary(withLibraryStatus: value, showID: self.show.id) { [weak self] result in
+					guard let self = self else { return }
 					switch result {
 					case .success:
 						// Update entry in library
-						self.libraryStatus = value.stringValue
-						self.showDetailsElement?.currentUser?.libraryStatus = value.sectionValue
+						self.libraryStatus = value
 
 						let libraryUpdateNotificationName = Notification.Name("Update\(value.sectionValue)Section")
 						NotificationCenter.default.post(name: libraryUpdateNotificationName, object: nil)
@@ -108,12 +95,15 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 				}
 			})
 
-			if !libraryStatusString.isEmpty {
-				alertController.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { (_) in
-					KService.removeFromLibrary(forUserID: userID, showID: showID) { result in
+			if self.libraryStatus != .none {
+				alertController.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { [weak self] _ in
+					guard let self = self else { return }
+					KService.removeFromLibrary(showID: self.show.id) { [weak self] result in
+						guard let self = self else { return }
 						switch result {
-						case .success:
-							self.libraryStatus = ""
+						case .success(let libraryUpdate):
+							self.show.attributes.update(using: libraryUpdate)
+							self.libraryStatus = .none
 							self.libraryStatusButton?.setTitle("ADD", for: .normal)
 						case .failure:
 							break
@@ -140,12 +130,15 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 #if !targetEnvironment(macCatalyst)
 extension BaseLockupCollectionViewCell: UIViewControllerPreviewingDelegate {
 	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-		showDetailCollectionViewController = R.storyboard.showDetails.showDetailCollectionViewController()
-		showDetailCollectionViewController?.showDetailsElement = showDetailsElement
+		if let show = self.show {
+			showDetailCollectionViewController = R.storyboard.showDetails.showDetailCollectionViewController()
+			showDetailCollectionViewController?.showID = show.id
 
-		previewingContext.sourceRect = previewingContext.sourceView.bounds
+			previewingContext.sourceRect = previewingContext.sourceView.bounds
 
-		return showDetailCollectionViewController
+			return showDetailCollectionViewController
+		}
+		return nil
 	}
 
 	func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {

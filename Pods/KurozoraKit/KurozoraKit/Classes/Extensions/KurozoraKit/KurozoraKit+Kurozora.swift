@@ -1,6 +1,6 @@
 //
 //  KurozoraKit+Kurozora.swift
-//  Kurozora
+//  KurozoraKit
 //
 //  Created by Khoren Katklian on 29/09/2019.
 //  Copyright © 2019 Kurozora. All rights reserved.
@@ -16,16 +16,15 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getPrivacyPolicy(completion completionHandler: @escaping (_ result: Result<PrivacyPolicyElement, KKError>) -> Void) {
+	public func getPrivacyPolicy(completion completionHandler: @escaping (_ result: Result<PrivacyPolicy, KKAPIError>) -> Void) {
 		let privacyPolicy = self.kurozoraKitEndpoints.privacyPolicy
-		let request: APIRequest<PrivacyPolicy, KKError> = tron.swiftyJSON.request(privacyPolicy)
+		let request: APIRequest<PrivacyPolicyResponse, KKAPIError> = tron.codable.request(privacyPolicy)
 		request.headers = headers
 		request.method = .get
-		request.perform(withSuccess: { privacyPolicy in
-			if let privacyPolicy = privacyPolicy.privacyPolicy {
-				completionHandler(.success(privacyPolicy))
-			}
-		}, failure: { error in
+		request.perform(withSuccess: { privacyPolicyResponse in
+			completionHandler(.success(privacyPolicyResponse.data))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't get privacy policy 😔", subTitle: error.message)
 			}

@@ -15,7 +15,7 @@ class SearchSuggestionResultCell: UICollectionViewCell {
 	@IBOutlet weak var posterImageView: UIImageView?
 
 	// MARK: - Properties
-	var showDetailsElement: ShowDetailsElement? {
+	var show: Show! {
 		didSet {
 			configureCell()
 		}
@@ -24,11 +24,13 @@ class SearchSuggestionResultCell: UICollectionViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
-		guard let showDetailsElement = showDetailsElement else { return }
-		titleLabel?.text = showDetailsElement.title
+		titleLabel?.text = show.attributes.title
 
-		if let posterThumbnail = showDetailsElement.posterThumbnail {
-			posterImageView?.setImage(with: posterThumbnail, placeholder: R.image.placeholders.showPoster()!)
+		if let showPoster = show.attributes.poster {
+			if let backgroundColor = showPoster.backgroundColor {
+				posterImageView?.backgroundColor = UIColor(hexString: backgroundColor)
+			}
+			posterImageView?.setImage(with: showPoster.url, placeholder: R.image.placeholders.showPoster()!)
 		}
 	}
 }

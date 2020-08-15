@@ -20,51 +20,39 @@ class InformationCollectionViewCell: UICollectionViewCell {
 	var episodeDetailInformation: EpisodeDetail.Information = .id
 	var studioInformationSection: StudioInformationSection = .founded
 
-	var episodeElement: EpisodeElement? {
+	var episode: Episode! {
+		didSet {
+			configureCellWithEpisodeElement()
+		}
+	}
+	var show: Show! {
 		didSet {
 			configureCell()
 		}
 	}
-	var showDetailsElement: ShowDetailsElement? {
+	var studio: Studio! {
 		didSet {
-			configureCell()
-		}
-	}
-	var studioElement: StudioElement? {
-		didSet {
-			configureCell()
+			configureCellWithStudioElement()
 		}
 	}
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
-		guard let showDetailsElement = showDetailsElement else {
-			configureCellWithEpisodeElement()
-			return
-		}
-
 		titleLabel.text = showDetailInformation.stringValue
-		detailLabel.text = showDetailInformation.information(from: showDetailsElement)
-		separatorView.isHidden = showDetailInformation == .languages
+		detailLabel.text = showDetailInformation.information(from: show)
+		separatorView.isHidden = showDetailInformation == .duration
 	}
 
 	fileprivate func configureCellWithEpisodeElement() {
-		guard let episodeElement = episodeElement else {
-			configureCellWithStudioElement()
-			return
-		}
-
 		titleLabel.text = episodeDetailInformation.stringValue
-		detailLabel.text = episodeDetailInformation.information(from: episodeElement)
+		detailLabel.text = episodeDetailInformation.information(from: episode)
 		separatorView.isHidden = episodeDetailInformation == .airDate
 	}
 
 	fileprivate func configureCellWithStudioElement() {
-		guard let studioElement = studioElement else { return }
-
 		titleLabel.text = studioInformationSection.stringValue
-		detailLabel.text = studioInformationSection.information(from: studioElement)
+		detailLabel.text = studioInformationSection.information(from: studio)
 		separatorView.isHidden = studioInformationSection == .website
 	}
 }

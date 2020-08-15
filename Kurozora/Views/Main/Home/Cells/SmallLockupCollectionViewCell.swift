@@ -25,9 +25,10 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	// MARK: - Functions
 	override func configureCell() {
 		super.configureCell()
-		guard let showDetailsElement = showDetailsElement else { return }
+		guard let show = show else { return }
+		let score = show.attributes.averageRating
 
-		if let score = showDetailsElement.averageRating, score != 0 {
+		if score != 0.0 {
 			self.scoreButton?.setTitle(" \(score)", for: .normal)
 			// Change color based on score
 			if score >= 2.5 {

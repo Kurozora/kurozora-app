@@ -13,7 +13,7 @@ import UIKit
 
 	`ProfileImageView` adjusts some options to achieve its design, this includes:
 	- Applying a border width and border color.
-	- Presenting a default profile image if non is specified.
+	- Presenting a default profile image if none is specified.
 	- Rounding the image's corners.
 */
 class ProfileImageView: CircularImageView {

@@ -20,68 +20,51 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 	@IBOutlet weak var cosmosView: CosmosView!
 
 	// MARK: - Properties
-	var showDetailsElement: ShowDetailsElement? {
+	var show: Show! {
 		didSet {
-			if showDetailsElement != nil {
-				configureCell()
-			}
+			configureCell()
 		}
 	}
+	var libraryStatus: KKLibrary.Status = .none
 
 	// MARK: - Functions
 	override func configureCell() {
 		super.configureCell()
-		guard let showDetailsElement = showDetailsElement else { return }
+		primaryLabel.text = self.show.attributes.title
 
-		primaryLabel.text = showDetailsElement.title
+		searchImageView.image = self.show.attributes.posterImage
 
-		if let posterThumbnail = showDetailsElement.posterThumbnail {
-			searchImageView.setImage(with: posterThumbnail, placeholder: R.image.placeholders.showPoster()!)
-		}
-
-		statusLabel?.text = showDetailsElement.airStatus ?? "TBA"
+		statusLabel.text = show.attributes.airStatus
 
 		// Configure library status
-		if let libraryStatus = showDetailsElement.currentUser?.libraryStatus, !libraryStatus.isEmpty {
-			actionButton?.setTitle("\(libraryStatus.capitalized) ▾", for: .normal)
-		} else {
-			actionButton?.setTitle("ADD", for: .normal)
+		if let libraryStatus = self.show.attributes.libraryStatus {
+			self.libraryStatus = libraryStatus
 		}
+		actionButton?.setTitle(self.libraryStatus != .none ? "\(self.libraryStatus.stringValue.capitalized) ▾" : "ADD", for: .normal)
 
 		// Cinfigure rating
-		if let watchRating = showDetailsElement.watchRating, !watchRating.isEmpty {
-			showRatingLabel?.text = watchRating
-			showRatingLabel?.isHidden = false
-		} else {
-			showRatingLabel?.isHidden = true
-		}
+		showRatingLabel.text = show.attributes.watchRating
+		showRatingLabel.isHidden = false
 
 		// Configure episode count
-		if let episodeCount = showDetailsElement.episodes, episodeCount != 0 {
-			episodeCountLabel?.text = "\(episodeCount) \(episodeCount == 1 ? "Episode" : "Episodes")"
-			episodeCountLabel?.isHidden = false
-		} else {
-			episodeCountLabel?.isHidden = true
-		}
+		let episodeCount = show.attributes.episodeCount
+		episodeCountLabel.text = "\(episodeCount) \(episodeCount >= 1 ? "Episode" : "Episodes")"
+		episodeCountLabel.isHidden = episodeCount == 0
 
 		// Configure air date
-		if let yearAired = showDetailsElement.year?.string, !yearAired.isEmpty {
-			airDateLabel?.text = yearAired
-			airDateLabel?.isHidden = false
+		if let airYear = show.attributes.airYear {
+			airDateLabel.text = "\(airYear)"
+			airDateLabel.isHidden = false
 		} else {
-			airDateLabel?.isHidden = true
+			airDateLabel.isHidden = true
 		}
 
 		// Configure score
-		if let score = showDetailsElement.averageRating, score != 0 {
-			cosmosView?.rating = score
-			scoreLabel?.text = "\(score)"
-			cosmosView?.isHidden = false
-			scoreLabel?.isHidden = false
-		} else {
-			cosmosView?.isHidden = true
-			scoreLabel?.isHidden = true
-		}
+		let score = show.attributes.averageRating
+		cosmosView.rating = score
+		scoreLabel.text = "\(score)"
+		cosmosView.isHidden = score == 0
+		scoreLabel.isHidden = score == 0
 	}
 
 	// MARK: - IBActions
@@ -89,18 +72,15 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 		super.actionButtonPressed(sender)
 
 		WorkflowController.shared.isSignedIn {
-			guard let libraryStatusString = self.showDetailsElement?.currentUser?.libraryStatus else { return }
-			guard let showID = self.showDetailsElement?.id else { return }
-			guard let userID = User.current?.id else { return }
-
-			let libraryStatus = KKLibrary.Status.fromString(libraryStatusString)
-			let alertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: libraryStatus, action: { (title, value)  in
-				if libraryStatus != value {
-					KService.addToLibrary(forUserID: userID, withLibraryStatus: value, showID: showID) { result in
+			let alertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: self.libraryStatus, action: { [weak self] (title, value)  in
+				guard let self = self else { return }
+				if self.libraryStatus != value {
+					KService.addToLibrary(withLibraryStatus: value, showID: self.show.id) { [weak self] result in
+						guard let self = self else { return }
 						switch result {
 						case .success:
 							// Update entry in library
-							self.showDetailsElement?.currentUser?.libraryStatus = value.stringValue
+							self.libraryStatus = value
 
 							let libraryUpdateNotificationName = Notification.Name("Update\(value.sectionValue)Section")
 							NotificationCenter.default.post(name: libraryUpdateNotificationName, object: nil)
@@ -113,12 +93,15 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 				}
 			})
 
-			if !libraryStatusString.isEmpty {
-				alertController.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { (_) in
-					KService.removeFromLibrary(forUserID: userID, showID: showID) { result in
+			if self.libraryStatus != .none {
+				alertController.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { [weak self] _ in
+					guard let self = self else { return }
+					KService.removeFromLibrary(showID: self.show.id) { [weak self] result in
+						guard let self = self else { return }
 						switch result {
-						case .success:
-							self.showDetailsElement?.currentUser?.libraryStatus = ""
+						case .success(let libraryUpdate):
+							self.show.attributes.update(using: libraryUpdate)
+							self.libraryStatus = .none
 							self.actionButton?.setTitle("ADD", for: .normal)
 						case .failure:
 							break

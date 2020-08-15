@@ -10,17 +10,24 @@ import Foundation
 
 /**
 	The set of available forum order types.
-
-	```
-	case top = "top"
-	case recent = "recent"
-	```
 */
 public enum ForumOrder: String, CaseIterable {
 	// MARK: - Cases
-	/// Order by top interacted thread.
+	/// Order by the most well received resource.
+	case best
+
+	/// Order by the most liked resource.
 	case top
 
-	/// Order by most recent thread.
-	case recent
+	/// Order by the newly created resource at the top.
+	case new
+
+	/// Order by the oldest created resource.
+	case old
+
+	/// Order by the least liked resource.
+	case poor
+
+	/// Order by the least well received resource.
+	case controversial
 }

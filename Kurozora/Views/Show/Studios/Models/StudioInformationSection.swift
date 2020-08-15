@@ -57,16 +57,14 @@ enum StudioInformationSection: Int, CaseIterable {
 	/**
 		Returns the required information from the given object.
 
-		- Parameter studioElement: The object used to extract the infromation from.
+		- Parameter studio: The object used to extract the infromation from.
 
 		Returns: the required information from the given object.
 	*/
-	func information(from studioElement: StudioElement) -> String {
+	func information(from studio: Studio) -> String {
 		switch self {
 		case .founded:
-			if let founded = studioElement.founded, !founded.isEmpty {
-				return founded.mediumDate
-			}
+			return studio.attributes.founded?.mediumDate ?? "-"
 		case .headquarters: break
 		case .website: break
 		}

@@ -48,11 +48,12 @@ class SignInTableViewController: AccountOnboardingTableViewController {
 		guard let kurozoraID = textFieldArray.first??.trimmedText else { return }
 		guard let password = textFieldArray.last??.text else { return }
 
-		KService.signIn(kurozoraID, password) { result in
+		KService.signIn(kurozoraID, password) { [weak self] result in
+			guard let self = self else { return }
 			switch result {
 			case .success(let authenticationToken):
 				// Save user in keychain.
-				if let username = User.current?.username {
+				if let username = User.current?.attributes.username {
 					try? Kurozora.shared.keychain.set(authenticationToken, key: username)
 					UserSettings.set(username, forKey: .selectedAccount)
 				}
@@ -105,7 +106,8 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 //		print("Identity Token \(identityTokenString)")
 
 		guard let emailAddress = appleIDCredential.email else { return }
-		KService.register(withAppleUserID: appleIDCredential.user, emailAddress: emailAddress) { result in
+		KService.register(withAppleUserID: appleIDCredential.user, emailAddress: emailAddress) { [weak self] result in
+			guard let self = self else { return }
 			switch result {
 			case .success:
 //				if let registerTableViewController = R.storyboard.onboarding.registerTableViewController() {

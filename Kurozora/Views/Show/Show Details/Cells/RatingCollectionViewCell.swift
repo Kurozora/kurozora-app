@@ -27,7 +27,7 @@ class RatingCollectionViewCell: UICollectionViewCell {
 	}
 
 	// MARK: - Properties
-	var showDetailsElement: ShowDetailsElement? {
+	var show: Show! {
 		didSet {
 			configureCell()
 		}
@@ -36,12 +36,10 @@ class RatingCollectionViewCell: UICollectionViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
-		guard let showDetailsElement = showDetailsElement else { return }
-
-		// Configure cosmos view
-		if let userRating = showDetailsElement.currentUser?.currentRating {
-			self.cosmosView.rating = userRating
-		}
+//		// Configure cosmos view
+//		if let userRating = show.currentUser?.currentRating {
+//			self.cosmosView.rating = userRating
+//		}
 
 		cosmosView.didFinishTouchingCosmos = { rating in
 			WorkflowController.shared.isSignedIn {
@@ -54,14 +52,11 @@ class RatingCollectionViewCell: UICollectionViewCell {
         }
 
 		// Configure average rating
-		if let averageRating = showDetailsElement.averageRating {
-			ratingLabel.text = "\(averageRating)"
-		}
+		ratingLabel.text = "\(show.attributes.averageRating)"
 
 		// Configure rating count
-		if let ratingCount = showDetailsElement.ratingCount {
-			cosmosDetailLabel.text = ratingCount != 0 ? "\(ratingCount) Ratings" : "Not enough ratings"
-		}
+		let ratingCount = show.attributes.ratingCount
+		cosmosDetailLabel.text = ratingCount != 0 ? "\(ratingCount) Ratings" : "Not enough ratings"
 	}
 
 	/**
@@ -70,19 +65,17 @@ class RatingCollectionViewCell: UICollectionViewCell {
 		- Parameter rating: The rating to be saved when the show has been rated by the user.
 	*/
 	func rateShow(with rating: Double) {
-		guard let showID = showDetailsElement?.id else { return }
-
-		KService.rateShow(showID, with: rating) { result in
+		KService.rateShow(self.show.id, with: rating) { result in
 			switch result {
 			case .success:
-				// Update current rating for the user.
-				self.showDetailsElement?.currentUser?.currentRating = rating
+//				// Update current rating for the user.
+//				self.show?.currentUser?.currentRating = rating
 
 				// Show a success alert thanking the user for rating.
 				let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
 				let sclAlertView = SCLAlertView(appearance: appearance).showSuccess("Submitted", subTitle: "Thanks for your rating.")
 
-				DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+				DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
 					sclAlertView.close()
 				}
 			case .failure: break

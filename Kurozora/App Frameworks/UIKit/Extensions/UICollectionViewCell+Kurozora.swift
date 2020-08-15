@@ -9,13 +9,13 @@
 import UIKit
 
 extension UICollectionViewCell {
-	/// Returns an instance of the tableView containing the cell.
-	var parentCollectionView: UICollectionView? {
-		return (next as? UICollectionView) ?? (parentViewController as? UICollectionViewController)?.collectionView
-	}
+//	/// Returns an instance of the tableView containing the cell.
+//	var parentCollectionView: UICollectionView? {
+//		return (next as? UICollectionView) ?? (parentViewController as? UICollectionViewController)?.collectionView
+//	}
 
-	/// Returns the indexPath of the cell.
-	var indexPath: IndexPath? {
-		return parentCollectionView?.indexPathForItem(at: self.center)
-	}
+//	/// Returns the indexPath of the cell.
+//	var indexPath: IndexPath? {
+//		return parentCollectionView?.indexPathForItem(at: self.center)
+//	}
 }

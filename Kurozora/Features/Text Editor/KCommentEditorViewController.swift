@@ -9,10 +9,9 @@
 import UIKit
 import KurozoraKit
 import SCLAlertView
-import SwiftyJSON
 
 protocol KCommentEditorViewDelegate: class {
-	func updateReplies(with threadRepliesElement: ThreadRepliesElement)
+	func updateReplies(with threadReplies: [ThreadReply])
 }
 
 class KCommentEditorViewController: KViewController {
@@ -54,23 +53,21 @@ class KCommentEditorViewController: KViewController {
 	let characterLimit = 240
 	let placeholderText = "Reply..."
 
-	var forumsThreadElement: ForumsThreadElement?
+	var forumsThread: ForumsThread!
 	weak var delegate: KCommentEditorViewDelegate?
 
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		if let threadTitle = forumsThreadElement?.title {
-			threadTitleLabel.text = threadTitle
+		threadTitleLabel.text = forumsThread.attributes.title
+
+		if let user = forumsThread.relationships.user.data.first {
+			posterUsernameLabel.text = user.attributes.username
 		}
 
-		if let posterUsername = forumsThreadElement?.posterUsername {
-			posterUsernameLabel.text = posterUsername
-		}
-
-		profileImageView.image = User.current?.profileImage
-		currentUsernameLabel.text = User.current?.username
+		profileImageView.image = User.current?.attributes.profileImage
+		currentUsernameLabel.text = User.current?.attributes.username
 		characterCountLabel.text = "\(characterLimit)"
 		commentTextView.text = placeholderText
 		commentTextView.theme_textColor = KThemePicker.textFieldPlaceholderTextColor.rawValue
@@ -85,33 +82,19 @@ class KCommentEditorViewController: KViewController {
 
 	@IBAction func replyButtonPressed(_ sender: UIBarButtonItem) {
 		if let characterCount = characterCountLabel.text?.int, characterCount >= 0 {
-			guard let threadID = forumsThreadElement?.id else { return }
 			let comment = commentTextView.text.trimmed
 			if comment.isEmpty || comment == placeholderText && commentTextView.textColor == KThemePicker.textFieldPlaceholderTextColor.colorValue {
 				return
 			}
 
-			KService.postReply(inThread: threadID, withComment: comment) { (replyID) in
-				DispatchQueue.main.async {
-					guard let userID = User.current?.id else { return }
-					guard let username = User.current?.username else { return }
-					guard let profileImage = User.current?.profileImage else { return }
-
-					let postedAt = Date().string(withFormat: "yyyy-MM-dd HH:mm:ss")
-					let replyJSON: JSON = [
-						"id": replyID,
-						"posted_at": postedAt,
-						"poster": [
-							"id": userID,
-							"username": username,
-							"avatar_url": profileImage
-						],
-						"score": 0,
-						"content": comment
-					]
-					if let threadRepliesElement = try? ThreadRepliesElement(json: replyJSON) {
-						self.delegate?.updateReplies(with: threadRepliesElement)
+			KService.postReply(inThread: forumsThread.id, withComment: comment) { [weak self] result in
+				guard let self = self else { return }
+				switch result {
+				case .success(let threadReplies):
+					DispatchQueue.main.async {
+						self.delegate?.updateReplies(with: threadReplies)
 					}
+				case .failure: break
 				}
 				self.dismiss(animated: true, completion: nil)
 			}

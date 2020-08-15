@@ -11,19 +11,18 @@ import KurozoraKit
 
 class FeedTableViewController: KTableViewController {
 	// MARK: - Properties
+	var refreshController = UIRefreshControl()
+
 	var sectionTitle: String = ""
 	var sectionID: Int?
 	var sectionIndex: Int?
-	var feedPostElements: [FeedPostElement]? {
+	var feedPosts: [FeedPost] = [] {
 		didSet {
 			_prefersActivityIndicatorHidden = true
 			tableView.reloadData()
 		}
 	}
-
-	// Pagination
-	var totalPages = 0
-	var pageNumber = 0
+	var nextPageURL: String?
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -42,9 +41,11 @@ class FeedTableViewController: KTableViewController {
 		// Turn off activity indicator for now
 		_prefersActivityIndicatorHidden = true
 
-		refreshControl?.theme_tintColor = KThemePicker.tintColor.rawValue
-		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle) feed!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
-		refreshControl?.addTarget(self, action: #selector(refreshFeedsData(_:)), for: .valueChanged)
+		// Add Refresh Control to Table View
+		tableView.refreshControl = refreshController
+		refreshController.theme_tintColor = KThemePicker.tintColor.rawValue
+		refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle) feed!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+		refreshController.addTarget(self, action: #selector(refreshFeedsData(_:)), for: .valueChanged)
 
 		// Fetch feed posts.
 		DispatchQueue.global(qos: .background).async {
@@ -59,8 +60,8 @@ class FeedTableViewController: KTableViewController {
 		- Parameter sender: The object requesting the refresh.
 	*/
 	@objc private func refreshFeedsData(_ sender: Any) {
-		refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing your \(sectionTitle) feed...", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
-		pageNumber = 0
+		refreshController.attributedTitle = NSAttributedString(string: "Refreshing your \(sectionTitle) feed...", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+		self.nextPageURL = nil
 		fetchFeedPosts()
 	}
 
@@ -80,31 +81,31 @@ class FeedTableViewController: KTableViewController {
 	func fetchFeedPosts() {
 		guard let sectionID = sectionID else { return }
 
-		KService.getFeedPosts(forSection: sectionID, page: pageNumber) { result in
+		KService.getFeedPosts(forSection: sectionID, next: nextPageURL) { [weak self] result in
+			guard let self = self else { return }
+
 			switch result {
-			case .success(let feed):
+			case .success(let feedPostResponse):
 				DispatchQueue.main.async {
-					if let feedPages = feed.feedPages {
-						self.totalPages = feedPages
+					// Prepare `feedPosts` if necessary
+					if self.nextPageURL == nil {
+						self.feedPosts = []
 					}
 
-					if self.pageNumber == 0 {
-						self.feedPostElements = feed.posts
-						self.pageNumber += 1
-					} else if self.pageNumber <= self.totalPages - 1 {
-						for feedPostsElement in (feed.posts)! {
-							self.feedPostElements?.append(feedPostsElement)
-						}
-						self.pageNumber += 1
-					}
+					// Append new threads data and save next page url
+					self.feedPosts.append(contentsOf: feedPostResponse.data)
+					self.nextPageURL = feedPostResponse.next
 
-					self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your \(self.sectionTitle) feed!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+					// Reset refresh controller title
+					self.refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh your \(self.sectionTitle) feed!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
 				}
 			case .failure: break
 			}
 		}
 
-		self.refreshControl?.endRefreshing()
+		DispatchQueue.main.async {
+			self.refreshController.endRefreshing()
+		}
 	}
 
 	// MARK: - Segue
@@ -115,8 +116,7 @@ class FeedTableViewController: KTableViewController {
 // MARK: - UITableViewDataSource
 extension FeedTableViewController {
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		guard let threadsCount = feedPostElements?.count else { return 0 }
-		return threadsCount
+		return feedPosts.count
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -130,14 +130,13 @@ extension FeedTableViewController {
 // MARK: - UITableViewDelegate
 extension FeedTableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
 	}
 
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 		let numberOfRows = tableView.numberOfRows()
 
-		if indexPath.row == numberOfRows - 1 {
-			if pageNumber <= totalPages - 1 {
+		if indexPath.row == numberOfRows - 5 {
+			if nextPageURL != nil {
 				fetchFeedPosts()
 			}
 		}
@@ -146,15 +145,10 @@ extension FeedTableViewController {
 
 // MARK: - KRichTextEditorViewDelegate
 //extension FeedTableViewController: KRichTextEditorViewDelegate {
-//	func updateThreadsList(with thread: ForumsThreadElement) {
-//	}
-//
-//	func updateFeedPosts(with posts: FeedPostsElement) {
+//	func updateFeedPosts(with feedPosts: [FeedPost]) {
 //		DispatchQueue.main.async {
-//			if self.feedPosts == nil {
-//				self.feedPosts = [posts]
-//			} else {
-//				self.feedPosts?.prepend(posts)
+//			for feedPost in feedPosts {
+//				self.feedPosts.prepend(feedPost)
 //			}
 //		}
 //	}

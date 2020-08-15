@@ -14,11 +14,10 @@ PODS:
   - Kingfisher (5.14.1):
     - Kingfisher/Core (= 5.14.1)
   - Kingfisher/Core (5.14.1)
-  - KurozoraKit (0.9.14):
+  - KurozoraKit (0.10.0):
     - KeychainAccess
     - SCLAlertView (~> 0.10)
     - TRON
-    - TRON/SwiftyJSON
   - MarqueeLabel (4.0.2)
   - NotificationBannerSwift (3.0.2):
     - MarqueeLabel (~> 4.0.0)
@@ -62,12 +61,12 @@ PODS:
   - SwipeCellKit (2.7.1)
   - Tabman (2.9.1):
     - Pageboy (~> 3.6.0)
-  - TRON (5.1.0):
+  - TRON (5.2.0):
     - Alamofire (~> 5.0)
-    - TRON/Core (= 5.1.0)
-  - TRON/Core (5.1.0):
+    - TRON/Core (= 5.2.0)
+  - TRON/Core (5.2.0):
     - Alamofire (~> 5.0)
-  - TRON/SwiftyJSON (5.1.0):
+  - TRON/SwiftyJSON (5.2.0):
     - Alamofire (~> 5.0)
     - SwiftyJSON (~> 5.0)
     - TRON/Core
@@ -139,7 +138,7 @@ SPEC CHECKSUMS:
   IBPCollectionViewCompositionalLayout: 06cf9aa021fd80807385d5c49ece4364609a0c97
   KeychainAccess: 3f760109aa99b05d0f231e28b22642da7153e38a
   Kingfisher: 8050bc6f7f68cbf3908bd04df7ccbac188f6d6d6
-  KurozoraKit: 1cd696372d882b38c13ecb8c32fe0e3882016b89
+  KurozoraKit: 85f0b92bd0091c303ce8505c61df6ed35dc298da
   MarqueeLabel: f762aa681ae201f66c1d511858b171f75d83013a
   NotificationBannerSwift: 713e20f21b6105f4a36a00e5d9fa414a930d3d8e
   Pageboy: 29a2d474ad99404b4d77f325e0ab6d705930a4fb
@@ -155,7 +154,7 @@ SPEC CHECKSUMS:
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   SwipeCellKit: 3972254a826da74609926daf59b08d6c72e619ea
   Tabman: 085d89c65be9e883629bdaf5b1453a6397e57846
-  TRON: 7f00c8199730b353714948ac8e624accf9d341d7
+  TRON: 5297f36221736c8720c1dbff67c9b071ffa735e4
   UIImageColors: d2ef3b0877d203cbb06489eeb78ea8b7788caabe
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
 

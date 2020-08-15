@@ -11,11 +11,9 @@ import KurozoraKit
 
 class SearchUserResultsCell: SearchBaseResultsCell {
 	// MARK: - Properties
-	var userProfile: UserProfile? = nil {
+	var user: User! {
 		didSet {
-			if userProfile != nil {
-				configureCell()
-			}
+			configureCell()
 		}
 	}
 	var searchImageViewSize: CGSize = .zero
@@ -23,57 +21,64 @@ class SearchUserResultsCell: SearchBaseResultsCell {
 	// MARK: - Functions
 	override func configureCell() {
 		super.configureCell()
-		guard let userProfile = userProfile else { return }
 
-		primaryLabel.text = userProfile.username
+		primaryLabel.text = user.attributes.username
 
 		// Configure follow status
 		updateFollowStatusLabel()
 
 		// Configure profile image
 		searchImageView.borderColor = UIColor.white.withAlphaComponent(0.20)
-		searchImageView.image = userProfile.profileImage
+		searchImageView.image = user.attributes.profileImage
 
 		// Configure follow button
-		if userProfile.id == User.current?.id {
-			actionButton?.isHidden = true
-		} else {
-			if userProfile.following ?? false {
-				actionButton?.setTitle("✓ Following", for: .normal)
-			} else {
-				actionButton?.setTitle("＋ Follow", for: .normal)
-			}
+		updateFollowButton()
+	}
 
-			actionButton?.isHidden = false
+	/// Updated the `actionButton` with the follow status of the user.
+	fileprivate func updateFollowButton() {
+		let followStatus = self.user.attributes.followStatus
+		switch followStatus {
+		case .followed:
+			self.actionButton?.setTitle("＋ Follow", for: .normal)
+			self.actionButton?.isHidden = false
+			self.actionButton?.isUserInteractionEnabled = true
+		case  .notFollowed:
+			self.actionButton?.setTitle("✓ Following", for: .normal)
+			self.actionButton?.isHidden = false
+			self.actionButton?.isUserInteractionEnabled = true
+		case .disabled:
+			self.actionButton?.setTitle("＋ Follow", for: .normal)
+			self.actionButton?.isHidden = true
+			self.actionButton?.isUserInteractionEnabled = false
 		}
 	}
 
 	/// Updates the (`secondaryLabel`) follow status label.
 	fileprivate func updateFollowStatusLabel() {
-		guard let userProfile = userProfile else { return }
-
-		if let followerCount = userProfile.followerCount, let userID = User.current?.id {
-			var secondaryLabelText = userProfile.id == userID ? "You, followed by you!" : "Be the first to follow!"
+		if let userID = User.current?.id {
+			let followerCount = user.attributes.followerCount
+			var secondaryLabelText = user.id == userID ? "You, followed by you!" : "Be the first to follow!"
 
 			switch followerCount {
 			case 0: break
 			case 1:
-				if userProfile.id == userID {
+				if user.id == userID {
 					secondaryLabelText = "Followed by you... and one fan!"
 				} else {
-					secondaryLabelText = userProfile.following ?? false ? "Followed by you." :  "Followed by one user."
+					secondaryLabelText = user.attributes.followStatus == .followed ? "Followed by you." :  "Followed by one user."
 				}
 			case 2...999:
-				if userProfile.id == userID {
+				if user.id == userID {
 					secondaryLabelText = "Followed by you and \(followerCount) fans."
 				} else {
-					secondaryLabelText = userProfile.following ?? false ? "Followed by you and (\(followerCount) users." :  "Followed by \(followerCount) users."
+					secondaryLabelText = user.attributes.followStatus == .followed ? "Followed by you and (\(followerCount) users." :  "Followed by \(followerCount) users."
 				}
 			default:
-				if userProfile.id == userID {
+				if user.id == userID {
 					secondaryLabelText = "Followed by \(followerCount.kFormatted) fans."
 				} else {
-					secondaryLabelText = userProfile.following ?? false ? "Followed by you and (\((followerCount - 1).kFormatted)) users." : "Followed by \(followerCount.kFormatted) users."
+					secondaryLabelText = user.attributes.followStatus == .followed ? "Followed by you and (\((followerCount - 1).kFormatted)) users." : "Followed by \(followerCount.kFormatted) users."
 				}
 			}
 
@@ -86,26 +91,15 @@ class SearchUserResultsCell: SearchBaseResultsCell {
 		super.actionButtonPressed(sender)
 
 		WorkflowController.shared.isSignedIn {
-			let followStatus: FollowStatus = self.userProfile?.following ?? false ? .unfollow : .follow
-
-			if let userID = self.userProfile?.id {
-				KService.updateFollowStatus(userID, withFollowStatus: followStatus) { result in
-					switch result {
-					case .success:
-						if followStatus == .unfollow {
-							sender.setTitle("＋ Follow", for: .normal)
-							self.userProfile?.following = false
-							self.userProfile?.followerCount = (self.userProfile?.followerCount ?? 1) - 1
-						} else {
-							sender.setTitle("✓ Following", for: .normal)
-							self.userProfile?.following = true
-							self.userProfile?.followerCount = (self.userProfile?.followerCount ?? 0) + 1
-						}
-
-						self.updateFollowStatusLabel()
-					case .failure:
-						break
-					}
+			KService.updateFollowStatus(self.user.id) { [weak self] result in
+				guard let self = self else { return }
+				switch result {
+				case .success(let followUpdate):
+					self.user.attributes.update(using: followUpdate)
+					self.updateFollowButton()
+					self.updateFollowStatusLabel()
+				case .failure:
+					break
 				}
 			}
 		}

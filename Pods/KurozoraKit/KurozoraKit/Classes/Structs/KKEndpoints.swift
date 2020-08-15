@@ -216,6 +216,16 @@ internal struct KKEndpoints {
 	/// **Replace:** `?` with the id of the user.
 	let usersFavoriteAnime = "users/?/favorite-anime"
 
+	/// The endpoint to add or remove shows from the user's reminder shows list.
+	///
+	/// **Replace:** `?` with the id of the user.
+	let usersReminderAnime = "users/?/reminder-anime"
+
+	/// The endpoint to download the user's reminder shows list calendar.
+	///
+	/// **Replace:** `?` with the id of the user.
+	let usersReminderAnimeDownload = "users/?/reminder-anime/download"
+
 	/// The endpoint to the user's notification list.
 	///
 	/// **Replace:** `?` with the id of the user.
@@ -224,7 +234,7 @@ internal struct KKEndpoints {
 	/// The endpoint to follow or unfollow a user.
 	///
 	/// **Replace:** `?` with the id of the user.
-	let usersFolllow = "users/?/follow"
+	let usersFollow = "users/?/follow"
 
 	/// The endpoint to the user's followers list.
 	///

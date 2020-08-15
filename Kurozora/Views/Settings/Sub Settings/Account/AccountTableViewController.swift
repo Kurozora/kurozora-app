@@ -14,11 +14,7 @@ class AccountTableViewController: SubSettingsViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var profileImageView: ProfileImageView!
 	@IBOutlet weak var usernameLabel: KLabel!
-	@IBOutlet weak var userEmailLabel: UILabel! {
-		didSet {
-			self.userEmailLabel.theme_textColor = KThemePicker.subTextColor.rawValue
-		}
-	}
+	@IBOutlet weak var userEmailLabel: KSecondaryLabel!
 
 	// MARK: - View
 	override func viewWillReload() {
@@ -37,13 +33,13 @@ class AccountTableViewController: SubSettingsViewController {
 	/// Configures the view with the user's details.
 	func configureUserDetails() {
 		// Setup username.
-		self.usernameLabel.text = User.current?.username
+		self.usernameLabel.text = User.current?.attributes.username
 
 		// Setup email address.
-		self.userEmailLabel.text = User.current?.kurozoraID
+		self.userEmailLabel.text = User.current?.attributes.email
 
 		// Setup profile image.
-		self.profileImageView.image = User.current?.profileImage
+		self.profileImageView.image = User.current?.attributes.profileImage
 	}
 
 	// MARK: - Segue
@@ -70,11 +66,11 @@ extension AccountTableViewController {
 //		case (0, 0): break
 //		case (1, 0): break
 		case (2, 0):
-			let username = User.current?.username ?? ""
+			let username = User.current?.attributes.username ?? ""
 			let alertView = SCLAlertView()
 			alertView.addButton("Yes, sign me out 🤨", action: {
 				if User.isSignedIn {
-					guard let sessionID = User.current?.session?.id else { return }
+					guard let sessionID = User.current?.relationships?.sessions?.data.first?.id else { return }
 					KService.signOut(ofSessionID: sessionID) { result in
 						switch result {
 						case .success:

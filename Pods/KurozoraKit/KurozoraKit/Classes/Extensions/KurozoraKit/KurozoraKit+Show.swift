@@ -1,6 +1,6 @@
 //
 //  KurozoraKit+Show.swift
-//  Kurozora
+//  KurozoraKit
 //
 //  Created by Khoren Katklian on 29/09/2019.
 //  Copyright © 2019 Kurozora. All rights reserved.
@@ -19,9 +19,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getExplore(_ genreID: Int? = nil, completion completionHandler: @escaping (_ result: Result<Explore, KKError>) -> Void) {
+	public func getExplore(_ genreID: Int? = nil, completion completionHandler: @escaping (_ result: Result<[ExploreCategory], KKAPIError>) -> Void) {
 		let explore = self.kurozoraKitEndpoints.explore
-		let request: APIRequest<Explore, KKError> = tron.swiftyJSON.request(explore)
+		let request: APIRequest<ExploreCategoryResponse, KKAPIError> = tron.codable.request(explore)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -37,13 +37,17 @@ extension KurozoraKit {
 		}
 
 		request.method = .get
-		request.perform(withSuccess: { explore in
-			completionHandler(.success(explore))
-		}, failure: { error in
+		request.perform(withSuccess: { exploreCategoryResponse in
+			completionHandler(.success(exploreCategoryResponse.data))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't get explore page 😔", subTitle: error.message)
 			}
-			print("Received explore error: \(error.message ?? "No message available")")
+			print("❌ Received explore error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}
@@ -52,28 +56,35 @@ extension KurozoraKit {
 		Fetch the show details for the given show id.
 
 		- Parameter showID: The id of the show for which the details should be fetched.
+		- Parameter relationships: The relationships to include in the response.
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getDetails(forShowID showID: Int, completion completionHandler: @escaping (_ result: Result<ShowDetailsElement, KKError>) -> Void) {
+	public func getDetails(forShowID showID: Int, including relationships: [String] = [], completion completionHandler: @escaping (_ result: Result<[Show], KKAPIError>) -> Void) {
 		let anime = self.kurozoraKitEndpoints.anime.replacingOccurrences(of: "?", with: "\(showID)")
-		let request: APIRequest<ShowDetails, KKError> = tron.swiftyJSON.request(anime)
+		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(anime)
 
 		request.headers = headers
 		if User.isSignedIn {
 			request.headers["kuro-auth"] = self.authenticationKey
 		}
 
+		if !relationships.isEmpty {
+			request.parameters["include"] = relationships.joined(separator: ",")
+		}
+
 		request.method = .get
-		request.perform(withSuccess: { showDetails in
-			DispatchQueue.main.async {
-				completionHandler(.success(showDetails.showDetailsElement ?? ShowDetailsElement()))
-			}
-		}, failure: { error in
+		request.perform(withSuccess: { showResponse in
+			completionHandler(.success(showResponse.data))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't get show details 😔", subTitle: error.message)
 			}
-			print("Received get details error: \(error.message ?? "No message available")")
+			print("❌ Received get details error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}
@@ -85,18 +96,22 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getActors(forShowID showID: Int, completion completionHandler: @escaping (_ result: Result<[ActorElement], KKError>) -> Void) {
+	public func getActors(forShowID showID: Int, completion completionHandler: @escaping (_ result: Result<[Actor], KKAPIError>) -> Void) {
 		let animeActors = self.kurozoraKitEndpoints.animeActors.replacingOccurrences(of: "?", with: "\(showID)")
-		let request: APIRequest<Actors, KKError> = tron.swiftyJSON.request(animeActors)
+		let request: APIRequest<ActorResponse, KKAPIError> = tron.codable.request(animeActors)
 		request.headers = headers
 		request.method = .get
-		request.perform(withSuccess: { actors in
-			completionHandler(.success(actors.actors ?? []))
-		}, failure: { error in
+		request.perform(withSuccess: { actorResponse in
+			completionHandler(.success(actorResponse.data))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't get actors list 😔", subTitle: error.message)
 			}
-			print("Received get actros error: \(error.message ?? "No message available")")
+			print("❌ Received get actros error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}
@@ -108,18 +123,22 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getCast(forShowID showID: Int, completion completionHandler: @escaping (_ result: Result<[CastElement], KKError>) -> Void) {
+	public func getCast(forShowID showID: Int, completion completionHandler: @escaping (_ result: Result<[Cast], KKAPIError>) -> Void) {
 		let animeActors = self.kurozoraKitEndpoints.animeCast.replacingOccurrences(of: "?", with: "\(showID)")
-		let request: APIRequest<Cast, KKError> = tron.swiftyJSON.request(animeActors)
+		let request: APIRequest<CastResponse, KKAPIError> = tron.codable.request(animeActors)
 		request.headers = headers
 		request.method = .get
-		request.perform(withSuccess: { cast in
-			completionHandler(.success(cast.cast ?? []))
-		}, failure: { error in
+		request.perform(withSuccess: { castResponse in
+			completionHandler(.success(castResponse.data))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't get cast list 😔", subTitle: error.message)
 			}
-			print("Received get cast error: \(error.message ?? "No message available")")
+			print("❌ Received get cast error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}
@@ -131,18 +150,22 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getCharacters(forShowID showID: Int, completion completionHandler: @escaping (_ result: Result<[CharacterElement], KKError>) -> Void) {
+	public func getCharacters(forShowID showID: Int, completion completionHandler: @escaping (_ result: Result<[Character], KKAPIError>) -> Void) {
 		let animeActors = self.kurozoraKitEndpoints.animeCharacters.replacingOccurrences(of: "?", with: "\(showID)")
-		let request: APIRequest<Characters, KKError> = tron.swiftyJSON.request(animeActors)
+		let request: APIRequest<CharacterResponse, KKAPIError> = tron.codable.request(animeActors)
 		request.headers = headers
 		request.method = .get
-		request.perform(withSuccess: { characters in
-			completionHandler(.success(characters.characters ?? []))
-		}, failure: { error in
+		request.perform(withSuccess: { characterResponse in
+			completionHandler(.success(characterResponse.data))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't get characters list 😔", subTitle: error.message)
 			}
-			print("Received get characters error: \(error.message ?? "No message available")")
+			print("❌ Received get characters error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}
@@ -154,18 +177,22 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getSeasons(forShowID showID: Int, completion completionHandler: @escaping (_ result: Result<[SeasonElement], KKError>) -> Void) {
+	public func getSeasons(forShowID showID: Int, completion completionHandler: @escaping (_ result: Result<[Season], KKAPIError>) -> Void) {
 		let animeSeasons = self.kurozoraKitEndpoints.animeSeasons.replacingOccurrences(of: "?", with: "\(showID)")
-		let request: APIRequest<Seasons, KKError> = tron.swiftyJSON.request(animeSeasons)
+		let request: APIRequest<SeasonResponse, KKAPIError> = tron.codable.request(animeSeasons)
 		request.headers = headers
 		request.method = .get
-		request.perform(withSuccess: { seasons in
-			completionHandler(.success(seasons.seasons ?? []))
-		}, failure: { error in
+		request.perform(withSuccess: { seasonResponse in
+			completionHandler(.success(seasonResponse.data))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't get seasons list 😔", subTitle: error.message)
 			}
-			print("Received get show seasons error: \(error.message ?? "No message available")")
+			print("❌ Received get show seasons error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}
@@ -178,9 +205,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func rateShow(_ showID: Int, with score: Double, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKError>) -> Void) {
+	public func rateShow(_ showID: Int, with score: Double, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) {
 		let animeRate = self.kurozoraKitEndpoints.animeRate.replacingOccurrences(of: "?", with: "\(showID)")
-		let request: APIRequest<KKSuccess, KKError> = tron.swiftyJSON.request(animeRate)
+		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(animeRate)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -193,11 +220,15 @@ extension KurozoraKit {
 		]
 		request.perform(withSuccess: { success in
 			completionHandler(.success(success))
-		}, failure: { error in
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't rate this show 😔", subTitle: error.message)
 			}
-			print("Received rating error: \(error.message ?? "No message available")")
+			print("❌ Received rating error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}
@@ -209,9 +240,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func search(forShow show: String, completion completionHandler: @escaping (_ result: Result<[ShowDetailsElement], KKError>) -> Void) {
+	public func search(forShow show: String, completion completionHandler: @escaping (_ result: Result<[Show], KKAPIError>) -> Void) {
 		let animeSearch = self.kurozoraKitEndpoints.animeSearch
-		let request: APIRequest<Search, KKError> = tron.swiftyJSON.request(animeSearch)
+		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(animeSearch)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -222,13 +253,16 @@ extension KurozoraKit {
 		request.parameters = [
 			"query": show
 		]
-		request.perform(withSuccess: { search in
-			completionHandler(.success(search.showResults ?? []))
+		request.perform(withSuccess: { showResponse in
+			completionHandler(.success(showResponse.data))
 		}, failure: { error in
 //			if self.services.showAlerts {
 //				SCLAlertView().showError("Can't get search results 😔", subTitle: error.message)
 //			}
-			print("Received show search error: \(error.message ?? "No message available")")
+			print("❌ Received show search error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}

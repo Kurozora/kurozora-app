@@ -13,7 +13,7 @@ import WhatsNew
 class HomeCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var kSearchController: KSearchController = KSearchController()
-	var genreElement: GenreElement? = nil
+	var genre: Genre? = nil
 	let actionsArray: [[[String: String]]] = [
 		[["title": "About In-App Purchases", "url": "https://kurozora.app/"], ["title": "About Personalization", "url": "https://kurozora.app/"], ["title": "Welcome to Kurozora", "url": "https://kurozora.app/"]],
 		[["title": "Redeem", "segueId": R.segue.homeCollectionViewController.redeemSegue.identifier], ["title": "Become a Pro User", "segueId": R.segue.homeCollectionViewController.subscriptionSegue.identifier]]
@@ -21,7 +21,7 @@ class HomeCollectionViewController: KCollectionViewController {
 
 	var dataSource: UICollectionViewDiffableDataSource<Int, Int>! = nil
 	var snapshot: NSDiffableDataSourceSnapshot<Int, Int>! = nil
-	var exploreCategories: [ExploreCategory]? = nil {
+	var exploreCategories: [ExploreCategory] = [] {
 		didSet {
 			_prefersActivityIndicatorHidden = true
 			configureDataSource()
@@ -42,14 +42,14 @@ class HomeCollectionViewController: KCollectionViewController {
 	override func viewWillReload() {
 		super.viewWillReload()
 
-		if exploreCategories != nil {
+		if exploreCategories.count != 0 {
 			fetchExplore()
 		}
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		self.title = genreElement?.name ?? "Explore"
+		self.title = genre?.attributes.name ?? "Explore"
 	}
 
 	override func viewDidLoad() {
@@ -149,12 +149,11 @@ class HomeCollectionViewController: KCollectionViewController {
 
 	/// Fetches the explore page from the server.
 	fileprivate func fetchExplore() {
-		KService.getExplore(genreElement?.id) { result in
+		KService.getExplore(genre?.id) { [weak self] result in
+			guard let self = self else { return }
 			switch result {
-			case .success(let explore):
-				DispatchQueue.main.async {
-					self.exploreCategories = explore.categories
-				}
+			case .success(let exploreCategories):
+				self.exploreCategories = exploreCategories
 			case .failure: break
 			}
 		}
@@ -165,23 +164,22 @@ class HomeCollectionViewController: KCollectionViewController {
 		if segue.identifier == R.segue.homeCollectionViewController.showDetailsSegue.identifier {
 			// Show detail for explore cell
 			if let showDetailCollectionViewController = segue.destination as? ShowDetailCollectionViewController {
-				if let selectedCell = sender as? BaseLockupCollectionViewCell {
-					showDetailCollectionViewController.showDetailsElement = selectedCell.showDetailsElement
-				} else if let showID = sender as? Int {
+				if let showID = sender as? Int {
 					showDetailCollectionViewController.showID = showID
 				}
 			}
 		} else if segue.identifier == R.segue.homeCollectionViewController.exploreSegue.identifier {
 			// Show explore view with specified genre
 			if let homeCollectionViewController = segue.destination as? HomeCollectionViewController {
-				if let selectedCell = sender as? BaseLockupCollectionViewCell {
-					homeCollectionViewController.genreElement = selectedCell.genreElement
+				if let genre = sender as? Genre {
+					homeCollectionViewController.genre = genre
 				}
 			}
-		} else if segue.identifier == R.segue.homeCollectionViewController.showsListSegue.identifier {
-			if let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController {
+		} else if segue.identifier == R.segue.homeCollectionViewController.showListSegue.identifier {
+			if let showListCollectionViewController = segue.destination as? ShowListCollectionViewController {
 				if let indexPath = sender as? IndexPath {
-					showsListCollectionViewController.exploreCategory = exploreCategories?[indexPath.section]
+					showListCollectionViewController.title = exploreCategories[indexPath.section].attributes.title
+					showListCollectionViewController.shows = exploreCategories[indexPath.section].relationships.shows?.data ?? []
 				}
 			}
 		}
@@ -191,8 +189,7 @@ class HomeCollectionViewController: KCollectionViewController {
 // MARK: - UICollectionViewDelegate
 extension HomeCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-		guard let exploreCategoriesCount = exploreCategories?.count else { return }
-		if indexPath.section < exploreCategoriesCount {
+		if indexPath.section < exploreCategories.count {
 			let cell = collectionView.cellForItem(at: indexPath)
 			UIView.animate(withDuration: 0.5,
 						   delay: 0.0,
@@ -206,8 +203,7 @@ extension HomeCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-		guard let exploreCategoriesCount = exploreCategories?.count else { return }
-		if indexPath.section < exploreCategoriesCount {
+		if indexPath.section < exploreCategories.count {
 			let cell = collectionView.cellForItem(at: indexPath)
 			UIView.animate(withDuration: 0.5,
 						   delay: 0.0,
@@ -222,10 +218,10 @@ extension HomeCollectionViewController {
 
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if let baseLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? BaseLockupCollectionViewCell {
-			if exploreCategories?[indexPath.section].genres?.count == 0 {
-				performSegue(withIdentifier: R.segue.homeCollectionViewController.showDetailsSegue, sender: baseLockupCollectionViewCell)
+			if self.exploreCategories[indexPath.section].relationships.shows != nil {
+				performSegue(withIdentifier: R.segue.homeCollectionViewController.showDetailsSegue, sender: baseLockupCollectionViewCell.show?.id)
 			} else {
-				performSegue(withIdentifier: R.segue.homeCollectionViewController.exploreSegue, sender: baseLockupCollectionViewCell)
+				performSegue(withIdentifier: R.segue.homeCollectionViewController.exploreSegue, sender: baseLockupCollectionViewCell.genre)
 			}
 		} else if let legalCollectionViewCell = collectionView.cellForItem(at: indexPath) as? LegalCollectionViewCell {
 			performSegue(withIdentifier: R.segue.homeCollectionViewController.legalSegue, sender: legalCollectionViewCell)
@@ -276,23 +272,20 @@ extension HomeCollectionViewController {
 	}
 
 	override func configureDataSource() {
-		self.dataSource = UICollectionViewDiffableDataSource<Int, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, _) -> UICollectionViewCell? in
-			if indexPath.section < self.exploreCategories?.count ?? 0 {
+		self.dataSource = UICollectionViewDiffableDataSource<Int, Int>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, _) -> UICollectionViewCell? in
+			guard let self = self else { return nil }
+			if indexPath.section < self.exploreCategories.count {
 				// Get a cell of the desired kind.
-				let cellStyle = self.exploreCategories?[indexPath.section].size ?? "small"
-				var horizontalCollectionCellStyle: HorizontalCollectionCellStyle = HorizontalCollectionCellStyle(rawValue: cellStyle) ?? .small
-				if indexPath.section == 0 {
-					horizontalCollectionCellStyle = .banner
-				}
-				guard let baseLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: horizontalCollectionCellStyle.identifierString, for: indexPath) as? BaseLockupCollectionViewCell
-					else { fatalError("Cannot dequeue reusable cell with identifier \(horizontalCollectionCellStyle.identifierString)") }
+				let exploreCategorySize = indexPath.section != 0 ? self.exploreCategories[indexPath.section].attributes.exploreCategorySize : .banner
+				guard let baseLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: exploreCategorySize.identifierString, for: indexPath) as? BaseLockupCollectionViewCell
+					else { fatalError("Cannot dequeue reusable cell with identifier \(exploreCategorySize.identifierString)") }
 
 				// Populate the cell with our item description.
-				let exploreCategoriesSection = self.exploreCategories?[indexPath.section]
-				if let shows = exploreCategoriesSection?.shows, shows.count != 0 {
-					baseLockupCollectionViewCell.showDetailsElement = shows[indexPath.row]
+				let exploreCategoriesSection = self.exploreCategories[indexPath.section]
+				if let shows = exploreCategoriesSection.relationships.shows?.data {
+					baseLockupCollectionViewCell.show = shows[indexPath.row]
 				} else {
-					baseLockupCollectionViewCell.genreElement = exploreCategoriesSection?.genres?[indexPath.row]
+					baseLockupCollectionViewCell.genre = exploreCategoriesSection.relationships.genres?.data[indexPath.row]
 				}
 
 				// Return the cell.
@@ -316,20 +309,20 @@ extension HomeCollectionViewController {
 			return actionBaseExploreCollectionViewCell
 		}
 		dataSource.supplementaryViewProvider = { (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
-			let exploreCategoriesCount = self.exploreCategories?.count ?? 0
+			let exploreCategoriesCount = self.exploreCategories.count
 
 			// Get a supplementary view of the desired kind.
 			let exploreSectionTitleCell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
 			exploreSectionTitleCell.indexPath = indexPath
 
 			if indexPath.section < exploreCategoriesCount {
-				let sectionTitle = self.exploreCategories?[indexPath.section].title ?? ""
+				let sectionTitle = self.exploreCategories[indexPath.section].attributes.title
 				if sectionTitle.contains("categories", caseSensitive: false) || sectionTitle.contains("genres", caseSensitive: false) {
 					exploreSectionTitleCell.segueID = R.segue.homeCollectionViewController.genresSegue.identifier
 				} else {
-					exploreSectionTitleCell.segueID = R.segue.homeCollectionViewController.showsListSegue.identifier
+					exploreSectionTitleCell.segueID = R.segue.homeCollectionViewController.showListSegue.identifier
 				}
-				exploreSectionTitleCell.title = self.exploreCategories?[indexPath.section].title
+				exploreSectionTitleCell.title = self.exploreCategories[indexPath.section].attributes.title
 			} else {
 				exploreSectionTitleCell.segueID = ""
 				exploreSectionTitleCell.title = "Quick Links"
@@ -340,8 +333,7 @@ extension HomeCollectionViewController {
 		}
 
 		let numberOfSections: Int = {
-			let exploreCategoriesCount = exploreCategories?.count ?? 0
-			return exploreCategoriesCount + 2
+			return exploreCategories.count + 2
 		}()
 
 		// Initialize data
@@ -350,11 +342,11 @@ extension HomeCollectionViewController {
 		var itemsPerSection = 0
 
 		for section in 0...numberOfSections {
-			if section < exploreCategories?.count ?? 0 {
-				let exploreCategoriesSection = exploreCategories?[section]
-				itemsPerSection = exploreCategoriesSection?.shows?.count ?? 0
+			if section < exploreCategories.count {
+				let exploreCategoriesSection = exploreCategories[section]
+				itemsPerSection = exploreCategoriesSection.relationships.shows?.data.count ?? 0
 				if itemsPerSection == 0 {
-					itemsPerSection = exploreCategoriesSection?.genres?.count ?? 0
+					itemsPerSection = exploreCategoriesSection.relationships.genres?.data.count ?? 0
 				}
 			} else if section == numberOfSections - 2 {
 				itemsPerSection = actionsArray.first?.count ?? itemsPerSection
@@ -379,13 +371,11 @@ extension HomeCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
 		var columnCount = 0
-		let exploreCategoriesCount = self.exploreCategories?.count ?? 0
+		let exploreCategoriesCount = self.exploreCategories.count
 		switch section {
 		case let section where section < exploreCategoriesCount:
-			let horizontalCollectionCellStyleString = self.exploreCategories?[section].size ?? "small"
-			let horizontalCollectionCellStyle: HorizontalCollectionCellStyle = section != 0 ? HorizontalCollectionCellStyle(rawValue: horizontalCollectionCellStyleString) ?? .small : .banner
-
-			switch horizontalCollectionCellStyle {
+			let exploreCategorySize = section != 0 ? self.exploreCategories[section].attributes.exploreCategorySize : .banner
+			switch exploreCategorySize {
 			case .banner:
 				if width >= 414 {
 					columnCount = (width / 562).rounded().int
@@ -446,10 +436,8 @@ extension HomeCollectionViewController {
 	}
 
 	override func groupHeightFraction(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> CGFloat {
-		let horizontalCollectionCellStyleString = self.exploreCategories?[section].size ?? "small"
-		let horizontalCollectionCellStyle: HorizontalCollectionCellStyle = section != 0 ? HorizontalCollectionCellStyle(rawValue: horizontalCollectionCellStyleString) ?? .small : .banner
-
-		switch horizontalCollectionCellStyle {
+		let exploreCategorySize = section != 0 ? self.exploreCategories[section].attributes.exploreCategorySize : .banner
+		switch exploreCategorySize {
 		case .banner:
 			return (0.55 / columnsCount.double).cgFloat
 		case .large:
@@ -472,7 +460,7 @@ extension HomeCollectionViewController {
 
 	override func contentInset(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
 		let width = layoutEnvironment.container.effectiveContentSize.width
-		let exploreCategoriesCount = self.exploreCategories?.count ?? 0
+		let exploreCategoriesCount = self.exploreCategories.count
 
 		switch section {
 		case let section where section < exploreCategoriesCount:
@@ -514,7 +502,7 @@ extension HomeCollectionViewController {
 
 	override func createLayout() -> UICollectionViewLayout {
 		return UICollectionViewCompositionalLayout { section, layoutEnvironment -> NSCollectionLayoutSection? in
-			let exploreCategoriesCount = self.exploreCategories?.count ?? 0
+			let exploreCategoriesCount = self.exploreCategories.count
 			switch section {
 			case let section where section < exploreCategoriesCount:
 				// Configure section.

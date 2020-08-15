@@ -12,7 +12,7 @@ import Cosmos
 
 class EpisodeDetailCollectionViewControlle: KCollectionViewController {
 	// MARK: - Properties
-	var episodeElement: EpisodeElement? {
+	var episode: Episode! {
 		didSet {
 			_prefersActivityIndicatorHidden = true
 		}
@@ -32,7 +32,7 @@ class EpisodeDetailCollectionViewControlle: KCollectionViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = episodeElement?.name
+		self.title = episode.attributes.title
 	}
 }
 
@@ -89,18 +89,18 @@ extension EpisodeDetailCollectionViewControlle {
 		case .header:
 			let episodeLockupCollectionViewCell = cell as? EpisodeLockupCollectionViewCell
 			episodeLockupCollectionViewCell?.simpleModeEnabled = true
-			episodeLockupCollectionViewCell?.episodeElement = episodeElement
+			episodeLockupCollectionViewCell?.episode = episode
 		case .synopsis:
 			let textViewCollectionViewCell = cell as? TextViewCollectionViewCell
 			textViewCollectionViewCell?.textViewCollectionViewCellType = .synopsis
-			textViewCollectionViewCell?.textViewContent = episodeElement?.overview
+			textViewCollectionViewCell?.textViewContent = episode.attributes.overview
 //		case .rating:
 //			let ratingCollectionViewCell = cell as? RatingCollectionViewCell
 //			ratingCollectionViewCell?.showDetailsElement = showDetailsElement
 		case .information:
 			let informationCollectionViewCell = cell as? InformationCollectionViewCell
 			informationCollectionViewCell?.episodeDetailInformation = EpisodeDetail.Information(rawValue: indexPath.item) ?? .id
-			informationCollectionViewCell?.episodeElement = episodeElement
+			informationCollectionViewCell?.episode = episode
 		default: break
 		}
 	}
@@ -200,7 +200,7 @@ extension EpisodeDetailCollectionViewControlle {
 				let headerSection = self.headerSection(for: section, layoutEnvironment: layoutEnvironment)
 				sectionLayout = headerSection
 			case .synopsis:
-				if let overview = self.episodeElement?.overview, !overview.isEmpty {
+				if let overview = self.episode.attributes.overview, !overview.isEmpty {
 					let fullSection = self.fullSection(for: section, layoutEnvironment: layoutEnvironment)
 					sectionLayout = fullSection
 					hasSectionHeader = true

@@ -13,7 +13,7 @@ import Pageboy
 
 protocol LibraryViewControllerDelegate: class {
 	/**
-		Tells your LibraryViewControllerDelegate to sort the library with the specified sort type.
+		Tells your `LibraryViewControllerDelegate` to sort the library with the specified sort type.
 
 		- Parameter sortType: The sort type by which the library should be sorted.
 	*/
@@ -173,7 +173,8 @@ class LibraryViewController: KTabbedViewController {
 		- Parameter sender: The object containing a reference to the button that initiated this action.
 	*/
 	fileprivate func populateSortActions(_ sender: UIBarButtonItem) {
-		let alertController = UIAlertController.actionSheetWithItems(items: KKLibrary.SortType.alertControllerItems, currentSelection: self.libraryViewControllerDelegate?.sortValue()) { (_, value, _)  in
+		let alertController = UIAlertController.actionSheetWithItems(items: KKLibrary.SortType.alertControllerItems, currentSelection: self.libraryViewControllerDelegate?.sortValue()) { [weak self] (_, value, _)  in
+			guard let self = self else { return }
 			let subAlertController = UIAlertController.actionSheetWithItems(items: value.subAlertControllerItems, currentSelection: self.libraryViewControllerDelegate?.sortOptionValue()) { (_, subValue, _) in
 				self.libraryViewControllerDelegate?.sortLibrary(by: value, option: subValue)
 			}

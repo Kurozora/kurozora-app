@@ -1,47 +1,34 @@
 //
 //  User.swift
-//  Kurozora
+//  KurozoraKit
 //
 //  Created by Khoren Katklian on 17/05/2018.
-//  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import SwiftyJSON
-import TRON
-
 /**
-	A mutable object that stores information about a single user, such as the user's profile, and authentication token.
+	A root object that stores information about a user resource.
 */
-public class User: JSONDecodable {
+public struct User: IdentityResource {
 	// MARK: - Properties
-	/// The profile update message.
-	public let message: String?
+	public let id: Int
 
-	/// The authentication token of the user.
-	public let kuroAuthToken: String?
+	public let type: String
+
+	public let href: String
 
 	/// An object which holds information about the current user.
-	public static var current: CurrentUser? = nil
+	public static var current: User? = nil
 
-	/// The profile details of the user.
-	public var profile: UserProfile?
+	/// The attributes belonging to the user.
+	public var attributes: User.Attributes
 
-	// MARK: - Initializers
-	required public init(json: JSON) throws {
-		self.message = json["message"].stringValue
-		self.kuroAuthToken = json["kuro_auth_token"].stringValue
-
-		if !json["session"].isEmpty {
-			User.current = try? CurrentUser(json: json)
-			User.current?.authenticationKey = self.kuroAuthToken
-		} else {
-			self.profile = try? UserProfile(json: json["user"])
-		}
-	}
+	/// The relationships blonging to yhe user.
+	public let relationships: User.Relationships?
 }
 
 // MARK: - Helpers
 extension User {
+	// MARK: - Properties
 	/// Returns a boolean indicating if the current user is signed in.
 	public static var isSignedIn: Bool {
 		return User.current != nil
@@ -50,5 +37,17 @@ extension User {
 	/// Returns a boolean indicating if the current user has purchased PRO.
 	static var isPro: Bool {
 		return true
+	}
+
+	// MARK: - Functions
+	/**
+		Updates the user with the given details.
+
+		- Parameter userDetails: The details used to update the current user's details.
+	*/
+	internal mutating func updateDetails(with userDetails: User) {
+		self.attributes.profileImageURL = userDetails.attributes.profileImageURL
+		self.attributes.bannerImageURL = userDetails.attributes.bannerImageURL
+		self.attributes.biography = userDetails.attributes.biography
 	}
 }

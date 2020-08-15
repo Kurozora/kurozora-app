@@ -11,7 +11,7 @@ import KurozoraKit
 
 class ManageThemesCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var themes: [[ThemeElement]] = [[], []] {
+	var themes: [[Theme]] = [[], []] {
 		didSet {
 			_prefersActivityIndicatorHidden = true
 			self.configureDataSource()
@@ -30,18 +30,53 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 	}
 
 	// Default theme
-	var defaultThemes = [
-		try? ThemeElement(json: ["name": "Default", "color": "#353A50"]),
-		try? ThemeElement(json: ["name": "Day", "color": "#E6E5E5"]),
-		try? ThemeElement(json: ["name": "Night", "color": "#333333"])
-	]
+	var defaultThemes = ThemeResponse(from:
+	"""
+	{
+		"data": [
+			{
+			  "id": 1,
+			  "type": "themes",
+			  "href": "",
+			  "attributes": {
+				"name": "Default",
+				"backgroundColor": "#353A50",
+				"screenshot": "",
+				"downloadLink": ""
+			  }
+			},
+			{
+			  "id": 2,
+			  "type": "themes",
+			  "href": "",
+			  "attributes": {
+				"name": "Day",
+				"backgroundColor": "#E6E5E5",
+				"screenshot": "",
+				"downloadLink": ""
+			  }
+			},
+			{
+			  "id": 3,
+			  "type": "themes",
+			  "href": "",
+			  "attributes": {
+				"name": "Night",
+				"backgroundColor": "#333333",
+				"screenshot": "",
+				"downloadLink": ""
+			  }
+			}
+		]
+	}
+	""".data(using: .utf8)!)
 
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
 		// Setup default themes
-		if let defaultThemes = self.defaultThemes as? [ThemeElement] {
+		if let defaultThemes = self.defaultThemes?.data {
 			self.themes[0].append(contentsOf: defaultThemes)
 		}
 	}
@@ -59,11 +94,11 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 	// MARK: - Functions
 	/// Fetches themes from the server.
 	func fetchThemes() {
-		KService.getThemes { result in
+		KService.getThemes { [weak self] result in
 			switch result {
 			case .success(let themes):
 				DispatchQueue.main.async {
-					self.themes[1].append(contentsOf: themes)
+					self?.themes[1].append(contentsOf: themes)
 				}
 			case .failure: break
 			}
@@ -93,7 +128,8 @@ extension ManageThemesCollectionViewController {
 	override func configureDataSource() {
 		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, identifier: Int) -> UICollectionViewCell? in
 			if let themesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.themesCollectionViewCell, for: indexPath) {
-				themesCollectionViewCell.themeElement = self.themes[indexPath.section][indexPath.item]
+				themesCollectionViewCell.indexPath = indexPath
+				themesCollectionViewCell.theme = self.themes[indexPath.section][indexPath.item]
 				return themesCollectionViewCell
 			} else {
 				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.themesCollectionViewCell.identifier)")

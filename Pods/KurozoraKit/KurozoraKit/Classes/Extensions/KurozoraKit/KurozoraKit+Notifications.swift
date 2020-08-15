@@ -1,6 +1,6 @@
 //
 //  KurozoraKit+Notifications.swift
-//  Kurozora
+//  KurozoraKit
 //
 //  Created by Khoren Katklian on 29/09/2019.
 //  Copyright © 2019 Kurozora. All rights reserved.
@@ -17,9 +17,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func deleteNotification(_ notificationID: String, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKError>) -> Void) {
+	public func deleteNotification(_ notificationID: String, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) {
 		let notificationsDelete = self.kurozoraKitEndpoints.notificationsDelete.replacingOccurrences(of: "?", with: "\(notificationID)")
-		let request: APIRequest<KKSuccess, KKError> = tron.swiftyJSON.request(notificationsDelete)
+		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(notificationsDelete)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -29,7 +29,8 @@ extension KurozoraKit {
 		request.method = .post
 		request.perform(withSuccess: { success in
 			completionHandler(.success(success))
-		}, failure: { error in
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't delete notification 😔", subTitle: error.message)
 			}
@@ -46,9 +47,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func updateNotification(_ notificationID: String, withReadStatus readStatus: ReadStatus, completion completionHandler: @escaping (_ result: Result<ReadStatus, KKError>) -> Void) {
+	public func updateNotification(_ notificationID: String, withReadStatus readStatus: ReadStatus, completion completionHandler: @escaping (_ result: Result<ReadStatus, KKAPIError>) -> Void) {
 		let notificationsUpdate = self.kurozoraKitEndpoints.notificationsUpdate
-		let request: APIRequest<UserNotificationElement, KKError> = tron.swiftyJSON.request(notificationsUpdate)
+		let request: APIRequest<UserNotificationUpdateResponse, KKAPIError> = tron.codable.request(notificationsUpdate)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -60,9 +61,10 @@ extension KurozoraKit {
 			"notification": notificationID,
 			"read": readStatus.rawValue
 		]
-		request.perform(withSuccess: { notification in
-			completionHandler(.success(notification.readStatus ?? .unread))
-		}, failure: { error in
+		request.perform(withSuccess: { userNotificationUpdateResponse in
+			completionHandler(.success(userNotificationUpdateResponse.data.readStatus))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't update notification 😔", subTitle: error.message)
 			}

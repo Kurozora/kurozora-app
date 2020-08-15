@@ -18,12 +18,12 @@ class IconNotificationCell: BasicNotificationCell {
 	override func configureCell() {
 		super.configureCell()
 
-		if let title = userNotificationElement?.data?.username {
+		if let title = userNotification?.attributes.payload.username {
 			notificationTitleLabel.text = title
 		}
 
-		if let profileImage = userNotificationElement?.data?.profileImage {
-			if let usernameInitials = userNotificationElement?.data?.username?.initials {
+		if let profileImage = userNotification?.attributes.payload.profileImage {
+			if let usernameInitials = userNotification?.attributes.payload.username?.initials {
 				let placeholderImage = usernameInitials.toImage(placeholder: R.image.placeholders.userProfile()!)
 				profileImageView.setImage(with: profileImage, placeholder: placeholderImage)
 			}

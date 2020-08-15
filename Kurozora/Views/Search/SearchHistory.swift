@@ -8,12 +8,8 @@
 
 import KurozoraKit
 import Foundation
-import SwiftyJSON
 
-class SearchHistory {
-	// MARK: - Initializers
-	private init() { }
-
+struct SearchHistory {
 	// MARK: - Poperties
 	fileprivate static let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
 	fileprivate static let filePathURL = documentsDirectory?.appendingPathComponent("Search History.json")
@@ -24,23 +20,20 @@ class SearchHistory {
 
 		Fetching of the content is ran on a background thread for best performance. The fetched content is then returned on the main thread to allow for UI changes.
 
-		- Parameter successHandler: A closure returning a ShowDetailsElement array.
-		- Parameter showDetailsElement: The returned  ShowDetailsElement array.
+		- Parameter successHandler: A closure returning a `Show` array.
+		- Parameter shows: The returned  `Show` array.
 	*/
-	static func getContent(_ successHandler: @escaping (_ showDetailsElement: [ShowDetailsElement]) -> Void) {
+	static func getContent(_ successHandler: @escaping (_ shows: [Show]) -> Void) {
 		guard let filePathURL = filePathURL else { return }
 
 		if fileExists() {
 			DispatchQueue.global(qos: .background).async {
 				do {
 					let contentsOfFile = try Data(contentsOf: filePathURL)
-					let jsonFromFile = try JSON(data: contentsOfFile)
-					var showDetails: ShowDetails?
 
 					DispatchQueue.main.async {
-						showDetails = try? ShowDetails(json: jsonFromFile)
-						if let showDetailsElements = showDetails?.showDetailsElements {
-							successHandler(showDetailsElements)
+						if let showResponse = ShowResponse(from: contentsOfFile) {
+							successHandler(showResponse.data)
 						}
 					}
 				} catch {
@@ -50,17 +43,17 @@ class SearchHistory {
 	}
 
 	/**
-		Writes the specified `ShowDetailsElement` to the search history file.
+		Writes the specified `Show` to the search history file.
 
-		- Parameter showDetailsElement: The specified `ShowDetailsElement` to be saved.
+		- Parameter show: The specified `Show` to be saved.
 	*/
-	static func saveContentsOf(_ showDetailsElement: ShowDetailsElement?) {
-		if let showDetailsElement = showDetailsElement, fileExists() {
-			getContent { (showDetailsElements) in
-				var fileShowDetailsElements = showDetailsElements
-				fileShowDetailsElements.removeFirst(where: { $0.id == showDetailsElement.id })
-				fileShowDetailsElements.prepend(showDetailsElement)
-				save(getJSON(from: fileShowDetailsElements)) { _ in
+	static func saveContentsOf(_ show: Show) {
+		if fileExists() {
+			getContent { (shows) in
+				var fileShows = shows
+				fileShows.removeFirst(where: { $0.id == show.id })
+				fileShows.prepend(show)
+				save(getDictionary(from: fileShows)) { _ in
 				}
 			}
 		}
@@ -77,51 +70,50 @@ class SearchHistory {
 		do {
 			return try filePathURL.checkResourceIsReachable()
 		} catch {
-			save(["anime": []]) { _ in
+			save(["data": []]) { _ in
 			}
 			return false
 		}
 	}
 
 	/**
-		Returns a JSON from the specified `ShowDetailsElement` array.
+		Returns a Dictionary from the specified `Show` array.
 
-		- Parameter showDetailsElements: The specified `showDetailsElements` array from which a JSON is created.
+		- Parameter shows: The specified `shows` array from which a Dictionary is created.
 
-		- Returns: a JSON from the specified `ShowDetailsElement` array.
+		- Returns: a Dictionary from the specified `Show` array.
 	*/
-	fileprivate static func getJSON(from showDetailsElements: [ShowDetailsElement]) -> [String: Any] {
-		var showDetailsElements = showDetailsElements
-		if showDetailsElements.count > 10 {
-			showDetailsElements.removeLast()
+	fileprivate static func getDictionary(from shows: [Show]) -> [String: Any] {
+		var shows = shows
+		if shows.count > 10 {
+			shows.removeLast()
 		}
-		var showJSON = ["anime": []]
-		for showDetailsElement in showDetailsElements {
-			showJSON["anime"]?.append([
-				"id": showDetailsElement.id ?? 0,
-				"title": showDetailsElement.title ?? "",
-				"poster_thumbnail": showDetailsElement.posterThumbnail ?? ""
-			])
+
+		var showDictionary = ["data": []]
+		do {
+			let data = try JSONEncoder().encode(shows)
+			let dictionary = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
+
+			showDictionary["data"] = dictionary as? [Any]
+		} catch {
 		}
-		return showJSON
+
+		return showDictionary
 	}
 
 	/**
-		Writes the specified object to the search history file as JSON and returns a boolean indicating weather the write was successful.
+		Writes the specified dictionary to the search history file as JSON and returns a boolean indicating weather the write was successful.
 
-		- Parameter object: The specified object to be written to the search history file.
+		- Parameter dictionary: The specified dictionary to be written to the search history file.
 		- Parameter successHandler: A closure returning a boolean indicating whether the writing is successful.
 		- Parameter isSuccess: A boolean value indicating whether the writing is successful.
 	*/
-	fileprivate static func save(_ object: [String: Any], _ successHandler: ((_ isSuccess: Bool) -> Void)? = nil) {
+	fileprivate static func save(_ dictionary: [String: Any], _ successHandler: ((_ isSuccess: Bool) -> Void)? = nil) {
 		guard let filePathURL = filePathURL else { return }
 
 		DispatchQueue.global(qos: .background).async {
 			do {
-				let jsonFromObject = JSON(object)
-				let dataFromJSON = try jsonFromObject.rawData()
-				try dataFromJSON.write(to: filePathURL)
-
+				try dictionary.jsonData()?.write(to: filePathURL)
 				successHandler?(true)
 			} catch {
 				successHandler?(false)

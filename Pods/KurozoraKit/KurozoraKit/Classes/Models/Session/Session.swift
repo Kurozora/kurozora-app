@@ -1,45 +1,24 @@
 //
 //  Session.swift
-//  Kurozora
+//  KurozoraKit
 //
-//  Created by Khoren Katklian on 19/09/2018.
-//  Copyright © 2018 Kurozora. All rights reserved.
+//  Created by Khoren Katklian on 04/08/2020.
 //
-
-import SwiftyJSON
-import TRON
 
 /**
-	A mutable object that stores information about a collection of user sessions, such as the current session, and a collection of other sessions.
+	A root object that stores information about a collection of session.
 */
-public class UserSessions: JSONDecodable {
+public struct Session: IdentityResource {
 	// MARK: - Properties
-	/// The user profile related to the session.
-	public let user: UserProfile?
+	public let id: Int
 
-	/// The user's current session.
-	public let currentSession: UserSessionsElement?
+	public let type: String
 
-	/// The collection of the user's other sessions.
-    public var otherSessions: [UserSessionsElement]?
+	public let href: String
 
-	// MARK: - Initializers
-    required public init(json: JSON) throws {
-		self.user = try? UserProfile(json: json["user"])
-		if !json["current_session"].isEmpty {
-			self.currentSession = try? UserSessionsElement(json: json["current_session"])
-		} else {
-			self.currentSession = try? UserSessionsElement(json: json["session"])
-		}
-		var otherSessions = [UserSessionsElement]()
+	/// The attributes belonging to the session.
+	public let attributes: Session.Attributes
 
-        let otherSessionsArray = json["other_sessions"].arrayValue
-		for otherSessionsItem in otherSessionsArray {
-			if let userSessionsElement = try? UserSessionsElement(json: otherSessionsItem) {
-				otherSessions.append(userSessionsElement)
-			}
-		}
-
-		self.otherSessions = otherSessions
-    }
+	/// The relationships belonging to the session.
+	public let relationships: Session.Relationships
 }

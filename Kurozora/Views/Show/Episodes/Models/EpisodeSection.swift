@@ -100,24 +100,17 @@ extension EpisodeDetail {
 
 			Returns: the required information from the given object.
 		*/
-		func information(from episodeElement: EpisodeElement) -> String {
+		func information(from episode: Episode) -> String {
 			switch self {
 			case .id:
-				if let episodeID = episodeElement.id, episodeID != 0 {
-					return episodeID.string
-				}
+				return "\(episode.id)"
 			case .number:
-				if let episodeNumber = episodeElement.number {
-					return episodeNumber.string
-				}
+				return "\(episode.attributes.number)"
 			case .duration:
-				return "25"
+				return "\(episode.attributes.duration)"
 			case .airDate:
-				if let firstAired = episodeElement.firstAired {
-					return firstAired
-				}
+				return episode.attributes.firstAired ?? "TBA"
 			}
-			return "-"
 		}
 	}
 }

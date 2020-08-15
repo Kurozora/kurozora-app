@@ -11,13 +11,6 @@ import UIKit
 enum KNotification {
 	/**
 		List of custom notification types.
-
-		```
-		case other
-		case session = "NewSession"
-		case follower = "NewFollower"
-		case message = "NewMessage"
-		```
 	*/
 	enum CustomType: String {
 		/// Indicates that the notification has no specific type and thus has the default style.
@@ -36,13 +29,13 @@ enum KNotification {
 		var stringValue: String {
 			switch self {
 			case .other:
-				return "OTHER"
+				return "Other"
 			case .session:
-				return "NEW SESSION"
+				return "New Session"
 			case .follower:
-				return "FOLLOWER"
+				return "Follower"
 			case .message:
-				return "MESSAGE"
+				return "Message"
 			}
 		}
 

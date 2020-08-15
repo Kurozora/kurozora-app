@@ -1,6 +1,6 @@
 //
 //  KurozoraKit+Thread.swift
-//  Kurozora
+//  KurozoraKit
 //
 //  Created by Khoren Katklian on 29/09/2019.
 //  Copyright © 2019 Kurozora. All rights reserved.
@@ -17,9 +17,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getDetails(forThread threadID: Int, completion completionHandler: @escaping (_ result: Result<ForumsThreadElement, KKError>) -> Void) {
+	public func getDetails(forThread threadID: Int, completion completionHandler: @escaping (_ result: Result<[ForumsThread], KKAPIError>) -> Void) {
 		let forumsThreads = self.kurozoraKitEndpoints.forumsThreads.replacingOccurrences(of: "?", with: "\(threadID)")
-		let request: APIRequest<ForumsThread, KKError> = tron.swiftyJSON.request(forumsThreads)
+		let request: APIRequest<ForumsThreadResponse, KKAPIError> = tron.codable.request(forumsThreads)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -27,9 +27,10 @@ extension KurozoraKit {
 		}
 
 		request.method = .get
-		request.perform(withSuccess: { thread in
-			completionHandler(.success(thread.thread ?? ForumsThreadElement()))
-		}, failure: { error in
+		request.perform(withSuccess: { forumsThreadResponse in
+			completionHandler(.success(forumsThreadResponse.data))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't get thread details 😔", subTitle: error.message)
 			}
@@ -46,9 +47,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func voteOnThread(_ threadID: Int, withVoteStatus voteStatus: VoteStatus, completion completionHandler: @escaping (_ result: Result<VoteStatus, KKError>) -> Void) {
+	public func voteOnThread(_ threadID: Int, withVoteStatus voteStatus: VoteStatus, completion completionHandler: @escaping (_ result: Result<VoteStatus, KKAPIError>) -> Void) {
 		let forumsThreadsVote = self.kurozoraKitEndpoints.forumsThreadsVote.replacingOccurrences(of: "?", with: "\(threadID)")
-		let request: APIRequest<VoteThread, KKError> = tron.swiftyJSON.request(forumsThreadsVote)
+		let request: APIRequest<ForumsVoteResponse, KKAPIError> = tron.codable.request(forumsThreadsVote)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -59,9 +60,10 @@ extension KurozoraKit {
 		request.parameters = [
 			"vote": voteStatus.voteValue
 		]
-		request.perform(withSuccess: { voteThread in
-			completionHandler(.success(voteThread.voteStatus ?? .noVote))
-		}, failure: { error in
+		request.perform(withSuccess: { forumsVoteResponse in
+			completionHandler(.success(forumsVoteResponse.data.voteAction))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't vote on this thread 😔", subTitle: error.message)
 			}
@@ -79,9 +81,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getReplies(forThread threadID: Int, orderedBy order: ForumOrder, next: String? = nil, completion completionHandler: @escaping (_ result: Result<ThreadReplies, KKError>) -> Void) {
+	public func getReplies(forThread threadID: Int, orderedBy order: ForumOrder, next: String? = nil, completion completionHandler: @escaping (_ result: Result<ThreadReplyResponse, KKAPIError>) -> Void) {
 		let forumsThreadsReplies = next ?? self.kurozoraKitEndpoints.forumsThreadsReplies.replacingOccurrences(of: "?", with: "\(threadID)")
-		let request: APIRequest<ThreadReplies, KKError> = tron.swiftyJSON.request(forumsThreadsReplies).buildURL(.relativeToBaseURL)
+		let request: APIRequest<ThreadReplyResponse, KKAPIError> = tron.codable.request(forumsThreadsReplies).buildURL(.relativeToBaseURL)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -92,9 +94,10 @@ extension KurozoraKit {
 		request.parameters = [
 			"order": order.rawValue
 		]
-		request.perform(withSuccess: { replies in
-			completionHandler(.success(replies))
-		}, failure: { error in
+		request.perform(withSuccess: { threadReplyResponse in
+			completionHandler(.success(threadReplyResponse))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't get replies 😔", subTitle: error.message)
 			}
@@ -111,9 +114,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func postReply(inThread threadID: Int, withComment comment: String, completion completionHandler: @escaping (_ result: Result<Int, KKError>) -> Void) {
+	public func postReply(inThread threadID: Int, withComment comment: String, completion completionHandler: @escaping (_ result: Result<[ThreadReply], KKAPIError>) -> Void) {
 		let forumsThreadsReplies = self.kurozoraKitEndpoints.forumsThreadsReplies.replacingOccurrences(of: "?", with: "\(threadID)")
-		let request: APIRequest<ThreadReply, KKError> = tron.swiftyJSON.request(forumsThreadsReplies)
+		let request: APIRequest<ThreadReplyResponse, KKAPIError> = tron.codable.request(forumsThreadsReplies)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -124,9 +127,10 @@ extension KurozoraKit {
 		request.parameters = [
 			"content": comment
 		]
-		request.perform(withSuccess: { reply in
-			completionHandler(.success(reply.id ?? 0))
-		}, failure: { error in
+		request.perform(withSuccess: { threadReplyResponse in
+			completionHandler(.success(threadReplyResponse.data))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't reply 😔", subTitle: error.message)
 			}
@@ -142,9 +146,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func search(forThread thread: String, completion completionHandler: @escaping (_ result: Result<[ForumsThreadElement], KKError>) -> Void) {
+	public func search(forThread thread: String, completion completionHandler: @escaping (_ result: Result<[ForumsThread], KKAPIError>) -> Void) {
 		let forumsThreadsSearch = self.kurozoraKitEndpoints.forumsThreadsSearch
-		let request: APIRequest<Search, KKError> = tron.swiftyJSON.request(forumsThreadsSearch)
+		let request: APIRequest<ForumsThreadResponse, KKAPIError> = tron.codable.request(forumsThreadsSearch)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -155,8 +159,8 @@ extension KurozoraKit {
 		request.parameters = [
 			"query": thread
 		]
-		request.perform(withSuccess: { search in
-			completionHandler(.success(search.threadResults ?? []))
+		request.perform(withSuccess: { forumsThreadResponse in
+			completionHandler(.success(forumsThreadResponse.data))
 		}, failure: { error in
 //			if self.services.showAlerts {
 //				SCLAlertView().showError("Can't get search results 😔", subTitle: error.message)
@@ -174,9 +178,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func lockThread(_ threadID: Int, withLockStatus lockStatus: LockStatus, completion completionHandler: @escaping (_ result: Result<LockStatus, KKError>) -> Void) {
+	public func lockThread(_ threadID: Int, withLockStatus lockStatus: LockStatus, completion completionHandler: @escaping (_ result: Result<LockStatus, KKAPIError>) -> Void) {
 		let forumsThreadsLock = self.kurozoraKitEndpoints.forumsThreadsLock.replacingOccurrences(of: "?", with: "\(threadID)")
-		let request: APIRequest<ForumsThread, KKError> = tron.swiftyJSON.request(forumsThreadsLock)
+		let request: APIRequest<ForumsLockResponse, KKAPIError> = tron.codable.request(forumsThreadsLock)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -187,9 +191,10 @@ extension KurozoraKit {
 		request.parameters = [
 			"lock": lockStatus.rawValue
 		]
-		request.perform(withSuccess: { forums in
-			completionHandler(.success(forums.thread?.locked ?? .unlocked))
-		}, failure: { error in
+		request.perform(withSuccess: { forumsLockResponse in
+			completionHandler(.success(forumsLockResponse.data.lockStatus))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't lock thread 😔", subTitle: error.message)
 			}

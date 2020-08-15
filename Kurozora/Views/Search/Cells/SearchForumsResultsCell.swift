@@ -11,9 +11,9 @@ import KurozoraKit
 
 class SearchForumsResultsCell: SearchBaseResultsCell {
 	// MARK: - Properties
-	var forumsThreadElement: ForumsThreadElement? = nil {
+	var forumsThread: ForumsThread! {
 		didSet {
-			if forumsThreadElement != nil {
+			if forumsThread != nil {
 				configureCell()
 			}
 		}
@@ -21,14 +21,12 @@ class SearchForumsResultsCell: SearchBaseResultsCell {
 
 	override func configureCell() {
 		super.configureCell()
-		guard let forumsThreadElement = forumsThreadElement else { return }
 
-		primaryLabel.text = forumsThreadElement.title
-		textView?.text = forumsThreadElement.content
+		primaryLabel.text = forumsThread.attributes.title
+		textView?.text = forumsThread.attributes.content
 
 		// Configure lock
-		if let locked = forumsThreadElement.locked {
-			searchImageView.isHidden = !locked.boolValue
-		}
+		let lockStatus = forumsThread.attributes.lockStatus
+		searchImageView.isHidden = !lockStatus.boolValue
 	}
 }

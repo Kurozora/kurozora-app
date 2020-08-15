@@ -25,7 +25,7 @@ class OtherSessionsCell: SwipeTableViewCell {
 	@IBOutlet var separatorView: [SecondarySeparatorView]!
 
 	// MARK: - Properties
-	var session: UserSessionsElement? {
+	var session: Session! {
 		didSet {
 			updateOtherSessions()
 		}
@@ -36,24 +36,12 @@ class OtherSessionsCell: SwipeTableViewCell {
 		guard let session = session else { return }
 
 		// IP Address
-		if let ipAddress = session.ip {
-			ipAddressValueLabel.text = ipAddress
-		} else {
-			ipAddressValueLabel.text = "-"
-		}
+		ipAddressValueLabel.text = session.attributes.ip
 
 		// Device Type
-		if let deviceName = session.platform?.deviceName {
-			deviceTypeValueLabel.text = deviceName
-		} else {
-			deviceTypeValueLabel.text = "-"
-		}
+		deviceTypeValueLabel.text = session.relationships.platform.data.first?.attributes.deviceModel
 
 		// Last Accessed
-		if let lastValidated = session.lastValidated, !lastValidated.isEmpty {
-			dateValueLabel?.text = lastValidated
-		} else {
-			dateValueLabel.text = "-"
-		}
+		dateValueLabel?.text = session.attributes.lastValidatedAt
 	}
 }

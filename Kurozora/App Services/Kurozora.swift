@@ -134,7 +134,7 @@ class Kurozora {
 				tabBarController.selectedIndex = 4
 
 				if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
-					profileTableViewController.userProfile = userID == User.current?.id ? User.current : try? UserProfile(json: ["id": userID])
+					profileTableViewController.userID = userID
 					tabBarController.selectedViewController?.show(profileTableViewController, sender: nil)
 				}
 			}

@@ -14,7 +14,7 @@ class BadgeTableViewCell: UITableViewCell {
 	@IBOutlet weak var badgeDescriptionLabel: UILabel!
 	@IBOutlet weak var badgeImageView: ProfileImageView!
 
-	var badgeElement: BadgeElement? {
+	var badge: Badge! {
 		didSet {
 			configureCell()
 		}
@@ -23,24 +23,16 @@ class BadgeTableViewCell: UITableViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
-		guard let badgeElement = badgeElement else { return }
+		// Set title and text color.
+		self.badgeTitleLabel.text = badge.attributes.name
+		self.badgeTitleLabel.textColor = UIColor(hexString: badge.attributes.textColor)
 
-		if let badgeText = badgeElement.text, !badgeText.isEmpty,
-			let badgeTextColor = badgeElement.textColor, !badgeTextColor.isEmpty,
-			let badgeDescription = badgeElement.description, !badgeDescription.isEmpty,
-			let badgeBackgroundColor = badgeElement.backgroundColor, !badgeBackgroundColor.isEmpty {
+		// Set description and text color.
+		self.badgeDescriptionLabel.text = badge.attributes.description
+		self.badgeDescriptionLabel.textColor = UIColor(hexString: badge.attributes.textColor)
 
-			// Set title and text color.
-			self.badgeTitleLabel.text = badgeText
-			self.badgeTitleLabel.textColor = UIColor(hexString: badgeTextColor)
-
-			// Set description and text color.
-			self.badgeDescriptionLabel.text = badgeDescription
-			self.badgeDescriptionLabel.textColor = UIColor(hexString: badgeTextColor)
-
-			// Set background color.
-			self.contentView.backgroundColor = UIColor(hexString: badgeBackgroundColor)
-		}
+		// Set background color.
+		self.contentView.backgroundColor = UIColor(hexString: badge.attributes.backgroundColor)
 
 		// Set badge image and border color
 		self.badgeImageView.image = R.image.placeholders.userProfile()

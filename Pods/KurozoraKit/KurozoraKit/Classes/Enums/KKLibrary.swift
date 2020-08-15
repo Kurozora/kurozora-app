@@ -1,6 +1,6 @@
 //
 //  KKLibrary.swift
-//  Kurozora
+//  KurozoraKit
 //
 //  Created by Khoren Katklian on 16/03/2019.
 //  Copyright © 2019 Kurozora. All rights reserved.
@@ -19,34 +19,35 @@ public enum KKLibrary {
 		The set of available library status types.
 
 		```
-		case watching = 0
-		case planning = 1
-		case completed = 2
-		case onHold = 3
-		case dropped = 4
+		case none = "None"
+		case watching = "Watching"
+		case planning = "Planning"
+		case completed = "Completed"
+		case onHold = "On-Hold"
+		case dropped = "Dropped"
 		```
 
 		- Tag: KKL-Status
 	*/
-	public enum Status: Int {
+	public enum Status: String, Codable {
 		// MARK: - Cases
 		/// The library has no status.
-		case none = -1
+		case none = "None"
 
 		/// The library's watching list.
-		case watching = 0
+		case watching = "Watching"
 
 		/// The library's planning list.
-		case planning = 1
+		case planning = "Planning"
 
 		/// The library's completed list.
-		case completed = 2
+		case completed = "Completed"
 
 		/// The library's on-hold list.
-		case onHold = 3
+		case onHold = "On-Hold"
 
 		/// The library's dropped list.
-		case dropped = 4
+		case dropped = "Dropped"
 
 		// MARK: - Properties
 		/// An array containing all library status types.
@@ -54,20 +55,7 @@ public enum KKLibrary {
 
 		/// The string value of a library status type.
 		public var stringValue: String {
-			switch self {
-			case .none:
-				return "None"
-			case .watching:
-				return "Watching"
-			case .planning:
-				return "Planning"
-			case .completed:
-				return "Completed"
-			case .onHold:
-				return "On-Hold"
-			case .dropped:
-				return "Dropped"
-			}
+			return self.rawValue
 		}
 
 		/// The section value string of a library status type.
@@ -77,34 +65,6 @@ public enum KKLibrary {
 				return "OnHold"
 			default:
 				return self.stringValue
-			}
-		}
-
-		// MARK: - Functions
-		/**
-			Returns the `KKLibrary.Status` value for the given string.
-
-			To decide the returned value, the given string is lowercased and compared with the `stringValue` of the `KKLibrary.Status` cases.
-			If no match is found then `.watching` is returned.
-
-			- Parameter string: The string value by which the `KKLibrary.Status` value is determined.
-
-			- Returns: the `KKLibrary.Status` value for the given string or `.watching` if no match is found.
-		*/
-		public static func fromString(_ string: String) -> KKLibrary.Status {
-			switch string.lowercased() {
-			case watching.stringValue.lowercased():
-				return .watching
-			case planning.stringValue.lowercased():
-				return .planning
-			case completed.stringValue.lowercased():
-				return .completed
-			case onHold.stringValue.lowercased():
-				return .onHold
-			case dropped.stringValue.lowercased():
-				return .dropped
-			default:
-				return .none
 			}
 		}
 	}

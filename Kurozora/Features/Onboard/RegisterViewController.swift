@@ -57,7 +57,8 @@ class RegisterTableViewController: AccountOnboardingTableViewController {
 			guard let password = textFieldArray.last??.text else { return }
 			let profileImage = profileImageView.image
 
-			KService.register(withUsername: username, emailAddress: emailAddress, password: password, profileImage: profileImage) { result in
+			KService.register(withUsername: username, emailAddress: emailAddress, password: password, profileImage: profileImage) { [weak self] result in
+				guard let self = self else { return }
 				switch result {
 				case .success:
 					let alertController = SCLAlertView(appearance: SCLAlertView.SCLAppearance(showCloseButton: false))

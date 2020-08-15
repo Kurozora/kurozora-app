@@ -15,7 +15,7 @@ class FollowCell: UITableViewCell {
 	@IBOutlet weak var followButton: KTintedButton!
 	@IBOutlet weak var separatorView: SeparatorView!
 
-	var userProfile: UserProfile? {
+	var user: User! {
 		didSet {
 			configureCell()
 		}
@@ -24,34 +24,47 @@ class FollowCell: UITableViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
-		guard let userProfile = userProfile else { return }
+		// Configure follow
+		self.updateFollowButton()
 
 		// Configure username
-		usernameLabel.text = userProfile.username
+		self.usernameLabel.text = user.attributes.username
 
 		// Configure profile image
-		profileImageView.image = userProfile.profileImage
+		self.profileImageView.image = user.attributes.profileImage
 
 		// Configure follow button
-		followButton.setTitle(userProfile.following ?? false ? "✓ Following" : "+ Follow", for: .normal)
-		followButton.isHidden = userProfile.id == User.current?.id
+		self.followButton.setTitle(user.attributes.followStatus == .followed ? "✓ Following" : "+ Follow", for: .normal)
+		self.followButton.isHidden = user.id == User.current?.id
+	}
+
+	/// Updated the `followButton` with the follow status of the user.
+	fileprivate func updateFollowButton() {
+		let followStatus = self.user.attributes.followStatus
+		switch followStatus {
+		case .followed:
+			self.followButton.setTitle("✓ Following", for: .normal)
+			self.followButton.isHidden = false
+			self.followButton.isUserInteractionEnabled = true
+		case .notFollowed:
+			self.followButton.setTitle("＋ Follow", for: .normal)
+			self.followButton.isHidden = false
+			self.followButton.isUserInteractionEnabled = true
+		case .disabled:
+			self.followButton.setTitle("＋ Follow", for: .normal)
+			self.followButton.isHidden = true
+			self.followButton.isUserInteractionEnabled = false
+		}
 	}
 
 	// MARK: - IBActions
 	@IBAction func followButtonPressed(_ sender: UIButton) {
-		guard let userID = userProfile?.id else { return }
-		let followStatus: FollowStatus = userProfile?.following ?? false ? .unfollow : .follow
-
-		KService.updateFollowStatus(userID, withFollowStatus: followStatus) { result in
+		KService.updateFollowStatus(user.id) { [weak self] result in
+			guard let self = self else { return }
 			switch result {
-			case .success:
-				if followStatus == .unfollow {
-					sender.setTitle("＋ Follow", for: .normal)
-					self.userProfile?.following = false
-				} else {
-					sender.setTitle("✓ Following", for: .normal)
-					self.userProfile?.following = true
-				}
+			case .success(let followUpdate):
+				self.user.attributes.update(using: followUpdate)
+				self.updateFollowButton()
 			case .failure: break
 			}
 		}

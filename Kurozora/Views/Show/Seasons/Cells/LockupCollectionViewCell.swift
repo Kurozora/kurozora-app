@@ -29,47 +29,39 @@ class LockupCollectionViewCell: UICollectionViewCell {
 	@IBOutlet var separatorViewLight: [SecondarySeparatorView]?
 
 	// MARK: - Properties
-	var seasonsElement: SeasonElement? = nil {
+	var season: Season! {
 		didSet {
 			configureSeasonCell()
 		}
 	}
-//	var relatedShowElement: RelatedShowElement? = nil {
-//		didSet {
-//			configureRelatedShowCell()
-//		}
-//	}
+	var relatedShow: RelatedShow! {
+		didSet {
+			configureRelatedShowCell()
+		}
+	}
 
 	// MARK: - Functions
 	/// Configure the cell with the season's details.
 	fileprivate func configureSeasonCell() {
-		guard let seasonsElement = seasonsElement else { return }
+		// Configure poster
+		self.posterImageView.image = self.season.attributes.posterImage
 
-		if let seasonPosterImage = seasonsElement.poster {
-			self.posterImageView.setImage(with: seasonPosterImage, placeholder: R.image.placeholders.showPoster()!)
-		}
+		// Configure season number
+		let seasonNumber = self.season.attributes.number
+		self.countLabel.text = seasonNumber != 0 ? "Season \(seasonNumber)" : ""
 
-		// Season number
-		if let seasonNumber = seasonsElement.number {
-			self.countLabel.text = seasonNumber != 0 ? "Season \(seasonNumber)" : ""
-		}
+		// Configure title
+		let seasonTitle = self.season.attributes.title
+		self.titleLabel.text = seasonTitle
 
-		// Season title
-		if let seasonTitle = seasonsElement.title {
-			self.titleLabel.text = seasonTitle
-		}
+		// Configure premiere date
+		let firstAired = self.season.attributes.firstAired
+		self.firstAiredLabel.text = firstAired?.mediumDate ?? "TBA"
 
-		// Season date
-		if let firstAired = seasonsElement.firstAired {
-			self.firstAiredLabel.text = firstAired.mediumDate
-		}
+		// Configure episode count
+		self.episodeCountLabel.text = "\(self.season.attributes.episodeCount)"
 
-		// Season episode count
-		if let episodeCount = seasonsElement.episodeCount {
-			self.episodeCountLabel.text = "\(episodeCount)"
-		}
-
-		// Season rating
+		// Configure rating
 		self.ratingLabel.text = "0.00"
 
 		// Apply shadow to shadow view
@@ -78,6 +70,24 @@ class LockupCollectionViewCell: UICollectionViewCell {
 
 	/// Configure the cell with the related show's details.
 	fileprivate func configureRelatedShowCell() {
+		self.posterImageView.image = self.relatedShow.show.attributes.posterImage
+
+		// Configure relation type
+		self.countLabel.text = self.relatedShow.attributes.type
+
+		// Configure title
+		self.titleLabel.text = self.relatedShow.show.attributes.title
+
+		// Configure premiere date
+		let firstAired = self.relatedShow.show.attributes.firstAired
+		self.firstAiredLabel.text = firstAired?.mediumDate ?? "TBA"
+
+		// Configure episode count
+		self.episodeCountLabel.text = "\(self.relatedShow.show.attributes.episodeCount)"
+
+		// Configure rating
+		self.ratingLabel.text = "\(self.relatedShow.show.attributes.averageRating)"
+
 		// Apply shadow to shadow view
 		self.shadowView.applyShadow()
 	}

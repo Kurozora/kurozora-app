@@ -26,7 +26,8 @@ class ResetPasswordTableViewController: AccountOnboardingTableViewController {
 			return
 		}
 
-		KService.resetPassword(withEmailAddress: emailAddress) { result in
+		KService.resetPassword(withEmailAddress: emailAddress) { [weak self] result in
+			guard let self = self else { return }
 			switch result {
 			case .success:
 				let appearance = SCLAlertView.SCLAppearance(

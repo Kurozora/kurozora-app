@@ -17,7 +17,7 @@ class FeedViewController: KTabbedViewController {
 	@IBOutlet weak var profileImageButton: ProfileImageButton!
 
 	// MARK: - Properties
-	var sections: [FeedSectionElement]? {
+	var feedSections: [FeedSection] = [] {
 		didSet {
 			self.reloadData()
 		}
@@ -39,7 +39,7 @@ class FeedViewController: KTabbedViewController {
 	// MARK: - Functions
 	/// Configures the view with the user's details.
 	func configureUserDetails() {
-		profileImageButton.setImage(User.current?.profileImage ?? R.image.placeholders.userProfile(), for: .normal)
+		profileImageButton.setImage(User.current?.attributes.profileImage ?? R.image.placeholders.userProfile(), for: .normal)
 	}
 
 	// MARK: - IBActions
@@ -63,16 +63,12 @@ class FeedViewController: KTabbedViewController {
 
 	// MARK: - TMBarDataSource
 	override func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
-		guard let sectionTitle = sections?[index].name else { return TMBarItem(title: "Section \(index)") }
-		return TMBarItem(title: sectionTitle)
+		return TMBarItem(title: feedSections[index].attributes.name)
 	}
 
 	// MARK: - PageboyViewControllerDataSource
 	override func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
-		if let sectionsCount = sections?.count, sectionsCount != 0 {
-			return sectionsCount
-		}
-		return 0
+		return feedSections.count
 	}
 
 	override func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
@@ -87,12 +83,8 @@ extension FeedViewController {
 
 		for index in 0 ..< count {
 			if let feedTableViewController = R.storyboard.feed.feedTableViewController() {
-				guard let sectionTitle = sections?[index].name else { return nil }
-				feedTableViewController.sectionTitle = sectionTitle
-
-				if let sectionID = sections?[index].id, sectionID != 0 {
-					feedTableViewController.sectionID = sectionID
-				}
+				feedTableViewController.sectionTitle = feedSections[index].attributes.name
+				feedTableViewController.sectionID = feedSections[index].id
 				feedTableViewController.sectionIndex = index
 				viewControllers.append(feedTableViewController)
 			}
@@ -102,11 +94,13 @@ extension FeedViewController {
 	}
 
 	override func fetchSections() {
-//		KService.getFeedSections { result in
+//		KService.getFeedSections { [weak self] result in
+//			guard let self = self else { return }
+//
 //			switch result {
-//			case .success(let sections):
+//			case .success(let feedSections):
 //				DispatchQueue.main.async {
-//					self.sections = sections
+//					self.feedSections = feedSections
 //				}
 //			case .failure: break
 //			}

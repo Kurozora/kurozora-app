@@ -16,7 +16,7 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var posterImageView: UIImageView!
 
 	// MARK: - Properties
-	var showDetailsElement: ShowDetailsElement? {
+	var show: Show! {
 		didSet {
 			configureCell()
 		}
@@ -25,12 +25,13 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	func configureCell() {
-		guard let showDetailsElement = showDetailsElement else { return }
+		self.titleLabel.text = show.attributes.title
 
-		self.titleLabel.text = showDetailsElement.title
-
-		if let posterThumbnail = showDetailsElement.posterThumbnail {
-			self.posterImageView.setImage(with: posterThumbnail, placeholder: R.image.placeholders.showPoster()!)
+		if let showPoster = show.attributes.poster {
+			if let backgroundColor = showPoster.backgroundColor {
+				self.posterImageView.backgroundColor = UIColor(hexString: backgroundColor)
+			}
+			self.posterImageView.setImage(with: showPoster.url, placeholder: R.image.placeholders.showPoster()!)
 		}
 	}
 }

@@ -1,6 +1,6 @@
 //
 //  KurozoraKit+User.swift
-//  Kurozora
+//  KurozoraKit
 //
 //  Created by Khoren Katklian on 29/09/2019.
 //  Copyright © 2019 Kurozora. All rights reserved.
@@ -20,9 +20,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func register(withUsername username: String, emailAddress: String, password: String, profileImage: UIImage?, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKError>) -> Void) {
+	public func register(withUsername username: String, emailAddress: String, password: String, profileImage: UIImage?, completion completionHandler: @escaping (_ result: Result<String, KKAPIError>) -> Void) {
 		let users = self.kurozoraKitEndpoints.users
-		let request: UploadAPIRequest<KKSuccess, KKError> = tron.swiftyJSON.uploadMultipart(users) { (formData) in
+		let request: UploadAPIRequest<SignInResponse, KKAPIError> = tron.codable.uploadMultipart(users) { (formData) in
 			if let profileImage = profileImage?.jpegData(compressionQuality: 0.1) {
 				formData.append(profileImage, withName: "profileImage", fileName: "ProfileImage.png", mimeType: "image/png")
 			}
@@ -36,9 +36,14 @@ extension KurozoraKit {
 			"email": emailAddress,
 			"password": password
 		]
-		request.perform(withSuccess: { success in
-			completionHandler(.success(success))
-		}, failure: { error in
+		request.perform(withSuccess: { [weak self] signInResponse in
+			guard let self = self else { return }
+			self.authenticationKey = signInResponse.authToken
+			User.current = signInResponse.data.first
+			completionHandler(.success(self.authenticationKey))
+			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't register account 😔", subTitle: error.message)
 			}
@@ -58,21 +63,25 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func register(withAppleUserID userID: String, emailAddress: String, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKError>) -> Void) {
+	public func register(withAppleUserID userID: String, emailAddress: String, completion completionHandler: @escaping (_ result: Result<String, KKAPIError>) -> Void) {
 		let usersRegisterSIWA = self.kurozoraKitEndpoints.usersRegisterSIWA
-		let request: APIRequest<KKSuccess, KKError> = tron.swiftyJSON.request(usersRegisterSIWA)
+		let request: APIRequest<SignInResponse, KKAPIError> = tron.codable.request(usersRegisterSIWA)
 		request.headers = headers
 		request.method = .post
 		request.parameters = [
 			"email": emailAddress,
 			"siwa_id": userID
 		]
-		request.perform(withSuccess: { success in
+		request.perform(withSuccess: { [weak self] signInResponse in
+			guard let self = self else { return }
 //			try? self.services._keychainDefaults.set("\(userID)", key: "siwa_id")
 //			self.services.processUserData(fromSession: userSession)
-			completionHandler(.success(success))
+			self.authenticationKey = signInResponse.authToken
+			User.current = signInResponse.data.first
+			completionHandler(.success(self.authenticationKey))
 			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
-		}, failure: { error in
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			UIView().endEditing(true)
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't register account 😔", subTitle: error.message)
@@ -93,21 +102,25 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func signInWithApple(usingIDToken idToken: String, authorizationCode: String, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKError>) -> Void) {
+	public func signInWithApple(usingIDToken idToken: String, authorizationCode: String, completion completionHandler: @escaping (_ result: Result<String, KKAPIError>) -> Void) {
 		let usersRegisterSIWA = self.kurozoraKitEndpoints.usersRegisterSIWA
-		let request: APIRequest<KKSuccess, KKError> = tron.swiftyJSON.request(usersRegisterSIWA)
+		let request: APIRequest<SignInResponse, KKAPIError> = tron.codable.request(usersRegisterSIWA)
 		request.headers = headers
 		request.method = .post
 		request.parameters = [
 			"identity_token": idToken,
 			"auth_code": authorizationCode
 		]
-		request.perform(withSuccess: { success in
+		request.perform(withSuccess: { [weak self] signInResponse in
+			guard let self = self else { return }
 //			try? KKServices.shared.KeychainDefaults.set(idToken, key: "SIWA_id_token")
 //			KKServices.shared.processUserData(fromSession: userSession)
-			completionHandler(.success(success))
+			self.authenticationKey = signInResponse.authToken
+			User.current = signInResponse.data.first
+			completionHandler(.success(signInResponse.authToken))
 			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
-		}, failure: { error in
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't sign in with Apple 😔", subTitle: error.message)
 			}
@@ -123,9 +136,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func resetPassword(withEmailAddress emailAddress: String, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKError>) -> Void) {
+	public func resetPassword(withEmailAddress emailAddress: String, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) {
 		let usersResetPassword = self.kurozoraKitEndpoints.usersResetPassword
-		let request: APIRequest<KKSuccess, KKError> = tron.swiftyJSON.request(usersResetPassword)
+		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(usersResetPassword)
 		request.headers = headers
 		request.method = .post
 		request.parameters = [
@@ -133,7 +146,8 @@ extension KurozoraKit {
 		]
 		request.perform(withSuccess: { success in
 			completionHandler(.success(success))
-		}, failure: { error in
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			UIView().endEditing(true)
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't send reset link 😔", subTitle: error.message)
@@ -146,16 +160,18 @@ extension KurozoraKit {
 	/**
 		Update the current user's profile information.
 
-		- Parameter userID: The id of the user whose information should be udpated.
 		- Parameter bio: The new biography to set.
 		- Parameter profileImage: The new user's profile image.
 		- Parameter bannerImage: The new user's profile image.
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func updateInformation(forUserID userID: Int, bio: String, profileImage: UIImage, bannerImage: UIImage, completion completionHandler: @escaping (_ result: Result<User, KKError>) -> Void) {
+	public func updateInformation(bio: String, profileImage: UIImage, bannerImage: UIImage, completion completionHandler: @escaping (_ result: Result<UserUpdate, KKAPIError>) -> Void) {
+		guard let userID = User.current?.id else {
+			fatalError("User must be signed in to call the updateInformation(bio:profileImage:bannerImage: completion:) method.")
+		}
 		let usersProfile = self.kurozoraKitEndpoints.usersProfile.replacingOccurrences(of: "?", with: "\(userID)")
-		let request: UploadAPIRequest<User, KKError> = tron.swiftyJSON.uploadMultipart(usersProfile) { (formData) in
+		let request: UploadAPIRequest<UserUpdateResponse, KKAPIError> = tron.codable.uploadMultipart(usersProfile) { (formData) in
 			if let profileImage = profileImage.jpegData(compressionQuality: 0.1) {
 				formData.append(profileImage, withName: "profileImage", fileName: "ProfileImage.png", mimeType: "image/png")
 			}
@@ -167,27 +183,22 @@ extension KurozoraKit {
 		request.headers = [
 			"Content-Type": "multipart/form-data"
 		]
-		if User.isSignedIn {
-			request.headers["kuro-auth"] = self.authenticationKey
-		}
+		request.headers["kuro-auth"] = self.authenticationKey
 
 		request.method = .post
 		request.parameters = [
 			"biography": bio
 		]
-		request.perform(withSuccess: { updatedUser in
+		request.perform(withSuccess: { [weak self] userUpdateResponse in
+			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showSuccess("Settings updated ☺️", subTitle: updatedUser.message)
+				SCLAlertView().showSuccess("Settings updated ☺️", subTitle: userUpdateResponse.message)
 			}
 
-			if updatedUser.profile?.id == User.current?.id {
-				if let userDetails = updatedUser.profile {
-					User.current?.updateDetails(with: userDetails)
-				}
-			}
-
-			completionHandler(.success(updatedUser))
-		}, failure: { error in
+			User.current?.attributes.update(using: userUpdateResponse.data)
+			completionHandler(.success(userUpdateResponse.data))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			UIView().endEditing(true)
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't update information 😔", subTitle: error.message)
@@ -204,9 +215,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getSessions(forUserID userID: Int, completion completionHandler: @escaping (_ result: Result<UserSessions, KKError>) -> Void) {
+	public func getSessions(forUserID userID: Int, completion completionHandler: @escaping (_ result: Result<[Session], KKAPIError>) -> Void) {
 		let usersSessions = self.kurozoraKitEndpoints.usersSessions.replacingOccurrences(of: "?", with: "\(userID)")
-		let request: APIRequest<UserSessions, KKError> = tron.swiftyJSON.request(usersSessions)
+		let request: APIRequest<SessionResponse, KKAPIError> = tron.codable.request(usersSessions)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -214,9 +225,10 @@ extension KurozoraKit {
 		}
 
 		request.method = .get
-		request.perform(withSuccess: { session in
-			completionHandler(.success(session))
-		}, failure: { error in
+		request.perform(withSuccess: { sessionResponse in
+			completionHandler(.success(sessionResponse.data))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't get session 😔", subTitle: error.message)
 			}
@@ -235,9 +247,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getLibrary(forUserID userID: Int, withLibraryStatus libraryStatus: KKLibrary.Status, withSortType sortType: KKLibrary.SortType, withSortOption sortOption: KKLibrary.SortType.Options, completion completionHandler: @escaping (_ result: Result<[ShowDetailsElement], KKError>) -> Void) {
+	public func getLibrary(forUserID userID: Int, withLibraryStatus libraryStatus: KKLibrary.Status, withSortType sortType: KKLibrary.SortType, withSortOption sortOption: KKLibrary.SortType.Options, completion completionHandler: @escaping (_ result: Result<[Show], KKAPIError>) -> Void) {
 		let usersLibrary = self.kurozoraKitEndpoints.usersLibrary.replacingOccurrences(of: "?", with: "\(userID)")
-		let request: APIRequest<ShowDetails, KKError> = tron.swiftyJSON.request(usersLibrary)
+		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(usersLibrary)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -251,9 +263,10 @@ extension KurozoraKit {
 		if sortType != .none {
 			request.parameters["sort"] = "\(sortType.parameterValue)\(sortOption.parameterValue)"
 		}
-		request.perform(withSuccess: { showDetails in
-			completionHandler(.success(showDetails.showDetailsElements ?? []))
-		}, failure: { error in
+		request.perform(withSuccess: { showResponse in
+			completionHandler(.success(showResponse.data))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't get library 😔", subTitle: error.message)
 			}
@@ -265,29 +278,30 @@ extension KurozoraKit {
 	/**
 		Add a show with the given show id to the current user's library.
 
-		- Parameter userID: The id of the user in whose library the show will be added.
 		- Parameter libraryStatus: The watch status to assign to the Anime.
 		- Parameter showID: The id of the show to add.
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func addToLibrary(forUserID userID: Int, withLibraryStatus libraryStatus: KKLibrary.Status, showID: Int, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKError>) -> Void) {
+	public func addToLibrary(withLibraryStatus libraryStatus: KKLibrary.Status, showID: Int, completion completionHandler: @escaping (_ result: Result<LibraryUpdate, KKAPIError>) -> Void) {
+		guard let userID = User.current?.id else {
+			fatalError("User must be signed in to call the addToLibrary(withLibraryStatus:showID:completion:) method.")
+		}
 		let usersLibrary = self.kurozoraKitEndpoints.usersLibrary.replacingOccurrences(of: "?", with: "\(userID)")
-		let request: APIRequest<KKSuccess, KKError> = tron.swiftyJSON.request(usersLibrary)
+		let request: APIRequest<LibraryUpdateResponse, KKAPIError> = tron.codable.request(usersLibrary)
 
 		request.headers = headers
-		if User.isSignedIn {
-			request.headers["kuro-auth"] = self.authenticationKey
-		}
+		request.headers["kuro-auth"] = self.authenticationKey
 
 		request.method = .post
 		request.parameters = [
 			"status": libraryStatus.sectionValue,
 			"anime_id": showID
 		]
-		request.perform(withSuccess: { success in
-			completionHandler(.success(success))
-		}, failure: { error in
+		request.perform(withSuccess: { libraryUpdateResponse in
+			completionHandler(.success(libraryUpdateResponse.data))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't add to your library 😔", subTitle: error.message)
 			}
@@ -299,27 +313,28 @@ extension KurozoraKit {
 	/**
 		Remove a show with the given show id from the current user's library.
 
-		- Parameter userID: The id of the user from whose library a show should be deleted.
 		- Parameter showID: The id of the show to be deleted.
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func removeFromLibrary(forUserID userID: Int, showID: Int, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKError>) -> Void) {
+	public func removeFromLibrary(showID: Int, completion completionHandler: @escaping (_ result: Result<LibraryUpdate, KKAPIError>) -> Void) {
+		guard let userID = User.current?.id else {
+			fatalError("User must be signed in to call the removeFromLibrary(showID:completion:) method.")
+		}
 		let usersLibraryDelete = self.kurozoraKitEndpoints.usersLibraryDelete.replacingOccurrences(of: "?", with: "\(userID)")
-		let request: APIRequest<KKSuccess, KKError> = tron.swiftyJSON.request(usersLibraryDelete)
+		let request: APIRequest<LibraryUpdateResponse, KKAPIError> = tron.codable.request(usersLibraryDelete)
 
 		request.headers = headers
-		if User.isSignedIn {
-			request.headers["kuro-auth"] = self.authenticationKey
-		}
+		request.headers["kuro-auth"] = self.authenticationKey
 
 		request.method = .post
 		request.parameters = [
 			"anime_id": showID
 		]
-		request.perform(withSuccess: { success in
-			completionHandler(.success(success))
-		}, failure: { error in
+		request.perform(withSuccess: { libraryUpdateResponse in
+			completionHandler(.success(libraryUpdateResponse.data))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't remove from your library 😔", subTitle: error.message)
 			}
@@ -337,9 +352,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func importMALLibrary(forUserID userID: Int, filePath: URL, importBehavior behavior: MALImport.Behavior, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKError>) -> Void) {
+	public func importMALLibrary(forUserID userID: Int, filePath: URL, importBehavior behavior: MALImport.Behavior, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) {
 		let usersLibraryMALImport = self.kurozoraKitEndpoints.usersLibraryMALImport.replacingOccurrences(of: "?", with: "\(userID)")
-		let request: UploadAPIRequest<KKSuccess, KKError> = tron.swiftyJSON.uploadMultipart(usersLibraryMALImport) { formData in
+		let request: UploadAPIRequest<KKSuccess, KKAPIError> = tron.codable.uploadMultipart(usersLibraryMALImport) { formData in
 			formData.append(filePath, withName: "file", fileName: "MALAnimeImport.xml", mimeType: "text/xml")
 		}
 
@@ -355,12 +370,14 @@ extension KurozoraKit {
 		request.parameters = [
 			"behavior": behavior.stringValue
 		]
-		request.perform(withSuccess: { success in
+		request.perform(withSuccess: { [weak self] success in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showInfo("Processing request", subTitle: success.message)
 			}
 			completionHandler(.success(success))
-		}, failure: { error in
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't import MAL library 😔", subTitle: error.message)
 			}
@@ -377,9 +394,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func search(inUserLibrary userID: Int,forShow show: String, completion completionHandler: @escaping (_ result: Result<[ShowDetailsElement], KKError>) -> Void) {
+	public func search(inUserLibrary userID: Int,forShow show: String, completion completionHandler: @escaping (_ result: Result<[Show], KKAPIError>) -> Void) {
 		let animeSearchInLibrary = self.kurozoraKitEndpoints.animeSearchInLibrary.replacingOccurrences(of: "?", with: "\(userID)")
-		let request: APIRequest<Search, KKError> = tron.swiftyJSON.request(animeSearchInLibrary)
+		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(animeSearchInLibrary)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -390,8 +407,8 @@ extension KurozoraKit {
 		request.parameters = [
 			"query": show
 		]
-		request.perform(withSuccess: { search in
-			completionHandler(.success(search.showResults ?? []))
+		request.perform(withSuccess: { showResponse in
+			completionHandler(.success(showResponse.data))
 		}, failure: { error in
 //			if self.services.showAlerts {
 //				SCLAlertView().showError("Can't get search results 😔", subTitle: error.message)
@@ -408,9 +425,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getFavourites(forUserID userID: Int, completion completionHandler: @escaping (_ result: Result<[ShowDetailsElement], KKError>) -> Void) {
+	public func getFavourites(forUserID userID: Int, completion completionHandler: @escaping (_ result: Result<[Show], KKAPIError>) -> Void) {
 		let usersFavoriteAnime = self.kurozoraKitEndpoints.usersFavoriteAnime.replacingOccurrences(of: "?", with: "\(userID)")
-		let request: APIRequest<ShowDetails, KKError> = tron.swiftyJSON.request(usersFavoriteAnime)
+		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(usersFavoriteAnime)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -418,9 +435,10 @@ extension KurozoraKit {
 		}
 
 		request.method = .get
-		request.perform(withSuccess: { showDetails in
-			completionHandler(.success(showDetails.showDetailsElements ?? []))
-		}, failure: { error in
+		request.perform(withSuccess: { showResponse in
+			completionHandler(.success(showResponse.data))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't get favorites list 😔", subTitle: error.message)
 			}
@@ -434,13 +452,12 @@ extension KurozoraKit {
 
 		- Parameter userID: The id of the user whose favourite list should be updated.
 		- Parameter showID: The id of the show whose favorite status should be updated.
-		- Parameter favoriteStatus: The favorite status value by which the show's favorite status will be updated.
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func updateFavoriteStatus(forUserID userID: Int, forShow showID: Int, withFavoriteStatus favoriteStatus: FavoriteStatus, completion completionHandler: @escaping (_ result: Result<FavoriteStatus, KKError>) -> Void) {
+	public func updateFavoriteStatus(forUserID userID: Int, forShow showID: Int, completion completionHandler: @escaping (_ result: Result<FavoriteStatus, KKAPIError>) -> Void) {
 		let usersFavoriteAnime = self.kurozoraKitEndpoints.usersFavoriteAnime.replacingOccurrences(of: "?", with: "\(userID)")
-		let request: APIRequest<FavoriteShow, KKError> = tron.swiftyJSON.request(usersFavoriteAnime)
+		let request: APIRequest<FavoriteShowResponse, KKAPIError> = tron.codable.request(usersFavoriteAnime)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -450,15 +467,48 @@ extension KurozoraKit {
 		request.method = .post
 		request.parameters = [
 			"anime_id": showID,
-			"is_favorite": favoriteStatus.rawValue
 		]
-		request.perform(withSuccess: { favoriteShow in
-			completionHandler(.success(favoriteShow.favoriteStatus ?? .unfavorite))
-		}, failure: { error in
+		request.perform(withSuccess: { favoriteShowResponse in
+			completionHandler(.success(favoriteShowResponse.data.favoriteStatus))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't update favorite status 😔", subTitle: error.message)
 			}
 			print("Received update favorite status error: \(error.message ?? "No message available")")
+			completionHandler(.failure(error))
+		})
+	}
+
+	/**
+		Update the `isReminded` value of a show in the current user's library.
+
+		- Parameter userID: The id of the user whose reminder list should be updated.
+		- Parameter showID: The id of the show whose reminder status should be updated.
+		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
+	*/
+	public func updateReminderStatus(forUserID userID: Int, forShow showID: Int, completion completionHandler: @escaping (_ result: Result<ReminderStatus, KKAPIError>) -> Void) {
+		let usersReminderAnime = self.kurozoraKitEndpoints.usersReminderAnime.replacingOccurrences(of: "?", with: "\(userID)")
+		let request: APIRequest<ReminderShowResponse, KKAPIError> = tron.codable.request(usersReminderAnime)
+
+		request.headers = headers
+		if User.isSignedIn {
+			request.headers["kuro-auth"] = self.authenticationKey
+		}
+
+		request.method = .post
+		request.parameters = [
+			"anime_id": showID,
+		]
+		request.perform(withSuccess: { reminderShowResponse in
+			completionHandler(.success(reminderShowResponse.data.reminderStatus))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
+			if self.services.showAlerts {
+				SCLAlertView().showError("Can't update reminder status 😔", subTitle: error.message)
+			}
+			print("Received update reminder status error: \(error.message ?? "No message available")")
 			completionHandler(.failure(error))
 		})
 	}
@@ -470,19 +520,22 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func restoreDetails(forUserWith authenticationKey: String, completion completionHandler: @escaping (_ result: Result<String, KKError>) -> Void) {
+	public func restoreDetails(forUserWith authenticationKey: String, completion completionHandler: @escaping (_ result: Result<String, KKAPIError>) -> Void) {
 		let usersMe = self.kurozoraKitEndpoints.usersMe
-		let request: APIRequest<User, KKError> = tron.swiftyJSON.request(usersMe)
+		let request: APIRequest<SignInResponse, KKAPIError> = tron.codable.request(usersMe)
 
 		request.headers = headers
 		request.headers["kuro-auth"] = authenticationKey
 
 		request.method = .get
-		request.perform(withSuccess: { user in
-			self.authenticationKey = user.kuroAuthToken ?? ""
+		request.perform(withSuccess: { [weak self] signInResponse in
+			guard let self = self else { return }
+			self.authenticationKey = signInResponse.authToken
+			User.current = signInResponse.data.first
 			completionHandler(.success(self.authenticationKey))
 			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
-		}, failure: { error in
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't get current user's details 😔", subTitle: error.message)
 			}
@@ -498,9 +551,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getProfile(forUserID userID: Int, completion completionHandler: @escaping (_ result: Result<User, KKError>) -> Void) {
+	public func getProfile(forUserID userID: Int, completion completionHandler: @escaping (_ result: Result<[User], KKAPIError>) -> Void) {
 		let usersProfile = self.kurozoraKitEndpoints.usersProfile.replacingOccurrences(of: "?", with: "\(userID)")
-		let request: APIRequest<User, KKError> = tron.swiftyJSON.request(usersProfile)
+		let request: APIRequest<UserResponse, KKAPIError> = tron.codable.request(usersProfile)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -508,9 +561,10 @@ extension KurozoraKit {
 		}
 
 		request.method = .get
-		request.perform(withSuccess: { userProfile in
-			completionHandler(.success(userProfile))
-		}, failure: { error in
+		request.perform(withSuccess: { userResponse in
+			completionHandler(.success(userResponse.data))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't get user details 😔", subTitle: error.message)
 			}
@@ -526,9 +580,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getNotifications(forUserID userID: Int, completion completionHandler: @escaping (_ result: Result<[UserNotificationElement], KKError>) -> Void) {
+	public func getNotifications(forUserID userID: Int, completion completionHandler: @escaping (_ result: Result<[UserNotification], KKAPIError>) -> Void) {
 		let usersNotifications = self.kurozoraKitEndpoints.usersNotifications.replacingOccurrences(of: "?", with: "\(userID)")
-		let request: APIRequest<UserNotification, KKError> = tron.swiftyJSON.request(usersNotifications)
+		let request: APIRequest<UserNotificationResponse, KKAPIError> = tron.codable.request(usersNotifications)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -536,9 +590,10 @@ extension KurozoraKit {
 		}
 
 		request.method = .get
-		request.perform(withSuccess: { userNotifications in
-			completionHandler(.success(userNotifications.notifications))
-		}, failure: { error in
+		request.perform(withSuccess: { userNotificationResponse in
+			completionHandler(.success(userNotificationResponse.data))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't get notifications 😔", subTitle: error.message)
 			}
@@ -554,9 +609,9 @@ extension KurozoraKit {
 		- Parameter successHandler: A closure returning a SearchElement array.
 		- Parameter search: The returned SearchElement array.
 	*/
-	public func search(forUsername username: String, completion completionHandler: @escaping (_ result: Result<[UserProfile], KKError>) -> Void) {
+	public func search(forUsername username: String, completion completionHandler: @escaping (_ result: Result<[User], KKAPIError>) -> Void) {
 		let usersSearch = self.kurozoraKitEndpoints.usersSearch
-		let request: APIRequest<Search, KKError> = tron.swiftyJSON.request(usersSearch)
+		let request: APIRequest<UserResponse, KKAPIError> = tron.codable.request(usersSearch)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -567,8 +622,8 @@ extension KurozoraKit {
 		request.parameters = [
 			"query": username
 		]
-		request.perform(withSuccess: { search in
-			completionHandler(.success(search.userResults ?? []))
+		request.perform(withSuccess: { userResponse in
+			completionHandler(.success(userResponse.data))
 		}, failure: { error in
 //			if self.services.showAlerts {
 //				SCLAlertView().showError("Can't get search results 😔", subTitle: error.message)
@@ -582,13 +637,12 @@ extension KurozoraKit {
 		Follow or unfollow a user with the given user id.
 
 		- Parameter userID: The id of the user to follow/unfollow.
-		- Parameter followStatus: The follow status value indicating whether to follow or unfollow a user.
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func updateFollowStatus(_ userID: Int, withFollowStatus follow: FollowStatus, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKError>) -> Void) {
-		let usersFollow = self.kurozoraKitEndpoints.usersFolllow.replacingOccurrences(of: "?", with: "\(userID)")
-		let request: APIRequest<KKSuccess, KKError> = tron.swiftyJSON.request(usersFollow)
+	public func updateFollowStatus(_ userID: Int, completion completionHandler: @escaping (_ result: Result<FollowUpdate, KKAPIError>) -> Void) {
+		let usersFollow = self.kurozoraKitEndpoints.usersFollow.replacingOccurrences(of: "?", with: "\(userID)")
+		let request: APIRequest<FollowUpdateResponse, KKAPIError> = tron.codable.request(usersFollow)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -596,12 +650,10 @@ extension KurozoraKit {
 		}
 
 		request.method = .post
-		request.parameters = [
-			"follow": follow.rawValue
-		]
-		request.perform(withSuccess: { success in
-			completionHandler(.success(success))
-		}, failure: { error in
+		request.perform(withSuccess: { followUpdateResponse in
+			completionHandler(.success(followUpdateResponse.data))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't follow user 😔", subTitle: error.message)
 			}
@@ -619,9 +671,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getFollowList(_ userID: Int, _ followList: FollowList, next: String? = nil, completion completionHandler: @escaping (_ result: Result<UserFollow, KKError>) -> Void) {
+	public func getFollowList(_ userID: Int, _ followList: FollowList, next: String? = nil, completion completionHandler: @escaping (_ result: Result<UserFollow, KKAPIError>) -> Void) {
 		let usersFollowerOrFollowing = next ?? (followList == .following ? self.kurozoraKitEndpoints.usersFollowing : self.kurozoraKitEndpoints.usersFollowers).replacingOccurrences(of: "?", with: "\(userID)")
-		let request: APIRequest<UserFollow, KKError> = tron.swiftyJSON.request(usersFollowerOrFollowing).buildURL(.relativeToBaseURL)
+		let request: APIRequest<UserFollow, KKAPIError> = tron.codable.request(usersFollowerOrFollowing).buildURL(.relativeToBaseURL)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -631,7 +683,8 @@ extension KurozoraKit {
 		request.method = .get
 		request.perform(withSuccess: { userFollow in
 			completionHandler(.success(userFollow))
-		}, failure: { error in
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't get \(followList.rawValue) list 😔", subTitle: error.message)
 			}

@@ -18,7 +18,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	private let refreshControl = UIRefreshControl()
 
-	var showDetailsElements: [ShowDetailsElement]? {
+	var shows: [Show] = [] {
 		didSet {
 			self.configureDataSource()
 			self.refreshControl.endRefreshing()
@@ -92,7 +92,8 @@ class LibraryListCollectionViewController: KCollectionViewController {
 
 	// MARK: - Functions
 	override func setupEmptyDataSetView() {
-		collectionView.emptyDataSetView { (view) in
+		collectionView.emptyDataSetView { [weak self] (view) in
+			guard let self = self else { return }
 			let detailLabelString = User.isSignedIn ? "Add a show to your \(self.libraryStatus.stringValue.lowercased()) list and it will show up here." : "Library is only available to registered Kurozora users."
 			view.titleLabelString(NSAttributedString(string: "No Shows", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: detailLabelString, attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
@@ -130,30 +131,31 @@ class LibraryListCollectionViewController: KCollectionViewController {
 			}
 
 			guard let userID = User.current?.id else { return }
-			KService.getLibrary(forUserID: userID, withLibraryStatus: self.libraryStatus, withSortType: librarySortType, withSortOption: librarySortTypeOption) { result in
+			KService.getLibrary(forUserID: userID, withLibraryStatus: self.libraryStatus, withSortType: librarySortType, withSortOption: librarySortTypeOption) { [weak self] result in
+				guard let self = self else { return }
 				switch result {
-				case .success(let showDetailsElements):
-					DispatchQueue.main.async {
-						self.showDetailsElements = showDetailsElements
-					}
+				case .success(let shows):
+//					DispatchQueue.main.async {
+						self.shows = shows
+//					}
 				case .failure: break
 				}
 			}
 		} else {
-			self.showDetailsElements = nil
+			self.shows = []
 			collectionView.reloadData()
 		}
 	}
 
 	/// Returns a ShowDetailsElemenet for the selected show at the given index path.
-	func selectedShow(at indexPath: IndexPath) -> ShowDetailsElement? {
-		return showDetailsElements?[indexPath.row]
+	func selectedShow(at indexPath: IndexPath) -> Show? {
+		return shows[indexPath.row]
     }
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if let currentCell = sender as? LibraryBaseCollectionViewCell, let showDetailCollectionViewController = segue.destination as? ShowDetailCollectionViewController {
-			showDetailCollectionViewController.showDetailsElement = currentCell.showDetailsElement
+			showDetailCollectionViewController.showID = currentCell.show.id
 		}
 	}
 }
@@ -199,14 +201,14 @@ extension LibraryListCollectionViewController {
 	override func configureDataSource() {
 		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, identifier: Int) -> UICollectionViewCell? in
 			if let libraryBaseCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: self.libraryCellStyle.identifierString, for: indexPath) as? LibraryBaseCollectionViewCell {
-				libraryBaseCollectionViewCell.showDetailsElement = self.showDetailsElements?[indexPath.item]
+				libraryBaseCollectionViewCell.show = self.shows[indexPath.item]
 				return libraryBaseCollectionViewCell
 			} else {
 				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.castCollectionViewCell.identifier)")
 			}
 		}
 
-		let itemsPerSection = showDetailsElements?.count ?? 0
+		let itemsPerSection = shows.count
 		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
 		SectionLayoutKind.allCases.forEach {
 			snapshot.appendSections([$0])
@@ -308,7 +310,7 @@ extension LibraryListCollectionViewController: ShowDetailCollectionViewControlle
 		guard let indexPath = collectionView.indexPath(for: libraryCell) else { return }
 
 		collectionView.performBatchUpdates({
-			showDetailsElements?.remove(at: indexPath.item)
+			shows.remove(at: indexPath.item)
 			collectionView.deleteItems(at: [indexPath])
 		})
 

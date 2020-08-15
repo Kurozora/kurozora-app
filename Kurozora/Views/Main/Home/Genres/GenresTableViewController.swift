@@ -11,7 +11,7 @@ import KurozoraKit
 
 class GenresTableViewController: KTableViewController {
 	// MARK: - Properties
-	var genresElements: [GenreElement]? {
+	var genres: [Genre] = [] {
 		didSet {
 			_prefersActivityIndicatorHidden = true
 			tableView.reloadData()
@@ -51,11 +51,12 @@ class GenresTableViewController: KTableViewController {
 
 	/// Fetches genres from the server.
 	func fetchGenres() {
-		KService.getGenres { result in
+		KService.getGenres { [weak self] result in
+			guard let self = self else { return }
 			switch result {
 			case .success(let genres):
 				DispatchQueue.main.async {
-					self.genresElements = genres
+					self.genres = genres
 				}
 			case .failure: break
 			}
@@ -72,7 +73,7 @@ class GenresTableViewController: KTableViewController {
 		if segue.identifier == R.segue.genresTableViewController.exploreSegue.identifier {
 			if let homeCollectionViewController = segue.destination as? HomeCollectionViewController {
 				if let selectedCell = sender as? GenreTableViewCell {
-					homeCollectionViewController.genreElement = selectedCell.genreElement
+					homeCollectionViewController.genre = selectedCell.genre
 				}
 			}
 		}
@@ -82,17 +83,14 @@ class GenresTableViewController: KTableViewController {
 // MARK: - UITableViewDataSource
 extension GenresTableViewController {
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		guard let genresCount = genresElements?.count else { return 0 }
-		return genresCount
+		return genres.count
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let genreTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.genreTableViewCell, for: indexPath) else {
 			fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.genreTableViewCell.identifier)")
 		}
-
-		genreTableViewCell.genreElement = genresElements?[indexPath.row]
-
+		genreTableViewCell.genre = genres[indexPath.row]
 		return genreTableViewCell
 	}
 }

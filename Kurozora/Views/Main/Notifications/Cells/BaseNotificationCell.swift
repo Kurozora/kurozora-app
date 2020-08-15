@@ -35,7 +35,7 @@ class BaseNotificationCell: SwipeTableViewCell {
 
 	// MARK: - Properties
 	var notificationType: KNotification.CustomType?
-	var userNotificationElement: UserNotificationElement? {
+	var userNotification: UserNotification! {
 		didSet {
 			configureCell()
 		}
@@ -44,20 +44,14 @@ class BaseNotificationCell: SwipeTableViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	func configureCell() {
-		guard let userNotificationElement = userNotificationElement else { return }
-
 		// Configure date label.
-		if let creationDate = userNotificationElement.creationDate {
-			self.dateLabel.text = creationDate.timeAgo
-		}
+		self.dateLabel.text = userNotification.attributes.createdAt.timeAgo
 
 		// Configure text label.
-		if let notificationContent = userNotificationElement.message {
-			self.notificationTextLabel.text = notificationContent
-		}
+		self.notificationTextLabel.text = userNotification.attributes.description
 
 		// Configure notification type label.
-		self.notificationTypeLabel.text = notificationType?.stringValue
+		self.notificationTypeLabel.text = notificationType?.stringValue.uppercased()
 
 		// Configure bubble view.
 		self.bubbleView.backgroundColor = notificationType?.colorValue
@@ -67,12 +61,15 @@ class BaseNotificationCell: SwipeTableViewCell {
 	}
 
 	/**
-		Update the read status of the notification.
+		Update the read status of the user notification.
 
 		- Parameter animation: A boolean value indicating whether the update should be animated.
 	*/
-	func updateReadStatus(animated: Bool = false) {
-		notificationMark.numberOfPages = userNotificationElement?.readStatus == .read ? 0 : 1
+	func updateReadStatus(with readStatus: ReadStatus? = nil, animated: Bool = false) {
+		if let readStatus = readStatus {
+			self.userNotification.attributes.readStatus = readStatus
+		}
+		notificationMark.numberOfPages = self.userNotification.attributes.readStatus == .read ? 0 : 1
 
 		if animated {
 			notificationMark.animateBounce()

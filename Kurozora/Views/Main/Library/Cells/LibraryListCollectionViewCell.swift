@@ -41,10 +41,9 @@ class LibraryListCollectionViewCell: LibraryBaseCollectionViewCell {
 	// MARK: - Functions
 	override func configureCell() {
 		super.configureCell()
-		guard let showDetailsElement = showDetailsElement else { return }
-		self.informationLabel.text = showDetailsElement.informationStringShort
+		self.informationLabel.text = show.attributes.informationStringShort
 
-		guard showDetailsElement.nextAirDateString != nil else {
+		guard show.attributes.nextAirDateString != nil else {
 			self.estimatedAiringLabel.text = ""
 			return
 		}
@@ -53,7 +52,7 @@ class LibraryListCollectionViewCell: LibraryBaseCollectionViewCell {
 	}
 
 	@objc func updateEstimatedAiringLabel() {
-		guard let fullAirDate = self.showDetailsElement?.nextAirDate else { return }
+		guard let fullAirDate = self.show.attributes.nextAirDate else { return }
 		let estimatedAiringString = "Episode # - \(fullAirDate.etaStringForDate(short: true))"
 		self.estimatedAiringLabel.text = estimatedAiringString
 	}

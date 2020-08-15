@@ -62,7 +62,14 @@ class ProfileTableViewController: KTableViewController {
 	var currentImageView: UIImageView?
 	var placeholderText = "Describe yourself!"
 
-	var userProfile: UserProfile? = User.current
+	var userID = User.current?.id ?? 0
+	var user: User! = User.current {
+		didSet {
+			_prefersActivityIndicatorHidden = true
+			self.userID = self.user.id
+			self.configureProfile()
+		}
+	}
 
 	var dismissButtonIsEnabled: Bool = false {
 		didSet {
@@ -71,7 +78,7 @@ class ProfileTableViewController: KTableViewController {
 			}
 		}
 	}
-	var feedPostElement: [FeedPostElement]? = nil
+	var feedPosts: [FeedPost]? = nil
 	var editingMode: Bool = false
 
 	var imagePicker = UIImagePickerController()
@@ -93,12 +100,6 @@ class ProfileTableViewController: KTableViewController {
 	}
 
 	// MARK: - View
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-
-		self.fetchUserDetails(for: self.userProfile?.id)
-	}
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
@@ -114,6 +115,7 @@ class ProfileTableViewController: KTableViewController {
 
 		// Fetch posts
 		DispatchQueue.global(qos: .background).async {
+			self.fetchUserDetails()
 			self.fetchPosts()
 		}
 	}
@@ -128,8 +130,10 @@ class ProfileTableViewController: KTableViewController {
 
 	// MARK: - Functions
 	override func setupEmptyDataSetView() {
-		tableView.emptyDataSetView { (view) in
-			let detailLabel = self.userProfile?.id == User.current?.id ? "There are no posts on your timeline!" : "There are no posts on this timeline! Be the first to post :D"
+		tableView.emptyDataSetView { [weak self] (view) in
+			guard let self = self else { return }
+
+			let detailLabel = self.user.id == User.current?.id ? "There are no posts on your timeline!" : "There are no posts on this timeline! Be the first to post :D"
 			let verticalOffset = (self.tableView.tableHeaderView?.height ?? 0 - self.view.height) / 2
 
 			view.titleLabelString(NSAttributedString(string: "No Posts", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
@@ -161,20 +165,13 @@ class ProfileTableViewController: KTableViewController {
 		}
 	}
 
-	/**
-		Fetches user detail for the given user id.
-
-		- Parameter userID: The user id for which the details should be fetched.
-	*/
-	private func fetchUserDetails(for userID: Int?) {
-		guard let userID = userID else { return }
-
-		KService.getProfile(forUserID: userID) { result in
+	/// Fetches user detail.
+	private func fetchUserDetails() {
+		KService.getProfile(forUserID: self.userID) { [weak self] result in
+			guard let self = self else { return }
 			switch result {
-			case .success(let user):
-				self.userProfile = user.profile
-				self.configureProfile()
-				self._prefersActivityIndicatorHidden = true
+			case .success(let users):
+				self.user = users.first
 			case .failure: break
 			}
 		}
@@ -186,28 +183,28 @@ class ProfileTableViewController: KTableViewController {
 		centerAlign.alignment = .center
 
 		// Configure username
-		usernameLabel.text = self.userProfile?.username
+		usernameLabel.text = self.user?.attributes.username
 		usernameLabel.isHidden = false
 
 		// Configure online status
-		onlineIndicatorLabel.text = self.userProfile?.activityStatus?.stringValue
+		onlineIndicatorLabel.text = self.user?.attributes.activityStatus.stringValue
 		onlineIndicatorLabel.isHidden = false
 
 		// Configure profile image
-		profileImageView.image = self.userProfile?.profileImage
+		profileImageView.image = self.user?.attributes.profileImage
 
 		// Configure banner image
-		if let bannerImageURL = self.userProfile?.bannerImageURL {
+		if let bannerImageURL = self.user?.attributes.bannerImageURL {
 			bannerImageView.setImage(with: bannerImageURL, placeholder: R.image.placeholders.userBanner()!)
 		}
 
 		// Configure user bio
-		if let biography = self.userProfile?.biography, !biography.isEmpty {
+		if let biography = self.user?.attributes.biography, !biography.isEmpty {
 			self.bioTextView.text = biography
 		}
 
 		// Configure reputation count
-		if let reputationCount = self.userProfile?.reputationCount {
+		if let reputationCount = self.user?.attributes.reputationCount {
 			let count = NSAttributedString(string: "\((reputationCount >= 10000) ? reputationCount.kFormatted : "\(reputationCount)")", attributes: [
 				NSAttributedString.Key.foregroundColor: KThemePicker.textColor.colorValue,
 				NSAttributedString.Key.paragraphStyle: centerAlign
@@ -224,7 +221,7 @@ class ProfileTableViewController: KTableViewController {
 		}
 
 		// Configure following & followers count
-		if let followingCount = self.userProfile?.followingCount {
+		if let followingCount = self.user?.attributes.followingCount {
 			let count = NSAttributedString(string: "\((followingCount >= 10000) ? followingCount.kFormatted : "\(followingCount)")", attributes: [
 				NSAttributedString.Key.foregroundColor: KThemePicker.textColor.colorValue,
 				NSAttributedString.Key.paragraphStyle: centerAlign
@@ -240,7 +237,7 @@ class ProfileTableViewController: KTableViewController {
 			self.followingButton.setAttributedTitle(followingButtonTitle, for: .normal)
 		}
 
-		if let followerCount = self.userProfile?.followerCount {
+		if let followerCount = self.user?.attributes.followerCount {
 			let count = NSAttributedString(string: "\((followerCount >= 10000) ? followerCount.kFormatted : "\(followerCount)")", attributes: [
 				NSAttributedString.Key.foregroundColor: KThemePicker.textColor.colorValue,
 				NSAttributedString.Key.paragraphStyle: centerAlign
@@ -256,41 +253,32 @@ class ProfileTableViewController: KTableViewController {
 			self.followersButton.setAttributedTitle(followersButtonTitle, for: .normal)
 		}
 
-		// Configure follow button
-		if self.userProfile?.id == User.current?.id {
-			followButton.isHidden = true
-			editProfileButton.isHidden = false
-		} else {
-			if let currentlyFollowing = self.userProfile?.following, currentlyFollowing == true {
-				followButton.setTitle("✓ Following", for: .normal)
-			} else {
-				followButton.setTitle("＋ Follow", for: .normal)
-			}
+		// Configure edit button
+		self.editProfileButton.isHidden = !(self.user?.id == User.current?.id)
 
-			followButton.isHidden = false
-			editProfileButton.isHidden = true
-		}
+		// Configure follow button
+		self.updateFollowButton()
 
 		// Configure pro badge
 		proBadgeButton.isHidden = true
-		if let proBadge = self.userProfile?.proBadge, !String(proBadge).isEmpty {
-			if proBadge {
-				self.proBadgeButton.isHidden = false
-				self.proBadgeButton.setTitle("PRO", for: .normal)
-			}
-		}
+//		if let proBadge = self.user?.attributes.proBadge, !String(proBadge).isEmpty {
+//			if proBadge {
+//				self.proBadgeButton.isHidden = false
+//				self.proBadgeButton.setTitle("PRO", for: .normal)
+//			}
+//		}
 
 		// Configure badge & badge button
-		if let badges = self.userProfile?.badges {
+		if let badges = self.user?.relationships?.badges?.data {
 			// Configure user badge (a.k.a tag)
 			if !badges.isEmpty {
 				self.tagBadgeButton.isHidden = false
 				for badge in badges {
-					self.tagBadgeButton.setTitle(badge.text, for: .normal)
-					self.tagBadgeButton.setTitleColor(UIColor(hexString: badge.textColor ?? "#00ABF1"), for: .normal)
-					self.tagBadgeButton.backgroundColor = UIColor(hexString: badge.backgroundColor ?? "#B6EAFF")
-					self.tagBadgeButton.borderColor = UIColor(hexString: badge.textColor ?? "#00ABF1")
-					self.profileImageView.borderColor = UIColor(hexString: badge.textColor ?? "#00ABF1")
+					self.tagBadgeButton.setTitle(badge.attributes.name, for: .normal)
+					self.tagBadgeButton.setTitleColor(UIColor(hexString: badge.attributes.textColor), for: .normal)
+					self.tagBadgeButton.backgroundColor = UIColor(hexString: badge.attributes.backgroundColor)
+					self.tagBadgeButton.borderColor = UIColor(hexString: badge.attributes.textColor)
+					self.profileImageView.borderColor = UIColor(hexString: badge.attributes.textColor)
 					break
 				}
 			} else {
@@ -450,8 +438,8 @@ class ProfileTableViewController: KTableViewController {
 		self.bannerImageCache = nil
 
 		if shouldUpdate {
-			guard let userID = User.current?.id else { return }
-			KService.updateInformation(forUserID: userID, bio: bioText, profileImage: profileImage, bannerImage: bannerImage) { result in
+			KService.updateInformation(bio: bioText, profileImage: profileImage, bannerImage: bannerImage) { [weak self] result in
+				guard let self = self else { return }
 				switch result {
 				case .success:
 					self.editMode(false)
@@ -482,7 +470,7 @@ class ProfileTableViewController: KTableViewController {
 	/// Performs segue to `FavoriteShowsCollectionViewController` with `FavoriteShowsSegue` as the identifier.
 	fileprivate func showFavoriteShowsList() {
 		if let favoriteShowsCollectionViewController = R.storyboard.library.favoriteShowsCollectionViewController() {
-			favoriteShowsCollectionViewController.userProfile = self.userProfile
+			favoriteShowsCollectionViewController.user = self.user
 			favoriteShowsCollectionViewController.dismissButtonIsEnabled = true
 
 			let kNavigationViewController = KNavigationController(rootViewController: favoriteShowsCollectionViewController)
@@ -515,6 +503,25 @@ class ProfileTableViewController: KTableViewController {
 		self.present(alertController, animated: true, completion: nil)
 	}
 
+	/// Updated the `followButton` with the follow status of the user.
+	fileprivate func updateFollowButton() {
+		let followStatus = self.user?.attributes.followStatus ?? .disabled
+		switch followStatus {
+		case .followed:
+			self.followButton.setTitle("＋ Follow", for: .normal)
+			self.followButton.isHidden = false
+			self.followButton.isUserInteractionEnabled = true
+		case  .notFollowed:
+			self.followButton.setTitle("✓ Following", for: .normal)
+			self.followButton.isHidden = false
+			self.followButton.isUserInteractionEnabled = true
+		case .disabled:
+			self.followButton.setTitle("＋ Follow", for: .normal)
+			self.followButton.isHidden = true
+			self.followButton.isUserInteractionEnabled = false
+		}
+	}
+
 	// MARK: - IBActions
 	@IBAction func editProfileButtonPressed(_ sender: UIButton) {
 		// Cache current profile data
@@ -527,19 +534,12 @@ class ProfileTableViewController: KTableViewController {
 
 	@IBAction func followButtonPressed(_ sender: UIButton) {
 		WorkflowController.shared.isSignedIn {
-			guard let userID = self.userProfile?.id else { return }
-			let followStatus: FollowStatus = self.userProfile?.following ?? false ? .unfollow : .follow
-
-			KService.updateFollowStatus(userID, withFollowStatus: followStatus) { result in
+			KService.updateFollowStatus(self.user.id) { [weak self] result in
+				guard let self = self else { return }
 				switch result {
-				case .success:
-					if followStatus == .unfollow {
-						sender.setTitle("＋ Follow", for: .normal)
-						self.userProfile?.following = false
-					} else {
-						sender.setTitle("✓ Following", for: .normal)
-						self.userProfile?.following = true
-					}
+				case .success(let followUpdate):
+					self.user?.attributes.update(using: followUpdate)
+					self.updateFollowButton()
 				case .failure: break
 				}
 			}
@@ -554,10 +554,10 @@ class ProfileTableViewController: KTableViewController {
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == R.segue.profileTableViewController.badgeSegue.identifier {
 			if let badgesTableViewController = segue.destination as? BadgesTableViewController {
-				badgesTableViewController.userProfile = self.userProfile
+				badgesTableViewController.user = self.user
 			}
 		} else if let followTableViewController = segue.destination as? FollowTableViewController {
-			followTableViewController.user = self.userProfile
+			followTableViewController.user = self.user
 
 			if segue.identifier == R.segue.profileTableViewController.followingSegue.identifier {
 				followTableViewController.followList = .following
@@ -571,7 +571,7 @@ class ProfileTableViewController: KTableViewController {
 // MARK: - UITableViewDataSource
 extension ProfileTableViewController {
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		guard let postCount = feedPostElement?.count else { return 0 }
+		guard let postCount = feedPosts?.count else { return 0 }
 		return postCount
 	}
 
@@ -579,7 +579,7 @@ extension ProfileTableViewController {
 		guard let feedPostCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedPostCell, for: indexPath) else {
 			fatalError("Cannot dequeue cell with reuse identifier \(R.reuseIdentifier.feedPostCell.identifier)")
 		}
-		feedPostCell.feedPostElement = feedPostElement?[indexPath.row]
+		feedPostCell.feedPost = feedPosts?[indexPath.row]
 		return feedPostCell
 	}
 }

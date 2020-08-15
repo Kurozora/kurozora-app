@@ -83,7 +83,8 @@ extension SignInWithAppleTableViewController: ASAuthorizationControllerDelegate 
 	func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
 		guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else { return }
 		guard let emailAddress = appleIDCredential.email else { return }
-		KService.register(withAppleUserID: appleIDCredential.user, emailAddress: emailAddress) { result in
+		KService.register(withAppleUserID: appleIDCredential.user, emailAddress: emailAddress) { [weak self] result in
+			guard let self = self else { return }
 			switch result {
 			case .success:
 				let alertController = SCLAlertView(appearance: SCLAlertView.SCLAppearance(showCloseButton: false))

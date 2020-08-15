@@ -16,7 +16,7 @@ class GenreTableViewCell: UITableViewCell {
 	@IBOutlet weak var separatorView: SeparatorView!
 
 	// MARK: - Properties
-	var genreElement: GenreElement? {
+	var genre: Genre! {
 		didSet {
 			configureCell()
 		}
@@ -25,12 +25,8 @@ class GenreTableViewCell: UITableViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
-		guard let genreElement = genreElement else { return }
+		nameLabel.text = genre.attributes.name
 
-		nameLabel.text = genreElement.name
-
-		if let isNsfw = genreElement.nsfw {
-			nsfwButton.isHidden = isNsfw ? false : true
-		}
+		nsfwButton.isHidden = genre.attributes.isNSFW ? false : true
 	}
 }

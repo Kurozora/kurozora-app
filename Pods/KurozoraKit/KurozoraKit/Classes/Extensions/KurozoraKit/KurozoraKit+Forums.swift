@@ -1,6 +1,6 @@
 //
 //  KurozoraKit+Forums.swift
-//  Kurozora
+//  KurozoraKit
 //
 //  Created by Khoren Katklian on 29/09/2019.
 //  Copyright © 2019 Kurozora. All rights reserved.
@@ -16,14 +16,15 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getForumSections(completion completionHandler: @escaping (_ result: Result<[ForumsSectionElement], KKError>) -> Void) {
+	public func getForumSections(completion completionHandler: @escaping (_ result: Result<[ForumsSection], KKAPIError>) -> Void) {
 		let forumsSections = self.kurozoraKitEndpoints.forumsSections
-		let request: APIRequest<ForumsSections, KKError> = tron.swiftyJSON.request(forumsSections)
+		let request: APIRequest<ForumsSectionResponse, KKAPIError> = tron.codable.request(forumsSections)
 		request.headers = headers
 		request.method = .get
-		request.perform(withSuccess: { sections in
-			completionHandler(.success(sections.sections ?? []))
-		}, failure: { error in
+		request.perform(withSuccess: { forumsSectionResponse in
+			completionHandler(.success(forumsSectionResponse.data))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't get forum sections 😔", subTitle: error.message)
 			}
@@ -41,9 +42,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getForumsThreads(forSection sectionID: Int, orderedBy order: ForumOrder, next: String? = nil, completion completionHandler: @escaping (_ result: Result<ForumsThread, KKError>) -> Void) {
+	public func getForumsThreads(forSection sectionID: Int, orderedBy order: ForumOrder, next: String? = nil, completion completionHandler: @escaping (_ result: Result<ForumsThreadResponse, KKAPIError>) -> Void) {
 		let forumsSectionsThreads = next ?? self.kurozoraKitEndpoints.forumsSectionsThreads.replacingOccurrences(of: "?", with: "\(sectionID)")
-		let request: APIRequest<ForumsThread, KKError> = tron.swiftyJSON.request(forumsSectionsThreads).buildURL(.relativeToBaseURL)
+		let request: APIRequest<ForumsThreadResponse, KKAPIError> = tron.codable.request(forumsSectionsThreads).buildURL(.relativeToBaseURL)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -54,9 +55,10 @@ extension KurozoraKit {
 		request.parameters = [
 			"order": order.rawValue
 		]
-		request.perform(withSuccess: { threads in
-			completionHandler(.success(threads))
-		}, failure: { error in
+		request.perform(withSuccess: { forumsThreadResponse in
+			completionHandler(.success(forumsThreadResponse))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't get forum thread 😔", subTitle: error.message)
 			}
@@ -74,9 +76,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func postThread(inSection sectionID: Int, withTitle title: String, content: String, completion completionHandler: @escaping (_ result: Result<Int, KKError>) -> Void) {
+	public func postThread(inSection sectionID: Int, withTitle title: String, content: String, completion completionHandler: @escaping (_ result: Result<[ForumsThread], KKAPIError>) -> Void) {
 		let forumsSectionsThreads = self.kurozoraKitEndpoints.forumsSectionsThreads.replacingOccurrences(of: "?", with: "\(sectionID)")
-		let request: APIRequest<ThreadPost, KKError> = tron.swiftyJSON.request(forumsSectionsThreads)
+		let request: APIRequest<ForumsThreadResponse, KKAPIError> = tron.codable.request(forumsSectionsThreads)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -88,9 +90,10 @@ extension KurozoraKit {
 			"title": title,
 			"content": content
 		]
-		request.perform(withSuccess: { thread in
-			completionHandler(.success(thread.threadID ?? 0))
-		}, failure: { error in
+		request.perform(withSuccess: { forumsThreadResponse in
+			completionHandler(.success(forumsThreadResponse.data))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't submit your thread 😔", subTitle: error.message)
 			}

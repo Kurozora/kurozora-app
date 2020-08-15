@@ -28,7 +28,8 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var moreButton: UIButton!
 
 	// MARK: - Properties
-	var themeElement: ThemeElement? {
+	var indexPath: IndexPath!
+	var theme: Theme! {
 		didSet {
 			configureCell()
 		}
@@ -37,29 +38,25 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
-		guard let themeElement = themeElement else { return }
+		titleLabel.text = theme.attributes.name
 
-		titleLabel.text = themeElement.name
-		if let themeBackgroundColor = themeElement.backgroundColor {
-			let themeBackgroundColorHex = themeBackgroundColor.isEmpty ? "#333333" : themeBackgroundColor
-			themeScreenshot.backgroundColor = UIColor(hexString: themeBackgroundColorHex)
-		}
+		let themeBackgroundColorHex = theme.attributes.backgroundColor ?? "#333333"
+		themeScreenshot.backgroundColor = UIColor(hexString: themeBackgroundColorHex)
+		themeScreenshot.setImage(with: theme.attributes.screenshot, placeholder: #imageLiteral(resourceName: "Empty/Themes"))
 
 		// Configure buy state
-//		if let themeBought = themeElement.currentUser?.themeBought {
-//
+//		if let themeBought = theme.attributes.currentUser?.themeBought {
 //		}
 
 		// Configure download count
-		if let downloadCount = themeElement.downloadCount {
-			switch downloadCount {
-			case 0:
-				downloadCountLabel.text = ""
-			case 1:
-				downloadCountLabel.text = "\(downloadCount) Download"
-			default:
-				downloadCountLabel.text = "\(downloadCount.kFormatted) Downloads"
-			}
+		let downloadCount = theme.attributes.downloadCount ?? 0
+		switch downloadCount {
+		case 0:
+			downloadCountLabel.text = ""
+		case 1:
+			downloadCountLabel.text = "\(downloadCount) Download"
+		default:
+			downloadCountLabel.text = "\(downloadCount.kFormatted) Downloads"
 		}
 
 		shouldHideMoreButton()
@@ -69,14 +66,12 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 
 	/// Checks whether to hide or unhide the more button for the current cell.
 	fileprivate func shouldHideMoreButton() {
-		guard let indexPathItem = indexPath?.item else { return }
-
-		switch indexPathItem {
-		case 0...2:
+		switch (indexPath.section, indexPath.row) {
+		case (0, 0...2):
 			moreButton.isHidden = true
 		default:
 			// More button hidden by default. If theme exists then unhide.
-			moreButton.isHidden = !KThemeStyle.themeExist(for: themeElement?.id)
+			moreButton.isHidden = !KThemeStyle.themeExist(for: theme.id)
 		}
 	}
 
@@ -102,10 +97,10 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 					return
 				}
 			default:
-				if Int(currentThemeID) == themeElement?.id {
+				if Int(currentThemeID) == theme.id {
 					getThemeButton.setTitle("USING", for: .normal)
 					return
-				} else if !KThemeStyle.themeExist(for: themeElement?.id) {
+				} else if !KThemeStyle.themeExist(for: theme.id) {
 					getThemeButton.setTitle("GET", for: .normal)
 					return
 				}
@@ -117,7 +112,7 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 
 	/// Checks whether the selected theme should be downloaded or else applied.
 	fileprivate func shouldDownloadTheme() {
-		guard let themeID = themeElement?.id else { return }
+		let themeID = theme.id
 		guard KThemeStyle.themeExist(for: themeID) else {
 			let alert = SCLAlertView()
 			alert.addButton("Sure") {
@@ -132,12 +127,12 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 
 	/// Handle the download process for the selected theme.
 	fileprivate func handleDownloadTheme() {
-		guard let themeName = themeElement?.name else { return }
-		guard let themeID = themeElement?.id else { return }
+		let themeName = theme.attributes.name
+		let themeID = theme.id
 		let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
 		let sclAlertView = SCLAlertView(appearance: appearance).showWait("Downloading \(themeName)...")
 
-		KThemeStyle.downloadThemeTask(for: themeElement) { isSuccess in
+		KThemeStyle.downloadThemeTask(for: theme) { isSuccess in
 			sclAlertView.setTitle(isSuccess ? "Finished downloading!" : "Download failed :(")
 
 			DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -153,11 +148,11 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 
 	/// Handle the removing process for a downloaded theme.
 	fileprivate func handleRemoveTheme(timeout: Double = 0.5, withSuccess successHandler: ((_ isSuccess: Bool) -> Void)? = nil) {
-		guard let themeName = themeElement?.name else { return }
+		let themeName = theme.attributes.name
 		let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
 		let sclAlertView = SCLAlertView(appearance: appearance).showWait("Removing \(themeName)...")
 
-		KThemeStyle.removeThemeTask(for: themeElement) { isSuccess in
+		KThemeStyle.removeThemeTask(for: theme) { isSuccess in
 			sclAlertView.setTitle(isSuccess ? "Finished removing!" : "Removing failed :(")
 
 			DispatchQueue.main.asyncAfter(deadline: .now() + timeout) {
@@ -203,7 +198,7 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 		})
 		let removeAction = UIAlertAction(title: "Remove theme", style: .destructive, handler: { (_) in
 			self.handleRemoveTheme()
-			if UserSettings.currentTheme.int == self.themeElement?.id {
+			if UserSettings.currentTheme.int == self.theme.id {
 				KThemeStyle.switchTo(.default)
 			}
 		})

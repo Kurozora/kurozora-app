@@ -16,13 +16,23 @@ import Foundation
 	case locked = 1
 	```
 */
-public enum LockStatus: Int {
+public enum LockStatus: Int, Codable {
 	// MARK: - Cases
 	/// The thread is unlocked.
 	case unlocked = 0
 
 	/// The thread is locked.
 	case locked = 1
+
+	// MARK: - Initializers
+	/**
+		Initializes an instance of `LockStatus` with the given bool value.
+
+		- Parameter bool: The boolean value used to initialize an instance of `LockStatus`.
+	*/
+	public init(from bool: Bool) {
+		self = bool ? .locked : .unlocked
+	}
 
 	// MARK: - Properties
 	/// The boolean value of a lock status type.

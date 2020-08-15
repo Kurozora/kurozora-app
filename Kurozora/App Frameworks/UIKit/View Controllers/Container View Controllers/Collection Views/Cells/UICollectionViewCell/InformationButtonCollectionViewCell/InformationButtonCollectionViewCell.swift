@@ -17,7 +17,7 @@ class InformationButtonCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - Properties
 	var studioInformationSection: StudioInformationSection?
-	var studioElement: StudioElement? {
+	var studio: Studio! {
 		didSet {
 			configureCell()
 		}
@@ -32,7 +32,7 @@ class InformationButtonCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - IBActions
 	@IBAction func websiteButtonPressed(_ sender: KButton) {
-		guard let websiteURL = studioElement?.websiteURL?.url else { return }
+		guard let websiteURL = studio.attributes.websiteURL?.url else { return }
 		UIApplication.shared.kOpen(websiteURL)
 	}
 }

@@ -10,14 +10,9 @@ import KurozoraKit
 import Foundation
 
 /**
-	List of notification grouping
-
-	```
-	var sectionTitle: String!
-	var sectionNotifications: [UserNotificationsElement]!
-	```
+	List of notification grouping.
 */
 struct GroupedNotifications {
-	var sectionTitle: String!
-	var sectionNotifications: [UserNotificationElement]!
+	var sectionTitle: String
+	var sectionNotifications: [UserNotification]
 }
