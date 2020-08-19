@@ -1467,9 +1467,9 @@
 		665B94A324E81C2B007E7A13 /* Character */ = {
 			isa = PBXGroup;
 			children = (
+				665B94A624E81C5C007E7A13 /* CharacterCollectionViewController.swift */,
 				665B94A524E81C41007E7A13 /* Cells */,
 				665B94A424E81C3D007E7A13 /* Models */,
-				665B94A624E81C5C007E7A13 /* CharacterCollectionViewController.swift */,
 			);
 			path = Character;
 			sourceTree = "<group>";

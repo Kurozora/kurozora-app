@@ -47,14 +47,17 @@ extension EpisodeDetailCollectionViewControlle {
 		case .header:
 			return 1
 		case .synopsis:
-			return 1
+			if let overview = self.episode.attributes.overview, !overview.isEmpty {
+				return 1
+			}
 		case .rating:
 			return 1
 		case .information:
 			return EpisodeDetail.Information.allCases.count
-		default:
-			return 0
+		default: break
 		}
+
+		return 0
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
