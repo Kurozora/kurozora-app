@@ -14,9 +14,9 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 	var shows: [Show] = [] {
 		didSet {
 			_prefersActivityIndicatorHidden = true
-			self.configureDataSource()
 		}
 	}
+	var nextPageURL: String?
 	var _user: User? = User.current
 	var user: User? {
 		get {
@@ -53,6 +53,8 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 			NotificationCenter.default.addObserver(self, selector: #selector(fetchFavoritesList), name: .KFavoriteShowsListDidChange, object: nil)
 		}
 
+		self.configureDataSource()
+
 		DispatchQueue.global(qos: .background).async {
 			self.fetchFavoritesList()
 		}
@@ -86,11 +88,20 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 	/// Fetches the user's favorite list.
 	@objc fileprivate func fetchFavoritesList() {
 		guard let userID = self.user?.id else { return }
-		KService.getFavourites(forUserID: userID) { [weak self] result in
+		KService.getFavoriteShows(forUserID: userID, next: self.nextPageURL) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
-			case .success(let shows):
-				self.shows = shows
+			case .success(let showResponse):
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.shows = []
+				}
+
+				// Append new data and save next page url
+				self.shows.append(contentsOf: showResponse.data)
+
+				self.nextPageURL = showResponse.next
+				self.updateDataSource()
 			case .failure: break
 			}
 		}
@@ -107,9 +118,17 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 // MARK: - UICollectionViewDelegate
 extension FavoriteShowsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		if indexPath.section == 1 {
-			let smallLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? SmallLockupCollectionViewCell
-			performSegue(withIdentifier: R.segue.favoriteShowsCollectionViewController.showDetailsSegue, sender: smallLockupCollectionViewCell)
+		let smallLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? SmallLockupCollectionViewCell
+		performSegue(withIdentifier: R.segue.favoriteShowsCollectionViewController.showDetailsSegue, sender: smallLockupCollectionViewCell)
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+		let numberOfItems = collectionView.numberOfItems()
+
+		if indexPath.item == numberOfItems - 5 {
+			if self.nextPageURL != nil {
+				self.fetchFavoritesList()
+			}
 		}
 	}
 }
@@ -121,31 +140,35 @@ extension FavoriteShowsCollectionViewController {
 	}
 
 	override func configureDataSource() {
-		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, identifier: Int) -> UICollectionViewCell? in
-			if indexPath.section == 0 {
-				if let libraryStatisticsCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.libraryStatisticsCollectionViewCell, for: indexPath) {
-					libraryStatisticsCollectionViewCell.shows = self.shows
-					return libraryStatisticsCollectionViewCell
-				} else {
-					fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.libraryStatisticsCollectionViewCell.identifier)")
-				}
-			}
-
+		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, _) -> UICollectionViewCell? in
 			let smallLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: SmallLockupCollectionViewCell.self, for: indexPath)
-			smallLockupCollectionViewCell.show = self.shows[indexPath.row]
+			smallLockupCollectionViewCell.show = self.shows[indexPath.item]
 			return smallLockupCollectionViewCell
 		}
 
 		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
 		SectionLayoutKind.allCases.forEach {
-			let itemsPerSection = $0 == .statistics ? 1 : shows.count
+			let itemsPerSection = shows.count
 
 			snapshot.appendSections([$0])
-			let itemOffset = $0.rawValue * itemsPerSection
-			let itemUpperbound = itemOffset + itemsPerSection
-			snapshot.appendItems(Array(itemOffset..<itemUpperbound))
+			snapshot.appendItems(Array(0..<itemsPerSection), toSection: $0)
 		}
 		dataSource.apply(snapshot)
+		collectionView.reloadEmptyDataSet()
+	}
+
+	override func updateDataSource() {
+		// Grab the current state of the UI from the data source.
+		var updatedSnapshot = dataSource.snapshot()
+
+		// Delete and append items for each section.
+		updatedSnapshot.deleteAllItems()
+		updatedSnapshot.sectionIdentifiers.forEach {
+			let itemsPerSection = shows.count
+			updatedSnapshot.appendItems(Array(0..<itemsPerSection), toSection: $0)
+		}
+
+		self.dataSource.apply(updatedSnapshot)
 		collectionView.reloadEmptyDataSet()
 	}
 }
@@ -153,10 +176,6 @@ extension FavoriteShowsCollectionViewController {
 // MARK: - KCollectionViewDelegateLayout
 extension FavoriteShowsCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
-		if section == 0 {
-			return 1
-		}
-
 		let width = layoutEnvironment.container.effectiveContentSize.width
 		var columnCount = (width / 374).rounded().int
 		if columnCount < 0 {
@@ -168,10 +187,6 @@ extension FavoriteShowsCollectionViewController {
 	}
 
 	func heightDimension(forSection section: Int, with columnsCount: Int) -> NSCollectionLayoutDimension {
-		if section == 0 {
-			return .absolute(80)
-		}
-
 		let heightFraction = (0.60 / columnsCount.double).cgFloat
 		return .fractionalWidth(heightFraction)
 	}
@@ -209,15 +224,13 @@ extension FavoriteShowsCollectionViewController {
 // MARK: - SectionLayoutKind
 extension FavoriteShowsCollectionViewController {
 	/**
-		List of cast section layout kind.
+		List of  favorites section layout kind.
 
 		```
-		case statistics = 0
-		case main = 1
+		case main = 0
 		```
 	*/
 	enum SectionLayoutKind: Int, CaseIterable {
-		case statistics = 0
-		case main = 1
+		case main = 0
 	}
 }

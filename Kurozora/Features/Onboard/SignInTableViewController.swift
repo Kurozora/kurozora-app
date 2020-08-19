@@ -106,7 +106,7 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 //		print("Identity Token \(identityTokenString)")
 
 		guard let emailAddress = appleIDCredential.email else { return }
-		KService.register(withAppleUserID: appleIDCredential.user, emailAddress: emailAddress) { [weak self] result in
+		KService.signUp(withAppleUserID: appleIDCredential.user, emailAddress: emailAddress) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
 			case .success:

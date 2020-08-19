@@ -140,13 +140,10 @@ class NotificationsViewController: KTableViewController {
 				self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing notifications list...", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
 			}
 
-			guard let userID = User.current?.id else { return }
-			KService.getNotifications(forUserID: userID) { [weak self] result in
+			KService.getNotifications { [weak self] result in
 				guard let self = self else { return }
 				switch result {
 				case .success(let notifications):
-					// HERE
-//					self.userNotifications = []
 					self.userNotifications = notifications
 				case .failure: break
 				}

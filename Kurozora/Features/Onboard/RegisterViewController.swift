@@ -57,7 +57,7 @@ class RegisterTableViewController: AccountOnboardingTableViewController {
 			guard let password = textFieldArray.last??.text else { return }
 			let profileImage = profileImageView.image
 
-			KService.register(withUsername: username, emailAddress: emailAddress, password: password, profileImage: profileImage) { [weak self] result in
+			KService.signUp(withUsername: username, emailAddress: emailAddress, password: password, profileImage: profileImage) { [weak self] result in
 				guard let self = self else { return }
 				switch result {
 				case .success:

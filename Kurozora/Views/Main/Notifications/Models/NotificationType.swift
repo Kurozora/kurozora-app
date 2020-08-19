@@ -25,6 +25,9 @@ enum KNotification {
 		/// Indicates that the notification has a `message` type and thus has the message style.
 		case message = "NewMessage"
 
+		/// Indicates that the notification has a `malImport` type and thus thas the import style.
+		case malImport = "MALImportFinished"
+
 		/// The string value of a notification type.
 		var stringValue: String {
 			switch self {
@@ -36,6 +39,8 @@ enum KNotification {
 				return "Follower"
 			case .message:
 				return "Message"
+			case .malImport:
+				return "Library Import"
 			}
 		}
 
@@ -50,6 +55,8 @@ enum KNotification {
 				return R.reuseIdentifier.iconNotificationCell.identifier
 			case .message:
 				return R.reuseIdentifier.iconNotificationCell.identifier
+			case .malImport:
+				return R.reuseIdentifier.basicNotificationCell.identifier
 			}
 		}
 
@@ -64,6 +71,8 @@ enum KNotification {
 				return #colorLiteral(red: 0.8862745098, green: 0.7647058824, blue: 0, alpha: 1)
 			case .message:
 				return #colorLiteral(red: 0.1950947344, green: 0.7805534601, blue: 0.3488782048, alpha: 1)
+			case .malImport:
+				return #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
 			}
 		}
 
@@ -78,6 +87,8 @@ enum KNotification {
 				return R.image.icons.follower()
 			case .message:
 				return R.image.icons.message()
+			case .malImport:
+				return R.image.icons.library()
 			}
 		}
 	}

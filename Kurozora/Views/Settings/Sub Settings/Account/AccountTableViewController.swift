@@ -70,8 +70,7 @@ extension AccountTableViewController {
 			let alertView = SCLAlertView()
 			alertView.addButton("Yes, sign me out 🤨", action: {
 				if User.isSignedIn {
-					guard let sessionID = User.current?.relationships?.sessions?.data.first?.id else { return }
-					KService.signOut(ofSessionID: sessionID) { result in
+					KService.signOut { result in
 						switch result {
 						case .success:
 							try? Kurozora.shared.keychain.remove(username)

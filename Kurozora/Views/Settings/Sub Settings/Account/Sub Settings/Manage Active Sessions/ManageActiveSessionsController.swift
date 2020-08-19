@@ -26,6 +26,9 @@ class ManageActiveSessionsController: KTableViewController {
 			tableView.reloadData()
 		}
 	}
+	var nextPageURL: String?
+
+	// Map & Location
 	var pointAnnotation: MKPointAnnotation!
 	var pinAnnotationView: MKPinAnnotationView!
 	let locationManager = CLLocationManager()
@@ -106,13 +109,20 @@ class ManageActiveSessionsController: KTableViewController {
 	// MARK: - Functions
 	/// Fetches sessions for the current user from the server.
 	private func fetchSessions() {
-		guard let userID = User.current?.id else { return }
-		KService.getSessions(forUserID: userID) { [weak self] result in
+		KService.getSessions(next: nextPageURL) { [weak self] result in
 			guard let self = self else { return }
 
 			switch result {
-			case .success(let sessions):
-				self.sessions = sessions
+			case .success(let sessionResponse):
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.sessions = []
+				}
+
+				// Append new data and save next page url
+				self.sessions.append(contentsOf: sessionResponse.data)
+
+				self.nextPageURL = sessionResponse.next
 			case .failure: break
 			}
 		}
@@ -196,6 +206,19 @@ class ManageActiveSessionsController: KTableViewController {
 		})
 
 		alertView.showNotice("Confirm deletion", subTitle: "Are you sure you want to delete this session?", closeButtonTitle: "Maybe not now")
+	}
+}
+
+// MARK: - UITableViewDelegate
+extension ManageActiveSessionsController {
+	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+		let numberOfRows = tableView.numberOfRows()
+
+		if indexPath.row == numberOfRows - 5 {
+			if self.nextPageURL != nil {
+				self.fetchSessions()
+			}
+		}
 	}
 }
 

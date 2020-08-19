@@ -52,10 +52,9 @@ class MALImportTableViewController: ServiceTableViewController {
 	// MARK: - IBActions
 	@IBAction func rightNavigationBarButtonPressed(sender: AnyObject) {
 		DispatchQueue.global(qos: .background).async {
-			guard let userID = User.current?.id else { return }
 			guard let filePath = self.selectedFileURL else { return }
 
-			KService.importMALLibrary(forUserID: userID, filePath: filePath, importBehavior: .overwrite) { _ in
+			KService.importMALLibrary(filePath: filePath, importBehavior: .overwrite) { _ in
 			}
 		}
 

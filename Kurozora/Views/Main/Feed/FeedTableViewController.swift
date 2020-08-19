@@ -87,12 +87,12 @@ class FeedTableViewController: KTableViewController {
 			switch result {
 			case .success(let feedPostResponse):
 				DispatchQueue.main.async {
-					// Prepare `feedPosts` if necessary
+					// Reset data if necessary
 					if self.nextPageURL == nil {
 						self.feedPosts = []
 					}
 
-					// Append new threads data and save next page url
+					// Append new data and save next page url
 					self.feedPosts.append(contentsOf: feedPostResponse.data)
 					self.nextPageURL = feedPostResponse.next
 
@@ -136,8 +136,8 @@ extension FeedTableViewController {
 		let numberOfRows = tableView.numberOfRows()
 
 		if indexPath.row == numberOfRows - 5 {
-			if nextPageURL != nil {
-				fetchFeedPosts()
+			if self.nextPageURL != nil {
+				self.fetchFeedPosts()
 			}
 		}
 	}

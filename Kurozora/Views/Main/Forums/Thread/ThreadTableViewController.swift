@@ -223,12 +223,12 @@ class ThreadTableViewController: KTableViewController {
 			switch result {
 			case .success(let threadRepliesResponse):
 				DispatchQueue.main.async {
-					// Prepare `threadReplies` if necessary
+					// Reset data if necessary
 					if self.nextPageURL == nil {
 						self.threadReplies = []
 					}
 
-					// Append new threadReplies data and save next page url
+					// Append new data and save next page url
 					self.threadReplies.append(contentsOf: threadRepliesResponse.data)
 					self.nextPageURL = threadRepliesResponse.next
 				}
@@ -474,8 +474,8 @@ extension ThreadTableViewController {
 		let numberOfSections = tableView.numberOfSections
 
 		if indexPath.section == numberOfSections - 5 {
-			if nextPageURL != nil {
-				getThreadReplies()
+			if self.nextPageURL != nil {
+				self.getThreadReplies()
 			}
 		}
 	}

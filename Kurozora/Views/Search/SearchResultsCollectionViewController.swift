@@ -96,8 +96,7 @@ class SearchResultsCollectionViewController: UICollectionViewController {
 				}
 			case .myLibrary:
 				WorkflowController.shared.isSignedIn {
-					guard let userID = User.current?.id else { return }
-					KService.search(inUserLibrary: userID, forShow: text) { [weak self] result in
+					KService.searchLibrary(forShow: text) { [weak self] result in
 						guard let self = self else { return }
 						switch result {
 						case .success(let showResults):

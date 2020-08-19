@@ -130,14 +130,11 @@ class LibraryListCollectionViewController: KCollectionViewController {
 				self.refreshControl.attributedTitle = NSAttributedString(string: "Refreshing your \(self.libraryStatus.stringValue.lowercased()) list...", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
 			}
 
-			guard let userID = User.current?.id else { return }
-			KService.getLibrary(forUserID: userID, withLibraryStatus: self.libraryStatus, withSortType: librarySortType, withSortOption: librarySortTypeOption) { [weak self] result in
+			KService.getLibrary(withLibraryStatus: self.libraryStatus, withSortType: librarySortType, withSortOption: librarySortTypeOption) { [weak self] result in
 				guard let self = self else { return }
 				switch result {
 				case .success(let shows):
-//					DispatchQueue.main.async {
-						self.shows = shows
-//					}
+					self.shows = shows
 				case .failure: break
 				}
 			}

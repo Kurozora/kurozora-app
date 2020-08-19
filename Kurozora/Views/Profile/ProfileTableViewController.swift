@@ -438,7 +438,7 @@ class ProfileTableViewController: KTableViewController {
 		self.bannerImageCache = nil
 
 		if shouldUpdate {
-			KService.updateInformation(bio: bioText, profileImage: profileImage, bannerImage: bannerImage) { [weak self] result in
+			KService.updateInformation(biography: bioText, profileImage: profileImage, bannerImage: bannerImage) { [weak self] result in
 				guard let self = self else { return }
 				switch result {
 				case .success:
@@ -534,7 +534,7 @@ class ProfileTableViewController: KTableViewController {
 
 	@IBAction func followButtonPressed(_ sender: UIButton) {
 		WorkflowController.shared.isSignedIn {
-			KService.updateFollowStatus(self.user.id) { [weak self] result in
+			KService.updateFollowStatus(forUserID: self.user.id) { [weak self] result in
 				guard let self = self else { return }
 				switch result {
 				case .success(let followUpdate):

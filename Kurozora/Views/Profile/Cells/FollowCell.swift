@@ -59,7 +59,7 @@ class FollowCell: UITableViewCell {
 
 	// MARK: - IBActions
 	@IBAction func followButtonPressed(_ sender: UIButton) {
-		KService.updateFollowStatus(user.id) { [weak self] result in
+		KService.updateFollowStatus(forUserID: user.id) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
 			case .success(let followUpdate):

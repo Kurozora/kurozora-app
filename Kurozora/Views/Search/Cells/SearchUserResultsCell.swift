@@ -91,7 +91,7 @@ class SearchUserResultsCell: SearchBaseResultsCell {
 		super.actionButtonPressed(sender)
 
 		WorkflowController.shared.isSignedIn {
-			KService.updateFollowStatus(self.user.id) { [weak self] result in
+			KService.updateFollowStatus(forUserID: self.user.id) { [weak self] result in
 				guard let self = self else { return }
 				switch result {
 				case .success(let followUpdate):

@@ -104,12 +104,12 @@ class ForumsListViewController: KTableViewController {
 
 			switch result {
 			case .success(let forumsThreadResponse):
-				// Prepare `forumsThreads` if necessary
+				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.forumsThreads = []
 				}
 
-				// Append new threads data and save next page url
+				// Append new data and save next page url
 				self.forumsThreads.append(contentsOf: forumsThreadResponse.data)
 				self.nextPageURL = forumsThreadResponse.next
 
@@ -161,8 +161,8 @@ extension ForumsListViewController {
 		let numberOfRows = tableView.numberOfRows()
 
 		if indexPath.row == numberOfRows - 5 {
-			if nextPageURL != nil {
-				fetchThreads()
+			if self.nextPageURL != nil {
+				self.fetchThreads()
 			}
 		}
 	}

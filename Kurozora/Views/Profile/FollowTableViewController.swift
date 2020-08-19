@@ -86,7 +86,7 @@ class FollowTableViewController: KTableViewController {
 	func followUser() {
 		guard let userID = user?.id else { return }
 
-		KService.updateFollowStatus(userID) { [weak self] result in
+		KService.updateFollowStatus(forUserID: userID) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
 			case .success(let followUpdate):
@@ -101,18 +101,18 @@ class FollowTableViewController: KTableViewController {
     func fetchFollowList() {
 		guard let userID = user?.id else { return }
 
-		KService.getFollowList(userID, self.followList, next: nextPageURL) {[weak self] result in
+		KService.getFollowList(forUserID: userID, self.followList, next: nextPageURL) {[weak self] result in
 			guard let self = self else { return }
 
 			switch result {
 			case .success(let userFollow):
 				DispatchQueue.main.async {
-					// Prepare `userFollow` if necessary
+					// Reset data if necessary
 					if self.nextPageURL == nil {
 						self.userFollow = []
 					}
 
-					// Append new user follow data and save next page url
+					// Append new data and save next page url
 					self.userFollow.append(contentsOf: userFollow.data)
 
 					self.nextPageURL = userFollow.next
@@ -155,8 +155,8 @@ extension FollowTableViewController {
 		let numberOfRows = tableView.numberOfRows()
 
 		if indexPath.row == numberOfRows - 5 {
-			if nextPageURL != nil {
-				fetchFollowList()
+			if self.nextPageURL != nil {
+				self.fetchFollowList()
 			}
 		}
 	}

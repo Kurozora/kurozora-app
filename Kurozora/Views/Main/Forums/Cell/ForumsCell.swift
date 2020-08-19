@@ -297,7 +297,13 @@ class ForumsCell: UITableViewCell {
 	/// Presents the reply view for the current thread.
 	func replyThread() {
 		WorkflowController.shared.isSignedIn {
-			// TODO: - Add reply function here
+			let kCommentEditorViewController = R.storyboard.textEditor.kCommentEditorViewController()
+			kCommentEditorViewController?.forumsThread = self.forumsThread
+
+			let kurozoraNavigationController = KNavigationController.init(rootViewController: kCommentEditorViewController!)
+			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
+
+			self.parentViewController?.present(kurozoraNavigationController)
 		}
 	}
 

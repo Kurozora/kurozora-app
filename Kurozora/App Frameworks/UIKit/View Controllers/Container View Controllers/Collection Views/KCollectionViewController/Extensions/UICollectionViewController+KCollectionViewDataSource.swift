@@ -44,4 +44,10 @@ extension UICollectionViewController: KCollectionViewDataSource {
 	*/
 	func configureDataSource() {
 	}
+
+	/**
+		Asks your data source object to update the data source of the collection view.
+	*/
+	func updateDataSource() {
+	}
 }

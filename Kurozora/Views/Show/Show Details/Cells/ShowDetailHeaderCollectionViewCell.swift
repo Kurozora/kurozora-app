@@ -225,16 +225,14 @@ extension ShowDetailHeaderCollectionViewCell {
 
 	@IBAction func favoriteButtonPressed(_ sender: UIButton) {
 		WorkflowController.shared.isSignedIn {
-			if let userID = User.current?.id {
-				KService.updateFavoriteStatus(forUserID: userID, forShow: self.show.id) { [weak self] result in
-					guard let self = self else { return }
-					switch result {
-					case .success(let favoriteStatus):
-						self.show.attributes.favoriteStatus = favoriteStatus
-						self.updateFavoriteStatus()
-					case .failure:
-						break
-					}
+			KService.updateFavoriteShowStatus(self.show.id) { [weak self] result in
+				guard let self = self else { return }
+				switch result {
+				case .success(let favoriteStatus):
+					self.show.attributes.favoriteStatus = favoriteStatus
+					self.updateFavoriteStatus()
+				case .failure:
+					break
 				}
 			}
 		}
@@ -242,16 +240,14 @@ extension ShowDetailHeaderCollectionViewCell {
 
 	@IBAction func raminderButtonPressed(_ sender: UIButton) {
 		WorkflowController.shared.isSignedIn {
-			if let userID = User.current?.id {
-				KService.updateReminderStatus(forUserID: userID, forShow: self.show.id) { [weak self] result in
-					guard let self = self else { return }
-					switch result {
-					case .success(let reminderStatus):
-						self.show.attributes.reminderStatus = reminderStatus
-						self.updateReminderStatus()
-					case .failure:
-						break
-					}
+			KService.updateReminderStatus(forShow: self.show.id) { [weak self] result in
+				guard let self = self else { return }
+				switch result {
+				case .success(let reminderStatus):
+					self.show.attributes.reminderStatus = reminderStatus
+					self.updateReminderStatus()
+				case .failure:
+					break
 				}
 			}
 		}
