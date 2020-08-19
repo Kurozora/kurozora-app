@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SafariServices
 
 extension UIApplication {
 	/**
@@ -27,8 +28,13 @@ extension UIApplication {
 		}
 		#endif
 
-		url = url.withPreferredScheme()
-		UIApplication.shared.open(url, options: options, completionHandler: completion)
+		if KBrowser(rawValue: UserSettings.defaultBrowser) == .kurozora {
+			let sfSafariViewController = SFSafariViewController(url: url)
+			UIApplication.topViewController?.present(sfSafariViewController, animated: true, completion: nil)
+		} else {
+			url = url.withPreferredScheme()
+			UIApplication.shared.open(url, options: options, completionHandler: completion)
+		}
 	}
 
 	/**

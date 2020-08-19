@@ -28,6 +28,9 @@ extension SettingsTableViewController {
 		/// The section representing the debug group of cells.
 		case debug
 
+		/// The section representing the pro group of cells.
+		case pro
+
 		/// The section representing the alerts group of cells.
 		case alerts
 
@@ -45,10 +48,20 @@ extension SettingsTableViewController {
 
 		// MARK: - Properties
 		/// An array containing all settings sections.
-		static let all: [Section] = [.account, .debug, .alerts, .general, .support, .social, .about]
+		static var all: [Section] {
+			var sections: [Section] = [.account]
 
-		/// An array containing all normal user settings sections.
-		static let allUser: [Section] = [.account, .alerts, .general, .support, .social, .about]
+			#if DEBUG
+			sections.append(.debug)
+			#endif
+
+			if User.isSignedIn {
+				sections.append(.pro)
+			}
+
+			sections.append(contentsOf: [.alerts, .general, .support, .social, .about])
+			return sections
+		}
 
 		/// The row values of a settings section.
 		var rowsValue: [Row] {
@@ -57,6 +70,8 @@ extension SettingsTableViewController {
 				return Row.allAccount
 			case .debug:
 				return Row.allDebug
+			case .pro:
+				return Row.allPro
 			case .alerts:
 				return Row.allAlerts
 			case .general:
@@ -77,6 +92,8 @@ extension SettingsTableViewController {
 				return "Account"
 			case .debug:
 				return "Debug"
+			case .pro:
+				return "Pro"
 			case .alerts:
 				return "Alerts"
 			case .general:
@@ -102,6 +119,9 @@ extension SettingsTableViewController {
 
 		/// The row representing the keychain cell.
 		case keychain
+
+		/// The row representing the reminder cell.
+		case reminder
 
 		/// The row representing the notifications cell.
 		case notifications
@@ -145,11 +165,13 @@ extension SettingsTableViewController {
 		/// The row representing the Medium cell.
 		case followMedium
 
+		#if DEBUG
 		/// An array containing all settings rows.
 		static let all: [Row] = [.account, .switchAccount, .keychain, .notifications, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .rate, .unlockFeatures, .restoreFeatures, .tipjar, .followTwitter, .followMedium]
-
+		#else
 		/// An array containing all normal user settings rows.
-		static let allUser: [Row] = [.account, .switchAccount, .notifications, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .rate, .unlockFeatures, .restoreFeatures, .tipjar, .followTwitter, .followMedium]
+		static let all: [Row] = [.account, .switchAccount, .notifications, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .rate, .unlockFeatures, .restoreFeatures, .tipjar, .followTwitter, .followMedium]
+		#endif
 
 		/// An array containing all account section settings rows.
 		static var allAccount: [Row] {
@@ -162,6 +184,9 @@ extension SettingsTableViewController {
 
 		/// An array containing all debug section settings rows.
 		static let allDebug: [Row] = [.keychain]
+
+		/// An array containing all pro section settings rows.
+		static let allPro: [Row] = [.reminder]
 
 		/// An array containing all alerts section settings rows.
 		static let allAlerts: [Row] = [.notifications]
@@ -193,6 +218,8 @@ extension SettingsTableViewController {
 				return R.segue.settingsTableViewController.switchAccountSegue.identifier
 			case .keychain:
 				return R.segue.settingsTableViewController.keysSegue.identifier
+			case .reminder:
+				return ""
 			case .notifications:
 				return R.segue.settingsTableViewController.notificationSegue.identifier
 			case .displayBlindness:
@@ -233,6 +260,8 @@ extension SettingsTableViewController {
 				return .chevron
 			case .keychain:
 				return .chevron
+			case .reminder:
+				return .none
 			case .notifications:
 				return .chevron
 			case .displayBlindness:
@@ -273,6 +302,8 @@ extension SettingsTableViewController {
 				return "Switch Account"
 			case .keychain:
 				return "Keys Manager"
+			case .reminder:
+				return "Subscribe to reminders"
 			case .notifications:
 				return "Notifications"
 			case .displayBlindness:
@@ -331,6 +362,8 @@ extension SettingsTableViewController {
 				return R.image.icons.accountSwitch()
 			case .keychain:
 				return R.image.icons.kDefaults()
+			case .reminder:
+				return R.image.icons.reminder()
 			case .notifications:
 				return R.image.icons.notifications()
 			case .displayBlindness:

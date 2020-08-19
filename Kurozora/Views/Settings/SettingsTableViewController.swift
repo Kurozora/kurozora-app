@@ -13,11 +13,9 @@ import SCLAlertView
 
 class SettingsTableViewController: KTableViewController {
 	// MARK: - Properties
-	#if DEBUG
-	var settingsSection = Section.all
-	#else
-	var settingsSection = Section.allUser
-	#endif
+	var settingsSection: [Section] {
+		return Section.all
+	}
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -143,6 +141,8 @@ extension SettingsTableViewController {
 		case .account:
 			WorkflowController.shared.isSignedIn()
 			shouldPerformSegue = User.isSignedIn
+		case .reminder:
+			UIApplication.shared.kOpen(KService.reminderSubscriptionURL)
 		case .notifications:
 			WorkflowController.shared.isSignedIn()
 			shouldPerformSegue = User.isSignedIn

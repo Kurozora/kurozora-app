@@ -18,7 +18,7 @@ extension BrowserSettingsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return section == 0 ? 0 : KBrowser.all.count
+		return section == 0 ? 0 : KBrowser.allCases.count
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -30,7 +30,7 @@ extension BrowserSettingsTableViewController {
 
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 		if let browserSettingsTableViewCell = cell as? BrowserSettingsTableViewCell {
-			browserSettingsTableViewCell.browser = KBrowser.all[indexPath.row]
+			browserSettingsTableViewCell.browser = KBrowser.allCases[indexPath.row]
 		}
 	}
 

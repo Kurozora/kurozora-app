@@ -8,23 +8,26 @@
 
 import UIKit
 
-enum KBrowser: Int {
-	case safari = 0
-	case duckduckgo = 1
-	case firefox = 2
-	case firefoxfocus = 3
-	case googlechrome = 4
-	case brave = 5
-	case opera = 6
-	case dolphin = 7
-
-	static let all: [KBrowser] = [.safari, .brave, .dolphin, .duckduckgo, .firefox, .firefoxfocus, .googlechrome, .opera]
+enum KBrowser: Int, CaseIterable {
+	// MARK: - Cases
+	case kurozora = 0
+	case safari
+	case duckduckgo
+	case firefox
+	case firefoxfocus
+	case googlechrome
+	case brave
+	case opera
+	case dolphin
 
 	// MARK: - Properties
+	/// The string value of a KBrowser type.
 	var stringValue: String {
 		switch self {
+		case .kurozora:
+			return "In-app (default)"
 		case .safari:
-			return "Safari (default)"
+			return "Safari"
 		case .brave:
 			return "Brave"
 		case .dolphin:
@@ -42,8 +45,11 @@ enum KBrowser: Int {
 		}
 	}
 
+	/// The image value of a KBrowser type.
 	var image: UIImage {
 		switch self {
+		case .kurozora:
+			return #imageLiteral(resourceName: UserSettings.appIcon)
 		case .safari:
 			return R.image.browsers.safari()!
 		case .brave:
@@ -66,6 +72,8 @@ enum KBrowser: Int {
 	// MARK: - Functions
 	func schemeValue(for urlScheme: String) -> String {
 		switch self {
+		case .kurozora:
+			return ""
 		case .safari:
 			return ""
 		case .brave:
@@ -91,6 +99,8 @@ enum KBrowser: Int {
 
 	func shortSchemeValue(for urlScheme: String) -> String {
 		switch self {
+		case .kurozora:
+			return ""
 		case .safari:
 			return ""
 		case .brave:
