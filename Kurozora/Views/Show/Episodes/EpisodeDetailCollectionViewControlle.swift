@@ -186,7 +186,7 @@ extension EpisodeDetailCollectionViewControlle {
 	override func contentInset(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
 		switch EpisodeDetail.Section(rawValue: section) {
 		case .header:
-			return  NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0)
+			return NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0)
 		default:
 			return NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 20, trailing: 10)
 		}

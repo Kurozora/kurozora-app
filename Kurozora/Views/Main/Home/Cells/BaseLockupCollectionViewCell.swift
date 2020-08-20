@@ -19,7 +19,7 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var libraryStatusButton: KTintedButton?
 
 	// MARK: - Properties
-	var showDetailCollectionViewController: ShowDetailCollectionViewController?
+	var showDetailsCollectionViewController: ShowDetailsCollectionViewController?
 	var show: Show! {
 		didSet {
 			configureCell()
@@ -131,19 +131,19 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 extension BaseLockupCollectionViewCell: UIViewControllerPreviewingDelegate {
 	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
 		if let show = self.show {
-			showDetailCollectionViewController = R.storyboard.showDetails.showDetailCollectionViewController()
-			showDetailCollectionViewController?.showID = show.id
+			showDetailsCollectionViewController = R.storyboard.shows.showDetailsCollectionViewController()
+			showDetailsCollectionViewController?.showID = show.id
 
 			previewingContext.sourceRect = previewingContext.sourceView.bounds
 
-			return showDetailCollectionViewController
+			return showDetailsCollectionViewController
 		}
 		return nil
 	}
 
 	func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
-		if let showDetailCollectionViewController = showDetailCollectionViewController {
-			self.parentViewController?.show(showDetailCollectionViewController, sender: nil)
+		if let showDetailsCollectionViewController = showDetailsCollectionViewController {
+			self.parentViewController?.show(showDetailsCollectionViewController, sender: nil)
 		}
 	}
 }

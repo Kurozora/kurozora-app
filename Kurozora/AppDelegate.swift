@@ -145,9 +145,9 @@ extension AppDelegate {
 		if userActivity.activityType == "OpenAnimeIntent", let parameters = userActivity.userInfo as? [String: Int] {
 			guard let showID = parameters["showID"] else { return false }
 
-			if let showDetailCollectionViewController = R.storyboard.showDetails.showDetailCollectionViewController() {
-				showDetailCollectionViewController.showID = showID
-				UIApplication.topViewController?.show(showDetailCollectionViewController, sender: nil)
+			if let showDetailsCollectionViewController = R.storyboard.shows.showDetailsCollectionViewController() {
+				showDetailsCollectionViewController.showID = showID
+				UIApplication.topViewController?.show(showDetailsCollectionViewController, sender: nil)
 			}
 		}
 

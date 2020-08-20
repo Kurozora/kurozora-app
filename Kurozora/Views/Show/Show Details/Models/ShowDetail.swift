@@ -92,13 +92,13 @@ class ShowDetail {
 			case .information:
 				return ""
 			case .seasons:
-				return R.segue.showDetailCollectionViewController.seasonSegue.identifier
+				return R.segue.showDetailsCollectionViewController.seasonSegue.identifier
 			case .cast:
-				return R.segue.showDetailCollectionViewController.castSegue.identifier
+				return R.segue.showDetailsCollectionViewController.castSegue.identifier
 			case .moreByStudio:
-				return R.segue.showDetailCollectionViewController.studioSegue.identifier
+				return R.segue.showDetailsCollectionViewController.studioSegue.identifier
 			case .relatedShows:
-				return R.segue.showDetailCollectionViewController.showListSegue.identifier
+				return R.segue.showDetailsCollectionViewController.showsListSegue.identifier
 			case .sosumi:
 				return ""
 			}

@@ -103,7 +103,6 @@ class FollowTableViewController: KTableViewController {
 
 		KService.getFollowList(forUserID: userID, self.followList, next: nextPageURL) {[weak self] result in
 			guard let self = self else { return }
-
 			switch result {
 			case .success(let userFollow):
 				DispatchQueue.main.async {

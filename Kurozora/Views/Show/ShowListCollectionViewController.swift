@@ -1,5 +1,5 @@
 //
-//  ShowListCollectionViewController.swift
+//  ShowsListCollectionViewController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 16/01/2020.
@@ -9,8 +9,58 @@
 import UIKit
 import KurozoraKit
 
-class ShowListCollectionViewController: KCollectionViewController {
+class ShowsListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
+	var actorID: Int! {
+		didSet {
+			KService.getShows(forActorID: actorID) { [weak self] result in
+				guard let self = self else { return }
+				switch result {
+				case .success(let shows):
+					self.shows = shows
+				case .failure: break
+				}
+			}
+		}
+	}
+	var characterID: Int! {
+		didSet {
+			KService.getShows(forCharacterID: characterID) { [weak self] result in
+				guard let self = self else { return }
+				switch result {
+				case .success(let shows):
+					self.shows = shows
+				case .failure: break
+				}
+			}
+		}
+	}
+	var showID: Int! {
+		didSet {
+			KService.getRelatedShows(forShowID: showID) { [weak self] result in
+				guard let self = self else { return }
+				switch result {
+				case .success(let relatedShows):
+					self.shows = relatedShows.compactMap({ relatedShow -> Show? in
+						return relatedShow.show
+					})
+				case .failure: break
+				}
+			}
+		}
+	}
+	var studioID: Int! {
+		didSet {
+			KService.getShows(forStudioID: studioID) { [weak self] result in
+				guard let self = self else { return }
+				switch result {
+				case .success(let shows):
+					self.shows = shows
+				case .failure: break
+				}
+			}
+		}
+	}
 	var shows: [Show] = [] {
 		didSet {
 			_prefersActivityIndicatorHidden = true
@@ -47,7 +97,7 @@ class ShowListCollectionViewController: KCollectionViewController {
 }
 
 // MARK: - UICollectionViewDelegate
-extension ShowListCollectionViewController {
+extension ShowsListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if let baseLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? BaseLockupCollectionViewCell {
 			self.performSegue(withIdentifier: R.segue.showListCollectionViewController.showDetailsSegue, sender: baseLockupCollectionViewCell.show?.id)
@@ -56,7 +106,7 @@ extension ShowListCollectionViewController {
 }
 
 // MARK: - KCollectionViewDataSource
-extension ShowListCollectionViewController {
+extension ShowsListCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
 		return [SmallLockupCollectionViewCell.self]
 	}
@@ -83,7 +133,7 @@ extension ShowListCollectionViewController {
 }
 
 // MARK: - KCollectionViewDelegateLayout
-extension ShowListCollectionViewController {
+extension ShowsListCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
 		let columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
@@ -124,9 +174,9 @@ extension ShowListCollectionViewController {
 }
 
 // MARK: - SectionLayoutKind
-extension ShowListCollectionViewController {
+extension ShowsListCollectionViewController {
 	/**
-	List of shows list section layout kind.
+	List of section layout kind.
 
 		```
 		case main = 0

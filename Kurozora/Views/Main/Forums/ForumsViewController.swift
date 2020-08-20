@@ -151,7 +151,6 @@ extension ForumsViewController {
 	override func fetchSections() {
 		KService.getForumSections { [weak self] result in
 			guard let self = self else { return }
-
 			switch result {
 			case .success(let forumsSections):
 				DispatchQueue.main.async {

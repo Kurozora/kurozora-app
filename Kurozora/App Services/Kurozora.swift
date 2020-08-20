@@ -121,10 +121,10 @@ class Kurozora {
 			let showIDString = url.lastPathComponent
 			if !showIDString.isEmpty {
 				guard let showID = Int(showIDString) else { return }
-				if let showDetailCollectionViewController = R.storyboard.showDetails.showDetailCollectionViewController() {
-					showDetailCollectionViewController.showID = showID
+				if let showDetailsCollectionViewController = R.storyboard.shows.showDetailsCollectionViewController() {
+					showDetailsCollectionViewController.showID = showID
 
-					UIApplication.topViewController?.show(showDetailCollectionViewController, sender: nil)
+					UIApplication.topViewController?.show(showDetailsCollectionViewController, sender: nil)
 				}
 			}
 		case .profile, .user:

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17140" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fW7-Z1-87g">
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17115"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Actor Details Collection View Controller-->
+        <scene sceneID="ctP-fT-ZgW">
+            <objects>
+                <collectionViewController storyboardIdentifier="ActorDetailsCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="VWB-mx-guf" customClass="ActorDetailsCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" id="0Yy-8l-ovX">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="PCQ-xt-kBH">
+                            <size key="itemSize" width="414" height="230"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ActorHeaderCollectionViewCell" id="Kgz-Gq-Wfg" customClass="ActorHeaderCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="189"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="OH0-hl-X35">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="189"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MMq-m0-BhS" customClass="ActorImageView" customModule="Kurozora" customModuleProvider="target">
+                                            <rect key="frame" x="143" y="20" width="128" height="128"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="128" id="bUH-FE-xJw"/>
+                                                <constraint firstAttribute="width" secondItem="MMq-m0-BhS" secondAttribute="height" multiplier="1:1" id="qHZ-tP-w7F"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dbM-nM-sK2" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                            <rect key="frame" x="173" y="156" width="68" height="33"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="dbM-nM-sK2" firstAttribute="centerX" secondItem="OH0-hl-X35" secondAttribute="centerX" id="NIi-xM-Eff"/>
+                                        <constraint firstItem="dbM-nM-sK2" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="OH0-hl-X35" secondAttribute="leadingMargin" id="RjW-ar-rk8"/>
+                                        <constraint firstItem="MMq-m0-BhS" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="OH0-hl-X35" secondAttribute="leadingMargin" id="SZj-6Z-fcM"/>
+                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="dbM-nM-sK2" secondAttribute="trailing" id="aZn-cX-mEw"/>
+                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="MMq-m0-BhS" secondAttribute="trailing" id="brn-J5-nwO"/>
+                                        <constraint firstItem="MMq-m0-BhS" firstAttribute="top" secondItem="OH0-hl-X35" secondAttribute="top" constant="20" id="dut-63-um2"/>
+                                        <constraint firstItem="MMq-m0-BhS" firstAttribute="centerX" secondItem="OH0-hl-X35" secondAttribute="centerX" id="iqb-Ot-LYb"/>
+                                        <constraint firstItem="dbM-nM-sK2" firstAttribute="top" secondItem="MMq-m0-BhS" secondAttribute="bottom" constant="8" symbolic="YES" id="k5K-q0-0oT"/>
+                                        <constraint firstAttribute="bottom" secondItem="dbM-nM-sK2" secondAttribute="bottom" id="psB-nu-eWd"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <connections>
+                                    <outlet property="actorImageView" destination="MMq-m0-BhS" id="EVY-vD-kjr"/>
+                                    <outlet property="nameLabel" destination="dbM-nM-sK2" id="1DI-9h-U6I"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="VWB-mx-guf" id="iOF-3J-c0s"/>
+                            <outlet property="delegate" destination="VWB-mx-guf" id="Ujx-FP-b2S"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" id="e9F-FH-UWD"/>
+                    <connections>
+                        <segue destination="rs2-Wi-NkO" kind="show" identifier="ShowDetailsSegue" id="uxm-es-uYh"/>
+                        <segue destination="5SG-F6-WMt" kind="show" identifier="ShowsListSegue" id="Ttd-Kd-TpG"/>
+                        <segue destination="sD4-V5-zDb" kind="show" identifier="CharacterDetailsSegue" id="Kja-sL-6Et"/>
+                        <segue destination="RUE-WM-XfK" kind="show" identifier="CharactersListSegue" id="tcD-Rs-adj"/>
+                    </connections>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ziY-jP-nKR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2936.2318840579715" y="-866.51785714285711"/>
+        </scene>
+        <!--ShowDetailsCollectionViewController-->
+        <scene sceneID="Ddh-yX-SvC">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Shows" referencedIdentifier="ShowDetailsCollectionViewController" id="rs2-Wi-NkO" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="AZb-eJ-Cg5"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mpt-G6-r0A" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3704" y="-844"/>
+        </scene>
+        <!--ShowsListCollectionViewController-->
+        <scene sceneID="Qfl-MY-u4a">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Shows" referencedIdentifier="ShowsListCollectionViewController" id="5SG-F6-WMt" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="UqW-zN-yWx"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8YQ-NQ-VKc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3695" y="-809"/>
+        </scene>
+        <!--CharactersListCollectionViewController-->
+        <scene sceneID="DA5-BV-jm1">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Characters" referencedIdentifier="CharactersListCollectionViewController" id="RUE-WM-XfK" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="qne-XB-Z9d"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GgV-U4-OgT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3714" y="-924"/>
+        </scene>
+        <!--CharacterDetailsCollectionViewController-->
+        <scene sceneID="n2P-Re-1UM">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Characters" referencedIdentifier="CharacterDetailsCollectionViewController" id="sD4-V5-zDb" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="uPk-eZ-SRB"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="P8X-El-OsI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3724" y="-887"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="hz0-Gt-vsp">
+            <objects>
+                <navigationController storyboardIdentifier="ActorsKNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="fW7-Z1-87g" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="GSV-Nd-0sV">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="l2i-bg-VAT" kind="relationship" relationship="rootViewController" id="J8D-pT-Bac"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TSL-tg-sOk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1090" y="-867"/>
+        </scene>
+        <!--Actors-->
+        <scene sceneID="ozy-Tq-qex">
+            <objects>
+                <collectionViewController storyboardIdentifier="ActorsListCollectionViewController" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="l2i-bg-VAT" customClass="ActorsListCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" id="OcG-MB-b1f">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="zpu-rI-4VE">
+                            <size key="itemSize" width="50" height="50"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells/>
+                        <connections>
+                            <outlet property="dataSource" destination="l2i-bg-VAT" id="0GB-N7-8BC"/>
+                            <outlet property="delegate" destination="l2i-bg-VAT" id="CMQ-BN-l9w"/>
+                            <outlet property="dragDelegate" destination="l2i-bg-VAT" id="Toy-vr-ffg"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="Actors" id="6HK-5N-HAm"/>
+                    <connections>
+                        <segue destination="VWB-mx-guf" kind="show" identifier="ActorDetailsSegue" id="mtl-SK-nfh"/>
+                    </connections>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="spB-yr-tRS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2026" y="-867"/>
+        </scene>
+    </scenes>
+    <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+</document>

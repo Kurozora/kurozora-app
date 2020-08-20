@@ -151,7 +151,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if let currentCell = sender as? LibraryBaseCollectionViewCell, let showDetailCollectionViewController = segue.destination as? ShowDetailCollectionViewController {
+		if let currentCell = sender as? LibraryBaseCollectionViewCell, let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController {
 			showDetailCollectionViewController.showID = currentCell.show.id
 		}
 	}
@@ -300,8 +300,8 @@ extension LibraryListCollectionViewController: UICollectionViewDragDelegate {
     }
 }
 
-// MARK: - ShowDetailCollectionViewControllerDelegate
-extension LibraryListCollectionViewController: ShowDetailCollectionViewControllerDelegate {
+// MARK: - ShowDetailsCollectionViewControllerDelegate
+extension LibraryListCollectionViewController: ShowDetailsCollectionViewControllerDelegate {
 	func updateShowInLibrary(for libraryCell: LibraryBaseCollectionViewCell?) {
 		guard let libraryCell = libraryCell else { return }
 		guard let indexPath = collectionView.indexPath(for: libraryCell) else { return }

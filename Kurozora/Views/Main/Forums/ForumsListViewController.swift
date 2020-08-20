@@ -101,7 +101,6 @@ class ForumsListViewController: KTableViewController {
 	func fetchThreads() {
 		KService.getForumsThreads(forSection: sectionID, orderedBy: forumOrder, next: nextPageURL) { [weak self] result in
 			guard let self = self else { return }
-
 			switch result {
 			case .success(let forumsThreadResponse):
 				// Reset data if necessary

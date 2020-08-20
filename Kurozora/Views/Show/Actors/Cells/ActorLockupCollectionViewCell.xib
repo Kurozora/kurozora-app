@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17140" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17115"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ActorLockupCollectionViewCell" id="Hwm-pB-dvL" customClass="ActorLockupCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="144" height="176.5"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="8SR-zQ-vCM">
+                <rect key="frame" x="0.0" y="0.0" width="144" height="176.5"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="geQ-1f-4LZ" customClass="ActorImageView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="8" y="0.0" width="128" height="128"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="128" id="A0t-Tb-QoB"/>
+                            <constraint firstAttribute="width" secondItem="geQ-1f-4LZ" secondAttribute="height" multiplier="1:1" id="hdQ-V9-tiA"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fRr-q9-SVN" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="8" y="136" width="128" height="20.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="qBG-KK-5kA"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="geQ-1f-4LZ" firstAttribute="top" secondItem="8SR-zQ-vCM" secondAttribute="top" id="6wW-3u-rcW"/>
+                    <constraint firstItem="geQ-1f-4LZ" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="8SR-zQ-vCM" secondAttribute="trailingMargin" id="7qs-vC-VbE"/>
+                    <constraint firstItem="geQ-1f-4LZ" firstAttribute="centerX" secondItem="8SR-zQ-vCM" secondAttribute="centerX" id="CIL-Xo-OVz"/>
+                    <constraint firstItem="geQ-1f-4LZ" firstAttribute="width" secondItem="geQ-1f-4LZ" secondAttribute="height" multiplier="1:1" id="P9C-e0-24E"/>
+                    <constraint firstItem="geQ-1f-4LZ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8SR-zQ-vCM" secondAttribute="leadingMargin" id="Vxh-Q2-3HJ"/>
+                    <constraint firstAttribute="trailingMargin" relation="lessThanOrEqual" secondItem="fRr-q9-SVN" secondAttribute="trailing" id="dkp-zS-LO7"/>
+                    <constraint firstItem="fRr-q9-SVN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8SR-zQ-vCM" secondAttribute="leadingMargin" id="eZD-6U-cjA"/>
+                    <constraint firstItem="fRr-q9-SVN" firstAttribute="centerX" secondItem="geQ-1f-4LZ" secondAttribute="centerX" id="igC-JS-d3x"/>
+                    <constraint firstAttribute="bottom" secondItem="fRr-q9-SVN" secondAttribute="bottom" constant="20" symbolic="YES" id="vv8-Gx-Wbk"/>
+                    <constraint firstItem="fRr-q9-SVN" firstAttribute="top" secondItem="geQ-1f-4LZ" secondAttribute="bottom" constant="8" symbolic="YES" id="z4t-5J-tiJ"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <connections>
+                <outlet property="actorImageView" destination="geQ-1f-4LZ" id="Iro-sK-gjC"/>
+                <outlet property="nameLabel" destination="fRr-q9-SVN" id="gzF-L3-jqw"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="153"/>
+        </collectionViewCell>
+    </objects>
+</document>

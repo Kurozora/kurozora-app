@@ -195,11 +195,11 @@ extension SearchResultsCollectionViewController {
 		if searchResults != nil {
 			switch currentScope {
 			case .show, .myLibrary:
-				if let showDetailsViewController = R.storyboard.showDetails.showDetailCollectionViewController() {
+				if let showDetailsCollectionViewController = R.storyboard.shows.showDetailsCollectionViewController() {
 					if let show = (searchBaseResultsCell as? SearchShowResultsCell)?.show {
-						showDetailsViewController.showID = show.id
+						showDetailsCollectionViewController.showID = show.id
 						SearchHistory.saveContentsOf(show)
-						self.presentingViewController?.show(showDetailsViewController, sender: nil)
+						self.presentingViewController?.show(showDetailsCollectionViewController, sender: nil)
 					}
 				}
 			case .thread:
@@ -216,9 +216,9 @@ extension SearchResultsCollectionViewController {
 				}
 			}
 		} else {
-			if let showDetailsViewController = R.storyboard.showDetails.showDetailCollectionViewController(), let show = (searchBaseResultsCell as? SearchSuggestionResultCell)?.show {
-				showDetailsViewController.showID = show.id
-				self.presentingViewController?.show(showDetailsViewController, sender: nil)
+			if let showDetailsCollectionViewController = R.storyboard.shows.showDetailsCollectionViewController(), let show = (searchBaseResultsCell as? SearchSuggestionResultCell)?.show {
+				showDetailsCollectionViewController.showID = show.id
+				self.presentingViewController?.show(showDetailsCollectionViewController, sender: nil)
 			}
 		}
 	}

@@ -43,7 +43,6 @@ class StudiosCollectionViewController: KCollectionViewController {
 	func fetchStudios() {
 		KService.getDetails(forStudioID: studioID, including: ["shows"]) { [weak self] result in
 			guard let self = self else { return }
-
 			switch result {
 			case .success(let studios):
 				self.studio = studios.first
@@ -55,7 +54,7 @@ class StudiosCollectionViewController: KCollectionViewController {
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == R.segue.studiosCollectionViewController.showDetailsSegue.identifier {
-			if let showDetailCollectionViewController = segue.destination as? ShowDetailCollectionViewController {
+			if let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController {
 				if let show = (sender as? BaseLockupCollectionViewCell)?.show {
 					showDetailCollectionViewController.showID = show.id
 				}
@@ -101,7 +100,7 @@ extension StudiosCollectionViewController {
 					informationButtonCollectionViewCell.studio = self.studio
 				}
 			case .shows:
-				(studioCollectionViewCell as? SmallLockupCollectionViewCell)?.show = self.studio.relationships?.shows.data[indexPath.item]
+				(studioCollectionViewCell as? SmallLockupCollectionViewCell)?.show = self.studio.relationships?.shows?.data[indexPath.item]
 			}
 
 			return studioCollectionViewCell
@@ -109,15 +108,16 @@ extension StudiosCollectionViewController {
 		dataSource.supplementaryViewProvider = { (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
 			let studioSection = StudioSection(rawValue: indexPath.section) ?? .main
 			let titleHeaderCollectionReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
-			titleHeaderCollectionReusableView.title = studioSection.stringValue
+			titleHeaderCollectionReusableView.segueID = "" //studioSection.identifierValue
 			titleHeaderCollectionReusableView.indexPath = indexPath
+			titleHeaderCollectionReusableView.title = studioSection.stringValue
 			return titleHeaderCollectionReusableView
 		}
 
 		var snapshot = NSDiffableDataSourceSnapshot<StudioSection, Int>()
 		StudioSection.allCases.forEach {
 			snapshot.appendSections([$0])
-			let rowCount = $0 == .shows ? studio.relationships?.shows.data.count ?? $0.rowCount : $0.rowCount
+			let rowCount = $0 == .shows ? studio.relationships?.shows?.data.count ?? $0.rowCount : $0.rowCount
 			let itemOffset = $0.rawValue * rowCount
 			let itemUpperbound = itemOffset + rowCount
 			snapshot.appendItems(Array(itemOffset..<itemUpperbound))
@@ -174,7 +174,7 @@ extension StudiosCollectionViewController {
 	override func contentInset(forSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
 		switch StudioSection(rawValue: section) {
 		case .main:
-			return  NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0)
+			return NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0)
 		default:
 			return NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 20, trailing: 10)
 		}
@@ -201,7 +201,7 @@ extension StudiosCollectionViewController {
 				sectionLayout = listSection
 				hasSectionHeader = true
 			case .shows:
-				if let studioShowsCount = self.studio.relationships?.shows.data.count {
+				if let studioShowsCount = self.studio.relationships?.shows?.data.count {
 					if studioShowsCount != 0 {
 						let listSection = self.listSection(for: section, layoutEnvironment: layoutEnvironment)
 						sectionLayout = listSection

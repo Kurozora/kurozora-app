@@ -33,15 +33,15 @@
             </objects>
             <point key="canvasLocation" x="-1199" y="865"/>
         </scene>
-        <!--ShowDetails-->
+        <!--ShowDetailsCollectionViewController-->
         <scene sceneID="IYW-xZ-q6d">
             <objects>
-                <viewControllerPlaceholder storyboardName="ShowDetails" id="sOR-Y4-DCs" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="Shows" referencedIdentifier="ShowDetailsCollectionViewController" id="sOR-Y4-DCs" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="YjB-V3-khE"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xW6-dk-hMZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="866" y="864"/>
+            <point key="canvasLocation" x="1048" y="865"/>
         </scene>
         <!--Library List Collection View Controller-->
         <scene sceneID="gCw-Zx-RW6">

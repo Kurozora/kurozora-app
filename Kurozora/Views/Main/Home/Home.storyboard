@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--ShowDetails-->
+        <!--ShowDetailsCollectionViewController-->
         <scene sceneID="oTj-KT-RTZ">
             <objects>
-                <viewControllerPlaceholder storyboardName="ShowDetails" id="8H2-pT-d2L" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="Shows" referencedIdentifier="ShowDetailsCollectionViewController" id="8H2-pT-d2L" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="9ku-Te-cpw"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l8x-AP-XJF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -244,7 +244,7 @@
                         <segue destination="8H2-pT-d2L" kind="show" identifier="ShowDetailsSegue" id="gKM-pt-PFb"/>
                         <segue destination="Pey-ss-6J5" kind="show" identifier="GenresSegue" id="YYd-Uu-4EQ"/>
                         <segue destination="xdS-8x-Scn" kind="show" identifier="ExploreSegue" id="nLz-2r-FHa"/>
-                        <segue destination="TkU-hQ-vfM" kind="show" identifier="ShowListSegue" id="2dF-nj-Ks4"/>
+                        <segue destination="TkU-hQ-vfM" kind="show" identifier="ShowsListSegue" id="2dF-nj-Ks4"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XSz-C9-PSE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -363,7 +363,7 @@
                 <viewControllerPlaceholder storyboardName="Redeem" id="SJ2-V2-Ihb" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5a5-ET-Z3V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1385" y="595"/>
+            <point key="canvasLocation" x="1451" y="595"/>
         </scene>
         <!--HomeCollectionViewController-->
         <scene sceneID="JZQ-XP-0tx">
@@ -373,12 +373,12 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="adX-LK-gOS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="880" y="595"/>
+            <point key="canvasLocation" x="754" y="595"/>
         </scene>
-        <!--ShowList-->
+        <!--ShowsListCollectionViewController-->
         <scene sceneID="4AQ-m0-2Yb">
             <objects>
-                <viewControllerPlaceholder storyboardName="ShowList" id="TkU-hQ-vfM" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="Shows" referencedIdentifier="ShowsListCollectionViewController" id="TkU-hQ-vfM" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="TCb-lv-nBO"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TK9-g6-Pdu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

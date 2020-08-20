@@ -63,7 +63,6 @@ class KRichTextEditorViewController: KViewController {
 
 		KService.postThread(inSection: sectionID, withTitle: title, content: content) {[weak self] result in
 			guard let self = self else { return }
-
 			switch result {
 			case .success(let forumsThreads):
 				DispatchQueue.main.async {

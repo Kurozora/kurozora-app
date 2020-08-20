@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17140" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17115"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CharacterLockupCollectionViewCell" id="p90-PI-O4m" customClass="CharacterLockupCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="144" height="176.5"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="iJE-Cn-d7Z">
+                <rect key="frame" x="0.0" y="0.0" width="144" height="176.5"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CtG-eg-yAQ" customClass="CharacterImageView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="8" y="0.0" width="128" height="128"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="CtG-eg-yAQ" secondAttribute="height" multiplier="1:1" id="Efs-Ru-Aeb"/>
+                            <constraint firstAttribute="width" constant="128" id="WJg-e5-yjy"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ESg-E4-Soe" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="8" y="136" width="128" height="20.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="EuQ-oS-cvo"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="CtG-eg-yAQ" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="iJE-Cn-d7Z" secondAttribute="trailingMargin" id="09t-jd-04q"/>
+                    <constraint firstItem="CtG-eg-yAQ" firstAttribute="width" secondItem="CtG-eg-yAQ" secondAttribute="height" multiplier="1:1" id="5eK-Ab-8Tq"/>
+                    <constraint firstItem="ESg-E4-Soe" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="iJE-Cn-d7Z" secondAttribute="leadingMargin" id="6bh-9s-7Vu"/>
+                    <constraint firstItem="CtG-eg-yAQ" firstAttribute="centerX" secondItem="iJE-Cn-d7Z" secondAttribute="centerX" id="Chb-mb-2aD"/>
+                    <constraint firstItem="CtG-eg-yAQ" firstAttribute="top" secondItem="iJE-Cn-d7Z" secondAttribute="top" id="FGV-k3-HQI"/>
+                    <constraint firstAttribute="bottom" secondItem="ESg-E4-Soe" secondAttribute="bottom" constant="20" symbolic="YES" id="MK9-68-aNN"/>
+                    <constraint firstItem="ESg-E4-Soe" firstAttribute="centerX" secondItem="CtG-eg-yAQ" secondAttribute="centerX" id="UaR-8T-uxj"/>
+                    <constraint firstItem="CtG-eg-yAQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="iJE-Cn-d7Z" secondAttribute="leadingMargin" id="ZZI-dg-oCQ"/>
+                    <constraint firstItem="ESg-E4-Soe" firstAttribute="top" secondItem="CtG-eg-yAQ" secondAttribute="bottom" constant="8" symbolic="YES" id="gcz-0E-eNg"/>
+                    <constraint firstAttribute="trailingMargin" relation="lessThanOrEqual" secondItem="ESg-E4-Soe" secondAttribute="trailing" id="p3w-hK-lwO"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <connections>
+                <outlet property="characterImageView" destination="CtG-eg-yAQ" id="7v1-PE-E8j"/>
+                <outlet property="nameLabel" destination="ESg-E4-Soe" id="Zin-cs-tMX"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="152.34375"/>
+        </collectionViewCell>
+    </objects>
+</document>

@@ -1,18 +1,18 @@
 //
-//  CastCollectionViewController.swift
+//  CharactersListCollectionViewController.swift
 //  Kurozora
 //
-//  Created by Khoren Katklian on 01/10/2018.
-//  Copyright © 2018 Kurozora. All rights reserved.
+//  Created by Khoren Katklian on 20/08/2020.
+//  Copyright © 2020 Kurozora. All rights reserved.
 //
 
 import UIKit
 import KurozoraKit
 
-class CastCollectionViewController: KCollectionViewController {
+class CharactersListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var showID: Int = 0
-	var cast: [Cast] = [] {
+	var actorID: Int = 0
+	var characters: [Character] = [] {
 		didSet {
 			_prefersActivityIndicatorHidden = true
 			self.configureDataSource()
@@ -31,34 +31,21 @@ class CastCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - View
-    override func viewDidLoad() {
-        super.viewDidLoad()
+	override func viewDidLoad() {
+		super.viewDidLoad()
 
-		// Fetch cast
 		DispatchQueue.global(qos: .background).async {
-			self.fetchCast()
-		}
-    }
-
-	// MARK: - Functions
-	override func setupEmptyDataSetView() {
-		collectionView.emptyDataSetView { view in
-			view.titleLabelString(NSAttributedString(string: "No cast", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
-				.detailLabelString(NSAttributedString(string: "Can't get cast list. Please reload the page or restart the app and check your WiFi connection.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-				.image(R.image.empty.actor())
-				.verticalOffset(-50)
-				.verticalSpace(5)
-				.isScrollAllowed(true)
+			self.fetchCharacters()
 		}
 	}
 
-	/// Fetch cast for the current show.
-	fileprivate func fetchCast() {
-		KService.getCast(forShowID: self.showID) { [weak self] result in
+	// MARK: - Functions
+	func fetchCharacters() {
+		KService.getCharacters(forActorID: actorID) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
-			case .success(let cast):
-				self.self.cast = cast
+			case .success(let characters):
+				self.characters = characters
 			case .failure: break
 			}
 		}
@@ -66,7 +53,7 @@ class CastCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == R.segue.castCollectionViewController.characterDetailsSegue.identifier {
+		if segue.identifier == R.segue.charactersListCollectionViewController.characterDetailsSegue.identifier {
 			if let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController {
 				if let characterID = sender as? Int {
 					characterDetailsCollectionViewController.characterID = characterID
@@ -77,43 +64,32 @@ class CastCollectionViewController: KCollectionViewController {
 }
 
 // MARK: - UICollectionViewDelegate
-extension CastCollectionViewController {
+extension CharactersListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		if let castCollectionViewCell = collectionView.cellForItem(at: indexPath) as? CastCollectionViewCell {
-			performSegue(withIdentifier: R.segue.castCollectionViewController.characterDetailsSegue, sender: castCollectionViewCell.cast.relationships.characters.data.first?.id)
+		if let characterLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? CharacterLockupCollectionViewCell {
+			self.performSegue(withIdentifier: R.segue.charactersListCollectionViewController.characterDetailsSegue, sender: characterLockupCollectionViewCell.character.id)
 		}
 	}
 }
 
 // MARK: - KCollectionViewDataSource
-extension CastCollectionViewController {
+extension CharactersListCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
-		return [CastCollectionViewCell.self]
+		return [CharacterLockupCollectionViewCell.self]
 	}
 
 	override func configureDataSource() {
-		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, identifier: Int) -> UICollectionViewCell? in
-			if let castCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.castCollectionViewCell, for: indexPath) {
-				castCollectionViewCell.cast = self.cast[indexPath.row]
-
-				if collectionView.indexPathForLastItem == indexPath {
-					castCollectionViewCell.separatorView.isHidden = true
-				} else {
-					castCollectionViewCell.separatorView.isHidden = false
-				}
-				return castCollectionViewCell
-			} else {
-				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.castCollectionViewCell.identifier)")
-			}
+		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, _) -> UICollectionViewCell? in
+			guard let self = self else { return nil }
+			let characterLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: CharacterLockupCollectionViewCell.self, for: indexPath)
+			characterLockupCollectionViewCell.character = self.characters[indexPath.row]
+			return characterLockupCollectionViewCell
 		}
 
-		let itemsPerSection = self.cast.count
 		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
 		SectionLayoutKind.allCases.forEach {
 			snapshot.appendSections([$0])
-			let itemOffset = $0.rawValue * itemsPerSection
-			let itemUpperbound = itemOffset + itemsPerSection
-			snapshot.appendItems(Array(itemOffset..<itemUpperbound))
+			snapshot.appendItems(Array(0..<self.characters.count), toSection: $0)
 		}
 		dataSource.apply(snapshot)
 		collectionView.reloadEmptyDataSet()
@@ -121,18 +97,11 @@ extension CastCollectionViewController {
 }
 
 // MARK: - KCollectionViewDelegateLayout
-extension CastCollectionViewController {
+extension CharactersListCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
-		let columnCount = (width / 374).rounded().int
-		if columnCount > 5 {
-			return 5
-		}
+		let columnCount = (width / 200).rounded().int
 		return columnCount > 0 ? columnCount : 1
-	}
-
-	override func groupHeightFraction(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> CGFloat {
-		return (0.52 / columnsCount.double).cgFloat
 	}
 
 	override func contentInset(forItemInSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
@@ -151,9 +120,8 @@ extension CastCollectionViewController {
 			let item = NSCollectionLayoutItem(layoutSize: itemSize)
 			item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
 
-			let heightFraction = self.groupHeightFraction(forSection: section, with: columns, layout: layoutEnvironment)
 			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-												   heightDimension: .fractionalWidth(heightFraction))
+												   heightDimension: .estimated(200))
 			let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
 
 			let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
@@ -165,9 +133,9 @@ extension CastCollectionViewController {
 }
 
 // MARK: - SectionLayoutKind
-extension CastCollectionViewController {
+extension CharactersListCollectionViewController {
 	/**
-		List of cast section layout kind.
+		List of section layout kind.
 
 		```
 		case main = 0

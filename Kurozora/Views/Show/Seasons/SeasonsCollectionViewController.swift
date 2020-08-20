@@ -61,7 +61,6 @@ class SeasonsCollectionViewController: KCollectionViewController {
     fileprivate func fetchSeasons() {
 		KService.getSeasons(forShowID: showID) { [weak self] result in
 			guard let self = self else { return }
-
 			switch result {
 			case .success(let seasons):
 				DispatchQueue.main.async {

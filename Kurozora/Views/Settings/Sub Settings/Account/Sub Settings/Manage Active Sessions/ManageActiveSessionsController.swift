@@ -111,7 +111,6 @@ class ManageActiveSessionsController: KTableViewController {
 	private func fetchSessions() {
 		KService.getSessions(next: nextPageURL) { [weak self] result in
 			guard let self = self else { return }
-
 			switch result {
 			case .success(let sessionResponse):
 				// Reset data if necessary

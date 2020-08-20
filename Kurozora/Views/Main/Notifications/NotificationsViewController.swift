@@ -218,7 +218,6 @@ class NotificationsViewController: KTableViewController {
 	func updateNotification(at indexPaths: [IndexPath]? = nil, for notificationID: String, withReadStatus readStatus: ReadStatus) {
 		KService.updateNotification(notificationID, withReadStatus: readStatus) { [weak self] result in
 			guard let self = self else { return }
-
 			switch result {
 			case .success(let readStatus):
 				if let indexPaths = indexPaths {

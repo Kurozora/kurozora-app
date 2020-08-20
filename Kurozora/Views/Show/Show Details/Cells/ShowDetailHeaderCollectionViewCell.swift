@@ -36,7 +36,7 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var posterImageView: UIImageView!
 
 	// MARK: - Properties
-	weak var delegate: ShowDetailCollectionViewControllerDelegate?
+	weak var delegate: ShowDetailsCollectionViewControllerDelegate?
 
 	var libraryBaseCollectionViewCell: LibraryBaseCollectionViewCell? = nil
 	var show: Show! {

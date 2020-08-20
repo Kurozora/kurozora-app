@@ -163,7 +163,7 @@ class HomeCollectionViewController: KCollectionViewController {
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == R.segue.homeCollectionViewController.showDetailsSegue.identifier {
 			// Show detail for explore cell
-			if let showDetailCollectionViewController = segue.destination as? ShowDetailCollectionViewController {
+			if let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController {
 				if let showID = sender as? Int {
 					showDetailCollectionViewController.showID = showID
 				}
@@ -175,11 +175,11 @@ class HomeCollectionViewController: KCollectionViewController {
 					homeCollectionViewController.genre = genre
 				}
 			}
-		} else if segue.identifier == R.segue.homeCollectionViewController.showListSegue.identifier {
-			if let showListCollectionViewController = segue.destination as? ShowListCollectionViewController {
+		} else if segue.identifier == R.segue.homeCollectionViewController.showsListSegue.identifier {
+			if let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController {
 				if let indexPath = sender as? IndexPath {
-					showListCollectionViewController.title = exploreCategories[indexPath.section].attributes.title
-					showListCollectionViewController.shows = exploreCategories[indexPath.section].relationships.shows?.data ?? []
+					showsListCollectionViewController.title = exploreCategories[indexPath.section].attributes.title
+					showsListCollectionViewController.shows = exploreCategories[indexPath.section].relationships.shows?.data ?? []
 				}
 			}
 		}
@@ -320,7 +320,7 @@ extension HomeCollectionViewController {
 				if sectionTitle.contains("categories", caseSensitive: false) || sectionTitle.contains("genres", caseSensitive: false) {
 					exploreSectionTitleCell.segueID = R.segue.homeCollectionViewController.genresSegue.identifier
 				} else {
-					exploreSectionTitleCell.segueID = R.segue.homeCollectionViewController.showListSegue.identifier
+					exploreSectionTitleCell.segueID = R.segue.homeCollectionViewController.showsListSegue.identifier
 				}
 				exploreSectionTitleCell.title = self.exploreCategories[indexPath.section].attributes.title
 			} else {

@@ -1,18 +1,67 @@
 //
-//  CastCollectionViewController.swift
+//  ShowsListCollectionViewController.swift
 //  Kurozora
 //
-//  Created by Khoren Katklian on 01/10/2018.
-//  Copyright © 2018 Kurozora. All rights reserved.
+//  Created by Khoren Katklian on 16/01/2020.
+//  Copyright © 2020 Kurozora. All rights reserved.
 //
 
 import UIKit
 import KurozoraKit
 
-class CastCollectionViewController: KCollectionViewController {
+class ShowsListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var showID: Int = 0
-	var cast: [Cast] = [] {
+	var actorID: Int! {
+		didSet {
+			KService.getShows(forActorID: actorID) { [weak self] result in
+				guard let self = self else { return }
+				switch result {
+				case .success(let shows):
+					self.shows = shows
+				case .failure: break
+				}
+			}
+		}
+	}
+	var characterID: Int! {
+		didSet {
+			KService.getShows(forCharacterID: characterID) { [weak self] result in
+				guard let self = self else { return }
+				switch result {
+				case .success(let shows):
+					self.shows = shows
+				case .failure: break
+				}
+			}
+		}
+	}
+	var showID: Int! {
+		didSet {
+			KService.getRelatedShows(forShowID: showID) { [weak self] result in
+				guard let self = self else { return }
+				switch result {
+				case .success(let relatedShows):
+					self.shows = relatedShows.compactMap({ relatedShow -> Show? in
+						return relatedShow.show
+					})
+				case .failure: break
+				}
+			}
+		}
+	}
+	var studioID: Int! {
+		didSet {
+			KService.getShows(forStudioID: studioID) { [weak self] result in
+				guard let self = self else { return }
+				switch result {
+				case .success(let shows):
+					self.shows = shows
+				case .failure: break
+				}
+			}
+		}
+	}
+	var shows: [Show] = [] {
 		didSet {
 			_prefersActivityIndicatorHidden = true
 			self.configureDataSource()
@@ -31,45 +80,16 @@ class CastCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - View
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-		// Fetch cast
-		DispatchQueue.global(qos: .background).async {
-			self.fetchCast()
-		}
-    }
-
-	// MARK: - Functions
-	override func setupEmptyDataSetView() {
-		collectionView.emptyDataSetView { view in
-			view.titleLabelString(NSAttributedString(string: "No cast", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
-				.detailLabelString(NSAttributedString(string: "Can't get cast list. Please reload the page or restart the app and check your WiFi connection.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-				.image(R.image.empty.actor())
-				.verticalOffset(-50)
-				.verticalSpace(5)
-				.isScrollAllowed(true)
-		}
-	}
-
-	/// Fetch cast for the current show.
-	fileprivate func fetchCast() {
-		KService.getCast(forShowID: self.showID) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let cast):
-				self.self.cast = cast
-			case .failure: break
-			}
-		}
+	override func viewDidLoad() {
+		super.viewDidLoad()
 	}
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == R.segue.castCollectionViewController.characterDetailsSegue.identifier {
-			if let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController {
-				if let characterID = sender as? Int {
-					characterDetailsCollectionViewController.characterID = characterID
+		if segue.identifier == R.segue.showsListCollectionViewController.showDetailsSegue.identifier {
+			if let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController {
+				if let showID = sender as? Int {
+					showDetailCollectionViewController.showID = showID
 				}
 			}
 		}
@@ -77,37 +97,29 @@ class CastCollectionViewController: KCollectionViewController {
 }
 
 // MARK: - UICollectionViewDelegate
-extension CastCollectionViewController {
+extension ShowsListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		if let castCollectionViewCell = collectionView.cellForItem(at: indexPath) as? CastCollectionViewCell {
-			performSegue(withIdentifier: R.segue.castCollectionViewController.characterDetailsSegue, sender: castCollectionViewCell.cast.relationships.characters.data.first?.id)
+		if let baseLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? BaseLockupCollectionViewCell {
+			self.performSegue(withIdentifier: R.segue.showsListCollectionViewController.showDetailsSegue, sender: baseLockupCollectionViewCell.show?.id)
 		}
 	}
 }
 
 // MARK: - KCollectionViewDataSource
-extension CastCollectionViewController {
+extension ShowsListCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
-		return [CastCollectionViewCell.self]
+		return [SmallLockupCollectionViewCell.self]
 	}
 
 	override func configureDataSource() {
-		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, identifier: Int) -> UICollectionViewCell? in
-			if let castCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.castCollectionViewCell, for: indexPath) {
-				castCollectionViewCell.cast = self.cast[indexPath.row]
-
-				if collectionView.indexPathForLastItem == indexPath {
-					castCollectionViewCell.separatorView.isHidden = true
-				} else {
-					castCollectionViewCell.separatorView.isHidden = false
-				}
-				return castCollectionViewCell
-			} else {
-				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.castCollectionViewCell.identifier)")
-			}
+		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, _) -> UICollectionViewCell? in
+			guard let self = self else { return nil }
+			let smallLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: SmallLockupCollectionViewCell.self, for: indexPath)
+			smallLockupCollectionViewCell.show = self.shows[indexPath.row]
+			return smallLockupCollectionViewCell
 		}
 
-		let itemsPerSection = self.cast.count
+		let itemsPerSection = shows.count
 		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
 		SectionLayoutKind.allCases.forEach {
 			snapshot.appendSections([$0])
@@ -121,18 +133,15 @@ extension CastCollectionViewController {
 }
 
 // MARK: - KCollectionViewDelegateLayout
-extension CastCollectionViewController {
+extension ShowsListCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
-		let columnCount = (width / 374).rounded().int
-		if columnCount > 5 {
-			return 5
-		}
+		let columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
 		return columnCount > 0 ? columnCount : 1
 	}
 
 	override func groupHeightFraction(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> CGFloat {
-		return (0.52 / columnsCount.double).cgFloat
+		return (0.55 / columnsCount.double).cgFloat
 	}
 
 	override func contentInset(forItemInSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
@@ -165,9 +174,9 @@ extension CastCollectionViewController {
 }
 
 // MARK: - SectionLayoutKind
-extension CastCollectionViewController {
+extension ShowsListCollectionViewController {
 	/**
-		List of cast section layout kind.
+		List of section layout kind.
 
 		```
 		case main = 0

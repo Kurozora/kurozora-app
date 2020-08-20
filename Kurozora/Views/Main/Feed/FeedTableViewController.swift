@@ -83,7 +83,6 @@ class FeedTableViewController: KTableViewController {
 
 		KService.getFeedPosts(forSection: sectionID, next: nextPageURL) { [weak self] result in
 			guard let self = self else { return }
-
 			switch result {
 			case .success(let feedPostResponse):
 				DispatchQueue.main.async {

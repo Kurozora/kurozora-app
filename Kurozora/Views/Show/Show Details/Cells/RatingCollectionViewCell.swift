@@ -68,6 +68,7 @@ class RatingCollectionViewCell: UICollectionViewCell {
 		KService.rateShow(self.show.id, with: rating) { result in
 			switch result {
 			case .success:
+				// HERE
 //				// Update current rating for the user.
 //				self.show?.currentUser?.currentRating = rating
 

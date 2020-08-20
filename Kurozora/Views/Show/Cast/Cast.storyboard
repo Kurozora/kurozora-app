@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Gl9-hb-xRY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17140" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Gl9-hb-xRY">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17115"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Actors-->
+        <!--Cast-->
         <scene sceneID="bc8-f3-Wqu">
             <objects>
                 <collectionViewController storyboardIdentifier="CastCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="4FQ-xS-EpI" customClass="CastCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
@@ -27,11 +27,24 @@
                             <outlet property="delegate" destination="4FQ-xS-EpI" id="EcF-jV-pIi"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="Actors" leftItemsSupplementBackButton="YES" id="nT6-bc-Roz"/>
+                    <navigationItem key="navigationItem" title="Cast" leftItemsSupplementBackButton="YES" id="nT6-bc-Roz"/>
+                    <connections>
+                        <segue destination="Kw9-GS-BBA" kind="show" identifier="CharacterDetailsSegue" id="O67-1f-vWq"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LA0-G4-hxj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1557.9710144927537" y="-1014.5089285714286"/>
+        </scene>
+        <!--CharacterDetailsCollectionViewController-->
+        <scene sceneID="E3l-OZ-OY4">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Characters" referencedIdentifier="CharacterDetailsCollectionViewController" id="Kw9-GS-BBA" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="OPy-oo-p0Z"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AyP-V1-DCH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2222" y="-1015"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="SFO-ZR-N4p">
