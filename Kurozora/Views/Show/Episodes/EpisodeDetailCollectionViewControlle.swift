@@ -102,7 +102,7 @@ extension EpisodeDetailCollectionViewControlle {
 //			ratingCollectionViewCell?.showDetailsElement = showDetailsElement
 		case .information:
 			let informationCollectionViewCell = cell as? InformationCollectionViewCell
-			informationCollectionViewCell?.episodeDetailInformation = EpisodeDetail.Information(rawValue: indexPath.item) ?? .id
+			informationCollectionViewCell?.episodeDetailInformation = EpisodeDetail.Information(rawValue: indexPath.item) ?? .number
 			informationCollectionViewCell?.episode = episode
 		default: break
 		}

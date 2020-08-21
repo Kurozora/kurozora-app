@@ -65,9 +65,6 @@ extension EpisodeDetail {
 	*/
 	enum Information: Int, CaseIterable {
 		// MARK: - Cases
-		/// The id of the episode.
-		case id
-
 		/// The number of the episode.
 		case number
 
@@ -81,8 +78,6 @@ extension EpisodeDetail {
 		/// The string value of an information type.
 		var stringValue: String {
 			switch self {
-			case .id:
-				return "ID"
 			case .number:
 				return "Number"
 			case .duration:
@@ -102,8 +97,6 @@ extension EpisodeDetail {
 		*/
 		func information(from episode: Episode) -> String {
 			switch self {
-			case .id:
-				return "\(episode.id)"
 			case .number:
 				return "\(episode.attributes.number)"
 			case .duration:

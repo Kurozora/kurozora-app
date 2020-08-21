@@ -320,13 +320,13 @@
 		66AC3D2023D90A2F00D28EE6 /* ShowAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614DF692089391600B0BC69 /* ShowAttributes.swift */; };
 		66AC3D2223D923ED00D28EE6 /* KViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AC3D2123D923ED00D28EE6 /* KViewController.swift */; };
 		66ACA19222C2627000FAEF08 /* AppearanceOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ACA19122C2627000FAEF08 /* AppearanceOptionsViewController.swift */; };
-		66AE1E0B24A0C41300FD3FFC /* StudiosCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AE1E0A24A0C41300FD3FFC /* StudiosCollectionViewController.swift */; };
+		66AE1E0B24A0C41300FD3FFC /* StudioDetailsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AE1E0A24A0C41300FD3FFC /* StudioDetailsCollectionViewController.swift */; };
 		66AE1E0D24A0C42600FD3FFC /* Studios.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66AE1E0C24A0C42600FD3FFC /* Studios.storyboard */; };
-		66AE1E1024A0DB9200FD3FFC /* StudioSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AE1E0F24A0DB9200FD3FFC /* StudioSection.swift */; };
+		66AE1E1024A0DB9200FD3FFC /* StudioDetailsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AE1E0F24A0DB9200FD3FFC /* StudioDetailsSection.swift */; };
 		66AE1E1324A0EA1800FD3FFC /* StudioHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AE1E1224A0EA1800FD3FFC /* StudioHeaderCollectionViewCell.swift */; };
 		66AE1E1524A0EE1D00FD3FFC /* CircularImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AE1E1424A0EE1D00FD3FFC /* CircularImageView.swift */; };
 		66AE1E1724A0F74900FD3FFC /* InformationButtonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AE1E1624A0F74900FD3FFC /* InformationButtonCollectionViewCell.swift */; };
-		66AE1E1924A10D7900FD3FFC /* StudioInformationSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AE1E1824A10D7900FD3FFC /* StudioInformationSection.swift */; };
+		66AE1E1924A10D7900FD3FFC /* StudioDetailsInformationSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AE1E1824A10D7900FD3FFC /* StudioDetailsInformationSection.swift */; };
 		66AEABDA22987A4D00949FD8 /* KThemePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AEABD922987A4D00949FD8 /* KThemePicker.swift */; };
 		66AEABDC2298A92500949FD8 /* NotificationAlertStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AEABDB2298A92500949FD8 /* NotificationAlertStyle.swift */; };
 		66AEABE62298A9C100949FD8 /* NotificationBannerStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AEABE52298A9C100949FD8 /* NotificationBannerStyle.swift */; };
@@ -807,13 +807,13 @@
 		66AC3D1E23D8FB0800D28EE6 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		66AC3D2123D923ED00D28EE6 /* KViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KViewController.swift; sourceTree = "<group>"; };
 		66ACA19122C2627000FAEF08 /* AppearanceOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceOptionsViewController.swift; sourceTree = "<group>"; };
-		66AE1E0A24A0C41300FD3FFC /* StudiosCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudiosCollectionViewController.swift; sourceTree = "<group>"; };
+		66AE1E0A24A0C41300FD3FFC /* StudioDetailsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioDetailsCollectionViewController.swift; sourceTree = "<group>"; };
 		66AE1E0C24A0C42600FD3FFC /* Studios.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Studios.storyboard; sourceTree = "<group>"; };
-		66AE1E0F24A0DB9200FD3FFC /* StudioSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioSection.swift; sourceTree = "<group>"; };
+		66AE1E0F24A0DB9200FD3FFC /* StudioDetailsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioDetailsSection.swift; sourceTree = "<group>"; };
 		66AE1E1224A0EA1800FD3FFC /* StudioHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
 		66AE1E1424A0EE1D00FD3FFC /* CircularImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularImageView.swift; sourceTree = "<group>"; };
 		66AE1E1624A0F74900FD3FFC /* InformationButtonCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationButtonCollectionViewCell.swift; sourceTree = "<group>"; };
-		66AE1E1824A10D7900FD3FFC /* StudioInformationSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioInformationSection.swift; sourceTree = "<group>"; };
+		66AE1E1824A10D7900FD3FFC /* StudioDetailsInformationSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioDetailsInformationSection.swift; sourceTree = "<group>"; };
 		66AEABD922987A4D00949FD8 /* KThemePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KThemePicker.swift; sourceTree = "<group>"; };
 		66AEABDB2298A92500949FD8 /* NotificationAlertStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAlertStyle.swift; sourceTree = "<group>"; };
 		66AEABE52298A9C100949FD8 /* NotificationBannerStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationBannerStyle.swift; sourceTree = "<group>"; };
@@ -2114,7 +2114,7 @@
 			isa = PBXGroup;
 			children = (
 				66AE1E0C24A0C42600FD3FFC /* Studios.storyboard */,
-				66AE1E0A24A0C41300FD3FFC /* StudiosCollectionViewController.swift */,
+				66AE1E0A24A0C41300FD3FFC /* StudioDetailsCollectionViewController.swift */,
 				66AE1E1124A0E9E400FD3FFC /* Cells */,
 				66AE1E0E24A0DB7B00FD3FFC /* Models */,
 			);
@@ -2124,8 +2124,8 @@
 		66AE1E0E24A0DB7B00FD3FFC /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				66AE1E0F24A0DB9200FD3FFC /* StudioSection.swift */,
-				66AE1E1824A10D7900FD3FFC /* StudioInformationSection.swift */,
+				66AE1E0F24A0DB9200FD3FFC /* StudioDetailsSection.swift */,
+				66AE1E1824A10D7900FD3FFC /* StudioDetailsInformationSection.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3261,7 +3261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				66C898EA24E17C3E00305C96 /* ShowAttributes+UIImage.swift in Sources */,
-				66AE1E0B24A0C41300FD3FFC /* StudiosCollectionViewController.swift in Sources */,
+				66AE1E0B24A0C41300FD3FFC /* StudioDetailsCollectionViewController.swift in Sources */,
 				66472370245DC531008E5111 /* CircularView.swift in Sources */,
 				664AAF8A24EE975F00FF4AA5 /* CharacterSection.swift in Sources */,
 				66CF6D6920A98CAA00F98375 /* FollowTableViewController.swift in Sources */,
@@ -3449,7 +3449,7 @@
 				66C27A7123E243FB00BC09D3 /* LibraryStatisticsCollectionViewCell.swift in Sources */,
 				667C2C47239BEEB600C04ED1 /* IBPCollectionViewCompositionalLayout+Interoperability.swift in Sources */,
 				66ABF5FA233835FF00795750 /* OnboardingType.swift in Sources */,
-				66AE1E1924A10D7900FD3FFC /* StudioInformationSection.swift in Sources */,
+				66AE1E1924A10D7900FD3FFC /* StudioDetailsInformationSection.swift in Sources */,
 				6645D5F923E70A4D0042B4E0 /* ManageIconTableViewController.swift in Sources */,
 				66CE34302325522700A41558 /* ForumOrder+Kurozora.swift in Sources */,
 				66CE81042460377900DB0C49 /* KCollectionViewDelegateLayout.swift in Sources */,
@@ -3464,7 +3464,7 @@
 				661F9F832087282500CF4153 /* RegisterViewController.swift in Sources */,
 				66CE8116246093CF00DB0C49 /* ServiceHeaderTableViewCell.swift in Sources */,
 				66FC6DD12340014500A454DD /* SettingsSection.swift in Sources */,
-				66AE1E1024A0DB9200FD3FFC /* StudioSection.swift in Sources */,
+				66AE1E1024A0DB9200FD3FFC /* StudioDetailsSection.swift in Sources */,
 				6619EE74216F969B00655B99 /* ForumsListViewController.swift in Sources */,
 				6674A0C320A45E6D00AAB527 /* LinkCollectionViewCell.swift in Sources */,
 				66EC939A2274B90100D584F7 /* ShowDetail.swift in Sources */,

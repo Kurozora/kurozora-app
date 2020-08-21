@@ -11,7 +11,7 @@
         <!--Studio-->
         <scene sceneID="yh2-3I-PRn">
             <objects>
-                <collectionViewController storyboardIdentifier="StudiosCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LEY-8f-r49" customClass="StudiosCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="StudioDetailsCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LEY-8f-r49" customClass="StudioDetailsCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" id="iIM-I3-df4">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -81,6 +81,7 @@
                     <navigationItem key="navigationItem" title="Studio" id="WyH-2I-v0S"/>
                     <connections>
                         <segue destination="pb1-tA-Wcg" kind="show" identifier="ShowDetailsSegue" id="w9j-21-D7A"/>
+                        <segue destination="AI9-TJ-gCE" kind="show" identifier="ShowsListSegue" id="r0N-jA-TMz"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wgn-nr-wwb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -95,7 +96,17 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uLU-fd-mQi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3600" y="-867"/>
+            <point key="canvasLocation" x="3604" y="-899"/>
+        </scene>
+        <!--ShowsListCollectionViewController-->
+        <scene sceneID="wfI-X8-Gj6">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Shows" referencedIdentifier="ShowsListCollectionViewController" id="AI9-TJ-gCE" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="giE-u5-Miu"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8aq-T2-9os" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3595" y="-834"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="fC4-lB-ohq">

@@ -18,9 +18,9 @@ class InformationCollectionViewCell: UICollectionViewCell {
 	// MARK: - Properties
 	var actorDetailsInformationSection: ActorDetailsInformationSection = .occupation
 	var characterInformationSection: CharacterInformationSection = .debut
-	var episodeDetailInformation: EpisodeDetail.Information = .id
-	var showDetailInformation: ShowDetail.Information = .id
-	var studioInformationSection: StudioInformationSection = .founded
+	var episodeDetailInformation: EpisodeDetail.Information = .number
+	var showDetailInformation: ShowDetail.Information = .studio
+	var studioDetailsInformationSection: StudioDetailsInformationSection = .founded
 
 	var actor: Actor! {
 		didSet {
@@ -79,8 +79,8 @@ class InformationCollectionViewCell: UICollectionViewCell {
 
 	/// Configure the cell with the given studio details.
 	fileprivate func configureCellWithStudio() {
-		titleLabel.text = self.studioInformationSection.stringValue
-		detailLabel.text = self.studioInformationSection.information(from: self.studio)
-		separatorView.isHidden = self.studioInformationSection == .website
+		titleLabel.text = self.studioDetailsInformationSection.stringValue
+		detailLabel.text = self.studioDetailsInformationSection.information(from: self.studio)
+		separatorView.isHidden = self.studioDetailsInformationSection == .website
 	}
 }

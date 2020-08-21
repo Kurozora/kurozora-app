@@ -1,5 +1,5 @@
 //
-//  StudioInformationSection.swift
+//  StudioDetailsSection.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 22/06/2020.
@@ -18,7 +18,7 @@ import Foundation
 	case shows = 3
 	```
 */
-enum StudioSection: Int, CaseIterable {
+enum StudioDetailsSection: Int, CaseIterable {
 	// MARK: - Cases
 	case main = 0
 	case about = 1
@@ -48,9 +48,23 @@ enum StudioSection: Int, CaseIterable {
 		case .about:
 			return 1
 		case .information:
-			return StudioInformationSection.allCases.count
+			return StudioDetailsInformationSection.allCases.count
 		case .shows:
 			return 0
+		}
+	}
+
+	/// The string value of a show section type segue identifier.
+	var segueIdentifier: String {
+		switch self {
+		case .main:
+			return ""
+		case .about:
+			return ""
+		case .information:
+			return ""
+		case .shows:
+			return R.segue.studioDetailsCollectionViewController.showsListSegue.identifier
 		}
 	}
 
@@ -69,7 +83,7 @@ enum StudioSection: Int, CaseIterable {
 		case .about:
 			return R.reuseIdentifier.textViewCollectionViewCell.identifier
 		case .information:
-			return StudioInformationSection(rawValue: row)?.identifierString ?? StudioInformationSection.website.identifierString
+			return StudioDetailsInformationSection(rawValue: row)?.identifierString ?? StudioDetailsInformationSection.website.identifierString
 		case .shows:
 			return R.reuseIdentifier.smallLockupCollectionViewCell.identifier
 		}

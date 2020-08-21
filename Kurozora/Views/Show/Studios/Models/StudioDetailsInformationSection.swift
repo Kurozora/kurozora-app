@@ -1,5 +1,5 @@
 //
-//  StudioInformationSection.swift
+//  StudioDetailsInformationSection.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 22/06/2020.
@@ -12,7 +12,7 @@ import KurozoraKit
 /**
 	Set of available studio information sections.
 */
-enum StudioInformationSection: Int, CaseIterable {
+enum StudioDetailsInformationSection: Int, CaseIterable {
 	// MARK: - Cases
 	case founded = 0
 	case headquarters = 1

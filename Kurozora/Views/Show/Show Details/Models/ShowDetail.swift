@@ -52,29 +52,29 @@ class ShowDetail {
 			}
 		}
 
-		/// The cell identifier string of a show section type.
-		var identifierString: String {
+		/// The row count of a character section layout kind.
+		var rowCount: Int {
 			switch self {
 			case .header:
-				return R.reuseIdentifier.showDetailHeaderCollectionViewCell.identifier
+				return 1
 			case .badge:
-				return R.reuseIdentifier.badgeCollectionViewCell.identifier
+				return 1
 			case .synopsis:
-				return R.reuseIdentifier.textViewCollectionViewCell.identifier
+				return 1
 			case .rating:
-				return R.reuseIdentifier.ratingCollectionViewCell.identifier
+				return 1
 			case .information:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
+				return ShowDetail.Information.allCases.count
 			case .seasons:
-				return R.reuseIdentifier.lockupCollectionViewCell.identifier
+				return 0
 			case .cast:
-				return R.reuseIdentifier.castCollectionViewCell.identifier
+				return 0
 			case .moreByStudio:
-				return R.reuseIdentifier.smallLockupCollectionViewCell.identifier
+				return 0
 			case .relatedShows:
-				return R.reuseIdentifier.lockupCollectionViewCell.identifier
+				return 0
 			case .sosumi:
-				return R.reuseIdentifier.sosumiShowCollectionViewCell.identifier
+				return 1
 			}
 		}
 
@@ -101,6 +101,39 @@ class ShowDetail {
 				return R.segue.showDetailsCollectionViewController.showsListSegue.identifier
 			case .sosumi:
 				return ""
+			}
+		}
+
+		// MARK: - Functions
+		/**
+			The cell identifier string of a character section.
+
+			- Parameter row: The row integer used to determine the cell reuse identifier.
+
+			- Returns: The cell identifier string of a show details section.
+		*/
+		func identifierString(for row: Int = 0) -> String {
+			switch self {
+			case .header:
+				return R.reuseIdentifier.showDetailHeaderCollectionViewCell.identifier
+			case .badge:
+				return R.reuseIdentifier.badgeCollectionViewCell.identifier
+			case .synopsis:
+				return R.reuseIdentifier.textViewCollectionViewCell.identifier
+			case .rating:
+				return R.reuseIdentifier.ratingCollectionViewCell.identifier
+			case .information:
+				return ShowDetail.Information(rawValue: row)?.identifierString ?? ShowDetail.Information.studio.identifierString
+			case .seasons:
+				return R.reuseIdentifier.lockupCollectionViewCell.identifier
+			case .cast:
+				return R.reuseIdentifier.castCollectionViewCell.identifier
+			case .moreByStudio:
+				return R.reuseIdentifier.smallLockupCollectionViewCell.identifier
+			case .relatedShows:
+				return R.reuseIdentifier.lockupCollectionViewCell.identifier
+			case .sosumi:
+				return R.reuseIdentifier.sosumiShowCollectionViewCell.identifier
 			}
 		}
 	}
@@ -157,8 +190,7 @@ class ShowDetail {
 		List of available show information types.
 	*/
 	enum Information: Int, CaseIterable {
-		case id = 0
-		case studio
+		case studio = 0
 		case network
 		case type
 		case aireDates
@@ -174,8 +206,6 @@ class ShowDetail {
 		/// The string value of an information type.
 		var stringValue: String {
 			switch self {
-			case .id:
-				return "ID"
 			case .studio:
 				return "Studio"
 			case .network:
@@ -201,6 +231,32 @@ class ShowDetail {
 			}
 		}
 
+		/// The cell identifier string of a character information section.
+		var identifierString: String {
+			switch self {
+			case .studio:
+				return R.reuseIdentifier.informationCollectionViewCell.identifier
+			case .network:
+				return R.reuseIdentifier.informationCollectionViewCell.identifier
+			case .type:
+				return R.reuseIdentifier.informationCollectionViewCell.identifier
+			case .aireDates:
+				return R.reuseIdentifier.informationCollectionViewCell.identifier
+			case .broadcast:
+				return R.reuseIdentifier.informationCollectionViewCell.identifier
+			case .genres:
+				return R.reuseIdentifier.informationCollectionViewCell.identifier
+			case .rating:
+				return R.reuseIdentifier.informationCollectionViewCell.identifier
+			case .seasonCount:
+				return R.reuseIdentifier.informationCollectionViewCell.identifier
+			case .episodeCount:
+				return R.reuseIdentifier.informationCollectionViewCell.identifier
+			case .duration:
+				return R.reuseIdentifier.informationCollectionViewCell.identifier
+			}
+		}
+
 		// MARK: - Functions
 		/**
 			Returns the required information from the given object.
@@ -211,8 +267,6 @@ class ShowDetail {
 		*/
 		func information(from show: Show) -> String {
 			switch self {
-			case .id:
-				return "\(show.id)"
 			case .studio:
 				if let studios = show.relationships?.studios?.data, studios.count != 0 {
 					var studioNames = ""
@@ -287,24 +341,15 @@ class ShowDetail {
 	}
 
 	/**
-		List of extenral sites.
-
-		```
-		case aniDB = 0
-		case aniList = 1
-		case imdb = 2
-		case kitsu = 3
-		case mal = 4
-		case tvdb = 5
-		```
+		List of available extenral sites.
 	*/
 	enum ExternalSite: Int, CaseIterable {
 		case aniDB = 0
-		case aniList = 1
-		case imdb = 2
-		case kitsu = 3
-		case mal = 4
-		case tvdb = 5
+		case aniList
+		case imdb
+		case kitsu
+		case mal
+		case tvdb
 
 		// MARK: - Properties
 		/// The string value of an external site.

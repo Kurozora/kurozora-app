@@ -16,7 +16,7 @@ class InformationButtonCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var separatorView: SecondarySeparatorView!
 
 	// MARK: - Properties
-	var studioInformationSection: StudioInformationSection?
+	var studioDetailsInformationSection: StudioDetailsInformationSection?
 	var studio: Studio! {
 		didSet {
 			configureCell()
@@ -26,8 +26,8 @@ class InformationButtonCollectionViewCell: UICollectionViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
-		self.titleLabel.text = studioInformationSection?.stringValue
-		self.iconImageView.image = studioInformationSection?.imageValue
+		self.titleLabel.text = studioDetailsInformationSection?.stringValue
+		self.iconImageView.image = studioDetailsInformationSection?.imageValue
 	}
 
 	// MARK: - IBActions
