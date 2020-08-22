@@ -10,7 +10,7 @@ import UIKit
 import KurozoraKit
 import SCLAlertView
 
-class RegisterTableViewController: AccountOnboardingTableViewController {
+class SignUpTableViewController: AccountOnboardingTableViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var profileImageView: ProfileImageView!
 	@IBOutlet weak var selectButton: KButton!
@@ -22,8 +22,9 @@ class RegisterTableViewController: AccountOnboardingTableViewController {
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
 		// Configure properties
-		self.accountOnboardingType = isSIWA ? .siwa : .register
+		self.accountOnboardingType = isSIWA ? .siwa : .signUp
 	}
 
 	// MARK: - Functions
@@ -47,11 +48,27 @@ class RegisterTableViewController: AccountOnboardingTableViewController {
 		self.present(imagePicker, animated: true, completion: nil)
 	}
 
+	/// Fetches the user's profile details.
+	func getProfileDetails() {
+		KService.getProfileDetails { result in
+			switch result {
+			case .success:
+				// Save user in keychain.
+				if let username = User.current?.attributes.username {
+					try? Kurozora.shared.keychain.set(KService.authenticationKey, key: username)
+					UserSettings.set(username, forKey: .selectedAccount)
+				}
+			case .failure: break
+			}
+		}
+	}
+
 	//MARK: - IBActions
 	override func rightNavigationBarButtonPressed(sender: AnyObject) {
 		super.rightNavigationBarButtonPressed(sender: sender)
 
-		if accountOnboardingType == .register {
+		switch self.accountOnboardingType {
+		case .signUp:
 			guard let username = textFieldArray.first??.trimmedText else { return }
 			guard let emailAddress = textFieldArray[1]?.trimmedText else { return }
 			guard let password = textFieldArray.last??.text else { return }
@@ -62,24 +79,33 @@ class RegisterTableViewController: AccountOnboardingTableViewController {
 				switch result {
 				case .success:
 					let alertController = SCLAlertView(appearance: SCLAlertView.SCLAppearance(showCloseButton: false))
-					alertController.showSuccess("Hooray!", subTitle: "Account created successfully! Please check your email for confirmation!")
+					alertController.showSuccess("Hooray!", subTitle: "Account created successfully! Please check your email for confirmation.")
 					alertController.addButton("Done", action: {
-						self.navigationController?.popViewController(animated: true)
 						self.dismiss(animated: true, completion: nil)
 					})
 				case .failure: break
 				}
 			}
-		} else if accountOnboardingType == .siwa {
-//			let username = textFieldArray.first??.trimmedText
-//			let profileImage = profileImageView.image
-//			
-//			KService.updateInformation(forUserID: 0, username: username, profileImage: profileImage, bannerImage: nil) { (update) in
-//				if let success = update?.success, success {
-//					self.navigationController?.popViewController(animated: true)
-//					self.dismiss(animated: true, completion: nil)
-//				}
-//			}
+		case .siwa:
+			let username = textFieldArray.first??.trimmedText
+			let profileImage = profileImageView.image
+
+			KService.updateInformation(profileImage: profileImage, username: username) { [weak self] result in
+				guard let self = self else { return }
+				switch result {
+				case .success:
+					// Get user details after completing account setup.
+					self.getProfileDetails()
+
+					let alertController = SCLAlertView(appearance: SCLAlertView.SCLAppearance(showCloseButton: false))
+					alertController.showSuccess("Hooray!", subTitle: "Account created successfully!")
+					alertController.addButton("Done", action: {
+						self.dismiss(animated: true, completion: nil)
+					})
+				case .failure: break
+				}
+			}
+		default: break
 		}
 	}
 
@@ -108,8 +134,18 @@ class RegisterTableViewController: AccountOnboardingTableViewController {
 	}
 }
 
+// MARK: - KTableViewControllerDataSource
+extension SignUpTableViewController {
+	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
+		return [
+			OnboardingTextFieldTableViewCell.self,
+			OnboardingFooterTableViewCell.self
+		]
+	}
+}
+
 //MARK: - UIImagePickerControllerDelegate
-extension RegisterTableViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension SignUpTableViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
 		if let editedImage = info[.editedImage] as? UIImage {
 			self.profileImageView.image = editedImage

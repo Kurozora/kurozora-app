@@ -9,5 +9,5 @@
 import UIKit
 
 class OnboardingBaseTableViewCell: KTableViewCell {
-	var accountOnboardingType: AccountOnboarding = .register
+	var accountOnboardingType: AccountOnboarding = .signIn
 }

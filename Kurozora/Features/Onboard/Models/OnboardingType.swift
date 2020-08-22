@@ -10,16 +10,9 @@ import Foundation
 
 extension AccountOnboarding {
 	/**
-		Set of available onboarding cell types.
-
-		```
-		case register = 0
-		case siwa = 1
-		case signIn = 2
-		case reset = 3
-		```
+		Set of available onboarding text field types.
 	*/
-	enum Cell: Int, CaseIterable {
+	enum TextField: Int, CaseIterable {
 		// MARK: - Cases
 		/// Username cell type.
 		case username = 0
@@ -30,17 +23,14 @@ extension AccountOnboarding {
 		/// Password cell type.
 		case password = 2
 
-		/// Footer cell type.
-		case footer = 3
-
 		// MARK: - Properties
 		/// An array containing all Sign in with Apple cell types.
-		static let siwaCases: [Cell] = [.username, .footer]
+		static let siwaCases: [TextField] = [.username]
 
 		/// An array containing only sign in cell types.
-		static let signInCases: [Cell] = [.email, .password, .footer]
+		static let signInCases: [TextField] = [.email, .password]
 
 		/// An array containing only reset password cell types.
-		static let resetCases: [Cell] = [.email]
+		static let resetCases: [TextField] = [.email]
 	}
 }

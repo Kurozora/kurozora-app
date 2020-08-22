@@ -10,21 +10,15 @@ import UIKit
 
 class AccountOnboardingTableViewController: KTableViewController {
 	// MARK: - IBOutlets
-	@IBOutlet weak var titleLabel: UILabel! {
-		didSet {
-			titleLabel?.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
-	@IBOutlet weak var subTextLabel: UILabel! {
-		didSet {
-			subTextLabel?.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
 	@IBOutlet weak var rightNavigationBarButton: UIBarButtonItem!
 
 	// MARK: - Properties
 	var textFieldArray: [UITextField?] = []
-	var accountOnboardingType: AccountOnboarding = .register
+	var accountOnboardingType: AccountOnboarding = .signIn {
+		didSet {
+			rightNavigationBarButton.title = accountOnboardingType.navigationBarButtonTitleValue
+		}
+	}
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -58,34 +52,50 @@ class AccountOnboardingTableViewController: KTableViewController {
 
 // MARK: - UITableViewDataSource
 extension AccountOnboardingTableViewController {
+	override func numberOfSections(in tableView: UITableView) -> Int {
+		return self.accountOnboardingType.sections.count
+	}
+
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return accountOnboardingType.cellTypes.count
+		switch self.accountOnboardingType.sections[section] {
+		case .textFields:
+			return self.accountOnboardingType.textFieldTypes.count
+		default:
+			return 1
+		}
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let identifier = accountOnboardingType.cellTypes[indexPath.row] == .footer ? R.reuseIdentifier.onboardingFooterTableViewCell.identifier : R.reuseIdentifier.onboardingTextFieldCell.identifier
-		let onboardingBaseTableViewCell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! OnboardingBaseTableViewCell
-		onboardingBaseTableViewCell.accountOnboardingType = accountOnboardingType
+		let onboardingBaseTableViewCell: OnboardingBaseTableViewCell!
 
-		switch accountOnboardingType.cellTypes[indexPath.row] {
-		case .username:
-			(onboardingBaseTableViewCell as? OnboardingTextFieldCell)?.textField.textType = .username
-		case .email:
-			(onboardingBaseTableViewCell as? OnboardingTextFieldCell)?.textField.textType = .emailAddress
-		case .password:
-			(onboardingBaseTableViewCell as? OnboardingTextFieldCell)?.textField.textType = .password
-		default: break
-		}
+		switch accountOnboardingType.sections[indexPath.section] {
+		case .header:
+			onboardingBaseTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.onboardingHeaderTableViewCell.identifier, for: indexPath) as? OnboardingHeaderTableViewCell
+			onboardingBaseTableViewCell.accountOnboardingType = self.accountOnboardingType
+		case .textFields:
+			onboardingBaseTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.onboardingTextFieldTableViewCell.identifier, for: indexPath) as? OnboardingBaseTableViewCell
+			onboardingBaseTableViewCell?.accountOnboardingType = self.accountOnboardingType
 
-		if onboardingBaseTableViewCell as? OnboardingTextFieldCell != nil {
-			(onboardingBaseTableViewCell as? OnboardingTextFieldCell)?.textField.tag = indexPath.row
-			(onboardingBaseTableViewCell as? OnboardingTextFieldCell)?.textField.delegate = self
-			(onboardingBaseTableViewCell as? OnboardingTextFieldCell)?.textField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
-			textFieldArray.append((onboardingBaseTableViewCell as? OnboardingTextFieldCell)?.textField)
-		}
+			switch accountOnboardingType.textFieldTypes[indexPath.row] {
+			case .username:
+				(onboardingBaseTableViewCell as? OnboardingTextFieldTableViewCell)?.textField.textType = .username
+			case .email:
+				(onboardingBaseTableViewCell as? OnboardingTextFieldTableViewCell)?.textField.textType = .emailAddress
+			case .password:
+				(onboardingBaseTableViewCell as? OnboardingTextFieldTableViewCell)?.textField.textType = .password
+			}
 
-		if onboardingBaseTableViewCell as? OnboardingFooterTableViewCell != nil {
-			(onboardingBaseTableViewCell as? OnboardingFooterTableViewCell)?.onboardingFooterTableViewCellDelegate = self as? SignInTableViewController
+			(onboardingBaseTableViewCell as? OnboardingTextFieldTableViewCell)?.textField.tag = indexPath.row
+			(onboardingBaseTableViewCell as? OnboardingTextFieldTableViewCell)?.textField.delegate = self
+			(onboardingBaseTableViewCell as? OnboardingTextFieldTableViewCell)?.textField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+			textFieldArray.append((onboardingBaseTableViewCell as? OnboardingTextFieldTableViewCell)?.textField)
+		case .options:
+			onboardingBaseTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.onboardingOptionsTableViewCell.identifier, for: indexPath) as? OnboardingBaseTableViewCell
+			onboardingBaseTableViewCell?.accountOnboardingType = self.accountOnboardingType
+			(onboardingBaseTableViewCell as? OnboardingOptionsTableViewCell)?.onboardingFooterTableViewCellDelegate = self as? SignInTableViewController
+		case .footer:
+			onboardingBaseTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.onboardingFooterTableViewCell.identifier, for: indexPath) as? OnboardingBaseTableViewCell
+			onboardingBaseTableViewCell?.accountOnboardingType = self.accountOnboardingType
 		}
 
 		onboardingBaseTableViewCell.configureCell()
@@ -115,7 +125,7 @@ extension AccountOnboardingTableViewController: UITextFieldDelegate {
 
 	func textFieldDidBeginEditing(_ textField: UITextField) {
 		switch accountOnboardingType {
-		case .register, .siwa:
+		case .signUp, .siwa:
 			textField.returnKeyType = textField.tag == textFieldArray.count - 1 ? .join : .next
 		case .signIn:
 			textField.returnKeyType = textField.tag == textFieldArray.count - 1 ? .go : .next

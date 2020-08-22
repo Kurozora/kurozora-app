@@ -69,12 +69,7 @@ class ManageActiveSessionsController: KTableViewController {
 
 		if CLLocationManager.locationServicesEnabled() == true {
 			let authorizationStatus: CLAuthorizationStatus!
-
-			if #available(iOS 14.0, macCatalyst 14.0, *) {
-				authorizationStatus = locationManager.authorizationStatus()
-			} else {
-				authorizationStatus = CLLocationManager.authorizationStatus()
-			}
+			authorizationStatus = CLLocationManager.authorizationStatus()
 
 			switch authorizationStatus {
 			case .restricted, .denied, .notDetermined:

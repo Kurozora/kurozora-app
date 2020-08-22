@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import AuthenticationServices
 import SCLAlertView
 
@@ -62,8 +63,8 @@ extension SignInWithAppleTableViewController {
 	}
 }
 
-// MARK: - OnboardingFooterTableViewCellDelegate
-extension SignInWithAppleTableViewController: OnboardingFooterTableViewCellDelegate {
+// MARK: - OnboardingOptionsTableViewCellDelegate
+extension SignInWithAppleTableViewController: OnboardingOptionsTableViewCellDelegate {
 	@available(iOS 13.0, macCatalyst 13.0, *)
 	func handleAuthorizationAppleIDButtonPress() {
 		let appleIDProvider = ASAuthorizationAppleIDProvider()
@@ -81,26 +82,47 @@ extension SignInWithAppleTableViewController: OnboardingFooterTableViewCellDeleg
 @available(iOS 13.0, macCatalyst 13.0, *)
 extension SignInWithAppleTableViewController: ASAuthorizationControllerDelegate {
 	func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-		guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else { return }
-		guard let emailAddress = appleIDCredential.email else { return }
-		KService.signUp(withAppleUserID: appleIDCredential.user, emailAddress: emailAddress) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success:
-				let alertController = SCLAlertView(appearance: SCLAlertView.SCLAppearance(showCloseButton: false))
-				alertController.showSuccess("Yay!", subTitle: "You can now sign in using Sign in with Apple!")
-				alertController.addButton("Done", action: {
-					DispatchQueue.main.async {
-						self.navigationController?.popViewController(animated: true)
+		switch authorization.credential {
+		case let appleIDCredential as ASAuthorizationAppleIDCredential:
+			print("----------- Statrted authorizationController() -----------")
+			print("User ID - \(appleIDCredential.user)")
+			print("User Name - \(appleIDCredential.fullName?.description ?? "N/A")")
+			print("User Email - \(appleIDCredential.email ?? "N/A")")
+			print("Real User Status - \(appleIDCredential.realUserStatus.rawValue)")
 
-						self.dismiss(animated: true) {
-							UserSettings.shared.removeObject(forKey: UserSettingsKey.lastNotificationRegistrationRequest.rawValue)
-							WorkflowController.shared.registerForPushNotifications()
-						}
-					}
-				})
-			case .failure: break
+			let authorizationCode = appleIDCredential.authorizationCode ?? Data()
+			if let authorizationCodeString = String(data: authorizationCode, encoding: .utf8) {
+				print("Refresh Token \(authorizationCodeString)")
 			}
+
+			let identityTokenData = appleIDCredential.identityToken ?? Data()
+			guard let identityTokenString = String(data: identityTokenData, encoding: .utf8) else { return }
+			print("Identity Token \(identityTokenString)")
+
+			KService.signIn(withAppleID: identityTokenString) { [weak self] result in
+				guard let self = self else { return }
+				switch result {
+				case .success(let oAuthResponse):
+					switch oAuthResponse.action {
+					case .signIn:
+						// Save user in keychain.
+						if let username = User.current?.attributes.username {
+							try? Kurozora.shared.keychain.set(oAuthResponse.authenticationToken, key: username)
+							UserSettings.set(username, forKey: .selectedAccount)
+						}
+
+						// Update the user's authentication key in KurozoraKit.
+						KService.authenticationKey = oAuthResponse.authenticationToken
+
+						// Dismiss the view.
+						self.dismiss(animated: true, completion: nil)
+					default: break
+					}
+				case .failure: break
+				}
+			}
+			print("----------- Ended authorizationController() -----------")
+		default: break
 		}
 	}
 

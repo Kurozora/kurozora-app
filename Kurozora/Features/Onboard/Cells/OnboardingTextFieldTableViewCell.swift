@@ -1,5 +1,5 @@
 //
-//  OnboardingTextFieldCell.swift
+//  OnboardingTextFieldTableViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 22/09/2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OnboardingTextFieldCell: OnboardingBaseTableViewCell {
+class OnboardingTextFieldTableViewCell: OnboardingBaseTableViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var textField: KTextField!
 
@@ -17,7 +17,7 @@ class OnboardingTextFieldCell: OnboardingBaseTableViewCell {
 		super.configureCell()
 
 		switch accountOnboardingType {
-		case .register:
+		case .signUp:
 			switch textField.textType {
 			case .username:
 				textField.placeholder = "Username: pick a cool one 🙉"

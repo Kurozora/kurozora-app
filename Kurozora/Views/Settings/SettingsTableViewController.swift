@@ -165,7 +165,9 @@ extension SettingsTableViewController {
 			alertView.showWarning("Clear all cache?", subTitle: "All of your caches will be cleared and Kurozora will restart.", closeButtonTitle: "Cancel")
 			return
 		case .rate:
-			UIApplication.shared.kOpen(.rateURL)
+			if let rateURL = URL.rateURL {
+				UIApplication.shared.open(rateURL)
+			}
 			return
 		case .restoreFeatures:
 			KStoreObserver.shared.restorePurchase()

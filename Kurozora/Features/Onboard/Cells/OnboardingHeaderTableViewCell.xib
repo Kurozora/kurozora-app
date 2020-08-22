@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17124"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="OnboardingHeaderTableViewCell" id="df4-U5-GRf" customClass="OnboardingHeaderTableViewCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="79.5"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="df4-U5-GRf" id="SRb-Ay-t0h">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="79.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kurozora ID" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bqp-1p-tpV" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="20" y="0.0" width="374" height="33.5"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign in with your Kurozora ID to use the library and other Kurozora services." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ucr-fh-u1t" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="20" y="41.5" width="374" height="38"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Bqp-1p-tpV" firstAttribute="top" secondItem="SRb-Ay-t0h" secondAttribute="top" id="G0G-hd-Kqc"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="ucr-fh-u1t" secondAttribute="trailing" id="XzQ-tQ-gPV"/>
+                    <constraint firstItem="ucr-fh-u1t" firstAttribute="leading" secondItem="SRb-Ay-t0h" secondAttribute="leadingMargin" id="b2D-KE-JaJ"/>
+                    <constraint firstItem="Bqp-1p-tpV" firstAttribute="leading" secondItem="SRb-Ay-t0h" secondAttribute="leadingMargin" id="d4k-yl-1cX"/>
+                    <constraint firstItem="Bqp-1p-tpV" firstAttribute="centerX" secondItem="SRb-Ay-t0h" secondAttribute="centerX" id="i1H-6x-3vh"/>
+                    <constraint firstItem="ucr-fh-u1t" firstAttribute="top" secondItem="Bqp-1p-tpV" secondAttribute="bottom" constant="8" symbolic="YES" id="k0p-kc-keg"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Bqp-1p-tpV" secondAttribute="trailing" id="ouA-f3-vhs"/>
+                    <constraint firstAttribute="bottom" secondItem="ucr-fh-u1t" secondAttribute="bottom" id="uoT-Av-rc8"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <connections>
+                <outlet property="primaryLabel" destination="Bqp-1p-tpV" id="mnt-pg-dLs"/>
+                <outlet property="secondaryLabel" destination="ucr-fh-u1t" id="ECB-pT-GcS"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="153"/>
+        </tableViewCell>
+    </objects>
+</document>

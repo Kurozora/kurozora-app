@@ -39,9 +39,10 @@ extension ServiceTableViewController {
 	}
 
 	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
-		return [ServicePreviewTableViewCell.self,
-				ServiceHeaderTableViewCell.self,
-				ServiceFooterTableViewCell.self
+		return [
+			ServicePreviewTableViewCell.self,
+			ServiceHeaderTableViewCell.self,
+			ServiceFooterTableViewCell.self
 		]
 	}
 

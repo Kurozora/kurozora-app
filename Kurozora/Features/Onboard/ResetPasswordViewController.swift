@@ -43,3 +43,13 @@ class ResetPasswordTableViewController: AccountOnboardingTableViewController {
 		}
 	}
 }
+
+// MARK: - KTableViewControllerDataSource
+extension ResetPasswordTableViewController {
+	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
+		return [
+			OnboardingHeaderTableViewCell.self,
+			OnboardingTextFieldTableViewCell.self
+		]
+	}
+}

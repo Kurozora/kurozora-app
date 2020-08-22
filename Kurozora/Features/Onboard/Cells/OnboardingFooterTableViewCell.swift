@@ -7,96 +7,28 @@
 //
 
 import UIKit
-import AuthenticationServices
-
-@objc protocol OnboardingFooterTableViewCellDelegate: class {
-	@available(iOS 13.0, macCatalyst 13.0, *)
-	func handleAuthorizationAppleIDButtonPress()
-}
 
 class OnboardingFooterTableViewCell: OnboardingBaseTableViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var forgotPasswordButton: UIButton! {
+	@IBOutlet weak var legalButton: UIButton! {
 		didSet {
-			forgotPasswordButton.theme_setTitleColor(KThemePicker.tintColor.rawValue, forState: .normal)
+			legalButton.addTarget(self, action: #selector(legalButtonPressed), for: .touchUpInside)
+			legalButton.addTarget(self, action: #selector(legalButtonTouched), for: [.touchDown, .touchDragExit, .touchDragInside, .touchCancel])
 		}
 	}
-	@IBOutlet weak var orLabel: UILabel! {
-		didSet {
-			orLabel.theme_textColor = KThemePicker.subTextColor.rawValue
-		}
-	}
-	@IBOutlet weak var registerPasswordButton: UIButton! {
-		didSet {
-			registerPasswordButton.theme_setTitleColor(KThemePicker.tintColor.rawValue, forState: .normal)
-		}
-	}
-	@IBOutlet weak var optionsStackView: UIStackView?
-	@IBOutlet weak var promotionalImageView: UIImageView?
-	@IBOutlet weak var descriptionLabel: UILabel? {
-		didSet {
-			descriptionLabel?.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
-	@IBOutlet weak var legalButton: UIButton? {
-		didSet {
-			legalButton?.addTarget(self, action: #selector(legalButtonPressed), for: .touchUpInside)
-			legalButton?.addTarget(self, action: #selector(legalButtonTouched), for: [.touchDown, .touchDragExit, .touchDragInside, .touchCancel])
-		}
-	}
-
-	// MARK: - Properties
-	weak var onboardingFooterTableViewCellDelegate: OnboardingFooterTableViewCellDelegate?
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	override func configureCell() {
 		super.configureCell()
 
-		if #available(iOS 13.0, macCatalyst 13.0, *) {
-			setupProviderSignInView()
-		}
+		let paragraphStyle = NSMutableParagraphStyle()
+		paragraphStyle.alignment = .center
 
-		if legalButton != nil {
-			let paragraphStyle = NSMutableParagraphStyle()
-			paragraphStyle.alignment = .center
-
-			// Normal state
-			let attributedString = NSMutableAttributedString(string: "Your Kurozra ID information is used to enable Kurozora services when you sign in. Kurozora services includes the library where you can keep track of the shows you are interested in. \n", attributes: [.foregroundColor: KThemePicker.subTextColor.colorValue, .paragraphStyle: paragraphStyle])
-			attributedString.append(NSAttributedString(string: "See how your data is managed...", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue, .paragraphStyle: paragraphStyle]))
-			legalButton?.setAttributedTitle(attributedString, for: .normal)
-		}
-	}
-
-	/// Sets up the sign in view by adding an "or" label and the Sign in with Apple ID button.
-	@available(iOS 13.0, macCatalyst 13.0, *)
-	func setupProviderSignInView() {
-		// Create a new 'or label' separator.
-		let orLabel: UILabel = UILabel(text: "—————— or ——————")
-		orLabel.font = .systemFont(ofSize: 15)
-		orLabel.theme_textColor = KThemePicker.subTextColor.rawValue
-
-		// Create and setup Apple ID authorization button
-		let style: ASAuthorizationAppleIDButton.Style = KThemeStyle.isNightTheme() ? .white : .black
-		let authorizationButton = ASAuthorizationAppleIDButton(type: .default, style: style)
-
-		// Add height constraint
-		let heightConstraint = authorizationButton.heightAnchor.constraint(equalToConstant: 40)
-		authorizationButton.addConstraint(heightConstraint)
-
-		// Add width constraint
-		let widthConstraint = authorizationButton.widthAnchor.constraint(equalToConstant: 220)
-		authorizationButton.addConstraint(widthConstraint)
-		authorizationButton.addTarget(self, action: #selector(handleAuthorizationAppleIDButtonPress), for: .touchUpInside)
-
-		// Add to stack view
-		optionsStackView?.addArrangedSubviews([orLabel, authorizationButton])
-	}
-
-	/// Handles the Apple ID button press.
-	@available(iOS 13.0, macCatalyst 13.0, *)
-	@objc func handleAuthorizationAppleIDButtonPress() {
-		onboardingFooterTableViewCellDelegate?.handleAuthorizationAppleIDButtonPress()
+		// Normal state
+		let attributedString = NSMutableAttributedString(string: "Your Kurozora ID information is used to enable Kurozora services when you sign in. Kurozora services includes the library where you can keep track of the shows you are interested in. \n", attributes: [.foregroundColor: KThemePicker.subTextColor.colorValue, .paragraphStyle: paragraphStyle])
+		attributedString.append(NSAttributedString(string: "See how your data is managed...", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue, .paragraphStyle: paragraphStyle]))
+		legalButton?.setAttributedTitle(attributedString, for: .normal)
 	}
 
 	/**

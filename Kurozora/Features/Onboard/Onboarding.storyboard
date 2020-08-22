@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16095" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oGH-lg-KeC">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oGH-lg-KeC">
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16084.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17124"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,91 +18,35 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="contentLayoutGuide" id="qZ0-D6-C6d"/>
                         <viewLayoutGuide key="frameLayoutGuide" id="Z1H-6u-fW1"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="eDH-tm-qS9">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="130"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Kurozora ID" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EKW-W9-8Iv">
-                                    <rect key="frame" x="137.5" y="20" width="139.5" height="34"/>
-                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Sign in with your Kurozora ID to use the library and other Kurozora services." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bDf-9Y-MC0">
-                                    <rect key="frame" x="8" y="62" width="398" height="38"/>
-                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                            <constraints>
-                                <constraint firstItem="EKW-W9-8Iv" firstAttribute="top" secondItem="eDH-tm-qS9" secondAttribute="top" constant="20" id="9UN-d1-IuQ"/>
-                                <constraint firstAttribute="bottom" secondItem="bDf-9Y-MC0" secondAttribute="bottom" constant="30" id="9tj-GX-RJV"/>
-                                <constraint firstItem="EKW-W9-8Iv" firstAttribute="centerX" secondItem="eDH-tm-qS9" secondAttribute="centerX" id="Bfg-zU-anu"/>
-                                <constraint firstAttribute="trailingMargin" secondItem="bDf-9Y-MC0" secondAttribute="trailing" id="H5W-2h-oJX"/>
-                                <constraint firstItem="bDf-9Y-MC0" firstAttribute="top" secondItem="EKW-W9-8Iv" secondAttribute="bottom" constant="8" symbolic="YES" id="f8a-CJ-9KV"/>
-                                <constraint firstItem="bDf-9Y-MC0" firstAttribute="leading" secondItem="eDH-tm-qS9" secondAttribute="leadingMargin" id="xdc-zf-aUn"/>
-                            </constraints>
-                        </view>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OnboardingTextFieldCell" id="QUD-d6-Uvf" customClass="OnboardingTextFieldCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="185.5" width="414" height="60"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QUD-d6-Uvf" id="Yfv-Zi-IPs">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <textField contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="The cool Kurozora ID you claimed 🙌" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Y1R-ZD-VFX" customClass="KTextField" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="20" y="10" width="374" height="50"/>
-                                            <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="50" id="07y-EV-GdW"/>
-                                            </constraints>
-                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                            <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES" textContentType="email"/>
-                                        </textField>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="Y1R-ZD-VFX" firstAttribute="leading" secondItem="Yfv-Zi-IPs" secondAttribute="leadingMargin" id="3BJ-fO-qtP"/>
-                                        <constraint firstAttribute="bottom" secondItem="Y1R-ZD-VFX" secondAttribute="bottom" id="Hg2-Ep-7Oi"/>
-                                        <constraint firstItem="Y1R-ZD-VFX" firstAttribute="top" secondItem="Yfv-Zi-IPs" secondAttribute="top" constant="10" id="YOs-kF-GAX"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="Y1R-ZD-VFX" secondAttribute="trailing" id="cZU-uC-Oy0"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <connections>
-                                    <outlet property="textField" destination="Y1R-ZD-VFX" id="spa-f1-adm"/>
-                                </connections>
-                            </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OnboardingFooterTableViewCell" id="VYz-yc-iXY" customClass="OnboardingFooterTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="245.5" width="414" height="318"/>
+                            <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OnboardingOptionsTableViewCell" id="VYz-yc-iXY" customClass="OnboardingOptionsTableViewCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="55.5" width="414" height="268"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VYz-yc-iXY" id="5B2-1M-yaM">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="318"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="268"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="OOy-ag-49a">
-                                            <rect key="frame" x="20" y="10" width="374" height="94"/>
+                                            <rect key="frame" x="20" y="10" width="374" height="100"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="bL3-c9-8O1">
-                                                    <rect key="frame" x="17" y="0.0" width="340" height="30"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                    <state key="normal" title="Forgot your password? Time to use your email 📧"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="characterWrap" translatesAutoresizingMaskIntoConstraints="NO" id="bL3-c9-8O1" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                                    <rect key="frame" x="44" y="0.0" width="286" height="33"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <state key="normal" title="Forgot your password? Let's reset 📧"/>
                                                     <connections>
-                                                        <segue destination="7C8-i2-q1I" kind="show" identifier="ResetPasswordSegue" id="MuH-mJ-aou"/>
+                                                        <segue destination="qIf-Aa-QPo" kind="show" identifier="ResetPasswordSegue" id="7TR-x7-dhG"/>
                                                     </connections>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="—————— or ——————" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uls-SB-5wS">
-                                                    <rect key="frame" x="87.5" y="38" width="199.5" height="18"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="—————— or ——————" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uls-SB-5wS" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                                                    <rect key="frame" x="98" y="41" width="178.5" height="18"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="u2b-Lj-jIl">
-                                                    <rect key="frame" x="20" y="64" width="334" height="30"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                    <state key="normal" title="New to Kurozora? Let's create a new account 🔥"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="characterWrap" translatesAutoresizingMaskIntoConstraints="NO" id="u2b-Lj-jIl" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                                    <rect key="frame" x="77" y="67" width="220" height="33"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <state key="normal" title="New to Kurozora? Join us 🔥"/>
                                                     <connections>
                                                         <segue destination="PNG-qo-j4c" kind="show" id="Vsw-4g-A6f"/>
                                                     </connections>
@@ -110,56 +54,30 @@
                                             </subviews>
                                         </stackView>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Promotional/Kurozora Services" translatesAutoresizingMaskIntoConstraints="NO" id="Spl-yt-qj9">
-                                            <rect key="frame" x="20" y="144" width="374" height="40"/>
+                                            <rect key="frame" x="20" y="170" width="374" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="40" id="6Gs-5M-iy5"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Kurozora ID is the email you use to access all Kurozora services." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C71-jA-gSI">
-                                            <rect key="frame" x="34" y="204" width="346" height="38"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Kurozora ID is the email you use to access all Kurozora services." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C71-jA-gSI" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                            <rect key="frame" x="34" y="230" width="346" height="38"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F7x-5a-Rci">
-                                            <rect key="frame" x="20" y="250" width="374" height="68"/>
-                                            <inset key="contentEdgeInsets" minX="0.0" minY="20" maxX="0.0" maxY="20"/>
-                                            <state key="normal">
-                                                <attributedString key="attributedTitle">
-                                                    <fragment>
-                                                        <string key="content">Your Kurozra ID information is used to enable Kurozora services when you sign in. Kurozora services includes the library where you can keep track of the shows you are interested in. </string>
-                                                        <attributes>
-                                                            <color key="NSColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                                            <font key="NSFont" size="12" name="HelveticaNeue"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                    <fragment content="See how your data is managed...">
-                                                        <attributes>
-                                                            <color key="NSColor" red="1" green="0.57647000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <font key="NSFont" size="12" name="HelveticaNeue"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                </attributedString>
-                                            </state>
-                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="Spl-yt-qj9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="5B2-1M-yaM" secondAttribute="leadingMargin" id="4pW-pt-bzj"/>
                                         <constraint firstItem="C71-jA-gSI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="5B2-1M-yaM" secondAttribute="leadingMargin" id="56v-mm-Olh"/>
-                                        <constraint firstAttribute="bottom" secondItem="F7x-5a-Rci" secondAttribute="bottom" id="9C8-bH-gs7"/>
+                                        <constraint firstAttribute="bottom" secondItem="C71-jA-gSI" secondAttribute="bottom" id="FHL-Uh-7ef"/>
                                         <constraint firstItem="C71-jA-gSI" firstAttribute="centerX" secondItem="Spl-yt-qj9" secondAttribute="centerX" id="JbC-UJ-dHo"/>
                                         <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="C71-jA-gSI" secondAttribute="trailing" id="Nn7-j7-JFy"/>
                                         <constraint firstItem="OOy-ag-49a" firstAttribute="leading" secondItem="5B2-1M-yaM" secondAttribute="leadingMargin" id="T5e-P6-Dky"/>
-                                        <constraint firstItem="Spl-yt-qj9" firstAttribute="top" secondItem="OOy-ag-49a" secondAttribute="bottom" constant="40" id="VgP-eI-qwd"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="F7x-5a-Rci" secondAttribute="trailing" id="Xwn-i8-Sbx"/>
-                                        <constraint firstItem="F7x-5a-Rci" firstAttribute="top" secondItem="C71-jA-gSI" secondAttribute="bottom" constant="8" symbolic="YES" id="Xyg-3T-SD1"/>
+                                        <constraint firstItem="Spl-yt-qj9" firstAttribute="top" secondItem="OOy-ag-49a" secondAttribute="bottom" constant="60" id="VgP-eI-qwd"/>
                                         <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="Spl-yt-qj9" secondAttribute="trailing" id="ZRZ-a2-z4S"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="OOy-ag-49a" secondAttribute="trailing" id="ZtL-Sq-pdr"/>
                                         <constraint firstItem="Spl-yt-qj9" firstAttribute="centerX" secondItem="OOy-ag-49a" secondAttribute="centerX" id="c5q-t1-LH7"/>
                                         <constraint firstItem="C71-jA-gSI" firstAttribute="top" secondItem="Spl-yt-qj9" secondAttribute="bottom" constant="20" id="kEG-1x-To3"/>
-                                        <constraint firstItem="F7x-5a-Rci" firstAttribute="leading" secondItem="5B2-1M-yaM" secondAttribute="leadingMargin" id="xFV-6X-Jx5"/>
                                         <constraint firstItem="OOy-ag-49a" firstAttribute="top" secondItem="5B2-1M-yaM" secondAttribute="top" constant="10" id="yTY-5X-mhH"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -167,7 +85,6 @@
                                 <connections>
                                     <outlet property="descriptionLabel" destination="C71-jA-gSI" id="eoa-kp-ERh"/>
                                     <outlet property="forgotPasswordButton" destination="bL3-c9-8O1" id="Zue-aS-Diq"/>
-                                    <outlet property="legalButton" destination="F7x-5a-Rci" id="cr8-QX-Gbo"/>
                                     <outlet property="optionsStackView" destination="OOy-ag-49a" id="jzI-fG-21W"/>
                                     <outlet property="orLabel" destination="Uls-SB-5wS" id="7aM-jD-fh3"/>
                                     <outlet property="promotionalImageView" destination="Spl-yt-qj9" id="evW-lg-V8d"/>
@@ -197,8 +114,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="rightNavigationBarButton" destination="NaO-6U-dMN" id="SiJ-Ty-D1z"/>
-                        <outlet property="subTextLabel" destination="bDf-9Y-MC0" id="d2W-Ha-xzj"/>
-                        <outlet property="titleLabel" destination="EKW-W9-8Iv" id="jC5-Fn-FlO"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0BR-6a-Dts" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -225,103 +140,10 @@
             </objects>
             <point key="canvasLocation" x="523" y="137"/>
         </scene>
-        <!--Reset Password Table View Controller-->
-        <scene sceneID="PVE-rB-cpl">
-            <objects>
-                <tableViewController storyboardIdentifier="ResetPasswordViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="7C8-i2-q1I" customClass="ResetPasswordTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="kFI-71-BKh">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="contentLayoutGuide" id="N1a-HI-vS3"/>
-                        <viewLayoutGuide key="frameLayoutGuide" id="MTf-3O-djR"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="ba9-De-XYU">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="110"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Forgot Password?" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ayy-mM-mJn">
-                                    <rect key="frame" x="100" y="20" width="214.5" height="34"/>
-                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Enter your Kurozora ID to continue." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dYJ-GC-XfQ">
-                                    <rect key="frame" x="87.5" y="62" width="239.5" height="18"/>
-                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                            <constraints>
-                                <constraint firstItem="dYJ-GC-XfQ" firstAttribute="top" secondItem="Ayy-mM-mJn" secondAttribute="bottom" constant="8" symbolic="YES" id="EHo-Ij-rHW"/>
-                                <constraint firstAttribute="bottom" secondItem="dYJ-GC-XfQ" secondAttribute="bottom" constant="30" id="HYR-fR-Diw"/>
-                                <constraint firstItem="dYJ-GC-XfQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ba9-De-XYU" secondAttribute="leadingMargin" id="Qqh-qv-qf6"/>
-                                <constraint firstItem="Ayy-mM-mJn" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ba9-De-XYU" secondAttribute="leadingMargin" id="iAS-A4-3eU"/>
-                                <constraint firstItem="dYJ-GC-XfQ" firstAttribute="centerX" secondItem="Ayy-mM-mJn" secondAttribute="centerX" id="iRE-8N-scm"/>
-                                <constraint firstItem="Ayy-mM-mJn" firstAttribute="top" secondItem="ba9-De-XYU" secondAttribute="top" constant="20" id="nuY-vU-7L3"/>
-                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="dYJ-GC-XfQ" secondAttribute="trailing" id="wgc-AZ-sn3"/>
-                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="Ayy-mM-mJn" secondAttribute="trailing" id="wq2-PX-J9K"/>
-                                <constraint firstItem="Ayy-mM-mJn" firstAttribute="centerX" secondItem="ba9-De-XYU" secondAttribute="centerX" id="yBg-AG-1w0"/>
-                            </constraints>
-                        </view>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OnboardingTextFieldCell" rowHeight="60" id="1iE-yl-9nN" customClass="OnboardingTextFieldCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="165.5" width="414" height="60"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1iE-yl-9nN" id="XoT-En-fjn">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <textField contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your email address to the rescue 💌" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Khe-nX-yBW" customClass="KTextField" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="20" y="10" width="374" height="50"/>
-                                            <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="50" id="rUv-Hx-1SF"/>
-                                            </constraints>
-                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                            <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="send" enablesReturnKeyAutomatically="YES" textContentType="email"/>
-                                        </textField>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="Khe-nX-yBW" firstAttribute="leading" secondItem="XoT-En-fjn" secondAttribute="leadingMargin" id="FJQ-6x-Xlv"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="Khe-nX-yBW" secondAttribute="trailing" id="Of9-Ve-NuL"/>
-                                        <constraint firstAttribute="bottom" secondItem="Khe-nX-yBW" secondAttribute="bottom" id="gby-7C-pEl"/>
-                                        <constraint firstItem="Khe-nX-yBW" firstAttribute="top" secondItem="XoT-En-fjn" secondAttribute="top" constant="10" id="mCp-9z-6hd"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <connections>
-                                    <outlet property="textField" destination="Khe-nX-yBW" id="kjb-be-QqS"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="7C8-i2-q1I" id="80H-Rf-7S4"/>
-                            <outlet property="delegate" destination="7C8-i2-q1I" id="Wsc-Sz-fhC"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="eqW-Ei-0kB">
-                        <barButtonItem key="rightBarButtonItem" title="Send ✨" id="6Dt-vl-A8F">
-                            <connections>
-                                <action selector="rightNavigationBarButtonPressedWithSender:" destination="7C8-i2-q1I" id="lby-xs-yyf"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="rightNavigationBarButton" destination="6Dt-vl-A8F" id="oA8-ZC-SNY"/>
-                        <outlet property="subTextLabel" destination="dYJ-GC-XfQ" id="FYI-Cu-Nbe"/>
-                        <outlet property="titleLabel" destination="Ayy-mM-mJn" id="zWa-Xh-da1"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Qph-B1-EaH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2161" y="-151"/>
-        </scene>
-        <!--Register Table View Controller-->
+        <!--Sign Up Table View Controller-->
         <scene sceneID="5MS-1r-T5m">
             <objects>
-                <tableViewController storyboardIdentifier="RegisterTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="PNG-qo-j4c" customClass="RegisterTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SignUpTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="PNG-qo-j4c" customClass="SignUpTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ZRy-RL-Gap">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -332,13 +154,13 @@
                             <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="New to Kurozora?" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xr5-LJ-ipy">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="New to Kurozora?" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xr5-LJ-ipy" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                                     <rect key="frame" x="101" y="20" width="212" height="34"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Create an account and join the community." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UJ9-WL-FIr">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Create an account and join the community." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UJ9-WL-FIr" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                                     <rect key="frame" x="61" y="62" width="292.5" height="18"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -351,7 +173,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                                             <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </imageView>
-                                        <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qUJ-dy-UZu" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                        <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qUJ-dy-UZu" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                                             <color key="backgroundColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.17999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
@@ -389,80 +211,6 @@
                                 <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="UJ9-WL-FIr" secondAttribute="trailing" id="xAf-mX-KX8"/>
                             </constraints>
                         </view>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OnboardingTextFieldCell" rowHeight="60" id="G6q-Q6-rZS" customClass="OnboardingTextFieldCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="255.5" width="414" height="60"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="G6q-Q6-rZS" id="sFO-Iz-nh6">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <textField contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username: pick a cool one 🙉" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="tFV-uv-uCC" customClass="KTextField" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="20" y="10" width="374" height="50"/>
-                                            <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="50" id="hkB-Sq-nMX"/>
-                                            </constraints>
-                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                            <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES" textContentType="username"/>
-                                        </textField>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="tFV-uv-uCC" firstAttribute="leading" secondItem="sFO-Iz-nh6" secondAttribute="leadingMargin" id="1qr-16-XSL"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="tFV-uv-uCC" secondAttribute="trailing" id="BNt-tq-yQa"/>
-                                        <constraint firstAttribute="bottom" secondItem="tFV-uv-uCC" secondAttribute="bottom" id="PAp-dJ-OBK"/>
-                                        <constraint firstItem="tFV-uv-uCC" firstAttribute="top" secondItem="sFO-Iz-nh6" secondAttribute="top" constant="10" id="WHZ-Qf-hjO"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <connections>
-                                    <outlet property="textField" destination="tFV-uv-uCC" id="7x9-8N-0SU"/>
-                                </connections>
-                            </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OnboardingFooterTableViewCell" rowHeight="82" id="Jl8-33-z0g" customClass="OnboardingFooterTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="315.5" width="414" height="82"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Jl8-33-z0g" id="X0g-QN-Fjh">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="82"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eFI-QU-QEl">
-                                            <rect key="frame" x="20" y="20" width="374" height="52"/>
-                                            <state key="normal">
-                                                <attributedString key="attributedTitle">
-                                                    <fragment>
-                                                        <string key="content">Your Kurozra ID information is used to enable Kurozora services when you sign in. Kurozora services includes the library where you can keep track of the shows you are interested in. </string>
-                                                        <attributes>
-                                                            <color key="NSColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <font key="NSFont" metaFont="label" size="12"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                    <fragment content="See how your data is managed...">
-                                                        <attributes>
-                                                            <color key="NSColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <font key="NSFont" metaFont="label" size="12"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                </attributedString>
-                                            </state>
-                                        </button>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="eFI-QU-QEl" secondAttribute="bottom" constant="10" id="90z-Sl-0RY"/>
-                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="eFI-QU-QEl" secondAttribute="trailing" id="PMj-wO-5PQ"/>
-                                        <constraint firstItem="eFI-QU-QEl" firstAttribute="top" secondItem="X0g-QN-Fjh" secondAttribute="top" constant="20" id="SgL-nO-Tz8"/>
-                                        <constraint firstItem="eFI-QU-QEl" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="X0g-QN-Fjh" secondAttribute="leadingMargin" id="tvs-Ip-Pso"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <connections>
-                                    <outlet property="legalButton" destination="eFI-QU-QEl" id="29w-FM-rsr"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="PNG-qo-j4c" id="AOq-9R-ufE"/>
                             <outlet property="delegate" destination="PNG-qo-j4c" id="5qY-Gd-90L"/>
@@ -479,13 +227,41 @@
                         <outlet property="profileImageView" destination="cG1-YT-L26" id="sqw-dy-AN9"/>
                         <outlet property="rightNavigationBarButton" destination="nw0-4m-Xlh" id="Fea-P0-jQO"/>
                         <outlet property="selectButton" destination="qUJ-dy-UZu" id="HAa-jl-zgF"/>
-                        <outlet property="subTextLabel" destination="UJ9-WL-FIr" id="Xe8-gr-hxc"/>
-                        <outlet property="titleLabel" destination="xr5-LJ-ipy" id="OeE-KG-qwp"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LxV-Og-AFi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2161" y="508"/>
+            <point key="canvasLocation" x="2129" y="453"/>
+        </scene>
+        <!--Reset Password Table View Controller-->
+        <scene sceneID="dhq-Jm-8ec">
+            <objects>
+                <tableViewController storyboardIdentifier="ResetPasswordTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="qIf-Aa-QPo" customClass="ResetPasswordTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="22" sectionFooterHeight="22" id="4e4-Yz-C8L">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="contentLayoutGuide" id="8Ka-K2-nUC"/>
+                        <viewLayoutGuide key="frameLayoutGuide" id="7RU-z9-Ega"/>
+                        <connections>
+                            <outlet property="dataSource" destination="qIf-Aa-QPo" id="foG-Ev-feE"/>
+                            <outlet property="delegate" destination="qIf-Aa-QPo" id="gEF-It-CXF"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="VG1-Xv-YwW">
+                        <barButtonItem key="rightBarButtonItem" title="Send ✨" id="nap-na-nSm">
+                            <connections>
+                                <action selector="rightNavigationBarButtonPressedWithSender:" destination="qIf-Aa-QPo" id="api-kD-ZeJ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="rightNavigationBarButton" destination="nap-na-nSm" id="wJK-Ph-C0W"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RRs-tG-kNv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2129" y="-234"/>
         </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

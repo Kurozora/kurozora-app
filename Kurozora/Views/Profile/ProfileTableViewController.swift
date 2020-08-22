@@ -438,7 +438,7 @@ class ProfileTableViewController: KTableViewController {
 		self.bannerImageCache = nil
 
 		if shouldUpdate {
-			KService.updateInformation(biography: bioText, profileImage: profileImage, bannerImage: bannerImage) { [weak self] result in
+			KService.updateInformation(biography: bioText, bannerImage: bannerImage, profileImage: profileImage) { [weak self] result in
 				guard let self = self else { return }
 				switch result {
 				case .success:
