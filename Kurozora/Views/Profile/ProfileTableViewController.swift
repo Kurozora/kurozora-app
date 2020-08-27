@@ -78,7 +78,7 @@ class ProfileTableViewController: KTableViewController {
 			}
 		}
 	}
-	var feedPosts: [FeedPost]? = nil
+	var feedMessages: [FeedMessage]? = nil
 	var editingMode: Bool = false
 
 	var imagePicker = UIImagePickerController()
@@ -571,16 +571,16 @@ class ProfileTableViewController: KTableViewController {
 // MARK: - UITableViewDataSource
 extension ProfileTableViewController {
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		guard let postCount = feedPosts?.count else { return 0 }
+		guard let postCount = self.feedMessages?.count else { return 0 }
 		return postCount
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		guard let feedPostCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedPostCell, for: indexPath) else {
-			fatalError("Cannot dequeue cell with reuse identifier \(R.reuseIdentifier.feedPostCell.identifier)")
+		guard let feedMessageCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedMessageCell, for: indexPath) else {
+			fatalError("Cannot dequeue cell with reuse identifier \(R.reuseIdentifier.feedMessageCell.identifier)")
 		}
-		feedPostCell.feedPost = feedPosts?[indexPath.row]
-		return feedPostCell
+		feedMessageCell.feedMessage = self.feedMessages?[indexPath.row]
+		return feedMessageCell
 	}
 }
 

@@ -10,13 +10,15 @@ import UIKit
 import KurozoraKit
 
 class FeedTableViewController: KTableViewController {
+	// MARK: - IBOutlets
+	@IBOutlet weak var postMessageButton: UIBarButtonItem!
+	@IBOutlet weak var profileImageButton: ProfileImageButton!
+
 	// MARK: - Properties
 	var refreshController = UIRefreshControl()
+	var rightBarButtonItems: [UIBarButtonItem]? = nil
 
-	var sectionTitle: String = ""
-	var sectionID: Int?
-	var sectionIndex: Int?
-	var feedPosts: [FeedPost] = [] {
+	var feedMessages: [FeedMessage] = [] {
 		didSet {
 			_prefersActivityIndicatorHidden = true
 			tableView.reloadData()
@@ -35,6 +37,13 @@ class FeedTableViewController: KTableViewController {
 	}
 
 	// MARK: - View
+	override func viewWillReload() {
+		super.viewWillReload()
+
+		self.enableActions()
+		self.configureUserDetails()
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
@@ -44,12 +53,16 @@ class FeedTableViewController: KTableViewController {
 		// Add Refresh Control to Table View
 		tableView.refreshControl = refreshController
 		refreshController.theme_tintColor = KThemePicker.tintColor.rawValue
-		refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle) feed!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+		refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh your explore feed!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
 		refreshController.addTarget(self, action: #selector(refreshFeedsData(_:)), for: .valueChanged)
+
+		// Configure navigation bar items
+		self.enableActions()
+		self.configureUserDetails()
 
 		// Fetch feed posts.
 		DispatchQueue.global(qos: .background).async {
-			self.fetchFeedPosts()
+			self.fetchFeedMessages()
 		}
 	}
 
@@ -60,9 +73,9 @@ class FeedTableViewController: KTableViewController {
 		- Parameter sender: The object requesting the refresh.
 	*/
 	@objc private func refreshFeedsData(_ sender: Any) {
-		refreshController.attributedTitle = NSAttributedString(string: "Refreshing your \(sectionTitle) feed...", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+		refreshController.attributedTitle = NSAttributedString(string: "Refreshing your explore feed...", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
 		self.nextPageURL = nil
-		fetchFeedPosts()
+		fetchFeedMessages()
 	}
 
 	override func setupEmptyDataSetView() {
@@ -77,26 +90,29 @@ class FeedTableViewController: KTableViewController {
 		}
 	}
 
-	/// Fetch feed posts for the current section.
-	func fetchFeedPosts() {
-		guard let sectionID = sectionID else { return }
+	/// Configures the view with the user's details.
+	func configureUserDetails() {
+		profileImageButton.setImage(User.current?.attributes.profileImage ?? R.image.placeholders.userProfile(), for: .normal)
+	}
 
-		KService.getFeedPosts(forSection: sectionID, next: nextPageURL) { [weak self] result in
+	/// Fetch feed posts for the current section.
+	func fetchFeedMessages() {
+		KService.getFeedExplore(next: nextPageURL) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
-			case .success(let feedPostResponse):
+			case .success(let feedMessageResponse):
 				DispatchQueue.main.async {
 					// Reset data if necessary
 					if self.nextPageURL == nil {
-						self.feedPosts = []
+						self.feedMessages = []
 					}
 
 					// Append new data and save next page url
-					self.feedPosts.append(contentsOf: feedPostResponse.data)
-					self.nextPageURL = feedPostResponse.next
+					self.feedMessages.append(contentsOf: feedMessageResponse.data)
+					self.nextPageURL = feedMessageResponse.next
 
 					// Reset refresh controller title
-					self.refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh your \(self.sectionTitle) feed!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+					self.refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh your explore feed!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
 				}
 			case .failure: break
 			}
@@ -107,6 +123,33 @@ class FeedTableViewController: KTableViewController {
 		}
 	}
 
+	/// Enables and disables actions such as buttons and the refresh control according to the user sign in state.
+	private func enableActions() {
+		DispatchQueue.main.async {
+			if !User.isSignedIn {
+				if let barButtonItem = self.navigationItem.rightBarButtonItems?[1] {
+					self.rightBarButtonItems = [barButtonItem]
+
+					self.navigationItem.rightBarButtonItems?.remove(at: 1)
+				}
+			} else {
+				if let rightBarButtonItems = self.rightBarButtonItems, self.navigationItem.rightBarButtonItems?.count == 1 {
+					self.navigationItem.rightBarButtonItems?.append(contentsOf: rightBarButtonItems)
+					self.rightBarButtonItems = nil
+				}
+			}
+		}
+	}
+
+	// MARK: - IBActions
+	@IBAction func profileButtonPressed(_ sender: UIButton) {
+		WorkflowController.shared.isSignedIn {
+			if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
+				self.show(profileTableViewController, sender: nil)
+			}
+		}
+	}
+
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 	}
@@ -114,15 +157,20 @@ class FeedTableViewController: KTableViewController {
 
 // MARK: - UITableViewDataSource
 extension FeedTableViewController {
+	override func numberOfSections(in tableView: UITableView) -> Int {
+		return 1
+	}
+
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return feedPosts.count
+		return self.feedMessages.count
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		guard let feedPostCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedPostCell, for: indexPath) else {
-			fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.feedPostCell.identifier)")
+		guard let feedMessageCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedMessageCell, for: indexPath) else {
+			fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.feedMessageCell.identifier)")
 		}
-		return feedPostCell
+		feedMessageCell.feedMessage = feedMessages[indexPath.row]
+		return feedMessageCell
 	}
 }
 
@@ -136,7 +184,7 @@ extension FeedTableViewController {
 
 		if indexPath.row == numberOfRows - 5 {
 			if self.nextPageURL != nil {
-				self.fetchFeedPosts()
+				self.fetchFeedMessages()
 			}
 		}
 	}
@@ -144,10 +192,10 @@ extension FeedTableViewController {
 
 // MARK: - KRichTextEditorViewDelegate
 //extension FeedTableViewController: KRichTextEditorViewDelegate {
-//	func updateFeedPosts(with feedPosts: [FeedPost]) {
+//	func updateFeedMessages(with feedMessages: [FeedPost]) {
 //		DispatchQueue.main.async {
-//			for feedPost in feedPosts {
-//				self.feedPosts.prepend(feedPost)
+//			for feedPost in feedMessages {
+//				self.feedMessages.prepend(feedPost)
 //			}
 //		}
 //	}

@@ -36,17 +36,17 @@ class KTabBarController: ESTabBarController {
 		let libraryViewController = R.storyboard.library.libraryKNavigationController()!
 		let forumsViewController = R.storyboard.forums.forumsKNavigationController()!
 		let notificationsViewController = R.storyboard.notifications.notificationKNvaigationController()!
-		let feedViewController = R.storyboard.feed.feedKNavigationController()!
+		let feedTableViewController = R.storyboard.feed.feedTableKNavigationController()!
 
         // Setup animation, title and image
 		homeCollectionViewController.tabBarItem = ESTabBarItem(BounceAnimation(), title: "Explore", image: R.image.symbols.house(), selectedImage: R.image.symbols.house_fill())
 		libraryViewController.tabBarItem = ESTabBarItem(BounceAnimation(), title: "Library", image: R.image.symbols.rectangle_stack(), selectedImage: R.image.symbols.rectangle_stack_fill())
 		forumsViewController.tabBarItem = ESTabBarItem(BounceAnimation(), title: "Forums", image: R.image.symbols.doc_plaintext(), selectedImage: R.image.symbols.doc_plaintext_fill())
 		notificationsViewController.tabBarItem = ESTabBarItem(BounceAnimation(), title: "Notifications", image: R.image.symbols.app_badge(), selectedImage: R.image.symbols.app_badge_fill())
-		feedViewController.tabBarItem = ESTabBarItem(BounceAnimation(), title: "Feed", image: R.image.symbols.person_crop_circle(), selectedImage: R.image.symbols.person_crop_circle_fill())
+		feedTableViewController.tabBarItem = ESTabBarItem(BounceAnimation(), title: "Feed", image: R.image.symbols.person_crop_circle(), selectedImage: R.image.symbols.person_crop_circle_fill())
 
         // Initialize views
-		viewControllers = [homeCollectionViewController, libraryViewController, forumsViewController, notificationsViewController, feedViewController]
+		viewControllers = [homeCollectionViewController, libraryViewController, forumsViewController, notificationsViewController, feedTableViewController]
 
 		setupBadgeValue()
 		NotificationCenter.default.addObserver(self, selector: #selector(toggleBadge), name: .KSNotificationsBadgeIsOn, object: nil)

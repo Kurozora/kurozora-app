@@ -17,6 +17,9 @@ extension Actor {
 		/// The last name of the actor.
 		public let lastName: String
 
+		/// The biogrpahy of the actor.
+		public let about: String?
+
 		/// The occupation of the actor.
 		public let occupation: String?
 

@@ -14,5 +14,5 @@ public struct SignInResponse: Codable {
 	public let data: [User]
 
 	/// The authentication token included in the repsonse for a sign in object request.
-	public let authToken: String
+	public let authenticationToken: String
 }

@@ -12,6 +12,6 @@ extension Studio {
 	public struct Relationships: Codable {
 		// MARK: - Properties
 		/// The shows created by the studio.
-		public let shows: ShowResponse
+		public let shows: ShowResponse?
 	}
 }

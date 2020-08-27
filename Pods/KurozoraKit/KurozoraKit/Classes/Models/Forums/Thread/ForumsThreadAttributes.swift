@@ -31,9 +31,6 @@ extension ForumsThread {
 
 		/// The date the forums thread was created at.
 		public let createdAt: String
-
-//		/// The current user's data related to the forums thread.
-//		public let currentUser: User.Attributes?
 	}
 }
 

@@ -18,4 +18,7 @@ public struct Character: IdentityResource {
 
 	/// The attributes belonging to the character.
 	public let attributes: Character.Attributes
+
+	/// The relationships belonging to the character.
+	public let relationships: Character.Relationships?
 }

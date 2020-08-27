@@ -18,8 +18,8 @@ extension KurozoraKit {
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
 	public func getDetails(forThread threadID: Int, completion completionHandler: @escaping (_ result: Result<[ForumsThread], KKAPIError>) -> Void) {
-		let forumsThreads = self.kurozoraKitEndpoints.forumsThreads.replacingOccurrences(of: "?", with: "\(threadID)")
-		let request: APIRequest<ForumsThreadResponse, KKAPIError> = tron.codable.request(forumsThreads)
+		let forumsThreadsDetails = KKEndpoint.Forums.Threads.details(threadID).endpointValue
+		let request: APIRequest<ForumsThreadResponse, KKAPIError> = tron.codable.request(forumsThreadsDetails)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -48,7 +48,7 @@ extension KurozoraKit {
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
 	public func voteOnThread(_ threadID: Int, withVoteStatus voteStatus: VoteStatus, completion completionHandler: @escaping (_ result: Result<VoteStatus, KKAPIError>) -> Void) {
-		let forumsThreadsVote = self.kurozoraKitEndpoints.forumsThreadsVote.replacingOccurrences(of: "?", with: "\(threadID)")
+		let forumsThreadsVote = KKEndpoint.Forums.Threads.vote(threadID).endpointValue
 		let request: APIRequest<ForumsVoteResponse, KKAPIError> = tron.codable.request(forumsThreadsVote)
 
 		request.headers = headers
@@ -78,11 +78,12 @@ extension KurozoraKit {
 		- Parameter threadID: The id of the thread for which the replies should be fetched.
 		- Parameter order: The forum order vlue by which the replies should be ordered.
 		- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+		- Parameter limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getReplies(forThread threadID: Int, orderedBy order: ForumOrder, next: String? = nil, completion completionHandler: @escaping (_ result: Result<ThreadReplyResponse, KKAPIError>) -> Void) {
-		let forumsThreadsReplies = next ?? self.kurozoraKitEndpoints.forumsThreadsReplies.replacingOccurrences(of: "?", with: "\(threadID)")
+	public func getReplies(forThread threadID: Int, orderedBy order: ForumOrder, next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<ThreadReplyResponse, KKAPIError>) -> Void) {
+		let forumsThreadsReplies = next ?? KKEndpoint.Forums.Threads.replies(threadID).endpointValue
 		let request: APIRequest<ThreadReplyResponse, KKAPIError> = tron.codable.request(forumsThreadsReplies).buildURL(.relativeToBaseURL)
 
 		request.headers = headers
@@ -92,7 +93,8 @@ extension KurozoraKit {
 
 		request.method = .get
 		request.parameters = [
-			"order": order.rawValue
+			"order": order.rawValue,
+			"limit": limit
 		]
 		request.perform(withSuccess: { threadReplyResponse in
 			completionHandler(.success(threadReplyResponse))
@@ -115,7 +117,7 @@ extension KurozoraKit {
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
 	public func postReply(inThread threadID: Int, withComment comment: String, completion completionHandler: @escaping (_ result: Result<[ThreadReply], KKAPIError>) -> Void) {
-		let forumsThreadsReplies = self.kurozoraKitEndpoints.forumsThreadsReplies.replacingOccurrences(of: "?", with: "\(threadID)")
+		let forumsThreadsReplies = KKEndpoint.Forums.Threads.replies(threadID).endpointValue
 		let request: APIRequest<ThreadReplyResponse, KKAPIError> = tron.codable.request(forumsThreadsReplies)
 
 		request.headers = headers
@@ -147,7 +149,7 @@ extension KurozoraKit {
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
 	public func search(forThread thread: String, completion completionHandler: @escaping (_ result: Result<[ForumsThread], KKAPIError>) -> Void) {
-		let forumsThreadsSearch = self.kurozoraKitEndpoints.forumsThreadsSearch
+		let forumsThreadsSearch = KKEndpoint.Forums.Threads.search.endpointValue
 		let request: APIRequest<ForumsThreadResponse, KKAPIError> = tron.codable.request(forumsThreadsSearch)
 
 		request.headers = headers
@@ -179,7 +181,7 @@ extension KurozoraKit {
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
 	public func lockThread(_ threadID: Int, withLockStatus lockStatus: LockStatus, completion completionHandler: @escaping (_ result: Result<LockStatus, KKAPIError>) -> Void) {
-		let forumsThreadsLock = self.kurozoraKitEndpoints.forumsThreadsLock.replacingOccurrences(of: "?", with: "\(threadID)")
+		let forumsThreadsLock = KKEndpoint.Forums.Threads.lock(threadID).endpointValue
 		let request: APIRequest<ForumsLockResponse, KKAPIError> = tron.codable.request(forumsThreadsLock)
 
 		request.headers = headers

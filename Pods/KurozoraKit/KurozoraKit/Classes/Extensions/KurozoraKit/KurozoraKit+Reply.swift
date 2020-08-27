@@ -19,7 +19,7 @@ extension KurozoraKit {
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
 	public func voteOnReply(_ replyID: Int, withVoteStatus voteStatus: VoteStatus, completion completionHandler: @escaping (_ result: Result<VoteStatus, KKAPIError>) -> Void) {
-		let forumsRepliesVote = self.kurozoraKitEndpoints.forumsRepliesVote.replacingOccurrences(of: "?", with: "\(replyID)")
+		let forumsRepliesVote = KKEndpoint.Forums.Replies.vote(replyID).endpointValue
 		let request: APIRequest<ForumsVoteResponse, KKAPIError> = tron.codable.request(forumsRepliesVote)
 
 		request.headers = headers

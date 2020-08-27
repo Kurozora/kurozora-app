@@ -12,4 +12,7 @@ public struct SessionResponse: Codable {
 	// MARK: - Properties
 	/// The data included in the repsonse for a session object request.
 	public let data: [Session]
+
+	/// The realtive URL to the next page in the paginated response.
+	public let next: String?
 }

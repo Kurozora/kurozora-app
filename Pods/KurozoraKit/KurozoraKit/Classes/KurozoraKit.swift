@@ -30,9 +30,6 @@ public class KurozoraKit {
 		}
 	}
 
-	/// A collection of Kurozora API endpoints.
-	internal let kurozoraKitEndpoints: KKEndpoints = KKEndpoints()
-
 	/**
 		Most common HTTP headers for the Kurozora API.
 

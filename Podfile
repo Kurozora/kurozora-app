@@ -16,7 +16,7 @@ def kurozora_pods
 	pod 'IBPCollectionViewCompositionalLayout'
 	pod 'KeychainAccess'
 	pod 'Kingfisher'
-	pod 'KurozoraKit', path: '../KurozoraKit'
+	pod 'KurozoraKit' #, path: '../KurozoraKit'
 	pod 'NotificationBannerSwift'
 	pod 'R.swift'
 	pod 'ReachabilitySwift'
