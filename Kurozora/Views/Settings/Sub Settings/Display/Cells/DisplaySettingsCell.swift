@@ -65,24 +65,21 @@ class DisplaySettingsCell: SettingsCell {
 		}
 	}
 
-	@IBOutlet weak var enabledAutomaticDarkThemeSwitch: UISwitch? {
+	@IBOutlet weak var enabledAutomaticDarkThemeSwitch: KSwitch? {
 		didSet {
-			enabledAutomaticDarkThemeSwitch?.theme_onTintColor = KThemePicker.tintColor.rawValue
 			enabledAutomaticDarkThemeSwitch?.isOn = UserSettings.automaticDarkTheme
 			toggleAppAppearanceOptions(UserSettings.automaticDarkTheme)
 		}
 	}
 
-	@IBOutlet weak var enabledTrueBlackSwitch: UISwitch? {
+	@IBOutlet weak var enabledTrueBlackSwitch: KSwitch? {
 		didSet {
-			enabledTrueBlackSwitch?.theme_onTintColor = KThemePicker.tintColor.rawValue
 			enabledTrueBlackSwitch?.isOn = UserSettings.trueBlackEnabled
 		}
 	}
 
-	@IBOutlet weak var enabledLargeTitlesSwitch: UISwitch? {
+	@IBOutlet weak var enabledLargeTitlesSwitch: KSwitch? {
 		didSet {
-			enabledLargeTitlesSwitch?.theme_onTintColor = KThemePicker.tintColor.rawValue
 			enabledLargeTitlesSwitch?.isOn = UserSettings.largeTitlesEnabled
 		}
 	}
@@ -164,7 +161,7 @@ class DisplaySettingsCell: SettingsCell {
 		updateAppAppearance(with: sender.tag)
 	}
 
-	@IBAction func enableAutomaticDarkThemeSwitched(_ sender: UISwitch) {
+	@IBAction func enableAutomaticDarkThemeSwitched(_ sender: KSwitch) {
 		UserSettings.set(sender.isOn, forKey: .automaticDarkTheme)
 		NotificationCenter.default.post(name: .KSAppAppearanceDidChange, object: nil, userInfo: ["isOn": sender.isOn])
 
@@ -173,7 +170,7 @@ class DisplaySettingsCell: SettingsCell {
 		self.parentTableView?.reloadData()
 	}
 
-	@IBAction func enableTrueBlackSwitched(_ sender: UISwitch) {
+	@IBAction func enableTrueBlackSwitched(_ sender: KSwitch) {
 		UserSettings.set(sender.isOn, forKey: .trueBlackEnabled)
 
 		if UserSettings.currentTheme == "Night" || UserSettings.currentTheme == "Black" {
@@ -181,7 +178,7 @@ class DisplaySettingsCell: SettingsCell {
 		}
 	}
 
-	@IBAction func enabledSwitchSwitched(_ sender: UISwitch) {
+	@IBAction func enabledSwitchSwitched(_ sender: KSwitch) {
 		UserSettings.set(sender.isOn, forKey: .largeTitlesEnabled)
 		NotificationCenter.default.post(name: .ThemeUpdateNotification, object: nil)
 	}

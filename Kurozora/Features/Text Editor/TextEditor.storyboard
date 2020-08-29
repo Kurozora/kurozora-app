@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16095" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="8Vn-8I-M1E">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="8Vn-8I-M1E">
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16084.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17124"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -154,7 +154,7 @@
                                 <rect key="frame" x="20" y="104" width="374" height="76"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20 Photos Taken Right Before Something Tragic Happened" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XGS-UU-0qu" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="8" y="8" width="318.5" height="41"/>
+                                        <rect key="frame" x="8" y="8" width="316.5" height="41"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -186,17 +186,17 @@
                                 <rect key="frame" x="20" y="188" width="374" height="658"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gph-A8-YHR">
-                                        <rect key="frame" x="8" y="8" width="35" height="35"/>
+                                        <rect key="frame" x="8" y="8" width="44" height="44"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/User Profile" translatesAutoresizingMaskIntoConstraints="NO" id="xIW-OE-8Zs" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
                                             </imageView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="xIW-OE-8Zs" firstAttribute="top" secondItem="Gph-A8-YHR" secondAttribute="top" id="DpW-ZY-K0A"/>
-                                            <constraint firstAttribute="width" constant="35" id="Hy8-Ab-jTU"/>
-                                            <constraint firstAttribute="height" constant="35" id="TfJ-ts-SyK"/>
+                                            <constraint firstAttribute="width" constant="44" id="Hy8-Ab-jTU"/>
+                                            <constraint firstAttribute="height" constant="44" id="TfJ-ts-SyK"/>
                                             <constraint firstAttribute="trailing" secondItem="xIW-OE-8Zs" secondAttribute="trailing" id="rhB-O8-cTm"/>
                                             <constraint firstItem="xIW-OE-8Zs" firstAttribute="leading" secondItem="Gph-A8-YHR" secondAttribute="leading" id="xbg-Rm-f7o"/>
                                             <constraint firstAttribute="bottom" secondItem="xIW-OE-8Zs" secondAttribute="bottom" id="yIp-mb-tcV"/>
@@ -217,19 +217,19 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="748" text="Kirito" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X0I-6b-2zo" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="51" y="8" width="44.5" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <rect key="frame" x="60" y="8" width="42.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="240" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BhZ-4v-9Lm">
                                         <rect key="frame" x="342" y="8" width="24" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="R8d-mS-n8Z" customClass="KTextView" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="51" y="28.5" width="315" height="621.5"/>
+                                        <rect key="frame" x="60" y="28.5" width="306" height="621.5"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -323,6 +323,183 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x07-SM-daX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-180" y="828"/>
+        </scene>
+        <!--Feed Message Editor View Controller-->
+        <scene sceneID="pGf-Id-5Jx">
+            <objects>
+                <viewController storyboardIdentifier="KFeedMessageEditorViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="44K-MY-IEQ" customClass="KFeedMessageEditorViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="OLd-V0-rCi"/>
+                        <viewControllerLayoutGuide type="bottom" id="Run-RE-oWv"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ISi-7k-qWm">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w3g-lc-1VF">
+                                <rect key="frame" x="20" y="104" width="374" height="113.5"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FSo-PI-GTY">
+                                        <rect key="frame" x="8" y="8" width="44" height="44"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/User Profile" translatesAutoresizingMaskIntoConstraints="NO" id="kls-an-ezp" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="kls-an-ezp" firstAttribute="leading" secondItem="FSo-PI-GTY" secondAttribute="leading" id="NzR-WH-6ec"/>
+                                            <constraint firstAttribute="width" constant="44" id="SyA-Tb-b54"/>
+                                            <constraint firstAttribute="height" constant="44" id="dWt-uV-1Aa"/>
+                                            <constraint firstItem="kls-an-ezp" firstAttribute="top" secondItem="FSo-PI-GTY" secondAttribute="top" id="eeJ-z0-YOq"/>
+                                            <constraint firstAttribute="bottom" secondItem="kls-an-ezp" secondAttribute="bottom" id="qMC-VB-p4N"/>
+                                            <constraint firstAttribute="trailing" secondItem="kls-an-ezp" secondAttribute="trailing" id="y4W-nm-sUs"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="17.5"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                <point key="value" x="0.0" y="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                                <real key="value" value="0.40000000000000002"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                                <real key="value" value="7"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="748" text="Kirito" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wQ8-1b-Fef" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="60" y="8" width="42.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="240" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="03q-PX-EpV">
+                                        <rect key="frame" x="342" y="8" width="24" height="20.5"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="zBs-tE-y2u" customClass="KTextView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="60" y="28.5" width="306" height="38"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="44K-MY-IEQ" id="kjJ-hd-2SP"/>
+                                        </connections>
+                                    </textView>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" title="Not Safe For Work" translatesAutoresizingMaskIntoConstraints="NO" id="Jr7-fT-oT6" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="317" y="74.5" width="51" height="31"/>
+                                    </switch>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" title="Spoiler" translatesAutoresizingMaskIntoConstraints="NO" id="CcU-Jc-lzq" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="197" y="74.5" width="51" height="31"/>
+                                    </switch>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NSFW" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LHC-gU-1WR" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="266" y="81" width="43" height="18"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Spoiler" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y7d-hD-Niq" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="141" y="81" width="48" height="18"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottomMargin" secondItem="Jr7-fT-oT6" secondAttribute="bottom" id="6e1-lK-yX4"/>
+                                    <constraint firstItem="Jr7-fT-oT6" firstAttribute="leading" secondItem="LHC-gU-1WR" secondAttribute="trailing" constant="8" symbolic="YES" id="GeV-za-qMm"/>
+                                    <constraint firstItem="zBs-tE-y2u" firstAttribute="leading" secondItem="wQ8-1b-Fef" secondAttribute="leading" id="IMz-ZL-yjQ"/>
+                                    <constraint firstItem="zBs-tE-y2u" firstAttribute="top" secondItem="wQ8-1b-Fef" secondAttribute="bottom" id="LTv-hw-XcR"/>
+                                    <constraint firstAttribute="leadingMargin" relation="lessThanOrEqual" secondItem="y7d-hD-Niq" secondAttribute="leading" constant="10" id="Mt3-Lw-Q2s"/>
+                                    <constraint firstItem="Jr7-fT-oT6" firstAttribute="top" secondItem="zBs-tE-y2u" secondAttribute="bottom" constant="8" symbolic="YES" id="UqN-qh-0F5"/>
+                                    <constraint firstItem="03q-PX-EpV" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="wQ8-1b-Fef" secondAttribute="trailing" constant="10" id="WkV-oU-0NM"/>
+                                    <constraint firstItem="LHC-gU-1WR" firstAttribute="centerY" secondItem="Jr7-fT-oT6" secondAttribute="centerY" id="XZP-vn-BM9"/>
+                                    <constraint firstItem="wQ8-1b-Fef" firstAttribute="top" secondItem="FSo-PI-GTY" secondAttribute="top" id="Yn3-gN-FQK"/>
+                                    <constraint firstItem="FSo-PI-GTY" firstAttribute="top" secondItem="w3g-lc-1VF" secondAttribute="top" constant="8" id="b7Y-EX-xnE"/>
+                                    <constraint firstItem="03q-PX-EpV" firstAttribute="centerY" secondItem="wQ8-1b-Fef" secondAttribute="centerY" id="dir-3K-cLR"/>
+                                    <constraint firstItem="CcU-Jc-lzq" firstAttribute="leading" secondItem="y7d-hD-Niq" secondAttribute="trailing" constant="8" symbolic="YES" id="gBX-DQ-0vX"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="Jr7-fT-oT6" secondAttribute="trailing" id="h8y-UA-C0l"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="zBs-tE-y2u" secondAttribute="trailing" id="hXZ-gO-GH5"/>
+                                    <constraint firstItem="FSo-PI-GTY" firstAttribute="leading" secondItem="w3g-lc-1VF" secondAttribute="leadingMargin" id="ikE-tA-GAl"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="CcU-Jc-lzq" secondAttribute="bottom" id="mzM-CE-s0E"/>
+                                    <constraint firstItem="wQ8-1b-Fef" firstAttribute="leading" secondItem="FSo-PI-GTY" secondAttribute="trailing" constant="8" id="n06-it-9F0"/>
+                                    <constraint firstItem="LHC-gU-1WR" firstAttribute="leading" secondItem="CcU-Jc-lzq" secondAttribute="trailing" constant="20" id="oM6-Rj-ZuC"/>
+                                    <constraint firstItem="y7d-hD-Niq" firstAttribute="centerY" secondItem="CcU-Jc-lzq" secondAttribute="centerY" id="oQ7-R1-VRw"/>
+                                    <constraint firstItem="03q-PX-EpV" firstAttribute="top" secondItem="wQ8-1b-Fef" secondAttribute="top" id="p6G-ri-cbI"/>
+                                    <constraint firstAttribute="trailing" secondItem="03q-PX-EpV" secondAttribute="trailing" constant="8" id="rST-gg-cAh"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="leadingMargin" secondItem="w3g-lc-1VF" secondAttribute="leading" id="01w-JR-zeM"/>
+                            <constraint firstItem="w3g-lc-1VF" firstAttribute="top" secondItem="OLd-V0-rCi" secondAttribute="bottom" constant="16" id="EUf-6V-rNu"/>
+                            <constraint firstItem="Run-RE-oWv" firstAttribute="top" relation="greaterThanOrEqual" secondItem="w3g-lc-1VF" secondAttribute="bottom" constant="16" id="I0k-nK-rgz"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="w3g-lc-1VF" secondAttribute="trailing" id="av3-lG-wTs"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="mrC-bf-qgS">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="gVi-se-jQn">
+                            <connections>
+                                <action selector="dismissButtonPressed:" destination="44K-MY-IEQ" id="SuE-TA-J42"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Post" style="done" id="vo2-JT-FF3">
+                            <connections>
+                                <action selector="replyButtonPressed:" destination="44K-MY-IEQ" id="LLa-oZ-IaX"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="characterCountLabel" destination="03q-PX-EpV" id="TUk-fn-A6O"/>
+                        <outlet property="commentPreviewContainer" destination="w3g-lc-1VF" id="rnX-aU-MfG"/>
+                        <outlet property="commentTextView" destination="zBs-tE-y2u" id="Dyy-vc-SoG"/>
+                        <outlet property="currentUsernameLabel" destination="wQ8-1b-Fef" id="OZo-ry-htD"/>
+                        <outlet property="isNSFWSwitch" destination="Jr7-fT-oT6" id="4iI-gB-EQL"/>
+                        <outlet property="isSpoilerSwitch" destination="CcU-Jc-lzq" id="J8C-vz-foA"/>
+                        <outlet property="profileImageView" destination="kls-an-ezp" id="hSm-q2-UFN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0my-Rg-Y7L" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="584" y="1519"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="rAt-v8-3vF">
+            <objects>
+                <navigationController storyboardIdentifier="KFeedMessageEditorKNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="1i2-p3-42t" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="xj6-4r-tNH">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="44K-MY-IEQ" kind="relationship" relationship="rootViewController" id="c7A-I1-bPh"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1UC-lz-n0n" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-181" y="1519"/>
         </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

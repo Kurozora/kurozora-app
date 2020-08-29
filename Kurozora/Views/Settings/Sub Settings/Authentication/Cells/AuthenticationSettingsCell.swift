@@ -38,9 +38,8 @@ class AuthenticationSettingsCell: SettingsCell {
 		}
 	}
 
-	@IBOutlet weak var enabledSwitch: UISwitch? {
+	@IBOutlet weak var enabledSwitch: KSwitch? {
 		didSet {
-			enabledSwitch?.theme_onTintColor = KThemePicker.tintColor.rawValue
 			enabledSwitch?.isOn = UserSettings.authenticationEnabled
 		}
 	}
@@ -59,7 +58,7 @@ class AuthenticationSettingsCell: SettingsCell {
 	}
 
 	// MARK: - IBActions
-	@IBAction func enabledSwitchSwitched(_ sender: UISwitch) {
+	@IBAction func enabledSwitchSwitched(_ sender: KSwitch) {
 		UserSettings.set(sender.isOn, forKey: .authenticationEnabled)
 
 		self.parentTableView?.reloadData()

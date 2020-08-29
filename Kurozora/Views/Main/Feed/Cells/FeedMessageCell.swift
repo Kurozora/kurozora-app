@@ -7,41 +7,36 @@
 //
 
 import UIKit
-import KurozoraKit
 
 class FeedMessageCell: BaseFeedMessageCell {
-	var feedMessage: FeedMessage! {
-		didSet {
-			configureCell()
-		}
-	}
-
 	// MARK: - Functions
 	override func configureCell() {
+		super.configureCell()
+
 		if let user = self.feedMessage.relationships.users.data.first {
 			// Username
-			usernameLabel?.text = user.attributes.username
+			usernameLabel.text = user.attributes.username
 
 			// Profile Image
-			profileImageView?.image = user.attributes.profileImage
+			profileImageView.image = user.attributes.profileImage
 		}
 
 		// Post content
-		postTextView?.text = self.feedMessage.attributes.body
+		postTextView.text = self.feedMessage.attributes.body
 
 		// Date time
-		dateTimeLabel?.text = self.feedMessage.attributes.createdAt.timeAgo
+		dateTimeLabel.text = self.feedMessage.attributes.createdAt.timeAgo
 
-		// Likes
-		let heartsCount = self.feedMessage.attributes.metrics.hearts
-		heartButton?.setTitle("\(heartsCount)", for: .normal)
+		// Hearts
+		let heartsCount = self.feedMessage.attributes.metrics.heartCount
+		heartButton.setTitle("\((heartsCount >= 1000) ? heartsCount.kFormatted : heartsCount.string)", for: .normal)
 
-		// Comments
-		let replyCount = self.feedMessage.attributes.replyCount
-		heartButton?.setTitle("\(replyCount)", for: .normal)
+		// Replies
+		let replyCount = self.feedMessage.attributes.metrics.replyCount
+		commentButton.setTitle("\((replyCount >= 1000) ? replyCount.kFormatted : replyCount.string)", for: .normal)
 
-		// ReShare
-		let reShareCount = self.feedMessage.attributes.reShareCount
-		shareButton?.setTitle("\(reShareCount)", for: .normal)
+		// ReShares
+		let reShareCount = self.feedMessage.attributes.metrics.reShareCount
+		shareButton.setTitle("\((reShareCount >= 1000) ? reShareCount.kFormatted : reShareCount.string)", for: .normal)
 	}
 }

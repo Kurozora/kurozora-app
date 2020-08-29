@@ -10,26 +10,10 @@ import UIKit
 
 class NotificationsSettingsViewController: SubSettingsViewController {
 	// MARK: - IBOutlets
-	@IBOutlet weak var allowNotificationsSwitch: UISwitch! {
-		didSet {
-			allowNotificationsSwitch.theme_onTintColor = KThemePicker.tintColor.rawValue
-		}
-	}
-	@IBOutlet weak var soundsSwitch: UISwitch! {
-		didSet {
-			soundsSwitch.theme_onTintColor = KThemePicker.tintColor.rawValue
-		}
-	}
-	@IBOutlet weak var vibrationsSwitch: UISwitch! {
-		didSet {
-			vibrationsSwitch.theme_onTintColor = KThemePicker.tintColor.rawValue
-		}
-	}
-	@IBOutlet weak var badgeSwitch: UISwitch! {
-		didSet {
-			badgeSwitch.theme_onTintColor = KThemePicker.tintColor.rawValue
-		}
-	}
+	@IBOutlet weak var allowNotificationsSwitch: KSwitch!
+	@IBOutlet weak var soundsSwitch: KSwitch!
+	@IBOutlet weak var vibrationsSwitch: KSwitch!
+	@IBOutlet weak var badgeSwitch: KSwitch!
 
 	// MARK: - Properties
 	var numberOfSections = 4
@@ -50,7 +34,7 @@ class NotificationsSettingsViewController: SubSettingsViewController {
 	}
 
 	// MARK: - IBActions
-	@IBAction func switchTapped(_ sender: UISwitch) {
+	@IBAction func switchTapped(_ sender: KSwitch) {
 		let switchType = KNotification.Options(rawValue: sender.tag)!
 		let isOn = sender.isOn
 

@@ -97,6 +97,9 @@ class ReplyCell: UITableViewCell {
 
 		dateTimeButton.setTitle(threadReply.attributes.createdAt.timeAgo, for: .normal)
 
+		// Thread reply vote status
+		self.updateVoting(withVoteStatus: threadReply.attributes.voteAction)
+
 		// Check if thread is locked
 		isLocked(forumsThread.attributes.lockStatus)
 
@@ -168,11 +171,8 @@ class ReplyCell: UITableViewCell {
 				profileViewController.dismissButtonIsEnabled = true
 
 				let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
-				if #available(iOS 13.0, macCatalyst 13.0, *) {
-					threadViewController.present(kurozoraNavigationController, animated: true, completion: nil)
-				} else {
-					threadViewController.presentAsStork(kurozoraNavigationController, height: nil, showIndicator: false, showCloseButton: false)
-				}
+
+				self.threadViewController.present(kurozoraNavigationController)
 			}
 		}
 	}
@@ -198,7 +198,6 @@ class ReplyCell: UITableViewCell {
 
 	/// Builds and presents an action sheet.
 	fileprivate func showActionList() {
-//		guard let threadReply = threadReply else { return }
 		let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
 		// Mod and Admin features actions

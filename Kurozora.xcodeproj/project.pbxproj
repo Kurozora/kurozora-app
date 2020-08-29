@@ -433,6 +433,8 @@
 		66D6237B20A1BFD300304914 /* FavoriteShowsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D6237A20A1BFD300304914 /* FavoriteShowsCollectionViewController.swift */; };
 		66D6237D20A1CB9C00304914 /* LibraryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D6237C20A1CB9C00304914 /* LibraryCollectionViewCell.swift */; };
 		66D6237F20A1CC1D00304914 /* Library.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66D6237E20A1CC1D00304914 /* Library.storyboard */; };
+		66D8B14B24F8559E00F0DE7B /* KFeedMessageEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D8B14A24F8559E00F0DE7B /* KFeedMessageEditorViewController.swift */; };
+		66D8B14D24F9417E00F0DE7B /* KSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D8B14C24F9417E00F0DE7B /* KSwitch.swift */; };
 		66DB11D024E6103900C99754 /* Shows.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66DB11CF24E6103900C99754 /* Shows.storyboard */; };
 		66DB2546245C667A000AA6DB /* KCopyableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DB2545245C667A000AA6DB /* KCopyableLabel.swift */; };
 		66DB2548245D6B1D000AA6DB /* KTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DB2547245D6B1D000AA6DB /* KTextView.swift */; };
@@ -934,6 +936,8 @@
 		66D6237A20A1BFD300304914 /* FavoriteShowsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteShowsCollectionViewController.swift; sourceTree = "<group>"; };
 		66D6237C20A1CB9C00304914 /* LibraryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCollectionViewCell.swift; sourceTree = "<group>"; };
 		66D6237E20A1CC1D00304914 /* Library.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Library.storyboard; sourceTree = "<group>"; };
+		66D8B14A24F8559E00F0DE7B /* KFeedMessageEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KFeedMessageEditorViewController.swift; sourceTree = "<group>"; };
+		66D8B14C24F9417E00F0DE7B /* KSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KSwitch.swift; sourceTree = "<group>"; };
 		66DB11CF24E6103900C99754 /* Shows.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Shows.storyboard; sourceTree = "<group>"; };
 		66DB2545245C667A000AA6DB /* KCopyableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCopyableLabel.swift; sourceTree = "<group>"; };
 		66DB2547245D6B1D000AA6DB /* KTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KTextView.swift; sourceTree = "<group>"; };
@@ -1864,10 +1868,8 @@
 		668142D9245B4A11008FC7BE /* Controls */ = {
 			isa = PBXGroup;
 			children = (
-				66CBDD9324634DBA00CA5F83 /* HeaderButton.swift */,
-				66D1358C228087920079438C /* KButton.swift */,
-				6647236C245DB602008E5111 /* KTintedButton.swift */,
-				66472373245E164B008E5111 /* ProfileImageButton.swift */,
+				66D8B14F24F96BAF00F0DE7B /* UIButton */,
+				66D8B14E24F96BA100F0DE7B /* UISwitch */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -2202,6 +2204,7 @@
 			children = (
 				666938AC21B19E3800BA9620 /* TextEditor.storyboard */,
 				66BDEC7321C3F0A100D5487B /* KCommentEditorViewController.swift */,
+				66D8B14A24F8559E00F0DE7B /* KFeedMessageEditorViewController.swift */,
 				66825BE921B29F3800A2F602 /* KRichTextEditorViewController.swift */,
 			);
 			path = "Text Editor";
@@ -2710,6 +2713,25 @@
 				66F944B222F0D11B009F1FE2 /* KWebViewController.swift */,
 			);
 			path = "Web Browser";
+			sourceTree = "<group>";
+		};
+		66D8B14E24F96BA100F0DE7B /* UISwitch */ = {
+			isa = PBXGroup;
+			children = (
+				66D8B14C24F9417E00F0DE7B /* KSwitch.swift */,
+			);
+			path = UISwitch;
+			sourceTree = "<group>";
+		};
+		66D8B14F24F96BAF00F0DE7B /* UIButton */ = {
+			isa = PBXGroup;
+			children = (
+				66CBDD9324634DBA00CA5F83 /* HeaderButton.swift */,
+				66D1358C228087920079438C /* KButton.swift */,
+				6647236C245DB602008E5111 /* KTintedButton.swift */,
+				66472373245E164B008E5111 /* ProfileImageButton.swift */,
+			);
+			path = UIButton;
 			sourceTree = "<group>";
 		};
 		66DE65262401AE80001C2773 /* Enums */ = {
@@ -3388,6 +3410,7 @@
 				66D4735221AB5FE600A894B7 /* UIAlertController+Extension.swift in Sources */,
 				66AF50DD21D9B67900FC622E /* NotificationsSettingsViewController.swift in Sources */,
 				66C4DADF243BE4CF00C4B90A /* KKLibrarySortType+Kurozora.swift in Sources */,
+				66D8B14B24F8559E00F0DE7B /* KFeedMessageEditorViewController.swift in Sources */,
 				66F944AC22F0C08E009F1FE2 /* TitleHeaderCollectionReusableView.swift in Sources */,
 				66A08C6D23E3A2F0007B6418 /* PrivacySettingsViewController.swift in Sources */,
 				667B38432361CE6500786EF6 /* KWhatsNewModel.swift in Sources */,
@@ -3488,6 +3511,7 @@
 				6699A1C123779E6800517C2C /* TimeInterval+String.swift in Sources */,
 				66AEABDC2298A92500949FD8 /* NotificationAlertStyle.swift in Sources */,
 				66999C4A24E71E1A00001A6E /* GenreAttributes+UIImage.swift in Sources */,
+				66D8B14D24F9417E00F0DE7B /* KSwitch.swift in Sources */,
 				662F706D22A45C2A00C3599D /* NotificationTitleCell.swift in Sources */,
 				66D6237920A1BEAC00304914 /* LibraryListCollectionViewController.swift in Sources */,
 				66BEC13523191D090039D683 /* NSLayoutManager+Kurozora.swift in Sources */,

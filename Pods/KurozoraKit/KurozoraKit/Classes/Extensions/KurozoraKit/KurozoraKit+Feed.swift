@@ -88,7 +88,7 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func postFeedMessage(withBody body: String, relatedToParent messageID: Int?, isReply: Bool, isReShare: Bool, isNSFW: Bool, isSpoiler: Bool, completion completionHandler: @escaping (_ result: Result<[FeedMessage], KKAPIError>) -> Void) {
+	public func postFeedMessage(withBody body: String, relatedToParent messageID: Int?, isReply: Bool?, isReShare: Bool?, isNSFW: Bool, isSpoiler: Bool, completion completionHandler: @escaping (_ result: Result<[FeedMessage], KKAPIError>) -> Void) {
 		guard User.current != nil else { fatalError("User must be signed in and have a session attached to call the postFeedMessage(withBody:isReply:isReShare:isNSFW:isSpoiler:) method.") }
 		let feedPost = KKEndpoint.Feed.post.endpointValue
 		let request: APIRequest<FeedMessageResponse, KKAPIError> = tron.codable.request(feedPost)
@@ -98,13 +98,13 @@ extension KurozoraKit {
 
 		request.parameters = [
 			"body": body,
-			"is_reply": isReply,
-			"is_reshare": isReShare,
 			"is_nsfw": isNSFW,
 			"is_spoiler": isSpoiler
 		]
 		if let messageID = messageID {
 			request.parameters["parent_id"] = messageID
+			request.parameters["is_reply"] = isReply
+			request.parameters["is_reshare"] = isReShare
 		}
 
 		request.method = .post

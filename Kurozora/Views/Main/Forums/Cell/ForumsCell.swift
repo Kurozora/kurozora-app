@@ -102,10 +102,7 @@ class ForumsCell: UITableViewCell {
 		dateTimeButton.setTitle(forumsThread.attributes.createdAt.timeAgo, for: .normal)
 
 		// Thread vote status
-//		if let voteStatusInt = forumsThread.currentUser?.likeAction {
-//			let voteStatus = VoteStatus(rawValue: voteStatusInt) ?? .downVote
-//			updateVoting(withVoteStatus: voteStatus)
-//		}
+		self.updateVoting(withVoteStatus: forumsThread.attributes.voteAction)
 
 		// Check if thread is locked
 		lockImageView.tintColor = .kLightRed

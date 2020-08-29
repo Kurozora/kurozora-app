@@ -189,7 +189,7 @@ class ThreadTableViewController: KTableViewController {
 		dateTimeButton.setTitle(forumsThread.attributes.createdAt.timeAgo, for: .normal)
 
 		// Thread vote state
-//		updateVoting(with: forumsThread.currentUser?.voteAction)
+		self.updateVoting(withVoteStatus: forumsThread.attributes.voteAction)
 
 		// Set locked state
 		lockImageView.tintColor = .kLightRed

@@ -150,6 +150,18 @@ class FeedTableViewController: KTableViewController {
 		}
 	}
 
+	@IBAction func postMessageButton(_ sender: UIBarButtonItem) {
+		WorkflowController.shared.isSignedIn {
+			if let kFeedMessageEditorViewController = R.storyboard.textEditor.kFeedMessageEditorViewController() {
+				kFeedMessageEditorViewController.delegate = self
+
+				let kurozoraNavigationController = KNavigationController.init(rootViewController: kFeedMessageEditorViewController)
+				kurozoraNavigationController.navigationBar.prefersLargeTitles = false
+				self.present(kurozoraNavigationController)
+			}
+		}
+	}
+
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 	}
@@ -176,9 +188,6 @@ extension FeedTableViewController {
 
 // MARK: - UITableViewDelegate
 extension FeedTableViewController {
-	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-	}
-
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 		let numberOfRows = tableView.numberOfRows()
 
@@ -191,12 +200,10 @@ extension FeedTableViewController {
 }
 
 // MARK: - KRichTextEditorViewDelegate
-//extension FeedTableViewController: KRichTextEditorViewDelegate {
-//	func updateFeedMessages(with feedMessages: [FeedPost]) {
-//		DispatchQueue.main.async {
-//			for feedPost in feedMessages {
-//				self.feedMessages.prepend(feedPost)
-//			}
-//		}
-//	}
-//}
+extension FeedTableViewController: KFeedMessageEditorViewDelegate {
+	func updateMessages(with feedMessages: [FeedMessage]) {
+		for feedMessage in feedMessages {
+			self.feedMessages.prepend(feedMessage)
+		}
+	}
+}
