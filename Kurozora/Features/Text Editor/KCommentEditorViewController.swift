@@ -31,12 +31,7 @@ class KCommentEditorViewController: KViewController {
 			characterCountLabel.theme_textColor = KThemePicker.subTextColor.rawValue
 		}
 	}
-	@IBOutlet weak var commentTextView: KTextView! {
-		didSet {
-			commentTextView.textContainerInset = .zero
-			commentTextView.textContainer.lineFragmentPadding = 0
-		}
-	}
+	@IBOutlet weak var commentTextView: KTextView!
 
 	@IBOutlet weak var replyToUserContainer: UIView! {
 		didSet {
@@ -87,16 +82,15 @@ class KCommentEditorViewController: KViewController {
 				return
 			}
 
+			self.view.endEditing(true)
 			KService.postReply(inThread: forumsThread.id, withComment: comment) { [weak self] result in
 				guard let self = self else { return }
 				switch result {
 				case .success(let threadReplies):
-					DispatchQueue.main.async {
-						self.delegate?.updateReplies(with: threadReplies)
-					}
+					self.delegate?.updateReplies(with: threadReplies)
+					self.dismiss(animated: true, completion: nil)
 				case .failure: break
 				}
-				self.dismiss(animated: true, completion: nil)
 			}
 		} else {
 			SCLAlertView().showWarning("Character limit reached!", subTitle: "You have exceeded the character limit for a reply.")

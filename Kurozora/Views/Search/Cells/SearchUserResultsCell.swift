@@ -76,9 +76,9 @@ class SearchUserResultsCell: SearchBaseResultsCell {
 				}
 			default:
 				if user.id == userID {
-					secondaryLabelText = "Followed by \(followerCount.kFormatted) fans."
+					secondaryLabelText = "Followed by \(followerCount.kkFormatted) fans."
 				} else {
-					secondaryLabelText = user.attributes.followStatus == .followed ? "Followed by you and (\((followerCount - 1).kFormatted)) users." : "Followed by \(followerCount.kFormatted) users."
+					secondaryLabelText = user.attributes.followStatus == .followed ? "Followed by you and (\((followerCount - 1).kkFormatted)) users." : "Followed by \(followerCount.kkFormatted) users."
 				}
 			}
 

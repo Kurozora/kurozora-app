@@ -27,41 +27,14 @@ class ForumsCell: UITableViewCell {
 			byLabel.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
 		}
 	}
-	@IBOutlet weak var voteCountButton: UIButton! {
-		didSet {
-			voteCountButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-			voteCountButton.theme_setTitleColor(KThemePicker.tableViewCellActionDefaultColor.rawValue, forState: .normal)
-		}
-	}
-	@IBOutlet weak var commentCountButton: UIButton! {
-		didSet {
-			commentCountButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-			commentCountButton.theme_setTitleColor(KThemePicker.tableViewCellActionDefaultColor.rawValue, forState: .normal)
-		}
-	}
-	@IBOutlet weak var dateTimeButton: UIButton! {
-		didSet {
-			dateTimeButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-			dateTimeButton.theme_setTitleColor(KThemePicker.tableViewCellActionDefaultColor.rawValue, forState: .normal)
-		}
-	}
+	@IBOutlet weak var voteCountButton: CellActionButton!
+	@IBOutlet weak var commentCountButton: CellActionButton!
+	@IBOutlet weak var dateTimeButton: CellActionButton!
 	@IBOutlet weak var lockImageView: UIImageView!
 
-	@IBOutlet weak var moreButton: KButton! {
-		didSet {
-			moreButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-		}
-	}
-	@IBOutlet weak var upvoteButton: UIButton! {
-		didSet {
-			upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-		}
-	}
-	@IBOutlet weak var downvoteButton: UIButton! {
-		didSet {
-			downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-		}
-	}
+	@IBOutlet weak var moreButton: CellActionButton!
+	@IBOutlet weak var upvoteButton: CellActionButton!
+	@IBOutlet weak var downvoteButton: CellActionButton!
 	@IBOutlet weak var actionsStackView: UIStackView!
 	@IBOutlet weak var bubbleView: UIView! {
 		didSet {
@@ -94,10 +67,10 @@ class ForumsCell: UITableViewCell {
 
 		// Set thread stats
 		let voteCount = forumsThread.attributes.metrics.weight
-		voteCountButton.setTitle("\((voteCount >= 1000) ? voteCount.kFormatted : voteCount.string) · ", for: .normal)
+		voteCountButton.setTitle("\(voteCount.kkFormatted) · ", for: .normal)
 
 		let replyCount = forumsThread.attributes.replyCount
-		commentCountButton.setTitle("\((replyCount >= 1000) ? replyCount.kFormatted : replyCount.string) · ", for: .normal)
+		commentCountButton.setTitle("\(replyCount.kkFormatted) · ", for: .normal)
 
 		dateTimeButton.setTitle(forumsThread.attributes.createdAt.timeAgo, for: .normal)
 
@@ -137,7 +110,7 @@ class ForumsCell: UITableViewCell {
 							threadScore -= 1
 						}
 
-						self.voteCountButton.setTitle("\((threadScore >= 1000) ? threadScore.kFormatted : threadScore.string) · ", for: .normal)
+						self.voteCountButton.setTitle("\(threadScore.kkFormatted) · ", for: .normal)
 					}
 				case .failure: break
 				}

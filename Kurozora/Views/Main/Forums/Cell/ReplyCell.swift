@@ -29,40 +29,16 @@ class ReplyCell: UITableViewCell {
 			usernameLabel.isUserInteractionEnabled = true
 		}
 	}
-	@IBOutlet weak var dateTimeButton: UIButton! {
-		didSet {
-			dateTimeButton.theme_setTitleColor(KThemePicker.tableViewCellActionDefaultColor.rawValue, forState: .normal)
-			dateTimeButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-		}
-	}
-	@IBOutlet weak var voteCountButton: UIButton! {
-		didSet {
-			voteCountButton.theme_setTitleColor(KThemePicker.tableViewCellActionDefaultColor.rawValue, forState: .normal)
-			voteCountButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-		}
-	}
-	@IBOutlet weak var contentTextView: UITextView! {
+	@IBOutlet weak var dateTimeButton: CellActionButton!
+	@IBOutlet weak var voteCountButton: CellActionButton!
+	@IBOutlet weak var contentTextView: KTextView! {
 		didSet {
 			contentTextView.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
-			contentTextView.textContainerInset = .zero
-			contentTextView.textContainer.lineFragmentPadding = 0
 		}
 	}
-	@IBOutlet weak var upvoteButton: UIButton! {
-		didSet {
-			upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-		}
-	}
-	@IBOutlet weak var downvoteButton: UIButton! {
-		didSet {
-			downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-		}
-	}
-	@IBOutlet weak var moreButton: UIButton! {
-		didSet {
-			moreButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-		}
-	}
+	@IBOutlet weak var upvoteButton: CellActionButton!
+	@IBOutlet weak var downvoteButton: CellActionButton!
+	@IBOutlet weak var moreButton: CellActionButton!
 	@IBOutlet weak var bubbleView: UIView! {
 		didSet {
 			bubbleView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
@@ -93,7 +69,7 @@ class ReplyCell: UITableViewCell {
 
 		// Set thread stats
 		let replyScore = threadReply.attributes.metrics.weight
-		voteCountButton.setTitle("\((replyScore >= 1000) ? replyScore.kFormatted : replyScore.string) · ", for: .normal)
+		voteCountButton.setTitle("\(replyScore.kkFormatted) · ", for: .normal)
 
 		dateTimeButton.setTitle(threadReply.attributes.createdAt.timeAgo, for: .normal)
 
@@ -131,7 +107,7 @@ class ReplyCell: UITableViewCell {
 							replyScore -= 1
 						}
 
-						self.voteCountButton.setTitle("\((replyScore >= 1000) ? replyScore.kFormatted : replyScore.string) · ", for: .normal)
+						self.voteCountButton.setTitle("\(replyScore.kkFormatted) · ", for: .normal)
 					}
 				case .failure: break
 				}

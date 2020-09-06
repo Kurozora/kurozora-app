@@ -442,16 +442,14 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 						guard let self = self else { return }
 						switch result {
 						case .success:
-//							DispatchQueue.main.async {
-								self.groupedNotifications[indexPath.section].sectionNotifications.remove(at: indexPath.row)
-								tableView.deleteRows(at: [indexPath], with: .left)
+							self.groupedNotifications[indexPath.section].sectionNotifications.remove(at: indexPath.row)
+							tableView.deleteRows(at: [indexPath], with: .left)
 
-								if self.groupedNotifications[indexPath.section].sectionNotifications.count == 0 {
-									self.groupedNotifications.remove(at: indexPath.section)
-									tableView.deleteSections([indexPath.section], with: .left)
-								}
-								tableView.endUpdates()
-//							}
+							if self.groupedNotifications[indexPath.section].sectionNotifications.count == 0 {
+								self.groupedNotifications.remove(at: indexPath.section)
+								tableView.deleteSections([indexPath.section], with: .left)
+							}
+							tableView.endUpdates()
 						case .failure:
 							break
 						}

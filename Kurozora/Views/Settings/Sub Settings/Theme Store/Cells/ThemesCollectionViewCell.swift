@@ -56,7 +56,7 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 		case 1:
 			downloadCountLabel.text = "\(downloadCount) Download"
 		default:
-			downloadCountLabel.text = "\(downloadCount.kFormatted) Downloads"
+			downloadCountLabel.text = "\(downloadCount.kkFormatted) Downloads"
 		}
 
 		shouldHideMoreButton()

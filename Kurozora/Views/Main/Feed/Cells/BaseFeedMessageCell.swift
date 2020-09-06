@@ -8,55 +8,21 @@
 
 import UIKit
 import KurozoraKit
+import SCLAlertView
 
 class BaseFeedMessageCell: KTableViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var profileImageView: ProfileImageView!
-	@IBOutlet weak var usernameLabel: UILabel! {
-		didSet {
-			usernameLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+	@IBOutlet weak var warningTranscriptLabel: UILabel?
+	@IBOutlet weak var warningVisualEffectView: KVisualEffectView?
 
-			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(usernameLabelPressed))
-			gestureRecognizer.numberOfTouchesRequired = 1
-			gestureRecognizer.numberOfTapsRequired = 1
-			usernameLabel.addGestureRecognizer(gestureRecognizer)
-			usernameLabel.isUserInteractionEnabled = true
-		}
-	}
-	@IBOutlet weak var dateTimeLabel: UILabel! {
-		didSet {
-			dateTimeLabel.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
-		}
-	}
-	@IBOutlet weak var postTextView: UITextView! {
-		didSet {
-			postTextView.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-			postTextView.text = "Feed post..."
-		}
-	}
-	@IBOutlet weak var heartButton: UIButton! {
-		didSet {
-			heartButton.theme_setTitleColor(KThemePicker.tableViewCellActionDefaultColor.rawValue, forState: .normal)
-			heartButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-		}
-	}
-	@IBOutlet weak var commentButton: UIButton! {
-		didSet {
-			commentButton.theme_setTitleColor(KThemePicker.tableViewCellActionDefaultColor.rawValue, forState: .normal)
-			commentButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-		}
-	}
-	@IBOutlet weak var shareButton: UIButton! {
-		didSet {
-			shareButton.theme_setTitleColor(KThemePicker.tableViewCellActionDefaultColor.rawValue, forState: .normal)
-			shareButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-		}
-	}
-	@IBOutlet weak var moreButton: UIButton! {
-		didSet {
-			moreButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-		}
-	}
+	@IBOutlet weak var profileImageView: ProfileImageView!
+	@IBOutlet weak var usernameLabel: KLabel!
+	@IBOutlet weak var dateTimeLabel: KSecondaryLabel!
+	@IBOutlet weak var postTextView: KTextView!
+	@IBOutlet weak var heartButton: CellActionButton!
+	@IBOutlet weak var commentButton: CellActionButton!
+	@IBOutlet weak var shareButton: CellActionButton!
+	@IBOutlet weak var moreButton: CellActionButton!
 	@IBOutlet weak var bubbleView: UIView! {
 		didSet {
 			bubbleView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
@@ -64,10 +30,22 @@ class BaseFeedMessageCell: KTableViewCell {
 	}
 
 	// MARK: - Properties
+	var warningIsHidden: Bool = false
+	var liveReplyEnabled = false
+	var liveReShareEnabled = false
 	var feedMessage: FeedMessage! {
 		didSet {
-			configureCell()
+			if !self.warningIsHidden {
+				configureCell()
+			}
 		}
+	}
+
+	// MARK: - View
+	override func prepareForReuse() {
+		super.prepareForReuse()
+
+		self.warningIsHidden = false
 	}
 
 	// MARK: - Functions
@@ -75,15 +53,117 @@ class BaseFeedMessageCell: KTableViewCell {
 		// Configure heart status for feed message.
 		self.updateHeartStatus()
 
+		// Configure poster details
+		if let user = self.feedMessage.relationships.users.data.first {
+			self.usernameLabel.text = user.attributes.username
+			self.profileImageView.image = user.attributes.profileImage
+
+			// Attach gestures
+			self.configureProfilePageGesture(for: self.usernameLabel)
+			self.configureProfilePageGesture(for: self.profileImageView)
+		}
+
+		// Configure body
+		postTextView.text = self.feedMessage.attributes.body
+
+		// Configure date time
+		dateTimeLabel.text = self.feedMessage.attributes.createdAt.timeAgo
+
+		// Configure metrics
+		let heartsCount = self.feedMessage.attributes.metrics.heartCount
+		heartButton.setTitle(heartsCount.kkFormatted, for: .normal)
+
+		let replyCount = self.feedMessage.attributes.metrics.replyCount
+		commentButton.setTitle(replyCount.kkFormatted, for: .normal)
+
+		let reShareCount = self.feedMessage.attributes.metrics.reShareCount
+		shareButton.setTitle(reShareCount.kkFormatted, for: .normal)
+
+		/// Configure re-share button
+		self.configureReShareButton()
+
+		// Configure warning messages
+		self.configureWarnings()
+
 		// Add gesture to cell
-		let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(showCellOptions(_:)))
-		addGestureRecognizer(longPressGesture)
-		isUserInteractionEnabled = true
+		if self.gestureRecognizers.isNilOrEmpty {
+			let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(showCellOptions(_:)))
+			addGestureRecognizer(longPressGesture)
+			isUserInteractionEnabled = true
+		}
+	}
+
+	/// Configures the re-share button.
+	fileprivate func configureReShareButton() {
+		if self.feedMessage.attributes.isReShared {
+			shareButton.setTitleColor(.kGreen, for: .normal)
+			shareButton.tintColor = .kGreen
+		} else {
+			self.shareButton.theme_setTitleColor(KThemePicker.tableViewCellActionDefaultColor.rawValue, forState: .normal)
+			self.shareButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+		}
+	}
+
+	/// Configures the warning messages.
+	fileprivate func configureWarnings() {
+		let isNSFW = self.feedMessage.attributes.isNSFW
+		let isSpoiler = self.feedMessage.attributes.isSpoiler
+
+		// Configure warning visual effect view
+		if isNSFW || isSpoiler {
+			self.warningVisualEffectView?.isHidden = false
+		} else {
+			self.warningTranscriptLabel?.text = ""
+			self.warningVisualEffectView?.isHidden = true
+			return
+		}
+
+		// Configure warning transcript
+		if isNSFW && isSpoiler {
+			self.warningTranscriptLabel?.text = "This message is NSFW and contains spoilers - tap to view"
+		} else if isNSFW {
+			self.warningTranscriptLabel?.text = "This message is NSFW - tap to view"
+		} else if isSpoiler {
+			self.warningTranscriptLabel?.text = "The message contains spoilers - tap to view"
+		}
+
+		// Add gesture recognizer to hide visual effect
+		if let warningVisualEffectView = self.warningVisualEffectView, warningVisualEffectView.gestureRecognizers.isNilOrEmpty {
+			let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideWarning(_:)))
+			self.warningVisualEffectView?.addGestureRecognizer(tapGestureRecognizer)
+		}
+	}
+
+	/**
+		Adds a `UITapGestureRecognizer` which opens the profile image onto the given view.
+
+		- Parameter view: The view to which the tap gesture should be attached.
+	*/
+	func configureProfilePageGesture(for view: UIView) {
+		if view.gestureRecognizers.isNilOrEmpty {
+			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(usernameLabelPressed))
+			gestureRecognizer.numberOfTouchesRequired = 1
+			gestureRecognizer.numberOfTapsRequired = 1
+			view.addGestureRecognizer(gestureRecognizer)
+			view.isUserInteractionEnabled = true
+		}
 	}
 
 	/// Shows the relevant options for the selected message.
-	@objc func showCellOptions(_ longPress: UILongPressGestureRecognizer) {
+	@objc fileprivate func showCellOptions(_ longPress: UILongPressGestureRecognizer) {
 		showActionList()
+	}
+
+	/// Segues to message details.
+	@objc func showOPMessage(_ gestureRecognizer: UITapGestureRecognizer) {
+		guard let opMessage = self.feedMessage.relationships.messages?.data.first else { return }
+		self.parentViewController?.performSegue(withIdentifier: R.segue.feedTableViewController.feedMessageDetailsSegue.identifier, sender: opMessage.id)
+	}
+
+	/// Hides warnings.
+	@objc fileprivate func hideWarning(_ gestureRecognizer: UITapGestureRecognizer) {
+		self.warningIsHidden = true
+		self.warningVisualEffectView?.isHidden = true
 	}
 
 	/// Presents the profile view for the feed message poster.
@@ -104,8 +184,10 @@ class BaseFeedMessageCell: KTableViewCell {
 	fileprivate func updateHeartStatus() {
 		if self.feedMessage.attributes.isHearted {
 			self.heartButton.tintColor = .kLightRed
+			self.heartButton.setTitleColor(.kLightRed, for: .normal)
 		} else {
 			self.heartButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+			self.heartButton.theme_setTitleColor(KThemePicker.tableViewCellActionDefaultColor.rawValue, forState: .normal)
 		}
 	}
 
@@ -121,9 +203,23 @@ class BaseFeedMessageCell: KTableViewCell {
 					self.updateHeartStatus()
 
 					let heartsCount = self.feedMessage.attributes.metrics.heartCount
-					self.heartButton.setTitle("\((heartsCount >= 1000) ? heartsCount.kFormatted : heartsCount.string)", for: .normal)
+					self.heartButton.setTitle(heartsCount.kkFormatted, for: .normal)
 				case .failure: break
 				}
+			}
+		}
+	}
+
+	fileprivate func replyMessage() {
+		WorkflowController.shared.isSignedIn {
+			if let kfmReplyTextEditorViewController = R.storyboard.textEditor.kfmReplyTextEditorViewController() {
+				kfmReplyTextEditorViewController.delegate = self.parentViewController as? KFeedMessageTextEditorViewDelegate
+				kfmReplyTextEditorViewController.segueToOPFeedDetails = !self.liveReplyEnabled
+				kfmReplyTextEditorViewController.opFeedMessage = self.feedMessage
+
+				let kurozoraNavigationController = KNavigationController.init(rootViewController: kfmReplyTextEditorViewController)
+				kurozoraNavigationController.navigationBar.prefersLargeTitles = false
+				self.parentViewController?.present(kurozoraNavigationController)
 			}
 		}
 	}
@@ -131,7 +227,19 @@ class BaseFeedMessageCell: KTableViewCell {
 	/// Re-share the message on the feed.
 	fileprivate func reShareMessage() {
 		WorkflowController.shared.isSignedIn {
+			if !self.feedMessage.attributes.isReShared {
+				if let kfmReShareTextEditorViewController = R.storyboard.textEditor.kfmReShareTextEditorViewController() {
+					kfmReShareTextEditorViewController.delegate = self.parentViewController as? KFeedMessageTextEditorViewDelegate
+					kfmReShareTextEditorViewController.segueToOPFeedDetails = !self.liveReShareEnabled
+					kfmReShareTextEditorViewController.opFeedMessage = self.feedMessage
 
+					let kurozoraNavigationController = KNavigationController.init(rootViewController: kfmReShareTextEditorViewController)
+					kurozoraNavigationController.navigationBar.prefersLargeTitles = false
+					self.parentViewController?.present(kurozoraNavigationController)
+				}
+			} else {
+				SCLAlertView().showNotice("Can't re-share", subTitle: "You are not allowed to re-share a message more than once.")
+			}
 		}
 	}
 
@@ -210,6 +318,16 @@ class BaseFeedMessageCell: KTableViewCell {
 	@IBAction func heartButtonPressed(_ sender: UIButton) {
 		self.heartMessage()
 		sender.animateBounce()
+	}
+
+	@IBAction func commentButtonPressed(_ sender: UIButton) {
+		self.replyMessage()
+		sender.animateBounce()
+	}
+
+	@IBAction func segueToMessageDetails(_ sender: UIButton) {
+		sender.animateBounce()
+		self.parentViewController?.performSegue(withIdentifier: R.segue.feedTableViewController.feedMessageDetailsSegue.identifier, sender: self.feedMessage.id)
 	}
 
 	@IBAction func reShareButtonPressed(_ sender: UIButton) {

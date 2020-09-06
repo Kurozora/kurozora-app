@@ -36,10 +36,9 @@ class RatingCollectionViewCell: UICollectionViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
-//		// Configure cosmos view
-//		if let userRating = show.currentUser?.currentRating {
-//			self.cosmosView.rating = userRating
-//		}
+		// Configure cosmos view
+		let userRating = self.show.attributes.givenRating
+		self.cosmosView.rating = userRating ?? 0.0
 
 		cosmosView.didFinishTouchingCosmos = { rating in
 			WorkflowController.shared.isSignedIn {
@@ -68,13 +67,12 @@ class RatingCollectionViewCell: UICollectionViewCell {
 		KService.rateShow(self.show.id, with: rating) { result in
 			switch result {
 			case .success:
-				// HERE
-//				// Update current rating for the user.
-//				self.show?.currentUser?.currentRating = rating
+				// Update current rating for the user.
+				self.show.attributes.givenRating = rating
 
 				// Show a success alert thanking the user for rating.
 				let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
-				let sclAlertView = SCLAlertView(appearance: appearance).showSuccess("Submitted", subTitle: "Thanks for your rating.")
+				let sclAlertView = SCLAlertView(appearance: appearance).showSuccess("Submitted", subTitle: "Thank you for rating.")
 
 				DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
 					sclAlertView.close()

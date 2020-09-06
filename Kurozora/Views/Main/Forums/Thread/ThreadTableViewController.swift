@@ -17,24 +17,9 @@ class ThreadTableViewController: KTableViewController {
 			topicLabel.theme_textColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
 		}
 	}
-	@IBOutlet weak var voteCountButton: UIButton! {
-		didSet {
-			voteCountButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-			voteCountButton.theme_setTitleColor(KThemePicker.tableViewCellActionDefaultColor.rawValue, forState: .normal)
-		}
-	}
-	@IBOutlet weak var commentCountButton: UIButton! {
-		didSet {
-			commentCountButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-			commentCountButton.theme_setTitleColor(KThemePicker.tableViewCellActionDefaultColor.rawValue, forState: .normal)
-		}
-	}
-	@IBOutlet weak var dateTimeButton: UIButton! {
-		didSet {
-			dateTimeButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-			dateTimeButton.theme_setTitleColor(KThemePicker.tableViewCellActionDefaultColor.rawValue, forState: .normal)
-		}
-	}
+	@IBOutlet weak var voteCountButton: CellActionButton!
+	@IBOutlet weak var commentCountButton: CellActionButton!
+	@IBOutlet weak var dateTimeButton: CellActionButton!
 	@IBOutlet weak var posterUsernameLabel: UIButton! {
 		didSet {
 			posterUsernameLabel.theme_setTitleColor(KThemePicker.tintColor.rawValue, forState: .normal)
@@ -45,32 +30,14 @@ class ThreadTableViewController: KTableViewController {
 	@IBOutlet weak var richTextView: KTextView! {
 		didSet {
 			richTextView.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-			richTextView.textContainerInset = .zero
-			richTextView.textContainer.lineFragmentPadding = 0
 		}
 	}
-	@IBOutlet weak var upvoteButton: UIButton! {
-		didSet {
-			upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-		}
-	}
-	@IBOutlet weak var downvoteButton: UIButton! {
-		didSet {
-			downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-		}
-	}
-	@IBOutlet weak var replyButton: UIButton! {
-		didSet {
-			replyButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-		}
-	}
-	@IBOutlet weak var shareButton: UIButton! {
-		didSet {
-			shareButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-		}
-	}
+	@IBOutlet weak var upvoteButton: CellActionButton!
+	@IBOutlet weak var downvoteButton: CellActionButton!
+	@IBOutlet weak var replyButton: CellActionButton!
+	@IBOutlet weak var shareButton: CellActionButton!
 	@IBOutlet weak var separatorView: SeparatorView!
-	@IBOutlet weak var actionsSeparatorView: SeparatorView!
+	@IBOutlet weak var actionsSeparatorView: SecondarySeparatorView!
 	@IBOutlet weak var actionsStackView: UIStackView!
 
 	// MARK: - Properties
@@ -181,10 +148,10 @@ class ThreadTableViewController: KTableViewController {
 
 		// Set thread stats
 		let voteCount = forumsThread.attributes.metrics.weight
-		voteCountButton.setTitle("\((voteCount >= 1000) ? voteCount.kFormatted : voteCount.string) · ", for: .normal)
+		voteCountButton.setTitle("\(voteCount.kkFormatted) · ", for: .normal)
 
 		let commentCount = forumsThread.attributes.replyCount
-		commentCountButton.setTitle("\((commentCount >= 1000) ? commentCount.kFormatted : commentCount.string) · ", for: .normal)
+		commentCountButton.setTitle("\(commentCount.kkFormatted) · ", for: .normal)
 
 		dateTimeButton.setTitle(forumsThread.attributes.createdAt.timeAgo, for: .normal)
 
@@ -258,7 +225,7 @@ class ThreadTableViewController: KTableViewController {
 							threadScore -= 1
 						}
 
-						self.voteCountButton.setTitle("\((threadScore >= 1000) ? threadScore.kFormatted : threadScore.string) · ", for: .normal)
+						self.voteCountButton.setTitle("\(threadScore.kkFormatted) · ", for: .normal)
 					}
 				case .failure: break
 				}

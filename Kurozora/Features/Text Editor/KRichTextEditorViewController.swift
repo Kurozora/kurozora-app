@@ -59,15 +59,13 @@ class KRichTextEditorViewController: KViewController {
 			SCLAlertView().showWarning("Thread's content is empty!")
 			return
 		}
-		print("Input: \(content)")
 
+		self.view.endEditing(true)
 		KService.postThread(inSection: sectionID, withTitle: title, content: content) {[weak self] result in
 			guard let self = self else { return }
 			switch result {
 			case .success(let forumsThreads):
-				DispatchQueue.main.async {
-					self.delegate?.updateThreadsList(with: forumsThreads)
-				}
+				self.delegate?.updateThreadsList(with: forumsThreads)
 				self.dismiss(animated: true, completion: nil)
 			case .failure: break
 			}

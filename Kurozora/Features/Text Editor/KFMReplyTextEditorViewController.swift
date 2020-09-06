@@ -1,8 +1,8 @@
 //
-//  KFeedMessageTextEditorViewController.swift
+//  KFMReplyTextEditorViewController.swift
 //  Kurozora
 //
-//  Created by Khoren Katklian on 27/08/2020.
+//  Created by Khoren Katklian on 31/08/2020.
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
@@ -10,27 +10,25 @@ import UIKit
 import KurozoraKit
 import SCLAlertView
 
-protocol KFeedMessageTextEditorViewDelegate: class {
-	func updateMessages(with feedMessages: [FeedMessage])
-	func segueToOPFeedDetails(_ feedMessage: FeedMessage)
-}
-
-class KFeedMessageTextEditorViewController: KViewController {
+class KFMReplyTextEditorViewController: KViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var isSpoilerSwitch: KSwitch!
 	@IBOutlet weak var isNSFWSwitch: KSwitch!
-
 	@IBOutlet weak var profileImageView: ProfileImageView!
 	@IBOutlet weak var currentUsernameLabel: KLabel!
-
-	@IBOutlet weak var characterCountLabel: UILabel! {
+	@IBOutlet weak var characterCountLabel: UILabel!
+	@IBOutlet weak var commentTextView: KTextView!
+	@IBOutlet weak var commentPreviewContainer: UIView! {
 		didSet {
-			characterCountLabel.theme_textColor = KThemePicker.subTextColor.rawValue
+			commentPreviewContainer.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 		}
 	}
-	@IBOutlet weak var commentTextView: KTextView!
 
-	@IBOutlet weak var commentPreviewContainer: UIView! {
+	@IBOutlet weak var opProfileImageView: ProfileImageView!
+	@IBOutlet weak var opUsernameLabel: KLabel!
+	@IBOutlet weak var opMessageTextView: KTextView!
+	@IBOutlet weak var opDateTimeLabel: KSecondaryLabel!
+	@IBOutlet weak var opMessagePreviewContainer: UIView! {
 		didSet {
 			commentPreviewContainer.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 		}
@@ -40,19 +38,28 @@ class KFeedMessageTextEditorViewController: KViewController {
 	let characterLimit = 240
 	let placeholderText = "What's on your mind..."
 
+	var opFeedMessage: FeedMessage!
+	var segueToOPFeedDetails: Bool = false
 	weak var delegate: KFeedMessageTextEditorViewDelegate?
 
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		profileImageView.image = User.current?.attributes.profileImage
-		currentUsernameLabel.text = User.current?.attributes.username
-		characterCountLabel.text = "\(characterLimit)"
-		commentTextView.text = placeholderText
-		commentTextView.theme_textColor = KThemePicker.textFieldPlaceholderTextColor.rawValue
-		commentTextView.becomeFirstResponder()
-		commentTextView.selectedTextRange = commentTextView.textRange(from: commentTextView.beginningOfDocument, to: commentTextView.beginningOfDocument)
+		self.profileImageView.image = User.current?.attributes.profileImage
+		self.currentUsernameLabel.text = User.current?.attributes.username
+		self.characterCountLabel.text = "\(characterLimit)"
+		self.commentTextView.text = placeholderText
+		self.commentTextView.theme_textColor = KThemePicker.textFieldPlaceholderTextColor.rawValue
+		self.commentTextView.becomeFirstResponder()
+		self.commentTextView.selectedTextRange = self.commentTextView.textRange(from: self.commentTextView.beginningOfDocument, to: self.commentTextView.beginningOfDocument)
+
+		if let user = self.opFeedMessage.relationships.users.data.first {
+			self.opProfileImageView.image = user.attributes.profileImage
+			self.opUsernameLabel.text = user.attributes.username
+		}
+		self.opMessageTextView.text = self.opFeedMessage.attributes.body
+		self.opDateTimeLabel.text = self.opFeedMessage.attributes.createdAt.timeAgo
 	}
 
 	// MARK: - IBActions
@@ -68,11 +75,15 @@ class KFeedMessageTextEditorViewController: KViewController {
 			}
 
 			self.view.endEditing(true)
-			KService.postFeedMessage(withBody: feedMessage, relatedToParent: nil, isReply: nil, isReShare: nil, isNSFW: isNSFWSwitch.isOn, isSpoiler: isSpoilerSwitch.isOn) { [weak self] result in
+			KService.postFeedMessage(withBody: feedMessage, relatedToParent: opFeedMessage.id, isReply: true, isReShare: false, isNSFW: isNSFWSwitch.isOn, isSpoiler: isSpoilerSwitch.isOn) { [weak self] result in
 				guard let self = self else { return }
 				switch result {
 				case .success(let feedMessages):
-					self.delegate?.updateMessages(with: feedMessages)
+					if self.segueToOPFeedDetails {
+						self.delegate?.segueToOPFeedDetails(self.opFeedMessage)
+					} else {
+						self.delegate?.updateMessages(with: feedMessages)
+					}
 					self.dismiss(animated: true, completion: nil)
 				case .failure: break
 				}
@@ -84,7 +95,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 }
 
 // MARK: - UITextViewDelegate
-extension KFeedMessageTextEditorViewController: UITextViewDelegate {
+extension KFMReplyTextEditorViewController: UITextViewDelegate {
 	func textViewDidChange(_ textView: UITextView) {
 		characterCountLabel.text = "\(characterLimit - textView.text.count)"
 	}

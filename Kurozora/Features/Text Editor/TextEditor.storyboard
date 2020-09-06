@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17124"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -15,7 +16,7 @@
                         <viewControllerLayoutGuide type="top" id="4En-jk-kIz"/>
                         <viewControllerLayoutGuide type="bottom" id="WDF-aN-cLz"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="N1I-XK-qUo">
+                    <view key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="N1I-XK-qUo">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -146,7 +147,7 @@
                         <viewControllerLayoutGuide type="top" id="WMu-9D-4eN"/>
                         <viewControllerLayoutGuide type="bottom" id="FPS-n3-jeS"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="3Xn-jC-Ocb">
+                    <view key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="3Xn-jC-Ocb">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -324,52 +325,83 @@
             </objects>
             <point key="canvasLocation" x="-180" y="828"/>
         </scene>
-        <!--Feed Message Editor View Controller-->
+        <!--Reply Text Editor View Controller-->
         <scene sceneID="pGf-Id-5Jx">
             <objects>
-                <viewController storyboardIdentifier="KFeedMessageEditorViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="44K-MY-IEQ" customClass="KFeedMessageEditorViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="KFMReplyTextEditorViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="44K-MY-IEQ" customClass="KFMReplyTextEditorViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="OLd-V0-rCi"/>
                         <viewControllerLayoutGuide type="bottom" id="Run-RE-oWv"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="ISi-7k-qWm">
+                    <view key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="ISi-7k-qWm">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w3g-lc-1VF">
-                                <rect key="frame" x="20" y="104" width="374" height="113.5"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Nr-QT-4ft" userLabel="OP Message Preview Container">
+                                <rect key="frame" x="20" y="104" width="374" height="87"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FSo-PI-GTY">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/User Profile" translatesAutoresizingMaskIntoConstraints="NO" id="gJ1-Pl-djc" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="8" y="8" width="44" height="44"/>
-                                        <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/User Profile" translatesAutoresizingMaskIntoConstraints="NO" id="kls-an-ezp" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
-                                            </imageView>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="kls-an-ezp" firstAttribute="leading" secondItem="FSo-PI-GTY" secondAttribute="leading" id="NzR-WH-6ec"/>
-                                            <constraint firstAttribute="width" constant="44" id="SyA-Tb-b54"/>
-                                            <constraint firstAttribute="height" constant="44" id="dWt-uV-1Aa"/>
-                                            <constraint firstItem="kls-an-ezp" firstAttribute="top" secondItem="FSo-PI-GTY" secondAttribute="top" id="eeJ-z0-YOq"/>
-                                            <constraint firstAttribute="bottom" secondItem="kls-an-ezp" secondAttribute="bottom" id="qMC-VB-p4N"/>
-                                            <constraint firstAttribute="trailing" secondItem="kls-an-ezp" secondAttribute="trailing" id="y4W-nm-sUs"/>
+                                            <constraint firstAttribute="height" constant="44" id="OHM-Qh-ypE"/>
+                                            <constraint firstAttribute="width" constant="44" id="kW2-v8-Kdw"/>
+                                            <constraint firstAttribute="width" secondItem="gJ1-Pl-djc" secondAttribute="height" multiplier="1:1" id="tHb-sC-3d4"/>
                                         </constraints>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="17.5"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
-                                                <point key="value" x="0.0" y="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                                <real key="value" value="0.40000000000000002"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
-                                                <real key="value" value="7"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </view>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="748" text="Usopp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xep-Jx-5iG" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="60" y="8" width="52" height="21"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="2d ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hXr-U9-OHg" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="324" y="8" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="_test" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qkR-jN-Jdi" customClass="KTextView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="60" y="29" width="306" height="38"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="44K-MY-IEQ" id="tgM-td-UBn"/>
+                                        </connections>
+                                    </textView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="xep-Jx-5iG" firstAttribute="leading" secondItem="gJ1-Pl-djc" secondAttribute="trailing" constant="8" id="0RA-a9-t9k"/>
+                                    <constraint firstItem="qkR-jN-Jdi" firstAttribute="top" secondItem="xep-Jx-5iG" secondAttribute="bottom" id="7nY-wK-s5U"/>
+                                    <constraint firstItem="qkR-jN-Jdi" firstAttribute="leading" secondItem="xep-Jx-5iG" secondAttribute="leading" id="Opc-ZY-9My"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="qkR-jN-Jdi" secondAttribute="trailing" id="TUE-ku-Tty"/>
+                                    <constraint firstItem="hXr-U9-OHg" firstAttribute="centerY" secondItem="xep-Jx-5iG" secondAttribute="centerY" id="WkK-Bx-pKw"/>
+                                    <constraint firstItem="gJ1-Pl-djc" firstAttribute="top" secondItem="xep-Jx-5iG" secondAttribute="top" id="YXm-Wa-XSg"/>
+                                    <constraint firstItem="gJ1-Pl-djc" firstAttribute="leading" secondItem="0Nr-QT-4ft" secondAttribute="leadingMargin" id="aE8-80-ePS"/>
+                                    <constraint firstAttribute="trailing" secondItem="hXr-U9-OHg" secondAttribute="trailing" constant="8" id="jQt-ua-jye"/>
+                                    <constraint firstItem="hXr-U9-OHg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="xep-Jx-5iG" secondAttribute="trailing" constant="10" id="ktr-yY-umf"/>
+                                    <constraint firstItem="gJ1-Pl-djc" firstAttribute="top" secondItem="0Nr-QT-4ft" secondAttribute="top" constant="8" id="lqG-nz-ERf"/>
+                                    <constraint firstAttribute="bottom" secondItem="qkR-jN-Jdi" secondAttribute="bottom" constant="20" symbolic="YES" id="n6t-Rp-KIE"/>
+                                    <constraint firstItem="hXr-U9-OHg" firstAttribute="top" secondItem="xep-Jx-5iG" secondAttribute="top" id="naz-nE-tNC"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w3g-lc-1VF">
+                                <rect key="frame" x="20" y="199" width="374" height="113.5"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/User Profile" translatesAutoresizingMaskIntoConstraints="NO" id="kls-an-ezp" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="8" y="8" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="kls-an-ezp" secondAttribute="height" multiplier="1:1" id="C5v-Pg-eya"/>
+                                            <constraint firstAttribute="width" constant="44" id="Rj2-EB-1W0"/>
+                                            <constraint firstAttribute="height" constant="44" id="ctV-nz-A9M"/>
+                                        </constraints>
+                                    </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="748" text="Kirito" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wQ8-1b-Fef" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="60" y="8" width="42.5" height="20.5"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
@@ -413,6 +445,8 @@
                                 <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="bottomMargin" secondItem="Jr7-fT-oT6" secondAttribute="bottom" id="6e1-lK-yX4"/>
+                                    <constraint firstItem="kls-an-ezp" firstAttribute="leading" secondItem="w3g-lc-1VF" secondAttribute="leadingMargin" id="9S3-Wg-2c0"/>
+                                    <constraint firstItem="wQ8-1b-Fef" firstAttribute="leading" secondItem="kls-an-ezp" secondAttribute="trailing" constant="8" id="CAK-nR-QYD"/>
                                     <constraint firstItem="Jr7-fT-oT6" firstAttribute="leading" secondItem="LHC-gU-1WR" secondAttribute="trailing" constant="8" symbolic="YES" id="GeV-za-qMm"/>
                                     <constraint firstItem="zBs-tE-y2u" firstAttribute="leading" secondItem="wQ8-1b-Fef" secondAttribute="leading" id="IMz-ZL-yjQ"/>
                                     <constraint firstItem="zBs-tE-y2u" firstAttribute="top" secondItem="wQ8-1b-Fef" secondAttribute="bottom" id="LTv-hw-XcR"/>
@@ -420,19 +454,17 @@
                                     <constraint firstItem="Jr7-fT-oT6" firstAttribute="top" secondItem="zBs-tE-y2u" secondAttribute="bottom" constant="8" symbolic="YES" id="UqN-qh-0F5"/>
                                     <constraint firstItem="03q-PX-EpV" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="wQ8-1b-Fef" secondAttribute="trailing" constant="10" id="WkV-oU-0NM"/>
                                     <constraint firstItem="LHC-gU-1WR" firstAttribute="centerY" secondItem="Jr7-fT-oT6" secondAttribute="centerY" id="XZP-vn-BM9"/>
-                                    <constraint firstItem="wQ8-1b-Fef" firstAttribute="top" secondItem="FSo-PI-GTY" secondAttribute="top" id="Yn3-gN-FQK"/>
-                                    <constraint firstItem="FSo-PI-GTY" firstAttribute="top" secondItem="w3g-lc-1VF" secondAttribute="top" constant="8" id="b7Y-EX-xnE"/>
                                     <constraint firstItem="03q-PX-EpV" firstAttribute="centerY" secondItem="wQ8-1b-Fef" secondAttribute="centerY" id="dir-3K-cLR"/>
                                     <constraint firstItem="CcU-Jc-lzq" firstAttribute="leading" secondItem="y7d-hD-Niq" secondAttribute="trailing" constant="8" symbolic="YES" id="gBX-DQ-0vX"/>
                                     <constraint firstAttribute="trailingMargin" secondItem="Jr7-fT-oT6" secondAttribute="trailing" id="h8y-UA-C0l"/>
                                     <constraint firstAttribute="trailingMargin" secondItem="zBs-tE-y2u" secondAttribute="trailing" id="hXZ-gO-GH5"/>
-                                    <constraint firstItem="FSo-PI-GTY" firstAttribute="leading" secondItem="w3g-lc-1VF" secondAttribute="leadingMargin" id="ikE-tA-GAl"/>
+                                    <constraint firstItem="kls-an-ezp" firstAttribute="top" secondItem="wQ8-1b-Fef" secondAttribute="top" id="hcN-LB-uWj"/>
                                     <constraint firstAttribute="bottomMargin" secondItem="CcU-Jc-lzq" secondAttribute="bottom" id="mzM-CE-s0E"/>
-                                    <constraint firstItem="wQ8-1b-Fef" firstAttribute="leading" secondItem="FSo-PI-GTY" secondAttribute="trailing" constant="8" id="n06-it-9F0"/>
                                     <constraint firstItem="LHC-gU-1WR" firstAttribute="leading" secondItem="CcU-Jc-lzq" secondAttribute="trailing" constant="20" id="oM6-Rj-ZuC"/>
                                     <constraint firstItem="y7d-hD-Niq" firstAttribute="centerY" secondItem="CcU-Jc-lzq" secondAttribute="centerY" id="oQ7-R1-VRw"/>
                                     <constraint firstItem="03q-PX-EpV" firstAttribute="top" secondItem="wQ8-1b-Fef" secondAttribute="top" id="p6G-ri-cbI"/>
                                     <constraint firstAttribute="trailing" secondItem="03q-PX-EpV" secondAttribute="trailing" constant="8" id="rST-gg-cAh"/>
+                                    <constraint firstItem="kls-an-ezp" firstAttribute="top" secondItem="w3g-lc-1VF" secondAttribute="top" constant="8" id="ty1-MW-zEV"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -444,9 +476,12 @@
                         <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="leadingMargin" secondItem="w3g-lc-1VF" secondAttribute="leading" id="01w-JR-zeM"/>
-                            <constraint firstItem="w3g-lc-1VF" firstAttribute="top" secondItem="OLd-V0-rCi" secondAttribute="bottom" constant="16" id="EUf-6V-rNu"/>
+                            <constraint firstItem="0Nr-QT-4ft" firstAttribute="top" secondItem="OLd-V0-rCi" secondAttribute="bottom" constant="16" id="1T8-u0-P9r"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="0Nr-QT-4ft" secondAttribute="leading" id="Af1-AK-s9J"/>
+                            <constraint firstItem="w3g-lc-1VF" firstAttribute="top" secondItem="0Nr-QT-4ft" secondAttribute="bottom" constant="8" symbolic="YES" id="EUf-6V-rNu"/>
                             <constraint firstItem="Run-RE-oWv" firstAttribute="top" relation="greaterThanOrEqual" secondItem="w3g-lc-1VF" secondAttribute="bottom" constant="16" id="I0k-nK-rgz"/>
                             <constraint firstAttribute="trailingMargin" secondItem="w3g-lc-1VF" secondAttribute="trailing" id="av3-lG-wTs"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="0Nr-QT-4ft" secondAttribute="trailing" id="p0S-el-v3P"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="mrC-bf-qgS">
@@ -455,9 +490,9 @@
                                 <action selector="dismissButtonPressed:" destination="44K-MY-IEQ" id="SuE-TA-J42"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Post" style="done" id="vo2-JT-FF3">
+                        <barButtonItem key="rightBarButtonItem" title="Send" style="done" id="vo2-JT-FF3">
                             <connections>
-                                <action selector="replyButtonPressed:" destination="44K-MY-IEQ" id="LLa-oZ-IaX"/>
+                                <action selector="sendButtonPressed:" destination="44K-MY-IEQ" id="sfY-TE-AjN"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -468,17 +503,22 @@
                         <outlet property="currentUsernameLabel" destination="wQ8-1b-Fef" id="OZo-ry-htD"/>
                         <outlet property="isNSFWSwitch" destination="Jr7-fT-oT6" id="4iI-gB-EQL"/>
                         <outlet property="isSpoilerSwitch" destination="CcU-Jc-lzq" id="J8C-vz-foA"/>
+                        <outlet property="opDateTimeLabel" destination="hXr-U9-OHg" id="4eX-kl-zfU"/>
+                        <outlet property="opMessagePreviewContainer" destination="0Nr-QT-4ft" id="10T-ly-mOE"/>
+                        <outlet property="opMessageTextView" destination="qkR-jN-Jdi" id="HTI-N3-U5p"/>
+                        <outlet property="opProfileImageView" destination="gJ1-Pl-djc" id="DXd-Ql-VkG"/>
+                        <outlet property="opUsernameLabel" destination="xep-Jx-5iG" id="kOb-ah-12c"/>
                         <outlet property="profileImageView" destination="kls-an-ezp" id="hSm-q2-UFN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0my-Rg-Y7L" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="584" y="1519"/>
+            <point key="canvasLocation" x="580" y="2222"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="rAt-v8-3vF">
             <objects>
-                <navigationController storyboardIdentifier="KFeedMessageEditorKNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="1i2-p3-42t" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="KFMReplyTextEditorKNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="1i2-p3-42t" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="xj6-4r-tNH">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -499,11 +539,356 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1UC-lz-n0n" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-181" y="1519"/>
+            <point key="canvasLocation" x="-184" y="2222"/>
+        </scene>
+        <!--Re Share Text Editor View Controller-->
+        <scene sceneID="mWK-K2-Ig3">
+            <objects>
+                <viewController storyboardIdentifier="KFMReShareTextEditorViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FIK-fH-cLY" customClass="KFMReShareTextEditorViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fg2-GQ-xCv"/>
+                        <viewControllerLayoutGuide type="bottom" id="2VG-ft-hgW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="ghR-op-TrM">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YBx-ol-UEo">
+                                <rect key="frame" x="20" y="104" width="374" height="165"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/User Profile" translatesAutoresizingMaskIntoConstraints="NO" id="FgP-VV-4bc" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="8" y="8" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="44" id="Bof-rI-FWg"/>
+                                            <constraint firstAttribute="width" secondItem="FgP-VV-4bc" secondAttribute="height" multiplier="1:1" id="LwB-mJ-95R"/>
+                                            <constraint firstAttribute="height" constant="44" id="YdH-Fk-nSw"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="748" text="Kirito" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S0c-80-c6W" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="60" y="8" width="42.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="240" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k7h-np-Ufc" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="342" y="8" width="24" height="20.5"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" text="_test" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="S23-Ao-1Rk" customClass="KTextView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="60" y="28.5" width="306" height="38"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="FIK-fH-cLY" id="xnU-cD-5hy"/>
+                                        </connections>
+                                    </textView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cwV-UP-jOj">
+                                        <rect key="frame" x="60" y="74.5" width="306" height="82.5"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/User Profile" translatesAutoresizingMaskIntoConstraints="NO" id="xCg-WK-oOs" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
+                                                <rect key="frame" x="8" y="8" width="32" height="32"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="32" id="Aug-BL-bAD"/>
+                                                    <constraint firstAttribute="height" constant="32" id="bB4-y0-eVL"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Usopp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vTS-Ro-gTX" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                                <rect key="frame" x="48" y="8" width="52" height="20.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2d ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lId-Og-VbP" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                                                <rect key="frame" x="256" y="8" width="42" height="20.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="_test" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3SH-Rj-P3x" customClass="KTextView" customModule="Kurozora" customModuleProvider="target">
+                                                <rect key="frame" x="48" y="36.5" width="250" height="38"/>
+                                                <color key="textColor" systemColor="labelColor"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="vTS-Ro-gTX" firstAttribute="top" secondItem="xCg-WK-oOs" secondAttribute="top" id="Cb2-kU-gOh"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="lId-Og-VbP" secondAttribute="trailing" id="GU5-xA-0Fc"/>
+                                            <constraint firstItem="vTS-Ro-gTX" firstAttribute="top" secondItem="cwV-UP-jOj" secondAttribute="top" constant="8" id="XGF-FN-r8Y"/>
+                                            <constraint firstItem="3SH-Rj-P3x" firstAttribute="leading" secondItem="vTS-Ro-gTX" secondAttribute="leading" id="XtC-nr-I6g"/>
+                                            <constraint firstItem="xCg-WK-oOs" firstAttribute="leading" secondItem="cwV-UP-jOj" secondAttribute="leadingMargin" id="YOx-HY-JoF"/>
+                                            <constraint firstItem="xCg-WK-oOs" firstAttribute="top" secondItem="cwV-UP-jOj" secondAttribute="top" constant="8" id="bR5-D7-kub"/>
+                                            <constraint firstItem="lId-Og-VbP" firstAttribute="top" secondItem="vTS-Ro-gTX" secondAttribute="top" id="emr-Ij-bBd"/>
+                                            <constraint firstItem="3SH-Rj-P3x" firstAttribute="trailing" secondItem="lId-Og-VbP" secondAttribute="trailing" id="flp-cA-wIV"/>
+                                            <constraint firstItem="lId-Og-VbP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vTS-Ro-gTX" secondAttribute="trailing" constant="10" id="jNe-5E-H7a"/>
+                                            <constraint firstItem="vTS-Ro-gTX" firstAttribute="leading" secondItem="xCg-WK-oOs" secondAttribute="trailing" constant="8" symbolic="YES" id="oKN-QA-RrG"/>
+                                            <constraint firstItem="lId-Og-VbP" firstAttribute="centerY" secondItem="vTS-Ro-gTX" secondAttribute="centerY" id="rSC-tE-IVG"/>
+                                            <constraint firstAttribute="bottom" secondItem="3SH-Rj-P3x" secondAttribute="bottom" constant="8" id="sxj-CM-h3u"/>
+                                            <constraint firstItem="3SH-Rj-P3x" firstAttribute="top" secondItem="vTS-Ro-gTX" secondAttribute="bottom" constant="8" symbolic="YES" id="tf1-ac-Tem"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="2"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="cwV-UP-jOj" firstAttribute="leading" secondItem="S23-Ao-1Rk" secondAttribute="leading" id="0hJ-fZ-kKt"/>
+                                    <constraint firstItem="S23-Ao-1Rk" firstAttribute="top" secondItem="S0c-80-c6W" secondAttribute="bottom" id="825-Zs-Ku4"/>
+                                    <constraint firstItem="cwV-UP-jOj" firstAttribute="top" secondItem="S23-Ao-1Rk" secondAttribute="bottom" constant="8" symbolic="YES" id="F7t-UO-kJk"/>
+                                    <constraint firstAttribute="bottom" secondItem="cwV-UP-jOj" secondAttribute="bottom" constant="8" id="GfD-7g-s2J"/>
+                                    <constraint firstItem="k7h-np-Ufc" firstAttribute="centerY" secondItem="S0c-80-c6W" secondAttribute="centerY" id="LiT-D7-5to"/>
+                                    <constraint firstItem="FgP-VV-4bc" firstAttribute="top" secondItem="S0c-80-c6W" secondAttribute="top" id="Xgi-rc-Riq"/>
+                                    <constraint firstItem="FgP-VV-4bc" firstAttribute="leading" secondItem="YBx-ol-UEo" secondAttribute="leadingMargin" id="eix-Wc-RAf"/>
+                                    <constraint firstItem="k7h-np-Ufc" firstAttribute="top" secondItem="S0c-80-c6W" secondAttribute="top" id="f6w-X7-Tkv"/>
+                                    <constraint firstItem="FgP-VV-4bc" firstAttribute="top" secondItem="YBx-ol-UEo" secondAttribute="top" constant="8" id="fRi-e1-rfD"/>
+                                    <constraint firstAttribute="trailing" secondItem="k7h-np-Ufc" secondAttribute="trailing" constant="8" id="gYP-zr-VRT"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="S23-Ao-1Rk" secondAttribute="trailing" id="gi2-fO-OFO"/>
+                                    <constraint firstItem="S0c-80-c6W" firstAttribute="leading" secondItem="FgP-VV-4bc" secondAttribute="trailing" constant="8" id="hlo-G5-KrJ"/>
+                                    <constraint firstItem="cwV-UP-jOj" firstAttribute="trailing" secondItem="S23-Ao-1Rk" secondAttribute="trailing" id="mKy-A3-hP6"/>
+                                    <constraint firstItem="k7h-np-Ufc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="S0c-80-c6W" secondAttribute="trailing" constant="10" id="sn5-vM-Ggn"/>
+                                    <constraint firstItem="S23-Ao-1Rk" firstAttribute="leading" secondItem="S0c-80-c6W" secondAttribute="leading" id="xAf-mU-ovt"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="leadingMargin" secondItem="YBx-ol-UEo" secondAttribute="leading" id="JGf-qU-oqC"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="YBx-ol-UEo" secondAttribute="trailing" id="e5f-Ri-7Y3"/>
+                            <constraint firstItem="YBx-ol-UEo" firstAttribute="top" secondItem="fg2-GQ-xCv" secondAttribute="bottom" constant="16" id="oCi-6H-ei4"/>
+                            <constraint firstItem="2VG-ft-hgW" firstAttribute="top" relation="greaterThanOrEqual" secondItem="YBx-ol-UEo" secondAttribute="bottom" constant="16" id="znv-iZ-Qpc"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="252-c9-bgN">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="1eR-sy-s2b">
+                            <connections>
+                                <action selector="dismissButtonPressed:" destination="FIK-fH-cLY" id="WY5-5m-Crt"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Send" style="done" id="Jhs-Hs-5sY">
+                            <connections>
+                                <action selector="sendButtonPressed:" destination="FIK-fH-cLY" id="uAp-ru-HZY"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="characterCountLabel" destination="k7h-np-Ufc" id="AMu-jN-YeV"/>
+                        <outlet property="commentPreviewContainer" destination="YBx-ol-UEo" id="bDt-6k-lHv"/>
+                        <outlet property="commentTextView" destination="S23-Ao-1Rk" id="k0B-oy-jst"/>
+                        <outlet property="currentUsernameLabel" destination="S0c-80-c6W" id="qWj-9X-K8U"/>
+                        <outlet property="dateLabel" destination="lId-Og-VbP" id="ujt-yX-FcY"/>
+                        <outlet property="opBodyTextView" destination="3SH-Rj-P3x" id="jBD-yS-ixe"/>
+                        <outlet property="opProfileImageView" destination="xCg-WK-oOs" id="bhJ-xv-oWa"/>
+                        <outlet property="opUsernameLabel" destination="vTS-Ro-gTX" id="81z-Gi-gIj"/>
+                        <outlet property="profileImageView" destination="FgP-VV-4bc" id="Uzz-iw-csn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="q1n-wc-ni4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="581" y="2914"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="VOi-of-pjh">
+            <objects>
+                <navigationController storyboardIdentifier="KFMReShareTextEditorKNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bSk-3X-HGt" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="I7V-hY-m5B">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="FIK-fH-cLY" kind="relationship" relationship="rootViewController" id="nkk-FN-x9H"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="88p-3R-Wfo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-181" y="2914"/>
+        </scene>
+        <!--Feed Message Text Editor View Controller-->
+        <scene sceneID="RJr-qg-fpB">
+            <objects>
+                <viewController storyboardIdentifier="KFeedMessageTextEditorViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Bwf-p5-zHb" customClass="KFeedMessageTextEditorViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jXH-hu-Mm5"/>
+                        <viewControllerLayoutGuide type="bottom" id="Tu0-jb-Q1H"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="ibO-Da-tD3">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zx8-Kw-x5t">
+                                <rect key="frame" x="20" y="104" width="374" height="113.5"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/User Profile" translatesAutoresizingMaskIntoConstraints="NO" id="kY2-fu-icv" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="8" y="8" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="44V-2n-mjF"/>
+                                            <constraint firstAttribute="width" secondItem="kY2-fu-icv" secondAttribute="height" multiplier="1:1" id="J66-Ly-aZc"/>
+                                            <constraint firstAttribute="width" constant="44" id="r5d-Wt-Jy2"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="748" text="Kirito" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RPn-w9-EvA" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="60" y="8" width="42.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="240" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cEI-jU-9lS">
+                                        <rect key="frame" x="342" y="8" width="24" height="20.5"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ylV-vR-Rhd" customClass="KTextView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="60" y="28.5" width="306" height="38"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="Bwf-p5-zHb" id="TaK-EH-Ljo"/>
+                                        </connections>
+                                    </textView>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" title="Not Safe For Work" translatesAutoresizingMaskIntoConstraints="NO" id="qhL-Md-fEg" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="317" y="74.5" width="51" height="31"/>
+                                    </switch>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" title="Spoiler" translatesAutoresizingMaskIntoConstraints="NO" id="EgE-4B-Lb6" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="197" y="74.5" width="51" height="31"/>
+                                    </switch>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NSFW" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kul-10-rfC" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="266" y="81" width="43" height="18"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Spoiler" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wJ5-GM-S1V" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="141" y="81" width="48" height="18"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailingMargin" secondItem="ylV-vR-Rhd" secondAttribute="trailing" id="58A-Vm-DbE"/>
+                                    <constraint firstItem="kY2-fu-icv" firstAttribute="leading" secondItem="Zx8-Kw-x5t" secondAttribute="leadingMargin" id="5Rl-qN-9Tz"/>
+                                    <constraint firstItem="RPn-w9-EvA" firstAttribute="leading" secondItem="kY2-fu-icv" secondAttribute="trailing" constant="8" id="Hzl-uc-F3g"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="qhL-Md-fEg" secondAttribute="trailing" id="Onh-Te-uqN"/>
+                                    <constraint firstItem="qhL-Md-fEg" firstAttribute="leading" secondItem="Kul-10-rfC" secondAttribute="trailing" constant="8" symbolic="YES" id="Ryb-zO-WTU"/>
+                                    <constraint firstItem="ylV-vR-Rhd" firstAttribute="top" secondItem="RPn-w9-EvA" secondAttribute="bottom" id="SLi-XK-lv6"/>
+                                    <constraint firstItem="qhL-Md-fEg" firstAttribute="top" secondItem="ylV-vR-Rhd" secondAttribute="bottom" constant="8" symbolic="YES" id="Tjc-u3-s6T"/>
+                                    <constraint firstAttribute="leadingMargin" relation="lessThanOrEqual" secondItem="wJ5-GM-S1V" secondAttribute="leading" constant="10" id="WvZ-O9-ygQ"/>
+                                    <constraint firstAttribute="trailing" secondItem="cEI-jU-9lS" secondAttribute="trailing" constant="8" id="bVP-vj-n0F"/>
+                                    <constraint firstItem="wJ5-GM-S1V" firstAttribute="centerY" secondItem="EgE-4B-Lb6" secondAttribute="centerY" id="dWB-ib-Ipv"/>
+                                    <constraint firstItem="cEI-jU-9lS" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="RPn-w9-EvA" secondAttribute="trailing" constant="10" id="fkG-l5-ttV"/>
+                                    <constraint firstItem="ylV-vR-Rhd" firstAttribute="leading" secondItem="RPn-w9-EvA" secondAttribute="leading" id="kqQ-VG-p9d"/>
+                                    <constraint firstItem="kY2-fu-icv" firstAttribute="top" secondItem="Zx8-Kw-x5t" secondAttribute="top" constant="8" id="nx5-gl-m2v"/>
+                                    <constraint firstItem="kY2-fu-icv" firstAttribute="top" secondItem="RPn-w9-EvA" secondAttribute="top" id="p8m-DZ-tw8"/>
+                                    <constraint firstItem="EgE-4B-Lb6" firstAttribute="leading" secondItem="wJ5-GM-S1V" secondAttribute="trailing" constant="8" symbolic="YES" id="pVv-Eo-EPW"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="EgE-4B-Lb6" secondAttribute="bottom" id="paG-Bs-gdi"/>
+                                    <constraint firstItem="cEI-jU-9lS" firstAttribute="top" secondItem="RPn-w9-EvA" secondAttribute="top" id="r59-17-p4s"/>
+                                    <constraint firstItem="cEI-jU-9lS" firstAttribute="centerY" secondItem="RPn-w9-EvA" secondAttribute="centerY" id="rtq-yd-Ol2"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="qhL-Md-fEg" secondAttribute="bottom" id="tDX-KI-7uw"/>
+                                    <constraint firstItem="Kul-10-rfC" firstAttribute="centerY" secondItem="qhL-Md-fEg" secondAttribute="centerY" id="twI-tl-Efi"/>
+                                    <constraint firstItem="Kul-10-rfC" firstAttribute="leading" secondItem="EgE-4B-Lb6" secondAttribute="trailing" constant="20" id="vG0-o6-mRE"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="Zx8-Kw-x5t" secondAttribute="trailing" id="4hS-R1-sm4"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="Zx8-Kw-x5t" secondAttribute="leading" id="8WF-8L-REm"/>
+                            <constraint firstItem="Tu0-jb-Q1H" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Zx8-Kw-x5t" secondAttribute="bottom" constant="16" id="CZ0-XD-5h9"/>
+                            <constraint firstItem="Zx8-Kw-x5t" firstAttribute="top" secondItem="jXH-hu-Mm5" secondAttribute="bottom" constant="16" id="Xrp-FB-o0u"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="QAa-a2-rIw">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="8Oh-gr-AmQ">
+                            <connections>
+                                <action selector="dismissButtonPressed:" destination="Bwf-p5-zHb" id="8RO-FK-62A"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Send" style="done" id="KHr-v2-Apu">
+                            <connections>
+                                <action selector="sendButtonPressed:" destination="Bwf-p5-zHb" id="G3i-ww-MyJ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="characterCountLabel" destination="cEI-jU-9lS" id="f5I-Qn-6Su"/>
+                        <outlet property="commentPreviewContainer" destination="Zx8-Kw-x5t" id="MmC-bx-Tfh"/>
+                        <outlet property="commentTextView" destination="ylV-vR-Rhd" id="iVf-W6-lyZ"/>
+                        <outlet property="currentUsernameLabel" destination="RPn-w9-EvA" id="pxT-sj-0Of"/>
+                        <outlet property="isNSFWSwitch" destination="qhL-Md-fEg" id="aDZ-dn-wnm"/>
+                        <outlet property="isSpoilerSwitch" destination="EgE-4B-Lb6" id="OrX-uV-Eu0"/>
+                        <outlet property="profileImageView" destination="kY2-fu-icv" id="m6j-Sl-pr6"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6WD-Kw-9hv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="580" y="1533"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="1h6-CT-vcx">
+            <objects>
+                <navigationController storyboardIdentifier="KFeedMessageTextEditorKNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="omk-JT-iW1" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="9AC-8z-Ou2">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Bwf-p5-zHb" kind="relationship" relationship="rootViewController" id="h1y-Ge-QOf"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1kx-sS-POB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-181" y="1533"/>
         </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
         <image name="Placeholders/User Profile" width="300" height="300"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

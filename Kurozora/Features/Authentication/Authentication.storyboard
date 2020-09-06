@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16095" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5pL-t1-VJe">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5pL-t1-VJe">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16084.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17124"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -41,7 +41,7 @@
                                 <rect key="frame" x="20" y="396" width="374" height="104"/>
                                 <subviews>
                                     <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FGH-9M-cuk" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="97" y="0.0" width="180" height="42"/>
+                                        <rect key="frame" x="97.5" y="0.0" width="179" height="42"/>
                                         <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                         <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
@@ -82,6 +82,7 @@
                                 </constraints>
                             </imageView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="hgc-Av-a7C"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="0pE-C4-Ed3" secondAttribute="trailing" id="0qr-JJ-ceb"/>
@@ -97,7 +98,6 @@
                             <constraint firstAttribute="top" secondItem="vYQ-Ee-SuJ" secondAttribute="top" id="wPP-xs-5zp"/>
                             <constraint firstItem="wZQ-9T-UrF" firstAttribute="centerX" secondItem="fJg-Qu-t5Z" secondAttribute="centerX" id="yXW-Ss-IZl"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="hgc-Av-a7C"/>
                     </view>
                     <connections>
                         <outlet property="blurEffectView" destination="vYQ-Ee-SuJ" id="kbw-Y3-hn4"/>

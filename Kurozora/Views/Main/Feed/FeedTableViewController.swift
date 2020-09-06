@@ -47,9 +47,6 @@ class FeedTableViewController: KTableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		// Turn off activity indicator for now
-		_prefersActivityIndicatorHidden = true
-
 		// Add Refresh Control to Table View
 		tableView.refreshControl = refreshController
 		refreshController.theme_tintColor = KThemePicker.tintColor.rawValue
@@ -101,19 +98,17 @@ class FeedTableViewController: KTableViewController {
 			guard let self = self else { return }
 			switch result {
 			case .success(let feedMessageResponse):
-				DispatchQueue.main.async {
-					// Reset data if necessary
-					if self.nextPageURL == nil {
-						self.feedMessages = []
-					}
-
-					// Append new data and save next page url
-					self.feedMessages.append(contentsOf: feedMessageResponse.data)
-					self.nextPageURL = feedMessageResponse.next
-
-					// Reset refresh controller title
-					self.refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh your explore feed!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.feedMessages = []
 				}
+
+				// Append new data and save next page url
+				self.feedMessages.append(contentsOf: feedMessageResponse.data)
+				self.nextPageURL = feedMessageResponse.next
+
+				// Reset refresh controller title
+				self.refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh your explore feed!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
 			case .failure: break
 			}
 		}
@@ -152,10 +147,10 @@ class FeedTableViewController: KTableViewController {
 
 	@IBAction func postMessageButton(_ sender: UIBarButtonItem) {
 		WorkflowController.shared.isSignedIn {
-			if let kFeedMessageEditorViewController = R.storyboard.textEditor.kFeedMessageEditorViewController() {
-				kFeedMessageEditorViewController.delegate = self
+			if let kFeedMessageTextEditorViewController = R.storyboard.textEditor.kFeedMessageTextEditorViewController() {
+				kFeedMessageTextEditorViewController.delegate = self
 
-				let kurozoraNavigationController = KNavigationController.init(rootViewController: kFeedMessageEditorViewController)
+				let kurozoraNavigationController = KNavigationController.init(rootViewController: kFeedMessageTextEditorViewController)
 				kurozoraNavigationController.navigationBar.prefersLargeTitles = false
 				self.present(kurozoraNavigationController)
 			}
@@ -164,6 +159,14 @@ class FeedTableViewController: KTableViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if segue.identifier == R.segue.feedTableViewController.feedMessageDetailsSegue.identifier {
+			// Show detail for explore cell
+			if let fmDetailsTableViewController = segue.destination as? FMDetailsTableViewController {
+				if let feedMessageID = sender as? Int {
+					fmDetailsTableViewController.feedMessageID = feedMessageID
+				}
+			}
+		}
 	}
 }
 
@@ -178,9 +181,16 @@ extension FeedTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		guard let feedMessageCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedMessageCell, for: indexPath) else {
-			fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.feedMessageCell.identifier)")
+		let feedMessageCell: BaseFeedMessageCell!
+
+		if feedMessages[indexPath.row].attributes.isReShare {
+			feedMessageCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedMessageReShareCell, for: indexPath)
+		} else {
+			feedMessageCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedMessageCell, for: indexPath)
 		}
+
+		feedMessageCell.liveReplyEnabled = false
+		feedMessageCell.liveReShareEnabled = true
 		feedMessageCell.feedMessage = feedMessages[indexPath.row]
 		return feedMessageCell
 	}
@@ -188,6 +198,12 @@ extension FeedTableViewController {
 
 // MARK: - UITableViewDelegate
 extension FeedTableViewController {
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		if let baseFeedMessageCell = tableView.cellForRow(at: indexPath) as? BaseFeedMessageCell {
+			self.performSegue(withIdentifier: R.segue.feedTableViewController.feedMessageDetailsSegue.identifier, sender: baseFeedMessageCell.feedMessage.id)
+		}
+	}
+
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 		let numberOfRows = tableView.numberOfRows()
 
@@ -200,10 +216,14 @@ extension FeedTableViewController {
 }
 
 // MARK: - KRichTextEditorViewDelegate
-extension FeedTableViewController: KFeedMessageEditorViewDelegate {
+extension FeedTableViewController: KFeedMessageTextEditorViewDelegate {
 	func updateMessages(with feedMessages: [FeedMessage]) {
 		for feedMessage in feedMessages {
 			self.feedMessages.prepend(feedMessage)
 		}
+	}
+
+	func segueToOPFeedDetails(_ feedMessage: FeedMessage) {
+		self.performSegue(withIdentifier: R.segue.feedTableViewController.feedMessageDetailsSegue.identifier, sender: feedMessage.id)
 	}
 }

@@ -100,14 +100,15 @@ extension ShowDetailHeaderCollectionViewCell {
 			self.favoriteButton.isHidden = true
 			self.favoriteButton.isUserInteractionEnabled = false
 		} else {
-			if animated {
-				self.favoriteButton.animateBounce()
-			}
 			self.favoriteButton.isHidden = false
 			self.favoriteButton.isUserInteractionEnabled = true
 
 			self.favoriteButton.setImage(favoriteStatus.imageValue, for: .normal)
 			NotificationCenter.default.post(name: .KFavoriteShowsListDidChange, object: nil)
+
+			if animated {
+				self.favoriteButton.animateBounce()
+			}
 		}
 	}
 
@@ -122,14 +123,15 @@ extension ShowDetailHeaderCollectionViewCell {
 			self.reminderButton.isHidden = true
 			self.reminderButton.isUserInteractionEnabled = false
 		} else {
-			if animated {
-				self.reminderButton.animateBounce()
-			}
 			self.reminderButton.isHidden = false
 			self.reminderButton.isUserInteractionEnabled = true
 
 			self.reminderButton.setImage(reminderStatus.imageValue, for: .normal)
 			NotificationCenter.default.post(name: .KFavoriteShowsListDidChange, object: nil)
+
+			if animated {
+				self.reminderButton.animateBounce()
+			}
 		}
 	}
 

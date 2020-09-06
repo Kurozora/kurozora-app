@@ -205,7 +205,7 @@ class ProfileTableViewController: KTableViewController {
 
 		// Configure reputation count
 		if let reputationCount = self.user?.attributes.reputationCount {
-			let count = NSAttributedString(string: "\((reputationCount >= 10000) ? reputationCount.kFormatted : "\(reputationCount)")", attributes: [
+			let count = NSAttributedString(string: reputationCount.kkFormatted, attributes: [
 				NSAttributedString.Key.foregroundColor: KThemePicker.textColor.colorValue,
 				NSAttributedString.Key.paragraphStyle: centerAlign
 			])
@@ -222,7 +222,7 @@ class ProfileTableViewController: KTableViewController {
 
 		// Configure following & followers count
 		if let followingCount = self.user?.attributes.followingCount {
-			let count = NSAttributedString(string: "\((followingCount >= 10000) ? followingCount.kFormatted : "\(followingCount)")", attributes: [
+			let count = NSAttributedString(string: followingCount.kkFormatted, attributes: [
 				NSAttributedString.Key.foregroundColor: KThemePicker.textColor.colorValue,
 				NSAttributedString.Key.paragraphStyle: centerAlign
 			])
@@ -238,7 +238,7 @@ class ProfileTableViewController: KTableViewController {
 		}
 
 		if let followerCount = self.user?.attributes.followerCount {
-			let count = NSAttributedString(string: "\((followerCount >= 10000) ? followerCount.kFormatted : "\(followerCount)")", attributes: [
+			let count = NSAttributedString(string: followerCount.kkFormatted, attributes: [
 				NSAttributedString.Key.foregroundColor: KThemePicker.textColor.colorValue,
 				NSAttributedString.Key.paragraphStyle: centerAlign
 			])
