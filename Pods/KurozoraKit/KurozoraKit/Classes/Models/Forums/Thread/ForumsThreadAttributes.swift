@@ -29,6 +29,9 @@ extension ForumsThread {
 		/// The metrics of the forums thread.
 		public let metrics: ForumsThread.Attributes.Metrics
 
+		/// The vote action of a forums vote.
+		public let voteAction: VoteStatus
+
 		/// The date the forums thread was created at.
 		public let createdAt: String
 	}

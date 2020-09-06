@@ -16,6 +16,9 @@ extension KKEndpoint.Feed {
 		/// The endpoint to heart or unheart a feed message.
 		case heart(_ messageID: Int)
 
+		/// The endpoint to the replies of a feed message.
+		case replies(_ messageID: Int)
+
 		// MARK: - Properties
 		/// The endpoint value of the Messages API type.
 		var endpointValue: String {
@@ -24,6 +27,8 @@ extension KKEndpoint.Feed {
 				return "feed/messages/\(messageID)"
 			case .heart(let messageID):
 				return "feed/messages/\(messageID)/heart"
+			case .replies(let messageID):
+				return "feed/messages/\(messageID)/replies"
 			}
 		}
 	}

@@ -7,17 +7,17 @@
 
 extension FeedMessage.Attributes {
 	/**
-		A root object that stores information about a single feed message metrics, such as the message's total hearts, and weighted score.
+		A root object that stores information about a single feed message metrics, such as the message's total hearts count, and replies count.
 	*/
 	public struct Metrics: Codable {
 		// MARK: - Properties
-		/// The total count of hearts.
-		public let count: Int
-
-		/// The total weight of hearts.
-		public let weight: Int
-
 		/// The total number of hearts.
-		public let hearts: Int
+		public var heartCount: Int
+
+		/// The total number of replies.
+		public var replyCount: Int
+
+		/// The total number of re-shares.
+		public var reShareCount: Int
 	}
 }

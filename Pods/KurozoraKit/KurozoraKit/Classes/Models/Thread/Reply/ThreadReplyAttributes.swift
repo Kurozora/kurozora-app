@@ -19,5 +19,8 @@ extension ThreadReply {
 
 		/// The metrics of the forums thread.
 		public let metrics: ThreadReply.Attributes.Metrics
+
+		/// The vote action of a forums vote.
+		public let voteAction: VoteStatus
 	}
 }
