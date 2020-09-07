@@ -11,6 +11,39 @@ import SCLAlertView
 
 extension KurozoraKit {
 	/**
+		Fetch a list of given user's feed messages.
+
+		- Parameter userID: The id of the user whose feed messages to fetch.
+		- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+		- Parameter limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
+		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
+	*/
+	public func getFeedMessages(forUserID userID: Int, next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<FeedMessageResponse, KKAPIError>) -> Void) {
+		let usersFeedMessages = next ?? KKEndpoint.Users.feedMessages(userID).endpointValue
+		let request: APIRequest<FeedMessageResponse, KKAPIError> = tron.codable.request(usersFeedMessages).buildURL(.relativeToBaseURL)
+
+		request.headers = headers
+		if User.isSignedIn {
+			request.headers["kuro-auth"] = self.authenticationKey
+		}
+
+		request.parameters["limit"] = limit
+
+		request.method = .get
+		request.perform(withSuccess: { feedMessageResponse in
+			completionHandler(.success(feedMessageResponse))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
+			if self.services.showAlerts {
+				SCLAlertView().showError("Can't get feed messages 😔", subTitle: error.message)
+			}
+			print("Received get feed messages error: \(error.message ?? "No message available")")
+			completionHandler(.failure(error))
+		})
+	}
+
+	/**
 		Fetch a list of home feed messages.
 
 		- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.

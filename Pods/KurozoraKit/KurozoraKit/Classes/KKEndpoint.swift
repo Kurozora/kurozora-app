@@ -169,6 +169,9 @@ internal struct KKEndpoint {
 		/// The edpoint to reset a user's password.
 		case resetPassword
 
+		/// The endpoint to the feed messages.
+		case feedMessages(_ userID: Int)
+
 		/// The endpoint to follow or unfollow a user.
 		case follow(_ userID: Int)
 
@@ -201,6 +204,8 @@ internal struct KKEndpoint {
 				return "users/signup/siwa"
 			case .resetPassword:
 				return "users/reset-password"
+			case .feedMessages(let userID):
+				return "users/\(userID)/feed-messages"
 			case .follow(let userID):
 				return "users/\(userID)/follow"
 			case .followers(let userID):

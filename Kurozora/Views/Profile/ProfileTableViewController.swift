@@ -16,51 +16,30 @@ class ProfileTableViewController: KTableViewController {
 
 	@IBOutlet weak var profileImageView: ProfileImageView!
 	@IBOutlet weak var usernameLabel: KLabel!
-	@IBOutlet weak var onlineIndicatorLabel: UILabel! {
-		didSet {
-			onlineIndicatorLabel.theme_textColor = KThemePicker.subTextColor.rawValue
-		}
-	}
+	@IBOutlet weak var onlineIndicatorLabel: KSecondaryLabel!
 	@IBOutlet weak var bannerImageView: UIImageView!
 	@IBOutlet weak var bioTextView: KTextView!
 
 	@IBOutlet weak var followButton: KTintedButton!
 
 	@IBOutlet weak var buttonsStackView: UIStackView!
-	@IBOutlet weak var reputationButton: UIButton! {
-		didSet {
-			reputationButton.theme_setTitleColor(KThemePicker.textColor.rawValue, forState: .normal)
-		}
-	}
-	@IBOutlet weak var badgesButton: UIButton! {
-		didSet {
-			badgesButton.theme_setTitleColor(KThemePicker.textColor.rawValue, forState: .normal)
-		}
-	}
-	@IBOutlet weak var followingButton: UIButton! {
-		didSet {
-			followingButton.theme_setTitleColor(KThemePicker.textColor.rawValue, forState: .normal)
-		}
-	}
-	@IBOutlet weak var followersButton: UIButton! {
-		didSet {
-			followersButton.theme_setTitleColor(KThemePicker.textColor.rawValue, forState: .normal)
-		}
-	}
+	@IBOutlet weak var reputationButton: KButton!
+	@IBOutlet weak var badgesButton: KButton!
+	@IBOutlet weak var followingButton: KButton!
+	@IBOutlet weak var followersButton: KButton!
 
 	@IBOutlet weak var proBadgeButton: UIButton!
 	@IBOutlet weak var tagBadgeButton: UIButton!
 
-	@IBOutlet weak var selectBannerImageButton: UIButton!
-	@IBOutlet weak var selectProfileImageButton: UIButton!
+	@IBOutlet weak var selectBannerImageButton: KButton!
+	@IBOutlet weak var selectProfileImageButton: KButton!
 	@IBOutlet weak var editProfileButton: KTintedButton!
 
 	@IBOutlet weak var separatorView: SeparatorView!
 	@IBOutlet weak var bannerImageViewHeightConstraint: NSLayoutConstraint!
 
 	// MARK: - Properties
-	var currentImageView: UIImageView?
-	var placeholderText = "Describe yourself!"
+	var refreshController = UIRefreshControl()
 
 	var userID = User.current?.id ?? 0
 	var user: User! = User.current {
@@ -78,7 +57,15 @@ class ProfileTableViewController: KTableViewController {
 			}
 		}
 	}
-	var feedMessages: [FeedMessage]? = nil
+	var feedMessages: [FeedMessage] = [] {
+		didSet {
+			tableView.reloadEmptyDataSet()
+		}
+	}
+	var nextPageURL: String?
+
+	var currentImageView: UIImageView?
+	var placeholderText = "Describe yourself!"
 	var editingMode: Bool = false
 
 	var imagePicker = UIImagePickerController()
@@ -108,15 +95,15 @@ class ProfileTableViewController: KTableViewController {
 		self.view.setNeedsUpdateConstraints()
 		self.view.layoutIfNeeded()
 
-		// Setup refresh controller
-		refreshControl?.theme_tintColor = KThemePicker.tintColor.rawValue
-		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh posts!", attributes: [NSAttributedString.Key.foregroundColor: UIColor.kurozora])
-		refreshControl?.addTarget(self, action: #selector(refreshPostsData(_:)), for: .valueChanged)
+		// Add Refresh Control to Table View
+		tableView.refreshControl = refreshController
+		refreshController.theme_tintColor = KThemePicker.tintColor.rawValue
+		refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh profile details!", attributes: [NSAttributedString.Key.foregroundColor: UIColor.kurozora])
+		refreshController.addTarget(self, action: #selector(refreshProfileData(_:)), for: .valueChanged)
 
 		// Fetch posts
 		DispatchQueue.global(qos: .background).async {
 			self.fetchUserDetails()
-			self.fetchPosts()
 		}
 	}
 
@@ -129,11 +116,22 @@ class ProfileTableViewController: KTableViewController {
 	}
 
 	// MARK: - Functions
+	/**
+		Refresh the profile by fetching new items from the server.
+
+		- Parameter sender: The object requesting the refresh.
+	*/
+	@objc private func refreshProfileData(_ sender: Any) {
+		refreshController.attributedTitle = NSAttributedString(string: "Refreshing profile details...", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+		self.nextPageURL = nil
+		self.fetchUserDetails()
+	}
+
 	override func setupEmptyDataSetView() {
 		tableView.emptyDataSetView { [weak self] (view) in
 			guard let self = self else { return }
 
-			let detailLabel = self.user.id == User.current?.id ? "There are no posts on your timeline!" : "There are no posts on this timeline! Be the first to post :D"
+			let detailLabel = self.user.id == User.current?.id ? "There are no messages on your feed!" : "There are no messages on this feed! Be the first to message :D"
 			let verticalOffset = (self.tableView.tableHeaderView?.height ?? 0 - self.view.height) / 2
 
 			view.titleLabelString(NSAttributedString(string: "No Posts", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
@@ -146,22 +144,30 @@ class ProfileTableViewController: KTableViewController {
 		}
 	}
 
-	/**
-		Refresh the posts data by fetching new items from the server.
-
-		- Parameter sender: The object requesting the refresh.
-	*/
-	@objc private func refreshPostsData(_ sender: Any) {
-		// Fetch posts data
-		refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing posts...", attributes: [NSAttributedString.Key.foregroundColor: UIColor.kurozora])
-		fetchPosts()
-	}
-
 	/// Fetches posts for the user whose page is being viewed.
-	private func fetchPosts() {
+	private func fetchFeedMessages() {
+		KService.getFeedMessages(forUserID: self.userID, next: nextPageURL) { [weak self] result in
+			guard let self = self else { return }
+			switch result {
+			case .success(let feedMessageResponse):
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.feedMessages = []
+				}
+
+				// Append new data and save next page url
+				self.feedMessages.append(contentsOf: feedMessageResponse.data)
+				self.nextPageURL = feedMessageResponse.next
+
+				if self.tableView.numberOfSections != 0 {
+					self.tableView.reloadSections([0], with: .automatic)
+				}
+			case .failure: break
+			}
+		}
+
 		DispatchQueue.main.async {
-			self.tableView.reloadData()
-			self.refreshControl?.endRefreshing()
+			self.refreshController.endRefreshing()
 		}
 	}
 
@@ -172,9 +178,14 @@ class ProfileTableViewController: KTableViewController {
 			switch result {
 			case .success(let users):
 				self.user = users.first
+
+				// Reset refresh controller title
+				self.refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh profile details!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
 			case .failure: break
 			}
 		}
+
+		self.fetchFeedMessages()
 	}
 
 	/// Configure the profile view with the details of the user whose page is being viewed.
@@ -199,7 +210,7 @@ class ProfileTableViewController: KTableViewController {
 		}
 
 		// Configure user bio
-		if let biography = self.user?.attributes.biography, !biography.isEmpty {
+		if let biography = self.user?.attributes.biography {
 			self.bioTextView.text = biography
 		}
 
@@ -409,27 +420,34 @@ class ProfileTableViewController: KTableViewController {
 		- Parameter sender: The object requesting the changes to be applied.
 	*/
 	@objc func applyProfileEdit(_ sender: UIBarButtonItem) {
-		let bioText = bioTextView.text.trimmed
-		var profileImage = profileImageView.image ?? UIImage()
-		var bannerImage = bannerImageView.image ?? UIImage()
-		var shouldUpdate = true
-//		var shouldUpdateProfileImage = true
+		var bioText: String? = bioTextView.text.trimmed
+		var profileImage = profileImageView.image
+		var bannerImage = bannerImageView.image
+		var bioTextUnchanged = false
 
 		// If everything is the same then dismiss and don't send a request to apply new information.
-		if self.bioTextCache == bioText && self.profileImageCache == profileImage && self.bannerImageCache == bannerImage {
-			shouldUpdate = false
-			self.editMode(shouldUpdate)
+		if self.bioTextCache == self.placeholderText, self.bioTextView.textColor == KThemePicker.textFieldPlaceholderTextColor.colorValue {
+			bioTextUnchanged = true
+			bioText = nil
+		}
+
+		if bioTextUnchanged && self.profileImageCache == profileImage && self.bannerImageCache == bannerImage {
+			// Nothing to change, clear the cache.
+			self.bioTextCache = nil
+			self.profileImageCache = nil
+			self.bannerImageCache = nil
+			self.editMode(false)
+			return
 		}
 
 		// If the profile image is the same, then ignore.
 		if self.profileImageCache == profileImage {
-			profileImage = UIImage()
-//			shouldUpdateProfileImage = false
+			profileImage = UIImage().cropped(to: .zero)
 		}
 
 		// If the banner is the same, then ignore.
 		if self.bannerImageCache == bannerImage {
-			bannerImage = UIImage()
+			bannerImage = UIImage().cropped(to: .zero)
 		}
 
 		// User wants to save changes, clear the cache.
@@ -437,14 +455,12 @@ class ProfileTableViewController: KTableViewController {
 		self.profileImageCache = nil
 		self.bannerImageCache = nil
 
-		if shouldUpdate {
-			KService.updateInformation(biography: bioText, bannerImage: bannerImage, profileImage: profileImage) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success:
-					self.editMode(false)
-				case .failure: break
-				}
+		KService.updateInformation(biography: bioText, bannerImage: bannerImage, profileImage: profileImage) { [weak self] result in
+			guard let self = self else { return }
+			switch result {
+			case .success:
+				self.editMode(false)
+			case .failure: break
 			}
 		}
 	}
@@ -525,7 +541,7 @@ class ProfileTableViewController: KTableViewController {
 	// MARK: - IBActions
 	@IBAction func editProfileButtonPressed(_ sender: UIButton) {
 		// Cache current profile data
-		self.bioTextCache = self.bioTextView.text
+		self.bioTextCache = self.bioTextView.text.isNilOrEmpty ? placeholderText : self.bioTextView.text.trimmed
 		self.profileImageCache = self.profileImageView.image
 		self.bannerImageCache = self.bannerImageView.image
 
@@ -570,22 +586,74 @@ class ProfileTableViewController: KTableViewController {
 
 // MARK: - UITableViewDataSource
 extension ProfileTableViewController {
+	override func numberOfSections(in tableView: UITableView) -> Int {
+		return 1
+	}
+
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		guard let postCount = self.feedMessages?.count else { return 0 }
-		return postCount
+		return self.feedMessages.count
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		guard let feedMessageCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedMessageCell, for: indexPath) else {
-			fatalError("Cannot dequeue cell with reuse identifier \(R.reuseIdentifier.feedMessageCell.identifier)")
+		let feedMessageCell: BaseFeedMessageCell!
+
+		if feedMessages[indexPath.row].attributes.isReShare || feedMessages[indexPath.row].attributes.isReply {
+			feedMessageCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedMessageReShareCell, for: indexPath)
+		} else {
+			feedMessageCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedMessageCell, for: indexPath)
 		}
-		feedMessageCell.feedMessage = self.feedMessages?[indexPath.row]
+
+		feedMessageCell.liveReplyEnabled = User.current?.id == self.userID
+		feedMessageCell.liveReShareEnabled = User.current?.id == self.userID
+		feedMessageCell.feedMessage = self.feedMessages[indexPath.row]
 		return feedMessageCell
 	}
 }
 
 // MARK: - UITableViewDelegate
 extension ProfileTableViewController {
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		if let baseFeedMessageCell = tableView.cellForRow(at: indexPath) as? BaseFeedMessageCell {
+			self.performSegue(withIdentifier: R.segue.feedTableViewController.feedMessageDetailsSegue.identifier, sender: baseFeedMessageCell.feedMessage.id)
+		}
+	}
+
+	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+		let numberOfRows = tableView.numberOfRows()
+
+		if indexPath.row == numberOfRows - 5 {
+			if self.nextPageURL != nil {
+				self.fetchFeedMessages()
+			}
+		}
+	}
+}
+
+// MARK: - KTableViewDataSource
+extension ProfileTableViewController {
+	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
+		return [
+			FeedMessageCell.self,
+			FeedMessageReShareCell.self
+		]
+	}
+}
+
+// MARK: - KRichTextEditorViewDelegate
+extension ProfileTableViewController: KFeedMessageTextEditorViewDelegate {
+	func updateMessages(with feedMessages: [FeedMessage]) {
+		for feedMessage in feedMessages {
+			self.feedMessages.prepend(feedMessage)
+		}
+
+		if self.tableView.numberOfSections != 0 {
+			self.tableView.reloadSections([0], with: .automatic)
+		}
+	}
+
+	func segueToOPFeedDetails(_ feedMessage: FeedMessage) {
+		self.performSegue(withIdentifier: R.segue.profileTableViewController.feedMessageDetailsSegue.identifier, sender: feedMessage.id)
+	}
 }
 
 // MARK: - UIImagePickerControllerDelegate

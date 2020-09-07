@@ -31,6 +31,25 @@ extension KKEndpoint.Me {
 	}
 }
 
+// MARK: - Feed
+extension KKEndpoint.Me {
+	/// The set of available Feed Messages API endpoint types.
+	internal enum Feed {
+		// MARK: - Cases
+		/// The endpoint to the authenticated user's feed messages list.
+		case messages
+
+		// MARK: - Properties
+		/// The endpoint value of the Feed Messages API type.
+		var endpointValue: String {
+			switch self {
+			case .messages:
+				return "me/feed-messages"
+			}
+		}
+	}
+}
+
 // MARK: - Library
 extension KKEndpoint.Me {
 	/// The set of available Library API endpoint types.

@@ -452,6 +452,7 @@
 		66E46DFD24FDAF7B009938E1 /* FMDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E46DFC24FDAF7B009938E1 /* FMDetailsTableViewController.swift */; };
 		66E46DFF25055FEA009938E1 /* Int+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E46DFE25055FEA009938E1 /* Int+Kurozora.swift */; };
 		66E46E0125056535009938E1 /* CellActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E46E0025056535009938E1 /* CellActionButton.swift */; };
+		66E46E05250666AE009938E1 /* FeedMessageReShareCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66E46E04250666AE009938E1 /* FeedMessageReShareCell.xib */; };
 		66E54EBE244E1579007248EE /* String+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E54EBD244E1579007248EE /* String+UIImage.swift */; };
 		66E54EC0244E160F007248EE /* String+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E54EBF244E160F007248EE /* String+Date.swift */; };
 		66E54EC3244E1698007248EE /* Array+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E54EC2244E1698007248EE /* Array+String.swift */; };
@@ -961,6 +962,7 @@
 		66E46DFC24FDAF7B009938E1 /* FMDetailsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDetailsTableViewController.swift; sourceTree = "<group>"; };
 		66E46DFE25055FEA009938E1 /* Int+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Kurozora.swift"; sourceTree = "<group>"; };
 		66E46E0025056535009938E1 /* CellActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellActionButton.swift; sourceTree = "<group>"; };
+		66E46E04250666AE009938E1 /* FeedMessageReShareCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedMessageReShareCell.xib; sourceTree = "<group>"; };
 		66E54EBD244E1579007248EE /* String+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+UIImage.swift"; sourceTree = "<group>"; };
 		66E54EBF244E160F007248EE /* String+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Date.swift"; sourceTree = "<group>"; };
 		66E54EC2244E1698007248EE /* Array+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+String.swift"; sourceTree = "<group>"; };
@@ -2467,6 +2469,7 @@
 				66CE1AFE209B59600007A4DE /* CommentCell.xib */,
 				66BF02B3209C997F00BDAF41 /* CommentImageCell.xib */,
 				66CB8D5124F83FE00047A2CF /* FeedMessageCell.xib */,
+				66E46E04250666AE009938E1 /* FeedMessageReShareCell.xib */,
 				66CB8D4D24F83ECD0047A2CF /* PostImageCell.xib */,
 				66BF02B6209CAACD00BDAF41 /* PostLinkCell.xib */,
 				66CE1B06209BAE1B0007A4DE /* ShowMoreCell.xib */,
@@ -2999,6 +3002,7 @@
 				668B166F23EDF7FC00C1306A /* App-Icon-iPad-Pro-Kurogram@2x.png in Resources */,
 				668B166423EDF0CF00C1306A /* App-Icon-iPhone-Red@2x.png in Resources */,
 				6675263122280ACB007C1617 /* Night.plist in Resources */,
+				66E46E05250666AE009938E1 /* FeedMessageReShareCell.xib in Resources */,
 				66CE8114246092FF00DB0C49 /* ServicePreviewTableViewCell.xib in Resources */,
 				66160C40215C2DEB00D0D722 /* Reachability.storyboard in Resources */,
 				6633A52924A3DA11003C6390 /* InformationButtonCollectionViewCell.xib in Resources */,

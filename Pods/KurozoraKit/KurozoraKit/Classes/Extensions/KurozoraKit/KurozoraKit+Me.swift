@@ -114,16 +114,10 @@ extension KurozoraKit {
 
 		request.method = .post
 		if let biography = biography {
-			request.parameters["biography"] = biography.isEmpty ? NSNull() : biography
-		}
-		if bannerImage?.size.width == 0 {
-			request.parameters["bannerImage"] = NSNull()
-		}
-		if profileImage?.size.width == 0 {
-			request.parameters["profileImage"] = NSNull()
+			request.parameters["biography"] = biography
 		}
 		if let username = username {
-			request.parameters["username"] = username.isEmpty ? NSNull() : username
+			request.parameters["username"] = username
 		}
 
 		request.perform(withSuccess: { userUpdateResponse in

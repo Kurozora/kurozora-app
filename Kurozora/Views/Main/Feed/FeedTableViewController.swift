@@ -21,7 +21,7 @@ class FeedTableViewController: KTableViewController {
 	var feedMessages: [FeedMessage] = [] {
 		didSet {
 			_prefersActivityIndicatorHidden = true
-			tableView.reloadData()
+			self.tableView.reloadEmptyDataSet()
 		}
 	}
 	var nextPageURL: String?
@@ -106,6 +106,10 @@ class FeedTableViewController: KTableViewController {
 				// Append new data and save next page url
 				self.feedMessages.append(contentsOf: feedMessageResponse.data)
 				self.nextPageURL = feedMessageResponse.next
+
+				if self.tableView.numberOfSections != 0 {
+					self.tableView.reloadSections([0], with: .automatic)
+				}
 
 				// Reset refresh controller title
 				self.refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh your explore feed!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
@@ -215,12 +219,24 @@ extension FeedTableViewController {
 	}
 }
 
+// MARK: - KTableViewDataSource
+extension FeedTableViewController {
+	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
+		return [
+			FeedMessageCell.self,
+			FeedMessageReShareCell.self
+		]
+	}
+}
+
 // MARK: - KRichTextEditorViewDelegate
 extension FeedTableViewController: KFeedMessageTextEditorViewDelegate {
 	func updateMessages(with feedMessages: [FeedMessage]) {
 		for feedMessage in feedMessages {
 			self.feedMessages.prepend(feedMessage)
 		}
+
+		self.tableView.reloadSections([0], with: .automatic)
 	}
 
 	func segueToOPFeedDetails(_ feedMessage: FeedMessage) {
