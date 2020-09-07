@@ -580,6 +580,10 @@ class ProfileTableViewController: KTableViewController {
 			} else if segue.identifier == R.segue.profileTableViewController.followersSegue.identifier {
 				followTableViewController.followList = .followers
 			}
+		} else if let fmDetailsTableViewController = segue.destination as? FMDetailsTableViewController {
+			if let feedMessageID = sender as? Int {
+				fmDetailsTableViewController.feedMessageID = feedMessageID
+			}
 		}
 	}
 }

@@ -139,9 +139,9 @@ class BaseFeedMessageCell: KTableViewCell {
 
 		- Parameter view: The view to which the tap gesture should be attached.
 	*/
-	func configureProfilePageGesture(for view: UIView) {
+	fileprivate func configureProfilePageGesture(for view: UIView) {
 		if view.gestureRecognizers.isNilOrEmpty {
-			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(usernameLabelPressed))
+			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(usernameLabelPressed(_:)))
 			gestureRecognizer.numberOfTouchesRequired = 1
 			gestureRecognizer.numberOfTapsRequired = 1
 			view.addGestureRecognizer(gestureRecognizer)
@@ -156,7 +156,7 @@ class BaseFeedMessageCell: KTableViewCell {
 
 	/// Segues to message details.
 	@objc func showOPMessage(_ gestureRecognizer: UITapGestureRecognizer) {
-		guard let opMessage = self.feedMessage.relationships.messages?.data.first else { return }
+		guard let opMessage = self.feedMessage.relationships.parent?.data.first else { return }
 		self.parentViewController?.performSegue(withIdentifier: R.segue.feedTableViewController.feedMessageDetailsSegue.identifier, sender: opMessage.id)
 	}
 
@@ -311,7 +311,7 @@ class BaseFeedMessageCell: KTableViewCell {
 	}
 
 	// MARK: - IBActions
-	@objc func usernameLabelPressed(sender: AnyObject) {
+	@objc func usernameLabelPressed(_ sender: AnyObject) {
 		self.visitPosterProfilePage()
 	}
 

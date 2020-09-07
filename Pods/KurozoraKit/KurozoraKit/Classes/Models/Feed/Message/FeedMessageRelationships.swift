@@ -14,6 +14,9 @@ extension FeedMessage {
 		/// The user object the feed message belongs to.
 		public let users: UserResponse
 
+		/// The parent message object the feed message belongs to.
+		public let parent: FeedMessageResponse?
+
 		/// The message object the feed message belongs to.
 		public let messages: FeedMessageResponse?
 	}
