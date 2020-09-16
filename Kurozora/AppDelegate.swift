@@ -27,6 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	// MARK: - AppDelegate
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
 		// Override point for customization after application launch.
+		// Init payment queue
+		SKPaymentQueue.default().add(KStoreObserver.shared)
+
 		// Initialize theme
 		KThemeStyle.initAppTheme()
 
@@ -49,9 +52,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		// Global app tint color
 		self.window?.theme_tintColor = KThemePicker.tintColor.rawValue
-
-		// Init payment queue
-		SKPaymentQueue.default().add(KStoreObserver.shared)
 
 		// Check network availability
 		if isUnreachable {

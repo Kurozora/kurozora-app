@@ -128,6 +128,23 @@ internal struct KKEndpoint {
 		}
 	}
 
+	// MARK: - Store
+	/// The set of available Store API endpoint types.
+	internal enum Store {
+		// MARK: - Cases
+		/// The endpoint to verify a receipt.
+		case verify
+
+		// MARK: - Properties
+		/// The endpoint value of the Store API type.
+		var endpointValue: String {
+			switch self {
+			case .verify:
+				return "store/verify"
+			}
+		}
+	}
+
 	// MARK: - Themes
 	/// The set of available Themes API endpoint types.
 	internal enum Themes {

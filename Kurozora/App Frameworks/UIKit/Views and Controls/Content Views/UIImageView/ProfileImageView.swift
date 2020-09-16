@@ -43,6 +43,7 @@ class ProfileImageView: CircularImageView {
 	func sharedInit() {
 		self.image = R.image.placeholders.userProfile()
 
+		self.theme_backgroundColor = KThemePicker.tableViewCellSubTextColor.rawValue
 		self.borderWidth = 2
 		self.borderColor = UIColor.white.withAlphaComponent(0.20)
 	}

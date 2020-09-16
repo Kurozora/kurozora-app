@@ -170,7 +170,7 @@ extension ProductTableViewController {
 extension ProductTableViewController: PurchaseButtonTableViewCellDelegate {
 	func purchaseButtonPressed(_ sender: UIButton) {
 		if self.productsArray.count != 0 {
-			KStoreObserver.shared.purchase(product: self.productsArray[sender.tag]) { (alert, _, _) in
+			KStoreObserver.shared.purchase(product: self.productsArray[sender.tag]) { alert, _, _ in
 				SCLAlertView().showWarning(alert.message)
 			}
 		}

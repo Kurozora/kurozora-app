@@ -97,6 +97,30 @@ class KStoreObserver: NSObject {
 		purchased.append(transaction)
 		print("Deliver content for \(transaction.payment.productIdentifier).")
 
+		// Get the receipt if it's available
+		if let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
+		   FileManager.default.fileExists(atPath: appStoreReceiptURL.path) {
+
+			do {
+				let receiptData = try Data(contentsOf: appStoreReceiptURL, options: .alwaysMapped)
+				let receiptString = receiptData.base64EncodedString(options: [.endLineWithCarriageReturn])
+				print("----- receipt string:", receiptString)
+
+				// Read receiptData
+				KService.verifyReceipt(receiptString) { result in
+					switch result {
+					case .success:
+						print("----- transaction verified.")
+					case .failure:
+						print("----- transactino not verified.")
+					}
+				}
+			} catch {
+				print("Couldn't read receipt data with error: " + error.localizedDescription)
+				self.handleFailed(transaction)
+			}
+		}
+
 		// Finish the successful transaction.
 		SKPaymentQueue.default().finishTransaction(transaction)
 	}
@@ -117,6 +141,7 @@ class KStoreObserver: NSObject {
 				self.delegate?.storeObserverDidReceiveMessage(message)
 			}
 		}
+
 		// Finish the failed transaction.
 		SKPaymentQueue.default().finishTransaction(transaction)
 	}
@@ -135,7 +160,7 @@ class KStoreObserver: NSObject {
 	}
 }
 
-//MARK:- SKProductsRequestDelegate
+//MARK: - SKProductsRequestDelegate
 extension KStoreObserver: SKProductsRequestDelegate {
 	func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
 		if response.products.count > 0 {
