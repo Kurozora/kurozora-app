@@ -1,6 +1,6 @@
 PODS:
   - Alamofire (5.2.2)
-  - Cosmos (22.1.0)
+  - Cosmos (23.0.0)
   - DiffableDataSources (0.4.0):
     - DifferenceKit/AppKitExtension (~> 1.1)
     - DifferenceKit/UIKitExtension (~> 1.1)
@@ -10,15 +10,15 @@ PODS:
   - EmptyDataSet-Swift (5.0.0)
   - ESTabBarController-swift (2.8.0)
   - IBPCollectionViewCompositionalLayout (0.6.7)
-  - KeychainAccess (4.2.0)
-  - Kingfisher (5.15.0):
-    - Kingfisher/Core (= 5.15.0)
-  - Kingfisher/Core (5.15.0)
-  - KurozoraKit (0.14.1):
+  - KeychainAccess (4.2.1)
+  - Kingfisher (5.15.5):
+    - Kingfisher/Core (= 5.15.5)
+  - Kingfisher/Core (5.15.5)
+  - KurozoraKit (0.14.2):
     - KeychainAccess
     - SCLAlertView (~> 0.10)
     - TRON
-  - MarqueeLabel (4.0.2)
+  - MarqueeLabel (4.0.3)
   - NotificationBannerSwift (3.0.2):
     - MarqueeLabel (~> 4.0.0)
     - SnapKit (~> 5.0.0)
@@ -130,16 +130,16 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
-  Cosmos: 2795b36ad4bbea1af3050d6d65576ed63875f86a
+  Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
   DiffableDataSources: 80396cec405c9b29e1e07b55c9be7d11b46c8741
   DifferenceKit: 516f12e336ed65a3a0665847b5c3cb5cad4bd4ea
   EmptyDataSet-Swift: eb382c0c87a2d9c678077385a595cec52da38171
   ESTabBarController-swift: 05593a6ad64700b03c0eb60ff625916370aa4136
   IBPCollectionViewCompositionalLayout: 06cf9aa021fd80807385d5c49ece4364609a0c97
-  KeychainAccess: 3f760109aa99b05d0f231e28b22642da7153e38a
-  Kingfisher: 1acb67597a520c2d0310677e66d6e0af455ef757
-  KurozoraKit: 6b5dac983e6e7b7be3e2e51d15b9961f66b14ead
-  MarqueeLabel: f762aa681ae201f66c1d511858b171f75d83013a
+  KeychainAccess: 9b07f665298d13c3a85881bd3171f6f49b8151c1
+  Kingfisher: e3ec347a5ab8817b7585ef46923a2d2b9a7d8fbe
+  KurozoraKit: 8c6fb5676dc350fd64b7bc21bfc7bc4889b9be45
+  MarqueeLabel: a1ea597e347506640a5b00fda9c07b572753f45e
   NotificationBannerSwift: 713e20f21b6105f4a36a00e5d9fa414a930d3d8e
   Pageboy: 29a2d474ad99404b4d77f325e0ab6d705930a4fb
   R.swift: 7c52cdc57a66840ffe6cbd8a823d732059d42a32

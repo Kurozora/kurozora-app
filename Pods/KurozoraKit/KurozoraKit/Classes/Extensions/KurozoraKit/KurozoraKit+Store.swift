@@ -1,6 +1,6 @@
 //
 //  KurozoraKit+Store.swift
-//  Alamofire
+//  KurozoraKit
 //
 //  Created by Khoren Katklian on 13/09/2020.
 //

@@ -37,6 +37,12 @@ class LegalViewController: KViewController {
 	}
 
 	// MARK: - View
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+
+		self.navigationController?.navigationBar.prefersLargeTitles = false
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		NotificationCenter.default.addObserver(self, selector: #selector(updatePrivacyPolicyTheme), name: .ThemeUpdateNotification, object: nil)
@@ -77,7 +83,9 @@ class LegalViewController: KViewController {
 // MARK: - UIScrollViewDelegate
 extension LegalViewController: UIScrollViewDelegate {
 	func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		if !scrollView.bounds.contains(titleLabel.frame.origin) {
+		let titleLabelPositionToNavigationBar = titleLabel.superview?.convert(titleLabel.frame.origin, to: navigationController?.navigationBar) ?? .zero
+
+		if titleLabelPositionToNavigationBar.y <= titleLabel.frame.origin.y / 2 {
 			if self.navigationTitleView.alpha == 0 {
 				UIView.animate(withDuration: 0.5) {
 					self.titleLabel.alpha = 0

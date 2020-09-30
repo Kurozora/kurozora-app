@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="20p-4J-ZCZ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="20p-4J-ZCZ">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17124"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17502"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -620,17 +620,17 @@
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
-                            <barButtonItem id="wrc-9h-3zD">
-                                <button key="customView" opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="tailTruncation" id="u3h-cK-q29" customClass="ProfileImageButton" customModule="Kurozora" customModuleProvider="target">
-                                    <rect key="frame" x="350" y="0.0" width="44" height="44"/>
+                            <barButtonItem style="plain" id="tt5-xx-9lS">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="egw-49-b9p" customClass="ProfileImageButton" customModule="Kurozora" customModuleProvider="target">
+                                    <rect key="frame" x="348" y="7" width="46" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" secondItem="u3h-cK-q29" secondAttribute="height" multiplier="1:1" id="oDv-wD-ra2"/>
+                                        <constraint firstAttribute="width" constant="28" id="4gN-1H-UE2"/>
+                                        <constraint firstAttribute="width" secondItem="egw-49-b9p" secondAttribute="height" multiplier="1:1" id="5Ot-rX-95c"/>
                                     </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <state key="normal" title="Profile"/>
                                     <connections>
-                                        <action selector="profileButtonPressed:" destination="AtO-CH-0OW" eventType="touchUpInside" id="zuh-T3-oml"/>
+                                        <action selector="profileButtonPressed:" destination="AtO-CH-0OW" eventType="touchUpInside" id="ed2-TQ-ewT"/>
                                     </connections>
                                 </button>
                             </barButtonItem>
@@ -647,7 +647,7 @@
                     </refreshControl>
                     <connections>
                         <outlet property="postMessageButton" destination="lOF-RI-y49" id="LT3-SE-AuC"/>
-                        <outlet property="profileImageButton" destination="u3h-cK-q29" id="BgE-nI-tYe"/>
+                        <outlet property="profileImageButton" destination="egw-49-b9p" id="LjA-U7-79o"/>
                         <segue destination="BEx-lZ-1Jp" kind="show" identifier="FeedMessageDetailsSegue" id="Z22-Fn-UgF"/>
                     </connections>
                 </tableViewController>

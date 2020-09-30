@@ -41,13 +41,24 @@ class KNavigationController: UINavigationController {
 		case .normal:
 			if #available(iOS 13.0, macCatalyst 13.0, *) {
 				let appearance = UINavigationBarAppearance()
-				appearance.backgroundColor = KThemePicker.barTintColor.colorValue
-				appearance.titleTextAttributes = [.foregroundColor: KThemePicker.barTitleTextColor.colorValue]
-				appearance.largeTitleTextAttributes = [.foregroundColor: KThemePicker.barTitleTextColor.colorValue]
+				appearance.theme_backgroundColor = KThemePicker.barTintColor.rawValue
+				appearance.theme_titleTextAttributes = ThemeStringAttributesPicker(keyPath: KThemePicker.barTitleTextColor.stringValue) { value -> [NSAttributedString.Key: Any]? in
+					guard let rgba = value as? String else { return nil }
+					let color = UIColor(rgba: rgba)
+					let titleTextAttributes = [NSAttributedString.Key.foregroundColor: color]
+
+					return titleTextAttributes
+				}
+				appearance.theme_largeTitleTextAttributes = ThemeStringAttributesPicker(keyPath: KThemePicker.barTitleTextColor.stringValue) { value -> [NSAttributedString.Key: Any]? in
+					guard let rgba = value as? String else { return nil }
+					let color = UIColor(rgba: rgba)
+					let titleTextAttributes = [NSAttributedString.Key.foregroundColor: color]
+
+					return titleTextAttributes
+				}
 
 				self.navigationBar.standardAppearance = appearance
 				self.navigationBar.compactAppearance = appearance
-				self.navigationBar.scrollEdgeAppearance = appearance
 			} else {
 				self.navigationBar.theme_titleTextAttributes = ThemeStringAttributesPicker(keyPath: KThemePicker.barTitleTextColor.stringValue) { value -> [NSAttributedString.Key: Any]? in
 					guard let rgba = value as? String else { return nil }
@@ -64,12 +75,13 @@ class KNavigationController: UINavigationController {
 
 					return titleTextAttributes
 				}
+
+				self.navigationBar.backgroundColor = .clear
+				self.navigationBar.barStyle = .default
+				self.navigationBar.theme_tintColor = KThemePicker.tintColor.rawValue
+				self.navigationBar.theme_barTintColor = KThemePicker.barTintColor.rawValue
 			}
 
-			self.navigationBar.backgroundColor = .clear
-			self.navigationBar.barStyle = .default
-			self.navigationBar.theme_tintColor = KThemePicker.tintColor.rawValue
-			self.navigationBar.theme_barTintColor = KThemePicker.barTintColor.rawValue
 			self.navigationBar.prefersLargeTitles = UserSettings.largeTitlesEnabled
 		case .blurred:
 			self.navigationBar.barStyle = .black

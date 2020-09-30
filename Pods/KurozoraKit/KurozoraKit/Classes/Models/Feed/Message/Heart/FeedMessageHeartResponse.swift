@@ -1,6 +1,6 @@
 //
 //  FeedMessageHeartResponse.swift
-//  Alamofire
+//  KurozoraKit
 //
 //  Created by Khoren Katklian on 28/08/2020.
 //

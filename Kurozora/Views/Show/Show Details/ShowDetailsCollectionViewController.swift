@@ -16,12 +16,20 @@ protocol ShowDetailsCollectionViewControllerDelegate: class {
 }
 
 class ShowDetailsCollectionViewController: KCollectionViewController {
+	// MARK: - IBOutlets
+	@IBOutlet weak var navigationTitleView: UIView!
+	@IBOutlet weak var navigationTitleLabel: UILabel! {
+		didSet {
+			navigationTitleLabel.theme_textColor = KThemePicker.barTitleTextColor.rawValue
+		}
+	}
+
 	// MARK: - Properties
 	var showID: Int = 0
 	private var show: Show! {
 		didSet {
 			_prefersActivityIndicatorHidden = true
-			self.title = show.attributes.title
+			self.navigationTitleLabel.text = show.attributes.title
 			self.showID = show.id
 		}
 	}
@@ -45,12 +53,15 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
-		// Setup navigation controller with special settings
-		navigationController?.navigationBar.prefersLargeTitles = false
+		// Make the navigation bar background clear
+		navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+		navigationController?.navigationBar.shadowImage = UIImage()
 	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		self.navigationTitleLabel.alpha = 0
 
 		// Fetch show details.
 		DispatchQueue.global(qos: .background).async {
@@ -61,9 +72,9 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 
-		// Reset the navigation bar
-		self.navigationController?.navigationBar.alpha = 1.0
-		navigationController?.navigationBar.prefersLargeTitles = UserSettings.largeTitlesEnabled
+		// Restore the navigation bar to default
+		navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+		navigationController?.navigationBar.shadowImage = nil
 	}
 
 	// MARK: - Functions
@@ -86,6 +97,18 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 			case .failure: break
 			}
 		}
+	}
+
+	// MARK: - IBActions
+	@IBAction func moreButtonPressed(_ sender: UIBarButtonItem) {
+		let shareText = "https://kurozora.app/anime/\(show.id)\nYou should watch \"\(show.attributes.title)\" via @KurozoraApp"
+		let activityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
+
+		if let popoverController = activityViewController.popoverPresentationController {
+			popoverController.barButtonItem = sender
+		}
+
+		self.present(activityViewController, animated: true, completion: nil)
 	}
 
 	// MARK: - Segue
@@ -553,16 +576,17 @@ extension ShowDetailsCollectionViewController {
 // MARK: - UIScrollViewDelegate
 extension ShowDetailsCollectionViewController {
 	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		#if !targetEnvironment(macCatalyst)
-		if scrollView.contentOffset.y >= scrollView.contentSize.height / 5 { // If user scrolled to 1/5 of the total scroll height
-			UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions(), animations: {
-				self.navigationController?.navigationBar.alpha = 1.0
-			}, completion: nil)
-		} else {
-			UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions(), animations: {
-				self.navigationController?.navigationBar.alpha = 0.0
-			}, completion: nil)
+		let navigationBar = self.navigationController?.navigationBar
+		let firstCell = self.collectionView.cellForItem(at: [0, 0])
+
+		let globalNavigationBarPositionY = navigationBar?.superview?.convert(navigationBar?.frame.origin ?? CGPoint(x: 0, y: 0), to: nil).y ?? .zero
+		let offset = scrollView.contentOffset.y
+		let firstCellHeight = firstCell?.frame.size.height ?? .zero
+
+		let percentage = offset / (firstCellHeight - globalNavigationBarPositionY)
+
+		if percentage.isFinite, percentage >= 0 {
+			self.navigationTitleLabel.alpha = percentage
 		}
-		#endif
 	}
 }

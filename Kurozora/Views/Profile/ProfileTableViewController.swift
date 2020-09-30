@@ -131,7 +131,7 @@ class ProfileTableViewController: KTableViewController {
 		tableView.emptyDataSetView { [weak self] (view) in
 			guard let self = self else { return }
 
-			let detailLabel = self.user.id == User.current?.id ? "There are no messages on your feed!" : "There are no messages on this feed! Be the first to message :D"
+			let detailLabel = self.user?.id == User.current?.id ? "There are no messages on your feed!" : "There are no messages on this feed! Be the first to message :D"
 			let verticalOffset = (self.tableView.tableHeaderView?.height ?? 0 - self.view.height) / 2
 
 			view.titleLabelString(NSAttributedString(string: "No Posts", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))

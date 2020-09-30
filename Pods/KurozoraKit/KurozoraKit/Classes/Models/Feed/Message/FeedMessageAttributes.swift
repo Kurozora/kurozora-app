@@ -48,7 +48,7 @@ extension FeedMessage.Attributes {
 
 		- Parameter isHearted: The new bool value of the `isHearted` property.
 	*/
-	public mutating func update(heartStatus isHearted:Bool) {
+	public mutating func update(heartStatus isHearted: Bool) {
 		self.isHearted = isHearted
 
 		if isHearted {

@@ -19,8 +19,6 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 		}
 	}
 	@IBOutlet weak var bannerContainerView: UIView!
-	@IBOutlet weak var closeButton: UIButton!
-	@IBOutlet weak var moreButton: UIButton!
 
 	// Action buttons
 	@IBOutlet weak var favoriteButton: UIButton!
@@ -149,25 +147,6 @@ extension ShowDetailHeaderCollectionViewCell {
 
 // MARK: - IBActions
 extension ShowDetailHeaderCollectionViewCell {
-	@IBAction func closeButtonPressed(_ sender: UIButton) {
-		self.parentViewController?.navigationController?.popViewController(animated: true)
-	}
-
-	@IBAction func moreButtonPressed(_ sender: AnyObject) {
-		let shareText = "https://kurozora.app/anime/\(show.id)\nYou should watch \"\(show.attributes.title)\" via @KurozoraApp"
-		let activityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
-
-		if let popoverController = activityViewController.popoverPresentationController {
-			if let sender = sender as? UIBarButtonItem {
-				popoverController.barButtonItem = sender
-			} else {
-				popoverController.sourceView = sender as? UIButton
-				popoverController.sourceRect = sender.bounds
-			}
-		}
-		self.parentViewController?.present(activityViewController, animated: true, completion: nil)
-	}
-
 	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
 		WorkflowController.shared.isSignedIn {
 			let oldLibraryStatus = self.libraryStatus

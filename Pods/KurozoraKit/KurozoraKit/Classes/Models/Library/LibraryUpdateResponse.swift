@@ -1,6 +1,6 @@
 //
 //  LibraryUpdateResponse.swift
-//  Alamofire
+//  KurozoraKit
 //
 //  Created by Khoren Katklian on 14/08/2020.
 //
