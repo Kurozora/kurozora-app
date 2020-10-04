@@ -34,11 +34,6 @@ extension User {
 		return User.current != nil
 	}
 
-	/// Returns a boolean indicating if the current user has purchased PRO.
-	static var isPro: Bool {
-		return true
-	}
-
 	// MARK: - Functions
 	/**
 		Updates the user with the given details.

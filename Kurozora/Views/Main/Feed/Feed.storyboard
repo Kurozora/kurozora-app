@@ -620,7 +620,7 @@
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
-                            <barButtonItem style="plain" id="tt5-xx-9lS">
+                            <barButtonItem title="Profile" id="tt5-xx-9lS">
                                 <button key="customView" opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="egw-49-b9p" customClass="ProfileImageButton" customModule="Kurozora" customModuleProvider="target">
                                     <rect key="frame" x="348" y="7" width="46" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

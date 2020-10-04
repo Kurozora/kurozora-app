@@ -34,8 +34,8 @@ extension User {
 		/// The URL to the banner image of the user.
 		public var bannerImageURL: String?
 
-//		/// Whether the user has a pro badge.
-//		public let proBadge: Bool?
+		/// Whether the user has a pro badge.
+		public var isPro: Bool
 
 		/// The join date of the user.
 		public let joinDate: String
@@ -120,5 +120,14 @@ extension User.Attributes {
 		userAttributes.profileImageURL = userUpdate.profileImageURL
 		userAttributes.bannerImageURL = userUpdate.bannerImageURL
 		return userAttributes
+	}
+
+	/**
+		Updates the subscription status of the user.
+
+		- Parameter receipt: The `Receipt` object used to update the subscription status.
+	*/
+	public mutating func updateSubscription(from receipt: Receipt) {
+		self.isPro = receipt.attributes.isValid
 	}
 }

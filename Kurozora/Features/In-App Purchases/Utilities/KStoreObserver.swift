@@ -114,15 +114,15 @@ class KStoreObserver: NSObject {
 					case .failure:
 						print("----- transactino not verified.")
 					}
+
+					// Finish the successful transaction.
+					SKPaymentQueue.default().finishTransaction(transaction)
 				}
 			} catch {
 				print("Couldn't read receipt data with error: " + error.localizedDescription)
 				self.handleFailed(transaction)
 			}
 		}
-
-		// Finish the successful transaction.
-		SKPaymentQueue.default().finishTransaction(transaction)
 	}
 
 	func handleFailed(_ transaction: SKPaymentTransaction) {

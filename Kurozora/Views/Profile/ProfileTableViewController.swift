@@ -271,13 +271,7 @@ class ProfileTableViewController: KTableViewController {
 		self.updateFollowButton()
 
 		// Configure pro badge
-		proBadgeButton.isHidden = true
-//		if let proBadge = self.user?.attributes.proBadge, !String(proBadge).isEmpty {
-//			if proBadge {
-//				self.proBadgeButton.isHidden = false
-//				self.proBadgeButton.setTitle("PRO", for: .normal)
-//			}
-//		}
+		self.proBadgeButton.isHidden = !(self.user?.attributes.isPro ?? false)
 
 		// Configure badge & badge button
 		if let badges = self.user?.relationships?.badges?.data {

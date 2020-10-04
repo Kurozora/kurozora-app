@@ -16,21 +16,23 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func verifyReceipt(_ receipt: String, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) {
+	public func verifyReceipt(_ receipt: String, completion completionHandler: @escaping (_ result: Result<[Receipt], KKAPIError>) -> Void) {
+		guard User.current != nil else { fatalError("User must be signed in and have a session attached to call the verifyReceipt(_:completion:) method.") }
 		let storeVerify = KKEndpoint.Store.verify.endpointValue
-		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(storeVerify)
+		let request: APIRequest<ReceiptResponse, KKAPIError> = tron.codable.request(storeVerify)
 
 		request.headers = headers
-		if User.isSignedIn {
-			request.headers["kuro-auth"] = self.authenticationKey
-		}
+		request.headers["kuro-auth"] = self.authenticationKey
 
 		request.parameters = [
 			"receipt": receipt
 		]
 		request.method = .post
-		request.perform(withSuccess: { kkSuccess in
-			completionHandler(.success(kkSuccess))
+		request.perform(withSuccess: { receiptResponse in
+			if let receipt = receiptResponse.data.first {
+				User.current?.attributes.updateSubscription(from: receipt)
+			}
+			completionHandler(.success(receiptResponse.data))
 		}, failure: { error in
 			print("Received validate receipt error: \(error.message ?? "No message available")")
 			completionHandler(.failure(error))
