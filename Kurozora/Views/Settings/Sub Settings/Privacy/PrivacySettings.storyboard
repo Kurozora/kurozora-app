@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="wY2-Ft-3es">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17700" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="wY2-Ft-3es">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -32,7 +32,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                                     <subviews>
                                                         <label multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" insetsLayoutMarginsFromSafeArea="NO" text="Open in Settings app" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kFk-6v-Ql6">
-                                                            <rect key="frame" x="8" y="10" width="160.5" height="30"/>
+                                                            <rect key="frame" x="8" y="10" width="159.5" height="30"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                             <nil key="textColor"/>
@@ -74,8 +74,8 @@
                                                 <constraint firstItem="RCt-ad-xlg" firstAttribute="leading" secondItem="93R-J5-LGI" secondAttribute="leading" id="mXE-Yw-SVI"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <viewLayoutGuide key="safeArea" id="KQb-uX-WKS"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <outlet property="chevronImageView" destination="12t-35-W7v" id="MSA-5H-xMa"/>
                                             <outlet property="primaryLabel" destination="kFk-6v-Ql6" id="GG1-RH-e9X"/>
@@ -140,14 +140,14 @@
                                                 <constraint firstItem="Xnn-up-RZi" firstAttribute="leading" secondItem="yBU-vA-vDd" secondAttribute="leading" id="dke-37-gBI"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <viewLayoutGuide key="safeArea" id="Nua-qw-jR6"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <outlet property="chevronImageView" destination="Si7-KA-VYl" id="qhF-hR-Kt6"/>
                                             <outlet property="primaryLabel" destination="0UW-QR-FTb" id="haP-dM-nFh"/>
                                             <outlet property="secondaryLabel" destination="ixE-zS-toS" id="Xqw-si-Cgy"/>
                                             <outlet property="selectedView" destination="Xnn-up-RZi" id="qej-mH-dBq"/>
-                                            <segue destination="6zO-7o-cem" kind="custom" identifier="LegalSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="v5S-pA-OUH"/>
+                                            <segue destination="6zO-7o-cem" kind="presentation" identifier="LegalSegue" id="v5S-pA-OUH"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>

@@ -51,7 +51,7 @@ class ServiceFooterTableViewCell: KTableViewCell {
 
 	@IBAction func privacyButtonPressed(_ sender: UIButton) {
 		if let legalKNavigationViewController = R.storyboard.legal.instantiateInitialViewController() {
-			self.parentViewController?.present(legalKNavigationViewController)
+			self.parentViewController?.present(legalKNavigationViewController, animated: true)
 		}
 	}
 }

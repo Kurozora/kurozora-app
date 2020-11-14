@@ -125,26 +125,3 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 		}
 	}
 }
-
-// MARK: - UIViewControllerPreviewingDelegate
-#if !targetEnvironment(macCatalyst)
-extension BaseLockupCollectionViewCell: UIViewControllerPreviewingDelegate {
-	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-		if let show = self.show {
-			showDetailsCollectionViewController = R.storyboard.shows.showDetailsCollectionViewController()
-			showDetailsCollectionViewController?.showID = show.id
-
-			previewingContext.sourceRect = previewingContext.sourceView.bounds
-
-			return showDetailsCollectionViewController
-		}
-		return nil
-	}
-
-	func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
-		if let showDetailsCollectionViewController = showDetailsCollectionViewController {
-			self.parentViewController?.show(showDetailsCollectionViewController, sender: nil)
-		}
-	}
-}
-#endif

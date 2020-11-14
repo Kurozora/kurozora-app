@@ -91,7 +91,7 @@ class Kurozora {
 			DispatchQueue.main.async {
 				if let reachabilityViewController = R.storyboard.reachability.kurozoraReachabilityViewController() {
 					let topViewController = UIApplication.topViewController
-					topViewController?.present(reachabilityViewController)
+					topViewController?.present(reachabilityViewController, animated: true)
 				}
 			}
 		}
@@ -104,13 +104,13 @@ class Kurozora {
 	*/
 	fileprivate func routeScheme(with url: URL) {
 		if url.pathExtension == "xml" {
-			WorkflowController.shared.isSignedIn({
+			WorkflowController.shared.isSignedIn {
 				if let malImportTableViewController = R.storyboard.accountSettings.malImportTableViewController() {
 					malImportTableViewController.selectedFileURL = url
 
 					UIApplication.topViewController?.show(malImportTableViewController, sender: nil)
 				}
-			})
+			}
 		}
 
 		guard let urlScheme = url.host?.removingPercentEncoding else { return }
@@ -173,21 +173,9 @@ class Kurozora {
 	/**
 		Opens a resource specified by a URL.
 
-		- Parameter app: The app's centralized point of control and coordination.
-		- Parameter url: The URL resource to open. This resource can be a network resource or a file. For information about the Apple-registered URL schemes, see Apple URL Scheme Reference.
-		- Parameter option: A dictionary of URL handling options. For information about the possible keys in this dictionary and how to handle them, see UIApplicationOpenURLOptionsKey. By default, the value of this parameter is an empty dictionary.
-	*/
-	func schemeHandler(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) {
-		routeScheme(with: url)
-	}
-
-	/**
-		Opens a resource specified by a URL on iOS 13.0+ and macCatalyst 13.0+.
-
 		- Parameter scene: The object that represents one instance of the app's user interface.
 		- Parameter url: The URL resource to open. This resource can be a network resource or a file. For information about the Apple-registered URL schemes, see Apple URL Scheme Reference.
 	*/
-	@available(iOS 13.0, macCatalyst 13.0, *)
 	func schemeHandler(_ scene: UIScene, open url: URL) {
 		routeScheme(with: url)
 	}
@@ -230,11 +218,11 @@ extension Kurozora {
 		// If user should authenticate but the top view controller isn't AuthenticationViewController
 		if let isAuthenticationViewController = topViewController?.isKind(of: AuthenticationViewController.self), !isAuthenticationViewController {
 			if let authenticationViewController = R.storyboard.authentication.authenticationViewController() {
-				topViewController?.present(authenticationViewController)
+				topViewController?.present(authenticationViewController, animated: true)
 			}
 		} else if topViewController == nil {
 			if let authenticationViewController = R.storyboard.authentication.authenticationViewController() {
-				topViewController?.present(authenticationViewController)
+				topViewController?.present(authenticationViewController, animated: true)
 			}
 		}
 	}
@@ -389,20 +377,9 @@ extension Kurozora {
 	/**
 		Handle the selected quick action.
 
-		- Parameter app: The app's centralized point of control and coordination.
-		- Parameter shortcutItem: The quick action for which you are providing an implementation in this method.
-	*/
-	func shortcutHandler(_ app: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem) {
-		performAction(for: shortcutItem)
-	}
-
-	/**
-		Handle the selected quick action on iOS 13.0+ and macCatalyst 13.0+.
-
 		- Parameter windowScene: The window scene object receiving the shortcut item.
 		- Parameter shortcutItem: The application's shortcut item.
 	*/
-	@available(iOS 13.0, *)
 	func shortcutHandler(_ windowScene: UIWindowScene, performActionFor shortcutItem: UIApplicationShortcutItem) {
 		performAction(for: shortcutItem)
 	}

@@ -8,7 +8,6 @@
 
 import UIKit
 import AVKit
-import SPStorkController
 
 // MARK: - View
 extension UIViewController {
@@ -25,25 +24,6 @@ extension UIViewController {
 // MARK: - Present
 extension UIViewController {
 	// MARK: - Functions
-	/**
-		Modally present the given view controller.
-
-		Presents the given controller in the default transition style on iOS 13+ and as SPStorkController on older iOS versions.
-
-		- Parameter controller: The view controller to present
-	*/
-	func present(_ controller: UIViewController) {
-		if #available(iOS 13.0, macCatalyst 13, *) {
-			self.present(controller, animated: true, completion: nil)
-		} else {
-			let transitioningDelegate = SPStorkTransitioningDelegate()
-			transitioningDelegate.showIndicator = false
-			controller.transitioningDelegate = transitioningDelegate
-			controller.modalPresentationStyle = .custom
-			self.present(controller, animated: true, completion: nil)
-		}
-    }
-
 	/**
 		Present a YouTube video in a view controller.
 

@@ -65,7 +65,6 @@ extension SignInWithAppleTableViewController {
 
 // MARK: - OnboardingOptionsTableViewCellDelegate
 extension SignInWithAppleTableViewController: OnboardingOptionsTableViewCellDelegate {
-	@available(iOS 13.0, macCatalyst 13.0, *)
 	func handleAuthorizationAppleIDButtonPress() {
 		let appleIDProvider = ASAuthorizationAppleIDProvider()
 		let request = appleIDProvider.createRequest()
@@ -79,7 +78,6 @@ extension SignInWithAppleTableViewController: OnboardingOptionsTableViewCellDele
 }
 
 // MARK: - ASAuthorizationControllerDelegate
-@available(iOS 13.0, macCatalyst 13.0, *)
 extension SignInWithAppleTableViewController: ASAuthorizationControllerDelegate {
 	func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
 		switch authorization.credential {
@@ -148,7 +146,6 @@ extension SignInWithAppleTableViewController: ASAuthorizationControllerDelegate 
 }
 
 // MARK: - ASAuthorizationControllerPresentationContextProviding
-@available(iOS 13.0, macCatalyst 13.0, *)
 extension SignInWithAppleTableViewController: ASAuthorizationControllerPresentationContextProviding {
 	func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
 		return view.window ?? UIWindow()

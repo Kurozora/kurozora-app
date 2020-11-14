@@ -142,7 +142,9 @@ extension SettingsTableViewController {
 			WorkflowController.shared.isSignedIn()
 			shouldPerformSegue = User.isSignedIn
 		case .reminder:
-			UIApplication.shared.kOpen(KService.reminderSubscriptionURL)
+			WorkflowController.shared.isPro {
+				UIApplication.shared.kOpen(KService.reminderSubscriptionURL)
+			}
 		case .notifications:
 			WorkflowController.shared.isSignedIn()
 			shouldPerformSegue = User.isSignedIn

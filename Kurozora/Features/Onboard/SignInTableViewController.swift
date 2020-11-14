@@ -21,14 +21,11 @@ class SignInTableViewController: AccountOnboardingTableViewController {
 
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		if #available(iOS 13.0, macCatalyst 13.0, *) {
-			performExistingAccountSetupFlows()
-		}
+		performExistingAccountSetupFlows()
 	}
 
 	// MARK: - Functions
 	/// Prompts the user if an existing Keychain credential or Apple ID credential is found.
-	@available(iOS 13.0, macCatalyst 13.0, *)
 	func performExistingAccountSetupFlows() {
 		// Prepare requests for both Apple ID and password providers.
 		let requests = [ASAuthorizationAppleIDProvider().createRequest(),
@@ -95,7 +92,6 @@ extension SignInTableViewController {
 
 // MARK: - OnboardingOptionsTableViewCellDelegate
 extension SignInTableViewController: OnboardingOptionsTableViewCellDelegate {
-	@available(iOS 13.0, macCatalyst 13.0, *)
 	func handleAuthorizationAppleIDButtonPress() {
 		let appleIDProvider = ASAuthorizationAppleIDProvider()
 		let request = appleIDProvider.createRequest()
@@ -109,7 +105,6 @@ extension SignInTableViewController: OnboardingOptionsTableViewCellDelegate {
 }
 
 // MARK: - ASAuthorizationControllerDelegate
-@available(iOS 13.0, macCatalyst 13.0, *)
 extension SignInTableViewController: ASAuthorizationControllerDelegate {
 	func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
 		switch authorization.credential {
@@ -177,7 +172,6 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 }
 
 // MARK: - ASAuthorizationControllerPresentationContextProviding
-@available(iOS 13.0, macCatalyst 13.0, *)
 extension SignInTableViewController: ASAuthorizationControllerPresentationContextProviding {
 	func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
 		return view.window ?? UIWindow()

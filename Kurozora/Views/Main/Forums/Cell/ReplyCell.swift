@@ -148,7 +148,7 @@ class ReplyCell: UITableViewCell {
 
 				let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
 
-				self.threadViewController.present(kurozoraNavigationController)
+				self.threadViewController.present(kurozoraNavigationController, animated: true)
 			}
 		}
 	}

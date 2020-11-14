@@ -18,15 +18,7 @@ class RedeemTableViewController: ServiceTableViewController {
 
 	// MARK: - Properties
 	var textFieldArray: [UITextField?] = []
-	var textRecognitionRequest: VNImageBasedRequest = {
-		var textRecognitionRequest: VNImageBasedRequest
-		if #available(iOS 13.0, macCatalyst 13.0, *) {
-			textRecognitionRequest = VNRecognizeTextRequest()
-		} else {
-			textRecognitionRequest = VNDetectTextRectanglesRequest()
-		}
-		return textRecognitionRequest
-	}()
+	var textRecognitionRequest = VNRecognizeTextRequest()
 	lazy var imagePicker = UIImagePickerController()
 
 	static let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
@@ -55,20 +47,18 @@ class RedeemTableViewController: ServiceTableViewController {
 		rightNavigationBarButton.isEnabled = false
 
 		// Prepare Vision
-		if #available(iOS 13.0, macCatalyst 13.0, *) {
-			textRecognitionRequest = VNRecognizeTextRequest(completionHandler: { (request, _) in
-				if let results = request.results, !results.isEmpty {
-					if let requestResults = request.results as? [VNRecognizedTextObservation] {
-						DispatchQueue.main.async {
-							self.processRecognizedText(requestResults)
-						}
+		textRecognitionRequest = VNRecognizeTextRequest(completionHandler: { (request, _) in
+			if let results = request.results, !results.isEmpty {
+				if let requestResults = request.results as? [VNRecognizedTextObservation] {
+					DispatchQueue.main.async {
+						self.processRecognizedText(requestResults)
 					}
 				}
-			})
-			(textRecognitionRequest as? VNRecognizeTextRequest)?.revision = VNRecognizeTextRequestRevision1
-			(textRecognitionRequest as? VNRecognizeTextRequest)?.recognitionLevel = .fast
-			(textRecognitionRequest as? VNRecognizeTextRequest)?.usesLanguageCorrection = false
-		}
+			}
+		})
+		textRecognitionRequest.revision = VNRecognizeTextRequestRevision1
+		textRecognitionRequest.recognitionLevel = .fast
+		textRecognitionRequest.usesLanguageCorrection = false
 	}
 
 	// MARK: - Functions
@@ -122,7 +112,6 @@ class RedeemTableViewController: ServiceTableViewController {
 
 		- Parameter recognizedtext: An array of recognized text observation.
 	*/
-	@available(iOS 13.0, macCatalyst 13.0, *)
 	fileprivate func processRecognizedText(_ recognizedText: [Any]) {
 		if let recognizedText = recognizedText as? [VNRecognizedTextObservation] {
 			let maximumCandidates = 1
@@ -181,15 +170,9 @@ extension RedeemTableViewController {
 				productActionTableViewCell.actionTextField.tag = indexPath.row
 				productActionTableViewCell.actionTextField.delegate = self
 				productActionTableViewCell.actionTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+				productActionTableViewCell.actionTextField.placeholder = "Or enter your code manually"
+				productActionTableViewCell.actionButton.isHidden = false
 				textFieldArray.append(productActionTableViewCell.actionTextField)
-
-				if #available(iOS 13.0, macCatalyst 13.0, *) {
-					productActionTableViewCell.actionButton.isHidden = false
-					productActionTableViewCell.actionTextField.placeholder = "Or enter your code manually"
-				} else {
-					productActionTableViewCell.actionButton.isHidden = true
-					productActionTableViewCell.actionTextField.placeholder = "Please enter your code"
-				}
 			}
 		default: break
 		}
@@ -244,13 +227,11 @@ extension RedeemTableViewController: UITextFieldDelegate {
 // MARK: - ProductActionTableViewCellDelegate
 extension RedeemTableViewController: ProductActionTableViewCellDelegate {
 	func actionButtonPressed(_ sender: UIButton) {
-		if #available(iOS 13.0, *) {
-			if VNDocumentCameraViewController.isSupported {
-				let documentCameraViewController = VNDocumentCameraViewController()
-				documentCameraViewController.delegate = self
-				present(documentCameraViewController, animated: true)
-				return
-			}
+		if VNDocumentCameraViewController.isSupported {
+			let documentCameraViewController = VNDocumentCameraViewController()
+			documentCameraViewController.delegate = self
+			present(documentCameraViewController, animated: true)
+			return
 		}
 
 		openCamera()
@@ -258,7 +239,6 @@ extension RedeemTableViewController: ProductActionTableViewCellDelegate {
 }
 
 // MARK: - VNDocumentCameraViewControllerDelegate
-@available(iOS 13.0, *)
 extension RedeemTableViewController: VNDocumentCameraViewControllerDelegate {
 	func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
 		let sclAlertViewShow = sclAlertView.showWait("Processing redeem code.")
@@ -282,7 +262,7 @@ extension RedeemTableViewController: VNDocumentCameraViewControllerDelegate {
 }
 
 //MARK: - UIImagePickerControllerDelegate
-extension RedeemTableViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension RedeemTableViewController: UIImagePickerControllerDelegate {
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
 		let sclAlertViewShow = sclAlertView.showWait("Processing redeem code.")
 

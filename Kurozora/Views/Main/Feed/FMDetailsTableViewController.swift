@@ -11,7 +11,9 @@ import KurozoraKit
 
 class FMDetailsTableViewController: KTableViewController {
 	// MARK: - Properties
+	#if !targetEnvironment(macCatalyst)
 	var refreshController = UIRefreshControl()
+	#endif
 
 	var feedMessageID: Int = 0
 	var feedMessage: FeedMessage! {
@@ -43,10 +45,12 @@ class FMDetailsTableViewController: KTableViewController {
 		super.viewDidLoad()
 
 		// Add Refresh Control to Table View
+		#if !targetEnvironment(macCatalyst)
 		tableView.refreshControl = refreshController
 		refreshController.theme_tintColor = KThemePicker.tintColor.rawValue
 		refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh message details!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
 		refreshController.addTarget(self, action: #selector(refreshDetails(_:)), for: .valueChanged)
+		#endif
 
 		DispatchQueue.global(qos: .background).async {
 			self.fetchDetails()
@@ -60,7 +64,9 @@ class FMDetailsTableViewController: KTableViewController {
 		- Parameter sender: The object requesting the refresh.
 	*/
 	@objc private func refreshDetails(_ sender: Any) {
+		#if !targetEnvironment(macCatalyst)
 		refreshController.attributedTitle = NSAttributedString(string: "Refreshing message details...", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+		#endif
 		self.nextPageURL = nil
 		fetchDetails()
 	}
@@ -104,7 +110,9 @@ class FMDetailsTableViewController: KTableViewController {
 				}
 
 				// Reset refresh controller title
+				#if !targetEnvironment(macCatalyst)
 				self.refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh feed details!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+				#endif
 			case .failure: break
 			}
 		}
@@ -135,7 +143,9 @@ class FMDetailsTableViewController: KTableViewController {
 		}
 
 		DispatchQueue.main.async {
+			#if !targetEnvironment(macCatalyst)
 			self.refreshController.endRefreshing()
+			#endif
 		}
 	}
 

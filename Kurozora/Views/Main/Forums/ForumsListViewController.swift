@@ -15,7 +15,9 @@ protocol ForumsListViewControllerDelegate: class {
 
 class ForumsListViewController: KTableViewController {
 	// MARK: - Properties
+	#if !targetEnvironment(macCatalyst)
 	var refreshController = UIRefreshControl()
+	#endif
 
 	var sectionTitle: String = ""
 	var sectionID: Int!
@@ -60,10 +62,12 @@ class ForumsListViewController: KTableViewController {
 		tableView.contentInset.bottom = 50
 
 		// Add Refresh Control to Table View
+		#if !targetEnvironment(macCatalyst)
 		tableView.refreshControl = refreshController
 		refreshController.theme_tintColor = KThemePicker.tintColor.rawValue
 		refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads.", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
 		refreshController.addTarget(self, action: #selector(refreshThreadsData(_:)), for: .valueChanged)
+		#endif
 
 		// Fetch threads
 		DispatchQueue.global(qos: .background).async {
@@ -78,7 +82,9 @@ class ForumsListViewController: KTableViewController {
 		- Parameter sender: The object requesting the refresh.
 	*/
 	@objc private func refreshThreadsData(_ sender: Any) {
+		#if !targetEnvironment(macCatalyst)
 		refreshController.attributedTitle = NSAttributedString(string: "Refreshing \(sectionTitle) threads...", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+		#endif
 		self.nextPageURL = nil
 		fetchThreads()
 	}
@@ -113,13 +119,17 @@ class ForumsListViewController: KTableViewController {
 				self.nextPageURL = forumsThreadResponse.next
 
 				// Reset refresh controller title
+				#if !targetEnvironment(macCatalyst)
 				self.refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh \(self.sectionTitle) threads.", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+				#endif
 			case .failure: break
 			}
 		}
 
 		DispatchQueue.main.async {
+			#if !targetEnvironment(macCatalyst)
 			self.refreshController.endRefreshing()
+			#endif
 		}
 	}
 

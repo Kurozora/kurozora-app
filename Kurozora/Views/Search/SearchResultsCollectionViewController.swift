@@ -198,6 +198,7 @@ extension SearchResultsCollectionViewController {
 				if let showDetailsCollectionViewController = R.storyboard.shows.showDetailsCollectionViewController() {
 					if let show = (searchBaseResultsCell as? SearchShowResultsCell)?.show {
 						showDetailsCollectionViewController.showID = show.id
+						showDetailsCollectionViewController.edgesForExtendedLayout = .all
 						SearchHistory.saveContentsOf(show)
 						self.presentingViewController?.show(showDetailsCollectionViewController, sender: nil)
 					}
@@ -218,6 +219,7 @@ extension SearchResultsCollectionViewController {
 		} else {
 			if let showDetailsCollectionViewController = R.storyboard.shows.showDetailsCollectionViewController(), let show = (searchBaseResultsCell as? SearchSuggestionResultCell)?.show {
 				showDetailsCollectionViewController.showID = show.id
+				showDetailsCollectionViewController.edgesForExtendedLayout = .all
 				self.presentingViewController?.show(showDetailsCollectionViewController, sender: nil)
 			}
 		}

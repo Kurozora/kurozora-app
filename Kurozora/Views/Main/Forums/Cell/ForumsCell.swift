@@ -127,7 +127,7 @@ class ForumsCell: UITableViewCell {
 			profileViewController.dismissButtonIsEnabled = true
 
 			let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
-			forumsChildViewController?.present(kurozoraNavigationController)
+			forumsChildViewController?.present(kurozoraNavigationController, animated: true)
 		}
 	}
 
@@ -273,7 +273,7 @@ class ForumsCell: UITableViewCell {
 			let kurozoraNavigationController = KNavigationController.init(rootViewController: kCommentEditorViewController!)
 			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
 
-			self.parentViewController?.present(kurozoraNavigationController)
+			self.parentViewController?.present(kurozoraNavigationController, animated: true)
 		}
 	}
 

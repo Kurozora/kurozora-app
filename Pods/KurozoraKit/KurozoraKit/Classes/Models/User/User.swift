@@ -34,6 +34,12 @@ extension User {
 		return User.current != nil
 	}
 
+	/// Returns a boolean indicating if the current user is signed in.
+	public static var isPro: Bool {
+		guard let currentUser = User.current else { return false }
+		return currentUser.attributes.isPro
+	}
+
 	// MARK: - Functions
 	/**
 		Updates the user with the given details.

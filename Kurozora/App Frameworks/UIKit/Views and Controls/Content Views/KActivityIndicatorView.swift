@@ -47,10 +47,8 @@ class KActivityIndicatorView: UIActivityIndicatorView {
 	/// The shared settings used to initialize the activity indicator.
 	private func sharedInit() {
 		// Configure activity indicator view.
-		if #available(iOS 13.0, *) {
-			self.style = .large
-		}
 		self.theme_color = KThemePicker.tintColor.rawValue
+		self.style = .large
 		self.autoresizingMask = [.flexibleRightMargin, .flexibleLeftMargin, .flexibleBottomMargin, .flexibleTopMargin]
 		self.hidesWhenStopped = true
 	}

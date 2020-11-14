@@ -20,7 +20,6 @@ let KService = KurozoraKit(debugURL: "https://kurozora.app/api/v1/").services(Ku
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 	// MARK: - Properties
-	var window: UIWindow?
 	var authenticationCount = 0
 	var isUnreachable = false
 
@@ -32,10 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		// Initialize theme
 		KThemeStyle.initAppTheme()
-
-		// Initialize UIWindow
-		window = UIWindow()
-		window?.makeKeyAndVisible()
 
 		// If the network is unreachable show the offline page
 		KNetworkManager.isUnreachable { _ in
@@ -50,9 +45,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Max disk cache size
 		ImageCache.default.diskStorage.config.sizeLimit = 300 * 1024 * 1024
 
-		// Global app tint color
-		self.window?.theme_tintColor = KThemePicker.tintColor.rawValue
-
 		// Check network availability
 		if isUnreachable {
 			return true
@@ -60,16 +52,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		// Restore current user session
 		WorkflowController.shared.restoreCurrentUserSession()
-
-		// Prepare home view
-		if #available(iOS 13.0, macCatalyst 13.0, *) {
-		} else {
-			let customTabBar = KTabBarController()
-			self.window?.rootViewController = customTabBar
-
-			// Check if user should authenticate
-			Kurozora.shared.userHasToAuthenticate()
-		}
 
 		return true
 	}
@@ -120,7 +102,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 // MARK: - UIScene
-@available(iOS 13.0, macCatalyst 13.0, *)
 extension AppDelegate {
 	// Here we tell iOS what scene configuration to use
 	func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
@@ -136,11 +117,6 @@ extension AppDelegate {
 
 // MARK: - Continuity
 extension AppDelegate {
-	func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-		Kurozora.shared.schemeHandler(app, open: url, options: options)
-		return true
-	}
-
 	func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
 		if userActivity.activityType == "OpenAnimeIntent", let parameters = userActivity.userInfo as? [String: Int] {
 			guard let showID = parameters["showID"] else { return false }
@@ -152,10 +128,6 @@ extension AppDelegate {
 		}
 
 		return true
-	}
-
-	func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-		Kurozora.shared.shortcutHandler(application, performActionFor: shortcutItem)
 	}
 }
 

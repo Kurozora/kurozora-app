@@ -15,7 +15,9 @@ class FeedTableViewController: KTableViewController {
 	@IBOutlet weak var profileImageButton: ProfileImageButton!
 
 	// MARK: - Properties
+	#if !targetEnvironment(macCatalyst)
 	var refreshController = UIRefreshControl()
+	#endif
 	var rightBarButtonItems: [UIBarButtonItem]? = nil
 
 	var feedMessages: [FeedMessage] = [] {
@@ -48,10 +50,12 @@ class FeedTableViewController: KTableViewController {
 		super.viewDidLoad()
 
 		// Add Refresh Control to Table View
+		#if !targetEnvironment(macCatalyst)
 		tableView.refreshControl = refreshController
 		refreshController.theme_tintColor = KThemePicker.tintColor.rawValue
 		refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh your explore feed!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
 		refreshController.addTarget(self, action: #selector(refreshFeedsData(_:)), for: .valueChanged)
+		#endif
 
 		// Configure navigation bar items
 		self.enableActions()
@@ -70,7 +74,9 @@ class FeedTableViewController: KTableViewController {
 		- Parameter sender: The object requesting the refresh.
 	*/
 	@objc private func refreshFeedsData(_ sender: Any) {
+		#if !targetEnvironment(macCatalyst)
 		refreshController.attributedTitle = NSAttributedString(string: "Refreshing your explore feed...", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+		#endif
 		self.nextPageURL = nil
 		fetchFeedMessages()
 	}
@@ -112,13 +118,17 @@ class FeedTableViewController: KTableViewController {
 				}
 
 				// Reset refresh controller title
+				#if !targetEnvironment(macCatalyst)
 				self.refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh your explore feed!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+				#endif
 			case .failure: break
 			}
 		}
 
 		DispatchQueue.main.async {
+			#if !targetEnvironment(macCatalyst)
 			self.refreshController.endRefreshing()
+			#endif
 		}
 	}
 
@@ -156,7 +166,7 @@ class FeedTableViewController: KTableViewController {
 
 				let kurozoraNavigationController = KNavigationController.init(rootViewController: kFeedMessageTextEditorViewController)
 				kurozoraNavigationController.navigationBar.prefersLargeTitles = false
-				self.present(kurozoraNavigationController)
+				self.present(kurozoraNavigationController, animated: true)
 			}
 		}
 	}

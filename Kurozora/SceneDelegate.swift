@@ -9,7 +9,6 @@
 import UIKit
 import KurozoraKit
 
-@available(iOS 13.0, macCatalyst 13.0, *)
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	var window: UIWindow?
 	var isUnreachable = false
@@ -99,7 +98,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 				if let showDetailsCollectionViewController = R.storyboard.shows.showDetailsCollectionViewController() {
 					showDetailsCollectionViewController.showID = showID
 					if let tabBarController = window?.rootViewController as? KTabBarController {
-						tabBarController.present(showDetailsCollectionViewController)
+						tabBarController.present(showDetailsCollectionViewController, animated: true)
 						return true
 					}
 				}

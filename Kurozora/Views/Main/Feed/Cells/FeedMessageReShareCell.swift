@@ -63,7 +63,7 @@ class FeedMessageReShareCell: FeedMessageCell {
 
 				let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
 
-				self.parentViewController?.present(kurozoraNavigationController)
+				self.parentViewController?.present(kurozoraNavigationController, animated: true)
 			}
 		}
 	}

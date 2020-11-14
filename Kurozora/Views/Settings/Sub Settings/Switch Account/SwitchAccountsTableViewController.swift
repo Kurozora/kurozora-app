@@ -30,7 +30,7 @@ class SwitchAccountsTableViewController: SubSettingsViewController {
 	@IBAction func addAccountBarButtonItemPressed(_ sender: UIBarButtonItem) {
 		if let signInTableViewController = R.storyboard.onboarding.signInTableViewController() {
 			let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
-			UIApplication.topViewController?.present(kNavigationController)
+			UIApplication.topViewController?.present(kNavigationController, animated: true)
 		}
 	}
 }

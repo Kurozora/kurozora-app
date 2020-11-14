@@ -21,10 +21,7 @@ extension UIStatusBarStyle {
 		case "LightContent":
 			return .lightContent
 		default:
-			if #available(iOS 13, *) {
-				return .darkContent
-			}
-			return .default
+			return .darkContent
 		}
 	}
 }

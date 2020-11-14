@@ -74,10 +74,6 @@ extension UIApplication {
 
 	/// The shared key window of the application.
 	static var sharedKeyWindow: UIWindow? {
-		if #available(iOS 13, macCatalyst 13, *) {
-			return UIApplication.shared.windows.first { $0.isKeyWindow }
-		} else {
-			return UIApplication.shared.keyWindow
-		}
+		return UIApplication.shared.windows.first { $0.isKeyWindow }
 	}
 }

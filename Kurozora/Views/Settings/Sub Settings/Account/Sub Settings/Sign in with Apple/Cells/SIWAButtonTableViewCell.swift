@@ -16,22 +16,16 @@ class SIWAButtonTableViewCell: UITableViewCell {
 	// MARK: - View
 	override func awakeFromNib() {
 		super.awakeFromNib()
-
-		if #available(iOS 13.0, *) {
-			setupProviderSignInView()
-		}
+		setupProviderSignInView()
 	}
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
-		if #available(iOS 13.0, macCatalyst 13.0, *) {
-			setupProviderSignInView()
-		}
+		setupProviderSignInView()
 	}
 
 	/// Sets up the sign in view by adding an "or" label and the Sign in with Apple ID button.
-	@available(iOS 13.0, macCatalyst 13.0, *)
 	func setupProviderSignInView() {
 		// Create and setup Apple ID authorization button
 		let style: ASAuthorizationAppleIDButton.Style = KThemeStyle.isNightTheme() ? .white : .black
@@ -52,7 +46,6 @@ class SIWAButtonTableViewCell: UITableViewCell {
 	}
 
 	/// Handles the Apple ID button press.
-	@available(iOS 13.0, macCatalyst 13.0, *)
 	@objc func handleAuthorizationAppleIDButtonPress() {
 		onboardingFooterTableViewCellDelegate?.handleAuthorizationAppleIDButtonPress()
 	}

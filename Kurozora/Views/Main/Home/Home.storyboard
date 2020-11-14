@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17140" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="eeh-Yo-M66">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17700" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="eeh-Yo-M66">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17115"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -238,9 +238,9 @@
                     </collectionView>
                     <navigationItem key="navigationItem" title="Explore" id="2aK-dy-bZm"/>
                     <connections>
-                        <segue destination="0a7-9G-Fd6" kind="custom" identifier="SubscriptionSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="3ef-dN-WV5"/>
-                        <segue destination="SJ2-V2-Ihb" kind="custom" identifier="RedeemSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="X7E-Wd-lXb"/>
-                        <segue destination="iCt-dj-RF4" kind="custom" identifier="LegalSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="ctZ-Iy-Ut3"/>
+                        <segue destination="0a7-9G-Fd6" kind="presentation" identifier="SubscriptionSegue" id="3ef-dN-WV5"/>
+                        <segue destination="SJ2-V2-Ihb" kind="presentation" identifier="RedeemSegue" id="X7E-Wd-lXb"/>
+                        <segue destination="iCt-dj-RF4" kind="presentation" identifier="LegalSegue" id="ctZ-Iy-Ut3"/>
                         <segue destination="8H2-pT-d2L" kind="show" identifier="ShowDetailsSegue" id="gKM-pt-PFb"/>
                         <segue destination="Pey-ss-6J5" kind="show" identifier="GenresSegue" id="YYd-Uu-4EQ"/>
                         <segue destination="xdS-8x-Scn" kind="show" identifier="ExploreSegue" id="nLz-2r-FHa"/>

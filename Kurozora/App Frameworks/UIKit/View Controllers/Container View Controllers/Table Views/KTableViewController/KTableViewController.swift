@@ -128,3 +128,6 @@ extension KTableViewController {
 		tableView.reloadEmptyDataSet()
 	}
 }
+
+// MARK: - UINavigationControllerDelegate
+extension KTableViewController: UINavigationControllerDelegate {}

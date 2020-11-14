@@ -175,7 +175,7 @@ class BaseFeedMessageCell: KTableViewCell {
 
 				let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
 
-				self.parentViewController?.present(kurozoraNavigationController)
+				self.parentViewController?.present(kurozoraNavigationController, animated: true)
 			}
 		}
 	}
@@ -219,7 +219,7 @@ class BaseFeedMessageCell: KTableViewCell {
 
 				let kurozoraNavigationController = KNavigationController.init(rootViewController: kfmReplyTextEditorViewController)
 				kurozoraNavigationController.navigationBar.prefersLargeTitles = false
-				self.parentViewController?.present(kurozoraNavigationController)
+				self.parentViewController?.present(kurozoraNavigationController, animated: true)
 			}
 		}
 	}
@@ -235,7 +235,7 @@ class BaseFeedMessageCell: KTableViewCell {
 
 					let kurozoraNavigationController = KNavigationController.init(rootViewController: kfmReShareTextEditorViewController)
 					kurozoraNavigationController.navigationBar.prefersLargeTitles = false
-					self.parentViewController?.present(kurozoraNavigationController)
+					self.parentViewController?.present(kurozoraNavigationController, animated: true)
 				}
 			} else {
 				SCLAlertView().showNotice("Can't re-share", subTitle: "You are not allowed to re-share a message more than once.")

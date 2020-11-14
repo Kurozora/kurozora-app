@@ -16,13 +16,17 @@ protocol LibraryListViewControllerDelegate: class {
 
 class LibraryListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
+	#if !targetEnvironment(macCatalyst)
 	private let refreshControl = UIRefreshControl()
+	#endif
 
 	var shows: [Show] = [] {
 		didSet {
 			self.configureDataSource()
+			#if !targetEnvironment(macCatalyst)
 			self.refreshControl.endRefreshing()
 			self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(self.libraryStatus.stringValue.lowercased()) list.", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
+			#endif
 		}
 	}
 	var libraryStatus: KKLibrary.Status = .planning
@@ -60,7 +64,9 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	override func viewWillReload() {
 		super.viewWillReload()
 
+		#if !targetEnvironment(macCatalyst)
 		self.enableActions()
+		#endif
 		self.fetchLibrary()
 	}
 
@@ -74,10 +80,12 @@ class LibraryListCollectionViewController: KCollectionViewController {
 		collectionView.collectionViewLayout = createLayout()
 
 		// Add Refresh Control to Collection View
+		#if !targetEnvironment(macCatalyst)
 		collectionView.refreshControl = refreshControl
 		refreshControl.theme_tintColor = KThemePicker.tintColor.rawValue
 		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(libraryStatus.stringValue.lowercased()) list.", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
 		refreshControl.addTarget(self, action: #selector(viewWillReload), for: .valueChanged)
+		#endif
 
 		// Observe NotificationCenter for an update
 		NotificationCenter.default.addObserver(self, selector: #selector(fetchLibrary), name: Notification.Name("Update\(libraryStatus.sectionValue)Section"), object: nil)
@@ -107,7 +115,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 					.didTapDataButton {
 						if let signInTableViewController = R.storyboard.onboarding.signInTableViewController() {
 							let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
-							self.present(kNavigationController)
+							self.present(kNavigationController, animated: true)
 						}
 					}
 			} else {
@@ -119,15 +127,19 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	}
 
 	/// Enables and disables actions such as buttons and the refresh control according to the user sign in state.
+	#if !targetEnvironment(macCatalyst)
 	private func enableActions() {
 		refreshControl.isEnabled = User.isSignedIn
 	}
+	#endif
 
 	/// Fetch the library items for the current user.
 	@objc private func fetchLibrary() {
 		if User.isSignedIn {
 			DispatchQueue.main.async {
+				#if !targetEnvironment(macCatalyst)
 				self.refreshControl.attributedTitle = NSAttributedString(string: "Refreshing your \(self.libraryStatus.stringValue.lowercased()) list...", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
+				#endif
 			}
 
 			KService.getLibrary(withLibraryStatus: self.libraryStatus, withSortType: librarySortType, withSortOption: librarySortTypeOption) { [weak self] result in

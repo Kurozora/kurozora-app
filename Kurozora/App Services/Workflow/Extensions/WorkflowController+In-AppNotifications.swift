@@ -17,7 +17,7 @@ extension WorkflowController {
 			if let manageActiveSessionsController = R.storyboard.accountSettings.manageActiveSessionsController() {
 				manageActiveSessionsController.dismissEnabled = true
 				let kurozoraNavigationController = KNavigationController(rootViewController: manageActiveSessionsController)
-				UIApplication.topViewController?.present(kurozoraNavigationController)
+				UIApplication.topViewController?.present(kurozoraNavigationController, animated: true)
 			}
 		}
 	}

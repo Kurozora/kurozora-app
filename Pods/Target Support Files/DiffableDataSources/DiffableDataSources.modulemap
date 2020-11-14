@@ -1,6 +1,0 @@
-framework module DiffableDataSources {
-  umbrella header "DiffableDataSources-umbrella.h"
-
-  export *
-  module * { export * }
-}

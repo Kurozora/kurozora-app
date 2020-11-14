@@ -8,6 +8,7 @@
 
 import UIKit
 
+// swiftlint:disable type_name
 class SectionBackgroundVisualEffectDecorationView: UICollectionReusableView {
 	// MARK: - Properties
 	static let elementKindSectionBackground = "SectionBackgroundVisualEffectElementKind"

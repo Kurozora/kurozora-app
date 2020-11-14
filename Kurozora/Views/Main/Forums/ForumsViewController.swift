@@ -103,7 +103,7 @@ class ForumsViewController: KTabbedViewController {
 
 				let kurozoraNavigationController = KNavigationController.init(rootViewController: kRichTextEditorViewController)
 				kurozoraNavigationController.navigationBar.prefersLargeTitles = false
-				self.present(kurozoraNavigationController)
+				self.present(kurozoraNavigationController, animated: true)
 			}
 		}
 	}

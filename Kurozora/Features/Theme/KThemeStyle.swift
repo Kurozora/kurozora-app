@@ -141,15 +141,11 @@ extension KThemeStyle {
 		case .default:
 			UserSettings.set("Default", forKey: .currentTheme)
 			ThemeManager.setTheme(plistName: "Default", path: .mainBundle)
-			if #available(iOS 13.0, *) {
-				UIApplication.sharedKeyWindow?.overrideUserInterfaceStyle = .dark
-			}
+			UIApplication.sharedKeyWindow?.overrideUserInterfaceStyle = .dark
 		case .day:
 			UserSettings.set("Day", forKey: .currentTheme)
 			ThemeManager.setTheme(plistName: "Day", path: .mainBundle)
-			if #available(iOS 13.0, *) {
-				UIApplication.sharedKeyWindow?.overrideUserInterfaceStyle = .light
-			}
+			UIApplication.sharedKeyWindow?.overrideUserInterfaceStyle = .light
 		case .night:
 			if UserSettings.trueBlackEnabled {
 				UserSettings.set("Black", forKey: .currentTheme)
@@ -159,13 +155,9 @@ extension KThemeStyle {
 				ThemeManager.setTheme(plistName: "Night", path: .mainBundle)
 			}
 
-			if #available(iOS 13.0, *) {
-				UIApplication.sharedKeyWindow?.overrideUserInterfaceStyle = .dark
-			}
+			UIApplication.sharedKeyWindow?.overrideUserInterfaceStyle = .dark
 		case .other:
-			if #available(iOS 13.0, *) {
-				UIApplication.sharedKeyWindow?.overrideUserInterfaceStyle = .unspecified
-			}
+			UIApplication.sharedKeyWindow?.overrideUserInterfaceStyle = .unspecified
 		}
 	}
 
@@ -181,15 +173,13 @@ extension KThemeStyle {
 		UserSettings.set(themeName, forKey: .currentTheme)
 		ThemeManager.setTheme(plistName: themeName, path: .mainBundle)
 
-		if #available(iOS 13.0, *) {
-			switch current {
-			case .day:
-				UIApplication.sharedKeyWindow?.overrideUserInterfaceStyle = .light
-			case .night, .default:
-				UIApplication.sharedKeyWindow?.overrideUserInterfaceStyle = .dark
-			default:
-				UIApplication.sharedKeyWindow?.overrideUserInterfaceStyle = .unspecified
-			}
+		switch current {
+		case .day:
+			UIApplication.sharedKeyWindow?.overrideUserInterfaceStyle = .light
+		case .night, .default:
+			UIApplication.sharedKeyWindow?.overrideUserInterfaceStyle = .dark
+		default:
+			UIApplication.sharedKeyWindow?.overrideUserInterfaceStyle = .unspecified
 		}
 	}
 

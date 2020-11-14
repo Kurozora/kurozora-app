@@ -9,6 +9,7 @@
 import UIKit
 import KurozoraKit
 import SCLAlertView
+import MobileCoreServices
 
 class SignUpTableViewController: AccountOnboardingTableViewController {
 	// MARK: - IBOutlets
@@ -17,6 +18,7 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 
 	// MARK: - Properties
 	lazy var imagePicker = UIImagePickerController()
+	var profileImageFilePath: String? = nil
 	var isSIWA = false
 
 	// MARK: - View
@@ -33,6 +35,11 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 		if UIImagePickerController.isSourceTypeAvailable(.camera) {
 			imagePicker.sourceType = .camera
 			imagePicker.allowsEditing = true
+			if User.isPro {
+				imagePicker.mediaTypes = [(kUTTypeGIF as String), (kUTTypePNG as String), (kUTTypeJPEG as String)]
+			} else {
+				imagePicker.mediaTypes = [(kUTTypePNG as String), (kUTTypeJPEG as String)]
+			}
 			imagePicker.delegate = self
 			self.present(imagePicker, animated: true, completion: nil)
 		} else {
@@ -88,9 +95,8 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 			}
 		case .siwa:
 			let username = textFieldArray.first??.trimmedText
-			let profileImage = profileImageView.image
 
-			KService.updateInformation(profileImage: profileImage, username: username) { [weak self] result in
+			KService.updateInformation(profileImageFilePath: profileImageFilePath, username: username) { [weak self] result in
 				guard let self = self else { return }
 				switch result {
 				case .success:
@@ -145,10 +151,14 @@ extension SignUpTableViewController {
 }
 
 //MARK: - UIImagePickerControllerDelegate
-extension SignUpTableViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension SignUpTableViewController: UIImagePickerControllerDelegate {
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
 		if let editedImage = info[.editedImage] as? UIImage {
 			self.profileImageView.image = editedImage
+		}
+
+		if let imageURL = info[.imageURL] as? URL {
+			profileImageFilePath = imageURL.absoluteString
 		}
 
 		// Dismiss the UIImagePicker after selection

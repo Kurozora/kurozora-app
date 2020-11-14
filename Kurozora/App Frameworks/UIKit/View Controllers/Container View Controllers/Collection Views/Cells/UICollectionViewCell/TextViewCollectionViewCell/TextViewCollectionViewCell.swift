@@ -47,7 +47,7 @@ class TextViewCollectionViewCell: UICollectionViewCell {
 				synopsisViewController.synopsis = textViewContent
 			}
 			synopsisKNavigationController.modalPresentationStyle = .fullScreen
-			self.parentViewController?.present(synopsisKNavigationController)
+			self.parentViewController?.present(synopsisKNavigationController, animated: true)
 		}
 	}
 }

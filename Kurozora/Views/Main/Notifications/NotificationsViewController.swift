@@ -119,7 +119,7 @@ class NotificationsViewController: KTableViewController {
 					.didTapDataButton {
 						if let signInTableViewController = R.storyboard.onboarding.signInTableViewController() {
 							let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
-							self.present(kNavigationController)
+							self.present(kNavigationController, animated: true)
 						}
 				}
 			}
@@ -422,7 +422,7 @@ extension NotificationsViewController {
 				profileViewController.dismissButtonIsEnabled = true
 
 				let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
-				self.present(kurozoraNavigationController)
+				self.present(kurozoraNavigationController, animated: true)
 			}
 		}
 	}

@@ -142,3 +142,6 @@ extension KCollectionViewController {
 		collectionView.reloadEmptyDataSet()
 	}
 }
+
+// MARK: - UINavigationControllerDelegate
+extension KCollectionViewController: UINavigationControllerDelegate {}

@@ -41,20 +41,6 @@ class AccountTableViewController: SubSettingsViewController {
 		// Setup profile image.
 		self.profileImageView.image = User.current?.attributes.profileImage
 	}
-
-	// MARK: - Segue
-	override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-		if identifier == R.segue.accountTableViewController.siwASegue.identifier {
-			if #available(iOS 13.0, macCatalyst 13.0, *) {
-				return true
-			} else {
-				SCLAlertView().showInfo("Not supported 😵", subTitle: "Sign in with Apple is only supported on iOS 13.0 and up. If you would like to use this feature, please update your iOS version if possible.")
-				return false
-			}
-		}
-
-		return true
-	}
 }
 
 // MARK: - UITableViewDataSource

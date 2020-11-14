@@ -41,7 +41,7 @@ class OnboardingFooterTableViewCell: OnboardingBaseTableViewCell {
 
 		if let legalViewController = R.storyboard.legal.legalViewController() {
 			let kNavigationController = KNavigationController(rootViewController: legalViewController)
-			self.parentViewController?.present(kNavigationController)
+			self.parentViewController?.present(kNavigationController, animated: true)
 		}
 	}
 

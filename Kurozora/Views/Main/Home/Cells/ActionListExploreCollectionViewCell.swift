@@ -31,7 +31,7 @@ class ActionListExploreCollectionViewCell: ActionBaseExploreCollectionViewCell {
 			}
 
 			kNavigationController.modalPresentationStyle = .custom
-			self.parentViewController?.present(kNavigationController)
+			self.parentViewController?.present(kNavigationController, animated: true)
 		}
 	}
 }

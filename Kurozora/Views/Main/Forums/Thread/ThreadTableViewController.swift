@@ -261,7 +261,7 @@ class ThreadTableViewController: KTableViewController {
 			let kurozoraNavigationController = KNavigationController.init(rootViewController: kCommentEditorViewController!)
 			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
 
-			self.present(kurozoraNavigationController)
+			self.present(kurozoraNavigationController, animated: true)
 		}
 	}
 
@@ -273,7 +273,7 @@ class ThreadTableViewController: KTableViewController {
 				profileViewController.dismissButtonIsEnabled = true
 
 				let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
-				self.present(kurozoraNavigationController)
+				self.present(kurozoraNavigationController, animated: true)
 			}
 		}
 	}

@@ -59,12 +59,7 @@ public class KurozoraKit {
 		- Parameter services: The desired [KKServices](x-source-tag://KKServices) to be used.
 	*/
 	public init(debugURL: String? = nil, authenticationKey: String = "", services: KKServices = KKServices()) {
-		var plugins: [Plugin] = debugURL != nil ? [NetworkLoggerPlugin()] : []
-
-		if #available(iOS 13.0, macCatalyst 13.0, *) {
-		} else {
-			plugins.append(NetworkActivityPlugin(application: UIApplication.shared))
-		}
+		let plugins: [Plugin] = debugURL != nil ? [NetworkLoggerPlugin()] : []
 
 		self.tron = TRON(baseURL: debugURL ?? "https://kurozora.app/api/v1/", plugins: plugins)
 		self.authenticationKey = authenticationKey

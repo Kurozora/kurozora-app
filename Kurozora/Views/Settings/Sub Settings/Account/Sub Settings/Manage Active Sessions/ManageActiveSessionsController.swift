@@ -47,13 +47,7 @@ class ManageActiveSessionsController: KTableViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		if dismissEnabled {
-			let closeButton: UIBarButtonItem
-			if #available(iOS 13.0, macCatalyst 13.0, *) {
-				closeButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss(_:)))
-			} else {
-				closeButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(dismiss(_:)))
-			}
-			self.navigationItem.leftBarButtonItem = closeButton
+			self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss(_:)))
 		}
 	}
 
@@ -67,22 +61,25 @@ class ManageActiveSessionsController: KTableViewController {
 		// Configure map view
 		mapView.showsUserLocation = true
 
-		if CLLocationManager.locationServicesEnabled() == true {
-			let authorizationStatus: CLAuthorizationStatus!
-			authorizationStatus = CLLocationManager.authorizationStatus()
-
-			switch authorizationStatus {
-			case .restricted, .denied, .notDetermined:
-				locationManager.requestWhenInUseAuthorization()
-			default: break
-			}
-
-			locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
-			locationManager.delegate = self
-			locationManager.startUpdatingLocation()
-
+		if #available(iOS 14.0, macOS 11.0, *) {
 		} else {
-			print("Please turn on location services or GPS")
+			if CLLocationManager.locationServicesEnabled() == true {
+				let authorizationStatus: CLAuthorizationStatus!
+				authorizationStatus = CLLocationManager.authorizationStatus()
+
+				switch authorizationStatus {
+				case .restricted, .denied, .notDetermined:
+					locationManager.requestWhenInUseAuthorization()
+				default: break
+				}
+
+				locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+				locationManager.delegate = self
+				locationManager.startUpdatingLocation()
+
+			} else {
+				print("Please turn on location services or GPS")
+			}
 		}
 
 		// Configure table view height
@@ -345,5 +342,18 @@ extension ManageActiveSessionsController: MKMapViewDelegate {
 extension ManageActiveSessionsController: CLLocationManagerDelegate {
 	func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
 		print("Unable to access your current location")
+	}
+
+	@available(iOS 14.0, macOS 11.0, *)
+	func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+		switch manager.authorizationStatus {
+		case .restricted, .denied, .notDetermined:
+			locationManager.requestWhenInUseAuthorization()
+		default: break
+		}
+
+		locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+		locationManager.delegate = self
+		locationManager.startUpdatingLocation()
 	}
 }
