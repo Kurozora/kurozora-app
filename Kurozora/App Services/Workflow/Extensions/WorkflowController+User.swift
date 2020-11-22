@@ -47,14 +47,14 @@ extension WorkflowController {
 	*/
 	func restoreCurrentUserSession() {
 		let accountKey = UserSettings.selectedAccount
-		if let authenticationKey = Kurozora.shared.keychain[accountKey] {
+		if let authenticationKey = KurozoraDelegate.shared.keychain[accountKey] {
 			DispatchQueue.global(qos: .background).async {
 				KService.restoreDetails(forUserWith: authenticationKey) { result in
 					switch result {
 					case .success(let newAuthenticationKey):
-						try? Kurozora.shared.keychain.set(newAuthenticationKey, key: accountKey)
+						try? KurozoraDelegate.shared.keychain.set(newAuthenticationKey, key: accountKey)
 					case .failure:
-						try? Kurozora.shared.keychain.remove(accountKey)
+						try? KurozoraDelegate.shared.keychain.remove(accountKey)
 					}
 				}
 			}

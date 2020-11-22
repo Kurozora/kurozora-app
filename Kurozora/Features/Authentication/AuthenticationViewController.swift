@@ -25,7 +25,7 @@ class AuthenticationViewController: KViewController {
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 
-		Kurozora.shared.handleUserAuthentication()
+		KurozoraDelegate.shared.handleUserAuthentication()
 		unlockDescriptionView.isHidden = true
 		lockImageView.isHidden = false
 	}
@@ -54,6 +54,6 @@ class AuthenticationViewController: KViewController {
 	// MARK: - IBActions
 	@IBAction func unlockButtonPressed(_ sender: UIButton) {
 		toggleHide()
-		Kurozora.shared.handleUserAuthentication()
+		KurozoraDelegate.shared.handleUserAuthentication()
 	}
 }

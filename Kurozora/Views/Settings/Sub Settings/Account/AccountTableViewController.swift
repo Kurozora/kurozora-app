@@ -59,7 +59,7 @@ extension AccountTableViewController {
 					KService.signOut { result in
 						switch result {
 						case .success:
-							try? Kurozora.shared.keychain.remove(username)
+							try? KurozoraDelegate.shared.keychain.remove(username)
 						case .failure:
 							break
 						}

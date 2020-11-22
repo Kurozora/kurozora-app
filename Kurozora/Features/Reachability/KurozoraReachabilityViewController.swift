@@ -41,7 +41,7 @@ class KurozoraReachabilityViewController: UIViewController {
 
 		// If the network is reachable show the main controller
 		networkManager.reachability.whenReachable = { _ in
-			Kurozora.shared.showMainPage(for: self.window, viewController: self)
+			KurozoraDelegate.shared.showMainPage(for: self.window, viewController: self)
 		}
 	}
 
@@ -55,7 +55,7 @@ class KurozoraReachabilityViewController: UIViewController {
 	// MARK: - IBActions
 	@IBAction func reconnectButtonPressed(_ sender: UIButton) {
 		KNetworkManager.isReachable { _ in
-			Kurozora.shared.showMainPage(for: self.window, viewController: self)
+			KurozoraDelegate.shared.showMainPage(for: self.window, viewController: self)
 		}
 	}
 }

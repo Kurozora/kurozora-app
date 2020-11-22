@@ -1,6 +1,6 @@
 //
-//  Kurozora.swift
-//  Kurozora
+//  KurozoraDelegate.swift
+//  KurozoraDelegate
 //
 //  Created by Khoren Katklian on 30/12/2018.
 //  Copyright © 2018 Kurozora. All rights reserved.
@@ -16,8 +16,8 @@ import SCLAlertView
 /**
 	A set of methods and properties used to manage shared behaviors for the `Kurozora` app.
 
-	The `Kurozora` object manages the app’s shared behaviors.
-	Use the `Kurozora` object to handle the following tasks:
+	The `KurozoraDelegate` object manages the app’s shared behaviors.
+	Use the `KurozoraDelegate` object to handle the following tasks:
 	- Ask the user for authentication before using the app.
 	- Handle URL schemes supported by the app.
 	- Initializing your app’s central data structures.
@@ -26,7 +26,7 @@ import SCLAlertView
 
 	- Tag: Kurozora
 */
-class Kurozora {
+class KurozoraDelegate {
 	// MARK: - Properties
 	// Authentication
 	/// Indicates whether authentication has been enabled by the user.
@@ -36,7 +36,7 @@ class Kurozora {
 	var authenticationInterval: Int = 0
 
 	/// Returns the singleton Kurozora instance.
-	static let shared: Kurozora = Kurozora()
+	static let shared: KurozoraDelegate = KurozoraDelegate()
 
 	// KurozoraKit
 	/// The app's identifier prefix.
@@ -72,7 +72,7 @@ class Kurozora {
 
 		if User.isSignedIn {
 			// Check if user should authenticate
-			Kurozora.shared.userHasToAuthenticate()
+			KurozoraDelegate.shared.userHasToAuthenticate()
 		}
 	}
 
@@ -182,7 +182,7 @@ class Kurozora {
 }
 
 // MARK: - Authentication
-extension Kurozora {
+extension KurozoraDelegate {
 	/// Asks the app if the user should authenticate so the app prepares for it.
 	func userShouldAuthenticate() {
 		self.authenticationEnabled = UserSettings.authenticationEnabled
@@ -347,7 +347,7 @@ extension Kurozora {
 }
 
 // MARK: - Quick Actions
-extension Kurozora {
+extension KurozoraDelegate {
 	/**
 		Performs an action for the specified shortcut item.
 

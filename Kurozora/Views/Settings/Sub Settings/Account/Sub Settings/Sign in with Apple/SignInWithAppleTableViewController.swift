@@ -105,7 +105,7 @@ extension SignInWithAppleTableViewController: ASAuthorizationControllerDelegate 
 					case .signIn:
 						// Save user in keychain.
 						if let username = User.current?.attributes.username {
-							try? Kurozora.shared.keychain.set(oAuthResponse.authenticationToken, key: username)
+							try? KurozoraDelegate.shared.keychain.set(oAuthResponse.authenticationToken, key: username)
 							UserSettings.set(username, forKey: .selectedAccount)
 						}
 

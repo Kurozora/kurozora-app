@@ -45,7 +45,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 		// Check network availability
 		if isUnreachable {
-			Kurozora.shared.showOfflinePage(for: window)
+			KurozoraDelegate.shared.showOfflinePage(for: window)
 			return
 		}
 
@@ -54,7 +54,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		self.window?.rootViewController = customTabBar
 
 		// Check if user should authenticate
-		Kurozora.shared.userHasToAuthenticate()
+		KurozoraDelegate.shared.userHasToAuthenticate()
 
 		// Configure window or resotre previous activity.
 		if let userActivity = connectionOptions.userActivities.first ?? session.stateRestorationActivity {
@@ -66,15 +66,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
 		guard let url = URLContexts.first?.url else { return }
-		Kurozora.shared.schemeHandler(scene, open: url)
+		KurozoraDelegate.shared.schemeHandler(scene, open: url)
 	}
 
 	func windowScene(_ windowScene: UIWindowScene, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-		Kurozora.shared.shortcutHandler(windowScene, performActionFor: shortcutItem)
+		KurozoraDelegate.shared.shortcutHandler(windowScene, performActionFor: shortcutItem)
 	}
 
 	func sceneDidEnterBackground(_ scene: UIScene) {
-		Kurozora.shared.userShouldAuthenticate()
+		KurozoraDelegate.shared.userShouldAuthenticate()
 	}
 
 	func sceneWillEnterForeground(_ scene: UIScene) {
@@ -90,8 +90,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	}
 
 	func sceneDidBecomeActive(_ scene: UIScene) {
-		if Date.uptime() > Kurozora.shared.authenticationInterval, Kurozora.shared.authenticationEnabled {
-			Kurozora.shared.prepareForAuthentication()
+		if Date.uptime() > KurozoraDelegate.shared.authenticationInterval, KurozoraDelegate.shared.authenticationEnabled {
+			KurozoraDelegate.shared.prepareForAuthentication()
 		}
 
 		// Clear notifications

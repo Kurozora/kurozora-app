@@ -16,7 +16,7 @@ class SwitchAccountsTableViewController: SubSettingsViewController {
 	// MARK: - Properties
 	/// All user accounts.
 	var accounts: [String] {
-		return Kurozora.shared.keychain.allKeys()
+		return KurozoraDelegate.shared.keychain.allKeys()
 	}
 
 	// MARK: - View
@@ -70,7 +70,7 @@ extension SwitchAccountsTableViewController {
 		UserSettings.set(accountKey, forKey: .selectedAccount)
 
 		// Retrieve selected user's session.
-		if let authenticationKey = Kurozora.shared.keychain[accountKey] {
+		if let authenticationKey = KurozoraDelegate.shared.keychain[accountKey] {
 			// Start using the selected user's authentication key.
 			KService.authenticationKey = authenticationKey
 
@@ -84,7 +84,7 @@ extension SwitchAccountsTableViewController {
 			let accountKey = self.accounts[indexPath.item]
 
 			// Remove user's authentication key from keychain and update tableView.
-			try? Kurozora.shared.keychain.remove(accountKey)
+			try? KurozoraDelegate.shared.keychain.remove(accountKey)
 			tableView.deleteRows(at: [indexPath], with: .automatic)
 			completion(true)
 		})
