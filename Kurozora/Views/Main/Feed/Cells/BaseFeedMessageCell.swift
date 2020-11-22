@@ -276,7 +276,7 @@ class BaseFeedMessageCell: KTableViewCell {
 			let userAction = UIAlertAction.init(title: username + "'s profile", style: .default, handler: { (_) in
 				self.visitPosterProfilePage()
 			})
-			userAction.setValue(R.image.symbols.person_crop_circle_fill()!, forKey: "image")
+			userAction.setValue(UIImage(systemName: "person.crop.circle.fill"), forKey: "image")
 			userAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 			alertController.addAction(userAction)
 		}
@@ -285,7 +285,7 @@ class BaseFeedMessageCell: KTableViewCell {
 		let reShareAction = UIAlertAction.init(title: "Share", style: .default, handler: { (_) in
 			self.shareMessage()
 		})
-		reShareAction.setValue(R.image.symbols.square_and_arrow_up_fill()!, forKey: "image")
+		reShareAction.setValue(UIImage(systemName: "square.and.arrow.up.fill"), forKey: "image")
 		reShareAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 		alertController.addAction(reShareAction)
 
@@ -293,7 +293,7 @@ class BaseFeedMessageCell: KTableViewCell {
 		let reportAction = UIAlertAction.init(title: "Report", style: .destructive, handler: { (_) in
 			self.reportMessage()
 		})
-		reportAction.setValue(R.image.symbols.exclamationmark_circle_fill()!, forKey: "image")
+		reportAction.setValue(UIImage(systemName: "exclamationmark.circle.fill"), forKey: "image")
 		reportAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 		alertController.addAction(reportAction)
 

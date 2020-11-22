@@ -14,9 +14,9 @@ extension ReminderStatus {
 	var imageValue: UIImage {
 		switch self {
 		case .reminded:
-			return R.image.symbols.bell_fill()!
+			return UIImage(systemName: "bell.fill")!
 		case .notReminded, .disabled:
-			return R.image.symbols.bell()!
+			return UIImage(systemName: "bell")!
 		}
 	}
 }

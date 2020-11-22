@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="oQA-sV-lQw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17700" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="oQA-sV-lQw">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -30,15 +30,15 @@
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="55"/>
                                             <subviews>
                                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kurozora" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="50r-B1-lkb">
-                                                    <rect key="frame" x="8" y="10" width="68.5" height="35"/>
+                                                    <rect key="frame" x="8" y="10" width="68" height="35"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                     <size key="shadowOffset" width="0.0" height="0.0"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Symbols/checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="w8e-CU-Ajj">
-                                                    <rect key="frame" x="342" y="19.5" width="24" height="16"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="w8e-CU-Ajj">
+                                                    <rect key="frame" x="347.5" y="21.5" width="18.5" height="12.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="Msm-Mm-o5P"/>
                                                     </constraints>
@@ -61,8 +61,8 @@
                                         <constraint firstAttribute="bottom" secondItem="v55-EO-bPg" secondAttribute="bottom" id="tJ8-S3-HrK"/>
                                     </constraints>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <viewLayoutGuide key="safeArea" id="wGD-Bt-PjE"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="primaryLabel" destination="50r-B1-lkb" id="TcT-Lh-Q8i"/>
                                     <outlet property="selectedImageView" destination="w8e-CU-Ajj" id="0Gf-MG-eOB"/>
@@ -117,6 +117,6 @@
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
-        <image name="Symbols/checkmark" width="24" height="24"/>
+        <image name="checkmark" catalog="system" width="128" height="114"/>
     </resources>
 </document>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hdZ-VV-P4Y">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17700" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hdZ-VV-P4Y">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17124"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -13,7 +13,7 @@
         <scene sceneID="U8C-3W-3AV">
             <objects>
                 <tableViewController storyboardIdentifier="NotificationsSettingsViewController" title="Notifications" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="qxA-b6-pa8" customClass="NotificationsSettingsViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" delaysContentTouches="NO" bouncesZoom="NO" dataMode="static" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="hft-H9-czh">
+                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" delaysContentTouches="NO" bouncesZoom="NO" dataMode="static" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="hft-H9-czh">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="Tuq-FB-wZm"/>
@@ -105,8 +105,8 @@
                                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Symbols/checkmark_circle_fill" translatesAutoresizingMaskIntoConstraints="NO" id="7Ua-TD-FqL">
-                                                                            <rect key="frame" x="19" y="144" width="35" height="35"/>
+                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="7Ua-TD-FqL">
+                                                                            <rect key="frame" x="19" y="144.5" width="35" height="34"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="35" id="JWA-Ki-vLf"/>
                                                                                 <constraint firstAttribute="height" constant="35" id="yn0-7Q-7Fn"/>
@@ -117,7 +117,7 @@
                                                                                 </userDefinedRuntimeAttribute>
                                                                             </userDefinedRuntimeAttributes>
                                                                         </imageView>
-                                                                        <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M3P-J4-ZR2">
+                                                                        <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M3P-J4-ZR2">
                                                                             <rect key="frame" x="0.0" y="0.0" width="73" height="184"/>
                                                                             <connections>
                                                                                 <action selector="notificationButtonTapped:" destination="KWc-Ge-oPQ" eventType="touchUpInside" id="1C7-1b-fci"/>
@@ -167,7 +167,7 @@
                                                                                 </userDefinedRuntimeAttribute>
                                                                             </userDefinedRuntimeAttributes>
                                                                         </imageView>
-                                                                        <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sWt-1E-yKj">
+                                                                        <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sWt-1E-yKj">
                                                                             <rect key="frame" x="0.0" y="0.0" width="73" height="184"/>
                                                                             <connections>
                                                                                 <action selector="notificationButtonTapped:" destination="KWc-Ge-oPQ" eventType="touchUpInside" id="65M-eq-ocC"/>
@@ -217,7 +217,7 @@
                                                                                 </userDefinedRuntimeAttribute>
                                                                             </userDefinedRuntimeAttributes>
                                                                         </imageView>
-                                                                        <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Xo-Dr-pHN">
+                                                                        <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Xo-Dr-pHN">
                                                                             <rect key="frame" x="0.0" y="0.0" width="73" height="184"/>
                                                                             <connections>
                                                                                 <action selector="notificationButtonTapped:" destination="KWc-Ge-oPQ" eventType="touchUpInside" id="qEe-Fu-f5b"/>
@@ -294,14 +294,14 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Temporary" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="wU4-Ao-UE7">
-                                                            <rect key="frame" x="255" y="15" width="82" height="20.5"/>
+                                                            <rect key="frame" x="266.5" y="15" width="82" height="20.5"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Symbols/chevron_right" translatesAutoresizingMaskIntoConstraints="NO" id="oIx-RT-fOG">
-                                                            <rect key="frame" x="342" y="17" width="24" height="16"/>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="oIx-RT-fOG">
+                                                            <rect key="frame" x="353.5" y="19" width="12.5" height="12.5"/>
                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="16" id="68C-nb-EYW"/>
@@ -344,7 +344,7 @@
                             <tableViewSection id="h4N-4a-3wx">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="50" id="RQm-C0-0go" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="454" width="374" height="50"/>
+                                        <rect key="frame" x="20" y="453.5" width="374" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RQm-C0-0go" id="JrI-GZ-IDb">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
@@ -396,7 +396,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="50" id="kyI-hH-FWM" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="504" width="374" height="50"/>
+                                        <rect key="frame" x="20" y="503.5" width="374" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kyI-hH-FWM" id="nJ8-4B-G27">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
@@ -448,7 +448,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="50" id="ndg-oq-PYd" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="554" width="374" height="50"/>
+                                        <rect key="frame" x="20" y="553.5" width="374" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ndg-oq-PYd" id="ZG6-E4-Ut2">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
@@ -504,7 +504,7 @@
                             <tableViewSection headerTitle="Options" id="2FB-fu-AnS">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="50" id="xMa-AK-nre" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="660" width="374" height="50"/>
+                                        <rect key="frame" x="20" y="659" width="374" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xMa-AK-nre" id="e89-Bw-oNf">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
@@ -521,15 +521,15 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Automatic" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="qzX-ES-5e4">
-                                                            <rect key="frame" x="263" y="15.5" width="74" height="19.5"/>
+                                                            <rect key="frame" x="274.5" y="15.5" width="74" height="19.5"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                             <size key="shadowOffset" width="0.0" height="1"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Symbols/chevron_right" translatesAutoresizingMaskIntoConstraints="NO" id="HDY-BI-Q3W">
-                                                            <rect key="frame" x="342" y="17" width="24" height="16"/>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="HDY-BI-Q3W">
+                                                            <rect key="frame" x="353.5" y="19" width="12.5" height="12.5"/>
                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="16" id="9Ph-2L-07m"/>
@@ -616,8 +616,8 @@
                                                     <nil key="highlightedColor"/>
                                                     <size key="shadowOffset" width="0.0" height="0.0"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Symbols/checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="uQp-5F-VbL">
-                                                    <rect key="frame" x="342" y="17" width="24" height="16"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="uQp-5F-VbL">
+                                                    <rect key="frame" x="347.5" y="19" width="18.5" height="12.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="VUQ-Gl-XNO"/>
                                                     </constraints>
@@ -691,8 +691,8 @@
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
-        <image name="Symbols/checkmark" width="24" height="24"/>
-        <image name="Symbols/checkmark_circle_fill" width="24" height="24"/>
-        <image name="Symbols/chevron_right" width="24" height="24"/>
+        <image name="checkmark" catalog="system" width="128" height="114"/>
+        <image name="checkmark.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="chevron.right" catalog="system" width="96" height="128"/>
     </resources>
 </document>

@@ -315,15 +315,14 @@ extension SettingsTableViewController {
 			case .browser:
 				return "Browser"
 			case .biometrics:
-				var primaryStringValue = "Passcode"
 				switch UIDevice.supportedBiomtetric {
 				case .faceID:
-					primaryStringValue = "Face ID & Passcode"
+					return "Face ID & Passcode"
 				case .touchID:
-					primaryStringValue = "Touch ID & Passcode"
-				case .none: break
+					return "Touch ID & Passcode"
+				default:
+					return "Passcode"
 				}
-				return primaryStringValue
 			case .cache:
 				return "Cache"
 			case .privacy:
@@ -380,7 +379,7 @@ extension SettingsTableViewController {
 					return R.image.icons.faceID()
 				case .touchID:
 					return R.image.icons.touchID()
-				case .none:
+				default:
 					return R.image.icons.lock()
 				}
 			case .cache:

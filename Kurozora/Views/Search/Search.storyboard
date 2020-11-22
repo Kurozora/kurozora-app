@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16095" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="2ep-aO-hMa">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17700" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="2ep-aO-hMa">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16084.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -244,8 +244,8 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cho-ED-5L4">
                                             <rect key="frame" x="0.0" y="0.0" width="340" height="70"/>
                                             <subviews>
-                                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Symbols/lock_fill" translatesAutoresizingMaskIntoConstraints="NO" id="Ngd-br-j5O">
-                                                    <rect key="frame" x="0.0" y="0.0" width="18" height="18"/>
+                                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lock.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Ngd-br-j5O">
+                                                    <rect key="frame" x="0.0" y="1" width="18" height="16"/>
                                                     <color key="tintColor" red="1" green="0.25490196079999999" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="18" id="aai-Ay-ccH"/>
@@ -253,7 +253,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DJP-IQ-gwv">
-                                                    <rect key="frame" x="25.999999999999996" y="0.0" width="44.666666666666657" height="20.333333333333332"/>
+                                                    <rect key="frame" x="26.000000000000004" y="0.0" width="43.333333333333343" height="20.333333333333332"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -331,19 +331,19 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kurozora" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="drt-vQ-zrh">
-                                                    <rect key="frame" x="68" y="0.0" width="72" height="20.333333333333332"/>
+                                                    <rect key="frame" x="68" y="0.0" width="71.666666666666686" height="20.333333333333332"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ol-rj-bPq">
-                                                    <rect key="frame" x="67.999999999999986" y="20.333333333333332" width="141.66666666666663" height="17.999999999999996"/>
+                                                    <rect key="frame" x="68.000000000000014" y="20.333333333333332" width="141.33333333333337" height="17.999999999999996"/>
                                                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="FWB-gm-pSF">
-                                                        <rect key="frame" x="0.0" y="0.0" width="141.66666666666663" height="17.999999999999996"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="141.33333333333337" height="17.999999999999996"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Be the first to follow!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GY7-lH-gUl">
-                                                                <rect key="frame" x="0.0" y="0.0" width="141.66666666666666" height="18"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="141.33333333333334" height="18"/>
                                                                 <color key="tintColor" white="0.59936179580000004" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                                 <color key="textColor" white="0.75" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -493,11 +493,16 @@
             <point key="canvasLocation" x="2712.8000000000002" y="150.73891625615764"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="YhF-wz-du0">
+            <size key="intrinsicContentSize" width="82" height="14"/>
+        </designable>
+    </designables>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
         <image name="Placeholders/Show Poster" width="680" height="1000"/>
         <image name="Placeholders/User Profile" width="300" height="300"/>
-        <image name="Symbols/lock_fill" width="24" height="24"/>
+        <image name="lock.fill" catalog="system" width="128" height="128"/>
         <image name="star_empty" width="48" height="46"/>
         <image name="star_filled" width="48" height="46"/>
     </resources>

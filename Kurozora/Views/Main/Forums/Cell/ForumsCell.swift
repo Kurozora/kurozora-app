@@ -9,6 +9,11 @@
 import UIKit
 import KurozoraKit
 
+protocol ForumsCellDelegate: class {
+	func voteOnForumsCell(_ cell: ForumsCell, with voteStatus: VoteStatus)
+	func visitOriginalPosterProfile(_ cell: ForumsCell)
+}
+
 class ForumsCell: UITableViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var usernameButton: KButton!
@@ -36,14 +41,9 @@ class ForumsCell: UITableViewCell {
 	@IBOutlet weak var upvoteButton: CellActionButton!
 	@IBOutlet weak var downvoteButton: CellActionButton!
 	@IBOutlet weak var actionsStackView: UIStackView!
-	@IBOutlet weak var bubbleView: UIView! {
-		didSet {
-			bubbleView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-		}
-	}
 
 	// MARK: - Properties
-	var forumsChildViewController: ForumsListViewController?
+	weak var forumsCellDelegate: ForumsCellDelegate?
 	var forumsThread: ForumsThread! {
 		didSet {
 			configureCell()
@@ -51,7 +51,23 @@ class ForumsCell: UITableViewCell {
 	}
 	var previousVote = 0
 
+	// MARK: - View
+	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+		super.init(style: style, reuseIdentifier: reuseIdentifier)
+		self.sharedInit()
+	}
+
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
+		self.sharedInit()
+	}
+
 	// MARK: - Functions
+	/// The shared settings used to initialize the tab bar item content view.
+	fileprivate func sharedInit() {
+		self.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+	}
+
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
 		// Set title label
@@ -81,54 +97,6 @@ class ForumsCell: UITableViewCell {
 		lockImageView.tintColor = .kLightRed
 		let lockStatus = forumsThread.attributes.lockStatus
 		isLocked(lockStatus)
-
-		// Add gesture to cell
-		let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(showCellOptions(_:)))
-		addGestureRecognizer(longPressGesture)
-		isUserInteractionEnabled = true
-	}
-
-	/**
-		Vote on the thread with the given vote.
-
-		- Parameter voteStatus: The `VoteStatus` value indicating whether to upvote, downvote or novote a thread.
-	*/
-	fileprivate func voteOnThread(withVoteStatus voteStatus: VoteStatus) {
-		WorkflowController.shared.isSignedIn {
-			KService.voteOnThread(self.forumsThread.id, withVoteStatus: voteStatus) { [weak self] result in
-				guard let self = self else { return }
-
-				switch result {
-				case .success(let voteStatus):
-					DispatchQueue.main.async {
-						var threadScore = self.forumsThread.attributes.metrics.weight
-
-						self.updateVoting(withVoteStatus: voteStatus)
-						if voteStatus == .upVote {
-							threadScore += 1
-						} else if voteStatus == .downVote {
-							threadScore -= 1
-						}
-
-						self.voteCountButton.setTitle("\(threadScore.kkFormatted) · ", for: .normal)
-					}
-				case .failure: break
-				}
-			}
-		}
-	}
-
-	/// Presents the profile view for the thread poster.
-	fileprivate func visitPosterProfilePage() {
-		guard let user = forumsThread.relationships.user.data.first else { return }
-
-		if let profileViewController = R.storyboard.profile.profileTableViewController() {
-			profileViewController.userID = user.id
-			profileViewController.dismissButtonIsEnabled = true
-
-			let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
-			forumsChildViewController?.present(kurozoraNavigationController, animated: true)
-		}
 	}
 
 	/**
@@ -154,98 +122,6 @@ class ForumsCell: UITableViewCell {
 		}
 	}
 
-	/// Builds and presents an action sheet.
-	fileprivate func showActionList() {
-		guard let forumsChildViewController = self.forumsChildViewController else { return }
-		let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-
-		// Upvote, downvote and reply actions
-		if forumsThread.attributes.lockStatus == .unlocked {
-			let upvoteAction = UIAlertAction(title: "Upvote", style: .default, handler: { _ in
-				self.voteOnThread(withVoteStatus: .upVote)
-			})
-			let downvoteAction = UIAlertAction(title: "Downvote", style: .default, handler: { _ in
-				self.voteOnThread(withVoteStatus: .downVote)
-			})
-			let replyAction = UIAlertAction(title: "Reply", style: .default, handler: { _ in
-				self.replyThread()
-			})
-
-			upvoteAction.setValue(R.image.symbols.arrow_up_circle_fill()!, forKey: "image")
-			upvoteAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-			downvoteAction.setValue(R.image.symbols.arrow_down_circle_fill()!, forKey: "image")
-			downvoteAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-			replyAction.setValue(R.image.symbols.message_fill()!, forKey: "image")
-			replyAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-
-			alertController.addAction(upvoteAction)
-			alertController.addAction(downvoteAction)
-			alertController.addAction(replyAction)
-		}
-
-		// Username action
-		if let user = forumsThread.relationships.user.data.first {
-			let username = user.attributes.username
-			let userAction = UIAlertAction.init(title: username + "'s profile", style: .default, handler: { (_) in
-				self.visitPosterProfilePage()
-			})
-			userAction.setValue(R.image.symbols.person_crop_circle_fill()!, forKey: "image")
-			userAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-			alertController.addAction(userAction)
-		}
-
-		// Share thread action
-		let shareAction = UIAlertAction.init(title: "Share", style: .default, handler: { (_) in
-			self.shareThread()
-		})
-		shareAction.setValue(R.image.symbols.square_and_arrow_up_fill()!, forKey: "image")
-		shareAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-		alertController.addAction(shareAction)
-
-		// Report thread action
-		let reportAction = UIAlertAction.init(title: "Report", style: .destructive, handler: { (_) in
-			self.reportThread()
-		})
-		reportAction.setValue(R.image.symbols.exclamationmark_circle_fill()!, forKey: "image")
-		reportAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-		alertController.addAction(reportAction)
-
-		alertController.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
-
-		//Present the controller
-		if let popoverController = alertController.popoverPresentationController {
-			popoverController.sourceView = moreButton
-			popoverController.sourceRect = moreButton.bounds
-		}
-
-		if (forumsChildViewController.navigationController?.visibleViewController as? UIAlertController) == nil {
-			forumsChildViewController.present(alertController, animated: true, completion: nil)
-		}
-	}
-
-	/// Presents a share sheet to share the selected thread.
-	func shareThread() {
-		guard let forumsChildViewController = forumsChildViewController else { return }
-		let threadURLString = "https://kurozora.app/thread/\(forumsThread.id)"
-		let threadURL: Any = URL(string: threadURLString) ?? threadURLString
-		let shareText = "You should read \"\(forumsThread.attributes.title)\" via @KurozoraApp"
-
-		let activityItems: [Any] = [threadURL, shareText]
-		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])
-
-		if let popoverController = activityViewController.popoverPresentationController {
-			popoverController.sourceView = moreButton
-			popoverController.sourceRect = moreButton.bounds
-		}
-		forumsChildViewController.present(activityViewController, animated: true, completion: nil)
-	}
-
-	/// Sends a report of the selected thread to the mods.
-	func reportThread() {
-		WorkflowController.shared.isSignedIn {
-		}
-	}
-
 	/**
 		Update the voting status of the thread.
 
@@ -255,51 +131,38 @@ class ForumsCell: UITableViewCell {
 		if voteStatus == .upVote {
 			self.upvoteButton.tintColor = .kGreen
 			self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+			self.downvoteButton.theme_setTitleColor(KThemePicker.tableViewCellActionDefaultColor.rawValue, forState: .normal)
 		} else if voteStatus == .noVote {
 			self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+			self.downvoteButton.theme_setTitleColor(KThemePicker.tableViewCellActionDefaultColor.rawValue, forState: .normal)
 			self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+			self.upvoteButton.theme_setTitleColor(KThemePicker.tableViewCellActionDefaultColor.rawValue, forState: .normal)
 		} else if voteStatus == .downVote {
 			self.downvoteButton.tintColor = .kLightRed
 			self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+			self.upvoteButton.theme_setTitleColor(KThemePicker.tableViewCellActionDefaultColor.rawValue, forState: .normal)
 		}
-	}
-
-	/// Presents the reply view for the current thread.
-	func replyThread() {
-		WorkflowController.shared.isSignedIn {
-			let kCommentEditorViewController = R.storyboard.textEditor.kCommentEditorViewController()
-			kCommentEditorViewController?.forumsThread = self.forumsThread
-
-			let kurozoraNavigationController = KNavigationController.init(rootViewController: kCommentEditorViewController!)
-			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
-
-			self.parentViewController?.present(kurozoraNavigationController, animated: true)
-		}
-	}
-
-	/// Shows the relevant options for the selected thread.
-	@objc func showCellOptions(_ longPress: UILongPressGestureRecognizer) {
-		showActionList()
 	}
 
 	// MARK: - IBActions
 	@IBAction func usernameButtonPressed(_ sender: UIButton) {
-		visitPosterProfilePage()
+		self.forumsCellDelegate?.visitOriginalPosterProfile(self)
 	}
 
 	@IBAction func upvoteButtonAction(_ sender: UIButton) {
-		previousVote = 1
-		voteOnThread(withVoteStatus: .upVote)
-		upvoteButton.animateBounce()
+		self.previousVote = 1
+		self.forumsCellDelegate?.voteOnForumsCell(self, with: .upVote)
+		self.upvoteButton.animateBounce()
 	}
 
 	@IBAction func downvoteButtonAction(_ sender: UIButton) {
-		previousVote = 0
-		voteOnThread(withVoteStatus: .downVote)
-		downvoteButton.animateBounce()
+		self.previousVote = 0
+		self.forumsCellDelegate?.voteOnForumsCell(self, with: .downVote)
+		self.downvoteButton.animateBounce()
 	}
 
 	@IBAction func moreButtonAction(_ sender: UIButton) {
-		showActionList()
+		fatalError("More button not implemented.")
+//		showActionList()
 	}
 }

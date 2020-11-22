@@ -31,7 +31,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="FollowTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="iE1-ty-IHr" customClass="FollowTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Vic-Y5-xlZ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
@@ -137,7 +137,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="ProfileTableViewController" title="Profile" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zlF-Vo-yv3" customClass="ProfileTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="Zag-E8-3Pp">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="YlQ-WU-WCF">
@@ -154,11 +154,13 @@
                                                 <constraint firstAttribute="height" constant="228" id="KY6-pM-3PK"/>
                                             </constraints>
                                         </imageView>
-                                        <button alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dG8-Sp-07m" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                        <button alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dG8-Sp-07m" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="228"/>
                                             <color key="backgroundColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.17999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
-                                            <state key="normal" title="Select"/>
+                                            <state key="normal" title="Select">
+                                                <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </state>
                                             <connections>
                                                 <action selector="selectBannerImageButtonPressed:" destination="zlF-Vo-yv3" eventType="touchUpInside" id="N44-ga-fZV"/>
                                             </connections>
@@ -189,7 +191,7 @@
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </imageView>
-                                                        <button clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vBP-c7-LwV" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                                        <button clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vBP-c7-LwV" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.17999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
@@ -207,7 +209,7 @@
                                                         <constraint firstAttribute="height" constant="80" id="Izc-Dj-KvD"/>
                                                     </constraints>
                                                 </view>
-                                                <button hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="acZ-hU-RmT">
+                                                <button hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="acZ-hU-RmT">
                                                     <rect key="frame" x="8" y="70" width="64" height="20"/>
                                                     <color key="backgroundColor" red="0.1137254902" green="0.56078431370000004" blue="0.94509803920000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
@@ -293,7 +295,7 @@
                                             <color key="textColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bKV-6f-pSz">
+                                        <button hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bKV-6f-pSz">
                                             <rect key="frame" x="96" y="78" width="39" height="20"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
@@ -353,7 +355,7 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="LNz-X2-qla">
                                             <rect key="frame" x="8" y="33" width="343" height="40"/>
                                             <subviews>
-                                                <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ldj-y1-nlK" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                                <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ldj-y1-nlK" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="82" height="40"/>
                                                     <state key="normal">
                                                         <attributedString key="attributedTitle">
@@ -374,7 +376,7 @@
                                                         </attributedString>
                                                     </state>
                                                 </button>
-                                                <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E2w-Ry-UIw" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                                <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E2w-Ry-UIw" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="87" y="0.0" width="82" height="40"/>
                                                     <state key="normal">
                                                         <attributedString key="attributedTitle">
@@ -401,7 +403,7 @@
                                                         </segue>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T5J-l1-I4p" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T5J-l1-I4p" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="174" y="0.0" width="82" height="40"/>
                                                     <state key="normal">
                                                         <attributedString key="attributedTitle">
@@ -431,7 +433,7 @@
                                                         </segue>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ggb-4z-Awv" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ggb-4z-Awv" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="261" y="0.0" width="82" height="40"/>
                                                     <state key="normal">
                                                         <attributedString key="attributedTitle">
@@ -512,7 +514,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Profile" id="yJS-kC-jrS">
-                        <barButtonItem key="rightBarButtonItem" title="More" image="Symbols/ellipsis_circle" id="7V8-8E-uOa">
+                        <barButtonItem key="rightBarButtonItem" title="More" image="ellipsis.circle" catalog="system" id="7V8-8E-uOa">
                             <connections>
                                 <action selector="moreBarButtonPressed:" destination="zlF-Vo-yv3" id="XYk-qO-cP7"/>
                             </connections>
@@ -551,7 +553,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="BadgesTableViewController" title="Badges" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="TCw-Pu-tHm" customClass="BadgesTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="1" sectionFooterHeight="18" estimatedSectionFooterHeight="1" id="eAj-A5-MCM">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <viewLayoutGuide key="contentLayoutGuide" id="gue-dv-VRT"/>
@@ -717,14 +719,14 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="7DX-hs-zha"/>
-        <segue reference="mKx-ht-wib"/>
+        <segue reference="uwo-Hi-Uyy"/>
         <segue reference="Sts-Ni-CBU"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058823529407" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
         <image name="Placeholders/User Banner" width="1130" height="706"/>
         <image name="Placeholders/User Profile" width="300" height="300"/>
-        <image name="Symbols/ellipsis_circle" width="24" height="24"/>
+        <image name="ellipsis.circle" catalog="system" width="128" height="121"/>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

@@ -14,9 +14,9 @@ extension FavoriteStatus {
 	var imageValue: UIImage {
 		switch self {
 		case .favorited:
-			return R.image.symbols.heart_fill()!
+			return UIImage(systemName: "heart.fill")!
 		case .notFavorited, .disabled:
-			return R.image.symbols.heart()!
+			return UIImage(systemName: "heart")!
 		}
 	}
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xyg-hs-K1N">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17700" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xyg-hs-K1N">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -48,8 +48,8 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Symbols/checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="ie9-Ev-WYr">
-                                                    <rect key="frame" x="342" y="24.333333333333329" width="24" height="16"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="ie9-Ev-WYr">
+                                                    <rect key="frame" x="347.66666666666669" y="26.666666666666664" width="18.333333333333314" height="12.000000000000007"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="C1c-IC-xfa"/>
                                                     </constraints>
@@ -154,8 +154,8 @@
                     <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="sh8-0V-d7p">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="ZJ1-3f-Wlz"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="contentLayoutGuide" id="iSF-Fg-ZNW"/>
                         <viewLayoutGuide key="frameLayoutGuide" id="VRk-KC-9e2"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" sectionInsetReference="layoutMargins" id="uLH-Bd-wlF">
@@ -194,7 +194,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                     <color key="tintColor" white="1" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <inset key="contentEdgeInsets" minX="2" minY="2" maxX="2" maxY="2"/>
-                                                    <state key="normal" image="Symbols/ellipsis_circle">
+                                                    <state key="normal" image="ellipsis.circle" catalog="system">
                                                         <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
                                                     <userDefinedRuntimeAttributes>
@@ -222,7 +222,7 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Strawberry" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Sp-VC-gg2" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="320" width="84.333333333333329" height="20.333333333333314"/>
+                                            <rect key="frame" x="0.0" y="320" width="84" height="20.333333333333314"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <color key="textColor" red="1" green="1" blue="0.99999994039999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <nil key="highlightedColor"/>
@@ -233,7 +233,7 @@
                                             <color key="textColor" red="1" green="1" blue="0.99999994039999995" alpha="0.86110805459999995" colorSpace="custom" customColorSpace="displayP3"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vgt-I3-cKU" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
+                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vgt-I3-cKU" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
                                             <rect key="frame" x="120" y="320" width="50" height="20"/>
                                             <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
@@ -295,7 +295,7 @@
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
-        <image name="Symbols/checkmark" width="24" height="24"/>
-        <image name="Symbols/ellipsis_circle" width="24" height="24"/>
+        <image name="checkmark" catalog="system" width="128" height="114"/>
+        <image name="ellipsis.circle" catalog="system" width="128" height="121"/>
     </resources>
 </document>

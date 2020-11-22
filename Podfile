@@ -12,6 +12,7 @@ def kurozora_pods
 	pod 'Cosmos'
 	pod 'ESTabBarController-swift'
 	pod 'EmptyDataSet-Swift'
+	pod 'FLEX', :configurations => ['Debug']
 	pod 'KeychainAccess'
 	pod 'Kingfisher'
 	pod 'KurozoraKit'#, path: '../KurozoraKit'

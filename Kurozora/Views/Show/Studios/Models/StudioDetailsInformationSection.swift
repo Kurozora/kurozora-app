@@ -35,7 +35,7 @@ enum StudioDetailsInformationSection: Int, CaseIterable {
 	var imageValue: UIImage? {
 		switch self {
 		case .website:
-			return R.image.symbols.safari()
+			return UIImage(systemName: "safari")
 		default:
 			return nil
 		}

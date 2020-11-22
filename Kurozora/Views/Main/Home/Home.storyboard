@@ -194,14 +194,15 @@
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <button contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BP6-qW-Rpr" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                        <button contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BP6-qW-Rpr" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="33"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="310" id="ACF-Ni-dc2"/>
                                                 <constraint firstAttribute="height" constant="34" id="fWq-VW-vB9"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                            <state key="normal" title="About In-App Purchases"/>
+                                            <state key="normal" title="About In-App Purchases">
+                                                <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </state>
                                             <connections>
                                                 <action selector="actionButtonPressed:" destination="cs5-kK-m9g" eventType="touchUpInside" id="4jv-lp-7R3"/>
                                             </connections>

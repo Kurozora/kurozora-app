@@ -204,36 +204,6 @@ class ThreadTableViewController: KTableViewController {
 	}
 
 	/**
-		Vote on the current thread with the given vote.
-
-		- Parameter voteStatus: The `VoteStatus` value indicating whether to upvote, downvote or novote a thread.
-	*/
-	func voteOnThread(withVoteStatus voteStatus: VoteStatus) {
-		WorkflowController.shared.isSignedIn {
-			KService.voteOnThread(self.forumThreadID, withVoteStatus: voteStatus) {[weak self] result in
-				guard let self = self else { return }
-
-				switch result {
-				case .success(let voteStatus):
-					DispatchQueue.main.async {
-						var threadScore = self.forumsThread.attributes.metrics.weight
-
-						self.updateVoting(withVoteStatus: voteStatus)
-						if voteStatus == .upVote {
-							threadScore += 1
-						} else if voteStatus == .downVote {
-							threadScore -= 1
-						}
-
-						self.voteCountButton.setTitle("\(threadScore.kkFormatted) · ", for: .normal)
-					}
-				case .failure: break
-				}
-			}
-		}
-	}
-
-	/**
 		Update the voting status of the thread.
 
 		- Parameter voteStatus: The `VoteStatus` value indicating whether to upvote, downvote or novote a thread.
@@ -251,33 +221,6 @@ class ThreadTableViewController: KTableViewController {
 		}
 	}
 
-	/// Presents the reply view for the current thread.
-	func replyThread() {
-		WorkflowController.shared.isSignedIn {
-			let kCommentEditorViewController = R.storyboard.textEditor.kCommentEditorViewController()
-			kCommentEditorViewController?.delegate = self
-			kCommentEditorViewController?.forumsThread = self.forumsThread
-
-			let kurozoraNavigationController = KNavigationController.init(rootViewController: kCommentEditorViewController!)
-			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
-
-			self.present(kurozoraNavigationController, animated: true)
-		}
-	}
-
-	/// Presents the profile view for the thread poster.
-	func visitPosterProfilePage() {
-		if let user = forumsThread.relationships.user.data.first {
-			if let profileViewController = R.storyboard.profile.profileTableViewController() {
-				profileViewController.userID = user.id
-				profileViewController.dismissButtonIsEnabled = true
-
-				let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
-				self.present(kurozoraNavigationController, animated: true)
-			}
-		}
-	}
-
 	/**
 		Shows and hides some elements according to the lock status of the current thread.
 
@@ -290,126 +233,48 @@ class ThreadTableViewController: KTableViewController {
 		tableView.reloadData()
 	}
 
-	/// Builds and presents an action sheet.
-	func showActionList(_ sender: UIBarButtonItem) {
-		guard let forumsThread = forumsThread else { return }
-		let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-
-		// Upvote, downvote and reply actions
-		if forumsThread.attributes.lockStatus == .unlocked {
-			let upvoteAction = UIAlertAction.init(title: "Upvote", style: .default, handler: { _ in
-				self.voteOnThread(withVoteStatus: .upVote)
-			})
-			let downvoteAction = UIAlertAction.init(title: "Downvote", style: .default, handler: { _ in
-				self.voteOnThread(withVoteStatus: .downVote)
-			})
-			let replyAction = UIAlertAction.init(title: "Reply", style: .default, handler: { _ in
-				self.replyThread()
-			})
-
-			upvoteAction.setValue(R.image.symbols.arrow_up_circle_fill()!, forKey: "image")
-			upvoteAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-			downvoteAction.setValue(R.image.symbols.arrow_down_circle_fill()!, forKey: "image")
-			downvoteAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-			replyAction.setValue(R.image.symbols.message_fill()!, forKey: "image")
-			replyAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-
-			alertController.addAction(upvoteAction)
-			alertController.addAction(downvoteAction)
-			alertController.addAction(replyAction)
-		}
-
-		// Username action
-		if let user = forumsThread.relationships.user.data.first {
-			let posterUsername = user.attributes.username
-			let userAction = UIAlertAction.init(title: posterUsername + "'s profile", style: .default, handler: { (_) in
-				self.visitPosterProfilePage()
-			})
-			userAction.setValue(R.image.symbols.person_crop_circle_fill()!, forKey: "image")
-			userAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-			alertController.addAction(userAction)
-		}
-
-		// Share thread action
-		let shareAction = UIAlertAction.init(title: "Share", style: .default, handler: { (_) in
-			self.shareThread(barButtonItem: sender)
-		})
-		shareAction.setValue(R.image.symbols.square_and_arrow_up_fill()!, forKey: "image")
-		shareAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-		alertController.addAction(shareAction)
-
-		// Report thread action
-		let reportAction = UIAlertAction.init(title: "Report", style: .destructive, handler: { (_) in
-			self.reportThread()
-		})
-		reportAction.setValue(R.image.symbols.exclamationmark_circle_fill()!, forKey: "image")
-		reportAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-		alertController.addAction(reportAction)
-
-		alertController.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
-
-		//Present the controller
-		if let popoverController = alertController.popoverPresentationController {
-			popoverController.barButtonItem = sender
-		}
-
-		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
-			self.present(alertController, animated: true, completion: nil)
-		}
-	}
-
-	/// Presents a share sheet to share the current thread.
-	func shareThread(_ sender: UIButton? = nil, barButtonItem: UIBarButtonItem? = nil) {
-		let threadURLString = "https://kurozora.app/thread/\(forumThreadID)"
-		let threadURL: Any = URL(string: threadURLString) ?? threadURLString
-		let shareText = "You should read \"\(forumsThread.attributes.title)\" via @KurozoraApp"
-
-		let activityItems: [Any] = [threadURL, shareText]
-		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])
-
-		if let popoverController = activityViewController.popoverPresentationController {
-			if let sender = sender {
-				popoverController.sourceView = sender
-				popoverController.sourceRect = sender.bounds
-			} else {
-				popoverController.barButtonItem = barButtonItem
-			}
-		}
-		self.present(activityViewController, animated: true, completion: nil)
-	}
-
-	/// Sends a report of the selected thread to the mods.
-	func reportThread() {
-		WorkflowController.shared.isSignedIn {
-		}
-	}
-
 	// MARK: - IBActions
 	@IBAction func showUserProfileButton(_ sender: UIButton) {
-		visitPosterProfilePage()
+		self.forumsThread.visitOriginalPosterProfile(from: self)
 	}
 
 	@IBAction func upVoteButtonPressed(_ sender: UIButton) {
-		voteOnThread(withVoteStatus: .upVote)
+		self.forumsThread.voteOnThread(as: .upVote) { [weak self] forumsThread in
+			guard let self = self else { return }
+			self.forumsThread = forumsThread
+			self.updateThreadDetails()
+		}
 		sender.animateBounce()
 	}
 
 	@IBAction func downVoteButtonPressed(_ sender: UIButton) {
-		voteOnThread(withVoteStatus: .downVote)
+		self.forumsThread.voteOnThread(as: .downVote) { [weak self] forumsThread in
+			guard let self = self else { return }
+			self.forumsThread = forumsThread
+			self.updateThreadDetails()
+		}
 		sender.animateBounce()
 	}
 
 	@IBAction func replyButtonPressed(_ sender: UIButton) {
-		replyThread()
+		self.forumsThread.replyToThread(via: self)
 		sender.animateBounce()
 	}
 
 	@IBAction func shareThreadButton(_ sender: UIButton) {
-		shareThread(sender)
+		self.forumsThread.openShareSheet(on: self, sender)
 	}
 
 	@IBAction func moreButtonPressed(_ sender: UIBarButtonItem) {
-		showActionList(sender)
+		fatalError("Implement more button.")
+//		let menu = UIMenuController.shared
+//		menu.menuItems =
+//			[UIMenuItem(title: "Test me", action: Selector("deleteLine")),
+//			 UIMenuItem(title: "Test me", action: Selector("deleteLine")),
+//			 UIMenuItem(title: "Test me", action: Selector("deleteLine"))]
+//		menu.showMenu(from: self.view, rect: self.view.frame)
+//		becomeFirstResponder()
+//		showActionList(sender)
 	}
 }
 
@@ -427,9 +292,9 @@ extension ThreadTableViewController {
 		guard let replyCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.replyCell, for: indexPath) else {
 			fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.replyCell.identifier)")
 		}
+		replyCell.delegate = self
 		replyCell.forumsThread = forumsThread
 		replyCell.threadReply = threadReplies[indexPath.section]
-		replyCell.threadViewController = self
 		return replyCell
 	}
 }
@@ -443,6 +308,49 @@ extension ThreadTableViewController {
 			if self.nextPageURL != nil {
 				self.getThreadReplies()
 			}
+		}
+	}
+
+	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+		if let replyCell = tableView.cellForRow(at: indexPath) as? ReplyCell {
+			replyCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
+
+			replyCell.usernameLabel.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+			replyCell.contentTextView.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
+		}
+	}
+
+	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+		if let replyCell = tableView.cellForRow(at: indexPath) as? ReplyCell {
+			replyCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+
+			replyCell.usernameLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			replyCell.contentTextView.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+		}
+	}
+
+	override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+		return self.threadReplies[indexPath.section].contextMenuConfiguration(in: self, onThread: self.forumsThread)
+	}
+}
+
+// MARK: - ReplyCellDelegate
+extension ThreadTableViewController: ReplyCellDelegate {
+	func voteOnReplyCell(_ cell: ReplyCell, with voteStatus: VoteStatus) {
+		if let indexPath = tableView.indexPath(for: cell) {
+			let threadReply = self.threadReplies[indexPath.section]
+			threadReply.voteOnThread(as: voteStatus) { [weak self] threadReply in
+				guard let self = self else { return }
+				self.threadReplies[indexPath.section] = threadReply
+				cell.threadReply = threadReply
+			}
+		}
+	}
+
+	func visitOriginalPosterProfile(_ cell: ReplyCell) {
+		if let indexPath = tableView.indexPath(for: cell) {
+			let threadReply = self.threadReplies[indexPath.section]
+			threadReply.visitOriginalPosterProfile(from: self)
 		}
 	}
 }

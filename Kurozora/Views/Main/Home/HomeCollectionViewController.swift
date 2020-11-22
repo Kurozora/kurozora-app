@@ -229,16 +229,12 @@ extension HomeCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: { suggestedActions in
-			suggestedActions.forEach { (menuElement) in
-				print("----- element:", menuElement)
+		if let baseLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? BaseLockupCollectionViewCell {
+			if self.exploreCategories[indexPath.section].relationships.shows != nil {
+				return baseLockupCollectionViewCell.show?.contextMenuConfiguration(in: self)
 			}
-			let exploreCategoriesSection = self.exploreCategories[indexPath.section]
-			if let shows = exploreCategoriesSection.relationships.shows?.data {
-				return self.makeContextMenu(for: shows[indexPath.row])
-			}
-			return nil
-		})
+		}
+		return nil
 	}
 }
 
@@ -266,81 +262,6 @@ extension HomeCollectionViewController {
 			}
 			return actionBaseExploreCollectionViewCell
 		}
-	}
-
-	func makeContextMenu(for show: Show) -> UIMenu {
-		var children: [UIMenuElement] = []
-
-		if User.isSignedIn {
-			// Create "add to library" element
-			let addToLibraryAction = UIAction(title: "Add to Library", image: UIImage(systemName: "plus")) { _ in
-				self.addToLibrary(show)
-			}
-			children.append(addToLibraryAction)
-		}
-
-		// Create "share" element
-		let shareAction = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { _ in
-			self.share(show)
-		}
-		children.append(shareAction)
-
-		// Create and return a UIMenu with the share action
-		return UIMenu(title: "", children: children)
-	}
-
-	fileprivate func addToLibrary(_ show: Show) {
-		WorkflowController.shared.isSignedIn {
-			let libraryStatus = show.attributes.libraryStatus ?? .none
-			let alertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: libraryStatus, action: { (_, value)  in
-				KService.addToLibrary(withLibraryStatus: value, showID: show.id) { result in
-					switch result {
-					case .success:
-						// Update entry in library
-						let libraryUpdateNotificationName = Notification.Name("Update\(value.sectionValue)Section")
-						NotificationCenter.default.post(name: libraryUpdateNotificationName, object: nil)
-					case .failure:
-						break
-					}
-				}
-			})
-
-			if libraryStatus != .none {
-				alertController.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { _ in
-					KService.removeFromLibrary(showID: show.id) { result in
-						switch result {
-						case .success:
-							break
-						case .failure:
-							break
-						}
-					}
-				}))
-			}
-			alertController.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
-
-			// Present the controller
-			if let popoverController = alertController.popoverPresentationController {
-				popoverController.sourceView = self.view
-				popoverController.sourceRect = self.view.frame
-			}
-
-			if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
-				self.present(alertController, animated: true, completion: nil)
-			}
-		}
-	}
-
-	fileprivate func share(_ show: Show) {
-		let shareText = "https://kurozora.app/anime/\(show.id)\nYou should watch \"\(show.attributes.title)\" via @KurozoraApp"
-		let activityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
-
-		if let popoverController = activityViewController.popoverPresentationController {
-			popoverController.sourceView = self.view
-			popoverController.sourceRect = self.view.frame
-		}
-
-		self.present(activityViewController, animated: true, completion: nil)
 	}
 }
 

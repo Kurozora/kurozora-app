@@ -263,7 +263,7 @@ class NotificationsViewController: KTableViewController {
 		let markAllAsRead = UIAlertAction.init(title: "Mark all as read", style: .default, handler: { (_) in
 			self.updateNotification(for: "all", withReadStatus: .read)
 		})
-		markAllAsRead.setValue(R.image.symbols.checkmark_circle()!, forKey: "image")
+		markAllAsRead.setValue(UIImage(systemName: "checkmark.circle"), forKey: "image")
 		markAllAsRead.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 		alertController.addAction(markAllAsRead)
 
@@ -271,7 +271,7 @@ class NotificationsViewController: KTableViewController {
 		let markAllAsUnread = UIAlertAction.init(title: "Mark all as unread", style: .default, handler: { (_) in
 			self.updateNotification(for: "all", withReadStatus: .unread)
 		})
-		markAllAsUnread.setValue(R.image.symbols.checkmark_circle_fill()!, forKey: "image")
+		markAllAsUnread.setValue(UIImage(systemName: "checkmark.circle.fill"), forKey: "image")
 		markAllAsUnread.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 		alertController.addAction(markAllAsUnread)
 

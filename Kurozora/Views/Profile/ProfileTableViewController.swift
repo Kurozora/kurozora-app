@@ -9,6 +9,7 @@
 import UIKit
 import KurozoraKit
 import SCLAlertView
+import MobileCoreServices
 
 class ProfileTableViewController: KTableViewController {
 	// MARK: - IBOutlets
@@ -39,7 +40,9 @@ class ProfileTableViewController: KTableViewController {
 	@IBOutlet weak var bannerImageViewHeightConstraint: NSLayoutConstraint!
 
 	// MARK: - Properties
+	#if !targetEnvironment(macCatalyst)
 	var refreshController = UIRefreshControl()
+	#endif
 
 	var userID = User.current?.id ?? 0
 	var user: User! = User.current {
@@ -69,6 +72,7 @@ class ProfileTableViewController: KTableViewController {
 	var editingMode: Bool = false
 
 	var imagePicker = UIImagePickerController()
+	var profileImageFilePath: String? = nil
 	var oldLeftBarItems: [UIBarButtonItem]?
 	var oldRightBarItems: [UIBarButtonItem]?
 
@@ -96,10 +100,12 @@ class ProfileTableViewController: KTableViewController {
 		self.view.layoutIfNeeded()
 
 		// Add Refresh Control to Table View
+		#if !targetEnvironment(macCatalyst)
 		tableView.refreshControl = refreshController
 		refreshController.theme_tintColor = KThemePicker.tintColor.rawValue
 		refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh profile details!", attributes: [NSAttributedString.Key.foregroundColor: UIColor.kurozora])
 		refreshController.addTarget(self, action: #selector(refreshProfileData(_:)), for: .valueChanged)
+		#endif
 
 		// Fetch posts
 		DispatchQueue.global(qos: .background).async {
@@ -122,7 +128,9 @@ class ProfileTableViewController: KTableViewController {
 		- Parameter sender: The object requesting the refresh.
 	*/
 	@objc private func refreshProfileData(_ sender: Any) {
+		#if !targetEnvironment(macCatalyst)
 		refreshController.attributedTitle = NSAttributedString(string: "Refreshing profile details...", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+		#endif
 		self.nextPageURL = nil
 		self.fetchUserDetails()
 	}
@@ -167,7 +175,9 @@ class ProfileTableViewController: KTableViewController {
 		}
 
 		DispatchQueue.main.async {
+			#if !targetEnvironment(macCatalyst)
 			self.refreshController.endRefreshing()
+			#endif
 		}
 	}
 
@@ -180,7 +190,9 @@ class ProfileTableViewController: KTableViewController {
 				self.user = users.first
 
 				// Reset refresh controller title
+				#if !targetEnvironment(macCatalyst)
 				self.refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh profile details!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+				#endif
 			case .failure: break
 			}
 		}
@@ -415,28 +427,25 @@ class ProfileTableViewController: KTableViewController {
 	*/
 	@objc func applyProfileEdit(_ sender: UIBarButtonItem) {
 		var bioText: String? = bioTextView.text.trimmed
-		var profileImage = profileImageView.image
 		var bannerImage = bannerImageView.image
 		var bioTextUnchanged = false
 
 		// If everything is the same then dismiss and don't send a request to apply new information.
-		if self.bioTextCache == self.placeholderText, self.bioTextView.textColor == KThemePicker.textFieldPlaceholderTextColor.colorValue {
+		if self.bioTextCache == self.placeholderText,
+		   self.bioTextView.textColor == KThemePicker.textFieldPlaceholderTextColor.colorValue {
 			bioTextUnchanged = true
 			bioText = nil
 		}
 
-		if bioTextUnchanged && self.profileImageCache == profileImage && self.bannerImageCache == bannerImage {
+		if bioTextUnchanged &&
+			self.profileImageFilePath == nil,
+			self.bannerImageCache == bannerImage {
 			// Nothing to change, clear the cache.
 			self.bioTextCache = nil
 			self.profileImageCache = nil
 			self.bannerImageCache = nil
 			self.editMode(false)
 			return
-		}
-
-		// If the profile image is the same, then ignore.
-		if self.profileImageCache == profileImage {
-			profileImage = UIImage().cropped(to: .zero)
 		}
 
 		// If the banner is the same, then ignore.
@@ -449,7 +458,7 @@ class ProfileTableViewController: KTableViewController {
 		self.profileImageCache = nil
 		self.bannerImageCache = nil
 
-		KService.updateInformation(biography: bioText, bannerImage: bannerImage, profileImage: profileImage) { [weak self] result in
+		KService.updateInformation(biography: bioText, bannerImage: bannerImage, profileImageFilePath: profileImageFilePath) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
 			case .success:
@@ -484,7 +493,7 @@ class ProfileTableViewController: KTableViewController {
 			favoriteShowsCollectionViewController.dismissButtonIsEnabled = true
 
 			let kNavigationViewController = KNavigationController(rootViewController: favoriteShowsCollectionViewController)
-			self.present(kNavigationViewController)
+			self.present(kNavigationViewController, animated: true)
 		}
 	}
 
@@ -497,7 +506,7 @@ class ProfileTableViewController: KTableViewController {
 			let showFavoriteShowsList = UIAlertAction.init(title: "Favorite shows", style: .default, handler: { (_) in
 				self.showFavoriteShowsList()
 			})
-			showFavoriteShowsList.setValue(R.image.symbols.heart_circle()!, forKey: "image")
+			showFavoriteShowsList.setValue(UIImage(systemName: "heart.circle"), forKey: "image")
 			showFavoriteShowsList.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 			alertController.addAction(showFavoriteShowsList)
 		}
@@ -655,10 +664,14 @@ extension ProfileTableViewController: KFeedMessageTextEditorViewDelegate {
 }
 
 // MARK: - UIImagePickerControllerDelegate
-extension ProfileTableViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension ProfileTableViewController: UIImagePickerControllerDelegate {
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
 		if let editedImage = info[.editedImage] as? UIImage {
 			self.currentImageView?.image = editedImage
+		}
+
+		if let imageURL = info[.imageURL] as? URL {
+			profileImageFilePath = imageURL.absoluteString
 		}
 
 		//Dismiss the UIImagePicker after selection
@@ -675,8 +688,12 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate, UINavigat
 		if UIImagePickerController.isSourceTypeAvailable(.camera) {
 			imagePicker.sourceType = .camera
 			imagePicker.allowsEditing = true
+			if User.isPro {
+				imagePicker.mediaTypes = [(kUTTypeGIF as String), (kUTTypePNG as String), (kUTTypeJPEG as String)]
+			} else {
+				imagePicker.mediaTypes = [(kUTTypePNG as String), (kUTTypeJPEG as String)]
+			}
 			imagePicker.delegate = self
-
 			self.present(imagePicker, animated: true, completion: nil)
 		} else {
 			SCLAlertView().showWarning("Well, this is awkward.", subTitle: "You don't seem to have a camera 😓")

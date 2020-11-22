@@ -132,13 +132,13 @@ class DisplaySettingsCell: SettingsCell {
 			lightOptionSelectedImageView?.borderWidth = 0
 			darkOptionSelectedImageView?.borderWidth = 2
 
-			lightOptionSelectedImageView?.image = R.image.symbols.checkmark_circle_fill()
+			lightOptionSelectedImageView?.image = UIImage(systemName: "checkmark.circle.fill")
 			darkOptionSelectedImageView?.image = nil
 		case .dark:
 			darkOptionSelectedImageView?.borderWidth = 0
 			lightOptionSelectedImageView?.borderWidth = 2
 
-			darkOptionSelectedImageView?.image = R.image.symbols.checkmark_circle_fill()
+			darkOptionSelectedImageView?.image = UIImage(systemName: "checkmark.circle.fill")
 			lightOptionSelectedImageView?.image = nil
 		}
 	}

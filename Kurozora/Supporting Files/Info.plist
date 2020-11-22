@@ -431,7 +431,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>11756</string>
+	<string>11765</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationCategoryType</key>
@@ -468,9 +468,9 @@
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2018 Kurozora B.V. All rights reserved.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>$(PRODUCT_NAME) uses your location to show you where a sign in has come from on the map in the settings. Your location is also used to allow automatic switching between light and dark themes. Please note that the "Always" option is not necessary for $(PRODUCT_NAME) to work and will reduce your battery life.</string>
+	<string>$(PRODUCT_NAME) uses your location to show you where a sign in has come from on the map in the settings. Your location is also used to allow automatic switching between light and dark themes. Please note that the &quot;Always&quot; option is not necessary for $(PRODUCT_NAME) to work and will reduce your battery life.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>$(PRODUCT_NAME) uses your location to show you where a sign in has come from on the map in the settings. Your location is also used to allow automatic switching between light and dark themes. Please note that the "Always" option is not necessary for $(PRODUCT_NAME) to work and will reduce your battery life.</string>
+	<string>$(PRODUCT_NAME) uses your location to show you where a sign in has come from on the map in the settings. Your location is also used to allow automatic switching between light and dark themes. Please note that the &quot;Always&quot; option is not necessary for $(PRODUCT_NAME) to work and will reduce your battery life.</string>
 	<key>NSLocationUsageDescription</key>
 	<string>$(PRODUCT_NAME) uses your location to show you where a sign in has come from on the map in the settings. Your location is also used to allow automatic switching between light and dark themes.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
@@ -510,24 +510,24 @@
 	<key>UIApplicationShortcutItems</key>
 	<array>
 		<dict>
-			<key>UIApplicationShortcutItemIconFile</key>
-			<string>Symbols/house_fill</string>
+			<key>UIApplicationShortcutItemIconSymbolName</key>
+			<string>house.fill</string>
 			<key>UIApplicationShortcutItemTitle</key>
 			<string>Home</string>
 			<key>UIApplicationShortcutItemType</key>
 			<string>HomeShortcut</string>
 		</dict>
 		<dict>
-			<key>UIApplicationShortcutItemIconFile</key>
-			<string>Symbols/app_badge_fill</string>
+			<key>UIApplicationShortcutItemIconSymbolName</key>
+			<string>app.badge.fill</string>
 			<key>UIApplicationShortcutItemTitle</key>
 			<string>Notifications</string>
 			<key>UIApplicationShortcutItemType</key>
 			<string>NotificationShortcut</string>
 		</dict>
 		<dict>
-			<key>UIApplicationShortcutItemIconFile</key>
-			<string>Symbols/person_crop_circle_fill</string>
+			<key>UIApplicationShortcutItemIconSymbolName</key>
+			<string>person.crop.circle.fill</string>
 			<key>UIApplicationShortcutItemTitle</key>
 			<string>Profile</string>
 			<key>UIApplicationShortcutItemType</key>

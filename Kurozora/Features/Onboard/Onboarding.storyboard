@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oGH-lg-KeC">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17700" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oGH-lg-KeC">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17124"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -29,10 +29,12 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="OOy-ag-49a">
                                             <rect key="frame" x="20" y="10" width="374" height="100"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="characterWrap" translatesAutoresizingMaskIntoConstraints="NO" id="bL3-c9-8O1" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="characterWrap" translatesAutoresizingMaskIntoConstraints="NO" id="bL3-c9-8O1" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="44" y="0.0" width="286" height="33"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <state key="normal" title="Forgot your password? Let's reset 📧"/>
+                                                    <state key="normal" title="Forgot your password? Let's reset 📧">
+                                                        <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </state>
                                                     <connections>
                                                         <segue destination="qIf-Aa-QPo" kind="show" identifier="ResetPasswordSegue" id="7TR-x7-dhG"/>
                                                     </connections>
@@ -43,10 +45,12 @@
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="characterWrap" translatesAutoresizingMaskIntoConstraints="NO" id="u2b-Lj-jIl" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="characterWrap" translatesAutoresizingMaskIntoConstraints="NO" id="u2b-Lj-jIl" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="77" y="67" width="220" height="33"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <state key="normal" title="New to Kurozora? Join us 🔥"/>
+                                                    <state key="normal" title="New to Kurozora? Join us 🔥">
+                                                        <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </state>
                                                     <connections>
                                                         <segue destination="PNG-qo-j4c" kind="show" id="Vsw-4g-A6f"/>
                                                     </connections>
@@ -173,11 +177,13 @@
                                             <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                                             <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </imageView>
-                                        <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qUJ-dy-UZu" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                        <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qUJ-dy-UZu" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                                             <color key="backgroundColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.17999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
-                                            <state key="normal" title="Select"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                            <state key="normal" title="Select">
+                                                <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </state>
                                             <connections>
                                                 <action selector="chooseImageButtonPressed:" destination="PNG-qo-j4c" eventType="touchUpInside" id="toB-rb-a7d"/>
                                             </connections>

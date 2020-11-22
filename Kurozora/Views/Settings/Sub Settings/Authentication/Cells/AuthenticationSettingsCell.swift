@@ -20,7 +20,7 @@ class AuthenticationSettingsCell: SettingsCell {
 				title = "Lock with Face ID & Passcode"
 			case .touchID:
 				title = "Lock with Touch ID & Passcode"
-			case .none: break
+			default: break
 			}
 			authenticationTitleLabel?.text = title
 		}
@@ -32,7 +32,7 @@ class AuthenticationSettingsCell: SettingsCell {
 				authenticationImageView.image = R.image.icons.faceID()
 			case .touchID:
 				authenticationImageView.image = R.image.icons.touchID()
-			case .none:
+			default:
 				authenticationImageView.image = R.image.icons.lock()
 			}
 		}

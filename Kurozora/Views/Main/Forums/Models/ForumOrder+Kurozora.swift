@@ -14,7 +14,7 @@ extension ForumOrder {
 	var imageValue: UIImage {
 		switch self {
 		case .best:
-			return R.image.symbols.hand_thumbsup()!
+			return UIImage(systemName: "hand.thumbsup")!
 		case .top:
 			return R.image.symbols.arrow_up_line_horizontal_3_decrease()!
 		case .new:
@@ -24,7 +24,7 @@ extension ForumOrder {
 		case .poor:
 			return R.image.symbols.arrow_down_line_horizontal_3_increase()!
 		case .controversial:
-			return R.image.symbols.hand_thumbsdown()!
+			return UIImage(systemName: "hand.thumbsdown")!
 		}
 	}
 

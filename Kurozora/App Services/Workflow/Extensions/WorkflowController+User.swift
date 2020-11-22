@@ -7,9 +7,39 @@
 //
 
 import KurozoraKit
+import SCLAlertView
 
 // MARK: - User
 extension WorkflowController {
+	/**
+		Checks whether the current user is signed in. If the user is signed in then a success block is run. Otherwise the user is asked to sign in.
+
+		- Parameter completion: Optional completion handler (default is `nil`).
+	*/
+	func isSignedIn(_ completion: (() -> Void)? = nil) {
+		if User.isSignedIn {
+			completion?()
+		} else {
+			if let signInTableViewController = R.storyboard.onboarding.signInTableViewController() {
+				let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
+				UIApplication.topViewController?.present(kNavigationController, animated: true)
+			}
+		}
+	}
+
+	/**
+		Checks whether the current user is pro. If the user is pro in then a success block is run. Otherwise pro features are turned off.
+
+		- Parameter completion: Optional completion handler (default is `nil`).
+	*/
+	func isPro(_ completion: (() -> Void)? = nil) {
+		if User.isPro {
+			completion?()
+		} else {
+			SCLAlertView().showInfo("That's unfortunate", subTitle: "This feature is only accessible to pro users 🧐")
+		}
+	}
+
 	/**
 		Repopulates the current user's data.
 

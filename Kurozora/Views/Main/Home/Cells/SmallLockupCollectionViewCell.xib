@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16095" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17700" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16084.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -59,12 +59,13 @@
                             <constraint firstAttribute="bottom" secondItem="Hj7-7r-lDN" secondAttribute="bottom" id="xcf-K7-yBO"/>
                         </constraints>
                     </view>
-                    <button clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rX6-CK-61S">
+                    <button clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rX6-CK-61S">
                         <rect key="frame" x="24.5" y="0.0" width="47" height="20"/>
                         <color key="backgroundColor" red="0.43472144010000002" green="0.81175655130000002" blue="0.36068430540000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="o2T-WF-7QU"/>
                         </constraints>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                         <inset key="contentEdgeInsets" minX="8" minY="0.0" maxX="8" maxY="0.0"/>
                         <state key="normal" title="New">
                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -76,7 +77,7 @@
                         </userDefinedRuntimeAttributes>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="One Piece" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qYV-48-V8n">
-                        <rect key="frame" x="104.5" y="10" width="89" height="24"/>
+                        <rect key="frame" x="104.5" y="10" width="89.5" height="24"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="bdU-sI-5IU"/>
                         </constraints>

@@ -112,8 +112,10 @@ extension ManageIconTableViewController {
 // MARK: - UITableViewDelegate
 extension ManageIconTableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		if let iconTableViewCell = tableView.cellForRow(at: indexPath) as? IconTableViewCell {
-			if indexPath == [0, 0] {
+		guard let iconTableViewCell = tableView.cellForRow(at: indexPath) as? IconTableViewCell else { return }
+		switch indexPath.section {
+		case 0:
+			if indexPath.row == 0 {
 				KThemeStyle.changeIcon(to: nil)
 			} else {
 				KThemeStyle.changeIcon(to: iconTableViewCell.alternativeIconsElement?.name)
@@ -122,6 +124,14 @@ extension ManageIconTableViewController {
 			UserSettings.set(iconTableViewCell.alternativeIconsElement?.image, forKey: .appIcon)
 			NotificationCenter.default.post(name: .KSAppIconDidChange, object: nil)
 			tableView.reloadData()
+		default:
+			WorkflowController.shared.isPro {
+				KThemeStyle.changeIcon(to: iconTableViewCell.alternativeIconsElement?.name)
+
+				UserSettings.set(iconTableViewCell.alternativeIconsElement?.image, forKey: .appIcon)
+				NotificationCenter.default.post(name: .KSAppIconDidChange, object: nil)
+				tableView.reloadData()
+			}
 		}
 	}
 }

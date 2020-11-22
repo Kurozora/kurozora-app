@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -82,7 +82,6 @@
 		66407C9823F625DB008944AB /* App-Icon-iPad-Love-Bug.png in Resources */ = {isa = PBXBuildFile; fileRef = 66407C9323F625DB008944AB /* App-Icon-iPad-Love-Bug.png */; };
 		6640E18922AD633500D0F575 /* Authentication.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6640E18822AD633500D0F575 /* Authentication.storyboard */; };
 		6640E18B22AD634600D0F575 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6640E18A22AD634600D0F575 /* AuthenticationViewController.swift */; };
-		6640E18D22ADD0A500D0F575 /* BiometricType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6640E18C22ADD0A500D0F575 /* BiometricType.swift */; };
 		6640E18F22ADD19000D0F575 /* AuthenticationSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6640E18E22ADD19000D0F575 /* AuthenticationSettingsCell.swift */; };
 		6640E19522ADD2D800D0F575 /* AuthenticationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6640E19422ADD2D800D0F575 /* AuthenticationTableViewController.swift */; };
 		6640E19722ADD30100D0F575 /* AuthenticationSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6640E19622ADD30100D0F575 /* AuthenticationSettings.storyboard */; };
@@ -426,6 +425,8 @@
 		66CF6D6920A98CAA00F98375 /* FollowTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6820A98CAA00F98375 /* FollowTableViewController.swift */; };
 		66CF6D6F20A9921000F98375 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6E20A9921000F98375 /* NotificationsViewController.swift */; };
 		66CF6D7120A9934F00F98375 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66CF6D7020A9934F00F98375 /* Profile.storyboard */; };
+		66D0BF8125613E29000AB7BF /* Show+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D0BF8025613E29000AB7BF /* Show+UIKit.swift */; };
+		66D0BF9C25616637000AB7BF /* ShowDetailsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D0BF9B25616637000AB7BF /* ShowDetailsCollectionView.swift */; };
 		66D1358D228087920079438C /* KButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D1358C228087920079438C /* KButton.swift */; };
 		66D4735221AB5FE600A894B7 /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D4735121AB5FE300A894B7 /* UIAlertController+Extension.swift */; };
 		66D6237720A1BB6600304914 /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D6237620A1BB6600304914 /* LibraryViewController.swift */; };
@@ -463,6 +464,8 @@
 		66F944AE22F0C08E009F1FE2 /* BaseLockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F944AA22F0C08E009F1FE2 /* BaseLockupCollectionViewCell.swift */; };
 		66F944AF22F0C08E009F1FE2 /* LegalExploreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F944AB22F0C08E009F1FE2 /* LegalExploreTableViewCell.swift */; };
 		66F944B322F0D11B009F1FE2 /* KWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F944B222F0D11B009F1FE2 /* KWebViewController.swift */; };
+		66FB7EAF2565D5C00028093C /* ForumsThread+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FB7EAE2565D5C00028093C /* ForumsThread+UIKit.swift */; };
+		66FB7ECC2569EE020028093C /* ThreadReply+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FB7ECB2569EE020028093C /* ThreadReply+UIKit.swift */; };
 		66FC6DD12340014500A454DD /* SettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DCF233FE9C900A454DD /* SettingsSection.swift */; };
 		66FC6DD32340028D00A454DD /* AccountSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66FC6DD22340028D00A454DD /* AccountSettings.storyboard */; };
 		66FC6DF62342BA5C00A454DD /* UIStatusBarStyle+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DF32342B79000A454DD /* UIStatusBarStyle+Theme.swift */; };
@@ -588,7 +591,6 @@
 		66407C9323F625DB008944AB /* App-Icon-iPad-Love-Bug.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Love-Bug.png"; sourceTree = "<group>"; };
 		6640E18822AD633500D0F575 /* Authentication.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Authentication.storyboard; sourceTree = "<group>"; };
 		6640E18A22AD634600D0F575 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
-		6640E18C22ADD0A500D0F575 /* BiometricType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricType.swift; sourceTree = "<group>"; };
 		6640E18E22ADD19000D0F575 /* AuthenticationSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationSettingsCell.swift; sourceTree = "<group>"; };
 		6640E19422ADD2D800D0F575 /* AuthenticationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationTableViewController.swift; sourceTree = "<group>"; };
 		6640E19622ADD30100D0F575 /* AuthenticationSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AuthenticationSettings.storyboard; sourceTree = "<group>"; };
@@ -933,6 +935,8 @@
 		66CF6D6820A98CAA00F98375 /* FollowTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowTableViewController.swift; sourceTree = "<group>"; };
 		66CF6D6E20A9921000F98375 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		66CF6D7020A9934F00F98375 /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
+		66D0BF8025613E29000AB7BF /* Show+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Show+UIKit.swift"; sourceTree = "<group>"; };
+		66D0BF9B25616637000AB7BF /* ShowDetailsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetailsCollectionView.swift; sourceTree = "<group>"; };
 		66D1358C228087920079438C /* KButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KButton.swift; sourceTree = "<group>"; };
 		66D4735121AB5FE300A894B7 /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
 		66D6237620A1BB6600304914 /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
@@ -970,6 +974,8 @@
 		66F944AA22F0C08E009F1FE2 /* BaseLockupCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseLockupCollectionViewCell.swift; sourceTree = "<group>"; };
 		66F944AB22F0C08E009F1FE2 /* LegalExploreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegalExploreTableViewCell.swift; sourceTree = "<group>"; };
 		66F944B222F0D11B009F1FE2 /* KWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWebViewController.swift; sourceTree = "<group>"; };
+		66FB7EAE2565D5C00028093C /* ForumsThread+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ForumsThread+UIKit.swift"; sourceTree = "<group>"; };
+		66FB7ECB2569EE020028093C /* ThreadReply+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThreadReply+UIKit.swift"; sourceTree = "<group>"; };
 		66FC6DCF233FE9C900A454DD /* SettingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSection.swift; sourceTree = "<group>"; };
 		66FC6DD22340028D00A454DD /* AccountSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AccountSettings.storyboard; sourceTree = "<group>"; };
 		66FC6DF32342B79000A454DD /* UIStatusBarStyle+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStatusBarStyle+Theme.swift"; sourceTree = "<group>"; };
@@ -1029,6 +1035,7 @@
 			isa = PBXGroup;
 			children = (
 				66938FD7211CD3E600ADA5D6 /* ShowDetailsCollectionViewController.swift */,
+				66D0BF9B25616637000AB7BF /* ShowDetailsCollectionView.swift */,
 				66D16CA0212D52AB00B6B882 /* Cells */,
 				66D1358B227F17180079438C /* Models */,
 			);
@@ -1100,6 +1107,24 @@
 				66B13A5A2405A9E300CD732B /* Workflow */,
 			);
 			path = "App Services";
+			sourceTree = "<group>";
+		};
+		6611895825631E0E00CDB347 /* Container View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				666E0D1E22888AFC00AA8BA4 /* Navigation */,
+				669C8D542107B7AD0014EB7A /* Tab Bar */,
+			);
+			path = "Container View Controllers";
+			sourceTree = "<group>";
+		};
+		6611895A25631E7E00CDB347 /* KNavigationController */ = {
+			isa = PBXGroup;
+			children = (
+				666E0D1F22888B2300AA8BA4 /* KNavigationController.swift */,
+				661049C222C0E55200A2A354 /* Models */,
+			);
+			path = KNavigationController;
 			sourceTree = "<group>";
 		};
 		6614409021DA40AB00E54915 /* Notifications */ = {
@@ -1200,17 +1225,8 @@
 			children = (
 				6640E18822AD633500D0F575 /* Authentication.storyboard */,
 				6640E18A22AD634600D0F575 /* AuthenticationViewController.swift */,
-				6640E19022ADD1A500D0F575 /* Models */,
 			);
 			path = Authentication;
-			sourceTree = "<group>";
-		};
-		6640E19022ADD1A500D0F575 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				6640E18C22ADD0A500D0F575 /* BiometricType.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		6640E19122ADD20700D0F575 /* Authentication */ = {
@@ -1737,8 +1753,7 @@
 		666E0D1E22888AFC00AA8BA4 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
-				666E0D1F22888B2300AA8BA4 /* KNavigationController.swift */,
-				661049C222C0E55200A2A354 /* Models */,
+				6611895A25631E7E00CDB347 /* KNavigationController */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -1816,13 +1831,13 @@
 		668142D4245B4931008FC7BE /* Views and Controls */ = {
 			isa = PBXGroup;
 			children = (
-				6647236E245DC514008E5111 /* View Fundementals */,
 				66472375246015F9008E5111 /* Container Views */,
 				668142D8245B49E4008FC7BE /* Content Views */,
 				668142D9245B4A11008FC7BE /* Controls */,
-				668142DA245B4A20008FC7BE /* Text Views */,
-				665A45802466EFDB00154F41 /* Visual Effects */,
 				668142DB245B4A46008FC7BE /* Related Types */,
+				668142DA245B4A20008FC7BE /* Text Views */,
+				6647236E245DC514008E5111 /* View Fundementals */,
+				665A45802466EFDB00154F41 /* Visual Effects */,
 			);
 			path = "Views and Controls";
 			sourceTree = "<group>";
@@ -1840,12 +1855,13 @@
 		668142D6245B4954008FC7BE /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				668142D7245B4999008FC7BE /* Container View Controllers */,
+				6611895825631E0E00CDB347 /* Container View Controllers */,
+				668142D7245B4999008FC7BE /* Content View Controllers */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
 		};
-		668142D7245B4999008FC7BE /* Container View Controllers */ = {
+		668142D7245B4999008FC7BE /* Content View Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				66C4DAE5243E133F00C4B90A /* KTabbedViewController.swift */,
@@ -1853,7 +1869,7 @@
 				6664B81524A404C400E73728 /* Collection Views */,
 				6664B81624A404D900E73728 /* Table Views */,
 			);
-			path = "Container View Controllers";
+			path = "Content View Controllers";
 			sourceTree = "<group>";
 		};
 		668142D8245B49E4008FC7BE /* Content Views */ = {
@@ -1948,18 +1964,17 @@
 		668142E1245B4BDA008FC7BE /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				66D0BF7F25613E09000AB7BF /* Models */,
 				66C898DC24DFEA2B00305C96 /* ActorAttributes+String.swift */,
+				66999C4F24E7586D00001A6E /* ActorAttributes+UIImage.swift */,
+				66999C5124E75AF300001A6E /* CharacterAttributes+UIImage.swift */,
 				667C0F12224CC50200A8CB56 /* ExploreCategorySize+Kurozora.swift */,
 				6698D3CA24E594BD006B7A4C /* FavoriteStatus+Kurozora.swift */,
 				66999C4924E71E1A00001A6E /* GenreAttributes+UIImage.swift */,
 				6698D3C824E59427006B7A4C /* ReminderStatus+Kurozora.swift */,
 				662F118124E60F1C0000375A /* SeasonAttributes+UIImage.swift */,
-				66C898E724E1770400305C96 /* Show+Intents.swift */,
-				66C898E924E17C3E00305C96 /* ShowAttributes+UIImage.swift */,
 				6698D3D324E5E81D006B7A4C /* StudioAttributes+UIImage.swift */,
 				666D3E8B244DE7240068A103 /* UserAttributes+UIImage.swift */,
-				66999C4F24E7586D00001A6E /* ActorAttributes+UIImage.swift */,
-				66999C5124E75AF300001A6E /* CharacterAttributes+UIImage.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2264,11 +2279,9 @@
 				6640E18722AD631F00D0F575 /* Authentication */,
 				669EA99E22C148D300784181 /* In-App Purchases */,
 				66A08C6B23E3A2DD007B6418 /* Legal */,
-				666E0D1E22888AFC00AA8BA4 /* Navigation */,
 				661F9F872087383500CF4153 /* Onboard */,
 				6614ABE2215EB23500A3A0C9 /* Reachability */,
 				66CE8105246088C000DB0C49 /* Services */,
-				669C8D542107B7AD0014EB7A /* Tab Bar */,
 				66B216A921C166B5006E167D /* Text Editor */,
 				66B4F1D5223D141A007C5048 /* Theme */,
 				664133E621DB827100CE823A /* UserDefaults */,
@@ -2624,6 +2637,25 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
+		66D0BF7E25613DE0000AB7BF /* Show */ = {
+			isa = PBXGroup;
+			children = (
+				66C898E724E1770400305C96 /* Show+Intents.swift */,
+				66D0BF8025613E29000AB7BF /* Show+UIKit.swift */,
+				66C898E924E17C3E00305C96 /* ShowAttributes+UIImage.swift */,
+			);
+			path = Show;
+			sourceTree = "<group>";
+		};
+		66D0BF7F25613E09000AB7BF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				66FB7EAC2565D59F0028093C /* Forums */,
+				66D0BF7E25613DE0000AB7BF /* Show */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		66D1358B227F17180079438C /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -2782,6 +2814,31 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
+		66FB7EAC2565D59F0028093C /* Forums */ = {
+			isa = PBXGroup;
+			children = (
+				66FB7EAD2565D5B10028093C /* Thread */,
+			);
+			path = Forums;
+			sourceTree = "<group>";
+		};
+		66FB7EAD2565D5B10028093C /* Thread */ = {
+			isa = PBXGroup;
+			children = (
+				66FB7ECA2569EDF10028093C /* Reply */,
+				66FB7EAE2565D5C00028093C /* ForumsThread+UIKit.swift */,
+			);
+			path = Thread;
+			sourceTree = "<group>";
+		};
+		66FB7ECA2569EDF10028093C /* Reply */ = {
+			isa = PBXGroup;
+			children = (
+				66FB7ECB2569EE020028093C /* ThreadReply+UIKit.swift */,
+			);
+			path = Reply;
+			sourceTree = "<group>";
+		};
 		66FC6DCE233FE9AA00A454DD /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -2874,12 +2931,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1200;
+				LastUpgradeCheck = 1230;
 				ORGANIZATIONNAME = Kurozora;
 				TargetAttributes = {
 					66647B4F2084995500CF624F = {
 						CreatedOnToolsVersion = 9.3;
-						DevelopmentTeam = 47ZEU5J4BF;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
@@ -2899,7 +2955,7 @@
 				};
 			};
 			buildConfigurationList = 66647B4B2084995500CF624F /* Build configuration list for PBXProject "Kurozora" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -3101,7 +3157,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Copy pods acknowledgements file to Settings.bundle\n\nPODPATH=\"${PODS_ROOT}/Target Support Files/Pods-Kurozora/Pods-Kurozora-acknowledgements.plist\"\nPROJECTPATH=\"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/Acknowledgements.plist\"\n\ncp \"${PODPATH}\" \"${PROJECTPATH}\"\n\nPLISTBUDDY=\"/usr/libexec/PlistBuddy -c\"\n\ni=0\nwhile true ; do\n   # If an item is printable then it exists, otherwise exit loop\n   $PLISTBUDDY \"Print PreferenceSpecifiers:$i\" \"${PROJECTPATH}\" >/dev/null 2>/dev/null\n   if [ $? -ne 0 ]; then\n      break\n   fi\n   i=$(($i + 1))\ndone\n\n# Get last item in array\ni=$(($i - 1))\n\n# Delete last item in array\n$PLISTBUDDY \"Delete PreferenceSpecifiers:$i\" \"${PROJECTPATH}\" >/dev/null 2>/dev/null\n";
+			shellScript = "# Copy pods acknowledgements file to Settings.bundle\nif [$ENABLE_PREVIEWS == \"NO\"]\nthen\n\tPODPATH=\"${PODS_ROOT}/Target Support Files/Pods-Kurozora/Pods-Kurozora-acknowledgements.plist\"\n\tPROJECTPATH=\"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/Acknowledgements.plist\"\n\n\tcp \"${PODPATH}\" \"${PROJECTPATH}\"\n\n\tPLISTBUDDY=\"/usr/libexec/PlistBuddy -c\"\n\n\ti=0\n\twhile true ; do\n\t   # If an item is printable then it exists, otherwise exit loop\n\t   $PLISTBUDDY \"Print PreferenceSpecifiers:$i\" \"${PROJECTPATH}\" >/dev/null 2>/dev/null\n\t   if [ $? -ne 0 ]; then\n\t\t  break\n\t   fi\n\t   i=$(($i + 1))\n\tdone\n\n\t# Get last item in array\n\ti=$(($i - 1))\n\n\t# Delete last item in array\n\t$PLISTBUDDY \"Delete PreferenceSpecifiers:$i\" \"${PROJECTPATH}\" >/dev/null 2>/dev/null\nelse\n\techo \"Skipping Add Acknowledgements script.\"\nfi\n";
 		};
 		6645D5F523E7062F0042B4E0 /* R.swift */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3121,7 +3177,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Add pod 'R.swift' to your Podfile and run pod install\n# In Xcode: Click on your project in the file list, choose your target under TARGETS, click the Build Phases tab and add a New Run Script Phase by clicking the little plus icon in the top left\n# Drag the new Run Script phase above the Compile Sources phase and below Check Pods Manifest.lock, expand it and paste the following script: \"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/R.generated.swift\"\n# Add $TEMP_DIR/rswift-lastrun to the \"Input Files\" and $SRCROOT/R.generated.swift to the \"Output Files\" of the Build Phase\n# Build your project, in Finder you will now see a R.generated.swift in the $SRCROOT-folder, drag the R.generated.swift files into your project and uncheck Copy items if needed\n\n\"${PODS_ROOT}/R.swift/rswift\" generate \"${SRCROOT}/Kurozora/Supporting Files/R.generated.swift\"\n";
+			shellScript = "# Add pod 'R.swift' to your Podfile and run pod install\n# In Xcode: Click on your project in the file list, choose your target under TARGETS, click the Build Phases tab and add a New Run Script Phase by clicking the little plus icon in the top left\n# Drag the new Run Script phase above the Compile Sources phase and below Check Pods Manifest.lock, expand it and paste the following script: \"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/R.generated.swift\"\n# Add $TEMP_DIR/rswift-lastrun to the \"Input Files\" and $SRCROOT/R.generated.swift to the \"Output Files\" of the Build Phase\n# Build your project, in Finder you will now see a R.generated.swift in the $SRCROOT-folder, drag the R.generated.swift files into your project and uncheck Copy items if needed\nif [$ENABLE_PREVIEWS == \"NO\"]\nthen\n\"${PODS_ROOT}/R.swift/rswift\" generate \"${SRCROOT}/Kurozora/Supporting Files/R.generated.swift\"\nelse\n\techo \"Skipping R.swift script.\"\nfi\n";
 		};
 		6666F88320BF4A4C0003A72F /* Run Build Bump Script */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3135,7 +3191,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# xcode-build-bump.sh\n# @desc Auto-increment the build number every time the project is run. \n# @usage\n# 1. Select: your Target in Xcode\n# 2. Select: Build Phases Tab\n# 3. Select: Add Build Phase -> Add Run Script\n# 4. Paste code below in to new \"Run Script\" section\n# 5. Drag the \"Run Script\" below \"Link Binaries With Libraries\"\n# 6. Insure that your starting build number is set to a whole integer and not a float (e.g. 1, not 1.0)\n\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n";
+			shellScript = "if [$ENABLE_PREVIEWS == \"NO\"]\nthen\n\tagvtool next-version -all\nelse\n\techo \"Skipping Build Bump script.\"\nfi\n";
 		};
 		66B4DC40245A20390097135A /* Add version to Settings.bundle */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3153,7 +3209,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "version=\"${MARKETING_VERSION}\"\n/usr/libexec/PlistBuddy \"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/Root.plist\" -c \"set PreferenceSpecifiers:2:DefaultValue $version\"\n";
+			shellScript = "if [$ENABLE_PREVIEWS == \"NO\"]\nthen\n\tversion=\"${MARKETING_VERSION}\"\n\t/usr/libexec/PlistBuddy \"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/Root.plist\" -c \"set PreferenceSpecifiers:2:DefaultValue $version\"\nelse\n\techo \"Skipping Add version to Settings.bundle script.\"\nfi\n";
 		};
 		66C4DAE4243DE98F00C4B90A /* [CPD] Copy/Paste Detector */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3171,7 +3227,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which pmd >/dev/null; then\n  # Running CPD\n  pmd cpd --files ${EXECUTABLE_NAME} --minimum-tokens 50 --language swift --format xml > cpd-output.xml --failOnViolation true\n\n  # Running script\n  php ./cpd_script.php -cpd-xml cpd-output.xml\nelse\n  echo \"warning: PMD not installed, run brew install pmd\"\nfi\n";
+			shellScript = "if [$ENABLE_PREVIEWS == \"NO\"]\nthen\n\tif which pmd >/dev/null; then\n\t  # Running CPD\n\t  pmd cpd --files ${EXECUTABLE_NAME} --minimum-tokens 50 --language swift --format xml > cpd-output.xml --failOnViolation true\n\n\t  # Running script\n\t  php ./cpd_script.php -cpd-xml cpd-output.xml\n\telse\n\t  echo \"warning: PMD not installed, run brew install pmd\"\n\tfi\nelse\n\techo \"Skipping Copy/Past Detector script.\"\nfi\n";
 		};
 		66CF0BBC231AEE8A00EEF947 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3214,57 +3270,12 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Kurozora/Pods-Kurozora-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework",
-				"${BUILT_PRODUCTS_DIR}/ESTabBarController-swift/ESTabBarController_swift.framework",
-				"${BUILT_PRODUCTS_DIR}/EmptyDataSet-Swift/EmptyDataSet_Swift.framework",
-				"${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework",
-				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
-				"${BUILT_PRODUCTS_DIR}/KurozoraKit/KurozoraKit.framework",
-				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
-				"${BUILT_PRODUCTS_DIR}/NotificationBannerSwift/NotificationBannerSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
-				"${BUILT_PRODUCTS_DIR}/R.swift.Library/Rswift.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
-				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
-				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
-				"${BUILT_PRODUCTS_DIR}/Solar/Solar.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftTheme/SwiftTheme.framework",
-				"${BUILT_PRODUCTS_DIR}/SwifterSwift/SwifterSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
-				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
-				"${BUILT_PRODUCTS_DIR}/TRON/TRON.framework",
-				"${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework",
-				"${BUILT_PRODUCTS_DIR}/UIImageColors/UIImageColors.framework",
-				"${BUILT_PRODUCTS_DIR}/WhatsNew/WhatsNew.framework",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Kurozora/Pods-Kurozora-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cosmos.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ESTabBarController_swift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EmptyDataSet_Swift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainAccess.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KurozoraKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NotificationBannerSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rswift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Solar.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftTheme.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwifterSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeCellKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TRON.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tabman.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIImageColors.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WhatsNew.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Kurozora/Pods-Kurozora-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3330,6 +3341,7 @@
 				664133E821DB828E00CE823A /* UserSettings.swift in Sources */,
 				6633A52B24A3E5CE003C6390 /* KSecondaryLabel.swift in Sources */,
 				66CBDD902462085E00CA5F83 /* KTintedLabel.swift in Sources */,
+				66D0BF9C25616637000AB7BF /* ShowDetailsCollectionView.swift in Sources */,
 				6699A1C323779E9B00517C2C /* LibraryListCollectionViewCell.swift in Sources */,
 				6640E19B22AE808C00D0F575 /* AuthenticationOptionsViewController.swift in Sources */,
 				661DBC4F234947D7009292DF /* SKProduct+Kurozora.swift in Sources */,
@@ -3414,6 +3426,7 @@
 				66CF5D7E21E7773F00969BBB /* Intents.intentdefinition in Sources */,
 				66112350208F70D200E6033A /* UIApplication+Navigation.swift in Sources */,
 				66B4DBF22450E5930097135A /* SIWAButtonTableViewCell.swift in Sources */,
+				66D0BF8125613E29000AB7BF /* Show+UIKit.swift in Sources */,
 				6648ED6C22A4630200E1BE18 /* NotificationType.swift in Sources */,
 				662DB4DB237EF3CC00B7FE7E /* KFillBarIndicator.swift in Sources */,
 				66AEABE62298A9C100949FD8 /* NotificationBannerStyle.swift in Sources */,
@@ -3432,7 +3445,6 @@
 				663E34252360D2F2003386D1 /* BannerLockupCollectionViewCell.swift in Sources */,
 				66E54EC0244E160F007248EE /* String+Date.swift in Sources */,
 				6694202723EAF1C800D69B5E /* Scheme.swift in Sources */,
-				6640E18D22ADD0A500D0F575 /* BiometricType.swift in Sources */,
 				66B2C741232F99440042AB12 /* Array+Kurozora.swift in Sources */,
 				66058DBA212E97670084B79E /* ReviewCollectionViewCell.swift in Sources */,
 				6664B81324A403C700E73728 /* TextViewCollectionViewCellType.swift in Sources */,
@@ -3506,6 +3518,7 @@
 				668142D3245B4804008FC7BE /* ProfileImageView.swift in Sources */,
 				66C4DAE1243BE52900C4B90A /* KKLibrarySortTypeOptions+Kurozora.swift in Sources */,
 				666E0D2122888B2300AA8BA4 /* KNavigationController.swift in Sources */,
+				66FB7ECC2569EE020028093C /* ThreadReply+UIKit.swift in Sources */,
 				66B4F1DD223D334D007C5048 /* SearchScope.swift in Sources */,
 				66CDC08F234A95B8009E799C /* RedeemTableViewController.swift in Sources */,
 				66E54EC3244E1698007248EE /* Array+String.swift in Sources */,
@@ -3565,6 +3578,7 @@
 				66DB2546245C667A000AA6DB /* KCopyableLabel.swift in Sources */,
 				664B52D322C03D4C00B988B3 /* DisplaySettingsCell.swift in Sources */,
 				66DB254A245D72ED000AA6DB /* KActivityIndicatorView.swift in Sources */,
+				66FB7EAF2565D5C00028093C /* ForumsThread+UIKit.swift in Sources */,
 				66B2C73F232F95680042AB12 /* BaseNotificationCell.swift in Sources */,
 				661F185E24AAA03700542AFB /* SectionBackgroundDecorationView.swift in Sources */,
 				66160C3B215C04B900D0D722 /* AccountTableViewController.swift in Sources */,
@@ -3634,13 +3648,10 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -3655,22 +3666,16 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
+				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "";
 				PRODUCT_NAME = "";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				WRAPPER_EXTENSION = "";
 			};
 			name = Debug;
 		};
@@ -3708,13 +3713,10 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -3723,22 +3725,17 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
+				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "";
 				PRODUCT_NAME = "";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
+				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
-				WRAPPER_EXTENSION = "";
 			};
 			name = Release;
 		};
@@ -3748,15 +3745,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Kurozora/Kurozora.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11050;
-				DEPLOYMENT_LOCATION = NO;
+				CURRENT_PROJECT_VERSION = 11765;
 				DEVELOPMENT_ASSET_PATHS = "\"Kurozora/Preview Content\"";
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
-				ENABLE_BITCODE = YES;
-				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3766,23 +3757,20 @@
 				INFOPLIST_FILE = "Kurozora/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 1.0.0;
-				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.tracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
-				PUBLIC_HEADERS_FOLDER_PATH = Kurozora.app/Headers;
-				SDKROOT = iphoneos;
 				SUPPORTS_MACCATALYST = YES;
-				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,6";
 				TVOS_DEPLOYMENT_TARGET = 13.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				WATCHOS_DEPLOYMENT_TARGET = 6.0;
-				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
@@ -3792,15 +3780,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Kurozora/Kurozora.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11050;
-				DEPLOYMENT_LOCATION = NO;
+				CURRENT_PROJECT_VERSION = 11765;
 				DEVELOPMENT_ASSET_PATHS = "\"Kurozora/Preview Content\"";
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
-				ENABLE_BITCODE = YES;
-				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3810,23 +3792,20 @@
 				INFOPLIST_FILE = "Kurozora/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 1.0.0;
-				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.tracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
-				PUBLIC_HEADERS_FOLDER_PATH = Kurozora.app/Headers;
-				SDKROOT = iphoneos;
 				SUPPORTS_MACCATALYST = YES;
-				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,6";
 				TVOS_DEPLOYMENT_TARGET = 13.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				WATCHOS_DEPLOYMENT_TARGET = 6.0;
-				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
 		};

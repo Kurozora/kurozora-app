@@ -204,8 +204,8 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 		})
 
 		// Add image
-		redownloadAction.setValue(R.image.symbols.arrow_uturn_down()!, forKey: "image")
-		removeAction.setValue(R.image.symbols.trash_fill()!, forKey: "image")
+		redownloadAction.setValue(UIImage(systemName: "arrow.uturn.down"), forKey: "image")
+		removeAction.setValue(UIImage(systemName: "trash.fill"), forKey: "image")
 
 		// Left align title
 		redownloadAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")

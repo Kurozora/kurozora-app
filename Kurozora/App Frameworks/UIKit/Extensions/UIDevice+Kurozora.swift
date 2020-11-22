@@ -185,7 +185,7 @@ extension UIDevice {
 	}()
 
 	/// The type of biometric the current device supports.
-	static let supportedBiomtetric: BiometricType = {
+	static let supportedBiomtetric: LABiometryType = {
 		let context = LAContext.init()
 		var error: NSError?
 
@@ -198,9 +198,9 @@ extension UIDevice {
 			default:
 				return .none
 			}
-		} else {
-			return .none
 		}
+
+		return .none
 	}()
 }
 

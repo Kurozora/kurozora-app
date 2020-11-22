@@ -25,6 +25,8 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - Properties
+	var dataSource: UICollectionViewDiffableDataSource<ShowDetail.Section, Int>! = nil
+	var snapshot: NSDiffableDataSourceSnapshot<ShowDetail.Section, Int>! = nil
 	var showID: Int = 0
 	private var show: Show! {
 		didSet {
@@ -37,7 +39,6 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 	var cast: [Cast] = []
 	var relatedShows: [RelatedShow] = []
 	var moreByStudio: Studio!
-	var dataSource: UICollectionViewDiffableDataSource<ShowDetail.Section, Int>! = nil
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -101,14 +102,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 
 	// MARK: - IBActions
 	@IBAction func moreButtonPressed(_ sender: UIBarButtonItem) {
-		let shareText = "https://kurozora.app/anime/\(show.id)\nYou should watch \"\(show.attributes.title)\" via @KurozoraApp"
-		let activityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
-
-		if let popoverController = activityViewController.popoverPresentationController {
-			popoverController.barButtonItem = sender
-		}
-
-		self.present(activityViewController, animated: true, completion: nil)
+		show.openShareSheet(on: self, barButtonItem: sender)
 	}
 
 	// MARK: - Segue
@@ -185,7 +179,7 @@ extension ShowDetailsCollectionViewController {
 	}
 
 	override func configureDataSource() {
-		dataSource = UICollectionViewDiffableDataSource<ShowDetail.Section, Int>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, _) -> UICollectionViewCell? in
+		dataSource = UICollectionViewDiffableDataSource<ShowDetail.Section, Int>(collectionView: collectionView) { [weak self] (collectionView, indexPath, _) -> UICollectionViewCell? in
 			guard let self = self else { return nil }
 			let showDetailSection = ShowDetail.Section(rawValue: indexPath.section) ?? .header
 			let reuseIdentifier = showDetailSection.identifierString(for: indexPath.item)
@@ -238,9 +232,11 @@ extension ShowDetailsCollectionViewController {
 			return titleHeaderCollectionReusableView
 		}
 
-		var snapshot = NSDiffableDataSourceSnapshot<ShowDetail.Section, Int>()
+		// Initialize data
+		self.snapshot = NSDiffableDataSourceSnapshot<ShowDetail.Section, Int>()
+//		[ShowDetail.Section.header, .badge, .synopsis].forEach {
 		ShowDetail.Section.allCases.forEach {
-			snapshot.appendSections([$0])
+			var identifierOffset = 0
 			var itemsPerSection = self.show != nil ? $0.rowCount : 0
 
 			if self.show != nil {
@@ -267,7 +263,10 @@ extension ShowDetailsCollectionViewController {
 				}
 			}
 
-			snapshot.appendItems(Array(0..<itemsPerSection), toSection: $0)
+			snapshot.appendSections([$0])
+			let maxIdentifier = identifierOffset + itemsPerSection
+			snapshot.appendItems(Array(0..<maxIdentifier))
+			identifierOffset += itemsPerSection
 		}
 		dataSource.apply(snapshot)
 	}
@@ -504,7 +503,7 @@ extension ShowDetailsCollectionViewController {
 		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
 											  heightDimension: .fractionalHeight(1.0))
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
-		item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
+		item.edgeSpacing = NSCollectionLayoutEdgeSpacing(leading: .flexible(10), top: .fixed(0), trailing: .flexible(10), bottom: .fixed(0))
 
 		let heightDimension = self.heightDimension(forSection: section, with: columns, layout: layoutEnvironment)
 		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
@@ -522,7 +521,7 @@ extension ShowDetailsCollectionViewController {
 		let layoutSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
 												heightDimension: heightDimension)
 		let item = NSCollectionLayoutItem(layoutSize: layoutSize)
-		item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
+		item.edgeSpacing = NSCollectionLayoutEdgeSpacing(leading: .flexible(10), top: .fixed(0), trailing: .flexible(10), bottom: .fixed(0))
 
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitem: item, count: columns)
 
@@ -536,7 +535,7 @@ extension ShowDetailsCollectionViewController {
 		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
 											  heightDimension: .fractionalHeight(0.5))
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
-		item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
+		item.edgeSpacing = NSCollectionLayoutEdgeSpacing(leading: .flexible(10), top: .fixed(0), trailing: .flexible(10), bottom: .fixed(0))
 
 		let widthDimension = self.widthDimension(forSection: section, with: columns, layout: layoutEnvironment)
 		let heightDimension = self.heightDimension(forSection: section, with: columns, layout: layoutEnvironment)
@@ -560,7 +559,7 @@ extension ShowDetailsCollectionViewController {
 		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
 											  heightDimension: .fractionalHeight(1.0))
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
-		item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
+		item.edgeSpacing = NSCollectionLayoutEdgeSpacing(leading: .flexible(10), top: .fixed(0), trailing: .flexible(10), bottom: .fixed(0))
 
 		let heightDimension = self.heightDimension(forSection: section, with: columns, layout: layoutEnvironment)
 		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),

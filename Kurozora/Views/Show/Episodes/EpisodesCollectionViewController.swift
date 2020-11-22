@@ -78,13 +78,13 @@ class EpisodesCollectionViewController: KCollectionViewController {
 	/// Goes to the first item in the presented collection view.
 	fileprivate func goToFirstEpisode() {
 		collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredVertically, animated: true)
-		goToButton.image = R.image.symbols.chevron_down_circle()
+		goToButton.image = UIImage(systemName: "chevron.down.circle")
 	}
 
 	/// Goes to the last item in the presented collection view.
 	fileprivate func goToLastEpisode() {
 		collectionView.scrollToItem(at: IndexPath(row: episodes.count - 1, section: 0), at: .centeredVertically, animated: true)
-		goToButton.image = R.image.symbols.chevron_up_circle()
+		goToButton.image = UIImage(systemName: "chevron.up.circle")
 	}
 
 	/// Goes to the last watched episode in the presented collection view.

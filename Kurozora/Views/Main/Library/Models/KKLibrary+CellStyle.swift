@@ -62,11 +62,11 @@ extension KKLibrary {
 		var imageValue: UIImage {
 			switch self {
 			case .detailed:
-				return R.image.symbols.rectangle_fill_on_rectangle_fill()!
+				return UIImage(systemName: "rectangle.fill.on.rectangle.fill")!
 			case .compact:
-				return R.image.symbols.rectangle_grid_3x2_fill()!
+				return UIImage(systemName: "rectangle.grid.3x2.fill")!
 			case .list:
-				return R.image.symbols.rectangle_grid_1x2_fill()!
+				return UIImage(systemName: "rectangle.grid.1x2.fill")!
 			}
 		}
 

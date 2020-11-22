@@ -14,19 +14,19 @@ extension KKLibrary.SortType {
 	var imageValue: UIImage {
 		switch self {
 		case .none:
-			return R.image.symbols.line_horizontal_3_decrease_circle_fill()!
+			return UIImage(systemName: "line.horizontal.3.decrease.circle.fill")!
 		case .alphabetically:
-			return R.image.symbols.textformat_abc()!
+			return UIImage(systemName: "textformat.abc")!
 //			case .popularity:
-//				return R.image.symbols.flame_fill()!
+//				return UIImage(UIImage(systemName: "flame.fill")!
 //			case .nextAiringEpisode:
 //				return R.image.symbols.tv_arrowshape_turn_up_right_fill()!
 //			case .nextEpisodeToWatch:
 //				return R.image.symbols.tv_eye_fill()!
 		case .date:
-			return R.image.symbols.calendar()!
+			return UIImage(systemName: "calendar")!
 		case .rating:
-			return R.image.symbols.star_fill()!
+			return UIImage(systemName: "star.fill")!
 		case .myRating:
 			return R.image.symbols.person_crop_circle_fill_badge_star()!
 		}

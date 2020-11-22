@@ -100,7 +100,7 @@ class NotificationSettingsCell: SettingsCell {
 			iconNotificationSelectedImageView.borderWidth = 2
 			statusBarNotificationSelectedImageView.borderWidth = 2
 
-			basicNotificationSelectedImageView.image = R.image.symbols.checkmark_circle_fill()
+			basicNotificationSelectedImageView.image = UIImage(systemName: "checkmark.circle.fill")
 			iconNotificationSelectedImageView.image = nil
 			statusBarNotificationSelectedImageView.image = nil
 		case 1:
@@ -108,7 +108,7 @@ class NotificationSettingsCell: SettingsCell {
 			basicNotificationSelectedImageView.borderWidth = 2
 			statusBarNotificationSelectedImageView.borderWidth = 2
 
-			iconNotificationSelectedImageView.image = R.image.symbols.checkmark_circle_fill()
+			iconNotificationSelectedImageView.image = UIImage(systemName: "checkmark.circle.fill")
 			basicNotificationSelectedImageView.image = nil
 			statusBarNotificationSelectedImageView.image = nil
 		case 2:
@@ -116,7 +116,7 @@ class NotificationSettingsCell: SettingsCell {
 			basicNotificationSelectedImageView.borderWidth = 2
 			iconNotificationSelectedImageView.borderWidth = 2
 
-			statusBarNotificationSelectedImageView.image = R.image.symbols.checkmark_circle_fill()
+			statusBarNotificationSelectedImageView.image = UIImage(systemName: "checkmark.circle.fill")
 			basicNotificationSelectedImageView.image = nil
 			iconNotificationSelectedImageView.image = nil
 		default: break

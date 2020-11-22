@@ -3,6 +3,7 @@ PODS:
   - Cosmos (23.0.0)
   - EmptyDataSet-Swift (5.0.0)
   - ESTabBarController-swift (2.8.0)
+  - FLEX (4.2.2)
   - KeychainAccess (4.2.1)
   - Kingfisher (5.15.7):
     - Kingfisher/Core (= 5.15.7)
@@ -69,9 +70,10 @@ DEPENDENCIES:
   - Cosmos
   - EmptyDataSet-Swift
   - ESTabBarController-swift
+  - FLEX
   - KeychainAccess
   - Kingfisher
-  - KurozoraKit
+  - KurozoraKit (from `../KurozoraKit`)
   - NotificationBannerSwift
   - R.swift
   - ReachabilitySwift
@@ -91,6 +93,7 @@ SPEC REPOS:
     - Cosmos
     - EmptyDataSet-Swift
     - ESTabBarController-swift
+    - FLEX
     - KeychainAccess
     - Kingfisher
     - MarqueeLabel
@@ -110,17 +113,21 @@ SPEC REPOS:
     - UIImageColors
     - WhatsNew
   https://github.com/kiritokatklian/Specs.git:
-    - KurozoraKit
     - SCLAlertView
+
+EXTERNAL SOURCES:
+  KurozoraKit:
+    :path: "../KurozoraKit"
 
 SPEC CHECKSUMS:
   Alamofire: 3b6a534a3df22db367e4dedeeca73d1ddfcf0e2f
   Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
   EmptyDataSet-Swift: eb382c0c87a2d9c678077385a595cec52da38171
   ESTabBarController-swift: 05593a6ad64700b03c0eb60ff625916370aa4136
+  FLEX: dbd68ae9c67fcc872c79c9e5a728f38243dfaa78
   KeychainAccess: 9b07f665298d13c3a85881bd3171f6f49b8151c1
   Kingfisher: 6e1a13523fcb1c86924ce53affe4ac957e544d59
-  KurozoraKit: aa749107c367a2a96db21023ff4939cd09e1ba49
+  KurozoraKit: 05569c73e9593eb4e4d818fdad7787b6f83178f1
   MarqueeLabel: 00cc0bcd087111dca575878b3531af980559707d
   NotificationBannerSwift: 713e20f21b6105f4a36a00e5d9fa414a930d3d8e
   Pageboy: cf121b9dd48c63f3f281b2a9ec93d02e0f23879b
@@ -139,6 +146,6 @@ SPEC CHECKSUMS:
   UIImageColors: d2ef3b0877d203cbb06489eeb78ea8b7788caabe
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
 
-PODFILE CHECKSUM: 10769f060f27d8ddd97e4a60dcd294ecbb9dee69
+PODFILE CHECKSUM: fbbf47be78cd0f0ab60e9a1ab3fc84247f3394ae
 
 COCOAPODS: 1.10.0

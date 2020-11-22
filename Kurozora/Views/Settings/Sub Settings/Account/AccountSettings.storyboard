@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17140" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="L5B-1B-AEl">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17700" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="L5B-1B-AEl">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17115"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -14,7 +14,7 @@
         <scene sceneID="DQk-pz-1cm">
             <objects>
                 <tableViewController storyboardIdentifier="AccountTableViewController" title="Account" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ChZ-k7-1t6" customClass="AccountTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="static" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="46m-9Q-eI8">
+                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="static" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="46m-9Q-eI8">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="contentLayoutGuide" id="sAN-Oi-RRl"/>
@@ -98,8 +98,8 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" image="Symbols/chevron_right" translatesAutoresizingMaskIntoConstraints="NO" id="n3N-Pw-6eo">
-                                                            <rect key="frame" x="342" y="17" width="24" height="16"/>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="n3N-Pw-6eo">
+                                                            <rect key="frame" x="353.5" y="19" width="12.5" height="12.5"/>
                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="16" id="JqR-v5-0uC"/>
@@ -185,8 +185,8 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" image="Symbols/chevron_right" translatesAutoresizingMaskIntoConstraints="NO" id="eDT-BX-Pmu">
-                                                            <rect key="frame" x="342" y="17" width="24" height="16"/>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="eDT-BX-Pmu">
+                                                            <rect key="frame" x="353.5" y="19" width="12.5" height="12.5"/>
                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="16" id="FYy-df-8Rf"/>
@@ -239,7 +239,7 @@
                             <tableViewSection id="CnI-MK-JHq">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SettingsCell" id="iw0-8x-5Cr" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="324" width="374" height="50"/>
+                                        <rect key="frame" x="20" y="323.5" width="374" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="iw0-8x-5Cr" id="e8K-V3-A0v">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
@@ -276,8 +276,8 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" image="Symbols/chevron_right" translatesAutoresizingMaskIntoConstraints="NO" id="bWl-YD-mL7">
-                                                            <rect key="frame" x="342" y="17" width="24" height="16"/>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="bWl-YD-mL7">
+                                                            <rect key="frame" x="353.5" y="19" width="12.5" height="12.5"/>
                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="16" id="9Au-Ms-ijb"/>
@@ -330,7 +330,7 @@
                             <tableViewSection id="2ws-Cf-flz">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" id="wPx-b4-hCa" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="410" width="374" height="50"/>
+                                        <rect key="frame" x="20" y="409" width="374" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wPx-b4-hCa" id="fGo-6w-bDH">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
@@ -761,7 +761,7 @@
         <scene sceneID="hhu-hI-Zga">
             <objects>
                 <tableViewController storyboardIdentifier="MALImportTableViewController" title="MAL Import" useStoryboardIdentifierAsRestorationIdentifier="YES" id="DIR-xz-9GA" customClass="MALImportTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="22" id="6Ey-t8-QCc">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="6Ey-t8-QCc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="e32-6g-f4W"/>
@@ -874,10 +874,7 @@
         <image name="Icons/Brands/Apple" width="130" height="130"/>
         <image name="Icons/Brands/MyAnimeList" width="128" height="128"/>
         <image name="Icons/Session" width="128" height="128"/>
-        <image name="Symbols/chevron_right" width="24" height="24"/>
-        <systemColor name="groupTableViewBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
+        <image name="chevron.right" catalog="system" width="96" height="128"/>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

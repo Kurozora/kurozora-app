@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="svG-2R-sWh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17700" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="svG-2R-sWh">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17124"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -13,7 +13,7 @@
         <scene sceneID="ofI-Cu-SE0">
             <objects>
                 <tableViewController storyboardIdentifier="DisplayTableViewController" title="Display &amp; Blindness" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y2K-Bn-OHN" customClass="DisplayTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" delaysContentTouches="NO" bouncesZoom="NO" dataMode="static" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="aHe-u0-qgI">
+                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" delaysContentTouches="NO" bouncesZoom="NO" dataMode="static" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="aHe-u0-qgI">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="jvV-1I-6oF"/>
@@ -51,8 +51,8 @@
                                                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Symbols/checkmark_circle_fill" translatesAutoresizingMaskIntoConstraints="NO" id="FbI-TE-ia8">
-                                                                            <rect key="frame" x="19" y="144" width="35" height="35"/>
+                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="FbI-TE-ia8">
+                                                                            <rect key="frame" x="19" y="144.5" width="35" height="34"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="35" id="Ajs-13-Rzs"/>
                                                                                 <constraint firstAttribute="width" constant="35" id="FDl-60-j6J"/>
@@ -63,7 +63,7 @@
                                                                                 </userDefinedRuntimeAttribute>
                                                                             </userDefinedRuntimeAttributes>
                                                                         </imageView>
-                                                                        <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9gD-SE-Axp">
+                                                                        <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9gD-SE-Axp">
                                                                             <rect key="frame" x="0.0" y="0.0" width="73" height="184"/>
                                                                             <connections>
                                                                                 <action selector="appearanceOptionButtonTapped:" destination="FLY-O0-IPQ" eventType="touchUpInside" id="G1l-PM-aAP"/>
@@ -113,7 +113,7 @@
                                                                                 </userDefinedRuntimeAttribute>
                                                                             </userDefinedRuntimeAttributes>
                                                                         </imageView>
-                                                                        <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Nb-Xc-bfx">
+                                                                        <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Nb-Xc-bfx">
                                                                             <rect key="frame" x="0.0" y="0.0" width="73" height="184"/>
                                                                             <connections>
                                                                                 <action selector="appearanceOptionButtonTapped:" destination="FLY-O0-IPQ" eventType="touchUpInside" id="62c-yt-8xM"/>
@@ -239,14 +239,14 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Dark Until Sunrise" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="9gr-0c-sbs">
-                                                            <rect key="frame" x="207" y="15.5" width="130" height="19.5"/>
+                                                            <rect key="frame" x="218.5" y="15.5" width="130" height="19.5"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Symbols/chevron_right" translatesAutoresizingMaskIntoConstraints="NO" id="HLr-i6-xdk">
-                                                            <rect key="frame" x="342" y="17" width="24" height="16"/>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="HLr-i6-xdk">
+                                                            <rect key="frame" x="353.5" y="19" width="12.5" height="12.5"/>
                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="16" id="hiQ-xF-B3B"/>
@@ -290,7 +290,7 @@
                                 <string key="footerTitle">Enable this option if you prefer a darker black color. Or if you value your eyes' health while using the app in the dark. Or those precious battery juices. Or or or...</string>
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="50" translatesAutoresizingMaskIntoConstraints="NO" id="UFt-sw-KLe" customClass="DisplaySettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="419" width="374" height="50"/>
+                                        <rect key="frame" x="20" y="418.5" width="374" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UFt-sw-KLe" id="mwQ-cc-SXz">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
@@ -344,7 +344,7 @@
                             <tableViewSection footerTitle="Disable this option if you hate the large titles in the navigation bar #annoying #too_ugly_for_me" id="qHo-ad-Xw6">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="50" translatesAutoresizingMaskIntoConstraints="NO" id="Idl-Sy-4tK" customClass="DisplaySettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="549" width="374" height="50"/>
+                                        <rect key="frame" x="20" y="548.5" width="374" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Idl-Sy-4tK" id="wIn-nf-umu">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
@@ -445,25 +445,25 @@
                         <viewLayoutGuide key="frameLayoutGuide" id="yTP-ZJ-RTI"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SelectableSettingsCell" id="xUA-jL-Hgh" customClass="SelectableSettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="55.5" width="374" height="41.5"/>
+                                <rect key="frame" x="20" y="55.5" width="374" height="41"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xUA-jL-Hgh" id="Mw7-Y8-UoC">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="41.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="41"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vxs-MW-Ztg">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="41.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="41"/>
                                             <subviews>
                                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sunset to Sunrise" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gsi-g5-vk1">
-                                                    <rect key="frame" x="8" y="10" width="134" height="21.5"/>
+                                                    <rect key="frame" x="8" y="10" width="134" height="21"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                     <size key="shadowOffset" width="0.0" height="0.0"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Symbols/checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="PHE-Wb-uCl">
-                                                    <rect key="frame" x="342" y="13" width="24" height="16"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="PHE-Wb-uCl">
+                                                    <rect key="frame" x="347.5" y="14.5" width="18.5" height="12.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="Oy7-lC-DRO"/>
                                                     </constraints>
@@ -495,17 +495,17 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="DateSettingsCell" id="uL8-Ph-RYR" customClass="DateSettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="97" width="374" height="41.5"/>
+                                <rect key="frame" x="20" y="96.5" width="374" height="41"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uL8-Ph-RYR" id="qf7-8g-iCz">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="41.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="41"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v6M-B0-z2V">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="41.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="41"/>
                                             <subviews>
                                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Light Appearance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dVR-to-nVy">
-                                                    <rect key="frame" x="8" y="10" width="135" height="21.5"/>
+                                                    <rect key="frame" x="8" y="10" width="135" height="21"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
@@ -546,7 +546,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="DatePickerSettingsCell" rowHeight="221" id="JUg-XW-ius" customClass="DatePickerSettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="138.5" width="374" height="221"/>
+                                <rect key="frame" x="20" y="137.5" width="374" height="221"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JUg-XW-ius" id="4ma-HZ-R9o">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="221"/>
@@ -555,7 +555,7 @@
                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EAm-sw-eys">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="221"/>
                                             <subviews>
-                                                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" style="wheels" translatesAutoresizingMaskIntoConstraints="NO" id="MC1-jj-Ic6">
+                                                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="MC1-jj-Ic6">
                                                     <rect key="frame" x="0.0" y="0.0" width="374" height="221"/>
                                                     <connections>
                                                         <action selector="dateDidChange:" destination="JUg-XW-ius" eventType="valueChanged" id="I1e-Dj-B0Z"/>
@@ -600,8 +600,8 @@
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
-        <image name="Symbols/checkmark" width="24" height="24"/>
-        <image name="Symbols/checkmark_circle_fill" width="24" height="24"/>
-        <image name="Symbols/chevron_right" width="24" height="24"/>
+        <image name="checkmark" catalog="system" width="128" height="114"/>
+        <image name="checkmark.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="chevron.right" catalog="system" width="96" height="128"/>
     </resources>
 </document>

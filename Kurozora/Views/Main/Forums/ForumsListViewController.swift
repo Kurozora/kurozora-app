@@ -146,16 +146,20 @@ class ForumsListViewController: KTableViewController {
 
 // MARK: - UITableViewDataSource
 extension ForumsListViewController {
-	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	override func numberOfSections(in tableView: UITableView) -> Int {
 		return self.forumsThreads.count
+	}
+
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return 1
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let forumsCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.forumsCell, for: indexPath) else {
 			fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.forumsCell.identifier)")
 		}
-		forumsCell.forumsThread = self.forumsThreads[indexPath.row]
-		forumsCell.forumsChildViewController = self
+		forumsCell.forumsThread = self.forumsThreads[indexPath.section]
+		forumsCell.forumsCellDelegate = self
 		return forumsCell
 	}
 }
@@ -163,16 +167,62 @@ extension ForumsListViewController {
 // MARK: - UITableViewDelegate
 extension ForumsListViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		performSegue(withIdentifier: R.segue.forumsListViewController.threadSegue, sender: self.forumsThreads[indexPath.row])
+		performSegue(withIdentifier: R.segue.forumsListViewController.threadSegue, sender: self.forumsThreads[indexPath.section])
 	}
 
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		let numberOfRows = tableView.numberOfRows()
+		let numberOfSections = tableView.numberOfSections
 
-		if indexPath.row == numberOfRows - 5 {
+		if indexPath.section == numberOfSections - 5 {
 			if self.nextPageURL != nil {
 				self.fetchThreads()
 			}
+		}
+	}
+
+	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+		if let forumsCell = tableView.cellForRow(at: indexPath) as? ForumsCell {
+			forumsCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
+
+			forumsCell.titleLabel.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+			forumsCell.contentLabel.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
+			forumsCell.byLabel.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
+
+		}
+	}
+
+	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+		if let forumsCell = tableView.cellForRow(at: indexPath) as? ForumsCell {
+			forumsCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+
+			forumsCell.titleLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			forumsCell.contentLabel.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+			forumsCell.byLabel.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+		}
+	}
+
+	override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+		return self.forumsThreads[indexPath.section].contextMenuConfiguration(in: self)
+	}
+}
+
+// MARK: - ForumsCellDelegate
+extension ForumsListViewController: ForumsCellDelegate {
+	func voteOnForumsCell(_ cell: ForumsCell, with voteStatus: VoteStatus) {
+		if let indexPath = tableView.indexPath(for: cell) {
+			let forumsThread = self.forumsThreads[indexPath.section]
+			forumsThread.voteOnThread(as: voteStatus) { [weak self] forumsThread in
+				guard let self = self else { return }
+				self.forumsThreads[indexPath.section] = forumsThread
+				cell.forumsThread = forumsThread
+			}
+		}
+	}
+
+	func visitOriginalPosterProfile(_ cell: ForumsCell) {
+		if let indexPath = tableView.indexPath(for: cell) {
+			let forumsThread = self.forumsThreads[indexPath.section]
+			forumsThread.visitOriginalPosterProfile(from: self)
 		}
 	}
 }

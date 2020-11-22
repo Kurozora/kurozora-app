@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ftf-WB-7ul">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17700" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ftf-WB-7ul">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17502"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -44,7 +44,7 @@
             <objects>
                 <navigationController storyboardIdentifier="ShowsKNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ftf-WB-7ul" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" backIndicatorImage="Symbols/chevron_left_circle" backIndicatorTransitionMaskImage="Symbols/chevron_left_circle" id="ESa-T6-GCe">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" backIndicatorImage="chevron.left.circle" catalog="system" backIndicatorTransitionMaskImage="chevron.left.circle" id="ESa-T6-GCe">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -192,7 +192,7 @@
                                                             </constraints>
                                                             <color key="tintColor" red="1" green="0.80000000000000004" blue="0.070588235289999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                             <inset key="contentEdgeInsets" minX="5" minY="4" maxX="5" maxY="4"/>
-                                                            <state key="normal" image="Symbols/bell">
+                                                            <state key="normal" image="bell" catalog="system">
                                                                 <color key="titleColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </state>
                                                             <userDefinedRuntimeAttributes>
@@ -214,7 +214,7 @@
                                                             </constraints>
                                                             <color key="tintColor" red="1" green="0.25490196079999999" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <inset key="contentEdgeInsets" minX="4" minY="5" maxX="4" maxY="5"/>
-                                                            <state key="normal" image="Symbols/heart">
+                                                            <state key="normal" image="heart" catalog="system">
                                                                 <color key="titleColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </state>
                                                             <userDefinedRuntimeAttributes>
@@ -319,13 +319,13 @@
                                                                     <rect key="frame" x="40" y="4" width="104" height="20"/>
                                                                     <userDefinedRuntimeAttributes>
                                                                         <userDefinedRuntimeAttribute type="number" keyPath="rating">
-                                                                            <real key="value" value="0.0"/>
+                                                                            <real key="value" value="2"/>
                                                                         </userDefinedRuntimeAttribute>
                                                                         <userDefinedRuntimeAttribute type="number" keyPath="totalStars">
                                                                             <integer key="value" value="5"/>
                                                                         </userDefinedRuntimeAttribute>
-                                                                        <userDefinedRuntimeAttribute type="image" keyPath="filledImage" value="star_filled"/>
-                                                                        <userDefinedRuntimeAttribute type="image" keyPath="emptyImage" value="star_empty"/>
+                                                                        <userDefinedRuntimeAttribute type="image" keyPath="filledImage" value="star.fill" catalog="system"/>
+                                                                        <userDefinedRuntimeAttribute type="image" keyPath="emptyImage" value="star" catalog="system"/>
                                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="updateOnTouch" value="NO"/>
                                                                         <userDefinedRuntimeAttribute type="number" keyPath="fillMode">
                                                                             <integer key="value" value="1"/>
@@ -335,6 +335,18 @@
                                                                         </userDefinedRuntimeAttribute>
                                                                         <userDefinedRuntimeAttribute type="number" keyPath="starMargin">
                                                                             <real key="value" value="3"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="color" keyPath="filledColor">
+                                                                            <color key="value" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="color" keyPath="emptyColor">
+                                                                            <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="color" keyPath="emptyBorderColor">
+                                                                            <color key="value" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="color" keyPath="filledBorderColor">
+                                                                            <color key="value" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         </userDefinedRuntimeAttribute>
                                                                     </userDefinedRuntimeAttributes>
                                                                 </view>
@@ -469,7 +481,7 @@
                                 <constraint firstAttribute="bottom" secondItem="nSg-hj-AjS" secondAttribute="bottom" id="x6Q-c4-7nQ"/>
                             </constraints>
                         </view>
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="Symbols/ellipsis_circle" id="bSI-Te-0Ll">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="ellipsis.circle" catalog="system" id="bSI-Te-0Ll">
                             <connections>
                                 <action selector="moreButtonPressed:" destination="A3e-GJ-UX5" id="eqY-CA-57g"/>
                             </connections>
@@ -559,11 +571,11 @@
     </designables>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
-        <image name="Symbols/bell" width="24" height="24"/>
-        <image name="Symbols/chevron_left_circle" width="24" height="24"/>
-        <image name="Symbols/ellipsis_circle" width="24" height="24"/>
-        <image name="Symbols/heart" width="24" height="24"/>
-        <image name="star_empty" width="48" height="46"/>
-        <image name="star_filled" width="48" height="46"/>
+        <image name="bell" catalog="system" width="128" height="124"/>
+        <image name="chevron.left.circle" catalog="system" width="128" height="121"/>
+        <image name="ellipsis.circle" catalog="system" width="128" height="121"/>
+        <image name="heart" catalog="system" width="128" height="109"/>
+        <image name="star" catalog="system" width="128" height="116"/>
+        <image name="star.fill" catalog="system" width="128" height="116"/>
     </resources>
 </document>

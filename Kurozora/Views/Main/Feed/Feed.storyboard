@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="20p-4J-ZCZ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17700" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="20p-4J-ZCZ">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17502"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -65,13 +65,13 @@
                                             <rect key="frame" x="72" y="74.5" width="322" height="44"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="qDb-hc-1rP">
-                                                    <rect key="frame" x="0.0" y="0.0" width="121" height="44"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="116.5" height="44"/>
                                                     <subviews>
                                                         <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KP7-x3-YMz" customClass="CellActionButton" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="35" height="44"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="31.5" height="44"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                             <color key="tintColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                            <state key="normal" title="0" image="Symbols/heart_fill_small">
+                                                            <state key="normal" title="0" image="heart.fill" catalog="system">
                                                                 <color key="titleColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                             </state>
                                                             <connections>
@@ -79,7 +79,7 @@
                                                             </connections>
                                                         </button>
                                                         <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5M8-rd-esk" customClass="CellActionButton" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="43" y="0.0" width="35" height="44"/>
+                                                            <rect key="frame" x="39.5" y="0.0" width="35" height="44"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                             <color key="tintColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                             <state key="normal" title="0" image="Symbols/message_fill">
@@ -90,10 +90,10 @@
                                                             </connections>
                                                         </button>
                                                         <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vkQ-Jd-5Ek" customClass="CellActionButton" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="86" y="0.0" width="35" height="44"/>
+                                                            <rect key="frame" x="82.5" y="0.0" width="34" height="44"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                             <color key="tintColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                            <state key="normal" title="0" image="Symbols/square_and_arrow_up_on_square_fill">
+                                                            <state key="normal" title="0" image="square.and.arrow.up.on.square.fill" catalog="system">
                                                                 <color key="titleColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                             </state>
                                                             <connections>
@@ -109,7 +109,7 @@
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                     <color key="tintColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                    <state key="normal" image="Symbols/ellipsis">
+                                                    <state key="normal" image="ellipsis" catalog="system">
                                                         <color key="titleColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     </state>
                                                     <connections>
@@ -243,13 +243,13 @@
                                                     <rect key="frame" x="60" y="74.5" width="306" height="44"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="tAU-7r-UZJ">
-                                                            <rect key="frame" x="0.0" y="0.0" width="121" height="44"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="116.5" height="44"/>
                                                             <subviews>
                                                                 <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9kV-mu-72R" customClass="CellActionButton" customModule="Kurozora" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="35" height="44"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="31.5" height="44"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                                     <color key="tintColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                                    <state key="normal" title="0" image="Symbols/heart_fill_small">
+                                                                    <state key="normal" title="0" image="heart.fill" catalog="system">
                                                                         <color key="titleColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                     </state>
                                                                     <connections>
@@ -257,7 +257,7 @@
                                                                     </connections>
                                                                 </button>
                                                                 <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tiS-Wf-zAf" customClass="CellActionButton" customModule="Kurozora" customModuleProvider="target">
-                                                                    <rect key="frame" x="43" y="0.0" width="35" height="44"/>
+                                                                    <rect key="frame" x="39.5" y="0.0" width="35" height="44"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                                     <color key="tintColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                     <state key="normal" title="0" image="Symbols/message_fill">
@@ -268,10 +268,10 @@
                                                                     </connections>
                                                                 </button>
                                                                 <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fBB-VQ-Wi5" customClass="CellActionButton" customModule="Kurozora" customModuleProvider="target">
-                                                                    <rect key="frame" x="86" y="0.0" width="35" height="44"/>
+                                                                    <rect key="frame" x="82.5" y="0.0" width="34" height="44"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                                     <color key="tintColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                                    <state key="normal" title="0" image="Symbols/square_and_arrow_up_on_square_fill">
+                                                                    <state key="normal" title="0" image="square.and.arrow.up.on.square.fill" catalog="system">
                                                                         <color key="titleColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                     </state>
                                                                     <connections>
@@ -287,7 +287,7 @@
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                             <color key="tintColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                            <state key="normal" image="Symbols/ellipsis">
+                                                            <state key="normal" image="ellipsis" catalog="system">
                                                                 <color key="titleColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                             </state>
                                                             <connections>
@@ -457,13 +457,13 @@
                                             <rect key="frame" x="72" y="157" width="322" height="44"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="JHM-g1-Nep">
-                                                    <rect key="frame" x="0.0" y="0.0" width="121" height="44"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="116.5" height="44"/>
                                                     <subviews>
                                                         <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EYG-BW-Ird" customClass="CellActionButton" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="35" height="44"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="31.5" height="44"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                             <color key="tintColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                            <state key="normal" title="0" image="Symbols/heart_fill_small">
+                                                            <state key="normal" title="0" image="heart.fill" catalog="system">
                                                                 <color key="titleColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                             </state>
                                                             <connections>
@@ -471,7 +471,7 @@
                                                             </connections>
                                                         </button>
                                                         <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vqY-EF-jOo" customClass="CellActionButton" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="43" y="0.0" width="35" height="44"/>
+                                                            <rect key="frame" x="39.5" y="0.0" width="35" height="44"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                             <color key="tintColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                             <state key="normal" title="0" image="Symbols/message_fill">
@@ -482,10 +482,10 @@
                                                             </connections>
                                                         </button>
                                                         <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Htv-fb-yGd" customClass="CellActionButton" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="86" y="0.0" width="35" height="44"/>
+                                                            <rect key="frame" x="82.5" y="0.0" width="34" height="44"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                             <color key="tintColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                            <state key="normal" title="0" image="Symbols/square_and_arrow_up_on_square_fill">
+                                                            <state key="normal" title="0" image="square.and.arrow.up.on.square.fill" catalog="system">
                                                                 <color key="titleColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                             </state>
                                                             <connections>
@@ -501,7 +501,7 @@
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                     <color key="tintColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                    <state key="normal" image="Symbols/ellipsis">
+                                                    <state key="normal" image="ellipsis" catalog="system">
                                                         <color key="titleColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     </state>
                                                     <connections>
@@ -614,37 +614,35 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Feed" id="4JV-Bj-kpv">
-                        <barButtonItem key="leftBarButtonItem" title="Settings" image="Symbols/gear" id="brK-B2-mL4">
+                        <barButtonItem key="leftBarButtonItem" title="Settings" image="gear" catalog="system" id="brK-B2-mL4">
                             <connections>
                                 <segue destination="HFC-YJ-V83" kind="presentation" identifier="SettingsSegue" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="Ltj-lh-J5F"/>
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem title="Profile" id="tt5-xx-9lS">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="egw-49-b9p" customClass="ProfileImageButton" customModule="Kurozora" customModuleProvider="target">
-                                    <rect key="frame" x="348" y="7" width="46" height="30"/>
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="egw-49-b9p" customClass="ProfileImageButton" customModule="Kurozora" customModuleProvider="target">
+                                    <rect key="frame" x="342" y="5" width="52" height="34"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="28" id="4gN-1H-UE2"/>
                                         <constraint firstAttribute="width" secondItem="egw-49-b9p" secondAttribute="height" multiplier="1:1" id="5Ot-rX-95c"/>
                                     </constraints>
-                                    <state key="normal" title="Profile"/>
+                                    <state key="normal" title="Profile">
+                                        <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </state>
                                     <connections>
                                         <action selector="profileButtonPressed:" destination="AtO-CH-0OW" eventType="touchUpInside" id="ed2-TQ-ewT"/>
                                     </connections>
                                 </button>
                             </barButtonItem>
-                            <barButtonItem title="Post message" image="Symbols/pencil_circle" id="lOF-RI-y49">
+                            <barButtonItem title="Post message" image="pencil.circle" catalog="system" id="lOF-RI-y49">
                                 <connections>
                                     <action selector="postMessageButton:" destination="AtO-CH-0OW" id="NQQ-sV-kFg"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
-                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="PaA-gX-qQ4">
-                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </refreshControl>
                     <connections>
                         <outlet property="postMessageButton" destination="lOF-RI-y49" id="LT3-SE-AuC"/>
                         <outlet property="profileImageButton" destination="egw-49-b9p" id="LjA-U7-79o"/>
@@ -685,12 +683,12 @@
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
         <image name="Placeholders/User Profile" width="300" height="300"/>
-        <image name="Symbols/ellipsis" width="24" height="24"/>
-        <image name="Symbols/gear" width="24" height="24"/>
-        <image name="Symbols/heart_fill_small" width="24" height="24"/>
         <image name="Symbols/message_fill" width="24" height="24"/>
-        <image name="Symbols/pencil_circle" width="24" height="24"/>
-        <image name="Symbols/square_and_arrow_up_on_square_fill" width="24" height="24"/>
+        <image name="ellipsis" catalog="system" width="128" height="37"/>
+        <image name="gear" catalog="system" width="128" height="119"/>
+        <image name="heart.fill" catalog="system" width="128" height="109"/>
+        <image name="pencil.circle" catalog="system" width="128" height="121"/>
+        <image name="square.and.arrow.up.on.square.fill" catalog="system" width="117" height="128"/>
         <systemColor name="separatorColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

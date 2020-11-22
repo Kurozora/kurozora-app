@@ -14,7 +14,7 @@ extension KKLibrary.SortType.Options {
 	var imageValue: UIImage {
 		switch self {
 		case .none:
-			return R.image.symbols.line_horizontal_3_decrease_circle_fill()!
+			return UIImage(systemName: "line.horizontal.3.decrease.circle.fill")!
 		case .ascending:
 			return R.image.symbols.arrow_up_line_horizontal_3_decrease()!
 		case .descending:
@@ -24,9 +24,9 @@ extension KKLibrary.SortType.Options {
 		case .oldest:
 			return R.image.symbols.calendar_badge_arrowshape_turn_up_left()!
 		case .best:
-			return R.image.symbols.hand_thumbsup()!
+			return UIImage(systemName: "hand.thumbsup.fill")!
 		case .worst:
-			return R.image.symbols.hand_thumbsdown()!
+			return UIImage(systemName: "hand.thumbsdown.fill")!
 		}
 	}
 }

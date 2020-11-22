@@ -8,6 +8,7 @@
 
 import UIKit
 import KurozoraKit
+import FLEX
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	var window: UIWindow?
@@ -19,6 +20,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		// Initialize UIWindow
 		window = UIWindow(windowScene: windowScene)
 		window?.makeKeyAndVisible()
+
+		#if !targetEnvironment(macCatalyst)
+		let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.enableFLEXToolbar(_:)))
+		swipeGesture.numberOfTouchesRequired = 4
+		swipeGesture.direction = [.down]
+		window?.addGestureRecognizer(swipeGesture)
+		#endif
 
 		#if targetEnvironment(macCatalyst)
 		if let titlebar = windowScene.titlebar {
@@ -91,6 +99,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	}
 
 	// MARK: - Functions
+	#if !targetEnvironment(macCatalyst)
+	/**
+		Enables FLEX toolbar when swipe gesture is detected.
+
+		- Parameter swipeGesture: A discrete gesture recognizer that interprets swiping gestures in one or more directions.
+	*/
+	@objc func enableFLEXToolbar(_ swipeGesture: UISwipeGestureRecognizer) {
+		FLEXManager.shared.showExplorer()
+	}
+	#endif
+
+	/**
+		Configures the scene according to the passed activity.
+
+		- Parameter window: The backdrop for your app’s user interface and the object that dispatches events to your views.
+		- Parameter activity: A representation of the state of your app at a moment in time.
+	*/
     func configure(window: UIWindow?, with activity: NSUserActivity) -> Bool {
         if activity.title == "OpenShowDetail" {
 			if let parameters = activity.userInfo as? [String: Int] {
