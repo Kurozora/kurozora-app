@@ -15,7 +15,7 @@ def kurozora_pods
 	pod 'FLEX', :configurations => ['Debug']
 	pod 'KeychainAccess'
 	pod 'Kingfisher'
-	pod 'KurozoraKit', path: '../KurozoraKit'
+	pod 'KurozoraKit'#, path: '../KurozoraKit'
 	pod 'R.swift'
 	pod 'ReachabilitySwift'
 #	pod 'RichTextView'
