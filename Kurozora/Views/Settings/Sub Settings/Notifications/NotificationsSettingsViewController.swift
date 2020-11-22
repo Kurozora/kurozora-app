@@ -12,11 +12,10 @@ class NotificationsSettingsViewController: SubSettingsViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var allowNotificationsSwitch: KSwitch!
 	@IBOutlet weak var soundsSwitch: KSwitch!
-	@IBOutlet weak var vibrationsSwitch: KSwitch!
 	@IBOutlet weak var badgeSwitch: KSwitch!
 
 	// MARK: - Properties
-	var numberOfSections = 4
+	var numberOfSections = 3
 
 	// MARK: - View
 	override func viewDidLoad() {
@@ -24,7 +23,6 @@ class NotificationsSettingsViewController: SubSettingsViewController {
 
 		allowNotificationsSwitch.isOn = UserSettings.notificationsAllowed
 		soundsSwitch.isOn = UserSettings.notificationsSound
-		vibrationsSwitch.isOn = UserSettings.notificationsVibration
 		badgeSwitch.isOn = UserSettings.notificationsBadge
 
 		if !allowNotificationsSwitch.isOn {
@@ -42,15 +40,13 @@ class NotificationsSettingsViewController: SubSettingsViewController {
 		case .allowNotifications:
 			UserSettings.set(isOn, forKey: .notificationsAllowed)
 			if isOn {
-				numberOfSections = 4
+				numberOfSections = 3
 			} else {
 				numberOfSections = 1
 			}
 			tableView.reloadData()
 		case .sounds:
 			UserSettings.set(isOn, forKey: .notificationsSound)
-		case .vibrations:
-			UserSettings.set(isOn, forKey: .notificationsVibration)
 		case .badge:
 			UserSettings.set(isOn, forKey: .notificationsBadge)
 			NotificationCenter.default.post(name: .KSNotificationsBadgeIsOn, object: nil)
@@ -69,14 +65,5 @@ class NotificationsSettingsViewController: SubSettingsViewController {
 extension NotificationsSettingsViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
 		return numberOfSections
-	}
-
-	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		if let notificationSettingsCell = super.tableView(tableView, cellForRowAt: indexPath) as? NotificationSettingsCell {
-			notificationSettingsCell.updateAlertType(with: UserSettings.alertType)
-			return notificationSettingsCell
-		}
-
-		return super.tableView(tableView, cellForRowAt: indexPath)
 	}
 }

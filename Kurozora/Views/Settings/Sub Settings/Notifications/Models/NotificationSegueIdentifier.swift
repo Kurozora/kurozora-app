@@ -14,25 +14,19 @@ extension KNotification {
 
 		```
 		case notificationsGrouping = 0
-		case bannerStyle = 1
 		```
 	*/
 	enum Settings: Int {
 		/// Indicates the view should segue to the notifications grouping options view.
 		case notificationsGrouping = 0
 
-		/// Indicates the view should segue to the banner style options view.
-		case bannerStyle = 1
-
 		// MARK: - Initializers
 		init(stringValue: String?) {
 			switch stringValue {
 			case R.segue.notificationsSettingsViewController.notificationsGroupingSegue.identifier:
 				self = .notificationsGrouping
-			case R.segue.notificationsSettingsViewController.bannerStyleSegue.identifier:
-				self = .bannerStyle
 			default:
-				self = .bannerStyle
+				self = .notificationsGrouping
 			}
 		}
 
@@ -41,8 +35,6 @@ extension KNotification {
 			switch self {
 			case .notificationsGrouping:
 				return R.segue.notificationsSettingsViewController.notificationsGroupingSegue.identifier
-			case .bannerStyle:
-				return R.segue.notificationsSettingsViewController.bannerStyleSegue.identifier
 			}
 		}
 	}

@@ -6,13 +6,10 @@ ${BUILT_PRODUCTS_DIR}/EmptyDataSet-Swift/EmptyDataSet_Swift.framework
 ${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework
 ${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework
 ${BUILT_PRODUCTS_DIR}/KurozoraKit/KurozoraKit.framework
-${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework
-${BUILT_PRODUCTS_DIR}/NotificationBannerSwift/NotificationBannerSwift.framework
 ${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework
 ${BUILT_PRODUCTS_DIR}/R.swift.Library/Rswift.framework
 ${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework
 ${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework
-${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework
 ${BUILT_PRODUCTS_DIR}/Solar/Solar.framework
 ${BUILT_PRODUCTS_DIR}/SwiftTheme/SwiftTheme.framework
 ${BUILT_PRODUCTS_DIR}/SwifterSwift/SwifterSwift.framework

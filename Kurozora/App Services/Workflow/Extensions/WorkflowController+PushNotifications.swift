@@ -67,6 +67,25 @@ extension WorkflowController {
 				self?.getNotificationSettings()
 			}
 		}
+
+		self.setupCategoryActions()
+	}
+
+	/// Sets up the notification actions for each of the available categories.
+	func setupCategoryActions() {
+		// Define the custom actions.
+		let showSessionsAction = UNNotificationAction(identifier: "VIEW_SESSION_DETAILS", title: "View Sessions", options: .foreground)
+		let showUpdateAction = UNNotificationAction(identifier: "VIEW_SHOW_DETAILS", title: "View Show Details", options: .foreground)
+		let newUserFollowAction = UNNotificationAction(identifier: "VIEW_PROFILE_DETAILS", title: "View Profile", options: .foreground)
+
+		// Define the notification type
+		let newSessionCategory =
+			UNNotificationCategory(identifier: "NEW_SESSION", actions: [showSessionsAction], intentIdentifiers: [], options: [.hiddenPreviewsShowTitle, .allowAnnouncement])
+		let showUpdateCategory = UNNotificationCategory(identifier: "SHOW_UPDATE", actions: [showUpdateAction], intentIdentifiers: [], options: [.hiddenPreviewsShowTitle, .allowAnnouncement])
+		let newUserFollowCategory = UNNotificationCategory(identifier: "NEW_USER_FOLLOW", actions: [newUserFollowAction], intentIdentifiers: [], options: [.hiddenPreviewsShowTitle])
+
+		// Register notification types.
+		UNUserNotificationCenter.current().setNotificationCategories([newSessionCategory, showUpdateCategory, newUserFollowCategory])
 	}
 
 	/// Registers the device for push notifications if authorized.
@@ -83,15 +102,90 @@ extension WorkflowController {
 // MARK: - UNUserNotificationCenterDelegate
 extension WorkflowController: UNUserNotificationCenterDelegate {
 	func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+		let userInfo = response.notification.request.content.userInfo
+
 		// Perform the task associated with the action.
 		switch response.actionIdentifier {
-		case "NEW_SESSION":
-			self.showSessions()
-		default:
-			break
+		case "VIEW_SESSION_DETAILS":
+			self.openSessionsManager()
+		case "VIEW_SHOW_DETAILS":
+			if let showID = userInfo["SHOW_ID"] as? Int {
+				self.openShowDetails(for: showID)
+			}
+		case "VIEW_PROFILE_DETAILS":
+			if let userID = userInfo["USER_ID"] as? Int {
+				self.openUserProfile(for: userID)
+			}
+		default: break
 		}
 
-		// Always call the completion handler when done.
 		completionHandler()
+	}
+
+	func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+		if UserSettings.notificationsAllowed {
+			var notificationPresentationOptions: UNNotificationPresentationOptions = [.alert]
+
+			if UserSettings.notificationsSound {
+				notificationPresentationOptions.insert(.sound)
+			}
+			if UserSettings.notificationsBadge {
+				notificationPresentationOptions.insert(.badge)
+			}
+
+			switch notification.request.content.categoryIdentifier {
+			case "NEW_SESSION":
+				completionHandler(notificationPresentationOptions)
+			case "SHOW_UPDATE":
+				completionHandler(notificationPresentationOptions)
+			case "NEW_USER_FOLLOW":
+				completionHandler(notificationPresentationOptions)
+			default: break
+			}
+		}
+
+		completionHandler([])
+	}
+
+	func userNotificationCenter(_ center: UNUserNotificationCenter, openSettingsFor notification: UNNotification?) {
+		if let notificationsSettingsViewController = R.storyboard.notificationSettings.notificationsSettingsViewController() {
+			UIApplication.topViewController?.show(notificationsSettingsViewController, sender: nil)
+		}
+	}
+}
+
+// MARK: - Push Notification Actions
+extension WorkflowController {
+	/// Open the sessions view if the current view is not the sessions view.
+	func openSessionsManager() {
+		if UIApplication.topViewController as? ManageActiveSessionsController == nil {
+			if let manageActiveSessionsController = R.storyboard.accountSettings.manageActiveSessionsController() {
+				UIApplication.topViewController?.show(manageActiveSessionsController, sender: nil)
+			}
+		}
+	}
+
+	/**
+		Open the show details view for the given show ID.
+
+		- Parameter showID: The id of the show with which the details view will be loaded.
+	*/
+	func openShowDetails(for showID: Int) {
+		if let showDetailsCollectionViewController = R.storyboard.shows.showDetailsCollectionViewController() {
+			showDetailsCollectionViewController.showID = showID
+			UIApplication.topViewController?.show(showDetailsCollectionViewController, sender: nil)
+		}
+	}
+
+	/**
+		Open the profile view for the given user ID.
+
+		- Parameter userID: The id of the user with which the profile view will be loaded.
+	*/
+	func openUserProfile(for userID: Int) {
+		if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
+			profileTableViewController.userID = userID
+			UIApplication.topViewController?.show(profileTableViewController, sender: nil)
+		}
 	}
 }

@@ -45,7 +45,6 @@ extension SubSettingsViewController {
 			settingsCell?.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellSelectedChevronColor.rawValue
 
 			settingsCell?.primaryLabel?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-			settingsCell?.bannerStyleValueLabel?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
 			settingsCell?.notificationGroupingValueLabel?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
 		}
 	}
@@ -57,7 +56,6 @@ extension SubSettingsViewController {
 			settingsCell?.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
 
 			settingsCell?.primaryLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-			settingsCell?.bannerStyleValueLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
 			settingsCell?.notificationGroupingValueLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
 		}
 	}

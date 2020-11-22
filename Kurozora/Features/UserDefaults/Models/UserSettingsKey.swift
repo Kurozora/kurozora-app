@@ -59,16 +59,10 @@ enum UserSettingsKey: String {
 	case notificationsAllowed
 	/// The key to the selected notification grouping option.
 	case notificationsGrouping
-	/// The key to the selected notification persistent option.
-	case notificationsPersistent
 	/// The key to the selected notification sound option.
 	case notificationsSound
-	/// The key to the selected notification vibration option.
-	case notificationsVibration
 	/// The key to the selcted notification badge option.
 	case notificationsBadge
-	/// The key to the selcted alert type option.
-	case alertType
 
 	// Register for notification
 	/// The key to the last notifcation registration reuest time.

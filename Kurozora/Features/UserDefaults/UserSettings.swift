@@ -147,11 +147,6 @@ extension UserSettings {
 		return shared.bool(forKey: #function)
 	}
 
-	/// Returns an integer indicating the notifications persistency type.
-	static var notificationsPersistent: Int {
-		return shared.integer(forKey: #function)
-	}
-
 	/// Returns an integer indicating the notifications grouping type.
 	static var notificationsGrouping: Int {
 		return shared.integer(forKey: #function)
@@ -162,18 +157,8 @@ extension UserSettings {
 		return shared.bool(forKey: #function)
 	}
 
-	/// Returns a boolean indicating if notifications vibration is allowed.
-	static var notificationsVibration: Bool {
-		return shared.bool(forKey: #function)
-	}
-
 	/// Returns a boolean indicating if notifications badge is allowed.
 	static var notificationsBadge: Bool {
 		return shared.bool(forKey: #function)
-	}
-
-	/// Returns an integer indicating the notifications alert trype.
-	static var alertType: Int {
-		return shared.integer(forKey: #function)
 	}
 }

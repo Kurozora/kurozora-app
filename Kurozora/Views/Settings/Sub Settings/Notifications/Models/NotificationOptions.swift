@@ -15,8 +15,7 @@ extension KNotification {
 		```
 		case allowNotifications = 0
 		case sounds = 1
-		case vibrations = 2
-		case badge = 3
+		case badge = 2
 		```
 	*/
 	enum Options: Int {
@@ -25,9 +24,6 @@ extension KNotification {
 
 		/// Indicates if a sound should be played when a notification is shown.
 		case sounds
-
-		/// Indicates if a vibration/haptic feedback should be played when a notification is shown.
-		case vibrations
 
 		/// Indicates if the notifications tab icon should show a badge with the number of unread notifications.
 		case badge

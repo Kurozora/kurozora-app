@@ -10,7 +10,7 @@ import UIKit
 
 class NotificationsOptionsViewController: SubSettingsViewController {
 	// MARK: - Properties
-	var notificationSegueIdentifier: KNotification.Settings = .bannerStyle
+	var notificationSegueIdentifier: KNotification.Settings = .notificationsGrouping
 	var segueIdentifier: String?
 
 	// MARK: - View
@@ -27,8 +27,6 @@ class NotificationsOptionsViewController: SubSettingsViewController {
 		switch notificationSegueIdentifier {
 		case .notificationsGrouping:
 			title = "Notification Grouping"
-		case .bannerStyle:
-			title = "Banner Style"
 		}
 	}
 }
@@ -39,8 +37,6 @@ extension NotificationsOptionsViewController {
 		switch notificationSegueIdentifier {
 		case .notificationsGrouping:
 			return 3
-		case .bannerStyle:
-			return 2
 		}
 	}
 
@@ -63,20 +59,6 @@ extension NotificationsOptionsViewController {
 			if grouping.rawValue == selected {
 				notificationsGroupingCell.isSelected = true
 			}
-		case .bannerStyle:
-			let bannerStyle = KNotification.BannerStyle(rawValue: indexPath.item)!
-			let selected = UserSettings.notificationsPersistent
-
-			switch bannerStyle {
-			case .temporary:
-				notificationsGroupingCell.primaryLabel?.text = "Temporary"
-			case .persistent:
-				notificationsGroupingCell.primaryLabel?.text = "Persistent"
-			}
-
-			if bannerStyle.rawValue == selected {
-				notificationsGroupingCell.isSelected = true
-			}
 		}
 
 		return notificationsGroupingCell
@@ -89,8 +71,6 @@ extension NotificationsOptionsViewController {
 		switch notificationSegueIdentifier {
 		case .notificationsGrouping:
 			UserSettings.set(indexPath.item, forKey: .notificationsGrouping)
-		case .bannerStyle:
-			UserSettings.set(indexPath.item, forKey: .notificationsPersistent)
 		}
 
 		NotificationCenter.default.post(name: .KSNotificationOptionsValueLabelsNotification, object: nil)

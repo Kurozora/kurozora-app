@@ -407,23 +407,15 @@ extension NotificationsViewController {
 extension NotificationsViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let baseNotificationCell = tableView.cellForRow(at: indexPath) as? BaseNotificationCell
-		// Change notification status to read
+
 		guard let notificationID = baseNotificationCell?.userNotification?.id else { return }
 		self.updateNotification(at: [indexPath], for: notificationID, withReadStatus: .read)
 
 		if baseNotificationCell?.notificationType == .session {
-			// Show sessions view
-			WorkflowController.shared.showSessions()
+			WorkflowController.shared.openSessionsManager()
 		} else if baseNotificationCell?.notificationType == .follower {
-			// Change notification status to read
 			guard let userID = baseNotificationCell?.userNotification?.attributes.payload.userID else { return }
-			if let profileViewController = R.storyboard.profile.profileTableViewController() {
-				profileViewController.userID = userID
-				profileViewController.dismissButtonIsEnabled = true
-
-				let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
-				self.present(kurozoraNavigationController, animated: true)
-			}
+			WorkflowController.shared.openUserProfile(for: userID)
 		}
 	}
 }

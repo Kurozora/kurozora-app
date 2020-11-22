@@ -328,7 +328,6 @@
 		66AE1E1924A10D7900FD3FFC /* StudioDetailsInformationSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AE1E1824A10D7900FD3FFC /* StudioDetailsInformationSection.swift */; };
 		66AEABDA22987A4D00949FD8 /* KThemePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AEABD922987A4D00949FD8 /* KThemePicker.swift */; };
 		66AEABDC2298A92500949FD8 /* NotificationAlertStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AEABDB2298A92500949FD8 /* NotificationAlertStyle.swift */; };
-		66AEABE62298A9C100949FD8 /* NotificationBannerStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AEABE52298A9C100949FD8 /* NotificationBannerStyle.swift */; };
 		66AEABE92298AA8D00949FD8 /* NotificationGroupStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AEABE82298AA8D00949FD8 /* NotificationGroupStyle.swift */; };
 		66AEABEB2298ABA100949FD8 /* NotificationSegueIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AEABEA2298ABA100949FD8 /* NotificationSegueIdentifier.swift */; };
 		66AEABED2298AC6A00949FD8 /* NotificationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AEABEC2298AC6A00949FD8 /* NotificationOptions.swift */; };
@@ -338,7 +337,6 @@
 		66B13A572403CA4F00CD732B /* UICollectionViewController+KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B13A562403CA4F00CD732B /* UICollectionViewController+KCollectionViewDataSource.swift */; };
 		66B13A5D2405AA1000CD732B /* WorkflowController+PushNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B13A5C2405AA1000CD732B /* WorkflowController+PushNotifications.swift */; };
 		66B13A5F2405AA8000CD732B /* WorkflowController+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B13A5E2405AA8000CD732B /* WorkflowController+User.swift */; };
-		66B13A612405AAC000CD732B /* WorkflowController+In-AppNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B13A602405AAC000CD732B /* WorkflowController+In-AppNotifications.swift */; };
 		66B13A672405DBE000CD732B /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66B13A662405DBE000CD732B /* Onboarding.storyboard */; };
 		66B216A821C033B9006E167D /* UIView+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B216A721C033B9006E167D /* UIView+Kurozora.swift */; };
 		66B216AA21C16817006E167D /* KRichTextEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66825BE921B29F3800A2F602 /* KRichTextEditorViewController.swift */; };
@@ -456,7 +454,6 @@
 		66E54EC3244E1698007248EE /* Array+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E54EC2244E1698007248EE /* Array+String.swift */; };
 		66EC939A2274B90100D584F7 /* ShowDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EC93992274B90100D584F7 /* ShowDetail.swift */; };
 		66ED9D8722ABD60400C7A45C /* NotificationSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66ED9D8622ABD60400C7A45C /* NotificationSettings.storyboard */; };
-		66ED9D8922ABE06D00C7A45C /* NotificationSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ED9D8822ABE06D00C7A45C /* NotificationSettingsCell.swift */; };
 		66ED9D8B22AC15E600C7A45C /* ImageAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ED9D8A22AC15E600C7A45C /* ImageAnnotation.swift */; };
 		66EF26C6215F960A00FB2B19 /* UIImage+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EF26C5215F960A00FB2B19 /* UIImage+Kurozora.swift */; };
 		66F9449F22F0BF57009F1FE2 /* ActionListExploreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F9449E22F0BF57009F1FE2 /* ActionListExploreCollectionViewCell.swift */; };
@@ -831,7 +828,6 @@
 		66AE1E1824A10D7900FD3FFC /* StudioDetailsInformationSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioDetailsInformationSection.swift; sourceTree = "<group>"; };
 		66AEABD922987A4D00949FD8 /* KThemePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KThemePicker.swift; sourceTree = "<group>"; };
 		66AEABDB2298A92500949FD8 /* NotificationAlertStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAlertStyle.swift; sourceTree = "<group>"; };
-		66AEABE52298A9C100949FD8 /* NotificationBannerStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationBannerStyle.swift; sourceTree = "<group>"; };
 		66AEABE82298AA8D00949FD8 /* NotificationGroupStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationGroupStyle.swift; sourceTree = "<group>"; };
 		66AEABEA2298ABA100949FD8 /* NotificationSegueIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSegueIdentifier.swift; sourceTree = "<group>"; };
 		66AEABEC2298AC6A00949FD8 /* NotificationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationOptions.swift; sourceTree = "<group>"; };
@@ -841,7 +837,6 @@
 		66B13A562403CA4F00CD732B /* UICollectionViewController+KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewController+KCollectionViewDataSource.swift"; sourceTree = "<group>"; };
 		66B13A5C2405AA1000CD732B /* WorkflowController+PushNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkflowController+PushNotifications.swift"; sourceTree = "<group>"; };
 		66B13A5E2405AA8000CD732B /* WorkflowController+User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkflowController+User.swift"; sourceTree = "<group>"; };
-		66B13A602405AAC000CD732B /* WorkflowController+In-AppNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkflowController+In-AppNotifications.swift"; sourceTree = "<group>"; };
 		66B13A662405DBE000CD732B /* Onboarding.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
 		66B216A721C033B9006E167D /* UIView+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Kurozora.swift"; sourceTree = "<group>"; };
 		66B2C73C232D0F350042AB12 /* PostType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostType.swift; sourceTree = "<group>"; };
@@ -966,7 +961,6 @@
 		66E54EC2244E1698007248EE /* Array+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+String.swift"; sourceTree = "<group>"; };
 		66EC93992274B90100D584F7 /* ShowDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetail.swift; sourceTree = "<group>"; };
 		66ED9D8622ABD60400C7A45C /* NotificationSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NotificationSettings.storyboard; sourceTree = "<group>"; };
-		66ED9D8822ABE06D00C7A45C /* NotificationSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsCell.swift; sourceTree = "<group>"; };
 		66ED9D8A22AC15E600C7A45C /* ImageAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAnnotation.swift; sourceTree = "<group>"; };
 		66EF26C5215F960A00FB2B19 /* UIImage+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Kurozora.swift"; sourceTree = "<group>"; };
 		66F9449E22F0BF57009F1FE2 /* ActionListExploreCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionListExploreCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1265,7 +1259,6 @@
 		664133DF21DA64AB00CE823A /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				66ED9D8822ABE06D00C7A45C /* NotificationSettingsCell.swift */,
 				664133E421DA8E5F00CE823A /* NotificationsGroupingCell.swift */,
 			);
 			path = Cell;
@@ -2151,7 +2144,6 @@
 			isa = PBXGroup;
 			children = (
 				66AEABE82298AA8D00949FD8 /* NotificationGroupStyle.swift */,
-				66AEABE52298A9C100949FD8 /* NotificationBannerStyle.swift */,
 				66AEABEC2298AC6A00949FD8 /* NotificationOptions.swift */,
 				66AEABEA2298ABA100949FD8 /* NotificationSegueIdentifier.swift */,
 				66AEABDB2298A92500949FD8 /* NotificationAlertStyle.swift */,
@@ -2191,7 +2183,6 @@
 		66B13A5B2405A9FC00CD732B /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				66B13A602405AAC000CD732B /* WorkflowController+In-AppNotifications.swift */,
 				66B13A5C2405AA1000CD732B /* WorkflowController+PushNotifications.swift */,
 				66B13A5E2405AA8000CD732B /* WorkflowController+User.swift */,
 			);
@@ -3373,7 +3364,6 @@
 				6646A272236A5D8400DCC0A4 /* BrowserSettingsTableViewController.swift in Sources */,
 				662B925F233E50FA001D49B7 /* SearchShowResultsCell.swift in Sources */,
 				665385BD23D3CD3C008ADEF3 /* KCollectionViewController.swift in Sources */,
-				66B13A612405AAC000CD732B /* WorkflowController+In-AppNotifications.swift in Sources */,
 				66999C5024E7586D00001A6E /* ActorAttributes+UIImage.swift in Sources */,
 				6640E18F22ADD19000D0F575 /* AuthenticationSettingsCell.swift in Sources */,
 				66B9BB9724FB1AC7004953C9 /* KFeedMessageReShareTextEditorView.swift in Sources */,
@@ -3391,7 +3381,6 @@
 				665099D522FC2B6A0053C2FD /* SearchSuggestionResultCell.swift in Sources */,
 				66CDC089234A829E009E799C /* ServiceFooterString.swift in Sources */,
 				664A065E21EA1BA7008CF4A6 /* GenresTableViewController.swift in Sources */,
-				66ED9D8922ABE06D00C7A45C /* NotificationSettingsCell.swift in Sources */,
 				664AAF8324EE8F0C00FF4AA5 /* CharacterHeaderCollectionViewCell.swift in Sources */,
 				667943632273933400E2D0D0 /* TextViewCollectionViewCell.swift in Sources */,
 				66938FD8211CD3E600ADA5D6 /* ShowDetailsCollectionViewController.swift in Sources */,
@@ -3429,7 +3418,6 @@
 				66D0BF8125613E29000AB7BF /* Show+UIKit.swift in Sources */,
 				6648ED6C22A4630200E1BE18 /* NotificationType.swift in Sources */,
 				662DB4DB237EF3CC00B7FE7E /* KFillBarIndicator.swift in Sources */,
-				66AEABE62298A9C100949FD8 /* NotificationBannerStyle.swift in Sources */,
 				664AAF9624EEE29A00FF4AA5 /* ActorsListCollectionViewController.swift in Sources */,
 				66E46E0125056535009938E1 /* CellActionButton.swift in Sources */,
 				66AEABE92298AA8D00949FD8 /* NotificationGroupStyle.swift in Sources */,

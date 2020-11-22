@@ -49,13 +49,6 @@ class SettingsCell: UITableViewCell {
 			NotificationCenter.default.addObserver(self, selector: #selector(updateNotificationValueLabels), name: .KSNotificationOptionsValueLabelsNotification, object: nil)
 		}
 	}
-	@IBOutlet weak var bannerStyleValueLabel: UILabel? {
-		didSet {
-			self.bannerStyleValueLabel?.text = KNotification.BannerStyle(rawValue: UserSettings.notificationsPersistent)?.stringValue
-			self.bannerStyleValueLabel?.theme_textColor = KThemePicker.subTextColor.rawValue
-			NotificationCenter.default.addObserver(self, selector: #selector(updateNotificationValueLabels), name: .KSNotificationOptionsValueLabelsNotification, object: nil)
-		}
-	}
 
 	// MARK: - Properties
 	var sectionRow: SettingsTableViewController.Row? {
@@ -141,6 +134,5 @@ class SettingsCell: UITableViewCell {
 	/// Updates the notification value labels with the respective options selected by the user.
 	@objc func updateNotificationValueLabels() {
 		self.notificationGroupingValueLabel?.text = KNotification.GroupStyle(rawValue: UserSettings.notificationsGrouping)?.stringValue
-		self.bannerStyleValueLabel?.text = KNotification.BannerStyle(rawValue: UserSettings.notificationsPersistent)?.stringValue
 	}
 }

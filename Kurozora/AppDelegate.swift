@@ -50,6 +50,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			return true
 		}
 
+		// Set UNUserNotificationCenterDelegate
+		UNUserNotificationCenter.current().delegate = WorkflowController.shared
+
 		// Restore current user session
 		WorkflowController.shared.restoreCurrentUserSession()
 
