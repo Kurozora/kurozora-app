@@ -79,8 +79,9 @@ extension AppearanceOptionsViewController {
 		guard let dateSettingsCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dateSettingsCell, for: indexPath) else {
 			fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.dateSettingsCell.identifier)")
 		}
-		dateSettingsCell.primaryLabel?.text = customScheduleOptions[indexPath.row]
-		dateSettingsCell.updateText(with: inputDates[indexPath.row])
+		let indexPathRow = datePickerIndexPath != nil && indexPath.row != 0 ? indexPath.row - 1 : indexPath.row
+		dateSettingsCell.primaryLabel?.text = customScheduleOptions[indexPathRow]
+		dateSettingsCell.updateText(with: inputDates[indexPathRow])
 		return dateSettingsCell
 	}
 
@@ -102,28 +103,26 @@ extension AppearanceOptionsViewController {
 			}
 			tableView.reloadData()
 		} else if indexPath.section == 2 {
-			tableView.beginUpdates()
-			if let datePickerIndexPath = datePickerIndexPath, datePickerIndexPath.row - 1 == indexPath.row {
-				tableView.deleteRows(at: [datePickerIndexPath], with: .fade)
-				self.datePickerIndexPath = nil
-			} else {
-				if let datePickerIndexPath = datePickerIndexPath {
+			if indexPath != datePickerIndexPath {
+				tableView.beginUpdates()
+				if let datePickerIndexPath = datePickerIndexPath, datePickerIndexPath.row - 1 == indexPath.row {
 					tableView.deleteRows(at: [datePickerIndexPath], with: .fade)
+					self.datePickerIndexPath = nil
+				} else {
+					if let datePickerIndexPath = datePickerIndexPath {
+						tableView.deleteRows(at: [datePickerIndexPath], with: .fade)
+					}
+					datePickerIndexPath = indexPathToInsertDatePicker(indexPath: indexPath)
+					tableView.insertRows(at: [datePickerIndexPath!], with: .fade)
+					tableView.deselectRow(at: indexPath, animated: true)
 				}
-				datePickerIndexPath = indexPathToInsertDatePicker(indexPath: indexPath)
-				tableView.insertRows(at: [datePickerIndexPath!], with: .fade)
-				tableView.deselectRow(at: indexPath, animated: true)
+				tableView.endUpdates()
 			}
-			tableView.endUpdates()
 		}
 	}
 
 	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		if datePickerIndexPath == indexPath {
-			return 221
-		} else {
-			return 55
-		}
+		return 55
 	}
 }
 

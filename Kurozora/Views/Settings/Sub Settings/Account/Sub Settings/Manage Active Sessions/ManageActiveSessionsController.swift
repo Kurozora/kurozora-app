@@ -10,15 +10,12 @@ import UIKit
 import KurozoraKit
 import CoreLocation
 import MapKit
-import SCLAlertView
-import SwipeCellKit
 
 class ManageActiveSessionsController: KTableViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var mapView: MKMapView!
 
 	// MARK: - Properties
-	var dismissEnabled: Bool = false
 	var sessions: [Session] = [] {
 		didSet {
 			createAnnotations()
@@ -44,15 +41,10 @@ class ManageActiveSessionsController: KTableViewController {
 	}
 
 	// MARK: - View
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-		if dismissEnabled {
-			self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss(_:)))
-		}
-	}
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		NotificationCenter.default.addObserver(self, selector: #selector(removeSession(_:)), name: .KSSessionIsDeleted, object: nil)
+
 		// Fetch sessions
 		DispatchQueue.global(qos: .background).async {
 			self.fetchSessions()
@@ -119,15 +111,6 @@ class ManageActiveSessionsController: KTableViewController {
 		}
 	}
 
-	/**
-		Dismisses the current view controller.
-
-		- Parameter sender: The object requesting the dismiss of the current view controller.
-	*/
-	@objc func dismiss(_ sender: Any?) {
-		self.dismiss(animated: true, completion: nil)
-	}
-
 	/// Creates annotations and adds them to the map view.
 	private func createAnnotations() {
 		let otherUserSessions = sessions
@@ -165,51 +148,68 @@ class ManageActiveSessionsController: KTableViewController {
 		locationManager.startUpdatingLocation()
 	}
 
-	/**
-		Removes a session with the given session cell as data source.
-
-		- Parameter otherSessionsCell: The session cell from which the data is fetched to decide which session to remove.
-	*/
-	private func removeSession(_ otherSessionsCell: OtherSessionsCell) {
-		let alertView = SCLAlertView()
-		alertView.addButton("Yes!", action: {
-			guard let sessionID = otherSessionsCell.session?.id else { return }
-
-			KService.deleteSession(sessionID) { [weak self] result in
-				guard let self = self else { return }
-
-				switch result {
-				case .success:
-					// Get index path for cell
-					if let indexPath = otherSessionsCell.indexPath {
-						// Start delete process
-						self.tableView.beginUpdates()
-						self.sessions.remove(at: indexPath.row)
-						self.tableView.deleteRows(at: [indexPath], with: .left)
-						if self.sessions.count == 0 {
-							self.tableView.deleteSections([1], with: .left)
-						}
-						self.tableView.endUpdates()
-					}
-				case .failure: break
-				}
-			}
-		})
-
-		alertView.showNotice("Confirm deletion", subTitle: "Are you sure you want to delete this session?", closeButtonTitle: "Maybe not now")
+	@objc func removeSession(_ notification: NSNotification) {
+		// Start delete process
+		self.tableView.beginUpdates()
+		if let indexPath = notification.userInfo?["indexPath"] as? IndexPath, self.sessions.count != 0 {
+			self.sessions.remove(at: indexPath.section - 1)
+			self.tableView.deleteSections([indexPath.section], with: .left)
+		}
+		self.tableView.endUpdates()
 	}
 }
 
 // MARK: - UITableViewDelegate
 extension ManageActiveSessionsController {
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		let numberOfRows = tableView.numberOfRows()
+		let numberOfSections = tableView.numberOfSections
 
-		if indexPath.row == numberOfRows - 5 {
+		if indexPath.section == numberOfSections - 5 {
 			if self.nextPageURL != nil {
 				self.fetchSessions()
 			}
 		}
+	}
+
+	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+		if let otherSessionsCell = tableView.cellForRow(at: indexPath) as? OtherSessionsCell {
+			otherSessionsCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
+
+			otherSessionsCell.ipAddressValueLabel.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+			otherSessionsCell.deviceTypeValueLabel.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+			otherSessionsCell.dateValueLabel.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+		}
+	}
+
+	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+		if let otherSessionsCell = tableView.cellForRow(at: indexPath) as? OtherSessionsCell {
+			otherSessionsCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+
+			otherSessionsCell.ipAddressValueLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			otherSessionsCell.deviceTypeValueLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			otherSessionsCell.dateValueLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+		}
+	}
+
+	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+		let signOutOfSessionAction = UIContextualAction(style: .destructive, title: "Sign Out") { [weak self] (_, _, completionHandler) in
+			guard let self = self else { return }
+			self.sessions[indexPath.section - 1].signOutOfSession(at: indexPath)
+			completionHandler(true)
+		}
+		signOutOfSessionAction.backgroundColor = .red
+		signOutOfSessionAction.image = UIImage(systemName: "minus.circle")
+
+		let swipeActionsConfiguration = UISwipeActionsConfiguration(actions: [signOutOfSessionAction])
+		swipeActionsConfiguration.performsFirstActionWithFullSwipe = true
+		return swipeActionsConfiguration
+	}
+
+	override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+		if indexPath.section != 0 {
+			return self.sessions[indexPath.section - 1].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		}
+		return nil
 	}
 }
 
@@ -218,17 +218,18 @@ extension ManageActiveSessionsController {
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		if section == 0 {
 			return "Current Session"
-		} else {
+		} else if section == 1 {
 			return "Other Sessions"
 		}
+		return nil
 	}
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return sessions.isEmpty ? 1 : 2
+		return sessions.isEmpty ? 1 : sessions.count + 1
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return section == 0 ? 1 : sessions.count
+		return 1
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -239,72 +240,17 @@ extension ManageActiveSessionsController {
 			currentSessionCell.session = User.current?.relationships?.sessions?.data.first
 			return currentSessionCell
 		} else {
-			let otherSessionsCount = self.sessions.count
-
-			// No other sessions
-			if otherSessionsCount == 0 {
-				guard let noSessionsCell = self.tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.noSessionsCell, for: indexPath) else {
-					fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.noSessionsCell.identifier)")
-				}
-				return noSessionsCell
-			}
-
 			// Other sessions found
 			guard let otherSessionsCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.otherSessionsCell, for: indexPath) else {
 					fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.otherSessionsCell.identifier)")
 			}
-			otherSessionsCell.delegate = self
-			otherSessionsCell.session = self.sessions[indexPath.row]
+			otherSessionsCell.session = self.sessions[indexPath.section-1]
 			return otherSessionsCell
 		}
 	}
 
 	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
 		return indexPath.section != 0
-	}
-}
-
-// MARK: - SwipeTableViewCellDelegate
-extension ManageActiveSessionsController: SwipeTableViewCellDelegate {
-	func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
-		switch orientation {
-		case .right:
-			let deleteAction = SwipeAction(style: .destructive, title: "Delete") { [weak self] _, indexPath in
-				guard let self = self else { return }
-				if let otherSessionsCell = tableView.cellForRow(at: indexPath) as? OtherSessionsCell {
-					self.removeSession(otherSessionsCell)
-				}
-			}
-			deleteAction.backgroundColor = .clear
-			deleteAction.image = R.image.trash_circle()
-			deleteAction.textColor = .kLightRed
-			deleteAction.font = .systemFont(ofSize: 13)
-			deleteAction.transitionDelegate = ScaleTransition.default
-			return [deleteAction]
-		case .left:
-			return nil
-		}
-	}
-
-	func visibleRect(for tableView: UITableView) -> CGRect? {
-		return tableView.safeAreaLayoutGuide.layoutFrame
-	}
-
-	func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
-		var options = SwipeOptions()
-
-		switch orientation {
-		case .right:
-			options.expansionStyle = .selection
-		case .left:
-			options.expansionStyle = .none
-		}
-
-		options.transitionStyle = .reveal
-		options.expansionDelegate = ScaleAndAlphaExpansion.default
-		options.buttonSpacing = 4
-		options.backgroundColor = .clear
-		return options
 	}
 }
 

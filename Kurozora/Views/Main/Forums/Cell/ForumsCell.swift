@@ -51,7 +51,7 @@ class ForumsCell: UITableViewCell {
 	}
 	var previousVote = 0
 
-	// MARK: - View
+	// MARK: - Initializers
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		self.sharedInit()
@@ -77,7 +77,7 @@ class ForumsCell: UITableViewCell {
 		contentLabel.text = forumsThread.attributes.content
 
 		// Set poster username label
-		if let user = forumsThread.relationships.user.data.first {
+		if let user = forumsThread.relationships.users.data.first {
 			usernameButton.setTitle(user.attributes.username, for: .normal)
 		}
 

@@ -53,7 +53,7 @@ class ReplyCell: UITableViewCell {
 		}
 	}
 
-	// MARK: - View
+	// MARK: - Initializers
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		self.sharedInit()
@@ -72,7 +72,7 @@ class ReplyCell: UITableViewCell {
 
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
-		if let user = threadReply.relationships.user.data.first {
+		if let user = threadReply.relationships.users.data.first {
 			// Configure username
 			usernameLabel.text = user.attributes.username
 

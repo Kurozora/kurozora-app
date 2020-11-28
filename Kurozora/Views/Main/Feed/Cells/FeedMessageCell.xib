@@ -10,193 +10,176 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedMessageCell" id="GNl-8T-hnU" customClass="FeedMessageCell" customModule="Kurozora" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="148.5"/>
+        <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedMessageCell" id="Q0A-hW-QVj" customClass="FeedMessageCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="374" height="121.5"/>
             <autoresizingMask key="autoresizingMask"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" tableViewCell="GNl-8T-hnU" id="XvC-NA-XQT">
-                <rect key="frame" x="0.0" y="0.0" width="414" height="148.5"/>
+            <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" tableViewCell="Q0A-hW-QVj" id="792-bS-aOJ">
+                <rect key="frame" x="0.0" y="0.0" width="374" height="121.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XxM-rI-iic">
-                        <rect key="frame" x="20" y="11" width="374" height="126.5"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="D1k-pw-hqK" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="8" y="8" width="44" height="44"/>
-                                <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="44" id="anc-bc-pg0"/>
-                                    <constraint firstAttribute="height" constant="44" id="uRG-4t-kf3"/>
-                                </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Kurozora" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iHd-1c-87b" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="60" y="8" width="71.5" height="20.5"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2d" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bAj-XX-DKo" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="351" y="8" width="15" height="14.5"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                <color key="textColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textView userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="_test" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cmU-O6-yIu" customClass="KTextView" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="60" y="28.5" width="306" height="38"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES" shipmentTrackingNumber="YES" flightNumber="YES" lookupSuggestion="YES"/>
-                            </textView>
-                            <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="otK-Zc-94b" customClass="KVisualEffectView" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="60" y="28.5" width="306" height="38"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="NvT-zm-Q5p">
-                                    <rect key="frame" x="0.0" y="0.0" width="306" height="38"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0ub-4B-9M6" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="134.5" y="9.5" width="37" height="19.5"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="0ub-4B-9M6" firstAttribute="centerX" secondItem="NvT-zm-Q5p" secondAttribute="centerX" id="JfJ-IS-Yju"/>
-                                        <constraint firstItem="0ub-4B-9M6" firstAttribute="centerY" secondItem="NvT-zm-Q5p" secondAttribute="centerY" id="cca-cJ-b2m"/>
-                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="0ub-4B-9M6" secondAttribute="bottom" constant="8" id="jdp-aw-kNQ"/>
-                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="0ub-4B-9M6" secondAttribute="trailing" id="kJx-do-Hq9"/>
-                                        <constraint firstItem="0ub-4B-9M6" firstAttribute="top" relation="greaterThanOrEqual" secondItem="NvT-zm-Q5p" secondAttribute="top" constant="8" id="llf-au-JbN"/>
-                                        <constraint firstItem="0ub-4B-9M6" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="NvT-zm-Q5p" secondAttribute="leadingMargin" id="zff-Bi-ffI"/>
-                                    </constraints>
-                                </view>
-                                <blurEffect style="regular"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </visualEffectView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="41K-xY-H6Z">
-                                <rect key="frame" x="60" y="74.5" width="306" height="44"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="hTU-7Q-K0Y">
-                                        <rect key="frame" x="0.0" y="0.0" width="116.5" height="44"/>
-                                        <subviews>
-                                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BMI-uh-wWy" customClass="CellActionButton" customModule="Kurozora" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="31.5" height="44"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <color key="tintColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <state key="normal" title="0" image="heart.fill" catalog="system">
-                                                    <color key="titleColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="heartButtonPressed:" destination="GNl-8T-hnU" eventType="touchUpInside" id="UW4-Ds-DSp"/>
-                                                </connections>
-                                            </button>
-                                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xT0-Qe-Ipq" customClass="CellActionButton" customModule="Kurozora" customModuleProvider="target">
-                                                <rect key="frame" x="39.5" y="0.0" width="35" height="44"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <color key="tintColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <state key="normal" title="0" image="Symbols/message_fill">
-                                                    <color key="titleColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="commentButtonPressed:" destination="GNl-8T-hnU" eventType="touchUpInside" id="ALC-it-FfN"/>
-                                                </connections>
-                                            </button>
-                                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lGO-hv-wXR" customClass="CellActionButton" customModule="Kurozora" customModuleProvider="target">
-                                                <rect key="frame" x="82.5" y="0.0" width="34" height="44"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <color key="tintColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <state key="normal" title="0" image="square.and.arrow.up.on.square.fill" catalog="system">
-                                                    <color key="titleColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="reShareButtonPressed:" destination="GNl-8T-hnU" eventType="touchUpInside" id="QqU-Qc-vhP"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rnK-ru-8W2" customClass="CellActionButton" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="262" y="0.0" width="44" height="44"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="rnK-ru-8W2" secondAttribute="height" multiplier="1:1" id="8al-Rm-7Bb"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <color key="tintColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <state key="normal" image="ellipsis" catalog="system">
-                                            <color key="titleColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="moreButtonPressed:" destination="GNl-8T-hnU" eventType="touchUpInside" id="hey-CR-oyr"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="0QW-HB-hWv"/>
-                                    <constraint firstItem="rnK-ru-8W2" firstAttribute="centerY" secondItem="hTU-7Q-K0Y" secondAttribute="centerY" id="4Qe-pc-tmN"/>
-                                    <constraint firstItem="rnK-ru-8W2" firstAttribute="top" secondItem="hTU-7Q-K0Y" secondAttribute="top" id="GDL-dB-qsn"/>
-                                    <constraint firstItem="hTU-7Q-K0Y" firstAttribute="top" secondItem="41K-xY-H6Z" secondAttribute="top" id="MuI-JV-XG2"/>
-                                    <constraint firstItem="hTU-7Q-K0Y" firstAttribute="centerY" secondItem="41K-xY-H6Z" secondAttribute="centerY" id="NI4-SF-sUk"/>
-                                    <constraint firstItem="hTU-7Q-K0Y" firstAttribute="leading" secondItem="41K-xY-H6Z" secondAttribute="leading" id="PxF-wi-a9q"/>
-                                    <constraint firstAttribute="trailing" secondItem="rnK-ru-8W2" secondAttribute="trailing" id="ezv-1L-gSn"/>
-                                    <constraint firstAttribute="bottom" secondItem="hTU-7Q-K0Y" secondAttribute="bottom" id="f9N-3Z-Pez"/>
-                                    <constraint firstItem="rnK-ru-8W2" firstAttribute="bottom" secondItem="hTU-7Q-K0Y" secondAttribute="bottom" id="nFW-G3-IUj"/>
-                                    <constraint firstItem="rnK-ru-8W2" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="hTU-7Q-K0Y" secondAttribute="trailing" constant="8" symbolic="YES" id="wul-UB-tfV"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qEa-CS-cR6" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="10" y="10" width="44" height="44"/>
+                        <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="bAj-XX-DKo" secondAttribute="trailing" id="2mc-fR-tlV"/>
-                            <constraint firstItem="bAj-XX-DKo" firstAttribute="top" secondItem="iHd-1c-87b" secondAttribute="top" id="816-Yh-TrS"/>
-                            <constraint firstItem="otK-Zc-94b" firstAttribute="top" secondItem="cmU-O6-yIu" secondAttribute="top" id="8Sv-dD-kXo"/>
-                            <constraint firstItem="otK-Zc-94b" firstAttribute="trailing" secondItem="cmU-O6-yIu" secondAttribute="trailing" id="9Bx-W8-ZoT"/>
-                            <constraint firstItem="otK-Zc-94b" firstAttribute="bottom" secondItem="cmU-O6-yIu" secondAttribute="bottom" id="CUP-Ys-Cpy"/>
-                            <constraint firstItem="bAj-XX-DKo" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="iHd-1c-87b" secondAttribute="trailing" constant="10" id="EWf-JQ-Prw"/>
-                            <constraint firstItem="D1k-pw-hqK" firstAttribute="top" secondItem="XxM-rI-iic" secondAttribute="topMargin" id="FmS-l7-Lxd"/>
-                            <constraint firstItem="cmU-O6-yIu" firstAttribute="leading" secondItem="iHd-1c-87b" secondAttribute="leading" id="IMh-9M-jE3"/>
-                            <constraint firstItem="iHd-1c-87b" firstAttribute="leading" secondItem="D1k-pw-hqK" secondAttribute="trailing" constant="8" symbolic="YES" id="Jnp-vx-Fcl"/>
-                            <constraint firstItem="otK-Zc-94b" firstAttribute="leading" secondItem="cmU-O6-yIu" secondAttribute="leading" id="X2X-WW-Sly"/>
-                            <constraint firstItem="iHd-1c-87b" firstAttribute="top" secondItem="D1k-pw-hqK" secondAttribute="top" id="Xi5-G0-5zf"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="41K-xY-H6Z" secondAttribute="bottom" id="aUC-fd-1GV"/>
-                            <constraint firstItem="cmU-O6-yIu" firstAttribute="top" secondItem="iHd-1c-87b" secondAttribute="bottom" constant="7.1054273576010019e-15" id="bI9-ST-51D"/>
-                            <constraint firstItem="41K-xY-H6Z" firstAttribute="leading" secondItem="iHd-1c-87b" secondAttribute="leading" id="dtK-1E-JSc"/>
-                            <constraint firstItem="41K-xY-H6Z" firstAttribute="trailing" secondItem="bAj-XX-DKo" secondAttribute="trailing" id="i4Z-8D-bKp"/>
-                            <constraint firstItem="D1k-pw-hqK" firstAttribute="leading" secondItem="XxM-rI-iic" secondAttribute="leadingMargin" id="lCF-LX-cj8"/>
-                            <constraint firstItem="41K-xY-H6Z" firstAttribute="top" secondItem="cmU-O6-yIu" secondAttribute="bottom" constant="8" symbolic="YES" id="lWQ-Kc-h0p"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="cmU-O6-yIu" secondAttribute="trailing" id="rYD-iZ-EUO"/>
+                            <constraint firstAttribute="width" constant="44" id="gbb-jo-hue"/>
+                            <constraint firstAttribute="height" constant="44" id="nlB-Yc-RI6"/>
                         </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Kurozora" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="27X-h2-WMd" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="62" y="10" width="71.5" height="20.5"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2d" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yad-DN-7du" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="349" y="10" width="15" height="20.5"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                        <color key="textColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="_test" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I35-Go-4sT" customClass="KTextView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="62" y="30.5" width="302" height="39"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES" shipmentTrackingNumber="YES" flightNumber="YES" lookupSuggestion="YES"/>
+                    </textView>
+                    <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cfl-Ds-ElJ" customClass="KVisualEffectView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="62" y="30.5" width="302" height="39"/>
+                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="tiF-e9-Zs7">
+                            <rect key="frame" x="0.0" y="0.0" width="302" height="39"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZDW-d9-wqu" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                    <rect key="frame" x="132.5" y="10" width="37" height="19.5"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="ZDW-d9-wqu" secondAttribute="trailing" id="0m1-vA-5WL"/>
+                                <constraint firstItem="ZDW-d9-wqu" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tiF-e9-Zs7" secondAttribute="leadingMargin" id="41w-dS-WhH"/>
+                                <constraint firstItem="ZDW-d9-wqu" firstAttribute="centerX" secondItem="tiF-e9-Zs7" secondAttribute="centerX" id="KdB-gc-Esw"/>
+                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ZDW-d9-wqu" secondAttribute="bottom" constant="8" id="Phn-uV-jBD"/>
+                                <constraint firstItem="ZDW-d9-wqu" firstAttribute="top" relation="greaterThanOrEqual" secondItem="tiF-e9-Zs7" secondAttribute="top" constant="8" id="Yvp-5h-68U"/>
+                                <constraint firstItem="ZDW-d9-wqu" firstAttribute="centerY" secondItem="tiF-e9-Zs7" secondAttribute="centerY" id="fgY-LZ-c4W"/>
+                            </constraints>
+                        </view>
+                        <blurEffect style="regular"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                 <real key="value" value="10"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
+                    </visualEffectView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U8F-at-A0g">
+                        <rect key="frame" x="62" y="77.5" width="302" height="44"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="2r3-Rh-BUE">
+                                <rect key="frame" x="0.0" y="0.0" width="116.5" height="44"/>
+                                <subviews>
+                                    <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7eR-Hg-lR6" customClass="CellActionButton" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="31.5" height="44"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <color key="tintColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <state key="normal" title="0" image="heart.fill" catalog="system">
+                                            <color key="titleColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="heartButtonPressed:" destination="Q0A-hW-QVj" eventType="touchUpInside" id="AXk-YL-WFW"/>
+                                        </connections>
+                                    </button>
+                                    <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZRS-WP-vqK" customClass="CellActionButton" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="39.5" y="0.0" width="35" height="44"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <color key="tintColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <state key="normal" title="0" image="Symbols/message_fill">
+                                            <color key="titleColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="commentButtonPressed:" destination="Q0A-hW-QVj" eventType="touchUpInside" id="N9o-OP-mzw"/>
+                                        </connections>
+                                    </button>
+                                    <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wjh-je-WtR" customClass="CellActionButton" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="82.5" y="0.0" width="34" height="44"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <color key="tintColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <state key="normal" title="0" image="square.and.arrow.up.on.square.fill" catalog="system">
+                                            <color key="titleColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="reShareButtonPressed:" destination="Q0A-hW-QVj" eventType="touchUpInside" id="gty-jP-1Ou"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jiI-CD-mWg" customClass="CellActionButton" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="258" y="0.0" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="jiI-CD-mWg" secondAttribute="height" multiplier="1:1" id="8YJ-vk-JPL"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="tintColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <state key="normal" image="ellipsis" catalog="system">
+                                    <color key="titleColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
+                                <connections>
+                                    <action selector="moreButtonPressed:" destination="Q0A-hW-QVj" eventType="touchUpInside" id="lyC-fr-xSJ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="2r3-Rh-BUE" firstAttribute="centerY" secondItem="U8F-at-A0g" secondAttribute="centerY" id="1mN-Nw-Cb6"/>
+                            <constraint firstAttribute="height" constant="44" id="6Qf-4f-E1D"/>
+                            <constraint firstItem="2r3-Rh-BUE" firstAttribute="leading" secondItem="U8F-at-A0g" secondAttribute="leading" id="C9e-n4-daj"/>
+                            <constraint firstItem="jiI-CD-mWg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2r3-Rh-BUE" secondAttribute="trailing" constant="8" symbolic="YES" id="D25-on-On3"/>
+                            <constraint firstItem="jiI-CD-mWg" firstAttribute="centerY" secondItem="2r3-Rh-BUE" secondAttribute="centerY" id="EOF-cP-hgp"/>
+                            <constraint firstItem="jiI-CD-mWg" firstAttribute="bottom" secondItem="2r3-Rh-BUE" secondAttribute="bottom" id="Jp5-TB-lwE"/>
+                            <constraint firstAttribute="trailing" secondItem="jiI-CD-mWg" secondAttribute="trailing" id="hxY-2W-tbO"/>
+                            <constraint firstAttribute="bottom" secondItem="2r3-Rh-BUE" secondAttribute="bottom" id="iMh-2x-q8E"/>
+                            <constraint firstItem="jiI-CD-mWg" firstAttribute="top" secondItem="2r3-Rh-BUE" secondAttribute="top" id="rTz-YV-Bar"/>
+                            <constraint firstItem="2r3-Rh-BUE" firstAttribute="top" secondItem="U8F-at-A0g" secondAttribute="top" id="x6U-1i-Qv7"/>
+                        </constraints>
                     </view>
                 </subviews>
-                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
-                    <constraint firstAttribute="bottomMargin" secondItem="XxM-rI-iic" secondAttribute="bottom" id="6hc-qd-z6g"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="XxM-rI-iic" secondAttribute="trailing" id="G3H-fX-c5a"/>
-                    <constraint firstItem="XxM-rI-iic" firstAttribute="top" secondItem="XvC-NA-XQT" secondAttribute="topMargin" id="RGk-kE-JaT"/>
-                    <constraint firstAttribute="leadingMargin" secondItem="XxM-rI-iic" secondAttribute="leading" id="rN0-me-53j"/>
+                    <constraint firstItem="Yad-DN-7du" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="27X-h2-WMd" secondAttribute="trailing" constant="10" id="15H-ox-BMJ"/>
+                    <constraint firstItem="Cfl-Ds-ElJ" firstAttribute="top" secondItem="I35-Go-4sT" secondAttribute="top" id="3bT-Tf-zhg"/>
+                    <constraint firstAttribute="trailing" secondItem="Yad-DN-7du" secondAttribute="trailing" constant="10" id="4eD-Bc-NGu"/>
+                    <constraint firstItem="Yad-DN-7du" firstAttribute="centerY" secondItem="27X-h2-WMd" secondAttribute="centerY" id="9ei-BF-Jld"/>
+                    <constraint firstAttribute="bottom" secondItem="U8F-at-A0g" secondAttribute="bottom" id="Ef8-Jg-KCU"/>
+                    <constraint firstItem="I35-Go-4sT" firstAttribute="top" secondItem="27X-h2-WMd" secondAttribute="bottom" id="F6i-YT-e6t"/>
+                    <constraint firstItem="qEa-CS-cR6" firstAttribute="top" secondItem="792-bS-aOJ" secondAttribute="top" constant="10" id="GF1-Lk-BjX"/>
+                    <constraint firstItem="Cfl-Ds-ElJ" firstAttribute="bottom" secondItem="I35-Go-4sT" secondAttribute="bottom" id="Oa5-Re-Sx7"/>
+                    <constraint firstItem="I35-Go-4sT" firstAttribute="trailing" secondItem="Yad-DN-7du" secondAttribute="trailing" id="Op4-7a-30J"/>
+                    <constraint firstItem="Yad-DN-7du" firstAttribute="top" secondItem="27X-h2-WMd" secondAttribute="top" id="Z9D-Ud-ebt"/>
+                    <constraint firstItem="U8F-at-A0g" firstAttribute="trailing" secondItem="I35-Go-4sT" secondAttribute="trailing" id="frQ-qT-1pg"/>
+                    <constraint firstItem="Cfl-Ds-ElJ" firstAttribute="trailing" secondItem="I35-Go-4sT" secondAttribute="trailing" id="fu1-5z-slR"/>
+                    <constraint firstItem="I35-Go-4sT" firstAttribute="leading" secondItem="27X-h2-WMd" secondAttribute="leading" id="ltr-eb-N3g"/>
+                    <constraint firstItem="27X-h2-WMd" firstAttribute="top" secondItem="qEa-CS-cR6" secondAttribute="top" id="oGS-UM-qhD"/>
+                    <constraint firstItem="U8F-at-A0g" firstAttribute="top" secondItem="I35-Go-4sT" secondAttribute="bottom" constant="8" symbolic="YES" id="oqC-9s-YLs"/>
+                    <constraint firstItem="Cfl-Ds-ElJ" firstAttribute="leading" secondItem="I35-Go-4sT" secondAttribute="leading" id="snR-sY-0IJ"/>
+                    <constraint firstItem="U8F-at-A0g" firstAttribute="leading" secondItem="I35-Go-4sT" secondAttribute="leading" id="tUN-Jy-E0L"/>
+                    <constraint firstItem="27X-h2-WMd" firstAttribute="leading" secondItem="qEa-CS-cR6" secondAttribute="trailing" constant="8" symbolic="YES" id="uY0-s2-DHX"/>
+                    <constraint firstItem="qEa-CS-cR6" firstAttribute="leading" secondItem="792-bS-aOJ" secondAttribute="leading" constant="10" id="xF4-KN-csH"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
-                <outlet property="bubbleView" destination="XxM-rI-iic" id="ya8-eg-93K"/>
-                <outlet property="commentButton" destination="xT0-Qe-Ipq" id="RMR-pf-qlh"/>
-                <outlet property="dateTimeLabel" destination="bAj-XX-DKo" id="FFG-nR-Dy5"/>
-                <outlet property="heartButton" destination="BMI-uh-wWy" id="Hix-j3-MyD"/>
-                <outlet property="moreButton" destination="rnK-ru-8W2" id="CmC-Ob-Q1o"/>
-                <outlet property="postTextView" destination="cmU-O6-yIu" id="P6j-O3-PhL"/>
-                <outlet property="profileImageView" destination="D1k-pw-hqK" id="WiJ-mc-drM"/>
-                <outlet property="shareButton" destination="lGO-hv-wXR" id="7cT-qS-GaU"/>
-                <outlet property="usernameLabel" destination="iHd-1c-87b" id="Zcn-Wc-Qu7"/>
-                <outlet property="warningTranscriptLabel" destination="0ub-4B-9M6" id="ZAX-l1-tjs"/>
-                <outlet property="warningVisualEffectView" destination="otK-Zc-94b" id="Cfz-on-kUV"/>
+                <outlet property="commentButton" destination="ZRS-WP-vqK" id="ZAU-oa-ewb"/>
+                <outlet property="dateTimeLabel" destination="Yad-DN-7du" id="0aO-Xm-b11"/>
+                <outlet property="heartButton" destination="7eR-Hg-lR6" id="5nR-ot-cVo"/>
+                <outlet property="moreButton" destination="jiI-CD-mWg" id="7Z7-Cb-jiE"/>
+                <outlet property="postTextView" destination="I35-Go-4sT" id="2NN-Yo-Rwj"/>
+                <outlet property="profileImageView" destination="qEa-CS-cR6" id="y0z-IG-ZnW"/>
+                <outlet property="shareButton" destination="Wjh-je-WtR" id="nPb-tM-GGT"/>
+                <outlet property="usernameLabel" destination="27X-h2-WMd" id="eDx-vg-PZV"/>
+                <outlet property="warningTranscriptLabel" destination="ZDW-d9-wqu" id="Fqt-6z-Asm"/>
+                <outlet property="warningVisualEffectView" destination="Cfl-Ds-ElJ" id="wT1-O7-MAl"/>
             </connections>
-            <point key="canvasLocation" x="-225" y="153"/>
+            <point key="canvasLocation" x="-255" y="19"/>
         </tableViewCell>
     </objects>
     <resources>

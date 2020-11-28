@@ -8,7 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import SCLAlertView
 
 class AccountTableViewController: SubSettingsViewController {
 	// MARK: - IBOutlets
@@ -53,8 +52,8 @@ extension AccountTableViewController {
 //		case (1, 0): break
 		case (2, 0):
 			let username = User.current?.attributes.username ?? ""
-			let alertView = SCLAlertView()
-			alertView.addButton("Yes, sign me out 🤨", action: {
+			let alertController = self.presentAlertController(title: "Sign Out", message: "Are you sure you want to sign out?", defaultActionButtonTitle: "No, keep me signed in 😆")
+			alertController.addAction(UIAlertAction(title: "Yes, sign me out 🤨", style: .destructive) { [weak self] _ in
 				if User.isSignedIn {
 					KService.signOut { result in
 						switch result {
@@ -65,10 +64,8 @@ extension AccountTableViewController {
 						}
 					}
 				}
-				self.dismiss(animated: true, completion: nil)
+				self?.dismiss(animated: true, completion: nil)
 			})
-
-			alertView.showError("Sign out", subTitle: "Are you sure you want to sign out?", closeButtonTitle: "No, keep me signed in 😆")
 		default: break
 		}
 	}

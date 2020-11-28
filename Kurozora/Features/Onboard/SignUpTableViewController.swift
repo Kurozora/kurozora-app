@@ -8,7 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import SCLAlertView
 import MobileCoreServices
 
 class SignUpTableViewController: AccountOnboardingTableViewController {
@@ -43,7 +42,7 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 			imagePicker.delegate = self
 			self.present(imagePicker, animated: true, completion: nil)
 		} else {
-			SCLAlertView().showWarning("Well, this is awkward.", subTitle: "You don't seem to have a camera 😓")
+			self.presentAlertController(title: "Well, this is awkward.", message: "You don't seem to have a camera 😓")
 		}
 	}
 
@@ -85,11 +84,9 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 				guard let self = self else { return }
 				switch result {
 				case .success:
-					let alertController = SCLAlertView(appearance: SCLAlertView.SCLAppearance(showCloseButton: false))
-					alertController.showSuccess("Hooray!", subTitle: "Account created successfully! Please check your email for confirmation.")
-					alertController.addButton("Done", action: {
-						self.dismiss(animated: true, completion: nil)
-					})
+					self.presentAlertController(title: "Hooray!", message: "Account created successfully! Please check your email for confirmation.", defaultActionButtonTitle: "Done") { [weak self] _ in
+						self?.dismiss(animated: true, completion: nil)
+					}
 				case .failure: break
 				}
 			}
@@ -103,11 +100,9 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 					// Get user details after completing account setup.
 					self.getProfileDetails()
 
-					let alertController = SCLAlertView(appearance: SCLAlertView.SCLAppearance(showCloseButton: false))
-					alertController.showSuccess("Hooray!", subTitle: "Account created successfully!")
-					alertController.addButton("Done", action: {
-						self.dismiss(animated: true, completion: nil)
-					})
+					self.presentAlertController(title: "Hooray!", message: "Your account was successfully created!", defaultActionButtonTitle: "Done") { [weak self] _ in
+						self?.dismiss(animated: true, completion: nil)
+					}
 				case .failure: break
 				}
 			}

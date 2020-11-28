@@ -49,7 +49,7 @@ extension ForumsThread {
 		var userMenuElements: [UIMenuElement] = []
 
 		// Username action
-		if let user = self.relationships.user.data.first {
+		if let user = self.relationships.users.data.first {
 			let username = user.attributes.username
 			let userAction = UIAction(title: "Show " + username + "'s Profile", image: UIImage(systemName: "person.crop.circle.fill")) { _ in
 				self.visitOriginalPosterProfile(from: viewController)
@@ -72,7 +72,6 @@ extension ForumsThread {
 			let reportAction = UIAction(title: "Report Thread", image: UIImage(systemName: "exclamationmark.circle.fill"), attributes: .destructive) { _ in
 				self.reportThread()
 			}
-
 			reportMenuElements.append(reportAction)
 
 			// Append report menu
@@ -163,7 +162,7 @@ extension ForumsThread {
 		- Parameter viewController: The view controller initiaing the segue.
 	*/
 	func visitOriginalPosterProfile(from viewController: UIViewController? = UIApplication.topViewController) {
-		guard let user = self.relationships.user.data.first else { return }
+		guard let user = self.relationships.users.data.first else { return }
 
 		if let profileViewController = R.storyboard.profile.profileTableViewController() {
 			profileViewController.userID = user.id

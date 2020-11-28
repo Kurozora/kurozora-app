@@ -8,7 +8,13 @@
 
 import UIKit
 import KurozoraKit
-import SCLAlertView
+
+protocol BaseFeedMessageCellDelegate: class {
+	func heartMessage(_ cell: BaseFeedMessageCell)
+	func replyToMessage(_ cell: BaseFeedMessageCell)
+	func reShareMessage(_ cell: BaseFeedMessageCell)
+	func visitOriginalPosterProfile(_ cell: BaseFeedMessageCell)
+}
 
 class BaseFeedMessageCell: KTableViewCell {
 	// MARK: - IBOutlets
@@ -23,13 +29,9 @@ class BaseFeedMessageCell: KTableViewCell {
 	@IBOutlet weak var commentButton: CellActionButton!
 	@IBOutlet weak var shareButton: CellActionButton!
 	@IBOutlet weak var moreButton: CellActionButton!
-	@IBOutlet weak var bubbleView: UIView! {
-		didSet {
-			bubbleView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-		}
-	}
 
 	// MARK: - Properties
+	weak var delegate: BaseFeedMessageCellDelegate?
 	var warningIsHidden: Bool = false
 	var liveReplyEnabled = false
 	var liveReShareEnabled = false
@@ -41,6 +43,17 @@ class BaseFeedMessageCell: KTableViewCell {
 		}
 	}
 
+	// MARK: - Initializers
+	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+		super.init(style: style, reuseIdentifier: reuseIdentifier)
+		self.sharedInit()
+	}
+
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
+		self.sharedInit()
+	}
+
 	// MARK: - View
 	override func prepareForReuse() {
 		super.prepareForReuse()
@@ -49,6 +62,12 @@ class BaseFeedMessageCell: KTableViewCell {
 	}
 
 	// MARK: - Functions
+	/// The shared settings used to initialize the tab bar item content view.
+	fileprivate func sharedInit() {
+		self.separatorInset = UIEdgeInsets(horizontal: 15, vertical: 0)
+		self.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+	}
+
 	override func configureCell() {
 		// Configure heart status for feed message.
 		self.updateHeartStatus()
@@ -84,13 +103,6 @@ class BaseFeedMessageCell: KTableViewCell {
 
 		// Configure warning messages
 		self.configureWarnings()
-
-		// Add gesture to cell
-		if self.gestureRecognizers.isNilOrEmpty {
-			let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(showCellOptions(_:)))
-			addGestureRecognizer(longPressGesture)
-			isUserInteractionEnabled = true
-		}
 	}
 
 	/// Configures the re-share button.
@@ -149,35 +161,10 @@ class BaseFeedMessageCell: KTableViewCell {
 		}
 	}
 
-	/// Shows the relevant options for the selected message.
-	@objc fileprivate func showCellOptions(_ longPress: UILongPressGestureRecognizer) {
-		showActionList()
-	}
-
-	/// Segues to message details.
-	@objc func showOPMessage(_ gestureRecognizer: UITapGestureRecognizer) {
-		guard let opMessage = self.feedMessage.relationships.parent?.data.first else { return }
-		self.parentViewController?.performSegue(withIdentifier: R.segue.feedTableViewController.feedMessageDetailsSegue.identifier, sender: opMessage.id)
-	}
-
 	/// Hides warnings.
 	@objc fileprivate func hideWarning(_ gestureRecognizer: UITapGestureRecognizer) {
 		self.warningIsHidden = true
 		self.warningVisualEffectView?.isHidden = true
-	}
-
-	/// Presents the profile view for the feed message poster.
-	fileprivate func visitPosterProfilePage() {
-		if let user = feedMessage.relationships.users.data.first {
-			if let profileViewController = R.storyboard.profile.profileTableViewController() {
-				profileViewController.userID = user.id
-				profileViewController.dismissButtonIsEnabled = true
-
-				let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
-
-				self.parentViewController?.present(kurozoraNavigationController, animated: true)
-			}
-		}
 	}
 
 	/// Update the heart status of the message.
@@ -191,151 +178,27 @@ class BaseFeedMessageCell: KTableViewCell {
 		}
 	}
 
-	/// Heart or un-heart the message.
-	fileprivate func heartMessage() {
-		WorkflowController.shared.isSignedIn {
-			KService.heartMessage(self.feedMessage.id) { [weak self] result in
-				guard let self = self else { return }
-
-				switch result {
-				case .success(let feedMessageHeart):
-					self.feedMessage.attributes.update(heartStatus: feedMessageHeart.isHearted)
-					self.updateHeartStatus()
-
-					let heartsCount = self.feedMessage.attributes.metrics.heartCount
-					self.heartButton.setTitle(heartsCount.kkFormatted, for: .normal)
-				case .failure: break
-				}
-			}
-		}
-	}
-
-	fileprivate func replyMessage() {
-		WorkflowController.shared.isSignedIn {
-			if let kfmReplyTextEditorViewController = R.storyboard.textEditor.kfmReplyTextEditorViewController() {
-				kfmReplyTextEditorViewController.delegate = self.parentViewController as? KFeedMessageTextEditorViewDelegate
-				kfmReplyTextEditorViewController.segueToOPFeedDetails = !self.liveReplyEnabled
-				kfmReplyTextEditorViewController.opFeedMessage = self.feedMessage
-
-				let kurozoraNavigationController = KNavigationController.init(rootViewController: kfmReplyTextEditorViewController)
-				kurozoraNavigationController.navigationBar.prefersLargeTitles = false
-				self.parentViewController?.present(kurozoraNavigationController, animated: true)
-			}
-		}
-	}
-
-	/// Re-share the message on the feed.
-	fileprivate func reShareMessage() {
-		WorkflowController.shared.isSignedIn {
-			if !self.feedMessage.attributes.isReShared {
-				if let kfmReShareTextEditorViewController = R.storyboard.textEditor.kfmReShareTextEditorViewController() {
-					kfmReShareTextEditorViewController.delegate = self.parentViewController as? KFeedMessageTextEditorViewDelegate
-					kfmReShareTextEditorViewController.segueToOPFeedDetails = !self.liveReShareEnabled
-					kfmReShareTextEditorViewController.opFeedMessage = self.feedMessage
-
-					let kurozoraNavigationController = KNavigationController.init(rootViewController: kfmReShareTextEditorViewController)
-					kurozoraNavigationController.navigationBar.prefersLargeTitles = false
-					self.parentViewController?.present(kurozoraNavigationController, animated: true)
-				}
-			} else {
-				SCLAlertView().showNotice("Can't re-share", subTitle: "You are not allowed to re-share a message more than once.")
-			}
-		}
-	}
-
-	/// Sends a report of the selected message to the mods.
-	func reportMessage() {
-		WorkflowController.shared.isSignedIn {
-		}
-	}
-
-	/// Presents a share sheet to share the selected message.
-	func shareMessage() {
-		var shareText = "\"\(feedMessage.attributes.body)\""
-		if let user = feedMessage.relationships.users.data.first {
-			shareText += "-\(user.attributes.username)"
-		}
-
-		let activityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
-
-		if let popoverController = activityViewController.popoverPresentationController {
-			popoverController.sourceView = moreButton
-			popoverController.sourceRect = moreButton.bounds
-		}
-		self.parentViewController?.present(activityViewController, animated: true, completion: nil)
-	}
-
-	/// Builds and presents an action sheet.
-	fileprivate func showActionList() {
-		let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-
-		// Heart, re-share and reply actions
-		// Username action
-		if let user = feedMessage.relationships.users.data.first {
-			let username = user.attributes.username
-			let userAction = UIAlertAction.init(title: username + "'s profile", style: .default, handler: { (_) in
-				self.visitPosterProfilePage()
-			})
-			userAction.setValue(UIImage(systemName: "person.crop.circle.fill"), forKey: "image")
-			userAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-			alertController.addAction(userAction)
-		}
-
-		// Share feed message action
-		let reShareAction = UIAlertAction.init(title: "Share", style: .default, handler: { (_) in
-			self.shareMessage()
-		})
-		reShareAction.setValue(UIImage(systemName: "square.and.arrow.up.fill"), forKey: "image")
-		reShareAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-		alertController.addAction(reShareAction)
-
-		// Report feed message action
-		let reportAction = UIAlertAction.init(title: "Report", style: .destructive, handler: { (_) in
-			self.reportMessage()
-		})
-		reportAction.setValue(UIImage(systemName: "exclamationmark.circle.fill"), forKey: "image")
-		reportAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-		alertController.addAction(reportAction)
-
-		alertController.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
-
-		//Present the controller
-		if let popoverController = alertController.popoverPresentationController {
-			popoverController.sourceView = moreButton
-			popoverController.sourceRect = moreButton.bounds
-		}
-
-		if (parentViewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
-			parentViewController?.present(alertController, animated: true, completion: nil)
-		}
-	}
-
 	// MARK: - IBActions
 	@objc func usernameLabelPressed(_ sender: AnyObject) {
-		self.visitPosterProfilePage()
+		self.delegate?.visitOriginalPosterProfile(self)
 	}
 
 	@IBAction func heartButtonPressed(_ sender: UIButton) {
-		self.heartMessage()
+		self.delegate?.heartMessage(self)
 		sender.animateBounce()
 	}
 
 	@IBAction func commentButtonPressed(_ sender: UIButton) {
-		self.replyMessage()
+		self.delegate?.replyToMessage(self)
 		sender.animateBounce()
-	}
-
-	@IBAction func segueToMessageDetails(_ sender: UIButton) {
-		sender.animateBounce()
-		self.parentViewController?.performSegue(withIdentifier: R.segue.feedTableViewController.feedMessageDetailsSegue.identifier, sender: self.feedMessage.id)
 	}
 
 	@IBAction func reShareButtonPressed(_ sender: UIButton) {
-		self.reShareMessage()
+		self.delegate?.reShareMessage(self)
 		sender.animateBounce()
 	}
 
 	@IBAction func moreButtonPressed(_ sender: UIButton) {
-		showActionList()
+		fatalError("More button action not implemented.")
 	}
 }

@@ -9,7 +9,6 @@
 import UIKit
 import KurozoraKit
 import Cosmos
-import SCLAlertView
 
 class RatingCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
@@ -71,11 +70,10 @@ class RatingCollectionViewCell: UICollectionViewCell {
 				self.show.attributes.givenRating = rating
 
 				// Show a success alert thanking the user for rating.
-				let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
-				let sclAlertView = SCLAlertView(appearance: appearance).showSuccess("Submitted", subTitle: "Thank you for rating.")
+				let alertController = UIApplication.topViewController?.presentAlertController(title: "Rating Submitted", message: "Thank you for rating.")
 
 				DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
-					sclAlertView.close()
+					alertController?.dismiss(animated: true, completion: nil)
 				}
 			case .failure: break
 			}

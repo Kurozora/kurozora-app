@@ -8,7 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import SCLAlertView
 
 protocol KFeedMessageTextEditorViewDelegate: class {
 	func updateMessages(with feedMessages: [FeedMessage])
@@ -78,7 +77,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 				}
 			}
 		} else {
-			SCLAlertView().showWarning("Character limit reached!", subTitle: "You have exceeded the character limit for a message.")
+			self.presentAlertController(title: "Limit Reached", message: "You have exceeded the character limit for a message.")
 		}
 	}
 }

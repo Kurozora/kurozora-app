@@ -9,8 +9,6 @@
 import UIKit
 
 class FeedMessageCell: BaseFeedMessageCell {
-	@IBOutlet weak var separatorView: SecondarySeparatorView?
-
 	// MARK: - Functions
 	override func configureCell() {
 		super.configureCell()

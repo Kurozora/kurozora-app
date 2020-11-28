@@ -141,7 +141,7 @@ class ThreadTableViewController: KTableViewController {
 		// Set thread content
 		self.richTextView.text = forumsThread.attributes.content
 
-		if let user = forumsThread.relationships.user.data.first {
+		if let user = forumsThread.relationships.users.data.first {
 			// Set poster username
 			self.posterUsernameLabel.setTitle(user.attributes.username, for: .normal)
 		}

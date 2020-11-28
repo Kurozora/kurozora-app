@@ -8,7 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import SCLAlertView
 
 class ThemesCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
@@ -114,11 +113,10 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 	fileprivate func shouldDownloadTheme() {
 		let themeID = theme.id
 		guard KThemeStyle.themeExist(for: themeID) else {
-			let alert = SCLAlertView()
-			alert.addButton("Sure") {
-				self.handleDownloadTheme()
-			}
-			alert.showInfo("Not Downloaded", subTitle: "Download the theme right now?", closeButtonTitle: "Cancel")
+			let alertController = UIApplication.topViewController?.presentAlertController(title: "Not Downloaded", message: "Download the theme right now?", defaultActionButtonTitle: "Cancel")
+			alertController?.addAction(UIAlertAction(title: "Download", style: .default) { [weak self] _ in
+				self?.handleDownloadTheme()
+			})
 			return
 		}
 
@@ -129,14 +127,14 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 	fileprivate func handleDownloadTheme() {
 		let themeName = theme.attributes.name
 		let themeID = theme.id
-		let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
-		let sclAlertView = SCLAlertView(appearance: appearance).showWait("Downloading \(themeName)...")
+		let alertController = UIApplication.topViewController?.presentActivityAlertController(title: "Downloading \(themeName)...", message: nil)
 
 		KThemeStyle.downloadThemeTask(for: theme) { isSuccess in
-			sclAlertView.setTitle(isSuccess ? "Finished downloading!" : "Download failed :(")
+			alertController?.dismiss(animated: true, completion: nil)
 
+			let alertController = UIApplication.topViewController?.presentAlertController(title: isSuccess ? "Finished downloading!" : "Download failed :(", message: nil)
 			DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-				sclAlertView.close()
+				alertController?.dismiss(animated: true, completion: nil)
 			}
 
 			if isSuccess {
@@ -149,14 +147,14 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 	/// Handle the removing process for a downloaded theme.
 	fileprivate func handleRemoveTheme(timeout: Double = 0.5, withSuccess successHandler: ((_ isSuccess: Bool) -> Void)? = nil) {
 		let themeName = theme.attributes.name
-		let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
-		let sclAlertView = SCLAlertView(appearance: appearance).showWait("Removing \(themeName)...")
+		let alertController = UIApplication.topViewController?.presentActivityAlertController(title: "Removing \(themeName)...", message: nil)
 
 		KThemeStyle.removeThemeTask(for: theme) { isSuccess in
-			sclAlertView.setTitle(isSuccess ? "Finished removing!" : "Removing failed :(")
+			alertController?.dismiss(animated: true, completion: nil)
 
+			let alertController = UIApplication.topViewController?.presentAlertController(title: isSuccess ? "Finished removing!" : "Removing failed :(", message: nil)
 			DispatchQueue.main.asyncAfter(deadline: .now() + timeout) {
-				sclAlertView.close()
+				alertController?.dismiss(animated: true, completion: nil)
 			}
 
 			if isSuccess {

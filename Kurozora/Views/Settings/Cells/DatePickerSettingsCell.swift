@@ -24,7 +24,6 @@ class DatePickerSettingsCell: SettingsCell {
 		super.layoutSubviews()
 
 		datePicker.textColor = KThemePicker.textColor.colorValue
-		datePicker.setValue(false, forKey: "highlightsToday")
 	}
 
 	// MARK: - Functions

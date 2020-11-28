@@ -191,13 +191,13 @@ extension FMDetailsTableViewController {
 			feedMessageCell.feedMessage = feedMessage
 			return feedMessageCell
 		default:
-			guard let feedMessageReplyCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedMessageReplyCell, for: indexPath) else {
-				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.feedMessageReplyCell.identifier)")
+			guard let feedMessageCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedMessageCell, for: indexPath) else {
+				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.feedMessageCell.identifier)")
 			}
-			feedMessageReplyCell.liveReplyEnabled = false
-			feedMessageReplyCell.liveReShareEnabled = false
-			feedMessageReplyCell.feedMessage = feedMessageReplies[indexPath.row]
-			return feedMessageReplyCell
+			feedMessageCell.liveReplyEnabled = false
+			feedMessageCell.liveReShareEnabled = false
+			feedMessageCell.feedMessage = feedMessageReplies[indexPath.row]
+			return feedMessageCell
 		}
 	}
 }
@@ -222,6 +222,16 @@ extension FMDetailsTableViewController {
 				self.getReplies()
 			}
 		}
+	}
+}
+
+// MARK: - KTableViewDataSource
+extension FMDetailsTableViewController {
+	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
+		return [
+			FeedMessageCell.self,
+			FeedMessageReShareCell.self
+		]
 	}
 }
 

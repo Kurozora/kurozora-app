@@ -18,12 +18,6 @@
 <a href="https://github.com/wxxsw/SwiftTheme/blob/master/LICENSE"><img src="http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat"></a>
 </p>
 
-## Sponsors
-
-SwiftTheme is being sponsored by the following tool; please help to support us by taking a look and signing up to a free trial
-
-<a href="https://tracking.gitads.io/?repo=SwiftTheme"><img src="https://images.gitads.io/SwiftTheme" alt="GitAds"/></a>
-
 ## Screenshot
 
 ![](https://github.com/wxxsw/SwiftThemeResources/blob/master/Screenshots/switch.gif)

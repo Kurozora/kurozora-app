@@ -16,8 +16,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="Tuq-FB-wZm"/>
-                        <viewLayoutGuide key="contentLayoutGuide" id="cVC-g9-gWr"/>
-                        <viewLayoutGuide key="frameLayoutGuide" id="Zs3-pg-IhE"/>
                         <sections>
                             <tableViewSection footerTitle="Receive notifications inside Kurozora while using the app. This is separate from systemwide notifications for Kurozora." id="tHZ-ms-IjV">
                                 <cells>
@@ -28,46 +26,35 @@
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ork-Hy-i8n">
-                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Allow Notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8nU-Eg-bdX">
-                                                            <rect key="frame" x="8" y="5" width="142" height="40"/>
-                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KlJ-qn-pPg" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="317" y="9.5" width="51" height="31"/>
-                                                            <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <color key="onTintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <connections>
-                                                                <action selector="switchTapped:" destination="qxA-b6-pa8" eventType="valueChanged" id="I2U-AT-hMA"/>
-                                                            </connections>
-                                                        </switch>
-                                                    </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="bottom" secondItem="8nU-Eg-bdX" secondAttribute="bottom" constant="5" id="2fH-SE-PbH"/>
-                                                        <constraint firstItem="8nU-Eg-bdX" firstAttribute="leading" secondItem="Ork-Hy-i8n" secondAttribute="leadingMargin" id="3sk-ca-P3h"/>
-                                                        <constraint firstItem="8nU-Eg-bdX" firstAttribute="top" secondItem="Ork-Hy-i8n" secondAttribute="top" constant="5" id="I4Q-HW-eT3"/>
-                                                        <constraint firstItem="KlJ-qn-pPg" firstAttribute="centerY" secondItem="Ork-Hy-i8n" secondAttribute="centerY" id="V0h-qz-7RN"/>
-                                                        <constraint firstAttribute="trailingMargin" secondItem="KlJ-qn-pPg" secondAttribute="trailing" id="sOp-hl-kXP"/>
-                                                        <constraint firstItem="KlJ-qn-pPg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8nU-Eg-bdX" secondAttribute="trailing" constant="10" id="tKS-UD-DNh"/>
-                                                    </constraints>
-                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Allow Notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8nU-Eg-bdX">
+                                                    <rect key="frame" x="8" y="15" width="141.5" height="20.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KlJ-qn-pPg" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
+                                                    <rect key="frame" x="317" y="10" width="51" height="30"/>
+                                                    <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="onTintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="switchTapped:" destination="qxA-b6-pa8" eventType="valueChanged" id="I2U-AT-hMA"/>
+                                                    </connections>
+                                                </switch>
                                             </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="Ork-Hy-i8n" secondAttribute="trailing" id="56G-BY-Jnk"/>
-                                                <constraint firstItem="Ork-Hy-i8n" firstAttribute="top" secondItem="hv5-7d-C2b" secondAttribute="top" id="QZP-hH-fMm"/>
-                                                <constraint firstAttribute="leading" secondItem="Ork-Hy-i8n" secondAttribute="leading" id="R7a-jo-iDz"/>
-                                                <constraint firstAttribute="bottom" secondItem="Ork-Hy-i8n" secondAttribute="bottom" id="b42-WB-dyx"/>
+                                                <constraint firstAttribute="trailing" secondItem="KlJ-qn-pPg" secondAttribute="trailing" constant="8" id="8oh-5R-R2l"/>
+                                                <constraint firstItem="KlJ-qn-pPg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8nU-Eg-bdX" secondAttribute="trailing" constant="8" symbolic="YES" id="CfO-1n-2yN"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="8nU-Eg-bdX" secondAttribute="bottom" constant="10" id="a9h-bf-xwO"/>
+                                                <constraint firstItem="8nU-Eg-bdX" firstAttribute="centerY" secondItem="KlJ-qn-pPg" secondAttribute="centerY" id="cUX-XM-3bF"/>
+                                                <constraint firstItem="KlJ-qn-pPg" firstAttribute="top" secondItem="hv5-7d-C2b" secondAttribute="top" constant="10" id="lfr-dn-2GU"/>
+                                                <constraint firstItem="8nU-Eg-bdX" firstAttribute="leading" secondItem="hv5-7d-C2b" secondAttribute="leading" constant="8" id="mbJ-eI-Sjz"/>
+                                                <constraint firstAttribute="bottom" secondItem="KlJ-qn-pPg" secondAttribute="bottom" constant="10" id="qbD-SV-oQ6"/>
+                                                <constraint firstItem="8nU-Eg-bdX" firstAttribute="top" relation="greaterThanOrEqual" secondItem="hv5-7d-C2b" secondAttribute="top" constant="10" id="vzb-mE-YgP"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <viewLayoutGuide key="safeArea" id="4f3-Ek-sDB"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
-                                            <outlet property="bubbleView" destination="Ork-Hy-i8n" id="apO-ba-gdP"/>
                                             <outlet property="primaryLabel" destination="8nU-Eg-bdX" id="YTh-IQ-e1x"/>
                                         </connections>
                                     </tableViewCell>
@@ -82,48 +69,36 @@
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CCR-dG-aDx">
-                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
-                                                    <subviews>
-                                                        <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sounds" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eCT-vt-NF5">
-                                                            <rect key="frame" x="8" y="10" width="58" height="30"/>
-                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <switch tag="1" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FKd-mg-6mV" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="317" y="9.5" width="51" height="31"/>
-                                                            <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <color key="onTintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <connections>
-                                                                <action selector="switchTapped:" destination="qxA-b6-pa8" eventType="valueChanged" id="ul9-Ak-Vji"/>
-                                                            </connections>
-                                                        </switch>
-                                                    </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <constraints>
-                                                        <constraint firstItem="eCT-vt-NF5" firstAttribute="leading" secondItem="CCR-dG-aDx" secondAttribute="leadingMargin" id="F8m-pa-H25"/>
-                                                        <constraint firstItem="FKd-mg-6mV" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="eCT-vt-NF5" secondAttribute="trailing" constant="10" id="HAj-Kh-B2m"/>
-                                                        <constraint firstAttribute="bottom" secondItem="eCT-vt-NF5" secondAttribute="bottom" constant="10" id="RbM-x4-oPo"/>
-                                                        <constraint firstItem="FKd-mg-6mV" firstAttribute="centerY" secondItem="CCR-dG-aDx" secondAttribute="centerY" id="bHJ-4I-7MC"/>
-                                                        <constraint firstItem="eCT-vt-NF5" firstAttribute="top" secondItem="CCR-dG-aDx" secondAttribute="top" constant="10" id="gIf-et-1SY"/>
-                                                        <constraint firstItem="eCT-vt-NF5" firstAttribute="centerY" secondItem="CCR-dG-aDx" secondAttribute="centerY" id="gbZ-P3-UUP"/>
-                                                        <constraint firstAttribute="trailingMargin" secondItem="FKd-mg-6mV" secondAttribute="trailing" id="kul-e7-Pxh"/>
-                                                    </constraints>
-                                                </view>
+                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sounds" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eCT-vt-NF5">
+                                                    <rect key="frame" x="8" y="15" width="57.5" height="20.5"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch tag="1" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FKd-mg-6mV" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
+                                                    <rect key="frame" x="317" y="10" width="51" height="30"/>
+                                                    <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="onTintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="switchTapped:" destination="qxA-b6-pa8" eventType="valueChanged" id="ul9-Ak-Vji"/>
+                                                    </connections>
+                                                </switch>
                                             </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="CCR-dG-aDx" secondAttribute="bottom" id="VQI-LN-M4L"/>
-                                                <constraint firstItem="CCR-dG-aDx" firstAttribute="top" secondItem="JrI-GZ-IDb" secondAttribute="top" id="kv9-04-oPc"/>
-                                                <constraint firstAttribute="trailing" secondItem="CCR-dG-aDx" secondAttribute="trailing" id="nSH-fn-7Uf"/>
-                                                <constraint firstItem="CCR-dG-aDx" firstAttribute="leading" secondItem="JrI-GZ-IDb" secondAttribute="leading" id="wSh-SN-rwz"/>
+                                                <constraint firstItem="eCT-vt-NF5" firstAttribute="leading" secondItem="JrI-GZ-IDb" secondAttribute="leading" constant="8" id="5Wb-LK-DVd"/>
+                                                <constraint firstItem="FKd-mg-6mV" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="eCT-vt-NF5" secondAttribute="trailing" constant="8" symbolic="YES" id="IXy-es-Thn"/>
+                                                <constraint firstItem="eCT-vt-NF5" firstAttribute="top" relation="greaterThanOrEqual" secondItem="JrI-GZ-IDb" secondAttribute="top" constant="10" id="JUp-KT-SSD"/>
+                                                <constraint firstItem="FKd-mg-6mV" firstAttribute="centerY" secondItem="eCT-vt-NF5" secondAttribute="centerY" id="ZQt-XX-UXE"/>
+                                                <constraint firstAttribute="trailing" secondItem="FKd-mg-6mV" secondAttribute="trailing" constant="8" id="arb-0I-uuG"/>
+                                                <constraint firstItem="FKd-mg-6mV" firstAttribute="top" secondItem="JrI-GZ-IDb" secondAttribute="top" constant="10" id="bE9-os-VOZ"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="eCT-vt-NF5" secondAttribute="bottom" constant="10" id="ltk-ZW-HhY"/>
+                                                <constraint firstAttribute="bottom" secondItem="FKd-mg-6mV" secondAttribute="bottom" constant="10" id="m5h-Vn-ELU"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <viewLayoutGuide key="safeArea" id="GAa-oW-BsR"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
-                                            <outlet property="bubbleView" destination="CCR-dG-aDx" id="Jg5-XB-Rek"/>
                                             <outlet property="primaryLabel" destination="eCT-vt-NF5" id="7Yd-nS-ij7"/>
                                         </connections>
                                     </tableViewCell>
@@ -134,48 +109,36 @@
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1hQ-Lm-G3T">
-                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
-                                                    <subviews>
-                                                        <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Badges" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Un-39-pw2">
-                                                            <rect key="frame" x="8" y="10" width="57.5" height="30"/>
-                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <switch tag="2" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XSM-LP-bDA" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="317" y="9.5" width="51" height="31"/>
-                                                            <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <color key="onTintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <connections>
-                                                                <action selector="switchTapped:" destination="qxA-b6-pa8" eventType="valueChanged" id="2BZ-S0-Xcq"/>
-                                                            </connections>
-                                                        </switch>
-                                                    </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="trailingMargin" secondItem="XSM-LP-bDA" secondAttribute="trailing" id="6W4-dc-ryo"/>
-                                                        <constraint firstItem="2Un-39-pw2" firstAttribute="top" secondItem="1hQ-Lm-G3T" secondAttribute="top" constant="10" id="7xV-FH-3Wg"/>
-                                                        <constraint firstAttribute="bottom" secondItem="2Un-39-pw2" secondAttribute="bottom" constant="10" id="Rgo-yI-950"/>
-                                                        <constraint firstItem="2Un-39-pw2" firstAttribute="leading" secondItem="1hQ-Lm-G3T" secondAttribute="leadingMargin" id="WpH-QG-8Il"/>
-                                                        <constraint firstItem="XSM-LP-bDA" firstAttribute="centerY" secondItem="1hQ-Lm-G3T" secondAttribute="centerY" id="ckA-7D-7vM"/>
-                                                        <constraint firstItem="XSM-LP-bDA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2Un-39-pw2" secondAttribute="trailing" constant="10" id="jeC-kp-pTI"/>
-                                                        <constraint firstItem="2Un-39-pw2" firstAttribute="centerY" secondItem="1hQ-Lm-G3T" secondAttribute="centerY" id="yaG-cr-aOj"/>
-                                                    </constraints>
-                                                </view>
+                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Badges" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Un-39-pw2">
+                                                    <rect key="frame" x="8" y="15" width="57.5" height="20.5"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch tag="2" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XSM-LP-bDA" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
+                                                    <rect key="frame" x="317" y="10" width="51" height="30"/>
+                                                    <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="onTintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="switchTapped:" destination="qxA-b6-pa8" eventType="valueChanged" id="2BZ-S0-Xcq"/>
+                                                    </connections>
+                                                </switch>
                                             </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="1hQ-Lm-G3T" secondAttribute="bottom" id="MUk-Ww-blH"/>
-                                                <constraint firstAttribute="trailing" secondItem="1hQ-Lm-G3T" secondAttribute="trailing" id="NRj-6Q-WGI"/>
-                                                <constraint firstItem="1hQ-Lm-G3T" firstAttribute="top" secondItem="ZG6-E4-Ut2" secondAttribute="top" id="scb-Tp-tsc"/>
-                                                <constraint firstItem="1hQ-Lm-G3T" firstAttribute="leading" secondItem="ZG6-E4-Ut2" secondAttribute="leading" id="wyQ-O2-DAN"/>
+                                                <constraint firstAttribute="bottom" secondItem="XSM-LP-bDA" secondAttribute="bottom" constant="10" id="APN-MH-Bdc"/>
+                                                <constraint firstItem="XSM-LP-bDA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2Un-39-pw2" secondAttribute="trailing" constant="8" symbolic="YES" id="EUg-Xo-sB2"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="2Un-39-pw2" secondAttribute="bottom" constant="10" id="U2o-4r-REP"/>
+                                                <constraint firstItem="2Un-39-pw2" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ZG6-E4-Ut2" secondAttribute="top" constant="10" id="Uay-sP-bPH"/>
+                                                <constraint firstItem="XSM-LP-bDA" firstAttribute="top" secondItem="ZG6-E4-Ut2" secondAttribute="top" constant="10" id="YhR-Le-ipf"/>
+                                                <constraint firstItem="XSM-LP-bDA" firstAttribute="centerY" secondItem="2Un-39-pw2" secondAttribute="centerY" id="gRk-e7-AxU"/>
+                                                <constraint firstAttribute="trailing" secondItem="XSM-LP-bDA" secondAttribute="trailing" constant="8" id="jjg-Uv-6lq"/>
+                                                <constraint firstItem="2Un-39-pw2" firstAttribute="leading" secondItem="ZG6-E4-Ut2" secondAttribute="leading" constant="8" id="zVM-gB-Neo"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <viewLayoutGuide key="safeArea" id="eKq-PE-ZPs"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
-                                            <outlet property="bubbleView" destination="1hQ-Lm-G3T" id="MyD-Wg-2SQ"/>
                                             <outlet property="primaryLabel" destination="2Un-39-pw2" id="63k-IC-De8"/>
                                         </connections>
                                     </tableViewCell>
@@ -237,7 +200,6 @@
                                                 <constraint firstAttribute="trailing" secondItem="cZu-SV-9yh" secondAttribute="trailing" id="pak-6M-2QD"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <viewLayoutGuide key="safeArea" id="YoP-Zh-euM"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <outlet property="chevronImageView" destination="HDY-BI-Q3W" id="uvf-S5-7Y8"/>
@@ -274,8 +236,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="W64-Ug-o6q"/>
-                        <viewLayoutGuide key="contentLayoutGuide" id="DNG-L4-27g"/>
-                        <viewLayoutGuide key="frameLayoutGuide" id="bR7-7T-vov"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SelectableSettingsCell" rowHeight="50" id="c4x-NC-ZRm" customClass="SelectableSettingsCell" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="20" y="55.5" width="374" height="50"/>
@@ -296,10 +256,7 @@
                                                     <size key="shadowOffset" width="0.0" height="0.0"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="uQp-5F-VbL">
-                                                    <rect key="frame" x="347.5" y="19" width="18.5" height="12.5"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="16" id="VUQ-Gl-XNO"/>
-                                                    </constraints>
+                                                    <rect key="frame" x="347.5" y="17" width="18.5" height="16.5"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -319,7 +276,6 @@
                                         <constraint firstItem="gb2-yE-gYA" firstAttribute="leading" secondItem="emc-CR-VDS" secondAttribute="leading" id="mLm-z1-D9s"/>
                                     </constraints>
                                 </tableViewCellContentView>
-                                <viewLayoutGuide key="safeArea" id="Xxo-hY-clL"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="primaryLabel" destination="n2F-8z-qcc" id="gJX-EN-f8x"/>

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SCLAlertView
 
 class ResetPasswordTableViewController: AccountOnboardingTableViewController {
 	// MARK: - View
@@ -22,7 +21,7 @@ class ResetPasswordTableViewController: AccountOnboardingTableViewController {
 		super.rightNavigationBarButtonPressed(sender: sender)
 
 		guard let emailAddress = textFieldArray.first??.trimmedText, emailAddress.isValidEmail else {
-			SCLAlertView().showError("Errr...", subTitle: "Please type a valid Kurozora ID 😣")
+			self.presentAlertController(title: "Errr...", message: "Please type a valid Kurozora ID 😣")
 			return
 		}
 
@@ -30,14 +29,9 @@ class ResetPasswordTableViewController: AccountOnboardingTableViewController {
 			guard let self = self else { return }
 			switch result {
 			case .success:
-				let appearance = SCLAlertView.SCLAppearance(
-					showCloseButton: false
-				)
-				let alertView = SCLAlertView(appearance: appearance)
-				alertView.addButton("Done", action: {
-					self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
-				})
-				alertView.showSuccess("Success!", subTitle: "If an account exists with this Kurozora ID, you should receive an email with your reset link shortly.")
+				self.presentAlertController(title: "Success!", message: "If an account exists with this Kurozora ID, you should receive an email with your reset link shortly.", defaultActionButtonTitle: "Done") { [weak self] _ in
+					self?.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+				}
 			case .failure: break
 			}
 		}

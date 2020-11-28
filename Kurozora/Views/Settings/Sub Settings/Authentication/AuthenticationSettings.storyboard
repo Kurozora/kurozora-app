@@ -25,71 +25,57 @@
                                     <tableViewCell contentMode="scaleToFill" misplaced="YES" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" translatesAutoresizingMaskIntoConstraints="NO" id="6oh-ZP-WM2" customClass="AuthenticationSettingsCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="20" y="18" width="374" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" tableViewCell="6oh-ZP-WM2" id="lis-rD-JCx">
+                                        <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6oh-ZP-WM2" id="lis-rD-JCx">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X67-2T-iMW">
-                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
+                                                <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="PGA-te-zoj">
+                                                    <rect key="frame" x="10" y="10" width="30" height="30"/>
                                                     <subviews>
-                                                        <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="PGA-te-zoj">
-                                                            <rect key="frame" x="8" y="10" width="30" height="30"/>
-                                                            <subviews>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icons/Face ID" translatesAutoresizingMaskIntoConstraints="NO" id="S7B-cc-bhW">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
-                                                                </imageView>
-                                                            </subviews>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="30" id="BOL-bW-vSq"/>
-                                                                <constraint firstAttribute="bottom" secondItem="S7B-cc-bhW" secondAttribute="bottom" id="DFr-Op-TpH"/>
-                                                                <constraint firstAttribute="height" constant="30" id="G6n-sN-v9K"/>
-                                                                <constraint firstItem="S7B-cc-bhW" firstAttribute="leading" secondItem="PGA-te-zoj" secondAttribute="leading" id="Qyc-C0-cnQ"/>
-                                                                <constraint firstItem="S7B-cc-bhW" firstAttribute="top" secondItem="PGA-te-zoj" secondAttribute="top" id="ZHl-SP-Whq"/>
-                                                                <constraint firstAttribute="trailing" secondItem="S7B-cc-bhW" secondAttribute="trailing" id="k8f-XZ-Wga"/>
-                                                            </constraints>
-                                                        </view>
-                                                        <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lock with Face ID &amp; Passcode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vrA-AR-cki">
-                                                            <rect key="frame" x="46" y="14.5" width="227.5" height="21"/>
-                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OFc-qj-smH" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="315" y="9.5" width="51" height="31"/>
-                                                            <connections>
-                                                                <action selector="enabledSwitchSwitched:" destination="6oh-ZP-WM2" eventType="valueChanged" id="reQ-a1-hfT"/>
-                                                            </connections>
-                                                        </switch>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icons/Face ID" translatesAutoresizingMaskIntoConstraints="NO" id="S7B-cc-bhW">
+                                                            <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                                        </imageView>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
-                                                        <constraint firstItem="PGA-te-zoj" firstAttribute="centerY" secondItem="X67-2T-iMW" secondAttribute="centerY" id="6JD-ux-xxj"/>
-                                                        <constraint firstAttribute="bottom" secondItem="PGA-te-zoj" secondAttribute="bottom" constant="10" id="InX-xR-yy4"/>
-                                                        <constraint firstItem="OFc-qj-smH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vrA-AR-cki" secondAttribute="trailing" constant="10" id="Pih-M4-zsd"/>
-                                                        <constraint firstItem="vrA-AR-cki" firstAttribute="centerY" secondItem="PGA-te-zoj" secondAttribute="centerY" id="ePW-qo-kaG"/>
-                                                        <constraint firstItem="PGA-te-zoj" firstAttribute="leading" secondItem="X67-2T-iMW" secondAttribute="leadingMargin" id="g9e-7w-aDS"/>
-                                                        <constraint firstItem="PGA-te-zoj" firstAttribute="top" secondItem="X67-2T-iMW" secondAttribute="top" constant="10" id="h9I-pM-dVH"/>
-                                                        <constraint firstItem="vrA-AR-cki" firstAttribute="leading" secondItem="PGA-te-zoj" secondAttribute="trailing" constant="8" symbolic="YES" id="l1V-he-akg"/>
-                                                        <constraint firstAttribute="trailingMargin" secondItem="OFc-qj-smH" secondAttribute="trailing" constant="2" id="x0j-Io-CD9"/>
-                                                        <constraint firstItem="OFc-qj-smH" firstAttribute="centerY" secondItem="X67-2T-iMW" secondAttribute="centerYWithinMargins" id="yEH-cL-o6D"/>
+                                                        <constraint firstAttribute="width" constant="30" id="BOL-bW-vSq"/>
+                                                        <constraint firstAttribute="bottom" secondItem="S7B-cc-bhW" secondAttribute="bottom" id="DFr-Op-TpH"/>
+                                                        <constraint firstAttribute="height" constant="30" id="G6n-sN-v9K"/>
+                                                        <constraint firstItem="S7B-cc-bhW" firstAttribute="leading" secondItem="PGA-te-zoj" secondAttribute="leading" id="Qyc-C0-cnQ"/>
+                                                        <constraint firstItem="S7B-cc-bhW" firstAttribute="top" secondItem="PGA-te-zoj" secondAttribute="top" id="ZHl-SP-Whq"/>
+                                                        <constraint firstAttribute="trailing" secondItem="S7B-cc-bhW" secondAttribute="trailing" id="k8f-XZ-Wga"/>
                                                     </constraints>
                                                 </view>
+                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lock with Face ID &amp; Passcode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vrA-AR-cki">
+                                                    <rect key="frame" x="48" y="14.5" width="227.5" height="21"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OFc-qj-smH" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
+                                                    <rect key="frame" x="315" y="9.5" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="enabledSwitchSwitched:" destination="6oh-ZP-WM2" eventType="valueChanged" id="reQ-a1-hfT"/>
+                                                    </connections>
+                                                </switch>
                                             </subviews>
-                                            <viewLayoutGuide key="safeArea" id="cu3-NZ-a98"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstItem="X67-2T-iMW" firstAttribute="top" secondItem="lis-rD-JCx" secondAttribute="top" id="1mx-xM-v0n"/>
-                                                <constraint firstAttribute="bottom" secondItem="X67-2T-iMW" secondAttribute="bottom" id="R85-N1-0tI"/>
-                                                <constraint firstAttribute="leading" secondItem="X67-2T-iMW" secondAttribute="leading" id="eYk-0G-fBZ"/>
-                                                <constraint firstAttribute="trailing" secondItem="X67-2T-iMW" secondAttribute="trailing" id="nJe-B9-vCb"/>
+                                                <constraint firstItem="PGA-te-zoj" firstAttribute="leading" secondItem="lis-rD-JCx" secondAttribute="leading" constant="10" id="0k4-f2-MVk"/>
+                                                <constraint firstItem="vrA-AR-cki" firstAttribute="leading" secondItem="PGA-te-zoj" secondAttribute="trailing" constant="8" symbolic="YES" id="EYq-AI-9Wm"/>
+                                                <constraint firstItem="vrA-AR-cki" firstAttribute="centerY" secondItem="PGA-te-zoj" secondAttribute="centerY" id="HZ0-NB-Tn6"/>
+                                                <constraint firstAttribute="bottom" secondItem="OFc-qj-smH" secondAttribute="bottom" constant="9.5" id="LRa-q0-lfK"/>
+                                                <constraint firstItem="OFc-qj-smH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vrA-AR-cki" secondAttribute="trailing" constant="8" symbolic="YES" id="TIo-Cw-Lue"/>
+                                                <constraint firstAttribute="bottom" secondItem="PGA-te-zoj" secondAttribute="bottom" constant="10" id="V5A-dT-fwQ"/>
+                                                <constraint firstAttribute="trailing" secondItem="OFc-qj-smH" secondAttribute="trailing" constant="10" id="f9J-yz-jFw"/>
+                                                <constraint firstItem="OFc-qj-smH" firstAttribute="top" secondItem="lis-rD-JCx" secondAttribute="top" constant="9.5" id="jag-hq-o46"/>
+                                                <constraint firstItem="PGA-te-zoj" firstAttribute="top" secondItem="lis-rD-JCx" secondAttribute="top" constant="10" id="nPW-IE-zap"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <viewLayoutGuide key="safeArea" id="LRe-WI-vOS"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <outlet property="authenticationImageView" destination="S7B-cc-bhW" id="8an-YU-6Ex"/>
                                             <outlet property="authenticationTitleLabel" destination="vrA-AR-cki" id="tol-lV-ecl"/>
-                                            <outlet property="bubbleView" destination="X67-2T-iMW" id="rN3-eO-3NL"/>
                                             <outlet property="enabledSwitch" destination="OFc-qj-smH" id="lvS-ul-XDZ"/>
                                         </connections>
                                     </tableViewCell>
@@ -97,32 +83,32 @@
                             </tableViewSection>
                             <tableViewSection footerTitle="You'll be asked to immediatly authenticate if you completely close the app." id="DVY-cs-STr">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="55" translatesAutoresizingMaskIntoConstraints="NO" id="1Il-jo-KSp" customClass="AuthenticationSettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="164" width="374" height="55"/>
+                                    <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="50" translatesAutoresizingMaskIntoConstraints="NO" id="1Il-jo-KSp" customClass="AuthenticationSettingsCell" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="20" y="164" width="374" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" tableViewCell="1Il-jo-KSp" id="4UV-qv-99A">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="55"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1Il-jo-KSp" id="4UV-qv-99A">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qnh-ey-GH6">
-                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="55"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                                     <subviews>
                                                         <label multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" insetsLayoutMarginsFromSafeArea="NO" text="Require Authentication" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="Nad-PE-BM9">
-                                                            <rect key="frame" x="8" y="10" width="173" height="35"/>
+                                                            <rect key="frame" x="8" y="10" width="173" height="30"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Immediately" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="idh-YM-Jj3">
-                                                            <rect key="frame" x="260.5" y="18" width="88" height="19.5"/>
+                                                            <rect key="frame" x="260.5" y="15.5" width="88" height="19.5"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Bwb-FO-ynS">
-                                                            <rect key="frame" x="353.5" y="21.5" width="12.5" height="12.5"/>
+                                                            <rect key="frame" x="353.5" y="19" width="12.5" height="12.5"/>
                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="16" id="KfG-fo-Xqw"/>
@@ -143,7 +129,6 @@
                                                     </constraints>
                                                 </view>
                                             </subviews>
-                                            <viewLayoutGuide key="safeArea" id="khr-Kc-j1H"/>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="qnh-ey-GH6" secondAttribute="bottom" id="88K-hp-wd0"/>
                                                 <constraint firstAttribute="trailing" secondItem="qnh-ey-GH6" secondAttribute="trailing" id="cnC-GK-zDi"/>
@@ -151,7 +136,6 @@
                                                 <constraint firstItem="qnh-ey-GH6" firstAttribute="top" secondItem="4UV-qv-99A" secondAttribute="top" id="whA-Ki-0Q9"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <viewLayoutGuide key="safeArea" id="MFO-3R-2Es"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <outlet property="authenticationRequireValueLabel" destination="idh-YM-Jj3" id="iqh-5R-zsI"/>
@@ -173,7 +157,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5S1-2W-n8c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3322" y="-269"/>
+            <point key="canvasLocation" x="-3323.1884057971015" y="-269.19642857142856"/>
         </scene>
         <!--Require Authentication-->
         <scene sceneID="9ks-wb-R4r">

@@ -34,8 +34,16 @@ extension NSObject {
         }
         set {
             objc_setAssociatedObject(self, &themePickersKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-            _removeThemeNotification()
             if newValue.isEmpty == false { _setupThemeNotification() }
+        }
+    }
+    
+    var hasAddPickerNotification: Bool {
+        get {
+            return objc_getAssociatedObject(self, &addPickerNotificationKey) as? Bool ?? false
+        }
+        set {
+            objc_setAssociatedObject(self, &addPickerNotificationKey, newValue, .OBJC_ASSOCIATION_ASSIGN)
         }
     }
     
@@ -102,15 +110,14 @@ extension NSObject {
 extension NSObject {
     
     fileprivate func _setupThemeNotification() {
-        if #available(iOS 9.0, tvOS 9.0, *) {
-            NotificationCenter.default.addObserver(self, selector: #selector(_updateTheme), name: NSNotification.Name(rawValue: ThemeUpdateNotification), object: nil)
-        } else {
-            NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: ThemeUpdateNotification), object: nil, queue: nil, using: { [weak self] notification in self?._updateTheme() })
+        if hasAddPickerNotification == false {
+            hasAddPickerNotification = true
+            if #available(iOS 9.0, tvOS 9.0, *) {
+                NotificationCenter.default.addObserver(self, selector: #selector(_updateTheme), name: NSNotification.Name(rawValue: ThemeUpdateNotification), object: nil)
+            } else {
+                NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: ThemeUpdateNotification), object: nil, queue: nil, using: { [weak self] notification in self?._updateTheme() })
+            }
         }
-    }
-    
-    fileprivate func _removeThemeNotification() {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: ThemeUpdateNotification), object: nil)
     }
     
     @objc private func _updateTheme() {
@@ -130,3 +137,4 @@ extension NSObject {
 }
 
 private var themePickersKey = ""
+private var addPickerNotificationKey = ""

@@ -8,7 +8,6 @@
 
 import UIKit
 import StoreKit
-import SCLAlertView
 import Vision
 import VisionKit
 
@@ -20,9 +19,6 @@ class RedeemTableViewController: ServiceTableViewController {
 	var textFieldArray: [UITextField?] = []
 	var textRecognitionRequest = VNRecognizeTextRequest()
 	lazy var imagePicker = UIImagePickerController()
-
-	static let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
-	let sclAlertView = SCLAlertView(appearance: appearance)
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -70,7 +66,7 @@ class RedeemTableViewController: ServiceTableViewController {
 			imagePicker.delegate = self
 			self.present(imagePicker, animated: true, completion: nil)
 		} else {
-			SCLAlertView().showWarning("Well, this is awkward.", subTitle: "You don't seem to have a camera 😓")
+			self.presentAlertController(title: "Well, this is awkward.", message: "You don't seem to have a camera 😓")
 		}
 	}
 
@@ -100,11 +96,11 @@ class RedeemTableViewController: ServiceTableViewController {
 	*/
 	func showSuccess(for redeemCode: String?) {
 		guard let redeemCode = redeemCode else {
-			SCLAlertView().showError("Error redeeming code", subTitle: "Please specify a valid redeem code")
+			self.presentAlertController(title: "Error Redeeming Code", message: "The code entered is not valid.")
 			return
 		}
 
-		SCLAlertView().showSuccess("Zoop, badoop, fruitloop!", subTitle: "\(redeemCode) has been redeemed successfully 🤩")
+		self.presentAlertController(title: "Zoop, badoop, fruitloop!", message: "\(redeemCode) was successfully redeemed 🤩")
 	}
 
 	/**
@@ -177,16 +173,6 @@ extension RedeemTableViewController {
 		default: break
 		}
 	}
-
-//	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//		switch Section(rawValue: indexPath.section) {
-//		case .preview:
-//			let cellRatio: CGFloat = UIDevice.isLandscape ? 1.5 : 3
-//			return view.frame.height / cellRatio
-//		default:
-//			return UITableView.automaticDimension
-//		}
-//	}
 }
 
 // MARK: - UITextFieldDelegate
@@ -241,7 +227,7 @@ extension RedeemTableViewController: ProductActionTableViewCellDelegate {
 // MARK: - VNDocumentCameraViewControllerDelegate
 extension RedeemTableViewController: VNDocumentCameraViewControllerDelegate {
 	func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
-		let sclAlertViewShow = sclAlertView.showWait("Processing redeem code.")
+		let alertController = self.presentActivityAlertController(title: "Processing redeem code.", message: nil)
 
 		controller.dismiss(animated: true) {
 			DispatchQueue.global(qos: .userInitiated).async {
@@ -250,7 +236,7 @@ extension RedeemTableViewController: VNDocumentCameraViewControllerDelegate {
 					self.processImage(image: image)
 				}
 				DispatchQueue.main.async {
-					sclAlertViewShow.close()
+					alertController.dismiss(animated: true, completion: nil)
 				}
 			}
 		}
@@ -264,7 +250,7 @@ extension RedeemTableViewController: VNDocumentCameraViewControllerDelegate {
 //MARK: - UIImagePickerControllerDelegate
 extension RedeemTableViewController: UIImagePickerControllerDelegate {
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-		let sclAlertViewShow = sclAlertView.showWait("Processing redeem code.")
+		let alertController = self.presentActivityAlertController(title: "Processing redeem code.", message: nil)
 
 		picker.dismiss(animated: true) {
 			DispatchQueue.global(qos: .userInitiated).async {
@@ -272,7 +258,7 @@ extension RedeemTableViewController: UIImagePickerControllerDelegate {
 					self.processImage(image: image)
 				}
 				DispatchQueue.main.async {
-					sclAlertViewShow.close()
+					alertController.dismiss(animated: true, completion: nil)
 				}
 			}
 		}

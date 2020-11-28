@@ -8,7 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import SCLAlertView
 import SwiftyJSON
 
 protocol KRichTextEditorViewDelegate: class {
@@ -51,12 +50,12 @@ class KRichTextEditorViewController: KViewController {
 
 	@IBAction func postButtonPressed(_ sender: UIBarButtonItem) {
 		guard let sectionID = sectionID else { return }
-		guard let title = titleTextField.text?.trimmed else {
-			SCLAlertView().showWarning("Thread's title is empty!")
+		guard let title = titleTextField.text?.trimmed, !title.isEmpty else {
+			self.presentAlertController(title: "Missing Title", message: "The title of the thread can't be left is empty.")
 			return
 		}
-		guard let content = richTextView.text else {
-			SCLAlertView().showWarning("Thread's content is empty!")
+		guard let content = richTextView.text, !(content == self.placeholderText && richTextView.textColor == KThemePicker.textFieldPlaceholderTextColor.colorValue), !content.isEmpty else {
+			self.presentAlertController(title: "Missing Content", message: "The content of the thread can't be left empty.")
 			return
 		}
 
@@ -71,62 +70,6 @@ class KRichTextEditorViewController: KViewController {
 			}
 		}
 	}
-
-//	@IBAction func insertYouTubeButtonPressed(_ sender: UIBarButtonItem) {
-//		let alertView = SCLAlertView()
-//		let textField = alertView.addTextField("9R8LzNUW4s4")
-//		alertView.addButton("Done") {
-//			if let youtubeID = textField.text, !youtubeID.isEmpty {
-//				self.richTextView.insertText("youtube[\(youtubeID)]")
-//			}
-//			alertView.dismiss(animated: true, completion: nil)
-//		}
-//		alertView.showInfo("Add a YouTube video", closeButtonTitle: "Cancel")
-//		textField.becomeFirstResponder()
-//	}
-//
-//	@IBAction func insertLinkButtonPressed(_ sender: UIBarButtonItem) {
-//		if let selectedRange = richTextView.selectedTextRange, !selectedRange.isEmpty {
-//			let alertView = SCLAlertView()
-//			let textField = alertView.addTextField("https://")
-//			alertView.addButton("Done") {
-//				if let linkText = textField.text, !linkText.isEmpty {
-//					let selectedText = self.richTextView.text(in: selectedRange) ?? ""
-//					self.richTextView.insertText("[\(selectedText))](\(linkText))")
-//				}
-//			}
-//			alertView.showInfo("Add a link", closeButtonTitle: "Cancel")
-//			textField.becomeFirstResponder()
-//		} else {
-//			SCLAlertView().showWarning("Please select a text first!")
-//		}
-//	}
-//
-//	@IBAction func insertMentionButtonPressed(_ sender: UIBarButtonItem) {
-//		let alertView = SCLAlertView()
-//		let textField = alertView.addTextField("Enter username")
-//		alertView.addButton("Done") {
-//			if let username = textField.text, !username.isEmpty {
-//				self.richTextView.insertText("@\(username)")
-//			}
-//			alertView.dismiss(animated: true, completion: nil)
-//		}
-//		alertView.showInfo("Mention a user", subTitle: "Enter the username of the user you want to mention.", closeButtonTitle: "Cancel")
-//		textField.becomeFirstResponder()
-//	}
-//
-//	@IBAction func insertTagButtonPressed(_ sender: UIBarButtonItem) {
-//		let alertView = SCLAlertView()
-//		let textField = alertView.addTextField("Enter username")
-//		alertView.addButton("Done") {
-//			if let username = textField.text, !username.isEmpty {
-//				self.richTextView.insertText("@\(username)")
-//			}
-//			alertView.dismiss(animated: true, completion: nil)
-//		}
-//		alertView.showInfo("Mention a user", subTitle: "Enter the username of the user you want to mention.", closeButtonTitle: "Cancel")
-//		textField.becomeFirstResponder()
-//	}
 }
 
 // MARK: - UITextViewDelegate

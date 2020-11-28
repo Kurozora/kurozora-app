@@ -53,6 +53,12 @@ class FeedMessageReShareCell: FeedMessageCell {
 		}
 	}
 
+	/// Segues to message details.
+	@objc func showOPMessage(_ gestureRecognizer: UITapGestureRecognizer) {
+		guard let opMessage = self.feedMessage.relationships.parent?.data.first else { return }
+		self.parentViewController?.performSegue(withIdentifier: R.segue.feedTableViewController.feedMessageDetailsSegue.identifier, sender: opMessage.id)
+	}
+
 	/// Presents the profile view for the feed message poster.
 	@objc fileprivate func visitOPProfilePage(_ gestureRecognizer: UITapGestureRecognizer) {
 		guard let opMessage = self.feedMessage.relationships.parent?.data.first else { return }

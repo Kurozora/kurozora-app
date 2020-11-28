@@ -8,14 +8,8 @@
 
 import UIKit
 import KurozoraKit
-import SwipeCellKit
 
-class OtherSessionsCell: SwipeTableViewCell {
-	@IBOutlet weak var bubbleView: UIView! {
-		didSet {
-			bubbleView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-		}
-	}
+class OtherSessionsCell: KTableViewCell {
 	@IBOutlet weak var ipAddressTitleLabel: KTintedLabel!
 	@IBOutlet weak var deviceTypeTitleLabel: KTintedLabel!
 	@IBOutlet weak var dateTitleLabel: KTintedLabel!
@@ -27,21 +21,16 @@ class OtherSessionsCell: SwipeTableViewCell {
 	// MARK: - Properties
 	var session: Session! {
 		didSet {
-			updateOtherSessions()
+			configureCell()
 		}
 	}
 
 	// MARK: - Functions
-	fileprivate func updateOtherSessions() {
-		guard let session = session else { return }
+	override func configureCell() {
+		self.ipAddressValueLabel.text = session.attributes.ip
+		self.deviceTypeValueLabel.text = session.relationships.platform.data.first?.attributes.deviceModel
+		self.dateValueLabel?.text = session.attributes.lastValidatedAt
 
-		// IP Address
-		ipAddressValueLabel.text = session.attributes.ip
-
-		// Device Type
-		deviceTypeValueLabel.text = session.relationships.platform.data.first?.attributes.deviceModel
-
-		// Last Accessed
-		dateValueLabel?.text = session.attributes.lastValidatedAt
+		self.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 	}
 }

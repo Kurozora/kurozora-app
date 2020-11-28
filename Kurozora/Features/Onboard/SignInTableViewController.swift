@@ -9,7 +9,6 @@
 import UIKit
 import KurozoraKit
 import AuthenticationServices
-import SCLAlertView
 
 class SignInTableViewController: AccountOnboardingTableViewController {
 	// MARK: - View
@@ -57,9 +56,6 @@ class SignInTableViewController: AccountOnboardingTableViewController {
 					try? KurozoraDelegate.shared.keychain.set(authenticationToken, key: username)
 					UserSettings.set(username, forKey: .selectedAccount)
 				}
-//
-//				// Update the user's authentication key in KurozoraKit.
-//				KService.authenticationKey = authenticationToken
 
 				// Dismiss the view and register user for push notifications.
 				self.dismiss(animated: true) {
@@ -149,25 +145,23 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 	}
 
 	func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-		var subTitle = ""
+		var message = ""
 		if let error = error as? ASAuthorizationError {
 			switch error.code {
 			case .canceled: break
 			case .failed:
-				subTitle = "Authentication failed by Apple. Please try again."
+				message = "Authentication failed by Apple. Please try again."
 			case .invalidResponse:
-				subTitle = "The app received an invalid response from Apple. Please try again."
+				message = "The app received an invalid response from Apple. Please try again."
 			case .notHandled:
-				subTitle = "An error occured and the authentication was not handled by Apple. Please try again."
+				message = "An error occured and the authentication was not handled by Apple. Please try again."
 			default: break
 			}
 		}
 
-		if !subTitle.isEmpty {
-			SCLAlertView().showError("Error", subTitle: subTitle)
+		if !message.isEmpty {
+			self.presentAlertController(title: "Error", message: message)
 		}
-//		print("Error description: \(subTitle)")
-//		print("Error localized: \(error.localizedDescription)")
 	}
 }
 

@@ -32,11 +32,6 @@ class SettingsCell: UITableViewCell {
 			self.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 		}
 	}
-	@IBOutlet weak var bubbleView: UIView? {
-		didSet {
-			self.bubbleView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-		}
-	}
 	@IBOutlet weak var chevronImageView: UIImageView? {
 		didSet {
 			self.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
@@ -57,7 +52,7 @@ class SettingsCell: UITableViewCell {
 		}
 	}
 
-	// MARK: - Lifecycle
+	// MARK: - Initializers
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		self.sharedInit()
@@ -72,6 +67,7 @@ class SettingsCell: UITableViewCell {
 	/// The shared settings used to initialize the view.
 	func sharedInit() {
 		self.separatorInset = UIEdgeInsets(horizontal: 15, vertical: 0)
+		self.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 	}
 
 	/// Configure the cell with the given details.

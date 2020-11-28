@@ -8,7 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import SCLAlertView
 
 protocol KCommentEditorViewDelegate: class {
 	func updateReplies(with threadReplies: [ThreadReply])
@@ -57,7 +56,7 @@ class KCommentEditorViewController: KViewController {
 
 		threadTitleLabel.text = forumsThread.attributes.title
 
-		if let user = forumsThread.relationships.user.data.first {
+		if let user = forumsThread.relationships.users.data.first {
 			posterUsernameLabel.text = user.attributes.username
 		}
 
@@ -93,7 +92,7 @@ class KCommentEditorViewController: KViewController {
 				}
 			}
 		} else {
-			SCLAlertView().showWarning("Character limit reached!", subTitle: "You have exceeded the character limit for a reply.")
+			self.presentAlertController(title: "Limit Reached", message: "You have exceeded the character limit for a reply.")
 		}
 	}
 }

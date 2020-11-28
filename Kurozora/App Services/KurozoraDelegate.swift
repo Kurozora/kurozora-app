@@ -11,7 +11,6 @@ import KurozoraKit
 import ESTabBarController_swift
 import KeychainAccess
 import LocalAuthentication
-import SCLAlertView
 
 /**
 	A set of methods and properties used to manage shared behaviors for the `Kurozora` app.
@@ -283,7 +282,7 @@ extension KurozoraDelegate {
 		} else {
 			guard let error = authError else { return }
 			// Show appropriate alert if biometry/TouchID/FaceID is locked out or not enrolled.
-			SCLAlertView().showError("Error Authenticating", subTitle: self.evaluateAuthenticationPolicyMessageForLA(errorCode: error.code))
+			UIApplication.topViewController?.presentAlertController(title: "Error Authenticating", message: self.evaluateAuthenticationPolicyMessageForLA(errorCode: error.code))
 		}
 	}
 

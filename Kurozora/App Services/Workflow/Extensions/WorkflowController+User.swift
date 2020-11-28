@@ -7,7 +7,6 @@
 //
 
 import KurozoraKit
-import SCLAlertView
 
 // MARK: - User
 extension WorkflowController {
@@ -36,7 +35,7 @@ extension WorkflowController {
 		if User.isPro {
 			completion?()
 		} else {
-			SCLAlertView().showInfo("That's unfortunate", subTitle: "This feature is only accessible to pro users 🧐")
+			UIApplication.topViewController?.presentAlertController(title: "That's Unfortunate", message: "This feature is only accessible to pro users 🧐")
 		}
 	}
 

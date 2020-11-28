@@ -3,11 +3,10 @@ PODS:
   - Cosmos (23.0.0)
   - EmptyDataSet-Swift (5.0.0)
   - ESTabBarController-swift (2.8.0)
-  - FLEX (4.2.2)
   - KeychainAccess (4.2.1)
-  - Kingfisher (5.15.7):
-    - Kingfisher/Core (= 5.15.7)
-  - Kingfisher/Core (5.15.7)
+  - Kingfisher (5.15.8):
+    - Kingfisher/Core (= 5.15.8)
+  - Kingfisher/Core (5.15.8)
   - KurozoraKit (0.15.0):
     - KeychainAccess
     - SCLAlertView (~> 0.10)
@@ -44,7 +43,7 @@ PODS:
   - SwifterSwift/StoreKit (5.2.0)
   - SwifterSwift/SwiftStdlib (5.2.0)
   - SwifterSwift/UIKit (5.2.0)
-  - SwiftTheme (0.5.3)
+  - SwiftTheme (0.5.4)
   - SwiftyJSON (5.0.0)
   - SwipeCellKit (2.7.1)
   - Tabman (2.9.1):
@@ -65,7 +64,6 @@ DEPENDENCIES:
   - Cosmos
   - EmptyDataSet-Swift
   - ESTabBarController-swift
-  - FLEX
   - KeychainAccess
   - Kingfisher
   - KurozoraKit (from `../KurozoraKit`)
@@ -87,7 +85,6 @@ SPEC REPOS:
     - Cosmos
     - EmptyDataSet-Swift
     - ESTabBarController-swift
-    - FLEX
     - KeychainAccess
     - Kingfisher
     - Pageboy
@@ -115,9 +112,8 @@ SPEC CHECKSUMS:
   Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
   EmptyDataSet-Swift: eb382c0c87a2d9c678077385a595cec52da38171
   ESTabBarController-swift: 05593a6ad64700b03c0eb60ff625916370aa4136
-  FLEX: dbd68ae9c67fcc872c79c9e5a728f38243dfaa78
   KeychainAccess: 9b07f665298d13c3a85881bd3171f6f49b8151c1
-  Kingfisher: 6e1a13523fcb1c86924ce53affe4ac957e544d59
+  Kingfisher: a3c03d702433fa6cfedabb2bddbe076fb8f2e902
   KurozoraKit: 05569c73e9593eb4e4d818fdad7787b6f83178f1
   Pageboy: cf121b9dd48c63f3f281b2a9ec93d02e0f23879b
   R.swift: 4170fb7161c67be3bc1a847040b79367d69c419f
@@ -126,7 +122,7 @@ SPEC CHECKSUMS:
   SCLAlertView: 7635567b49d0fecbe374778bcd946801db40caf3
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
   SwifterSwift: 334181863c416882d97b7a60c05054d9e4d799e2
-  SwiftTheme: 617a1f46d9bd1d0f5733860eb5aebbc935202be4
+  SwiftTheme: 900582982b8d33d6226314e080f74d0767683218
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   SwipeCellKit: 3972254a826da74609926daf59b08d6c72e619ea
   Tabman: 085d89c65be9e883629bdaf5b1453a6397e57846
@@ -134,6 +130,6 @@ SPEC CHECKSUMS:
   UIImageColors: d2ef3b0877d203cbb06489eeb78ea8b7788caabe
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
 
-PODFILE CHECKSUM: 929f0fec588ddce8e9a4e8547a54c79cc72b6223
+PODFILE CHECKSUM: 777fe4cbe57cb4bf221b73bb0cf98ff923054ef2
 
 COCOAPODS: 1.10.0

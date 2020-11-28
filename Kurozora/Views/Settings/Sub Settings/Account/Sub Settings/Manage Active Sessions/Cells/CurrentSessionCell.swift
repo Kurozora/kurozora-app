@@ -15,13 +15,6 @@ class CurrentSessionCell: KTableViewCell {
 	@IBOutlet weak var deviceTitleLabel: KTintedLabel!
 	@IBOutlet weak var ipAddressValueLabel: KLabel!
 	@IBOutlet weak var deviceValueLabel: KLabel!
-	@IBOutlet weak var bubbleView: UIView! {
-		didSet {
-			bubbleView.theme_backgroundColor = KThemePicker.tintedBackgroundColor.rawValue
-			bubbleView.clipsToBounds = true
-			bubbleView.cornerRadius = 10
-		}
-	}
 	@IBOutlet weak var separatorView: SeparatorView!
 
 	// MARK: - Properties
@@ -33,7 +26,9 @@ class CurrentSessionCell: KTableViewCell {
 
 	// MARK: - Functions
 	override func configureCell() {
-		ipAddressValueLabel.text = session.attributes.ip
-		deviceValueLabel.text = session.relationships.platform.data.first?.attributes.deviceModel
+		self.ipAddressValueLabel.text = session.attributes.ip
+		self.deviceValueLabel.text = session.relationships.platform.data.first?.attributes.deviceModel
+
+		self.contentView.theme_backgroundColor = KThemePicker.tintedBackgroundColor.rawValue
 	}
 }

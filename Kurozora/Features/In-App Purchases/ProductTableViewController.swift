@@ -8,7 +8,6 @@
 
 import UIKit
 import StoreKit
-import SCLAlertView
 
 class ProductTableViewController: KTableViewController {
 	// MARK: - IBOutlets
@@ -99,7 +98,7 @@ class ProductTableViewController: KTableViewController {
 		} else {
 			DispatchQueue.main.async {
 				// Warn the user that they are not allowed to make purchases.
-				SCLAlertView().showWarning("Can't Purchase", subTitle: KStoreObserver.AlertType.disabled.message)
+				self.presentAlertController(title: "Can't Purchase", message: KStoreObserver.AlertType.disabled.message)
 			}
 		}
 	}
@@ -171,8 +170,8 @@ extension ProductTableViewController: PurchaseButtonTableViewCellDelegate {
 	func purchaseButtonPressed(_ sender: UIButton) {
 		if self.productsArray.count != 0 {
 			WorkflowController.shared.isSignedIn {
-				KStoreObserver.shared.purchase(product: self.productsArray[sender.tag]) { alert, _, _ in
-					SCLAlertView().showWarning(alert.message)
+				KStoreObserver.shared.purchase(product: self.productsArray[sender.tag]) { alertType, _, _ in
+					self.presentAlertController(title: "", message: alertType.message)
 				}
 			}
 		}

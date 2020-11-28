@@ -48,6 +48,7 @@ class FeedTableViewController: KTableViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		NotificationCenter.default.addObserver(self, selector: #selector(updateFeedMessage(_:)), name: .KFTMessageDidUpdate, object: nil)
 
 		// Add Refresh Control to Table View
 		#if !targetEnvironment(macCatalyst)
@@ -93,6 +94,16 @@ class FeedTableViewController: KTableViewController {
 		}
 	}
 
+	@objc func updateFeedMessage(_ notification: NSNotification) {
+		// Start delete process
+		self.tableView.performBatchUpdates({
+			if let indexPath = notification.userInfo?["indexPath"] as? IndexPath, let feedMessage = notification.userInfo?["feedMessage"] as? FeedMessage {
+				self.feedMessages[indexPath.section] = feedMessage
+				self.tableView.reloadSections([indexPath.section], with: .none)
+			}
+		}, completion: nil)
+	}
+
 	/// Configures the view with the user's details.
 	func configureUserDetails() {
 		profileImageButton.setImage(User.current?.attributes.profileImage ?? R.image.placeholders.userProfile(), for: .normal)
@@ -113,9 +124,11 @@ class FeedTableViewController: KTableViewController {
 				self.feedMessages.append(contentsOf: feedMessageResponse.data)
 				self.nextPageURL = feedMessageResponse.next
 
-				if self.tableView.numberOfSections != 0 {
-					self.tableView.reloadSections([0], with: .automatic)
-				}
+//				if self.tableView.numberOfSections != 0 {
+//					self.tableView.reloadSections(IndexSet(0...self.feedMessages.count), with: .automatic)
+//				}
+
+				self.tableView.reloadData()
 
 				// Reset refresh controller title
 				#if !targetEnvironment(macCatalyst)
@@ -187,25 +200,26 @@ class FeedTableViewController: KTableViewController {
 // MARK: - UITableViewDataSource
 extension FeedTableViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return 1
+		return self.feedMessages.count
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return self.feedMessages.count
+		return 1
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let feedMessageCell: BaseFeedMessageCell!
 
-		if feedMessages[indexPath.row].attributes.isReShare {
+		if feedMessages[indexPath.section].attributes.isReShare {
 			feedMessageCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedMessageReShareCell, for: indexPath)
 		} else {
 			feedMessageCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedMessageCell, for: indexPath)
 		}
 
+		feedMessageCell.delegate = self
 		feedMessageCell.liveReplyEnabled = false
 		feedMessageCell.liveReShareEnabled = true
-		feedMessageCell.feedMessage = feedMessages[indexPath.row]
+		feedMessageCell.feedMessage = feedMessages[indexPath.section]
 		return feedMessageCell
 	}
 }
@@ -219,13 +233,35 @@ extension FeedTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		let numberOfRows = tableView.numberOfRows()
+		let numberOfSections = tableView.numberOfSections
 
-		if indexPath.row == numberOfRows - 5 {
+		if indexPath.section == numberOfSections - 5 {
 			if self.nextPageURL != nil {
 				self.fetchFeedMessages()
 			}
 		}
+	}
+
+	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+		if let baseFeedMessageCell = tableView.cellForRow(at: indexPath) as? BaseFeedMessageCell {
+			baseFeedMessageCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
+
+			baseFeedMessageCell.usernameLabel.theme_tintColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+			baseFeedMessageCell.postTextView.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
+		}
+	}
+
+	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+		if let baseFeedMessageCell = tableView.cellForRow(at: indexPath) as? BaseFeedMessageCell {
+			baseFeedMessageCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+
+			baseFeedMessageCell.usernameLabel.theme_tintColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			baseFeedMessageCell.postTextView.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+		}
+	}
+
+	override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+		return self.feedMessages[indexPath.section].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 	}
 }
 
@@ -239,6 +275,37 @@ extension FeedTableViewController {
 	}
 }
 
+// MARK: - BaseFeedMessageCellDelegate
+extension FeedTableViewController: BaseFeedMessageCellDelegate {
+	func heartMessage(_ cell: BaseFeedMessageCell) {
+		if let indexPath = self.tableView.indexPath(for: cell) {
+			let feedMessage = self.feedMessages[indexPath.section]
+			feedMessage.heartMessage(via: self, userInfo: ["indexPath": indexPath])
+		}
+	}
+
+	func replyToMessage(_ cell: BaseFeedMessageCell) {
+		if let indexPath = self.tableView.indexPath(for: cell) {
+			let feedMessage = self.feedMessages[indexPath.section]
+			feedMessage.replyToMessage(via: self, userInfo: ["liveReplyEnabled": cell.liveReplyEnabled])
+		}
+	}
+
+	func reShareMessage(_ cell: BaseFeedMessageCell) {
+		if let indexPath = self.tableView.indexPath(for: cell) {
+			let feedMessage = self.feedMessages[indexPath.section]
+			feedMessage.reShareMessage(via: self, userInfo: ["liveReShareEnabled": cell.liveReShareEnabled])
+		}
+	}
+
+	func visitOriginalPosterProfile(_ cell: BaseFeedMessageCell) {
+		if let indexPath = self.tableView.indexPath(for: cell) {
+			let feedMessage = self.feedMessages[indexPath.section]
+			feedMessage.visitOriginalPosterProfile(from: self)
+		}
+	}
+}
+
 // MARK: - KRichTextEditorViewDelegate
 extension FeedTableViewController: KFeedMessageTextEditorViewDelegate {
 	func updateMessages(with feedMessages: [FeedMessage]) {
@@ -246,7 +313,7 @@ extension FeedTableViewController: KFeedMessageTextEditorViewDelegate {
 			self.feedMessages.prepend(feedMessage)
 		}
 
-		self.tableView.reloadSections([0], with: .automatic)
+		self.tableView.reloadData()
 	}
 
 	func segueToOPFeedDetails(_ feedMessage: FeedMessage) {

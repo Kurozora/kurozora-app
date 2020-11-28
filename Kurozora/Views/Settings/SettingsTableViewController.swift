@@ -9,7 +9,6 @@
 import UIKit
 import KurozoraKit
 import Kingfisher
-import SCLAlertView
 
 class SettingsTableViewController: KTableViewController {
 	// MARK: - Properties
@@ -149,8 +148,8 @@ extension SettingsTableViewController {
 			WorkflowController.shared.isSignedIn()
 			shouldPerformSegue = User.isSignedIn
 		case .cache:
-			let alertView = SCLAlertView()
-			alertView.addButton("Clear 🗑", action: {
+			let alertController = self.presentAlertController(title: "Clear all Cache?", message: "All of your caches will be cleared.", defaultActionButtonTitle: "Cancel")
+			alertController.addAction(UIAlertAction(title: "Clear 🗑", style: .destructive) { _ in
 				// Clear memory cache right away.
 				KingfisherManager.shared.cache.clearMemoryCache()
 
@@ -163,8 +162,6 @@ extension SettingsTableViewController {
 				// Refresh cacheSizeLabel
 				tableView.reloadData()
 			})
-
-			alertView.showWarning("Clear all cache?", subTitle: "All of your caches will be cleared and Kurozora will restart.", closeButtonTitle: "Cancel")
 			return
 		case .rate:
 			if let rateURL = URL.rateURL {

@@ -9,7 +9,6 @@
 import UIKit
 import KurozoraKit
 import AuthenticationServices
-import SCLAlertView
 
 class SignInWithAppleTableViewController: ServiceTableViewController {
 	// MARK: - Properties
@@ -125,22 +124,22 @@ extension SignInWithAppleTableViewController: ASAuthorizationControllerDelegate 
 	}
 
 	func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-		var subTitle = ""
+		var message = ""
 		if let error = error as? ASAuthorizationError {
 			switch error.code {
 			case .canceled: break
 			case .failed:
-				subTitle = "Authentication failed by Apple. Please try again."
+				message = "Authentication failed by Apple. Please try again."
 			case .invalidResponse:
-				subTitle = "The app received an invalid response from Apple. Please try again."
+				message = "The app received an invalid response from Apple. Please try again."
 			case .notHandled:
-				subTitle = "An error occured and the authentication was not handled by Apple. Please try again."
+				message = "An error occured and the authentication was not handled by Apple. Please try again."
 			default: break
 			}
 		}
 
-		if !subTitle.isEmpty {
-			SCLAlertView().showError("Error", subTitle: subTitle)
+		if !message.isEmpty {
+			self.presentAlertController(title: "Error", message: message)
 		}
 	}
 }

@@ -9,6 +9,7 @@
 import UIKit
 
 class DisplaySettingsCell: SettingsCell {
+	// MARK: - IBOutlets
 	@IBOutlet weak var lightOptionContainerView: UIView?
 	@IBOutlet weak var lightOptionImageView: UIImageView? {
 		didSet {
@@ -23,16 +24,7 @@ class DisplaySettingsCell: SettingsCell {
 			lightOptionSelectedImageView?.theme_borderColor = KThemePicker.borderColor.rawValue
 		}
 	}
-	@IBOutlet weak var lightOptionTitleLabel: UILabel? {
-		didSet {
-			lightOptionTitleLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-		}
-	}
-	@IBOutlet weak var lightOptionButton: UIButton? {
-		didSet {
-			lightOptionButton?.tag = 0
-		}
-	}
+	@IBOutlet weak var lightOptionButton: UIButton?
 
 	@IBOutlet weak var darkOptionContainerView: UIView?
 	@IBOutlet weak var darkOptionImageView: UIImageView? {
@@ -46,21 +38,11 @@ class DisplaySettingsCell: SettingsCell {
 			darkOptionSelectedImageView?.theme_borderColor = KThemePicker.borderColor.rawValue
 		}
 	}
-	@IBOutlet weak var darkOptionTitleLabel: UILabel? {
-		didSet {
-			darkOptionTitleLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-		}
-	}
-	@IBOutlet weak var darkOptionButton: UIButton? {
-		didSet {
-			darkOptionButton?.tag = 1
-		}
-	}
+	@IBOutlet weak var darkOptionButton: UIButton?
 
-	@IBOutlet weak var optionsValueLabel: UILabel? {
+	@IBOutlet weak var optionsValueLabel: KSecondaryLabel? {
 		didSet {
 			updateOptionsValueLabel()
-			optionsValueLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
 			NotificationCenter.default.addObserver(self, selector: #selector(updateOptionsValueLabel), name: .KSAutomaticDarkThemeDidChange, object: nil)
 		}
 	}
@@ -101,7 +83,6 @@ class DisplaySettingsCell: SettingsCell {
 		}
 	}
 
-	// MARK: - Functions
 	@objc func updateAppAppearance(_ notification: NSNotification) {
 		if let option = notification.userInfo?["option"] as? Int {
 			updateAppAppearance(with: option)

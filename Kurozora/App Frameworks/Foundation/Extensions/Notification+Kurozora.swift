@@ -15,6 +15,12 @@ extension Notification.Name {
 		return Notification.Name(#function)
 	}
 
+	// MARK: - Feed
+	/// A notification posted when the feed message is updated.
+	static var KFTMessageDidUpdate: NSNotification.Name {
+		return NSNotification.Name(#function)
+	}
+
 	// MARK: - Notification settings
 	/// A notification posted after the value of `notificationsBadge` in `UserSettings` has changed.
 	static var KSNotificationsBadgeIsOn: NSNotification.Name {
@@ -40,6 +46,12 @@ extension Notification.Name {
 	// MARK: - User settings
 	/// A notification posted after the value of `authenticationInterval` in `UserSettings` has changed.
 	static var KSAuthenticationRequireTimeoutValueDidChange: NSNotification.Name {
+		return Notification.Name(#function)
+	}
+
+	// MARK: - Session settings
+	/// A notification posted after a session is deleted.
+	static var KSSessionIsDeleted: NSNotification.Name {
 		return Notification.Name(#function)
 	}
 

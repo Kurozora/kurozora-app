@@ -14,6 +14,10 @@ import UIKit
         self.init(v: { ThemeManager.value(for: keyPath) })
     }
     
+    public convenience init(keyPath: String, map: @escaping (Any?) -> Any?) {
+        self.init(v: { map(ThemeManager.value(for: keyPath)) })
+    }
+    
     public convenience init(anys: Any...) {
         self.init(v: { ThemeManager.element(for: anys) })
     }

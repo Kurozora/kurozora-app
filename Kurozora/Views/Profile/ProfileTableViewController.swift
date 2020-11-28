@@ -8,7 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import SCLAlertView
 import MobileCoreServices
 
 class ProfileTableViewController: KTableViewController {
@@ -696,7 +695,7 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate {
 			imagePicker.delegate = self
 			self.present(imagePicker, animated: true, completion: nil)
 		} else {
-			SCLAlertView().showWarning("Well, this is awkward.", subTitle: "You don't seem to have a camera 😓")
+			self.presentAlertController(title: "Well, this is awkward.", message: "You don't seem to have a camera 😓")
 		}
 	}
 

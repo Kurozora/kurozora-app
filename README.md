@@ -21,15 +21,17 @@
 * **🧩 Essence:** All brought together with [KurozoraKit](https://github.com/kiritokatklian/KurozoraKit), creating a perfect harmony. It’s the piece of the puzzle you don’t want to be missing.
 
 # Screenshots
-![The explore page containing multiple sections of shows, used to discover new shows.](.github/Assets/Screenshots/1.png)
+![The explore page containing multiple sections of shows, used to discover new shows.](.github/Assets/Screenshots/1.jpg)
 
-![The library page showing the user’s watching list.](.github/Assets/Screenshots/2.png)
+![The library page showing the user’s watching list.](.github/Assets/Screenshots/2.jpg)
 
-![The forums page with multiple sections containing threads.](.github/Assets/Screenshots/3.png)
+![The forums page with multiple sections containing threads.](.github/Assets/Screenshots/3.jpg)
 
-![The notifications page previewing notifications in different colours.](.github/Assets/Screenshots/4.png)
+![The search page showing multiple search results for JoJo’s Bizarre Adventure.](.github/Assets/Screenshots/4.jpg)
 
-![The feed page showing the user’s current feed of posts by their followers and users they are following.](.github/Assets/Screenshots/5.png)
+![The details page of Re:Zero Kara Hajimeru Isekai Seikatsu.](.github/Assets/Screenshots/5.jpg)
+
+![The explore page in multiple themes overlaid on top of each other.](.github/Assets/Screenshots/6.jpg)
 
 # Requirements
 
