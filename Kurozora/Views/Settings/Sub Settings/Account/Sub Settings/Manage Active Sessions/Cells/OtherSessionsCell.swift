@@ -30,7 +30,5 @@ class OtherSessionsCell: KTableViewCell {
 		self.ipAddressValueLabel.text = session.attributes.ip
 		self.deviceTypeValueLabel.text = session.relationships.platform.data.first?.attributes.deviceModel
 		self.dateValueLabel?.text = session.attributes.lastValidatedAt
-
-		self.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 	}
 }

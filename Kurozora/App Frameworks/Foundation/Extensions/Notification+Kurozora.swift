@@ -21,6 +21,17 @@ extension Notification.Name {
 		return NSNotification.Name(#function)
 	}
 
+	// MARK: - Notifications
+	/// A notification posted when the user notifications are updated.
+	static var KUNDidUpdate: NSNotification.Name {
+		return NSNotification.Name(#function)
+	}
+
+	/// A notification posted when the user notification is deleted.
+	static var KUNDidDelete: NSNotification.Name {
+		return NSNotification.Name(#function)
+	}
+
 	// MARK: - Notification settings
 	/// A notification posted after the value of `notificationsBadge` in `UserSettings` has changed.
 	static var KSNotificationsBadgeIsOn: NSNotification.Name {

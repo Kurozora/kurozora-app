@@ -10,22 +10,21 @@ import UIKit
 
 class IconNotificationCell: BasicNotificationCell {
 	// MARK: - IBOutlets
-	// Body
 	@IBOutlet weak var profileImageView: ProfileImageView!
-	@IBOutlet weak var notificationTitleLabel: UILabel!
+	@IBOutlet weak var titleLabel: KLabel!
 
 	// MARK: - Functions
 	override func configureCell() {
 		super.configureCell()
 
 		if let title = userNotification?.attributes.payload.username {
-			notificationTitleLabel.text = title
+			titleLabel.text = title
 		}
 
-		if let profileImage = userNotification?.attributes.payload.profileImage {
+		if let profileImageURL = userNotification?.attributes.payload.profileImageURL {
 			if let usernameInitials = userNotification?.attributes.payload.username?.initials {
 				let placeholderImage = usernameInitials.toImage(placeholder: R.image.placeholders.userProfile()!)
-				profileImageView.setImage(with: profileImage, placeholder: placeholderImage)
+				profileImageView.setImage(with: profileImageURL, placeholder: placeholderImage)
 			}
 		}
 	}

@@ -10,7 +10,7 @@ import UIKit
 import KurozoraKit
 import Kingfisher
 
-class SettingsCell: UITableViewCell {
+class SettingsCell: KTableViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var iconImageView: UIImageView? {
 		didSet {
@@ -52,26 +52,9 @@ class SettingsCell: UITableViewCell {
 		}
 	}
 
-	// MARK: - Initializers
-	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-		super.init(style: style, reuseIdentifier: reuseIdentifier)
-		self.sharedInit()
-	}
-
-	required init?(coder: NSCoder) {
-		super.init(coder: coder)
-		self.sharedInit()
-	}
-
 	// MARK: - Functions
-	/// The shared settings used to initialize the view.
-	func sharedInit() {
-		self.separatorInset = UIEdgeInsets(horizontal: 15, vertical: 0)
-		self.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-	}
-
 	/// Configure the cell with the given details.
-	func configureCell() {
+	override func configureCell() {
 		iconImageView?.image = sectionRow?.imageValue
 		primaryLabel?.text = sectionRow?.primaryStringValue
 		secondaryLabel?.text = sectionRow?.secondaryStringValue

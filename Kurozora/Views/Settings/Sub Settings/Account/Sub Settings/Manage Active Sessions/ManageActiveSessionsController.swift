@@ -197,7 +197,7 @@ extension ManageActiveSessionsController {
 			self.sessions[indexPath.section - 1].signOutOfSession(at: indexPath)
 			completionHandler(true)
 		}
-		signOutOfSessionAction.backgroundColor = .red
+		signOutOfSessionAction.backgroundColor = .kLightRed
 		signOutOfSessionAction.image = UIImage(systemName: "minus.circle")
 
 		let swipeActionsConfiguration = UISwipeActionsConfiguration(actions: [signOutOfSessionAction])

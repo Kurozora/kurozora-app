@@ -8,30 +8,13 @@
 
 import UIKit
 import KurozoraKit
-import SwipeCellKit
 
-class BaseNotificationCell: SwipeTableViewCell {
+class BaseNotificationCell: KTableViewCell {
 	// MARK: - IBOutlets
-	// Head
-	@IBOutlet weak var notificationTypeLabel: UILabel! {
-		didSet {
-			notificationTypeLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-		}
-	}
-	@IBOutlet weak var dateLabel: UILabel! {
-		didSet {
-			dateLabel.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
-		}
-	}
-	@IBOutlet weak var notificationMark: UIPageControl! {
-		didSet {
-			notificationMark.theme_currentPageIndicatorTintColor = KThemePicker.tintColor.rawValue
-		}
-	}
-
-	// Body
-	@IBOutlet weak var notificationTextLabel: UILabel!
-	@IBOutlet weak var bubbleView: UIView!
+	@IBOutlet weak var notificationTypeLabel: KSecondaryLabel!
+	@IBOutlet weak var dateLabel: KSecondaryLabel!
+	@IBOutlet weak var contentLabel: KLabel!
+	@IBOutlet weak var readStatusImageView: UIImageView!
 
 	// MARK: - Properties
 	var notificationType: KNotification.CustomType?
@@ -42,19 +25,10 @@ class BaseNotificationCell: SwipeTableViewCell {
 	}
 
 	// MARK: - Functions
-	/// Configure the cell with the given details.
-	func configureCell() {
-		// Configure date label.
+	override func configureCell() {
 		self.dateLabel.text = userNotification.attributes.createdAt.timeAgo
-
-		// Configure text label.
-		self.notificationTextLabel.text = userNotification.attributes.description
-
-		// Configure notification type label.
+		self.contentLabel.text = userNotification.attributes.description
 		self.notificationTypeLabel.text = notificationType?.stringValue.uppercased()
-
-		// Configure bubble view.
-		self.bubbleView.backgroundColor = notificationType?.colorValue
 
 		// Setup read status.
 		updateReadStatus()
@@ -69,10 +43,10 @@ class BaseNotificationCell: SwipeTableViewCell {
 		if let readStatus = readStatus {
 			self.userNotification.attributes.readStatus = readStatus
 		}
-		notificationMark.numberOfPages = self.userNotification.attributes.readStatus == .read ? 0 : 1
+		readStatusImageView.isHidden = self.userNotification.attributes.readStatus == .read
 
 		if animated {
-			notificationMark.animateBounce()
+			readStatusImageView.animateBounce()
 		}
 	}
 }

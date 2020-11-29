@@ -17,6 +17,24 @@ import UIKit
 	- A [reloadCell()](x-source-tag://KTableViewCell-reloadCell) method for reloading the data inside the cell.
 */
 class KTableViewCell: UITableViewCell {
+	// MARK: - Initializers
+	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+		super.init(style: style, reuseIdentifier: reuseIdentifier)
+		self.sharedInit()
+	}
+
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
+		self.sharedInit()
+	}
+
+	// MARK: - Functions
+	/// The shared settings used to initialize the tab bar item content view.
+	func sharedInit() {
+		self.separatorInset = UIEdgeInsets(horizontal: 15, vertical: 0)
+		self.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+	}
+
 	/**
 		Configures the views in the table view cell.
 

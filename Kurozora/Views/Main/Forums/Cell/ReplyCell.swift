@@ -14,7 +14,7 @@ protocol ReplyCellDelegate: class {
 	func visitOriginalPosterProfile(_ cell: ReplyCell)
 }
 
-class ReplyCell: UITableViewCell {
+class ReplyCell: KTableViewCell {
 	@IBOutlet weak var profileImageView: ProfileImageView! {
 		didSet {
 			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(usernameLabelPressed))
@@ -53,25 +53,8 @@ class ReplyCell: UITableViewCell {
 		}
 	}
 
-	// MARK: - Initializers
-	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-		super.init(style: style, reuseIdentifier: reuseIdentifier)
-		self.sharedInit()
-	}
-
-	required init?(coder: NSCoder) {
-		super.init(coder: coder)
-		self.sharedInit()
-	}
-
 	// MARK: - Functions
-	/// The shared settings used to initialize the tab bar item content view.
-	fileprivate func sharedInit() {
-		self.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-	}
-
-	/// Configure the cell with the given details.
-	fileprivate func configureCell() {
+	override func configureCell() {
 		if let user = threadReply.relationships.users.data.first {
 			// Configure username
 			usernameLabel.text = user.attributes.username

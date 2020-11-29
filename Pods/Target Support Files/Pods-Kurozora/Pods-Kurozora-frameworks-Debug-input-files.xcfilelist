@@ -14,7 +14,6 @@ ${BUILT_PRODUCTS_DIR}/Solar/Solar.framework
 ${BUILT_PRODUCTS_DIR}/SwiftTheme/SwiftTheme.framework
 ${BUILT_PRODUCTS_DIR}/SwifterSwift/SwifterSwift.framework
 ${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework
-${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework
 ${BUILT_PRODUCTS_DIR}/TRON/TRON.framework
 ${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework
 ${BUILT_PRODUCTS_DIR}/UIImageColors/UIImageColors.framework

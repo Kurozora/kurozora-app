@@ -12,7 +12,6 @@ def kurozora_pods
 	pod 'Cosmos'
 	pod 'ESTabBarController-swift'
 	pod 'EmptyDataSet-Swift'
-	pod 'FLEX', :configurations => ['Debug']
 	pod 'KeychainAccess'
 	pod 'Kingfisher'
 	pod 'KurozoraKit'#, path: '../KurozoraKit'
@@ -23,7 +22,6 @@ def kurozora_pods
 #	pod 'SnowGlobe'
 	pod 'SwiftTheme'
 	pod 'SwifterSwift'
-	pod 'SwipeCellKit'
 	pod 'Tabman'
 	pod 'TRON'
 	pod 'TRON/SwiftyJSON'

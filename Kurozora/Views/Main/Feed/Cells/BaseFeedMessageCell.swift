@@ -43,17 +43,6 @@ class BaseFeedMessageCell: KTableViewCell {
 		}
 	}
 
-	// MARK: - Initializers
-	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-		super.init(style: style, reuseIdentifier: reuseIdentifier)
-		self.sharedInit()
-	}
-
-	required init?(coder: NSCoder) {
-		super.init(coder: coder)
-		self.sharedInit()
-	}
-
 	// MARK: - View
 	override func prepareForReuse() {
 		super.prepareForReuse()
@@ -62,12 +51,6 @@ class BaseFeedMessageCell: KTableViewCell {
 	}
 
 	// MARK: - Functions
-	/// The shared settings used to initialize the tab bar item content view.
-	fileprivate func sharedInit() {
-		self.separatorInset = UIEdgeInsets(horizontal: 15, vertical: 0)
-		self.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-	}
-
 	override func configureCell() {
 		// Configure heart status for feed message.
 		self.updateHeartStatus()

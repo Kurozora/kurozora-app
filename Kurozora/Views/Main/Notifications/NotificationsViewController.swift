@@ -8,7 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import SwipeCellKit
 
 protocol NotificationsViewControllerDelegate: class {
     func notificationsViewControllerHasUnreadNotifications(count: Int)
@@ -76,6 +75,9 @@ class NotificationsViewController: KTableViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		NotificationCenter.default.addObserver(self, selector: #selector(updateNotifications(_:)), name: .KUNDidUpdate, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(removeNotification(_:)), name: .KUNDidDelete, object: nil)
 
 		// Unhide activity indicator if user is signed in.
 		_prefersActivityIndicatorHidden = !User.isSignedIn
@@ -208,48 +210,6 @@ class NotificationsViewController: KTableViewController {
 		}
 	}
 
-	/**
-		Update the read/unread status for the given notification id.
-
-		- Parameter indexPath: The IndexPath of the notifications in the tableView.
-		- Parameter notificationID: The id of the notification to be updated. Accepts array of id’s or all.
-		- Parameter readStatus: The `ReadStatus` value indicating whether to mark the notification as read or unread.
-	*/
-	func updateNotification(at indexPaths: [IndexPath]? = nil, for notificationID: String, withReadStatus readStatus: ReadStatus) {
-		KService.updateNotification(notificationID, withReadStatus: readStatus) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let readStatus):
-				if let indexPaths = indexPaths {
-					let shouldUpdateIndividually = indexPaths.count == 1
-					for indexPath in indexPaths {
-						switch self.grouping {
-						case .automatic, .byType:
-							self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].attributes.readStatus = readStatus
-						case .off:
-							self.userNotifications[indexPath.row].attributes.readStatus = readStatus
-						}
-
-						if shouldUpdateIndividually {
-							let baseNotificationCell = self.tableView.cellForRow(at: indexPath) as? BaseNotificationCell
-							baseNotificationCell?.updateReadStatus(with: readStatus, animated: true)
-						}
-					}
-
-					if !shouldUpdateIndividually {
-						self.tableView.reloadData()
-					}
-				} else {
-					for index in self.userNotifications.indices {
-						self.userNotifications[index].attributes.readStatus = readStatus
-					}
-					self.tableView.reloadData()
-				}
-			case .failure: break
-			}
-		}
-	}
-
 	// MARK: - IBActions
 	/**
 		Show options for editing notifications in batch.
@@ -261,17 +221,17 @@ class NotificationsViewController: KTableViewController {
 
 		// Mark all as read action
 		let markAllAsRead = UIAlertAction.init(title: "Mark all as read", style: .default, handler: { (_) in
-			self.updateNotification(for: "all", withReadStatus: .read)
+			self.userNotifications.batchUpdate(for: "all", withReadStatus: .read)
 		})
-		markAllAsRead.setValue(UIImage(systemName: "checkmark.circle"), forKey: "image")
+		markAllAsRead.setValue(UIImage(systemName: "circlebadge"), forKey: "image")
 		markAllAsRead.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 		alertController.addAction(markAllAsRead)
 
 		// Mark all as unread action
 		let markAllAsUnread = UIAlertAction.init(title: "Mark all as unread", style: .default, handler: { (_) in
-			self.updateNotification(for: "all", withReadStatus: .unread)
+			self.userNotifications.batchUpdate(for: "all", withReadStatus: .unread)
 		})
-		markAllAsUnread.setValue(UIImage(systemName: "checkmark.circle.fill"), forKey: "image")
+		markAllAsUnread.setValue(UIImage(systemName: "circlebadge.fill"), forKey: "image")
 		markAllAsUnread.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 		alertController.addAction(markAllAsUnread)
 
@@ -332,8 +292,15 @@ class NotificationsViewController: KTableViewController {
 
 			indexPaths.append(IndexPath(row: row, section: section))
 		}
+
+		switch self.grouping {
+		case .automatic, .byType:
+			self.groupedNotifications[section].sectionNotifications.batchUpdate(at: indexPaths, for: notificationIDs, withReadStatus: readStatus)
+		case .off:
+			self.userNotifications.batchUpdate(at: indexPaths, for: notificationIDs, withReadStatus: readStatus)
+		}
+
 		sender.setTitle(readStatus == .unread ? "Mark as read" : "Mark as unread", for: .normal)
-		updateNotification(at: indexPaths, for: notificationIDs, withReadStatus: readStatus)
 	}
 }
 
@@ -396,7 +363,6 @@ extension NotificationsViewController {
 
 		// Setup cell
 		let baseNotificationCell = self.tableView.dequeueReusableCell(withIdentifier: notificationCellIdentifier, for: indexPath) as! BaseNotificationCell
-		baseNotificationCell.delegate = self
 		baseNotificationCell.notificationType = notificationType
 		baseNotificationCell.userNotification = userNotification
 		return baseNotificationCell
@@ -408,8 +374,12 @@ extension NotificationsViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let baseNotificationCell = tableView.cellForRow(at: indexPath) as? BaseNotificationCell
 
-		guard let notificationID = baseNotificationCell?.userNotification?.id else { return }
-		self.updateNotification(at: [indexPath], for: notificationID, withReadStatus: .read)
+		switch self.grouping {
+		case .automatic, .byType:
+			self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].update(at: indexPath, withReadStatus: .read)
+		case .off:
+			self.userNotifications[indexPath.row].update(at: indexPath, withReadStatus: .read)
+		}
 
 		if baseNotificationCell?.notificationType == .session {
 			WorkflowController.shared.openSessionsManager()
@@ -418,112 +388,134 @@ extension NotificationsViewController {
 			WorkflowController.shared.openUserProfile(for: userID)
 		}
 	}
-}
 
-// MARK: - SwipeTableViewCellDelegate
-extension NotificationsViewController: SwipeTableViewCellDelegate {
-	func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
-		switch orientation {
-		case .right:
-			let deleteAction = SwipeAction(style: .destructive, title: "Delete") { [weak self] _, indexPath in
-				guard let self = self else { return }
-				switch self.grouping {
-				case .automatic, .byType:
-					let notificationID = self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].id
-					KService.deleteNotification(notificationID) { [weak self] result in
-						guard let self = self else { return }
-						switch result {
-						case .success:
-							self.groupedNotifications[indexPath.section].sectionNotifications.remove(at: indexPath.row)
-							tableView.deleteRows(at: [indexPath], with: .left)
+	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+		if let baseNotificationCell = tableView.cellForRow(at: indexPath) as? BaseNotificationCell {
+			baseNotificationCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
 
-							if self.groupedNotifications[indexPath.section].sectionNotifications.count == 0 {
-								self.groupedNotifications.remove(at: indexPath.section)
-								tableView.deleteSections([indexPath.section], with: .left)
-							}
-							tableView.endUpdates()
-						case .failure:
-							break
-						}
-					}
-				case .off:
-					KService.deleteNotification(self.userNotifications[indexPath.row].id) { [weak self] result in
-						guard let self = self else { return }
+			(baseNotificationCell as? BasicNotificationCell)?.chevronImageView.theme_tintColor = KThemePicker.tableViewCellSelectedChevronColor.rawValue
+			(baseNotificationCell as? IconNotificationCell)?.titleLabel.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
 
-						switch result {
-						case .success:
-							self.userNotifications.remove(at: indexPath.row)
-							tableView.beginUpdates()
-							tableView.deleteRows(at: [indexPath], with: .left)
-							tableView.endUpdates()
-						case .failure:
-							break
-						}
-					}
-				}
+			baseNotificationCell.contentLabel.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+			baseNotificationCell.notificationTypeLabel.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
+			baseNotificationCell.dateLabel.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
+		}
+	}
+
+	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+		if let baseNotificationCell = tableView.cellForRow(at: indexPath) as? BaseNotificationCell {
+			baseNotificationCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+
+			(baseNotificationCell as? BasicNotificationCell)?.chevronImageView.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
+			(baseNotificationCell as? IconNotificationCell)?.titleLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+
+			baseNotificationCell.contentLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			baseNotificationCell.notificationTypeLabel.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+			baseNotificationCell.dateLabel.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+		}
+	}
+
+	override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+		var readStatus: ReadStatus = .unread
+		switch self.grouping {
+		case .automatic, .byType:
+			let notificationReadStatus = self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].attributes.readStatus
+			if notificationReadStatus == .unread {
+				readStatus = .read
 			}
-			deleteAction.backgroundColor = .clear
-			deleteAction.image = R.image.trash_circle()
-			deleteAction.textColor = .kLightRed
-			deleteAction.font = .systemFont(ofSize: 13)
-			deleteAction.transitionDelegate = ScaleTransition.default
-			return [deleteAction]
-		case .left:
-			var readStatus: ReadStatus = .unread
+		case .off:
+			let notificationReadStatus = self.userNotifications[indexPath.row].attributes.readStatus
+			if notificationReadStatus == .unread {
+				readStatus = .read
+			}
+		}
+
+		let isRead = readStatus == .read
+		let readUnreadAction = UIContextualAction(style: .normal, title: "") { _, _, completionHandler in
 			switch self.grouping {
 			case .automatic, .byType:
-				let notificationReadStatus = self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].attributes.readStatus
-				if notificationReadStatus == .unread {
-					readStatus = .read
-				}
+				self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].update(at: indexPath, withReadStatus: readStatus)
 			case .off:
-				let notificationReadStatus = self.userNotifications[indexPath.row].attributes.readStatus
-				if notificationReadStatus == .unread {
-					readStatus = .read
-				}
+				self.userNotifications[indexPath.row].update(at: indexPath, withReadStatus: readStatus)
 			}
+			completionHandler(true)
+		}
+		readUnreadAction.backgroundColor = KThemePicker.tintColor.colorValue
+		readUnreadAction.title = isRead ? "Mark as Read" : "Mark as Unread"
+		readUnreadAction.image = isRead ? UIImage(systemName: "circlebadge") : UIImage(systemName: "circlebadge.fill")
 
-			let markedAction = SwipeAction(style: .default, title: "") { _, indexPath in
-				var notificationID = ""
+		let swipeActionsConfiguration = UISwipeActionsConfiguration(actions: [readUnreadAction])
+		swipeActionsConfiguration.performsFirstActionWithFullSwipe = true
+		return swipeActionsConfiguration
+	}
 
-				switch self.grouping {
-				case .automatic, .byType:
-					notificationID = self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].id
-				case .off:
-					notificationID = self.userNotifications[indexPath.row].id
-				}
-
-				self.updateNotification(at: [indexPath], for: notificationID, withReadStatus: readStatus)
+	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+		let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, completionHandler in
+			switch self.grouping {
+			case .automatic, .byType:
+				self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].remove(at: indexPath)
+			case .off:
+				self.userNotifications[indexPath.row].remove(at: indexPath)
 			}
-			let isRead = readStatus == .read
-			markedAction.backgroundColor = .clear
-			markedAction.title = isRead ? "Mark as Read" : "Mark as Unread"
-			markedAction.image = isRead ? R.image.unwatched_circle()! : R.image.watched_circle()!
-			markedAction.textColor = isRead ? #colorLiteral(red: 0.6078431373, green: 0.6078431373, blue: 0.6078431373, alpha: 1) : .kurozora
-			markedAction.font = .systemFont(ofSize: 16, weight: .semibold)
-			markedAction.transitionDelegate = ScaleTransition.default
-			return [markedAction]
+			completionHandler(true)
+		}
+		deleteAction.backgroundColor = .kLightRed
+		deleteAction.image = UIImage(systemName: "trash")
+
+		let swipeActionsConfiguration = UISwipeActionsConfiguration(actions: [deleteAction])
+		swipeActionsConfiguration.performsFirstActionWithFullSwipe = true
+		return swipeActionsConfiguration
+	}
+
+	override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+		switch self.grouping {
+		case .automatic, .byType:
+			return self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		case .off:
+			return self.userNotifications[indexPath.row].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		}
+	}
+}
+
+extension NotificationsViewController {
+	/**
+		Update the read/unread status for the given notification id.
+
+		- Parameter notification: The index path of the notifications.
+	*/
+	@objc fileprivate func updateNotifications(_ notification: NSNotification) {
+		let userInfo = notification.userInfo
+		if let indexPath = userInfo?["indexPath"] as? IndexPath {
+			self.tableView.performBatchUpdates({
+				self.tableView.reloadSections([indexPath.section], with: .automatic)
+			}, completion: nil)
+		} else {
+			self.tableView.reloadData()
 		}
 	}
 
-	func visibleRect(for tableView: UITableView) -> CGRect? {
-		return tableView.safeAreaLayoutGuide.layoutFrame
-	}
+	@objc fileprivate func removeNotification(_ notification: NSNotification) {
+		let userInfo = notification.userInfo
+		if let indexPath = userInfo?["indexPath"] as? IndexPath {
+			switch self.grouping {
+			case .automatic, .byType:
+				tableView.performBatchUpdates({
+					self.groupedNotifications[indexPath.section].sectionNotifications.remove(at: indexPath.row)
+					tableView.deleteRows(at: [indexPath], with: .left)
 
-	func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
-		var options = SwipeOptions()
+					if self.groupedNotifications[indexPath.section].sectionNotifications.count == 0 {
+						self.groupedNotifications.remove(at: indexPath.section)
+						tableView.deleteSections([indexPath.section], with: .left)
+					}
+				}, completion: nil)
+			case .off:
+				self.userNotifications[indexPath.row].remove(at: indexPath)
 
-		switch orientation {
-		case .right:
-			options.expansionStyle = .destructive(automaticallyDelete: false)
-		case .left:
-			options.expansionStyle = .selection
+				tableView.performBatchUpdates({
+					self.userNotifications.remove(at: indexPath.row)
+					tableView.deleteRows(at: [indexPath], with: .automatic)
+				}, completion: nil)
+			}
 		}
-
-		options.transitionStyle = .reveal
-		options.expansionDelegate = ScaleAndAlphaExpansion.default
-		options.buttonSpacing = 4
-		options.backgroundColor = .clear
-		return options
 	}
 }
