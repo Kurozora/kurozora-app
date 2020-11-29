@@ -270,6 +270,7 @@
 		66973DFA2311E4400097A9F8 /* Notification+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66973DF92311E4400097A9F8 /* Notification+Kurozora.swift */; };
 		66973DFD231202AF0097A9F8 /* UserSettingsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66973DFC231202AF0097A9F8 /* UserSettingsKey.swift */; };
 		6697DACD2573B50A0054FEFD /* UserNotification+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6697DACC2573B50A0054FEFD /* UserNotification+UIKit.swift */; };
+		6697DB2325744B9A0054FEFD /* Global+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6697DB2225744B9A0054FEFD /* Global+Kurozora.swift */; };
 		6698D3C924E59427006B7A4C /* ReminderStatus+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6698D3C824E59427006B7A4C /* ReminderStatus+Kurozora.swift */; };
 		6698D3CB24E594BD006B7A4C /* FavoriteStatus+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6698D3CA24E594BD006B7A4C /* FavoriteStatus+Kurozora.swift */; };
 		6698D3D424E5E81D006B7A4C /* StudioAttributes+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6698D3D324E5E81D006B7A4C /* StudioAttributes+UIImage.swift */; };
@@ -773,6 +774,7 @@
 		66973DF92311E4400097A9F8 /* Notification+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Kurozora.swift"; sourceTree = "<group>"; };
 		66973DFC231202AF0097A9F8 /* UserSettingsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettingsKey.swift; sourceTree = "<group>"; };
 		6697DACC2573B50A0054FEFD /* UserNotification+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserNotification+UIKit.swift"; sourceTree = "<group>"; };
+		6697DB2225744B9A0054FEFD /* Global+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Global+Kurozora.swift"; sourceTree = "<group>"; };
 		6698D3C824E59427006B7A4C /* ReminderStatus+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReminderStatus+Kurozora.swift"; sourceTree = "<group>"; };
 		6698D3CA24E594BD006B7A4C /* FavoriteStatus+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoriteStatus+Kurozora.swift"; sourceTree = "<group>"; };
 		6698D3D324E5E81D006B7A4C /* StudioAttributes+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StudioAttributes+UIImage.swift"; sourceTree = "<group>"; };
@@ -2343,6 +2345,7 @@
 		66B4F1D9223D1F70007C5048 /* App Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6697DB2225744B9A0054FEFD /* Global+Kurozora.swift */,
 				66E54EBC244E1486007248EE /* Foundation */,
 				66B4DBF6245396490097135A /* KeychainAccess */,
 				666D3E8D244DE73F0068A103 /* KurozoraKit */,
@@ -3405,6 +3408,7 @@
 				665385BD23D3CD3C008ADEF3 /* KCollectionViewController.swift in Sources */,
 				66999C5024E7586D00001A6E /* ActorAttributes+UIImage.swift in Sources */,
 				6640E18F22ADD19000D0F575 /* AuthenticationSettingsCell.swift in Sources */,
+				6697DB2325744B9A0054FEFD /* Global+Kurozora.swift in Sources */,
 				66B9BB9724FB1AC7004953C9 /* KFeedMessageReShareTextEditorView.swift in Sources */,
 				66FE5D01215B739D00E2844A /* KDefaultsCell.swift in Sources */,
 				66CE80FA2460348100DB0C49 /* KTableViewController+KTableViewDataSource.swift in Sources */,

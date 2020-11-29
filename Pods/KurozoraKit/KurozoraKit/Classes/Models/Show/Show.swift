@@ -8,7 +8,7 @@
 /**
 	A root object that stores information about a show resource.
 */
-public struct Show: IdentityResource {
+public class Show: IdentityResource {
 	// MARK: - Properties
 	public let id: Int
 

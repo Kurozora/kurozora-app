@@ -6,7 +6,6 @@
 //
 
 import TRON
-import SCLAlertView
 
 extension KurozoraKit {
 	/**
@@ -36,7 +35,7 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get studio details 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Studio's Details 😔", message: error.message)
 			}
 			print("❌ Received get studio details error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
@@ -68,7 +67,7 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get studio shows list 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Studio's Shows 😔", message: error.message)
 			}
 			print("❌ Received get studio shows error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")

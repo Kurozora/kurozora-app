@@ -8,7 +8,7 @@
 /**
 	A root object that stores information about a feed message resource.
 */
-public struct FeedMessage: IdentityResource {
+public class FeedMessage: IdentityResource {
 	// MARK: - Properties
 	public let id: Int
 

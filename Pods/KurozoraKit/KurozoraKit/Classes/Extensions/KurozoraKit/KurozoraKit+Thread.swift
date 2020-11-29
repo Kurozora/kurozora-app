@@ -7,7 +7,6 @@
 //
 
 import TRON
-import SCLAlertView
 
 extension KurozoraKit {
 	/**
@@ -32,9 +31,12 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get thread details 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Thread's Details 😔", message: error.message)
 			}
-			print("Received get thread error: \(error.message ?? "No message available")")
+			print("❌ Received get thread error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}
@@ -65,9 +67,12 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't vote on this thread 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Vote on Thread 😔", message: error.message)
 			}
-			print("Received vote thread error: \(error.message ?? "No message available")")
+			print("❌ Received vote thread error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}
@@ -101,9 +106,12 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get replies 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Replies 😔", message: error.message)
 			}
-			print("Received get replies error: \(error.message ?? "No message available")")
+			print("❌ Received get replies error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}
@@ -134,9 +142,12 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't reply 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Reply 😔", message: error.message)
 			}
-			print("Received post reply error: \(error.message ?? "No message available")")
+			print("❌ Received post reply error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}
@@ -164,10 +175,10 @@ extension KurozoraKit {
 		request.perform(withSuccess: { forumsThreadResponse in
 			completionHandler(.success(forumsThreadResponse.data))
 		}, failure: { error in
-//			if self.services.showAlerts {
-//				SCLAlertView().showError("Can't get search results 😔", subTitle: error.message)
-//			}
-			print("Received thread search error: \(error.message ?? "No message available")")
+			print("❌ Received thread search error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}
@@ -198,9 +209,12 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't lock thread 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Lock Thread 😔", message: error.message)
 			}
-			print("Received thread lock error: \(error.message ?? "No message available")")
+			print("❌ Received thread lock error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}

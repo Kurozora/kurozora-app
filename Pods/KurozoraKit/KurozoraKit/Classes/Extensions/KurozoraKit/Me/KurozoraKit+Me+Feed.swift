@@ -6,7 +6,6 @@
 //
 
 import TRON
-import SCLAlertView
 
 extension KurozoraKit {
 	/**
@@ -34,9 +33,12 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get feed messages 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Feed Messages 😔", message: error.message)
 			}
-			print("Received get feed messages error: \(error.message ?? "No message available")")
+			print("❌ Received get feed messages error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}

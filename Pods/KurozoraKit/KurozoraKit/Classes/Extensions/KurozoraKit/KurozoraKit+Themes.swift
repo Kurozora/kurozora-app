@@ -7,7 +7,6 @@
 //
 
 import TRON
-import SCLAlertView
 
 extension KurozoraKit {
 	/**
@@ -31,7 +30,7 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get themes 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Themes 😔", message: error.message)
 			}
 			print("❌ Received get themes error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
@@ -63,7 +62,7 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get theme details 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Theme's Details 😔", message: error.message)
 			}
 			print("❌ Received get theme details error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")

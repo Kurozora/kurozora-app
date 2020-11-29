@@ -6,10 +6,8 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
-import UIKit
-
 // MARK: - Model
-extension UIDevice {
+internal extension UIDevice {
 	/// The device's model name in a readable form.
 	static let modelName: String = {
 		var systemInfo = utsname()

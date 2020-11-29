@@ -12,16 +12,16 @@ extension ThreadReply.Attributes {
 	public struct Metrics: Codable {
 		// MARK: - Properties
 		/// The total count of likes and dislikes.
-		public let count: Int
+		public var count: Int
 
 		/// The total weight of likes and dislikes.
-		public let weight: Int
+		public var weight: Int
 
 		/// The total number of likes.
-		public let likes: Int
+		public var likes: Int
 
 		/// The total number of dislikes.
-		public let dislikes: Int
+		public var dislikes: Int
 	}
 }
 

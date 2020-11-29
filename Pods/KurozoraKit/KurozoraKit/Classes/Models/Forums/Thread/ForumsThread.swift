@@ -8,7 +8,7 @@
 /**
 	A root object that stores information about a forums thread resource.
 */
-public struct ForumsThread: IdentityResource {
+public class ForumsThread: IdentityResource {
 	// MARK: - Properties
 	public let id: Int
 

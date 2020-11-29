@@ -7,7 +7,6 @@
 //
 
 import TRON
-import SCLAlertView
 
 extension KurozoraKit {
 	/**
@@ -41,9 +40,12 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't sign up account 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Sign Up 😔", message: error.message)
 			}
-			print("Received sign up account error: \(error.message ?? "No message available")")
+			print("❌ Received sign up account error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}
@@ -81,7 +83,7 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't sign in 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Sign In 😔", message: error.message)
 			}
 			print("❌ Received sign in error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
@@ -129,9 +131,12 @@ extension KurozoraKit {
 			guard let self = self else { return }
 			UIView().endEditing(true)
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't sign in 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Sign In 😔", message: error.message)
 			}
-			print("Received sign in with SIWA error: \(error.message ?? "No message available")")
+			print("❌ Received sign in with SIWA error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}
@@ -157,9 +162,12 @@ extension KurozoraKit {
 			guard let self = self else { return }
 			UIView().endEditing(true)
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't send reset link 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Send Reset Link 😔", message: error.message)
 			}
-			print("Received reset password error: \(error.message ?? "No message available")")
+			print("❌ Received reset password error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}
@@ -191,9 +199,12 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get \(followList.rawValue) list 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get \(followList.rawValue.capitalized) List 😔", message: error.message)
 			}
-			print("Received get \(followList.rawValue) error: \(error.message ?? "No message available")")
+			print("❌ Received get \(followList.rawValue) error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}
@@ -220,9 +231,12 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't follow user 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Follow User 😔", message: error.message)
 			}
-			print("Received follow user error: \(error.message ?? "No message available")")
+			print("❌ Received follow user error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}
@@ -253,9 +267,12 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get favorites list 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Favorites 😔", message: error.message)
 			}
-			print("Received get favorites error: \(error.message ?? "No message available")")
+			print("❌ Received get favorites error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}
@@ -282,9 +299,12 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get user details 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get User's Details 😔", message: error.message)
 			}
-			print("Received user profile error: \(error.message ?? "No message available")")
+			print("❌ Received user profile error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}
@@ -312,10 +332,10 @@ extension KurozoraKit {
 		request.perform(withSuccess: { userResponse in
 			completionHandler(.success(userResponse.data))
 		}, failure: { error in
-//			if self.services.showAlerts {
-//				SCLAlertView().showError("Can't get search results 😔", subTitle: error.message)
-//			}
-			print("Received user search error: \(error.message ?? "No message available")")
+			print("❌ Received user search error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}

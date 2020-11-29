@@ -6,7 +6,6 @@
 //
 
 import TRON
-import SCLAlertView
 
 extension KurozoraKit {
 	/**
@@ -41,7 +40,7 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get explore page 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Explore Page 😔", message: error.message)
 			}
 			print("❌ Received explore error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")

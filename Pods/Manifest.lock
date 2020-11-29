@@ -7,16 +7,14 @@ PODS:
   - Kingfisher (5.15.8):
     - Kingfisher/Core (= 5.15.8)
   - Kingfisher/Core (5.15.8)
-  - KurozoraKit (0.15.0):
+  - KurozoraKit (0.15.5):
     - KeychainAccess
-    - SCLAlertView (~> 0.10)
     - TRON
   - Pageboy (3.6.2)
   - R.swift (5.3.0):
     - R.swift.Library (~> 5.3.0)
   - R.swift.Library (5.3.0)
   - ReachabilitySwift (5.0.0)
-  - SCLAlertView (0.10.2)
   - Solar (2.1.0)
   - SwifterSwift (5.2.0):
     - SwifterSwift/AppKit (= 5.2.0)
@@ -65,7 +63,7 @@ DEPENDENCIES:
   - ESTabBarController-swift
   - KeychainAccess
   - Kingfisher
-  - KurozoraKit (from `../KurozoraKit`)
+  - KurozoraKit
   - R.swift
   - ReachabilitySwift
   - Solar
@@ -98,11 +96,7 @@ SPEC REPOS:
     - UIImageColors
     - WhatsNew
   https://github.com/kiritokatklian/Specs.git:
-    - SCLAlertView
-
-EXTERNAL SOURCES:
-  KurozoraKit:
-    :path: "../KurozoraKit"
+    - KurozoraKit
 
 SPEC CHECKSUMS:
   Alamofire: 3b6a534a3df22db367e4dedeeca73d1ddfcf0e2f
@@ -111,12 +105,11 @@ SPEC CHECKSUMS:
   ESTabBarController-swift: 05593a6ad64700b03c0eb60ff625916370aa4136
   KeychainAccess: 9b07f665298d13c3a85881bd3171f6f49b8151c1
   Kingfisher: a3c03d702433fa6cfedabb2bddbe076fb8f2e902
-  KurozoraKit: 05569c73e9593eb4e4d818fdad7787b6f83178f1
+  KurozoraKit: da510e3d71d8a620f78f5dd47daf5b4c9c5b0907
   Pageboy: cf121b9dd48c63f3f281b2a9ec93d02e0f23879b
   R.swift: 4170fb7161c67be3bc1a847040b79367d69c419f
   R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
-  SCLAlertView: 7635567b49d0fecbe374778bcd946801db40caf3
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
   SwifterSwift: 334181863c416882d97b7a60c05054d9e4d799e2
   SwiftTheme: 900582982b8d33d6226314e080f74d0767683218
@@ -126,6 +119,6 @@ SPEC CHECKSUMS:
   UIImageColors: d2ef3b0877d203cbb06489eeb78ea8b7788caabe
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
 
-PODFILE CHECKSUM: bdf4590aab884b780e0a06863562ffda4756e37c
+PODFILE CHECKSUM: 4f826523de6e81f237d31aec6b0d425831fcd55e
 
 COCOAPODS: 1.10.0

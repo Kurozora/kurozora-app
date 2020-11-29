@@ -7,7 +7,6 @@
 //
 
 import TRON
-import SCLAlertView
 
 extension KurozoraKit {
 	/**
@@ -29,7 +28,7 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get notifications 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Notifications 😔", message: error.message)
 			}
 			print("❌ Received get notification error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
@@ -56,7 +55,7 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get notification details 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Notification's Details 😔", message: error.message)
 			}
 			print("❌ Received get notification details error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
@@ -91,7 +90,7 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't update notification 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Update Notification 😔", message: error.message)
 			}
 			print("❌ Received update notification error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
@@ -120,7 +119,7 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't delete notification 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Delete Notification 😔", message: error.message)
 			}
 			print("❌ Received delete notification error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")

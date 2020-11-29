@@ -12,7 +12,7 @@ extension ThreadReply {
 	public struct Relationships: Codable {
 		// MARK: - Properties
 		/// The user object the thread reply belongs to.
-		public let user: UserResponse
+		public let users: UserResponse
 	}
 }
 

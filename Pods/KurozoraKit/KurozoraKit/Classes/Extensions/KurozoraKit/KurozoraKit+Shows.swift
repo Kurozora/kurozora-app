@@ -7,7 +7,6 @@
 //
 
 import TRON
-import SCLAlertView
 
 extension KurozoraKit {
 	/**
@@ -37,7 +36,7 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get show's details 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Show's Details 😔", message: error.message)
 			}
 			print("❌ Received get show details error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
@@ -64,7 +63,7 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get show's actors list 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Show's Actors 😔", message: error.message)
 			}
 			print("❌ Received get show actors error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
@@ -91,7 +90,7 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get show's cast list 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Show's Cast 😔", message: error.message)
 			}
 			print("❌ Received get show cast error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
@@ -118,7 +117,7 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get show's characters list 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Show's Characters 😔", message: error.message)
 			}
 			print("❌ Received get show characters error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
@@ -150,9 +149,9 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get show's related shows list 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Related Shows 😔", message: error.message)
 			}
-			print("❌ Received get show seasons error:", error.errorDescription ?? "Unknown error")
+			print("❌ Received get related shows error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
 			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
 			print("└ Failure reason:", error.failureReason ?? "No reason available")
@@ -177,7 +176,7 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get show's seasons list 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Show's Seasons 😔", message: error.message)
 			}
 			print("❌ Received get show seasons error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
@@ -213,7 +212,7 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't rate this show 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Rate Show 😔", message: error.message)
 			}
 			print("❌ Received show rating error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
@@ -246,9 +245,6 @@ extension KurozoraKit {
 		request.perform(withSuccess: { showResponse in
 			completionHandler(.success(showResponse.data))
 		}, failure: { error in
-//			if self.services.showAlerts {
-//				SCLAlertView().showError("Can't get show's search results 😔", subTitle: error.message)
-//			}
 			print("❌ Received show search error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
 			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")

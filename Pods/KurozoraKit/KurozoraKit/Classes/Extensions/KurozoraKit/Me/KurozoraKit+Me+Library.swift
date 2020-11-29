@@ -6,7 +6,6 @@
 //
 
 import TRON
-import SCLAlertView
 
 extension KurozoraKit {
 	/**
@@ -37,7 +36,7 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get library 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Library 😔", message: error.message)
 			}
 			print("❌ Received get library error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
@@ -72,7 +71,7 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't add to your library 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
 			}
 			print("❌ Received add library error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
@@ -105,7 +104,7 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't remove from your library 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Remove From Your Library 😔", message: error.message)
 			}
 			print("❌ Received remove library error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
@@ -142,13 +141,13 @@ extension KurozoraKit {
 		request.perform(withSuccess: { [weak self] success in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showInfo("Processing request", subTitle: success.message)
+				UIApplication.topViewController?.presentAlertController(title: "Processing Request", message: success.message)
 			}
 			completionHandler(.success(success))
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't import MAL library 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Import MAL Library 😔", message: error.message)
 			}
 			print("❌ Received library MAL import error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
@@ -179,9 +178,6 @@ extension KurozoraKit {
 		request.perform(withSuccess: { showResponse in
 			completionHandler(.success(showResponse.data))
 		}, failure: { error in
-//			if self.services.showAlerts {
-//				SCLAlertView().showError("Can't get search results 😔", subTitle: error.message)
-//			}
 			print("❌ Received library search error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
 			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")

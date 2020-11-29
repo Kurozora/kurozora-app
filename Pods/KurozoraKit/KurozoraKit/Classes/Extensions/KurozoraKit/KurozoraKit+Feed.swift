@@ -7,7 +7,6 @@
 //
 
 import TRON
-import SCLAlertView
 
 extension KurozoraKit {
 	/**
@@ -36,9 +35,12 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get feed messages 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Feed Messages 😔", message: error.message)
 			}
-			print("Received get feed messages error: \(error.message ?? "No message available")")
+			print("❌ Received get feed messages error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}
@@ -68,9 +70,12 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get home feed 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Home Feed 😔", message: error.message)
 			}
-			print("Received get feed home error: \(error.message ?? "No message available")")
+			print("❌ Received get feed home error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}
@@ -100,9 +105,12 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get explore feed 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Explore Feed 😔", message: error.message)
 			}
-			print("Received get feed explore error: \(error.message ?? "No message available")")
+			print("❌ Received get feed explore error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}
@@ -146,9 +154,12 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't submit your message 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Submit Your Message 😔", message: error.message)
 			}
-			print("Received post feed message error: \(error.message ?? "No message available")")
+			print("❌ Received post feed message error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}
@@ -175,9 +186,12 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get message details 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Message Details 😔", message: error.message)
 			}
-			print("Received get message error: \(error.message ?? "No message available")")
+			print("❌ Received get message details error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}
@@ -209,9 +223,12 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get replies 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Replies 😔", message: error.message)
 			}
-			print("Received get feed message replies error: \(error.message ?? "No message available")")
+			print("❌ Received get feed message replies error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}
@@ -237,9 +254,12 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't submit your message 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Heart Message 😔", message: error.message)
 			}
-			print("Received post feed message error: \(error.message ?? "No message available")")
+			print("❌ Received heart feed message error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}

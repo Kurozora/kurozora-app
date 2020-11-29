@@ -7,7 +7,6 @@
 //
 
 import TRON
-import SCLAlertView
 
 extension KurozoraKit {
 	/**
@@ -26,9 +25,12 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get forum sections 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Sub-Forums 😔", message: error.message)
 			}
-			print("Received get forum sections error: \(error.message ?? "No message available")")
+			print("❌ Received get forum sections error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}
@@ -62,9 +64,12 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get forum thread 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Threads 😔", message: error.message)
 			}
-			print("Received get forum threads error: \(error.message ?? "No message available")")
+			print("❌ Received get forum threads error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}
@@ -97,9 +102,12 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't submit your thread 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Submit Your Thread 😔", message: error.message)
 			}
-			print("Received post thread error: \(error.message ?? "No message available")")
+			print("❌ Received post thread error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}

@@ -6,7 +6,6 @@
 //
 
 import TRON
-import SCLAlertView
 
 extension KurozoraKit {
 	/**
@@ -32,7 +31,7 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get profile details 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Profile Details 😔", message: error.message)
 			}
 			print("❌ Received get profile details error", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
@@ -63,11 +62,7 @@ extension KurozoraKit {
 			User.current = signInResponse.data.first
 			completionHandler(.success(self.authenticationKey))
 			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
-		}, failure: { [weak self] error in
-			guard let self = self else { return }
-			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get details 😔", subTitle: error.message)
-			}
+		}, failure: { error in
 			print("❌ Received restore details error", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
 			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
@@ -88,14 +83,13 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func updateInformation(biography: String? = nil, bannerImage: UIImage? = nil, profileImage: UIImage? = nil, username: String? = nil, completion completionHandler: @escaping (_ result: Result<UserUpdate, KKAPIError>) -> Void) {
+	public func updateInformation(biography: String? = nil, bannerImage: UIImage? = nil, profileImageFilePath: String? = nil, username: String? = nil, completion completionHandler: @escaping (_ result: Result<UserUpdate, KKAPIError>) -> Void) {
 		let usersProfile = KKEndpoint.Me.update.endpointValue
 		let request: UploadAPIRequest<UserUpdateResponse, KKAPIError> = tron.codable.uploadMultipart(usersProfile) { formData in
-			if let profileImage = profileImage {
-				if profileImage.size.width != 0 {
-					if let profileImageData = profileImage.jpegData(compressionQuality: 0.1) {
-						formData.append(profileImageData, withName: "profileImage", fileName: "ProfileImage.png", mimeType: "image/png")
-					}
+			if let profileImageFilePath = profileImageFilePath, let profileImageFilePathURL = URL(string: profileImageFilePath) {
+				if let profileImageData = try? Data(contentsOf: profileImageFilePathURL) {
+					let fileExtension = profileImageFilePathURL.pathExtension
+					formData.append(profileImageData, withName: "profileImage", fileName: "ProfileImage.\(fileExtension)", mimeType: "image/\(fileExtension)")
 				}
 			}
 			if let bannerImage = bannerImage {
@@ -108,7 +102,8 @@ extension KurozoraKit {
 		}
 
 		request.headers = [
-			"Content-Type": "multipart/form-data"
+			"Content-Type": "multipart/form-data",
+			"Accept": "application/json"
 		]
 		request.headers["kuro-auth"] = self.authenticationKey
 
@@ -127,7 +122,7 @@ extension KurozoraKit {
 			guard let self = self else { return }
 			UIView().endEditing(true)
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't update information 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Update Information 😔", message: error.message)
 			}
 			print("❌ Received update profile information error", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
@@ -161,7 +156,7 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get \(followList.rawValue) list 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get \(followList.rawValue.capitalized) List 😔", message: error.message)
 			}
 			print("❌ Received get \(followList.rawValue) error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")

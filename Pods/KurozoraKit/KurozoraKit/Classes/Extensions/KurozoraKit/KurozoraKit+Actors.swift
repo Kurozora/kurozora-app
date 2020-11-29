@@ -6,7 +6,6 @@
 //
 
 import TRON
-import SCLAlertView
 
 extension KurozoraKit {
 	/**
@@ -36,7 +35,7 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get actor details 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Actor's Details 😔", message: error.message)
 			}
 			print("❌ Received get actor details error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
@@ -63,9 +62,9 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get actor actors list 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Actor's Characters 😔", message: error.message)
 			}
-			print("❌ Received get actor actors error:", error.errorDescription ?? "Unknown error")
+			print("❌ Received get actor characters error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
 			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
 			print("└ Failure reason:", error.failureReason ?? "No reason available")
@@ -90,7 +89,7 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get actor shows list 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Actor's Shows 😔", message: error.message)
 			}
 			print("❌ Received get actor shows error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")

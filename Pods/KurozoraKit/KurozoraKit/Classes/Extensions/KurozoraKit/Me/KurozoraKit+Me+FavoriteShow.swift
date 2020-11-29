@@ -6,7 +6,6 @@
 //
 
 import TRON
-import SCLAlertView
 
 extension KurozoraKit {
 	/**
@@ -32,7 +31,7 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get favorites list 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Favorites 😔", message: error.message)
 			}
 			print("❌ Received get favorites error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
@@ -65,7 +64,7 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't update favorite status 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Update Favorite Status 😔", message: error.message)
 			}
 			print("❌ Received update favorite status error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")

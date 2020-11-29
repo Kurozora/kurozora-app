@@ -1,12 +1,10 @@
 //
-//  Global+Swift.swift
-//  KurozoraKit
+//  Global+Kurozora.swift
+//  Kurozora
 //
-//  Created by Khoren Katklian on 09/04/2020.
+//  Created by Khoren Katklian on 29/11/2020.
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
-
-import Foundation
 
 /**
 	Writes the textual representations of the given items into the standard output which only prints in `Debug` configuration.
@@ -34,7 +32,7 @@ import Foundation
 	The output from each call to `print(_:separator:terminator:)` includes a newline by default. To print the items without a trailing newline, pass an empty string as `terminator`.
 	```
 	for n in 1...5 {
-	    print(n, terminator: "")
+	print(n, terminator: "")
 	}
 	// Prints "12345"
 	```
@@ -43,7 +41,7 @@ import Foundation
 	- Parameter separator: A string to print between each item. The default is a single space (`" "`).
 	- Parameter terminator: The string to print after all items have been printed. The default is a newline (`"\n"`).
 */
-internal func print(_ items: Any..., separator: String = " ", terminator: String = "\n") {
+func print(_ items: Any..., separator: String = " ", terminator: String = "\n") {
 	#if DEBUG
 	var idx = items.startIndex
 	let endIdx = items.endIndex

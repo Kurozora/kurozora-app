@@ -6,7 +6,6 @@
 //
 
 import TRON
-import SCLAlertView
 
 extension KurozoraKit {
 	/**
@@ -32,7 +31,7 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get reminders 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Reminders 😔", message: error.message)
 			}
 			print("❌ Received get reminder show error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
@@ -65,7 +64,7 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't update reminder status 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Update Reminder Status 😔", message: error.message)
 			}
 			print("❌ Received update reminder status error", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
@@ -75,7 +74,7 @@ extension KurozoraKit {
 		})
 	}
 
-	/// The rmeinder subscription url of the authenticated user.
+	/// The reminder subscription url of the authenticated user.
 	public var reminderSubscriptionURL: URL {
 		let meReminderShowDownload = KKEndpoint.Me.ReminderShow.download.endpointValue
 		let subscriptionURL = tron.urlBuilder.url(forPath: meReminderShowDownload)

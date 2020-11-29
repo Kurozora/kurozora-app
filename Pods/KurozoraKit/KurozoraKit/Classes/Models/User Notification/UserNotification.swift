@@ -8,7 +8,7 @@
 /**
 	A root object that stores information about a user notification resource.
 */
-public struct UserNotification: Codable {
+public class UserNotification: Codable {
 	// MARK: - Properties
 	/// The id of the resource.
 	public let id: String

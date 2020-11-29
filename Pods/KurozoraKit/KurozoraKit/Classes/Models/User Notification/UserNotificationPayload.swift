@@ -26,6 +26,6 @@ extension UserNotification {
 		public let username: String?
 
 		/// [Follower] The profile image of the follower.
-		public let profileImage: String?
+		public let profileImageURL: String?
 	}
 }

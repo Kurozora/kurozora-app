@@ -7,7 +7,6 @@
 //
 
 import TRON
-import SCLAlertView
 
 extension KurozoraKit {
 	/**
@@ -26,9 +25,12 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get privacy policy 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Privacy Policy 😔", message: error.message)
 			}
-			print("Received privacy policy error: \(error.message ?? "No message available")")
+			print("❌ Received get privacy policy error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
 		})
 	}

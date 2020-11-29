@@ -24,13 +24,13 @@ extension ForumsThread {
 		fileprivate var _lockStatus: LockStatus?
 
 		/// The count of replies on the forums thread.
-		public let replyCount: Int
+		public var replyCount: Int
 
 		/// The metrics of the forums thread.
-		public let metrics: ForumsThread.Attributes.Metrics
+		public var metrics: ForumsThread.Attributes.Metrics
 
 		/// The vote action of a forums vote.
-		public let voteAction: VoteStatus
+		public var voteAction: VoteStatus
 
 		/// The date the forums thread was created at.
 		public let createdAt: String

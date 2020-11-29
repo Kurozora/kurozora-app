@@ -12,6 +12,6 @@ extension ForumsThread {
 	public struct Relationships: Codable {
 		// MARK: - Properties
 		/// The user object the forums thread belongs to.
-		public let user: UserResponse
+		public let users: UserResponse
 	}
 }

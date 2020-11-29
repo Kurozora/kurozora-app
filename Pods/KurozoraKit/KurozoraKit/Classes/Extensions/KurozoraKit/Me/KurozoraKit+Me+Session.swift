@@ -7,7 +7,6 @@
 //
 
 import TRON
-import SCLAlertView
 
 extension KurozoraKit {
 	/**
@@ -33,7 +32,7 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get session 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Sessions 😔", message: error.message)
 			}
 			print("Received get session error: \(error.message ?? "No message available")")
 			completionHandler(.failure(error))
@@ -57,7 +56,7 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get session details 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Session's Details 😔", message: error.message)
 			}
 			print("❌ Received get session details error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
@@ -89,9 +88,6 @@ extension KurozoraKit {
 		request.perform(withSuccess: { success in
 			completionHandler(.success(success))
 		}, failure: { error in
-//			if self.services.showAlerts {
-//				SCLAlertView().showError("Can't update session 😔", subTitle: error.message)
-//			}
 			print("❌ Received update session error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
 			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
@@ -120,7 +116,7 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't delete session 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Delete Session 😔", message: error.message)
 			}
 			print("❌ Received delete session error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
@@ -157,7 +153,7 @@ extension KurozoraKit {
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't sign out 😔", subTitle: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Sign Out 😔", message: error.message)
 			}
 			print("❌ Received sign out error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
