@@ -111,27 +111,23 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 	}
 
 	@IBAction func chooseImageButtonPressed(_ sender: UIButton) {
-		let alert = UIAlertController(title: "Profile Photo", message: "Choose an awesome photo 😉", preferredStyle: .actionSheet)
-		alert.addAction(UIAlertAction(title: "Take a photo 📷", style: .default, handler: { _ in
-			self.openCamera()
-		}))
+		let actionSheetAlertController = UIAlertController.actionSheet(title: "Profile Photo", message: "Choose an awesome photo 😉") { [weak self] actionSheetAlertController in
+			actionSheetAlertController.addAction(UIAlertAction(title: "Take a photo 📷", style: .default, handler: { _ in
+				self?.openCamera()
+			}))
 
-		alert.addAction(UIAlertAction(title: "Choose from Photo Library 🏛", style: .default, handler: { _ in
-			self.openPhotoLibrary()
-		}))
+			actionSheetAlertController.addAction(UIAlertAction(title: "Choose from Photo Library 🏛", style: .default, handler: { _ in
+				self?.openPhotoLibrary()
+			}))
 
-		alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
-
-		switch UIDevice.current.userInterfaceIdiom {
-		case .pad:
-			alert.popoverPresentationController?.sourceView = sender
-			alert.popoverPresentationController?.sourceRect = sender.bounds
-			alert.popoverPresentationController?.permittedArrowDirections = .up
-		default:
-			break
+			if let popoverController = actionSheetAlertController.popoverPresentationController {
+				popoverController.sourceView = sender
+				popoverController.sourceRect = sender.bounds
+				popoverController.permittedArrowDirections = .up
+			}
 		}
 
-		self.present(alert, animated: true, completion: nil)
+		self.present(actionSheetAlertController, animated: true, completion: nil)
 	}
 }
 

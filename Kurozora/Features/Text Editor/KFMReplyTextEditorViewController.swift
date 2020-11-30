@@ -29,7 +29,7 @@ class KFMReplyTextEditorViewController: KViewController {
 	@IBOutlet weak var opDateTimeLabel: KSecondaryLabel!
 	@IBOutlet weak var opMessagePreviewContainer: UIView! {
 		didSet {
-			commentPreviewContainer.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+			opMessagePreviewContainer.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 		}
 	}
 

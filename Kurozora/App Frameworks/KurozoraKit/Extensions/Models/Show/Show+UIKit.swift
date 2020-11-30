@@ -35,7 +35,7 @@ extension Show {
 
 		if User.isSignedIn {
 			if libraryStatus != .none {
-				let removeFromLibraryAction = UIAction(title: "Delete from Library", image: UIImage(systemName: "trash"), attributes: .destructive) { _ in
+				let removeFromLibraryAction = UIAction(title: "Remove from Library", image: UIImage(systemName: "minus.circle"), attributes: .destructive) { _ in
 					self.removeFromLibrary()
 				}
 				let subMenu = UIMenu(title: "", options: .displayInline, children: [removeFromLibraryAction])

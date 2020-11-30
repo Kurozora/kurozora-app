@@ -498,27 +498,24 @@ class ProfileTableViewController: KTableViewController {
 
 	/// Builds and presents an action sheet.
 	fileprivate func showActionList(_ sender: UIBarButtonItem) {
-		let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-
-		// Go to last watched episode
-		if User.isSignedIn {
-			let showFavoriteShowsList = UIAlertAction.init(title: "Favorite shows", style: .default, handler: { (_) in
-				self.showFavoriteShowsList()
-			})
-			showFavoriteShowsList.setValue(UIImage(systemName: "heart.circle"), forKey: "image")
-			showFavoriteShowsList.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-			alertController.addAction(showFavoriteShowsList)
+		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
+			// Go to last watched episode
+			if User.isSignedIn {
+				let showFavoriteShowsList = UIAlertAction.init(title: "Favorite shows", style: .default, handler: { (_) in
+					self?.showFavoriteShowsList()
+				})
+				showFavoriteShowsList.setValue(UIImage(systemName: "heart.circle"), forKey: "image")
+				showFavoriteShowsList.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+				actionSheetAlertController.addAction(showFavoriteShowsList)
+			}
 		}
 
-		alertController.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
-		alertController.view.theme_tintColor = KThemePicker.tintColor.rawValue
-
 		//Present the controller
-		if let popoverController = alertController.popoverPresentationController {
+		if let popoverController = actionSheetAlertController.popoverPresentationController {
 			popoverController.barButtonItem = sender
 		}
 
-		self.present(alertController, animated: true, completion: nil)
+		self.present(actionSheetAlertController, animated: true, completion: nil)
 	}
 
 	/// Updated the `followButton` with the follow status of the user.
@@ -711,46 +708,46 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate {
 	// MARK: - IBActions
 	@IBAction func selectProfileImageButtonPressed(_ sender: UIButton) {
 		self.currentImageView = self.profileImageView
-		let alert = UIAlertController(title: "Profile Photo", message: "Choose an awesome photo 😉", preferredStyle: .actionSheet)
-		alert.addAction(UIAlertAction(title: "Take a photo 📷", style: .default, handler: { _ in
-			self.openCamera()
-		}))
+		let actionSheetAlertController = UIAlertController.actionSheet(title: "Profile Photo", message: "Choose an awesome photo 😉") { [weak self] actionSheetAlertController in
+			actionSheetAlertController.addAction(UIAlertAction(title: "Take a photo 📷", style: .default, handler: { _ in
+				self?.openCamera()
+			}))
 
-		alert.addAction(UIAlertAction(title: "Choose from Photo Library 🏛", style: .default, handler: { _ in
-			self.openPhotoLibrary()
-		}))
-
-		alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
-
-		if UIDevice.isPad {
-			alert.popoverPresentationController?.sourceView = sender
-			alert.popoverPresentationController?.sourceRect = sender.bounds
-			alert.popoverPresentationController?.permittedArrowDirections = .up
+			actionSheetAlertController.addAction(UIAlertAction(title: "Choose from Photo Library 🏛", style: .default, handler: { _ in
+				self?.openPhotoLibrary()
+			}))
 		}
 
-		self.present(alert, animated: true, completion: nil)
+		//Present the controller
+		if let popoverController = actionSheetAlertController.popoverPresentationController {
+			popoverController.sourceView = sender
+			popoverController.sourceRect = sender.bounds
+			popoverController.permittedArrowDirections = .up
+		}
+
+		self.present(actionSheetAlertController, animated: true, completion: nil)
 	}
 
 	@IBAction func selectBannerImageButtonPressed(_ sender: UIButton) {
 		self.currentImageView = self.bannerImageView
-		let alert = UIAlertController(title: "Banner Photo", message: "Choose a breathtaking photo 🌄", preferredStyle: .actionSheet)
-		alert.addAction(UIAlertAction(title: "Take a photo 📷", style: .default, handler: { _ in
-			self.openCamera()
-		}))
+		let actionSheetAlertController = UIAlertController.actionSheet(title: "Banner Photo", message: "Choose a breathtaking photo 🌄") { [weak self] actionSheetAlertController in
+			actionSheetAlertController.addAction(UIAlertAction(title: "Take a photo 📷", style: .default, handler: { _ in
+				self?.openCamera()
+			}))
 
-		alert.addAction(UIAlertAction(title: "Choose from Photo Library 🏛", style: .default, handler: { _ in
-			self.openPhotoLibrary()
-		}))
-
-		alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
-
-		if UIDevice.isPad {
-			alert.popoverPresentationController?.sourceView = sender
-			alert.popoverPresentationController?.sourceRect = sender.bounds
-			alert.popoverPresentationController?.permittedArrowDirections = .up
+			actionSheetAlertController.addAction(UIAlertAction(title: "Choose from Photo Library 🏛", style: .default, handler: { _ in
+				self?.openPhotoLibrary()
+			}))
 		}
 
-		self.present(alert, animated: true, completion: nil)
+		//Present the controller
+		if let popoverController = actionSheetAlertController.popoverPresentationController {
+			popoverController.sourceView = sender
+			popoverController.sourceRect = sender.bounds
+			popoverController.permittedArrowDirections = .up
+		}
+
+		self.present(actionSheetAlertController, animated: true, completion: nil)
 	}
 }
 

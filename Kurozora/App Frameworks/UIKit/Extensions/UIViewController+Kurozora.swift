@@ -40,7 +40,7 @@ extension UIViewController {
 	}
 
 	/**
-		Present a `UIAlertController` with a default action button.
+		Present a `UIAlertController` of alert style with a default action button.
 
 		- Parameter title: The title of the alert. Use this string to get the user’s attention and communicate the reason for the alert.
 		- Parameter message: Descriptive text that provides additional details about the reason for the alert.
@@ -62,7 +62,7 @@ extension UIViewController {
 	}
 
 	/**
-		Present a `UIAlertController` with an activity indicator.
+		Present a `UIAlertController` of alert style with an activity indicator.
 
 		- Parameter title: The title of the alert. Use this string to get the user’s attention and communicate the reason for the alert.
 		- Parameter message: Descriptive text that provides additional details about the reason for the alert.

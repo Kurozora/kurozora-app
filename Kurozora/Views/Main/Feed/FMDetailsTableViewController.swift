@@ -41,9 +41,13 @@ class FMDetailsTableViewController: KTableViewController {
 	}
 
 	// MARK: - View
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		NotificationCenter.default.addObserver(self, selector: #selector(updateFeedMessage(_:)), name: .KFTMessageDidUpdate, object: nil)
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
 		// Add Refresh Control to Table View
 		#if !targetEnvironment(macCatalyst)
 		tableView.refreshControl = refreshController
@@ -55,6 +59,11 @@ class FMDetailsTableViewController: KTableViewController {
 		DispatchQueue.global(qos: .background).async {
 			self.fetchDetails()
 		}
+	}
+
+	override func viewDidDisappear(_ animated: Bool) {
+		super.viewDidDisappear(true)
+		NotificationCenter.default.removeObserver(self, name: .KFTMessageDidUpdate, object: nil)
 	}
 
 	// MARK: - Functions
@@ -74,7 +83,6 @@ class FMDetailsTableViewController: KTableViewController {
 	override func setupEmptyDataSetView() {
 		tableView.emptyDataSetView { [weak self] (view) in
 			guard let self = self else { return }
-
 			let verticalOffset = (self.tableView.tableHeaderView?.height ?? 0 - self.view.height) / 2
 			view.titleLabelString(NSAttributedString(string: "No Replies", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: "Be the first to reply to this message!", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
@@ -87,12 +95,17 @@ class FMDetailsTableViewController: KTableViewController {
 	}
 
 	/**
-		Dismisses the view controller. Used for navigation bar buttons.
+		Updates the feed message with the received information.
 
-		- Parameter sender: The object requesting the dismisssal of the current view.
+		- Parameter notification: An object containing information broadcast to registered observers.
 	*/
-	@objc func dismissPressed(_ sender: AnyObject) {
-		self.dismiss(animated: true, completion: nil)
+	@objc func updateFeedMessage(_ notification: NSNotification) {
+		// Start delete process
+		self.tableView.performBatchUpdates({
+			if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
+				self.tableView.reloadRows(at: [indexPath], with: .none)
+			}
+		}, completion: nil)
 	}
 
 	/// Fetch feed message details.
@@ -186,6 +199,7 @@ extension FMDetailsTableViewController {
 			} else {
 				feedMessageCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedMessageCell, for: indexPath)
 			}
+			feedMessageCell.delegate = self
 			feedMessageCell.liveReplyEnabled = true
 			feedMessageCell.liveReShareEnabled = false
 			feedMessageCell.feedMessage = feedMessage
@@ -194,6 +208,7 @@ extension FMDetailsTableViewController {
 			guard let feedMessageCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedMessageCell, for: indexPath) else {
 				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.feedMessageCell.identifier)")
 			}
+			feedMessageCell.delegate = self
 			feedMessageCell.liveReplyEnabled = false
 			feedMessageCell.liveReShareEnabled = false
 			feedMessageCell.feedMessage = feedMessageReplies[indexPath.row]
@@ -223,6 +238,33 @@ extension FMDetailsTableViewController {
 			}
 		}
 	}
+
+	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+		if let baseFeedMessageCell = tableView.cellForRow(at: indexPath) as? BaseFeedMessageCell {
+			baseFeedMessageCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
+
+			baseFeedMessageCell.usernameLabel.theme_tintColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+			baseFeedMessageCell.postTextView.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
+		}
+	}
+
+	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+		if let baseFeedMessageCell = tableView.cellForRow(at: indexPath) as? BaseFeedMessageCell {
+			baseFeedMessageCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+
+			baseFeedMessageCell.usernameLabel.theme_tintColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			baseFeedMessageCell.postTextView.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+		}
+	}
+
+	override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+		switch indexPath.section {
+		case 0:
+			return self.feedMessage.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		default:
+			return self.feedMessageReplies[indexPath.row].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		}
+	}
 }
 
 // MARK: - KTableViewDataSource
@@ -232,6 +274,72 @@ extension FMDetailsTableViewController {
 			FeedMessageCell.self,
 			FeedMessageReShareCell.self
 		]
+	}
+}
+
+// MARK: - BaseFeedMessageCellDelegate
+extension FMDetailsTableViewController: BaseFeedMessageCellDelegate {
+	func heartMessage(_ cell: BaseFeedMessageCell) {
+		if let indexPath = self.tableView.indexPath(for: cell) {
+			switch indexPath.section {
+			case 0:
+				self.feedMessage.heartMessage(via: self, userInfo: ["indexPath": indexPath])
+			default:
+				self.feedMessageReplies[indexPath.row].heartMessage(via: self, userInfo: ["indexPath": indexPath])
+			}
+		}
+	}
+
+	func replyToMessage(_ cell: BaseFeedMessageCell) {
+		if let indexPath = self.tableView.indexPath(for: cell) {
+			switch indexPath.section {
+			case 0:
+				self.feedMessage.replyToMessage(via: self, userInfo: ["liveReplyEnabled": cell.liveReplyEnabled])
+			default:
+				self.feedMessageReplies[indexPath.row].replyToMessage(via: self, userInfo: ["liveReplyEnabled": cell.liveReplyEnabled])
+			}
+		}
+	}
+
+	func reShareMessage(_ cell: BaseFeedMessageCell) {
+		if let indexPath = self.tableView.indexPath(for: cell) {
+			switch indexPath.section {
+			case 0:
+				self.feedMessage.reShareMessage(via: self, userInfo: ["liveReShareEnabled": cell.liveReShareEnabled])
+			default:
+				self.feedMessageReplies[indexPath.row].reShareMessage(via: self, userInfo: ["liveReShareEnabled": cell.liveReShareEnabled])
+			}
+		}
+	}
+
+	func visitOriginalPosterProfile(_ cell: BaseFeedMessageCell) {
+		if let indexPath = self.tableView.indexPath(for: cell) {
+			switch indexPath.section {
+			case 0:
+				self.feedMessage.visitOriginalPosterProfile(from: self)
+			default:
+				self.feedMessageReplies[indexPath.row].visitOriginalPosterProfile(from: self)
+			}
+		}
+	}
+
+	func showActionsList(_ cell: BaseFeedMessageCell, sender: UIButton) {
+		if let indexPath = self.tableView.indexPath(for: cell) {
+			switch indexPath.section {
+			case 0:
+				self.feedMessage.actionList(on: self, sender, userInfo: [
+					"indexPath": indexPath,
+					"liveReplyEnabled": cell.liveReplyEnabled,
+					"liveReShareEnabled": cell.liveReShareEnabled
+				])
+			default:
+				self.feedMessageReplies[indexPath.row].actionList(on: self, sender, userInfo: [
+					"indexPath": indexPath,
+					"liveReplyEnabled": cell.liveReplyEnabled,
+					"liveReShareEnabled": cell.liveReShareEnabled
+				])
+			}
+		}
 	}
 }
 

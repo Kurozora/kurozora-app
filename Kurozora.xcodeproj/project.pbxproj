@@ -1859,9 +1859,9 @@
 		668142D5245B494B008FC7BE /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
+				668142E0245B4BBB008FC7BE /* Extensions */,
 				668142D6245B4954008FC7BE /* View Controllers */,
 				668142D4245B4931008FC7BE /* Views and Controls */,
-				668142E0245B4BBB008FC7BE /* Extensions */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";

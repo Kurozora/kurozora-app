@@ -76,7 +76,7 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBActions
 	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
 		WorkflowController.shared.isSignedIn {
-			let alertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: self.libraryStatus, action: { [weak self] (title, value)  in
+			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: self.libraryStatus, action: { [weak self] (title, value)  in
 				guard let self = self else { return }
 				KService.addToLibrary(withLibraryStatus: value, showID: self.show.id) { [weak self] result in
 					guard let self = self else { return }
@@ -96,7 +96,7 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 			})
 
 			if self.libraryStatus != .none {
-				alertController.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { [weak self] _ in
+				actionSheetAlertController.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { [weak self] _ in
 					guard let self = self else { return }
 					KService.removeFromLibrary(showID: self.show.id) { [weak self] result in
 						guard let self = self else { return }
@@ -111,16 +111,15 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 					}
 				}))
 			}
-			alertController.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
 
 			// Present the controller
-			if let popoverController = alertController.popoverPresentationController {
+			if let popoverController = actionSheetAlertController.popoverPresentationController {
 				popoverController.sourceView = sender
 				popoverController.sourceRect = sender.bounds
 			}
 
 			if (self.parentViewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
-				self.parentViewController?.present(alertController, animated: true, completion: nil)
+				self.parentViewController?.present(actionSheetAlertController, animated: true, completion: nil)
 			}
 		}
 	}

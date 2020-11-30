@@ -189,40 +189,38 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 	}
 
 	@IBAction func moreButtonPressed(_ sender: UIButton) {
-		let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
+			let redownloadAction = UIAlertAction(title: "Redownload Theme", style: .default, handler: { (_) in
+				self?.handleRedownloadTheme()
+			})
+			let removeAction = UIAlertAction(title: "Remove Theme", style: .destructive, handler: { (_) in
+				self?.handleRemoveTheme()
+				if UserSettings.currentTheme.int == self?.theme.id {
+					KThemeStyle.switchTo(.default)
+				}
+			})
 
-		let redownloadAction = UIAlertAction(title: "Redownload theme", style: .default, handler: { (_) in
-			self.handleRedownloadTheme()
-		})
-		let removeAction = UIAlertAction(title: "Remove theme", style: .destructive, handler: { (_) in
-			self.handleRemoveTheme()
-			if UserSettings.currentTheme.int == self.theme.id {
-				KThemeStyle.switchTo(.default)
-			}
-		})
+			// Add image
+			redownloadAction.setValue(UIImage(systemName: "arrow.uturn.down"), forKey: "image")
+			removeAction.setValue(UIImage(systemName: "minus.circle"), forKey: "image")
 
-		// Add image
-		redownloadAction.setValue(UIImage(systemName: "arrow.uturn.down"), forKey: "image")
-		removeAction.setValue(UIImage(systemName: "trash.fill"), forKey: "image")
+			// Left align title
+			redownloadAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+			removeAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 
-		// Left align title
-		redownloadAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-		removeAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-
-		alertController.addAction(redownloadAction)
-		alertController.addAction(removeAction)
-
-		// Add cancel action
-		alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+			// Add actions
+			actionSheetAlertController.addAction(redownloadAction)
+			actionSheetAlertController.addAction(removeAction)
+		}
 
 		//Present the controller
-		if let popoverController = alertController.popoverPresentationController {
+		if let popoverController = actionSheetAlertController.popoverPresentationController {
 			popoverController.sourceView = sender
 			popoverController.sourceRect = sender.bounds
 		}
 
 		if (self.parentViewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
-			self.parentViewController?.present(alertController, animated: true, completion: nil)
+			self.parentViewController?.present(actionSheetAlertController, animated: true, completion: nil)
 		}
 	}
 }

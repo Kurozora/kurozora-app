@@ -20,7 +20,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		window = UIWindow(windowScene: windowScene)
 		window?.makeKeyAndVisible()
 
+		// Initialize theme
+		KThemeStyle.initAppTheme()
+
 		#if targetEnvironment(macCatalyst)
+		// Hide the title bar
 		if let titlebar = windowScene.titlebar {
 			titlebar.titleVisibility = .hidden
 			titlebar.toolbar = nil

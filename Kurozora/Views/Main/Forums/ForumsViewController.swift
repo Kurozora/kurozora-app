@@ -69,7 +69,7 @@ class ForumsViewController: KTabbedViewController {
 
 	// MARK: - IBActions
 	@IBAction func sortingBarButtonItemPressed(_ sender: UIBarButtonItem) {
-		let alertController = UIAlertController.actionSheetWithItems(items: ForumOrder.alertControllerItems, currentSelection: self.forumsViewControllerDelegate?.orderValue(), action: { [weak self] (title, value, image)  in
+		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: ForumOrder.alertControllerItems, currentSelection: self.forumsViewControllerDelegate?.orderValue(), action: { [weak self] (title, value, image)  in
 			guard let self = self else { return }
 			self.forumsViewControllerDelegate?.orderForums(by: value)
 
@@ -81,15 +81,13 @@ class ForumsViewController: KTabbedViewController {
 			currentSection?.fetchThreads()
 		})
 
-		alertController.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
-
 		//Present the controller
-		if let popoverController = alertController.popoverPresentationController {
+		if let popoverController = actionSheetAlertController.popoverPresentationController {
 			popoverController.barButtonItem = sender
 		}
 
 		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
-			self.present(alertController, animated: true, completion: nil)
+			self.present(actionSheetAlertController, animated: true, completion: nil)
 		}
 	}
 

@@ -217,33 +217,31 @@ class NotificationsViewController: KTableViewController {
 		- Parameter sender: The object containing a reference to the button that initiated this action.
 	*/
 	@IBAction func moreOptionsButtonPressed(_ sender: UIBarButtonItem) {
-		let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
+			// Mark all as read action
+			let markAllAsRead = UIAlertAction.init(title: "Mark all as read", style: .default, handler: { (_) in
+				self?.userNotifications.batchUpdate(for: "all", withReadStatus: .read)
+			})
+			markAllAsRead.setValue(UIImage(systemName: "circlebadge"), forKey: "image")
+			markAllAsRead.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+			actionSheetAlertController.addAction(markAllAsRead)
 
-		// Mark all as read action
-		let markAllAsRead = UIAlertAction.init(title: "Mark all as read", style: .default, handler: { (_) in
-			self.userNotifications.batchUpdate(for: "all", withReadStatus: .read)
-		})
-		markAllAsRead.setValue(UIImage(systemName: "circlebadge"), forKey: "image")
-		markAllAsRead.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-		alertController.addAction(markAllAsRead)
-
-		// Mark all as unread action
-		let markAllAsUnread = UIAlertAction.init(title: "Mark all as unread", style: .default, handler: { (_) in
-			self.userNotifications.batchUpdate(for: "all", withReadStatus: .unread)
-		})
-		markAllAsUnread.setValue(UIImage(systemName: "circlebadge.fill"), forKey: "image")
-		markAllAsUnread.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-		alertController.addAction(markAllAsUnread)
-
-		alertController.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+			// Mark all as unread action
+			let markAllAsUnread = UIAlertAction.init(title: "Mark all as unread", style: .default, handler: { (_) in
+				self?.userNotifications.batchUpdate(for: "all", withReadStatus: .unread)
+			})
+			markAllAsUnread.setValue(UIImage(systemName: "circlebadge.fill"), forKey: "image")
+			markAllAsUnread.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+			actionSheetAlertController.addAction(markAllAsUnread)
+		}
 
 		// Present the controller
-		if let popoverController = alertController.popoverPresentationController {
+		if let popoverController = actionSheetAlertController.popoverPresentationController {
 			popoverController.barButtonItem = sender
 		}
 
 		if (navigationController?.visibleViewController as? UIAlertController) == nil {
-			self.present(alertController, animated: true, completion: nil)
+			self.present(actionSheetAlertController, animated: true, completion: nil)
 		}
 	}
 
@@ -450,7 +448,7 @@ extension NotificationsViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-		let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, completionHandler in
+		let deleteAction = UIContextualAction(style: .destructive, title: "Remove") { _, _, completionHandler in
 			switch self.grouping {
 			case .automatic, .byType:
 				self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].remove(at: indexPath)
@@ -460,7 +458,7 @@ extension NotificationsViewController {
 			completionHandler(true)
 		}
 		deleteAction.backgroundColor = .kLightRed
-		deleteAction.image = UIImage(systemName: "trash")
+		deleteAction.image = UIImage(systemName: "minus.circle")
 
 		let swipeActionsConfiguration = UISwipeActionsConfiguration(actions: [deleteAction])
 		swipeActionsConfiguration.performsFirstActionWithFullSwipe = true

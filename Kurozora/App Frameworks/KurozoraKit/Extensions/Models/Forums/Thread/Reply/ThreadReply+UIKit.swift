@@ -31,7 +31,7 @@ extension ThreadReply {
 				let downvoteAction = UIAction(title: "Downvote the Thread", image: UIImage(systemName: "arrow.down.circle.fill")) { _ in
 					self.voteOnReply(as: .downVote, at: indexPath)
 				}
-//				let replyAction = UIAction(title: "Reply to Thread", image: R.image.symbols.message_fill()) { _ in
+//				let replyAction = UIAction(title: "Reply to Thread", image: #imageLiteral(resourceName: "Symbols/message.left.and.message.right.fill")) { _ in
 //					self.replyToReply(via: viewController)
 //				}
 
@@ -190,70 +190,68 @@ extension ThreadReply {
 		- Parameter userInfo: Any infromation passed by the user.
 	*/
 	func actionList(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil, userInfo: [AnyHashable: Any]?) {
-		let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
+			if User.isSignedIn {
+				let parentThread = userInfo?["parentThread"] as? ForumsThread
 
-		if User.isSignedIn {
-			let parentThread = userInfo?["parentThread"] as? ForumsThread
+				// Upvote, downvote and reply actions
+				if parentThread?.attributes.lockStatus == .unlocked, let indexPath = userInfo?["indexPath"] as? IndexPath {
+					let upvoteReplyAction = UIAlertAction(title: "Upvote the Reply", style: .default, handler: { (_) in
+						self?.voteOnReply(as: .upVote, at: indexPath)
+					})
+					let downvoteReplyAction = UIAlertAction(title: "Downvote the Reply", style: .default, handler: { (_) in
+						self?.voteOnReply(as: .downVote, at: indexPath)
+					})
+	//				let replyAction = UIAlertAction(title: "Reply to Thread", style: .default) { (_) in
+	//					self?.replyToReply(via: viewController)
+	//				}
 
-			// Upvote, downvote and reply actions
-			if parentThread?.attributes.lockStatus == .unlocked, let indexPath = userInfo?["indexPath"] as? IndexPath {
-				let upvoteReplyAction = UIAlertAction(title: "Upvote the Reply", style: .default, handler: { (_) in
-					self.voteOnReply(as: .upVote, at: indexPath)
+					upvoteReplyAction.setValue(UIImage(systemName: "arrow.up.circle.fill"), forKey: "image")
+					downvoteReplyAction.setValue(UIImage(systemName: "arrow.down.circle.fill"), forKey: "image")
+	//				replyAction.setValue(#imageLiteral(resourceName: "Symbols/message.left.and.message.right.fill"), forKey: "image")
+
+					upvoteReplyAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+					downvoteReplyAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+	//				replyAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+
+					actionSheetAlertController.addAction(upvoteReplyAction)
+					actionSheetAlertController.addAction(downvoteReplyAction)
+	//				alertController.addAction(replyAction)
+				}
+			}
+
+			// Username action
+			if let user = self?.relationships.users.data.first {
+				let username = user.attributes.username
+				let userAction = UIAlertAction(title: "Show " + username + "'s Profile", style: .default, handler: { _ in
+					self?.visitOriginalPosterProfile(from: viewController)
 				})
-				let downvoteReplyAction = UIAlertAction(title: "Downvote the Reply", style: .default, handler: { (_) in
-					self.voteOnReply(as: .downVote, at: indexPath)
+				userAction.setValue(UIImage(systemName: "person.crop.circle.fill"), forKey: "image")
+				userAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+				actionSheetAlertController.addAction(userAction)
+			}
+
+			// Share action
+			let shareAction = UIAlertAction(title: "Share Reply", style: .default, handler: { _ in
+				self?.openShareSheet(on: viewController)
+			})
+			shareAction.setValue(UIImage(systemName: "square.and.arrow.up.fill"), forKey: "image")
+			shareAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+			actionSheetAlertController.addAction(shareAction)
+
+			if User.isSignedIn {
+				// Report thread action
+				let reportAction = UIAlertAction(title: "Report Reply", style: .destructive, handler: { (_) in
+					self?.reportReply()
 				})
-//				let replyAction = UIAlertAction(title: "Reply to Thread", style: .default) { (_) in
-//					self.replyToReply(via: viewController)
-//				}
-
-				upvoteReplyAction.setValue(UIImage(systemName: "arrow.up.circle.fill"), forKey: "image")
-				downvoteReplyAction.setValue(UIImage(systemName: "arrow.down.circle.fill"), forKey: "image")
-//				replyAction.setValue(R.image.symbols.message_fill(), forKey: "image")
-
-				upvoteReplyAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-				downvoteReplyAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-//				replyAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-
-				alertController.addAction(upvoteReplyAction)
-				alertController.addAction(downvoteReplyAction)
-//				alertController.addAction(replyAction)
+				reportAction.setValue(UIImage(systemName: "exclamationmark.circle.fill"), forKey: "image")
+				reportAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+				actionSheetAlertController.addAction(reportAction)
 			}
 		}
 
-		// Username action
-		if let user = self.relationships.users.data.first {
-			let username = user.attributes.username
-			let userAction = UIAlertAction(title: "Show " + username + "'s Profile", style: .default, handler: { _ in
-				self.visitOriginalPosterProfile(from: viewController)
-			})
-			userAction.setValue(UIImage(systemName: "person.crop.circle.fill"), forKey: "image")
-			userAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-			alertController.addAction(userAction)
-		}
-
-		// Share action
-		let shareAction = UIAlertAction(title: "Share Reply", style: .default, handler: { _ in
-			self.openShareSheet(on: viewController)
-		})
-		shareAction.setValue(UIImage(systemName: "square.and.arrow.up.fill"), forKey: "image")
-		shareAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-		alertController.addAction(shareAction)
-
-		if User.isSignedIn {
-			// Report thread action
-			let reportAction = UIAlertAction(title: "Report Reply", style: .default, handler: { (_) in
-				self.reportReply()
-			})
-			reportAction.setValue(UIImage(systemName: "exclamationmark.circle.fill"), forKey: "image")
-			reportAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-			alertController.addAction(reportAction)
-		}
-
-		alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-
 		// Present the controller
-		if let popoverController = alertController.popoverPresentationController {
+		if let popoverController = actionSheetAlertController.popoverPresentationController {
 			if let view = view {
 				popoverController.sourceView = view
 				popoverController.sourceRect = view.frame
@@ -261,6 +259,6 @@ extension ThreadReply {
 				popoverController.barButtonItem = barButtonItem
 			}
 		}
-		viewController?.present(alertController, animated: true, completion: nil)
+		viewController?.present(actionSheetAlertController, animated: true, completion: nil)
 	}
 }

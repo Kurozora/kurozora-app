@@ -173,21 +173,19 @@ class LibraryViewController: KTabbedViewController {
 		- Parameter sender: The object containing a reference to the button that initiated this action.
 	*/
 	fileprivate func populateSortActions(_ sender: UIBarButtonItem) {
-		let alertController = UIAlertController.actionSheetWithItems(items: KKLibrary.SortType.alertControllerItems, currentSelection: self.libraryViewControllerDelegate?.sortValue()) { [weak self] (_, value, _)  in
+		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.SortType.alertControllerItems, currentSelection: self.libraryViewControllerDelegate?.sortValue()) { [weak self] (_, value, _)  in
 			guard let self = self else { return }
-			let subAlertController = UIAlertController.actionSheetWithItems(items: value.subAlertControllerItems, currentSelection: self.libraryViewControllerDelegate?.sortOptionValue()) { (_, subValue, _) in
+			let subActionSheetAlertController = UIAlertController.actionSheetWithItems(items: value.subAlertControllerItems, currentSelection: self.libraryViewControllerDelegate?.sortOptionValue()) { (_, subValue, _) in
 				self.libraryViewControllerDelegate?.sortLibrary(by: value, option: subValue)
 			}
 
-			subAlertController.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
-
 			//Present the controller
-			if let popoverController = subAlertController.popoverPresentationController {
+			if let popoverController = subActionSheetAlertController.popoverPresentationController {
 				popoverController.barButtonItem = sender
 			}
 
 			if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
-				self.present(subAlertController, animated: true, completion: nil)
+				self.present(subActionSheetAlertController, animated: true, completion: nil)
 			}
 		}
 
@@ -199,19 +197,17 @@ class LibraryViewController: KTabbedViewController {
 				})
 				stopSortingAction.setValue(UIImage(systemName: "xmark.circle.fill"), forKey: "image")
 				stopSortingAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-				alertController.addAction(stopSortingAction)
+				actionSheetAlertController.addAction(stopSortingAction)
 			}
 		}
 
-		alertController.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
-
 		//Present the controller
-		if let popoverController = alertController.popoverPresentationController {
+		if let popoverController = actionSheetAlertController.popoverPresentationController {
 			popoverController.barButtonItem = sender
 		}
 
 		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
-			self.present(alertController, animated: true, completion: nil)
+			self.present(actionSheetAlertController, animated: true, completion: nil)
 		}
 	}
 

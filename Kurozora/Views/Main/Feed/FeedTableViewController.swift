@@ -46,10 +46,13 @@ class FeedTableViewController: KTableViewController {
 		self.configureUserDetails()
 	}
 
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		NotificationCenter.default.addObserver(self, selector: #selector(updateFeedMessage(_:)), name: .KFTMessageDidUpdate, object: nil)
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		NotificationCenter.default.addObserver(self, selector: #selector(updateFeedMessage(_:)), name: .KFTMessageDidUpdate, object: nil)
-
 		// Add Refresh Control to Table View
 		#if !targetEnvironment(macCatalyst)
 		tableView.refreshControl = refreshController
@@ -66,6 +69,11 @@ class FeedTableViewController: KTableViewController {
 		DispatchQueue.global(qos: .background).async {
 			self.fetchFeedMessages()
 		}
+	}
+
+	override func viewDidDisappear(_ animated: Bool) {
+		super.viewDidDisappear(true)
+		NotificationCenter.default.removeObserver(self, name: .KFTMessageDidUpdate, object: nil)
 	}
 
 	// MARK: - Functions
@@ -102,8 +110,7 @@ class FeedTableViewController: KTableViewController {
 	@objc func updateFeedMessage(_ notification: NSNotification) {
 		// Start delete process
 		self.tableView.performBatchUpdates({
-			if let indexPath = notification.userInfo?["indexPath"] as? IndexPath, let feedMessage = notification.userInfo?["feedMessage"] as? FeedMessage {
-				self.feedMessages[indexPath.section] = feedMessage
+			if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
 				self.tableView.reloadSections([indexPath.section], with: .none)
 			}
 		}, completion: nil)
@@ -128,10 +135,6 @@ class FeedTableViewController: KTableViewController {
 				// Append new data and save next page url
 				self.feedMessages.append(contentsOf: feedMessageResponse.data)
 				self.nextPageURL = feedMessageResponse.next
-
-//				if self.tableView.numberOfSections != 0 {
-//					self.tableView.reloadSections(IndexSet(0...self.feedMessages.count), with: .automatic)
-//				}
 
 				self.tableView.reloadData()
 
@@ -284,29 +287,35 @@ extension FeedTableViewController {
 extension FeedTableViewController: BaseFeedMessageCellDelegate {
 	func heartMessage(_ cell: BaseFeedMessageCell) {
 		if let indexPath = self.tableView.indexPath(for: cell) {
-			let feedMessage = self.feedMessages[indexPath.section]
-			feedMessage.heartMessage(via: self, userInfo: ["indexPath": indexPath])
+			self.feedMessages[indexPath.section].heartMessage(via: self, userInfo: ["indexPath": indexPath])
 		}
 	}
 
 	func replyToMessage(_ cell: BaseFeedMessageCell) {
 		if let indexPath = self.tableView.indexPath(for: cell) {
-			let feedMessage = self.feedMessages[indexPath.section]
-			feedMessage.replyToMessage(via: self, userInfo: ["liveReplyEnabled": cell.liveReplyEnabled])
+			self.feedMessages[indexPath.section].replyToMessage(via: self, userInfo: ["liveReplyEnabled": cell.liveReplyEnabled])
 		}
 	}
 
 	func reShareMessage(_ cell: BaseFeedMessageCell) {
 		if let indexPath = self.tableView.indexPath(for: cell) {
-			let feedMessage = self.feedMessages[indexPath.section]
-			feedMessage.reShareMessage(via: self, userInfo: ["liveReShareEnabled": cell.liveReShareEnabled])
+			self.feedMessages[indexPath.section].reShareMessage(via: self, userInfo: ["liveReShareEnabled": cell.liveReShareEnabled])
 		}
 	}
 
 	func visitOriginalPosterProfile(_ cell: BaseFeedMessageCell) {
 		if let indexPath = self.tableView.indexPath(for: cell) {
-			let feedMessage = self.feedMessages[indexPath.section]
-			feedMessage.visitOriginalPosterProfile(from: self)
+			self.feedMessages[indexPath.section].visitOriginalPosterProfile(from: self)
+		}
+	}
+
+	func showActionsList(_ cell: BaseFeedMessageCell, sender: UIButton) {
+		if let indexPath = self.tableView.indexPath(for: cell) {
+			self.feedMessages[indexPath.section].actionList(on: self, sender, userInfo: [
+				"indexPath": indexPath,
+				"liveReplyEnabled": cell.liveReplyEnabled,
+				"liveReShareEnabled": cell.liveReShareEnabled
+			])
 		}
 	}
 }

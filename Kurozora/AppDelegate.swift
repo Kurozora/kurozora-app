@@ -29,9 +29,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Init payment queue
 		SKPaymentQueue.default().add(KStoreObserver.shared)
 
-		// Initialize theme
-		KThemeStyle.initAppTheme()
-
 		// If the network is unreachable show the offline page
 		KNetworkManager.isUnreachable { _ in
 			self.isUnreachable = true

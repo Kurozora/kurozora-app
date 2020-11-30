@@ -32,7 +32,7 @@ extension UserNotification {
 		menuElements.append(updateReadStatusAction)
 
 		// Delete action
-		let deleteAction = UIAction(title: "Delete Notification", image: UIImage(systemName: "minus.circle"), attributes: .destructive) { _ in
+		let deleteAction = UIAction(title: "Remove Notification", image: UIImage(systemName: "minus.circle"), attributes: .destructive) { _ in
 			if let indexPath = userInfo?["indexPath"] as? IndexPath {
 				self.remove(at: indexPath)
 			}

@@ -21,11 +21,11 @@ extension FeedMessage {
 		var menuElements: [UIMenuElement] = []
 
 		if User.isSignedIn {
-			// Heart and reply
+			// Heart, reply and reshare
 			let heartAction = UIAction(title: "Like the Message", image: UIImage(systemName: "heart.fill")) { _ in
 				self.heartMessage(via: viewController, userInfo: userInfo)
 			}
-			let replyAction = UIAction(title: "Reply to Message", image: R.image.symbols.message_fill()) { _ in
+			let replyAction = UIAction(title: "Reply to Message", image: #imageLiteral(resourceName: "Symbols/message.left.and.message.right.fill")) { _ in
 				self.replyToMessage(via: viewController, userInfo: userInfo)
 			}
 			let reShareAction = UIAction(title: "Re-share the Message", image: UIImage(systemName: "square.and.arrow.up.on.square.fill")) { _ in
@@ -39,7 +39,7 @@ extension FeedMessage {
 
 		var userMenuElements: [UIMenuElement] = []
 		// Replies action
-		let showRepliesAction = UIAction(title: "Show Replies", image: R.image.symbols.message_fill()) { _ in
+		let showRepliesAction = UIAction(title: "Show Replies", image: #imageLiteral(resourceName: "Symbols/message.left.and.message.right.fill")) { _ in
 			self.visitRepliesView(from: viewController)
 		}
 		userMenuElements.append(showRepliesAction)
@@ -93,7 +93,7 @@ extension FeedMessage {
 					self.attributes.update(heartStatus: feedMessageHeart.isHearted)
 
 					if let indexPath = userInfo?["indexPath"] as? IndexPath {
-						NotificationCenter.default.post(name: .KFTMessageDidUpdate, object: nil, userInfo: ["feedMessage": self, "indexPath": indexPath])
+						NotificationCenter.default.post(name: .KFTMessageDidUpdate, object: nil, userInfo: ["indexPath": indexPath])
 					}
 				case .failure: break
 				}
@@ -209,5 +209,84 @@ extension FeedMessage {
 		WorkflowController.shared.isSignedIn {
 			UIApplication.topViewController?.presentAlertController(title: "Message Reported", message: "Thank you for helping keep the community safe.")
 		}
+	}
+
+	/**
+		Builds and presents the feed message actions in an action sheet.
+
+		Make sure to send either the view or the bar button item that's sending the request.
+
+		- Parameter viewController: The view controller presenting the action sheet.
+		- Parameter view: The `UIView` sending the request.
+		- Parameter barButtonItem: The `UIBarButtonItem` sending the request.
+		- Parameter userInfo: Any infromation passed by the user.
+	*/
+	func actionList(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil, userInfo: [AnyHashable: Any]?) {
+		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
+			if User.isSignedIn {
+				// Heart, reply and reshare
+				let heartAction = UIAlertAction(title: "Like the Message", style: .default, handler: { (_) in
+					self?.heartMessage(via: viewController, userInfo: userInfo)
+				})
+				let replyAction = UIAlertAction(title: "Reply to Message", style: .default, handler: { (_) in
+					self?.replyToMessage(via: viewController, userInfo: userInfo)
+				})
+				let reShareAction = UIAlertAction(title: "Re-share the Message", style: .default) { (_) in
+					self?.reShareMessage(via: viewController, userInfo: userInfo)
+				}
+
+				heartAction.setValue(UIImage(systemName: "heart.fill"), forKey: "image")
+				replyAction.setValue(#imageLiteral(resourceName: "Symbols/message.left.and.message.right.fill"), forKey: "image")
+				reShareAction.setValue(UIImage(systemName: "square.and.arrow.up.on.square.fill"), forKey: "image")
+
+				heartAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+				replyAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+				reShareAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+
+				actionSheetAlertController.addAction(heartAction)
+				actionSheetAlertController.addAction(replyAction)
+				actionSheetAlertController.addAction(reShareAction)
+			}
+
+			// Username action
+			if let user = self?.relationships.users.data.first {
+				let username = user.attributes.username
+				let userAction = UIAlertAction(title: "Show " + username + "'s Profile", style: .default, handler: { _ in
+					self?.visitOriginalPosterProfile(from: viewController)
+				})
+				userAction.setValue(UIImage(systemName: "person.crop.circle.fill"), forKey: "image")
+				userAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+				actionSheetAlertController.addAction(userAction)
+			}
+
+			// Share action
+			let shareAction = UIAlertAction(title: "Share Message", style: .default, handler: { _ in
+				self?.openShareSheet(on: viewController)
+			})
+			shareAction.setValue(UIImage(systemName: "square.and.arrow.up.fill"), forKey: "image")
+			shareAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+			actionSheetAlertController.addAction(shareAction)
+
+			if User.isSignedIn {
+				// Report thread action
+				let reportAction = UIAlertAction(title: "Report Message", style: .destructive, handler: { (_) in
+					self?.reportMessage()
+				})
+				reportAction.setValue(UIImage(systemName: "exclamationmark.circle.fill"), forKey: "image")
+				reportAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+				actionSheetAlertController.addAction(reportAction)
+			}
+		}
+
+		// Present the controller
+		if let popoverController = actionSheetAlertController.popoverPresentationController {
+			if let view = view {
+				popoverController.sourceView = view
+				popoverController.sourceRect = view.frame
+			} else {
+				popoverController.barButtonItem = barButtonItem
+			}
+		}
+		viewController?.present(actionSheetAlertController, animated: true, completion: nil)
 	}
 }

@@ -92,24 +92,24 @@ class EpisodeLockupCollectionViewCell: UICollectionViewCell {
 	*/
 	func populateActionSheet() {
 		let tag = self.episodeWatchedButton.tag
-		let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-		alertController.addAction(UIAlertAction(title: (tag == 0) ? "Mark as Watched" : "Mark as Unwatched", style: .default, handler: { _ in
-			self.watchedButtonPressed()
-		}))
-		alertController.addAction(UIAlertAction(title: "Rate", style: .default, handler: nil))
-		alertController.addAction(UIAlertAction(title: "Share", style: .default, handler: { _ in
-			self.populateShareSheet()
-		}))
-		alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
+			actionSheetAlertController.addAction(UIAlertAction(title: (tag == 0) ? "Mark as Watched" : "Mark as Unwatched", style: .default, handler: { _ in
+				self?.watchedButtonPressed()
+			}))
+			actionSheetAlertController.addAction(UIAlertAction(title: "Rate", style: .default, handler: nil))
+			actionSheetAlertController.addAction(UIAlertAction(title: "Share", style: .default, handler: { _ in
+				self?.populateShareSheet()
+			}))
+		}
 
 		//Present the controller
-		if let popoverController = alertController.popoverPresentationController {
+		if let popoverController = actionSheetAlertController.popoverPresentationController {
 			popoverController.sourceView = self.episodeMoreButton
 			popoverController.sourceRect = self.episodeMoreButton.bounds
 		}
 
 		if (self.parentViewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
-			self.parentViewController?.present(alertController, animated: true, completion: nil)
+			self.parentViewController?.present(actionSheetAlertController, animated: true, completion: nil)
 		}
 	}
 

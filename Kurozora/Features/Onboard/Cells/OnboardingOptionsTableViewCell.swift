@@ -28,7 +28,6 @@ class OnboardingOptionsTableViewCell: OnboardingBaseTableViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	override func configureCell() {
-		super.configureCell()
 		setupProviderSignInView()
 	}
 

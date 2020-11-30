@@ -14,6 +14,7 @@ protocol BaseFeedMessageCellDelegate: class {
 	func replyToMessage(_ cell: BaseFeedMessageCell)
 	func reShareMessage(_ cell: BaseFeedMessageCell)
 	func visitOriginalPosterProfile(_ cell: BaseFeedMessageCell)
+	func showActionsList(_ cell: BaseFeedMessageCell, sender: UIButton)
 }
 
 class BaseFeedMessageCell: KTableViewCell {
@@ -182,6 +183,7 @@ class BaseFeedMessageCell: KTableViewCell {
 	}
 
 	@IBAction func moreButtonPressed(_ sender: UIButton) {
-		fatalError("More button action not implemented.")
+		self.delegate?.showActionsList(self, sender: sender)
+		sender.animateBounce()
 	}
 }

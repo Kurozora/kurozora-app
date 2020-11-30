@@ -20,8 +20,6 @@ class OnboardingFooterTableViewCell: OnboardingBaseTableViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	override func configureCell() {
-		super.configureCell()
-
 		let paragraphStyle = NSMutableParagraphStyle()
 		paragraphStyle.alignment = .center
 

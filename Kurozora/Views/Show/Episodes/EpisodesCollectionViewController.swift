@@ -100,37 +100,36 @@ class EpisodesCollectionViewController: KCollectionViewController {
 
 	/// Builds and presents an action sheet.
 	fileprivate func showActionList() {
-		let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-		let visibleIndexPath = collectionView.indexPathsForVisibleItems
+		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
+			let visibleIndexPath = collectionView.indexPathsForVisibleItems
 
-		if !visibleIndexPath.contains(IndexPath(item: 0, section: 0)) {
-			// Go to first episode
-			let goToFirstEpisode = UIAlertAction.init(title: "Go to first episode", style: .default, handler: { (_) in
-				self.goToFirstEpisode()
+			if !visibleIndexPath.contains(IndexPath(item: 0, section: 0)) {
+				// Go to first episode
+				let goToFirstEpisode = UIAlertAction.init(title: "Go to first episode", style: .default, handler: { (_) in
+					self?.goToFirstEpisode()
+				})
+				actionSheetAlertController.addAction(goToFirstEpisode)
+			} else {
+				// Go to last episode
+				let goToLastEpisode = UIAlertAction.init(title: "Go to last episode", style: .default, handler: { (_) in
+					self?.goToLastEpisode()
+				})
+				actionSheetAlertController.addAction(goToLastEpisode)
+			}
+
+			// Go to last watched episode
+			let goToLastWatchedEpisode = UIAlertAction.init(title: "Go to last watched episode", style: .default, handler: { (_) in
+				self?.goToLastWatchedEpisode()
 			})
-			alertController.addAction(goToFirstEpisode)
-		} else {
-			// Go to last episode
-			let goToLastEpisode = UIAlertAction.init(title: "Go to last episode", style: .default, handler: { (_) in
-				self.goToLastEpisode()
-			})
-			alertController.addAction(goToLastEpisode)
+			actionSheetAlertController.addAction(goToLastWatchedEpisode)
 		}
 
-		// Go to last watched episode
-		let goToLastWatchedEpisode = UIAlertAction.init(title: "Go to last watched episode", style: .default, handler: { (_) in
-			self.goToLastWatchedEpisode()
-		})
-		alertController.addAction(goToLastWatchedEpisode)
-
-		alertController.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
-
 		//Present the controller
-		if let popoverController = alertController.popoverPresentationController {
+		if let popoverController = actionSheetAlertController.popoverPresentationController {
 			popoverController.barButtonItem = goToButton
 		}
 
-		self.present(alertController, animated: true, completion: nil)
+		self.present(actionSheetAlertController, animated: true, completion: nil)
 	}
 
 	// MARK: - IBActions
