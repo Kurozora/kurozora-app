@@ -12,6 +12,7 @@ import KurozoraKit
 protocol ForumsCellDelegate: class {
 	func voteOnForumsCell(_ cell: ForumsCell, with voteStatus: VoteStatus)
 	func visitOriginalPosterProfile(_ cell: ForumsCell)
+	func showActionsList(_ cell: ForumsCell, sender: UIButton)
 }
 
 class ForumsCell: KTableViewCell {
@@ -31,7 +32,7 @@ class ForumsCell: KTableViewCell {
 	@IBOutlet weak var actionsStackView: UIStackView!
 
 	// MARK: - Properties
-	weak var forumsCellDelegate: ForumsCellDelegate?
+	weak var delegate: ForumsCellDelegate?
 	var forumsThread: ForumsThread! {
 		didSet {
 			configureCell()
@@ -117,23 +118,23 @@ class ForumsCell: KTableViewCell {
 
 	// MARK: - IBActions
 	@IBAction func usernameButtonPressed(_ sender: UIButton) {
-		self.forumsCellDelegate?.visitOriginalPosterProfile(self)
+		self.delegate?.visitOriginalPosterProfile(self)
 	}
 
 	@IBAction func upvoteButtonAction(_ sender: UIButton) {
 		self.previousVote = 1
-		self.forumsCellDelegate?.voteOnForumsCell(self, with: .upVote)
-		self.upvoteButton.animateBounce()
+		self.delegate?.voteOnForumsCell(self, with: .upVote)
+		sender.animateBounce()
 	}
 
 	@IBAction func downvoteButtonAction(_ sender: UIButton) {
 		self.previousVote = 0
-		self.forumsCellDelegate?.voteOnForumsCell(self, with: .downVote)
-		self.downvoteButton.animateBounce()
+		self.delegate?.voteOnForumsCell(self, with: .downVote)
+		sender.animateBounce()
 	}
 
 	@IBAction func moreButtonAction(_ sender: UIButton) {
-		fatalError("More button not implemented.")
-//		showActionList()
+		self.delegate?.showActionsList(self, sender: sender)
+		sender.animateBounce()
 	}
 }

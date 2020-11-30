@@ -83,6 +83,11 @@ class DisplaySettingsCell: SettingsCell {
 		}
 	}
 
+	/**
+		Updates the app's appearance with the received information.
+
+		- Parameter notification: An object containing information broadcast to registered observers.
+	*/
 	@objc func updateAppAppearance(_ notification: NSNotification) {
 		if let option = notification.userInfo?["option"] as? Int {
 			updateAppAppearance(with: option)

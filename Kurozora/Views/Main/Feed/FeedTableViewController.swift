@@ -94,6 +94,11 @@ class FeedTableViewController: KTableViewController {
 		}
 	}
 
+	/**
+		Updates the feed message with the received information.
+
+		- Parameter notification: An object containing information broadcast to registered observers.
+	*/
 	@objc func updateFeedMessage(_ notification: NSNotification) {
 		// Start delete process
 		self.tableView.performBatchUpdates({

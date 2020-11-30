@@ -76,6 +76,9 @@ class ThreadTableViewController: KTableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		NotificationCenter.default.addObserver(self, selector: #selector(updateForumsThread(_:)), name: .KFTDidUpdate, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(updateReplyCell(_:)), name: .KTRDidUpdate, object: nil)
+
 		// Fetch thread details
 		if forumsThread != nil {
 			_prefersActivityIndicatorHidden = true
@@ -121,16 +124,29 @@ class ThreadTableViewController: KTableViewController {
 	}
 
 	/**
-		Dismisses the view controller. Used for navigation bar buttons.
+		Updates the forums thread with the received information.
 
-		- Parameter sender: The object requesting the dismisssal of the current view.
+		- Parameter notification: An object containing information broadcast to registered observers.
 	*/
-	@objc func dismissPressed(_ sender: AnyObject) {
-		self.dismiss(animated: true, completion: nil)
+	@objc func updateForumsThread(_ notification: NSNotification) {
+		self.updateThreadDetails()
+	}
+
+	/**
+		Updates the replies with the received information.
+
+		- Parameter notification: An object containing information broadcast to registered observers.
+	*/
+	@objc func updateReplyCell(_ notification: NSNotification) {
+		let userInfo = notification.userInfo
+		if let indexPath = userInfo?["indexPath"] as? IndexPath {
+			let replyCell = tableView.cellForRow(at: indexPath) as? ReplyCell
+			replyCell?.configureCell()
+		}
 	}
 
 	/// Update the thread view with the fetched details.
-	func updateThreadDetails() {
+	@objc func updateThreadDetails() {
 		// Set topic label
 		topicLabel.text = "In \(sectionTitle) by"
 
@@ -239,20 +255,12 @@ class ThreadTableViewController: KTableViewController {
 	}
 
 	@IBAction func upVoteButtonPressed(_ sender: UIButton) {
-		self.forumsThread.voteOnThread(as: .upVote) { [weak self] forumsThread in
-			guard let self = self else { return }
-			self.forumsThread = forumsThread
-			self.updateThreadDetails()
-		}
+		self.forumsThread.voteOnThread(as: .upVote, at: nil)
 		sender.animateBounce()
 	}
 
 	@IBAction func downVoteButtonPressed(_ sender: UIButton) {
-		self.forumsThread.voteOnThread(as: .downVote) { [weak self] forumsThread in
-			guard let self = self else { return }
-			self.forumsThread = forumsThread
-			self.updateThreadDetails()
-		}
+		self.forumsThread.voteOnThread(as: .downVote, at: nil)
 		sender.animateBounce()
 	}
 
@@ -266,15 +274,7 @@ class ThreadTableViewController: KTableViewController {
 	}
 
 	@IBAction func moreButtonPressed(_ sender: UIBarButtonItem) {
-		fatalError("Implement more button.")
-//		let menu = UIMenuController.shared
-//		menu.menuItems =
-//			[UIMenuItem(title: "Test me", action: Selector("deleteLine")),
-//			 UIMenuItem(title: "Test me", action: Selector("deleteLine")),
-//			 UIMenuItem(title: "Test me", action: Selector("deleteLine"))]
-//		menu.showMenu(from: self.view, rect: self.view.frame)
-//		becomeFirstResponder()
-//		showActionList(sender)
+		self.forumsThread.actionList(on: self, barButtonItem: sender, userInfo: nil)
 	}
 }
 
@@ -330,7 +330,7 @@ extension ThreadTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		return self.threadReplies[indexPath.section].contextMenuConfiguration(in: self, onThread: self.forumsThread)
+		return self.threadReplies[indexPath.section].contextMenuConfiguration(in: self, userInfo: ["parentThread": self.forumsThread!, "indexPath": indexPath])
 	}
 }
 
@@ -338,19 +338,19 @@ extension ThreadTableViewController {
 extension ThreadTableViewController: ReplyCellDelegate {
 	func voteOnReplyCell(_ cell: ReplyCell, with voteStatus: VoteStatus) {
 		if let indexPath = tableView.indexPath(for: cell) {
-			let threadReply = self.threadReplies[indexPath.section]
-			threadReply.voteOnThread(as: voteStatus) { [weak self] threadReply in
-				guard let self = self else { return }
-				self.threadReplies[indexPath.section] = threadReply
-				cell.threadReply = threadReply
-			}
+			self.threadReplies[indexPath.section].voteOnReply(as: voteStatus, at: indexPath)
 		}
 	}
 
 	func visitOriginalPosterProfile(_ cell: ReplyCell) {
 		if let indexPath = tableView.indexPath(for: cell) {
-			let threadReply = self.threadReplies[indexPath.section]
-			threadReply.visitOriginalPosterProfile(from: self)
+			self.threadReplies[indexPath.section].visitOriginalPosterProfile(from: self)
+		}
+	}
+
+	func showActionsList(_ cell: ReplyCell, sender: UIButton) {
+		if let indexPath = tableView.indexPath(for: cell) {
+			self.threadReplies[indexPath.section].actionList(sender, userInfo: ["parentThread": self.forumsThread!, "indexPath": indexPath])
 		}
 	}
 }

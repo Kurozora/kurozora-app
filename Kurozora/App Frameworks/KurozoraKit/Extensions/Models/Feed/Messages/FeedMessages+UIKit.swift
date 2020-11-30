@@ -54,7 +54,7 @@ extension FeedMessage {
 		}
 
 		// Create "share" element
-		let shareAction = UIAction(title: "Share Message", image: UIImage(systemName: "square.and.arrow.up")) { _ in
+		let shareAction = UIAction(title: "Share Message", image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
 			self.openShareSheet(on: viewController)
 		}
 		userMenuElements.append(shareAction)
@@ -207,7 +207,7 @@ extension FeedMessage {
 	/// Sends a report of the selected message to the mods.
 	func reportMessage() {
 		WorkflowController.shared.isSignedIn {
-
+			UIApplication.topViewController?.presentAlertController(title: "Message Reported", message: "Thank you for helping keep the community safe.")
 		}
 	}
 }

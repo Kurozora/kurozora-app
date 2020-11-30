@@ -479,9 +479,9 @@ extension NotificationsViewController {
 
 extension NotificationsViewController {
 	/**
-		Update the read/unread status for the given notification id.
+		Updates the user's notifications with the received information.
 
-		- Parameter notification: The index path of the notifications.
+		- Parameter notification: An object containing information broadcast to registered observers.
 	*/
 	@objc fileprivate func updateNotifications(_ notification: NSNotification) {
 		let userInfo = notification.userInfo
@@ -494,6 +494,11 @@ extension NotificationsViewController {
 		}
 	}
 
+	/**
+		Removes the replies specified in the received information.
+
+		- Parameter notification: An object containing information broadcast to registered observers.
+	*/
 	@objc fileprivate func removeNotification(_ notification: NSNotification) {
 		let userInfo = notification.userInfo
 		if let indexPath = userInfo?["indexPath"] as? IndexPath {

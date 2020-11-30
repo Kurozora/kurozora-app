@@ -21,6 +21,12 @@ extension Notification.Name {
 		return NSNotification.Name(#function)
 	}
 
+	// MARK: - Forums Thread
+	/// A notification posted when the forums thread is updated.
+	static var KFTDidUpdate: NSNotification.Name {
+		return NSNotification.Name(#function)
+	}
+
 	// MARK: - Notifications
 	/// A notification posted when the user notifications are updated.
 	static var KUNDidUpdate: NSNotification.Name {
@@ -29,6 +35,12 @@ extension Notification.Name {
 
 	/// A notification posted when the user notification is deleted.
 	static var KUNDidDelete: NSNotification.Name {
+		return NSNotification.Name(#function)
+	}
+
+	// MARK: - Thread Reply
+	/// A notification posted when the thread reply is updated.
+	static var KTRDidUpdate: NSNotification.Name {
 		return NSNotification.Name(#function)
 	}
 

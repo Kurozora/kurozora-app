@@ -58,6 +58,8 @@ class ForumsListViewController: KTableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		NotificationCenter.default.addObserver(self, selector: #selector(updateForumsCell(_:)), name: .KFTDidUpdate, object: nil)
+
 		// Add bottom inset to avoid the tabbar obscuring the view
 		tableView.contentInset.bottom = 50
 
@@ -133,6 +135,19 @@ class ForumsListViewController: KTableViewController {
 		}
 	}
 
+	/**
+		Updates the forums threads with the received information.
+
+		- Parameter notification: An object containing information broadcast to registered observers.
+	*/
+	@objc func updateForumsCell(_ notification: NSNotification) {
+		let userInfo = notification.userInfo
+		if let indexPath = userInfo?["indexPath"] as? IndexPath {
+			let forumsCell = tableView.cellForRow(at: indexPath) as? ForumsCell
+			forumsCell?.configureCell()
+		}
+	}
+
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == R.segue.forumsListViewController.threadSegue.identifier {
@@ -159,7 +174,7 @@ extension ForumsListViewController {
 			fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.forumsCell.identifier)")
 		}
 		forumsCell.forumsThread = self.forumsThreads[indexPath.section]
-		forumsCell.forumsCellDelegate = self
+		forumsCell.delegate = self
 		return forumsCell
 	}
 }
@@ -202,7 +217,7 @@ extension ForumsListViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		return self.forumsThreads[indexPath.section].contextMenuConfiguration(in: self)
+		return self.forumsThreads[indexPath.section].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 	}
 }
 
@@ -210,19 +225,19 @@ extension ForumsListViewController {
 extension ForumsListViewController: ForumsCellDelegate {
 	func voteOnForumsCell(_ cell: ForumsCell, with voteStatus: VoteStatus) {
 		if let indexPath = tableView.indexPath(for: cell) {
-			let forumsThread = self.forumsThreads[indexPath.section]
-			forumsThread.voteOnThread(as: voteStatus) { [weak self] forumsThread in
-				guard let self = self else { return }
-				self.forumsThreads[indexPath.section] = forumsThread
-				cell.forumsThread = forumsThread
-			}
+			self.forumsThreads[indexPath.section].voteOnThread(as: voteStatus, at: indexPath)
 		}
 	}
 
 	func visitOriginalPosterProfile(_ cell: ForumsCell) {
 		if let indexPath = tableView.indexPath(for: cell) {
-			let forumsThread = self.forumsThreads[indexPath.section]
-			forumsThread.visitOriginalPosterProfile(from: self)
+			self.forumsThreads[indexPath.section].visitOriginalPosterProfile(from: self)
+		}
+	}
+
+	func showActionsList(_ cell: ForumsCell, sender: UIButton) {
+		if let indexPath = tableView.indexPath(for: cell) {
+			self.forumsThreads[indexPath.section].actionList(sender, userInfo: ["indexPath": indexPath])
 		}
 	}
 }

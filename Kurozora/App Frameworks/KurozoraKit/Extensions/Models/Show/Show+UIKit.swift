@@ -28,7 +28,7 @@ extension Show {
 		}
 
 		// Create "share" element
-		let shareAction = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { _ in
+		let shareAction = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
 			self.openShareSheet(on: viewController)
 		}
 		menuElements.append(shareAction)

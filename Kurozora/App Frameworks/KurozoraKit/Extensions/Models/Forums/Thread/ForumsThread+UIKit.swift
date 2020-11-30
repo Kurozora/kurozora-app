@@ -10,31 +10,24 @@ import UIKit
 import KurozoraKit
 
 extension ForumsThread {
-//	var upVoteCompletion: ((_ forumsThread: ForumsThread)->()) {
-//		return (forumsThread: self)
-//	}
-
-	func contextMenuConfiguration(in viewController: UIViewController)
+	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?)
 	-> UIContextMenuConfiguration? {
 		return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: { _ in
-			return self.makeContextMenu(in: viewController)
+			return self.makeContextMenu(in: viewController, userInfo: userInfo)
 		})
 	}
 
-	private func makeContextMenu(in viewController: UIViewController) -> UIMenu {
+	private func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?) -> UIMenu {
 		var menuElements: [UIMenuElement] = []
 
 		if User.isSignedIn {
 			// Upvote, downvote and reply actions
-			if self.attributes.lockStatus == .unlocked {
+			if self.attributes.lockStatus == .unlocked, let indexPath = userInfo?["indexPath"] as? IndexPath {
 				let upvoteAction = UIAction(title: "Upvote the Thread", image: UIImage(systemName: "arrow.up.circle.fill")) { _ in
-					fatalError("Upvote method not implemented.")
-//					self.upVoteCompletion(self)
-//					self.voteOnThread(as: .upVote)
+					self.voteOnThread(as: .upVote, at: indexPath)
 				}
 				let downvoteAction = UIAction(title: "Downvote the Thread", image: UIImage(systemName: "arrow.down.circle.fill")) { _ in
-					fatalError("Downvote method not implemented.")
-//					self.voteOnThread(as: .downVote, completion: self)
+					self.voteOnThread(as: .downVote, at: indexPath)
 				}
 				let replyAction = UIAction(title: "Reply to Thread", image: R.image.symbols.message_fill()) { _ in
 					self.replyToThread(via: viewController)
@@ -58,7 +51,7 @@ extension ForumsThread {
 		}
 
 		// Create "share" element
-		let shareAction = UIAction(title: "Share Thread", image: UIImage(systemName: "square.and.arrow.up")) { _ in
+		let shareAction = UIAction(title: "Share Thread", image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
 			self.openShareSheet(on: viewController)
 		}
 		userMenuElements.append(shareAction)
@@ -114,8 +107,9 @@ extension ForumsThread {
 		Vote on the thread with the given vote.
 
 		- Parameter voteStatus: The `VoteStatus` value indicating whether to upvote, downvote or novote a thread.
+		- Parameter indexPath: The index path of the forums thread.
 	*/
-	func voteOnThread(as voteStatus: VoteStatus, completion completionHandler: @escaping (ForumsThread) -> Void) {
+	func voteOnThread(as voteStatus: VoteStatus, at indexPath: IndexPath?) {
 		WorkflowController.shared.isSignedIn {
 			KService.voteOnThread(self.id, withVoteStatus: voteStatus) { [weak self] result in
 				guard let self = self else { return }
@@ -130,7 +124,8 @@ extension ForumsThread {
 
 						self.attributes.voteAction = voteStatus
 
-						completionHandler(self)
+						let userInfo = indexPath != nil ? ["indexPath": indexPath!] : nil
+						NotificationCenter.default.post(name: .KFTDidUpdate, object: nil, userInfo: userInfo)
 					}
 				case .failure: break
 				}
@@ -149,7 +144,7 @@ extension ForumsThread {
 			kCommentEditorViewController?.delegate = viewController as? KCommentEditorViewDelegate
 			kCommentEditorViewController?.forumsThread = self
 
-			let kurozoraNavigationController = KNavigationController.init(rootViewController: kCommentEditorViewController!)
+			let kurozoraNavigationController = KNavigationController(rootViewController: kCommentEditorViewController!)
 			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
 
 			viewController?.present(kurozoraNavigationController, animated: true)
@@ -168,7 +163,7 @@ extension ForumsThread {
 			profileViewController.userID = user.id
 			profileViewController.dismissButtonIsEnabled = true
 
-			let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
+			let kurozoraNavigationController = KNavigationController(rootViewController: profileViewController)
 			viewController?.present(kurozoraNavigationController, animated: true)
 		}
 	}
@@ -176,7 +171,90 @@ extension ForumsThread {
 	/// Sends a report of the selected thread to the mods.
 	func reportThread() {
 		WorkflowController.shared.isSignedIn {
-
+			UIApplication.topViewController?.presentAlertController(title: "Thread Reported", message: "Thank you for helping keep the comunity safe.")
 		}
+	}
+
+	/**
+		Builds and presents the forums thread actions in an action sheet.
+
+		Make sure to send either the view or the bar button item that's sending the request.
+
+		- Parameter viewController: The view controller presenting the action sheet.
+		- Parameter view: The `UIView` sending the request.
+		- Parameter barButtonItem: The `UIBarButtonItem` sending the request.
+		- Parameter userInfo: Any infromation passed by the user.
+	*/
+	func actionList(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil, userInfo: [AnyHashable: Any]?) {
+		let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+		if User.isSignedIn {
+			// Upvote, downvote and reply actions
+			if self.attributes.lockStatus == .unlocked, let indexPath = userInfo?["indexPath"] as? IndexPath {
+				let upvoteThreadAction = UIAlertAction(title: "Upvote the Thread", style: .default, handler: { (_) in
+					self.voteOnThread(as: .upVote, at: indexPath)
+				})
+				let downvoteThreadAction = UIAlertAction(title: "Upvote the Thread", style: .default, handler: { (_) in
+					self.voteOnThread(as: .downVote, at: indexPath)
+				})
+				let replyAction = UIAlertAction(title: "Reply to Thread", style: .default) { (_) in
+					self.replyToThread(via: viewController)
+				}
+
+				upvoteThreadAction.setValue(UIImage(systemName: "arrow.up.circle.fill"), forKey: "image")
+				downvoteThreadAction.setValue(UIImage(systemName: "arrow.down.circle.fill"), forKey: "image")
+				replyAction.setValue(R.image.symbols.message_fill(), forKey: "image")
+
+				upvoteThreadAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+				downvoteThreadAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+				replyAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+
+				alertController.addAction(upvoteThreadAction)
+				alertController.addAction(downvoteThreadAction)
+				alertController.addAction(replyAction)
+			}
+		}
+
+		// Username action
+		if let user = self.relationships.users.data.first {
+			let username = user.attributes.username
+			let userAction = UIAlertAction(title: "Show " + username + "'s Profile", style: .default, handler: { _ in
+				self.visitOriginalPosterProfile(from: viewController)
+			})
+			userAction.setValue(UIImage(systemName: "person.crop.circle.fill"), forKey: "image")
+			userAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+			alertController.addAction(userAction)
+		}
+
+		// Share action
+		let shareAction = UIAlertAction(title: "Share Thread", style: .default, handler: { _ in
+			self.openShareSheet(on: viewController)
+		})
+		shareAction.setValue(UIImage(systemName: "square.and.arrow.up.fill"), forKey: "image")
+		shareAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+		alertController.addAction(shareAction)
+
+		if User.isSignedIn {
+			// Report thread action
+			let reportAction = UIAlertAction(title: "Report Thread", style: .default, handler: { (_) in
+				self.reportThread()
+			})
+			reportAction.setValue(UIImage(systemName: "exclamationmark.circle.fill"), forKey: "image")
+			reportAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+			alertController.addAction(reportAction)
+		}
+
+		alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+		// Present the controller
+		if let popoverController = alertController.popoverPresentationController {
+			if let view = view {
+				popoverController.sourceView = view
+				popoverController.sourceRect = view.frame
+			} else {
+				popoverController.barButtonItem = barButtonItem
+			}
+		}
+		viewController?.present(alertController, animated: true, completion: nil)
 	}
 }

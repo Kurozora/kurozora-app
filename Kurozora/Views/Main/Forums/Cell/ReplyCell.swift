@@ -12,6 +12,7 @@ import KurozoraKit
 protocol ReplyCellDelegate: class {
 	func voteOnReplyCell(_ cell: ReplyCell, with voteStatus: VoteStatus)
 	func visitOriginalPosterProfile(_ cell: ReplyCell)
+	func showActionsList(_ cell: ReplyCell, sender: UIButton)
 }
 
 class ReplyCell: KTableViewCell {
@@ -23,10 +24,8 @@ class ReplyCell: KTableViewCell {
 			profileImageView.addGestureRecognizer(gestureRecognizer)
 		}
 	}
-	@IBOutlet weak var usernameLabel: UILabel! {
+	@IBOutlet weak var usernameLabel: KLabel! {
 		didSet {
-			usernameLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-
 			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(usernameLabelPressed))
 			gestureRecognizer.numberOfTouchesRequired = 1
 			gestureRecognizer.numberOfTapsRequired = 1
@@ -137,7 +136,7 @@ class ReplyCell: KTableViewCell {
 	}
 
 	@IBAction func moreButtonPressed(_ sender: UIButton) {
-		fatalError("More button not implementd.")
-//		showActionList()
+		self.delegate?.showActionsList(self, sender: sender)
+		sender.animateBounce()
 	}
 }
