@@ -8,7 +8,30 @@
 
 import SwiftUI
 
+// A SwiftUI wrapper for Cosmos view
+struct MyCosmosView: UIViewRepresentable {
+	var rating: Double
+	var starSize: Double
+
+	func makeUIView(context: Context) -> KCosmosView {
+		KCosmosView()
+	}
+
+	func updateUIView(_ uiView: KCosmosView, context: Context) {
+		uiView.rating = rating
+
+		// Autoresize Cosmos view according to it intrinsic size
+		uiView.setContentHuggingPriority(.defaultHigh, for: .vertical)
+		uiView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+
+		// Change Cosmos view settings here
+		uiView.settings.starSize = starSize
+	}
+}
+
 struct ShowDetailsCollectionView: View {
+	@State var rating = 3.0
+
 	private func getScrollOffset(_ geometry: GeometryProxy) -> CGFloat {
 		geometry.frame(in: .global).minY
 	}
@@ -51,21 +74,115 @@ struct ShowDetailsCollectionView: View {
 
 			VStack(alignment: .leading, spacing: 10) {
 				HStack {
-					Image("person")
+					Image("Placeholders/Show Poster")
 						.resizable()
 						.scaledToFill()
-						.frame(width: 55, height: 55)
-						.clipShape(Circle())
-						.shadow(radius: 4)
+						.frame(width: 86, height: 128)
+						.clipShape(RoundedRectangle(cornerRadius: 10))
+						.shadow(color: .init(.brown), radius: 4, x: 0.0, y: 0.0)
 
 					VStack(alignment: .leading) {
 						Text("Article Written By")
-							.font(.system(size: 12))
+							.font(.subheadline)
 							.foregroundColor(.gray)
 						Text("Brandon Baars")
-							.font(.system(size: 17))
+							.font(.headline)
 					}
 				}
+
+				ScrollView(.horizontal, showsIndicators: false) {
+					HStack {
+						Group {
+							VStack {
+								MyCosmosView(rating: rating, starSize: 20.0)
+								Text("100 Reviews")
+									.font(.subheadline)
+									.fixedSize(horizontal: true, vertical: false)
+							}
+							Divider()
+						}
+						Group {
+							VStack {
+								Text("7+")
+									.font(.headline)
+								Text("Age")
+									.font(.subheadline)
+							}
+							Divider()
+						}
+						Group {
+							VStack {
+								Image(systemName: "a.square")
+									.font(.headline)
+								Text("Studio")
+									.font(.subheadline)
+							}
+							Divider()
+						}
+						Group {
+							VStack {
+								Text("7")
+									.font(.headline)
+								Text("100 Reviews")
+									.font(.subheadline)
+							}
+							Divider()
+						}
+						Group {
+							VStack {
+								Text("7")
+									.font(.headline)
+								Text("100 Reviews")
+									.font(.subheadline)
+							}
+							Divider()
+						}
+						Group {
+							VStack {
+								Text("7")
+									.font(.headline)
+								Text("100 Reviews")
+									.font(.subheadline)
+							}
+							Divider()
+						}
+						Group {
+							VStack {
+								Text("7")
+									.font(.headline)
+								Text("100 Reviews")
+									.font(.subheadline)
+							}
+							Divider()
+						}
+						Group {
+							VStack {
+								Text("7")
+									.font(.headline)
+								Text("100 Reviews")
+									.font(.subheadline)
+							}
+							Divider()
+						}
+						Group {
+							VStack {
+								Text("7")
+									.font(.headline)
+								Text("100 Reviews")
+									.font(.subheadline)
+							}
+							Divider()
+						}
+						Group {
+							VStack {
+								Text("7")
+									.font(.headline)
+								Text("100 Reviews")
+									.font(.subheadline)
+							}
+						}
+					}
+				}.fixedSize(horizontal: false, vertical: true)
 
 				Text("02 January 2019 • 5 min read")
 					.font(.system(size: 12))
