@@ -13,15 +13,20 @@ import EmptyDataSet_Swift
 	A supercharged view controller that specializes in managing a collection view.
 
 	This implemenation of [UITableViewController](apple-reference-documentation://hsbc27YqnU) implements the following behavior:
-	- A [UIActivityIndicatorView](apple-reference-documentation://hsXlO5I6Ag) is shown when `viewDidLoad` is called.
+	- A [KRefreshControl](x-source-tag://KRefreshControl) is added to the table view.
+	- A [UIActivityIndicatorView](apple-reference-documentation://hsXlO5I6Ag) is shown when [viewDidLoad](apple-reference-documentation://ls%2Fdocumentation%2Fuikit%2Fuiviewcontroller%2F1621495-viewdidload) is called.
 	- The view controller subscribes to the `theme_backgroundColor` of the currently selected theme.
-	- The view controller observes changes in the user's sign in status and runs `viewWillReload` if a change has been detected.
+	- The view controller observes changes in the user's sign in status and runs [viewWillReload](x-source-tag://UIViewController-viewWillReload) if a change has been detected.
 
 	Create a custom subclass of `KTableViewController` for each table view that you manage. When you initialize the table view controller, you must specify the style of the table view (plain or grouped). You must also override the data source and delegate methods required to fill your table with data.
 
 	You may override the [loadView()](apple-reference-documentation://hsl6d2tyZj) method or any other superclass method, but if you do, be sure to call `super` in the implementation of your method. If you do not, the table view controller may not be able to perform all of the tasks needed to maintain the integrity of the table view.
 
+	You may override `prefersRefreshControlDisabled` to prevent the view from activating the refresh control.
+
 	You may also override `prefersActivityIndicatorHidden` to prevent the view from showing the acitivity indicator.
+
+	- Important: Refresh control is unavailable on macOS and as such it is disabled by default.
 
 	- Tag: KTableViewController
 */
@@ -43,6 +48,25 @@ class KTableViewController: UITableViewController {
 		return false
 	}
 
+	/**
+		Specifies whether the table view prefers the refresh control to be disabled or enabled.
+
+		If you change the return value for this method, call the [setNeedsRefreshControlAppearanceUpdate()](x-source-tag://KTableViewController-setNeedsRefreshControlAppearanceUpdate) method.
+
+		By default, this property returns `false`.
+
+		- Returns: `true` if the refresh control should be disabled or `false` if it should be enabled.
+	*/
+	var prefersRefreshControlDisabled: Bool {
+		return false
+	}
+
+	// MARK: - Command Keys
+	#if targetEnvironment(macCatalyst)
+	/// The command key for refreshing pages.
+	private let refreshCommand = UIKeyCommand(title: "Refresh Page", action: #selector(handleRefreshControl), input: "R", modifierFlags: .command, discoverabilityTitle: "Refresh Page")
+	#endif
+
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -55,16 +79,19 @@ class KTableViewController: UITableViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(viewWillReload), name: .KUserIsSignedInDidChange, object: nil)
 
 		// Observe theme update notification.
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView(_:)), name: .ThemeUpdateNotification, object: nil)
 
 		// Configure table view.
 		configureTableView()
 
-		// Start activity indicator view.
-		setupActivityIndicator()
+		// Configure refresh control.
+		configureRefreshControl()
 
-		// Setup empty data view.
-		setupEmptyDataSetView()
+		// Configure activity indicator.
+		configureActivityIndicator()
+
+		// Configure empty view.
+		configureEmptyDataView()
 	}
 
 	// MARK: - Functions
@@ -88,12 +115,56 @@ class KTableViewController: UITableViewController {
 	}
 }
 
+// MARK: - Refresh Control
+extension KTableViewController {
+	/**
+		Configures the refresh control of the table view.
+	*/
+	private func configureRefreshControl() {
+		#if targetEnvironment(macCatalyst)
+		self.addKeyCommand(refreshCommand)
+		#else
+		tableView.refreshControl = KRefreshControl()
+		refreshControl?.addTarget(self, action: #selector(self.handleRefreshControl), for: .valueChanged)
+		#endif
+	}
+
+	/**
+		Indicates to the system that the table view refresh control attributes have changed.
+
+		Call this method if the table view's refresh control attributes, such as enabled/disabled status, change.
+
+		- Tag: KTableViewController-setNeedsRefreshControlAppearanceUpdate
+	*/
+	func setNeedsRefreshControlAppearanceUpdate() {
+		if prefersRefreshControlDisabled {
+			#if targetEnvironment(macCatalyst)
+			self.removeKeyCommand(refreshCommand)
+			#else
+			self.tableView.refreshControl = nil
+			#endif
+		} else {
+			self.configureRefreshControl()
+		}
+	}
+
+	/**
+		Action method used to update your content.
+
+		This method is called upon activation of the refresh control. Call the refresh control’s [endRefreshing()](apple-reference-documentation://ls%2Fdocumentation%2Fuikit%2Fuirefreshcontrol%2F1624848-endrefreshing) method when you are done.
+
+		- Tag: KTableViewController-handleRefreshControl
+	*/
+	@objc func handleRefreshControl() { }
+}
+
 // MARK: - Activity Indicator
 extension KTableViewController {
 	/**
-		Adds the activity indicator at the center if the view and toggles it.
+		Configures the activity indicator with default values.
 	*/
-	private func setupActivityIndicator() {
+	private func configureActivityIndicator() {
+		self.activityIndicatorView.removeFromSuperview()
 		self.view.addSubview(activityIndicatorView)
 		self.activityIndicatorView.center = self.view.center
 
@@ -119,13 +190,26 @@ extension KTableViewController {
 
 		Use this method to show a beautiful and informative view when the table view is empty.
 	*/
-	@objc func setupEmptyDataSetView() { }
+	@objc func configureEmptyDataView() { }
 
 	/**
-		Reloads the empty data set of the table view.
+		Reload empty data with a completion handler.
+
+		- Parameter completion: Completion handler to run after reloadEmptyDataView finishes.
 	*/
-	@objc func reloadEmptyDataView() {
+	func reloadEmptyDataView(completion: (() -> Void)? = nil) {
 		tableView.reloadEmptyDataSet()
+		self.configureEmptyDataView()
+		completion?()
+	}
+
+	/**
+		Reload empty data when receiving a notification.
+
+		- Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
+	*/
+	@objc private func reloadEmptyDataView(_ notification: NSNotification) {
+		self.reloadEmptyDataView()
 	}
 }
 

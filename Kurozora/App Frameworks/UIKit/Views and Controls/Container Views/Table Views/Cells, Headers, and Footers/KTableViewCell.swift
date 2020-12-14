@@ -29,7 +29,7 @@ class KTableViewCell: UITableViewCell {
 	}
 
 	// MARK: - Functions
-	/// The shared settings used to initialize the tab bar item content view.
+	/// The shared settings used to initialize the table view cell.
 	func sharedInit() {
 		self.separatorInset = UIEdgeInsets(horizontal: 15, vertical: 0)
 		self.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue

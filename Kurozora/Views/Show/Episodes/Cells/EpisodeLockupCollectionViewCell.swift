@@ -8,7 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import Cosmos
 
 class EpisodeLockupCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
@@ -22,7 +21,7 @@ class EpisodeLockupCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var episodeFirstAiredLabel: UILabel!
 	@IBOutlet weak var episodeWatchedButton: KButton!
 	@IBOutlet weak var episodeMoreButton: KButton!
-	@IBOutlet weak var cosmosView: CosmosView!
+	@IBOutlet weak var cosmosView: KCosmosView!
 
 	// MARK: - Properties
 	var simpleModeEnabled: Bool = false

@@ -25,6 +25,12 @@ class CurrentSessionCell: KTableViewCell {
 	}
 
 	// MARK: - Functions
+	override func sharedInit() {
+		super.sharedInit()
+		self.contentView.theme_backgroundColor = KThemePicker.tintedBackgroundColor.rawValue
+	}
+
+	// MARK: - Functions
 	override func configureCell() {
 		self.ipAddressValueLabel.text = session.attributes.ip
 		self.deviceValueLabel.text = session.relationships.platform.data.first?.attributes.deviceModel

@@ -7,11 +7,10 @@
 //
 
 import UIKit
-import Cosmos
 
 class ReviewCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var reviewerButton: UIButton!
-    @IBOutlet weak var scoreLabel: UILabel!
-	@IBOutlet weak var cosmosView: CosmosView!
-    @IBOutlet weak var reviewLabel: UILabel!
+    @IBOutlet weak var reviewerButton: KButton!
+    @IBOutlet weak var scoreLabel: KSecondaryLabel!
+	@IBOutlet weak var cosmosView: KCosmosView!
+    @IBOutlet weak var reviewLabel: KLabel!
 }

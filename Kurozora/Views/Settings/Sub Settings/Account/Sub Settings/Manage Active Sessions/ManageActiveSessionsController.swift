@@ -19,8 +19,13 @@ class ManageActiveSessionsController: KTableViewController {
 	var sessions: [Session] = [] {
 		didSet {
 			createAnnotations()
-			_prefersActivityIndicatorHidden = true
-			tableView.reloadData()
+			tableView.reloadData {
+				self._prefersActivityIndicatorHidden = true
+				#if !targetEnvironment(macCatalyst)
+				self.refreshControl?.endRefreshing()
+				self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your sessions list!")
+				#endif
+			}
 		}
 	}
 	var nextPageURL: String?
@@ -44,6 +49,11 @@ class ManageActiveSessionsController: KTableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		NotificationCenter.default.addObserver(self, selector: #selector(removeSession(_:)), name: .KSSessionIsDeleted, object: nil)
+
+		// Setup refresh control
+		#if !targetEnvironment(macCatalyst)
+		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your sessions!")
+		#endif
 
 		// Fetch sessions
 		DispatchQueue.global(qos: .background).async {
@@ -93,6 +103,12 @@ class ManageActiveSessionsController: KTableViewController {
 	// MARK: - Functions
 	/// Fetches sessions for the current user from the server.
 	private func fetchSessions() {
+		#if !targetEnvironment(macCatalyst)
+		DispatchQueue.main.async {
+			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing sessions list...")
+		}
+		#endif
+
 		KService.getSessions(next: nextPageURL) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
@@ -161,6 +177,10 @@ class ManageActiveSessionsController: KTableViewController {
 			self.tableView.deleteSections([indexPath.section], with: .left)
 		}
 		self.tableView.endUpdates()
+	}
+
+	override func handleRefreshControl() {
+		self.fetchSessions()
 	}
 }
 

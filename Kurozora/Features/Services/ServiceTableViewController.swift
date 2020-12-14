@@ -14,6 +14,8 @@ import UIKit
 	Subclass `ServiceTableViewController` when your interface consists of a table that provides a service.
 	Table view controllers already adopt the protocols you need to manage your table view's content and respond to changes.
 	In addition, `ServiceTableViewController` implements the following behaviors:
+	- Disables refresh control.
+	- Disables activity indicator.
 	- Registers an instance of [ServicePreviewTableViewCell](x-source-tag://ServicePreviewTableViewCell)
 	- Registers an instance of [ServiceHeaderTableViewCell](x-source-tag://ServiceHeaderTableViewCell)
 	- Registers an instance of [ServiceFooterTableViewCell](x-source-tag://ServiceFooterTableViewCell)
@@ -26,6 +28,39 @@ class ServiceTableViewController: KTableViewController {
 
 	/// The service type used to populate the table view cells.
 	var serviceType: ServiceType?
+
+	#if !targetEnvironment(macCatalyst)
+	// Refresh control
+	var _prefersRefreshControlDisabled = false {
+		didSet {
+			self.setNeedsRefreshControlAppearanceUpdate()
+		}
+	}
+	override var prefersRefreshControlDisabled: Bool {
+		return _prefersRefreshControlDisabled
+	}
+	#endif
+
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return _prefersActivityIndicatorHidden
+	}
+
+	// MARK: - View
+	override func viewDidLoad() {
+		super.viewDidLoad()
+
+		// Stop activity indicator and disable refresh control
+		_prefersActivityIndicatorHidden = true
+		#if !targetEnvironment(macCatalyst)
+		_prefersRefreshControlDisabled = true
+		#endif
+	}
 }
 
 // MARK: - UITableViewDataSource

@@ -10,7 +10,6 @@ import UIKit
 import KurozoraKit
 import StoreKit
 import Kingfisher
-import UserNotifications
 import SwifterSwift
 
 // MARK: - KurozoraKit

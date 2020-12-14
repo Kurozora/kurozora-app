@@ -65,9 +65,28 @@ class ShowsListCollectionViewController: KCollectionViewController {
 		didSet {
 			_prefersActivityIndicatorHidden = true
 			self.configureDataSource()
+			#if !targetEnvironment(macCatalyst)
+			#if DEBUG
+			self.refreshControl?.endRefreshing()
+			#endif
+			#endif
 		}
 	}
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>! = nil
+
+	#if !targetEnvironment(macCatalyst)
+	#if DEBUG
+	// Refresh control
+	var _prefersRefreshControlDisabled = false {
+		didSet {
+			self.setNeedsRefreshControlAppearanceUpdate()
+		}
+	}
+	override var prefersRefreshControlDisabled: Bool {
+		return _prefersRefreshControlDisabled
+	}
+	#endif
+	#endif
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -82,7 +101,38 @@ class ShowsListCollectionViewController: KCollectionViewController {
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		// Add refresh control
+		#if !targetEnvironment(macCatalyst)
+		#if DEBUG
+		_prefersRefreshControlDisabled = false
+		#else
+		_prefersRefreshControlDisabled = true
+		#endif
+		#endif
 	}
+
+	// MARK: - Functions
+	#if DEBUG
+	override func handleRefreshControl() {
+		if let showID = self.showID {
+			self.showID = showID
+			return
+		}
+		if let actorID = self.actorID {
+			self.actorID = actorID
+			return
+		}
+		if let characterID = self.characterID {
+			self.characterID = characterID
+			return
+		}
+		if let studioID = self.studioID {
+			self.studioID = studioID
+			return
+		}
+	}
+	#endif
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

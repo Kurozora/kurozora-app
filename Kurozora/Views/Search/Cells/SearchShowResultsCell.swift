@@ -8,7 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import Cosmos
 
 class SearchShowResultsCell: SearchBaseResultsCell {
 	// MARK: - IBOutlets
@@ -17,7 +16,7 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 	@IBOutlet weak var episodeCountLabel: UILabel!
 	@IBOutlet weak var airDateLabel: UILabel!
 	@IBOutlet weak var scoreLabel: UILabel!
-	@IBOutlet weak var cosmosView: CosmosView!
+	@IBOutlet weak var cosmosView: KCosmosView!
 
 	// MARK: - Properties
 	var show: Show! {

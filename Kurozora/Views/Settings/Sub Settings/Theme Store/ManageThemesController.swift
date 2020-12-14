@@ -105,8 +105,8 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 		}
 	}
 
-	override func setupEmptyDataSetView() {
-		super.setupEmptyDataSetView()
+	override func configureEmptyDataView() {
+		super.configureEmptyDataView()
 		collectionView.emptyDataSetView { view in
 			view.titleLabelString(NSAttributedString(string: "No Themes", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: "Can't get themes list. Please reload the page or restart the app and check your WiFi connection.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))

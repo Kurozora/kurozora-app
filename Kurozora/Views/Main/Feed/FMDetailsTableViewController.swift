@@ -11,10 +11,6 @@ import KurozoraKit
 
 class FMDetailsTableViewController: KTableViewController {
 	// MARK: - Properties
-	#if !targetEnvironment(macCatalyst)
-	var refreshController = UIRefreshControl()
-	#endif
-
 	var feedMessageID: Int = 0
 	var feedMessage: FeedMessage! {
 		didSet {
@@ -48,12 +44,9 @@ class FMDetailsTableViewController: KTableViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		// Add Refresh Control to Table View
+		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
-		tableView.refreshControl = refreshController
-		refreshController.theme_tintColor = KThemePicker.tintColor.rawValue
-		refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh message details!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
-		refreshController.addTarget(self, action: #selector(refreshDetails(_:)), for: .valueChanged)
+		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh message details!")
 		#endif
 
 		DispatchQueue.global(qos: .background).async {
@@ -67,20 +60,15 @@ class FMDetailsTableViewController: KTableViewController {
 	}
 
 	// MARK: - Functions
-	/**
-		Refresh the feed message data.
-
-		- Parameter sender: The object requesting the refresh.
-	*/
-	@objc private func refreshDetails(_ sender: Any) {
+	override func handleRefreshControl() {
 		#if !targetEnvironment(macCatalyst)
-		refreshController.attributedTitle = NSAttributedString(string: "Refreshing message details...", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+		refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing message details...")
 		#endif
 		self.nextPageURL = nil
 		fetchDetails()
 	}
 
-	override func setupEmptyDataSetView() {
+	override func configureEmptyDataView() {
 		tableView.emptyDataSetView { [weak self] (view) in
 			guard let self = self else { return }
 			let verticalOffset = (self.tableView.tableHeaderView?.height ?? 0 - self.view.height) / 2
@@ -124,7 +112,7 @@ class FMDetailsTableViewController: KTableViewController {
 
 				// Reset refresh controller title
 				#if !targetEnvironment(macCatalyst)
-				self.refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh feed details!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+				self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh feed details!")
 				#endif
 			case .failure: break
 			}
@@ -157,7 +145,7 @@ class FMDetailsTableViewController: KTableViewController {
 
 		DispatchQueue.main.async {
 			#if !targetEnvironment(macCatalyst)
-			self.refreshController.endRefreshing()
+			self.refreshControl?.endRefreshing()
 			#endif
 		}
 	}

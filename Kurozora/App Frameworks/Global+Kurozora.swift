@@ -32,7 +32,7 @@
 	The output from each call to `print(_:separator:terminator:)` includes a newline by default. To print the items without a trailing newline, pass an empty string as `terminator`.
 	```
 	for n in 1...5 {
-	print(n, terminator: "")
+	    print(n, terminator: "")
 	}
 	// Prints "12345"
 	```

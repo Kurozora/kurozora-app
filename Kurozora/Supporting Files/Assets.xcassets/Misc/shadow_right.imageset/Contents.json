@@ -1,12 +1,12 @@
 {
   "images" : [
     {
+      "filename" : "shadow_right.pdf",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "more.pdf",
       "scale" : "2x"
     },
     {
@@ -15,7 +15,10 @@
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "template-rendering-intent" : "template"
   }
 }

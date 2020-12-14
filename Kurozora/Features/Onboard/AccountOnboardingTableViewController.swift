@@ -20,6 +20,18 @@ class AccountOnboardingTableViewController: KTableViewController {
 		}
 	}
 
+	#if !targetEnvironment(macCatalyst)
+	// Refresh control
+	var _prefersRefreshControlDisabled = false {
+		didSet {
+			self.setNeedsRefreshControlAppearanceUpdate()
+		}
+	}
+	override var prefersRefreshControlDisabled: Bool {
+		return _prefersRefreshControlDisabled
+	}
+	#endif
+
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
 		didSet {
@@ -34,8 +46,11 @@ class AccountOnboardingTableViewController: KTableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		// Stop activity indicator as it's not needed for now.
+		// Stop activity indicator and disable refresh control
 		_prefersActivityIndicatorHidden = true
+		#if !targetEnvironment(macCatalyst)
+		_prefersRefreshControlDisabled = true
+		#endif
 
 		rightNavigationBarButton.isEnabled = false
 	}

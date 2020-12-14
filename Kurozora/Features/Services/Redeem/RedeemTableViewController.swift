@@ -20,25 +20,12 @@ class RedeemTableViewController: ServiceTableViewController {
 	var textRecognitionRequest = VNRecognizeTextRequest()
 	lazy var imagePicker = UIImagePickerController()
 
-	// Activity indicator
-	var _prefersActivityIndicatorHidden = false {
-		didSet {
-			self.setNeedsActivityIndicatorAppearanceUpdate()
-		}
-	}
-	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
-	}
-
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Configure properties
 		self.previewImage = R.image.promotional.redeemCode()
 		self.serviceType = .redeem
-
-		// Stop activity indicator as it's not needed for now.
-		_prefersActivityIndicatorHidden = true
 
 		rightNavigationBarButton.isEnabled = false
 

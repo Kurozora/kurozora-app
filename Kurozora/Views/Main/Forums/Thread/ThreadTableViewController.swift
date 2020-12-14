@@ -108,7 +108,7 @@ class ThreadTableViewController: KTableViewController {
 	}
 
 	// MARK: - Functions
-	override func setupEmptyDataSetView() {
+	override func configureEmptyDataView() {
 		tableView.emptyDataSetView { [weak self] (view) in
 			guard let self = self else { return }
 

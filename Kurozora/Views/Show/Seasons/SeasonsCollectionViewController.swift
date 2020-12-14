@@ -45,7 +45,7 @@ class SeasonsCollectionViewController: KCollectionViewController {
     }
 
 	// MARK: - Functions
-	override func setupEmptyDataSetView() {
+	override func configureEmptyDataView() {
 		collectionView?.emptyDataSetView { view in
 			view.titleLabelString(NSAttributedString(string: "No Seasons", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: "This show doesn't have seasons yet. Please check back again later.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))

@@ -15,9 +15,6 @@ class FeedTableViewController: KTableViewController {
 	@IBOutlet weak var profileImageButton: ProfileImageButton!
 
 	// MARK: - Properties
-	#if !targetEnvironment(macCatalyst)
-	var refreshController = UIRefreshControl()
-	#endif
 	var rightBarButtonItems: [UIBarButtonItem]? = nil
 
 	var feedMessages: [FeedMessage] = [] {
@@ -53,12 +50,9 @@ class FeedTableViewController: KTableViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		// Add Refresh Control to Table View
+		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
-		tableView.refreshControl = refreshController
-		refreshController.theme_tintColor = KThemePicker.tintColor.rawValue
-		refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh your explore feed!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
-		refreshController.addTarget(self, action: #selector(refreshFeedsData(_:)), for: .valueChanged)
+		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your explore feed!")
 		#endif
 
 		// Configure navigation bar items
@@ -77,20 +71,15 @@ class FeedTableViewController: KTableViewController {
 	}
 
 	// MARK: - Functions
-	/**
-		Refresh the feeds data by fetching new items from the server.
-
-		- Parameter sender: The object requesting the refresh.
-	*/
-	@objc private func refreshFeedsData(_ sender: Any) {
+	override func handleRefreshControl() {
 		#if !targetEnvironment(macCatalyst)
-		refreshController.attributedTitle = NSAttributedString(string: "Refreshing your explore feed...", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+		refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing your explore feed...")
 		#endif
 		self.nextPageURL = nil
 		fetchFeedMessages()
 	}
 
-	override func setupEmptyDataSetView() {
+	override func configureEmptyDataView() {
 		tableView.emptyDataSetView { (view) in
 			view.titleLabelString(NSAttributedString(string: "No Feed", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: "Can't get feed list. Please reload the page or restart the app and check your WiFi connection.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
@@ -140,7 +129,7 @@ class FeedTableViewController: KTableViewController {
 
 				// Reset refresh controller title
 				#if !targetEnvironment(macCatalyst)
-				self.refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh your explore feed!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+				self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your explore feed!")
 				#endif
 			case .failure: break
 			}
@@ -148,7 +137,7 @@ class FeedTableViewController: KTableViewController {
 
 		DispatchQueue.main.async {
 			#if !targetEnvironment(macCatalyst)
-			self.refreshController.endRefreshing()
+			self.refreshControl?.endRefreshing()
 			#endif
 		}
 	}

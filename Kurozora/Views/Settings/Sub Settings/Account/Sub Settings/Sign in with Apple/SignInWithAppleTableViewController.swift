@@ -11,26 +11,12 @@ import KurozoraKit
 import AuthenticationServices
 
 class SignInWithAppleTableViewController: ServiceTableViewController {
-	// MARK: - Properties
-	// Activity indicator
-	var _prefersActivityIndicatorHidden = false {
-		didSet {
-			self.setNeedsActivityIndicatorAppearanceUpdate()
-		}
-	}
-	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
-	}
-
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Configure properties
 		self.previewImage = R.image.promotional.signInWithApple()
 		self.serviceType = .signInWithApple
-
-		// Stop activity indicator as it's not needed for now.
-		_prefersActivityIndicatorHidden = true
 	}
 }
 

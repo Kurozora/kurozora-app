@@ -11,7 +11,7 @@ PODS:
     - KeychainAccess
     - TRON
   - Pageboy (3.6.2)
-  - R.swift (5.3.0):
+  - R.swift (5.3.1):
     - R.swift.Library (~> 5.3.0)
   - R.swift.Library (5.3.0)
   - ReachabilitySwift (5.0.0)
@@ -107,7 +107,7 @@ SPEC CHECKSUMS:
   Kingfisher: a3c03d702433fa6cfedabb2bddbe076fb8f2e902
   KurozoraKit: da510e3d71d8a620f78f5dd47daf5b4c9c5b0907
   Pageboy: cf121b9dd48c63f3f281b2a9ec93d02e0f23879b
-  R.swift: 4170fb7161c67be3bc1a847040b79367d69c419f
+  R.swift: 56ec7e3aef34b9eee47a659e42462db2c1cc5ac3
   R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24

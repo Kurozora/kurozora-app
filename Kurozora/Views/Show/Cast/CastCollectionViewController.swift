@@ -41,7 +41,7 @@ class CastCollectionViewController: KCollectionViewController {
     }
 
 	// MARK: - Functions
-	override func setupEmptyDataSetView() {
+	override func configureEmptyDataView() {
 		collectionView.emptyDataSetView { view in
 			view.titleLabelString(NSAttributedString(string: "No cast", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: "Can't get cast list. Please reload the page or restart the app and check your WiFi connection.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))

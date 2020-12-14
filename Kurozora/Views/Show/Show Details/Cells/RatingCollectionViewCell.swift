@@ -8,22 +8,13 @@
 
 import UIKit
 import KurozoraKit
-import Cosmos
 
 class RatingCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var cosmosView: CosmosView!
-	@IBOutlet weak var cosmosDetailLabel: UILabel! {
-		didSet {
-			cosmosDetailLabel.theme_textColor = KThemePicker.subTextColor.rawValue
-		}
-	}
+	@IBOutlet weak var cosmosView: KCosmosView!
+	@IBOutlet weak var cosmosDetailLabel: KSecondaryLabel!
 	@IBOutlet weak var ratingLabel: KLabel!
-	@IBOutlet weak var ratingDetailLabel: UILabel! {
-		didSet {
-			ratingDetailLabel.theme_textColor = KThemePicker.subTextColor.rawValue
-		}
-	}
+	@IBOutlet weak var ratingDetailLabel: KSecondaryLabel!
 
 	// MARK: - Properties
 	var show: Show! {

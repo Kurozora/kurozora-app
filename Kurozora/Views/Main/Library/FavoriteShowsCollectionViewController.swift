@@ -72,7 +72,7 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 		dismiss(animated: true, completion: nil)
 	}
 
-	override func setupEmptyDataSetView() {
+	override func configureEmptyDataView() {
 		collectionView.emptyDataSetView { view in
 			let detailLabel = self.user?.id == User.current?.id ? "Favorited shows will show up on this page!" : "\(self.user?.attributes.username ?? "This user") hasn't favorited shows yet."
 			view.titleLabelString(NSAttributedString(string: "No Favorites", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))

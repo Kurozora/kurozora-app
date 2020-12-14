@@ -39,10 +39,6 @@ class ProfileTableViewController: KTableViewController {
 	@IBOutlet weak var bannerImageViewHeightConstraint: NSLayoutConstraint!
 
 	// MARK: - Properties
-	#if !targetEnvironment(macCatalyst)
-	var refreshController = UIRefreshControl()
-	#endif
-
 	var userID = User.current?.id ?? 0
 	var user: User! = User.current {
 		didSet {
@@ -98,12 +94,9 @@ class ProfileTableViewController: KTableViewController {
 		self.view.setNeedsUpdateConstraints()
 		self.view.layoutIfNeeded()
 
-		// Add Refresh Control to Table View
+		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
-		tableView.refreshControl = refreshController
-		refreshController.theme_tintColor = KThemePicker.tintColor.rawValue
-		refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh profile details!", attributes: [NSAttributedString.Key.foregroundColor: UIColor.kurozora])
-		refreshController.addTarget(self, action: #selector(refreshProfileData(_:)), for: .valueChanged)
+		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh profile details!")
 		#endif
 
 		// Fetch posts
@@ -121,20 +114,15 @@ class ProfileTableViewController: KTableViewController {
 	}
 
 	// MARK: - Functions
-	/**
-		Refresh the profile by fetching new items from the server.
-
-		- Parameter sender: The object requesting the refresh.
-	*/
-	@objc private func refreshProfileData(_ sender: Any) {
+	override func handleRefreshControl() {
 		#if !targetEnvironment(macCatalyst)
-		refreshController.attributedTitle = NSAttributedString(string: "Refreshing profile details...", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+		refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing profile details...")
 		#endif
 		self.nextPageURL = nil
 		self.fetchUserDetails()
 	}
 
-	override func setupEmptyDataSetView() {
+	override func configureEmptyDataView() {
 		tableView.emptyDataSetView { [weak self] (view) in
 			guard let self = self else { return }
 
@@ -175,7 +163,7 @@ class ProfileTableViewController: KTableViewController {
 
 		DispatchQueue.main.async {
 			#if !targetEnvironment(macCatalyst)
-			self.refreshController.endRefreshing()
+			self.refreshControl?.endRefreshing()
 			#endif
 		}
 	}
@@ -190,7 +178,7 @@ class ProfileTableViewController: KTableViewController {
 
 				// Reset refresh controller title
 				#if !targetEnvironment(macCatalyst)
-				self.refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh profile details!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+				self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh profile details!")
 				#endif
 			case .failure: break
 			}

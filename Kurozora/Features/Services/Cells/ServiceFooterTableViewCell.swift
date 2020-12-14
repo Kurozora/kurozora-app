@@ -36,6 +36,11 @@ class ServiceFooterTableViewCell: KTableViewCell {
 	}
 
 	// MARK: - Cell
+	override func sharedInit() {
+		super.sharedInit()
+		self.contentView.backgroundColor = .clear
+	}
+
 	override func configureCell() {
 		self.privacyButton.setAttributedTitle(ServiceFooterString.visitPrivacyPolicy, for: .normal)
 	}

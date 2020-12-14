@@ -65,6 +65,18 @@ class ProductTableViewController: KTableViewController {
 		}
 	}
 
+	#if !targetEnvironment(macCatalyst)
+	// Refresh control
+	var _prefersRefreshControlDisabled = false {
+		didSet {
+			self.setNeedsRefreshControlAppearanceUpdate()
+		}
+	}
+	override var prefersRefreshControlDisabled: Bool {
+		return _prefersRefreshControlDisabled
+	}
+	#endif
+
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
 		didSet {
@@ -78,6 +90,11 @@ class ProductTableViewController: KTableViewController {
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		// Disable refresh control
+		#if !targetEnvironment(macCatalyst)
+		_prefersRefreshControlDisabled = true
+		#endif
 
 		DispatchQueue.global(qos: .background).async {
 			// Fetch subscriptions.

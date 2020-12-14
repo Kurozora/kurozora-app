@@ -15,10 +15,6 @@ protocol ForumsListViewControllerDelegate: class {
 
 class ForumsListViewController: KTableViewController {
 	// MARK: - Properties
-	#if !targetEnvironment(macCatalyst)
-	var refreshController = UIRefreshControl()
-	#endif
-
 	var sectionTitle: String = ""
 	var sectionID: Int!
 	var sectionIndex: Int!
@@ -63,12 +59,9 @@ class ForumsListViewController: KTableViewController {
 		// Add bottom inset to avoid the tabbar obscuring the view
 		tableView.contentInset.bottom = 50
 
-		// Add Refresh Control to Table View
+		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
-		tableView.refreshControl = refreshController
-		refreshController.theme_tintColor = KThemePicker.tintColor.rawValue
-		refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads.", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
-		refreshController.addTarget(self, action: #selector(refreshThreadsData(_:)), for: .valueChanged)
+		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads.")
 		#endif
 
 		// Fetch threads
@@ -78,20 +71,15 @@ class ForumsListViewController: KTableViewController {
 	}
 
 	// MARK: - Functions
-	/**
-		Refresh the threads data by fetching new items from the server.
-
-		- Parameter sender: The object requesting the refresh.
-	*/
-	@objc private func refreshThreadsData(_ sender: Any) {
+	override func handleRefreshControl() {
 		#if !targetEnvironment(macCatalyst)
-		refreshController.attributedTitle = NSAttributedString(string: "Refreshing \(sectionTitle) threads...", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+		refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing \(sectionTitle) threads...")
 		#endif
 		self.nextPageURL = nil
 		fetchThreads()
 	}
 
-	override func setupEmptyDataSetView() {
+	override func configureEmptyDataView() {
 		tableView.emptyDataSetView { [weak self] (view) in
 			guard let self = self else { return }
 
@@ -122,7 +110,7 @@ class ForumsListViewController: KTableViewController {
 
 				// Reset refresh controller title
 				#if !targetEnvironment(macCatalyst)
-				self.refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh \(self.sectionTitle) threads.", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+				self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh \(self.sectionTitle) threads.")
 				#endif
 			case .failure: break
 			}
@@ -130,7 +118,7 @@ class ForumsListViewController: KTableViewController {
 
 		DispatchQueue.main.async {
 			#if !targetEnvironment(macCatalyst)
-			self.refreshController.endRefreshing()
+			self.refreshControl?.endRefreshing()
 			#endif
 		}
 	}

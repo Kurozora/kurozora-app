@@ -26,25 +26,12 @@ class MALImportTableViewController: ServiceTableViewController {
 		}
 	}
 
-	// Activity indicator
-	var _prefersActivityIndicatorHidden = false {
-		didSet {
-			self.setNeedsActivityIndicatorAppearanceUpdate()
-		}
-	}
-	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
-	}
-
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Confgure properties
 		self.previewImage = R.image.promotional.moveToKurozora()
 		self.serviceType = .malImport
-
-		// Stop activity indicator as it's not needed for now.
-		_prefersActivityIndicatorHidden = true
 
 		rightNavigationBarButton.isEnabled = false
 	}

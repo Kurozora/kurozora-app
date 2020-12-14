@@ -8,7 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import Cosmos
 
 class EpisodeDetailCollectionViewControlle: KCollectionViewController {
 	// MARK: - Properties

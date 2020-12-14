@@ -18,6 +18,18 @@ class GenresTableViewController: KTableViewController {
 		}
 	}
 
+	#if !targetEnvironment(macCatalyst)
+	// Refresh control
+	var _prefersRefreshControlDisabled = false {
+		didSet {
+			self.setNeedsRefreshControlAppearanceUpdate()
+		}
+	}
+	override var prefersRefreshControlDisabled: Bool {
+		return _prefersRefreshControlDisabled
+	}
+	#endif
+
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
 		didSet {
@@ -31,6 +43,10 @@ class GenresTableViewController: KTableViewController {
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		// Disable refresh control
+		#if !targetEnvironment(macCatalyst)
+		_prefersRefreshControlDisabled = true
+		#endif
 
 		DispatchQueue.global(qos: .background).async {
 			self.fetchGenres()
@@ -38,7 +54,7 @@ class GenresTableViewController: KTableViewController {
 	}
 
 	// MARK: - Functions
-	override func setupEmptyDataSetView() {
+	override func configureEmptyDataView() {
 		tableView.emptyDataSetView { (view) in
 			view.titleLabelString(NSAttributedString(string: "No Genres", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: "Can't get genres list. Please reload the page or restart the app and check your WiFi connection.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))

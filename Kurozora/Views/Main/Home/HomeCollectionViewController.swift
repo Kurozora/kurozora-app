@@ -23,10 +23,27 @@ class HomeCollectionViewController: KCollectionViewController {
 	var snapshot: NSDiffableDataSourceSnapshot<Int, Int>! = nil
 	var exploreCategories: [ExploreCategory] = [] {
 		didSet {
-			_prefersActivityIndicatorHidden = true
 			configureDataSource()
+			_prefersActivityIndicatorHidden = true
+			#if !targetEnvironment(macCatalyst)
+			#if DEBUG
+			self.refreshControl?.endRefreshing()
+			#endif
+			#endif
 		}
 	}
+
+	#if DEBUG
+	// Refresh control
+	var _prefersRefreshControlDisabled = false {
+		didSet {
+			self.setNeedsRefreshControlAppearanceUpdate()
+		}
+	}
+	override var prefersRefreshControlDisabled: Bool {
+		return _prefersRefreshControlDisabled
+	}
+	#endif
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -63,8 +80,12 @@ class HomeCollectionViewController: KCollectionViewController {
 		// Setup search bar.
 		setupSearchBar()
 
-		// Setup scroll view.
-		collectionView.delaysContentTouches = false
+		// Add Refresh Control to Collection View
+		#if DEBUG
+		_prefersRefreshControlDisabled = false
+		#else
+		_prefersRefreshControlDisabled = true
+		#endif
 	}
 
 	override func viewDidAppear(_ animated: Bool) {
@@ -75,6 +96,12 @@ class HomeCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - Functions
+	#if DEBUG
+	override func handleRefreshControl() {
+		self.fetchExplore()
+	}
+	#endif
+
 	/// Shows what's new in the app if necessary.
 	fileprivate func showWhatsNew() {
 		if WhatsNew.shouldPresent() {
@@ -131,7 +158,7 @@ class HomeCollectionViewController: KCollectionViewController {
 		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
 											   heightDimension: .absolute(55))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
-													   subitem: item, count: columns)
+															 subitem: item, count: columns)
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
 		return layoutSection

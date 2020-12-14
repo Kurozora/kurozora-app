@@ -16,6 +16,18 @@ class DebugSettingsTableViewController: KTableViewController {
 	let kDefaultItems = KurozoraDelegate.shared.keychain.allItems()
 	var kDefaultCount = KurozoraDelegate.shared.keychain.allItems().count
 
+	#if !targetEnvironment(macCatalyst)
+	// Refresh control
+	var _prefersRefreshControlDisabled = false {
+		didSet {
+			self.setNeedsRefreshControlAppearanceUpdate()
+		}
+	}
+	override var prefersRefreshControlDisabled: Bool {
+		return _prefersRefreshControlDisabled
+	}
+	#endif
+
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
 		didSet {
@@ -30,11 +42,15 @@ class DebugSettingsTableViewController: KTableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		// Stop activity indicator and disable refresh control
 		_prefersActivityIndicatorHidden = true
+		#if !targetEnvironment(macCatalyst)
+		_prefersRefreshControlDisabled = true
+		#endif
 	}
 
 	// MARK: - Functions
-	override func setupEmptyDataSetView() {
+	override func configureEmptyDataView() {
 		tableView.emptyDataSetView { (view) in
 			view.titleLabelString(NSAttributedString(string: "No Keys", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: "All Kurozora related keys in your keychain are removed.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))

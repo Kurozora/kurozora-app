@@ -8,11 +8,10 @@
 
 import UIKit
 import KurozoraKit
-import Cosmos
 
 class BadgeCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var cosmosView: CosmosView!
+	@IBOutlet weak var cosmosView: KCosmosView!
 	@IBOutlet weak var ratingView: UIView! {
 		didSet {
 			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(showRating(_:)))
