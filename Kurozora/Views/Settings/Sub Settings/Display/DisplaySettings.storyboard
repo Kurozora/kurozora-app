@@ -58,7 +58,7 @@
                                                                         </userDefinedRuntimeAttribute>
                                                                     </userDefinedRuntimeAttributes>
                                                                 </imageView>
-                                                                <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Brp-a8-jet">
+                                                                <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Brp-a8-jet">
                                                                     <rect key="frame" x="0.0" y="0.0" width="78" height="192"/>
                                                                     <connections>
                                                                         <action selector="appearanceOptionButtonTapped:" destination="XOO-96-8EI" eventType="touchUpInside" id="v60-QS-8hs"/>
@@ -108,7 +108,7 @@
                                                                         </userDefinedRuntimeAttribute>
                                                                     </userDefinedRuntimeAttributes>
                                                                 </imageView>
-                                                                <button tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1au-9f-4LQ">
+                                                                <button tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1au-9f-4LQ">
                                                                     <rect key="frame" x="0.0" y="0.0" width="78" height="192"/>
                                                                     <connections>
                                                                         <action selector="appearanceOptionButtonTapped:" destination="XOO-96-8EI" eventType="touchUpInside" id="FKD-tu-qkS"/>
@@ -391,17 +391,17 @@
                         <viewLayoutGuide key="safeArea" id="4T8-xq-hoD"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SelectableSettingsCell" id="xUA-jL-Hgh" customClass="SelectableSettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="55.5" width="374" height="41"/>
+                                <rect key="frame" x="20" y="55.5" width="374" height="41.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xUA-jL-Hgh" id="Mw7-Y8-UoC">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="41"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="41.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vxs-MW-Ztg">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="41"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="41.5"/>
                                             <subviews>
                                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sunset to Sunrise" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gsi-g5-vk1" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="10" width="134" height="21"/>
+                                                    <rect key="frame" x="8" y="10" width="134" height="21.5"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
@@ -409,7 +409,7 @@
                                                     <size key="shadowOffset" width="0.0" height="0.0"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="PHE-Wb-uCl">
-                                                    <rect key="frame" x="347.5" y="12.5" width="18.5" height="16.5"/>
+                                                    <rect key="frame" x="347.5" y="13" width="18.5" height="16.5"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -437,17 +437,17 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="DateSettingsCell" id="uL8-Ph-RYR" customClass="DateSettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="96.5" width="374" height="41"/>
+                                <rect key="frame" x="20" y="97" width="374" height="41.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uL8-Ph-RYR" id="qf7-8g-iCz">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="41"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="41.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v6M-B0-z2V">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="41"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="41.5"/>
                                             <subviews>
                                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Light Appearance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dVR-to-nVy" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="10" width="135" height="21"/>
+                                                    <rect key="frame" x="8" y="10" width="135" height="21.5"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
@@ -487,21 +487,21 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="DatePickerSettingsCell" id="JUg-XW-ius" customClass="DatePickerSettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="137.5" width="374" height="55"/>
+                                <rect key="frame" x="20" y="138.5" width="374" height="55"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JUg-XW-ius" id="4ma-HZ-R9o">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="55"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Starts at" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="418-MU-fP6" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="10" y="17.5" width="65" height="20.5"/>
+                                            <rect key="frame" x="8" y="17.5" width="65" height="20.5"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="MC1-jj-Ic6">
-                                            <rect key="frame" x="274" y="10" width="90" height="35"/>
+                                            <rect key="frame" x="276" y="10" width="90" height="35"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" priority="999" constant="90" id="qOw-W3-R4g"/>
                                             </constraints>
@@ -515,9 +515,9 @@
                                         <constraint firstItem="418-MU-fP6" firstAttribute="centerY" secondItem="MC1-jj-Ic6" secondAttribute="centerY" id="4Nc-Vs-L8O"/>
                                         <constraint firstItem="MC1-jj-Ic6" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="418-MU-fP6" secondAttribute="trailing" constant="8" symbolic="YES" id="5eF-l4-Gf0"/>
                                         <constraint firstItem="MC1-jj-Ic6" firstAttribute="top" secondItem="4ma-HZ-R9o" secondAttribute="top" constant="10" id="U3j-qn-tyS"/>
-                                        <constraint firstItem="418-MU-fP6" firstAttribute="leading" secondItem="4ma-HZ-R9o" secondAttribute="leading" constant="10" id="Xtv-vR-Sdj"/>
+                                        <constraint firstItem="418-MU-fP6" firstAttribute="leading" secondItem="4ma-HZ-R9o" secondAttribute="leading" constant="8" id="Xtv-vR-Sdj"/>
                                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="418-MU-fP6" secondAttribute="bottom" constant="10" id="e6K-B0-CVw"/>
-                                        <constraint firstAttribute="trailing" secondItem="MC1-jj-Ic6" secondAttribute="trailing" constant="10" id="epr-A4-fye"/>
+                                        <constraint firstAttribute="trailing" secondItem="MC1-jj-Ic6" secondAttribute="trailing" constant="8" id="epr-A4-fye"/>
                                         <constraint firstAttribute="bottom" secondItem="MC1-jj-Ic6" secondAttribute="bottom" constant="10" id="g0U-CF-xCX"/>
                                         <constraint firstItem="418-MU-fP6" firstAttribute="top" relation="greaterThanOrEqual" secondItem="4ma-HZ-R9o" secondAttribute="top" constant="10" id="xJx-ls-MIz"/>
                                     </constraints>
