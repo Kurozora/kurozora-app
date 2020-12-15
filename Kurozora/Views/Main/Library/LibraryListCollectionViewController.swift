@@ -16,16 +16,16 @@ protocol LibraryListViewControllerDelegate: class {
 
 class LibraryListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	#if !targetEnvironment(macCatalyst)
-	private let refreshControl = UIRefreshControl()
-	#endif
-
 	var shows: [Show] = [] {
 		didSet {
 			self.configureDataSource()
+			self._prefersActivityIndicatorHidden = true
+			self.reloadEmptyDataView {
+				self.toggleEmptyDataView()
+			}
 			#if !targetEnvironment(macCatalyst)
-			self.refreshControl.endRefreshing()
-			self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(self.libraryStatus.stringValue.lowercased()) list.", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
+			self.refreshControl?.endRefreshing()
+			self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your \(self.libraryStatus.stringValue.lowercased()) list.")
 			#endif
 		}
 	}
@@ -41,8 +41,24 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	weak var delegate: LibraryListViewControllerDelegate?
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>! = nil
 
+	// Refresh control
+	var _prefersRefreshControlDisabled = false {
+		didSet {
+			self.setNeedsRefreshControlAppearanceUpdate()
+		}
+	}
+	override var prefersRefreshControlDisabled: Bool {
+		return _prefersRefreshControlDisabled
+	}
+
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
 	override var prefersActivityIndicatorHidden: Bool {
-		return true
+		return _prefersActivityIndicatorHidden
 	}
 
 	// MARK: - View
@@ -64,14 +80,17 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	override func viewWillReload() {
 		super.viewWillReload()
 
-		#if !targetEnvironment(macCatalyst)
-		self.enableActions()
-		#endif
+		self.reloadEmptyDataView {
+			self.toggleEmptyDataView()
+		}
+		self.enableRefreshControl()
 		self.fetchLibrary()
 	}
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+		NotificationCenter.default.addObserver(self, selector: #selector(fetchLibrary), name: Notification.Name("Update\(libraryStatus.sectionValue)Section"), object: nil)
 
 		// Add bottom inset to avoid the tabbar obscuring the view
 		collectionView.contentInset.bottom = 50
@@ -79,16 +98,17 @@ class LibraryListCollectionViewController: KCollectionViewController {
 		// Setup collection view.
 		collectionView.collectionViewLayout = createLayout()
 
-		// Add Refresh Control to Collection View
-		#if !targetEnvironment(macCatalyst)
-		collectionView.refreshControl = refreshControl
-		refreshControl.theme_tintColor = KThemePicker.tintColor.rawValue
-		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(libraryStatus.stringValue.lowercased()) list.", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
-		refreshControl.addTarget(self, action: #selector(viewWillReload), for: .valueChanged)
-		#endif
+		// Hide activity indicator if user is not signed in.
+		if !User.isSignedIn {
+			self._prefersActivityIndicatorHidden = true
+			self.toggleEmptyDataView()
+		}
 
-		// Observe NotificationCenter for an update
-		NotificationCenter.default.addObserver(self, selector: #selector(fetchLibrary), name: Notification.Name("Update\(libraryStatus.sectionValue)Section"), object: nil)
+		// Add Refresh Control to Collection View
+		enableRefreshControl()
+		#if !targetEnvironment(macCatalyst)
+		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your \(libraryStatus.stringValue.lowercased()) list.")
+		#endif
 
 		// Fetch library if user is signed in
 		if User.isSignedIn {
@@ -99,46 +119,65 @@ class LibraryListCollectionViewController: KCollectionViewController {
     }
 
 	// MARK: - Functions
-	override func setupEmptyDataSetView() {
-		collectionView.emptyDataSetView { [weak self] (view) in
-			guard let self = self else { return }
-			let detailLabelString = User.isSignedIn ? "Add a show to your \(self.libraryStatus.stringValue.lowercased()) list and it will show up here." : "Library is only available to registered Kurozora users."
-			view.titleLabelString(NSAttributedString(string: "No Shows", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
-				.detailLabelString(NSAttributedString(string: detailLabelString, attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-				.image(R.image.empty.library())
-
-			// Not signed in
-			if !User.isSignedIn {
-				view.buttonTitle(NSAttributedString(string: "Sign In", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.tintColor.colorValue]), for: .normal)
-					.buttonTitle(NSAttributedString(string: "Sign In", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.tintColor.colorValue.darken()]), for: .highlighted)
-					.isScrollAllowed(false)
-					.didTapDataButton {
-						if let signInTableViewController = R.storyboard.onboarding.signInTableViewController() {
-							let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
-							self.present(kNavigationController, animated: true)
-						}
-					}
-			} else {
-				view.verticalOffset(-50)
-					.verticalSpace(5)
-					.isScrollAllowed(true)
-			}
+	/// Fades in and out the empty data view according to the number of rows.
+	func toggleEmptyDataView() {
+		if self.collectionView.numberOfItems() == 0 || !User.isSignedIn {
+			self.collectionView.backgroundView?.animateFadeIn()
+		} else {
+			self.collectionView.backgroundView?.animateFadeOut()
 		}
 	}
 
-	/// Enables and disables actions such as buttons and the refresh control according to the user sign in state.
-	#if !targetEnvironment(macCatalyst)
-	private func enableActions() {
-		refreshControl.isEnabled = User.isSignedIn
+	override func handleRefreshControl() {
+		self.fetchLibrary()
 	}
-	#endif
+
+	override func configureEmptyDataView() {
+		var detailString: String
+		var buttonTitle: String = ""
+		var buttonAction: (() -> Void)? = nil
+
+		if User.isSignedIn {
+			detailString = "Add a show to your \(self.libraryStatus.stringValue.lowercased()) list and it will show up here."
+		} else {
+			detailString = "Library is currently available to registered Kurozora users only."
+			buttonTitle = "Sign In"
+			buttonAction = {
+				if let signInTableViewController = R.storyboard.onboarding.signInTableViewController() {
+					let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
+					self.present(kNavigationController, animated: true)
+				}
+			}
+		}
+
+		emptyBackgroundView.configureImageView(image: R.image.empty.library()!)
+		emptyBackgroundView.configureLabels(title: "No Shows", detail: detailString)
+		emptyBackgroundView.configureButton(title: buttonTitle, handler: buttonAction)
+
+		collectionView.backgroundView?.alpha = 0
+	}
+
+	/// Enables and disables the refresh control according to the user sign in state.
+	private func enableRefreshControl() {
+		if User.isSignedIn {
+			#if !targetEnvironment(macCatalyst)
+			guard refreshControl == nil else { return }
+			self._prefersRefreshControlDisabled = false
+			#endif
+		} else {
+			#if !targetEnvironment(macCatalyst)
+			guard refreshControl != nil else { return }
+			self._prefersRefreshControlDisabled = true
+			#endif
+		}
+	}
 
 	/// Fetch the library items for the current user.
 	@objc private func fetchLibrary() {
 		if User.isSignedIn {
 			DispatchQueue.main.async {
 				#if !targetEnvironment(macCatalyst)
-				self.refreshControl.attributedTitle = NSAttributedString(string: "Refreshing your \(self.libraryStatus.stringValue.lowercased()) list...", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
+				self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing your \(self.libraryStatus.stringValue.lowercased()) list...")
 				#endif
 			}
 
@@ -152,7 +191,9 @@ class LibraryListCollectionViewController: KCollectionViewController {
 			}
 		} else {
 			self.shows = []
-			collectionView.reloadData()
+			collectionView.reloadData {
+				self.toggleEmptyDataView()
+			}
 		}
 	}
 
@@ -226,7 +267,6 @@ extension LibraryListCollectionViewController {
 			snapshot.appendItems(Array(itemOffset..<itemUpperbound))
 		}
 		dataSource.apply(snapshot)
-		collectionView.reloadEmptyDataSet()
 	}
 }
 
@@ -323,7 +363,9 @@ extension LibraryListCollectionViewController: ShowDetailsCollectionViewControll
 			collectionView.deleteItems(at: [indexPath])
 		})
 
-		collectionView.reloadData()
+		collectionView.reloadData {
+			self.toggleEmptyDataView()
+		}
 	}
 }
 

@@ -17,6 +17,7 @@ import EmptyDataSet_Swift
 	- A [UIActivityIndicatorView](apple-reference-documentation://hsXlO5I6Ag) is shown when [viewDidLoad](apple-reference-documentation://ls%2Fdocumentation%2Fuikit%2Fuiviewcontroller%2F1621495-viewdidload) is called.
 	- The view controller subscribes to the `theme_backgroundColor` of the currently selected theme.
 	- The view controller observes changes in the user's sign in status and runs [viewWillReload](x-source-tag://UIViewController-viewWillReload) if a change has been detected.
+	- The view controller observes changes in the selected app theme and runs [themeWillReload](x-source-tag://UIViewController-themeWillReload) if a change has been detected.
 
 	Create a custom subclass of `KTableViewController` for each table view that you manage. When you initialize the table view controller, you must specify the style of the table view (plain or grouped). You must also override the data source and delegate methods required to fill your table with data.
 
@@ -26,7 +27,7 @@ import EmptyDataSet_Swift
 
 	You may also override `prefersActivityIndicatorHidden` to prevent the view from showing the acitivity indicator.
 
-	- Important: Refresh control is unavailable on macOS and as such it is disabled by default.
+	- Important: Refresh control is unavailable on macOS and as such it is disabled by default. Instead, the key-command `⌘+R` is added.
 
 	- Tag: KTableViewController
 */
@@ -34,6 +35,9 @@ class KTableViewController: UITableViewController {
 	// MARK: - Properties
 	/// The activity indicator view object of the view controller.
 	private let activityIndicatorView: KActivityIndicatorView = KActivityIndicatorView()
+
+	/// The object controlling the empty background view.
+	let emptyBackgroundView: EmptyBackgroundView = EmptyBackgroundView()
 
 	/**
 		Specifies whether the view controller prefers the activity indicator to be hidden or shown.
@@ -67,19 +71,30 @@ class KTableViewController: UITableViewController {
 	private let refreshCommand = UIKeyCommand(title: "Refresh Page", action: #selector(handleRefreshControl), input: "R", modifierFlags: .command, discoverabilityTitle: "Refresh Page")
 	#endif
 
+	// MARK: - Initializers
+	deinit {
+		NotificationCenter.default.removeObserver(self)
+	}
+
 	// MARK: - View
+	override func viewWillReload() {
+		super.viewWillReload()
+
+		self.reloadEmptyDataView()
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
-		// Set table view theme.
-		self.view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		self.tableView.theme_separatorColor = KThemePicker.separatorColorLight.rawValue
 
 		// Observe user sign-in status.
 		NotificationCenter.default.addObserver(self, selector: #selector(viewWillReload), name: .KUserIsSignedInDidChange, object: nil)
 
 		// Observe theme update notification.
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView(_:)), name: .ThemeUpdateNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(themeWillReload), name: .ThemeUpdateNotification, object: nil)
+
+		// Set table view theme.
+		self.view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+		self.tableView.theme_separatorColor = KThemePicker.separatorColorLight.rawValue
 
 		// Configure table view.
 		configureTableView()
@@ -101,6 +116,8 @@ class KTableViewController: UITableViewController {
 		Cells can also be registered during the configuration by using [registerCells(for tableView: UITableView)](x-source-tag://KTableViewController-registerCellsForTableView).
 	*/
 	fileprivate func configureTableView() {
+		tableView.backgroundView = emptyBackgroundView
+
 		// Register cells with the table view.
 		registerCells()
 	}
@@ -198,18 +215,8 @@ extension KTableViewController {
 		- Parameter completion: Completion handler to run after reloadEmptyDataView finishes.
 	*/
 	func reloadEmptyDataView(completion: (() -> Void)? = nil) {
-		tableView.reloadEmptyDataSet()
 		self.configureEmptyDataView()
 		completion?()
-	}
-
-	/**
-		Reload empty data when receiving a notification.
-
-		- Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
-	*/
-	@objc private func reloadEmptyDataView(_ notification: NSNotification) {
-		self.reloadEmptyDataView()
 	}
 }
 

@@ -25,16 +25,31 @@ class NotificationsViewController: KTableViewController {
 	var userNotifications: [UserNotification] = [] {
 		didSet {
 			self.groupNotifications(userNotifications)
-
-			_prefersActivityIndicatorHidden = true
-
 			self.tableView.reloadData {
+				self._prefersActivityIndicatorHidden = true
+				self.reloadEmptyDataView {
+					self.toggleEmptyDataView()
+				}
+				#if !targetEnvironment(macCatalyst)
 				self.refreshControl?.endRefreshing()
-				self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your notifications list!", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
+				self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your notifications list!")
+				#endif
 			}
 		}
 	} // Grouping type: Off
 	var groupedNotifications = [GroupedNotifications]() // Grouping type: Automatic, ByType
+
+	#if !targetEnvironment(macCatalyst)
+	// Refresh control
+	var _prefersRefreshControlDisabled = false {
+		didSet {
+			self.setNeedsRefreshControlAppearanceUpdate()
+		}
+	}
+	override var prefersRefreshControlDisabled: Bool {
+		return _prefersRefreshControlDisabled
+	}
+	#endif
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -62,8 +77,11 @@ class NotificationsViewController: KTableViewController {
 	override func viewWillReload() {
 		super.viewWillReload()
 
-		enableActions()
-		fetchNotifications()
+		#if !targetEnvironment(macCatalyst)
+		self.enableRefreshControl()
+		#endif
+		self.enableActions()
+		self.fetchNotifications()
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
@@ -79,17 +97,22 @@ class NotificationsViewController: KTableViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(updateNotifications(_:)), name: .KUNDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(removeNotification(_:)), name: .KUNDidDelete, object: nil)
 
-		// Unhide activity indicator if user is signed in.
-		_prefersActivityIndicatorHidden = !User.isSignedIn
+		// Hide activity indicator if user is not signed in.
+		if !User.isSignedIn {
+			self._prefersActivityIndicatorHidden = true
+			self.toggleEmptyDataView()
+		}
 
 		// Setup search bar.
-		setupSearchBar()
+		self.setupSearchBar()
 
-		// Refresh controller.
-		refreshControl?.theme_tintColor = KThemePicker.tintColor.rawValue
-		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your notifications!", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
-		refreshControl?.addTarget(self, action: #selector(fetchNotifications), for: .valueChanged)
-		enableActions()
+		// Setup refresh control
+		#if !targetEnvironment(macCatalyst)
+		enableRefreshControl()
+		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your notifications!")
+		#endif
+
+		self.enableActions()
 	}
 
 	// MARK: - Functions
@@ -103,45 +126,77 @@ class NotificationsViewController: KTableViewController {
 		navigationItem.searchController = kSearchController
 	}
 
-	override func setupEmptyDataSetView() {
-		tableView.emptyDataSetView { [weak self] (view) in
-			guard let self = self else { return }
+	/// Fades in and out the empty data view according to the number of rows.
+	func toggleEmptyDataView() {
+		if self.tableView.numberOfSections == 0 || !User.isSignedIn {
+			self.tableView.backgroundView?.animateFadeIn()
+		} else {
+			self.tableView.backgroundView?.animateFadeOut()
+		}
+	}
 
-			let detailLabelString = User.isSignedIn ? "When you have notifications, you will see them here!" : "Notifications is only available to registered Kurozora users."
-			view.titleLabelString(NSAttributedString(string: "No Notifications", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
-				.detailLabelString(NSAttributedString(string: detailLabelString, attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-				.image(R.image.empty.notifications())
-				.imageTintColor(KThemePicker.textColor.colorValue)
-				.verticalOffset(-60)
-				.verticalSpace(5)
+	override func handleRefreshControl() {
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing notifications list...")
+		#endif
+		self.fetchNotifications()
+	}
 
-			if !User.isSignedIn {
-				view.buttonTitle(NSAttributedString(string: "Sign In", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.tintColor.colorValue]), for: .normal)
-					.buttonTitle(NSAttributedString(string: "Sign In", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.tintColor.colorValue.darken()]), for: .highlighted)
-					.didTapDataButton {
-						if let signInTableViewController = R.storyboard.onboarding.signInTableViewController() {
-							let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
-							self.present(kNavigationController, animated: true)
-						}
+	override func configureEmptyDataView() {
+		var detailString: String
+		var buttonTitle: String = ""
+		var buttonAction: (() -> Void)? = nil
+
+		if User.isSignedIn {
+			detailString = "When you have notifications, you will see them here!"
+		} else {
+			detailString = "Notifications are only available to registered Kurozora users."
+			buttonTitle = "Sign In"
+			buttonAction = {
+				if let signInTableViewController = R.storyboard.onboarding.signInTableViewController() {
+					let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
+					self.present(kNavigationController, animated: true)
 				}
 			}
 		}
+
+		emptyBackgroundView.configureImageView(image: R.image.empty.notifications()!)
+		emptyBackgroundView.configureLabels(title: "No Notifications", detail: detailString)
+		emptyBackgroundView.configureButton(title: buttonTitle, handler: buttonAction)
+
+		tableView.backgroundView?.alpha = 0
+	}
+
+	/// Enables and disables the refresh control according to the user sign in state.
+	private func enableRefreshControl() {
+		if User.isSignedIn {
+			#if !targetEnvironment(macCatalyst)
+			guard refreshControl == nil else { return }
+			self._prefersRefreshControlDisabled = false
+			#endif
+		} else {
+			#if !targetEnvironment(macCatalyst)
+			guard refreshControl != nil else { return }
+			self._prefersRefreshControlDisabled = true
+			#endif
+		}
+		#if !targetEnvironment(macCatalyst)
+		self.setNeedsRefreshControlAppearanceUpdate()
+		#endif
 	}
 
 	/// Enables and disables actions such as buttons and the refresh control according to the user sign in state.
 	private func enableActions() {
 		markAllButton.isEnabled = User.isSignedIn
 		markAllButton.title = User.isSignedIn ? "Mark all" : ""
-		refreshControl?.isEnabled = User.isSignedIn
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.isEnabled = User.isSignedIn
+		#endif
 	}
 
 	/// Fetch the notifications for the current user.
-	@objc func fetchNotifications() {
+	func fetchNotifications() {
 		if User.isSignedIn {
-			DispatchQueue.main.async {
-				self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing notifications list...", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
-			}
-
 			KService.getNotifications { [weak self] result in
 				guard let self = self else { return }
 				switch result {
@@ -153,9 +208,11 @@ class NotificationsViewController: KTableViewController {
 		} else {
 			self.userNotifications = []
 			self.groupedNotifications = []
-			DispatchQueue.main.async {
-				self.tableView.reloadData()
+			self.tableView.reloadData {
+				self.toggleEmptyDataView()
 			}
+
+			self._prefersActivityIndicatorHidden = true
 		}
 	}
 
@@ -309,7 +366,7 @@ extension NotificationsViewController {
 		case .automatic, .byType:
 			return self.groupedNotifications.count
 		case .off:
-			return 1
+			return self.userNotifications.isEmpty ? 0 : 1
 		}
 	}
 
@@ -488,7 +545,9 @@ extension NotificationsViewController {
 				self.tableView.reloadSections([indexPath.section], with: .automatic)
 			}, completion: nil)
 		} else {
-			self.tableView.reloadData()
+			self.tableView.reloadData {
+				self.toggleEmptyDataView()
+			}
 		}
 	}
 
@@ -519,6 +578,8 @@ extension NotificationsViewController {
 					tableView.deleteRows(at: [indexPath], with: .automatic)
 				}, completion: nil)
 			}
+
+			self.toggleEmptyDataView()
 		}
 	}
 }

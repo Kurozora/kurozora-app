@@ -37,10 +37,8 @@ extension UIView {
 	*/
 	func animateFadeIn(duration: TimeInterval = 0.80, completion: ((Bool) -> Void)? = nil) {
 		alpha = 0.0
-		transform = CGAffineTransform.identity.scaledBy(x: 0.85, y: 0.85)
 		UIView.animate(withDuration: duration, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1.0, options: [.allowUserInteraction, .curveEaseOut], animations: { () -> Void in
 			self.alpha = 1.0
-			self.transform = .identity
 		}, completion: completion)
 	}
 
@@ -53,7 +51,6 @@ extension UIView {
 	func animateFadeOut(duration: TimeInterval = 0.25, completion: ((Bool) -> Void)? = nil) {
 		UIView.animate(withDuration: duration, animations: { () -> Void in
 			self.alpha = 0.0
-			self.transform = CGAffineTransform.identity.scaledBy(x: 0.85, y: 0.85)
 		}, completion: completion)
 	}
 

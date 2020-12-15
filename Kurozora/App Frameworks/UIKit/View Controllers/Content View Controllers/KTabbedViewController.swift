@@ -22,7 +22,7 @@ import Pageboy
 
 		- Parameter count: The number of view controllers to initialize.
 
-		- Returns: A collection of view contorllers.
+		- Returns: A collection of view controllers.
 
 		- Tag: KTabbedViewControllerDataSource-initializeViewControllersWithCount
 	*/
@@ -75,34 +75,46 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 	}
 
 	// MARK: - View
+	override func themeWillReload() {
+		super.themeWillReload()
+
+		self.styleTabBarView()
+	}
+
 	override func viewWillReload() {
 		super.viewWillReload()
 
+		self.configureViewControllers()
 		self.reloadData()
 		self.configureTabBarViewVisibility()
 	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		NotificationCenter.default.addObserver(self, selector: #selector(viewWillReload), name: .KUserIsSignedInDidChange, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadTabBarStyle), name: .ThemeUpdateNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(themeWillReload), name: .ThemeUpdateNotification, object: nil)
 
+		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		navigationItem.hidesSearchBarWhenScrolling = false
 
-		// Initialize view controllers.
-		self.viewControllers = self.tabBarDataSource?.initializeViewControllers(with: self.numberOfViewControllers(in: self))
+		// Configure view controllers.
+		configureViewControllers()
 
 		// Tabman view controllers
 		self.dataSource = self
 
-		// Tabman bar
-		initTabBarView()
+		// Configure tabman bar
+		configureTabBarView()
 	}
 
 	// MARK: - Functions
-	/// Initializes the tab bar view with the specified style.
-	private func initTabBarView() {
+	/// Configures the view controllers for the tab bar data source.
+	private func configureViewControllers() {
+		self.viewControllers = self.tabBarDataSource?.initializeViewControllers(with: self.numberOfViewControllers(in: self))
+	}
+
+	/// Configures the tab bar view with the specified style.
+	private func configureTabBarView() {
 		self.styleTabBarView()
 		self.addBar(bar, dataSource: self, at: .custom(view: bottomBarView, layout: { bar in
 			bar.translatesAutoresizingMaskIntoConstraints = false
@@ -161,11 +173,6 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 		bar.isHidden = bar.items?.count ?? 0 <= 1
 	}
 
-	/// Reloads the tab bar with the new data.
-	@objc func reloadTabBarStyle() {
-		styleTabBarView()
-	}
-
 	// MARK: - TMBarDataSource
 	/**
 		Provide a `BarItem` for an index in the bar.
@@ -207,7 +214,7 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 		- Returns: The view controller to display
 	*/
 	func viewController(for pageboyViewController: PageboyViewController, at index: PageboyViewController.PageIndex) -> UIViewController? {
-		return self.viewControllers?[index]
+		return viewControllers?.count ?? 0 > index ? self.viewControllers?[index] : nil
 	}
 
 	/**
@@ -231,7 +238,7 @@ extension KTabbedViewController: KTabbedViewControllerDataSource {
 
 		- Parameter count: The number of view controllers to initialize.
 
-		- Returns: A collection of view contorllers.
+		- Returns: A collection of view controllers.
 	*/
 	func initializeViewControllers(with count: Int) -> [UIViewController]? {
 		return nil

@@ -20,6 +20,15 @@ extension UIViewController {
 		- Tag: UIViewController-viewWillReload
 	*/
 	@objc func viewWillReload() { }
+
+	/**
+		Notifies the view controller that the app's theme is about to be reloaded.
+
+		This method is called when there has been a change in the selected app theme. You can override this method to perform custom tasks associated with re-styling unthemeable views. For example, you might use this method to change the color of the view being presented. If you override this method, you must call super at some point in your implementation.
+
+		- Tag: UIViewController-themeWillReload
+	*/
+	@objc func themeWillReload() { }
 }
 
 // MARK: - Present

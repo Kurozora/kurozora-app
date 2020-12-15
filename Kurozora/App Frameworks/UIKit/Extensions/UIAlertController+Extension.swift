@@ -79,7 +79,7 @@ extension UIAlertController {
 	*/
 	static func actionSheet(title: String?, message: String?, defaultActionButtonTitle: String = "Cancel", handler: ((UIAlertAction) -> Void)? = nil, actions: ((_ actionSheetAlertController: UIAlertController) -> Void)) -> UIAlertController {
 		let alertController = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
-		alertController.view.theme_tintColor = KThemePicker.textColor.rawValue
+		alertController.view.tintColor = .label
 
 		// Add user specified actions
 		actions(alertController)

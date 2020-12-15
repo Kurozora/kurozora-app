@@ -59,13 +59,13 @@ class LibraryViewController: KTabbedViewController {
 		// Actions
 		enableActions()
 
-		// Setup search bar.
-		setupSearchBar()
+		// Configure search bar.
+		configureSearchBar()
     }
 
 	// MARK: - Functions
-	/// Sets up the search bar.
-	fileprivate func setupSearchBar() {
+	/// Configures the search bar.
+	fileprivate func configureSearchBar() {
 		// Configure search controller
 		kSearchController.searchScope = .myLibrary
 		kSearchController.viewController = self

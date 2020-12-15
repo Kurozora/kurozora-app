@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import EmptyDataSet_Swift
 
 /**
 	A supercharged view controller that specializes in managing a collection view.
@@ -17,6 +16,7 @@ import EmptyDataSet_Swift
 	- A [UIActivityIndicatorView](apple-reference-documentation://hsXlO5I6Ag) is shown when [viewDidLoad](apple-reference-documentation://ls%2Fdocumentation%2Fuikit%2Fuiviewcontroller%2F1621495-viewdidload) is called.
 	- The view controller subscribes to the `theme_backgroundColor` of the currently selected theme.
 	- The view controller observes changes in the user's sign in status and runs [viewWillReload](x-source-tag://UIViewController-viewWillReload) if a change has been detected.
+	- The view controller observes changes in the selected app theme and runs [themeWillReload](x-source-tag://UIViewController-themeWillReload) if a change has been detected.
 
 	You create a custom subclass of `KCollectionViewController` for each collection view that you want to manage. When you initialize the controller, using the [init(collectionViewLayout:)](apple-reference-documentation://hsrfD1Zed-) method, you specify the layout the collection view should have. Because the initially created collection view is without dimensions or content, the collection view’s data source and delegate—typically the collection view controller itself—must provide this information.
 
@@ -26,7 +26,7 @@ import EmptyDataSet_Swift
 
 	You may also override `prefersActivityIndicatorHidden` to prevent the view from showing the acitivity indicator.
 
-	- Important: Refresh control is unavailable on macOS and as such it is disabled by default.
+	- Important: Refresh control is unavailable on macOS and as such it is disabled by default. Instead, the key-command `⌘+R` is added.
 
 	- Tag: KCollectionViewController
 */
@@ -34,6 +34,9 @@ class KCollectionViewController: UICollectionViewController {
 	// MARK: - Properties
 	/// The activity indicator view object of the view controller.
 	private let activityIndicatorView: KActivityIndicatorView = KActivityIndicatorView()
+
+	/// The object controlling the empty background view.
+	let emptyBackgroundView: EmptyBackgroundView = EmptyBackgroundView()
 
 	/**
 		Specifies whether the view controller prefers the activity indicator to be hidden or shown.
@@ -87,6 +90,11 @@ class KCollectionViewController: UICollectionViewController {
 	private let refreshCommand = UIKeyCommand(title: "Refresh Page", action: #selector(handleRefreshControl), input: "R", modifierFlags: .command, discoverabilityTitle: "Refresh Page")
 	#endif
 
+	// MARK: - Initializers
+	deinit {
+		NotificationCenter.default.removeObserver(self)
+	}
+
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -98,7 +106,7 @@ class KCollectionViewController: UICollectionViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(viewWillReload), name: .KUserIsSignedInDidChange, object: nil)
 
 		// Observe theme update notification.
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView(_:)), name: .ThemeUpdateNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(themeWillReload), name: .ThemeUpdateNotification, object: nil)
 
 		// Configure collection view.
 		configureCollectionView()
@@ -122,6 +130,7 @@ class KCollectionViewController: UICollectionViewController {
 	fileprivate func configureCollectionView() {
 		collectionView.collectionViewLayout = createLayout()
 		collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+		collectionView.backgroundView = emptyBackgroundView
 
 		// Register cells with the collection view.
 		registerCells()
@@ -146,13 +155,6 @@ class KCollectionViewController: UICollectionViewController {
 		for nib in registerNibs(for: collectionView) {
 			collectionView.register(nib: UINib(nibName: String(describing: nib), bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withClass: nib)
 		}
-	}
-}
-
-// MARK: - Theme
-extension KCollectionViewController {
-	@objc func updateTheme() {
-
 	}
 }
 
@@ -239,7 +241,6 @@ extension KCollectionViewController {
 		- Parameter completion: Completion handler to run after reloadEmptyDataView finishes.
 	*/
 	func reloadEmptyDataView(completion: (() -> Void)? = nil) {
-		collectionView.reloadEmptyDataSet()
 		self.configureEmptyDataView()
 		completion?()
 	}

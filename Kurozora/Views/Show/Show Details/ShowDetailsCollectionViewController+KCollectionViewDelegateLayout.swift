@@ -131,7 +131,7 @@ extension ShowDetailsCollectionViewController {
 	override func contentInset(forItemInSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
 		switch ShowDetail.Section(rawValue: section) {
 		case .header:
-			return .zero
+			return NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)
 		default:
 			return NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10)
 		}
