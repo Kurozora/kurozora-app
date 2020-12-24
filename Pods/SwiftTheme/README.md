@@ -314,6 +314,9 @@ NotificationCenter.default.addObserver(
 - var theme_borderColor: ThemeCGColorPicker?
 - var theme_shadowColor: ThemeCGColorPicker?
 
+##### CATextLayer
+- var theme_foregroundColor: ThemeCGColorPicker?
+
 ##### CAGradientLayer
 - var theme_colors: ThemeAnyPicker?
 

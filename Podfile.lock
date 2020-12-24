@@ -1,7 +1,6 @@
 PODS:
-  - Alamofire (5.4.0)
+  - Alamofire (5.4.1)
   - Cosmos (23.0.0)
-  - EmptyDataSet-Swift (5.0.0)
   - ESTabBarController-swift (2.8.0)
   - KeychainAccess (4.2.1)
   - Kingfisher (5.15.8):
@@ -41,7 +40,7 @@ PODS:
   - SwifterSwift/StoreKit (5.2.0)
   - SwifterSwift/SwiftStdlib (5.2.0)
   - SwifterSwift/UIKit (5.2.0)
-  - SwiftTheme (0.5.4)
+  - SwiftTheme (0.5.5)
   - SwiftyJSON (5.0.0)
   - Tabman (2.9.1):
     - Pageboy (~> 3.6.0)
@@ -59,7 +58,6 @@ PODS:
 
 DEPENDENCIES:
   - Cosmos
-  - EmptyDataSet-Swift
   - ESTabBarController-swift
   - KeychainAccess
   - Kingfisher
@@ -79,7 +77,6 @@ SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Alamofire
     - Cosmos
-    - EmptyDataSet-Swift
     - ESTabBarController-swift
     - KeychainAccess
     - Kingfisher
@@ -99,9 +96,8 @@ SPEC REPOS:
     - KurozoraKit
 
 SPEC CHECKSUMS:
-  Alamofire: 3b6a534a3df22db367e4dedeeca73d1ddfcf0e2f
+  Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
   Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
-  EmptyDataSet-Swift: eb382c0c87a2d9c678077385a595cec52da38171
   ESTabBarController-swift: 05593a6ad64700b03c0eb60ff625916370aa4136
   KeychainAccess: 9b07f665298d13c3a85881bd3171f6f49b8151c1
   Kingfisher: a3c03d702433fa6cfedabb2bddbe076fb8f2e902
@@ -112,13 +108,13 @@ SPEC CHECKSUMS:
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
   SwifterSwift: 334181863c416882d97b7a60c05054d9e4d799e2
-  SwiftTheme: 900582982b8d33d6226314e080f74d0767683218
+  SwiftTheme: 585ead917c78ea3fc508437b0a141d29c034bdb0
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   Tabman: 085d89c65be9e883629bdaf5b1453a6397e57846
   TRON: 146d78dbf9bbcaaa77b7cf398a0a63d5dda267a5
   UIImageColors: d2ef3b0877d203cbb06489eeb78ea8b7788caabe
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
 
-PODFILE CHECKSUM: 4f826523de6e81f237d31aec6b0d425831fcd55e
+PODFILE CHECKSUM: 91c8c736ca2e31946db3380ee9c04a9c7c1691f1
 
 COCOAPODS: 1.10.0

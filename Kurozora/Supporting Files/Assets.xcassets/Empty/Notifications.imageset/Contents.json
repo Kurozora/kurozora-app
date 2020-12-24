@@ -9,14 +9,14 @@
       "scale" : "2x"
     },
     {
+      "filename" : "Notifications.png",
       "idiom" : "universal",
-      "filename" : "empty_notifications.png",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   },
   "properties" : {
     "template-rendering-intent" : "template"

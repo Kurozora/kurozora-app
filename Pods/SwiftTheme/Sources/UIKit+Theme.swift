@@ -296,6 +296,13 @@ import UIKit
         set { setThemePicker(self, "setFillColor:", newValue) }
     }
 }
+@objc public extension CATextLayer
+{
+    var theme_foregroundColor: ThemeCGColorPicker? {
+        get { return getThemePicker(self, "setForegroundColor:") as? ThemeCGColorPicker}
+        set { setThemePicker(self, "setForegroundColor:", newValue) }
+    }
+}
 @objc public extension CAGradientLayer
 {
     var theme_colors: ThemeAnyPicker? {
