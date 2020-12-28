@@ -20,8 +20,10 @@ class ForumsListViewController: KTableViewController {
 	var sectionIndex: Int!
 	var forumsThreads: [ForumsThread] = [] {
 		didSet {
-			_prefersActivityIndicatorHidden = true
-			tableView.reloadData()
+			self._prefersActivityIndicatorHidden = true
+			tableView.reloadData {
+				self.toggleEmptyDataView()
+			}
 		}
 	}
 	var nextPageURL: String?
@@ -35,7 +37,7 @@ class ForumsListViewController: KTableViewController {
 		}
 	}
 	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
+		return self._prefersActivityIndicatorHidden
 	}
 
 	// MARK: - View
@@ -45,10 +47,10 @@ class ForumsListViewController: KTableViewController {
 		UserSettings.set(sectionIndex, forKey: .forumsPage)
 
 		// Setup library view controller delegate
-		(tabmanParent as? ForumsViewController)?.forumsViewControllerDelegate = self
+		(self.tabmanParent as? ForumsViewController)?.forumsViewControllerDelegate = self
 
 		// Update forum order button to reflect page settings
-		delegate?.updateForumOrderButton(with: forumOrder)
+		self.delegate?.updateForumOrderButton(with: self.forumOrder)
 	}
 
 	override func viewDidLoad() {
@@ -57,11 +59,11 @@ class ForumsListViewController: KTableViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(updateForumsCell(_:)), name: .KFTDidUpdate, object: nil)
 
 		// Add bottom inset to avoid the tabbar obscuring the view
-		tableView.contentInset.bottom = 50
+		self.tableView.contentInset.bottom = 50
 
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
-		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads.")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads.")
 		#endif
 
 		// Fetch threads
@@ -72,29 +74,34 @@ class ForumsListViewController: KTableViewController {
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		#if !targetEnvironment(macCatalyst)
-		refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing \(sectionTitle) threads...")
-		#endif
 		self.nextPageURL = nil
-		fetchThreads()
+		self.fetchThreads()
 	}
 
 	override func configureEmptyDataView() {
-		tableView.emptyDataSetView { [weak self] (view) in
-			guard let self = self else { return }
+		emptyBackgroundView.configureImageView(image: R.image.empty.comment()!)
+		emptyBackgroundView.configureLabels(title: "No Threads", detail: "Be the first to post in the \(self.sectionTitle.lowercased()) forums!")
 
-			view.titleLabelString(NSAttributedString(string: "No Threads", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
-				.detailLabelString(NSAttributedString(string: "Be the first to post in the \(self.sectionTitle.lowercased()) forums!", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-				.image(R.image.empty.comment())
-				.imageTintColor(KThemePicker.textColor.colorValue)
-				.verticalOffset(-50)
-				.verticalSpace(5)
-				.isScrollAllowed(true)
+		tableView.backgroundView?.alpha = 0
+	}
+
+	/// Fades in and out the empty data view according to the number of sections.
+	func toggleEmptyDataView() {
+		if self.tableView.numberOfSections == 0 {
+			self.tableView.backgroundView?.animateFadeIn()
+		} else {
+			self.tableView.backgroundView?.animateFadeOut()
 		}
 	}
 
 	/// Fetch threads list for the current section.
 	func fetchThreads() {
+		DispatchQueue.main.async {
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing \(self.sectionTitle) threads...")
+			#endif
+		}
+
 		KService.getForumsThreads(forSection: sectionID, orderedBy: forumOrder, next: nextPageURL) { [weak self] result in
 			guard let self = self else { return }
 			switch result {

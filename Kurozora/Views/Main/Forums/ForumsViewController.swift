@@ -81,7 +81,7 @@ class ForumsViewController: KTabbedViewController {
 			currentSection?.fetchThreads()
 		})
 
-		//Present the controller
+		// Present the controller
 		if let popoverController = actionSheetAlertController.popoverPresentationController {
 			popoverController.barButtonItem = sender
 		}

@@ -14,24 +14,16 @@ class ThreadTableViewController: KTableViewController {
 	@IBOutlet weak var lockImageView: UIImageView!
 	@IBOutlet weak var topicLabel: UILabel! {
 		didSet {
-			topicLabel.theme_textColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+			self.topicLabel.theme_textColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
 		}
 	}
 	@IBOutlet weak var voteCountButton: CellActionButton!
 	@IBOutlet weak var commentCountButton: CellActionButton!
 	@IBOutlet weak var dateTimeButton: CellActionButton!
-	@IBOutlet weak var posterUsernameLabel: UIButton! {
-		didSet {
-			posterUsernameLabel.theme_setTitleColor(KThemePicker.tintColor.rawValue, forState: .normal)
-		}
-	}
+	@IBOutlet weak var posterUsernameLabel: KButton!
 	@IBOutlet weak var threadTitleLabel: KLabel!
 
-	@IBOutlet weak var richTextView: KTextView! {
-		didSet {
-			richTextView.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		}
-	}
+	@IBOutlet weak var richTextView: KTextView!
 	@IBOutlet weak var upvoteButton: CellActionButton!
 	@IBOutlet weak var downvoteButton: CellActionButton!
 	@IBOutlet weak var replyButton: CellActionButton!
@@ -44,8 +36,10 @@ class ThreadTableViewController: KTableViewController {
 	var forumThreadID: Int = 0
 	var forumsThread: ForumsThread! {
 		didSet {
-			_prefersActivityIndicatorHidden = true
 			self.forumThreadID = forumsThread?.id ?? self.forumThreadID
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing thread replies...")
+			#endif
 		}
 	}
 	var replyID: Int?
@@ -56,7 +50,15 @@ class ThreadTableViewController: KTableViewController {
 	// Reply variables
 	var threadReplies: [ThreadReply] = [] {
 		didSet {
-			tableView.reloadData()
+			tableView.reloadData {
+				self._prefersActivityIndicatorHidden = true
+				self.toggleEmptyDataView()
+			}
+
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.endRefreshing()
+			self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh thread details!")
+			#endif
 		}
 	}
 	var repliesOrder: ForumOrder = .top
@@ -81,14 +83,22 @@ class ThreadTableViewController: KTableViewController {
 
 		// Fetch thread details
 		if forumsThread != nil {
-			_prefersActivityIndicatorHidden = true
 			DispatchQueue.main.async {
 				self.updateThreadDetails()
 			}
 		}
 
+		// Setup refresh control
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh thread details!")
+		#endif
+
 		DispatchQueue.global(qos: .background).async {
-			self.fetchDetails()
+			if self.forumsThread == nil {
+				self.fetchDetails()
+			} else {
+				self.fetchThreadReplies()
+			}
 		}
 	}
 
@@ -108,18 +118,26 @@ class ThreadTableViewController: KTableViewController {
 	}
 
 	// MARK: - Functions
-	override func configureEmptyDataView() {
-		tableView.emptyDataSetView { [weak self] (view) in
-			guard let self = self else { return }
+	override func handleRefreshControl() {
+		self.nextPageURL = nil
+		self.fetchDetails()
+	}
 
-			let verticalOffset = (self.tableView.tableHeaderView?.height ?? 0 - self.view.height) / 2
-			view.titleLabelString(NSAttributedString(string: "No Replies", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
-				.detailLabelString(NSAttributedString(string: "Be the first to reply on this thread!", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-				.image(R.image.empty.comment())
-				.imageTintColor(KThemePicker.textColor.colorValue)
-				.verticalOffset(verticalOffset < 0 ? 0 : verticalOffset)
-				.verticalSpace(10)
-				.isScrollAllowed(true)
+	override func configureEmptyDataView() {
+		// TODO: - HERE: Look at this
+//		let verticalOffset = (self.tableView.tableHeaderView?.height ?? 0 - self.view.height) / 2
+		emptyBackgroundView.configureImageView(image: R.image.empty.comment()!)
+		emptyBackgroundView.configureLabels(title: "No Replies", detail: "Be the first to reply on this thread!")
+
+		tableView.backgroundView?.alpha = 0
+	}
+
+	/// Fades in and out the empty data view according to the number of sections.
+	func toggleEmptyDataView() {
+		if self.tableView.numberOfSections == 0 {
+			self.tableView.backgroundView?.animateFadeIn()
+		} else {
+			self.tableView.backgroundView?.animateFadeOut()
 		}
 	}
 
@@ -181,25 +199,30 @@ class ThreadTableViewController: KTableViewController {
 
 	/// Fetch thread details for the current thread.
 	func fetchDetails() {
-		if forumsThread == nil {
-			KService.getDetails(forThread: forumThreadID) {[weak self] result in
-				guard let self = self else { return }
+		DispatchQueue.main.async {
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing thread details...")
+			#endif
+		}
 
-				switch result {
-				case .success(let threads):
-					DispatchQueue.main.async {
-						self.forumsThread = threads.first
-						self.updateThreadDetails()
-					}
-				case .failure: break
+		KService.getDetails(forThread: forumThreadID) {[weak self] result in
+			guard let self = self else { return }
+
+			switch result {
+			case .success(let threads):
+				DispatchQueue.main.async {
+					self.forumsThread = threads.first
+					self.updateThreadDetails()
 				}
+			case .failure: break
 			}
 		}
-		getThreadReplies()
+
+		self.fetchThreadReplies()
 	}
 
 	/// Fetch the thread replies for the current thread.
-	func getThreadReplies() {
+	func fetchThreadReplies() {
 		KService.getReplies(forThread: forumThreadID, orderedBy: repliesOrder, next: nextPageURL) {[weak self] result in
 			guard let self = self else { return }
 			switch result {
@@ -306,7 +329,7 @@ extension ThreadTableViewController {
 
 		if indexPath.section == numberOfSections - 5 {
 			if self.nextPageURL != nil {
-				self.getThreadReplies()
+				self.fetchThreadReplies()
 			}
 		}
 	}
@@ -316,7 +339,7 @@ extension ThreadTableViewController {
 			replyCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
 
 			replyCell.usernameLabel.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-			replyCell.contentTextView.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
+			replyCell.contentTextView.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
 		}
 	}
 
@@ -325,7 +348,7 @@ extension ThreadTableViewController {
 			replyCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 
 			replyCell.usernameLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-			replyCell.contentTextView.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+			replyCell.contentTextView.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
 		}
 	}
 

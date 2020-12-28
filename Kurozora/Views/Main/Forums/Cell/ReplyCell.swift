@@ -16,30 +16,11 @@ protocol ReplyCellDelegate: class {
 }
 
 class ReplyCell: KTableViewCell {
-	@IBOutlet weak var profileImageView: ProfileImageView! {
-		didSet {
-			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(usernameLabelPressed))
-			gestureRecognizer.numberOfTouchesRequired = 1
-			gestureRecognizer.numberOfTapsRequired = 1
-			profileImageView.addGestureRecognizer(gestureRecognizer)
-		}
-	}
-	@IBOutlet weak var usernameLabel: KLabel! {
-		didSet {
-			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(usernameLabelPressed))
-			gestureRecognizer.numberOfTouchesRequired = 1
-			gestureRecognizer.numberOfTapsRequired = 1
-			usernameLabel.addGestureRecognizer(gestureRecognizer)
-			usernameLabel.isUserInteractionEnabled = true
-		}
-	}
+	@IBOutlet weak var profileImageView: ProfileImageView!
+	@IBOutlet weak var usernameLabel: KLabel!
 	@IBOutlet weak var dateTimeButton: CellActionButton!
 	@IBOutlet weak var voteCountButton: CellActionButton!
-	@IBOutlet weak var contentTextView: KTextView! {
-		didSet {
-			contentTextView.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
-		}
-	}
+	@IBOutlet weak var contentTextView: KTextView!
 	@IBOutlet weak var upvoteButton: CellActionButton!
 	@IBOutlet weak var downvoteButton: CellActionButton!
 	@IBOutlet weak var moreButton: CellActionButton!
@@ -50,6 +31,14 @@ class ReplyCell: KTableViewCell {
 		didSet {
 			configureCell()
 		}
+	}
+
+	override func awakeFromNib() {
+		super.awakeFromNib()
+
+		profileImageView.addGestureRecognizer(self.profileSegueGestureRecognizer())
+		usernameLabel.addGestureRecognizer(self.profileSegueGestureRecognizer())
+		usernameLabel.isUserInteractionEnabled = true
 	}
 
 	// MARK: - Functions
@@ -76,6 +65,18 @@ class ReplyCell: KTableViewCell {
 
 		// Check if thread is locked
 		isLocked(forumsThread.attributes.lockStatus)
+	}
+
+	/**
+		Returns a gesture recognizer for profile segue.
+
+		- Returns: a gesture recognizer for profile segue.
+	*/
+	fileprivate func profileSegueGestureRecognizer() -> UIGestureRecognizer {
+		let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleProfileSegue(_:)))
+		tapGestureRecognizer.numberOfTouchesRequired = 1
+		tapGestureRecognizer.numberOfTapsRequired = 1
+		return tapGestureRecognizer
 	}
 
 	/**
@@ -121,7 +122,7 @@ class ReplyCell: KTableViewCell {
 	}
 
 	// MARK: - IBActions
-	@objc func usernameLabelPressed(sender: AnyObject) {
+	@objc func handleProfileSegue(_ gestureRecognizer: UIGestureRecognizer) {
 		self.delegate?.visitOriginalPosterProfile(self)
 	}
 
