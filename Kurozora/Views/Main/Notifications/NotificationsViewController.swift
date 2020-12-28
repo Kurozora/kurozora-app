@@ -27,9 +27,8 @@ class NotificationsViewController: KTableViewController {
 			self.groupNotifications(userNotifications)
 			self.tableView.reloadData {
 				self._prefersActivityIndicatorHidden = true
-				self.reloadEmptyDataView {
-					self.toggleEmptyDataView()
-				}
+				self.toggleEmptyDataView()
+
 				#if !targetEnvironment(macCatalyst)
 				self.refreshControl?.endRefreshing()
 				self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your notifications list!")
@@ -39,7 +38,6 @@ class NotificationsViewController: KTableViewController {
 	} // Grouping type: Off
 	var groupedNotifications = [GroupedNotifications]() // Grouping type: Automatic, ByType
 
-	#if !targetEnvironment(macCatalyst)
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
 		didSet {
@@ -47,9 +45,8 @@ class NotificationsViewController: KTableViewController {
 		}
 	}
 	override var prefersRefreshControlDisabled: Bool {
-		return _prefersRefreshControlDisabled
+		return self._prefersRefreshControlDisabled
 	}
-	#endif
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -77,11 +74,9 @@ class NotificationsViewController: KTableViewController {
 	override func viewWillReload() {
 		super.viewWillReload()
 
-		#if !targetEnvironment(macCatalyst)
 		self.enableRefreshControl()
-		#endif
 		self.enableActions()
-		self.fetchNotifications()
+		self.handleRefreshControl()
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
@@ -108,10 +103,10 @@ class NotificationsViewController: KTableViewController {
 
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
-		enableRefreshControl()
-		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your notifications!")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your notifications!")
 		#endif
 
+		self.enableRefreshControl()
 		self.enableActions()
 	}
 
@@ -126,19 +121,7 @@ class NotificationsViewController: KTableViewController {
 		navigationItem.searchController = kSearchController
 	}
 
-	/// Fades in and out the empty data view according to the number of rows.
-	func toggleEmptyDataView() {
-		if self.tableView.numberOfSections == 0 || !User.isSignedIn {
-			self.tableView.backgroundView?.animateFadeIn()
-		} else {
-			self.tableView.backgroundView?.animateFadeOut()
-		}
-	}
-
 	override func handleRefreshControl() {
-		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing notifications list...")
-		#endif
 		self.fetchNotifications()
 	}
 
@@ -167,22 +150,18 @@ class NotificationsViewController: KTableViewController {
 		tableView.backgroundView?.alpha = 0
 	}
 
+	/// Fades in and out the empty data view according to the number of sections.
+	func toggleEmptyDataView() {
+		if self.tableView.numberOfSections == 0 || !User.isSignedIn {
+			self.tableView.backgroundView?.animateFadeIn()
+		} else {
+			self.tableView.backgroundView?.animateFadeOut()
+		}
+	}
+
 	/// Enables and disables the refresh control according to the user sign in state.
 	private func enableRefreshControl() {
-		if User.isSignedIn {
-			#if !targetEnvironment(macCatalyst)
-			guard refreshControl == nil else { return }
-			self._prefersRefreshControlDisabled = false
-			#endif
-		} else {
-			#if !targetEnvironment(macCatalyst)
-			guard refreshControl != nil else { return }
-			self._prefersRefreshControlDisabled = true
-			#endif
-		}
-		#if !targetEnvironment(macCatalyst)
-		self.setNeedsRefreshControlAppearanceUpdate()
-		#endif
+		self._prefersRefreshControlDisabled = !User.isSignedIn
 	}
 
 	/// Enables and disables actions such as buttons and the refresh control according to the user sign in state.
@@ -196,6 +175,12 @@ class NotificationsViewController: KTableViewController {
 
 	/// Fetch the notifications for the current user.
 	func fetchNotifications() {
+		DispatchQueue.main.async {
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing notifications list...")
+			#endif
+		}
+
 		if User.isSignedIn {
 			KService.getNotifications { [weak self] result in
 				guard let self = self else { return }
@@ -390,16 +375,16 @@ extension NotificationsViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		let notificationTitleCell = self.tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.notificationTitleCell.identifier) as? NotificationTitleCell
-		notificationTitleCell?.notificationMarkButton.tag = section
-		notificationTitleCell?.notificationMarkButton.addTarget(self, action: #selector(notificationMarkButtonPressed(_:)), for: .touchUpInside)
+		let titleHeaderTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.titleHeaderTableViewCell.identifier) as? TitleHeaderTableViewCell
+		titleHeaderTableViewCell?.headerButton.tag = section
+		titleHeaderTableViewCell?.headerButton.addTarget(self, action: #selector(notificationMarkButtonPressed(_:)), for: .touchUpInside)
 
 		switch self.grouping {
 		case .automatic, .byType:
-			notificationTitleCell?.notificationTitleLabel.text = groupedNotifications[section].sectionTitle
+			titleHeaderTableViewCell?.titleLabel.text = groupedNotifications[section].sectionTitle
 			let allNotificationsRead = groupedNotifications[section].sectionNotifications.contains(where: { $0.attributes.readStatus == .read })
-			notificationTitleCell?.notificationMarkButton.setTitle(allNotificationsRead ? "Mark as unread" : "Mark as read", for: .normal)
-			return notificationTitleCell?.contentView
+			titleHeaderTableViewCell?.headerButton.setTitle(allNotificationsRead ? "Mark as unread" : "Mark as read", for: .normal)
+			return titleHeaderTableViewCell?.contentView
 		case .off: break
 		}
 
@@ -532,6 +517,14 @@ extension NotificationsViewController {
 	}
 }
 
+// MARK: - KTableViewDataSource
+extension NotificationsViewController {
+	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
+		return [TitleHeaderTableViewCell.self]
+	}
+}
+
+// MARK: - Helper functions
 extension NotificationsViewController {
 	/**
 		Updates the user's notifications with the received information.

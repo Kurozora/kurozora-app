@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17700" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jkm-sX-7PU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jkm-sX-7PU">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -18,48 +18,8 @@
                         <viewLayoutGuide key="contentLayoutGuide" id="3CR-mE-RHs"/>
                         <viewLayoutGuide key="frameLayoutGuide" id="a0p-Xf-dmR"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="NotificationTitleCell" id="Skw-hb-8qh" customClass="NotificationTitleCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="55.5" width="374" height="66.5"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" tableViewCell="Skw-hb-8qh" id="wXO-qZ-JeT">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="66.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Earlier Today" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KnC-Lj-iBV" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="20" y="10" width="132.5" height="46.5"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
-                                            <color key="textColor" red="0.99988999999999995" green="1" blue="0.99987999999999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LaF-Rp-xsW" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="260" y="11.5" width="94" height="44"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="44" id="l2i-3T-Uuc"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
-                                            <state key="normal" title="Mark as read"/>
-                                        </button>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="trailingMargin" secondItem="LaF-Rp-xsW" secondAttribute="trailing" id="EHI-Hg-5db"/>
-                                        <constraint firstItem="KnC-Lj-iBV" firstAttribute="top" secondItem="wXO-qZ-JeT" secondAttribute="top" constant="10" id="EoI-VD-3v9"/>
-                                        <constraint firstItem="KnC-Lj-iBV" firstAttribute="leading" secondItem="wXO-qZ-JeT" secondAttribute="leadingMargin" id="PJL-mE-DGP"/>
-                                        <constraint firstItem="LaF-Rp-xsW" firstAttribute="top" relation="greaterThanOrEqual" secondItem="wXO-qZ-JeT" secondAttribute="topMargin" id="RwT-DS-Qkk"/>
-                                        <constraint firstItem="LaF-Rp-xsW" firstAttribute="centerY" secondItem="KnC-Lj-iBV" secondAttribute="centerY" id="Xe2-HE-U6w"/>
-                                        <constraint firstItem="LaF-Rp-xsW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="KnC-Lj-iBV" secondAttribute="trailing" constant="10" id="eYg-Ka-YME"/>
-                                        <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="LaF-Rp-xsW" secondAttribute="bottom" id="gAy-BE-5I6"/>
-                                        <constraint firstAttribute="bottom" secondItem="KnC-Lj-iBV" secondAttribute="bottom" constant="10" id="rq4-GQ-TWo"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <connections>
-                                    <outlet property="notificationMarkButton" destination="LaF-Rp-xsW" id="KyX-eb-byi"/>
-                                    <outlet property="notificationTitleLabel" destination="KnC-Lj-iBV" id="4by-JN-hn3"/>
-                                </connections>
-                            </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="IconNotificationCell" id="wbn-0V-6lL" customClass="IconNotificationCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="122" width="374" height="123.5"/>
+                                <rect key="frame" x="20" y="55.5" width="374" height="123.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" tableViewCell="wbn-0V-6lL" id="Xq7-ba-E9W">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="123.5"/>
@@ -162,7 +122,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="BasicNotificationCell" id="kul-Nw-ISN" customClass="BasicNotificationCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="245.5" width="374" height="95"/>
+                                <rect key="frame" x="20" y="179" width="374" height="95"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" tableViewCell="kul-Nw-ISN" id="deI-YU-FxE">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="95"/>
@@ -244,7 +204,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="BaseNotificationCell" id="PGf-48-VWM" customClass="BaseNotificationCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="340.5" width="374" height="83"/>
+                                <rect key="frame" x="20" y="274" width="374" height="83"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" tableViewCell="PGf-48-VWM" id="2yO-Pi-AaD">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="83"/>
