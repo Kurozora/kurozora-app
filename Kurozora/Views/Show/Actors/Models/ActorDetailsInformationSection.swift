@@ -14,7 +14,7 @@ import KurozoraKit
 */
 enum ActorDetailsInformationSection: Int, CaseIterable {
 	// MARK: - Cases
-	case occupation
+	case occupation = 0
 
 	// MARK: - Properties
 	/// The string value of a actor details information section.

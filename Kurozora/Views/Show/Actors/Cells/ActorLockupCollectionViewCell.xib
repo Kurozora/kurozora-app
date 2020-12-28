@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17140" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17115"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ActorLockupCollectionViewCell" id="Hwm-pB-dvL" customClass="ActorLockupCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="144" height="176.5"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ActorLockupCollectionViewCell" id="RuL-qC-mds" customClass="ActorLockupCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="128" height="176.5"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="8SR-zQ-vCM">
-                <rect key="frame" x="0.0" y="0.0" width="144" height="176.5"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="5AR-HQ-YxU">
+                <rect key="frame" x="0.0" y="0.0" width="128" height="176.5"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="geQ-1f-4LZ" customClass="ActorImageView" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="8" y="0.0" width="128" height="128"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OxI-dX-Wyq" customClass="ActorImageView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="128" id="A0t-Tb-QoB"/>
-                            <constraint firstAttribute="width" secondItem="geQ-1f-4LZ" secondAttribute="height" multiplier="1:1" id="hdQ-V9-tiA"/>
+                            <constraint firstAttribute="width" secondItem="OxI-dX-Wyq" secondAttribute="height" multiplier="1:1" id="cTu-HU-lcA"/>
+                            <constraint firstAttribute="width" constant="128" id="w4a-pS-UEH"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fRr-q9-SVN" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="8" y="136" width="128" height="20.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9es-S6-YO9" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="136" width="128" height="20.5"/>
                         <constraints>
-                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="qBG-KK-5kA"/>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="cbv-To-IAn"/>
                         </constraints>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <nil key="textColor"/>
@@ -35,22 +35,22 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="geQ-1f-4LZ" firstAttribute="top" secondItem="8SR-zQ-vCM" secondAttribute="top" id="6wW-3u-rcW"/>
-                    <constraint firstItem="geQ-1f-4LZ" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="8SR-zQ-vCM" secondAttribute="trailingMargin" id="7qs-vC-VbE"/>
-                    <constraint firstItem="geQ-1f-4LZ" firstAttribute="centerX" secondItem="8SR-zQ-vCM" secondAttribute="centerX" id="CIL-Xo-OVz"/>
-                    <constraint firstItem="geQ-1f-4LZ" firstAttribute="width" secondItem="geQ-1f-4LZ" secondAttribute="height" multiplier="1:1" id="P9C-e0-24E"/>
-                    <constraint firstItem="geQ-1f-4LZ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8SR-zQ-vCM" secondAttribute="leadingMargin" id="Vxh-Q2-3HJ"/>
-                    <constraint firstAttribute="trailingMargin" relation="lessThanOrEqual" secondItem="fRr-q9-SVN" secondAttribute="trailing" id="dkp-zS-LO7"/>
-                    <constraint firstItem="fRr-q9-SVN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8SR-zQ-vCM" secondAttribute="leadingMargin" id="eZD-6U-cjA"/>
-                    <constraint firstItem="fRr-q9-SVN" firstAttribute="centerX" secondItem="geQ-1f-4LZ" secondAttribute="centerX" id="igC-JS-d3x"/>
-                    <constraint firstAttribute="bottom" secondItem="fRr-q9-SVN" secondAttribute="bottom" constant="20" symbolic="YES" id="vv8-Gx-Wbk"/>
-                    <constraint firstItem="fRr-q9-SVN" firstAttribute="top" secondItem="geQ-1f-4LZ" secondAttribute="bottom" constant="8" symbolic="YES" id="z4t-5J-tiJ"/>
+                    <constraint firstItem="OxI-dX-Wyq" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="5AR-HQ-YxU" secondAttribute="leading" id="DPU-HT-SLD"/>
+                    <constraint firstItem="OxI-dX-Wyq" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="5AR-HQ-YxU" secondAttribute="trailing" id="JRB-2P-eSR"/>
+                    <constraint firstItem="9es-S6-YO9" firstAttribute="top" secondItem="OxI-dX-Wyq" secondAttribute="bottom" constant="8" symbolic="YES" id="Rje-eF-Jx0"/>
+                    <constraint firstItem="9es-S6-YO9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="5AR-HQ-YxU" secondAttribute="leading" id="Uy3-PF-8gv"/>
+                    <constraint firstItem="9es-S6-YO9" firstAttribute="centerX" secondItem="OxI-dX-Wyq" secondAttribute="centerX" id="VmA-NS-V6w"/>
+                    <constraint firstItem="OxI-dX-Wyq" firstAttribute="width" secondItem="OxI-dX-Wyq" secondAttribute="height" multiplier="1:1" id="cO5-OA-WDj"/>
+                    <constraint firstItem="OxI-dX-Wyq" firstAttribute="top" secondItem="5AR-HQ-YxU" secondAttribute="top" id="e4D-go-fbn"/>
+                    <constraint firstItem="OxI-dX-Wyq" firstAttribute="centerX" secondItem="5AR-HQ-YxU" secondAttribute="centerX" id="lLn-AG-QYt"/>
+                    <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="9es-S6-YO9" secondAttribute="trailing" id="nry-vs-oyd"/>
+                    <constraint firstAttribute="bottom" secondItem="9es-S6-YO9" secondAttribute="bottom" constant="20" symbolic="YES" id="zLn-EG-abd"/>
                 </constraints>
             </collectionViewCellContentView>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <connections>
-                <outlet property="actorImageView" destination="geQ-1f-4LZ" id="Iro-sK-gjC"/>
-                <outlet property="nameLabel" destination="fRr-q9-SVN" id="gzF-L3-jqw"/>
+                <outlet property="actorImageView" destination="OxI-dX-Wyq" id="p4T-zQ-tzU"/>
+                <outlet property="nameLabel" destination="9es-S6-YO9" id="Hff-ek-2My"/>
             </connections>
             <point key="canvasLocation" x="139" y="153"/>
         </collectionViewCell>

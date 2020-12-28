@@ -9,7 +9,7 @@
 import Foundation
 
 /**
-	List of actor details section layout kind.
+	List of actor section layout kind.
 
 	```
 	case main = 0
@@ -18,7 +18,7 @@ import Foundation
 	case shows = 3
 	```
 */
-enum ActorDetailsSection: Int, CaseIterable {
+enum ActorSection: Int, CaseIterable {
 	// MARK: - Cases
 	case main = 0
 	case about = 1
@@ -61,11 +61,11 @@ enum ActorDetailsSection: Int, CaseIterable {
 
 	// MARK: - Functions
 	/**
-	The cell identifier string of a character section.
+		The cell identifier string of a character section.
 
-	- Parameter row: The row integer used to determine the cell reuse identifier.
+		- Parameter row: The row integer used to determine the cell reuse identifier.
 
-	- Returns: The cell identifier string of a character section.
+		- Returns: The cell identifier string of a character section.
 	*/
 	func identifierString(for row: Int = 0) -> String {
 		switch self {

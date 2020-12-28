@@ -14,11 +14,27 @@ class ActorsListCollectionViewController: KCollectionViewController {
 	var characterID = 0
 	var actors: [Actor] = [] {
 		didSet {
-			_prefersActivityIndicatorHidden = true
 			self.configureDataSource()
+			self._prefersActivityIndicatorHidden = true
+			self.toggleEmptyDataView()
+			#if DEBUG
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.endRefreshing()
+			#endif
+			#endif
 		}
 	}
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>! = nil
+
+	// Refresh control
+	var _prefersRefreshControlDisabled = false {
+		didSet {
+			self.setNeedsRefreshControlAppearanceUpdate()
+		}
+	}
+	override var prefersRefreshControlDisabled: Bool {
+		return self._prefersRefreshControlDisabled
+	}
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -31,8 +47,20 @@ class ActorsListCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - View
+	override func viewWillReload() {
+		super.viewWillReload()
+
+		self.handleRefreshControl()
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		#if DEBUG
+		self._prefersRefreshControlDisabled = false
+		#else
+		self._prefersRefreshControlDisabled = true
+		#endif
 
 		DispatchQueue.global(qos: .background).async {
 			self.fetchActors()
@@ -40,6 +68,26 @@ class ActorsListCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - Functions
+	override func handleRefreshControl() {
+		self.fetchActors()
+	}
+
+	override func configureEmptyDataView() {
+		emptyBackgroundView.configureImageView(image: R.image.empty.cast()!)
+		emptyBackgroundView.configureLabels(title: "No Actors", detail: "Can't get actors list. Please reload the page or restart the app and check your WiFi connection.")
+
+		collectionView.backgroundView?.alpha = 0
+	}
+
+	/// Fades in and out the empty data view according to the number of rows.
+	func toggleEmptyDataView() {
+		if self.collectionView.numberOfItems() == 0 {
+			self.collectionView.backgroundView?.animateFadeIn()
+		} else {
+			self.collectionView.backgroundView?.animateFadeOut()
+		}
+	}
+
 	func fetchActors() {
 		KService.getActors(forCharacterID: characterID) { [weak self] result in
 			guard let self = self else { return }
@@ -92,7 +140,6 @@ extension ActorsListCollectionViewController {
 			snapshot.appendItems(Array(0..<actors.count), toSection: $0)
 		}
 		dataSource.apply(snapshot)
-		collectionView.reloadEmptyDataSet()
 	}
 }
 
@@ -115,13 +162,11 @@ extension ActorsListCollectionViewController {
 	override func createLayout() -> UICollectionViewLayout {
 		let layout = UICollectionViewCompositionalLayout { (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-												  heightDimension: .fractionalHeight(1.0))
+			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
 			let item = NSCollectionLayoutItem(layoutSize: itemSize)
 			item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
 
-			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-												   heightDimension: .estimated(200))
+			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(200))
 			let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
 
 			let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
