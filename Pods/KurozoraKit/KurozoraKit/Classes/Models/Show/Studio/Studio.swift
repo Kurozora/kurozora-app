@@ -8,7 +8,7 @@
 /**
 	A root object that stores information about a studio resource.
 */
-public struct Studio: IdentityResource {
+public struct Studio: IdentityResource, Hashable {
 	// MARK: - Properties
 	public let id: Int
 
@@ -21,4 +21,13 @@ public struct Studio: IdentityResource {
 
 	/// The relationships belonging to the studio.
 	public let relationships: Studio.Relationships?
+
+	// MARK: - Functions
+	public static func == (lhs: Studio, rhs: Studio) -> Bool {
+		lhs.id == rhs.id
+	}
+
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(self.id)
+	}
 }

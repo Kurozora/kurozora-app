@@ -8,7 +8,7 @@
 /**
 	A root object that stores information about a feed message resource.
 */
-public class FeedMessage: IdentityResource {
+public class FeedMessage: IdentityResource, Hashable {
 	// MARK: - Properties
 	public let id: Int
 
@@ -21,5 +21,14 @@ public class FeedMessage: IdentityResource {
 
 	/// The relationships belonging to the feed message.
 	public let relationships: FeedMessage.Relationships
+
+	// MARK: - Functions
+	public static func == (lhs: FeedMessage, rhs: FeedMessage) -> Bool {
+		lhs.id == rhs.id
+	}
+
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(self.id)
+	}
 }
 

@@ -57,7 +57,7 @@
 		662EDB4A257C37A6005AA29E /* KRefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662EDB49257C37A6005AA29E /* KRefreshControl.swift */; };
 		662F117B24E5EEB40000375A /* StudioLogoImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662F117A24E5EEB40000375A /* StudioLogoImageView.swift */; };
 		662F118224E60F1C0000375A /* SeasonAttributes+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662F118124E60F1C0000375A /* SeasonAttributes+UIImage.swift */; };
-		662F706D22A45C2A00C3599D /* NotificationTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662F706C22A45C2A00C3599D /* NotificationTitleCell.swift */; };
+		662F706D22A45C2A00C3599D /* TitleHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662F706C22A45C2A00C3599D /* TitleHeaderTableViewCell.swift */; };
 		662F706F22A45D0F00C3599D /* BasicNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662F706E22A45D0F00C3599D /* BasicNotificationCell.swift */; };
 		663266CA2444960100295CE7 /* ProductTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663266C92444960100295CE7 /* ProductTableViewController.swift */; };
 		6633A52924A3DA11003C6390 /* InformationButtonCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6633A52824A3DA11003C6390 /* InformationButtonCollectionViewCell.xib */; };
@@ -124,7 +124,6 @@
 		664AAF9424EEA37800FF4AA5 /* ActorLockupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 664AAF9324EEA37800FF4AA5 /* ActorLockupCollectionViewCell.xib */; };
 		664AAF9624EEE29A00FF4AA5 /* ActorsListCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664AAF9524EEE29A00FF4AA5 /* ActorsListCollectionViewController.swift */; };
 		664AAF9824EEE53700FF4AA5 /* Actors.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 664AAF9724EEE53700FF4AA5 /* Actors.storyboard */; };
-		664AAF9A24EEE9A600FF4AA5 /* ActorDetailsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664AAF9924EEE9A600FF4AA5 /* ActorDetailsCollectionViewController.swift */; };
 		664AAF9D24EEEC4F00FF4AA5 /* ActorDetailsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664AAF9C24EEEC4F00FF4AA5 /* ActorDetailsSection.swift */; };
 		664AAF9F24EEED0000FF4AA5 /* ActorDetailsInformationSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664AAF9E24EEED0000FF4AA5 /* ActorDetailsInformationSection.swift */; };
 		664AAFA124EEEE9F00FF4AA5 /* ActorHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664AAFA024EEEE9F00FF4AA5 /* ActorHeaderCollectionViewCell.swift */; };
@@ -195,6 +194,11 @@
 		667F9ADD21B5F354003F6629 /* SettingsSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9ADC21B5F354003F6629 /* SettingsSplitViewController.swift */; };
 		668142D3245B4804008FC7BE /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668142D2245B4804008FC7BE /* ProfileImageView.swift */; };
 		66825BFA21B3E2A700A2F602 /* WorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66112348208F6ACE00E6033A /* WorkflowController.swift */; };
+		668421E425954F25000A09F8 /* ActorDetailsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668421E325954F25000A09F8 /* ActorDetailsCollectionViewController.swift */; };
+		668422462595F762000A09F8 /* CharacterDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668422452595F762000A09F8 /* CharacterDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */; };
+		6684224825966F97000A09F8 /* PosterLockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6684224725966F97000A09F8 /* PosterLockupCollectionViewCell.swift */; };
+		6684225025967A65000A09F8 /* TitleHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6684224F25967A65000A09F8 /* TitleHeaderTableViewCell.xib */; };
+		66842253259760F4000A09F8 /* Favorites.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66842252259760F4000A09F8 /* Favorites.storyboard */; };
 		668B162A23EDF0CF00C1306A /* App-Icon-iPad-Pro-Dutch-Orange@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B15EE23EDF0C500C1306A /* App-Icon-iPad-Pro-Dutch-Orange@2x.png */; };
 		668B162B23EDF0CF00C1306A /* App-Icon-iPad-Ocean-Blue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B15EF23EDF0C500C1306A /* App-Icon-iPad-Ocean-Blue@2x.png */; };
 		668B162C23EDF0CF00C1306A /* App-Icon-iPad-Product-RED@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B15F023EDF0C600C1306A /* App-Icon-iPad-Product-RED@2x.png */; };
@@ -326,6 +330,10 @@
 		66AC3D2023D90A2F00D28EE6 /* ShowAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614DF692089391600B0BC69 /* ShowAttributes.swift */; };
 		66AC3D2223D923ED00D28EE6 /* KViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AC3D2123D923ED00D28EE6 /* KViewController.swift */; };
 		66ACA19222C2627000FAEF08 /* AppearanceOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ACA19122C2627000FAEF08 /* AppearanceOptionsViewController.swift */; };
+		66AE01242593D4E200308636 /* Badge.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66AE01232593D4E200308636 /* Badge.storyboard */; };
+		66AE01272593D5D300308636 /* Follow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66AE01262593D5D300308636 /* Follow.storyboard */; };
+		66AE01292594018400308636 /* Genre.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66AE01282594018400308636 /* Genre.storyboard */; };
+		66AE0142259516FE00308636 /* Preview Content.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66AE0141259516FE00308636 /* Preview Content.xcassets */; };
 		66AE1E0B24A0C41300FD3FFC /* StudioDetailsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AE1E0A24A0C41300FD3FFC /* StudioDetailsCollectionViewController.swift */; };
 		66AE1E0D24A0C42600FD3FFC /* Studios.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66AE1E0C24A0C42600FD3FFC /* Studios.storyboard */; };
 		66AE1E1024A0DB9200FD3FFC /* StudioDetailsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AE1E0F24A0DB9200FD3FFC /* StudioDetailsSection.swift */; };
@@ -371,6 +379,8 @@
 		66BEC13723191E6D0039D683 /* RatingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BEC13623191E6D0039D683 /* RatingCollectionViewCell.swift */; };
 		66C27A7123E243FB00BC09D3 /* LibraryStatisticsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C27A7023E243FB00BC09D3 /* LibraryStatisticsCollectionViewCell.swift */; };
 		66C2C5262107ACA10020E21F /* KTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C2C5252107ACA10020E21F /* KTabBarController.swift */; };
+		66C457FA2598D5E000886374 /* ActorDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C457F92598D5E000886374 /* ActorDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */; };
+		66C457FC2598DA4500886374 /* StudioDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C457FB2598DA4500886374 /* StudioDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */; };
 		66C4DADD243BE4AA00C4B90A /* KKLibraryStatus+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4DADC243BE4AA00C4B90A /* KKLibraryStatus+Kurozora.swift */; };
 		66C4DADF243BE4CF00C4B90A /* KKLibrarySortType+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4DADE243BE4CF00C4B90A /* KKLibrarySortType+Kurozora.swift */; };
 		66C4DAE1243BE52900C4B90A /* KKLibrarySortTypeOptions+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4DAE0243BE52900C4B90A /* KKLibrarySortTypeOptions+Kurozora.swift */; };
@@ -570,7 +580,7 @@
 		662EDB49257C37A6005AA29E /* KRefreshControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KRefreshControl.swift; sourceTree = "<group>"; };
 		662F117A24E5EEB40000375A /* StudioLogoImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioLogoImageView.swift; sourceTree = "<group>"; };
 		662F118124E60F1C0000375A /* SeasonAttributes+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SeasonAttributes+UIImage.swift"; sourceTree = "<group>"; };
-		662F706C22A45C2A00C3599D /* NotificationTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTitleCell.swift; sourceTree = "<group>"; };
+		662F706C22A45C2A00C3599D /* TitleHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		662F706E22A45D0F00C3599D /* BasicNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicNotificationCell.swift; sourceTree = "<group>"; };
 		663266C92444960100295CE7 /* ProductTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductTableViewController.swift; sourceTree = "<group>"; };
 		6633A52824A3DA11003C6390 /* InformationButtonCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InformationButtonCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -638,7 +648,6 @@
 		664AAF9324EEA37800FF4AA5 /* ActorLockupCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActorLockupCollectionViewCell.xib; sourceTree = "<group>"; };
 		664AAF9524EEE29A00FF4AA5 /* ActorsListCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorsListCollectionViewController.swift; sourceTree = "<group>"; };
 		664AAF9724EEE53700FF4AA5 /* Actors.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Actors.storyboard; sourceTree = "<group>"; };
-		664AAF9924EEE9A600FF4AA5 /* ActorDetailsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorDetailsCollectionViewController.swift; sourceTree = "<group>"; };
 		664AAF9C24EEEC4F00FF4AA5 /* ActorDetailsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorDetailsSection.swift; sourceTree = "<group>"; };
 		664AAF9E24EEED0000FF4AA5 /* ActorDetailsInformationSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorDetailsInformationSection.swift; sourceTree = "<group>"; };
 		664AAFA024EEEE9F00FF4AA5 /* ActorHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -703,6 +712,11 @@
 		667F9ADC21B5F354003F6629 /* SettingsSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSplitViewController.swift; sourceTree = "<group>"; };
 		668142D2245B4804008FC7BE /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		66825BE921B29F3800A2F602 /* KRichTextEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KRichTextEditorViewController.swift; sourceTree = "<group>"; };
+		668421E325954F25000A09F8 /* ActorDetailsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorDetailsCollectionViewController.swift; sourceTree = "<group>"; };
+		668422452595F762000A09F8 /* CharacterDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CharacterDetailsCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
+		6684224725966F97000A09F8 /* PosterLockupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterLockupCollectionViewCell.swift; sourceTree = "<group>"; };
+		6684224F25967A65000A09F8 /* TitleHeaderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TitleHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		66842252259760F4000A09F8 /* Favorites.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Favorites.storyboard; sourceTree = "<group>"; };
 		668B15EE23EDF0C500C1306A /* App-Icon-iPad-Pro-Dutch-Orange@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Pro-Dutch-Orange@2x.png"; sourceTree = "<group>"; };
 		668B15EF23EDF0C500C1306A /* App-Icon-iPad-Ocean-Blue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Ocean-Blue@2x.png"; sourceTree = "<group>"; };
 		668B15F023EDF0C600C1306A /* App-Icon-iPad-Product-RED@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Product-RED@2x.png"; sourceTree = "<group>"; };
@@ -833,6 +847,10 @@
 		66AC3D1E23D8FB0800D28EE6 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		66AC3D2123D923ED00D28EE6 /* KViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KViewController.swift; sourceTree = "<group>"; };
 		66ACA19122C2627000FAEF08 /* AppearanceOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceOptionsViewController.swift; sourceTree = "<group>"; };
+		66AE01232593D4E200308636 /* Badge.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Badge.storyboard; sourceTree = "<group>"; };
+		66AE01262593D5D300308636 /* Follow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Follow.storyboard; sourceTree = "<group>"; };
+		66AE01282594018400308636 /* Genre.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Genre.storyboard; sourceTree = "<group>"; };
+		66AE0141259516FE00308636 /* Preview Content.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Content.xcassets"; sourceTree = "<group>"; };
 		66AE1E0A24A0C41300FD3FFC /* StudioDetailsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioDetailsCollectionViewController.swift; sourceTree = "<group>"; };
 		66AE1E0C24A0C42600FD3FFC /* Studios.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Studios.storyboard; sourceTree = "<group>"; };
 		66AE1E0F24A0DB9200FD3FFC /* StudioDetailsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioDetailsSection.swift; sourceTree = "<group>"; };
@@ -880,6 +898,8 @@
 		66BF02B6209CAACD00BDAF41 /* PostLinkCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostLinkCell.xib; sourceTree = "<group>"; };
 		66C27A7023E243FB00BC09D3 /* LibraryStatisticsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryStatisticsCollectionViewCell.swift; sourceTree = "<group>"; };
 		66C2C5252107ACA10020E21F /* KTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KTabBarController.swift; sourceTree = "<group>"; };
+		66C457F92598D5E000886374 /* ActorDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActorDetailsCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
+		66C457FB2598DA4500886374 /* StudioDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StudioDetailsCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
 		66C4DADC243BE4AA00C4B90A /* KKLibraryStatus+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KKLibraryStatus+Kurozora.swift"; sourceTree = "<group>"; };
 		66C4DADE243BE4CF00C4B90A /* KKLibrarySortType+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KKLibrarySortType+Kurozora.swift"; sourceTree = "<group>"; };
 		66C4DAE0243BE52900C4B90A /* KKLibrarySortTypeOptions+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KKLibrarySortTypeOptions+Kurozora.swift"; sourceTree = "<group>"; };
@@ -1238,7 +1258,6 @@
 			children = (
 				6601F1AB2118488D0074C1DD /* IconNotificationCell.swift */,
 				662F706E22A45D0F00C3599D /* BasicNotificationCell.swift */,
-				662F706C22A45C2A00C3599D /* NotificationTitleCell.swift */,
 				66B2C73E232F95680042AB12 /* BaseNotificationCell.swift */,
 			);
 			path = Cells;
@@ -1408,6 +1427,7 @@
 		66472375246015F9008E5111 /* Container Views */ = {
 			isa = PBXGroup;
 			children = (
+				6684224D259677CE000A09F8 /* Collection Views */,
 				6647237624601659008E5111 /* Table Views */,
 			);
 			path = "Container Views";
@@ -1521,6 +1541,7 @@
 		664A066121EA23CA008CF4A6 /* Genres */ = {
 			isa = PBXGroup;
 			children = (
+				66AE01282594018400308636 /* Genre.storyboard */,
 				664A065D21EA1BA7008CF4A6 /* GenresTableViewController.swift */,
 				660C043723D151140040C749 /* Cells */,
 			);
@@ -1543,8 +1564,9 @@
 			isa = PBXGroup;
 			children = (
 				664AAF9724EEE53700FF4AA5 /* Actors.storyboard */,
+				668421E325954F25000A09F8 /* ActorDetailsCollectionViewController.swift */,
+				66C457F92598D5E000886374 /* ActorDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */,
 				664AAF9524EEE29A00FF4AA5 /* ActorsListCollectionViewController.swift */,
-				664AAF9924EEE9A600FF4AA5 /* ActorDetailsCollectionViewController.swift */,
 				664AAF9024EEA25A00FF4AA5 /* Cells */,
 				664AAF9B24EEEC2E00FF4AA5 /* Models */,
 			);
@@ -1608,8 +1630,9 @@
 			isa = PBXGroup;
 			children = (
 				664AAF8024EE8E2F00FF4AA5 /* Characters.storyboard */,
-				664AAFA224EEF11800FF4AA5 /* CharactersListCollectionViewController.swift */,
 				665B94A624E81C5C007E7A13 /* CharacterDetailsCollectionViewController.swift */,
+				668422452595F762000A09F8 /* CharacterDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */,
+				664AAFA224EEF11800FF4AA5 /* CharactersListCollectionViewController.swift */,
 				665B94A524E81C41007E7A13 /* Cells */,
 				665B94A424E81C3D007E7A13 /* Models */,
 			);
@@ -1675,8 +1698,8 @@
 				66DE65262401AE80001C2773 /* Enums */,
 				66B4F1D1223BC8EB007C5048 /* Features */,
 				6675262B22280AB4007C1617 /* Plist */,
-				66ABBBFF240215BE00CE8A26 /* Views */,
 				66707833208B836500471FBC /* Supporting Files */,
+				66ABBBFF240215BE00CE8A26 /* Views */,
 			);
 			path = Kurozora;
 			sourceTree = "<group>";
@@ -1694,7 +1717,6 @@
 		6664B81524A404C400E73728 /* Collection Views */ = {
 			isa = PBXGroup;
 			children = (
-				6664B81924A4054C00E73728 /* Cells */,
 				66B13A582404779900CD732B /* KCollectionViewController */,
 			);
 			path = "Collection Views";
@@ -1814,6 +1836,7 @@
 				66647B612084995E00CF624F /* Info.plist */,
 				6645D5F623E709EE0042B4E0 /* R.generated.swift */,
 				66647B5C2084995E00CF624F /* Assets.xcassets */,
+				66AE0141259516FE00308636 /* Preview Content.xcassets */,
 				668F63842098681C003B1C1D /* Fonts */,
 			);
 			path = "Supporting Files";
@@ -1872,6 +1895,7 @@
 			children = (
 				667F9AD821B47FA4003F6629 /* BadgesTableViewController.swift */,
 				667F9AD321B47E6D003F6629 /* BadgeTableViewCell.swift */,
+				66AE01232593D4E200308636 /* Badge.storyboard */,
 			);
 			path = Badges;
 			sourceTree = "<group>";
@@ -2028,6 +2052,32 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		6684224D259677CE000A09F8 /* Collection Views */ = {
+			isa = PBXGroup;
+			children = (
+				6664B81924A4054C00E73728 /* Cells */,
+			);
+			path = "Collection Views";
+			sourceTree = "<group>";
+		};
+		6684224E25967A01000A09F8 /* TitleHeaderTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				662F706C22A45C2A00C3599D /* TitleHeaderTableViewCell.swift */,
+				6684224F25967A65000A09F8 /* TitleHeaderTableViewCell.xib */,
+			);
+			path = TitleHeaderTableViewCell;
+			sourceTree = "<group>";
+		};
+		6684225125974DE9000A09F8 /* Favorites */ = {
+			isa = PBXGroup;
+			children = (
+				66842252259760F4000A09F8 /* Favorites.storyboard */,
+				66D6237A20A1BFD300304914 /* FavoriteShowsCollectionViewController.swift */,
+			);
+			path = Favorites;
+			sourceTree = "<group>";
+		};
 		668F63842098681C003B1C1D /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -2176,6 +2226,7 @@
 			isa = PBXGroup;
 			children = (
 				66AA35C1240312210006EC5B /* Main */,
+				6684225125974DE9000A09F8 /* Favorites */,
 				66AA35C22403125F0006EC5B /* Show */,
 				66CF6D6320A9875600F98375 /* Profile */,
 				66B4F1D2223BC901007C5048 /* Search */,
@@ -2184,11 +2235,21 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		66AE01252593D5C000308636 /* Follow */ = {
+			isa = PBXGroup;
+			children = (
+				66AE01262593D5D300308636 /* Follow.storyboard */,
+				66CF6D6820A98CAA00F98375 /* FollowTableViewController.swift */,
+			);
+			path = Follow;
+			sourceTree = "<group>";
+		};
 		66AE1E0924A0C3EB00FD3FFC /* Studios */ = {
 			isa = PBXGroup;
 			children = (
 				66AE1E0C24A0C42600FD3FFC /* Studios.storyboard */,
 				66AE1E0A24A0C41300FD3FFC /* StudioDetailsCollectionViewController.swift */,
+				66C457FB2598DA4500886374 /* StudioDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */,
 				66AE1E1124A0E9E400FD3FFC /* Cells */,
 				66AE1E0E24A0DB7B00FD3FFC /* Models */,
 			);
@@ -2650,6 +2711,7 @@
 		66CE810E24608F5200DB0C49 /* Cells, Headers, and Footers */ = {
 			isa = PBXGroup;
 			children = (
+				6684224E25967A01000A09F8 /* TitleHeaderTableViewCell */,
 				66CE810B24608DD800DB0C49 /* KTableViewCell.swift */,
 			);
 			path = "Cells, Headers, and Footers";
@@ -2693,10 +2755,10 @@
 			isa = PBXGroup;
 			children = (
 				66CF6D7020A9934F00F98375 /* Profile.storyboard */,
-				66CF6D6820A98CAA00F98375 /* FollowTableViewController.swift */,
 				66CF6D6620A987D100F98375 /* ProfileTableViewController.swift */,
 				667F9AD521B47E8B003F6629 /* Badges */,
 				66232CD7231004EE00C45B5A /* Cells */,
+				66AE01252593D5C000308636 /* Follow */,
 				665099D122FC223A0053C2FD /* Models */,
 			);
 			path = Profile;
@@ -2758,6 +2820,7 @@
 				663E342A2360D3B8003386D1 /* LargeLockupCollectionViewCell.swift */,
 				66F944AB22F0C08E009F1FE2 /* LegalExploreTableViewCell.swift */,
 				663E34262360D333003386D1 /* MediumLockupCollectionViewCell.swift */,
+				6684224725966F97000A09F8 /* PosterLockupCollectionViewCell.swift */,
 				663E34282360D34C003386D1 /* SmallLockupCollectionViewCell.swift */,
 				663E34222360D2BE003386D1 /* VideoLockupCollectionViewCell.swift */,
 				660C043323D150310040C749 /* LargeLockupCollectionViewCell.xib */,
@@ -2775,7 +2838,6 @@
 				66D6237E20A1CC1D00304914 /* Library.storyboard */,
 				66D6237820A1BEAC00304914 /* LibraryListCollectionViewController.swift */,
 				66D6237620A1BB6600304914 /* LibraryViewController.swift */,
-				66D6237A20A1BFD300304914 /* FavoriteShowsCollectionViewController.swift */,
 				66BA740C223DB29E00AEB8ED /* Cells */,
 				66BA740B223DB27500AEB8ED /* Models */,
 			);
@@ -3067,6 +3129,7 @@
 				666938B921B1D50E00BA9620 /* WriteACommentCell.xib in Resources */,
 				668B165023EDF0CF00C1306A /* App-Icon-iPad-Sky-Blue.png in Resources */,
 				66407C9823F625DB008944AB /* App-Icon-iPad-Love-Bug.png in Resources */,
+				66AE01242593D4E200308636 /* Badge.storyboard in Resources */,
 				668B163223EDF0CF00C1306A /* App-Icon-iPad-Yellow.png in Resources */,
 				66C5797B22A86435001B8F51 /* DebugSettings.storyboard in Resources */,
 				668B164D23EDF0CF00C1306A /* App-Icon-iPhone-Ocean-Blue@3x.png in Resources */,
@@ -3099,6 +3162,7 @@
 				6633A52924A3DA11003C6390 /* InformationButtonCollectionViewCell.xib in Resources */,
 				668B164823EDF0CF00C1306A /* App-Icon-iPhone-Peach-Orange@2x.png in Resources */,
 				664AAF8124EE8E2F00FF4AA5 /* Characters.storyboard in Resources */,
+				6684225025967A65000A09F8 /* TitleHeaderTableViewCell.xib in Resources */,
 				668B165423EDF0CF00C1306A /* App-Icon-iPhone-Sky-Blue@2x.png in Resources */,
 				66CE8118246093DE00DB0C49 /* ServiceHeaderTableViewCell.xib in Resources */,
 				668B163A23EDF0CF00C1306A /* App-Icon-iPad-Pro-Peach-Orange@2x.png in Resources */,
@@ -3129,6 +3193,7 @@
 				668B165C23EDF0CF00C1306A /* App-Icon-iPhone-Day@3x.png in Resources */,
 				668B164523EDF0CF00C1306A /* App-Icon-iPad-Pro-Ocean-Blue@2x.png in Resources */,
 				66CB8D5224F83FE00047A2CF /* FeedMessageCell.xib in Resources */,
+				66AE0142259516FE00308636 /* Preview Content.xcassets in Resources */,
 				666C825A2168031B00C93A70 /* Home.storyboard in Resources */,
 				668B162A23EDF0CF00C1306A /* App-Icon-iPad-Pro-Dutch-Orange@2x.png in Resources */,
 				668B165723EDF0CF00C1306A /* App-Icon-iPad-Pro-Red@2x.png in Resources */,
@@ -3158,6 +3223,7 @@
 				66C5797D22A864CB001B8F51 /* Legal.storyboard in Resources */,
 				66A48FE021A411A900F34085 /* Notifications.storyboard in Resources */,
 				669EA9A222C1491600784181 /* Purchase.storyboard in Resources */,
+				66AE01292594018400308636 /* Genre.storyboard in Resources */,
 				668B164923EDF0CF00C1306A /* App-Icon-iPad-Rose-Gold.png in Resources */,
 				6646A275236A5F7600DCC0A4 /* BrowserSettings.storyboard in Resources */,
 				668B164C23EDF0CF00C1306A /* App-Icon-iPhone-Dutch-Orange@3x.png in Resources */,
@@ -3191,6 +3257,7 @@
 				66CBDDA124649CB300CA5F83 /* Synopsis.storyboard in Resources */,
 				668F639020986851003B1C1D /* Aller_BdIt.ttf in Resources */,
 				668B165823EDF0CF00C1306A /* App-Icon-iPad-Pro-Night@2x.png in Resources */,
+				66842253259760F4000A09F8 /* Favorites.storyboard in Resources */,
 				668F638E20986851003B1C1D /* Aller_Bd.ttf in Resources */,
 				668B166D23EDF7FC00C1306A /* App-Icon-iPhone-Kurogram@3x.png in Resources */,
 				66DB11D024E6103900C99754 /* Shows.storyboard in Resources */,
@@ -3199,6 +3266,7 @@
 				669A36C124F1BFFA0045D04A /* OnboardingTextFieldTableViewCell.xib in Resources */,
 				668B164023EDF0CF00C1306A /* App-Icon-iPad-Dutch-Orange@2x.png in Resources */,
 				668B166323EDF0CF00C1306A /* App-Icon-iPhone-Ocean-Blue@2x.png in Resources */,
+				66AE01272593D5D300308636 /* Follow.storyboard in Resources */,
 				668B164B23EDF0CF00C1306A /* App-Icon-iPad-Coral@2x.png in Resources */,
 				669FD7FC23F9E9DB001440EC /* App-Icon-iPad-Cookiezora@2x.png in Resources */,
 				668B166B23EDF7FC00C1306A /* App-Icon-iPad-Kurogram.png in Resources */,
@@ -3245,7 +3313,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Add pod 'R.swift' to your Podfile and run pod install\n# In Xcode: Click on your project in the file list, choose your target under TARGETS, click the Build Phases tab and add a New Run Script Phase by clicking the little plus icon in the top left\n# Drag the new Run Script phase above the Compile Sources phase and below Check Pods Manifest.lock, expand it and paste the following script: \"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/R.generated.swift\"\n# Add $TEMP_DIR/rswift-lastrun to the \"Input Files\" and $SRCROOT/R.generated.swift to the \"Output Files\" of the Build Phase\n# Build your project, in Finder you will now see a R.generated.swift in the $SRCROOT-folder, drag the R.generated.swift files into your project and uncheck Copy items if needed\nif [$ENABLE_PREVIEWS == \"NO\"]\nthen\n\t\"${PODS_ROOT}/R.swift/rswift\" generate \"${SRCROOT}/Kurozora/Supporting Files/R.generated.swift\"\nelse\n\techo \"Skipping R.swift script.\"\nfi\n";
+			shellScript = "# Add pod 'R.swift' to your Podfile and run pod install\n# In Xcode: Click on your project in the file list, choose your target under TARGETS, click the Build Phases tab and add a New Run Script Phase by clicking the little plus icon in the top left\n# Drag the new Run Script phase above the Compile Sources phase and below Check Pods Manifest.lock, expand it and paste the following script: \"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/R.generated.swift\"\n# Add $TEMP_DIR/rswift-lastrun to the \"Input Files\" and $SRCROOT/R.generated.swift to the \"Output Files\" of the Build Phase\n# Build your project, in Finder you will now see a R.generated.swift in the $SRCROOT-folder, drag the R.generated.swift files into your project and uncheck Copy items if needed\n#if [$ENABLE_PREVIEWS == \"NO\"]\n#then\n\t\"${PODS_ROOT}/R.swift/rswift\" generate \"${SRCROOT}/Kurozora/Supporting Files/R.generated.swift\"\n#else\n#\techo \"Skipping R.swift script.\"\n#fi\n";
 		};
 		6666F88320BF4A4C0003A72F /* Run Build Bump Script */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3384,6 +3452,7 @@
 				663C95B923084FAC003720A4 /* SceneDelegate.swift in Sources */,
 				663E342B2360D3B8003386D1 /* LargeLockupCollectionViewCell.swift in Sources */,
 				66244D91230B774200EC33E0 /* LibraryDetailedCollectionViewCell.swift in Sources */,
+				6684224825966F97000A09F8 /* PosterLockupCollectionViewCell.swift in Sources */,
 				6609FADB21D91369008DF5E4 /* KurozoraReachabilityViewController.swift in Sources */,
 				6609FAD921D90C13008DF5E4 /* KNetworkManager.swift in Sources */,
 				663E342D2360D559003386D1 /* VerticalCollectionCellStyle.swift in Sources */,
@@ -3479,6 +3548,7 @@
 				66F944AC22F0C08E009F1FE2 /* TitleHeaderCollectionReusableView.swift in Sources */,
 				66A08C6D23E3A2F0007B6418 /* PrivacySettingsViewController.swift in Sources */,
 				667B38432361CE6500786EF6 /* KWhatsNewModel.swift in Sources */,
+				66C457FA2598D5E000886374 /* ActorDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				66AE1E1324A0EA1800FD3FFC /* StudioHeaderCollectionViewCell.swift in Sources */,
 				66DE652C2401B187001C2773 /* Studios.swift in Sources */,
 				66CBA53522BC452700FBEC13 /* FeedTableViewController.swift in Sources */,
@@ -3568,6 +3638,7 @@
 				66CE8116246093CF00DB0C49 /* ServiceHeaderTableViewCell.swift in Sources */,
 				66FC6DD12340014500A454DD /* SettingsSection.swift in Sources */,
 				66AE1E1024A0DB9200FD3FFC /* StudioDetailsSection.swift in Sources */,
+				66C457FC2598DA4500886374 /* StudioDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				6619EE74216F969B00655B99 /* ForumsListViewController.swift in Sources */,
 				6674A0C320A45E6D00AAB527 /* LinkCollectionViewCell.swift in Sources */,
 				66EC939A2274B90100D584F7 /* ShowDetail.swift in Sources */,
@@ -3579,7 +3650,7 @@
 				66AEABDC2298A92500949FD8 /* NotificationAlertStyle.swift in Sources */,
 				66999C4A24E71E1A00001A6E /* GenreAttributes+UIImage.swift in Sources */,
 				66D8B14D24F9417E00F0DE7B /* KSwitch.swift in Sources */,
-				662F706D22A45C2A00C3599D /* NotificationTitleCell.swift in Sources */,
+				662F706D22A45C2A00C3599D /* TitleHeaderTableViewCell.swift in Sources */,
 				66D6237920A1BEAC00304914 /* LibraryListCollectionViewController.swift in Sources */,
 				66E46DFF25055FEA009938E1 /* Int+Kurozora.swift in Sources */,
 				66BEC13523191D090039D683 /* NSLayoutManager+Kurozora.swift in Sources */,
@@ -3610,6 +3681,7 @@
 				666938B221B1D4DF00BA9620 /* WriteACommentCell.swift in Sources */,
 				664B6D75230F3A3200F9C726 /* FeedType.swift in Sources */,
 				667F9ADD21B5F354003F6629 /* SettingsSplitViewController.swift in Sources */,
+				668422462595F762000A09F8 /* CharacterDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				665CBBA222C2B139004D0D3E /* DateSettingsCell.swift in Sources */,
 				66A1C65C232B75360044EAD1 /* FollowCell.swift in Sources */,
 				669FD80123FA2270001440EC /* MALImportTableViewController.swift in Sources */,
@@ -3640,7 +3712,6 @@
 				66CDC090234A9704009E799C /* ProductActionTableViewCell.swift in Sources */,
 				66BEC133231711DD0039D683 /* KWhatsNewViewController.swift in Sources */,
 				66AEABEB2298ABA100949FD8 /* NotificationSegueIdentifier.swift in Sources */,
-				664AAF9A24EEE9A600FF4AA5 /* ActorDetailsCollectionViewController.swift in Sources */,
 				66C898DD24DFEA2B00305C96 /* ActorAttributes+String.swift in Sources */,
 				6646A26E236A54A700DCC0A4 /* URL+Kurozora.swift in Sources */,
 				664B6D78230F45F400F9C726 /* DarkThemeOption.swift in Sources */,
@@ -3656,6 +3727,7 @@
 				66160C3B215C04B900D0D722 /* AccountTableViewController.swift in Sources */,
 				663E341A235F7CCC003386D1 /* ActionBaseExploreCollectionViewCell.swift in Sources */,
 				66CB8D5024F83F2D0047A2CF /* PostCell.swift in Sources */,
+				668421E425954F25000A09F8 /* ActorDetailsCollectionViewController.swift in Sources */,
 				66FC6DF62342BA5C00A454DD /* UIStatusBarStyle+Theme.swift in Sources */,
 				66E46DFD24FDAF7B009938E1 /* FMDetailsTableViewController.swift in Sources */,
 				660B42AB2125AF830051EF66 /* ThemesCollectionViewCell.swift in Sources */,
@@ -3818,7 +3890,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Kurozora/Kurozora.entitlements;
 				CURRENT_PROJECT_VERSION = 11766;
-				DEVELOPMENT_ASSET_PATHS = "\"Kurozora/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Kurozora/Supporting Files\"";
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3835,6 +3907,7 @@
 					"@executable_path/../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.tracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3853,7 +3926,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Kurozora/Kurozora.entitlements;
 				CURRENT_PROJECT_VERSION = 11766;
-				DEVELOPMENT_ASSET_PATHS = "\"Kurozora/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Kurozora/Supporting Files\"";
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3870,6 +3943,7 @@
 					"@executable_path/../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.tracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -8,7 +8,7 @@
 /**
 	A root object that stores information about a show resource.
 */
-public class Show: IdentityResource {
+public class Show: IdentityResource, Hashable {
 	// MARK: - Properties
 	public let id: Int
 
@@ -21,4 +21,13 @@ public class Show: IdentityResource {
 
 	/// The relationships belonging to the show.
 	public let relationships: Show.Relationships?
+
+	// MARK: - Functions
+	public static func == (lhs: Show, rhs: Show) -> Bool {
+		return lhs.id == rhs.id
+	}
+
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(self.id)
+	}
 }

@@ -8,7 +8,7 @@
 /**
 	A root object that stores information about an actor resource.
 */
-public struct Actor: IdentityResource {
+public struct Actor: IdentityResource, Hashable {
 	// MARK: - Properties
 	public let id: Int
 
@@ -21,4 +21,13 @@ public struct Actor: IdentityResource {
 
 	/// The relationships belonging to the actor.
 	public let relationships: Actor.Relationships?
+
+	// MARK: - Functions
+	public static func == (lhs: Actor, rhs: Actor) -> Bool {
+		lhs.id == rhs.id
+	}
+
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(self.id)
+	}
 }

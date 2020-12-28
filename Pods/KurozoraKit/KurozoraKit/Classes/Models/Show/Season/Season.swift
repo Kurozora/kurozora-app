@@ -8,7 +8,7 @@
 /**
 	A root object that stores information about a season resource.
 */
-public struct Season: IdentityResource {
+public struct Season: IdentityResource, Hashable {
 	// MARK: - Properties
 	public let id: Int
 
@@ -18,5 +18,14 @@ public struct Season: IdentityResource {
 
 	/// The attributes belonging to the season.
 	public let attributes: Season.Attributes
+
+	// MARK: - Functions
+	public static func == (lhs: Season, rhs: Season) -> Bool {
+		lhs.id == rhs.id
+	}
+
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(self.id)
+	}
 }
 

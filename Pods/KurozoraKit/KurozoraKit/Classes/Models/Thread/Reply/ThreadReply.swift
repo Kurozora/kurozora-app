@@ -8,7 +8,7 @@
 /**
 	A root object that stores information about thread reply resource.
 */
-public class ThreadReply: IdentityResource {
+public class ThreadReply: IdentityResource, Hashable {
 	// MARK: - Properties
 	public let id: Int
 
@@ -21,4 +21,13 @@ public class ThreadReply: IdentityResource {
 
 	/// The relationships belonging to the thread reply
 	public let relationships: ThreadReply.Relationships
+
+	// MARK: - Functions
+	public static func == (lhs: ThreadReply, rhs: ThreadReply) -> Bool {
+		lhs.id == rhs.id
+	}
+
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(self.id)
+	}
 }

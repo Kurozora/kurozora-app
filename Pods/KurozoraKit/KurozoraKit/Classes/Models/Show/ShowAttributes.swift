@@ -82,10 +82,10 @@ extension Show {
 		/// The video url of the show.
 		public let videoUrl: String?
 
-		/// The link to the banner of the show.
+		/// The media object of the banner of the show.
 		public let banner: Show.Attributes.Media?
 
-		/// The link to the poster of the show.
+		/// The media object of the poster of the show.
 		public let poster: Show.Attributes.Media?
 
 		/// The first air date of the show.

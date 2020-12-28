@@ -6,7 +6,7 @@ PODS:
   - Kingfisher (5.15.8):
     - Kingfisher/Core (= 5.15.8)
   - Kingfisher/Core (5.15.8)
-  - KurozoraKit (0.15.5):
+  - KurozoraKit (0.15.7):
     - KeychainAccess
     - TRON
   - Pageboy (3.6.2)
@@ -101,7 +101,7 @@ SPEC CHECKSUMS:
   ESTabBarController-swift: 05593a6ad64700b03c0eb60ff625916370aa4136
   KeychainAccess: 9b07f665298d13c3a85881bd3171f6f49b8151c1
   Kingfisher: a3c03d702433fa6cfedabb2bddbe076fb8f2e902
-  KurozoraKit: da510e3d71d8a620f78f5dd47daf5b4c9c5b0907
+  KurozoraKit: 1fb6749874c83f8af9929d0e6c64e7cb9d007164
   Pageboy: cf121b9dd48c63f3f281b2a9ec93d02e0f23879b
   R.swift: 56ec7e3aef34b9eee47a659e42462db2c1cc5ac3
   R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962

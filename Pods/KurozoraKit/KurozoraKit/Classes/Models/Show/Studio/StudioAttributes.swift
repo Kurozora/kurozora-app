@@ -15,7 +15,7 @@ extension Studio {
 		public let name: String
 
 		/// The logo of the studio.
-		public let logo: String?
+		public let logo: Studio.Attributes.Media?
 
 		/// The about text of the studio.
 		public let about: String?
@@ -24,6 +24,6 @@ extension Studio {
 		public let founded: String?
 
 		/// The link to the website of the studio.
-		public let websiteURL: String?
+		public let websiteUrl: String?
 	}
 }

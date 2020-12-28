@@ -8,7 +8,7 @@
 /**
 	A root object that stores information about a user resource.
 */
-public struct User: IdentityResource {
+public struct User: IdentityResource, Hashable {
 	// MARK: - Properties
 	public let id: Int
 
@@ -24,6 +24,15 @@ public struct User: IdentityResource {
 
 	/// The relationships blonging to yhe user.
 	public let relationships: User.Relationships?
+
+	// MARK: - Functions
+	public static func == (lhs: User, rhs: User) -> Bool {
+		lhs.id == rhs.id
+	}
+
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(self.id)
+	}
 }
 
 // MARK: - Helpers

@@ -8,7 +8,7 @@
 /**
 	A root object that stores information about a collection of session.
 */
-public struct Session: IdentityResource {
+public struct Session: IdentityResource, Hashable {
 	// MARK: - Properties
 	public let id: Int
 
@@ -21,4 +21,13 @@ public struct Session: IdentityResource {
 
 	/// The relationships belonging to the session.
 	public let relationships: Session.Relationships
+
+	// MARK: - Functions
+	public static func == (lhs: Session, rhs: Session) -> Bool {
+		lhs.id == rhs.id
+	}
+
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(self.id)
+	}
 }

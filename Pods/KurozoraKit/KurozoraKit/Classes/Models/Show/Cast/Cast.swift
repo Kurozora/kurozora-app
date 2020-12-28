@@ -8,12 +8,12 @@
 /**
 	A root object that stores information about a cast resource.
 */
-public struct Cast: Codable {
+public struct Cast: IdentityResource, Hashable {
 	// MARK: - Properties
-	/// The type of the resource.
+	public let id: Int
+
 	public let type: String
 
-	/// The relative link to where the resource is located.
 	public let href: String
 
 	/// The attributes belonging to the show.
@@ -21,4 +21,13 @@ public struct Cast: Codable {
 
 	/// The relationships belonging to the show.
 	public let relationships: Cast.Relationships
+
+	// MARK: - Functions
+	public static func == (lhs: Cast, rhs: Cast) -> Bool {
+		lhs.id == rhs.id
+	}
+
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(self.id)
+	}
 }

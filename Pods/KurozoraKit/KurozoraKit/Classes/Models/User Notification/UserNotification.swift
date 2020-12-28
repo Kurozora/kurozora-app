@@ -8,7 +8,7 @@
 /**
 	A root object that stores information about a user notification resource.
 */
-public class UserNotification: Codable {
+public class UserNotification: Codable, Hashable {
 	// MARK: - Properties
 	/// The id of the resource.
 	public let id: String
@@ -21,4 +21,13 @@ public class UserNotification: Codable {
 
 	/// The attributes belonging to the user notification.
 	public var attributes: UserNotification.Attributes
+
+	// MARK: - Functions
+	public static func == (lhs: UserNotification, rhs: UserNotification) -> Bool {
+		lhs.id == rhs.id
+	}
+
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(self.id)
+	}
 }

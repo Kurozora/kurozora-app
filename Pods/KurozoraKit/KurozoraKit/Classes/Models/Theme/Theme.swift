@@ -9,7 +9,7 @@
 /**
 	A root object that stores information about a theme resource.
 */
-public struct Theme: IdentityResource {
+public struct Theme: IdentityResource, Hashable {
 	// MARK: - Properties
 	public let id: Int
 
@@ -19,4 +19,13 @@ public struct Theme: IdentityResource {
 
 	/// The attributes belonging to the theme.
 	public let attributes: Theme.Attributes
+
+	// MARK: - Functions
+	public static func == (lhs: Theme, rhs: Theme) -> Bool {
+		lhs.id == rhs.id
+	}
+
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(self.id)
+	}
 }
