@@ -234,7 +234,7 @@ extension RedeemTableViewController: VNDocumentCameraViewControllerDelegate {
 	}
 }
 
-//MARK: - UIImagePickerControllerDelegate
+// MARK: - UIImagePickerControllerDelegate
 extension RedeemTableViewController: UIImagePickerControllerDelegate {
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
 		let alertController = self.presentActivityAlertController(title: "Processing redeem code.", message: nil)

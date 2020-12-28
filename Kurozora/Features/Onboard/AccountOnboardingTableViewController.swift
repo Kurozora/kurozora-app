@@ -20,7 +20,6 @@ class AccountOnboardingTableViewController: KTableViewController {
 		}
 	}
 
-	#if !targetEnvironment(macCatalyst)
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
 		didSet {
@@ -30,7 +29,6 @@ class AccountOnboardingTableViewController: KTableViewController {
 	override var prefersRefreshControlDisabled: Bool {
 		return _prefersRefreshControlDisabled
 	}
-	#endif
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -47,12 +45,10 @@ class AccountOnboardingTableViewController: KTableViewController {
 		super.viewDidLoad()
 
 		// Stop activity indicator and disable refresh control
-		_prefersActivityIndicatorHidden = true
-		#if !targetEnvironment(macCatalyst)
-		_prefersRefreshControlDisabled = true
-		#endif
+		self._prefersActivityIndicatorHidden = true
+		self._prefersRefreshControlDisabled = true
 
-		rightNavigationBarButton.isEnabled = false
+		self.rightNavigationBarButton.isEnabled = false
 	}
 
 	// MARK: - IBActions

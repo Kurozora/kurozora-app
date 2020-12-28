@@ -19,19 +19,18 @@ class EmptyBackgroundView: UIView {
 		contentView.translatesAutoresizingMaskIntoConstraints = false
 		contentView.backgroundColor = UIColor.clear
 		contentView.isUserInteractionEnabled = true
-		contentView.alpha = 0
 		return contentView
 	}()
 
 	/// The property managing the image view.
 	lazy var imageView: UIImageView = {
 		let imageView = UIImageView()
+		imageView.accessibilityIdentifier = "empty view image"
 		imageView.translatesAutoresizingMaskIntoConstraints = false
 		imageView.backgroundColor = UIColor.clear
 		imageView.theme_tintColor = KThemePicker.subTextColor.rawValue
 		imageView.contentMode = .scaleAspectFit
 		imageView.isUserInteractionEnabled = false
-		imageView.accessibilityIdentifier = "empty view image"
 		self.contentView.addSubview(imageView)
 		return imageView
 	}()
@@ -39,13 +38,13 @@ class EmptyBackgroundView: UIView {
 	/// The property managing the title label.
 	lazy var titleLabel: KLabel = {
 		let titleLabel = KLabel()
+		titleLabel.accessibilityIdentifier = "empty view title"
 		titleLabel.translatesAutoresizingMaskIntoConstraints = false
 		titleLabel.backgroundColor = UIColor.clear
 		titleLabel.font = .preferredFont(forTextStyle: .headline)
 		titleLabel.textAlignment = .center
 		titleLabel.lineBreakMode = .byWordWrapping
 		titleLabel.numberOfLines = 0
-		titleLabel.accessibilityIdentifier = "empty view title"
 		self.contentView.addSubview(titleLabel)
 		return titleLabel
 	}()
@@ -53,13 +52,13 @@ class EmptyBackgroundView: UIView {
 	/// The property managing the detail label.
 	lazy var detailLabel: KSecondaryLabel = {
 		let detailLabel = KSecondaryLabel()
+		detailLabel.accessibilityIdentifier = "empty view detail"
 		detailLabel.translatesAutoresizingMaskIntoConstraints = false
 		detailLabel.backgroundColor = UIColor.clear
 		detailLabel.font = .preferredFont(forTextStyle: .subheadline)
 		detailLabel.textAlignment = .center
 		detailLabel.lineBreakMode = .byWordWrapping
 		detailLabel.numberOfLines = 0
-		detailLabel.accessibilityIdentifier = "empty view detail"
 		self.contentView.addSubview(detailLabel)
 		return detailLabel
 	}()
@@ -67,11 +66,13 @@ class EmptyBackgroundView: UIView {
 	/// The property managing the button.
 	lazy var button: KButton = {
 		let button = KButton()
+		button.accessibilityIdentifier = "empty view button"
 		button.translatesAutoresizingMaskIntoConstraints = false
-		button.backgroundColor = UIColor.clear
 		button.contentHorizontalAlignment = .center
 		button.contentVerticalAlignment = .center
-		button.accessibilityIdentifier = "empty view button"
+		button.isHidden = true
+		button.backgroundColor = UIColor.clear
+		button.highlightBackgroundColorEnabled = true
 		self.contentView.addSubview(button)
 		return button
 	}()
@@ -154,16 +155,6 @@ class EmptyBackgroundView: UIView {
 	}
 
 	// MARK: - Functions
-	override public func didMoveToSuperview() {
-		if let superviewBounds = self.superview?.bounds {
-			self.frame = CGRect(x: 0, y: 0, width: superviewBounds.width, height: superviewBounds.height)
-		}
-
-		UIView.animate(withDuration: 0.25) {
-			self.contentView.alpha = 1
-		}
-	}
-
 	/// Configures the initial view of the empty background view.
 	fileprivate func configureInitialView() {
 		self.addSubview(self.contentView)

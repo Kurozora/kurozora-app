@@ -69,7 +69,7 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 		}
 	}
 
-	//MARK: - IBActions
+	// MARK: - IBActions
 	override func rightNavigationBarButtonPressed(sender: AnyObject) {
 		super.rightNavigationBarButtonPressed(sender: sender)
 
@@ -141,7 +141,7 @@ extension SignUpTableViewController {
 	}
 }
 
-//MARK: - UIImagePickerControllerDelegate
+// MARK: - UIImagePickerControllerDelegate
 extension SignUpTableViewController: UIImagePickerControllerDelegate {
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
 		if let editedImage = info[.editedImage] as? UIImage {
