@@ -19,21 +19,20 @@ extension UIApplication {
 		- Parameter completionHandler: The block to execute with the results. Provide a value for this parameter if you want to be informed of the success or failure of opening the URL. This block is executed asynchronously on your app's main thread. The block has no return value and takes the following parameter:
 		- Parameter success: A Boolean indicating whether the URL was opened successfully.
 	*/
-	func kOpen(_ url: URL?, _ deepLink: URL? = nil, options: [UIApplication.OpenExternalURLOptionsKey: Any] = [:], completionHandler completion: ((_ success: Bool) -> Void)? = nil) {
-		guard var url = url else { return }
-
+	func kOpen(_ url: URL?, deepLink: URL? = nil, options: [UIApplication.OpenExternalURLOptionsKey: Any] = [:], completionHandler completion: ((_ success: Bool) -> Void)? = nil) {
 		#if !targetEnvironment(macCatalyst)
-		if let deepLink = URL(string: deepLink?.scheme?.appending("://") ?? ""), UIApplication.shared.canOpenURL(deepLink) {
+		if let deepLink = deepLink, UIApplication.shared.canOpenURL(deepLink) {
 			UIApplication.shared.open(deepLink, options: options, completionHandler: completion)
 		}
 		#endif
 
-		if KBrowser(rawValue: UserSettings.defaultBrowser) == .kurozora {
-			let sfSafariViewController = SFSafariViewController(url: url)
-			UIApplication.topViewController?.present(sfSafariViewController, animated: true, completion: nil)
-		} else {
-			url = url.withPreferredScheme()
-			UIApplication.shared.open(url, options: options, completionHandler: completion)
+		if let url = url {
+			if KBrowser(rawValue: UserSettings.defaultBrowser) == .kurozora {
+				let sfSafariViewController = SFSafariViewController(url: url)
+				UIApplication.topViewController?.present(sfSafariViewController, animated: true, completion: nil)
+			} else {
+				UIApplication.shared.open(url.withPreferredScheme(), options: options, completionHandler: completion)
+			}
 		}
 	}
 
