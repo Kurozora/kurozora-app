@@ -24,7 +24,5 @@ class MediumLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		primaryLabel?.text = genre.attributes.name
 		backgroundColorView?.backgroundColor = UIColor(hexString: genre.attributes.color)
 		bannerImageView?.image = genre.attributes.symbolImage
-
-		shadowView?.applyShadow()
 	}
 }

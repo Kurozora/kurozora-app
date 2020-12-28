@@ -13,7 +13,6 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var primaryLabel: UILabel?
 	@IBOutlet weak var secondaryLabel: UILabel?
-	@IBOutlet weak var shadowView: UIView?
 	@IBOutlet weak var bannerImageView: UIImageView?
 	@IBOutlet weak var posterImageView: UIImageView?
 	@IBOutlet weak var libraryStatusButton: KTintedButton?
@@ -68,15 +67,13 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 			self.libraryStatus = libraryStatus
 		}
 		self.libraryStatusButton?.setTitle(self.libraryStatus != .none ? "\(self.libraryStatus.stringValue.capitalized) ▾" : "ADD", for: .normal)
-
-		// Add shadow
-		shadowView?.applyShadow()
 	}
 
 	// MARK: - IBActions
 	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
 		WorkflowController.shared.isSignedIn {
-			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: self.libraryStatus, action: { [weak self] (title, value)  in
+			let oldLibraryStatus = self.libraryStatus
+			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: oldLibraryStatus, action: { [weak self] (title, value)  in
 				guard let self = self else { return }
 				KService.addToLibrary(withLibraryStatus: value, showID: self.show.id) { [weak self] result in
 					guard let self = self else { return }
@@ -84,11 +81,10 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 					case .success:
 						// Update entry in library
 						self.libraryStatus = value
-
-						let libraryUpdateNotificationName = Notification.Name("Update\(value.sectionValue)Section")
-						NotificationCenter.default.post(name: libraryUpdateNotificationName, object: nil)
-
 						self.libraryStatusButton?.setTitle("\(title) ▾", for: .normal)
+
+						let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
+						NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
 					case .failure:
 						break
 					}
@@ -105,6 +101,9 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 							self.show.attributes.update(using: libraryUpdate)
 							self.libraryStatus = .none
 							self.libraryStatusButton?.setTitle("ADD", for: .normal)
+
+							let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
+							NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
 						case .failure:
 							break
 						}

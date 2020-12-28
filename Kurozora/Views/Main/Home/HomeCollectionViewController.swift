@@ -23,17 +23,16 @@ class HomeCollectionViewController: KCollectionViewController {
 	var snapshot: NSDiffableDataSourceSnapshot<Int, Int>! = nil
 	var exploreCategories: [ExploreCategory] = [] {
 		didSet {
-			configureDataSource()
-			_prefersActivityIndicatorHidden = true
-			#if !targetEnvironment(macCatalyst)
+			self.updateDataSource()
+			self._prefersActivityIndicatorHidden = true
 			#if DEBUG
+			#if !targetEnvironment(macCatalyst)
 			self.refreshControl?.endRefreshing()
 			#endif
 			#endif
 		}
 	}
 
-	#if DEBUG
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
 		didSet {
@@ -41,9 +40,8 @@ class HomeCollectionViewController: KCollectionViewController {
 		}
 	}
 	override var prefersRefreshControlDisabled: Bool {
-		return _prefersRefreshControlDisabled
+		return self._prefersRefreshControlDisabled
 	}
-	#endif
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -52,16 +50,16 @@ class HomeCollectionViewController: KCollectionViewController {
 		}
 	}
 	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
+		return self._prefersActivityIndicatorHidden
 	}
 
 	// MARK: - View
 	override func viewWillReload() {
 		super.viewWillReload()
 
-		if exploreCategories.count != 0 {
-			fetchExplore()
-		}
+//		if exploreCategories.count != 0 {
+			self.handleRefreshControl()
+//		}
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -71,36 +69,37 @@ class HomeCollectionViewController: KCollectionViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		// Setup search bar.
+		self.setupSearchBar()
+
+		// Add Refresh Control to Collection View
+		#if DEBUG
+		self._prefersRefreshControlDisabled = false
+		#else
+		self._prefersRefreshControlDisabled = true
+		#endif
+
+		self.configureDataSource()
 
 		// Fetch explore details.
 		DispatchQueue.global(qos: .background).async {
 			self.fetchExplore()
 		}
-
-		// Setup search bar.
-		setupSearchBar()
-
-		// Add Refresh Control to Collection View
-		#if DEBUG
-		_prefersRefreshControlDisabled = false
-		#else
-		_prefersRefreshControlDisabled = true
-		#endif
 	}
 
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 
 		// Show what's new in the app if necessary.
-		showWhatsNew()
+		self.showWhatsNew()
 	}
 
 	// MARK: - Functions
-	#if DEBUG
 	override func handleRefreshControl() {
-		self.fetchExplore()
+		DispatchQueue.global(qos: .background).async {
+			self.fetchExplore()
+		}
 	}
-	#endif
 
 	/// Shows what's new in the app if necessary.
 	fileprivate func showWhatsNew() {
@@ -108,60 +107,6 @@ class HomeCollectionViewController: KCollectionViewController {
 			let whatsNew = KWhatsNewViewController(titleText: "What's New", buttonText: "Continue", items: KWhatsNewModel.current)
 			self.present(whatsNew, animated: true)
 		}
-	}
-
-	/**
-		Returns a grid described by compositional layout.
-
-		- Parameter section: The section for which the layout is being described.
-		- Parameter layoutEnvironment: The layout environment in which the layout is being described.
-
-		- Returns: a grid described by compositional layout.
-	*/
-	func gridSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-											  heightDimension: .fractionalHeight(1.0))
-		let item = NSCollectionLayoutItem(layoutSize: itemSize)
-		item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
-
-		let heightFraction = self.groupHeightFraction(forSection: section, with: columns, layout: layoutEnvironment)
-		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.90),
-											   heightDimension: .fractionalWidth(heightFraction))
-		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
-													   subitem: item, count: columns)
-		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-		#if targetEnvironment(macCatalyst)
-		layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
-		#else
-		layoutSection.orthogonalScrollingBehavior = .groupPaging
-		#endif
-		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
-		return layoutSection
-	}
-
-	/**
-		Returns a list described by compositional layout.
-
-		- Parameter section: The section for which the layout is being described.
-		- Parameter layoutEnvironment: The layout environment in which the layout is being described.
-
-		- Returns: a list described by compositional layout.
-	*/
-	func listSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-											  heightDimension: .fractionalHeight(1.0))
-		let item = NSCollectionLayoutItem(layoutSize: itemSize)
-		item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
-
-		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-											   heightDimension: .absolute(55))
-		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
-															 subitem: item, count: columns)
-		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
-		return layoutSection
 	}
 
 	/// Sets up the search bar and starts the placeholder timer.
@@ -283,8 +228,7 @@ extension HomeCollectionViewController {
 			}
 			return legalExploreCollectionViewCell
 		default:
-			guard let actionBaseExploreCollectionViewCell = collectionView.dequeueReusableCell(
-				withReuseIdentifier: verticalCollectionCellStyle.identifierString, for: indexPath) as? ActionBaseExploreCollectionViewCell else {
+			guard let actionBaseExploreCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: verticalCollectionCellStyle.identifierString, for: indexPath) as? ActionBaseExploreCollectionViewCell else {
 					fatalError("Cannot dequeue reusable cell with identifier \(verticalCollectionCellStyle.identifierString)")
 			}
 			return actionBaseExploreCollectionViewCell
@@ -295,11 +239,12 @@ extension HomeCollectionViewController {
 // MARK: - KCollectionViewDataSource
 extension HomeCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
-		return [SmallLockupCollectionViewCell.self,
-				MediumLockupCollectionViewCell.self,
-				LargeLockupCollectionViewCell.self,
-				VideoLockupCollectionViewCell.self,
-				LegalCollectionViewCell.self
+		return [
+			SmallLockupCollectionViewCell.self,
+			MediumLockupCollectionViewCell.self,
+			LargeLockupCollectionViewCell.self,
+			VideoLockupCollectionViewCell.self,
+			LegalCollectionViewCell.self
 		]
 	}
 
@@ -367,10 +312,10 @@ extension HomeCollectionViewController {
 			// Return the view.
 			return exploreSectionTitleCell
 		}
+	}
 
-		let numberOfSections: Int = {
-			return exploreCategories.count + 2
-		}()
+	override func updateDataSource() {
+		let numberOfSections: Int = exploreCategories.count + 2
 
 		// Initialize data
 		self.snapshot = NSDiffableDataSourceSnapshot<Int, Int>()
@@ -471,25 +416,6 @@ extension HomeCollectionViewController {
 		return columnCount > 0 ? columnCount : 1
 	}
 
-	override func groupHeightFraction(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> CGFloat {
-		let exploreCategorySize = section != 0 ? self.exploreCategories[section].attributes.exploreCategorySize : .banner
-		switch exploreCategorySize {
-		case .banner:
-			return (0.55 / columnsCount.double).cgFloat
-		case .large:
-			return (0.55 / columnsCount.double).cgFloat
-		case .medium:
-			return (0.60 / columnsCount.double).cgFloat
-		case .small:
-			return (0.55 / columnsCount.double).cgFloat
-		case .video:
-			if columnsCount <= 1 {
-				return (0.75 / columnsCount.double).cgFloat
-			}
-			return (0.92 / columnsCount.double).cgFloat
-		}
-	}
-
 	override func contentInset(forItemInSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
 		return NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10)
 	}
@@ -500,7 +426,7 @@ extension HomeCollectionViewController {
 
 		switch section {
 		case let section where section < exploreCategoriesCount:
-			return NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0)
+			return NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 40, trailing: 10)
 		default:
 			var verticalCollectionCellStyle: VerticalCollectionCellStyle = .actionList
 			switch section {
@@ -529,9 +455,11 @@ extension HomeCollectionViewController {
 					return NSDirectionalEdgeInsets(top: 0, leading: leadingInset, bottom: 20, trailing: trailingInset)
 				}
 
+				return NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 40, trailing: 10)
+			case .legal:
 				return NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 20, trailing: 10)
 			default:
-				return NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 20, trailing: 10)
+				return NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 40, trailing: 10)
 			}
 		}
 	}
@@ -541,34 +469,39 @@ extension HomeCollectionViewController {
 			let exploreCategoriesCount = self.exploreCategories.count
 			switch section {
 			case let section where section < exploreCategoriesCount:
-				// Configure section.
-				let gridSection = self.gridSection(for: section, layoutEnvironment: layoutEnvironment)
+				let exploreCategorySize = self.exploreCategories[section].attributes.exploreCategorySize
+				var sectionLayout: NSCollectionLayoutSection? = nil
 
-				// If it's the first section (featured shows) then return without adding a header view.
-				guard section != 0 else {
+				switch exploreCategorySize {
+				case .banner:
+					let gridSection = self.gridSection(for: section, layoutEnvironment: layoutEnvironment)
 					return gridSection
+				case .large:
+					sectionLayout = self.gridSection(for: section, layoutEnvironment: layoutEnvironment)
+				case .medium:
+					sectionLayout = self.gridSection(for: section, layoutEnvironment: layoutEnvironment)
+				case .small:
+					sectionLayout = self.smallSectionLayout(section, layoutEnvironment: layoutEnvironment)
+				case .video:
+					sectionLayout = self.gridSection(for: section, layoutEnvironment: layoutEnvironment)
 				}
 
 				// Add header supplementary view.
-				let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-															  heightDimension: .estimated(52))
+				let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50))
 				let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
 					layoutSize: headerFooterSize,
 					elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
-				gridSection.boundarySupplementaryItems = [sectionHeader]
+				sectionLayout?.boundarySupplementaryItems = [sectionHeader]
 
-				return gridSection
+				return sectionLayout
 			default:
 				let listSection = self.listSection(for: section, layoutEnvironment: layoutEnvironment)
 
 				// Lists are 3 sections. This makes sure that only the top most section gets a header view (Quick Links).
-				guard section == exploreCategoriesCount else {
-					return listSection
-				}
+				guard section == exploreCategoriesCount else { return listSection }
 
 				// Add header supplementary view.
-				let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-															  heightDimension: .estimated(52))
+				let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50))
 				let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
 					layoutSize: headerFooterSize,
 					elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
@@ -576,5 +509,60 @@ extension HomeCollectionViewController {
 				return listSection
 			}
 		}
+	}
+
+	func gridSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
+		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.90), heightDimension: .estimated(200.0))
+		let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.90), heightDimension: .estimated(200.0))
+		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+		layoutGroup.interItemSpacing = .fixed(10.0)
+
+		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+		layoutSection.interGroupSpacing = 10.0
+		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
+		#if targetEnvironment(macCatalyst)
+		layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+		#else
+		layoutSection.orthogonalScrollingBehavior = .groupPaging
+		#endif
+		return layoutSection
+	}
+
+	func smallSectionLayout(_ section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
+		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.90), heightDimension: .fractionalHeight(1.0))
+		let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.90), heightDimension: .estimated(150.0))
+		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+		layoutGroup.interItemSpacing = .fixed(10.0)
+
+		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+		layoutSection.interGroupSpacing = 10.0
+		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
+		#if targetEnvironment(macCatalyst)
+		layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+		#else
+		layoutSection.orthogonalScrollingBehavior = .groupPaging
+		#endif
+		return layoutSection
+	}
+
+	func listSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
+		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+		let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(55))
+		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+		layoutGroup.interItemSpacing = .fixed(10)
+
+		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+		layoutSection.interGroupSpacing = 10.0
+		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
+		return layoutSection
 	}
 }
