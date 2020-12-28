@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17140" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Gl9-hb-xRY">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Gl9-hb-xRY">
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17115"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -15,11 +15,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" sectionInsetReference="layoutMargins" id="eHf-4p-nQn">
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" sectionInsetReference="layoutMargins" id="eHf-4p-nQn">
                             <size key="itemSize" width="374" height="148"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells/>
                         <connections>
@@ -30,11 +30,22 @@
                     <navigationItem key="navigationItem" title="Cast" leftItemsSupplementBackButton="YES" id="nT6-bc-Roz"/>
                     <connections>
                         <segue destination="Kw9-GS-BBA" kind="show" identifier="CharacterDetailsSegue" id="O67-1f-vWq"/>
+                        <segue destination="EII-z8-Zmy" kind="show" identifier="ActorDetailsSegue" id="PoR-a8-UaV"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LA0-G4-hxj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1557.9710144927537" y="-1014.5089285714286"/>
+        </scene>
+        <!--ActorDetailsCollectionViewController-->
+        <scene sceneID="P9h-b6-9Xu">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Actors" referencedIdentifier="ActorDetailsCollectionViewController" id="EII-z8-Zmy" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="wuW-ee-9FK"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nsO-Do-jg0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2264" y="-1045"/>
         </scene>
         <!--CharacterDetailsCollectionViewController-->
         <scene sceneID="E3l-OZ-OY4">
@@ -44,7 +55,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AyP-V1-DCH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2222" y="-1015"/>
+            <point key="canvasLocation" x="2285" y="-984"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="SFO-ZR-N4p">
@@ -70,7 +81,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H8D-GO-CT7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="819" y="-1015"/>
+            <point key="canvasLocation" x="739" y="-1015"/>
         </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

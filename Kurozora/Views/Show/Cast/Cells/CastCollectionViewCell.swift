@@ -9,19 +9,24 @@
 import UIKit
 import KurozoraKit
 
+protocol CastCollectionViewCellDelegate: class {
+	func actorButtonPressed(_ cell: CastCollectionViewCell)
+	func characterButtonPressed(_ cell: CastCollectionViewCell)
+}
+
 class CastCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
+	@IBOutlet weak var actorImageView: UIImageView!
+	@IBOutlet weak var actorNameLabel: KCopyableTintedLabel!
+	@IBOutlet weak var actorButton: UIButton!
+
 	@IBOutlet weak var characterImageView: UIImageView!
-	@IBOutlet weak var characterShadowView: UIView!
 	@IBOutlet weak var characterNameLabel: KCopyableLabel!
 	@IBOutlet weak var characterRoleLabel: KSecondaryLabel!
-
-	@IBOutlet weak var actorImageView: UIImageView!
-	@IBOutlet weak var actorShadowView: UIView!
-	@IBOutlet weak var actorNameLabel: KCopyableTintedLabel!
-	@IBOutlet weak var separatorView: SeparatorView!
+	@IBOutlet weak var characterButton: UIButton!
 
 	// MARK: - Properties
+	weak var delegate: CastCollectionViewCellDelegate?
 	var cast: Cast! {
 		didSet {
 			configureCell()
@@ -34,7 +39,6 @@ class CastCollectionViewCell: UICollectionViewCell {
 		// Configure actor
 		self.actorNameLabel.text = cast.relationships.actors.data.first?.attributes.fullName ?? "Unknown"
 		self.actorImageView.image = self.cast.relationships.actors.data.first?.attributes.personalImage
-		self.actorShadowView.applyShadow()
 
 		// Configure character
 		if let characterName = cast.relationships.characters.data.first?.attributes.name {
@@ -42,6 +46,14 @@ class CastCollectionViewCell: UICollectionViewCell {
 		}
 		self.characterRoleLabel.text = cast.attributes.role
 		self.characterImageView.image = self.cast.relationships.characters.data.first?.attributes.personalImage
-		self.characterShadowView.applyShadow()
+	}
+
+	// MARK: - IBActions
+	@IBAction func actorButtonPressed(_ sender: UIButton) {
+		self.delegate?.actorButtonPressed(self)
+	}
+
+	@IBAction func characterButtonPressed(_ sender: UIButton) {
+		self.delegate?.characterButtonPressed(self)
 	}
 }

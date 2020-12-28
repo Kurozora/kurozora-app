@@ -14,11 +14,27 @@ class CastCollectionViewController: KCollectionViewController {
 	var showID: Int = 0
 	var cast: [Cast] = [] {
 		didSet {
-			_prefersActivityIndicatorHidden = true
-			self.configureDataSource()
+			self.updateDataSource()
+			self._prefersActivityIndicatorHidden = true
+			self.toggleEmptyDataView()
+			#if DEBUG
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.endRefreshing()
+			#endif
+			#endif
 		}
 	}
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>! = nil
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Cast>! = nil
+
+	// Refresh control
+	var _prefersRefreshControlDisabled = false {
+		didSet {
+			self.setNeedsRefreshControlAppearanceUpdate()
+		}
+	}
+	override var prefersRefreshControlDisabled: Bool {
+		return self._prefersRefreshControlDisabled
+	}
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -31,8 +47,22 @@ class CastCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - View
+	override func viewWillReload() {
+		super.viewWillReload()
+
+		self.handleRefreshControl()
+	}
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+		#if DEBUG
+		self._prefersRefreshControlDisabled = false
+		#else
+		self._prefersRefreshControlDisabled = true
+		#endif
+
+		self.configureDataSource()
 
 		// Fetch cast
 		DispatchQueue.global(qos: .background).async {
@@ -41,14 +71,25 @@ class CastCollectionViewController: KCollectionViewController {
     }
 
 	// MARK: - Functions
+	override func handleRefreshControl() {
+		DispatchQueue.global(qos: .background).async {
+			self.fetchCast()
+		}
+	}
+
 	override func configureEmptyDataView() {
-		collectionView.emptyDataSetView { view in
-			view.titleLabelString(NSAttributedString(string: "No cast", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
-				.detailLabelString(NSAttributedString(string: "Can't get cast list. Please reload the page or restart the app and check your WiFi connection.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-				.image(R.image.empty.actor())
-				.verticalOffset(-50)
-				.verticalSpace(5)
-				.isScrollAllowed(true)
+		emptyBackgroundView.configureImageView(image: R.image.empty.cast()!)
+		emptyBackgroundView.configureLabels(title: "No Cast", detail: "This show doesn't have casts yet. Please check back again later.")
+
+		collectionView.backgroundView?.alpha = 0
+	}
+
+	/// Fades in and out the empty data view according to the number of rows.
+	func toggleEmptyDataView() {
+		if self.collectionView.numberOfItems() == 0 {
+			self.collectionView.backgroundView?.animateFadeIn()
+		} else {
+			self.collectionView.backgroundView?.animateFadeOut()
 		}
 	}
 
@@ -58,7 +99,7 @@ class CastCollectionViewController: KCollectionViewController {
 			guard let self = self else { return }
 			switch result {
 			case .success(let cast):
-				self.self.cast = cast
+				self.cast = cast
 			case .failure: break
 			}
 		}
@@ -68,8 +109,14 @@ class CastCollectionViewController: KCollectionViewController {
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == R.segue.castCollectionViewController.characterDetailsSegue.identifier {
 			if let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController {
-				if let characterID = sender as? Int {
-					characterDetailsCollectionViewController.characterID = characterID
+				if let castCollectionViewCell = sender as? CastCollectionViewCell, let character = castCollectionViewCell.cast.relationships.characters.data.first {
+					characterDetailsCollectionViewController.characterID = character.id
+				}
+			}
+		} else if segue.identifier == R.segue.castCollectionViewController.actorDetailsSegue.identifier {
+			if let actorDetailsCollectionViewController = segue.destination as? ActorDetailsCollectionViewController {
+				if let castCollectionViewCell = sender as? CastCollectionViewCell, let actor = castCollectionViewCell.cast.relationships.actors.data.first {
+					actorDetailsCollectionViewController.actorID = actor.id
 				}
 			}
 		}
@@ -78,10 +125,28 @@ class CastCollectionViewController: KCollectionViewController {
 
 // MARK: - UICollectionViewDelegate
 extension CastCollectionViewController {
-	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		if let castCollectionViewCell = collectionView.cellForItem(at: indexPath) as? CastCollectionViewCell {
-			performSegue(withIdentifier: R.segue.castCollectionViewController.characterDetailsSegue, sender: castCollectionViewCell.cast.relationships.characters.data.first?.id)
-		}
+	override func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+		let cell = collectionView.cellForItem(at: indexPath)
+		UIView.animate(withDuration: 0.5,
+					   delay: 0.0,
+					   usingSpringWithDamping: 0.8,
+					   initialSpringVelocity: 0.2,
+					   options: [.beginFromCurrentState, .allowUserInteraction],
+					   animations: {
+						cell?.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+					   }, completion: nil)
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+		let cell = collectionView.cellForItem(at: indexPath)
+		UIView.animate(withDuration: 0.5,
+					   delay: 0.0,
+					   usingSpringWithDamping: 0.4,
+					   initialSpringVelocity: 0.2,
+					   options: [.beginFromCurrentState, .allowUserInteraction],
+					   animations: {
+						cell?.transform = CGAffineTransform.identity
+					   }, completion: nil)
 	}
 }
 
@@ -92,31 +157,32 @@ extension CastCollectionViewController {
 	}
 
 	override func configureDataSource() {
-		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, identifier: Int) -> UICollectionViewCell? in
-			if let castCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.castCollectionViewCell, for: indexPath) {
-				castCollectionViewCell.cast = self.cast[indexPath.row]
-
-				if collectionView.indexPathForLastItem == indexPath {
-					castCollectionViewCell.separatorView.isHidden = true
-				} else {
-					castCollectionViewCell.separatorView.isHidden = false
-				}
-				return castCollectionViewCell
-			} else {
+		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Cast>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: Cast) -> UICollectionViewCell? in
+			guard let castCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.castCollectionViewCell, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.castCollectionViewCell.identifier)")
 			}
+			castCollectionViewCell.delegate = self
+			castCollectionViewCell.cast = item
+			return castCollectionViewCell
 		}
+	}
 
-		let itemsPerSection = self.cast.count
-		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
-		SectionLayoutKind.allCases.forEach {
-			snapshot.appendSections([$0])
-			let itemOffset = $0.rawValue * itemsPerSection
-			let itemUpperbound = itemOffset + itemsPerSection
-			snapshot.appendItems(Array(itemOffset..<itemUpperbound))
-		}
+	override func updateDataSource() {
+		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Cast>()
+		snapshot.appendSections([.main])
+		snapshot.appendItems(self.cast)
 		dataSource.apply(snapshot)
-		collectionView.reloadEmptyDataSet()
+	}
+}
+
+// MARK: - CastCollectionViewCellDelegate
+extension CastCollectionViewController: CastCollectionViewCellDelegate {
+	func actorButtonPressed(_ cell: CastCollectionViewCell) {
+		self.performSegue(withIdentifier: R.segue.castCollectionViewController.actorDetailsSegue.identifier, sender: cell)
+	}
+
+	func characterButtonPressed(_ cell: CastCollectionViewCell) {
+		self.performSegue(withIdentifier: R.segue.castCollectionViewController.characterDetailsSegue.identifier, sender: cell)
 	}
 }
 
@@ -131,32 +197,22 @@ extension CastCollectionViewController {
 		return columnCount > 0 ? columnCount : 1
 	}
 
-	override func groupHeightFraction(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> CGFloat {
-		return (0.52 / columnsCount.double).cgFloat
-	}
-
-	override func contentInset(forItemInSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-	}
-
 	override func contentInset(forSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 20, trailing: 10)
 	}
 
 	override func createLayout() -> UICollectionViewLayout {
 		let layout = UICollectionViewCompositionalLayout { (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-												  heightDimension: .fractionalHeight(1.0))
+			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
 			let item = NSCollectionLayoutItem(layoutSize: itemSize)
-			item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
 
-			let heightFraction = self.groupHeightFraction(forSection: section, with: columns, layout: layoutEnvironment)
-			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-												   heightDimension: .fractionalWidth(heightFraction))
+			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(150.0))
 			let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+			layoutGroup.interItemSpacing = .fixed(10.0)
 
 			let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+			layoutSection.interGroupSpacing = 10.0
 			layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
 			return layoutSection
 		}
