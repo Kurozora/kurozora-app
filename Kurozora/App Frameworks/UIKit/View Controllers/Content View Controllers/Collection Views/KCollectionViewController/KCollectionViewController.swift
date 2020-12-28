@@ -33,10 +33,14 @@ import UIKit
 class KCollectionViewController: UICollectionViewController {
 	// MARK: - Properties
 	/// The activity indicator view object of the view controller.
-	private let activityIndicatorView: KActivityIndicatorView = KActivityIndicatorView()
+	private lazy var activityIndicatorView: KActivityIndicatorView = {
+		return KActivityIndicatorView()
+	}()
 
 	/// The object controlling the empty background view.
-	let emptyBackgroundView: EmptyBackgroundView = EmptyBackgroundView()
+	lazy var emptyBackgroundView: EmptyBackgroundView = {
+		return EmptyBackgroundView()
+	}()
 
 	/**
 		Specifies whether the view controller prefers the activity indicator to be hidden or shown.
@@ -90,12 +94,13 @@ class KCollectionViewController: UICollectionViewController {
 	private let refreshCommand = UIKeyCommand(title: "Refresh Page", action: #selector(handleRefreshControl), input: "R", modifierFlags: .command, discoverabilityTitle: "Refresh Page")
 	#endif
 
-	// MARK: - Initializers
-	deinit {
-		NotificationCenter.default.removeObserver(self)
+	// MARK: - View
+	override func viewWillReload() {
+		super.viewWillReload()
+
+		self.configureEmptyDataView()
 	}
 
-	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
@@ -234,25 +239,6 @@ extension KCollectionViewController {
 		Use this method to show a beautiful and informative view when the collection view is empty.
 	*/
 	@objc func configureEmptyDataView() { }
-
-	/**
-		Reload empty data with a completion handler.
-
-		- Parameter completion: Completion handler to run after reloadEmptyDataView finishes.
-	*/
-	func reloadEmptyDataView(completion: (() -> Void)? = nil) {
-		self.configureEmptyDataView()
-		completion?()
-	}
-
-	/**
-		Reload empty data when receiving a notification.
-
-		- Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
-	*/
-	@objc private func reloadEmptyDataView(_ notification: NSNotification) {
-		self.reloadEmptyDataView()
-	}
 }
 
 // MARK: - UINavigationControllerDelegate

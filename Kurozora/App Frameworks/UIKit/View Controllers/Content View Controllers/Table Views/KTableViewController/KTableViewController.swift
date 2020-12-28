@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import EmptyDataSet_Swift
 
 /**
 	A supercharged view controller that specializes in managing a collection view.
@@ -34,10 +33,14 @@ import EmptyDataSet_Swift
 class KTableViewController: UITableViewController {
 	// MARK: - Properties
 	/// The activity indicator view object of the view controller.
-	private let activityIndicatorView: KActivityIndicatorView = KActivityIndicatorView()
+	private lazy var activityIndicatorView: KActivityIndicatorView = {
+		return KActivityIndicatorView()
+	}()
 
 	/// The object controlling the empty background view.
-	let emptyBackgroundView: EmptyBackgroundView = EmptyBackgroundView()
+	lazy var emptyBackgroundView: EmptyBackgroundView = {
+		return EmptyBackgroundView()
+	}()
 
 	/**
 		Specifies whether the view controller prefers the activity indicator to be hidden or shown.
@@ -80,7 +83,7 @@ class KTableViewController: UITableViewController {
 	override func viewWillReload() {
 		super.viewWillReload()
 
-		self.reloadEmptyDataView()
+		self.configureEmptyDataView()
 	}
 
 	override func viewDidLoad() {
@@ -208,16 +211,6 @@ extension KTableViewController {
 		Use this method to show a beautiful and informative view when the table view is empty.
 	*/
 	@objc func configureEmptyDataView() { }
-
-	/**
-		Reload empty data with a completion handler.
-
-		- Parameter completion: Completion handler to run after reloadEmptyDataView finishes.
-	*/
-	func reloadEmptyDataView(completion: (() -> Void)? = nil) {
-		self.configureEmptyDataView()
-		completion?()
-	}
 }
 
 // MARK: - UINavigationControllerDelegate

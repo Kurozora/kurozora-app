@@ -66,12 +66,14 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 	weak var tabBarDataSource: KTabbedViewControllerDataSource?
 
 	// MARK: - Initializers
+	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+		self.sharedInit()
+	}
+
 	required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
-		self.tabBarDataSource = self
-
-		// Fetch sections.
-		self.tabBarDataSource?.fetchSections?()
+		self.sharedInit()
 	}
 
 	// MARK: - View
@@ -108,6 +110,16 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 	}
 
 	// MARK: - Functions
+	/// The shared settings used to initialize tabbed view controller.
+	fileprivate func sharedInit() {
+		self.tabBarDataSource = self
+
+		// Fetch sections.
+		DispatchQueue.global(qos: .background).async {
+			self.tabBarDataSource?.fetchSections?()
+		}
+	}
+
 	/// Configures the view controllers for the tab bar data source.
 	private func configureViewControllers() {
 		self.viewControllers = self.tabBarDataSource?.initializeViewControllers(with: self.numberOfViewControllers(in: self))
@@ -249,5 +261,5 @@ extension KTabbedViewController: KTabbedViewControllerDataSource {
 
 		This method is called in `init(coder:)` when intializing the view from a storyboard.
 	*/
-	func fetchSections() {}
+	func fetchSections() { }
 }
