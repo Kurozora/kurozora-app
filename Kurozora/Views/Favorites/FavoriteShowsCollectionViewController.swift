@@ -13,14 +13,19 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var shows: [Show] = [] {
 		didSet {
-			_prefersActivityIndicatorHidden = true
+			self._prefersActivityIndicatorHidden = true
+
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.endRefreshing()
+			self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh favorites list!")
+			#endif
 		}
 	}
 	var nextPageURL: String?
 	var _user: User? = User.current
 	var user: User? {
 		get {
-			return _user
+			return self._user
 		}
 		set {
 			self._user = newValue
@@ -34,6 +39,7 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 		}
 	}
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>! = nil
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>! = nil
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -42,15 +48,15 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 		}
 	}
 	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
+		return self._prefersActivityIndicatorHidden
 	}
 
 	// MARK: - Views
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Observe NotificationCenter for an update.
-		if user?.id == User.current?.id {
-			NotificationCenter.default.addObserver(self, selector: #selector(fetchFavoritesList), name: .KFavoriteShowsListDidChange, object: nil)
+		if self.user?.id == User.current?.id {
+			NotificationCenter.default.addObserver(self, selector: #selector(self.fetchFavoritesList), name: .KFavoriteShowsListDidChange, object: nil)
 		}
 
 		self.configureDataSource()
@@ -58,6 +64,11 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 		DispatchQueue.global(qos: .background).async {
 			self.fetchFavoritesList()
 		}
+
+		// Setup refresh control
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh favorites list!")
+		#endif
 	}
 
 	// MARK: - Functions
@@ -72,21 +83,42 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 		dismiss(animated: true, completion: nil)
 	}
 
+	override func handleRefreshControl() {
+		self.fetchFavoritesList()
+	}
+
 	override func configureEmptyDataView() {
-		collectionView.emptyDataSetView { view in
-			let detailLabel = self.user?.id == User.current?.id ? "Favorited shows will show up on this page!" : "\(self.user?.attributes.username ?? "This user") hasn't favorited shows yet."
-			view.titleLabelString(NSAttributedString(string: "No Favorites", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
-				.detailLabelString(NSAttributedString(string: detailLabel, attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-				.image(R.image.empty.favorites()!)
-				.imageTintColor(KThemePicker.textColor.colorValue)
-				.verticalOffset(-50)
-				.verticalSpace(5)
-				.isScrollAllowed(true)
+		var detailString: String
+
+		if self.user?.id == User.current?.id {
+			detailString = "Favorited shows will show up on this page!"
+		} else {
+			detailString = "\(self.user?.attributes.username ?? "This user") hasn't favorited shows yet."
+		}
+
+		emptyBackgroundView.configureImageView(image: R.image.empty.favorites()!)
+		emptyBackgroundView.configureLabels(title: "No Favorites", detail: detailString)
+
+		collectionView.backgroundView?.alpha = 0
+	}
+
+	/// Fades in and out the empty data view according to the number of sections.
+	func toggleEmptyDataView() {
+		if self.snapshot.itemIdentifiers.isEmpty {
+			self.collectionView.backgroundView?.animateFadeIn()
+		} else {
+			self.collectionView.backgroundView?.animateFadeOut()
 		}
 	}
 
 	/// Fetches the user's favorite list.
 	@objc fileprivate func fetchFavoritesList() {
+		DispatchQueue.main.async {
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing favorites list...")
+			#endif
+		}
+
 		guard let userID = self.user?.id else { return }
 		KService.getFavoriteShows(forUserID: userID, next: self.nextPageURL) { [weak self] result in
 			guard let self = self else { return }
@@ -140,37 +172,25 @@ extension FavoriteShowsCollectionViewController {
 	}
 
 	override func configureDataSource() {
-		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, _) -> UICollectionViewCell? in
+		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, _) -> UICollectionViewCell? in
 			guard let self = self else { return nil }
 			let smallLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: SmallLockupCollectionViewCell.self, for: indexPath)
 			smallLockupCollectionViewCell.show = self.shows[indexPath.item]
 			return smallLockupCollectionViewCell
 		}
-
-		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
-		SectionLayoutKind.allCases.forEach {
-			let itemsPerSection = shows.count
-
-			snapshot.appendSections([$0])
-			snapshot.appendItems(Array(0..<itemsPerSection), toSection: $0)
-		}
-		dataSource.apply(snapshot)
-		collectionView.reloadEmptyDataSet()
 	}
 
 	override func updateDataSource() {
-		// Grab the current state of the UI from the data source.
-		var updatedSnapshot = dataSource.snapshot()
-
-		// Delete and append items for each section.
-		updatedSnapshot.deleteAllItems()
-		updatedSnapshot.sectionIdentifiers.forEach {
+		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
+		SectionLayoutKind.allCases.forEach {
 			let itemsPerSection = shows.count
-			updatedSnapshot.appendItems(Array(0..<itemsPerSection), toSection: $0)
+			snapshot.appendSections([$0])
+			snapshot.appendItems(Array(0..<itemsPerSection))
 		}
-
-		self.dataSource.apply(updatedSnapshot)
-		collectionView.reloadEmptyDataSet()
+		self.snapshot = snapshot
+		self.dataSource.apply(snapshot) {
+			self.toggleEmptyDataView()
+		}
 	}
 }
 

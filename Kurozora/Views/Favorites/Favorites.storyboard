@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="8NB-r7-Zt3">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--ShowDetailsCollectionViewController-->
+        <scene sceneID="dPH-LJ-lE2">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Shows" referencedIdentifier="ShowDetailsCollectionViewController" id="l9G-KJ-lhF" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="gTN-aB-EaX"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jIN-wM-Zqa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1070" y="202"/>
+        </scene>
+        <!--My Favorites-->
+        <scene sceneID="ws2-75-oPq">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UB3-8V-Y1T" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <collectionViewController storyboardIdentifier="FavoriteShowsCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="WBh-vK-AHK" customClass="FavoriteShowsCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" id="8m3-l4-zdR">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="bPk-HZ-ZQo">
+                            <size key="itemSize" width="407" height="65"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="LibraryStatisticsCollectionViewCell" id="7if-kZ-7A0" customClass="LibraryStatisticsCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="3.5" y="0.0" width="407" height="63"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="XsG-ep-iu1">
+                                    <rect key="frame" x="0.0" y="0.0" width="407" height="63"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Shows" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1JD-mx-aw3" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                            <rect key="frame" x="8" y="0.0" width="153" height="33.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="33.666666666666664" id="Yax-mk-byc"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="28"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="69 TV · 20 Movie · 12 OVA/ONA/Specials" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FfP-ef-8VD" userLabel="Subtitle Label" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                                            <rect key="frame" x="8" y="41.5" width="307.5" height="21.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="FfP-ef-8VD" secondAttribute="trailing" id="P84-vZ-3Hi"/>
+                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="1JD-mx-aw3" secondAttribute="trailing" id="b7k-Lg-8TI"/>
+                                        <constraint firstItem="1JD-mx-aw3" firstAttribute="leading" secondItem="XsG-ep-iu1" secondAttribute="leadingMargin" id="cDZ-Z7-bN6"/>
+                                        <constraint firstItem="1JD-mx-aw3" firstAttribute="top" secondItem="XsG-ep-iu1" secondAttribute="top" id="gGP-Hd-CfG"/>
+                                        <constraint firstAttribute="bottom" secondItem="FfP-ef-8VD" secondAttribute="bottom" id="jcD-vC-K7Z"/>
+                                        <constraint firstItem="FfP-ef-8VD" firstAttribute="top" secondItem="1JD-mx-aw3" secondAttribute="bottom" constant="8" symbolic="YES" id="uOn-Eh-G9U"/>
+                                        <constraint firstItem="1JD-mx-aw3" firstAttribute="leading" secondItem="FfP-ef-8VD" secondAttribute="leading" id="vzC-ke-CHZ"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <size key="customSize" width="407" height="63"/>
+                                <connections>
+                                    <outlet property="primaryLabel" destination="1JD-mx-aw3" id="UJu-0s-u0R"/>
+                                    <outlet property="secondaryLabel" destination="FfP-ef-8VD" id="CbI-lj-U99"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="WBh-vK-AHK" id="mYa-Pg-1xM"/>
+                            <outlet property="delegate" destination="WBh-vK-AHK" id="7r9-xe-QGa"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="My Favorites" id="NFd-7S-oCL"/>
+                    <connections>
+                        <segue destination="l9G-KJ-lhF" kind="show" identifier="ShowDetailsSegue" id="jq7-tr-0gm"/>
+                    </connections>
+                </collectionViewController>
+            </objects>
+            <point key="canvasLocation" x="325" y="202"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="fgf-EA-0c1">
+            <objects>
+                <navigationController storyboardIdentifier="FavoriteShowsKNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="8NB-r7-Zt3" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="lKc-Pj-Pva">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="WBh-vK-AHK" kind="relationship" relationship="rootViewController" id="m4s-yi-Pqc"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4ap-UE-tlz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-538" y="202"/>
+        </scene>
+    </scenes>
+</document>
