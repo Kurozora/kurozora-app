@@ -14,11 +14,27 @@ class SeasonsCollectionViewController: KCollectionViewController {
 	var showID: Int = 0
 	var seasons: [Season] = [] {
 		didSet {
-			_prefersActivityIndicatorHidden = true
-			self.configureDataSource()
+			self.updateDataSource()
+			self._prefersActivityIndicatorHidden = true
+			self.toggleEmptyDataView()
+			#if DEBUG
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.endRefreshing()
+			#endif
+			#endif
 		}
 	}
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>! = nil
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Season>! = nil
+
+	// Refresh control
+	var _prefersRefreshControlDisabled = false {
+		didSet {
+			self.setNeedsRefreshControlAppearanceUpdate()
+		}
+	}
+	override var prefersRefreshControlDisabled: Bool {
+		return self._prefersRefreshControlDisabled
+	}
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -34,26 +50,39 @@ class SeasonsCollectionViewController: KCollectionViewController {
 	override func viewDidLoad() {
         super.viewDidLoad()
 
-		// Stop activity indicator in case user doesn't need to fetch actors details.
-		if !seasons.isEmpty {
-			_prefersActivityIndicatorHidden = true
-		} else {
-			DispatchQueue.global(qos: .background).async {
-				self.fetchSeasons()
-			}
+		#if DEBUG
+		self._prefersRefreshControlDisabled = false
+		#else
+		self._prefersRefreshControlDisabled = true
+		#endif
+
+		self.configureDataSource()
+
+		DispatchQueue.global(qos: .background).async {
+			self.fetchSeasons()
 		}
     }
 
 	// MARK: - Functions
+	override func handleRefreshControl() {
+		DispatchQueue.global(qos: .background).async {
+			self.fetchSeasons()
+		}
+	}
+
 	override func configureEmptyDataView() {
-		collectionView?.emptyDataSetView { view in
-			view.titleLabelString(NSAttributedString(string: "No Seasons", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
-				.detailLabelString(NSAttributedString(string: "This show doesn't have seasons yet. Please check back again later.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-				.image(R.image.empty.seasons())
-				.imageTintColor(KThemePicker.textColor.colorValue)
-				.verticalOffset(-50)
-				.verticalSpace(5)
-				.isScrollAllowed(true)
+		emptyBackgroundView.configureImageView(image: R.image.empty.seasons()!)
+		emptyBackgroundView.configureLabels(title: "No Seasons", detail: "This show doesn't have seasons yet. Please check back again later.")
+
+		collectionView.backgroundView?.alpha = 0
+	}
+
+	/// Fades in and out the empty data view according to the number of rows.
+	func toggleEmptyDataView() {
+		if self.collectionView.numberOfItems() == 0 {
+			self.collectionView.backgroundView?.animateFadeIn()
+		} else {
+			self.collectionView.backgroundView?.animateFadeOut()
 		}
 	}
 
@@ -120,30 +149,21 @@ extension SeasonsCollectionViewController {
 	}
 
 	override func configureDataSource() {
-		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, identifier: Int) -> UICollectionViewCell? in
+		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Season>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: Season) -> UICollectionViewCell? in
 			if let lockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.lockupCollectionViewCell, for: indexPath) {
-				lockupCollectionViewCell.season = self.seasons[indexPath.row]
-				if collectionView.indexPathForLastItem == indexPath {
-					lockupCollectionViewCell.separatorView.isHidden = true
-				} else {
-					lockupCollectionViewCell.separatorView.isHidden = false
-				}
+				lockupCollectionViewCell.season = item
 				return lockupCollectionViewCell
 			} else {
 				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.lockupCollectionViewCell.identifier)")
 			}
 		}
+	}
 
-		let itemsPerSection = seasons.count
-		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
-		SectionLayoutKind.allCases.forEach {
-			snapshot.appendSections([$0])
-			let itemOffset = $0.rawValue * itemsPerSection
-			let itemUpperbound = itemOffset + itemsPerSection
-			snapshot.appendItems(Array(itemOffset..<itemUpperbound))
-		}
+	override func updateDataSource() {
+		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Season>()
+		snapshot.appendSections([.main])
+		snapshot.appendItems(seasons)
 		dataSource.apply(snapshot)
-		collectionView.reloadEmptyDataSet()
 	}
 }
 
@@ -151,37 +171,26 @@ extension SeasonsCollectionViewController {
 extension SeasonsCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
-		var columnCount = 1
-		if width >= 414 {
-			columnCount = (width / 414).rounded().int
-		} else {
-			columnCount = (width / 284).rounded().int
-		}
+		let columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
 		return columnCount > 0 ? columnCount : 1
 	}
 
-	override func contentInset(forItemInSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		return NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
-	}
-
 	override func contentInset(forSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		return NSDirectionalEdgeInsets(top: 20, leading: 10, bottom: 20, trailing: 10)
+		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 20, trailing: 10)
 	}
 
 	override func createLayout() -> UICollectionViewLayout {
 		let layout = UICollectionViewCompositionalLayout { (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-													heightDimension: .absolute(196))
+			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
 			let item = NSCollectionLayoutItem(layoutSize: itemSize)
-			item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
 
-			let heightFraction = itemSize.heightDimension.dimension + 20
-			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-												   heightDimension: .absolute(heightFraction))
+			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(150.0))
 			let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+			layoutGroup.interItemSpacing = .fixed(10.0)
 
 			let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+			layoutSection.interGroupSpacing = 10.0
 			layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
 			return layoutSection
 		}

@@ -12,20 +12,14 @@ import KurozoraKit
 class LockupCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var posterImageView: UIImageView!
-	@IBOutlet weak var shadowView: UIView!
-	@IBOutlet weak var countLabel: KLabel! {
-		didSet {
-			self.countLabel.theme_textColor = KThemePicker.subTextColor.rawValue
-		}
-	}
-	@IBOutlet weak var startDateTitleLabel: KTintedLabel!
-	@IBOutlet weak var episodeCountTitleLabel: KTintedLabel!
-	@IBOutlet weak var ratingTitleLabel: KTintedLabel!
+	@IBOutlet weak var countLabel: KSecondaryLabel!
+	@IBOutlet weak var startDateTitleLabel: KSecondaryLabel!
+	@IBOutlet weak var episodeCountTitleLabel: KSecondaryLabel!
+	@IBOutlet weak var ratingTitleLabel: KSecondaryLabel!
 	@IBOutlet weak var titleLabel: KLabel!
 	@IBOutlet weak var firstAiredLabel: KLabel!
 	@IBOutlet weak var episodeCountLabel: KLabel!
 	@IBOutlet weak var ratingLabel: KLabel!
-	@IBOutlet weak var separatorView: SeparatorView!
 	@IBOutlet var separatorViewLight: [SecondarySeparatorView]?
 
 	// MARK: - Properties
@@ -63,9 +57,6 @@ class LockupCollectionViewCell: UICollectionViewCell {
 
 		// Configure rating
 		self.ratingLabel.text = "0.00"
-
-		// Apply shadow to shadow view
-		self.shadowView.applyShadow()
 	}
 
 	/// Configure the cell with the related show's details.
@@ -87,8 +78,5 @@ class LockupCollectionViewCell: UICollectionViewCell {
 
 		// Configure rating
 		self.ratingLabel.text = "\(self.relatedShow.show.attributes.averageRating)"
-
-		// Apply shadow to shadow view
-		self.shadowView.applyShadow()
 	}
 }
