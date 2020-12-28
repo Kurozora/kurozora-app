@@ -33,9 +33,17 @@ enum TextViewCollectionViewCellType {
 	var maximumNumberOfLinesValue: Int {
 		switch self {
 		case .synopsis:
-			return 5
-		case .about:
+			#if targetEnvironment(macCatalyst)
 			return 10
+			#else
+			return 5
+			#endif
+		case .about:
+			#if targetEnvironment(macCatalyst)
+			return 15
+			#else
+			return 10
+			#endif
 		}
 	}
 }

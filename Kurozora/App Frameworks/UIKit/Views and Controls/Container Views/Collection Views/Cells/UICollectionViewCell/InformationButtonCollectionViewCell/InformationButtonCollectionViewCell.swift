@@ -16,7 +16,7 @@ class InformationButtonCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var separatorView: SecondarySeparatorView!
 
 	// MARK: - Properties
-	var studioDetailsInformationSection: StudioDetailsInformationSection?
+	var studioDetailsInformationSection: StudioDetailsInformationSection = .website
 	var studio: Studio! {
 		didSet {
 			configureCell()
@@ -26,13 +26,14 @@ class InformationButtonCollectionViewCell: UICollectionViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
-		self.titleLabel.text = studioDetailsInformationSection?.stringValue
-		self.iconImageView.image = studioDetailsInformationSection?.imageValue
+		self.titleLabel.text = studioDetailsInformationSection.stringValue
+		self.iconImageView.image = studioDetailsInformationSection.imageValue
+		self.separatorView.isHidden = self.studioDetailsInformationSection == .website
 	}
 
 	// MARK: - IBActions
 	@IBAction func websiteButtonPressed(_ sender: KButton) {
-		guard let websiteURL = studio.attributes.websiteURL?.url else { return }
+		guard let websiteURL = studio.attributes.websiteUrl?.url else { return }
 		UIApplication.shared.kOpen(websiteURL)
 	}
 }

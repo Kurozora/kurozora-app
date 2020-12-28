@@ -12,7 +12,7 @@ import KurozoraKit
 class TextViewCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var textView: KTextView!
-	@IBOutlet weak var moreSynopsisButton: KTintedButton?
+	@IBOutlet weak var moreSynopsisButton: KButton?
 	@IBOutlet weak var moreSynopsisImageView: UIImageView? {
 		didSet {
 			moreSynopsisImageView?.theme_tintColor = KThemePicker.backgroundColor.rawValue
@@ -35,8 +35,7 @@ class TextViewCollectionViewCell: UICollectionViewCell {
 		textView.textContainer.lineBreakMode = .byWordWrapping
 		textView.text = textViewContent
 
-		// Synopsis background
-		moreButtonView?.isHidden = !(textView.layoutManager.numberOfLines > textViewCollectionViewCellType.maximumNumberOfLinesValue)
+		textView.layoutManager.delegate = self
 	}
 
 	// MARK: - IBActions
@@ -49,5 +48,13 @@ class TextViewCollectionViewCell: UICollectionViewCell {
 			synopsisKNavigationController.modalPresentationStyle = .fullScreen
 			self.parentViewController?.present(synopsisKNavigationController, animated: true)
 		}
+	}
+}
+
+// MARK: - NSLayoutManagerDelegate
+extension TextViewCollectionViewCell: NSLayoutManagerDelegate {
+	func layoutManager(_ layoutManager: NSLayoutManager, textContainer: NSTextContainer, didChangeGeometryFrom oldSize: CGSize) {
+		// Synopsis background
+		self.moreButtonView?.isHidden = !(textView.layoutManager.numberOfLines > textViewCollectionViewCellType.maximumNumberOfLinesValue)
 	}
 }
