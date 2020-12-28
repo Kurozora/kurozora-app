@@ -13,12 +13,13 @@ class GenresTableViewController: KTableViewController {
 	// MARK: - Properties
 	var genres: [Genre] = [] {
 		didSet {
-			_prefersActivityIndicatorHidden = true
-			tableView.reloadData()
+			self._prefersActivityIndicatorHidden = true
+			self.tableView.reloadData {
+				self.toggleEmptyDataView()
+			}
 		}
 	}
 
-	#if !targetEnvironment(macCatalyst)
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
 		didSet {
@@ -26,9 +27,8 @@ class GenresTableViewController: KTableViewController {
 		}
 	}
 	override var prefersRefreshControlDisabled: Bool {
-		return _prefersRefreshControlDisabled
+		return self._prefersRefreshControlDisabled
 	}
-	#endif
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -43,9 +43,11 @@ class GenresTableViewController: KTableViewController {
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		// Disable refresh control
-		#if !targetEnvironment(macCatalyst)
-		_prefersRefreshControlDisabled = true
+
+		#if DEBUG
+		self._prefersRefreshControlDisabled = false
+		#else
+		self._prefersRefreshControlDisabled = true
 		#endif
 
 		DispatchQueue.global(qos: .background).async {
@@ -54,14 +56,23 @@ class GenresTableViewController: KTableViewController {
 	}
 
 	// MARK: - Functions
+	override func handleRefreshControl() {
+		self.fetchGenres()
+	}
+
 	override func configureEmptyDataView() {
-		tableView.emptyDataSetView { (view) in
-			view.titleLabelString(NSAttributedString(string: "No Genres", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
-				.detailLabelString(NSAttributedString(string: "Can't get genres list. Please reload the page or restart the app and check your WiFi connection.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-				.image(R.image.empty.genres())
-				.verticalOffset(-50)
-				.verticalSpace(5)
-				.isScrollAllowed(true)
+		emptyBackgroundView.configureImageView(image: R.image.empty.genres()!)
+		emptyBackgroundView.configureLabels(title: "No Genres", detail: "Can't get genres list. Please reload the page or restart the app and check your WiFi connection.")
+
+		tableView.backgroundView?.alpha = 0
+	}
+
+	/// Fades in and out the empty data view according to the number of .
+	func toggleEmptyDataView() {
+		if self.tableView.numberOfRows() == 0 {
+			self.tableView.backgroundView?.animateFadeIn()
+		} else {
+			self.tableView.backgroundView?.animateFadeOut()
 		}
 	}
 

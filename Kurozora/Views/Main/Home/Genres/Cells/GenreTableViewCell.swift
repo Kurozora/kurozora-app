@@ -9,11 +9,11 @@
 import UIKit
 import KurozoraKit
 
-class GenreTableViewCell: UITableViewCell {
+class GenreTableViewCell: KTableViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var nameLabel: KLabel!
 	@IBOutlet weak var nsfwButton: UIButton!
-	@IBOutlet weak var separatorView: SeparatorView!
+	@IBOutlet weak var iconImageView: UIImageView!
 
 	// MARK: - Properties
 	var genre: Genre! {
@@ -23,10 +23,9 @@ class GenreTableViewCell: UITableViewCell {
 	}
 
 	// MARK: - Functions
-	/// Configure the cell with the given details.
-	fileprivate func configureCell() {
+	override func configureCell() {
 		nameLabel.text = genre.attributes.name
-
+		iconImageView.image = genre.attributes.symbolImage
 		nsfwButton.isHidden = genre.attributes.isNSFW ? false : true
 	}
 }
