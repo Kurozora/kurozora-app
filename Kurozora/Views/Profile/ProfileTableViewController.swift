@@ -36,28 +36,39 @@ class ProfileTableViewController: KTableViewController {
 	@IBOutlet weak var editProfileButton: KTintedButton!
 
 	@IBOutlet weak var separatorView: SeparatorView!
-	@IBOutlet weak var bannerImageViewHeightConstraint: NSLayoutConstraint!
 
 	// MARK: - Properties
 	var userID = User.current?.id ?? 0
 	var user: User! = User.current {
 		didSet {
-			_prefersActivityIndicatorHidden = true
+			self._prefersActivityIndicatorHidden = true
 			self.userID = self.user.id
+
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing profile messages...")
+			#endif
+
 			self.configureProfile()
 		}
 	}
 
 	var dismissButtonIsEnabled: Bool = false {
 		didSet {
-			if dismissButtonIsEnabled {
-				enableDismissButton()
+			if self.dismissButtonIsEnabled {
+				self.enableDismissButton()
 			}
 		}
 	}
 	var feedMessages: [FeedMessage] = [] {
 		didSet {
-			tableView.reloadEmptyDataSet()
+			self.tableView.reloadData {
+				self._prefersActivityIndicatorHidden = true
+				self.toggleEmptyDataView()
+			}
+
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh profile details!")
+			#endif
 		}
 	}
 	var nextPageURL: String?
@@ -82,21 +93,23 @@ class ProfileTableViewController: KTableViewController {
 		}
 	}
 	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
+		return self._prefersActivityIndicatorHidden
 	}
 
 	// MARK: - View
+	override func viewWillReload() {
+		super.viewWillReload()
+
+		self.handleRefreshControl()
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
-		// Setup banner image height
-		self.bannerImageViewHeightConstraint.constant = view.height / 3
-		self.view.setNeedsUpdateConstraints()
-		self.view.layoutIfNeeded()
+		NotificationCenter.default.addObserver(self, selector: #selector(updateFeedMessage(_:)), name: .KFTMessageDidUpdate, object: nil)
 
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
-		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh profile details!")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh profile details!")
 		#endif
 
 		// Fetch posts
@@ -115,28 +128,49 @@ class ProfileTableViewController: KTableViewController {
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		#if !targetEnvironment(macCatalyst)
-		refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing profile details...")
-		#endif
 		self.nextPageURL = nil
 		self.fetchUserDetails()
 	}
 
 	override func configureEmptyDataView() {
-		tableView.emptyDataSetView { [weak self] (view) in
-			guard let self = self else { return }
+		// MARK: - HERE: Look at this
+//		let verticalOffset = (self.tableView.tableHeaderView?.height ?? 0 - self.view.height) / 2
 
-			let detailLabel = self.user?.id == User.current?.id ? "There are no messages on your feed!" : "There are no messages on this feed! Be the first to message :D"
-			let verticalOffset = (self.tableView.tableHeaderView?.height ?? 0 - self.view.height) / 2
+		var detailString: String
 
-			view.titleLabelString(NSAttributedString(string: "No Posts", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
-				.detailLabelString(NSAttributedString(string: detailLabel, attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-				.image(R.image.empty.comment())
-				.imageTintColor(KThemePicker.textColor.colorValue)
-				.verticalOffset(verticalOffset < 0 ? 0 : verticalOffset)
-				.verticalSpace(10)
-				.isScrollAllowed(true)
+		if self.userID == User.current?.id {
+			detailString = "There are no messages on your feed!"
+		} else {
+			detailString = "There are no messages on this feed!"
 		}
+
+		emptyBackgroundView.configureImageView(image: R.image.empty.comment()!)
+		emptyBackgroundView.configureLabels(title: "No Posts", detail: detailString)
+
+		tableView.backgroundView?.alpha = 0
+	}
+
+	/// Fades in and out the empty data view according to the number of sections.
+	func toggleEmptyDataView() {
+		if self.tableView.numberOfSections == 0 {
+			self.tableView.backgroundView?.animateFadeIn()
+		} else {
+			self.tableView.backgroundView?.animateFadeOut()
+		}
+	}
+
+	/**
+		Updates the feed message with the received information.
+
+		- Parameter notification: An object containing information broadcast to registered observers.
+	*/
+	@objc func updateFeedMessage(_ notification: NSNotification) {
+		// Start delete process
+		self.tableView.performBatchUpdates({
+			if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
+				self.tableView.reloadSections([indexPath.section], with: .none)
+			}
+		}, completion: nil)
 	}
 
 	/// Fetches posts for the user whose page is being viewed.
@@ -145,17 +179,15 @@ class ProfileTableViewController: KTableViewController {
 			guard let self = self else { return }
 			switch result {
 			case .success(let feedMessageResponse):
-				// Reset data if necessary
-				if self.nextPageURL == nil {
-					self.feedMessages = []
-				}
+				DispatchQueue.main.async {
+					// Reset data if necessary
+					if self.nextPageURL == nil {
+						self.feedMessages = []
+					}
 
-				// Append new data and save next page url
-				self.feedMessages.append(contentsOf: feedMessageResponse.data)
-				self.nextPageURL = feedMessageResponse.next
-
-				if self.tableView.numberOfSections != 0 {
-					self.tableView.reloadSections([0], with: .automatic)
+					// Append new data and save next page url
+					self.feedMessages.append(contentsOf: feedMessageResponse.data)
+					self.nextPageURL = feedMessageResponse.next
 				}
 			case .failure: break
 			}
@@ -170,16 +202,19 @@ class ProfileTableViewController: KTableViewController {
 
 	/// Fetches user detail.
 	private func fetchUserDetails() {
+		DispatchQueue.main.async {
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing profile details...")
+			#endif
+		}
+
 		KService.getProfile(forUserID: self.userID) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
 			case .success(let users):
-				self.user = users.first
-
-				// Reset refresh controller title
-				#if !targetEnvironment(macCatalyst)
-				self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh profile details!")
-				#endif
+				DispatchQueue.main.async {
+					self.user = users.first
+				}
 			case .failure: break
 			}
 		}
@@ -475,7 +510,7 @@ class ProfileTableViewController: KTableViewController {
 
 	/// Performs segue to `FavoriteShowsCollectionViewController` with `FavoriteShowsSegue` as the identifier.
 	fileprivate func showFavoriteShowsList() {
-		if let favoriteShowsCollectionViewController = R.storyboard.library.favoriteShowsCollectionViewController() {
+		if let favoriteShowsCollectionViewController = R.storyboard.favorites.favoriteShowsCollectionViewController() {
 			favoriteShowsCollectionViewController.user = self.user
 			favoriteShowsCollectionViewController.dismissButtonIsEnabled = true
 
@@ -498,7 +533,7 @@ class ProfileTableViewController: KTableViewController {
 			}
 		}
 
-		//Present the controller
+		// Present the controller
 		if let popoverController = actionSheetAlertController.popoverPresentationController {
 			popoverController.barButtonItem = sender
 		}
@@ -511,11 +546,11 @@ class ProfileTableViewController: KTableViewController {
 		let followStatus = self.user?.attributes.followStatus ?? .disabled
 		switch followStatus {
 		case .followed:
-			self.followButton.setTitle("＋ Follow", for: .normal)
+			self.followButton.setTitle("✓ Following", for: .normal)
 			self.followButton.isHidden = false
 			self.followButton.isUserInteractionEnabled = true
-		case  .notFollowed:
-			self.followButton.setTitle("✓ Following", for: .normal)
+		case .notFollowed:
+			self.followButton.setTitle("＋ Follow", for: .normal)
 			self.followButton.isHidden = false
 			self.followButton.isUserInteractionEnabled = true
 		case .disabled:
@@ -532,7 +567,7 @@ class ProfileTableViewController: KTableViewController {
 		self.profileImageCache = self.profileImageView.image
 		self.bannerImageCache = self.bannerImageView.image
 
-		editMode(true)
+		self.editMode(true)
 	}
 
 	@IBAction func followButtonPressed(_ sender: UIButton) {
@@ -550,7 +585,7 @@ class ProfileTableViewController: KTableViewController {
 	}
 
 	@IBAction func moreBarButtonPressed(_ sender: UIBarButtonItem) {
-		showActionList(sender)
+		self.showActionList(sender)
 	}
 
 	// MARK: - Segue
@@ -578,25 +613,26 @@ class ProfileTableViewController: KTableViewController {
 // MARK: - UITableViewDataSource
 extension ProfileTableViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return 1
+		return self.feedMessages.count
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return self.feedMessages.count
+		return 1
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let feedMessageCell: BaseFeedMessageCell!
 
-		if feedMessages[indexPath.row].attributes.isReShare || feedMessages[indexPath.row].attributes.isReply {
+		if feedMessages[indexPath.section].attributes.isReShare {
 			feedMessageCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedMessageReShareCell, for: indexPath)
 		} else {
 			feedMessageCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedMessageCell, for: indexPath)
 		}
 
+		feedMessageCell.delegate = self
 		feedMessageCell.liveReplyEnabled = User.current?.id == self.userID
 		feedMessageCell.liveReShareEnabled = User.current?.id == self.userID
-		feedMessageCell.feedMessage = self.feedMessages[indexPath.row]
+		feedMessageCell.feedMessage = self.feedMessages[indexPath.section]
 		return feedMessageCell
 	}
 }
@@ -610,13 +646,35 @@ extension ProfileTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		let numberOfRows = tableView.numberOfRows()
+		let numberOfSections = tableView.numberOfSections
 
-		if indexPath.row == numberOfRows - 5 {
+		if indexPath.section == numberOfSections - 5 {
 			if self.nextPageURL != nil {
 				self.fetchFeedMessages()
 			}
 		}
+	}
+
+	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+		if let baseFeedMessageCell = tableView.cellForRow(at: indexPath) as? BaseFeedMessageCell {
+			baseFeedMessageCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
+
+			baseFeedMessageCell.usernameLabel.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+			baseFeedMessageCell.postTextView.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+		}
+	}
+
+	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+		if let baseFeedMessageCell = tableView.cellForRow(at: indexPath) as? BaseFeedMessageCell {
+			baseFeedMessageCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+
+			baseFeedMessageCell.usernameLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			baseFeedMessageCell.postTextView.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+		}
+	}
+
+	override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+		return self.feedMessages[indexPath.section].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 	}
 }
 
@@ -630,6 +688,43 @@ extension ProfileTableViewController {
 	}
 }
 
+// MARK: - BaseFeedMessageCellDelegate
+extension ProfileTableViewController: BaseFeedMessageCellDelegate {
+	func heartMessage(_ cell: BaseFeedMessageCell) {
+		if let indexPath = self.tableView.indexPath(for: cell) {
+			self.feedMessages[indexPath.section].heartMessage(via: self, userInfo: ["indexPath": indexPath])
+		}
+	}
+
+	func replyToMessage(_ cell: BaseFeedMessageCell) {
+		if let indexPath = self.tableView.indexPath(for: cell) {
+			self.feedMessages[indexPath.section].replyToMessage(via: self, userInfo: ["liveReplyEnabled": cell.liveReplyEnabled])
+		}
+	}
+
+	func reShareMessage(_ cell: BaseFeedMessageCell) {
+		if let indexPath = self.tableView.indexPath(for: cell) {
+			self.feedMessages[indexPath.section].reShareMessage(via: self, userInfo: ["liveReShareEnabled": cell.liveReShareEnabled])
+		}
+	}
+
+	func visitOriginalPosterProfile(_ cell: BaseFeedMessageCell) {
+		if let indexPath = self.tableView.indexPath(for: cell) {
+			self.feedMessages[indexPath.section].visitOriginalPosterProfile(from: self)
+		}
+	}
+
+	func showActionsList(_ cell: BaseFeedMessageCell, sender: UIButton) {
+		if let indexPath = self.tableView.indexPath(for: cell) {
+			self.feedMessages[indexPath.section].actionList(on: self, sender, userInfo: [
+				"indexPath": indexPath,
+				"liveReplyEnabled": cell.liveReplyEnabled,
+				"liveReShareEnabled": cell.liveReShareEnabled
+			])
+		}
+	}
+}
+
 // MARK: - KRichTextEditorViewDelegate
 extension ProfileTableViewController: KFeedMessageTextEditorViewDelegate {
 	func updateMessages(with feedMessages: [FeedMessage]) {
@@ -637,9 +732,7 @@ extension ProfileTableViewController: KFeedMessageTextEditorViewDelegate {
 			self.feedMessages.prepend(feedMessage)
 		}
 
-		if self.tableView.numberOfSections != 0 {
-			self.tableView.reloadSections([0], with: .automatic)
-		}
+		self.tableView.reloadData()
 	}
 
 	func segueToOPFeedDetails(_ feedMessage: FeedMessage) {
@@ -658,7 +751,7 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate {
 			profileImageFilePath = imageURL.absoluteString
 		}
 
-		//Dismiss the UIImagePicker after selection
+		// Dismiss the UIImagePicker after selection
 		picker.dismiss(animated: true, completion: nil)
 	}
 
@@ -706,7 +799,7 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate {
 			}))
 		}
 
-		//Present the controller
+		// Present the controller
 		if let popoverController = actionSheetAlertController.popoverPresentationController {
 			popoverController.sourceView = sender
 			popoverController.sourceRect = sender.bounds
@@ -728,7 +821,7 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate {
 			}))
 		}
 
-		//Present the controller
+		// Present the controller
 		if let popoverController = actionSheetAlertController.popoverPresentationController {
 			popoverController.sourceView = sender
 			popoverController.sourceRect = sender.bounds

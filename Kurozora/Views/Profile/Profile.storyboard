@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17700" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="q9O-KI-xnB">
-    <device id="retina5_9" orientation="portrait" appearance="dark"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="q9O-KI-xnB">
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
@@ -11,10 +11,10 @@
         <!--FavoriteShowsCollectionViewController-->
         <scene sceneID="dSu-ot-U5F">
             <objects>
-                <viewControllerPlaceholder storyboardName="Library" referencedIdentifier="FavoriteShowsCollectionViewController" id="MLI-TH-L8z" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="Favorites" referencedIdentifier="FavoriteShowsCollectionViewController" id="MLI-TH-L8z" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Buf-ae-aTm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="903" y="-703"/>
+            <point key="canvasLocation" x="1634" y="-1228"/>
         </scene>
         <!--FMDetailsTableViewController-->
         <scene sceneID="l48-2t-gRR">
@@ -24,137 +24,41 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jcN-Kh-Qg8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1318" y="-703"/>
+            <point key="canvasLocation" x="1590" y="-1176"/>
         </scene>
-        <!--Follow Table View Controller-->
-        <scene sceneID="0b1-3Q-3zj">
+        <!--FollowTableViewController-->
+        <scene sceneID="WB3-oB-wNl">
             <objects>
-                <tableViewController storyboardIdentifier="FollowTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="iE1-ty-IHr" customClass="FollowTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="Vic-Y5-xlZ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="10" reuseIdentifier="FollowCell" rowHeight="70" id="8x8-gW-6XI" customClass="FollowCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="16" y="55.333332061767578" width="343" height="70"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8x8-gW-6XI" id="vqV-dz-Yi6">
-                                    <rect key="frame" x="0.0" y="0.0" width="343" height="70"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Slk-E2-m6G" customClass="CircularView" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="16" y="10" width="50" height="50"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IbT-5f-WVF" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                    <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </imageView>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="IbT-5f-WVF" secondAttribute="trailing" id="4n4-um-FRL"/>
-                                                <constraint firstItem="IbT-5f-WVF" firstAttribute="leading" secondItem="Slk-E2-m6G" secondAttribute="leading" id="Akd-3Z-RVj"/>
-                                                <constraint firstAttribute="bottom" secondItem="IbT-5f-WVF" secondAttribute="bottom" id="Gp8-QP-IKX"/>
-                                                <constraint firstAttribute="width" constant="50" id="Z4e-3J-I0D"/>
-                                                <constraint firstAttribute="height" constant="50" id="dMd-bD-Lfp"/>
-                                                <constraint firstItem="IbT-5f-WVF" firstAttribute="top" secondItem="Slk-E2-m6G" secondAttribute="top" id="g1s-Nh-0op"/>
-                                            </constraints>
-                                        </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kirito" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FPe-u4-Irb" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="76" y="24.666666666666671" width="43" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                            <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CTb-FS-pTs" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="260" y="23" width="67" height="24"/>
-                                            <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="24" id="lzt-nJ-e9E"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
-                                            <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
-                                            <state key="normal" title="Follow">
-                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            </state>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                    <integer key="value" value="12"/>
-                                                </userDefinedRuntimeAttribute>
-                                                <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
-                                            </userDefinedRuntimeAttributes>
-                                            <connections>
-                                                <action selector="followButtonPressed:" destination="8x8-gW-6XI" eventType="touchUpInside" id="Jet-QE-I1E"/>
-                                            </connections>
-                                        </button>
-                                        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="meB-oq-8YQ" customClass="SeparatorView" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="16" y="69.666666666666671" width="311" height="0.3333333333333286"/>
-                                            <color key="backgroundColor" red="0.89411764709999997" green="0.89411764709999997" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="0.5" id="OnJ-nR-rPH"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="Slk-E2-m6G" firstAttribute="leading" secondItem="vqV-dz-Yi6" secondAttribute="leadingMargin" id="9xr-FN-4UG"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="CTb-FS-pTs" secondAttribute="trailing" id="E7n-Tr-7LE"/>
-                                        <constraint firstItem="CTb-FS-pTs" firstAttribute="centerY" secondItem="FPe-u4-Irb" secondAttribute="centerY" id="IuM-Oa-igo"/>
-                                        <constraint firstItem="FPe-u4-Irb" firstAttribute="leading" secondItem="Slk-E2-m6G" secondAttribute="trailing" constant="10" id="J64-tw-dMV"/>
-                                        <constraint firstAttribute="bottom" secondItem="Slk-E2-m6G" secondAttribute="bottom" constant="10" id="XeX-vH-Q8A"/>
-                                        <constraint firstItem="Slk-E2-m6G" firstAttribute="top" secondItem="vqV-dz-Yi6" secondAttribute="top" constant="10" id="eoQ-Aq-wfh"/>
-                                        <constraint firstItem="FPe-u4-Irb" firstAttribute="centerY" secondItem="Slk-E2-m6G" secondAttribute="centerY" id="owO-lk-kqp"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="meB-oq-8YQ" secondAttribute="trailing" id="r88-nH-18c"/>
-                                        <constraint firstItem="Slk-E2-m6G" firstAttribute="centerY" secondItem="vqV-dz-Yi6" secondAttribute="centerY" id="sG8-67-O8N"/>
-                                        <constraint firstAttribute="bottom" secondItem="meB-oq-8YQ" secondAttribute="bottom" id="t6w-GO-wwW"/>
-                                        <constraint firstItem="meB-oq-8YQ" firstAttribute="leading" secondItem="vqV-dz-Yi6" secondAttribute="leadingMargin" id="xyW-na-jir"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <connections>
-                                    <outlet property="followButton" destination="CTb-FS-pTs" id="cxX-9Y-0Kd"/>
-                                    <outlet property="profileImageView" destination="IbT-5f-WVF" id="rQb-c8-gGH"/>
-                                    <outlet property="separatorView" destination="meB-oq-8YQ" id="hJq-S8-1hD"/>
-                                    <outlet property="usernameLabel" destination="FPe-u4-Irb" id="hn8-ss-B6l"/>
-                                    <segue destination="zlF-Vo-yv3" kind="show" identifier="ProfileSegue" id="mKx-ht-wib">
-                                        <segue key="commit" inheritsFrom="parent" id="dup-3g-2Br"/>
-                                        <segue key="preview" inheritsFrom="commit" id="YiZ-yF-rHw"/>
-                                    </segue>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="iE1-ty-IHr" id="rpc-AF-GuL"/>
-                            <outlet property="delegate" destination="iE1-ty-IHr" id="Ptf-Iv-Odu"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="whE-eK-Okk"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="DKn-Ii-cyG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <viewControllerPlaceholder storyboardName="Follow" referencedIdentifier="FollowTableViewController" id="fr7-NV-7bH" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="50b-ma-42I"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vZf-gO-OAw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1711" y="-1112"/>
+            <point key="canvasLocation" x="1574" y="-1073"/>
         </scene>
         <!--Profile-->
         <scene sceneID="oXQ-6R-gF7">
             <objects>
                 <tableViewController storyboardIdentifier="ProfileTableViewController" title="Profile" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zlF-Vo-yv3" customClass="ProfileTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="insetGrouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" id="Zag-E8-3Pp">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="insetGrouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="Zag-E8-3Pp">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="YlQ-WU-WCF">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="361"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="381"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ct4-sA-QJa" userLabel="User Details Banner">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="228"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="250"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalCompressionResistancePriority="250" image="Placeholders/User Banner" translatesAutoresizingMaskIntoConstraints="NO" id="zl8-rJ-jxV">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="228"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="250"/>
                                             <gestureRecognizers/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="228" id="KY6-pM-3PK"/>
+                                                <constraint firstAttribute="width" secondItem="zl8-rJ-jxV" secondAttribute="height" multiplier="3:2" id="opy-3b-JUb"/>
                                             </constraints>
                                         </imageView>
                                         <button alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dG8-Sp-07m" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="228"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="250"/>
                                             <color key="backgroundColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.17999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                             <state key="normal" title="Select">
@@ -177,7 +81,7 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L3e-NK-2YU" userLabel="User Details Header">
-                                    <rect key="frame" x="8" y="179" width="359" height="98"/>
+                                    <rect key="frame" x="8" y="201" width="359" height="98"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PR0-Kq-mbS" userLabel="Profile Photo Wrapper">
                                             <rect key="frame" x="8" y="0.0" width="80" height="90"/>
@@ -209,14 +113,14 @@
                                                     </constraints>
                                                 </view>
                                                 <button hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="acZ-hU-RmT">
-                                                    <rect key="frame" x="8" y="70" width="64" height="20"/>
+                                                    <rect key="frame" x="0.0" y="70" width="80" height="20"/>
                                                     <color key="backgroundColor" red="0.1137254902" green="0.56078431370000004" blue="0.94509803920000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="lJg-H7-iyS"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
-                                                    <state key="normal" title="Kokosei">
+                                                    <state key="normal" title="Koukousei">
                                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
                                                     <userDefinedRuntimeAttributes>
@@ -231,18 +135,20 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="acZ-hU-RmT" firstAttribute="centerX" secondItem="wJX-ls-ZaG" secondAttribute="centerX" id="2Dg-oD-HY2"/>
+                                                <constraint firstItem="wJX-ls-ZaG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="PR0-Kq-mbS" secondAttribute="leading" id="589-Vq-hak"/>
                                                 <constraint firstAttribute="bottom" secondItem="acZ-hU-RmT" secondAttribute="bottom" id="BCZ-n1-Aik"/>
-                                                <constraint firstItem="acZ-hU-RmT" firstAttribute="leading" secondItem="PR0-Kq-mbS" secondAttribute="leadingMargin" id="TU1-Ae-78Y"/>
+                                                <constraint firstItem="acZ-hU-RmT" firstAttribute="leading" secondItem="PR0-Kq-mbS" secondAttribute="leading" id="TU1-Ae-78Y"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="wJX-ls-ZaG" secondAttribute="trailing" id="e40-nh-cne"/>
                                                 <constraint firstItem="acZ-hU-RmT" firstAttribute="centerY" secondItem="wJX-ls-ZaG" secondAttribute="bottom" id="hV9-0v-oP0"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="acZ-hU-RmT" secondAttribute="trailing" id="p4h-ou-mNG"/>
+                                                <constraint firstAttribute="trailing" secondItem="acZ-hU-RmT" secondAttribute="trailing" id="p4h-ou-mNG"/>
                                                 <constraint firstItem="wJX-ls-ZaG" firstAttribute="top" secondItem="PR0-Kq-mbS" secondAttribute="top" id="xH6-T0-e9n"/>
                                             </constraints>
                                         </view>
                                         <button hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bkn-1Z-yJM" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="284" y="56" width="67" height="24"/>
+                                            <rect key="frame" x="284" y="52" width="67" height="32"/>
                                             <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="24" id="WHj-Jg-99m"/>
+                                                <constraint firstAttribute="height" constant="32" id="WHj-Jg-99m"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -251,9 +157,6 @@
                                                 <color key="titleColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </state>
                                             <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                    <integer key="value" value="12"/>
-                                                </userDefinedRuntimeAttribute>
                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
                                             </userDefinedRuntimeAttributes>
                                             <connections>
@@ -261,10 +164,10 @@
                                             </connections>
                                         </button>
                                         <button hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EtH-JN-qoL" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="303" y="56" width="48" height="24"/>
+                                            <rect key="frame" x="303" y="52" width="48" height="32"/>
                                             <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="24" id="iDf-IJ-PTB"/>
+                                                <constraint firstAttribute="height" constant="32" id="iDf-IJ-PTB"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -283,13 +186,13 @@
                                             </connections>
                                         </button>
                                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" text="Kurozora" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ak5-fH-5eB" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="96" y="57.666666666666664" width="73.666666666666686" height="20.333333333333336"/>
+                                            <rect key="frame" x="96" y="57.666666666666693" width="73.666666666666686" height="20.333333333333336"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Online" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kxg-Vi-HwP" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="177.66666666666666" y="57.666666666666664" width="44" height="20.333333333333336"/>
+                                            <rect key="frame" x="177.66666666666666" y="57.666666666666693" width="44" height="20.333333333333336"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -339,10 +242,10 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qhJ-dz-VUa" userLabel="User Details Body">
-                                    <rect key="frame" x="8" y="277" width="359" height="84"/>
+                                    <rect key="frame" x="8" y="299" width="359" height="62"/>
                                     <subviews>
                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="gIa-4A-kfT" customClass="KTextView" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="8" y="0.0" width="343" height="33"/>
+                                            <rect key="frame" x="8" y="0.0" width="343" height="11"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -352,7 +255,7 @@
                                             </connections>
                                         </textView>
                                         <stackView opaque="NO" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="LNz-X2-qla">
-                                            <rect key="frame" x="8" y="33" width="343" height="40"/>
+                                            <rect key="frame" x="8" y="11" width="343" height="40"/>
                                             <subviews>
                                                 <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ldj-y1-nlK" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="82" height="40"/>
@@ -396,9 +299,9 @@
                                                         </attributedString>
                                                     </state>
                                                     <connections>
-                                                        <segue destination="TCw-Pu-tHm" kind="show" identifier="BadgeSegue" id="7DX-hs-zha">
-                                                            <segue key="commit" inheritsFrom="parent" id="yAR-X9-TJP"/>
-                                                            <segue key="preview" inheritsFrom="commit" id="Ulv-Oy-Tn6"/>
+                                                        <segue destination="1u3-lU-S8H" kind="show" identifier="BadgeSegue" id="qIF-9v-juK">
+                                                            <segue key="commit" inheritsFrom="parent" id="mfz-u7-T02"/>
+                                                            <segue key="preview" inheritsFrom="commit" id="Ban-ki-CNE"/>
                                                         </segue>
                                                     </connections>
                                                 </button>
@@ -426,9 +329,9 @@
                                                         </attributedString>
                                                     </state>
                                                     <connections>
-                                                        <segue destination="iE1-ty-IHr" kind="show" identifier="FollowingSegue" id="xco-Va-rlf">
-                                                            <segue key="commit" inheritsFrom="parent" id="dva-iQ-dNq"/>
-                                                            <segue key="preview" inheritsFrom="commit" id="jMW-1O-bfb"/>
+                                                        <segue destination="fr7-NV-7bH" kind="show" identifier="FollowingSegue" id="0X0-XB-akm">
+                                                            <segue key="commit" inheritsFrom="parent" id="6vK-T2-he1"/>
+                                                            <segue key="preview" inheritsFrom="commit" id="Ogs-LM-dvT"/>
                                                         </segue>
                                                     </connections>
                                                 </button>
@@ -460,9 +363,9 @@
                                                         </attributedString>
                                                     </state>
                                                     <connections>
-                                                        <segue destination="iE1-ty-IHr" kind="show" identifier="FollowersSegue" id="Sts-Ni-CBU">
-                                                            <segue key="commit" inheritsFrom="parent" id="tQt-N9-b3U"/>
-                                                            <segue key="preview" inheritsFrom="commit" id="Pzc-YI-mdx"/>
+                                                        <segue destination="fr7-NV-7bH" kind="show" identifier="FollowersSegue" id="Tep-0Z-l4o">
+                                                            <segue key="commit" inheritsFrom="parent" id="iR8-zv-nqG"/>
+                                                            <segue key="preview" inheritsFrom="commit" id="cAC-je-wqd"/>
                                                         </segue>
                                                     </connections>
                                                 </button>
@@ -472,7 +375,7 @@
                                             </constraints>
                                         </stackView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OmS-Rs-je8" customClass="SeparatorView" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="8" y="83" width="343" height="1"/>
+                                            <rect key="frame" x="8" y="61" width="343" height="1"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="1" id="f9O-an-uNu"/>
@@ -504,7 +407,7 @@
                                 <constraint firstItem="ct4-sA-QJa" firstAttribute="leading" secondItem="YlQ-WU-WCF" secondAttribute="leading" id="j3y-M2-V0d"/>
                                 <constraint firstItem="qhJ-dz-VUa" firstAttribute="leading" secondItem="L3e-NK-2YU" secondAttribute="leading" id="n1n-jb-CYb"/>
                                 <constraint firstItem="qhJ-dz-VUa" firstAttribute="top" secondItem="L3e-NK-2YU" secondAttribute="bottom" id="oOK-Oz-Uj4"/>
-                                <constraint firstAttribute="bottom" secondItem="qhJ-dz-VUa" secondAttribute="bottom" id="xnl-bB-6i1"/>
+                                <constraint firstAttribute="bottom" secondItem="qhJ-dz-VUa" secondAttribute="bottom" constant="20" id="xnl-bB-6i1"/>
                             </constraints>
                         </view>
                         <connections>
@@ -522,7 +425,6 @@
                     <connections>
                         <outlet property="badgesButton" destination="E2w-Ry-UIw" id="PQd-Wb-u8H"/>
                         <outlet property="bannerImageView" destination="zl8-rJ-jxV" id="59M-1e-QfB"/>
-                        <outlet property="bannerImageViewHeightConstraint" destination="KY6-pM-3PK" id="zu2-GO-eBp"/>
                         <outlet property="bioTextView" destination="gIa-4A-kfT" id="Nn7-CY-HZA"/>
                         <outlet property="buttonsStackView" destination="LNz-X2-qla" id="QPq-oh-OOt"/>
                         <outlet property="editProfileButton" destination="EtH-JN-qoL" id="Bfr-gN-4ch"/>
@@ -547,148 +449,15 @@
             </objects>
             <point key="canvasLocation" x="928.79999999999995" y="-1112.0689655172414"/>
         </scene>
-        <!--Badges-->
-        <scene sceneID="R0A-Oe-tDS">
+        <!--BadgesTableViewController-->
+        <scene sceneID="CN5-5Z-irS">
             <objects>
-                <tableViewController storyboardIdentifier="BadgesTableViewController" title="Badges" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="TCw-Pu-tHm" customClass="BadgesTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="1" sectionFooterHeight="18" estimatedSectionFooterHeight="1" id="eAj-A5-MCM">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
-                        <viewLayoutGuide key="contentLayoutGuide" id="gue-dv-VRT"/>
-                        <viewLayoutGuide key="frameLayoutGuide" id="7Ca-Pn-QVP"/>
-                        <color key="sectionIndexColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LeftBadgeCell" rowHeight="70" id="Dk1-T7-tiz" customClass="BadgeTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.333332061767578" width="375" height="70"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Dk1-T7-tiz" id="nMb-xc-XeH">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KT9-gc-C1A">
-                                            <rect key="frame" x="16" y="10" width="50" height="50"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QgJ-PI-GFH" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                    <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </imageView>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="QgJ-PI-GFH" firstAttribute="top" secondItem="KT9-gc-C1A" secondAttribute="top" id="6iw-Me-Exq"/>
-                                                <constraint firstItem="QgJ-PI-GFH" firstAttribute="leading" secondItem="KT9-gc-C1A" secondAttribute="leading" id="9Yp-xG-bcB"/>
-                                                <constraint firstAttribute="trailing" secondItem="QgJ-PI-GFH" secondAttribute="trailing" id="JfN-Lz-mYv"/>
-                                                <constraint firstAttribute="bottom" secondItem="QgJ-PI-GFH" secondAttribute="bottom" id="MaR-Z1-xxc"/>
-                                                <constraint firstAttribute="height" constant="50" id="fc8-QV-LdO"/>
-                                                <constraint firstAttribute="width" constant="50" id="nts-PI-gqf"/>
-                                            </constraints>
-                                        </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Badge Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tX1-WL-IJb">
-                                            <rect key="frame" x="76" y="10" width="91" height="18"/>
-                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
-                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is the description of a badge." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kJR-fy-QBH">
-                                            <rect key="frame" x="76.000000000000014" y="27.999999999999996" width="192.33333333333337" height="14.333333333333332"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
-                                    <constraints>
-                                        <constraint firstItem="tX1-WL-IJb" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="nMb-xc-XeH" secondAttribute="trailingMargin" id="EmH-7q-E01"/>
-                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="KT9-gc-C1A" secondAttribute="bottom" constant="10" id="LlU-NP-KxP"/>
-                                        <constraint firstItem="KT9-gc-C1A" firstAttribute="leading" secondItem="nMb-xc-XeH" secondAttribute="leadingMargin" id="SnO-dm-fdE"/>
-                                        <constraint firstItem="KT9-gc-C1A" firstAttribute="top" relation="greaterThanOrEqual" secondItem="nMb-xc-XeH" secondAttribute="top" constant="10" id="U87-Ll-0NV"/>
-                                        <constraint firstItem="KT9-gc-C1A" firstAttribute="centerY" secondItem="nMb-xc-XeH" secondAttribute="centerY" id="VwV-ah-Xpr"/>
-                                        <constraint firstItem="KT9-gc-C1A" firstAttribute="top" secondItem="tX1-WL-IJb" secondAttribute="top" id="eIz-Yq-I8o"/>
-                                        <constraint firstItem="kJR-fy-QBH" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="nMb-xc-XeH" secondAttribute="trailingMargin" id="h8Q-6X-ywN"/>
-                                        <constraint firstItem="tX1-WL-IJb" firstAttribute="leading" secondItem="KT9-gc-C1A" secondAttribute="trailing" constant="10" id="ifi-jf-qHg"/>
-                                        <constraint firstItem="kJR-fy-QBH" firstAttribute="top" secondItem="tX1-WL-IJb" secondAttribute="bottom" id="jFr-zv-SCd"/>
-                                        <constraint firstItem="kJR-fy-QBH" firstAttribute="leading" secondItem="tX1-WL-IJb" secondAttribute="leading" id="lIZ-gn-SZh"/>
-                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="kJR-fy-QBH" secondAttribute="bottom" constant="8" id="sjC-v9-yMd"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <outlet property="badgeDescriptionLabel" destination="kJR-fy-QBH" id="3ah-lF-dMC"/>
-                                    <outlet property="badgeImageView" destination="QgJ-PI-GFH" id="J8Y-lV-Q4N"/>
-                                    <outlet property="badgeTitleLabel" destination="tX1-WL-IJb" id="CP8-e2-0nf"/>
-                                </connections>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RightBadgeCell" rowHeight="70" id="5Cw-9J-rAq" customClass="BadgeTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="125.33333206176758" width="375" height="70"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5Cw-9J-rAq" id="A1c-xq-yeS">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Badge Name" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mqI-tV-SV3">
-                                            <rect key="frame" x="208" y="10" width="91" height="18"/>
-                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
-                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is the description of a badge." textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ES1-wu-mO2">
-                                            <rect key="frame" x="106.66666666666667" y="27.999999999999996" width="192.33333333333331" height="14.333333333333332"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nte-EP-yrf">
-                                            <rect key="frame" x="309" y="10" width="50" height="50"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DQJ-PO-efa" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                    <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </imageView>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="DQJ-PO-efa" firstAttribute="leading" secondItem="nte-EP-yrf" secondAttribute="leading" id="2P6-qt-ECI"/>
-                                                <constraint firstAttribute="width" constant="50" id="7U8-ue-DrA"/>
-                                                <constraint firstAttribute="trailing" secondItem="DQJ-PO-efa" secondAttribute="trailing" id="XwM-Yg-Qlf"/>
-                                                <constraint firstAttribute="bottom" secondItem="DQJ-PO-efa" secondAttribute="bottom" id="bbH-QA-o1B"/>
-                                                <constraint firstAttribute="height" constant="50" id="gpr-GD-5y3"/>
-                                                <constraint firstItem="DQJ-PO-efa" firstAttribute="top" secondItem="nte-EP-yrf" secondAttribute="top" id="jEy-7o-zS4"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
-                                    <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
-                                    <constraints>
-                                        <constraint firstItem="nte-EP-yrf" firstAttribute="top" secondItem="mqI-tV-SV3" secondAttribute="top" id="FVP-qI-dtM"/>
-                                        <constraint firstItem="nte-EP-yrf" firstAttribute="centerY" secondItem="A1c-xq-yeS" secondAttribute="centerY" id="G4I-Dn-xmk"/>
-                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ES1-wu-mO2" secondAttribute="bottom" constant="8" id="GcC-Dm-ogr"/>
-                                        <constraint firstAttribute="leadingMargin" relation="lessThanOrEqual" secondItem="mqI-tV-SV3" secondAttribute="leading" id="Ld0-ws-18z"/>
-                                        <constraint firstAttribute="leadingMargin" relation="lessThanOrEqual" secondItem="ES1-wu-mO2" secondAttribute="leading" id="RSE-Jy-IUV"/>
-                                        <constraint firstItem="ES1-wu-mO2" firstAttribute="trailing" secondItem="mqI-tV-SV3" secondAttribute="trailing" id="TWh-5m-NkB"/>
-                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="nte-EP-yrf" secondAttribute="bottom" constant="10" id="UOX-l8-IPA"/>
-                                        <constraint firstItem="ES1-wu-mO2" firstAttribute="top" secondItem="mqI-tV-SV3" secondAttribute="bottom" id="XJJ-or-afU"/>
-                                        <constraint firstItem="nte-EP-yrf" firstAttribute="top" relation="greaterThanOrEqual" secondItem="A1c-xq-yeS" secondAttribute="top" constant="10" id="bQI-wL-vUf"/>
-                                        <constraint firstItem="nte-EP-yrf" firstAttribute="leading" secondItem="mqI-tV-SV3" secondAttribute="trailing" constant="10" id="fsD-jr-aBi"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="nte-EP-yrf" secondAttribute="trailing" id="r4X-MM-KNE"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <outlet property="badgeDescriptionLabel" destination="ES1-wu-mO2" id="FPC-ni-t8U"/>
-                                    <outlet property="badgeImageView" destination="DQJ-PO-efa" id="gb5-h8-2ox"/>
-                                    <outlet property="badgeTitleLabel" destination="mqI-tV-SV3" id="QpV-cf-ffp"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="TCw-Pu-tHm" id="vyj-eC-kyd"/>
-                            <outlet property="delegate" destination="TCw-Pu-tHm" id="wfH-TD-YRc"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="5kE-b5-5ya"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="uMU-AB-vWv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewControllerPlaceholder storyboardName="Badge" referencedIdentifier="BadgesTableViewController" id="1u3-lU-S8H" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="h1U-wI-JAG"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ujU-z3-G2n" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="327" y="-413"/>
+            <point key="canvasLocation" x="1577" y="-1125"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="o26-8I-W3L">
@@ -717,18 +486,14 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="7DX-hs-zha"/>
-        <segue reference="YiZ-yF-rHw"/>
-        <segue reference="Sts-Ni-CBU"/>
+        <segue reference="qIF-9v-juK"/>
+        <segue reference="Tep-0Z-l4o"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058823529407" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
         <image name="Placeholders/User Banner" width="1130" height="706"/>
         <image name="Placeholders/User Profile" width="300" height="300"/>
         <image name="ellipsis.circle" catalog="system" width="128" height="121"/>
-        <systemColor name="groupTableViewBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
