@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>UIStatusBarStyle</key>
+	<string>Default</string>
+	<key>UIVisualEffectView</key>
+	<string>Light</string>
+	<key>Global</key>
+	<dict>
+		<key>backgroundColor</key>
+		<string>#FFDCE3</string>
+		<key>barTintColor</key>
+		<string>#FFDCE3</string>
+		<key>barTitleTextColor</key>
+		<string>#FF9300</string>
+		<key>blurBackgroundColor</key>
+		<string>#FFD2D280</string>
+		<key>borderColor</key>
+		<string>#CCB0B5</string>
+		<key>textColor</key>
+		<string>#100000</string>
+		<key>textFieldBackgroundColor</key>
+		<string>#E7C7CD</string>
+		<key>textFieldTextColor</key>
+		<string>#100000</string>
+		<key>textFieldPlaceholderTextColor</key>
+		<string>#CCB0B5</string>
+		<key>tintColor</key>
+		<string>#FF9300</string>
+		<key>tintedBackgroundColor</key>
+		<string>#FFC4CE</string>
+		<key>tintedButtonTextColor</key>
+		<string>#FFDCE3</string>
+		<key>separatorColor</key>
+		<string>#A48080</string>
+		<key>separatorColorLight</key>
+		<string>#D2AEB1</string>
+		<key>subTextColor</key>
+		<string>#A48080</string>
+	</dict>
+	<key>TableViewCell</key>
+	<dict>
+		<key>backgroundColor</key>
+		<string>#FFEAEE</string>
+		<key>titleTextColor</key>
+		<string>#100000</string>
+		<key>subTextColor</key>
+		<string>#CCB0B5</string>
+		<key>chevronColor</key>
+		<string>#CCB0B5</string>
+		<key>selectedBackgroundColor</key>
+		<string>#FFF8F9</string>
+		<key>selectedTitleTextColor</key>
+		<string>#B77676</string>
+		<key>selectedSubTextColor</key>
+		<string>#DBB6B7</string>
+		<key>selectedChevronColor</key>
+		<string>#B77676</string>
+		<key>actionDefaultColor</key>
+		<string>#A09597</string>
+	</dict>
+</dict>
+</plist>

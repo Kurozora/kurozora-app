@@ -66,7 +66,7 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 	/// Checks whether to hide or unhide the more button for the current cell.
 	fileprivate func shouldHideMoreButton() {
 		switch (indexPath.section, indexPath.row) {
-		case (0, 0...2):
+		case (0, 0...5):
 			moreButton.isHidden = true
 		default:
 			// More button hidden by default. If theme exists then unhide.
@@ -92,6 +92,21 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 				}
 			case [0, 2]:
 				if currentThemeID == "Night" || currentThemeID == "Black" {
+					getThemeButton.setTitle("USING", for: .normal)
+					return
+				}
+			case [0, 3]:
+				if currentThemeID == "Grass" {
+					getThemeButton.setTitle("USING", for: .normal)
+					return
+				}
+			case [0, 4]:
+				if currentThemeID == "Sky" {
+					getThemeButton.setTitle("USING", for: .normal)
+					return
+				}
+			case [0, 5]:
+				if currentThemeID == "Sakkura" {
 					getThemeButton.setTitle("USING", for: .normal)
 					return
 				}
@@ -183,6 +198,12 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 			KThemeStyle.switchTo(.day)
 		case [0, 2]:
 			KThemeStyle.switchTo(.night)
+		case [0, 3]:
+			KThemeStyle.switchTo(.grass)
+		case [0, 4]:
+			KThemeStyle.switchTo(.sky)
+		case [0, 5]:
+			KThemeStyle.switchTo(.sakura)
 		default:
 			shouldDownloadTheme()
 		}

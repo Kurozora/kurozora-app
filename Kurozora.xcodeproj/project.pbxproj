@@ -381,6 +381,9 @@
 		66C2C5262107ACA10020E21F /* KTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C2C5252107ACA10020E21F /* KTabBarController.swift */; };
 		66C457FA2598D5E000886374 /* ActorDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C457F92598D5E000886374 /* ActorDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */; };
 		66C457FC2598DA4500886374 /* StudioDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C457FB2598DA4500886374 /* StudioDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */; };
+		66C45841259A88ED00886374 /* Grass.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66C4583E259A88ED00886374 /* Grass.plist */; };
+		66C45842259A88ED00886374 /* Sakura.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66C4583F259A88ED00886374 /* Sakura.plist */; };
+		66C45843259A88ED00886374 /* Sky.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66C45840259A88ED00886374 /* Sky.plist */; };
 		66C4DADD243BE4AA00C4B90A /* KKLibraryStatus+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4DADC243BE4AA00C4B90A /* KKLibraryStatus+Kurozora.swift */; };
 		66C4DADF243BE4CF00C4B90A /* KKLibrarySortType+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4DADE243BE4CF00C4B90A /* KKLibrarySortType+Kurozora.swift */; };
 		66C4DAE1243BE52900C4B90A /* KKLibrarySortTypeOptions+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4DAE0243BE52900C4B90A /* KKLibrarySortTypeOptions+Kurozora.swift */; };
@@ -900,6 +903,9 @@
 		66C2C5252107ACA10020E21F /* KTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KTabBarController.swift; sourceTree = "<group>"; };
 		66C457F92598D5E000886374 /* ActorDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActorDetailsCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
 		66C457FB2598DA4500886374 /* StudioDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StudioDetailsCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
+		66C4583E259A88ED00886374 /* Grass.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Grass.plist; sourceTree = "<group>"; };
+		66C4583F259A88ED00886374 /* Sakura.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Sakura.plist; sourceTree = "<group>"; };
+		66C45840259A88ED00886374 /* Sky.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Sky.plist; sourceTree = "<group>"; };
 		66C4DADC243BE4AA00C4B90A /* KKLibraryStatus+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KKLibraryStatus+Kurozora.swift"; sourceTree = "<group>"; };
 		66C4DADE243BE4CF00C4B90A /* KKLibrarySortType+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KKLibrarySortType+Kurozora.swift"; sourceTree = "<group>"; };
 		66C4DAE0243BE52900C4B90A /* KKLibrarySortTypeOptions+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KKLibrarySortTypeOptions+Kurozora.swift"; sourceTree = "<group>"; };
@@ -1697,9 +1703,9 @@
 				66112343208F6A8E00E6033A /* App Services */,
 				66DE65262401AE80001C2773 /* Enums */,
 				66B4F1D1223BC8EB007C5048 /* Features */,
+				66ABBBFF240215BE00CE8A26 /* Views */,
 				6675262B22280AB4007C1617 /* Plist */,
 				66707833208B836500471FBC /* Supporting Files */,
-				66ABBBFF240215BE00CE8A26 /* Views */,
 			);
 			path = Kurozora;
 			sourceTree = "<group>";
@@ -1867,9 +1873,12 @@
 			isa = PBXGroup;
 			children = (
 				666FBD8F22C4E16F007DB5D8 /* Black.plist */,
-				6675262C22280ACA007C1617 /* Default.plist */,
 				6675262D22280ACB007C1617 /* Day.plist */,
+				6675262C22280ACA007C1617 /* Default.plist */,
+				66C4583E259A88ED00886374 /* Grass.plist */,
 				6675262E22280ACB007C1617 /* Night.plist */,
+				66C4583F259A88ED00886374 /* Sakura.plist */,
+				66C45840259A88ED00886374 /* Sky.plist */,
 			);
 			path = Plist;
 			sourceTree = "<group>";
@@ -3148,6 +3157,7 @@
 				66CF6D7120A9934F00F98375 /* Profile.storyboard in Resources */,
 				668B165D23EDF0CF00C1306A /* App-Icon-iPhone-Rose-Gold@2x.png in Resources */,
 				66DEB4A821D248710093725F /* Search.storyboard in Resources */,
+				66C45842259A88ED00886374 /* Sakura.plist in Resources */,
 				668B163923EDF0CF00C1306A /* App-Icon-iPad-Day.png in Resources */,
 				666938BA21B1D51400BA9620 /* ShowMoreCell.xib in Resources */,
 				668B163823EDF0CF00C1306A /* App-Icon-iPhone-Coral@3x.png in Resources */,
@@ -3256,6 +3266,7 @@
 				669FD7FD23F9E9DB001440EC /* App-Icon-iPhone-Kurolicious@3x.png in Resources */,
 				66CBDDA124649CB300CA5F83 /* Synopsis.storyboard in Resources */,
 				668F639020986851003B1C1D /* Aller_BdIt.ttf in Resources */,
+				66C45841259A88ED00886374 /* Grass.plist in Resources */,
 				668B165823EDF0CF00C1306A /* App-Icon-iPad-Pro-Night@2x.png in Resources */,
 				66842253259760F4000A09F8 /* Favorites.storyboard in Resources */,
 				668F638E20986851003B1C1D /* Aller_Bd.ttf in Resources */,
@@ -3269,6 +3280,7 @@
 				66AE01272593D5D300308636 /* Follow.storyboard in Resources */,
 				668B164B23EDF0CF00C1306A /* App-Icon-iPad-Coral@2x.png in Resources */,
 				669FD7FC23F9E9DB001440EC /* App-Icon-iPad-Cookiezora@2x.png in Resources */,
+				66C45843259A88ED00886374 /* Sky.plist in Resources */,
 				668B166B23EDF7FC00C1306A /* App-Icon-iPad-Kurogram.png in Resources */,
 				668F638C20986851003B1C1D /* Aller_Lt.ttf in Resources */,
 			);

@@ -33,8 +33,17 @@ enum KThemeStyle: Int {
 	/// The night style of the app with black background and darker colors.
 	case night = 2
 
+	/// The grass style of the app with green background and bright colors.
+	case grass = 3
+
+	/// The sky style of the app with blue background and bright colors.
+	case sky = 4
+
+	/// The sakura style of the app with pink background and bright colors.
+	case sakura = 5
+
 	/// Other styles of the app.
-	case other = 3
+	case other = 6
 
 	// MARK: Variables
 	// FileManager variables
@@ -60,6 +69,12 @@ enum KThemeStyle: Int {
 			return "Day"
 		case .night:
 			return "Night"
+		case .grass:
+			return "Grass"
+		case .sky:
+			return "Sky"
+		case .sakura:
+			return "Sakura"
 		case .other:
 			return "Other"
 		}
@@ -107,6 +122,12 @@ enum KThemeStyle: Int {
 			return .day
 		case "Night":
 			return .night
+		case "Grass":
+			return .grass
+		case "Sky":
+			return .sky
+		case "Sakura":
+			return .sakura
 		default: // a.k.a "Other"
 			return .other
 		}
@@ -156,6 +177,18 @@ extension KThemeStyle {
 			}
 
 			UIApplication.sharedKeyWindow?.overrideUserInterfaceStyle = .dark
+		case .grass:
+			UserSettings.set("Grass", forKey: .currentTheme)
+			ThemeManager.setTheme(plistName: "Grass", path: .mainBundle)
+			UIApplication.sharedKeyWindow?.overrideUserInterfaceStyle = .light
+		case .sky:
+			UserSettings.set("Sky", forKey: .currentTheme)
+			ThemeManager.setTheme(plistName: "Sky", path: .mainBundle)
+			UIApplication.sharedKeyWindow?.overrideUserInterfaceStyle = .light
+		case .sakura:
+			UserSettings.set("Sakura", forKey: .currentTheme)
+			ThemeManager.setTheme(plistName: "Sakura", path: .mainBundle)
+			UIApplication.sharedKeyWindow?.overrideUserInterfaceStyle = .light
 		case .other:
 			UIApplication.sharedKeyWindow?.overrideUserInterfaceStyle = .unspecified
 		}
@@ -174,7 +207,7 @@ extension KThemeStyle {
 		ThemeManager.setTheme(plistName: themeName, path: .mainBundle)
 
 		switch current {
-		case .day:
+		case .day, .grass, .sky, .sakura:
 			UIApplication.sharedKeyWindow?.overrideUserInterfaceStyle = .light
 		case .night, .default:
 			UIApplication.sharedKeyWindow?.overrideUserInterfaceStyle = .dark
