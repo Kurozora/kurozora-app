@@ -17,7 +17,7 @@ extension Studio.Attributes {
 	var logoImage: UIImage? {
 		let logoImageView = UIImageView()
 		let placeholderImage = R.image.placeholders.studioLogo()!
-		logoImageView.setImage(with: self.logo ?? "", placeholder: placeholderImage)
+		logoImageView.setImage(with: self.logo?.url ?? "", placeholder: placeholderImage)
 		return logoImageView.image?.withRenderingMode(.alwaysOriginal)
 	}
 }

@@ -71,7 +71,8 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 		super.actionButtonPressed(sender)
 
 		WorkflowController.shared.isSignedIn {
-			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: self.libraryStatus, action: { [weak self] (title, value)  in
+			let oldLibraryStatus = self.libraryStatus
+			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: oldLibraryStatus, action: { [weak self] (title, value)  in
 				guard let self = self else { return }
 				if self.libraryStatus != value {
 					KService.addToLibrary(withLibraryStatus: value, showID: self.show.id) { [weak self] result in
@@ -80,11 +81,10 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 						case .success:
 							// Update entry in library
 							self.libraryStatus = value
-
-							let libraryUpdateNotificationName = Notification.Name("Update\(value.sectionValue)Section")
-							NotificationCenter.default.post(name: libraryUpdateNotificationName, object: nil)
-
 							self.actionButton?.setTitle("\(title) ▾", for: .normal)
+
+							let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
+							NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
 						case .failure:
 							break
 						}
@@ -102,6 +102,9 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 							self.show.attributes.update(using: libraryUpdate)
 							self.libraryStatus = .none
 							self.actionButton?.setTitle("ADD", for: .normal)
+
+							let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
+							NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
 						case .failure:
 							break
 						}
@@ -109,7 +112,7 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 				}))
 			}
 
-			//Present the controller
+			// Present the controller
 			if let popoverController = actionSheetAlertController.popoverPresentationController {
 				popoverController.sourceView = sender
 				popoverController.sourceRect = sender.bounds
