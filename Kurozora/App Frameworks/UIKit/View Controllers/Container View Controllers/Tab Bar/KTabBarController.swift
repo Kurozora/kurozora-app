@@ -67,3 +67,28 @@ class KTabBarController: ESTabBarController {
 		}
 	}
 }
+
+extension KTabBarController {
+	override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+		let selectedTwice = tabBar.selectedItem == item
+
+		super.tabBar(tabBar, didSelect: item)
+
+		if selectedTwice {
+			let selectedViewController = (viewControllers?[selectedIndex] as? KNavigationController)?.visibleViewController
+			switch selectedIndex {
+			case 0:
+				(selectedViewController as? UICollectionViewController)?.collectionView.safeScrollToItem(at: [0, 0], at: .top, animated: true)
+			case 1:
+				((selectedViewController as? KTabbedViewController)?.currentViewController as? UICollectionViewController)?.collectionView.safeScrollToItem(at: [0, 0], at: .top, animated: true)
+			case 2:
+				((selectedViewController as? KTabbedViewController)?.currentViewController as? UITableViewController)?.tableView.safeScrollToRow(at: [0, 0], at: .top, animated: true)
+			case 3:
+				(selectedViewController as? UITableViewController)?.tableView.safeScrollToRow(at: [0, 0], at: .top, animated: true)
+			case 4:
+				(selectedViewController as? UITableViewController)?.tableView.safeScrollToRow(at: [0, 0], at: .top, animated: true)
+			default: break
+			}
+		}
+	}
+}

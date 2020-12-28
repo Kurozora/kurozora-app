@@ -24,19 +24,17 @@ class BasicTabBarItemContentView: ESTabBarItemContentView {
 	// MARK: - Function
 	/// The shared settings used to initialize the tab bar item content view.
 	fileprivate func sharedInit() {
+		NotificationCenter.default.addObserver(self, selector: #selector(updateTabBarItemStyle), name: .ThemeUpdateNotification, object: nil)
 		ESTabBar.appearance().theme_barTintColor = KThemePicker.barTintColor.rawValue
-
-		updateTabBarItemStyle()
-
-		NotificationCenter.default.addObserver(self, selector: #selector(updateTabBarItemStyle), name: .ThemeUpdateNotification, object: nil
-		)
+		self.imageView.contentMode = .scaleAspectFit
+		self.updateTabBarItemStyle()
 	}
 
 	/// Applies the default tab bar item style to the tab bar items.
 	@objc fileprivate func updateTabBarItemStyle() {
-		textColor = KThemePicker.subTextColor.colorValue
-		highlightTextColor = KThemePicker.tintColor.colorValue
-		iconColor = KThemePicker.subTextColor.colorValue
-		highlightIconColor = KThemePicker.tintColor.colorValue
+		self.textColor = KThemePicker.subTextColor.colorValue
+		self.iconColor = KThemePicker.subTextColor.colorValue
+		self.highlightTextColor = KThemePicker.tintColor.colorValue
+		self.highlightIconColor = KThemePicker.tintColor.colorValue
 	}
 }
