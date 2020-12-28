@@ -34,9 +34,6 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var posterImageView: UIImageView!
 
 	// MARK: - Properties
-	weak var delegate: ShowDetailsCollectionViewControllerDelegate?
-
-	var libraryBaseCollectionViewCell: LibraryBaseCollectionViewCell? = nil
 	var show: Show! {
 		didSet {
 			self.libraryStatus = show.attributes.libraryStatus ?? .none
@@ -161,11 +158,13 @@ extension ShowDetailHeaderCollectionViewCell {
 
 							// Update entry in library
 							self.libraryStatus = value
-							self.delegate?.updateShowInLibrary(for: self.libraryBaseCollectionViewCell)
 							self.updateLibraryActions(animated: oldLibraryStatus == .none)
 
-							let libraryUpdateNotificationName = Notification.Name("Update\(value.sectionValue)Section")
-							NotificationCenter.default.post(name: libraryUpdateNotificationName, object: nil)
+							let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
+							NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
+
+							let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
+							NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
 						case .failure:
 							break
 						}
@@ -182,7 +181,10 @@ extension ShowDetailHeaderCollectionViewCell {
 						case .success(let libraryUpdate):
 							self.show.attributes.update(using: libraryUpdate)
 							self.libraryStatus = .none
-							self.delegate?.updateShowInLibrary(for: self.libraryBaseCollectionViewCell)
+
+							let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
+							NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
+
 							self.updateLibraryActions(animated: true)
 						case .failure:
 							break
@@ -191,7 +193,7 @@ extension ShowDetailHeaderCollectionViewCell {
 				}))
 			}
 
-			//Present the controller
+			// Present the controller
 			if let popoverController = actionSheetAlertController.popoverPresentationController {
 				popoverController.sourceView = sender
 				popoverController.sourceRect = sender.bounds

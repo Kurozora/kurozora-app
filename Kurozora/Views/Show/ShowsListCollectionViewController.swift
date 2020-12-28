@@ -63,19 +63,18 @@ class ShowsListCollectionViewController: KCollectionViewController {
 	}
 	var shows: [Show] = [] {
 		didSet {
-			_prefersActivityIndicatorHidden = true
 			self.configureDataSource()
-			#if !targetEnvironment(macCatalyst)
+			self._prefersActivityIndicatorHidden = true
+			self.toggleEmptyDataView()
 			#if DEBUG
+			#if !targetEnvironment(macCatalyst)
 			self.refreshControl?.endRefreshing()
 			#endif
 			#endif
 		}
 	}
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>! = nil
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Show>! = nil
 
-	#if !targetEnvironment(macCatalyst)
-	#if DEBUG
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
 		didSet {
@@ -83,10 +82,8 @@ class ShowsListCollectionViewController: KCollectionViewController {
 		}
 	}
 	override var prefersRefreshControlDisabled: Bool {
-		return _prefersRefreshControlDisabled
+		return self._prefersRefreshControlDisabled
 	}
-	#endif
-	#endif
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -95,25 +92,28 @@ class ShowsListCollectionViewController: KCollectionViewController {
 		}
 	}
 	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
+		return self._prefersActivityIndicatorHidden
 	}
 
 	// MARK: - View
+	override func viewWillReload() {
+		super.viewWillReload()
+
+		self.handleRefreshControl()
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
 		// Add refresh control
-		#if !targetEnvironment(macCatalyst)
 		#if DEBUG
-		_prefersRefreshControlDisabled = false
+		self._prefersRefreshControlDisabled = false
 		#else
-		_prefersRefreshControlDisabled = true
-		#endif
+		self._prefersRefreshControlDisabled = true
 		#endif
 	}
 
 	// MARK: - Functions
-	#if DEBUG
 	override func handleRefreshControl() {
 		if let showID = self.showID {
 			self.showID = showID
@@ -132,7 +132,22 @@ class ShowsListCollectionViewController: KCollectionViewController {
 			return
 		}
 	}
-	#endif
+
+	override func configureEmptyDataView() {
+		emptyBackgroundView.configureImageView(image: R.image.empty.library()!)
+		emptyBackgroundView.configureLabels(title: "No Shows", detail: "Can't get shows list. Please refresh the page or restart the app and check your WiFi connection.")
+
+		collectionView.backgroundView?.alpha = 0
+	}
+
+	/// Fades in and out the empty data view according to the number of rows.
+	func toggleEmptyDataView() {
+		if self.collectionView.numberOfItems() == 0 {
+			self.collectionView.backgroundView?.animateFadeIn()
+		} else {
+			self.collectionView.backgroundView?.animateFadeOut()
+		}
+	}
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -162,23 +177,20 @@ extension ShowsListCollectionViewController {
 	}
 
 	override func configureDataSource() {
-		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, _) -> UICollectionViewCell? in
-			guard let self = self else { return nil }
+		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Show>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: Show) -> UICollectionViewCell? in
 			let smallLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: SmallLockupCollectionViewCell.self, for: indexPath)
-			smallLockupCollectionViewCell.show = self.shows[indexPath.row]
+			smallLockupCollectionViewCell.show = item
 			return smallLockupCollectionViewCell
 		}
 
-		let itemsPerSection = shows.count
-		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
-		SectionLayoutKind.allCases.forEach {
-			snapshot.appendSections([$0])
-			let itemOffset = $0.rawValue * itemsPerSection
-			let itemUpperbound = itemOffset + itemsPerSection
-			snapshot.appendItems(Array(itemOffset..<itemUpperbound))
-		}
+		self.updateDataSource()
+	}
+
+	override func updateDataSource() {
+		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Show>()
+		snapshot.appendSections([.main])
+		snapshot.appendItems(self.shows)
 		dataSource.apply(snapshot)
-		collectionView.reloadEmptyDataSet()
 	}
 }
 
@@ -190,32 +202,22 @@ extension ShowsListCollectionViewController {
 		return columnCount > 0 ? columnCount : 1
 	}
 
-	override func groupHeightFraction(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> CGFloat {
-		return (0.55 / columnsCount.double).cgFloat
-	}
-
-	override func contentInset(forItemInSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-	}
-
 	override func contentInset(forSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 20, trailing: 10)
 	}
 
 	override func createLayout() -> UICollectionViewLayout {
 		let layout = UICollectionViewCompositionalLayout { (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-												  heightDimension: .fractionalHeight(1.0))
+			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
 			let item = NSCollectionLayoutItem(layoutSize: itemSize)
-			item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
 
-			let heightFraction = self.groupHeightFraction(forSection: section, with: columns, layout: layoutEnvironment)
-			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-												   heightDimension: .fractionalWidth(heightFraction))
+			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(150.0))
 			let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+			layoutGroup.interItemSpacing = .fixed(10.0)
 
 			let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+			layoutSection.interGroupSpacing = 10.0
 			layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
 			return layoutSection
 		}

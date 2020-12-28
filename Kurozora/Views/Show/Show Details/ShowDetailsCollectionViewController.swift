@@ -11,10 +11,6 @@ import KurozoraKit
 import Intents
 import IntentsUI
 
-protocol ShowDetailsCollectionViewControllerDelegate: class {
-	func updateShowInLibrary(for cell: LibraryBaseCollectionViewCell?)
-}
-
 class ShowDetailsCollectionViewController: KCollectionViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var navigationTitleView: UIView!
@@ -30,23 +26,27 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 	var showID: Int = 0
 	var show: Show! {
 		didSet {
-			_prefersActivityIndicatorHidden = true
 			self.navigationTitleLabel.text = show.attributes.title
 			self.showID = show.id
-			#if !targetEnvironment(macCatalyst)
+		}
+	}
+	var seasons: [Season] = []
+	var cast: [Cast] = []
+	var relatedShows: [RelatedShow] = [] {
+		didSet {
+			_prefersActivityIndicatorHidden = true
+			self.collectionView.reloadData {
+				self.toggleEmptyDataView()
+			}
 			#if DEBUG
+			#if !targetEnvironment(macCatalyst)
 			self.refreshControl?.endRefreshing()
 			#endif
 			#endif
 		}
 	}
-	var seasons: [Season] = []
-	var cast: [Cast] = []
-	var relatedShows: [RelatedShow] = []
 	var moreByStudio: Studio!
 
-	#if !targetEnvironment(macCatalyst)
-	#if DEBUG
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
 		didSet {
@@ -54,10 +54,8 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		}
 	}
 	override var prefersRefreshControlDisabled: Bool {
-		return _prefersRefreshControlDisabled
+		return self._prefersRefreshControlDisabled
 	}
-	#endif
-	#endif
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -66,7 +64,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		}
 	}
 	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
+		return self._prefersActivityIndicatorHidden
 	}
 
 	// MARK: - Properties
@@ -74,8 +72,8 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		super.viewWillAppear(animated)
 
 		// Make the navigation bar background clear
-		navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-		navigationController?.navigationBar.shadowImage = UIImage()
+		self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+		self.navigationController?.navigationBar.shadowImage = UIImage()
 	}
 
 	override func viewDidLoad() {
@@ -84,12 +82,10 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		self.navigationTitleLabel.alpha = 0
 
 		// Add refresh control
-		#if !targetEnvironment(macCatalyst)
 		#if DEBUG
-		_prefersRefreshControlDisabled = false
+		self._prefersRefreshControlDisabled = false
 		#else
-		_prefersRefreshControlDisabled = true
-		#endif
+		self._prefersRefreshControlDisabled = true
 		#endif
 
 		// Fetch show details.
@@ -102,11 +98,31 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		super.viewWillDisappear(animated)
 
 		// Restore the navigation bar to default
-		navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
-		navigationController?.navigationBar.shadowImage = nil
+		self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+		self.navigationController?.navigationBar.shadowImage = nil
 	}
 
 	// MARK: - Functions
+	override func handleRefreshControl() {
+		self.fetchDetails()
+	}
+
+	override func configureEmptyDataView() {
+		emptyBackgroundView.configureImageView(image: R.image.empty.library()!)
+		emptyBackgroundView.configureLabels(title: "No Details", detail: "This show doesn't have details yet. Please check back again later.")
+
+		collectionView.backgroundView?.alpha = 0
+	}
+
+	/// Fades in and out the empty data view according to the number of rows.
+	func toggleEmptyDataView() {
+		if self.collectionView.numberOfSections == 0 {
+			self.collectionView.backgroundView?.animateFadeIn()
+		} else {
+			self.collectionView.backgroundView?.animateFadeOut()
+		}
+	}
+
 	/// Fetches details for the currently viewed show.
 	func fetchDetails() {
 		// If the air status is empty then the details are incomplete and should be fetched anew.
@@ -119,7 +135,6 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 				self.cast = shows.first?.relationships?.cast?.data ?? []
 				self.moreByStudio = shows.first?.relationships?.studios?.data.randomElement()
 				self.relatedShows = shows.first?.relationships?.relatedShows?.data ?? []
-				self.collectionView.reloadData()
 
 				// Donate suggestion to Siri
 				self.userActivity = self.show.openDetailUserActivity
@@ -128,22 +143,16 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		}
 	}
 
-	#if DEBUG
-	override func handleRefreshControl() {
-		self.fetchDetails()
-	}
-	#endif
-
 	// MARK: - IBActions
 	@IBAction func moreButtonPressed(_ sender: UIBarButtonItem) {
-		show.openShareSheet(on: self, barButtonItem: sender)
+		self.show.openShareSheet(on: self, barButtonItem: sender)
 	}
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == R.segue.showDetailsCollectionViewController.seasonSegue.identifier {
 			if let seasonsCollectionViewController = segue.destination as? SeasonsCollectionViewController {
-				seasonsCollectionViewController.seasons = seasons
+				seasonsCollectionViewController.showID = self.show.id
 			}
 		} else if segue.identifier == R.segue.showDetailsCollectionViewController.castSegue.identifier {
 			if let castCollectionViewController = segue.destination as? CastCollectionViewController {
@@ -171,6 +180,18 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 			if let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController {
 				showsListCollectionViewController.title = "Related"
 				showsListCollectionViewController.showID = self.show.id
+			}
+		} else if segue.identifier == R.segue.showDetailsCollectionViewController.characterDetailsSegue.identifier {
+			if let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController {
+				if let castCollectionViewCell = sender as? CastCollectionViewCell, let character = castCollectionViewCell.cast.relationships.characters.data.first {
+					characterDetailsCollectionViewController.characterID = character.id
+				}
+			}
+		} else if segue.identifier == R.segue.showDetailsCollectionViewController.actorDetailsSegue.identifier {
+			if let actorDetailsCollectionViewController = segue.destination as? ActorDetailsCollectionViewController {
+				if let castCollectionViewCell = sender as? CastCollectionViewCell, let actor = castCollectionViewCell.cast.relationships.actors.data.first {
+					actorDetailsCollectionViewController.actorID = actor.id
+				}
 			}
 		}
 	}
@@ -242,6 +263,7 @@ extension ShowDetailsCollectionViewController {
 			lockupCollectionViewCell?.season = self.seasons[indexPath.item]
 		case .cast:
 			let castCollectionViewCell = showDetailCollectionViewCell as? CastCollectionViewCell
+			castCollectionViewCell?.delegate = self
 			castCollectionViewCell?.cast = self.cast[indexPath.item]
 		case .moreByStudio:
 			let smallLockupCollectionViewCell = showDetailCollectionViewCell as? SmallLockupCollectionViewCell
@@ -302,6 +324,17 @@ extension ShowDetailsCollectionViewController {
 
 	override func registerNibs(for collectionView: UICollectionView) -> [UICollectionReusableView.Type] {
 		return [TitleHeaderCollectionReusableView.self]
+	}
+}
+
+// MARK: - CastCollectionViewCellDelegate
+extension ShowDetailsCollectionViewController: CastCollectionViewCellDelegate {
+	func actorButtonPressed(_ cell: CastCollectionViewCell) {
+		self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.actorDetailsSegue.identifier, sender: cell)
+	}
+
+	func characterButtonPressed(_ cell: CastCollectionViewCell) {
+		self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.characterDetailsSegue.identifier, sender: cell)
 	}
 }
 

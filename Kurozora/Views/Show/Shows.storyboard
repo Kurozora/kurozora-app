@@ -65,7 +65,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="yH1-ih-AvY">
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="yH1-ih-AvY">
                             <size key="itemSize" width="374" height="387"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -100,21 +100,21 @@
                                                     </constraints>
                                                 </view>
                                                 <view hidden="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kP9-Yc-DGS">
-                                                    <rect key="frame" x="0.0" y="184" width="374" height="193"/>
+                                                    <rect key="frame" x="0.0" y="211" width="374" height="166"/>
                                                     <subviews>
                                                         <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sok-gv-7aN" customClass="KVisualEffectView" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="8" y="0.0" width="358" height="193"/>
+                                                            <rect key="frame" x="8" y="0.0" width="358" height="166"/>
                                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="lNp-3S-JbC">
-                                                                <rect key="frame" x="0.0" y="0.0" width="358" height="193"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="358" height="166"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             </view>
                                                             <blurEffect style="regular"/>
                                                         </visualEffectView>
                                                         <view contentMode="scaleToFill" horizontalCompressionResistancePriority="748" verticalCompressionResistancePriority="748" translatesAutoresizingMaskIntoConstraints="NO" id="fKf-7k-rgZ">
-                                                            <rect key="frame" x="16" y="8" width="118" height="177"/>
+                                                            <rect key="frame" x="16" y="8" width="100" height="150"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lVv-bj-3os">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="118" height="177"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="150"/>
                                                                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <gestureRecognizers/>
                                                                     <userDefinedRuntimeAttributes>
@@ -128,27 +128,27 @@
                                                             <constraints>
                                                                 <constraint firstItem="lVv-bj-3os" firstAttribute="top" secondItem="fKf-7k-rgZ" secondAttribute="top" id="FeL-su-kZr"/>
                                                                 <constraint firstAttribute="width" secondItem="fKf-7k-rgZ" secondAttribute="height" multiplier="2:3" id="POe-7U-xOA"/>
-                                                                <constraint firstAttribute="width" constant="118" id="Qb1-km-c1s"/>
+                                                                <constraint firstAttribute="width" constant="100" id="Qb1-km-c1s"/>
                                                                 <constraint firstItem="lVv-bj-3os" firstAttribute="leading" secondItem="fKf-7k-rgZ" secondAttribute="leading" id="bv7-Il-og5"/>
                                                                 <constraint firstAttribute="bottom" secondItem="lVv-bj-3os" secondAttribute="bottom" id="tlO-Ac-Rkv"/>
                                                                 <constraint firstAttribute="trailing" secondItem="lVv-bj-3os" secondAttribute="trailing" id="yTK-WD-Qcb"/>
                                                             </constraints>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Re:Zero Kara Hajimeru " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MLW-nK-QtG">
-                                                            <rect key="frame" x="142" y="8" width="182.5" height="20.5"/>
+                                                            <rect key="frame" x="124" y="8" width="182.5" height="20.5"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="TV · TV-MA · 25eps · 25min · 2016" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XfO-Gc-p0Z">
-                                                            <rect key="frame" x="142" y="28.5" width="193.5" height="38"/>
+                                                            <rect key="frame" x="124" y="28.5" width="193.5" height="38"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <button userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AGH-kj-cmg">
-                                                            <rect key="frame" x="142" y="71.5" width="71" height="30"/>
-                                                            <color key="backgroundColor" red="0.4941176471" green="0.82745098039999998" blue="0.12941176469999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <button userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AGH-kj-cmg">
+                                                            <rect key="frame" x="124" y="71.5" width="71" height="30"/>
+                                                            <color key="backgroundColor" red="0.20000000000000001" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <accessibility key="accessibilityConfiguration">
                                                                 <accessibilityTraits key="traits" button="YES" notEnabled="YES"/>
                                                             </accessibility>
@@ -167,7 +167,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </button>
                                                         <button contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g7Z-lw-ybF" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="142" y="155" width="101" height="30"/>
+                                                            <rect key="frame" x="124" y="128" width="101" height="30"/>
                                                             <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                             <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
@@ -184,7 +184,7 @@
                                                             </connections>
                                                         </button>
                                                         <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qZj-3p-1ji" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="290" y="155" width="30" height="30"/>
+                                                            <rect key="frame" x="290" y="128" width="30" height="30"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="30" id="X1m-nr-oDU"/>
@@ -206,7 +206,7 @@
                                                             </connections>
                                                         </button>
                                                         <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lo1-qa-GNH" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="328" y="155" width="30" height="30"/>
+                                                            <rect key="frame" x="328" y="128" width="30" height="30"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="30" id="1MD-Rh-Zro"/>
@@ -294,7 +294,7 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" reuseIdentifier="BadgeCollectionViewCell" id="HZ5-T0-cWg" customClass="BadgeCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="397" width="374" height="80"/>
+                                <rect key="frame" x="20" y="387" width="374" height="80"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" id="QHt-Tj-vdt">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="80"/>
@@ -472,11 +472,34 @@
                         <segue destination="urV-HF-poe" kind="show" identifier="StudioSegue" id="YkB-FM-SBI"/>
                         <segue destination="0CH-ol-MCV" kind="show" identifier="ShowDetailsSegue" id="8X9-Ml-Zaa"/>
                         <segue destination="xgN-Jn-ydw" kind="show" identifier="ShowsListSegue" id="diw-vY-oOt"/>
+                        <segue destination="TlV-BJ-YqV" kind="show" identifier="ActorDetailsSegue" id="Jby-Sd-cNh"/>
+                        <segue destination="KF6-eM-yUm" kind="show" identifier="CharacterDetailsSegue" id="arD-Sg-qCx"/>
+                        <segue destination="XRk-F5-HRl" kind="show" identifier="EpisodeDetailsSegue" id="qyr-Pr-uji"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NcP-g6-hAK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3085.507246376812" y="522.99107142857144"/>
+        </scene>
+        <!--ActorDetailsCollectionViewController-->
+        <scene sceneID="39u-hs-CmB">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Actors" referencedIdentifier="ActorDetailsCollectionViewController" id="TlV-BJ-YqV" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="bEK-ix-5st"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DOQ-Cz-0BO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3775" y="354"/>
+        </scene>
+        <!--CharacterDetailsCollectionViewController-->
+        <scene sceneID="Rp6-5I-zjX">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Characters" referencedIdentifier="CharacterDetailsCollectionViewController" id="KF6-eM-yUm" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="BAZ-Dj-UaO"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SPA-Gl-nSd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3793" y="393"/>
         </scene>
         <!--CastCollectionViewController-->
         <scene sceneID="5vJ-EO-I3P">
@@ -508,6 +531,16 @@
             </objects>
             <point key="canvasLocation" x="3762" y="524"/>
         </scene>
+        <!--EpisodeDetailCollectionViewControlle-->
+        <scene sceneID="okI-f5-58Z">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Episodes" referencedIdentifier="EpisodeDetailCollectionViewControlle" id="XRk-F5-HRl" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="iYF-0a-00A"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hvz-T3-rnn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3776" y="569"/>
+        </scene>
         <!--ShowDetailsCollectionViewController-->
         <scene sceneID="3DI-hf-2bg">
             <objects>
@@ -516,7 +549,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6if-A0-VsM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3774" y="567"/>
+            <point key="canvasLocation" x="3772" y="607"/>
         </scene>
         <!--StudioDetailsCollectionViewController-->
         <scene sceneID="ZBI-4a-YPc">
@@ -526,7 +559,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SSH-Z7-7iU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3780" y="609"/>
+            <point key="canvasLocation" x="3778" y="649"/>
         </scene>
         <!--ShowsListCollectionViewController-->
         <scene sceneID="bSN-Bg-9nK">
@@ -536,7 +569,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ixY-rj-DGk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3766" y="650"/>
+            <point key="canvasLocation" x="3764" y="690"/>
         </scene>
     </scenes>
     <designables>
