@@ -16,7 +16,6 @@ class DebugSettingsTableViewController: KTableViewController {
 	let kDefaultItems = KurozoraDelegate.shared.keychain.allItems()
 	var kDefaultCount = KurozoraDelegate.shared.keychain.allItems().count
 
-	#if !targetEnvironment(macCatalyst)
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
 		didSet {
@@ -24,9 +23,8 @@ class DebugSettingsTableViewController: KTableViewController {
 		}
 	}
 	override var prefersRefreshControlDisabled: Bool {
-		return _prefersRefreshControlDisabled
+		return self._prefersRefreshControlDisabled
 	}
-	#endif
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -35,7 +33,7 @@ class DebugSettingsTableViewController: KTableViewController {
 		}
 	}
 	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
+		return self._prefersActivityIndicatorHidden
 	}
 
 	// MARK: - View
@@ -43,40 +41,32 @@ class DebugSettingsTableViewController: KTableViewController {
 		super.viewDidLoad()
 
 		// Stop activity indicator and disable refresh control
-		_prefersActivityIndicatorHidden = true
-		#if !targetEnvironment(macCatalyst)
-		_prefersRefreshControlDisabled = true
-		#endif
+		self._prefersActivityIndicatorHidden = true
+		self._prefersRefreshControlDisabled = true
+
+		self.toggleEmptyDataView()
 	}
 
 	// MARK: - Functions
 	override func configureEmptyDataView() {
-		tableView.emptyDataSetView { (view) in
-			view.titleLabelString(NSAttributedString(string: "No Keys", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
-				.detailLabelString(NSAttributedString(string: "All Kurozora related keys in your keychain are removed.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-				.image(R.image.empty.keychain())
-				.verticalOffset(-50)
-				.verticalSpace(5)
-				.isScrollAllowed(true)
+		emptyBackgroundView.configureImageView(image: R.image.empty.keychain()!)
+		emptyBackgroundView.configureLabels(title: "No Keys", detail: "All Kurozora related keys in your keychain are removed.")
+
+		tableView.backgroundView?.alpha = 0
+	}
+
+	/// Fades in and out the empty data view according to `kDefaultCount`.
+	func toggleEmptyDataView() {
+		if kDefaultCount == 0 {
+			self.tableView.backgroundView?.animateFadeIn()
+		} else {
+			self.tableView.backgroundView?.animateFadeOut()
 		}
 	}
 }
 
 // MARK: - UITableViewDataSource
 extension DebugSettingsTableViewController {
-	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-		if editingStyle == .delete {
-			let kDefaultsTableViewCell = self.tableView.cellForRow(at: indexPath) as! KDefaultsCell
-			guard let key = kDefaultsTableViewCell.primaryLabel?.text else {return}
-
-			self.tableView.beginUpdates()
-			try? KurozoraDelegate.shared.keychain.remove(key)
-			self.kDefaultCount = kDefaultCount - 1
-			self.tableView.deleteRows(at: [indexPath], with: .automatic)
-			self.tableView.endUpdates()
-		}
-	}
-
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return kDefaultCount
 	}
@@ -94,5 +84,19 @@ extension DebugSettingsTableViewController {
 		}
 
 		return kDefaultsCell
+	}
+
+	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+		if editingStyle == .delete {
+			let kDefaultsTableViewCell = self.tableView.cellForRow(at: indexPath) as! KDefaultsCell
+			guard let key = kDefaultsTableViewCell.primaryLabel?.text else {return}
+
+			self.tableView.beginUpdates()
+			try? KurozoraDelegate.shared.keychain.remove(key)
+			self.kDefaultCount = kDefaultCount - 1
+			self.tableView.deleteRows(at: [indexPath], with: .automatic)
+			self.toggleEmptyDataView()
+			self.tableView.endUpdates()
+		}
 	}
 }

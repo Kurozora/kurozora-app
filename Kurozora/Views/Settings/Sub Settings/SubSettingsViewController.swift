@@ -10,7 +10,6 @@ import UIKit
 
 class SubSettingsViewController: KTableViewController {
 	// MARK: - Properties
-	#if !targetEnvironment(macCatalyst)
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
 		didSet {
@@ -18,9 +17,8 @@ class SubSettingsViewController: KTableViewController {
 		}
 	}
 	override var prefersRefreshControlDisabled: Bool {
-		return _prefersRefreshControlDisabled
+		return self._prefersRefreshControlDisabled
 	}
-	#endif
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -29,7 +27,7 @@ class SubSettingsViewController: KTableViewController {
 		}
 	}
 	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
+		return self._prefersActivityIndicatorHidden
 	}
 
 	// MARK: - View
@@ -37,10 +35,8 @@ class SubSettingsViewController: KTableViewController {
 		super.viewDidLoad()
 
 		// Stop activity indicator and disable refresh control
-		_prefersActivityIndicatorHidden = true
-		#if !targetEnvironment(macCatalyst)
-		_prefersRefreshControlDisabled = true
-		#endif
+		self._prefersActivityIndicatorHidden = true
+		self._prefersRefreshControlDisabled = true
 	}
 }
 

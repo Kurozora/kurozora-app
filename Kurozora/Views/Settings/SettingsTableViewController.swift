@@ -16,7 +16,6 @@ class SettingsTableViewController: KTableViewController {
 		return Section.all
 	}
 
-	#if !targetEnvironment(macCatalyst)
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
 		didSet {
@@ -24,9 +23,8 @@ class SettingsTableViewController: KTableViewController {
 		}
 	}
 	override var prefersRefreshControlDisabled: Bool {
-		return _prefersRefreshControlDisabled
+		return self._prefersRefreshControlDisabled
 	}
-	#endif
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -35,24 +33,22 @@ class SettingsTableViewController: KTableViewController {
 		}
 	}
 	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
+		return self._prefersActivityIndicatorHidden
 	}
 
 	// MARK: - View
 	override func viewWillReload() {
 		super.viewWillReload()
 
-		tableView.reloadData()
+		self.tableView.reloadData()
 	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
 		// Stop activity indicator and disable refresh control
-		_prefersActivityIndicatorHidden = true
-		#if !targetEnvironment(macCatalyst)
-		_prefersRefreshControlDisabled = true
-		#endif
+		self._prefersActivityIndicatorHidden = true
+		self._prefersRefreshControlDisabled = true
 	}
 
     // MARK: - IBActions
@@ -189,10 +185,10 @@ extension SettingsTableViewController {
 		case .tipjar:
 			shouldPerformSegue = true
 		case .followTwitter:
-			UIApplication.shared.kOpen(.twitterPageURL, .twitterPageDeepLink)
+			UIApplication.shared.kOpen(.twitterPageURL, deepLink: .twitterPageDeepLink)
 			return
 		case .followMedium:
-			UIApplication.shared.kOpen(.mediumPageURL, .mediumPageDeepLink)
+			UIApplication.shared.kOpen(.mediumPageURL, deepLink: .mediumPageDeepLink)
 			return
 		default: break
 		}

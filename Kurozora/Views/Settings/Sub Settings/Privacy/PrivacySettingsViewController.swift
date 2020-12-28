@@ -16,13 +16,13 @@ extension PrivacySettingsViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		switch indexPath {
 		case [0, 0]:
-			#if targetEnvironment(macCatalyst)
-			let settingsUrl = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy")
-			#else
+			#if !targetEnvironment(macCatalyst)
 			let settingsUrl = URL(string: UIApplication.openSettingsURLString)
+			#else
+			let settingsUrl = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy")
 			#endif
 
-			UIApplication.shared.kOpen(settingsUrl)
+			UIApplication.shared.kOpen(nil, deepLink: settingsUrl)
 		default: return
 		}
 	}
