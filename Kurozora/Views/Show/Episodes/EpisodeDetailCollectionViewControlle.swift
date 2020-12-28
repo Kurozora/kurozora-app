@@ -11,10 +11,30 @@ import KurozoraKit
 
 class EpisodeDetailCollectionViewControlle: KCollectionViewController {
 	// MARK: - Properties
+	var episodeID = 0
 	var episode: Episode! {
 		didSet {
-			_prefersActivityIndicatorHidden = true
+			self.title = self.episode.attributes.title
+			self._prefersActivityIndicatorHidden = true
+			self.collectionView.reloadData {
+				self.toggleEmptyDataView()
+			}
+			#if DEBUG
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.endRefreshing()
+			#endif
+			#endif
 		}
+	}
+
+	// Refresh control
+	var _prefersRefreshControlDisabled = false {
+		didSet {
+			self.setNeedsRefreshControlAppearanceUpdate()
+		}
+	}
+	override var prefersRefreshControlDisabled: Bool {
+		return self._prefersRefreshControlDisabled
 	}
 
 	// Activity indicator
@@ -28,35 +48,87 @@ class EpisodeDetailCollectionViewControlle: KCollectionViewController {
 	}
 
 	// MARK: - View
+	override func viewWillReload() {
+		super.viewWillReload()
+
+		self.handleRefreshControl()
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = episode.attributes.title
+		#if DEBUG
+		self._prefersRefreshControlDisabled = false
+		#else
+		self._prefersRefreshControlDisabled = true
+		#endif
+
+		// Fetch cast
+		DispatchQueue.global(qos: .background).async {
+			self.fetchEpisodeDetails()
+		}
+	}
+
+	// MARK: - Functions
+	override func handleRefreshControl() {
+		self.fetchEpisodeDetails()
+	}
+
+	override func configureEmptyDataView() {
+		emptyBackgroundView.configureImageView(image: R.image.empty.episodes()!)
+		emptyBackgroundView.configureLabels(title: "No Details", detail: "This episode doesn't have details yet. Please check back again later.")
+
+		collectionView.backgroundView?.alpha = 0
+	}
+
+	/// Fades in and out the empty data view according to the number of rows.
+	func toggleEmptyDataView() {
+		if self.collectionView.numberOfSections == 0 {
+			self.collectionView.backgroundView?.animateFadeIn()
+		} else {
+			self.collectionView.backgroundView?.animateFadeOut()
+		}
+	}
+
+	/// Fetch details for the current episode.
+	fileprivate func fetchEpisodeDetails() {
+		KService.getDetails(forEpisodeID: self.episodeID) { [weak self] result in
+			guard let self = self else { return }
+			switch result {
+			case .success(let episode):
+				DispatchQueue.main.async {
+					self.episode = episode.first
+				}
+			case .failure: break
+			}
+		}
 	}
 }
 
 // MARK: - UICollectionViewDataSource
 extension EpisodeDetailCollectionViewControlle {
 	override func numberOfSections(in collectionView: UICollectionView) -> Int {
-		return EpisodeDetail.Section.allCases.count
+		return self.episode != nil ? EpisodeDetail.Section.allCases.count : 0
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		var itemsPerSection = 0
+
 		switch EpisodeDetail.Section(rawValue: section) {
 		case .header:
-			return 1
+			itemsPerSection = 1
 		case .synopsis:
 			if let overview = self.episode.attributes.overview, !overview.isEmpty {
-				return 1
+				itemsPerSection = 1
 			}
 		case .rating:
-			return 1
+			itemsPerSection = 1
 		case .information:
-			return EpisodeDetail.Information.allCases.count
+			itemsPerSection = EpisodeDetail.Information.allCases.count
 		default: break
 		}
 
-		return 0
+		return itemsPerSection
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -91,11 +163,11 @@ extension EpisodeDetailCollectionViewControlle {
 		case .header:
 			let episodeLockupCollectionViewCell = cell as? EpisodeLockupCollectionViewCell
 			episodeLockupCollectionViewCell?.simpleModeEnabled = true
-			episodeLockupCollectionViewCell?.episode = episode
+			episodeLockupCollectionViewCell?.episode = self.episode
 		case .synopsis:
 			let textViewCollectionViewCell = cell as? TextViewCollectionViewCell
 			textViewCollectionViewCell?.textViewCollectionViewCellType = .synopsis
-			textViewCollectionViewCell?.textViewContent = episode.attributes.overview
+			textViewCollectionViewCell?.textViewContent = self.episode.attributes.overview
 //		case .rating:
 //			let ratingCollectionViewCell = cell as? RatingCollectionViewCell
 //			ratingCollectionViewCell?.showDetailsElement = showDetailsElement

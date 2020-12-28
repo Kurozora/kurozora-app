@@ -11,21 +11,33 @@ import KurozoraKit
 
 class EpisodesCollectionViewController: KCollectionViewController {
 	// MARK: - IBOutlets
-	@IBOutlet weak var goToButton: UIBarButtonItem! {
-		didSet {
-			goToButton.theme_tintColor = KThemePicker.tintColor.rawValue
-		}
-	}
+	@IBOutlet weak var goToButton: UIBarButtonItem!
 
 	// MARK: - Properties
 	var seasonID: Int = 0
 	var episodes: [Episode] = [] {
 		didSet {
-			_prefersActivityIndicatorHidden = true
 			self.configureDataSource()
+			self._prefersActivityIndicatorHidden = true
+			self.toggleEmptyDataView()
+			#if DEBUG
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.endRefreshing()
+			#endif
+			#endif
 		}
 	}
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>! = nil
+
+	// Refresh control
+	var _prefersRefreshControlDisabled = false {
+		didSet {
+			self.setNeedsRefreshControlAppearanceUpdate()
+		}
+	}
+	override var prefersRefreshControlDisabled: Bool {
+		return self._prefersRefreshControlDisabled
+	}
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -38,28 +50,45 @@ class EpisodesCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - View
+	override func viewWillReload() {
+		super.viewWillReload()
+
+		self.handleRefreshControl()
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		#if DEBUG
+		self._prefersRefreshControlDisabled = false
+		#else
+		self._prefersRefreshControlDisabled = true
+		#endif
 
 		// Fetch episodes
 		DispatchQueue.global(qos: .background).async {
 			self.fetchEpisodes()
 		}
-
-		// Setup scroll view.
-		collectionView.delaysContentTouches = false
 	}
 
 	// MARK: - Functions
+	override func handleRefreshControl() {
+		self.fetchEpisodes()
+	}
+
 	override func configureEmptyDataView() {
-		collectionView?.emptyDataSetView { view in
-			view.titleLabelString(NSAttributedString(string: "No Episodes", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
-				.detailLabelString(NSAttributedString(string: "This season doesn't have episodes yet. Please check back again later.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-				.image(R.image.empty.episodes())
-				.imageTintColor(KThemePicker.textColor.colorValue)
-				.verticalOffset(-50)
-				.verticalSpace(5)
-				.isScrollAllowed(true)
+		emptyBackgroundView.configureImageView(image: R.image.empty.episodes()!)
+		emptyBackgroundView.configureLabels(title: "No Episodes", detail: "This season doesn't have episodes yet. Please check back again later.")
+
+		collectionView.backgroundView?.alpha = 0
+	}
+
+	/// Fades in and out the empty data view according to the number of rows.
+	func toggleEmptyDataView() {
+		if self.collectionView.numberOfItems() == 0 {
+			self.collectionView.backgroundView?.animateFadeIn()
+		} else {
+			self.collectionView.backgroundView?.animateFadeOut()
 		}
 	}
 
@@ -69,7 +98,9 @@ class EpisodesCollectionViewController: KCollectionViewController {
 			guard let self = self else { return }
 			switch result {
 			case .success(let episodes):
-				self.episodes = episodes
+				DispatchQueue.main.async {
+					self.episodes = episodes
+				}
 			case .failure: break
 			}
 		}
@@ -124,7 +155,7 @@ class EpisodesCollectionViewController: KCollectionViewController {
 			actionSheetAlertController.addAction(goToLastWatchedEpisode)
 		}
 
-		//Present the controller
+		// Present the controller
 		if let popoverController = actionSheetAlertController.popoverPresentationController {
 			popoverController.barButtonItem = goToButton
 		}
@@ -141,7 +172,7 @@ class EpisodesCollectionViewController: KCollectionViewController {
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == R.segue.episodesCollectionViewController.episodeDetailSegue.identifier, let episodeCell = sender as? EpisodeLockupCollectionViewCell {
 			if let episodeDetailViewController = segue.destination as? EpisodeDetailCollectionViewControlle, let indexPath = collectionView.indexPath(for: episodeCell) {
-				episodeDetailViewController.episode = episodes[indexPath.row]
+				episodeDetailViewController.episodeID = episodes[indexPath.row].id
 			}
 		}
 	}
@@ -205,7 +236,6 @@ extension EpisodesCollectionViewController {
 			snapshot.appendItems(Array(itemOffset..<itemUpperbound))
 		}
 		dataSource.apply(snapshot)
-		collectionView.reloadEmptyDataSet()
 	}
 }
 

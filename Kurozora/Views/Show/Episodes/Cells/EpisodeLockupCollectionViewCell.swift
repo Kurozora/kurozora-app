@@ -101,7 +101,7 @@ class EpisodeLockupCollectionViewCell: UICollectionViewCell {
 			}))
 		}
 
-		//Present the controller
+		// Present the controller
 		if let popoverController = actionSheetAlertController.popoverPresentationController {
 			popoverController.sourceView = self.episodeMoreButton
 			popoverController.sourceRect = self.episodeMoreButton.bounds
