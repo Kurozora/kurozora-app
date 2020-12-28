@@ -18,11 +18,10 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var shows: [Show] = [] {
 		didSet {
-			self.configureDataSource()
+			self.updateDataSource()
 			self._prefersActivityIndicatorHidden = true
-			self.reloadEmptyDataView {
-				self.toggleEmptyDataView()
-			}
+			self.toggleEmptyDataView()
+
 			#if !targetEnvironment(macCatalyst)
 			self.refreshControl?.endRefreshing()
 			self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your \(self.libraryStatus.stringValue.lowercased()) list.")
@@ -39,7 +38,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	}
 	var libraryCellStyle: KKLibrary.CellStyle = .detailed
 	weak var delegate: LibraryListViewControllerDelegate?
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>! = nil
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Show>! = nil
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
@@ -48,7 +47,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 		}
 	}
 	override var prefersRefreshControlDisabled: Bool {
-		return _prefersRefreshControlDisabled
+		return self._prefersRefreshControlDisabled
 	}
 
 	// Activity indicator
@@ -58,7 +57,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 		}
 	}
 	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
+		return self._prefersActivityIndicatorHidden
 	}
 
 	// MARK: - View
@@ -80,23 +79,21 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	override func viewWillReload() {
 		super.viewWillReload()
 
-		self.reloadEmptyDataView {
-			self.toggleEmptyDataView()
-		}
 		self.enableRefreshControl()
-		self.fetchLibrary()
+		self.handleRefreshControl()
 	}
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-		NotificationCenter.default.addObserver(self, selector: #selector(fetchLibrary), name: Notification.Name("Update\(libraryStatus.sectionValue)Section"), object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(addToLibrary(_:)), name: Notification.Name("AddTo\(self.libraryStatus.sectionValue)Section"), object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(removeFromLibrary(_:)), name: Notification.Name("RemoveFrom\(self.libraryStatus.sectionValue)Section"), object: nil)
 
 		// Add bottom inset to avoid the tabbar obscuring the view
-		collectionView.contentInset.bottom = 50
+		self.collectionView.contentInset.bottom = 50
 
 		// Setup collection view.
-		collectionView.collectionViewLayout = createLayout()
+		self.collectionView.collectionViewLayout = self.createLayout()
 
 		// Hide activity indicator if user is not signed in.
 		if !User.isSignedIn {
@@ -107,8 +104,10 @@ class LibraryListCollectionViewController: KCollectionViewController {
 		// Add Refresh Control to Collection View
 		enableRefreshControl()
 		#if !targetEnvironment(macCatalyst)
-		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your \(libraryStatus.stringValue.lowercased()) list.")
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your \(libraryStatus.stringValue.lowercased()) list.")
 		#endif
+
+		self.configureDataSource()
 
 		// Fetch library if user is signed in
 		if User.isSignedIn {
@@ -129,7 +128,9 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	}
 
 	override func handleRefreshControl() {
-		self.fetchLibrary()
+		DispatchQueue.global(qos: .background).async {
+			self.fetchLibrary()
+		}
 	}
 
 	override func configureEmptyDataView() {
@@ -159,21 +160,11 @@ class LibraryListCollectionViewController: KCollectionViewController {
 
 	/// Enables and disables the refresh control according to the user sign in state.
 	private func enableRefreshControl() {
-		if User.isSignedIn {
-			#if !targetEnvironment(macCatalyst)
-			guard refreshControl == nil else { return }
-			self._prefersRefreshControlDisabled = false
-			#endif
-		} else {
-			#if !targetEnvironment(macCatalyst)
-			guard refreshControl != nil else { return }
-			self._prefersRefreshControlDisabled = true
-			#endif
-		}
+		self._prefersRefreshControlDisabled = !User.isSignedIn
 	}
 
 	/// Fetch the library items for the current user.
-	@objc private func fetchLibrary() {
+	private func fetchLibrary() {
 		if User.isSignedIn {
 			DispatchQueue.main.async {
 				#if !targetEnvironment(macCatalyst)
@@ -190,17 +181,34 @@ class LibraryListCollectionViewController: KCollectionViewController {
 				}
 			}
 		} else {
-			self.shows = []
+			self.shows.removeAll()
 			collectionView.reloadData {
 				self.toggleEmptyDataView()
 			}
 		}
 	}
 
-	/// Returns a ShowDetailsElemenet for the selected show at the given index path.
-	func selectedShow(at indexPath: IndexPath) -> Show? {
-		return shows[indexPath.row]
-    }
+	/**
+		Add the given show to the library.
+
+		- Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
+	*/
+	@objc func addToLibrary(_ notification: NSNotification) {
+		DispatchQueue.global(qos: .background).async {
+			self.fetchLibrary()
+		}
+	}
+
+	/**
+		Removes the given show from the library.
+
+		- Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
+	*/
+	@objc func removeFromLibrary(_ notification: NSNotification) {
+		DispatchQueue.global(qos: .background).async {
+			self.fetchLibrary()
+		}
+	}
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -249,24 +257,21 @@ extension LibraryListCollectionViewController {
 	}
 
 	override func configureDataSource() {
-		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, identifier: Int) -> UICollectionViewCell? in
+		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Show>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: Show) -> UICollectionViewCell? in
 			if let libraryBaseCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: self.libraryCellStyle.identifierString, for: indexPath) as? LibraryBaseCollectionViewCell {
-				libraryBaseCollectionViewCell.show = self.shows[indexPath.item]
+				libraryBaseCollectionViewCell.show = item
 				return libraryBaseCollectionViewCell
 			} else {
 				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.castCollectionViewCell.identifier)")
 			}
 		}
+	}
 
-		let itemsPerSection = shows.count
-		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
-		SectionLayoutKind.allCases.forEach {
-			snapshot.appendSections([$0])
-			let itemOffset = $0.rawValue * itemsPerSection
-			let itemUpperbound = itemOffset + itemsPerSection
-			snapshot.appendItems(Array(itemOffset..<itemUpperbound))
-		}
-		dataSource.apply(snapshot)
+	override func updateDataSource() {
+		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Show>()
+		snapshot.appendSections([.main])
+		snapshot.appendItems(self.shows)
+		dataSource.apply(snapshot, animatingDifferences: true)
 	}
 }
 
@@ -276,7 +281,7 @@ extension LibraryListCollectionViewController {
 		let width = layoutEnvironment.container.effectiveContentSize.width
 		switch libraryCellStyle {
 		case .compact:
-			var columnCount = (width / 125).rounded().int
+			var columnCount = (width / 105).rounded().int
 			if columnCount < 0 {
 				columnCount = 3
 			} else if columnCount > 8 {
@@ -296,19 +301,6 @@ extension LibraryListCollectionViewController {
 		}
 	}
 
-	override func groupHeightFraction(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> CGFloat {
-		switch libraryCellStyle {
-		case .compact:
-			return (1.44 / columnsCount.double).cgFloat
-		case .detailed, .list:
-			return (0.60 / columnsCount.double).cgFloat
-		}
-	}
-
-	override func contentInset(forItemInSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-	}
-
 	override func contentInset(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
 		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
 	}
@@ -316,17 +308,15 @@ extension LibraryListCollectionViewController {
 	override func createLayout() -> UICollectionViewLayout {
 		let layout = UICollectionViewCompositionalLayout { (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-												  heightDimension: .fractionalHeight(1.0))
+			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(200.0))
 			let item = NSCollectionLayoutItem(layoutSize: itemSize)
-			item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
 
-			let heightFraction = self.groupHeightFraction(forSection: section, with: columns, layout: layoutEnvironment)
-			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-												   heightDimension: .fractionalWidth(heightFraction))
+			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(200.0))
 			let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+			layoutGroup.interItemSpacing = .fixed(10.0)
 
 			let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+			layoutSection.interGroupSpacing = 10.0
 			layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
 			return layoutSection
 		}
@@ -338,9 +328,8 @@ extension LibraryListCollectionViewController {
 extension LibraryListCollectionViewController: UICollectionViewDragDelegate {
 	func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
 		guard let libraryBaseCollectionViewCell = collectionView.cellForItem(at: indexPath) as? LibraryBaseCollectionViewCell else { return [UIDragItem]() }
-		let selectedShow = self.selectedShow(at: indexPath)
-
-		guard let userActivity = selectedShow?.openDetailUserActivity else { return [UIDragItem]() }
+		let selectedShow = self.shows[indexPath.row]
+		let userActivity = selectedShow.openDetailUserActivity
 		let itemProvider = NSItemProvider(object: (libraryBaseCollectionViewCell as? LibraryDetailedCollectionViewCell)?.episodeImageView?.image ?? libraryBaseCollectionViewCell.posterImageView.image ?? R.image.placeholders.showPoster()!)
 		itemProvider.suggestedName = libraryBaseCollectionViewCell.titleLabel.text
 		itemProvider.registerObject(userActivity, visibility: .all)
@@ -352,29 +341,25 @@ extension LibraryListCollectionViewController: UICollectionViewDragDelegate {
     }
 }
 
-// MARK: - ShowDetailsCollectionViewControllerDelegate
-extension LibraryListCollectionViewController: ShowDetailsCollectionViewControllerDelegate {
-	func updateShowInLibrary(for libraryCell: LibraryBaseCollectionViewCell?) {
-		guard let libraryCell = libraryCell else { return }
-		guard let indexPath = collectionView.indexPath(for: libraryCell) else { return }
-
-		collectionView.performBatchUpdates({
-			shows.remove(at: indexPath.item)
-			collectionView.deleteItems(at: [indexPath])
-		})
-
-		collectionView.reloadData {
-			self.toggleEmptyDataView()
-		}
-	}
-}
-
 // MARK: - LibraryViewControllerDelegate
 extension LibraryListCollectionViewController: LibraryViewControllerDelegate {
 	func sortLibrary(by sortType: KKLibrary.SortType, option: KKLibrary.SortType.Options) {
 		librarySortType = sortType
 		librarySortTypeOption = option
-		self.fetchLibrary()
+
+//		switch (librarySortType, librarySortTypeOption) {
+//		case (.alphabetically, .ascending):
+//			self.shows.sort { $0.attributes.title < $1.attributes.title }
+//			self.updateDataSource()
+//		case (.alphabetically, .descending):
+//			self.shows.sort { $0.attributes.title > $1.attributes.title }
+//			self.updateDataSource()
+//		default: break
+//		}
+
+		DispatchQueue.global(qos: .background).async {
+			self.fetchLibrary()
+		}
 	}
 
 	func sortValue() -> KKLibrary.SortType {

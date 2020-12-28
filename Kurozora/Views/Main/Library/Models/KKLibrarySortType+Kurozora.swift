@@ -20,15 +20,15 @@ extension KKLibrary.SortType {
 //			case .popularity:
 //				return UIImage(UIImage(systemName: "flame.fill")!
 //			case .nextAiringEpisode:
-//				return R.image.symbols.tv_arrowshape_turn_up_right_fill()!
+//				return UIImage(named: "tv.arrowshape.turn.up.forward.fill")!
 //			case .nextEpisodeToWatch:
-//				return R.image.symbols.tv_eye_fill()!
+//				return UIImage(named: "tv.eye.fill")!
 		case .date:
 			return UIImage(systemName: "calendar")!
 		case .rating:
 			return UIImage(systemName: "star.fill")!
 		case .myRating:
-			return R.image.symbols.person_crop_circle_fill_badge_star()!
+			return UIImage(named: "Symbols/person.crop.circle.fill.badge.star")!
 		}
 	}
 

@@ -10,28 +10,14 @@ import UIKit
 
 class LibraryListCollectionViewCell: LibraryBaseCollectionViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var estimatedAiringLabel: UILabel! {
-		didSet {
-			estimatedAiringLabel.theme_textColor = KThemePicker.tintColor.rawValue
-		}
-	}
-	@IBOutlet weak var informationLabel: KLabel!
-	@IBOutlet weak var genresLabel: UILabel! {
-		didSet {
-			genresLabel.theme_textColor = KThemePicker.subTextColor.rawValue
-		}
-	}
+	@IBOutlet weak var estimatedAiringLabel: KTintedLabel!
+	@IBOutlet weak var informationLabel: KSecondaryLabel!
+	@IBOutlet weak var genresLabel: KSecondaryLabel!
 
 	// MARK: - Properties
 	var timer: Timer?
 
 	// MARK: - View
-	override func layoutSubviews() {
-		super.layoutSubviews()
-
-		posterShadowView?.applyShadow()
-	}
-
 	override func prepareForReuse() {
 		super.prepareForReuse()
 

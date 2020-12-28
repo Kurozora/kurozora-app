@@ -89,8 +89,8 @@ extension Show {
 							// Update entry in library
 							self.attributes.update(using: libraryUpdate)
 
-							let libraryUpdateNotificationName = Notification.Name("Update\(actionLibraryStatus.sectionValue)Section")
-							NotificationCenter.default.post(name: libraryUpdateNotificationName, object: nil)
+							let libraryAddToNotificationName = Notification.Name("AddTo\(actionLibraryStatus.sectionValue)Section")
+							NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
 						case .failure:
 							break
 						}
@@ -108,8 +108,8 @@ extension Show {
 			switch result {
 			case .success(let libraryUpdate):
 				if let oldLibraryStatus = self.attributes.libraryStatus {
-					let libraryUpdateNotificationName = Notification.Name("Update\(oldLibraryStatus.sectionValue)Section")
-					NotificationCenter.default.post(name: libraryUpdateNotificationName, object: nil)
+					let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
+					NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
 				}
 
 				self.attributes = self.attributes.updated(using: libraryUpdate)

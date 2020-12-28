@@ -127,21 +127,6 @@ class LibraryViewController: KTabbedViewController {
 	}
 
 	/// Changes the layout between the available library cell styles.
-	fileprivate func changeSortType() {
-		guard let currentSection = self.currentViewController as? LibraryListCollectionViewController else { return }
-
-		// Update library list
-		UIView.animate(withDuration: 0, animations: {
-			guard let flowLayout = currentSection.collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
-				return
-			}
-			flowLayout.invalidateLayout()
-		}, completion: { _ in
-			currentSection.collectionView.reloadData()
-		})
-	}
-
-	/// Changes the layout between the available library cell styles.
 	fileprivate func changeLayout() {
 		guard let currentSection = self.currentViewController as? LibraryListCollectionViewController else { return }
 		var libraryCellStyle: KKLibrary.CellStyle = KKLibrary.CellStyle(rawValue: changeLayoutBarButtonItem.tag) ?? .detailed
@@ -157,14 +142,10 @@ class LibraryViewController: KTabbedViewController {
 
 		// Update library list
 		currentSection.libraryCellStyle = libraryCellStyle
-		UIView.animate(withDuration: 0, animations: {
-			guard let flowLayout = currentSection.collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
-				return
-			}
-			flowLayout.invalidateLayout()
-		}, completion: { _ in
+
+		UIView.animate(withDuration: 0.2) {
 			currentSection.collectionView.reloadData()
-		})
+		}
 	}
 
 	/**
@@ -179,7 +160,7 @@ class LibraryViewController: KTabbedViewController {
 				self.libraryViewControllerDelegate?.sortLibrary(by: value, option: subValue)
 			}
 
-			//Present the controller
+			// Present the controller
 			if let popoverController = subActionSheetAlertController.popoverPresentationController {
 				popoverController.barButtonItem = sender
 			}
@@ -201,7 +182,7 @@ class LibraryViewController: KTabbedViewController {
 			}
 		}
 
-		//Present the controller
+		// Present the controller
 		if let popoverController = actionSheetAlertController.popoverPresentationController {
 			popoverController.barButtonItem = sender
 		}
@@ -245,7 +226,6 @@ extension LibraryViewController: LibraryListViewControllerDelegate {
 
 	func updateSortTypeButton(with sortType: KKLibrary.SortType) {
 		updateSortTypeBarButtonItem(sortType)
-		changeSortType()
 	}
 }
 

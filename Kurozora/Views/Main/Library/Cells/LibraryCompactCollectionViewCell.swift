@@ -9,10 +9,4 @@
 import UIKit
 
 class LibraryCompactCollectionViewCell: LibraryBaseCollectionViewCell {
-	// MARK: - Functions
-	override func layoutSubviews() {
-		super.layoutSubviews()
-
-		posterShadowView?.applyShadow()
-	}
 }

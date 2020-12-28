@@ -13,13 +13,6 @@ class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 	@IBOutlet weak var episodeImageView: UIImageView!
 	@IBOutlet weak var userProgressLabel: UILabel!
 
-	// MARK: - View
-	override func layoutSubviews() {
-		super.layoutSubviews()
-
-		self.applyShadow()
-	}
-
 	// MARK: - Functions
 	override func configureCell() {
 		super.configureCell()
