@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Follow Table View Controller-->
+        <scene sceneID="3xF-Mk-yn1">
+            <objects>
+                <tableViewController storyboardIdentifier="FollowTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Zpd-sq-8mb" customClass="FollowTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="insetGrouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="dpi-j3-T5m">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="10" reuseIdentifier="FollowCell" id="z0W-Cz-LgW" customClass="FollowCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="20" y="55.5" width="374" height="66"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="z0W-Cz-LgW" id="Xoh-X7-cJq">
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="66"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KbV-cz-nXw" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
+                                            <rect key="frame" x="8" y="8" width="50" height="50"/>
+                                            <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="50" id="JWH-p2-eBj"/>
+                                                <constraint firstAttribute="width" secondItem="KbV-cz-nXw" secondAttribute="height" multiplier="1:1" id="p3k-rl-Omz"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kirito" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xbU-bb-WPB" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                            <rect key="frame" x="66" y="22.5" width="40" height="21"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lg6-G8-Ntc" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
+                                            <rect key="frame" x="299" y="17" width="67" height="32"/>
+                                            <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="32" id="ATm-ao-O0E"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                            <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                                            <state key="normal" title="Follow">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </state>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
+                                            </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="followButtonPressed:" destination="z0W-Cz-LgW" eventType="touchUpInside" id="p1L-2F-A3O"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="lg6-G8-Ntc" firstAttribute="centerY" secondItem="xbU-bb-WPB" secondAttribute="centerY" id="C69-aZ-cLe"/>
+                                        <constraint firstItem="KbV-cz-nXw" firstAttribute="leading" secondItem="Xoh-X7-cJq" secondAttribute="leading" constant="8" id="IvY-db-8Z3"/>
+                                        <constraint firstAttribute="bottom" secondItem="KbV-cz-nXw" secondAttribute="bottom" constant="8" id="Q5N-CL-kFw"/>
+                                        <constraint firstItem="KbV-cz-nXw" firstAttribute="top" secondItem="Xoh-X7-cJq" secondAttribute="top" constant="8" id="eAQ-hc-IXD"/>
+                                        <constraint firstItem="xbU-bb-WPB" firstAttribute="leading" secondItem="KbV-cz-nXw" secondAttribute="trailing" constant="8" symbolic="YES" id="fAi-F2-amF"/>
+                                        <constraint firstItem="KbV-cz-nXw" firstAttribute="centerY" secondItem="Xoh-X7-cJq" secondAttribute="centerY" id="tPS-cF-tBc"/>
+                                        <constraint firstItem="xbU-bb-WPB" firstAttribute="centerY" secondItem="KbV-cz-nXw" secondAttribute="centerY" id="uBR-Jf-rjQ"/>
+                                        <constraint firstAttribute="trailing" secondItem="lg6-G8-Ntc" secondAttribute="trailing" constant="8" id="wNa-jA-0c6"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="followButton" destination="lg6-G8-Ntc" id="JIf-JZ-U8T"/>
+                                    <outlet property="profileImageView" destination="KbV-cz-nXw" id="eia-1z-twX"/>
+                                    <outlet property="usernameLabel" destination="xbU-bb-WPB" id="e6b-gT-yZC"/>
+                                    <segue destination="BIf-M1-TTQ" kind="show" identifier="ProfileSegue" id="dfC-k3-h7X">
+                                        <segue key="commit" inheritsFrom="parent" id="LBB-B5-Nd9"/>
+                                        <segue key="preview" inheritsFrom="commit" id="jbx-pc-m2M"/>
+                                    </segue>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Zpd-sq-8mb" id="LGm-1t-bVg"/>
+                            <outlet property="delegate" destination="Zpd-sq-8mb" id="km7-Na-ukL"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="dHi-KV-l0Q"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Q1j-eU-tVt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1588" y="-1112"/>
+        </scene>
+        <!--ProfileTableViewController-->
+        <scene sceneID="BNc-n1-0fq">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Profile" referencedIdentifier="ProfileTableViewController" id="BIf-M1-TTQ" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="cEb-UN-sUV"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Fc3-CR-ylk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2140" y="-1112"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="pFa-Mr-p1h">
+            <objects>
+                <navigationController storyboardIdentifier="FollowKNavigationController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="X1f-aR-Z62" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="pzq-PT-RKM">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Zpd-sq-8mb" kind="relationship" relationship="rootViewController" id="0da-BP-yrP"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2BY-ho-Sg7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="757" y="-1112"/>
+        </scene>
+    </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="dfC-k3-h7X"/>
+    </inferredMetricsTieBreakers>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

@@ -9,11 +9,10 @@
 import UIKit
 import KurozoraKit
 
-class FollowCell: UITableViewCell {
+class FollowCell: KTableViewCell {
 	@IBOutlet weak var usernameLabel: KLabel!
 	@IBOutlet weak var profileImageView: ProfileImageView!
 	@IBOutlet weak var followButton: KTintedButton!
-	@IBOutlet weak var separatorView: SeparatorView!
 
 	var user: User! {
 		didSet {
@@ -22,11 +21,7 @@ class FollowCell: UITableViewCell {
 	}
 
 	// MARK: - Functions
-	/// Configure the cell with the given details.
-	fileprivate func configureCell() {
-		// Configure follow
-		self.updateFollowButton()
-
+	override func configureCell() {
 		// Configure username
 		self.usernameLabel.text = user.attributes.username
 
@@ -34,8 +29,7 @@ class FollowCell: UITableViewCell {
 		self.profileImageView.image = user.attributes.profileImage
 
 		// Configure follow button
-		self.followButton.setTitle(user.attributes.followStatus == .followed ? "✓ Following" : "+ Follow", for: .normal)
-		self.followButton.isHidden = user.id == User.current?.id
+		self.updateFollowButton()
 	}
 
 	/// Updated the `followButton` with the follow status of the user.
