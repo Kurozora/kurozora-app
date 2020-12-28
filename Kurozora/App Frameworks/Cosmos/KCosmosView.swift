@@ -30,10 +30,6 @@ class KCosmosView: CosmosView {
 		self.sharedInit()
 	}
 
-	deinit {
-		NotificationCenter.default.removeObserver(self)
-	}
-
 	// MARK: - Functions
 	/// The shared settings used to initialize cosmos view.
 	fileprivate func sharedInit() {

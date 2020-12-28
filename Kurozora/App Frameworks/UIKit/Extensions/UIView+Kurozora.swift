@@ -36,7 +36,9 @@ extension UIView {
 		- Parameter completion: optional completion handler to run with animation finishes (default is nil)
 	*/
 	func animateFadeIn(duration: TimeInterval = 0.80, completion: ((Bool) -> Void)? = nil) {
-		alpha = 0.0
+		if self.alpha != 0.0 {
+			self.alpha = 0.0
+		}
 		UIView.animate(withDuration: duration, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1.0, options: [.allowUserInteraction, .curveEaseOut], animations: { () -> Void in
 			self.alpha = 1.0
 		}, completion: completion)

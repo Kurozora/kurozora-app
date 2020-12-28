@@ -12,15 +12,6 @@ class BounceAnimation: BasicTabBarItemContentView {
 	// MARK: - Properties
 	var duration = 0.3
 
-	// MARK: - Initializers
-	override init(frame: CGRect) {
-		super.init(frame: frame)
-	}
-
-	required init?(coder aDecoder: NSCoder) {
-		super.init(coder: aDecoder)
-	}
-
 	// MARK: - Functions
 	override func selectAnimation(animated: Bool, completion: (() -> Void)?) {
 		self.bounceAnimation()
