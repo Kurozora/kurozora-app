@@ -14,16 +14,31 @@ class FMDetailsTableViewController: KTableViewController {
 	var feedMessageID: Int = 0
 	var feedMessage: FeedMessage! {
 		didSet {
-			_prefersActivityIndicatorHidden = true
 			self.feedMessageID = feedMessage?.id ?? feedMessageID
 
 			let repliesCount = feedMessage.attributes.metrics.replyCount
 			self.title = "\(repliesCount.kkFormatted) replies"
+
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing message replies...")
+			#endif
 		}
 	}
 
 	// Reply variables
-	var feedMessageReplies: [FeedMessage] = []
+	var feedMessageReplies: [FeedMessage] = [] {
+		didSet {
+			self.tableView.reloadData {
+				self._prefersActivityIndicatorHidden = true
+				self.toggleEmptyDataView()
+			}
+
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.endRefreshing()
+			self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh message details and replies!")
+			#endif
+		}
+	}
 	var nextPageURL: String?
 
 	// Activity indicator
@@ -46,7 +61,7 @@ class FMDetailsTableViewController: KTableViewController {
 		super.viewDidLoad()
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
-		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh message details!")
+		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh message details and replies!")
 		#endif
 
 		DispatchQueue.global(qos: .background).async {
@@ -61,24 +76,26 @@ class FMDetailsTableViewController: KTableViewController {
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		#if !targetEnvironment(macCatalyst)
-		refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing message details...")
-		#endif
 		self.nextPageURL = nil
-		fetchDetails()
+		self.fetchDetails()
 	}
 
 	override func configureEmptyDataView() {
-		tableView.emptyDataSetView { [weak self] (view) in
-			guard let self = self else { return }
-			let verticalOffset = (self.tableView.tableHeaderView?.height ?? 0 - self.view.height) / 2
-			view.titleLabelString(NSAttributedString(string: "No Replies", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
-				.detailLabelString(NSAttributedString(string: "Be the first to reply to this message!", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-				.image(R.image.empty.comment())
-				.imageTintColor(KThemePicker.textColor.colorValue)
-				.verticalOffset(verticalOffset < 0 ? 0 : verticalOffset)
-				.verticalSpace(10)
-				.isScrollAllowed(true)
+		// TODO: - HERE: Look at this
+//		let verticalOffset = (self.tableView.tableHeaderView?.height ?? 0 - self.view.height) / 2
+
+		emptyBackgroundView.configureImageView(image: R.image.empty.comment()!)
+		emptyBackgroundView.configureLabels(title: "No Replies", detail: "Be the first to reply to this message!")
+
+		tableView.backgroundView?.alpha = 0
+	}
+
+	/// Fades in and out the empty data view according to the number of sections.
+	func toggleEmptyDataView() {
+		if self.tableView.numberOfRows() <= 1 {
+			self.tableView.backgroundView?.animateFadeIn()
+		} else {
+			self.tableView.backgroundView?.animateFadeOut()
 		}
 	}
 
@@ -98,55 +115,45 @@ class FMDetailsTableViewController: KTableViewController {
 
 	/// Fetch feed message details.
 	func fetchDetails() {
+		DispatchQueue.main.async {
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing message details...")
+			#endif
+		}
+
 		KService.getDetails(forFeedMessage: self.feedMessageID) { [weak self] result in
 			guard let self = self else { return }
-
 			switch result {
 			case .success(let feedMessages):
-				self.feedMessage = feedMessages.first
-				if self.tableView.numberOfSections != 0 {
-					self.tableView.reloadSections([0], with: .automatic)
-				} else {
+				DispatchQueue.main.async {
+					self.feedMessage = feedMessages.first
 					self.tableView.reloadData()
 				}
-
-				// Reset refresh controller title
-				#if !targetEnvironment(macCatalyst)
-				self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh feed details!")
-				#endif
 			case .failure: break
 			}
 		}
 
-		getReplies()
+		self.fetchFeedReplies()
 	}
 
 	/// Fetch the feed message replies.
-	func getReplies() {
-		KService.getReplies(forFeedMessage: feedMessageID, next: nextPageURL) {[weak self] result in
+	func fetchFeedReplies() {
+		KService.getReplies(forFeedMessage: feedMessageID, next: nextPageURL) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
 			case .success(let feedMessageResponse):
-				// Reset data if necessary
-				if self.nextPageURL == nil {
-					self.feedMessageReplies = []
-				}
+				DispatchQueue.main.async {
+					// Reset data if necessary
+					if self.nextPageURL == nil {
+						self.feedMessageReplies = []
+					}
 
-				// Append new data and save next page url
-				self.feedMessageReplies.append(contentsOf: feedMessageResponse.data)
-				self.nextPageURL = feedMessageResponse.next
-
-				if self.tableView.numberOfSections != 0 {
-					self.tableView.reloadSections([1], with: .automatic)
+					// Append new data and save next page url
+					self.feedMessageReplies.append(contentsOf: feedMessageResponse.data)
+					self.nextPageURL = feedMessageResponse.next
 				}
 			case .failure: break
 			}
-		}
-
-		DispatchQueue.main.async {
-			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.endRefreshing()
-			#endif
 		}
 	}
 
@@ -166,13 +173,13 @@ class FMDetailsTableViewController: KTableViewController {
 // MARK: - UITableViewDataSource
 extension FMDetailsTableViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return self.feedMessage == nil ? 0 : 2
+		return 2
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		switch section {
 		case 0:
-			return 1
+			return self.feedMessage != nil ? 1 : 0
 		default:
 			return feedMessageReplies.count
 		}
@@ -222,7 +229,7 @@ extension FMDetailsTableViewController {
 
 		if indexPath.row == numberOfRows - 5 {
 			if self.nextPageURL != nil {
-				self.getReplies()
+				self.fetchFeedReplies()
 			}
 		}
 	}
@@ -231,8 +238,8 @@ extension FMDetailsTableViewController {
 		if let baseFeedMessageCell = tableView.cellForRow(at: indexPath) as? BaseFeedMessageCell {
 			baseFeedMessageCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
 
-			baseFeedMessageCell.usernameLabel.theme_tintColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-			baseFeedMessageCell.postTextView.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
+			baseFeedMessageCell.usernameLabel.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+			baseFeedMessageCell.postTextView.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
 		}
 	}
 
@@ -240,8 +247,8 @@ extension FMDetailsTableViewController {
 		if let baseFeedMessageCell = tableView.cellForRow(at: indexPath) as? BaseFeedMessageCell {
 			baseFeedMessageCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 
-			baseFeedMessageCell.usernameLabel.theme_tintColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-			baseFeedMessageCell.postTextView.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+			baseFeedMessageCell.usernameLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			baseFeedMessageCell.postTextView.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
 		}
 	}
 

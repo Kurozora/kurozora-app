@@ -19,8 +19,15 @@ class FeedTableViewController: KTableViewController {
 
 	var feedMessages: [FeedMessage] = [] {
 		didSet {
-			_prefersActivityIndicatorHidden = true
-			self.tableView.reloadEmptyDataSet()
+			self.tableView.reloadData {
+				self._prefersActivityIndicatorHidden = true
+				self.toggleEmptyDataView()
+			}
+
+			// Reset refresh controller title
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your explore feed!")
+			#endif
 		}
 	}
 	var nextPageURL: String?
@@ -41,6 +48,7 @@ class FeedTableViewController: KTableViewController {
 
 		self.enableActions()
 		self.configureUserDetails()
+		self.handleRefreshControl()
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -72,22 +80,23 @@ class FeedTableViewController: KTableViewController {
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		#if !targetEnvironment(macCatalyst)
-		refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing your explore feed...")
-		#endif
 		self.nextPageURL = nil
 		fetchFeedMessages()
 	}
 
 	override func configureEmptyDataView() {
-		tableView.emptyDataSetView { (view) in
-			view.titleLabelString(NSAttributedString(string: "No Feed", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
-				.detailLabelString(NSAttributedString(string: "Can't get feed list. Please reload the page or restart the app and check your WiFi connection.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-				.image(R.image.empty.comment())
-				.imageTintColor(KThemePicker.textColor.colorValue)
-				.verticalOffset(-50)
-				.verticalSpace(5)
-				.isScrollAllowed(true)
+		emptyBackgroundView.configureImageView(image: R.image.empty.comment()!)
+		emptyBackgroundView.configureLabels(title: "No Feed", detail: "Can't get feed list. Please refresh the page or restart the app and check your WiFi connection.")
+
+		tableView.backgroundView?.alpha = 0
+	}
+
+	/// Fades in and out the empty data view according to the number of sections.
+	func toggleEmptyDataView() {
+		if self.tableView.numberOfSections == 0 {
+			self.tableView.backgroundView?.animateFadeIn()
+		} else {
+			self.tableView.backgroundView?.animateFadeOut()
 		}
 	}
 
@@ -112,6 +121,12 @@ class FeedTableViewController: KTableViewController {
 
 	/// Fetch feed posts for the current section.
 	func fetchFeedMessages() {
+		DispatchQueue.main.async {
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing your explore feed...")
+			#endif
+		}
+
 		KService.getFeedExplore(next: nextPageURL) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
@@ -124,13 +139,6 @@ class FeedTableViewController: KTableViewController {
 				// Append new data and save next page url
 				self.feedMessages.append(contentsOf: feedMessageResponse.data)
 				self.nextPageURL = feedMessageResponse.next
-
-				self.tableView.reloadData()
-
-				// Reset refresh controller title
-				#if !targetEnvironment(macCatalyst)
-				self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your explore feed!")
-				#endif
 			case .failure: break
 			}
 		}
@@ -243,8 +251,8 @@ extension FeedTableViewController {
 		if let baseFeedMessageCell = tableView.cellForRow(at: indexPath) as? BaseFeedMessageCell {
 			baseFeedMessageCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
 
-			baseFeedMessageCell.usernameLabel.theme_tintColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-			baseFeedMessageCell.postTextView.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
+			baseFeedMessageCell.usernameLabel.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+			baseFeedMessageCell.postTextView.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
 		}
 	}
 
@@ -252,8 +260,8 @@ extension FeedTableViewController {
 		if let baseFeedMessageCell = tableView.cellForRow(at: indexPath) as? BaseFeedMessageCell {
 			baseFeedMessageCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 
-			baseFeedMessageCell.usernameLabel.theme_tintColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-			baseFeedMessageCell.postTextView.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+			baseFeedMessageCell.usernameLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			baseFeedMessageCell.postTextView.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
 		}
 	}
 
