@@ -442,20 +442,9 @@ extension HomeCollectionViewController {
 
 			switch verticalCollectionCellStyle {
 			case .actionButton:
-				if width > 828 {
-					let itemsWidth = (414 * numberOfItems + 20 * numberOfItems).cgFloat
-					var leadingInset: CGFloat = (width - itemsWidth) / 2
-					var trailingInset: CGFloat = leadingInset
-
-					if leadingInset < 10 {
-						leadingInset = 10
-						trailingInset = 10
-					}
-
-					return NSDirectionalEdgeInsets(top: 0, leading: leadingInset, bottom: 20, trailing: trailingInset)
-				}
-
-				return NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 40, trailing: 10)
+				let leadingInset = self.collectionView.directionalLayoutMargins.leading
+				let trailingInset = self.collectionView.directionalLayoutMargins.trailing
+				return NSDirectionalEdgeInsets(top: 0, leading: leadingInset, bottom: 20, trailing: trailingInset)
 			case .legal:
 				return NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 20, trailing: 10)
 			default:
@@ -469,13 +458,13 @@ extension HomeCollectionViewController {
 			let exploreCategoriesCount = self.exploreCategories.count
 			switch section {
 			case let section where section < exploreCategoriesCount:
-				let exploreCategorySize = self.exploreCategories[section].attributes.exploreCategorySize
+				let exploreCategorySize = section != 0 ? self.exploreCategories[section].attributes.exploreCategorySize : .banner
 				var sectionLayout: NSCollectionLayoutSection? = nil
 
 				switch exploreCategorySize {
 				case .banner:
-					let gridSection = self.gridSection(for: section, layoutEnvironment: layoutEnvironment)
-					return gridSection
+					sectionLayout = self.gridSection(for: section, layoutEnvironment: layoutEnvironment)
+					return sectionLayout
 				case .large:
 					sectionLayout = self.gridSection(for: section, layoutEnvironment: layoutEnvironment)
 				case .medium:
