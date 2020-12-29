@@ -48,7 +48,7 @@
         <scene sceneID="gCw-Zx-RW6">
             <objects>
                 <collectionViewController storyboardIdentifier="LibraryListCollectionViewController" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="QE5-9K-gce" customClass="LibraryListCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" id="6vj-Jx-pIa">
+                    <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" keyboardDismissMode="onDrag" dataMode="prototypes" id="6vj-Jx-pIa">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
