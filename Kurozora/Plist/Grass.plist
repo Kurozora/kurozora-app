@@ -33,11 +33,11 @@
 		<key>tintedButtonTextColor</key>
 		<string>#E5EFAC</string>
 		<key>separatorColor</key>
-		<string>#B7BF89</string>
+		<string>#898F67</string>
 		<key>separatorColorLight</key>
 		<string>#CED79A</string>
 		<key>subTextColor</key>
-		<string>#B7BF89</string>
+		<string>#898F67</string>
 	</dict>
 	<key>TableViewCell</key>
 	<dict>
