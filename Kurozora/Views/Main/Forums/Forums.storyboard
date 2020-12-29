@@ -34,7 +34,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Should anime forums be deleted? LMAO lol skittles" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jGw-Ib-wBw" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="26" y="8" width="322" height="42.5"/>
+                                            <rect key="frame" x="26" y="8" width="340" height="42.5"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -179,7 +179,7 @@
                                         <constraint firstItem="jGw-Ib-wBw" firstAttribute="top" secondItem="CGY-d5-Mqd" secondAttribute="top" id="d1L-RP-bKr"/>
                                         <constraint firstItem="CGY-d5-Mqd" firstAttribute="leading" secondItem="oqg-85-MAy" secondAttribute="leading" constant="6" id="jZp-bj-mOU"/>
                                         <constraint firstItem="LfV-s9-0I0" firstAttribute="top" secondItem="Rk4-ya-8xf" secondAttribute="bottom" id="m5E-t9-Iws"/>
-                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="jGw-Ib-wBw" secondAttribute="trailing" constant="8" id="nmB-b4-O4v"/>
+                                        <constraint firstAttribute="trailing" secondItem="jGw-Ib-wBw" secondAttribute="trailing" constant="8" id="nmB-b4-O4v"/>
                                         <constraint firstItem="9ss-Hv-TuU" firstAttribute="top" secondItem="LfV-s9-0I0" secondAttribute="top" id="pNr-jM-gob"/>
                                         <constraint firstItem="Rk4-ya-8xf" firstAttribute="leading" secondItem="jGw-Ib-wBw" secondAttribute="leading" id="phj-3d-2E9"/>
                                         <constraint firstAttribute="trailing" secondItem="Rk4-ya-8xf" secondAttribute="trailing" constant="8" id="r8Z-YU-5Gi"/>
