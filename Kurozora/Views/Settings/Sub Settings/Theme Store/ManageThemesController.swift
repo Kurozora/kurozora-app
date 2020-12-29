@@ -13,11 +13,27 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var themes: [[Theme]] = [[], []] {
 		didSet {
-			_prefersActivityIndicatorHidden = true
 			self.configureDataSource()
+			self._prefersActivityIndicatorHidden = true
+			self.toggleEmptyDataView()
+			#if DEBUG
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.endRefreshing()
+			#endif
+			#endif
 		}
 	}
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>! = nil
+
+	// Refresh control
+	var _prefersRefreshControlDisabled = false {
+		didSet {
+			self.setNeedsRefreshControlAppearanceUpdate()
+		}
+	}
+	override var prefersRefreshControlDisabled: Bool {
+		return self._prefersRefreshControlDisabled
+	}
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -66,12 +82,51 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 				"screenshot": "",
 				"downloadLink": ""
 			  }
+			},
+			{
+			  "id": 4,
+			  "type": "themes",
+			  "href": "",
+			  "attributes": {
+				"name": "Grass",
+				"backgroundColor": "#E5EFAC",
+				"screenshot": "",
+				"downloadLink": ""
+			  }
+			},
+			{
+			  "id": 5,
+			  "type": "themes",
+			  "href": "",
+			  "attributes": {
+				"name": "Sky",
+				"backgroundColor": "#E5EFAC",
+				"screenshot": "",
+				"downloadLink": ""
+			  }
+			},
+			{
+			  "id": 6,
+			  "type": "themes",
+			  "href": "",
+			  "attributes": {
+				"name": "Sakura",
+				"backgroundColor": "#E5EFAC",
+				"screenshot": "",
+				"downloadLink": ""
+			  }
 			}
 		]
 	}
 	""".data(using: .utf8)!)
 
 	// MARK: - View
+	override func viewWillReload() {
+		super.viewWillReload()
+
+		self.handleRefreshControl()
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
@@ -85,6 +140,12 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 	required init?(coder: NSCoder) {
 		super.init(coder: coder)
 
+		#if DEBUG
+		self._prefersRefreshControlDisabled = false
+		#else
+		self._prefersRefreshControlDisabled = true
+		#endif
+
 		// Fetch themes
 		DispatchQueue.global(qos: .background).async {
 			self.fetchThemes()
@@ -92,6 +153,26 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - Functions
+	override func handleRefreshControl() {
+		self.fetchThemes()
+	}
+
+	override func configureEmptyDataView() {
+		emptyBackgroundView.configureImageView(image: R.image.empty.themes()!)
+		emptyBackgroundView.configureLabels(title: "No Themes", detail: "Themes are not available at this moment. Please check back again later.")
+
+		collectionView.backgroundView?.alpha = 0
+	}
+
+	/// Fades in and out the empty data view according to the number of rows.
+	func toggleEmptyDataView() {
+		if self.collectionView.numberOfItems() == 0 {
+			self.collectionView.backgroundView?.animateFadeIn()
+		} else {
+			self.collectionView.backgroundView?.animateFadeOut()
+		}
+	}
+
 	/// Fetches themes from the server.
 	func fetchThemes() {
 		KService.getThemes { [weak self] result in
@@ -102,19 +183,6 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 				}
 			case .failure: break
 			}
-		}
-	}
-
-	override func configureEmptyDataView() {
-		super.configureEmptyDataView()
-		collectionView.emptyDataSetView { view in
-			view.titleLabelString(NSAttributedString(string: "No Themes", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
-				.detailLabelString(NSAttributedString(string: "Can't get themes list. Please reload the page or restart the app and check your WiFi connection.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-				.image(R.image.empty.themes())
-				.imageTintColor(KThemePicker.textColor.colorValue)
-				.verticalOffset(-50)
-				.verticalSpace(5)
-				.isScrollAllowed(true)
 		}
 	}
 }
@@ -145,7 +213,6 @@ extension ManageThemesCollectionViewController {
 			snapshot.appendItems(Array(itemOffset..<itemUpperbound))
 		}
 		dataSource.apply(snapshot)
-		collectionView.reloadEmptyDataSet()
 	}
 }
 
@@ -172,14 +239,12 @@ extension ManageThemesCollectionViewController {
 	override func createLayout() -> UICollectionViewLayout {
 		let layout = UICollectionViewCompositionalLayout { (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-												  heightDimension: .fractionalHeight(1.0))
+			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
 			let item = NSCollectionLayoutItem(layoutSize: itemSize)
 			item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
 
 			let heightFraction = self.groupHeightFraction(forSection: section, with: columns, layout: layoutEnvironment)
-			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-												   heightDimension: .fractionalWidth(heightFraction))
+			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(heightFraction))
 			let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
 
 			let layoutSection = NSCollectionLayoutSection(group: layoutGroup)

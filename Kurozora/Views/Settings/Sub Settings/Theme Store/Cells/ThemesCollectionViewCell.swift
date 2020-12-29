@@ -14,11 +14,7 @@ class ThemesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var themeScreenshot: UIImageView!
 	@IBOutlet weak var shadowView: UIView!
 	@IBOutlet weak var titleLabel: KLabel!
-	@IBOutlet weak var downloadCountLabel: UILabel! {
-		didSet {
-			downloadCountLabel.theme_textColor = KThemePicker.subTextColor.rawValue
-		}
-	}
+	@IBOutlet weak var downloadCountLabel: KSecondaryLabel!
 	@IBOutlet weak var getThemeButton: KTintedButton! {
 		didSet {
 			NotificationCenter.default.addObserver(self, selector: #selector(updateGetThemeButton), name: .ThemeUpdateNotification, object: nil)
@@ -60,7 +56,6 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 
 		shouldHideMoreButton()
 		updateGetThemeButton()
-		shadowView.applyShadow()
 	}
 
 	/// Checks whether to hide or unhide the more button for the current cell.
@@ -234,7 +229,7 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 			actionSheetAlertController.addAction(removeAction)
 		}
 
-		//Present the controller
+		// Present the controller
 		if let popoverController = actionSheetAlertController.popoverPresentationController {
 			popoverController.sourceView = sender
 			popoverController.sourceRect = sender.bounds

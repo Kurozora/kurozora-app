@@ -2720,8 +2720,8 @@
 		66CE810E24608F5200DB0C49 /* Cells, Headers, and Footers */ = {
 			isa = PBXGroup;
 			children = (
-				6684224E25967A01000A09F8 /* TitleHeaderTableViewCell */,
 				66CE810B24608DD800DB0C49 /* KTableViewCell.swift */,
+				6684224E25967A01000A09F8 /* TitleHeaderTableViewCell */,
 			);
 			path = "Cells, Headers, and Footers";
 			sourceTree = "<group>";
