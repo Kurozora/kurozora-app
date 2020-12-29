@@ -23,4 +23,19 @@ extension KTableViewController: KTableViewDataSource {
 	func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
 		return []
 	}
+
+	/**
+		Asks your data source object for the reusable views registered with the `tableView`.
+
+		If you do not implement this method, the collection view uses a default value of an empty array.
+
+		- Parameter tableView: The collection view requesting this information.
+
+		- Returns: The collection view reusable views registered with `tableView`.
+
+		- Tag: KTableViewDataSource-registerNibsForTableView
+	*/
+	func registerNibs(for tableView: UITableView) -> [UITableViewHeaderFooterView.Type] {
+		return []
+	}
 }

@@ -15,4 +15,5 @@ import UIKit
 */
 @objc protocol KTableViewDataSource: class {
 	@objc optional func registerCells(for tableView: UITableView) -> [UITableViewCell.Type]
+	@objc optional func registerNibs(for tableView: UITableView) -> [UITableViewHeaderFooterView.Type]
 }

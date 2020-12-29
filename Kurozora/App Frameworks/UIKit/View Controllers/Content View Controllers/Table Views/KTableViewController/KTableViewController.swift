@@ -123,6 +123,8 @@ class KTableViewController: UITableViewController {
 
 		// Register cells with the table view.
 		registerCells()
+
+		registerNibs()
 	}
 
 	/**
@@ -131,6 +133,15 @@ class KTableViewController: UITableViewController {
 	fileprivate func registerCells() {
 		for cell in registerCells(for: tableView) {
 			tableView.register(nibWithCellClass: cell)
+		}
+	}
+
+	/**
+		Registers nibs returned by [registerNibs(for tableView: UITableView)](x-source-tag://KTableViewController-registerNibsForTableView).
+	*/
+	fileprivate func registerNibs() {
+		for nib in registerNibs(for: tableView) {
+			tableView.register(nib: UINib(nibName: String(describing: nib), bundle: nil), withHeaderFooterViewClass: nib)
 		}
 	}
 }

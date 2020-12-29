@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
@@ -9,44 +9,46 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="TitleHeaderTableViewCell" id="2rY-D6-UBE" customClass="TitleHeaderTableViewCell" customModule="Kurozora" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="374" height="66.5"/>
+        <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="TitleHeaderTableViewCell" id="DKb-Sl-9bB" customClass="TitleHeaderTableViewCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="374" height="64"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" tableViewCell="2rY-D6-UBE" id="Paw-Fy-Lw1">
-                <rect key="frame" x="0.0" y="0.0" width="374" height="66.5"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" tableViewCell="DKb-Sl-9bB" id="pJ9-rd-ZxT">
+                <rect key="frame" x="0.0" y="0.0" width="374" height="64"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Earlier Today" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TZa-Zz-MZi" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="20" y="10" width="132.5" height="46.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Earlier Today" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GdJ-YR-WPw" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="10" width="132.5" height="26.5"/>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
-                        <color key="textColor" red="0.99988999999999995" green="1" blue="0.99987999999999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JHh-IH-t99" customClass="HeaderButton" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="245" y="11.5" width="109" height="44"/>
+                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PDa-5H-e7j" customClass="HeaderButton" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="311" y="10" width="63" height="44"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="44" id="P7p-lT-9DW"/>
+                            <constraint firstAttribute="height" constant="44" id="r8T-R0-jAr"/>
                         </constraints>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
-                        <state key="normal" title="Mark as read"/>
+                        <state key="normal" title="See All">
+                            <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </state>
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailingMargin" secondItem="JHh-IH-t99" secondAttribute="trailing" id="7V7-H4-MaT"/>
-                    <constraint firstItem="JHh-IH-t99" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Paw-Fy-Lw1" secondAttribute="topMargin" id="9JK-Is-HVF"/>
-                    <constraint firstItem="TZa-Zz-MZi" firstAttribute="top" secondItem="Paw-Fy-Lw1" secondAttribute="top" constant="10" id="AF5-Jx-sIl"/>
-                    <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="JHh-IH-t99" secondAttribute="bottom" id="CGE-Lb-tYU"/>
-                    <constraint firstAttribute="bottom" secondItem="TZa-Zz-MZi" secondAttribute="bottom" constant="10" id="Fti-WW-2uU"/>
-                    <constraint firstItem="JHh-IH-t99" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="TZa-Zz-MZi" secondAttribute="trailing" constant="10" id="T7Q-lC-HYF"/>
-                    <constraint firstItem="JHh-IH-t99" firstAttribute="centerY" secondItem="TZa-Zz-MZi" secondAttribute="centerY" id="UPY-tm-boO"/>
-                    <constraint firstItem="TZa-Zz-MZi" firstAttribute="leading" secondItem="Paw-Fy-Lw1" secondAttribute="leadingMargin" id="lmn-Rt-Npa"/>
+                    <constraint firstItem="GdJ-YR-WPw" firstAttribute="top" secondItem="pJ9-rd-ZxT" secondAttribute="top" constant="10" id="7vz-r0-DTm"/>
+                    <constraint firstAttribute="bottom" secondItem="GdJ-YR-WPw" secondAttribute="bottom" constant="10" id="TSx-A9-zGP"/>
+                    <constraint firstItem="PDa-5H-e7j" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="GdJ-YR-WPw" secondAttribute="trailing" constant="8" symbolic="YES" id="bHP-qi-nOp"/>
+                    <constraint firstItem="GdJ-YR-WPw" firstAttribute="leading" secondItem="pJ9-rd-ZxT" secondAttribute="leading" id="gZw-jv-YTf"/>
+                    <constraint firstItem="PDa-5H-e7j" firstAttribute="top" secondItem="pJ9-rd-ZxT" secondAttribute="top" constant="10" id="kqp-aU-IwL"/>
+                    <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="PDa-5H-e7j" secondAttribute="bottom" constant="10" id="lLz-n2-gao"/>
+                    <constraint firstAttribute="trailing" secondItem="PDa-5H-e7j" secondAttribute="trailing" id="oax-Bv-rws"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <connections>
-                <outlet property="headerButton" destination="JHh-IH-t99" id="Dh5-b8-ohC"/>
-                <outlet property="titleLabel" destination="TZa-Zz-MZi" id="uU6-AI-qGc"/>
+                <outlet property="headerButton" destination="PDa-5H-e7j" id="6tB-iw-1m7"/>
+                <outlet property="titleLabel" destination="GdJ-YR-WPw" id="CcN-AP-OjR"/>
             </connections>
             <point key="canvasLocation" x="-23" y="154"/>
         </tableViewCell>
