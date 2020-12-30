@@ -421,7 +421,6 @@ extension HomeCollectionViewController {
 	}
 
 	override func contentInset(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		let width = layoutEnvironment.container.effectiveContentSize.width
 		let exploreCategoriesCount = self.exploreCategories.count
 
 		switch section {

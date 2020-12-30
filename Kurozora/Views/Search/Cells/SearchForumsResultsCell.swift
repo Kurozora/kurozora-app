@@ -13,17 +13,16 @@ class SearchForumsResultsCell: SearchBaseResultsCell {
 	// MARK: - Properties
 	var forumsThread: ForumsThread! {
 		didSet {
-			if forumsThread != nil {
-				configureCell()
-			}
+			self.configureCell()
 		}
 	}
 
+	// MARK: - Functions
 	override func configureCell() {
 		super.configureCell()
 
 		primaryLabel.text = forumsThread.attributes.title
-		textView?.text = forumsThread.attributes.content
+		secondaryLabel?.text = forumsThread.attributes.content
 
 		// Configure lock
 		let lockStatus = forumsThread.attributes.lockStatus

@@ -47,16 +47,16 @@ class SearchResultsCollectionViewController: UICollectionViewController {
 		super.viewWillAppear(animated)
 
 		// Fetch user's search history.
-		SearchHistory.getContent({ (showDetailsElements) in
+		SearchHistory.getContent { showDetailsElements in
 			self.suggestionElements = showDetailsElements
-		})
+		}
 	}
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
 		// Create colelction view layout
-		collectionView.collectionViewLayout = createLayout()
+		self.collectionView.collectionViewLayout = self.createLayout()
 
 		// Blurred table view background
 		let blurEffect = UIBlurEffect(style: .regular)
@@ -66,7 +66,7 @@ class SearchResultsCollectionViewController: UICollectionViewController {
 			subview.backgroundColor = nil
 		}
 
-		collectionView.backgroundView = blurEffectView
+		self.collectionView.backgroundView = blurEffectView
     }
 
 	// MARK: - Functions
@@ -153,8 +153,8 @@ class SearchResultsCollectionViewController: UICollectionViewController {
 extension SearchResultsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		var resultsCount = suggestionElements?.count
-		if UIDevice.isPhone, UIDevice.isPortrait || UIDevice.isFlat, resultsCount ?? 0 > 6 {
-			resultsCount = 6
+		if UIDevice.isPhone, UIDevice.isPortrait || UIDevice.isFlat, resultsCount ?? 0 > 8 {
+			resultsCount = 8
 		}
 
 		if searchResults != nil {
@@ -167,8 +167,7 @@ extension SearchResultsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		if searchResults != nil {
 			let searchBaseResultsCell = collectionView.dequeueReusableCell(withReuseIdentifier: currentScope.identifierString, for: indexPath) as! SearchBaseResultsCell
-			searchBaseResultsCell.indexPath = indexPath
-			searchBaseResultsCell.numberOfItems = collectionView.numberOfItems()
+			searchBaseResultsCell.separatorView?.isHidden = indexPath.item == searchResults!.count - 1
 			switch currentScope {
 			case .show, .myLibrary:
 				(searchBaseResultsCell as? SearchShowResultsCell)?.show = searchResults?[indexPath.row] as? Show
@@ -229,46 +228,16 @@ extension SearchResultsCollectionViewController {
 // MARK: - KCollectionViewDelegateLayout
 extension SearchResultsCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
-		if searchResults != nil {
-			return 1
-		}
+		if searchResults != nil { return 1 }
 
 		let width = layoutEnvironment.container.contentSize.width
-		var columnCount = (width / 110).rounded().int
+		var columnCount = (width / 105).rounded().int
 		if columnCount < 0 {
 			columnCount = 1
 		} else if columnCount > 5 {
 			columnCount = 5
 		}
 		return columnCount
-	}
-
-	override func groupHeightFraction(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> CGFloat {
-		if searchResults != nil {
-			switch currentScope {
-			case .show, .myLibrary:
-				if UIDevice.isPhone, UIDevice.isPortrait || UIDevice.isFlat {
-					return 0.40
-				}
-				return 0.25
-			case .thread:
-				if UIDevice.isPhone, UIDevice.isPortrait || UIDevice.isFlat {
-					return 0.30
-				}
-				return 0.15
-			case .user:
-				if UIDevice.isPhone, UIDevice.isPortrait || UIDevice.isFlat {
-					return 0.25
-				}
-				return 0.20
-			}
-		}
-
-		return (1.50 / columnsCount.double).cgFloat
-	}
-
-	override func contentInset(forItemInSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
 	}
 
 	override func contentInset(forSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
@@ -278,25 +247,23 @@ extension SearchResultsCollectionViewController {
 	}
 
 	override func contentInset(forBackgroundInSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		let leadingInset = collectionView.directionalLayoutMargins.leading
-		let trailingInset = collectionView.directionalLayoutMargins.trailing
-		return NSDirectionalEdgeInsets(top: 20, leading: leadingInset, bottom: 20, trailing: trailingInset)
+		let leadingInset = collectionView.directionalLayoutMargins.leading - 10.0
+		let trailingInset = collectionView.directionalLayoutMargins.trailing - 10.0
+		return NSDirectionalEdgeInsets(top: 10, leading: leadingInset, bottom: 10, trailing: trailingInset)
 	}
 
 	override func createLayout() -> UICollectionViewLayout {
 		let layout = UICollectionViewCompositionalLayout { (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-												  heightDimension: .fractionalHeight(1.0))
+			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(200.0))
 			let item = NSCollectionLayoutItem(layoutSize: itemSize)
-			item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
 
-			let heightFraction = self.groupHeightFraction(forSection: section, with: columns, layout: layoutEnvironment)
-			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-												   heightDimension: .fractionalWidth(heightFraction))
+			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(200.0))
 			let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+			layoutGroup.interItemSpacing = .fixed(10.0)
 
 			let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+			layoutSection.interGroupSpacing = 10.0
 			layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
 
 			let sectionBackgroundDecoration = NSCollectionLayoutDecorationItem.background(elementKind: SectionBackgroundVisualEffectDecorationView.elementKindSectionBackground)
