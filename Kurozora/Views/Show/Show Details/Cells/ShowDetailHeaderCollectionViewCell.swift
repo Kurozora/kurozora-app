@@ -221,7 +221,7 @@ extension ShowDetailHeaderCollectionViewCell {
 	}
 
 	@IBAction func raminderButtonPressed(_ sender: UIButton) {
-		WorkflowController.shared.isSignedIn {
+		WorkflowController.shared.isPro {
 			KService.updateReminderStatus(forShow: self.show.id) { [weak self] result in
 				guard let self = self else { return }
 				switch result {

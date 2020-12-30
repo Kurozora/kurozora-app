@@ -20,11 +20,9 @@ extension UIApplication {
 		- Parameter success: A Boolean indicating whether the URL was opened successfully.
 	*/
 	func kOpen(_ url: URL?, deepLink: URL? = nil, options: [UIApplication.OpenExternalURLOptionsKey: Any] = [:], completionHandler completion: ((_ success: Bool) -> Void)? = nil) {
-		#if !targetEnvironment(macCatalyst)
 		if let deepLink = deepLink, UIApplication.shared.canOpenURL(deepLink) {
 			UIApplication.shared.open(deepLink, options: options, completionHandler: completion)
 		}
-		#endif
 
 		if let url = url {
 			if KBrowser(rawValue: UserSettings.defaultBrowser) == .kurozora {
