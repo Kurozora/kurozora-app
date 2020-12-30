@@ -38,8 +38,8 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 			}
 		}
 	}
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>! = nil
-	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>! = nil
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Show>! = nil
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, Show>! = nil
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -172,21 +172,17 @@ extension FavoriteShowsCollectionViewController {
 	}
 
 	override func configureDataSource() {
-		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, _) -> UICollectionViewCell? in
-			guard let self = self else { return nil }
+		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Show>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: Show) -> UICollectionViewCell? in
 			let smallLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: SmallLockupCollectionViewCell.self, for: indexPath)
-			smallLockupCollectionViewCell.show = self.shows[indexPath.item]
+			smallLockupCollectionViewCell.show = item
 			return smallLockupCollectionViewCell
 		}
 	}
 
 	override func updateDataSource() {
-		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
-		SectionLayoutKind.allCases.forEach {
-			let itemsPerSection = shows.count
-			snapshot.appendSections([$0])
-			snapshot.appendItems(Array(0..<itemsPerSection))
-		}
+		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Show>()
+		snapshot.appendSections([.main])
+		snapshot.appendItems(self.shows)
 		self.snapshot = snapshot
 		self.dataSource.apply(snapshot) {
 			self.toggleEmptyDataView()
@@ -198,44 +194,27 @@ extension FavoriteShowsCollectionViewController {
 extension FavoriteShowsCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
-		var columnCount = (width / 374).rounded().int
-		if columnCount < 0 {
-			columnCount = 1
-		} else if columnCount > 5 {
-			columnCount = 5
-		}
-		return columnCount
-	}
-
-	func heightDimension(forSection section: Int, with columnsCount: Int) -> NSCollectionLayoutDimension {
-		let heightFraction = (0.60 / columnsCount.double).cgFloat
-		return .fractionalWidth(heightFraction)
-	}
-
-	override func contentInset(forItemInSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+		let columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
+		return columnCount > 0 ? columnCount : 1
 	}
 
 	override func contentInset(forSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 20, trailing: 10)
 	}
 
 	override func createLayout() -> UICollectionViewLayout {
 		let layout = UICollectionViewCompositionalLayout { (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-												  heightDimension: .fractionalHeight(1.0))
+			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
 			let item = NSCollectionLayoutItem(layoutSize: itemSize)
-			item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
 
-			let heightDimension = self.heightDimension(forSection: section, with: columns)
-			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-												   heightDimension: heightDimension)
+			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(150.0))
 			let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+			layoutGroup.interItemSpacing = .fixed(10.0)
 
 			let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+			layoutSection.interGroupSpacing = 10.0
 			layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
-
 			return layoutSection
 		}
 		return layout

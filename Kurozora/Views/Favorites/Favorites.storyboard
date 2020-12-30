@@ -16,12 +16,11 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jIN-wM-Zqa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1070" y="202"/>
+            <point key="canvasLocation" x="991" y="202"/>
         </scene>
         <!--My Favorites-->
         <scene sceneID="ws2-75-oPq">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="UB3-8V-Y1T" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <collectionViewController storyboardIdentifier="FavoriteShowsCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="WBh-vK-AHK" customClass="FavoriteShowsCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" id="8m3-l4-zdR">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -42,7 +41,7 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Shows" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1JD-mx-aw3" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="8" y="0.0" width="153" height="33.5"/>
+                                            <rect key="frame" x="8" y="0.0" width="391" height="33.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="33.666666666666664" id="Yax-mk-byc"/>
                                             </constraints>
@@ -51,15 +50,15 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="69 TV · 20 Movie · 12 OVA/ONA/Specials" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FfP-ef-8VD" userLabel="Subtitle Label" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="8" y="41.5" width="307.5" height="21.5"/>
+                                            <rect key="frame" x="8" y="41.5" width="391" height="21.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="FfP-ef-8VD" secondAttribute="trailing" id="P84-vZ-3Hi"/>
-                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="1JD-mx-aw3" secondAttribute="trailing" id="b7k-Lg-8TI"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="FfP-ef-8VD" secondAttribute="trailing" id="P84-vZ-3Hi"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="1JD-mx-aw3" secondAttribute="trailing" id="b7k-Lg-8TI"/>
                                         <constraint firstItem="1JD-mx-aw3" firstAttribute="leading" secondItem="XsG-ep-iu1" secondAttribute="leadingMargin" id="cDZ-Z7-bN6"/>
                                         <constraint firstItem="1JD-mx-aw3" firstAttribute="top" secondItem="XsG-ep-iu1" secondAttribute="top" id="gGP-Hd-CfG"/>
                                         <constraint firstAttribute="bottom" secondItem="FfP-ef-8VD" secondAttribute="bottom" id="jcD-vC-K7Z"/>
@@ -84,6 +83,7 @@
                         <segue destination="l9G-KJ-lhF" kind="show" identifier="ShowDetailsSegue" id="jq7-tr-0gm"/>
                     </connections>
                 </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UB3-8V-Y1T" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="325" y="202"/>
         </scene>
