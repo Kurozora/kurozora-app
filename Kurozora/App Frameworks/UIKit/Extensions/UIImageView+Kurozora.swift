@@ -16,15 +16,16 @@ extension UIImageView {
 
 		- Parameter urlString: The url string from where the image should be downloaded.
 		- Parameter placeholder: The placeholder to show until the downloaded image is loaded or in case the url is dead.
+		- Parameter comletionHandler: Called when the image is retrieved and set is done.
 	*/
-	func setImage(with urlString: String, placeholder: UIImage, completionHandler: (() -> Void)? = nil) {
+	func setImage(with urlString: String, placeholder: UIImage, completionHandler: ((Result<RetrieveImageResult, KingfisherError>) -> Void)? = nil) {
 		if !urlString.isEmpty, let imageURL = URL(string: urlString) {
 			let resource = ImageResource(downloadURL: imageURL, cacheKey: urlString)
 			let options: KingfisherOptionsInfo = [.transition(.fade(0.2))]
 
 			self.kf.indicatorType = .activity
-			self.kf.setImage(with: resource, placeholder: placeholder, options: options, progressBlock: nil) { _ in
-				completionHandler?()
+			self.kf.setImage(with: resource, placeholder: placeholder, options: options, progressBlock: nil) { result in
+				completionHandler?(result)
 			}
 		} else {
 			self.image = placeholder

@@ -38,6 +38,10 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 			self.collectionView.reloadData {
 				self.toggleEmptyDataView()
 			}
+			#if targetEnvironment(macCatalyst)
+			self.touchBar = nil
+			#endif
+
 			#if DEBUG
 			#if !targetEnvironment(macCatalyst)
 			self.refreshControl?.endRefreshing()
@@ -46,6 +50,12 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		}
 	}
 	var moreByStudio: Studio!
+
+	// Touch Bar
+	#if targetEnvironment(macCatalyst)
+	var toggleShowIsFavoriteTouchBarItem: NSButtonTouchBarItem?
+	var toggleShowIsRemindedTouchBarItem: NSButtonTouchBarItem?
+	#endif
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
@@ -78,6 +88,9 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		NotificationCenter.default.addObserver(self, selector: #selector(handleFavoriteToggle(_:)), name: .KShowFavoriteIsToggled, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(handleReminderToggle(_:)), name: .KShowReminderIsToggled, object: nil)
 
 		self.navigationTitleLabel.alpha = 0
 
@@ -141,6 +154,32 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 			case .failure: break
 			}
 		}
+	}
+
+	@objc func toggleFavorite() {
+		self.show.toggleFavorite()
+	}
+
+	@objc func toggleReminder() {
+		self.show.toggleReminder()
+	}
+
+	@objc func shareShow() {
+		self.show.openShareSheet(on: self)
+	}
+
+	@objc func handleFavoriteToggle(_ notification: NSNotification) {
+		#if targetEnvironment(macCatalyst)
+		let name = show.attributes.favoriteStatus == .favorited ? "heart.fill" : "heart"
+		self.toggleShowIsFavoriteTouchBarItem?.image = UIImage(systemName: name)
+		#endif
+	}
+
+	@objc func handleReminderToggle(_ notification: NSNotification) {
+		#if targetEnvironment(macCatalyst)
+		let name = show.attributes.reminderStatus == .reminded ? "bell.fill" : "bell"
+		self.toggleShowIsRemindedTouchBarItem?.image = UIImage(systemName: name)
+		#endif
 	}
 
 	// MARK: - IBActions

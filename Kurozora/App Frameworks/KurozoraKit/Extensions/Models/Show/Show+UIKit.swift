@@ -118,4 +118,32 @@ extension Show {
 			}
 		}
 	}
+
+	func toggleFavorite() {
+		WorkflowController.shared.isSignedIn {
+			KService.updateFavoriteShowStatus(self.id) { [weak self] result in
+				guard let self = self else { return }
+				switch result {
+				case .success(let favoriteStatus):
+					self.attributes.favoriteStatus = favoriteStatus
+					NotificationCenter.default.post(name: .KShowFavoriteIsToggled, object: nil)
+				case .failure: break
+				}
+			}
+		}
+	}
+
+	func toggleReminder() {
+		WorkflowController.shared.isPro {
+			KService.updateReminderStatus(forShow: self.id) { [weak self] result in
+				guard let self = self else { return }
+				switch result {
+				case .success(let reminderStatus):
+					self.attributes.reminderStatus = reminderStatus
+					NotificationCenter.default.post(name: .KShowReminderIsToggled, object: nil)
+				case .failure: break
+				}
+			}
+		}
+	}
 }

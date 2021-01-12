@@ -47,6 +47,10 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 extension ShowDetailHeaderCollectionViewCell {
 	/// Updates the view with the details fetched from the server.
 	fileprivate func updateDetails() {
+		NotificationCenter.default.removeObserver(self)
+		NotificationCenter.default.addObserver(self, selector: #selector(handleFavoriteToggle(_:)), name: .KShowFavoriteIsToggled, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(handleReminderToggle(_:)), name: .KShowReminderIsToggled, object: nil)
+
 		// Configure library status
 		if let libraryStatus = self.show.attributes.libraryStatus {
 			self.libraryStatus = libraryStatus
@@ -82,6 +86,14 @@ extension ShowDetailHeaderCollectionViewCell {
 
 	func updateLibraryStatus() {
 		self.libraryStatusButton.setTitle(libraryStatus != .none ? "\(libraryStatus.stringValue.capitalized) ▾" : "ADD", for: .normal)
+	}
+
+	@objc func handleFavoriteToggle(_ notification: NSNotification) {
+		updateFavoriteStatus()
+	}
+
+	@objc func handleReminderToggle(_ notification: NSNotification) {
+		updateReminderStatus()
 	}
 
 	/**
@@ -206,32 +218,10 @@ extension ShowDetailHeaderCollectionViewCell {
 	}
 
 	@IBAction func favoriteButtonPressed(_ sender: UIButton) {
-		WorkflowController.shared.isSignedIn {
-			KService.updateFavoriteShowStatus(self.show.id) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let favoriteStatus):
-					self.show.attributes.favoriteStatus = favoriteStatus
-					self.updateFavoriteStatus()
-				case .failure:
-					break
-				}
-			}
-		}
+		self.show.toggleFavorite()
 	}
 
 	@IBAction func raminderButtonPressed(_ sender: UIButton) {
-		WorkflowController.shared.isPro {
-			KService.updateReminderStatus(forShow: self.show.id) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let reminderStatus):
-					self.show.attributes.reminderStatus = reminderStatus
-					self.updateReminderStatus()
-				case .failure:
-					break
-				}
-			}
-		}
+		self.show.toggleReminder()
 	}
 }

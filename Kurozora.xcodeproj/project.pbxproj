@@ -33,6 +33,7 @@
 		66160C3B215C04B900D0D722 /* AccountTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66160C3A215C04B900D0D722 /* AccountTableViewController.swift */; };
 		66160C40215C2DEB00D0D722 /* Reachability.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66160C3F215C2DEB00D0D722 /* Reachability.storyboard */; };
 		6619EE74216F969B00655B99 /* ForumsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6619EE73216F969B00655B99 /* ForumsListViewController.swift */; };
+		661ACC9B25ADA41B002407A7 /* ShowDetailsCollectionViewController+NSTouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661ACC9A25ADA41B002407A7 /* ShowDetailsCollectionViewController+NSTouchBar.swift */; };
 		661B26B42351E71B00840AF5 /* UIImageView+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661B26B22351E5A100840AF5 /* UIImageView+Kurozora.swift */; };
 		661DBC4F234947D7009292DF /* SKProduct+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DBC4E234947D7009292DF /* SKProduct+Kurozora.swift */; };
 		661DBC51234A4E00009292DF /* TipJarTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DBC50234A4E00009292DF /* TipJarTableViewController.swift */; };
@@ -139,6 +140,7 @@
 		665099D522FC2B6A0053C2FD /* SearchSuggestionResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665099D422FC2B6A0053C2FD /* SearchSuggestionResultCell.swift */; };
 		665385BB23D3CD1E008ADEF3 /* KTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665385BA23D3CD1E008ADEF3 /* KTableViewController.swift */; };
 		665385BD23D3CD3C008ADEF3 /* KCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665385BC23D3CD3C008ADEF3 /* KCollectionViewController.swift */; };
+		66593123259CE689006732C8 /* TouchBar+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66593122259CE689006732C8 /* TouchBar+Kurozora.swift */; };
 		6659E70D20C1C14E007F139D /* UIDevice+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6659E70C20C1C14E007F139D /* UIDevice+Kurozora.swift */; };
 		665A0B7620CC72F20024E2E2 /* ManageActiveSessionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665A0B7520CC72F20024E2E2 /* ManageActiveSessionsController.swift */; };
 		665A457F24660D9500154F41 /* RatingCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 665A457E24660D9500154F41 /* RatingCollectionViewCell.xib */; };
@@ -558,6 +560,7 @@
 		66160C3A215C04B900D0D722 /* AccountTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTableViewController.swift; sourceTree = "<group>"; };
 		66160C3F215C2DEB00D0D722 /* Reachability.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Reachability.storyboard; sourceTree = "<group>"; };
 		6619EE73216F969B00655B99 /* ForumsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumsListViewController.swift; sourceTree = "<group>"; };
+		661ACC9A25ADA41B002407A7 /* ShowDetailsCollectionViewController+NSTouchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShowDetailsCollectionViewController+NSTouchBar.swift"; sourceTree = "<group>"; };
 		661B26B22351E5A100840AF5 /* UIImageView+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Kurozora.swift"; sourceTree = "<group>"; };
 		661DBC4E234947D7009292DF /* SKProduct+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKProduct+Kurozora.swift"; sourceTree = "<group>"; };
 		661DBC50234A4E00009292DF /* TipJarTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipJarTableViewController.swift; sourceTree = "<group>"; };
@@ -666,6 +669,7 @@
 		665099D422FC2B6A0053C2FD /* SearchSuggestionResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSuggestionResultCell.swift; sourceTree = "<group>"; };
 		665385BA23D3CD1E008ADEF3 /* KTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KTableViewController.swift; sourceTree = "<group>"; };
 		665385BC23D3CD3C008ADEF3 /* KCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCollectionViewController.swift; sourceTree = "<group>"; };
+		66593122259CE689006732C8 /* TouchBar+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TouchBar+Kurozora.swift"; sourceTree = "<group>"; };
 		6659E70C20C1C14E007F139D /* UIDevice+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Kurozora.swift"; sourceTree = "<group>"; };
 		665A0B7520CC72F20024E2E2 /* ManageActiveSessionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageActiveSessionsController.swift; sourceTree = "<group>"; };
 		665A457E24660D9500154F41 /* RatingCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RatingCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -1071,6 +1075,7 @@
 				66D0BF9B25616637000AB7BF /* ShowDetailsCollectionView.swift */,
 				66938FD7211CD3E600ADA5D6 /* ShowDetailsCollectionViewController.swift */,
 				6614AD402580033500039BFB /* ShowDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */,
+				661ACC9A25ADA41B002407A7 /* ShowDetailsCollectionViewController+NSTouchBar.swift */,
 				66D16CA0212D52AB00B6B882 /* Cells */,
 				66D1358B227F17180079438C /* Models */,
 			);
@@ -1621,6 +1626,14 @@
 				66B2C73C232D0F350042AB12 /* PostType.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		66593121259CE671006732C8 /* TouchBar */ = {
+			isa = PBXGroup;
+			children = (
+				66593122259CE689006732C8 /* TouchBar+Kurozora.swift */,
+			);
+			path = TouchBar;
 			sourceTree = "<group>";
 		};
 		665A45802466EFDB00154F41 /* Visual Effects */ = {
@@ -2417,6 +2430,7 @@
 				66CE8105246088C000DB0C49 /* Services */,
 				66B216A921C166B5006E167D /* Text Editor */,
 				66B4F1D5223D141A007C5048 /* Theme */,
+				66593121259CE671006732C8 /* TouchBar */,
 				664133E621DB827100CE823A /* UserDefaults */,
 				66D8AA7522F0DDFE00456E75 /* Web Browser */,
 				66BEC131231711C40039D683 /* WhatsNew */,
@@ -3531,6 +3545,7 @@
 				6614AD412580033500039BFB /* ShowDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				66B9BB9724FB1AC7004953C9 /* KFeedMessageReShareTextEditorView.swift in Sources */,
 				66FE5D01215B739D00E2844A /* KDefaultsCell.swift in Sources */,
+				661ACC9B25ADA41B002407A7 /* ShowDetailsCollectionViewController+NSTouchBar.swift in Sources */,
 				66CE80FA2460348100DB0C49 /* KTableViewController+KTableViewDataSource.swift in Sources */,
 				6601C3A023BBB98000466BA3 /* ShowDetailHeaderCollectionViewCell.swift in Sources */,
 				667C0F13224CC50200A8CB56 /* ExploreCategorySize+Kurozora.swift in Sources */,
@@ -3645,6 +3660,7 @@
 				66C2C5262107ACA10020E21F /* KTabBarController.swift in Sources */,
 				66DB2548245D6B1D000AA6DB /* KTextView.swift in Sources */,
 				6640E19D22AE895A00D0F575 /* AuthenticationInterval.swift in Sources */,
+				66593123259CE689006732C8 /* TouchBar+Kurozora.swift in Sources */,
 				66CAE6852337CFB000991E59 /* OnboardingTextFieldTableViewCell.swift in Sources */,
 				661F9F832087282500CF4153 /* SignUpTableViewController.swift in Sources */,
 				66CE8116246093CF00DB0C49 /* ServiceHeaderTableViewCell.swift in Sources */,

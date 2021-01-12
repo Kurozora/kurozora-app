@@ -15,6 +15,16 @@ extension Notification.Name {
 		return Notification.Name(#function)
 	}
 
+	/// A notification posted when the favorite button is toggled.
+	static var KShowFavoriteIsToggled: NSNotification.Name {
+		return Notification.Name(#function)
+	}
+
+	/// A notification posted when the reminder button is toggled.
+	static var KShowReminderIsToggled: NSNotification.Name {
+		return Notification.Name(#function)
+	}
+
 	// MARK: - Feed
 	/// A notification posted when the feed message is updated.
 	static var KFTMessageDidUpdate: NSNotification.Name {
