@@ -9,12 +9,6 @@
 import UIKit
 import KurozoraKit
 
-protocol ReplyCellDelegate: class {
-	func voteOnReplyCell(_ cell: ReplyCell, with voteStatus: VoteStatus)
-	func visitOriginalPosterProfile(_ cell: ReplyCell)
-	func showActionsList(_ cell: ReplyCell, sender: UIButton)
-}
-
 class ReplyCell: KTableViewCell {
 	@IBOutlet weak var profileImageView: ProfileImageView!
 	@IBOutlet weak var usernameLabel: KLabel!

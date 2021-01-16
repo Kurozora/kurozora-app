@@ -168,8 +168,13 @@ class FeedTableViewController: KTableViewController {
 		}
 	}
 
-	// MARK: - IBActions
-	@IBAction func profileButtonPressed(_ sender: UIButton) {
+	/// Performs segue to the settings view.
+	@objc func segueToSettings() {
+		self.performSegue(withIdentifier: R.segue.feedTableViewController.settingsSegue, sender: nil)
+	}
+
+	/// Performs segue to the profile view.
+	@objc func segueToProfile() {
 		WorkflowController.shared.isSignedIn {
 			if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
 				self.show(profileTableViewController, sender: nil)
@@ -177,7 +182,8 @@ class FeedTableViewController: KTableViewController {
 		}
 	}
 
-	@IBAction func postMessageButton(_ sender: UIBarButtonItem) {
+	/// Shows the text editor for posintg a new message.
+	@objc func postNewMessage() {
 		WorkflowController.shared.isSignedIn {
 			if let kFeedMessageTextEditorViewController = R.storyboard.textEditor.kFeedMessageTextEditorViewController() {
 				kFeedMessageTextEditorViewController.delegate = self
@@ -187,6 +193,15 @@ class FeedTableViewController: KTableViewController {
 				self.present(kurozoraNavigationController, animated: true)
 			}
 		}
+	}
+
+	// MARK: - IBActions
+	@IBAction func profileButtonPressed(_ sender: UIButton) {
+		self.segueToProfile()
+	}
+
+	@IBAction func postMessageButton(_ sender: UIBarButtonItem) {
+		self.postNewMessage()
 	}
 
 	// MARK: - Segue
@@ -199,6 +214,15 @@ class FeedTableViewController: KTableViewController {
 				}
 			}
 		}
+	}
+
+	override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+		if identifier == R.segue.feedTableViewController.profileSegue.identifier {
+			WorkflowController.shared.isSignedIn()
+			return User.isSignedIn
+		}
+
+		return true
 	}
 }
 

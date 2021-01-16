@@ -25,5 +25,10 @@ extension NSTouchBarItem.Identifier {
 
 	// MARK: - Forums
 	static let forumsComposeThread = NSTouchBarItem.Identifier("app.kurozora.tracker.forumsComposeThread")
+
+	// MARK: - Feed
+	static let showSettings = NSTouchBarItem.Identifier("app.kurozora.tracker.showSettings")
+	static let showProfile = NSTouchBarItem.Identifier("app.kurozora.tracker.showProfile")
+	static let feedComposeMessage = NSTouchBarItem.Identifier("app.kurozora.tracker.feedComposeMessage")
 }
 #endif

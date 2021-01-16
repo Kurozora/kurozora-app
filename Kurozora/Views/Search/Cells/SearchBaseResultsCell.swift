@@ -21,6 +21,5 @@ class SearchBaseResultsCell: UICollectionViewCell {
 	func configureCell() { }
 
 	// MARK: - IBActions
-	@IBAction func actionButtonPressed(_ sender: UIButton) {
-	}
+	@IBAction func actionButtonPressed(_ sender: UIButton) { }
 }

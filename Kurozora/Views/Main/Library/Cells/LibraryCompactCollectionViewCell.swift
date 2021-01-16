@@ -8,5 +8,4 @@
 
 import UIKit
 
-class LibraryCompactCollectionViewCell: LibraryBaseCollectionViewCell {
-}
+class LibraryCompactCollectionViewCell: LibraryBaseCollectionViewCell { }

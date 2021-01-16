@@ -9,11 +9,6 @@
 import UIKit
 import KurozoraKit
 
-protocol LibraryListViewControllerDelegate: class {
-	func updateChangeLayoutButton(with cellStyle: KKLibrary.CellStyle)
-	func updateSortTypeButton(with sortType: KKLibrary.SortType)
-}
-
 class LibraryListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var shows: [Show] = [] {
@@ -249,80 +244,6 @@ extension LibraryListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let libraryBaseCollectionViewCell = collectionView.cellForItem(at: indexPath) as? LibraryBaseCollectionViewCell
 		performSegue(withIdentifier: R.segue.libraryListCollectionViewController.showDetailsSegue, sender: libraryBaseCollectionViewCell)
-	}
-}
-
-// MARK: - KCollectionViewDataSource
-extension LibraryListCollectionViewController {
-	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
-		return []
-	}
-
-	override func configureDataSource() {
-		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Show>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: Show) -> UICollectionViewCell? in
-			if let libraryBaseCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: self.libraryCellStyle.identifierString, for: indexPath) as? LibraryBaseCollectionViewCell {
-				libraryBaseCollectionViewCell.show = item
-				return libraryBaseCollectionViewCell
-			} else {
-				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.castCollectionViewCell.identifier)")
-			}
-		}
-	}
-
-	override func updateDataSource() {
-		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Show>()
-		snapshot.appendSections([.main])
-		snapshot.appendItems(self.shows)
-		dataSource.apply(snapshot, animatingDifferences: true)
-	}
-}
-
-// MARK: - KCollectionViewDelegateLayout
-extension LibraryListCollectionViewController {
-	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
-		let width = layoutEnvironment.container.effectiveContentSize.width
-		switch libraryCellStyle {
-		case .compact:
-			var columnCount = (width / 105).rounded().int
-			if columnCount < 0 {
-				columnCount = 3
-			} else if columnCount > 8 {
-				columnCount = 8
-			} else {
-				columnCount = abs(columnCount.double/1.5).rounded().int
-			}
-			return columnCount
-		case .detailed, .list:
-			var columnCount = (width / 374).rounded().int
-			if columnCount < 0 {
-				columnCount = 1
-			} else if columnCount > 5 {
-				columnCount = 5
-			}
-			return columnCount
-		}
-	}
-
-	override func contentInset(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-	}
-
-	override func createLayout() -> UICollectionViewLayout {
-		let layout = UICollectionViewCompositionalLayout { (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(200.0))
-			let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(200.0))
-			let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-			layoutGroup.interItemSpacing = .fixed(10.0)
-
-			let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-			layoutSection.interGroupSpacing = 10.0
-			layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
-			return layoutSection
-		}
-		return layout
 	}
 }
 

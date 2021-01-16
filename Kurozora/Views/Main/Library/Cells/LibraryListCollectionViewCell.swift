@@ -29,7 +29,7 @@ class LibraryListCollectionViewCell: LibraryBaseCollectionViewCell {
 		super.configureCell()
 		self.informationLabel.text = show.attributes.informationStringShort
 
-		guard show.attributes.nextAirDateString != nil else {
+		guard show.attributes.nextAirDateString != nil && show.attributes.endDateTime == nil else {
 			self.estimatedAiringLabel.text = ""
 			return
 		}

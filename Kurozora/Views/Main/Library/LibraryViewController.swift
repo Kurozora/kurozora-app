@@ -11,29 +11,6 @@ import KurozoraKit
 import Tabman
 import Pageboy
 
-protocol LibraryViewControllerDelegate: class {
-	/**
-		Tells your `LibraryViewControllerDelegate` to sort the library with the specified sort type.
-
-		- Parameter sortType: The sort type by which the library should be sorted.
-	*/
-	func sortLibrary(by sortType: KKLibrary.SortType, option: KKLibrary.SortType.Options)
-
-	/**
-		Tells your `LibraryViewControllerDelegate` the current sort value used to sort the items in the library.
-
-		- Returns: The current sort value used to sort the items in the library.
-	*/
-	func sortValue() -> KKLibrary.SortType
-
-	/**
-		Tells your `LibraryViewControllerDelegate` the current sort option value used to sort the items in the library.
-
-		- Returns: The current sort option value used to sort the items in the library.
-	*/
-	func sortOptionValue() -> KKLibrary.SortType.Options
-}
-
 class LibraryViewController: KTabbedViewController {
 	// MARK: - IBOutlets
 	@IBOutlet var changeLayoutBarButtonItem: UIBarButtonItem!
@@ -260,7 +237,7 @@ extension LibraryViewController {
 		var viewControllers = [UIViewController]()
 
 		for index in 0 ..< count {
-			if let libraryListCollectionViewController = R.storyboard.library.libraryListCollectionViewController() {
+			if let libraryListCollectionViewController = R.storyboard.libraryList.libraryListCollectionViewController() {
 				let libraryStatus = KKLibrary.Status.all[index]
 
 				// Get the user's preferred library layout
@@ -280,51 +257,3 @@ extension LibraryViewController {
 		return viewControllers
 	}
 }
-
-// MARK: - NSTouchBarDelegate
-#if targetEnvironment(macCatalyst)
-extension LibraryViewController: NSTouchBarDelegate {
-	override func makeTouchBar() -> NSTouchBar? {
-		var itemIdentifiers: [NSTouchBarItem.Identifier] = [
-			.fixedSpaceSmall,
-			.toggleSearchBar,
-			.fixedSpaceSmall
-		]
-		let touchBar = NSTouchBar()
-		touchBar.delegate = self
-		if User.isSignedIn {
-			itemIdentifiers.append(contentsOf: [
-				.listTabBar,
-				.flexibleSpace,
-				.showFavorites
-			])
-		}
-		touchBar.defaultItemIdentifiers = itemIdentifiers
-		return touchBar
-	}
-
-	func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItem.Identifier) -> NSTouchBarItem? {
-		let touchBarItem: NSTouchBarItem?
-
-		switch identifier {
-		case .toggleSearchBar:
-			guard let image = UIImage(systemName: "magnifyingglass") else { return nil }
-			touchBarItem = NSButtonTouchBarItem(identifier: identifier, image: image, target: self, action: #selector(toggleSearchBar))
-		case .listTabBar:
-			let labels: [String] = KKLibrary.Status.all.map { (libraryStatus) -> String in
-				libraryStatus.stringValue
-			}
-
-			tabBarTouchBarItem = NSPickerTouchBarItem(identifier: identifier, labels: labels, selectionMode: .selectOne, target: self, action: #selector(goToSelectedView(_:)))
-			tabBarTouchBarItem?.selectedIndex = self.currentIndex ?? 0
-			touchBarItem = tabBarTouchBarItem
-		case .showFavorites:
-			guard let image = UIImage(systemName: "heart.circle") else { return nil }
-			touchBarItem = NSButtonTouchBarItem(identifier: identifier, image: image, target: self, action: #selector(segueToFavoriteShows))
-		default:
-			touchBarItem = nil
-		}
-		return touchBarItem
-	}
-}
-#endif

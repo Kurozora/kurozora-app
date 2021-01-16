@@ -9,10 +9,6 @@
 import UIKit
 import KurozoraKit
 
-protocol ForumsListViewControllerDelegate: class {
-	func updateForumOrderButton(with orderType: ForumOrder)
-}
-
 class ForumsListViewController: KTableViewController {
 	// MARK: - Properties
 	var sectionTitle: String = ""

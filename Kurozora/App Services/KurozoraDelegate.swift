@@ -152,7 +152,7 @@ class KurozoraDelegate {
 
 				if !forumThreadIDString.isEmpty {
 					guard let forumThreadID = forumThreadIDString.int else { return }
-					if let threadTableViewController = R.storyboard.forums.threadTableViewController() {
+					if let threadTableViewController = R.storyboard.thread.threadTableViewController() {
 						threadTableViewController.forumThreadID = forumThreadID
 						tabBarController.selectedViewController?.show(threadTableViewController, sender: nil)
 					}

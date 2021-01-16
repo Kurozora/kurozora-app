@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17700" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="20p-4J-ZCZ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="20p-4J-ZCZ">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -14,7 +14,17 @@
                 <viewControllerPlaceholder storyboardName="Settings" id="HFC-YJ-V83" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qQW-6e-gkf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3685" y="-392"/>
+            <point key="canvasLocation" x="3736" y="-361"/>
+        </scene>
+        <!--ProfileTableViewController-->
+        <scene sceneID="bG1-tu-Arm">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Profile" referencedIdentifier="ProfileTableViewController" id="rlF-GF-AFN" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="hJV-n8-pjv"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7y9-0Z-cBe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3815" y="-327"/>
         </scene>
         <!--Details Table View Controller-->
         <scene sceneID="1G3-o4-LpC">
@@ -35,7 +45,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="48u-Ct-3eU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3924.6376811594205" y="284.59821428571428"/>
+            <point key="canvasLocation" x="3977" y="27"/>
         </scene>
         <!--FMDetailsTableViewController-->
         <scene sceneID="NGP-DO-nZE">
@@ -45,7 +55,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="psy-0z-Nae" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4509" y="285"/>
+            <point key="canvasLocation" x="4561" y="27"/>
         </scene>
         <!--Feed-->
         <scene sceneID="3EW-to-g3U">
@@ -70,7 +80,7 @@
                         </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem title="Profile" id="tt5-xx-9lS">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="egw-49-b9p" customClass="ProfileImageButton" customModule="Kurozora" customModuleProvider="target">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="egw-49-b9p" customClass="ProfileImageButton" customModule="Kurozora" customModuleProvider="target">
                                     <rect key="frame" x="342" y="5" width="52" height="34"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <constraints>
@@ -84,6 +94,9 @@
                                         <action selector="profileButtonPressed:" destination="AtO-CH-0OW" eventType="touchUpInside" id="ed2-TQ-ewT"/>
                                     </connections>
                                 </button>
+                                <connections>
+                                    <segue destination="rlF-GF-AFN" kind="show" identifier="ProfileSegue" id="wv4-Oc-J8j"/>
+                                </connections>
                             </barButtonItem>
                             <barButtonItem title="Post message" image="pencil.circle" catalog="system" id="lOF-RI-y49">
                                 <connections>

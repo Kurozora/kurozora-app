@@ -160,7 +160,7 @@ extension ForumsViewController {
 		var viewControllers = [UIViewController]()
 
 		for index in 0 ..< count {
-			if let forumsListViewController = R.storyboard.forums.forumsListViewController() {
+			if let forumsListViewController = R.storyboard.forumsList.forumsListViewController() {
 				forumsListViewController.sectionTitle = forumsSections[index].attributes.name
 				forumsListViewController.sectionID = forumsSections[index].id
 				forumsListViewController.sectionIndex = index

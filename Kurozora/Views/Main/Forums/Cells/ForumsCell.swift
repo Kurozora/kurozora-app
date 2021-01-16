@@ -9,12 +9,6 @@
 import UIKit
 import KurozoraKit
 
-protocol ForumsCellDelegate: class {
-	func voteOnForumsCell(_ cell: ForumsCell, with voteStatus: VoteStatus)
-	func visitOriginalPosterProfile(_ cell: ForumsCell)
-	func showActionsList(_ cell: ForumsCell, sender: UIButton)
-}
-
 class ForumsCell: KTableViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var usernameButton: KButton!

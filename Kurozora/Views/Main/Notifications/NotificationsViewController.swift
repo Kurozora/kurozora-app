@@ -9,11 +9,6 @@
 import UIKit
 import KurozoraKit
 
-protocol NotificationsViewControllerDelegate: class {
-    func notificationsViewControllerHasUnreadNotifications(count: Int)
-    func notificationsViewControllerClearedAllNotifications()
-}
-
 class NotificationsViewController: KTableViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var markAllButton: UIBarButtonItem!
@@ -79,13 +74,6 @@ class NotificationsViewController: KTableViewController {
 		self.handleRefreshControl()
 	}
 
-	override func viewWillDisappear(_ animated: Bool) {
-		super.viewWillDisappear(animated)
-		if User.isSignedIn {
-			oldGrouping = UserSettings.notificationsGrouping
-		}
-	}
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
@@ -108,6 +96,13 @@ class NotificationsViewController: KTableViewController {
 
 		self.enableRefreshControl()
 		self.enableActions()
+	}
+
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		if User.isSignedIn {
+			oldGrouping = UserSettings.notificationsGrouping
+		}
 	}
 
 	// MARK: - Functions
@@ -198,57 +193,6 @@ class NotificationsViewController: KTableViewController {
 			}
 
 			self._prefersActivityIndicatorHidden = true
-		}
-	}
-
-	/**
-		Group the fetched notifications according to the user's notification preferences.
-
-		- Parameter userNotifications: The array of the fetched notifications.
-	*/
-	func groupNotifications(_ userNotifications: [UserNotification]) {
-		switch self.grouping {
-		case .automatic:
-			self.groupedNotifications = []
-
-			// Group notifications by date and assign a group title as key (Recent, Last Week, Yesterday etc.)
-			let groupedNotifications = userNotifications.reduce(into: [String: [UserNotification]](), { (result, userNotification) in
-				let creationDate = userNotification.attributes.createdAt
-				let timeKey = creationDate.groupTime
-
-				result[timeKey, default: []].append(userNotification)
-			})
-
-			// Append the grouped elements to the grouped notifications array
-			let groupedNotificationsArray = groupedNotifications
-			for (key, value) in groupedNotificationsArray {
-				self.groupedNotifications.append(GroupedNotifications(sectionTitle: key, sectionNotifications: value))
-			}
-
-			// Reorder grouped notifiactions so the recent one is at the top (Recent, Earlier Today, Yesterday, etc.)
-			self.groupedNotifications.sort(by: { $0.sectionNotifications.first?.attributes.createdAt.dateTime ?? Date() > $1.sectionNotifications.first?.attributes.createdAt.dateTime ?? Date() })
-		case .byType:
-			self.groupedNotifications = []
-
-			// Group notifications by type and assign a group title as key (Sessions, Messages etc.)
-			let groupedNotifications = userNotifications.reduce(into: [String: [UserNotification]](), { (result, userNotification) in
-				let type = userNotification.attributes.type
-				guard let notificationType = KNotification.CustomType(rawValue: type) else { return }
-				let timeKey = notificationType.stringValue
-
-				result[timeKey, default: []].append(userNotification)
-			})
-
-			// Append the grouped elements to the grouped notifications array
-			let groupedNotificationsArray = groupedNotifications
-			for (key, value) in groupedNotificationsArray {
-				self.groupedNotifications.append(GroupedNotifications(sectionTitle: key, sectionNotifications: value))
-			}
-
-			// Reorder grouped notifiactions so the recent one is at the top (Recent, Earlier Today, Yesterday, etc.)
-			self.groupedNotifications.sort(by: { $0.sectionNotifications.first?.attributes.createdAt.dateTime ?? Date() > $1.sectionNotifications.first?.attributes.createdAt.dateTime ?? Date() })
-		case .off:
-			self.groupedNotifications = []
 		}
 	}
 
@@ -532,6 +476,57 @@ extension NotificationsViewController {
 // MARK: - Helper functions
 extension NotificationsViewController {
 	/**
+		Group the fetched notifications according to the user's notification preferences.
+
+		- Parameter userNotifications: The array of the fetched notifications.
+	*/
+	func groupNotifications(_ userNotifications: [UserNotification]) {
+		switch self.grouping {
+		case .automatic:
+			self.groupedNotifications = []
+
+			// Group notifications by date and assign a group title as key (Recent, Last Week, Yesterday etc.)
+			let groupedNotifications = userNotifications.reduce(into: [String: [UserNotification]](), { (result, userNotification) in
+				let creationDate = userNotification.attributes.createdAt
+				let timeKey = creationDate.groupTime
+
+				result[timeKey, default: []].append(userNotification)
+			})
+
+			// Append the grouped elements to the grouped notifications array
+			let groupedNotificationsArray = groupedNotifications
+			for (key, value) in groupedNotificationsArray {
+				self.groupedNotifications.append(GroupedNotifications(sectionTitle: key, sectionNotifications: value))
+			}
+
+			// Reorder grouped notifiactions so the recent one is at the top (Recent, Earlier Today, Yesterday, etc.)
+			self.groupedNotifications.sort(by: { $0.sectionNotifications.first?.attributes.createdAt.dateTime ?? Date() > $1.sectionNotifications.first?.attributes.createdAt.dateTime ?? Date() })
+		case .byType:
+			self.groupedNotifications = []
+
+			// Group notifications by type and assign a group title as key (Sessions, Messages etc.)
+			let groupedNotifications = userNotifications.reduce(into: [String: [UserNotification]](), { (result, userNotification) in
+				let type = userNotification.attributes.type
+				guard let notificationType = KNotification.CustomType(rawValue: type) else { return }
+				let timeKey = notificationType.stringValue
+
+				result[timeKey, default: []].append(userNotification)
+			})
+
+			// Append the grouped elements to the grouped notifications array
+			let groupedNotificationsArray = groupedNotifications
+			for (key, value) in groupedNotificationsArray {
+				self.groupedNotifications.append(GroupedNotifications(sectionTitle: key, sectionNotifications: value))
+			}
+
+			// Reorder grouped notifiactions so the recent one is at the top (Recent, Earlier Today, Yesterday, etc.)
+			self.groupedNotifications.sort(by: { $0.sectionNotifications.first?.attributes.createdAt.dateTime ?? Date() > $1.sectionNotifications.first?.attributes.createdAt.dateTime ?? Date() })
+		case .off:
+			self.groupedNotifications = []
+		}
+	}
+
+	/**
 		Updates the user's notifications with the received information.
 
 		- Parameter notification: An object containing information broadcast to registered observers.
@@ -581,32 +576,3 @@ extension NotificationsViewController {
 		}
 	}
 }
-
-// MARK: - NSTouchBarDelegate
-#if targetEnvironment(macCatalyst)
-extension NotificationsViewController: NSTouchBarDelegate {
-	override func makeTouchBar() -> NSTouchBar? {
-		let touchBar = NSTouchBar()
-		touchBar.delegate = self
-		touchBar.defaultItemIdentifiers = [
-			.fixedSpaceSmall,
-			.toggleSearchBar,
-			.fixedSpaceSmall
-		]
-		return touchBar
-	}
-
-	func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItem.Identifier) -> NSTouchBarItem? {
-		let touchBarItem: NSTouchBarItem?
-
-		switch identifier {
-		case .toggleSearchBar:
-			guard let image = UIImage(systemName: "magnifyingglass") else { return nil }
-			touchBarItem = NSButtonTouchBarItem(identifier: identifier, image: image, target: self, action: #selector(toggleSearchBar))
-		default:
-			touchBarItem = nil
-		}
-		return touchBarItem
-	}
-}
-#endif
