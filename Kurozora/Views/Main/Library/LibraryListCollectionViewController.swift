@@ -181,9 +181,11 @@ class LibraryListCollectionViewController: KCollectionViewController {
 				}
 			}
 		} else {
-			self.shows.removeAll()
-			collectionView.reloadData {
-				self.toggleEmptyDataView()
+			DispatchQueue.main.async {
+				self.shows.removeAll()
+				self.collectionView.reloadData {
+					self.toggleEmptyDataView()
+				}
 			}
 		}
 	}
