@@ -408,7 +408,7 @@
                         </leftBarButtonItems>
                         <barButtonItem key="rightBarButtonItem" title="Favourites" image="heart.circle" catalog="system" id="bHY-lK-ES7">
                             <connections>
-                                <segue destination="AKf-6J-kDy" kind="show" id="BtH-Vl-yCX"/>
+                                <segue destination="AKf-6J-kDy" kind="show" identifier="FavoriteShowsSegue" id="BtH-Vl-yCX"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

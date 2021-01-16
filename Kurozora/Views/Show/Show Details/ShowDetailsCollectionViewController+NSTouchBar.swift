@@ -16,8 +16,7 @@ extension ShowDetailsCollectionViewController: NSTouchBarDelegate {
 
 		touchBar.defaultItemIdentifiers = [
 			.toggleShowIsReminded,
-			.toggleShowIsFavorite,
-			.fixedSpaceSmall,
+			.toggleShowIsFavorite
 		]
 		return touchBar
 	}
@@ -44,4 +43,3 @@ extension ShowDetailsCollectionViewController: NSTouchBarDelegate {
 	}
 }
 #endif
-

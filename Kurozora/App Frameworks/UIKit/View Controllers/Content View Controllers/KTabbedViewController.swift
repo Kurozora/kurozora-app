@@ -65,6 +65,11 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 	/// Tab bar data manager.
 	weak var tabBarDataSource: KTabbedViewControllerDataSource?
 
+	#if targetEnvironment(macCatalyst)
+	/// An `NSTouchBarItem` that holds a reference to the available sections in the TouchBar.
+	var tabBarTouchBarItem: NSPickerTouchBarItem?
+	#endif
+
 	// MARK: - Initializers
 	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)

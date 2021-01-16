@@ -252,6 +252,11 @@ class NotificationsViewController: KTableViewController {
 		}
 	}
 
+	/// Focuses on the search bar.
+	@objc func toggleSearchBar() {
+		self.navigationItem.searchController?.searchBar.textField?.becomeFirstResponder()
+	}
+
 	// MARK: - IBActions
 	/**
 		Show options for editing notifications in batch.
@@ -576,3 +581,32 @@ extension NotificationsViewController {
 		}
 	}
 }
+
+// MARK: - NSTouchBarDelegate
+#if targetEnvironment(macCatalyst)
+extension NotificationsViewController: NSTouchBarDelegate {
+	override func makeTouchBar() -> NSTouchBar? {
+		let touchBar = NSTouchBar()
+		touchBar.delegate = self
+		touchBar.defaultItemIdentifiers = [
+			.fixedSpaceSmall,
+			.toggleSearchBar,
+			.fixedSpaceSmall
+		]
+		return touchBar
+	}
+
+	func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItem.Identifier) -> NSTouchBarItem? {
+		let touchBarItem: NSTouchBarItem?
+
+		switch identifier {
+		case .toggleSearchBar:
+			guard let image = UIImage(systemName: "magnifyingglass") else { return nil }
+			touchBarItem = NSButtonTouchBarItem(identifier: identifier, image: image, target: self, action: #selector(toggleSearchBar))
+		default:
+			touchBarItem = nil
+		}
+		return touchBarItem
+	}
+}
+#endif

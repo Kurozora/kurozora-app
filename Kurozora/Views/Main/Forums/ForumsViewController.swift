@@ -36,6 +36,10 @@ class ForumsViewController: KTabbedViewController {
 	var forumsSections: [ForumsSection] = [] {
 		didSet {
 			self.reloadData()
+
+			#if targetEnvironment(macCatalyst)
+			self.touchBar = nil
+			#endif
 		}
 	}
 	var kSearchController: KSearchController = KSearchController()
@@ -67,6 +71,32 @@ class ForumsViewController: KTabbedViewController {
 		sortingBarButtonItem.image = forumOrder.imageValue
 	}
 
+	/// Focuses on the search bar.
+	@objc func toggleSearchBar() {
+		self.navigationItem.searchController?.searchBar.textField?.becomeFirstResponder()
+	}
+
+	/// Goes to the selected view.
+	@objc func goToSelectedView(_ touchBarItem: NSPickerTouchBarItem) {
+		self.bar.delegate?.bar(self.bar, didRequestScrollTo: touchBarItem.selectedIndex)
+	}
+
+	/// Presents the text editor for creating new threads.
+	@objc func createNewThread() {
+		WorkflowController.shared.isSignedIn {
+			if let kRichTextEditorViewController = R.storyboard.textEditor.kRichTextEditorViewController() {
+				if let currentIndex = self.currentIndex {
+					kRichTextEditorViewController.delegate = self.viewControllers?[currentIndex] as? ForumsListViewController
+					kRichTextEditorViewController.sectionID = currentIndex + 1
+				}
+
+				let kurozoraNavigationController = KNavigationController.init(rootViewController: kRichTextEditorViewController)
+				kurozoraNavigationController.navigationBar.prefersLargeTitles = false
+				self.present(kurozoraNavigationController, animated: true)
+			}
+		}
+	}
+
 	// MARK: - IBActions
 	@IBAction func sortingBarButtonItemPressed(_ sender: UIBarButtonItem) {
 		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: ForumOrder.alertControllerItems, currentSelection: self.forumsViewControllerDelegate?.orderValue(), action: { [weak self] (title, value, image)  in
@@ -92,23 +122,18 @@ class ForumsViewController: KTabbedViewController {
 	}
 
 	@IBAction func createThreadBarButtonItemPressed(_ sender: Any) {
-		WorkflowController.shared.isSignedIn {
-			if let kRichTextEditorViewController = R.storyboard.textEditor.kRichTextEditorViewController() {
-				if let currentIndex = self.currentIndex {
-					kRichTextEditorViewController.delegate = self.viewControllers?[currentIndex] as? ForumsListViewController
-					kRichTextEditorViewController.sectionID = currentIndex + 1
-				}
-
-				let kurozoraNavigationController = KNavigationController.init(rootViewController: kRichTextEditorViewController)
-				kurozoraNavigationController.navigationBar.prefersLargeTitles = false
-				self.present(kurozoraNavigationController, animated: true)
-			}
-		}
+		self.createNewThread()
 	}
 
 	// MARK: - TMBarDataSource
 	override func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
 		return TMBarItem(title: forumsSections[index].attributes.name)
+	}
+
+	// MARK: - TMBarDelegate
+	override func bar(_ bar: TMBar, didRequestScrollTo index: PageboyViewController.PageIndex) {
+		super.bar(bar, didRequestScrollTo: index)
+		self.tabBarTouchBarItem?.selectedIndex = index
 	}
 
 	// MARK: - PageboyViewControllerDataSource
@@ -117,6 +142,7 @@ class ForumsViewController: KTabbedViewController {
 	}
 
 	override func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
+		self.tabBarTouchBarItem?.selectedIndex = UserSettings.forumsPage
 		return .at(index: UserSettings.forumsPage)
 	}
 }
@@ -159,3 +185,46 @@ extension ForumsViewController {
 		}
 	}
 }
+
+// MARK: - NSTouchBarDelegate
+#if targetEnvironment(macCatalyst)
+extension ForumsViewController: NSTouchBarDelegate {
+	override func makeTouchBar() -> NSTouchBar? {
+		let touchBar = NSTouchBar()
+		touchBar.delegate = self
+		touchBar.defaultItemIdentifiers = [
+			.fixedSpaceSmall,
+			.toggleSearchBar,
+			.fixedSpaceSmall,
+			.listTabBar,
+			.flexibleSpace,
+			.forumsComposeThread
+		]
+		return touchBar
+	}
+
+	func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItem.Identifier) -> NSTouchBarItem? {
+		let touchBarItem: NSTouchBarItem?
+
+		switch identifier {
+		case .toggleSearchBar:
+			guard let image = UIImage(systemName: "magnifyingglass") else { return nil }
+			touchBarItem = NSButtonTouchBarItem(identifier: identifier, image: image, target: self, action: #selector(toggleSearchBar))
+		case .listTabBar:
+			let labels: [String] = forumsSections.map { (forumsSection) -> String in
+				forumsSection.attributes.name
+			}
+
+			tabBarTouchBarItem = NSPickerTouchBarItem(identifier: identifier, labels: labels, selectionMode: .selectOne, target: self, action: #selector(goToSelectedView(_:)))
+			tabBarTouchBarItem?.selectedIndex = self.currentIndex ?? 0
+			touchBarItem = tabBarTouchBarItem
+		case .forumsComposeThread:
+			guard let image = UIImage(systemName: "pencil.circle") else { return nil }
+			touchBarItem = NSButtonTouchBarItem(identifier: identifier, image: image, target: self, action: #selector(createNewThread))
+		default:
+			touchBarItem = nil
+		}
+		return touchBarItem
+	}
+}
+#endif

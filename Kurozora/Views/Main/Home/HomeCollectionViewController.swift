@@ -131,6 +131,11 @@ class HomeCollectionViewController: KCollectionViewController {
 		}
 	}
 
+	/// Focuses on the search bar.
+	@objc func toggleSearchBar() {
+		self.navigationItem.searchController?.searchBar.textField?.becomeFirstResponder()
+	}
+
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == R.segue.homeCollectionViewController.showDetailsSegue.identifier {
@@ -554,3 +559,32 @@ extension HomeCollectionViewController {
 		return layoutSection
 	}
 }
+
+// MARK: - NSTouchBarDelegate
+#if targetEnvironment(macCatalyst)
+extension HomeCollectionViewController: NSTouchBarDelegate {
+	override func makeTouchBar() -> NSTouchBar? {
+		let touchBar = NSTouchBar()
+		touchBar.delegate = self
+		touchBar.defaultItemIdentifiers = [
+			.fixedSpaceSmall,
+			.toggleSearchBar,
+			.fixedSpaceSmall
+		]
+		return touchBar
+	}
+
+	func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItem.Identifier) -> NSTouchBarItem? {
+		let touchBarItem: NSTouchBarItem?
+
+		switch identifier {
+		case .toggleSearchBar:
+			guard let image = UIImage(systemName: "magnifyingglass") else { return nil }
+			touchBarItem = NSButtonTouchBarItem(identifier: identifier, image: image, target: self, action: #selector(toggleSearchBar))
+		default:
+			touchBarItem = nil
+		}
+		return touchBarItem
+	}
+}
+#endif

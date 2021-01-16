@@ -51,6 +51,10 @@ class LibraryViewController: KTabbedViewController {
 		super.viewWillReload()
 
 		enableActions()
+
+		#if targetEnvironment(macCatalyst)
+		self.touchBar = nil
+		#endif
 	}
 
     override func viewDidLoad() {
@@ -192,6 +196,21 @@ class LibraryViewController: KTabbedViewController {
 		}
 	}
 
+	/// Focuses on the search bar.
+	@objc func toggleSearchBar() {
+		self.navigationItem.searchController?.searchBar.textField?.becomeFirstResponder()
+	}
+
+	/// Goes to the selected view.
+	@objc func goToSelectedView(_ touchBarItem: NSPickerTouchBarItem) {
+		self.bar.delegate?.bar(self.bar, didRequestScrollTo: touchBarItem.selectedIndex)
+	}
+
+	/// Segues to the favorite shows view.
+	@objc func segueToFavoriteShows() {
+		self.performSegue(withIdentifier: R.segue.libraryViewController.favoriteShowsSegue, sender: nil)
+	}
+
 	// MARK: - IBActions
 	@IBAction func changeLayoutBarButtonItemPressed(_ sender: UIBarButtonItem) {
 		changeLayout()
@@ -205,6 +224,12 @@ class LibraryViewController: KTabbedViewController {
 	override func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
 		let sectionTitle = KKLibrary.Status.all[index].stringValue
 		return TMBarItem(title: sectionTitle)
+	}
+
+	// MARK: - TMBarDelegate
+	override func bar(_ bar: TMBar, didRequestScrollTo index: PageboyViewController.PageIndex) {
+		super.bar(bar, didRequestScrollTo: index)
+		self.tabBarTouchBarItem?.selectedIndex = index
 	}
 
 	// MARK: - PageboyViewControllerDataSource
@@ -255,3 +280,51 @@ extension LibraryViewController {
 		return viewControllers
 	}
 }
+
+// MARK: - NSTouchBarDelegate
+#if targetEnvironment(macCatalyst)
+extension LibraryViewController: NSTouchBarDelegate {
+	override func makeTouchBar() -> NSTouchBar? {
+		var itemIdentifiers: [NSTouchBarItem.Identifier] = [
+			.fixedSpaceSmall,
+			.toggleSearchBar,
+			.fixedSpaceSmall
+		]
+		let touchBar = NSTouchBar()
+		touchBar.delegate = self
+		if User.isSignedIn {
+			itemIdentifiers.append(contentsOf: [
+				.listTabBar,
+				.flexibleSpace,
+				.showFavorites
+			])
+		}
+		touchBar.defaultItemIdentifiers = itemIdentifiers
+		return touchBar
+	}
+
+	func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItem.Identifier) -> NSTouchBarItem? {
+		let touchBarItem: NSTouchBarItem?
+
+		switch identifier {
+		case .toggleSearchBar:
+			guard let image = UIImage(systemName: "magnifyingglass") else { return nil }
+			touchBarItem = NSButtonTouchBarItem(identifier: identifier, image: image, target: self, action: #selector(toggleSearchBar))
+		case .listTabBar:
+			let labels: [String] = KKLibrary.Status.all.map { (libraryStatus) -> String in
+				libraryStatus.stringValue
+			}
+
+			tabBarTouchBarItem = NSPickerTouchBarItem(identifier: identifier, labels: labels, selectionMode: .selectOne, target: self, action: #selector(goToSelectedView(_:)))
+			tabBarTouchBarItem?.selectedIndex = self.currentIndex ?? 0
+			touchBarItem = tabBarTouchBarItem
+		case .showFavorites:
+			guard let image = UIImage(systemName: "heart.circle") else { return nil }
+			touchBarItem = NSButtonTouchBarItem(identifier: identifier, image: image, target: self, action: #selector(segueToFavoriteShows))
+		default:
+			touchBarItem = nil
+		}
+		return touchBarItem
+	}
+}
+#endif

@@ -19,7 +19,7 @@ class KActivityIndicatorView: UIActivityIndicatorView {
 	/// Indicates whether the activity indicator is hidden or visible.
 	var prefersHidden: Bool = false {
 		didSet {
-			if prefersHidden {
+			if self.prefersHidden {
 				self.stopAnimating()
 			} else {
 				self.startAnimating()
