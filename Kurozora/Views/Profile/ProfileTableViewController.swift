@@ -690,33 +690,33 @@ extension ProfileTableViewController {
 
 // MARK: - BaseFeedMessageCellDelegate
 extension ProfileTableViewController: BaseFeedMessageCellDelegate {
-	func heartMessage(_ cell: BaseFeedMessageCell) {
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressHeartButton button: UIButton) {
 		if let indexPath = self.tableView.indexPath(for: cell) {
 			self.feedMessages[indexPath.section].heartMessage(via: self, userInfo: ["indexPath": indexPath])
 		}
 	}
 
-	func replyToMessage(_ cell: BaseFeedMessageCell) {
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressReplyButton button: UIButton) {
 		if let indexPath = self.tableView.indexPath(for: cell) {
 			self.feedMessages[indexPath.section].replyToMessage(via: self, userInfo: ["liveReplyEnabled": cell.liveReplyEnabled])
 		}
 	}
 
-	func reShareMessage(_ cell: BaseFeedMessageCell) {
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressReShareButton button: UIButton) {
 		if let indexPath = self.tableView.indexPath(for: cell) {
 			self.feedMessages[indexPath.section].reShareMessage(via: self, userInfo: ["liveReShareEnabled": cell.liveReShareEnabled])
 		}
 	}
 
-	func visitOriginalPosterProfile(_ cell: BaseFeedMessageCell) {
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressUserName sender: AnyObject) {
 		if let indexPath = self.tableView.indexPath(for: cell) {
 			self.feedMessages[indexPath.section].visitOriginalPosterProfile(from: self)
 		}
 	}
 
-	func showActionsList(_ cell: BaseFeedMessageCell, sender: UIButton) {
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressMoreButton button: UIButton) {
 		if let indexPath = self.tableView.indexPath(for: cell) {
-			self.feedMessages[indexPath.section].actionList(on: self, sender, userInfo: [
+			self.feedMessages[indexPath.section].actionList(on: self, button, userInfo: [
 				"indexPath": indexPath,
 				"liveReplyEnabled": cell.liveReplyEnabled,
 				"liveReShareEnabled": cell.liveReShareEnabled
@@ -727,7 +727,7 @@ extension ProfileTableViewController: BaseFeedMessageCellDelegate {
 
 // MARK: - KRichTextEditorViewDelegate
 extension ProfileTableViewController: KFeedMessageTextEditorViewDelegate {
-	func updateMessages(with feedMessages: [FeedMessage]) {
+	func kFeedMessageTextEditorView(updateMessagesWith feedMessages: [FeedMessage]) {
 		for feedMessage in feedMessages {
 			self.feedMessages.prepend(feedMessage)
 		}

@@ -247,7 +247,7 @@ extension ForumsListViewController: ForumsViewControllerDelegate {
 
 // MARK: - KRichTextEditorViewDelegate
 extension ForumsListViewController: KRichTextEditorViewDelegate {
-	func updateThreadsList(with forumsThreads: [ForumsThread]) {
+	func kRichTextEditorView(updateThreadsListWith forumsThreads: [ForumsThread]) {
 		DispatchQueue.main.async {
 			for forumsThread in forumsThreads {
 				self.forumsThreads.prepend(forumsThread)

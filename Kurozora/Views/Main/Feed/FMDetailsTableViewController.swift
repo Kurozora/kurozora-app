@@ -274,7 +274,7 @@ extension FMDetailsTableViewController {
 
 // MARK: - BaseFeedMessageCellDelegate
 extension FMDetailsTableViewController: BaseFeedMessageCellDelegate {
-	func heartMessage(_ cell: BaseFeedMessageCell) {
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressHeartButton button: UIButton) {
 		if let indexPath = self.tableView.indexPath(for: cell) {
 			switch indexPath.section {
 			case 0:
@@ -285,7 +285,7 @@ extension FMDetailsTableViewController: BaseFeedMessageCellDelegate {
 		}
 	}
 
-	func replyToMessage(_ cell: BaseFeedMessageCell) {
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressReplyButton button: UIButton) {
 		if let indexPath = self.tableView.indexPath(for: cell) {
 			switch indexPath.section {
 			case 0:
@@ -296,7 +296,7 @@ extension FMDetailsTableViewController: BaseFeedMessageCellDelegate {
 		}
 	}
 
-	func reShareMessage(_ cell: BaseFeedMessageCell) {
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressReShareButton button: UIButton) {
 		if let indexPath = self.tableView.indexPath(for: cell) {
 			switch indexPath.section {
 			case 0:
@@ -307,7 +307,7 @@ extension FMDetailsTableViewController: BaseFeedMessageCellDelegate {
 		}
 	}
 
-	func visitOriginalPosterProfile(_ cell: BaseFeedMessageCell) {
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressUserName sender: AnyObject) {
 		if let indexPath = self.tableView.indexPath(for: cell) {
 			switch indexPath.section {
 			case 0:
@@ -318,17 +318,17 @@ extension FMDetailsTableViewController: BaseFeedMessageCellDelegate {
 		}
 	}
 
-	func showActionsList(_ cell: BaseFeedMessageCell, sender: UIButton) {
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressMoreButton button: UIButton) {
 		if let indexPath = self.tableView.indexPath(for: cell) {
 			switch indexPath.section {
 			case 0:
-				self.feedMessage.actionList(on: self, sender, userInfo: [
+				self.feedMessage.actionList(on: self, button, userInfo: [
 					"indexPath": indexPath,
 					"liveReplyEnabled": cell.liveReplyEnabled,
 					"liveReShareEnabled": cell.liveReShareEnabled
 				])
 			default:
-				self.feedMessageReplies[indexPath.row].actionList(on: self, sender, userInfo: [
+				self.feedMessageReplies[indexPath.row].actionList(on: self, button, userInfo: [
 					"indexPath": indexPath,
 					"liveReplyEnabled": cell.liveReplyEnabled,
 					"liveReShareEnabled": cell.liveReShareEnabled
@@ -340,7 +340,7 @@ extension FMDetailsTableViewController: BaseFeedMessageCellDelegate {
 
 // MARK: - KRichTextEditorViewDelegate
 extension FMDetailsTableViewController: KFeedMessageTextEditorViewDelegate {
-	func updateMessages(with feedMessages: [FeedMessage]) {
+	func kFeedMessageTextEditorView(updateMessagesWith feedMessages: [FeedMessage]) {
 		for feedMessage in feedMessages {
 			self.feedMessageReplies.prepend(feedMessage)
 		}

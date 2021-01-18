@@ -9,11 +9,6 @@
 import UIKit
 import KurozoraKit
 
-protocol KFeedMessageTextEditorViewDelegate: class {
-	func updateMessages(with feedMessages: [FeedMessage])
-	func segueToOPFeedDetails(_ feedMessage: FeedMessage)
-}
-
 class KFeedMessageTextEditorViewController: KViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var isSpoilerSwitch: KSwitch!
@@ -71,7 +66,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 				guard let self = self else { return }
 				switch result {
 				case .success(let feedMessages):
-					self.delegate?.updateMessages(with: feedMessages)
+					self.delegate?.kFeedMessageTextEditorView(updateMessagesWith: feedMessages)
 					self.dismiss(animated: true, completion: nil)
 				case .failure: break
 				}

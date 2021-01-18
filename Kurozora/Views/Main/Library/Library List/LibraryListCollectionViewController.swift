@@ -28,7 +28,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	var librarySortType: KKLibrary.SortType = .none
 	var librarySortTypeOption: KKLibrary.SortType.Options = .none {
 		didSet {
-			self.delegate?.updateSortTypeButton(with: librarySortType)
+			self.delegate?.libraryListViewController(updateSortWith: librarySortType)
 		}
 	}
 	var libraryCellStyle: KKLibrary.CellStyle = .detailed
@@ -65,10 +65,10 @@ class LibraryListCollectionViewController: KCollectionViewController {
 		(tabmanParent as? LibraryViewController)?.libraryViewControllerDelegate = self
 
 		// Update change layout button to reflect user settings
-		delegate?.updateChangeLayoutButton(with: libraryCellStyle)
+		delegate?.libraryListViewController(updateLayoutWith: libraryCellStyle)
 
 		// Update sort type button to reflect user settings
-		delegate?.updateSortTypeButton(with: librarySortType)
+		delegate?.libraryListViewController(updateSortWith: librarySortType)
 	}
 
 	override func viewWillReload() {

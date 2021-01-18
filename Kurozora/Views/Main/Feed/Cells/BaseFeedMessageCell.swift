@@ -9,14 +9,6 @@
 import UIKit
 import KurozoraKit
 
-protocol BaseFeedMessageCellDelegate: class {
-	func heartMessage(_ cell: BaseFeedMessageCell)
-	func replyToMessage(_ cell: BaseFeedMessageCell)
-	func reShareMessage(_ cell: BaseFeedMessageCell)
-	func visitOriginalPosterProfile(_ cell: BaseFeedMessageCell)
-	func showActionsList(_ cell: BaseFeedMessageCell, sender: UIButton)
-}
-
 class BaseFeedMessageCell: KTableViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var warningTranscriptLabel: UILabel?
@@ -164,26 +156,26 @@ class BaseFeedMessageCell: KTableViewCell {
 
 	// MARK: - IBActions
 	@objc func usernameLabelPressed(_ sender: AnyObject) {
-		self.delegate?.visitOriginalPosterProfile(self)
+		self.delegate?.baseFeedMessageCell(self, didPressUserName: sender)
 	}
 
 	@IBAction func heartButtonPressed(_ sender: UIButton) {
-		self.delegate?.heartMessage(self)
+		self.delegate?.baseFeedMessageCell(self, didPressHeartButton: sender)
 		sender.animateBounce()
 	}
 
 	@IBAction func commentButtonPressed(_ sender: UIButton) {
-		self.delegate?.replyToMessage(self)
+		self.delegate?.baseFeedMessageCell(self, didPressReplyButton: sender)
 		sender.animateBounce()
 	}
 
 	@IBAction func reShareButtonPressed(_ sender: UIButton) {
-		self.delegate?.reShareMessage(self)
+		self.delegate?.baseFeedMessageCell(self, didPressReShareButton: sender)
 		sender.animateBounce()
 	}
 
 	@IBAction func moreButtonPressed(_ sender: UIButton) {
-		self.delegate?.showActionsList(self, sender: sender)
+		self.delegate?.baseFeedMessageCell(self, didPressMoreButton: sender)
 		sender.animateBounce()
 	}
 }

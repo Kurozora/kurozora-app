@@ -141,15 +141,17 @@ extension AppearanceOptionsViewController {
 	}
 }
 
-// MARK: - DatePickerSettingsDelegate
-extension AppearanceOptionsViewController: DatePickerSettingsDelegate {
-	func didChangeDate(date: Date, indexPath: IndexPath, datePicker: UIDatePicker) {
-		inputDates[indexPath.row] = date
+// MARK: - DatePickerSettingsCellDelegate
+extension AppearanceOptionsViewController: DatePickerSettingsCellDelegate {
+	func datePickerSettingsCell(_ cell: DatePickerSettingsCell, didChangeDate datePicker: UIDatePicker) {
+		guard var indexPath = tableView.indexPath(for: cell) else { return }
+		indexPath.row -= 1
+		inputDates[indexPath.row] = datePicker.date
 
 		if indexPath.row == 0 {
-			UserSettings.set(date, forKey: .darkThemeOptionStart)
+			UserSettings.set(datePicker.date, forKey: .darkThemeOptionStart)
 		} else if indexPath.row == 1 {
-			UserSettings.set(date, forKey: .darkThemeOptionEnd)
+			UserSettings.set(datePicker.date, forKey: .darkThemeOptionEnd)
 		}
 
 		NotificationCenter.default.post(name: .KSAutomaticDarkThemeDidChange, object: nil)

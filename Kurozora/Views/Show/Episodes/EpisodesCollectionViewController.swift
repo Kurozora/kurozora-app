@@ -210,6 +210,36 @@ extension EpisodesCollectionViewController {
 
 		self.performSegue(withIdentifier: segueIdentifier, sender: collectionViewCell)
 	}
+
+	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+		return self.episodes[indexPath.section].contextMenuConfiguration(in: self)
+	}
+}
+
+// MARK: - EpisodeLockupCollectionViewCellDelegate
+extension EpisodesCollectionViewController: EpisodeLockupCollectionViewCellDelegate {
+	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressMoreButton button: UIButton) {
+		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
+			let actionTitle = button.tag == 0 ? "Mark as Watched" : "Mark as Un-watched"
+			actionSheetAlertController.addAction(UIAlertAction(title: actionTitle, style: .default, handler: { _ in
+				cell.episode.updateWatchStatus()
+			}))
+			actionSheetAlertController.addAction(UIAlertAction(title: "Rate", style: .default, handler: nil))
+			actionSheetAlertController.addAction(UIAlertAction(title: "Share", style: .default, handler: { _ in
+				cell.episode.openShareSheet(on: self, button)
+			}))
+		}
+
+		// Present the controller
+		if let popoverController = actionSheetAlertController.popoverPresentationController {
+			popoverController.sourceView = button
+			popoverController.sourceRect = button.bounds
+		}
+
+		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
+			self.present(actionSheetAlertController, animated: true, completion: nil)
+		}
+	}
 }
 
 // MARK: - SectionLayoutKind

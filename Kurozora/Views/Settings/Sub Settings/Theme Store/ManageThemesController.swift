@@ -13,7 +13,7 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var themes: [[Theme]] = [[], []] {
 		didSet {
-			self.configureDataSource()
+			self.updateDataSource()
 			self._prefersActivityIndicatorHidden = true
 			self.toggleEmptyDataView()
 			#if DEBUG
@@ -146,6 +146,8 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 		self._prefersRefreshControlDisabled = true
 		#endif
 
+		self.configureDataSource()
+
 		// Fetch themes
 		DispatchQueue.global(qos: .background).async {
 			self.fetchThemes()
@@ -187,71 +189,61 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 	}
 }
 
-// MARK: - KCollectionViewDataSource
-extension ManageThemesCollectionViewController {
-	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
-		return []
+extension ManageThemesCollectionViewController: ThemesCollectionViewCellDelegate {
+	func themesCollectionViewCell(_ cell: ThemesCollectionViewCell, didPressGetButton button: UIButton) {
+		let indexPath = self.collectionView.indexPath(for: cell)
+		switch indexPath {
+		case [0, 0]:
+			KThemeStyle.switchTo(.default)
+		case [0, 1]:
+			KThemeStyle.switchTo(.day)
+		case [0, 2]:
+			KThemeStyle.switchTo(.night)
+		case [0, 3]:
+			KThemeStyle.switchTo(.grass)
+		case [0, 4]:
+			KThemeStyle.switchTo(.sky)
+		case [0, 5]:
+			KThemeStyle.switchTo(.sakura)
+		default:
+			cell.shouldDownloadTheme()
+		}
 	}
 
-	override func configureDataSource() {
-		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, identifier: Int) -> UICollectionViewCell? in
-			if let themesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.themesCollectionViewCell, for: indexPath) {
-				themesCollectionViewCell.indexPath = indexPath
-				themesCollectionViewCell.theme = self.themes[indexPath.section][indexPath.item]
-				return themesCollectionViewCell
-			} else {
-				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.themesCollectionViewCell.identifier)")
-			}
+	func themesCollectionViewCell(_ cell: ThemesCollectionViewCell, didPressMoreButton button: UIButton) {
+		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { actionSheetAlertController in
+			let redownloadAction = UIAlertAction(title: "Redownload Theme", style: .default, handler: { (_) in
+				cell.handleRedownloadTheme()
+			})
+			let removeAction = UIAlertAction(title: "Remove Theme", style: .destructive, handler: { (_) in
+				cell.handleRemoveTheme()
+				if UserSettings.currentTheme.int == cell.theme.id {
+					KThemeStyle.switchTo(.default)
+				}
+			})
+
+			// Add image
+			redownloadAction.setValue(UIImage(systemName: "arrow.uturn.down"), forKey: "image")
+			removeAction.setValue(UIImage(systemName: "minus.circle"), forKey: "image")
+
+			// Left align title
+			redownloadAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+			removeAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+
+			// Add actions
+			actionSheetAlertController.addAction(redownloadAction)
+			actionSheetAlertController.addAction(removeAction)
 		}
 
-		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
-		SectionLayoutKind.allCases.forEach {
-			let itemsPerSection = ($0 == .def ? themes.first?.count : themes.last?.count) ?? 0
-			snapshot.appendSections([$0])
-			let itemOffset = $0.rawValue * itemsPerSection
-			let itemUpperbound = itemOffset + itemsPerSection
-			snapshot.appendItems(Array(itemOffset..<itemUpperbound))
+		// Present the controller
+		if let popoverController = actionSheetAlertController.popoverPresentationController {
+			popoverController.sourceView = button
+			popoverController.sourceRect = button.bounds
 		}
-		dataSource.apply(snapshot)
-	}
-}
 
-// MARK: - KCollectionViewDelegateLayout
-extension ManageThemesCollectionViewController {
-	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
-		let width = layoutEnvironment.container.effectiveContentSize.width
-		let columnCount = (width / 170).rounded().int
-		return columnCount > 0 ? columnCount : 1
-	}
-
-	override func groupHeightFraction(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> CGFloat {
-		return (2.00 / columnsCount.double).cgFloat
-	}
-
-	override func contentInset(forItemInSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-	}
-
-	override func contentInset(forSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-	}
-
-	override func createLayout() -> UICollectionViewLayout {
-		let layout = UICollectionViewCompositionalLayout { (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-			let item = NSCollectionLayoutItem(layoutSize: itemSize)
-			item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
-
-			let heightFraction = self.groupHeightFraction(forSection: section, with: columns, layout: layoutEnvironment)
-			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(heightFraction))
-			let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-
-			let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-			layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
-			return layoutSection
+		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
+			self.present(actionSheetAlertController, animated: true, completion: nil)
 		}
-		return layout
 	}
 }
 

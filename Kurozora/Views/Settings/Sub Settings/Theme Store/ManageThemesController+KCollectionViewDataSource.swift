@@ -1,5 +1,5 @@
 //
-//  EpisodesCollectionViewController+KCollectionViewDataSource.swift
+//  ManageThemesController+KCollectionViewDataSource.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 18/01/2021.
@@ -8,24 +8,28 @@
 
 import UIKit
 
-extension EpisodesCollectionViewController {
+extension ManageThemesCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
-		return [EpisodeLockupCollectionViewCell.self]
+		return []
 	}
 
 	override func configureDataSource() {
 		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, identifier: Int) -> UICollectionViewCell? in
-			guard let episodesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.episodeLockupCollectionViewCell, for: indexPath) else {
-				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.episodeLockupCollectionViewCell.identifier)")
+			if let themesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.themesCollectionViewCell, for: indexPath) {
+				themesCollectionViewCell.delegate = self
+				themesCollectionViewCell.indexPath = indexPath
+				themesCollectionViewCell.theme = self.themes[indexPath.section][indexPath.item]
+				return themesCollectionViewCell
+			} else {
+				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.themesCollectionViewCell.identifier)")
 			}
-			episodesCollectionViewCell.delegate = self
-			episodesCollectionViewCell.episode = self.episodes[indexPath.row]
-			return episodesCollectionViewCell
 		}
+	}
 
-		let itemsPerSection = episodes.count
+	override func updateDataSource() {
 		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
 		SectionLayoutKind.allCases.forEach {
+			let itemsPerSection = ($0 == .def ? self.themes.first?.count : self.themes.last?.count) ?? 0
 			snapshot.appendSections([$0])
 			let itemOffset = $0.rawValue * itemsPerSection
 			let itemUpperbound = itemOffset + itemsPerSection

@@ -10,10 +10,13 @@ import UIKit
 import KurozoraKit
 
 class FollowCell: KTableViewCell {
+	// MARK: - IBOutlets
 	@IBOutlet weak var usernameLabel: KLabel!
 	@IBOutlet weak var profileImageView: ProfileImageView!
 	@IBOutlet weak var followButton: KTintedButton!
 
+	// MARK: - Properties
+	weak var delegate: FollowCellDelegate?
 	var user: User! {
 		didSet {
 			configureCell()
@@ -33,7 +36,7 @@ class FollowCell: KTableViewCell {
 	}
 
 	/// Updated the `followButton` with the follow status of the user.
-	fileprivate func updateFollowButton() {
+	func updateFollowButton() {
 		let followStatus = self.user.attributes.followStatus
 		switch followStatus {
 		case .followed:
@@ -53,14 +56,6 @@ class FollowCell: KTableViewCell {
 
 	// MARK: - IBActions
 	@IBAction func followButtonPressed(_ sender: UIButton) {
-		KService.updateFollowStatus(forUserID: user.id) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let followUpdate):
-				self.user.attributes.update(using: followUpdate)
-				self.updateFollowButton()
-			case .failure: break
-			}
-		}
+		self.delegate?.followCell(self, didPressButton: sender)
 	}
 }

@@ -380,7 +380,7 @@ extension ThreadTableViewController: ReplyCellDelegate {
 
 // MARK: - KCommentEditorViewDelegate
 extension ThreadTableViewController: KCommentEditorViewDelegate {
-	func updateReplies(with threadReplies: [ThreadReply]) {
+	func kCommentEditorView(updateRepliesWith threadReplies: [ThreadReply]) {
 		DispatchQueue.main.async {
 			for threadReply in threadReplies {
 				self.threadReplies.prepend(threadReply)

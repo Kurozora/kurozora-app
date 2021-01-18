@@ -74,7 +74,7 @@ class KFMReShareTextEditorViewController: KViewController {
 					if self.segueToOPFeedDetails, let feedMessage = feedMessages.first {
 						self.delegate?.segueToOPFeedDetails(feedMessage)
 					} else {
-						self.delegate?.updateMessages(with: feedMessages)
+						self.delegate?.kFeedMessageTextEditorView(updateMessagesWith: feedMessages)
 					}
 					self.dismiss(animated: true, completion: nil)
 				case .failure: break

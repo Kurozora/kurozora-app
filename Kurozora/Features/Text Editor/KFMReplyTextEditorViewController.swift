@@ -81,7 +81,7 @@ class KFMReplyTextEditorViewController: KViewController {
 					if self.segueToOPFeedDetails {
 						self.delegate?.segueToOPFeedDetails(self.opFeedMessage)
 					} else {
-						self.delegate?.updateMessages(with: feedMessages)
+						self.delegate?.kFeedMessageTextEditorView(updateMessagesWith: feedMessages)
 					}
 					self.dismiss(animated: true, completion: nil)
 				case .failure: break

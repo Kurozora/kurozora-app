@@ -9,10 +9,6 @@
 import UIKit
 import KurozoraKit
 
-protocol KCommentEditorViewDelegate: class {
-	func updateReplies(with threadReplies: [ThreadReply])
-}
-
 class KCommentEditorViewController: KViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var threadTitleLabel: KLabel!
@@ -86,7 +82,7 @@ class KCommentEditorViewController: KViewController {
 				guard let self = self else { return }
 				switch result {
 				case .success(let threadReplies):
-					self.delegate?.updateReplies(with: threadReplies)
+					self.delegate?.kCommentEditorView(updateRepliesWith: threadReplies)
 					self.dismiss(animated: true, completion: nil)
 				case .failure: break
 				}

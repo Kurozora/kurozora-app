@@ -10,10 +10,6 @@ import UIKit
 import KurozoraKit
 import SwiftyJSON
 
-protocol KRichTextEditorViewDelegate: class {
-	func updateThreadsList(with forumsThreads: [ForumsThread])
-}
-
 class KRichTextEditorViewController: KViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var titleTextField: KTextField!
@@ -64,7 +60,7 @@ class KRichTextEditorViewController: KViewController {
 			guard let self = self else { return }
 			switch result {
 			case .success(let forumsThreads):
-				self.delegate?.updateThreadsList(with: forumsThreads)
+				self.delegate?.kRichTextEditorView(updateThreadsListWith: forumsThreads)
 				self.dismiss(animated: true, completion: nil)
 			case .failure: break
 			}

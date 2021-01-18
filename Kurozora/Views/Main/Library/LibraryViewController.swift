@@ -222,11 +222,11 @@ class LibraryViewController: KTabbedViewController {
 
 // MARK: - LibraryListViewControllerDelegate
 extension LibraryViewController: LibraryListViewControllerDelegate {
-	func updateChangeLayoutButton(with cellStyle: KKLibrary.CellStyle) {
+	func libraryListViewController(updateLayoutWith cellStyle: KKLibrary.CellStyle) {
 		updateChangeLayoutBarButtonItem(cellStyle)
 	}
 
-	func updateSortTypeButton(with sortType: KKLibrary.SortType) {
+	func libraryListViewController(updateSortWith sortType: KKLibrary.SortType) {
 		updateSortTypeBarButtonItem(sortType)
 	}
 }

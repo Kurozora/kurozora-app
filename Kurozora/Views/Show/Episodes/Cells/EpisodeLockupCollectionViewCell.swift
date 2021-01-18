@@ -24,6 +24,7 @@ class EpisodeLockupCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var cosmosView: KCosmosView!
 
 	// MARK: - Properties
+	weak var delegate: EpisodeLockupCollectionViewCellDelegate?
 	var simpleModeEnabled: Bool = false
 	var episode: Episode! {
 		didSet {
@@ -86,72 +87,12 @@ class EpisodeLockupCollectionViewCell: UICollectionViewCell {
         }
     }
 
-	/**
-		Populate an action sheet for the given episode.
-	*/
-	func populateActionSheet() {
-		let tag = self.episodeWatchedButton.tag
-		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
-			actionSheetAlertController.addAction(UIAlertAction(title: (tag == 0) ? "Mark as Watched" : "Mark as Unwatched", style: .default, handler: { _ in
-				self?.watchedButtonPressed()
-			}))
-			actionSheetAlertController.addAction(UIAlertAction(title: "Rate", style: .default, handler: nil))
-			actionSheetAlertController.addAction(UIAlertAction(title: "Share", style: .default, handler: { _ in
-				self?.populateShareSheet()
-			}))
-		}
-
-		// Present the controller
-		if let popoverController = actionSheetAlertController.popoverPresentationController {
-			popoverController.sourceView = self.episodeMoreButton
-			popoverController.sourceRect = self.episodeMoreButton.bounds
-		}
-
-		if (self.parentViewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
-			self.parentViewController?.present(actionSheetAlertController, animated: true, completion: nil)
-		}
-	}
-
-	func populateShareSheet() {
-		var activityItems: [Any] = []
-		let shareText = "https://kurozora.app/episode/\(episode.id)\nYou should watch \"\(episode.attributes.title)\" via @KurozoraApp"
-
-		// Episode title
-		activityItems.append(shareText)
-
-		// Episode image
-		if let episodeImage = episodeImageView.image {
-			activityItems.append(episodeImage)
-		}
-
-		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])
-		if let popoverController = activityViewController.popoverPresentationController {
-			popoverController.sourceView = episodeMoreButton
-			popoverController.sourceRect = episodeMoreButton.bounds
-		}
-
-		if (self.parentViewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
-			self.parentViewController?.present(activityViewController, animated: true, completion: nil)
-		}
-	}
-
-	func watchedButtonPressed() {
-		KService.updateEpisodeWatchStatus(self.episode.id) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let watchStatus):
-				self.configureWatchButton(with: watchStatus)
-			case .failure: break
-			}
-		}
-	}
-
 	// MARK: - IBActions
 	@IBAction func watchedButtonPressed(_ sender: UIButton) {
-		self.watchedButtonPressed()
+		self.episode.updateWatchStatus()
 	}
 
 	@IBAction func moreButtonPressed(_ sender: UIButton) {
-		self.populateActionSheet()
+		self.delegate?.episodeLockupCollectionViewCell(self, didPressMoreButton: sender)
 	}
 }

@@ -10,6 +10,6 @@ import UIKit
 import KurozoraKit
 
 protocol LibraryListViewControllerDelegate: class {
-	func updateChangeLayoutButton(with cellStyle: KKLibrary.CellStyle)
-	func updateSortTypeButton(with sortType: KKLibrary.SortType)
+	func libraryListViewController(updateLayoutWith cellStyle: KKLibrary.CellStyle)
+	func libraryListViewController(updateSortWith sortType: KKLibrary.SortType)
 }

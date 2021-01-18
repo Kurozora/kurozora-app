@@ -23,6 +23,7 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var moreButton: UIButton!
 
 	// MARK: - Properties
+	weak var delegate: ThemesCollectionViewCellDelegate?
 	var indexPath: IndexPath!
 	var theme: Theme! {
 		didSet {
@@ -120,7 +121,7 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 	}
 
 	/// Checks whether the selected theme should be downloaded or else applied.
-	fileprivate func shouldDownloadTheme() {
+	func shouldDownloadTheme() {
 		let themeID = theme.id
 		guard KThemeStyle.themeExist(for: themeID) else {
 			let alertController = UIApplication.topViewController?.presentAlertController(title: "Not Downloaded", message: "Download the theme right now?", defaultActionButtonTitle: "Cancel")
@@ -155,7 +156,7 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 	}
 
 	/// Handle the removing process for a downloaded theme.
-	fileprivate func handleRemoveTheme(timeout: Double = 0.5, withSuccess successHandler: ((_ isSuccess: Bool) -> Void)? = nil) {
+	func handleRemoveTheme(timeout: Double = 0.5, withSuccess successHandler: ((_ isSuccess: Bool) -> Void)? = nil) {
 		let themeName = theme.attributes.name
 		let alertController = UIApplication.topViewController?.presentActivityAlertController(title: "Removing \(themeName)...", message: nil)
 
@@ -176,7 +177,7 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 	}
 
 	/// Handle the redownload process for a downloaded theme.
-	fileprivate func handleRedownloadTheme() {
+	func handleRedownloadTheme() {
 		handleRemoveTheme(timeout: 0) { success in
 			if success {
 				self.handleDownloadTheme()
@@ -186,57 +187,10 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - IBActions
 	@IBAction func getThemeButtonPressed(_ sender: UIButton) {
-		switch indexPath {
-		case [0, 0]:
-			KThemeStyle.switchTo(.default)
-		case [0, 1]:
-			KThemeStyle.switchTo(.day)
-		case [0, 2]:
-			KThemeStyle.switchTo(.night)
-		case [0, 3]:
-			KThemeStyle.switchTo(.grass)
-		case [0, 4]:
-			KThemeStyle.switchTo(.sky)
-		case [0, 5]:
-			KThemeStyle.switchTo(.sakura)
-		default:
-			shouldDownloadTheme()
-		}
+		self.delegate?.themesCollectionViewCell(self, didPressGetButton: sender)
 	}
 
 	@IBAction func moreButtonPressed(_ sender: UIButton) {
-		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
-			let redownloadAction = UIAlertAction(title: "Redownload Theme", style: .default, handler: { (_) in
-				self?.handleRedownloadTheme()
-			})
-			let removeAction = UIAlertAction(title: "Remove Theme", style: .destructive, handler: { (_) in
-				self?.handleRemoveTheme()
-				if UserSettings.currentTheme.int == self?.theme.id {
-					KThemeStyle.switchTo(.default)
-				}
-			})
-
-			// Add image
-			redownloadAction.setValue(UIImage(systemName: "arrow.uturn.down"), forKey: "image")
-			removeAction.setValue(UIImage(systemName: "minus.circle"), forKey: "image")
-
-			// Left align title
-			redownloadAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-			removeAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-
-			// Add actions
-			actionSheetAlertController.addAction(redownloadAction)
-			actionSheetAlertController.addAction(removeAction)
-		}
-
-		// Present the controller
-		if let popoverController = actionSheetAlertController.popoverPresentationController {
-			popoverController.sourceView = sender
-			popoverController.sourceRect = sender.bounds
-		}
-
-		if (self.parentViewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
-			self.parentViewController?.present(actionSheetAlertController, animated: true, completion: nil)
-		}
+		self.delegate?.themesCollectionViewCell(self, didPressMoreButton: sender)
 	}
 }

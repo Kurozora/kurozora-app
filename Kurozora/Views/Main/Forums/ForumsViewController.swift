@@ -11,22 +11,6 @@ import KurozoraKit
 import Tabman
 import Pageboy
 
-protocol ForumsViewControllerDelegate: class {
-	/**
-		Tells your `ForumsViewControllerDelegate` to order the forums with the specified order type.
-
-		- Parameter forumOrder: The order type by which the forums should be ordered.
-	*/
-	func orderForums(by forumOrder: ForumOrder)
-
-	/**
-		Tells your `ForumsViewControllerDelegate` the current order value used to order the items in the forums.
-
-		- Returns: The current order value used to order the items in the forums.
-	*/
-	func orderValue() -> ForumOrder
-}
-
 class ForumsViewController: KTabbedViewController {
 	// MARK: - IBOutlets
     @IBOutlet weak var createThreadBarButtonItem: UIBarButtonItem!

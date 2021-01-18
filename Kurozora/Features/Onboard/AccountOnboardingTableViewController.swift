@@ -103,7 +103,7 @@ extension AccountOnboardingTableViewController {
 		case .options:
 			onboardingBaseTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.onboardingOptionsTableViewCell.identifier, for: indexPath) as? OnboardingBaseTableViewCell
 			onboardingBaseTableViewCell?.accountOnboardingType = self.accountOnboardingType
-			(onboardingBaseTableViewCell as? OnboardingOptionsTableViewCell)?.onboardingFooterTableViewCellDelegate = self as? SignInTableViewController
+			(onboardingBaseTableViewCell as? OnboardingOptionsTableViewCell)?.delegate = self as? SignInTableViewController
 		case .footer:
 			onboardingBaseTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.onboardingFooterTableViewCell.identifier, for: indexPath) as? OnboardingBaseTableViewCell
 			onboardingBaseTableViewCell?.accountOnboardingType = self.accountOnboardingType

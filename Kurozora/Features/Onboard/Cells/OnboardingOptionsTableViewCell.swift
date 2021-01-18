@@ -23,7 +23,7 @@ class OnboardingOptionsTableViewCell: OnboardingBaseTableViewCell {
 	@IBOutlet weak var descriptionLabel: KLabel?
 
 	// MARK: - Properties
-	weak var onboardingFooterTableViewCellDelegate: OnboardingOptionsTableViewCellDelegate?
+	weak var delegate: OnboardingOptionsTableViewCellDelegate?
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
@@ -56,6 +56,6 @@ class OnboardingOptionsTableViewCell: OnboardingBaseTableViewCell {
 
 	/// Handles the Apple ID button press.
 	@objc func handleAuthorizationAppleIDButtonPress() {
-		onboardingFooterTableViewCellDelegate?.handleAuthorizationAppleIDButtonPress()
+		self.delegate?.handleAuthorizationAppleIDButtonPress()
 	}
 }

@@ -180,6 +180,7 @@ extension FollowTableViewController {
 		guard let followCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.followCell, for: indexPath) else {
 			fatalError("Cannot dequeue cell with reuse identifier \(R.reuseIdentifier.followCell.identifier)")
 		}
+		followCell.delegate = self
 		followCell.user = userFollow[indexPath.section]
         return followCell
     }
@@ -210,6 +211,22 @@ extension FollowTableViewController {
 			followCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 
 			followCell.usernameLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+		}
+	}
+}
+
+// MARK: - FollowCellDelegate
+extension FollowTableViewController: FollowCellDelegate {
+	func followCell(_ cell: FollowCell, didPressButton button: UIButton) {
+		guard let indexPath = self.tableView.indexPath(for: cell) else { return }
+		var user = self.userFollow[indexPath.section]
+		KService.updateFollowStatus(forUserID: user.id) { result in
+			switch result {
+			case .success(let followUpdate):
+				user.attributes.update(using: followUpdate)
+				cell.updateFollowButton()
+			case .failure: break
+			}
 		}
 	}
 }

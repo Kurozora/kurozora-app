@@ -9,6 +9,12 @@
 import Foundation
 
 extension Notification.Name {
+	// MARK: - Episodes
+	/// A notification posted when the watch status of an episode changes.
+	static var KEpisodeWatchStatusDidUpdate: NSNotification.Name {
+		return Notification.Name(#function)
+	}
+
 	// MARK: - Shows
 	/// A notification posted when the favorite shows list changes.
 	static var KFavoriteShowsListDidChange: NSNotification.Name {
