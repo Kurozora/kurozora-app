@@ -11,7 +11,3 @@ import UIKit
 protocol TitleHeaderCollectionReusableViewDelegate: class {
 	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPressButton button: UIButton)
 }
-
-protocol ServiceFooterTableViewCellDelegate: class {
-	func serviceFooterTableViewCell(_ cell: ServiceFooterTableViewCell, didPressButton button: UIButton)
-}
