@@ -21,6 +21,7 @@ class TextViewCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var moreButtonView: UIView?
 
 	// MARK: - Properties
+	weak var delegate: TextViewCollectionViewCellDelegate?
 	var textViewCollectionViewCellType: TextViewCollectionViewCellType = .synopsis
 	var textViewContent: String? {
 		didSet {
@@ -40,14 +41,7 @@ class TextViewCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - IBActions
 	@IBAction func moreButtonPressed(_ sender: UIButton) {
-		if let synopsisKNavigationController = R.storyboard.synopsis.instantiateInitialViewController() {
-			if let synopsisViewController = synopsisKNavigationController.viewControllers.first as? SynopsisViewController {
-				synopsisViewController.title = textViewCollectionViewCellType.stringValue
-				synopsisViewController.synopsis = textViewContent
-			}
-			synopsisKNavigationController.modalPresentationStyle = .fullScreen
-			self.parentViewController?.present(synopsisKNavigationController, animated: true)
-		}
+		self.delegate?.textViewCollectionViewCell(self, didPressButton: sender)
 	}
 }
 

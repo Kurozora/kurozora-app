@@ -27,6 +27,5 @@ class ActionBaseExploreCollectionViewCell: UICollectionViewCell {
 	}
 
 	// MARK: - IBActions
-	@IBAction func actionButtonPressed(_ sender: UIButton) {
-	}
+	@IBAction func actionButtonPressed(_ sender: UIButton) { }
 }

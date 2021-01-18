@@ -144,12 +144,13 @@ extension ProductTableViewController {
 			purchaseButtonTableViewCell.productTitle = productTitles.isEmpty ? "" : productTitles[indexPath.row]
 			purchaseButtonTableViewCell.productsArray = productsArray
 			purchaseButtonTableViewCell.purchaseButton.tag = indexPath.row
-			purchaseButtonTableViewCell.purchaseButtonTableViewCellDelegate = self
+			purchaseButtonTableViewCell.delegate = self
 			return purchaseButtonTableViewCell
 		default:
 			guard let serviceFooterTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.serviceFooterTableViewCell, for: indexPath) else {
 				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.serviceFooterTableViewCell.identifier)")
 			}
+			serviceFooterTableViewCell.delegate = self
 			serviceFooterTableViewCell.serviceType = serviceType
 			return serviceFooterTableViewCell
 		}
@@ -180,13 +181,22 @@ extension ProductTableViewController {
 
 // MARK: - PurchaseButtonTableViewCellDelegate
 extension ProductTableViewController: PurchaseButtonTableViewCellDelegate {
-	func purchaseButtonPressed(_ sender: UIButton) {
+	func purchaseButtonTableViewCell(_ cell: PurchaseButtonTableViewCell, didPressButton button: UIButton) {
 		if self.productsArray.count != 0 {
 			WorkflowController.shared.isSignedIn {
-				KStoreObserver.shared.purchase(product: self.productsArray[sender.tag]) { alertType, _, _ in
+				KStoreObserver.shared.purchase(product: self.productsArray[button.tag]) { alertType, _, _ in
 					self.presentAlertController(title: "", message: alertType.message)
 				}
 			}
+		}
+	}
+}
+
+// MAKR: - ServiceFooterTableViewCellDelegate
+extension ProductTableViewController: ServiceFooterTableViewCellDelegate {
+	func serviceFooterTableViewCell(_ cell: ServiceFooterTableViewCell, didPressButton button: UIButton) {
+		if let legalKNavigationViewController = R.storyboard.legal.instantiateInitialViewController() {
+			self.present(legalKNavigationViewController, animated: true)
 		}
 	}
 }

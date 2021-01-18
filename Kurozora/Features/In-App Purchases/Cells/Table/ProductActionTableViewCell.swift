@@ -8,20 +8,16 @@
 
 import UIKit
 
-protocol ProductActionTableViewCellDelegate: class {
-	func actionButtonPressed(_ sender: UIButton)
-}
-
 class ProductActionTableViewCell: UITableViewCell {
-	// MARK: - Properties
-	weak var delegate: ProductActionTableViewCellDelegate?
-
 	// MARK: - IBOutlets
 	@IBOutlet weak var actionButton: KButton!
 	@IBOutlet weak var actionTextField: KTextField!
 
+	// MARK: - Properties
+	weak var delegate: ProductActionTableViewCellDelegate?
+
 	// MARK: - IBActions
 	@IBAction func actionButtonPressed(_ sender: UIButton) {
-		delegate?.actionButtonPressed(sender)
+		self.delegate?.productActionTableViewCell(self, didPressButton: sender)
 	}
 }

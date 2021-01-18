@@ -139,8 +139,8 @@ extension EpisodeDetailCollectionViewController {
 			let episodeLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: episodeDetailSection.identifierString, for: indexPath) as! EpisodeLockupCollectionViewCell
 			return episodeLockupCollectionViewCell
 		case .synopsis:
-			let synopsisCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: episodeDetailSection.identifierString, for: indexPath) as! TextViewCollectionViewCell
-			return synopsisCollectionViewCell
+			let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: episodeDetailSection.identifierString, for: indexPath) as! TextViewCollectionViewCell
+			return textViewCollectionViewCell
 		case .rating:
 			let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: episodeDetailSection.identifierString, for: indexPath) as! RatingCollectionViewCell
 			return ratingCollectionViewCell
@@ -166,6 +166,7 @@ extension EpisodeDetailCollectionViewController {
 			episodeLockupCollectionViewCell?.episode = self.episode
 		case .synopsis:
 			let textViewCollectionViewCell = cell as? TextViewCollectionViewCell
+			textViewCollectionViewCell?.delegate = self
 			textViewCollectionViewCell?.textViewCollectionViewCellType = .synopsis
 			textViewCollectionViewCell?.textViewContent = self.episode.attributes.overview
 //		case .rating:
@@ -181,16 +182,30 @@ extension EpisodeDetailCollectionViewController {
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
 		guard let sectionHeaderReusableView = view as? TitleHeaderCollectionReusableView else { return }
-		guard let Section = EpisodeDetail.Section(rawValue: indexPath.section) else { return }
-
-		sectionHeaderReusableView.title = Section.stringValue
+		guard let episodeDetailSection = EpisodeDetail.Section(rawValue: indexPath.section) else { return }
+		sectionHeaderReusableView.delegate = self
+		sectionHeaderReusableView.title = episodeDetailSection.stringValue
 		sectionHeaderReusableView.indexPath = indexPath
+	}
+}
+
+// MARK: - TextViewCollectionViewCellDelegate
+extension EpisodeDetailCollectionViewController: TextViewCollectionViewCellDelegate {
+	func textViewCollectionViewCell(_ cell: TextViewCollectionViewCell, didPressButton button: UIButton) {
+		if let synopsisKNavigationController = R.storyboard.synopsis.instantiateInitialViewController() {
+			if let synopsisViewController = synopsisKNavigationController.viewControllers.first as? SynopsisViewController {
+				synopsisViewController.title = cell.textViewCollectionViewCellType.stringValue
+				synopsisViewController.synopsis = self.episode.attributes.overview
+			}
+			synopsisKNavigationController.modalPresentationStyle = .fullScreen
+			self.present(synopsisKNavigationController, animated: true)
+		}
 	}
 }
 
 // MARK: - TitleHeaderCollectionReusableViewDelegate
 extension EpisodeDetailCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
-	func headerButtonPressed(_ reusableView: TitleHeaderCollectionReusableView) {
+	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPressButton button: UIButton) {
 		self.performSegue(withIdentifier: reusableView.segueID, sender: reusableView.indexPath)
 	}
 }

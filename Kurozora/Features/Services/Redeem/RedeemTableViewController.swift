@@ -199,15 +199,14 @@ extension RedeemTableViewController: UITextFieldDelegate {
 
 // MARK: - ProductActionTableViewCellDelegate
 extension RedeemTableViewController: ProductActionTableViewCellDelegate {
-	func actionButtonPressed(_ sender: UIButton) {
+	func productActionTableViewCell(_ cell: ProductActionTableViewCell, didPressButton button: UIButton) {
 		if VNDocumentCameraViewController.isSupported {
 			let documentCameraViewController = VNDocumentCameraViewController()
 			documentCameraViewController.delegate = self
-			present(documentCameraViewController, animated: true)
-			return
+			self.present(documentCameraViewController, animated: true)
+		} else {
+			self.openCamera()
 		}
-
-		openCamera()
 	}
 }
 

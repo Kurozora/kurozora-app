@@ -22,6 +22,8 @@ class ServiceFooterTableViewCell: KTableViewCell {
 	@IBOutlet weak var privacyButton: UIButton!
 
 	// MARK: - Properties
+	weak var delegate: ServiceFooterTableViewCellDelegate?
+
 	/// The service type used to populate the cell.
 	var serviceType: ServiceType? {
 		didSet {
@@ -55,8 +57,6 @@ class ServiceFooterTableViewCell: KTableViewCell {
 	}
 
 	@IBAction func privacyButtonPressed(_ sender: UIButton) {
-		if let legalKNavigationViewController = R.storyboard.legal.instantiateInitialViewController() {
-			self.parentViewController?.present(legalKNavigationViewController, animated: true)
-		}
+		self.delegate?.serviceFooterTableViewCell(self, didPressButton: sender)
 	}
 }

@@ -33,6 +33,7 @@ extension StudioDetailsCollectionViewController {
 				(studioCollectionViewCell as? StudioHeaderCollectionViewCell)?.studio = self.studio
 			case .about:
 				let textViewCollectionViewCell = studioCollectionViewCell as? TextViewCollectionViewCell
+				textViewCollectionViewCell?.delegate = self
 				textViewCollectionViewCell?.textViewCollectionViewCellType = .about
 				textViewCollectionViewCell?.textViewContent = self.studio.attributes.about
 			case .information:
@@ -40,6 +41,7 @@ extension StudioDetailsCollectionViewController {
 					informationCollectionViewCell.studioDetailsInformationSection = StudioDetailsInformationSection(rawValue: indexPath.item) ?? .founded
 					informationCollectionViewCell.studio = self.studio
 				} else if let informationButtonCollectionViewCell = studioCollectionViewCell as? InformationButtonCollectionViewCell {
+					informationButtonCollectionViewCell.delegate = self
 					informationButtonCollectionViewCell.studioDetailsInformationSection = StudioDetailsInformationSection(rawValue: indexPath.item) ?? .website
 					informationButtonCollectionViewCell.studio = self.studio
 				}
@@ -52,6 +54,7 @@ extension StudioDetailsCollectionViewController {
 		dataSource.supplementaryViewProvider = { (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
 			let studioDetailsSection = StudioDetailsSection(rawValue: indexPath.section) ?? .main
 			let titleHeaderCollectionReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
+			titleHeaderCollectionReusableView.delegate = self
 			titleHeaderCollectionReusableView.segueID = studioDetailsSection.segueIdentifier
 			titleHeaderCollectionReusableView.indexPath = indexPath
 			titleHeaderCollectionReusableView.title = studioDetailsSection.stringValue

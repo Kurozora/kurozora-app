@@ -78,9 +78,32 @@ extension StudioDetailsCollectionViewController {
 	}
 }
 
+// MARK: - InformationButtonCollectionViewCellDelegate
+extension StudioDetailsCollectionViewController: InformationButtonCollectionViewCellDelegate {
+	func informationButtonCollectionViewCell(_ cell: InformationButtonCollectionViewCell, didPressButton button: UIButton) {
+		guard cell.studioDetailsInformationSection == .website else { return }
+		guard let websiteURL = self.studio.attributes.websiteUrl?.url else { return }
+		UIApplication.shared.kOpen(websiteURL)
+	}
+}
+
+// MARK: - TextViewCollectionViewCellDelegate
+extension StudioDetailsCollectionViewController: TextViewCollectionViewCellDelegate {
+	func textViewCollectionViewCell(_ cell: TextViewCollectionViewCell, didPressButton button: UIButton) {
+		if let synopsisKNavigationController = R.storyboard.synopsis.instantiateInitialViewController() {
+			if let synopsisViewController = synopsisKNavigationController.viewControllers.first as? SynopsisViewController {
+				synopsisViewController.title = cell.textViewCollectionViewCellType.stringValue
+				synopsisViewController.synopsis = self.studio.attributes.about
+			}
+			synopsisKNavigationController.modalPresentationStyle = .fullScreen
+			self.present(synopsisKNavigationController, animated: true)
+		}
+	}
+}
+
 // MARK: - TitleHeaderCollectionReusableViewDelegate
 extension StudioDetailsCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
-	func headerButtonPressed(_ reusableView: TitleHeaderCollectionReusableView) {
+	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPressButton button: UIButton) {
 		self.performSegue(withIdentifier: reusableView.segueID, sender: reusableView.indexPath)
 	}
 }

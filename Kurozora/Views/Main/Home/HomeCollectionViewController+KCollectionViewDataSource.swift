@@ -65,6 +65,7 @@ extension HomeCollectionViewController {
 
 			// Get a supplementary view of the desired kind.
 			let exploreSectionTitleCell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
+			exploreSectionTitleCell.delegate = self
 			exploreSectionTitleCell.indexPath = indexPath
 
 			if indexPath.section < exploreCategoriesCount {

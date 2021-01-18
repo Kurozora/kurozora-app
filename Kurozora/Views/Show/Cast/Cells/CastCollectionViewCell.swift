@@ -9,11 +9,6 @@
 import UIKit
 import KurozoraKit
 
-protocol CastCollectionViewCellDelegate: class {
-	func actorButtonPressed(_ cell: CastCollectionViewCell)
-	func characterButtonPressed(_ cell: CastCollectionViewCell)
-}
-
 class CastCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var actorImageView: UIImageView!
@@ -50,10 +45,10 @@ class CastCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - IBActions
 	@IBAction func actorButtonPressed(_ sender: UIButton) {
-		self.delegate?.actorButtonPressed(self)
+		self.delegate?.castCollectionViewCell(self, didPressActorButton: sender)
 	}
 
 	@IBAction func characterButtonPressed(_ sender: UIButton) {
-		self.delegate?.characterButtonPressed(self)
+		self.delegate?.castCollectionViewCell(self, didPressCharacterButton: sender)
 	}
 }

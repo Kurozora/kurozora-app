@@ -1,5 +1,5 @@
 //
-//  ActorDetailsCollectionViewController+KCollectionViewDataSource.swift
+//  ShowDetailsCollectionViewController+KCollectionViewDataSource.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 18/01/2021.
@@ -8,13 +8,16 @@
 
 import UIKit
 
-extension ActorDetailsCollectionViewController {
+extension ShowDetailsCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
 		return [
-			CharacterLockupCollectionViewCell.self,
 			TextViewCollectionViewCell.self,
+			RatingCollectionViewCell.self,
 			InformationCollectionViewCell.self,
-			SmallLockupCollectionViewCell.self
+			LockupCollectionViewCell.self,
+			SmallLockupCollectionViewCell.self,
+			CastCollectionViewCell.self,
+			SosumiShowCollectionViewCell.self
 		]
 	}
 

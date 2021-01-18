@@ -17,6 +17,7 @@ class TitleHeaderCollectionReusableView: UICollectionReusableView {
 
 	// MARK: - Properties
 	static let reuseIdentifier = "TitleHeaderCollectionReusableView"
+	weak var delegate: TitleHeaderCollectionReusableViewDelegate?
 	var title: String? = nil {
 		didSet {
 			configureView()
@@ -37,6 +38,6 @@ class TitleHeaderCollectionReusableView: UICollectionReusableView {
 
 	// MARK: - IBActions
 	@IBAction func headerButtonPressed(_ sender: UIButton) {
-		self.parentViewController?.performSegue(withIdentifier: segueID, sender: indexPath)
+		self.delegate?.titleHeaderCollectionReusableView(self, didPressButton: sender)
 	}
 }

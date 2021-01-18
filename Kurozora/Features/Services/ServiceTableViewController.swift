@@ -95,6 +95,7 @@ extension ServiceTableViewController {
 			guard let serviceFooterTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.serviceFooterTableViewCell, for: indexPath) else {
 				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.serviceFooterTableViewCell.identifier)")
 			}
+			serviceFooterTableViewCell.delegate = self
 			serviceFooterTableViewCell.serviceType = serviceType
 			return serviceFooterTableViewCell
 		}
@@ -122,6 +123,15 @@ extension ServiceTableViewController {
 
 	override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
 		return UITableView.automaticDimension
+	}
+}
+
+// MARK: - ServiceFooterTableViewCellDelegate
+extension ServiceTableViewController: ServiceFooterTableViewCellDelegate {
+	func serviceFooterTableViewCell(_ cell: ServiceFooterTableViewCell, didPressButton button: UIButton) {
+		if let legalKNavigationViewController = R.storyboard.legal.instantiateInitialViewController() {
+			self.present(legalKNavigationViewController, animated: true)
+		}
 	}
 }
 

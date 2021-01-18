@@ -141,23 +141,20 @@ class HomeCollectionViewController: KCollectionViewController {
 		if segue.identifier == R.segue.homeCollectionViewController.showDetailsSegue.identifier {
 			// Show detail for explore cell
 			if let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController {
-				if let showID = sender as? Int {
-					showDetailCollectionViewController.showID = showID
-				}
+				guard let showID = sender as? Int else { return }
+				showDetailCollectionViewController.showID = showID
 			}
 		} else if segue.identifier == R.segue.homeCollectionViewController.exploreSegue.identifier {
 			// Show explore view with specified genre
 			if let homeCollectionViewController = segue.destination as? HomeCollectionViewController {
-				if let genre = sender as? Genre {
-					homeCollectionViewController.genre = genre
-				}
+				guard let genre = sender as? Genre else { return }
+				homeCollectionViewController.genre = genre
 			}
 		} else if segue.identifier == R.segue.homeCollectionViewController.showsListSegue.identifier {
 			if let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController {
-				if let indexPath = sender as? IndexPath {
-					showsListCollectionViewController.title = exploreCategories[indexPath.section].attributes.title
-					showsListCollectionViewController.shows = exploreCategories[indexPath.section].relationships.shows?.data ?? []
-				}
+				guard let indexPath = sender as? IndexPath else { return }
+				showsListCollectionViewController.title = exploreCategories[indexPath.section].attributes.title
+				showsListCollectionViewController.shows = exploreCategories[indexPath.section].relationships.shows?.data ?? []
 			}
 		}
 	}
@@ -207,9 +204,8 @@ extension HomeCollectionViewController {
 
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
 		if let baseLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? BaseLockupCollectionViewCell {
-			if self.exploreCategories[indexPath.section].relationships.shows != nil {
-				return baseLockupCollectionViewCell.show?.contextMenuConfiguration(in: self)
-			}
+			guard self.exploreCategories[indexPath.section].relationships.shows != nil else { return nil }
+			return baseLockupCollectionViewCell.show?.contextMenuConfiguration(in: self)
 		}
 		return nil
 	}
@@ -238,5 +234,12 @@ extension HomeCollectionViewController {
 			}
 			return actionBaseExploreCollectionViewCell
 		}
+	}
+}
+
+// MARK: - TitleHeaderCollectionReusableViewDelegate
+extension HomeCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
+	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPressButton button: UIButton) {
+		self.performSegue(withIdentifier: reusableView.segueID, sender: reusableView.indexPath)
 	}
 }

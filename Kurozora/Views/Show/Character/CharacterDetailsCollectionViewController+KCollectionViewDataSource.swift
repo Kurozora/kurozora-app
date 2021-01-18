@@ -14,7 +14,6 @@ extension CharacterDetailsCollectionViewController {
 			ActorLockupCollectionViewCell.self,
 			TextViewCollectionViewCell.self,
 			InformationCollectionViewCell.self,
-			InformationButtonCollectionViewCell.self,
 			SmallLockupCollectionViewCell.self
 		]
 	}

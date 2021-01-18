@@ -288,6 +288,7 @@ extension ShowDetailsCollectionViewController {
 			badgeCollectionViewCell?.show = self.show
 		case .synopsis:
 			let textViewCollectionViewCell = showDetailCollectionViewCell as? TextViewCollectionViewCell
+			textViewCollectionViewCell?.delegate = self
 			textViewCollectionViewCell?.textViewCollectionViewCellType = .synopsis
 			textViewCollectionViewCell?.textViewContent = self.show.attributes.synopsis
 		case .rating:
@@ -321,6 +322,7 @@ extension ShowDetailsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 		let showDetailSection = ShowDetail.Section(rawValue: indexPath.section) ?? .header
 		let titleHeaderCollectionReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
+		titleHeaderCollectionReusableView.delegate = self
 		titleHeaderCollectionReusableView.segueID = showDetailSection.segueIdentifier
 		titleHeaderCollectionReusableView.indexPath = indexPath
 		titleHeaderCollectionReusableView.title = showDetailSection != .moreByStudio ? showDetailSection.stringValue : showDetailSection.stringValue + self.moreByStudio.attributes.name
@@ -347,33 +349,35 @@ extension ShowDetailsCollectionViewController {
 	}
 }
 
-// MARK: - KCollectionViewDataSource
-extension ShowDetailsCollectionViewController {
-	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
-		return [
-			TextViewCollectionViewCell.self,
-			RatingCollectionViewCell.self,
-			InformationCollectionViewCell.self,
-			LockupCollectionViewCell.self,
-			SmallLockupCollectionViewCell.self,
-			CastCollectionViewCell.self,
-			SosumiShowCollectionViewCell.self
-		]
-	}
-
-	override func registerNibs(for collectionView: UICollectionView) -> [UICollectionReusableView.Type] {
-		return [TitleHeaderCollectionReusableView.self]
-	}
-}
-
 // MARK: - CastCollectionViewCellDelegate
 extension ShowDetailsCollectionViewController: CastCollectionViewCellDelegate {
-	func actorButtonPressed(_ cell: CastCollectionViewCell) {
+	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressActorButton button: UIButton) {
 		self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.actorDetailsSegue.identifier, sender: cell)
 	}
 
-	func characterButtonPressed(_ cell: CastCollectionViewCell) {
+	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressCharacterButton button: UIButton) {
 		self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.characterDetailsSegue.identifier, sender: cell)
+	}
+}
+
+// MARK: - TextViewCollectionViewCellDelegate
+extension ShowDetailsCollectionViewController: TextViewCollectionViewCellDelegate {
+	func textViewCollectionViewCell(_ cell: TextViewCollectionViewCell, didPressButton button: UIButton) {
+		if let synopsisKNavigationController = R.storyboard.synopsis.instantiateInitialViewController() {
+			if let synopsisViewController = synopsisKNavigationController.viewControllers.first as? SynopsisViewController {
+				synopsisViewController.title = cell.textViewCollectionViewCellType.stringValue
+				synopsisViewController.synopsis = self.show.attributes.synopsis
+			}
+			synopsisKNavigationController.modalPresentationStyle = .fullScreen
+			self.present(synopsisKNavigationController, animated: true)
+		}
+	}
+}
+
+// MARK: - TitleHeaderCollectionReusableViewDelegate
+extension ShowDetailsCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
+	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPressButton button: UIButton) {
+		self.performSegue(withIdentifier: reusableView.segueID, sender: reusableView.indexPath)
 	}
 }
 

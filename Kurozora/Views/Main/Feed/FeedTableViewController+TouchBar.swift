@@ -1,5 +1,5 @@
 //
-//  FeedTableViewControllerTouchBar.swift
+//  FeedTableViewController+TouchBar.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 16/01/2021.

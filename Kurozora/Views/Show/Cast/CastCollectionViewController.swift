@@ -152,11 +152,11 @@ extension CastCollectionViewController {
 
 // MARK: - CastCollectionViewCellDelegate
 extension CastCollectionViewController: CastCollectionViewCellDelegate {
-	func actorButtonPressed(_ cell: CastCollectionViewCell) {
+	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressActorButton button: UIButton) {
 		self.performSegue(withIdentifier: R.segue.castCollectionViewController.actorDetailsSegue.identifier, sender: cell)
 	}
 
-	func characterButtonPressed(_ cell: CastCollectionViewCell) {
+	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressCharacterButton button: UIButton) {
 		self.performSegue(withIdentifier: R.segue.castCollectionViewController.characterDetailsSegue.identifier, sender: cell)
 	}
 }

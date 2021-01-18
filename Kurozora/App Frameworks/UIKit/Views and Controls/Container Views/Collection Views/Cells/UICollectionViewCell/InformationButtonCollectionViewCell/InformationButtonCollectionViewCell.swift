@@ -16,6 +16,7 @@ class InformationButtonCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var separatorView: SecondarySeparatorView!
 
 	// MARK: - Properties
+	weak var delegate: InformationButtonCollectionViewCellDelegate?
 	var studioDetailsInformationSection: StudioDetailsInformationSection = .website
 	var studio: Studio! {
 		didSet {
@@ -32,8 +33,7 @@ class InformationButtonCollectionViewCell: UICollectionViewCell {
 	}
 
 	// MARK: - IBActions
-	@IBAction func websiteButtonPressed(_ sender: KButton) {
-		guard let websiteURL = studio.attributes.websiteUrl?.url else { return }
-		UIApplication.shared.kOpen(websiteURL)
+	@IBAction func actionButtonPressed(_ sender: KButton) {
+		self.delegate?.informationButtonCollectionViewCell(self, didPressButton: sender)
 	}
 }

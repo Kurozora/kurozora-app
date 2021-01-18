@@ -170,6 +170,7 @@ extension CharacterDetailsCollectionViewController {
 			(characterCollectionViewCell as? CharacterHeaderCollectionViewCell)?.character = self.character
 		case .about:
 			let textViewCollectionViewCell = characterCollectionViewCell as? TextViewCollectionViewCell
+			textViewCollectionViewCell?.delegate = self
 			textViewCollectionViewCell?.textViewCollectionViewCellType = .about
 			textViewCollectionViewCell?.textViewContent = self.character.attributes.about
 		case .information:
@@ -193,6 +194,7 @@ extension CharacterDetailsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 		let characterSection = CharacterSection(rawValue: indexPath.section) ?? .main
 		let titleHeaderCollectionReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
+		titleHeaderCollectionReusableView.delegate = self
 		titleHeaderCollectionReusableView.segueID = characterSection.segueIdentifier
 		titleHeaderCollectionReusableView.indexPath = indexPath
 		titleHeaderCollectionReusableView.title = characterSection.stringValue
@@ -211,9 +213,23 @@ extension CharacterDetailsCollectionViewController {
 	}
 }
 
+// MARK: - TextViewCollectionViewCellDelegate
+extension CharacterDetailsCollectionViewController: TextViewCollectionViewCellDelegate {
+	func textViewCollectionViewCell(_ cell: TextViewCollectionViewCell, didPressButton button: UIButton) {
+		if let synopsisKNavigationController = R.storyboard.synopsis.instantiateInitialViewController() {
+			if let synopsisViewController = synopsisKNavigationController.viewControllers.first as? SynopsisViewController {
+				synopsisViewController.title = cell.textViewCollectionViewCellType.stringValue
+				synopsisViewController.synopsis = self.character.attributes.about
+			}
+			synopsisKNavigationController.modalPresentationStyle = .fullScreen
+			self.present(synopsisKNavigationController, animated: true)
+		}
+	}
+}
+
 // MARK: - TitleHeaderCollectionReusableViewDelegate
 extension CharacterDetailsCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
-	func headerButtonPressed(_ reusableView: TitleHeaderCollectionReusableView) {
+	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPressButton button: UIButton) {
 		self.performSegue(withIdentifier: reusableView.segueID, sender: reusableView.indexPath)
 	}
 }

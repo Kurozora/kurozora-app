@@ -1,5 +1,5 @@
 //
-//  ShowDetailsCollectionViewController+NSTouchBar.swift
+//  ShowDetailsCollectionViewController+TouchBar.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 12/01/2021.

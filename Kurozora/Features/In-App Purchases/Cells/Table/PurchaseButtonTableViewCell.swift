@@ -9,10 +9,6 @@
 import UIKit
 import StoreKit
 
-protocol PurchaseButtonTableViewCellDelegate: class {
-	func purchaseButtonPressed(_ sender: UIButton)
-}
-
 class PurchaseButtonTableViewCell: UITableViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var bubbleView: UIView? {
@@ -24,7 +20,7 @@ class PurchaseButtonTableViewCell: UITableViewCell {
 	@IBOutlet weak var primaryLabel: KLabel!
 
 	// MARK: - Properties
-	weak var purchaseButtonTableViewCellDelegate: PurchaseButtonTableViewCellDelegate?
+	weak var delegate: PurchaseButtonTableViewCellDelegate?
 	var productNumber: Int = 0
 	var productTitle: String = ""
 	var productsArray: [SKProduct]? {
@@ -69,6 +65,6 @@ class PurchaseButtonTableViewCell: UITableViewCell {
 
 	// MARK: - IBActions
 	@IBAction func purchaseButtonPressed(_ sender: UIButton) {
-		purchaseButtonTableViewCellDelegate?.purchaseButtonPressed(sender)
+		self.delegate?.purchaseButtonTableViewCell(self, didPressButton: sender)
 	}
 }
