@@ -211,19 +211,9 @@ extension CharacterDetailsCollectionViewController {
 	}
 }
 
-// MARK: - KCollectionViewDataSource
-extension CharacterDetailsCollectionViewController {
-	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
-		return [
-			ActorLockupCollectionViewCell.self,
-			TextViewCollectionViewCell.self,
-			InformationCollectionViewCell.self,
-			InformationButtonCollectionViewCell.self,
-			SmallLockupCollectionViewCell.self
-		]
-	}
-
-	override func registerNibs(for collectionView: UICollectionView) -> [UICollectionReusableView.Type] {
-		return [TitleHeaderCollectionReusableView.self]
+// MARK: - TitleHeaderCollectionReusableViewDelegate
+extension CharacterDetailsCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
+	func headerButtonPressed(_ reusableView: TitleHeaderCollectionReusableView) {
+		self.performSegue(withIdentifier: reusableView.segueID, sender: reusableView.indexPath)
 	}
 }

@@ -142,62 +142,6 @@ extension SeasonsCollectionViewController {
 	}
 }
 
-// MARK: - KCollectionViewDataSource
-extension SeasonsCollectionViewController {
-	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
-		return [LockupCollectionViewCell.self]
-	}
-
-	override func configureDataSource() {
-		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Season>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: Season) -> UICollectionViewCell? in
-			if let lockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.lockupCollectionViewCell, for: indexPath) {
-				lockupCollectionViewCell.season = item
-				return lockupCollectionViewCell
-			} else {
-				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.lockupCollectionViewCell.identifier)")
-			}
-		}
-	}
-
-	override func updateDataSource() {
-		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Season>()
-		snapshot.appendSections([.main])
-		snapshot.appendItems(seasons)
-		dataSource.apply(snapshot)
-	}
-}
-
-// MARK: - KCollectionViewDelegateLayout
-extension SeasonsCollectionViewController {
-	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
-		let width = layoutEnvironment.container.effectiveContentSize.width
-		let columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
-		return columnCount > 0 ? columnCount : 1
-	}
-
-	override func contentInset(forSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 20, trailing: 10)
-	}
-
-	override func createLayout() -> UICollectionViewLayout {
-		let layout = UICollectionViewCompositionalLayout { (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-			let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(150.0))
-			let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-			layoutGroup.interItemSpacing = .fixed(10.0)
-
-			let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-			layoutSection.interGroupSpacing = 10.0
-			layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
-			return layoutSection
-		}
-		return layout
-	}
-}
-
 // MARK: - SectionLayoutKind
 extension SeasonsCollectionViewController {
 	/**

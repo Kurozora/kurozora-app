@@ -150,31 +150,6 @@ extension CastCollectionViewController {
 	}
 }
 
-// MARK: - KCollectionViewDataSource
-extension CastCollectionViewController {
-	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
-		return [CastCollectionViewCell.self]
-	}
-
-	override func configureDataSource() {
-		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Cast>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: Cast) -> UICollectionViewCell? in
-			guard let castCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.castCollectionViewCell, for: indexPath) else {
-				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.castCollectionViewCell.identifier)")
-			}
-			castCollectionViewCell.delegate = self
-			castCollectionViewCell.cast = item
-			return castCollectionViewCell
-		}
-	}
-
-	override func updateDataSource() {
-		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Cast>()
-		snapshot.appendSections([.main])
-		snapshot.appendItems(self.cast)
-		dataSource.apply(snapshot)
-	}
-}
-
 // MARK: - CastCollectionViewCellDelegate
 extension CastCollectionViewController: CastCollectionViewCellDelegate {
 	func actorButtonPressed(_ cell: CastCollectionViewCell) {
@@ -183,40 +158,6 @@ extension CastCollectionViewController: CastCollectionViewCellDelegate {
 
 	func characterButtonPressed(_ cell: CastCollectionViewCell) {
 		self.performSegue(withIdentifier: R.segue.castCollectionViewController.characterDetailsSegue.identifier, sender: cell)
-	}
-}
-
-// MARK: - KCollectionViewDelegateLayout
-extension CastCollectionViewController {
-	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
-		let width = layoutEnvironment.container.effectiveContentSize.width
-		let columnCount = (width / 374).rounded().int
-		if columnCount > 5 {
-			return 5
-		}
-		return columnCount > 0 ? columnCount : 1
-	}
-
-	override func contentInset(forSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 20, trailing: 10)
-	}
-
-	override func createLayout() -> UICollectionViewLayout {
-		let layout = UICollectionViewCompositionalLayout { (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-			let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(150.0))
-			let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-			layoutGroup.interItemSpacing = .fixed(10.0)
-
-			let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-			layoutSection.interGroupSpacing = 10.0
-			layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
-			return layoutSection
-		}
-		return layout
 	}
 }
 

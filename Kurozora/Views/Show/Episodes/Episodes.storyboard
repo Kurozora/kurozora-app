@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17700" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3U2-4Z-cqf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3U2-4Z-cqf">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -49,7 +49,7 @@
         <!--Episode-->
         <scene sceneID="Kc0-6m-8cw">
             <objects>
-                <collectionViewController storyboardIdentifier="EpisodeDetailCollectionViewControlle" title="Episode" useStoryboardIdentifierAsRestorationIdentifier="YES" id="W7w-EE-TzB" customClass="EpisodeDetailCollectionViewControlle" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="EpisodeDetailCollectionViewControlle" title="Episode" useStoryboardIdentifierAsRestorationIdentifier="YES" id="W7w-EE-TzB" customClass="EpisodeDetailCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" id="9rj-Cd-JST">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
