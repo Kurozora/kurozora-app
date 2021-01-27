@@ -17,23 +17,25 @@ open class TMConstrainedHorizontalBarLayout: TMHorizontalBarLayout {
     
     // MARK: Properties
     
-    //swiftlint:disable unused_setter_value
+    // swiftlint:disable unused_setter_value
     @available(*, unavailable)
     open override var contentMode: TMBarLayout.ContentMode {
+        get {
+            return super.contentMode
+        }
         set {
             fatalError("\(type(of: self)) does not support updating contentMode")
-        } get {
-            return super.contentMode
         }
     }
     
-    //swiftlint:disable unused_setter_value
+    // swiftlint:disable unused_setter_value
     @available(*, unavailable)
     open override var interButtonSpacing: CGFloat {
+        get {
+            return super.interButtonSpacing
+        }
         set {
             fatalError("\(type(of: self)) does not support updating interButtonSpacing")
-        } get {
-            return super.interButtonSpacing
         }
     }
    

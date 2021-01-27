@@ -40,7 +40,7 @@ PODS:
   - SwifterSwift/UIKit (5.2.0)
   - SwiftTheme (0.5.5)
   - SwiftyJSON (5.0.0)
-  - Tabman (2.9.1):
+  - Tabman (2.10.0):
     - Pageboy (~> 3.6.0)
   - TRON (5.4.0):
     - Alamofire (~> 5.0)
@@ -51,7 +51,6 @@ PODS:
     - Alamofire (~> 5.0)
     - SwiftyJSON (~> 5.0)
     - TRON/Core
-  - UIImageColors (2.1.0)
   - WhatsNew (0.4.6)
 
 DEPENDENCIES:
@@ -68,7 +67,6 @@ DEPENDENCIES:
   - Tabman
   - TRON
   - TRON/SwiftyJSON
-  - UIImageColors
   - WhatsNew
 
 SPEC REPOS:
@@ -88,7 +86,6 @@ SPEC REPOS:
     - SwiftyJSON
     - Tabman
     - TRON
-    - UIImageColors
     - WhatsNew
   https://github.com/kiritokatklian/Specs.git:
     - KurozoraKit
@@ -108,11 +105,10 @@ SPEC CHECKSUMS:
   SwifterSwift: 334181863c416882d97b7a60c05054d9e4d799e2
   SwiftTheme: 585ead917c78ea3fc508437b0a141d29c034bdb0
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
-  Tabman: 085d89c65be9e883629bdaf5b1453a6397e57846
+  Tabman: d8d6ab0b483c7db375a71ac227d3ef791b56a049
   TRON: 682b67b9ab368baa2dc2c1e4907e18c755191161
-  UIImageColors: d2ef3b0877d203cbb06489eeb78ea8b7788caabe
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
 
-PODFILE CHECKSUM: 91c8c736ca2e31946db3380ee9c04a9c7c1691f1
+PODFILE CHECKSUM: 83d6723afec5968ca2ad0e85cf91f71becde656e
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.1

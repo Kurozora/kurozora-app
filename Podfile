@@ -16,7 +16,6 @@ def kurozora_pods
 	pod 'KurozoraKit'#, path: '../KurozoraKit'
 	pod 'R.swift'
 	pod 'ReachabilitySwift'
-#	pod 'RichTextView'
 	pod 'Solar'
 #	pod 'SnowGlobe'
 	pod 'SwiftTheme'
@@ -24,9 +23,7 @@ def kurozora_pods
 	pod 'Tabman'
 	pod 'TRON'
 	pod 'TRON/SwiftyJSON'
-	pod 'UIImageColors'
 	pod 'WhatsNew'
-#	pod 'Zip'
 end
 
 # MARK: - Targets

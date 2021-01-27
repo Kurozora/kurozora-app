@@ -121,28 +121,31 @@ open class TMBarView<Layout: TMBarLayout, Button: TMBarButton, Indicator: TMBarI
     /// - `.swipe`: The bar contents can be scrolled through with swipe gestures.
     /// - `.none`: The bar contents can't be scrolled at all.
     open var scrollMode: ScrollMode {
+        get {
+            return ScrollMode(rawValue: scrollView.scrollMode.rawValue)!
+        }
         set {
             scrollView.scrollMode = GestureScrollView.ScrollMode(rawValue: newValue.rawValue)!
-        } get {
-            return ScrollMode(rawValue: scrollView.scrollMode.rawValue)!
         }
     }
     /// Whether to fade the leading and trailing edges of the bar content to an alpha of 0.
     open var fadesContentEdges: Bool {
+        get {
+            return scrollViewContainer.showFade
+        }
         set {
             scrollViewContainer.showFade = newValue
-        } get {
-            return scrollViewContainer.showFade
         }
     }
     /// Spacing between components in the bar, such as between the layout and accessory views.
     ///
     /// Defaults to `8.0`.
     open var spacing: CGFloat {
+        get {
+            return layoutGrid.horizontalSpacing
+        }
         set {
             layoutGrid.horizontalSpacing = newValue
-        } get {
-            return layoutGrid.horizontalSpacing
         }
     }
     
@@ -342,19 +345,25 @@ open class TMBarView<Layout: TMBarLayout, Button: TMBarButton, Indicator: TMBarI
 
     // MARK: UIAccessibilityContainer
 
+    private var allAccessibilityElements: [UIView] {
+        let accessoryElements = AccessoryLocation.allCases.compactMap { accessoryViews[$0] }
+        let buttonElements = buttons.all.compactMap { $0 as UIView }
+        return accessoryElements + buttonElements
+    }
+
     override open func accessibilityElementCount() -> Int {
-        return buttons.all.count
+        return allAccessibilityElements.count
     }
 
     override open func accessibilityElement(at index: Int) -> Any? {
-        return buttons.all[index]
+        return allAccessibilityElements[index]
     }
 
     open override func index(ofAccessibilityElement element: Any) -> Int {
-        guard let item = element as? Button else {
+        guard let item = element as? UIView else {
             return 0
         }
-        return buttons.all.firstIndex(of: item) ?? 0
+        return allAccessibilityElements.firstIndex(where: { $0 === item }) ?? 0
     }
 }
 
@@ -560,7 +569,7 @@ extension TMBarView: TMBarButtonInteractionHandler, GestureScrollViewGestureDele
 // MARK: - Accessory View Management
 private extension TMBarView {
 
-    enum AccessoryLocation: String {
+    enum AccessoryLocation: String, CaseIterable {
         case leading
         case leadingPinned
         case trailing

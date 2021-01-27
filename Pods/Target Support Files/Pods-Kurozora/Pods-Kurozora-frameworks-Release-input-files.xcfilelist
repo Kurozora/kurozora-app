@@ -14,5 +14,4 @@ ${BUILT_PRODUCTS_DIR}/SwifterSwift/SwifterSwift.framework
 ${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework
 ${BUILT_PRODUCTS_DIR}/TRON/TRON.framework
 ${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework
-${BUILT_PRODUCTS_DIR}/UIImageColors/UIImageColors.framework
 ${BUILT_PRODUCTS_DIR}/WhatsNew/WhatsNew.framework
