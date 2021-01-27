@@ -29,6 +29,12 @@ class ServiceHeaderTableViewCell: KTableViewCell {
 	}
 
 	// MARK: - Functions
+	override func sharedInit() {
+		super.sharedInit()
+		self.contentView.backgroundColor = .clear
+	}
+
+	// MARK: - Functions
 	override func reloadCell() {
 		self.headlineLabel.text = serviceType?.headlineStringValue
 		self.subheadLabel.text = serviceType?.subheadStringValue

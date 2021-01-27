@@ -29,6 +29,12 @@ class ServicePreviewTableViewCell: KTableViewCell {
 		}
 	}
 
+	// MARK: - Functions
+	override func sharedInit() {
+		super.sharedInit()
+		self.contentView.backgroundColor = .clear
+	}
+
 	// MARK: - View
 	override func reloadCell() {
 		self.previewImageView?.image = previewImage
