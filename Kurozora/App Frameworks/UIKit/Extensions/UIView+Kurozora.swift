@@ -9,6 +9,14 @@
 import UIKit
 
 extension UIView {
+	// MARK: - Properties
+	#if targetEnvironment(macCatalyst)
+	@objc(_focusRingType)
+	var focusRingType: UInt {
+		return 1 // NSFocusRingTypeNone
+	}
+	#endif
+
 	// MARK: - Functions
 	/**
 		Adds parallax effect to the view.
