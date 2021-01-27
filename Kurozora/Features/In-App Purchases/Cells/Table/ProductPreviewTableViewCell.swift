@@ -46,17 +46,10 @@ extension ProductPreviewTableViewCell: UICollectionViewDataSource {
 		guard let purchasePreviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.purchasePreviewCollectionViewCell, for: indexPath) else {
 			fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.purchasePreviewCollectionViewCell.identifier)")
 		}
-		return purchasePreviewCollectionViewCell
-	}
-}
-
-// MARK: - UICollectionViewDelegate
-extension ProductPreviewTableViewCell: UICollectionViewDelegate {
-	func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 		if indexPath.section == 0 {
-			let purchasePreviewCollectionViewCell = cell as? PurchasePreviewCollectionViewCell
-			purchasePreviewCollectionViewCell?.previewImage = previewImages[indexPath.item]
+			purchasePreviewCollectionViewCell.previewImage = previewImages[indexPath.item]
 		}
+		return purchasePreviewCollectionViewCell
 	}
 }
 

@@ -136,28 +136,16 @@ extension RedeemTableViewController {
 			guard let productActionTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.productActionTableViewCell, for: indexPath) else {
 				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.productActionTableViewCell.identifier)")
 			}
+			productActionTableViewCell.delegate = self
+			productActionTableViewCell.actionTextField.tag = indexPath.row
+			productActionTableViewCell.actionTextField.delegate = self
+			productActionTableViewCell.actionTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+			productActionTableViewCell.actionTextField.placeholder = "Or enter your code manually"
+			productActionTableViewCell.actionButton.isHidden = false
+			textFieldArray.append(productActionTableViewCell.actionTextField)
 			return productActionTableViewCell
 		default:
 			return super.tableView(tableView, cellForRowAt: indexPath)
-		}
-	}
-}
-
-// MARK: - UITableViewDelegate
-extension RedeemTableViewController {
-	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		switch Section(rawValue: indexPath.section) {
-		case .body:
-			if let productActionTableViewCell = cell as? ProductActionTableViewCell {
-				productActionTableViewCell.delegate = self
-				productActionTableViewCell.actionTextField.tag = indexPath.row
-				productActionTableViewCell.actionTextField.delegate = self
-				productActionTableViewCell.actionTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
-				productActionTableViewCell.actionTextField.placeholder = "Or enter your code manually"
-				productActionTableViewCell.actionButton.isHidden = false
-				textFieldArray.append(productActionTableViewCell.actionTextField)
-			}
-		default: break
 		}
 	}
 }

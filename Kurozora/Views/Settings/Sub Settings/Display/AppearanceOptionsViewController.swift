@@ -64,17 +64,26 @@ extension AppearanceOptionsViewController {
 			guard let selectableSettingsCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.selectableSettingsCell, for: indexPath) else {
 				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.selectableSettingsCell.identifier)")
 			}
+			if let darkThemeOption = DarkThemeOption(rawValue: indexPath.item) {
+				selectableSettingsCell.primaryLabel?.text = automaticOptions[indexPath.row]
+				selectableSettingsCell.isSelected = darkThemeOption.rawValue == UserSettings.darkThemeOption
+			}
 			return selectableSettingsCell
 		} else if datePickerIndexPath == indexPath {
 			guard let datePickerSettingsCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.datePickerSettingsCell, for: indexPath) else {
 				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.datePickerSettingsCell.identifier)")
 			}
+			datePickerSettingsCell.updateCell(with: inputDates[indexPath.row - 1], for: indexPath)
+			datePickerSettingsCell.delegate = self
 			return datePickerSettingsCell
 		}
 
 		guard let dateSettingsCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dateSettingsCell, for: indexPath) else {
 			fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.dateSettingsCell.identifier)")
 		}
+		let indexPathRow = datePickerIndexPath != nil && indexPath.row != 0 ? indexPath.row - 1 : indexPath.row
+		dateSettingsCell.primaryLabel?.text = customScheduleOptions[indexPathRow]
+		dateSettingsCell.updateText(with: inputDates[indexPathRow])
 		return dateSettingsCell
 	}
 
@@ -88,28 +97,6 @@ extension AppearanceOptionsViewController {
 
 // MARK: - UITableViewDelegate
 extension AppearanceOptionsViewController {
-	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		if indexPath.section == 1 {
-			if let selectableSettingsCell = cell as? SelectableSettingsCell {
-				if let darkThemeOption = DarkThemeOption(rawValue: indexPath.item) {
-					selectableSettingsCell.primaryLabel?.text = automaticOptions[indexPath.row]
-					selectableSettingsCell.isSelected = darkThemeOption.rawValue == UserSettings.darkThemeOption
-				}
-			}
-		} else if datePickerIndexPath == indexPath {
-			if let datePickerSettingsCell = cell as? DatePickerSettingsCell {
-				datePickerSettingsCell.updateCell(with: inputDates[indexPath.row - 1], for: indexPath)
-				datePickerSettingsCell.delegate = self
-			}
-		} else {
-			if let dateSettingsCell = cell as? DateSettingsCell {
-				let indexPathRow = datePickerIndexPath != nil && indexPath.row != 0 ? indexPath.row - 1 : indexPath.row
-				dateSettingsCell.primaryLabel?.text = customScheduleOptions[indexPathRow]
-				dateSettingsCell.updateText(with: inputDates[indexPathRow])
-			}
-		}
-	}
-
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		if indexPath.section == 1 {
 			UserSettings.set(indexPath.item, forKey: .darkThemeOption)

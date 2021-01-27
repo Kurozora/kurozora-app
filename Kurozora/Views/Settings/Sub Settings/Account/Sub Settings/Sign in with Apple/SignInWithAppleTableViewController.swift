@@ -28,22 +28,10 @@ extension SignInWithAppleTableViewController {
 			guard let siwaButtonTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.siwaButtonTableViewCell, for: indexPath) else {
 				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.siwaButtonTableViewCell.identifier)")
 			}
+			siwaButtonTableViewCell.onboardingFooterTableViewCellDelegate = self
 			return siwaButtonTableViewCell
 		default:
 			return super.tableView(tableView, cellForRowAt: indexPath)
-		}
-	}
-}
-
-// MARK: - UITableViewDelegate
-extension SignInWithAppleTableViewController {
-	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		switch Section(rawValue: indexPath.section) {
-		case .body:
-			if let siwaButtonTableViewCell = cell as? SIWAButtonTableViewCell {
-				siwaButtonTableViewCell.onboardingFooterTableViewCellDelegate = self
-			}
-		default: break
 		}
 	}
 }

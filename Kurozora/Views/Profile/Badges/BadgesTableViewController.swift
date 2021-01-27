@@ -90,14 +90,7 @@ extension BadgesTableViewController {
 		guard let badgeTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath as IndexPath) else {
 			fatalError("Cannot dequeue cell with reuse identifier \(identifier.identifier)")
 		}
+		badgeTableViewCell.badge = self.badges[indexPath.section]
 		return badgeTableViewCell
-	}
-}
-
-// MARK: - UITableViewDelegate
-extension BadgesTableViewController {
-	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		let badgeTableViewCell = cell as? BadgeTableViewCell
-		badgeTableViewCell?.badge = self.badges[indexPath.section]
 	}
 }

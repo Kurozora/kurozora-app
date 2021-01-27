@@ -42,10 +42,13 @@ extension SwitchAccountsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		guard let notificationsGroupingCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.selectableSettingsCell, for: indexPath) else {
+		guard let selectableSettingsCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.selectableSettingsCell, for: indexPath) else {
 			fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.selectableSettingsCell.identifier)")
 		}
-		return notificationsGroupingCell
+		let accountKey = accounts[indexPath.item]
+		selectableSettingsCell.primaryLabel?.text = accountKey
+		selectableSettingsCell.isSelected = accountKey == UserSettings.selectedAccount
+		return selectableSettingsCell
 	}
 
 	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -56,14 +59,6 @@ extension SwitchAccountsTableViewController {
 
 // MARK: - UITableViewDelegate
 extension SwitchAccountsTableViewController {
-	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		if let selectableSettingsCell = cell as? SelectableSettingsCell {
-			let accountKey = accounts[indexPath.item]
-			selectableSettingsCell.primaryLabel?.text = accountKey
-			selectableSettingsCell.isSelected = accountKey == UserSettings.selectedAccount
-		}
-	}
-
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let accountKey = accounts[indexPath.item]
 		// Update user settings for selected account

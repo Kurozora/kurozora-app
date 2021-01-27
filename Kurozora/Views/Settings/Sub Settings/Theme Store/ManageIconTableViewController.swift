@@ -70,22 +70,17 @@ extension ManageIconTableViewController {
 		guard let iconTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.iconTableViewCell, for: indexPath) else {
 			fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.iconTableViewCell.identifier)")
 		}
-		return iconTableViewCell
-	}
-
-	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		if let iconTableViewCell = cell as? IconTableViewCell {
-			switch indexPath.section {
-			case 0:
-				iconTableViewCell.alternativeIconsElement = alternativeIcons?.defaultIcons?[indexPath.row]
-			case 1:
-				iconTableViewCell.alternativeIconsElement = alternativeIcons?.premiumIcons?[indexPath.row]
-			case 2:
-				iconTableViewCell.alternativeIconsElement = alternativeIcons?.limitedIcons?[indexPath.row]
-			default:
-				iconTableViewCell.alternativeIconsElement = nil
-			}
+		switch indexPath.section {
+		case 0:
+			iconTableViewCell.alternativeIconsElement = alternativeIcons?.defaultIcons?[indexPath.row]
+		case 1:
+			iconTableViewCell.alternativeIconsElement = alternativeIcons?.premiumIcons?[indexPath.row]
+		case 2:
+			iconTableViewCell.alternativeIconsElement = alternativeIcons?.limitedIcons?[indexPath.row]
+		default:
+			iconTableViewCell.alternativeIconsElement = nil
 		}
+		return iconTableViewCell
 	}
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

@@ -22,16 +22,11 @@ extension BrowserSettingsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		guard let BrowserSettingsTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.browserSettingsTableViewCell, for: indexPath) else {
+		guard let browserSettingsTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.browserSettingsTableViewCell, for: indexPath) else {
 			fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.browserSettingsTableViewCell.identifier)")
 		}
-		return BrowserSettingsTableViewCell
-	}
-
-	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		if let browserSettingsTableViewCell = cell as? BrowserSettingsTableViewCell {
-			browserSettingsTableViewCell.browser = KBrowser.allCases[indexPath.row]
-		}
+		browserSettingsTableViewCell.browser = KBrowser.allCases[indexPath.row]
+		return browserSettingsTableViewCell
 	}
 
 	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {

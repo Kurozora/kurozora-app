@@ -57,31 +57,19 @@ extension MALImportTableViewController {
 			guard let malImportActionTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.malImportActionTableViewCell, for: indexPath) else {
 				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.malImportActionTableViewCell.identifier)")
 			}
+			malImportActionTableViewCell.actionTextField.tag = indexPath.row
+			malImportActionTableViewCell.actionTextField.delegate = self
+			malImportActionTableViewCell.actionTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+			if selectedFileURL != nil {
+				if let lastPathComponent = selectedFileURL?.lastPathComponent {
+					malImportActionTableViewCell.actionTextField.text = ".../" + lastPathComponent
+					self.rightNavigationBarButton.isEnabled = true
+				}
+			}
+			textFieldArray.append(malImportActionTableViewCell.actionTextField)
 			return malImportActionTableViewCell
 		default:
 			return super.tableView(tableView, cellForRowAt: indexPath)
-		}
-	}
-}
-
-// MARK: - UITableViewDelegate
-extension MALImportTableViewController {
-	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		switch Section(rawValue: indexPath.section) {
-		case .body:
-			if let malImportActionTableViewCell = cell as? ProductActionTableViewCell {
-				malImportActionTableViewCell.actionTextField.tag = indexPath.row
-				malImportActionTableViewCell.actionTextField.delegate = self
-				malImportActionTableViewCell.actionTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
-				if selectedFileURL != nil {
-					if let lastPathComponent = selectedFileURL?.lastPathComponent {
-						malImportActionTableViewCell.actionTextField.text = ".../" + lastPathComponent
-						self.rightNavigationBarButton.isEnabled = true
-					}
-				}
-				textFieldArray.append(malImportActionTableViewCell.actionTextField)
-			}
-		default: break
 		}
 	}
 }

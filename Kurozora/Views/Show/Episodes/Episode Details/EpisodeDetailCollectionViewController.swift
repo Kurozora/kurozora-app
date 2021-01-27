@@ -137,15 +137,23 @@ extension EpisodeDetailCollectionViewController {
 		switch episodeDetailSection {
 		case .header:
 			let episodeLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: episodeDetailSection.identifierString, for: indexPath) as! EpisodeLockupCollectionViewCell
+			episodeLockupCollectionViewCell.simpleModeEnabled = true
+			episodeLockupCollectionViewCell.episode = self.episode
 			return episodeLockupCollectionViewCell
 		case .synopsis:
 			let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: episodeDetailSection.identifierString, for: indexPath) as! TextViewCollectionViewCell
+			textViewCollectionViewCell.delegate = self
+			textViewCollectionViewCell.textViewCollectionViewCellType = .synopsis
+			textViewCollectionViewCell.textViewContent = self.episode.attributes.overview
 			return textViewCollectionViewCell
 		case .rating:
 			let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: episodeDetailSection.identifierString, for: indexPath) as! RatingCollectionViewCell
+//			ratingCollectionViewCell.showDetailsElement = showDetailsElement
 			return ratingCollectionViewCell
 		case .information:
 			let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: episodeDetailSection.identifierString, for: indexPath) as! InformationCollectionViewCell
+			informationCollectionViewCell.episodeDetailInformation = EpisodeDetail.Information(rawValue: indexPath.item) ?? .number
+			informationCollectionViewCell.episode = episode
 			return informationCollectionViewCell
 		}
 	}
@@ -158,28 +166,6 @@ extension EpisodeDetailCollectionViewController {
 
 // MARK: - UICollectionViewDelegate
 extension EpisodeDetailCollectionViewController {
-	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		switch EpisodeDetail.Section(rawValue: indexPath.section) {
-		case .header:
-			let episodeLockupCollectionViewCell = cell as? EpisodeLockupCollectionViewCell
-			episodeLockupCollectionViewCell?.simpleModeEnabled = true
-			episodeLockupCollectionViewCell?.episode = self.episode
-		case .synopsis:
-			let textViewCollectionViewCell = cell as? TextViewCollectionViewCell
-			textViewCollectionViewCell?.delegate = self
-			textViewCollectionViewCell?.textViewCollectionViewCellType = .synopsis
-			textViewCollectionViewCell?.textViewContent = self.episode.attributes.overview
-//		case .rating:
-//			let ratingCollectionViewCell = cell as? RatingCollectionViewCell
-//			ratingCollectionViewCell?.showDetailsElement = showDetailsElement
-		case .information:
-			let informationCollectionViewCell = cell as? InformationCollectionViewCell
-			informationCollectionViewCell?.episodeDetailInformation = EpisodeDetail.Information(rawValue: indexPath.item) ?? .number
-			informationCollectionViewCell?.episode = episode
-		default: break
-		}
-	}
-
 	override func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
 		guard let sectionHeaderReusableView = view as? TitleHeaderCollectionReusableView else { return }
 		guard let episodeDetailSection = EpisodeDetail.Section(rawValue: indexPath.section) else { return }
