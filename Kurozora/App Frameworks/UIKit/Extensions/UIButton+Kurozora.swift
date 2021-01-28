@@ -16,14 +16,18 @@ extension UIButton {
 		- Parameter urlString: The url string from where the image should be downloaded.
 		- Parameter placeholder: The placeholder to show until the downloaded image is loaded or in case the url is dead.
 	*/
-	func setImage(with urlString: String, placeholder: UIImage, completionHandler: (() -> Void)? = nil) {
+	func setImage(with urlString: String, placeholder: UIImage) {
 		if !urlString.isEmpty, let imageURL = URL(string: urlString) {
-			let resource = ImageResource(downloadURL: imageURL, cacheKey: urlString)
-			let options: KingfisherOptionsInfo = [.transition(.fade(0.2))]
-
-			self.kf.setImage(with: resource, for: .normal, placeholder: placeholder.original, options: options, progressBlock: nil) { _ in
-				completionHandler?()
-			}
+			KF.url(imageURL)
+				.transition(.fade(0.2))
+				.placeholder(placeholder)
+				.loadDiskFileSynchronously()
+				.cacheMemoryOnly()
+				.lowDataModeSource(.network(imageURL))
+				.onProgress { _, _ in } // receivedSize, totalSize
+				.onSuccess { _ in } // result
+				.onFailure { _ in } // error
+				.set(to: self, for: .normal)
 		} else {
 			self.setImage(placeholder.original, for: .normal)
 		}
