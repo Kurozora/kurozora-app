@@ -35,6 +35,7 @@
 		6619EE74216F969B00655B99 /* ForumsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6619EE73216F969B00655B99 /* ForumsListViewController.swift */; };
 		661ACC9B25ADA41B002407A7 /* ShowDetailsCollectionViewController+TouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661ACC9A25ADA41B002407A7 /* ShowDetailsCollectionViewController+TouchBar.swift */; };
 		661B26B42351E71B00840AF5 /* UIImageView+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661B26B22351E5A100840AF5 /* UIImageView+Kurozora.swift */; };
+		661D646C25C387EA00822D01 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661D646B25C387EA00822D01 /* MenuController.swift */; };
 		661DBC4F234947D7009292DF /* SKProduct+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DBC4E234947D7009292DF /* SKProduct+Kurozora.swift */; };
 		661DBC51234A4E00009292DF /* TipJarTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DBC50234A4E00009292DF /* TipJarTableViewController.swift */; };
 		661DBC57234A6A78009292DF /* PurchaseButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DBC55234A6A73009292DF /* PurchaseButtonTableViewCell.swift */; };
@@ -611,6 +612,7 @@
 		6619EE73216F969B00655B99 /* ForumsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumsListViewController.swift; sourceTree = "<group>"; };
 		661ACC9A25ADA41B002407A7 /* ShowDetailsCollectionViewController+TouchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShowDetailsCollectionViewController+TouchBar.swift"; sourceTree = "<group>"; };
 		661B26B22351E5A100840AF5 /* UIImageView+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Kurozora.swift"; sourceTree = "<group>"; };
+		661D646B25C387EA00822D01 /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 		661DBC4E234947D7009292DF /* SKProduct+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKProduct+Kurozora.swift"; sourceTree = "<group>"; };
 		661DBC50234A4E00009292DF /* TipJarTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipJarTableViewController.swift; sourceTree = "<group>"; };
 		661DBC55234A6A73009292DF /* PurchaseButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseButtonTableViewCell.swift; sourceTree = "<group>"; };
@@ -1328,6 +1330,14 @@
 				6645D5F323E702B10042B4E0 /* Utilities */,
 			);
 			path = Reachability;
+			sourceTree = "<group>";
+		};
+		661D646D25C38C4800822D01 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				661D646B25C387EA00822D01 /* MenuController.swift */,
+			);
+			path = Menu;
 			sourceTree = "<group>";
 		};
 		661F9F872087383500CF4153 /* Onboard */ = {
@@ -2558,6 +2568,7 @@
 				6640E18722AD631F00D0F575 /* Authentication */,
 				669EA99E22C148D300784181 /* In-App Purchases */,
 				66A08C6B23E3A2DD007B6418 /* Legal */,
+				661D646D25C38C4800822D01 /* Menu */,
 				661F9F872087383500CF4153 /* Onboard */,
 				6614ABE2215EB23500A3A0C9 /* Reachability */,
 				66CE8105246088C000DB0C49 /* Services */,
@@ -3731,6 +3742,7 @@
 				66CF6D6F20A9921000F98375 /* NotificationsViewController.swift in Sources */,
 				66EA1DD625B5BB3100FCD07A /* ActorDetailsCollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				66825BFA21B3E2A700A2F602 /* WorkflowController.swift in Sources */,
+				661D646C25C387EA00822D01 /* MenuController.swift in Sources */,
 				660C042A23D1126B0040C749 /* ShowsListCollectionViewController.swift in Sources */,
 				66B216A821C033B9006E167D /* UIView+Kurozora.swift in Sources */,
 				661F184524A5594C00542AFB /* KCopyableTintedLabel.swift in Sources */,

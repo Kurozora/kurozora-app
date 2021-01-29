@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	// MARK: - Properties
 	var authenticationCount = 0
 	var isUnreachable = false
+	var menuController: MenuController!
 
 	// MARK: - AppDelegate
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
@@ -150,5 +151,26 @@ extension AppDelegate {
 		#if DEBUG
 		userInfo.forEach({ print("\($0.key): \($0.value)") })
 		#endif
+	}
+}
+
+// MARK: - Menu Actions
+extension AppDelegate {
+	/// Used to update your content.
+	@objc func handleRefreshControl() {	}
+
+	/// User chose "Preferences..." from the Application menu.
+	@objc func handlePreferences() {
+		if let settingsSplitViewController = R.storyboard.settings.instantiateInitialViewController() {
+			settingsSplitViewController.modalPresentationStyle = .fullScreen
+			UIApplication.topViewController?.present(settingsSplitViewController, animated: true)
+		}
+	}
+}
+
+// MARK: - Menu
+extension AppDelegate {
+	override func buildMenu(with builder: UIMenuBuilder) {
+		menuController = MenuController(with: builder)
 	}
 }

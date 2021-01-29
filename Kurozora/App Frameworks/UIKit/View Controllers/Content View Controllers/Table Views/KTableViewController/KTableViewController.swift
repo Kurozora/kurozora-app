@@ -68,12 +68,6 @@ class KTableViewController: UITableViewController {
 		return false
 	}
 
-	// MARK: - Command Keys
-	#if targetEnvironment(macCatalyst)
-	/// The command key for refreshing pages.
-	private let refreshCommand = UIKeyCommand(title: "Refresh Page", action: #selector(handleRefreshControl), input: "R", modifierFlags: .command, discoverabilityTitle: "Refresh Page")
-	#endif
-
 	// MARK: - Initializers
 	deinit {
 		NotificationCenter.default.removeObserver(self)
@@ -153,7 +147,6 @@ extension KTableViewController {
 	*/
 	private func configureRefreshControl() {
 		#if targetEnvironment(macCatalyst)
-		self.addKeyCommand(refreshCommand)
 		#else
 		tableView.refreshControl = KRefreshControl()
 		refreshControl?.addTarget(self, action: #selector(self.handleRefreshControl), for: .valueChanged)
@@ -170,7 +163,6 @@ extension KTableViewController {
 	func setNeedsRefreshControlAppearanceUpdate() {
 		if prefersRefreshControlDisabled {
 			#if targetEnvironment(macCatalyst)
-			self.removeKeyCommand(refreshCommand)
 			#else
 			self.tableView.refreshControl = nil
 			#endif

@@ -88,12 +88,6 @@ class KCollectionViewController: UICollectionViewController {
 		return true
 	}
 
-	// MARK: - Command Keys
-	#if targetEnvironment(macCatalyst)
-	/// The command key for refreshing pages.
-	private let refreshCommand = UIKeyCommand(title: "Refresh Page", action: #selector(handleRefreshControl), input: "R", modifierFlags: .command, discoverabilityTitle: "Refresh Page")
-	#endif
-
 	// MARK: - View
 	override func viewWillReload() {
 		super.viewWillReload()
@@ -170,7 +164,6 @@ extension KCollectionViewController {
 	*/
 	private func configureRefreshControl() {
 		#if targetEnvironment(macCatalyst)
-		addKeyCommand(refreshCommand)
 		#else
 		collectionView.refreshControl = KRefreshControl()
 		refreshControl?.addTarget(self, action: #selector(self.handleRefreshControl), for: .valueChanged)
@@ -187,7 +180,6 @@ extension KCollectionViewController {
 	func setNeedsRefreshControlAppearanceUpdate() {
 		if prefersRefreshControlDisabled {
 			#if targetEnvironment(macCatalyst)
-			removeKeyCommand(refreshCommand)
 			#else
 			self.collectionView.refreshControl = nil
 			#endif
