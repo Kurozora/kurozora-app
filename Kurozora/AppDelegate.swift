@@ -209,9 +209,16 @@ extension AppDelegate {
 
 	/// User chose "Upgrade to Pro..." from the Account menu.
 	@objc func handleUpgradeToPro(_ sender: AnyObject) {
-		if let subscriptionTableViewController = R.storyboard.purchase.subscriptionTableViewController() {
-			subscriptionTableViewController.navigationItem.leftBarButtonItem = nil
-			UIApplication.topViewController?.show(subscriptionTableViewController, sender: nil)
+		let topViewController = UIApplication.topViewController
+		if topViewController?.navigationController != nil {
+			if let subscriptionTableViewController = R.storyboard.purchase.subscriptionTableViewController() {
+				subscriptionTableViewController.navigationItem.leftBarButtonItem = nil
+				topViewController?.show(subscriptionTableViewController, sender: nil)
+			}
+		} else {
+			if let subscriptionTableViewController = R.storyboard.purchase.instantiateInitialViewController() {
+				topViewController?.present(subscriptionTableViewController, animated: true)
+			}
 		}
 	}
 

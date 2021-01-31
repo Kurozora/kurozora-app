@@ -41,7 +41,7 @@ extension WorkflowController {
 		WorkflowController.shared.isPro {
 			let reminderSubscriptionURL = KService.reminderSubscriptionURL
 			let reminderSubscriptionString = reminderSubscriptionURL.absoluteString.removingPrefix(reminderSubscriptionURL.scheme ?? "")
-			UIApplication.shared.kOpen(nil, deepLink: URL(string: "webcal://\(reminderSubscriptionString)"))
+			UIApplication.shared.kOpen(nil, deepLink: URL(string: "webcal\(reminderSubscriptionString)"))
 		}
 	}
 
