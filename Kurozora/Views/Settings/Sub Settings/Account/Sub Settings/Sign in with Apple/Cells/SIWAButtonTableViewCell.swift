@@ -10,6 +10,9 @@ import UIKit
 import AuthenticationServices
 
 class SIWAButtonTableViewCell: UITableViewCell {
+	// MARK: - IBOutlets
+	@IBOutlet weak var stackView: UIStackView!
+
 	// MARK: - Properties
 	weak var onboardingFooterTableViewCellDelegate: OnboardingOptionsTableViewCellDelegate?
 
@@ -41,8 +44,7 @@ class SIWAButtonTableViewCell: UITableViewCell {
 		authorizationButton.addTarget(self, action: #selector(handleAuthorizationAppleIDButtonPress), for: .touchUpInside)
 
 		// Add to stack view
-		self.contentView.addSubview(authorizationButton)
-		authorizationButton.anchorCenterSuperview()
+		self.stackView.addArrangedSubview(authorizationButton)
 	}
 
 	/// Handles the Apple ID button press.

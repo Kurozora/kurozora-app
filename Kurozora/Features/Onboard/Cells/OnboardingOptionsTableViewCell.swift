@@ -34,7 +34,7 @@ class OnboardingOptionsTableViewCell: OnboardingBaseTableViewCell {
 	/// Sets up the sign in view by adding an "or" label and the Sign in with Apple ID button.
 	func setupProviderSignInView() {
 		// Create a new 'or label' separator.
-		let orLabel: KSecondaryLabel = KSecondaryLabel(text: "—————— or ——————")
+		let orLabel: KSecondaryLabel = KSecondaryLabel(text: "━━━━━━ or ━━━━━━")
 		orLabel.font = .preferredFont(forTextStyle: .subheadline)
 
 		// Create and setup Apple ID authorization button

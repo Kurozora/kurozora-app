@@ -120,7 +120,7 @@ enum KThemeStyle: Int {
 			return .default
 		case "Day":
 			return .day
-		case "Night":
+		case "Night", "Black":
 			return .night
 		case "Grass":
 			return .grass
