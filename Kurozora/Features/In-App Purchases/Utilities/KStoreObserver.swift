@@ -18,11 +18,11 @@ protocol KStoreObserverDelegate: AnyObject {
 }
 
 class KStoreObserver: NSObject {
-	//MARK:- Shared Object
+	// MARK: - Shared Object
 	static let shared = KStoreObserver()
 	private override init() { }
 
-	//MARK:- Properties
+	// MARK: - Properties
 	fileprivate var productIDs = [String]()
 	fileprivate var productID = ""
 	fileprivate var iapProducts = [SKProduct]()
@@ -48,7 +48,7 @@ class KStoreObserver: NSObject {
 
 	weak var delegate: KStoreObserverDelegate?
 
-	//MARK: - Functions
+	// MARK: - Functions
 	/// Sets the product ids.
 	func setProductIDs(ids: [String]) {
 		self.productIDs = ids
@@ -63,7 +63,7 @@ class KStoreObserver: NSObject {
 			let payment = SKPayment(product: product)
 			SKPaymentQueue.default().add(payment)
 
-			print("PRODUCT TO PURCHASE: \(product.productIdentifier)")
+			print("----- PRODUCT TO PURCHASE: \(product.productIdentifier)")
 			productID = product.productIdentifier
 		} else {
 			complition(AlertType.disabled, nil, nil)
@@ -126,13 +126,13 @@ class KStoreObserver: NSObject {
 	}
 
 	func handleFailed(_ transaction: SKPaymentTransaction) {
-		print("Product purchase failed")
+		print("----- Product purchase failed")
 		/// Handles failed purchase transactions.
 		var message = "Purchase of \(transaction.payment.productIdentifier) failed."
 
 		if let error = transaction.error {
 			message += "\nError: \(error.localizedDescription)"
-			print("Error: \(error.localizedDescription)")
+			print("----- Error: \(error.localizedDescription)")
 		}
 
 		// Do not send any notifications when the user cancels the purchase.
@@ -150,7 +150,7 @@ class KStoreObserver: NSObject {
 	fileprivate func handleRestored(_ transaction: SKPaymentTransaction) {
 		hasRestorablePurchases = true
 		restored.append(transaction)
-		print("Restore content for \(transaction.payment.productIdentifier).")
+		print("----- Restore content for \(transaction.payment.productIdentifier).")
 
 		DispatchQueue.main.async {
 			self.delegate?.storeObserverRestoreDidSucceed()
@@ -160,7 +160,7 @@ class KStoreObserver: NSObject {
 	}
 }
 
-//MARK: - SKProductsRequestDelegate
+// MARK: - SKProductsRequestDelegate
 extension KStoreObserver: SKProductsRequestDelegate {
 	func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
 		if response.products.count > 0 {
@@ -181,7 +181,7 @@ extension KStoreObserver: SKPaymentTransactionObserver {
 			case .purchasing: break
 			case .deferred:
 				// Do not block your UI. Allow the user to continue using your app.
-				print("Transaction in progress: \(transaction)")
+				print("----- Transaction in progress: \(transaction)")
 			case .purchased:
 				// The purchase was successful.
 				handlePurchased(transaction)
@@ -212,16 +212,20 @@ extension KStoreObserver: SKPaymentTransactionObserver {
 
 	func paymentQueue(_ queue: SKPaymentQueue, removedTransactions transactions: [SKPaymentTransaction]) {
 		for transaction in transactions {
-			print("\(transaction.payment.productIdentifier) was removed from the payment queue.")
+			print("----- \(transaction.payment.productIdentifier) was removed from the payment queue.")
 		}
 	}
 
 	func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
-		print("All restorable transactions have been processed by the payment queue.")
+		print("----- All restorable transactions have been processed by the payment queue.")
 
 		if !hasRestorablePurchases {
 			if let complition = self.purchaseProductComplition {
-				complition(AlertType.restored, nil, nil)
+				complition(AlertType.restoreFailed, nil, nil)
+			}
+		} else {
+			if let completion = self.purchaseProductComplition {
+				completion(AlertType.restoreSucceeded, nil, nil)
 			}
 		}
 	}
@@ -232,7 +236,8 @@ extension KStoreObserver {
 	enum AlertType {
 		case setProductIDs
 		case disabled
-		case restored
+		case restoreFailed
+		case restoreSucceeded
 
 		/// The message linked to an alert type.
 		var message: String {
@@ -241,8 +246,10 @@ extension KStoreObserver {
 				return "Product ids not set, call setProductIDs method!"
 			case .disabled:
 				return "You are not authorized to make payments. In-App Purchases may be restricted on your device."
-			case .restored:
-				return "There are no restorable purchases.\nOnly previously bought non-consumable products and auto-renewable subscriptions can be restored.!"
+			case .restoreFailed:
+				return "There are no restorable purchases.\nOnly previously bought non-consumable products and auto-renewable subscriptions can be restored."
+			case .restoreSucceeded:
+				return "All purchases have been restored.\nPlease remember that only previously bought non-consumable products and auto-renewable subscriptions can be restored."
 			}
 		}
 	}
