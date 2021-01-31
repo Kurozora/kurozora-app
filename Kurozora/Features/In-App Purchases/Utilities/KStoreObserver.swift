@@ -195,8 +195,8 @@ extension KStoreObserver: SKPaymentTransactionObserver {
 	}
 
 	func paymentQueue(_ queue: SKPaymentQueue, shouldAddStorePayment payment: SKPayment, for product: SKProduct) -> Bool {
-		if let purchaseTableViewController = R.storyboard.purchase.purchaseViewController() {
-			UIApplication.sharedKeyWindow?.rootViewController?.present(purchaseTableViewController)
+		if let subscriptionTableViewController = R.storyboard.purchase.subscriptionTableViewController() {
+			UIApplication.sharedKeyWindow?.rootViewController?.present(subscriptionTableViewController, animated: true)
 		}
 
 		return true

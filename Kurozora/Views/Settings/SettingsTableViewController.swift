@@ -152,11 +152,7 @@ extension SettingsTableViewController {
 			WorkflowController.shared.isSignedIn()
 			shouldPerformSegue = User.isSignedIn
 		case .reminder:
-			WorkflowController.shared.isPro {
-				let reminderSubscriptionURL = KService.reminderSubscriptionURL
-				let reminderSubscriptionString = reminderSubscriptionURL.absoluteString.removingPrefix(reminderSubscriptionURL.scheme ?? "")
-				UIApplication.shared.kOpen(nil, deepLink: URL(string: "webcal://\(reminderSubscriptionString)"))
-			}
+			WorkflowController.shared.subscribeToReminders()
 		case .notifications:
 			WorkflowController.shared.isSignedIn()
 			shouldPerformSegue = User.isSignedIn

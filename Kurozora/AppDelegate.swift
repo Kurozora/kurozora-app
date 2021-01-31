@@ -51,6 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		UNUserNotificationCenter.current().delegate = WorkflowController.shared
 
 		// Restore current user session
+		NotificationCenter.default.addObserver(self, selector: #selector(updateMenuBuilder(_:)), name: .KUserIsSignedInDidChange, object: nil)
 		WorkflowController.shared.restoreCurrentUserSession()
 
 		return true
@@ -154,16 +155,83 @@ extension AppDelegate {
 	}
 }
 
+// MARK: - Notification Handlers
+extension AppDelegate {
+	/**
+		Used to update the menu builder.
+
+		- Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
+	*/
+	@objc func updateMenuBuilder(_ notification: NSNotification) {
+		UIMenuSystem.main.setNeedsRebuild()
+	}
+}
+
 // MARK: - Menu Actions
 extension AppDelegate {
 	/// Used to update your content.
-	@objc func handleRefreshControl() {	}
+	@objc func handleRefreshControl(_ sender: AnyObject) {	}
 
 	/// User chose "Preferences..." from the Application menu.
-	@objc func handlePreferences() {
+	@objc func handlePreferences(_ sender: AnyObject) {
 		if let settingsSplitViewController = R.storyboard.settings.instantiateInitialViewController() {
 			settingsSplitViewController.modalPresentationStyle = .fullScreen
 			UIApplication.topViewController?.present(settingsSplitViewController, animated: true)
+		}
+	}
+
+	/// User chose the "View My Account..." from the account menu.
+	@objc func handleViewMyAccount(_ sender: AnyObject) {
+		if let settingsSplitViewController = R.storyboard.settings.instantiateInitialViewController() {
+			settingsSplitViewController.modalPresentationStyle = .fullScreen
+			if let settingsTableViewController = (settingsSplitViewController.viewControllers.first as? KNavigationController)?.visibleViewController as? SettingsTableViewController {
+				settingsTableViewController.performSegue(withIdentifier: R.segue.settingsTableViewController.accountSegue.identifier, sender: nil)
+			}
+			UIApplication.topViewController?.present(settingsSplitViewController, animated: true)
+		}
+	}
+
+	/// User chose "Username" from the Account menu.
+	@objc func handleUsername(_ sender: AnyObject) { }
+
+	/// User chose "Email" from the Account menu.
+	@objc func handleEmail(_ sender: AnyObject) { }
+
+	/// User chose "Sign Out" from the Account menu.
+	@objc func handleSignIn(_ sender: AnyObject) {
+		WorkflowController.shared.presentSignInView()
+	}
+
+	/// User chose "Sign Out" from the Account menu.
+	@objc func handleSignOut(_ sender: AnyObject) {
+		WorkflowController.shared.signOut()
+	}
+
+	/// User chose "Upgrade to Pro..." from the Account menu.
+	@objc func handleUpgradeToPro(_ sender: AnyObject) {
+		if let subscriptionTableViewController = R.storyboard.purchase.subscriptionTableViewController() {
+			subscriptionTableViewController.navigationItem.leftBarButtonItem = nil
+			UIApplication.topViewController?.show(subscriptionTableViewController, sender: nil)
+		}
+	}
+
+	/// User chose "Subscribe to Reminders..." from the Account menu.
+	@objc func handleSubscribeToReminders(_ sender: AnyObject) {
+		WorkflowController.shared.subscribeToReminders()
+	}
+
+	/// User chose "Redeem" from the Account menu.
+	@objc func handleRedeem(_ sender: AnyObject) {
+		if let redeemTableViewController = R.storyboard.redeem.redeemTableViewController() {
+			redeemTableViewController.navigationItem.leftBarButtonItem = nil
+			UIApplication.topViewController?.show(redeemTableViewController, sender: nil)
+		}
+	}
+
+	/// User chose "Favorite Shows" from the Account menu.
+	@objc func handleFavoriteShows(_ sender: AnyObject) {
+		if let favoriteShowsCollectionViewController = R.storyboard.favorites.favoriteShowsCollectionViewController() {
+			UIApplication.topViewController?.show(favoriteShowsCollectionViewController, sender: nil)
 		}
 	}
 }

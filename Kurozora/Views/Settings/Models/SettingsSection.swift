@@ -303,7 +303,7 @@ extension SettingsTableViewController {
 			case .keychain:
 				return "Keys Manager"
 			case .reminder:
-				return "Subscribe to reminders"
+				return "Subscribe to Reminders"
 			case .notifications:
 				return "Notifications"
 			case .displayBlindness:

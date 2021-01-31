@@ -51,19 +51,9 @@ extension AccountTableViewController {
 //		case (0, 0): break
 //		case (1, 0): break
 		case (2, 0):
-			let username = User.current?.attributes.username ?? ""
 			let alertController = self.presentAlertController(title: "Sign Out", message: "Are you sure you want to sign out?", defaultActionButtonTitle: "No, keep me signed in 😆")
 			alertController.addAction(UIAlertAction(title: "Yes, sign me out 🤨", style: .destructive) { [weak self] _ in
-				if User.isSignedIn {
-					KService.signOut { result in
-						switch result {
-						case .success:
-							try? KurozoraDelegate.shared.keychain.remove(username)
-						case .failure:
-							break
-						}
-					}
-				}
+				WorkflowController.shared.signOut()
 				self?.dismiss(animated: true, completion: nil)
 			})
 		default: break

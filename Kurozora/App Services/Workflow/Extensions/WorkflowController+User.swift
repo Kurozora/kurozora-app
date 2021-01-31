@@ -19,10 +19,7 @@ extension WorkflowController {
 		if User.isSignedIn {
 			completion?()
 		} else {
-			if let signInTableViewController = R.storyboard.onboarding.signInTableViewController() {
-				let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
-				UIApplication.topViewController?.present(kNavigationController, animated: true)
-			}
+			self.presentSignInView()
 		}
 	}
 
@@ -36,6 +33,15 @@ extension WorkflowController {
 			completion?()
 		} else {
 			UIApplication.topViewController?.presentAlertController(title: "That's Unfortunate", message: "This feature is only accessible to pro users 🧐")
+		}
+	}
+
+	/// Subscribes user with their reminders.
+	func subscribeToReminders() {
+		WorkflowController.shared.isPro {
+			let reminderSubscriptionURL = KService.reminderSubscriptionURL
+			let reminderSubscriptionString = reminderSubscriptionURL.absoluteString.removingPrefix(reminderSubscriptionURL.scheme ?? "")
+			UIApplication.shared.kOpen(nil, deepLink: URL(string: "webcal://\(reminderSubscriptionString)"))
 		}
 	}
 
@@ -55,6 +61,29 @@ extension WorkflowController {
 					case .failure:
 						try? KurozoraDelegate.shared.keychain.remove(accountKey)
 					}
+				}
+			}
+		}
+	}
+
+	/// Presents the user with the sign in view.
+	func presentSignInView() {
+		if let signInTableViewController = R.storyboard.onboarding.signInTableViewController() {
+			let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
+			UIApplication.topViewController?.present(kNavigationController, animated: true)
+		}
+	}
+
+	/// Signs out the user and removes all data from the keychain.
+	func signOut() {
+		let username = User.current?.attributes.username ?? ""
+		if User.isSignedIn {
+			KService.signOut { result in
+				switch result {
+				case .success:
+					try? KurozoraDelegate.shared.keychain.remove(username)
+				case .failure:
+					break
 				}
 			}
 		}
