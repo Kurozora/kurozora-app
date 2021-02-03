@@ -8,6 +8,6 @@
 
 import UIKit
 
-protocol EpisodeLockupCollectionViewCellDelegate: class {
+protocol EpisodeLockupCollectionViewCellDelegate: AnyObject {
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressMoreButton button: UIButton)
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol CastCollectionViewCellDelegate: class {
+protocol CastCollectionViewCellDelegate: AnyObject {
 	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressActorButton button: UIButton)
 	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressCharacterButton button: UIButton)
 }

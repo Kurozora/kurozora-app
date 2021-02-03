@@ -9,7 +9,7 @@
 import UIKit
 import KurozoraKit
 
-protocol LibraryViewControllerDelegate: class {
+protocol LibraryViewControllerDelegate: AnyObject {
 	/**
 		Tells your `LibraryViewControllerDelegate` to sort the library with the specified sort type.
 

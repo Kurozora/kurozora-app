@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ThemesCollectionViewCellDelegate: class {
+protocol ThemesCollectionViewCellDelegate: AnyObject {
 	func themesCollectionViewCell(_ cell: ThemesCollectionViewCell, didPressGetButton button: UIButton)
 	func themesCollectionViewCell(_ cell: ThemesCollectionViewCell, didPressMoreButton button: UIButton)
 }

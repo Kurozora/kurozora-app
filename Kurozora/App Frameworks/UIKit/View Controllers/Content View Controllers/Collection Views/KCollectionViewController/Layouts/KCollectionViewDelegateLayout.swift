@@ -11,7 +11,7 @@ import UIKit
 /**
 	The KCollectionViewDelegateLayout protocol defines methods that guide you with managing the (compositional) layout of sections, groups and items in a collection view. The methods of this protocol are all optional.
 */
-@objc protocol KCollectionViewDelegateLayout: class {
+@objc protocol KCollectionViewDelegateLayout: AnyObject {
 	@objc optional func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int
 	@objc optional func groupHeightFraction(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> CGFloat
 	@objc optional func contentInset(forBackgroundInSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets

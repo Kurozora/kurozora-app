@@ -8,6 +8,6 @@
 
 import UIKit
 
-protocol FollowCellDelegate: class {
+protocol FollowCellDelegate: AnyObject {
 	func followCell(_ cell: FollowCell, didPressButton button: UIButton)
 }

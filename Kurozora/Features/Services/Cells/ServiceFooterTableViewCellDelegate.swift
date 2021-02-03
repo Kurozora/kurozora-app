@@ -8,6 +8,6 @@
 
 import UIKit
 
-protocol ServiceFooterTableViewCellDelegate: class {
+protocol ServiceFooterTableViewCellDelegate: AnyObject {
 	func serviceFooterTableViewCell(_ cell: ServiceFooterTableViewCell, didPressButton button: UIButton)
 }

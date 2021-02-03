@@ -8,6 +8,6 @@
 
 import UIKit
 
-protocol DatePickerSettingsCellDelegate: class {
+protocol DatePickerSettingsCellDelegate: AnyObject {
 	func datePickerSettingsCell(_ cell: DatePickerSettingsCell, didChangeDate datePicker: UIDatePicker)
 }

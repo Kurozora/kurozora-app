@@ -60,10 +60,12 @@ class ForumsViewController: KTabbedViewController {
 		self.navigationItem.searchController?.searchBar.textField?.becomeFirstResponder()
 	}
 
+	#if targetEnvironment(macCatalyst)
 	/// Goes to the selected view.
 	@objc func goToSelectedView(_ touchBarItem: NSPickerTouchBarItem) {
 		self.bar.delegate?.bar(self.bar, didRequestScrollTo: touchBarItem.selectedIndex)
 	}
+	#endif
 
 	/// Presents the text editor for creating new threads.
 	@objc func createNewThread() {
@@ -117,7 +119,9 @@ class ForumsViewController: KTabbedViewController {
 	// MARK: - TMBarDelegate
 	override func bar(_ bar: TMBar, didRequestScrollTo index: PageboyViewController.PageIndex) {
 		super.bar(bar, didRequestScrollTo: index)
+		#if targetEnvironment(macCatalyst)
 		self.tabBarTouchBarItem?.selectedIndex = index
+		#endif
 	}
 
 	// MARK: - PageboyViewControllerDataSource
@@ -126,7 +130,9 @@ class ForumsViewController: KTabbedViewController {
 	}
 
 	override func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
+		#if targetEnvironment(macCatalyst)
 		self.tabBarTouchBarItem?.selectedIndex = UserSettings.forumsPage
+		#endif
 		return .at(index: UserSettings.forumsPage)
 	}
 }

@@ -8,6 +8,6 @@
 
 import UIKit
 
-protocol TextViewCollectionViewCellDelegate: class {
+protocol TextViewCollectionViewCellDelegate: AnyObject {
 	func textViewCollectionViewCell(_ cell: TextViewCollectionViewCell, didPressButton button: UIButton)
 }

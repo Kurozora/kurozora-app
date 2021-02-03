@@ -24,7 +24,9 @@ class MenuController {
 		builder.remove(menu: .substitutions)
 		builder.remove(menu: .transformations)
 		builder.remove(menu: .speech)
+		#if targetEnvironment(macCatalyst)
 		builder.remove(menu: .openRecent)
+		#endif
 		builder.insertSibling(MenuController.refreshPage(), beforeMenu: .fullscreen)
 		builder.insertSibling(MenuController.openPreferences(), afterMenu: .about)
 		builder.insertSibling(MenuController.account(), beforeMenu: .window)
@@ -36,7 +38,7 @@ class MenuController {
 		- Returns: The "Refresh Page" UIMenu object.
 	*/
 	class func refreshPage() -> UIMenu {
-		let refreshPageCommand = UIKeyCommand(title: "Refresh Page", action: #selector(AppDelegate.handleRefreshControl(_:)), input: "R", modifierFlags: .command, discoverabilityTitle: "Refresh Page")
+		let refreshPageCommand = UIKeyCommand(title: "Refresh Page", action: #selector(AppDelegate.handleRefreshControl), input: "R", modifierFlags: .command, discoverabilityTitle: "Refresh Page")
 		return UIMenu(title: "Refresh", identifier: UIMenu.Identifier("app.kurozora.menus.refreshPage"), options: .displayInline, children: [refreshPageCommand])
 	}
 

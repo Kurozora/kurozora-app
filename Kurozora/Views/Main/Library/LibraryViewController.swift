@@ -178,10 +178,12 @@ class LibraryViewController: KTabbedViewController {
 		self.navigationItem.searchController?.searchBar.textField?.becomeFirstResponder()
 	}
 
+	#if targetEnvironment(macCatalyst)
 	/// Goes to the selected view.
 	@objc func goToSelectedView(_ touchBarItem: NSPickerTouchBarItem) {
 		self.bar.delegate?.bar(self.bar, didRequestScrollTo: touchBarItem.selectedIndex)
 	}
+	#endif
 
 	/// Segues to the favorite shows view.
 	@objc func segueToFavoriteShows() {
@@ -206,7 +208,9 @@ class LibraryViewController: KTabbedViewController {
 	// MARK: - TMBarDelegate
 	override func bar(_ bar: TMBar, didRequestScrollTo index: PageboyViewController.PageIndex) {
 		super.bar(bar, didRequestScrollTo: index)
+		#if targetEnvironment(macCatalyst)
 		self.tabBarTouchBarItem?.selectedIndex = index
+		#endif
 	}
 
 	// MARK: - PageboyViewControllerDataSource

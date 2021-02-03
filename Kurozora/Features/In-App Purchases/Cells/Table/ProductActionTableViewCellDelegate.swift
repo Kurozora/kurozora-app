@@ -8,6 +8,6 @@
 
 import UIKit
 
-protocol ProductActionTableViewCellDelegate: class {
+protocol ProductActionTableViewCellDelegate: AnyObject {
 	func productActionTableViewCell(_ cell: ProductActionTableViewCell, didPressButton button: UIButton)
 }

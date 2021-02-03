@@ -14,7 +14,7 @@ import Pageboy
 
 	- Tag: KTabbedViewControllerDataSource
 */
-@objc protocol KTabbedViewControllerDataSource: class {
+@objc protocol KTabbedViewControllerDataSource: AnyObject {
 	/**
 		Tells `KTabbedViewControllerDataSource` which view controllers should be initialized for pagination.
 

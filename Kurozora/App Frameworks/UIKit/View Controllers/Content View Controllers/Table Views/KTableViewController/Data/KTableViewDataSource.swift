@@ -13,7 +13,7 @@ import UIKit
 
 	- Tag: KTableViewDataSource
 */
-@objc protocol KTableViewDataSource: class {
+@objc protocol KTableViewDataSource: AnyObject {
 	@objc optional func registerCells(for tableView: UITableView) -> [UITableViewCell.Type]
 	@objc optional func registerNibs(for tableView: UITableView) -> [UITableViewHeaderFooterView.Type]
 }

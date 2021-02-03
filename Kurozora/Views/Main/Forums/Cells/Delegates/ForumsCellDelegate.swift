@@ -9,7 +9,7 @@
 import UIKit
 import KurozoraKit
 
-protocol ForumsCellDelegate: class {
+protocol ForumsCellDelegate: AnyObject {
 	func voteOnForumsCell(_ cell: ForumsCell, with voteStatus: VoteStatus)
 	func visitOriginalPosterProfile(_ cell: ForumsCell)
 	func showActionsList(_ cell: ForumsCell, sender: UIButton)

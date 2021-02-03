@@ -13,7 +13,7 @@ import UIKit
 
 	- Tag: KCollectionViewDataSource
 */
-@objc protocol KCollectionViewDataSource: class {
+@objc protocol KCollectionViewDataSource: AnyObject {
 	@objc optional func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type]
 	@objc optional func registerNibs(for collectionView: UICollectionView) -> [UICollectionReusableView.Type]
 	@objc optional func updateDataSource()

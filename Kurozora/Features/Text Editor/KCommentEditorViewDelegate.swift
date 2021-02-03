@@ -9,6 +9,6 @@
 import UIKit
 import KurozoraKit
 
-protocol KCommentEditorViewDelegate: class {
+protocol KCommentEditorViewDelegate: AnyObject {
 	func kCommentEditorView(updateRepliesWith threadReplies: [ThreadReply])
 }

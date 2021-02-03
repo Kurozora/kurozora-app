@@ -9,6 +9,6 @@
 import UIKit
 import KurozoraKit
 
-protocol KRichTextEditorViewDelegate: class {
+protocol KRichTextEditorViewDelegate: AnyObject {
 	func kRichTextEditorView(updateThreadsListWith forumsThreads: [ForumsThread])
 }

@@ -9,7 +9,7 @@
 import UIKit
 import KurozoraKit
 
-protocol LibraryListViewControllerDelegate: class {
+protocol LibraryListViewControllerDelegate: AnyObject {
 	func libraryListViewController(updateLayoutWith cellStyle: KKLibrary.CellStyle)
 	func libraryListViewController(updateSortWith sortType: KKLibrary.SortType)
 }

@@ -9,7 +9,7 @@
 import UIKit
 import KurozoraKit
 
-protocol ForumsViewControllerDelegate: class {
+protocol ForumsViewControllerDelegate: AnyObject {
 	/**
 		Tells your `ForumsViewControllerDelegate` to order the forums with the specified order type.
 

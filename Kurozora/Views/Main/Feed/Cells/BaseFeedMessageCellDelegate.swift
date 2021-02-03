@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol BaseFeedMessageCellDelegate: class {
+protocol BaseFeedMessageCellDelegate: AnyObject {
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressHeartButton button: UIButton)
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressReplyButton button: UIButton)
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressReShareButton button: UIButton)

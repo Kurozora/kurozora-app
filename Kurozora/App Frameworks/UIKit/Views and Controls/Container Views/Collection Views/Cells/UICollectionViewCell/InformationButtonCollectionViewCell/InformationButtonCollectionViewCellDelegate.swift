@@ -8,6 +8,6 @@
 
 import UIKit
 
-protocol InformationButtonCollectionViewCellDelegate: class {
+protocol InformationButtonCollectionViewCellDelegate: AnyObject {
 	func informationButtonCollectionViewCell(_ cell: InformationButtonCollectionViewCell, didPressButton button: UIButton)
 }

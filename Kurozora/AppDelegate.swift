@@ -170,7 +170,7 @@ extension AppDelegate {
 // MARK: - Menu Actions
 extension AppDelegate {
 	/// Used to update your content.
-	@objc func handleRefreshControl(_ sender: AnyObject) {	}
+	@objc func handleRefreshControl() {	}
 
 	/// User chose "Preferences..." from the Application menu.
 	@objc func handlePreferences(_ sender: AnyObject) {

@@ -8,6 +8,6 @@
 
 import UIKit
 
-protocol TitleHeaderCollectionReusableViewDelegate: class {
+protocol TitleHeaderCollectionReusableViewDelegate: AnyObject {
 	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPressButton button: UIButton)
 }

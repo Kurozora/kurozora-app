@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol NotificationsViewControllerDelegate: class {
+protocol NotificationsViewControllerDelegate: AnyObject {
 	func notificationsViewControllerHasUnreadNotifications(count: Int)
 	func notificationsViewControllerClearedAllNotifications()
 }

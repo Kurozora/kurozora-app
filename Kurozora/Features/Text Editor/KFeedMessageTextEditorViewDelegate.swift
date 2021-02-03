@@ -9,7 +9,7 @@
 import UIKit
 import KurozoraKit
 
-protocol KFeedMessageTextEditorViewDelegate: class {
+protocol KFeedMessageTextEditorViewDelegate: AnyObject {
 	func kFeedMessageTextEditorView(updateMessagesWith feedMessages: [FeedMessage])
 	func segueToOPFeedDetails(_ feedMessage: FeedMessage)
 }

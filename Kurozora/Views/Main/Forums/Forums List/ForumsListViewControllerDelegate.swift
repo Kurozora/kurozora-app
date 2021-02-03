@@ -9,6 +9,6 @@
 import UIKit
 import KurozoraKit
 
-protocol ForumsListViewControllerDelegate: class {
+protocol ForumsListViewControllerDelegate: AnyObject {
 	func updateForumOrderButton(with orderType: ForumOrder)
 }
