@@ -102,7 +102,7 @@ class ManageActiveSessionsController: KTableViewController {
 
 	// MARK: - Functions
 	/// Fetches sessions for the current user from the server.
-	private func fetchSessions() {
+	func fetchSessions() {
 		#if !targetEnvironment(macCatalyst)
 		DispatchQueue.main.async {
 			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing sessions list...")
@@ -181,60 +181,6 @@ class ManageActiveSessionsController: KTableViewController {
 
 	override func handleRefreshControl() {
 		self.fetchSessions()
-	}
-}
-
-// MARK: - UITableViewDelegate
-extension ManageActiveSessionsController {
-	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		let numberOfSections = tableView.numberOfSections
-
-		if indexPath.section == numberOfSections - 5 {
-			if self.nextPageURL != nil {
-				self.fetchSessions()
-			}
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-		if let otherSessionsCell = tableView.cellForRow(at: indexPath) as? OtherSessionsCell {
-			otherSessionsCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
-
-			otherSessionsCell.ipAddressValueLabel.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-			otherSessionsCell.deviceTypeValueLabel.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-			otherSessionsCell.dateValueLabel.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-		if let otherSessionsCell = tableView.cellForRow(at: indexPath) as? OtherSessionsCell {
-			otherSessionsCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-
-			otherSessionsCell.ipAddressValueLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-			otherSessionsCell.deviceTypeValueLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-			otherSessionsCell.dateValueLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-		let signOutOfSessionAction = UIContextualAction(style: .destructive, title: "Sign Out") { [weak self] (_, _, completionHandler) in
-			guard let self = self else { return }
-			self.sessions[indexPath.section - 1].signOutOfSession(at: indexPath)
-			completionHandler(true)
-		}
-		signOutOfSessionAction.backgroundColor = .kLightRed
-		signOutOfSessionAction.image = UIImage(systemName: "minus.circle")
-
-		let swipeActionsConfiguration = UISwipeActionsConfiguration(actions: [signOutOfSessionAction])
-		swipeActionsConfiguration.performsFirstActionWithFullSwipe = true
-		return swipeActionsConfiguration
-	}
-
-	override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		if indexPath.section != 0 {
-			return self.sessions[indexPath.section - 1].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-		}
-		return nil
 	}
 }
 

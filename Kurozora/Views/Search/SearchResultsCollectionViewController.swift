@@ -194,30 +194,26 @@ extension SearchResultsCollectionViewController {
 		if searchResults != nil {
 			switch currentScope {
 			case .show, .myLibrary:
-				if let showDetailsCollectionViewController = R.storyboard.shows.showDetailsCollectionViewController() {
-					if let show = (searchBaseResultsCell as? SearchShowResultsCell)?.show {
-						showDetailsCollectionViewController.showID = show.id
-						showDetailsCollectionViewController.edgesForExtendedLayout = .all
-						SearchHistory.saveContentsOf(show)
-						self.presentingViewController?.show(showDetailsCollectionViewController, sender: nil)
-					}
+				if let show = (searchBaseResultsCell as? SearchShowResultsCell)?.show {
+					let showDetailsCollectionViewController = ShowDetailsCollectionViewController.`init`(with: show.id)
+					showDetailsCollectionViewController.edgesForExtendedLayout = .all
+					SearchHistory.saveContentsOf(show)
+					self.presentingViewController?.show(showDetailsCollectionViewController, sender: nil)
 				}
 			case .thread:
-				if let threadTableViewController = R.storyboard.thread.threadTableViewController() {
-					threadTableViewController.forumsThread = (searchBaseResultsCell as? SearchForumsResultsCell)?.forumsThread
+				if let forumsThread = (searchBaseResultsCell as? SearchForumsResultsCell)?.forumsThread {
+					let threadTableViewController = ThreadTableViewController.`init`(with: forumsThread.id)
 					self.presentingViewController?.show(threadTableViewController, sender: nil)
 				}
 			case .user:
-				if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
-					if let user = (searchBaseResultsCell as? SearchUserResultsCell)?.user {
-						profileTableViewController.userID = user.id
-						self.presentingViewController?.show(profileTableViewController, sender: nil)
-					}
+				if let user = (searchBaseResultsCell as? SearchUserResultsCell)?.user {
+					let profileTableViewController = ProfileTableViewController.`init`(with: user.id)
+					self.presentingViewController?.show(profileTableViewController, sender: nil)
 				}
 			}
 		} else {
-			if let showDetailsCollectionViewController = R.storyboard.shows.showDetailsCollectionViewController(), let show = (searchBaseResultsCell as? SearchSuggestionResultCell)?.show {
-				showDetailsCollectionViewController.showID = show.id
+			if let show = (searchBaseResultsCell as? SearchSuggestionResultCell)?.show {
+				let showDetailsCollectionViewController = ShowDetailsCollectionViewController.`init`(with: show.id)
 				showDetailsCollectionViewController.edgesForExtendedLayout = .all
 				self.presentingViewController?.show(showDetailsCollectionViewController, sender: nil)
 			}

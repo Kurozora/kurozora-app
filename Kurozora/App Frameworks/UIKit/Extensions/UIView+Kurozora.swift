@@ -108,31 +108,4 @@ extension UIView {
 			self.layer.rasterizationScale = UIScreen.main.scale
 		}
 	}
-
-	/**
-		Create a snapshot of current view.
-
-		- Returns: an image of the created snapshot of the view.
-	*/
-	func createSnapshot() -> UIImage? {
-		UIGraphicsBeginImageContextWithOptions(frame.size, false, 0)
-		drawHierarchy(in: frame, afterScreenUpdates: true)
-
-		let image = UIGraphicsGetImageFromCurrentImageContext()
-		UIGraphicsEndImageContext()
-
-		return image
-	}
-
-	/**
-		Add rounded corners for each specified corner.
-
-		- Parameter corners: The corner which should be rounded.
-		- Parameter radius: The amount by which the corner should be rounded.
-	*/
-	func roundedCorners(_ corners: UIRectCorner, radius: CGFloat) {
-		clipsToBounds = true
-		layer.cornerRadius = radius
-		layer.maskedCorners = CACornerMask(rawValue: corners.rawValue)
-	}
 }

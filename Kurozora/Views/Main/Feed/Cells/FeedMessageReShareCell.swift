@@ -63,14 +63,11 @@ class FeedMessageReShareCell: FeedMessageCell {
 	@objc fileprivate func visitOPProfilePage(_ gestureRecognizer: UITapGestureRecognizer) {
 		guard let opMessage = self.feedMessage.relationships.parent?.data.first else { return }
 		if let opUser = opMessage.relationships.users.data.first {
-			if let profileViewController = R.storyboard.profile.profileTableViewController() {
-				profileViewController.userID = opUser.id
-				profileViewController.dismissButtonIsEnabled = true
+			let profileTableViewController = ProfileTableViewController.`init`(with: opUser.id)
+			profileTableViewController.dismissButtonIsEnabled = true
 
-				let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
-
-				self.parentViewController?.present(kurozoraNavigationController, animated: true)
-			}
+			let kurozoraNavigationController = KNavigationController.init(rootViewController: profileTableViewController)
+			self.parentViewController?.present(kurozoraNavigationController, animated: true)
 		}
 	}
 }

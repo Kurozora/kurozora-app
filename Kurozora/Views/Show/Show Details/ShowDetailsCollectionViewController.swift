@@ -77,7 +77,40 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		return self._prefersActivityIndicatorHidden
 	}
 
-	// MARK: - Properties
+	// MARK: - Initializers
+	/**
+		Initialize a new instance of ShowDetailsCollectionViewController with the given show id.
+
+		- Parameter showID: The show id to use when initializing the view.
+
+		- Returns: an initialized instance of ShowDetailsCollectionViewController.
+	*/
+	static func `init`(with showID: Int) -> ShowDetailsCollectionViewController {
+		if let showDetailsCollectionViewController = R.storyboard.shows.showDetailsCollectionViewController() {
+			showDetailsCollectionViewController.showID = showID
+			return showDetailsCollectionViewController
+		}
+
+		fatalError("Failed to instantiate ShowDetailsCollectionViewController with the given show id.")
+	}
+
+	/**
+		Initialize a new instance of ShowDetailsCollectionViewController with the given show object.
+
+		- Parameter show: The `Show` object to use when initializing the view controller.
+
+		- Returns: an initialized instance of ShowDetailsCollectionViewController.
+	*/
+	static func `init`(with show: Show) -> ShowDetailsCollectionViewController {
+		if let showDetailsCollectionViewController = R.storyboard.shows.showDetailsCollectionViewController() {
+			showDetailsCollectionViewController.show = show
+			return showDetailsCollectionViewController
+		}
+
+		fatalError("Failed to instantiate ShowDetailsCollectionViewController with the given Show object.")
+	}
+
+	// MARK: - View
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
@@ -102,8 +135,10 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		#endif
 
 		// Fetch show details.
-		DispatchQueue.global(qos: .background).async {
-			self.fetchDetails()
+		if show == nil {
+			DispatchQueue.global(qos: .background).async {
+				self.fetchDetails()
+			}
 		}
 	}
 

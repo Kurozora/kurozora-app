@@ -253,47 +253,6 @@ extension FeedTableViewController {
 	}
 }
 
-// MARK: - UITableViewDelegate
-extension FeedTableViewController {
-	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		if let baseFeedMessageCell = tableView.cellForRow(at: indexPath) as? BaseFeedMessageCell {
-			self.performSegue(withIdentifier: R.segue.feedTableViewController.feedMessageDetailsSegue.identifier, sender: baseFeedMessageCell.feedMessage.id)
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		let numberOfSections = tableView.numberOfSections
-
-		if indexPath.section == numberOfSections - 5 {
-			if self.nextPageURL != nil {
-				self.fetchFeedMessages()
-			}
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-		if let baseFeedMessageCell = tableView.cellForRow(at: indexPath) as? BaseFeedMessageCell {
-			baseFeedMessageCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
-
-			baseFeedMessageCell.usernameLabel.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-			baseFeedMessageCell.postTextView.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-		if let baseFeedMessageCell = tableView.cellForRow(at: indexPath) as? BaseFeedMessageCell {
-			baseFeedMessageCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-
-			baseFeedMessageCell.usernameLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-			baseFeedMessageCell.postTextView.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		return self.feedMessages[indexPath.section].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-	}
-}
-
 // MARK: - KTableViewDataSource
 extension FeedTableViewController {
 	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {

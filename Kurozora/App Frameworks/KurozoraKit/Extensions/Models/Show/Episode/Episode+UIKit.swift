@@ -10,9 +10,13 @@ import UIKit
 import KurozoraKit
 
 extension Episode {
-	func contextMenuConfiguration(in viewController: UIViewController)
+	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?)
 	-> UIContextMenuConfiguration? {
-		return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: { _ in
+		let identifier = userInfo?["indexPath"] as? NSCopying
+
+		return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
+			return EpisodeDetailCollectionViewController.`init`(with: self.id)
+		}, actionProvider: { _ in
 			return self.makeContextMenu(in: viewController)
 		})
 	}

@@ -74,6 +74,39 @@ class ThreadTableViewController: KTableViewController {
 		return _prefersActivityIndicatorHidden
 	}
 
+	// MARK: - Initializers
+	/**
+		Initialize a new instance of ThreadTableViewController with the given forum thread id.
+
+		- Parameter forumThreadID: The forum thread id to use when initializing the view.
+
+		- Returns: an initialized instance of ThreadTableViewController.
+	*/
+	static func `init`(with forumThreadID: Int) -> ThreadTableViewController {
+		if let threadTableViewController = R.storyboard.thread.threadTableViewController() {
+			threadTableViewController.forumThreadID = forumThreadID
+			return threadTableViewController
+		}
+
+		fatalError("Failed to instantiate ThreadTableViewController with the given forum thread id.")
+	}
+
+	/**
+	Initialize a new instance of ThreadTableViewController with the given thread object.
+
+	- Parameter forumsThread: The `ForumsThread` object to use when initializing the view controller.
+
+	- Returns: an initialized instance of ThreadTableViewController.
+	*/
+	static func `init`(with forumsThread: ForumsThread) -> ThreadTableViewController {
+		if let threadTableViewController = R.storyboard.thread.threadTableViewController() {
+			threadTableViewController.forumsThread = forumsThread
+			return threadTableViewController
+		}
+
+		fatalError("Failed to instantiate ThreadTableViewController with the given ForumsThread object.")
+	}
+
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()

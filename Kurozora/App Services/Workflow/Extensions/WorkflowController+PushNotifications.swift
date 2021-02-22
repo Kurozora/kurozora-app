@@ -176,10 +176,8 @@ extension WorkflowController {
 		- Parameter showID: The id of the show with which the details view will be loaded.
 	*/
 	func openShowDetails(for showID: Int) {
-		if let showDetailsCollectionViewController = R.storyboard.shows.showDetailsCollectionViewController() {
-			showDetailsCollectionViewController.showID = showID
-			UIApplication.topViewController?.show(showDetailsCollectionViewController, sender: nil)
-		}
+		let showDetailsCollectionViewController = ShowDetailsCollectionViewController.`init`(with: showID)
+		UIApplication.topViewController?.show(showDetailsCollectionViewController, sender: nil)
 	}
 
 	/**
@@ -188,9 +186,7 @@ extension WorkflowController {
 		- Parameter userID: The id of the user with which the profile view will be loaded.
 	*/
 	func openUserProfile(for userID: Int) {
-		if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
-			profileTableViewController.userID = userID
-			UIApplication.topViewController?.show(profileTableViewController, sender: nil)
-		}
+		let profileTableViewController = ProfileTableViewController.`init`(with: userID)
+		UIApplication.topViewController?.show(profileTableViewController, sender: nil)
 	}
 }

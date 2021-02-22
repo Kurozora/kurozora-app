@@ -12,7 +12,21 @@ import KurozoraKit
 extension UserNotification {
 	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?)
 	-> UIContextMenuConfiguration? {
-		return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: { _ in
+		let identifier = userInfo?["indexPath"] as? NSCopying
+
+		return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
+			switch KNotification.CustomType(rawValue: self.attributes.type) {
+			case .follower:
+				if let userID = self.attributes.payload.userID {
+					return ProfileTableViewController.`init`(with: userID)
+				}
+			case .session:
+				return R.storyboard.accountSettings.manageActiveSessionsController()
+			default: break
+			}
+
+			return nil
+		}, actionProvider: { _ in
 			return self.makeContextMenu(in: viewController, userInfo: userInfo)
 		})
 	}

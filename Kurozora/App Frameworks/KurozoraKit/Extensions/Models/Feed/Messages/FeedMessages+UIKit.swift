@@ -12,7 +12,9 @@ import KurozoraKit
 extension FeedMessage {
 	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?)
 	-> UIContextMenuConfiguration? {
-		return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: { _ in
+		let identifier = userInfo?["identifier"] as? NSCopying
+
+		return UIContextMenuConfiguration(identifier: identifier, previewProvider: nil, actionProvider: { _ in
 			return self.makeContextMenu(in: viewController, userInfo: userInfo)
 		})
 	}
@@ -166,13 +168,11 @@ extension FeedMessage {
 	func visitOriginalPosterProfile(from viewController: UIViewController? = UIApplication.topViewController) {
 		guard let user = self.relationships.users.data.first else { return }
 
-		if let profileViewController = R.storyboard.profile.profileTableViewController() {
-			profileViewController.userID = user.id
-			profileViewController.dismissButtonIsEnabled = true
+		let profileTableViewController = ProfileTableViewController.`init`(with: user.id)
+		profileTableViewController.dismissButtonIsEnabled = true
 
-			let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
-			viewController?.present(kurozoraNavigationController, animated: true)
-		}
+		let kurozoraNavigationController = KNavigationController.init(rootViewController: profileTableViewController)
+		viewController?.present(kurozoraNavigationController, animated: true)
 	}
 
 	/**

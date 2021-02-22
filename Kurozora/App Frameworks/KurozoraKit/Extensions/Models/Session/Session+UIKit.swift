@@ -12,7 +12,9 @@ import KurozoraKit
 extension Session {
 	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?)
 	-> UIContextMenuConfiguration? {
-		return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: { _ in
+		let identifier = userInfo?["indexPath"] as? NSCopying
+
+		return UIContextMenuConfiguration(identifier: identifier, previewProvider: nil, actionProvider: { _ in
 			return self.makeContextMenu(in: viewController, userInfo: userInfo)
 		})
 	}

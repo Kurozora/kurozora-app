@@ -23,3 +23,39 @@ import Foundation
     }
     
 }
+
+@objc public extension ThemePicker {
+    
+    class func getThemePicker(
+        _ object : NSObject,
+        _ selector : String
+    ) -> ThemePicker? {
+        return object.themePickers[selector]
+    }
+
+    class func setThemePicker(
+        _ object : NSObject,
+        _ selector : String,
+        _ picker : ThemePicker?
+    ) {
+        object.themePickers[selector] = picker
+        object.performThemePicker(selector: selector, picker: picker)
+    }
+
+    class func makeStatePicker(
+        _ object : NSObject,
+        _ selector : String,
+        _ picker : ThemePicker?,
+        _ state : UIControl.State
+    ) -> ThemePicker? {
+        
+        var picker = picker
+        
+        if let statePicker = object.themePickers[selector] as? ThemeStatePicker {
+            picker = statePicker.setPicker(picker, forState: state)
+        } else {
+            picker = ThemeStatePicker(picker: picker, withState: state)
+        }
+        return picker
+    }
+}

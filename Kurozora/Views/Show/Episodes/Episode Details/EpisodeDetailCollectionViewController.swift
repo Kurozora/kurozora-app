@@ -47,6 +47,39 @@ class EpisodeDetailCollectionViewController: KCollectionViewController {
 		return _prefersActivityIndicatorHidden
 	}
 
+	// MARK: - Initializers
+	/**
+		Initialize a new instance of EpisodeDetailCollectionViewController with the given episode id.
+
+		- Parameter episodeID: The episode id to use when initializing the view.
+
+		- Returns: an initialized instance of EpisodeDetailCollectionViewController.
+	*/
+	static func `init`(with episodeID: Int) -> EpisodeDetailCollectionViewController {
+		if let episodeDetailCollectionViewController = R.storyboard.episodes.episodeDetailCollectionViewController() {
+			episodeDetailCollectionViewController.episodeID = episodeID
+			return episodeDetailCollectionViewController
+		}
+
+		fatalError("Failed to instantiate EpisodeDetailCollectionViewController with the given show id.")
+	}
+
+	/**
+		Initialize a new instance of EpisodeDetailCollectionViewController with the given episode object.
+
+		- Parameter episode: The `Episode` object to use when initializing the view controller.
+
+		- Returns: an initialized instance of EpisodeDetailCollectionViewController.
+	*/
+	static func `init`(with episode: Episode) -> EpisodeDetailCollectionViewController {
+		if let episodeDetailCollectionViewController = R.storyboard.episodes.episodeDetailCollectionViewController() {
+			episodeDetailCollectionViewController.episode = episode
+			return episodeDetailCollectionViewController
+		}
+
+		fatalError("Failed to instantiate EpisodeDetailCollectionViewController with the given Show object.")
+	}
+
 	// MARK: - View
 	override func viewWillReload() {
 		super.viewWillReload()

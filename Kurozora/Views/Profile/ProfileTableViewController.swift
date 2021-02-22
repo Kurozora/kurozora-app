@@ -96,6 +96,39 @@ class ProfileTableViewController: KTableViewController {
 		return self._prefersActivityIndicatorHidden
 	}
 
+	// MARK: - Initializers
+	/**
+		Initialize a new instance of ProfileTableViewController with the given user id.
+
+		- Parameter userID: The user id to use when initializing the view.
+
+		- Returns: an initialized instance of ProfileTableViewController.
+	*/
+	static func `init`(with userID: Int) -> ProfileTableViewController {
+		if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
+			profileTableViewController.userID = userID
+			return profileTableViewController
+		}
+
+		fatalError("Failed to instantiate ProfileTableViewController with the given user id.")
+	}
+
+	/**
+		Initialize a new instance of ProfileTableViewController with the given user object.
+
+		- Parameter user: The `User` object to use when initializing the view controller.
+
+		- Returns: an initialized instance of ProfileTableViewController.
+	*/
+	static func `init`(with user: User) -> ProfileTableViewController {
+		if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
+			profileTableViewController.user = user
+			return profileTableViewController
+		}
+
+		fatalError("Failed to instantiate ProfileTableViewController with the given User object.")
+	}
+
 	// MARK: - View
 	override func viewWillReload() {
 		super.viewWillReload()
@@ -174,7 +207,7 @@ class ProfileTableViewController: KTableViewController {
 	}
 
 	/// Fetches posts for the user whose page is being viewed.
-	private func fetchFeedMessages() {
+	func fetchFeedMessages() {
 		KService.getFeedMessages(forUserID: self.userID, next: nextPageURL) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
@@ -634,47 +667,6 @@ extension ProfileTableViewController {
 		feedMessageCell.liveReShareEnabled = User.current?.id == self.userID
 		feedMessageCell.feedMessage = self.feedMessages[indexPath.section]
 		return feedMessageCell
-	}
-}
-
-// MARK: - UITableViewDelegate
-extension ProfileTableViewController {
-	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		if let baseFeedMessageCell = tableView.cellForRow(at: indexPath) as? BaseFeedMessageCell {
-			self.performSegue(withIdentifier: R.segue.feedTableViewController.feedMessageDetailsSegue.identifier, sender: baseFeedMessageCell.feedMessage.id)
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		let numberOfSections = tableView.numberOfSections
-
-		if indexPath.section == numberOfSections - 5 {
-			if self.nextPageURL != nil {
-				self.fetchFeedMessages()
-			}
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-		if let baseFeedMessageCell = tableView.cellForRow(at: indexPath) as? BaseFeedMessageCell {
-			baseFeedMessageCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
-
-			baseFeedMessageCell.usernameLabel.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-			baseFeedMessageCell.postTextView.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-		if let baseFeedMessageCell = tableView.cellForRow(at: indexPath) as? BaseFeedMessageCell {
-			baseFeedMessageCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-
-			baseFeedMessageCell.usernameLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-			baseFeedMessageCell.postTextView.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		return self.feedMessages[indexPath.section].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 	}
 }
 

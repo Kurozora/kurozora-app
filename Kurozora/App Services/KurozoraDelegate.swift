@@ -120,11 +120,8 @@ class KurozoraDelegate {
 			let showIDString = url.lastPathComponent
 			if !showIDString.isEmpty {
 				guard let showID = Int(showIDString) else { return }
-				if let showDetailsCollectionViewController = R.storyboard.shows.showDetailsCollectionViewController() {
-					showDetailsCollectionViewController.showID = showID
-
-					UIApplication.topViewController?.show(showDetailsCollectionViewController, sender: nil)
-				}
+				let showDetailsCollectionViewController = ShowDetailsCollectionViewController.`init`(with: showID)
+				UIApplication.topViewController?.show(showDetailsCollectionViewController, sender: nil)
 			}
 		case .profile, .user:
 			guard let userID = url.lastPathComponent.int else { return }
@@ -132,10 +129,8 @@ class KurozoraDelegate {
 			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
 				tabBarController.selectedIndex = 4
 
-				if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
-					profileTableViewController.userID = userID
-					tabBarController.selectedViewController?.show(profileTableViewController, sender: nil)
-				}
+				let profileTableViewController = ProfileTableViewController.`init`(with: userID)
+				tabBarController.selectedViewController?.show(profileTableViewController, sender: nil)
 			}
 		case .explore, .home:
 			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
@@ -152,10 +147,8 @@ class KurozoraDelegate {
 
 				if !forumThreadIDString.isEmpty {
 					guard let forumThreadID = forumThreadIDString.int else { return }
-					if let threadTableViewController = R.storyboard.thread.threadTableViewController() {
-						threadTableViewController.forumThreadID = forumThreadID
-						tabBarController.selectedViewController?.show(threadTableViewController, sender: nil)
-					}
+					let threadTableViewController = ThreadTableViewController.`init`(with: forumThreadID)
+					tabBarController.selectedViewController?.show(threadTableViewController, sender: nil)
 				}
 			}
 		case .notification, .notifications:

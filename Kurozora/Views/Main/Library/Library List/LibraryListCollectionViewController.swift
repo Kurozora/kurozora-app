@@ -215,38 +215,6 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	}
 }
 
-// MARK: - UICollectionViewDelegate
-extension LibraryListCollectionViewController {
-	override func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-		let cell = collectionView.cellForItem(at: indexPath)
-		UIView.animate(withDuration: 0.5,
-					   delay: 0.0,
-					   usingSpringWithDamping: 0.8,
-					   initialSpringVelocity: 0.2,
-					   options: [.beginFromCurrentState],
-					   animations: {
-						cell?.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
-		}, completion: nil)
-	}
-
-	override func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-		let cell = collectionView.cellForItem(at: indexPath)
-		UIView.animate(withDuration: 0.5,
-					   delay: 0.0,
-					   usingSpringWithDamping: 0.4,
-					   initialSpringVelocity: 0.2,
-					   options: [.beginFromCurrentState],
-					   animations: {
-						cell?.transform = CGAffineTransform.identity
-		}, completion: nil)
-	}
-
-	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		let libraryBaseCollectionViewCell = collectionView.cellForItem(at: indexPath) as? LibraryBaseCollectionViewCell
-		performSegue(withIdentifier: R.segue.libraryListCollectionViewController.showDetailsSegue, sender: libraryBaseCollectionViewCell)
-	}
-}
-
 // MARK: - UICollectionViewDragDelegate
 extension LibraryListCollectionViewController: UICollectionViewDragDelegate {
 	func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {

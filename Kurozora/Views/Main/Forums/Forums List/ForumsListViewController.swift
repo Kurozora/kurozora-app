@@ -170,48 +170,6 @@ extension ForumsListViewController {
 	}
 }
 
-// MARK: - UITableViewDelegate
-extension ForumsListViewController {
-	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		performSegue(withIdentifier: R.segue.forumsListViewController.threadSegue, sender: self.forumsThreads[indexPath.section])
-	}
-
-	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		let numberOfSections = tableView.numberOfSections
-
-		if indexPath.section == numberOfSections - 5 {
-			if self.nextPageURL != nil {
-				self.fetchThreads()
-			}
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-		if let forumsCell = tableView.cellForRow(at: indexPath) as? ForumsCell {
-			forumsCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
-
-			forumsCell.titleLabel.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-			forumsCell.contentLabel.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
-			forumsCell.byLabel.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
-
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-		if let forumsCell = tableView.cellForRow(at: indexPath) as? ForumsCell {
-			forumsCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-
-			forumsCell.titleLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-			forumsCell.contentLabel.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
-			forumsCell.byLabel.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		return self.forumsThreads[indexPath.section].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-	}
-}
-
 // MARK: - ForumsCellDelegate
 extension ForumsListViewController: ForumsCellDelegate {
 	func voteOnForumsCell(_ cell: ForumsCell, with voteStatus: VoteStatus) {

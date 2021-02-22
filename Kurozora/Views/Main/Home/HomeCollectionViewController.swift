@@ -57,9 +57,7 @@ class HomeCollectionViewController: KCollectionViewController {
 	override func viewWillReload() {
 		super.viewWillReload()
 
-//		if exploreCategories.count != 0 {
-			self.handleRefreshControl()
-//		}
+		self.handleRefreshControl()
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -157,57 +155,6 @@ class HomeCollectionViewController: KCollectionViewController {
 				showsListCollectionViewController.shows = exploreCategories[indexPath.section].relationships.shows?.data ?? []
 			}
 		}
-	}
-}
-
-// MARK: - UICollectionViewDelegate
-extension HomeCollectionViewController {
-	override func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-		if indexPath.section < exploreCategories.count {
-			let cell = collectionView.cellForItem(at: indexPath)
-			UIView.animate(withDuration: 0.5,
-						   delay: 0.0,
-						   usingSpringWithDamping: 0.8,
-						   initialSpringVelocity: 0.2,
-						   options: [.beginFromCurrentState, .allowUserInteraction],
-						   animations: {
-							cell?.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
-			}, completion: nil)
-		}
-	}
-
-	override func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-		if indexPath.section < exploreCategories.count {
-			let cell = collectionView.cellForItem(at: indexPath)
-			UIView.animate(withDuration: 0.5,
-						   delay: 0.0,
-						   usingSpringWithDamping: 0.4,
-						   initialSpringVelocity: 0.2,
-						   options: [.beginFromCurrentState, .allowUserInteraction],
-						   animations: {
-							cell?.transform = CGAffineTransform.identity
-			}, completion: nil)
-		}
-	}
-
-	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		if let baseLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? BaseLockupCollectionViewCell {
-			if self.exploreCategories[indexPath.section].relationships.shows != nil {
-				performSegue(withIdentifier: R.segue.homeCollectionViewController.showDetailsSegue, sender: baseLockupCollectionViewCell.show?.id)
-			} else {
-				performSegue(withIdentifier: R.segue.homeCollectionViewController.exploreSegue, sender: baseLockupCollectionViewCell.genre)
-			}
-		} else if let legalCollectionViewCell = collectionView.cellForItem(at: indexPath) as? LegalCollectionViewCell {
-			performSegue(withIdentifier: R.segue.homeCollectionViewController.legalSegue, sender: legalCollectionViewCell)
-		}
-	}
-
-	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		if let baseLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? BaseLockupCollectionViewCell {
-			guard self.exploreCategories[indexPath.section].relationships.shows != nil else { return nil }
-			return baseLockupCollectionViewCell.show?.contextMenuConfiguration(in: self)
-		}
-		return nil
 	}
 }
 
