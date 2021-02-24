@@ -121,27 +121,3 @@ extension GenresTableViewController {
 		return genreTableViewCell
 	}
 }
-
-// MARK: - UITableViewDelegate
-extension GenresTableViewController {
-	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-		if let genreTableViewCell = tableView.cellForRow(at: indexPath) as? GenreTableViewCell {
-			genreTableViewCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
-
-			genreTableViewCell.nameLabel.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-		if let genreTableViewCell = tableView.cellForRow(at: indexPath) as? GenreTableViewCell {
-			genreTableViewCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-
-			genreTableViewCell.nameLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		return UITableView.automaticDimension
-	}
-}

@@ -112,7 +112,7 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 	}
 
 	/// Fetches the user's favorite list.
-	@objc fileprivate func fetchFavoritesList() {
+	@objc func fetchFavoritesList() {
 		DispatchQueue.main.async {
 			#if !targetEnvironment(macCatalyst)
 			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing favorites list...")
@@ -143,24 +143,6 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if let show = (sender as? SmallLockupCollectionViewCell)?.show, let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController {
 			showDetailCollectionViewController.showID = show.id
-		}
-	}
-}
-
-// MARK: - UICollectionViewDelegate
-extension FavoriteShowsCollectionViewController {
-	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		let smallLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? SmallLockupCollectionViewCell
-		performSegue(withIdentifier: R.segue.favoriteShowsCollectionViewController.showDetailsSegue, sender: smallLockupCollectionViewCell)
-	}
-
-	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		let numberOfItems = collectionView.numberOfItems()
-
-		if indexPath.item == numberOfItems - 5 {
-			if self.nextPageURL != nil {
-				self.fetchFavoritesList()
-			}
 		}
 	}
 }

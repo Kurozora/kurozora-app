@@ -186,35 +186,6 @@ extension FollowTableViewController {
     }
 }
 
-// MARK: - UITableViewDelegate
-extension FollowTableViewController {
-	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		let numberOfSections = tableView.numberOfSections
-
-		if indexPath.section == numberOfSections - 5 {
-			if self.nextPageURL != nil {
-				self.fetchFollowList()
-			}
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-		if let followCell = tableView.cellForRow(at: indexPath) as? FollowCell {
-			followCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
-
-			followCell.usernameLabel.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-		if let followCell = tableView.cellForRow(at: indexPath) as? FollowCell {
-			followCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-
-			followCell.usernameLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-		}
-	}
-}
-
 // MARK: - FollowCellDelegate
 extension FollowTableViewController: FollowCellDelegate {
 	func followCell(_ cell: FollowCell, didPressButton button: UIButton) {

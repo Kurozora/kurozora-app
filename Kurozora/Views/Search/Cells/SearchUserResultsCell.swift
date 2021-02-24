@@ -40,11 +40,11 @@ class SearchUserResultsCell: SearchBaseResultsCell {
 		let followStatus = self.user.attributes.followStatus
 		switch followStatus {
 		case .followed:
-			self.actionButton?.setTitle("＋ Follow", for: .normal)
+			self.actionButton?.setTitle("✓ Following", for: .normal)
 			self.actionButton?.isHidden = false
 			self.actionButton?.isUserInteractionEnabled = true
-		case  .notFollowed:
-			self.actionButton?.setTitle("✓ Following", for: .normal)
+		case .notFollowed:
+			self.actionButton?.setTitle("＋ Follow", for: .normal)
 			self.actionButton?.isHidden = false
 			self.actionButton?.isUserInteractionEnabled = true
 		case .disabled:

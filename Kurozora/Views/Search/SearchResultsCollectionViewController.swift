@@ -187,40 +187,6 @@ extension SearchResultsCollectionViewController {
 	}
 }
 
-// MARK: - UICollectionViewDelegate
-extension SearchResultsCollectionViewController {
-	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		let searchBaseResultsCell = collectionView.cellForItem(at: indexPath)
-		if searchResults != nil {
-			switch currentScope {
-			case .show, .myLibrary:
-				if let show = (searchBaseResultsCell as? SearchShowResultsCell)?.show {
-					let showDetailsCollectionViewController = ShowDetailsCollectionViewController.`init`(with: show.id)
-					showDetailsCollectionViewController.edgesForExtendedLayout = .all
-					SearchHistory.saveContentsOf(show)
-					self.presentingViewController?.show(showDetailsCollectionViewController, sender: nil)
-				}
-			case .thread:
-				if let forumsThread = (searchBaseResultsCell as? SearchForumsResultsCell)?.forumsThread {
-					let threadTableViewController = ThreadTableViewController.`init`(with: forumsThread.id)
-					self.presentingViewController?.show(threadTableViewController, sender: nil)
-				}
-			case .user:
-				if let user = (searchBaseResultsCell as? SearchUserResultsCell)?.user {
-					let profileTableViewController = ProfileTableViewController.`init`(with: user.id)
-					self.presentingViewController?.show(profileTableViewController, sender: nil)
-				}
-			}
-		} else {
-			if let show = (searchBaseResultsCell as? SearchSuggestionResultCell)?.show {
-				let showDetailsCollectionViewController = ShowDetailsCollectionViewController.`init`(with: show.id)
-				showDetailsCollectionViewController.edgesForExtendedLayout = .all
-				self.presentingViewController?.show(showDetailsCollectionViewController, sender: nil)
-			}
-		}
-	}
-}
-
 // MARK: - UISearchResultsUpdating
 extension SearchResultsCollectionViewController: UISearchResultsUpdating {
 	func updateSearchResults(for searchController: UISearchController) {
