@@ -53,6 +53,23 @@ class HomeCollectionViewController: KCollectionViewController {
 		return self._prefersActivityIndicatorHidden
 	}
 
+	// MARK: - Initializers
+	/**
+		Initialize a new instance of HomeCollectionViewController with the given genre object.
+
+		- Parameter genre: The genre object to use when initializing the view.
+
+		- Returns: an initialized instance of HomeCollectionViewController.
+	*/
+	static func `init`(with genre: Genre) -> HomeCollectionViewController {
+		if let homeCollectionViewController = R.storyboard.home.homeCollectionViewController() {
+			homeCollectionViewController.genre = genre
+			return homeCollectionViewController
+		}
+
+		fatalError("Failed to instantiate HomeCollectionViewController with the given Genre object.")
+	}
+
 	// MARK: - View
 	override func viewWillReload() {
 		super.viewWillReload()

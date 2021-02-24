@@ -24,6 +24,9 @@ extension URL {
 	static let mediumPageURL = URL(string: "https://medium.com/@kurozora")
 
 	/// The deep link URL to the App Store page of Kurozora.
+	static let appStoreURL = URL(string: "itms-apps://apps.apple.com/us/app/kurozora/id1476153872")
+
+	/// The deep link URL to the App Store rating page of Kurozora.
 	static let rateURL = URL(string: "itms-apps://apps.apple.com/us/app/kurozora/id1476153872?action=write-review")
 
 	// MARK: - Functions

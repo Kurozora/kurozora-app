@@ -1,34 +1,24 @@
 //
-//  HomeCollectionViewController+UICollectionViewDelegate.swift
+//  ShowListCollectionViewController+UICollectionViewDelegate.swift
 //  Kurozora
 //
-//  Created by Khoren Katklian on 22/02/2021.
+//  Created by Khoren Katklian on 24/02/2021.
 //  Copyright © 2021 Kurozora. All rights reserved.
 //
 
 import UIKit
 
-extension HomeCollectionViewController {
+extension ShowsListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if let baseLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? BaseLockupCollectionViewCell {
-			if self.exploreCategories[indexPath.section].relationships.shows != nil {
-				performSegue(withIdentifier: R.segue.homeCollectionViewController.showDetailsSegue, sender: baseLockupCollectionViewCell.show?.id)
-			} else {
-				performSegue(withIdentifier: R.segue.homeCollectionViewController.exploreSegue, sender: baseLockupCollectionViewCell.genre)
-			}
-		} else if let legalCollectionViewCell = collectionView.cellForItem(at: indexPath) as? LegalCollectionViewCell {
-			performSegue(withIdentifier: R.segue.homeCollectionViewController.legalSegue, sender: legalCollectionViewCell)
+			self.performSegue(withIdentifier: R.segue.showsListCollectionViewController.showDetailsSegue, sender: baseLockupCollectionViewCell.show?.id)
 		}
 	}
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		if let baseLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? BaseLockupCollectionViewCell {
-			if self.exploreCategories[indexPath.section].relationships.shows != nil {
-				return baseLockupCollectionViewCell.show?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-			} else {
-				return baseLockupCollectionViewCell.genre?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-			}
+		if let smallLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? SmallLockupCollectionViewCell {
+			return smallLockupCollectionViewCell.show?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		}
 
 		return nil

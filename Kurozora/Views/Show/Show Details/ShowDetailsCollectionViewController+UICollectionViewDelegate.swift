@@ -69,4 +69,12 @@ extension ShowDetailsCollectionViewController {
 		}
 		return nil
 	}
+
+	override func collectionView(_ collectionView: UICollectionView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
+		if let previewViewController = animator.previewViewController {
+			animator.addCompletion {
+				self.show(previewViewController, sender: self)
+			}
+		}
+	}
 }

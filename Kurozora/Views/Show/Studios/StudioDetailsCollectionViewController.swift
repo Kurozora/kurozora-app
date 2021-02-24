@@ -69,15 +69,6 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 	}
 }
 
-// MARK: - UICollectionViewDelegate
-extension StudioDetailsCollectionViewController {
-	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		if let baseLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? BaseLockupCollectionViewCell {
-			performSegue(withIdentifier: R.segue.studioDetailsCollectionViewController.showDetailsSegue, sender: baseLockupCollectionViewCell)
-		}
-	}
-}
-
 // MARK: - InformationButtonCollectionViewCellDelegate
 extension StudioDetailsCollectionViewController: InformationButtonCollectionViewCellDelegate {
 	func informationButtonCollectionViewCell(_ cell: InformationButtonCollectionViewCell, didPressButton button: UIButton) {

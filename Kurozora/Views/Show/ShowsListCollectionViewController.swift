@@ -161,15 +161,6 @@ class ShowsListCollectionViewController: KCollectionViewController {
 	}
 }
 
-// MARK: - UICollectionViewDelegate
-extension ShowsListCollectionViewController {
-	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		if let baseLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? BaseLockupCollectionViewCell {
-			self.performSegue(withIdentifier: R.segue.showsListCollectionViewController.showDetailsSegue, sender: baseLockupCollectionViewCell.show?.id)
-		}
-	}
-}
-
 // MARK: - KCollectionViewDataSource
 extension ShowsListCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
