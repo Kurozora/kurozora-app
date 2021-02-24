@@ -81,13 +81,13 @@ extension ThreadReply {
 	}
 
 	/**
-	Present share sheet for the forums thread.
+		Present share sheet for the thread reply.
 
-	Make sure to send either the view or the bar button item that's sending the request.
+		Make sure to send either the view or the bar button item that's sending the request.
 
-	- Parameter viewController: The view controller presenting the share sheet.
-	- Parameter view: The `UIView` sending the request.
-	- Parameter barButtonItem: The `UIBarButtonItem` sending the request.
+		- Parameter viewController: The view controller presenting the share sheet.
+		- Parameter view: The `UIView` sending the request.
+		- Parameter barButtonItem: The `UIBarButtonItem` sending the request.
 	*/
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
 		let threadURLString = "https://kurozora.app/thread/\(self.id)"

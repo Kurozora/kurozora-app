@@ -68,8 +68,8 @@ extension ForumsListViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
-		animator.addCompletion {
-			if let previewViewController = animator.previewViewController {
+		if let previewViewController = animator.previewViewController {
+			animator.addCompletion {
 				self.show(previewViewController, sender: self)
 			}
 		}

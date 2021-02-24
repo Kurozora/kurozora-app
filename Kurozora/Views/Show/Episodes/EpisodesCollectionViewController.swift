@@ -49,6 +49,23 @@ class EpisodesCollectionViewController: KCollectionViewController {
 		return _prefersActivityIndicatorHidden
 	}
 
+	// MARK: - Initializers
+	/**
+		Initialize a new instance of EpisodesCollectionViewController with the given season id.
+
+		- Parameter seasonID: The season id to use when initializing the view.
+
+		- Returns: an initialized instance of EpisodesCollectionViewController.
+	*/
+	static func `init`(with seasonID: Int) -> EpisodesCollectionViewController {
+		if let episodesCollectionViewController = R.storyboard.episodes.episodesCollectionViewController() {
+			episodesCollectionViewController.seasonID = seasonID
+			return episodesCollectionViewController
+		}
+
+		fatalError("Failed to instantiate EpisodesCollectionViewController with the given season id.")
+	}
+
 	// MARK: - View
 	override func viewWillReload() {
 		super.viewWillReload()

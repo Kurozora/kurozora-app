@@ -52,7 +52,7 @@ extension Show {
 	}
 
 	/**
-		Present share sheet for the forums thread.
+		Present share sheet for the show.
 
 		Make sure to send either the view or the bar button item that's sending the request.
 

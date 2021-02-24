@@ -123,33 +123,6 @@ class CastCollectionViewController: KCollectionViewController {
 	}
 }
 
-// MARK: - UICollectionViewDelegate
-extension CastCollectionViewController {
-	override func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-		let cell = collectionView.cellForItem(at: indexPath)
-		UIView.animate(withDuration: 0.5,
-					   delay: 0.0,
-					   usingSpringWithDamping: 0.8,
-					   initialSpringVelocity: 0.2,
-					   options: [.beginFromCurrentState, .allowUserInteraction],
-					   animations: {
-						cell?.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
-					   }, completion: nil)
-	}
-
-	override func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-		let cell = collectionView.cellForItem(at: indexPath)
-		UIView.animate(withDuration: 0.5,
-					   delay: 0.0,
-					   usingSpringWithDamping: 0.4,
-					   initialSpringVelocity: 0.2,
-					   options: [.beginFromCurrentState, .allowUserInteraction],
-					   animations: {
-						cell?.transform = CGAffineTransform.identity
-					   }, completion: nil)
-	}
-}
-
 // MARK: - CastCollectionViewCellDelegate
 extension CastCollectionViewController: CastCollectionViewCellDelegate {
 	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressActorButton button: UIButton) {

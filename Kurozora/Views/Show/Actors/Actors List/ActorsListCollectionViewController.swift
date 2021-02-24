@@ -1,5 +1,5 @@
 //
-//  CharactersListCollectionViewController.swift
+//  ActorsListCollectionViewController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 20/08/2020.
@@ -9,10 +9,10 @@
 import UIKit
 import KurozoraKit
 
-class CharactersListCollectionViewController: KCollectionViewController {
+class ActorsListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var actorID: Int = 0
-	var characters: [Character] = [] {
+	var characterID = 0
+	var actors: [Actor] = [] {
 		didSet {
 			self.configureDataSource()
 			self._prefersActivityIndicatorHidden = true
@@ -63,18 +63,18 @@ class CharactersListCollectionViewController: KCollectionViewController {
 		#endif
 
 		DispatchQueue.global(qos: .background).async {
-			self.fetchCharacters()
+			self.fetchActors()
 		}
 	}
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		self.fetchCharacters()
+		self.fetchActors()
 	}
 
 	override func configureEmptyDataView() {
 		emptyBackgroundView.configureImageView(image: R.image.empty.cast()!)
-		emptyBackgroundView.configureLabels(title: "No Characters", detail: "Can't get characters list. Please reload the page or restart the app and check your WiFi connection.")
+		emptyBackgroundView.configureLabels(title: "No Actors", detail: "Can't get actors list. Please reload the page or restart the app and check your WiFi connection.")
 
 		collectionView.backgroundView?.alpha = 0
 	}
@@ -88,12 +88,12 @@ class CharactersListCollectionViewController: KCollectionViewController {
 		}
 	}
 
-	func fetchCharacters() {
-		KService.getCharacters(forActorID: actorID) { [weak self] result in
+	func fetchActors() {
+		KService.getActors(forCharacterID: characterID) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
-			case .success(let characters):
-				self.characters = characters
+			case .success(let actors):
+				self.actors = actors
 			case .failure: break
 			}
 		}
@@ -101,50 +101,41 @@ class CharactersListCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == R.segue.charactersListCollectionViewController.characterDetailsSegue.identifier {
-			if let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController {
-				if let characterID = sender as? Int {
-					characterDetailsCollectionViewController.characterID = characterID
+		if segue.identifier == R.segue.actorsListCollectionViewController.actorDetailsSegue.identifier {
+			if let actorDetailsCollectionViewController = segue.destination as? ActorDetailsCollectionViewController {
+				if let actorID = sender as? Int {
+					actorDetailsCollectionViewController.actorID = actorID
 				}
 			}
 		}
 	}
 }
 
-// MARK: - UICollectionViewDelegate
-extension CharactersListCollectionViewController {
-	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		if let characterLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? CharacterLockupCollectionViewCell {
-			self.performSegue(withIdentifier: R.segue.charactersListCollectionViewController.characterDetailsSegue, sender: characterLockupCollectionViewCell.character.id)
-		}
-	}
-}
-
 // MARK: - KCollectionViewDataSource
-extension CharactersListCollectionViewController {
+extension ActorsListCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
-		return [CharacterLockupCollectionViewCell.self]
+		return [ActorLockupCollectionViewCell.self]
 	}
 
 	override func configureDataSource() {
 		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, _) -> UICollectionViewCell? in
 			guard let self = self else { return nil }
-			let characterLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: CharacterLockupCollectionViewCell.self, for: indexPath)
-			characterLockupCollectionViewCell.character = self.characters[indexPath.row]
-			return characterLockupCollectionViewCell
+			let actorLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: ActorLockupCollectionViewCell.self, for: indexPath)
+			actorLockupCollectionViewCell.actor = self.actors[indexPath.row]
+			return actorLockupCollectionViewCell
 		}
 
 		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
 		SectionLayoutKind.allCases.forEach {
 			snapshot.appendSections([$0])
-			snapshot.appendItems(Array(0..<self.characters.count), toSection: $0)
+			snapshot.appendItems(Array(0..<actors.count), toSection: $0)
 		}
 		dataSource.apply(snapshot)
 	}
 }
 
 // MARK: - KCollectionViewDelegateLayout
-extension CharactersListCollectionViewController {
+extension ActorsListCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
 		let columnCount = (width / 200).rounded().int
@@ -166,7 +157,7 @@ extension CharactersListCollectionViewController {
 			let item = NSCollectionLayoutItem(layoutSize: itemSize)
 			item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
 
-			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(200.0))
+			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(200))
 			let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
 
 			let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
@@ -178,7 +169,7 @@ extension CharactersListCollectionViewController {
 }
 
 // MARK: - SectionLayoutKind
-extension CharactersListCollectionViewController {
+extension ActorsListCollectionViewController {
 	/**
 		List of section layout kind.
 

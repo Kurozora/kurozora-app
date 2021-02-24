@@ -52,6 +52,39 @@ class CharacterDetailsCollectionViewController: KCollectionViewController {
 		return self._prefersActivityIndicatorHidden
 	}
 
+	// MARK: - Initializers
+	/**
+		Initialize a new instance of CharacterDetailsCollectionViewController with the given character id.
+
+		- Parameter characterID: The character id to use when initializing the view.
+
+		- Returns: an initialized instance of CharacterDetailsCollectionViewController.
+	*/
+	static func `init`(with characterID: Int) -> CharacterDetailsCollectionViewController {
+		if let characterDetailsCollectionViewController = R.storyboard.characters.characterDetailsCollectionViewController() {
+			characterDetailsCollectionViewController.characterID = characterID
+			return characterDetailsCollectionViewController
+		}
+
+		fatalError("Failed to instantiate CharacterDetailsCollectionViewController with the given character id.")
+	}
+
+	/**
+		Initialize a new instance of CharacterDetailsCollectionViewController with the given character object.
+
+		- Parameter show: The `Show` object to use when initializing the view controller.
+
+		- Returns: an initialized instance of CharacterDetailsCollectionViewController.
+	*/
+	static func `init`(with character: Character) -> CharacterDetailsCollectionViewController {
+		if let characterDetailsCollectionViewController = R.storyboard.characters.characterDetailsCollectionViewController() {
+			characterDetailsCollectionViewController.character = character
+			return characterDetailsCollectionViewController
+		}
+
+		fatalError("Failed to instantiate CharacterDetailsCollectionViewController with the given Character object.")
+	}
+
 	// MARK: - View
 	override func viewWillReload() {
 		super.viewWillReload()
@@ -199,17 +232,6 @@ extension CharacterDetailsCollectionViewController {
 		titleHeaderCollectionReusableView.indexPath = indexPath
 		titleHeaderCollectionReusableView.title = characterSection.stringValue
 		return titleHeaderCollectionReusableView
-	}
-}
-
-// MARK: - UICollectionViewDelegate
-extension CharacterDetailsCollectionViewController {
-	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		if let baseLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? BaseLockupCollectionViewCell {
-			performSegue(withIdentifier: R.segue.characterDetailsCollectionViewController.showDetailsSegue, sender: baseLockupCollectionViewCell)
-		} else if let actorLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? ActorLockupCollectionViewCell {
-			performSegue(withIdentifier: R.segue.characterDetailsCollectionViewController.actorDetailsSegue, sender: actorLockupCollectionViewCell)
-		}
 	}
 }
 

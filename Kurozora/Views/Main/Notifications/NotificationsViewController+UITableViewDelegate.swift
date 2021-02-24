@@ -136,8 +136,8 @@ extension NotificationsViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
-		animator.addCompletion {
-			if let previewViewController = animator.previewViewController, let indexPath = configuration.identifier as? IndexPath {
+		if let previewViewController = animator.previewViewController, let indexPath = configuration.identifier as? IndexPath {
+			animator.addCompletion {
 				switch self.grouping {
 				case .automatic, .byType:
 					self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].update(at: indexPath, withReadStatus: .read)

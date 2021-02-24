@@ -40,8 +40,8 @@ extension EpisodesCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
-		animator.addCompletion {
-			if let previewViewController = animator.previewViewController {
+		if let previewViewController = animator.previewViewController {
+			animator.addCompletion {
 				self.show(previewViewController, sender: self)
 			}
 		}

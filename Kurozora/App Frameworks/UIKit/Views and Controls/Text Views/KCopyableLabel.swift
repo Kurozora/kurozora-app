@@ -81,4 +81,16 @@ extension KCopyableLabel: UIContextMenuInteractionDelegate {
 			return self.makeContextMenu()
 		}
 	}
+
+	func contextMenuInteraction(_ interaction: UIContextMenuInteraction, previewForHighlightingMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+		let parameters = UIPreviewParameters()
+		parameters.backgroundColor = KThemePicker.backgroundColor.colorValue
+		return UITargetedPreview(view: interaction.view!, parameters: parameters)
+	}
+
+	func contextMenuInteraction(_ interaction: UIContextMenuInteraction, previewForDismissingMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+		let parameters = UIPreviewParameters()
+		parameters.backgroundColor = KThemePicker.backgroundColor.colorValue
+		return UITargetedPreview(view: interaction.view!, parameters: parameters)
+	}
 }

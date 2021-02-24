@@ -52,6 +52,39 @@ class ActorDetailsCollectionViewController: KCollectionViewController {
 		return self._prefersActivityIndicatorHidden
 	}
 
+	// MARK: - Initializers
+	/**
+		Initialize a new instance of ActorDetailsCollectionViewController with the given actor id.
+
+		- Parameter actorID: The actor id to use when initializing the view.
+
+		- Returns: an initialized instance of ActorDetailsCollectionViewController.
+	*/
+	static func `init`(with actorID: Int) -> ActorDetailsCollectionViewController {
+		if let actorDetailsCollectionViewController = R.storyboard.actors.actorDetailsCollectionViewController() {
+			actorDetailsCollectionViewController.actorID = actorID
+			return actorDetailsCollectionViewController
+		}
+
+		fatalError("Failed to instantiate ActorDetailsCollectionViewController with the given actor id.")
+	}
+
+	/**
+		Initialize a new instance of ActorDetailsCollectionViewController with the given actor object.
+
+		- Parameter show: The `Show` object to use when initializing the view controller.
+
+		- Returns: an initialized instance of ActorDetailsCollectionViewController.
+	*/
+	static func `init`(with actor: Actor) -> ActorDetailsCollectionViewController {
+		if let actorDetailsCollectionViewController = R.storyboard.actors.actorDetailsCollectionViewController() {
+			actorDetailsCollectionViewController.actor = actor
+			return actorDetailsCollectionViewController
+		}
+
+		fatalError("Failed to instantiate ActorDetailsCollectionViewController with the given Actor object.")
+	}
+
 	// MARK: - View
 	override func viewWillReload() {
 		super.viewWillReload()
@@ -192,24 +225,13 @@ extension ActorDetailsCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-		let characterSection = CharacterSection(rawValue: indexPath.section) ?? .main
+		let actorSection = ActorSection(rawValue: indexPath.section) ?? .main
 		let titleHeaderCollectionReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
 		titleHeaderCollectionReusableView.delegate = self
-		titleHeaderCollectionReusableView.segueID = characterSection.segueIdentifier
+		titleHeaderCollectionReusableView.segueID = actorSection.segueIdentifier
 		titleHeaderCollectionReusableView.indexPath = indexPath
-		titleHeaderCollectionReusableView.title = characterSection.stringValue
+		titleHeaderCollectionReusableView.title = actorSection.stringValue
 		return titleHeaderCollectionReusableView
-	}
-}
-
-// MARK: - UICollectionViewController
-extension ActorDetailsCollectionViewController {
-	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		if let baseLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? BaseLockupCollectionViewCell {
-			performSegue(withIdentifier: R.segue.actorDetailsCollectionViewController.showDetailsSegue, sender: baseLockupCollectionViewCell)
-		} else if let characterLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? CharacterLockupCollectionViewCell {
-			performSegue(withIdentifier: R.segue.actorDetailsCollectionViewController.characterDetailsSegue, sender: characterLockupCollectionViewCell)
-		}
 	}
 }
 

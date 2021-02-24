@@ -365,25 +365,6 @@ extension ShowDetailsCollectionViewController {
 	}
 }
 
-// MARK: - UICollectionViewDelegate
-extension ShowDetailsCollectionViewController {
-	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		guard let showDetailSection = ShowDetail.Section(rawValue: indexPath.section) else { return }
-		let collectionViewCell = collectionView.cellForItem(at: indexPath)
-		var segueIdentifier = ""
-
-		switch showDetailSection {
-		case .seasons:
-			segueIdentifier = R.segue.showDetailsCollectionViewController.episodeSegue.identifier
-		case .moreByStudio, .relatedShows:
-			segueIdentifier = R.segue.showDetailsCollectionViewController.showDetailsSegue.identifier
-		default: return
-		}
-
-		self.performSegue(withIdentifier: segueIdentifier, sender: collectionViewCell)
-	}
-}
-
 // MARK: - CastCollectionViewCellDelegate
 extension ShowDetailsCollectionViewController: CastCollectionViewCellDelegate {
 	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressActorButton button: UIButton) {
