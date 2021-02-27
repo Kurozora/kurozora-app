@@ -8,7 +8,7 @@
 /**
 	A root object that stores information about an episode resource.
 */
-public struct Episode: IdentityResource, Hashable {
+public class Episode: IdentityResource, Hashable {
 	// MARK: - Properties
 	public let id: Int
 
@@ -17,7 +17,7 @@ public struct Episode: IdentityResource, Hashable {
 	public let href: String
 
 	/// The attributes belonging to the episode.
-	public let attributes: Episode.Attributes
+	public var attributes: Episode.Attributes
 
 	// MARK: - Functions
 	public static func == (lhs: Episode, rhs: Episode) -> Bool {

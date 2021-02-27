@@ -52,4 +52,27 @@ extension Episode.Attributes {
 			self._watchStatus = newValue
 		}
 	}
+
+	// MARK: - Functions
+	/**
+		Updates the attributes with the given `WatchStatus` object.
+
+		- Parameter watchStatus: The `WatchStatus` object used to update the attributes.
+	*/
+	public mutating func update(using watchStatus: WatchStatus) {
+		self.watchStatus = watchStatus
+	}
+
+	/**
+		Returns a copy of the object with the updated attributes from the given `WatchStatus` object.
+
+		- Parameter watchStatus: The `WatchStatus` object used to update the attributes.
+
+		- Returns: a copy of the object with the updated attributes from the given `WatchStatus` object.
+	*/
+	public mutating func updated(using watchStatus: WatchStatus) -> Self {
+		var episodeAttributes = self
+		episodeAttributes.watchStatus = watchStatus
+		return episodeAttributes
+	}
 }
