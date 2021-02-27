@@ -89,7 +89,7 @@ class EpisodeLockupCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - IBActions
 	@IBAction func watchedButtonPressed(_ sender: UIButton) {
-		self.episode.updateWatchStatus()
+		self.delegate?.episodeLockupCollectionViewCell(self, didPressWatchButton: sender)
 	}
 
 	@IBAction func moreButtonPressed(_ sender: UIButton) {

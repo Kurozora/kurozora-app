@@ -17,7 +17,7 @@ class EpisodesCollectionViewController: KCollectionViewController {
 	var seasonID: Int = 0
 	var episodes: [Episode] = [] {
 		didSet {
-			self.configureDataSource()
+			self.updateDataSource()
 			self._prefersActivityIndicatorHidden = true
 			self.toggleEmptyDataView()
 			#if DEBUG
@@ -73,6 +73,12 @@ class EpisodesCollectionViewController: KCollectionViewController {
 		self.handleRefreshControl()
 	}
 
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+
+		NotificationCenter.default.addObserver(self, selector: #selector(updateEpisodes(_:)), name: .KEpisodeWatchStatusDidUpdate, object: nil)
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
@@ -82,10 +88,18 @@ class EpisodesCollectionViewController: KCollectionViewController {
 		self._prefersRefreshControlDisabled = true
 		#endif
 
+		self.configureDataSource()
+
 		// Fetch episodes
 		DispatchQueue.global(qos: .background).async {
 			self.fetchEpisodes()
 		}
+	}
+
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+
+		NotificationCenter.default.removeObserver(self, name: .KEpisodeWatchStatusDidUpdate, object: nil)
 	}
 
 	// MARK: - Functions
@@ -121,6 +135,19 @@ class EpisodesCollectionViewController: KCollectionViewController {
 			case .failure: break
 			}
 		}
+	}
+
+	/**
+		Update the episodes list.
+
+		- Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
+	*/
+	@objc func updateEpisodes(_ notification: NSNotification) {
+		guard let indexPath = notification.userInfo?["indexPath"] as? IndexPath, let selectedEpisode = dataSource.itemIdentifier(for: indexPath) else { return }
+
+		var newSnapshot = dataSource.snapshot()
+		newSnapshot.reloadItems([selectedEpisode])
+		dataSource.apply(newSnapshot)
 	}
 
 	/// Goes to the first item in the presented collection view.
@@ -190,6 +217,9 @@ class EpisodesCollectionViewController: KCollectionViewController {
 		if segue.identifier == R.segue.episodesCollectionViewController.episodeDetailSegue.identifier, let episodeCell = sender as? EpisodeLockupCollectionViewCell {
 			if let episodeDetailViewController = segue.destination as? EpisodeDetailCollectionViewController, let indexPath = collectionView.indexPath(for: episodeCell) {
 				episodeDetailViewController.episodeID = episodes[indexPath.row].id
+
+				let notificationName = NSNotification.Name(rawValue: "\(episodes[indexPath.row].attributes.title)DidUpdate")
+				NotificationCenter.default.addObserver(self, selector: #selector(updateEpisodes(_:)), name: notificationName, object: nil)
 			}
 		}
 	}
@@ -197,11 +227,17 @@ class EpisodesCollectionViewController: KCollectionViewController {
 
 // MARK: - EpisodeLockupCollectionViewCellDelegate
 extension EpisodesCollectionViewController: EpisodeLockupCollectionViewCellDelegate {
+	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressWatchButton button: UIButton) {
+		guard let indexPath = collectionView.indexPath(for: cell) else { return }
+		cell.episode.updateWatchStatus(userInfo: ["indexPath": indexPath])
+	}
+
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressMoreButton button: UIButton) {
 		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
 			let actionTitle = button.tag == 0 ? "Mark as Watched" : "Mark as Un-watched"
 			actionSheetAlertController.addAction(UIAlertAction(title: actionTitle, style: .default, handler: { _ in
-				cell.episode.updateWatchStatus()
+				guard let indexPath = self?.collectionView.indexPath(for: cell) else { return }
+				cell.episode.updateWatchStatus(userInfo: ["indexPath": indexPath])
 			}))
 			actionSheetAlertController.addAction(UIAlertAction(title: "Rate", style: .default, handler: nil))
 			actionSheetAlertController.addAction(UIAlertAction(title: "Share", style: .default, handler: { _ in

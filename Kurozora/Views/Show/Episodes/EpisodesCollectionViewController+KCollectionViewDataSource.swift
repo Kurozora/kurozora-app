@@ -22,7 +22,9 @@ extension EpisodesCollectionViewController {
 			episodesCollectionViewCell.episode = self.episodes[indexPath.row]
 			return episodesCollectionViewCell
 		}
+	}
 
+	override func updateDataSource() {
 		let itemsPerSection = episodes.count
 		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
 		SectionLayoutKind.allCases.forEach {

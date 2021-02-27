@@ -20,6 +20,8 @@ class ActionListExploreCollectionViewCell: ActionBaseExploreCollectionViewCell {
 	override func configureCell() {
 		super.configureCell()
 		separatorView?.isHidden = separatorIsHidden
+		actionButton?.highlightBackgroundColorEnabled = true
+		actionButton?.highlightBackgroundColor = KThemePicker.backgroundColor.colorValue.lighten()
 	}
 
 	// MARK: - IBActions

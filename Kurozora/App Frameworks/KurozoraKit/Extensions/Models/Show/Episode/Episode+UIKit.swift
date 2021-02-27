@@ -17,11 +17,11 @@ extension Episode {
 		return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
 			return EpisodeDetailCollectionViewController.`init`(with: self.id)
 		}, actionProvider: { _ in
-			return self.makeContextMenu(in: viewController)
+			return self.makeContextMenu(in: viewController, userInfo: userInfo)
 		})
 	}
 
-	private func makeContextMenu(in viewController: UIViewController) -> UIMenu {
+	private func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?) -> UIMenu {
 		var menuElements: [UIMenuElement] = []
 
 		if User.isSignedIn {
@@ -29,11 +29,12 @@ extension Episode {
 			let watchStatus = self.attributes.watchStatus ?? .notWatched
 			let updateWatchStatusTitle = watchStatus == .notWatched ? "Mark as Watched" : "Mark as Un-watched"
 			let updateWatchStatusImage = watchStatus == .notWatched ? UIImage(systemName: "plus.circle") : UIImage(systemName: "minus.circle")
-			var menuElements: [UIMenuElement] = []
+			let attributes: UIAction.Attributes = watchStatus == .notWatched ? [] : .destructive
 
-			menuElements.append(UIAction(title: updateWatchStatusTitle, image: updateWatchStatusImage, handler: { _ in
-				self.updateWatchStatus()
-			}))
+			let watchAction = UIAction(title: updateWatchStatusTitle, image: updateWatchStatusImage, attributes: attributes) { _ in
+				self.updateWatchStatus(userInfo: userInfo)
+			}
+			menuElements.append(watchAction)
 		}
 
 		// Create "rate" element
@@ -52,13 +53,19 @@ extension Episode {
 		return UIMenu(title: "", children: menuElements)
 	}
 
-	/// Updates the watch status of the episode.
-	func updateWatchStatus() {
+	/**
+		Updates the watch status of the episode.
+
+		- Parameter userInfo: A dictionary that contains information related to the notification.
+	*/
+	func updateWatchStatus(userInfo: [AnyHashable: Any]?) {
 		KService.updateEpisodeWatchStatus(self.id) { result in
 			switch result {
 			case .success(let watchStatus):
-//				self.configureWatchButton(with: watchStatus)
-				NotificationCenter.default.post(name: .KEpisodeWatchStatusDidUpdate, object: nil)
+				// Update watch status
+				self.attributes = self.attributes.updated(using: watchStatus)
+
+				NotificationCenter.default.post(name: .KEpisodeWatchStatusDidUpdate, object: nil, userInfo: userInfo)
 			case .failure: break
 			}
 		}

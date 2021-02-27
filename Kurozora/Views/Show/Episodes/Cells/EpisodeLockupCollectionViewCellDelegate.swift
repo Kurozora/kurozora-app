@@ -9,5 +9,6 @@
 import UIKit
 
 protocol EpisodeLockupCollectionViewCellDelegate: AnyObject {
+	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressWatchButton button: UIButton)
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressMoreButton button: UIButton)
 }

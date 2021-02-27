@@ -111,12 +111,13 @@ extension Show {
 			guard let self = self else { return }
 			switch result {
 			case .success(let libraryUpdate):
+				// Update entry in library
+				self.attributes = self.attributes.updated(using: libraryUpdate)
+
 				if let oldLibraryStatus = self.attributes.libraryStatus {
 					let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
 					NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
 				}
-
-				self.attributes = self.attributes.updated(using: libraryUpdate)
 			case .failure:
 				break
 			}

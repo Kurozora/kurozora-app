@@ -65,4 +65,3 @@ extension User {
 		viewController?.present(activityViewController, animated: true, completion: nil)
 	}
 }
-

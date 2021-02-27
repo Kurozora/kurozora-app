@@ -105,7 +105,7 @@ extension HomeCollectionViewController {
 				let trailingInset = self.collectionView.directionalLayoutMargins.trailing
 				return NSDirectionalEdgeInsets(top: 0, leading: leadingInset, bottom: 20, trailing: trailingInset)
 			case .legal:
-				return NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 20, trailing: 10)
+				return NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
 			default:
 				return NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 40, trailing: 10)
 			}
@@ -143,7 +143,14 @@ extension HomeCollectionViewController {
 
 				return sectionLayout
 			default:
-				let listSection = self.listSection(for: section, layoutEnvironment: layoutEnvironment)
+				var listSection: NSCollectionLayoutSection!
+
+				switch section {
+				case let section where section == exploreCategoriesCount + 1:
+					listSection = self.buttonSection(for: section, layoutEnvironment: layoutEnvironment)
+				default:
+					listSection = self.listSection(for: section, layoutEnvironment: layoutEnvironment)
+				}
 
 				// Lists are 3 sections. This makes sure that only the top most section gets a header view (Quick Links).
 				guard section == exploreCategoriesCount else { return listSection }
@@ -205,6 +212,21 @@ extension HomeCollectionViewController {
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
 		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(55))
+		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+		layoutGroup.interItemSpacing = .fixed(10)
+
+		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+		layoutSection.interGroupSpacing = 10.0
+		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
+		return layoutSection
+	}
+
+	func buttonSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
+		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+		let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(44))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
 		layoutGroup.interItemSpacing = .fixed(10)
 
