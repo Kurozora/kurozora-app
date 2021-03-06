@@ -120,22 +120,6 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 	}
 	""".data(using: .utf8)!)
 
-	// MARK: - View
-	override func viewWillReload() {
-		super.viewWillReload()
-
-		self.handleRefreshControl()
-	}
-
-	override func viewDidLoad() {
-		super.viewDidLoad()
-
-		// Setup default themes
-		if let defaultThemes = self.defaultThemes?.data {
-			self.themes[0].append(contentsOf: defaultThemes)
-		}
-	}
-
 	// MARK: - Initializers
 	required init?(coder: NSCoder) {
 		super.init(coder: coder)
@@ -146,11 +130,27 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 		self._prefersRefreshControlDisabled = true
 		#endif
 
-		self.configureDataSource()
-
 		// Fetch themes
 		DispatchQueue.global(qos: .background).async {
 			self.fetchThemes()
+		}
+	}
+
+	// MARK: - View
+	override func viewWillReload() {
+		super.viewWillReload()
+
+		self.handleRefreshControl()
+	}
+
+	override func viewDidLoad() {
+		super.viewDidLoad()
+
+		self.configureDataSource()
+
+		// Setup default themes
+		if let defaultThemes = self.defaultThemes?.data {
+			self.themes[0].append(contentsOf: defaultThemes)
 		}
 	}
 
