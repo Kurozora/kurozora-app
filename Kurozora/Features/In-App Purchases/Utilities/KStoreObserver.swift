@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import StoreKit
 
 protocol KStoreObserverDelegate: AnyObject {
@@ -95,39 +96,47 @@ class KStoreObserver: NSObject {
 	/// Handles successful purchase transactions.
 	fileprivate func handlePurchased(_ transaction: SKPaymentTransaction) {
 		purchased.append(transaction)
-		print("Deliver content for \(transaction.payment.productIdentifier).")
+		print("----- Deliver content for \(transaction.payment.productIdentifier).")
 
-		// Get the receipt if it's available
-		if let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
-		   FileManager.default.fileExists(atPath: appStoreReceiptURL.path) {
+		if User.isSignedIn {
+			// Get the receipt if it's available
+			if let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
+			   FileManager.default.fileExists(atPath: appStoreReceiptURL.path) {
 
-			do {
-				let receiptData = try Data(contentsOf: appStoreReceiptURL, options: .alwaysMapped)
-				let receiptString = receiptData.base64EncodedString(options: [.endLineWithCarriageReturn])
-				print("----- receipt string:", receiptString)
+				do {
+					let receiptData = try Data(contentsOf: appStoreReceiptURL, options: .alwaysMapped)
+					let receiptString = receiptData.base64EncodedString(options: [.endLineWithCarriageReturn])
+					print("----- receipt string:", receiptString)
 
-				// Read receiptData
-				KService.verifyReceipt(receiptString) { result in
-					switch result {
-					case .success:
-						print("----- transaction verified.")
-					case .failure:
-						print("----- transactino not verified.")
+					// Read receiptData
+					KService.verifyReceipt(receiptString) { result in
+						switch result {
+						case .success:
+							print("----- transaction verified.")
+						case .failure:
+							print("----- transactino not verified.")
+						}
+
+						// Finish the successful transaction.
+						SKPaymentQueue.default().finishTransaction(transaction)
 					}
-
-					// Finish the successful transaction.
-					SKPaymentQueue.default().finishTransaction(transaction)
+				} catch {
+					print("----- Couldn't read receipt data with error: " + error.localizedDescription)
+					self.handleFailed(transaction)
 				}
-			} catch {
-				print("Couldn't read receipt data with error: " + error.localizedDescription)
+			} else {
+				print("----- Purchase failed: App Store receipt not found.")
 				self.handleFailed(transaction)
 			}
+		} else {
+			print("----- Purchase failed: User not signed.")
+			self.handleFailed(transaction)
 		}
 	}
 
 	func handleFailed(_ transaction: SKPaymentTransaction) {
 		print("----- Product purchase failed")
-		/// Handles failed purchase transactions.
+		// Handles failed purchase transactions.
 		var message = "Purchase of \(transaction.payment.productIdentifier) failed."
 
 		if let error = transaction.error {
@@ -135,7 +144,7 @@ class KStoreObserver: NSObject {
 			print("----- Error: \(error.localizedDescription)")
 		}
 
-		// Do not send any notifications when the user cancels the purchase.
+		// Send notifications of if the user hasn't cancelled the purchase.
 		if (transaction.error as? SKError)?.code != .paymentCancelled {
 			DispatchQueue.main.async {
 				self.delegate?.storeObserverDidReceiveMessage(message)
@@ -155,6 +164,7 @@ class KStoreObserver: NSObject {
 		DispatchQueue.main.async {
 			self.delegate?.storeObserverRestoreDidSucceed()
 		}
+
 		// Finishes the restored transaction.
 		SKPaymentQueue.default().finishTransaction(transaction)
 	}
