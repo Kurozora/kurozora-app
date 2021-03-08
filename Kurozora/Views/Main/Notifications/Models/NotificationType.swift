@@ -28,6 +28,9 @@ enum KNotification {
 		/// Indicates that the notification has a `malImport` type and thus thas the import style.
 		case malImport = "MALImportFinished"
 
+		/// Indicates that the notification has a `subscriptionStatus` type and thus the subscription style.
+		case subscriptionStatus = "SubscriptionStatus"
+
 		/// The string value of a notification type.
 		var stringValue: String {
 			switch self {
@@ -41,6 +44,8 @@ enum KNotification {
 				return "Message"
 			case .malImport:
 				return "Library Import"
+			case .subscriptionStatus:
+				return "Subscription Update"
 			}
 		}
 
@@ -57,22 +62,8 @@ enum KNotification {
 				return R.reuseIdentifier.iconNotificationCell.identifier
 			case .malImport:
 				return R.reuseIdentifier.basicNotificationCell.identifier
-			}
-		}
-
-		/// The color value of a notification type cell.
-		var colorValue: UIColor {
-			switch self {
-			case .other:
-				return #colorLiteral(red: 0.6666666865, green: 0.6666666865, blue: 0.6666666865, alpha: 1)
-			case .session:
-				return #colorLiteral(red: 0.006537661422, green: 0.4778559804, blue: 0.9984870553, alpha: 1)
-			case .follower:
-				return #colorLiteral(red: 0.8862745098, green: 0.7647058824, blue: 0, alpha: 1)
-			case .message:
-				return #colorLiteral(red: 0.1950947344, green: 0.7805534601, blue: 0.3488782048, alpha: 1)
-			case .malImport:
-				return #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
+			case .subscriptionStatus:
+				return R.reuseIdentifier.basicNotificationCell.identifier
 			}
 		}
 
@@ -89,6 +80,8 @@ enum KNotification {
 				return R.image.icons.message()
 			case .malImport:
 				return R.image.icons.library()
+			case .subscriptionStatus:
+				return R.image.icons.unlock()
 			}
 		}
 	}

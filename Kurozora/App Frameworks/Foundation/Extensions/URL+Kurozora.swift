@@ -23,6 +23,9 @@ extension URL {
 	/// The Medium page URL of Kurozora.
 	static let mediumPageURL = URL(string: "https://medium.com/@kurozora")
 
+	/// The deep link URL to the Subscription Management page of the user.
+	static let subscriptionManagement = URL(string: "itms://apps.apple.com/account/subscriptions")
+
 	/// The deep link URL to the App Store page of Kurozora.
 	static let appStoreURL = URL(string: "itms-apps://apps.apple.com/us/app/kurozora/id1476153872")
 

@@ -25,6 +25,8 @@ extension NotificationsViewController {
 		} else if baseNotificationCell?.notificationType == .follower {
 			guard let userID = baseNotificationCell?.userNotification?.attributes.payload.userID else { return }
 			WorkflowController.shared.openUserProfile(for: userID)
+		} else if baseNotificationCell?.notificationType == .subscriptionStatus {
+			UIApplication.shared.kOpen(nil, deepLink: .subscriptionManagement)
 		}
 	}
 
