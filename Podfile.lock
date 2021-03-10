@@ -3,7 +3,7 @@ PODS:
   - Cosmos (23.0.0)
   - ESTabBarController-swift (2.8.0)
   - KeychainAccess (4.2.2)
-  - Kingfisher (6.1.1)
+  - Kingfisher (6.2.1)
   - KurozoraKit (0.15.8):
     - KeychainAccess
     - TRON
@@ -40,7 +40,7 @@ PODS:
   - SwifterSwift/UIKit (5.2.0)
   - SwiftTheme (0.6.0)
   - SwiftyJSON (5.0.0)
-  - Tabman (2.10.0):
+  - Tabman (2.11.0):
     - Pageboy (~> 3.6.0)
   - TRON (5.4.0):
     - Alamofire (~> 5.0)
@@ -95,7 +95,7 @@ SPEC CHECKSUMS:
   Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
   ESTabBarController-swift: 05593a6ad64700b03c0eb60ff625916370aa4136
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
-  Kingfisher: 676d63307fbef6ed5d5ed400bff36983480d7500
+  Kingfisher: e71c6fac2aebb1262888cabc2cb13d313362a48f
   KurozoraKit: 2e37f2f0784194c8b7c5a56e4583194dce71172a
   Pageboy: cf121b9dd48c63f3f281b2a9ec93d02e0f23879b
   R.swift: c533450b0f7dc494e0993f5f1a1db925d84c3006
@@ -105,7 +105,7 @@ SPEC CHECKSUMS:
   SwifterSwift: 334181863c416882d97b7a60c05054d9e4d799e2
   SwiftTheme: 50c3b3d38bdee43212af1f4ec0fb95dec550b2be
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
-  Tabman: d8d6ab0b483c7db375a71ac227d3ef791b56a049
+  Tabman: 1d927ebbea463623dac78f889b32fd1addb8fbe8
   TRON: 682b67b9ab368baa2dc2c1e4907e18c755191161
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
 
