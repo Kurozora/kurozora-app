@@ -52,7 +52,7 @@ extension CharacterDetailsCollectionViewController {
 		}
 	}
 
-	override func createLayout() -> UICollectionViewLayout {
+	override func createLayout() -> UICollectionViewLayout? {
 		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self, self.character != nil else { return nil }
 			guard let characterSection = CharacterSection(rawValue: section) else { fatalError("character section not supported") }

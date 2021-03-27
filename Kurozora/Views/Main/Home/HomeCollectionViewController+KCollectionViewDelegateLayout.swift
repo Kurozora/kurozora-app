@@ -112,7 +112,7 @@ extension HomeCollectionViewController {
 		}
 	}
 
-	override func createLayout() -> UICollectionViewLayout {
+	override func createLayout() -> UICollectionViewLayout? {
 		return UICollectionViewCompositionalLayout { section, layoutEnvironment -> NSCollectionLayoutSection? in
 			let exploreCategoriesCount = self.exploreCategories.count
 			switch section {

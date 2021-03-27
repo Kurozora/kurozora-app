@@ -88,7 +88,9 @@ class LibraryListCollectionViewController: KCollectionViewController {
 		self.collectionView.contentInset.bottom = 50
 
 		// Setup collection view.
-		self.collectionView.collectionViewLayout = self.createLayout()
+		if let collectionViewLayout = self.createLayout() {
+			self.collectionView.collectionViewLayout = collectionViewLayout
+		}
 
 		// Hide activity indicator if user is not signed in.
 		if !User.isSignedIn {

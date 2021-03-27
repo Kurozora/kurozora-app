@@ -74,7 +74,7 @@ extension ShowDetailsCollectionViewController {
 		}
 	}
 
-	override func createLayout() -> UICollectionViewLayout {
+	override func createLayout() -> UICollectionViewLayout? {
 		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self, self.show != nil else { return nil }
 			guard let showDetailSection = ShowDetail.Section(rawValue: section) else { fatalError("ShowDetail section not supported") }

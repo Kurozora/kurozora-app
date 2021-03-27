@@ -56,7 +56,9 @@ class SearchResultsCollectionViewController: UICollectionViewController {
         super.viewDidLoad()
 
 		// Create colelction view layout
-		self.collectionView.collectionViewLayout = self.createLayout()
+		if let collectionViewLayout = self.createLayout() {
+			self.collectionView.collectionViewLayout = collectionViewLayout
+		}
 
 		// Blurred table view background
 		let blurEffect = UIBlurEffect(style: .regular)

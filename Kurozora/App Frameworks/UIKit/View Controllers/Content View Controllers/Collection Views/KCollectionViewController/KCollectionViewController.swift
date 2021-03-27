@@ -127,7 +127,9 @@ class KCollectionViewController: UICollectionViewController {
 		Cells can also be registered during the configuration by using [registerCells(for collectionView: UICollectionView)](x-source-tag://KCollectionViewDataSource-registerCellsForCollectionView).
 	*/
 	fileprivate func configureCollectionView() {
-		collectionView.collectionViewLayout = createLayout()
+		if let colllectionViewLayout = self.createLayout() {
+			collectionView.collectionViewLayout = colllectionViewLayout
+		}
 		collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 		collectionView.backgroundView = emptyBackgroundView
 

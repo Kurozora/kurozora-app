@@ -52,7 +52,7 @@ extension ActorDetailsCollectionViewController {
 		}
 	}
 
-	override func createLayout() -> UICollectionViewLayout {
+	override func createLayout() -> UICollectionViewLayout? {
 		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self, self.actor != nil else { return nil }
 			guard let actorSection = ActorSection(rawValue: section) else { fatalError("actor details section not supported") }

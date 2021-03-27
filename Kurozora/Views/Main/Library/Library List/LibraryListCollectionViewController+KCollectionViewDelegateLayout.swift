@@ -37,7 +37,7 @@ extension LibraryListCollectionViewController {
 		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
 	}
 
-	override func createLayout() -> UICollectionViewLayout {
+	override func createLayout() -> UICollectionViewLayout? {
 		let layout = UICollectionViewCompositionalLayout { (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(200.0))
