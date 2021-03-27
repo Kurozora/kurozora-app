@@ -29,13 +29,26 @@ class KNavigationController: UINavigationController {
 		setupForwardPanGesture()
 		#endif
 		self.nextViewController = viewControllers
-		self.delegate = self
     }
 
 	// MARK: - Functions
-	/// Updates the normal navigation bar style with the changed values.
-	@objc func updateNormalStyle() {
-		toggleStyle(.normal)
+	/// The shared settings used to initialize tab bar view.
+	private func sharedInit () {
+		// Configure theme
+		self.toggleStyle(.normal)
+		self.setupToolbarStyle()
+
+		// configure delegates
+		self.delegate = self
+	}
+
+	/**
+		Used to update the theme of the view.
+
+		- Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
+	*/
+	@objc func updateTheme(_ notification: NSNotification) {
+		self.sharedInit()
 	}
 
 	/**
@@ -45,11 +58,17 @@ class KNavigationController: UINavigationController {
 	*/
 	func toggleStyle(_ style: KNavigationStyle) {
 		self.navigationBar.isTranslucent = true
+		self.navigationBar.backgroundColor = .clear
+		self.navigationBar.barStyle = .default
 
 		switch style {
 		case .normal:
 			let appearance = UINavigationBarAppearance()
+			#if targetEnvironment(macCatalyst)
+//			appearance.backgroundColor = KThemePicker.barTintColor.colorValue.withAlphaComponent(0.4)
+			#else
 			appearance.theme_backgroundColor = KThemePicker.barTintColor.rawValue
+			#endif
 			appearance.theme_titleTextAttributes = ThemeStringAttributesPicker(keyPath: KThemePicker.barTitleTextColor.stringValue) { value -> [NSAttributedString.Key: Any]? in
 				guard let rgba = value as? String else { return nil }
 				let color = UIColor(rgba: rgba)
@@ -69,10 +88,12 @@ class KNavigationController: UINavigationController {
 			self.navigationBar.compactAppearance = appearance
 			self.navigationBar.prefersLargeTitles = UserSettings.largeTitlesEnabled
 		case .blurred:
+			#if !targetEnvironment(macCatalyst)
 			self.navigationBar.barStyle = .black
 			self.navigationBar.backgroundColor = .clear
 			self.navigationBar.tintColor = nil
 			self.navigationBar.barTintColor = nil
+			#endif
 		}
 	}
 
@@ -138,5 +159,4 @@ extension KNavigationController: UINavigationControllerDelegate {
 }
 
 // MARK: - UIGestureRecognizerDelegate
-extension KNavigationController: UIGestureRecognizerDelegate {
-}
+extension KNavigationController: UIGestureRecognizerDelegate { }

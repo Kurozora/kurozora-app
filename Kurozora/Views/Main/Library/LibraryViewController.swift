@@ -17,7 +17,9 @@ class LibraryViewController: KTabbedViewController {
 	@IBOutlet var sortTypeBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Properties
+	#if !targetEnvironment(macCatalyst)
 	var kSearchController: KSearchController = KSearchController()
+	#endif
 	var rightBarButtonItems: [UIBarButtonItem]? = nil
 	var leftBarButtonItems: [UIBarButtonItem]? = nil
 
@@ -47,12 +49,14 @@ class LibraryViewController: KTabbedViewController {
 	// MARK: - Functions
 	/// Configures the search bar.
 	fileprivate func configureSearchBar() {
+		#if !targetEnvironment(macCatalyst)
 		// Configure search controller
 		kSearchController.searchScope = .myLibrary
 		kSearchController.viewController = self
 
 		// Add search bar to navigation controller
 		navigationItem.searchController = kSearchController
+		#endif
 	}
 
 	override func configureTabBarViewVisibility() {

@@ -26,7 +26,9 @@ class ForumsViewController: KTabbedViewController {
 			#endif
 		}
 	}
+	#if !targetEnvironment(macCatalyst)
 	var kSearchController: KSearchController = KSearchController()
+	#endif
 
 	weak var forumsViewControllerDelegate: ForumsViewControllerDelegate?
 
@@ -34,19 +36,21 @@ class ForumsViewController: KTabbedViewController {
 	override func viewDidLoad() {
         super.viewDidLoad()
 
-		// Setup search bar.
-		setupSearchBar()
+		// Configure search bar.
+		configureSearchBar()
     }
 
 	// MARK: - Functions
-	/// Sets up the search bar.
-	fileprivate func setupSearchBar() {
+	/// Configures the search bar.
+	fileprivate func configureSearchBar() {
+		#if !targetEnvironment(macCatalyst)
 		// Configure search bar
 		kSearchController.searchScope = .thread
 		kSearchController.viewController = self
 
 		// Add search bar to navigation controller
 		navigationItem.searchController = kSearchController
+		#endif
 	}
 
 	/// Updates the sort type button icon to reflect the current sort type when switching between views.

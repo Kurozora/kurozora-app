@@ -49,11 +49,15 @@ class KSearchController: UISearchController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		#if targetEnvironment(macCatalyst)
+
+		#else
 		searchBar.sizeToFit()
 		searchBar.barStyle = .default
 		searchBar.searchBarStyle = .default
 		searchBar.isTranslucent = true
 		searchBar.scopeButtonTitles = SearchScope.allString
+		#endif
 		searchBar.selectedScopeButtonIndex = searchScope.rawValue
 		searchBar.textField?.theme_textColor = KThemePicker.textColor.rawValue
 
@@ -80,14 +84,14 @@ class KSearchController: UISearchController {
 	}
 
 	/// Starts the placeholder timer for the search bar if no timers are already running.
-	func startPlaceholderTimer() {
+	private func startPlaceholderTimer() {
 		if placeholderTimer == nil {
 			placeholderTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(updateSearchPlaceholder), userInfo: nil, repeats: true)
 		}
 	}
 
 	/// Stops the placeholder timer if one is running.
-	func stopPlacholderTimer() {
+	private func stopPlacholderTimer() {
 		if placeholderTimer != nil {
 			placeholderTimer?.invalidate()
 			placeholderTimer = nil
@@ -98,10 +102,9 @@ class KSearchController: UISearchController {
 // MARK: - UISearchControllerDelegate
 extension KSearchController: UISearchControllerDelegate {
 	func willPresentSearchController(_ searchController: UISearchController) {
-		searchBar.showsCancelButton = true
 		#if targetEnvironment(macCatalyst)
-		searchController.searchBar.showsScopeBar = true
-		#endif
+		#else
+		searchBar.showsCancelButton = true
 
 		if var tabBarFrame = viewController?.tabBarController?.tabBar.frame {
 			tabBarFrame.origin.y = self.view.frame.size.height + (tabBarFrame.size.height)
@@ -109,15 +112,15 @@ extension KSearchController: UISearchControllerDelegate {
 				self.viewController?.tabBarController?.tabBar.isHidden = true
 			})
 		}
+		#endif
 
 		self.stopPlacholderTimer()
 	}
 
 	func willDismissSearchController(_ searchController: UISearchController) {
-		searchBar.showsCancelButton = false
 		#if targetEnvironment(macCatalyst)
-		searchController.searchBar.showsScopeBar = false
-		#endif
+		#else
+		searchBar.showsCancelButton = false
 
 		if var tabBarFrame = viewController?.tabBarController?.tabBar.frame {
 			tabBarFrame.origin.y = self.view.frame.size.height - (tabBarFrame.size.height)
@@ -125,6 +128,7 @@ extension KSearchController: UISearchControllerDelegate {
 				self.viewController?.tabBarController?.tabBar.isHidden = false
 			})
 		}
+		#endif
 
 		self.startPlaceholderTimer()
 	}
