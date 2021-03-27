@@ -36,6 +36,8 @@
 		<string>#C6C5C5</string>
 		<key>separatorColorLight</key>
 		<string>#555555</string>
+		<key>sidebarBackgroundColor</key>
+		<string>#2020204D</string>
 		<key>subTextColor</key>
 		<string>#A2A2A2</string>
 	</dict>

@@ -36,6 +36,8 @@
 		<string>#979797</string>
 		<key>separatorColorLight</key>
 		<string>#BBBBBB</string>
+		<key>sidebarBackgroundColor</key>
+		<string>#FFFFFF00</string>
 		<key>subTextColor</key>
 		<string>#979797</string>
 	</dict>

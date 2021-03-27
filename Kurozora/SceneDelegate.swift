@@ -29,6 +29,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 			titlebar.titleVisibility = .hidden
 			titlebar.toolbar = nil
 		}
+		windowScene.sizeRestrictions?.minimumSize = CGSize(width: 1000, height: 432)
 		#endif
 
 		// Global app tint color
