@@ -145,7 +145,7 @@ class BaseFeedMessageCell: KTableViewCell {
 
 	/// Update the heart status of the message.
 	fileprivate func updateHeartStatus() {
-		if self.feedMessage.attributes.isHearted {
+		if self.feedMessage.attributes.isHearted ?? false {
 			self.heartButton.tintColor = .kLightRed
 			self.heartButton.setTitleColor(.kLightRed, for: .normal)
 		} else {
