@@ -44,9 +44,9 @@ extension Cast {
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
 		var activityItems: [Any] = []
 
-		if let actor = self.relationships.actors.data.first?.attributes.fullName,
-		   let charactor = self.relationships.characters.data.first?.attributes.name {
-			activityItems.append("TIL, \(actor) is the voice actor of \(charactor) via @KurozoraApp")
+		if let person = self.relationships.people.data.first?.attributes.fullName,
+		   let character = self.relationships.characters.data.first?.attributes.name {
+			activityItems.append("TIL, \(person) is the voice actor of \(character) via @KurozoraApp")
 		}
 
 		if let castImage = castImage() {
@@ -73,10 +73,10 @@ extension Cast {
 		- Returns: a combined image of the cast.
 	*/
 	private func castImage() -> UIImage? {
-		guard let actorImage = self.relationships.actors.data.first?.attributes.personalImage else { return nil}
-		guard let charactorImage = self.relationships.characters.data.first?.attributes.personalImage else {return nil }
-		let leftImage = actorImage
-		let rightImage = charactorImage
+		guard let personImage = self.relationships.people.data.first?.attributes.personalImage else { return nil}
+		guard let characterImage = self.relationships.characters.data.first?.attributes.personalImage else {return nil }
+		let leftImage = personImage
+		let rightImage = characterImage
 
 		let size = CGSize(width: leftImage.size.width + rightImage.size.width, height: max(leftImage.size.height, rightImage.size.height))
 		UIGraphicsBeginImageContextWithOptions(size, false, 0.0)

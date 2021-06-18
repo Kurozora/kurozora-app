@@ -7,30 +7,30 @@
 
 import Foundation
 
-// MARK: - Actors
+// MARK: - People
 extension KKEndpoint.Shows {
-	/// The set of available Actors API endpoints.
-	internal enum Actors {
+	/// The set of available People API endpoints.
+	internal enum People {
 		// MARK: - Cases
-		/// The endpoint to the details of an actor.
-		case details(_ actorID: Int)
+		/// The endpoint to the details of a person.
+		case details(_ personID: Int)
 
-		/// The endpoint to the characters belonging to a actor.
-		case characters(_ actorID: Int)
+		/// The endpoint to the characters belonging to a person.
+		case characters(_ personID: Int)
 
-		/// The endpoint to the shows belonging to a actor.
-		case shows(_ actorID: Int)
+		/// The endpoint to the shows belonging to a person.
+		case shows(_ personID: Int)
 
 		// MARK: - Properties
-		/// The endpoint value of the Actors API type.
+		/// The endpoint value of the People API type.
 		var endpointValue: String {
 			switch self {
-			case .details(let actorID):
-				return "actors/\(actorID)"
-			case .characters(let actorID):
-				return "actors/\(actorID)/characters"
-			case .shows(let actorID):
-				return "actors/\(actorID)/anime"
+			case .details(let personID):
+				return "people/\(personID)"
+			case .characters(let personID):
+				return "people/\(personID)/characters"
+			case .shows(let personID):
+				return "people/\(personID)/anime"
 			}
 		}
 	}
@@ -44,8 +44,8 @@ extension KKEndpoint.Shows {
 		/// The endpoint to the details of a character.
 		case details(_ characterID: Int)
 
-		/// The endpoint to the actors belonging to a character.
-		case actors(_ characterID: Int)
+		/// The endpoint to the people belonging to a character.
+		case people(_ characterID: Int)
 
 		/// The endpoint to the shows belonging to a character.
 		case shows(_ characterID: Int)
@@ -56,8 +56,8 @@ extension KKEndpoint.Shows {
 			switch self {
 			case .details(let characterID):
 				return "characters/\(characterID)"
-			case .actors(let characterID):
-				return "characters/\(characterID)/actors"
+			case .people(let characterID):
+				return "characters/\(characterID)/people"
 			case .shows(let characterID):
 				return "characters/\(characterID)/anime"
 			}

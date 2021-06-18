@@ -1,10 +1,10 @@
 PODS:
-  - Alamofire (5.4.1)
+  - Alamofire (5.4.3)
   - Cosmos (23.0.0)
   - ESTabBarController-swift (2.8.0)
   - KeychainAccess (4.2.2)
-  - Kingfisher (6.2.1)
-  - KurozoraKit (0.15.8):
+  - Kingfisher (6.3.0)
+  - KurozoraKit (0.16.1):
     - KeychainAccess
     - TRON
   - Pageboy (3.6.2)
@@ -39,15 +39,15 @@ PODS:
   - SwifterSwift/SwiftStdlib (5.2.0)
   - SwifterSwift/UIKit (5.2.0)
   - SwiftTheme (0.6.0)
-  - SwiftyJSON (5.0.0)
-  - Tabman (2.11.0):
+  - SwiftyJSON (5.0.1)
+  - Tabman (2.11.1):
     - Pageboy (~> 3.6.0)
-  - TRON (5.4.0):
+  - TRON (5.4.1):
     - Alamofire (~> 5.0)
-    - TRON/Core (= 5.4.0)
-  - TRON/Core (5.4.0):
+    - TRON/Core (= 5.4.1)
+  - TRON/Core (5.4.1):
     - Alamofire (~> 5.0)
-  - TRON/SwiftyJSON (5.4.0):
+  - TRON/SwiftyJSON (5.4.1):
     - Alamofire (~> 5.0)
     - SwiftyJSON (~> 5.0)
     - TRON/Core
@@ -91,12 +91,12 @@ SPEC REPOS:
     - KurozoraKit
 
 SPEC CHECKSUMS:
-  Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
+  Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
   Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
   ESTabBarController-swift: 05593a6ad64700b03c0eb60ff625916370aa4136
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
-  Kingfisher: e71c6fac2aebb1262888cabc2cb13d313362a48f
-  KurozoraKit: 2e37f2f0784194c8b7c5a56e4583194dce71172a
+  Kingfisher: 6c3df386db71d82c0817a429d2c9421a77396529
+  KurozoraKit: 05cc8f297fd04b2f9025195064aadf8dcf4f0b94
   Pageboy: cf121b9dd48c63f3f281b2a9ec93d02e0f23879b
   R.swift: c533450b0f7dc494e0993f5f1a1db925d84c3006
   R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962
@@ -104,11 +104,11 @@ SPEC CHECKSUMS:
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
   SwifterSwift: 334181863c416882d97b7a60c05054d9e4d799e2
   SwiftTheme: 50c3b3d38bdee43212af1f4ec0fb95dec550b2be
-  SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
-  Tabman: 1d927ebbea463623dac78f889b32fd1addb8fbe8
-  TRON: 682b67b9ab368baa2dc2c1e4907e18c755191161
+  SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
+  Tabman: 792ac76fd1ec95af175c93db880a3c47cabedc91
+  TRON: 1d635dad9a55c9441cb2bcf0571a14a5ede59440
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
 
-PODFILE CHECKSUM: 83d6723afec5968ca2ad0e85cf91f71becde656e
+PODFILE CHECKSUM: 5b316f40458d4af5714f9503be875bc595ab157b
 
 COCOAPODS: 1.10.1

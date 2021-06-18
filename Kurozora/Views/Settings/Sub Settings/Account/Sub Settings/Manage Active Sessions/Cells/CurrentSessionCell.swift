@@ -32,7 +32,7 @@ class CurrentSessionCell: KTableViewCell {
 
 	// MARK: - Functions
 	override func configureCell() {
-		self.ipAddressValueLabel.text = session.attributes.ip
+		self.ipAddressValueLabel.text = session.attributes.ipAddress
 		self.deviceValueLabel.text = session.relationships.platform.data.first?.attributes.deviceModel
 	}
 }

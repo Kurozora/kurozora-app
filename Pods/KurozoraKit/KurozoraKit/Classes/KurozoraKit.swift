@@ -61,7 +61,7 @@ public class KurozoraKit {
 	public init(debugURL: String? = nil, authenticationKey: String = "", services: KKServices = KKServices()) {
 		let plugins: [Plugin] = debugURL != nil ? [NetworkLoggerPlugin()] : []
 
-		self.tron = TRON(baseURL: debugURL ?? "https://kurozora.app/api/v1/", plugins: plugins)
+		self.tron = TRON(baseURL: debugURL ?? "https://api.kurozora.app/v1/", plugins: plugins)
 		self.authenticationKey = authenticationKey
 		self.services = services
 	}

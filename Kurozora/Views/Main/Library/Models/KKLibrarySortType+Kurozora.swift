@@ -14,15 +14,15 @@ extension KKLibrary.SortType {
 	var imageValue: UIImage {
 		switch self {
 		case .none:
-			return UIImage(systemName: "line.horizontal.3.decrease.circle.fill")!
+			return UIImage(systemName: "line.3.horizontal.decrease.circle.fill")!
 		case .alphabetically:
 			return UIImage(systemName: "textformat.abc")!
 //			case .popularity:
 //				return UIImage(UIImage(systemName: "flame.fill")!
 //			case .nextAiringEpisode:
-//				return UIImage(named: "tv.arrowshape.turn.up.forward.fill")!
+//				return UIImage(named: "arrowshape.turn.up.forward.tv.fill")!
 //			case .nextEpisodeToWatch:
-//				return UIImage(named: "tv.eye.fill")!
+//				return UIImage(named: "eye.tv.fill")!
 		case .date:
 			return UIImage(systemName: "calendar")!
 		case .rating:

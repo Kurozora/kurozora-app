@@ -57,11 +57,7 @@ extension AnimatedImageViewDelegate {
     public func animatedImageViewDidFinishAnimating(_ imageView: AnimatedImageView) {}
 }
 
-#if swift(>=4.2)
 let KFRunLoopModeCommon = RunLoop.Mode.common
-#else
-let KFRunLoopModeCommon = RunLoopMode.commonModes
-#endif
 
 /// Represents a subclass of `UIImageView` for displaying animated image.
 /// Different from showing animated image in a normal `UIImageView` (which load all frames at one time),
@@ -170,8 +166,7 @@ open class AnimatedImageView: UIImageView {
     // A display link that keeps calling the `updateFrame` method on every screen refresh.
     private lazy var displayLink: CADisplayLink = {
         isDisplayLinkInitialized = true
-        let displayLink = CADisplayLink(
-            target: TargetProxy(target: self), selector: #selector(TargetProxy.onScreenUpdate))
+        let displayLink = CADisplayLink(target: TargetProxy(target: self), selector: #selector(TargetProxy.onScreenUpdate))
         displayLink.add(to: .main, forMode: runLoopMode)
         displayLink.isPaused = true
         return displayLink
@@ -185,6 +180,19 @@ open class AnimatedImageView: UIImageView {
             }
             setNeedsDisplay()
             layer.setNeedsDisplay()
+        }
+    }
+    
+    open override var isHighlighted: Bool {
+        get {
+            super.isHighlighted
+        }
+        set {
+            // Highlighted image is unsupported for animated images.
+            // See https://github.com/onevcat/Kingfisher/issues/1679
+            if displayLink.isPaused {
+                super.isHighlighted = newValue
+            }
         }
     }
     
@@ -245,12 +253,14 @@ open class AnimatedImageView: UIImageView {
     // Reset the animator.
     private func reset() {
         animator = nil
-        if let imageSource = image?.kf.imageSource {
+        if let image = image, let imageSource = image.kf.imageSource {
             let targetSize = bounds.scaled(UIScreen.main.scale).size
             let animator = Animator(
                 imageSource: imageSource,
                 contentMode: contentMode,
                 size: targetSize,
+                imageSize: image.kf.size,
+                imageScale: image.kf.scale,
                 framePreloadCount: framePreloadCount,
                 repeatCount: repeatCount,
                 preloadQueue: preloadQueue)
@@ -358,6 +368,9 @@ extension AnimatedImageView {
     public class Animator {
         private let size: CGSize
 
+        private let imageSize: CGSize
+        private let imageScale: CGFloat
+
         /// The maximum count of image frames that needs preload.
         public let maxFrameCount: Int
 
@@ -438,20 +451,33 @@ extension AnimatedImageView {
         ///   - source: The reference of animated image.
         ///   - mode: Content mode of the `AnimatedImageView`.
         ///   - size: Size of the `AnimatedImageView`.
+        ///   - imageSize: Size of the `KingfisherWrapper`.
+        ///   - imageScale: Scale of the `KingfisherWrapper`.
         ///   - count: Count of frames needed to be preloaded.
         ///   - repeatCount: The repeat count should this animator uses.
+        ///   - preloadQueue: Dispatch queue used for preloading images.
         init(imageSource source: CGImageSource,
              contentMode mode: UIView.ContentMode,
              size: CGSize,
+             imageSize: CGSize,
+             imageScale: CGFloat,
              framePreloadCount count: Int,
              repeatCount: RepeatCount,
              preloadQueue: DispatchQueue) {
             self.imageSource = source
             self.contentMode = mode
             self.size = size
+            self.imageSize = imageSize
+            self.imageScale = imageScale
             self.maxFrameCount = count
             self.maxRepeatCount = repeatCount
             self.preloadQueue = preloadQueue
+            
+            GraphicsContext.begin(size: imageSize, scale: imageScale)
+        }
+        
+        deinit {
+            GraphicsContext.end()
         }
 
         /// Gets the image frame of a given index.
@@ -507,22 +533,30 @@ extension AnimatedImageView {
         }
 
         private func loadFrame(at index: Int) -> UIImage? {
-            let options: [CFString: Any] = [
-                kCGImageSourceCreateThumbnailFromImageIfAbsent: true,
-                kCGImageSourceCreateThumbnailWithTransform: true,
-                kCGImageSourceShouldCacheImmediately: true,
-                kCGImageSourceThumbnailMaxPixelSize: max(size.width, size.height)
-            ]
-
             let resize = needsPrescaling && size != .zero
-            guard let cgImage = CGImageSourceCreateImageAtIndex(imageSource,
-                                                                index,
-                                                                resize ? options as CFDictionary : nil) else {
+            let options: [CFString: Any]?
+            if resize {
+                options = [
+                    kCGImageSourceCreateThumbnailFromImageIfAbsent: true,
+                    kCGImageSourceCreateThumbnailWithTransform: true,
+                    kCGImageSourceShouldCacheImmediately: true,
+                    kCGImageSourceThumbnailMaxPixelSize: max(size.width, size.height)
+                ]
+            } else {
+                options = nil
+            }
+
+            guard let cgImage = CGImageSourceCreateImageAtIndex(imageSource, index, options as CFDictionary?) else {
                 return nil
             }
 
             let image = KFCrossPlatformImage(cgImage: cgImage)
-            return backgroundDecode ? image.kf.decoded : image
+            
+            guard let context = GraphicsContext.current(size: imageSize, scale: imageScale, inverting: true, cgImage: cgImage) else {
+                return image
+            }
+            
+            return backgroundDecode ? image.kf.decoded(on: context) : image
         }
         
         private func updatePreloadedFrames() {

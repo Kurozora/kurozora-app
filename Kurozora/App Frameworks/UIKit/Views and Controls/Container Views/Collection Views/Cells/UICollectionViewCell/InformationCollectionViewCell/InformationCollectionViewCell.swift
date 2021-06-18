@@ -16,15 +16,15 @@ class InformationCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var separatorView: SecondarySeparatorView!
 
 	// MARK: - Properties
-	var actorDetailsInformationSection: ActorDetailsInformationSection = .occupation
+	var personDetailsInformationSection: PersonDetailsInformationSection = .givenName
 	var characterInformationSection: CharacterInformationSection = .debut
 	var episodeDetailInformation: EpisodeDetail.Information = .number
-	var showDetailInformation: ShowDetail.Information = .studio
+	var showDetailInformation: ShowDetail.Information = .type
 	var studioDetailsInformationSection: StudioDetailsInformationSection = .founded
 
-	var actor: Actor! {
+	var person: Person! {
 		didSet {
-			configureCellWithActor()
+			configureCellWithPerson()
 		}
 	}
 	var character: Character! {
@@ -49,11 +49,11 @@ class InformationCollectionViewCell: UICollectionViewCell {
 	}
 
 	// MARK: - Functions
-	/// Configure the cell with the given actor details.
-	fileprivate func configureCellWithActor() {
-		titleLabel.text = self.actorDetailsInformationSection.stringValue
-		detailLabel.text = self.actorDetailsInformationSection.information(from: self.actor)
-		separatorView.isHidden = self.actorDetailsInformationSection == .occupation
+	/// Configure the cell with the given person details.
+	fileprivate func configureCellWithPerson() {
+		titleLabel.text = self.personDetailsInformationSection.stringValue
+		detailLabel.text = self.personDetailsInformationSection.information(from: self.person)
+		separatorView.isHidden = self.personDetailsInformationSection == .givenName
 	}
 
 	/// Configure the cell with the given character details.

@@ -14,7 +14,7 @@ extension KKLibrary.SortType.Options {
 	var imageValue: UIImage {
 		switch self {
 		case .none:
-			return UIImage(systemName: "line.horizontal.3.decrease.circle.fill")!
+			return UIImage(systemName: "line.3.horizontal.decrease.circle.fill")!
 		case .ascending:
 			return R.image.symbols.arrow_up_line_horizontal_3_decrease()!
 		case .descending:

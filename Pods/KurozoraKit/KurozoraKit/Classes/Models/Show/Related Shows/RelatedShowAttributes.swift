@@ -7,11 +7,11 @@
 
 extension RelatedShow {
 	/**
-		A root object that stores information about a single related show, such as the show's type.
+		A root object that stores information about a single related show, such as the relation between the shows.
 	*/
 	public struct Attributes: Codable {
 		// MARK: - Properties
-		/// The type of relation with the parent show.
-		public let type: String
+		/// The relation between the shows.
+		public let relation: MediaRelation
 	}
 }

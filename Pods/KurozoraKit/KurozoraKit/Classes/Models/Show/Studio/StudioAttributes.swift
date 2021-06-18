@@ -25,5 +25,14 @@ extension Studio {
 
 		/// The link to the website of the studio.
 		public let websiteUrl: String?
+
+		/// Whether the studio is the producer of an anime.
+		public let isProducer: Bool?
+
+		/// Whether the studio is the studio of an anime.
+		public let isStudio: Bool?
+
+		/// Whether the studio is the licensor of an anime.
+		public let isLicensor: Bool?
 	}
 }

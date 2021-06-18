@@ -12,8 +12,8 @@ extension CharacterDetailsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if let baseLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? BaseLockupCollectionViewCell {
 			performSegue(withIdentifier: R.segue.characterDetailsCollectionViewController.showDetailsSegue, sender: baseLockupCollectionViewCell)
-		} else if let actorLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? ActorLockupCollectionViewCell {
-			performSegue(withIdentifier: R.segue.characterDetailsCollectionViewController.actorDetailsSegue, sender: actorLockupCollectionViewCell)
+		} else if let personLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? PersonLockupCollectionViewCell {
+			performSegue(withIdentifier: R.segue.characterDetailsCollectionViewController.personDetailsSegue, sender: personLockupCollectionViewCell)
 		}
 	}
 
@@ -25,9 +25,9 @@ extension CharacterDetailsCollectionViewController {
 			if let smallLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? SmallLockupCollectionViewCell {
 				return smallLockupCollectionViewCell.show?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 			}
-		case .actors:
-			if let actorLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? ActorLockupCollectionViewCell {
-				return actorLockupCollectionViewCell.actor?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		case .people:
+			if let personLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? PersonLockupCollectionViewCell {
+				return personLockupCollectionViewCell.person?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 			}
 		default: break
 		}

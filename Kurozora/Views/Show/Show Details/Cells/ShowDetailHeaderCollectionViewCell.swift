@@ -64,7 +64,7 @@ extension ShowDetailHeaderCollectionViewCell {
 		self.tagsLabel.text = self.show.attributes.informationString
 
 		// Configure airStatus label
-		if let airingStatus = ShowDetail.AiringStatus(rawValue: self.show.attributes.airStatus) {
+		if let airingStatus = ShowDetail.AiringStatus(rawValue: self.show.attributes.status.name) {
 			self.statusButton.setTitle(airingStatus.stringValue, for: .normal)
 			self.statusButton.backgroundColor = airingStatus.colorValue
 		}

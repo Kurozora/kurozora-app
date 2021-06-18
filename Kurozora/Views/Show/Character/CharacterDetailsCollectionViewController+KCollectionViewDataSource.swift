@@ -11,7 +11,7 @@ import UIKit
 extension CharacterDetailsCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
 		return [
-			ActorLockupCollectionViewCell.self,
+			PersonLockupCollectionViewCell.self,
 			TextViewCollectionViewCell.self,
 			InformationCollectionViewCell.self,
 			SmallLockupCollectionViewCell.self

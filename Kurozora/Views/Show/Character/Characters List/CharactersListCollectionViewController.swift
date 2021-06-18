@@ -11,7 +11,7 @@ import KurozoraKit
 
 class CharactersListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var actorID: Int = 0
+	var personID: Int = 0
 	var characters: [Character] = [] {
 		didSet {
 			self.configureDataSource()
@@ -22,6 +22,7 @@ class CharactersListCollectionViewController: KCollectionViewController {
 			self.refreshControl?.endRefreshing()
 			#endif
 			#endif
+
 		}
 	}
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>! = nil
@@ -89,7 +90,7 @@ class CharactersListCollectionViewController: KCollectionViewController {
 	}
 
 	func fetchCharacters() {
-		KService.getCharacters(forActorID: actorID) { [weak self] result in
+		KService.getCharacters(forPersonID: personID) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
 			case .success(let characters):

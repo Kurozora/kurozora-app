@@ -80,8 +80,8 @@ extension WorkflowController {
 
 		// Define the notification type
 		let newSessionCategory =
-			UNNotificationCategory(identifier: "NEW_SESSION", actions: [showSessionsAction], intentIdentifiers: [], options: [.hiddenPreviewsShowTitle, .allowAnnouncement])
-		let showUpdateCategory = UNNotificationCategory(identifier: "SHOW_UPDATE", actions: [showUpdateAction], intentIdentifiers: [], options: [.hiddenPreviewsShowTitle, .allowAnnouncement])
+		UNNotificationCategory(identifier: "NEW_SESSION", actions: [showSessionsAction], intentIdentifiers: [], options: [.hiddenPreviewsShowTitle])
+		let showUpdateCategory = UNNotificationCategory(identifier: "SHOW_UPDATE", actions: [showUpdateAction], intentIdentifiers: [], options: [.hiddenPreviewsShowTitle])
 		let newUserFollowCategory = UNNotificationCategory(identifier: "NEW_USER_FOLLOW", actions: [newUserFollowAction], intentIdentifiers: [], options: [.hiddenPreviewsShowTitle])
 
 		// Register notification types.

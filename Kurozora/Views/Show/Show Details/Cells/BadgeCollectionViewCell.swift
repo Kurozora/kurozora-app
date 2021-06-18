@@ -62,8 +62,8 @@ class BadgeCollectionViewCell: UICollectionViewCell {
 	/// Updates the view with the details fetched from the server.
 	fileprivate func updateDetails() {
 		// Configure rating
-		let averageRating = show.attributes.averageRating
-		let ratingCount = show.attributes.ratingCount
+		let averageRating = show.attributes.userRating.averageRating
+		let ratingCount = show.attributes.userRating.ratingCount
 
 		cosmosView.rating = averageRating
 		ratingScoreLabel.text = "\(averageRating)"

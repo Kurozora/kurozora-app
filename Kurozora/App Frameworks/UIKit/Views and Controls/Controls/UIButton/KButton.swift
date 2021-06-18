@@ -54,7 +54,6 @@ class KButton: UIButton {
 	func sharedInit() {
 		// Configure properties
 		self.theme_setTitleColor(KThemePicker.tintColor.rawValue, forState: .normal)
-		self.adjustsImageWhenHighlighted = false
 		self.titleLabel?.font = .systemFont(ofSize: self.titleLabel?.font.pointSize ?? 18, weight: .semibold)
 
 		// Add targets

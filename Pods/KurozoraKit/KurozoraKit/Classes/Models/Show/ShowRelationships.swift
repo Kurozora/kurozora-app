@@ -11,23 +11,20 @@ extension Show {
 	*/
 	public struct Relationships: Codable {
 		// MARK: - Properties
-		/// The actors belonging to the show.
-		public let actors: ActorResponse?
-
 		/// The cast belonging to the show.
 		public let cast: CastResponse?
 
 		/// The characters belonging to the show.
 		public let characters: CharacterResponse?
 
-		/// The genres belonging to the show.
-		public let genres: GenreResponse?
-
 		/// The relationships belonging to the show.
 		public let relatedShows: RelatedShowResponse?
 
 		/// The seasons belonging to the show.
 		public let seasons: SeasonResponse?
+
+		/// The staff belonging to the show.
+		public let staff: StaffResponse?
 
 		/// The studios belonging to the show.
 		public let studios: StudioResponse?

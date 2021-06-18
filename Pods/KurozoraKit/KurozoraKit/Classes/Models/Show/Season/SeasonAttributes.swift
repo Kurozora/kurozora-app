@@ -14,16 +14,19 @@ extension Season {
 		/// The number of the season.
 		public let number: Int
 
+		/// The link to a poster of the season.
+		public let posterURL: String?
+
 		/// The title of the season.
 		public let title: String
 
-		/// The link to a poster of the season.
-		public let poster: String?
-
-		/// The premiere date of the season.
-		public let firstAired: String?
+		/// The synopsis of the season.
+		public let synopsis: String?
 
 		/// The episode count of the season.
 		public let episodeCount: Int
+
+		/// The premiere date of the season.
+		public let firstAired: String?
 	}
 }

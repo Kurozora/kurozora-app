@@ -7,14 +7,14 @@
 
 extension Character {
 	/**
-		A root object that stores information about character relationships, such as the shows, and actors that belong to it.
+		A root object that stores information about character relationships, such as the shows, and people that belong to it.
 	*/
 	public struct Relationships: Codable {
 		// MARK: - Properties
-		/// The shows belonging to the character.
-		public let shows: ShowResponse?
+		/// The people that played the character.
+		public let people: PersonResponse?
 
-		/// The actors belonging to the character.
-		public let actors: ActorResponse?
+		/// The shows in which the character showed up.
+		public let shows: ShowResponse?
 	}
 }

@@ -33,11 +33,11 @@
 		660E39E825E5BAC700A46EB0 /* ShowDetailsCollectionViewController+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660E39E725E5BAC700A46EB0 /* ShowDetailsCollectionViewController+UICollectionViewDelegate.swift */; };
 		660E39ED25E5BC7500A46EB0 /* Season+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660E39EC25E5BC7500A46EB0 /* Season+UIKit.swift */; };
 		660E39F325E5BE3400A46EB0 /* Cast+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660E39F225E5BE3400A46EB0 /* Cast+UIKit.swift */; };
-		660E39F525E5BE4000A46EB0 /* Actor+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660E39F425E5BE4000A46EB0 /* Actor+UIKit.swift */; };
+		660E39F525E5BE4000A46EB0 /* Person+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660E39F425E5BE4000A46EB0 /* Person+UIKit.swift */; };
 		660E39F725E5BE4900A46EB0 /* Character+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660E39F625E5BE4900A46EB0 /* Character+UIKit.swift */; };
 		660E39F925E5CF3900A46EB0 /* CharacterDetailsCollectionViewController+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660E39F825E5CF3900A46EB0 /* CharacterDetailsCollectionViewController+UICollectionViewDelegate.swift */; };
-		660E39FB25E5D28800A46EB0 /* ActorDetailsCollectionViewController+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660E39FA25E5D28800A46EB0 /* ActorDetailsCollectionViewController+UICollectionViewDelegate.swift */; };
-		660E39FE25E5D31000A46EB0 /* ActorsListCollectionViewController+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660E39FD25E5D31000A46EB0 /* ActorsListCollectionViewController+UICollectionViewDelegate.swift */; };
+		660E39FB25E5D28800A46EB0 /* PersonDetailsCollectionViewController+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660E39FA25E5D28800A46EB0 /* PersonDetailsCollectionViewController+UICollectionViewDelegate.swift */; };
+		660E39FE25E5D31000A46EB0 /* PeopleListCollectionViewController+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660E39FD25E5D31000A46EB0 /* PeopleListCollectionViewController+UICollectionViewDelegate.swift */; };
 		660E3A0125E5D38800A46EB0 /* CharactersListCollectionViewController+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660E3A0025E5D38800A46EB0 /* CharactersListCollectionViewController+UICollectionViewDelegate.swift */; };
 		660E3A0325E5D40100A46EB0 /* CastCollectionViewController+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660E3A0225E5D40100A46EB0 /* CastCollectionViewController+UICollectionViewDelegate.swift */; };
 		660E3A0525E5D7BB00A46EB0 /* StudioDetailsCollectionViewController+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660E3A0425E5D7BB00A46EB0 /* StudioDetailsCollectionViewController+UICollectionViewDelegate.swift */; };
@@ -142,16 +142,16 @@
 		664AAF8124EE8E2F00FF4AA5 /* Characters.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 664AAF8024EE8E2F00FF4AA5 /* Characters.storyboard */; };
 		664AAF8324EE8F0C00FF4AA5 /* CharacterHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664AAF8224EE8F0C00FF4AA5 /* CharacterHeaderCollectionViewCell.swift */; };
 		664AAF8524EE8FDD00FF4AA5 /* CharacterImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664AAF8424EE8FDD00FF4AA5 /* CharacterImageView.swift */; };
-		664AAF8824EE903700FF4AA5 /* ActorImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664AAF8724EE903700FF4AA5 /* ActorImageView.swift */; };
+		664AAF8824EE903700FF4AA5 /* PersonImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664AAF8724EE903700FF4AA5 /* PersonImageView.swift */; };
 		664AAF8A24EE975F00FF4AA5 /* CharacterSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664AAF8924EE975F00FF4AA5 /* CharacterSection.swift */; };
 		664AAF8C24EE986700FF4AA5 /* CharacterInformationSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664AAF8B24EE986700FF4AA5 /* CharacterInformationSection.swift */; };
-		664AAF9224EEA26300FF4AA5 /* ActorLockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664AAF9124EEA26300FF4AA5 /* ActorLockupCollectionViewCell.swift */; };
-		664AAF9424EEA37800FF4AA5 /* ActorLockupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 664AAF9324EEA37800FF4AA5 /* ActorLockupCollectionViewCell.xib */; };
-		664AAF9624EEE29A00FF4AA5 /* ActorsListCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664AAF9524EEE29A00FF4AA5 /* ActorsListCollectionViewController.swift */; };
-		664AAF9824EEE53700FF4AA5 /* Actors.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 664AAF9724EEE53700FF4AA5 /* Actors.storyboard */; };
-		664AAF9D24EEEC4F00FF4AA5 /* ActorDetailsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664AAF9C24EEEC4F00FF4AA5 /* ActorDetailsSection.swift */; };
-		664AAF9F24EEED0000FF4AA5 /* ActorDetailsInformationSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664AAF9E24EEED0000FF4AA5 /* ActorDetailsInformationSection.swift */; };
-		664AAFA124EEEE9F00FF4AA5 /* ActorHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664AAFA024EEEE9F00FF4AA5 /* ActorHeaderCollectionViewCell.swift */; };
+		664AAF9224EEA26300FF4AA5 /* PersonLockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664AAF9124EEA26300FF4AA5 /* PersonLockupCollectionViewCell.swift */; };
+		664AAF9424EEA37800FF4AA5 /* PersonLockupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 664AAF9324EEA37800FF4AA5 /* PersonLockupCollectionViewCell.xib */; };
+		664AAF9624EEE29A00FF4AA5 /* PeopleListCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664AAF9524EEE29A00FF4AA5 /* PeopleListCollectionViewController.swift */; };
+		664AAF9824EEE53700FF4AA5 /* People.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 664AAF9724EEE53700FF4AA5 /* People.storyboard */; };
+		664AAF9D24EEEC4F00FF4AA5 /* PersonDetailsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664AAF9C24EEEC4F00FF4AA5 /* PersonDetailsSection.swift */; };
+		664AAF9F24EEED0000FF4AA5 /* PersonDetailsInformationSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664AAF9E24EEED0000FF4AA5 /* PersonDetailsInformationSection.swift */; };
+		664AAFA124EEEE9F00FF4AA5 /* PersonHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664AAFA024EEEE9F00FF4AA5 /* PersonHeaderCollectionViewCell.swift */; };
 		664AAFA324EEF11800FF4AA5 /* CharactersListCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664AAFA224EEF11800FF4AA5 /* CharactersListCollectionViewController.swift */; };
 		664AAFA724EEF3D600FF4AA5 /* CharacterLockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664AAFA624EEF3D600FF4AA5 /* CharacterLockupCollectionViewCell.swift */; };
 		664AAFA924EEF3DD00FF4AA5 /* CharacterLockupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 664AAFA824EEF3DD00FF4AA5 /* CharacterLockupCollectionViewCell.xib */; };
@@ -228,7 +228,7 @@
 		667F9ADD21B5F354003F6629 /* SettingsSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9ADC21B5F354003F6629 /* SettingsSplitViewController.swift */; };
 		668142D3245B4804008FC7BE /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668142D2245B4804008FC7BE /* ProfileImageView.swift */; };
 		66825BFA21B3E2A700A2F602 /* WorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66112348208F6ACE00E6033A /* WorkflowController.swift */; };
-		668421E425954F25000A09F8 /* ActorDetailsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668421E325954F25000A09F8 /* ActorDetailsCollectionViewController.swift */; };
+		668421E425954F25000A09F8 /* PersonDetailsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668421E325954F25000A09F8 /* PersonDetailsCollectionViewController.swift */; };
 		668422462595F762000A09F8 /* CharacterDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668422452595F762000A09F8 /* CharacterDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */; };
 		6684224825966F97000A09F8 /* PosterLockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6684224725966F97000A09F8 /* PosterLockupCollectionViewCell.swift */; };
 		6684225025967A65000A09F8 /* TitleHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6684224F25967A65000A09F8 /* TitleHeaderTableViewCell.xib */; };
@@ -317,7 +317,7 @@
 		6698D3CB24E594BD006B7A4C /* FavoriteStatus+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6698D3CA24E594BD006B7A4C /* FavoriteStatus+Kurozora.swift */; };
 		6698D3D424E5E81D006B7A4C /* StudioAttributes+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6698D3D324E5E81D006B7A4C /* StudioAttributes+UIImage.swift */; };
 		66999C4A24E71E1A00001A6E /* GenreAttributes+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66999C4924E71E1A00001A6E /* GenreAttributes+UIImage.swift */; };
-		66999C5024E7586D00001A6E /* ActorAttributes+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66999C4F24E7586D00001A6E /* ActorAttributes+UIImage.swift */; };
+		66999C5024E7586D00001A6E /* PersonAttributes+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66999C4F24E7586D00001A6E /* PersonAttributes+UIImage.swift */; };
 		66999C5224E75AF300001A6E /* CharacterAttributes+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66999C5124E75AF300001A6E /* CharacterAttributes+UIImage.swift */; };
 		6699A1C123779E6800517C2C /* TimeInterval+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6699A1C023779E6800517C2C /* TimeInterval+String.swift */; };
 		6699A1C323779E9B00517C2C /* LibraryListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6699A1C223779E9B00517C2C /* LibraryListCollectionViewCell.swift */; };
@@ -361,7 +361,6 @@
 		66AC260422F0E5350064541B /* ActionButtonExploreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AC260322F0E5350064541B /* ActionButtonExploreCollectionViewCell.swift */; };
 		66AC260622F0E58A0064541B /* WebBrowser.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66AC260522F0E58A0064541B /* WebBrowser.storyboard */; };
 		66AC3D1F23D8FB0800D28EE6 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66AC3D1E23D8FB0800D28EE6 /* GameKit.framework */; };
-		66AC3D2023D90A2F00D28EE6 /* ShowAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614DF692089391600B0BC69 /* ShowAttributes.swift */; };
 		66AC3D2223D923ED00D28EE6 /* KViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AC3D2123D923ED00D28EE6 /* KViewController.swift */; };
 		66ACA19222C2627000FAEF08 /* AppearanceOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ACA19122C2627000FAEF08 /* AppearanceOptionsViewController.swift */; };
 		66AE01242593D4E200308636 /* Badge.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66AE01232593D4E200308636 /* Badge.storyboard */; };
@@ -417,7 +416,7 @@
 		66BFF4EB25FFF879009EBA30 /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BFF4EA25FFF879009EBA30 /* SidebarViewController.swift */; };
 		66C27A7123E243FB00BC09D3 /* LibraryStatisticsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C27A7023E243FB00BC09D3 /* LibraryStatisticsCollectionViewCell.swift */; };
 		66C2C5262107ACA10020E21F /* KTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C2C5252107ACA10020E21F /* KTabBarController.swift */; };
-		66C457FA2598D5E000886374 /* ActorDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C457F92598D5E000886374 /* ActorDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */; };
+		66C457FA2598D5E000886374 /* PersonDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C457F92598D5E000886374 /* PersonDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */; };
 		66C457FC2598DA4500886374 /* StudioDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C457FB2598DA4500886374 /* StudioDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */; };
 		66C45841259A88ED00886374 /* Grass.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66C4583E259A88ED00886374 /* Grass.plist */; };
 		66C45842259A88ED00886374 /* Sakura.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66C4583F259A88ED00886374 /* Sakura.plist */; };
@@ -432,7 +431,7 @@
 		66C5D5FF23BA9A5E003040BE /* SectionBackgroundVisualEffectDecorationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C5D5FE23BA9A5E003040BE /* SectionBackgroundVisualEffectDecorationView.swift */; };
 		66C86402216DF9270054EE16 /* SeasonsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C86401216DF9270054EE16 /* SeasonsCollectionViewController.swift */; };
 		66C86404216DFB850054EE16 /* LockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C86403216DFB850054EE16 /* LockupCollectionViewCell.swift */; };
-		66C898DD24DFEA2B00305C96 /* ActorAttributes+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C898DC24DFEA2B00305C96 /* ActorAttributes+String.swift */; };
+		66C898DD24DFEA2B00305C96 /* PersonAttributes+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C898DC24DFEA2B00305C96 /* PersonAttributes+String.swift */; };
 		66C898E824E1770500305C96 /* Show+Intents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C898E724E1770400305C96 /* Show+Intents.swift */; };
 		66C898EA24E17C3E00305C96 /* ShowAttributes+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C898E924E17C3E00305C96 /* ShowAttributes+UIImage.swift */; };
 		66C8FBF124671CBC00C82D60 /* SwitchAccountSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66C8FBF024671CBC00C82D60 /* SwitchAccountSettings.storyboard */; };
@@ -498,7 +497,6 @@
 		66DB254A245D72ED000AA6DB /* KActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DB2549245D72ED000AA6DB /* KActivityIndicatorView.swift */; };
 		66DE65282401AEDB001C2773 /* FilterSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DE65272401AEDB001C2773 /* FilterSection.swift */; };
 		66DE652A2401B0A8001C2773 /* BrowseType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DE65292401B0A8001C2773 /* BrowseType.swift */; };
-		66DE652C2401B187001C2773 /* Studios.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DE652B2401B187001C2773 /* Studios.swift */; };
 		66DEB4A821D248710093725F /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66DEB4A721D248710093725F /* Search.storyboard */; };
 		66DEB4AB21D283800093725F /* SearchResultsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DEB4A421D247810093725F /* SearchResultsCollectionViewController.swift */; };
 		66DEB4B221D419420093725F /* KSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DEB4B121D419420093725F /* KSearchController.swift */; };
@@ -524,7 +522,7 @@
 		66EA1DCB25B36DE900FCD07A /* FavoriteShowsCollectionViewController+KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DCA25B36DE900FCD07A /* FavoriteShowsCollectionViewController+KCollectionViewDataSource.swift */; };
 		66EA1DCF25B36EBD00FCD07A /* SearchResultsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DCE25B36EBD00FCD07A /* SearchResultsCollectionViewController+KCollectionViewDelegateLayout.swift */; };
 		66EA1DD425B5B75200FCD07A /* TitleHeaderCollectionReusableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DD325B5B75200FCD07A /* TitleHeaderCollectionReusableViewDelegate.swift */; };
-		66EA1DD625B5BB3100FCD07A /* ActorDetailsCollectionViewController+KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DD525B5BB3100FCD07A /* ActorDetailsCollectionViewController+KCollectionViewDataSource.swift */; };
+		66EA1DD625B5BB3100FCD07A /* PersonDetailsCollectionViewController+KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DD525B5BB3100FCD07A /* PersonDetailsCollectionViewController+KCollectionViewDataSource.swift */; };
 		66EA1DD825B5BB7700FCD07A /* CastCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DD725B5BB7700FCD07A /* CastCollectionViewController+KCollectionViewDelegateLayout.swift */; };
 		66EA1DDB25B5BBAB00FCD07A /* CastCollectionViewController+KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DDA25B5BBAB00FCD07A /* CastCollectionViewController+KCollectionViewDataSource.swift */; };
 		66EA1DDD25B5BBF600FCD07A /* CharacterDetailsCollectionViewController+KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DDC25B5BBF600FCD07A /* CharacterDetailsCollectionViewController+KCollectionViewDataSource.swift */; };
@@ -637,11 +635,11 @@
 		660E39E725E5BAC700A46EB0 /* ShowDetailsCollectionViewController+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShowDetailsCollectionViewController+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
 		660E39EC25E5BC7500A46EB0 /* Season+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Season+UIKit.swift"; sourceTree = "<group>"; };
 		660E39F225E5BE3400A46EB0 /* Cast+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cast+UIKit.swift"; sourceTree = "<group>"; };
-		660E39F425E5BE4000A46EB0 /* Actor+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Actor+UIKit.swift"; sourceTree = "<group>"; };
+		660E39F425E5BE4000A46EB0 /* Person+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+UIKit.swift"; sourceTree = "<group>"; };
 		660E39F625E5BE4900A46EB0 /* Character+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+UIKit.swift"; sourceTree = "<group>"; };
 		660E39F825E5CF3900A46EB0 /* CharacterDetailsCollectionViewController+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CharacterDetailsCollectionViewController+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
-		660E39FA25E5D28800A46EB0 /* ActorDetailsCollectionViewController+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActorDetailsCollectionViewController+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
-		660E39FD25E5D31000A46EB0 /* ActorsListCollectionViewController+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActorsListCollectionViewController+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
+		660E39FA25E5D28800A46EB0 /* PersonDetailsCollectionViewController+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersonDetailsCollectionViewController+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
+		660E39FD25E5D31000A46EB0 /* PeopleListCollectionViewController+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PeopleListCollectionViewController+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
 		660E3A0025E5D38800A46EB0 /* CharactersListCollectionViewController+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CharactersListCollectionViewController+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
 		660E3A0225E5D40100A46EB0 /* CastCollectionViewController+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CastCollectionViewController+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
 		660E3A0425E5D7BB00A46EB0 /* StudioDetailsCollectionViewController+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StudioDetailsCollectionViewController+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
@@ -661,7 +659,6 @@
 		66148D6425E5E625000F2E0A /* FavoriteShowsCollectionViewController+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoriteShowsCollectionViewController+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
 		6614ABE3215F65D100A3A0C9 /* KLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KLabel.swift; sourceTree = "<group>"; };
 		6614AD402580033500039BFB /* ShowDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShowDetailsCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
-		6614DF692089391600B0BC69 /* ShowAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowAttributes.swift; sourceTree = "<group>"; };
 		66160C3A215C04B900D0D722 /* AccountTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTableViewController.swift; sourceTree = "<group>"; };
 		66160C3F215C2DEB00D0D722 /* Reachability.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Reachability.storyboard; sourceTree = "<group>"; };
 		6619EE73216F969B00655B99 /* ForumsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumsListViewController.swift; sourceTree = "<group>"; };
@@ -751,16 +748,16 @@
 		664AAF8024EE8E2F00FF4AA5 /* Characters.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Characters.storyboard; sourceTree = "<group>"; };
 		664AAF8224EE8F0C00FF4AA5 /* CharacterHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
 		664AAF8424EE8FDD00FF4AA5 /* CharacterImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterImageView.swift; sourceTree = "<group>"; };
-		664AAF8724EE903700FF4AA5 /* ActorImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorImageView.swift; sourceTree = "<group>"; };
+		664AAF8724EE903700FF4AA5 /* PersonImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonImageView.swift; sourceTree = "<group>"; };
 		664AAF8924EE975F00FF4AA5 /* CharacterSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSection.swift; sourceTree = "<group>"; };
 		664AAF8B24EE986700FF4AA5 /* CharacterInformationSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterInformationSection.swift; sourceTree = "<group>"; };
-		664AAF9124EEA26300FF4AA5 /* ActorLockupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorLockupCollectionViewCell.swift; sourceTree = "<group>"; };
-		664AAF9324EEA37800FF4AA5 /* ActorLockupCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActorLockupCollectionViewCell.xib; sourceTree = "<group>"; };
-		664AAF9524EEE29A00FF4AA5 /* ActorsListCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorsListCollectionViewController.swift; sourceTree = "<group>"; };
-		664AAF9724EEE53700FF4AA5 /* Actors.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Actors.storyboard; sourceTree = "<group>"; };
-		664AAF9C24EEEC4F00FF4AA5 /* ActorDetailsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorDetailsSection.swift; sourceTree = "<group>"; };
-		664AAF9E24EEED0000FF4AA5 /* ActorDetailsInformationSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorDetailsInformationSection.swift; sourceTree = "<group>"; };
-		664AAFA024EEEE9F00FF4AA5 /* ActorHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
+		664AAF9124EEA26300FF4AA5 /* PersonLockupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonLockupCollectionViewCell.swift; sourceTree = "<group>"; };
+		664AAF9324EEA37800FF4AA5 /* PersonLockupCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PersonLockupCollectionViewCell.xib; sourceTree = "<group>"; };
+		664AAF9524EEE29A00FF4AA5 /* PeopleListCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleListCollectionViewController.swift; sourceTree = "<group>"; };
+		664AAF9724EEE53700FF4AA5 /* People.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = People.storyboard; sourceTree = "<group>"; };
+		664AAF9C24EEEC4F00FF4AA5 /* PersonDetailsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetailsSection.swift; sourceTree = "<group>"; };
+		664AAF9E24EEED0000FF4AA5 /* PersonDetailsInformationSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetailsInformationSection.swift; sourceTree = "<group>"; };
+		664AAFA024EEEE9F00FF4AA5 /* PersonHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
 		664AAFA224EEF11800FF4AA5 /* CharactersListCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersListCollectionViewController.swift; sourceTree = "<group>"; };
 		664AAFA624EEF3D600FF4AA5 /* CharacterLockupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterLockupCollectionViewCell.swift; sourceTree = "<group>"; };
 		664AAFA824EEF3DD00FF4AA5 /* CharacterLockupCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CharacterLockupCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -831,7 +828,7 @@
 		667F9ADC21B5F354003F6629 /* SettingsSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSplitViewController.swift; sourceTree = "<group>"; };
 		668142D2245B4804008FC7BE /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		66825BE921B29F3800A2F602 /* KRichTextEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KRichTextEditorViewController.swift; sourceTree = "<group>"; };
-		668421E325954F25000A09F8 /* ActorDetailsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorDetailsCollectionViewController.swift; sourceTree = "<group>"; };
+		668421E325954F25000A09F8 /* PersonDetailsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetailsCollectionViewController.swift; sourceTree = "<group>"; };
 		668422452595F762000A09F8 /* CharacterDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CharacterDetailsCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
 		6684224725966F97000A09F8 /* PosterLockupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterLockupCollectionViewCell.swift; sourceTree = "<group>"; };
 		6684224F25967A65000A09F8 /* TitleHeaderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TitleHeaderTableViewCell.xib; sourceTree = "<group>"; };
@@ -920,7 +917,7 @@
 		6698D3CA24E594BD006B7A4C /* FavoriteStatus+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoriteStatus+Kurozora.swift"; sourceTree = "<group>"; };
 		6698D3D324E5E81D006B7A4C /* StudioAttributes+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StudioAttributes+UIImage.swift"; sourceTree = "<group>"; };
 		66999C4924E71E1A00001A6E /* GenreAttributes+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GenreAttributes+UIImage.swift"; sourceTree = "<group>"; };
-		66999C4F24E7586D00001A6E /* ActorAttributes+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActorAttributes+UIImage.swift"; sourceTree = "<group>"; };
+		66999C4F24E7586D00001A6E /* PersonAttributes+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersonAttributes+UIImage.swift"; sourceTree = "<group>"; };
 		66999C5124E75AF300001A6E /* CharacterAttributes+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CharacterAttributes+UIImage.swift"; sourceTree = "<group>"; };
 		6699A1C023779E6800517C2C /* TimeInterval+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+String.swift"; sourceTree = "<group>"; };
 		6699A1C223779E9B00517C2C /* LibraryListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryListCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1021,7 +1018,7 @@
 		66BFF4EA25FFF879009EBA30 /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
 		66C27A7023E243FB00BC09D3 /* LibraryStatisticsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryStatisticsCollectionViewCell.swift; sourceTree = "<group>"; };
 		66C2C5252107ACA10020E21F /* KTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KTabBarController.swift; sourceTree = "<group>"; };
-		66C457F92598D5E000886374 /* ActorDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActorDetailsCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
+		66C457F92598D5E000886374 /* PersonDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersonDetailsCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
 		66C457FB2598DA4500886374 /* StudioDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StudioDetailsCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
 		66C4583E259A88ED00886374 /* Grass.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Grass.plist; sourceTree = "<group>"; };
 		66C4583F259A88ED00886374 /* Sakura.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Sakura.plist; sourceTree = "<group>"; };
@@ -1036,7 +1033,7 @@
 		66C5D5FE23BA9A5E003040BE /* SectionBackgroundVisualEffectDecorationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionBackgroundVisualEffectDecorationView.swift; sourceTree = "<group>"; };
 		66C86401216DF9270054EE16 /* SeasonsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonsCollectionViewController.swift; sourceTree = "<group>"; };
 		66C86403216DFB850054EE16 /* LockupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockupCollectionViewCell.swift; sourceTree = "<group>"; };
-		66C898DC24DFEA2B00305C96 /* ActorAttributes+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActorAttributes+String.swift"; sourceTree = "<group>"; };
+		66C898DC24DFEA2B00305C96 /* PersonAttributes+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersonAttributes+String.swift"; sourceTree = "<group>"; };
 		66C898E724E1770400305C96 /* Show+Intents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Show+Intents.swift"; sourceTree = "<group>"; };
 		66C898E924E17C3E00305C96 /* ShowAttributes+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShowAttributes+UIImage.swift"; sourceTree = "<group>"; };
 		66C8FBF024671CBC00C82D60 /* SwitchAccountSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SwitchAccountSettings.storyboard; sourceTree = "<group>"; };
@@ -1107,7 +1104,6 @@
 		66DB2549245D72ED000AA6DB /* KActivityIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KActivityIndicatorView.swift; sourceTree = "<group>"; };
 		66DE65272401AEDB001C2773 /* FilterSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSection.swift; sourceTree = "<group>"; };
 		66DE65292401B0A8001C2773 /* BrowseType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseType.swift; sourceTree = "<group>"; };
-		66DE652B2401B187001C2773 /* Studios.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Studios.swift; sourceTree = "<group>"; };
 		66DEB4A421D247810093725F /* SearchResultsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsCollectionViewController.swift; sourceTree = "<group>"; };
 		66DEB4A721D248710093725F /* Search.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
 		66DEB4B121D419420093725F /* KSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KSearchController.swift; sourceTree = "<group>"; };
@@ -1133,7 +1129,7 @@
 		66EA1DCA25B36DE900FCD07A /* FavoriteShowsCollectionViewController+KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoriteShowsCollectionViewController+KCollectionViewDataSource.swift"; sourceTree = "<group>"; };
 		66EA1DCE25B36EBD00FCD07A /* SearchResultsCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchResultsCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
 		66EA1DD325B5B75200FCD07A /* TitleHeaderCollectionReusableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleHeaderCollectionReusableViewDelegate.swift; sourceTree = "<group>"; };
-		66EA1DD525B5BB3100FCD07A /* ActorDetailsCollectionViewController+KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActorDetailsCollectionViewController+KCollectionViewDataSource.swift"; sourceTree = "<group>"; };
+		66EA1DD525B5BB3100FCD07A /* PersonDetailsCollectionViewController+KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersonDetailsCollectionViewController+KCollectionViewDataSource.swift"; sourceTree = "<group>"; };
 		66EA1DD725B5BB7700FCD07A /* CastCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CastCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
 		66EA1DDA25B5BBAB00FCD07A /* CastCollectionViewController+KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CastCollectionViewController+KCollectionViewDataSource.swift"; sourceTree = "<group>"; };
 		66EA1DDC25B5BBF600FCD07A /* CharacterDetailsCollectionViewController+KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CharacterDetailsCollectionViewController+KCollectionViewDataSource.swift"; sourceTree = "<group>"; };
@@ -1306,14 +1302,14 @@
 			path = Cast;
 			sourceTree = "<group>";
 		};
-		660E39F025E5BE0600A46EB0 /* Actor */ = {
+		660E39F025E5BE0600A46EB0 /* Person */ = {
 			isa = PBXGroup;
 			children = (
-				660E39F425E5BE4000A46EB0 /* Actor+UIKit.swift */,
-				66C898DC24DFEA2B00305C96 /* ActorAttributes+String.swift */,
-				66999C4F24E7586D00001A6E /* ActorAttributes+UIImage.swift */,
+				660E39F425E5BE4000A46EB0 /* Person+UIKit.swift */,
+				66C898DC24DFEA2B00305C96 /* PersonAttributes+String.swift */,
+				66999C4F24E7586D00001A6E /* PersonAttributes+UIImage.swift */,
 			);
-			path = Actor;
+			path = Person;
 			sourceTree = "<group>";
 		};
 		660E39F125E5BE0F00A46EB0 /* Character */ = {
@@ -1325,13 +1321,13 @@
 			path = Character;
 			sourceTree = "<group>";
 		};
-		660E39FC25E5D2F700A46EB0 /* Actors List */ = {
+		660E39FC25E5D2F700A46EB0 /* People List */ = {
 			isa = PBXGroup;
 			children = (
-				664AAF9524EEE29A00FF4AA5 /* ActorsListCollectionViewController.swift */,
-				660E39FD25E5D31000A46EB0 /* ActorsListCollectionViewController+UICollectionViewDelegate.swift */,
+				664AAF9524EEE29A00FF4AA5 /* PeopleListCollectionViewController.swift */,
+				660E39FD25E5D31000A46EB0 /* PeopleListCollectionViewController+UICollectionViewDelegate.swift */,
 			);
-			path = "Actors List";
+			path = "People List";
 			sourceTree = "<group>";
 		};
 		660E39FF25E5D36500A46EB0 /* Characters List */ = {
@@ -1824,7 +1820,7 @@
 		664AAF8624EE901800FF4AA5 /* UIImageView */ = {
 			isa = PBXGroup;
 			children = (
-				664AAF8724EE903700FF4AA5 /* ActorImageView.swift */,
+				664AAF8724EE903700FF4AA5 /* PersonImageView.swift */,
 				664AAF8424EE8FDD00FF4AA5 /* CharacterImageView.swift */,
 				66AE1E1424A0EE1D00FD3FFC /* CircularImageView.swift */,
 				668142D2245B4804008FC7BE /* ProfileImageView.swift */,
@@ -1833,27 +1829,27 @@
 			path = UIImageView;
 			sourceTree = "<group>";
 		};
-		664AAF8F24EEA24D00FF4AA5 /* Actors */ = {
+		664AAF8F24EEA24D00FF4AA5 /* People */ = {
 			isa = PBXGroup;
 			children = (
-				664AAF9724EEE53700FF4AA5 /* Actors.storyboard */,
-				668421E325954F25000A09F8 /* ActorDetailsCollectionViewController.swift */,
-				66EA1DD525B5BB3100FCD07A /* ActorDetailsCollectionViewController+KCollectionViewDataSource.swift */,
-				66C457F92598D5E000886374 /* ActorDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */,
-				660E39FA25E5D28800A46EB0 /* ActorDetailsCollectionViewController+UICollectionViewDelegate.swift */,
-				660E39FC25E5D2F700A46EB0 /* Actors List */,
+				664AAF9724EEE53700FF4AA5 /* People.storyboard */,
+				668421E325954F25000A09F8 /* PersonDetailsCollectionViewController.swift */,
+				66EA1DD525B5BB3100FCD07A /* PersonDetailsCollectionViewController+KCollectionViewDataSource.swift */,
+				66C457F92598D5E000886374 /* PersonDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */,
+				660E39FA25E5D28800A46EB0 /* PersonDetailsCollectionViewController+UICollectionViewDelegate.swift */,
+				660E39FC25E5D2F700A46EB0 /* People List */,
 				664AAF9024EEA25A00FF4AA5 /* Cells */,
 				664AAF9B24EEEC2E00FF4AA5 /* Models */,
 			);
-			path = Actors;
+			path = People;
 			sourceTree = "<group>";
 		};
 		664AAF9024EEA25A00FF4AA5 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				664AAFA024EEEE9F00FF4AA5 /* ActorHeaderCollectionViewCell.swift */,
-				664AAF9124EEA26300FF4AA5 /* ActorLockupCollectionViewCell.swift */,
-				664AAF9324EEA37800FF4AA5 /* ActorLockupCollectionViewCell.xib */,
+				664AAFA024EEEE9F00FF4AA5 /* PersonHeaderCollectionViewCell.swift */,
+				664AAF9124EEA26300FF4AA5 /* PersonLockupCollectionViewCell.swift */,
+				664AAF9324EEA37800FF4AA5 /* PersonLockupCollectionViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1861,8 +1857,8 @@
 		664AAF9B24EEEC2E00FF4AA5 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				664AAF9E24EEED0000FF4AA5 /* ActorDetailsInformationSection.swift */,
-				664AAF9C24EEEC4F00FF4AA5 /* ActorDetailsSection.swift */,
+				664AAF9E24EEED0000FF4AA5 /* PersonDetailsInformationSection.swift */,
+				664AAF9C24EEEC4F00FF4AA5 /* PersonDetailsSection.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2336,11 +2332,11 @@
 		668142E1245B4BDA008FC7BE /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				66D0BF7F25613E09000AB7BF /* Models */,
 				667C0F12224CC50200A8CB56 /* ExploreCategorySize+Kurozora.swift */,
 				6698D3CA24E594BD006B7A4C /* FavoriteStatus+Kurozora.swift */,
 				6698D3C824E59427006B7A4C /* ReminderStatus+Kurozora.swift */,
 				6698D3D324E5E81D006B7A4C /* StudioAttributes+UIImage.swift */,
+				66D0BF7F25613E09000AB7BF /* Models */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2516,10 +2512,10 @@
 				660C042923D1126B0040C749 /* ShowsListCollectionViewController.swift */,
 				660E3A0625E5D91500A46EB0 /* ShowListCollectionViewController+UICollectionViewDelegate.swift */,
 				66058DB2212E915D0084B79E /* Show Details */,
-				664AAF8F24EEA24D00FF4AA5 /* Actors */,
 				666C82562162895700C93A70 /* Cast */,
 				665B94A324E81C2B007E7A13 /* Character */,
 				66058DC3212E984F0084B79E /* Episodes */,
+				664AAF8F24EEA24D00FF4AA5 /* People */,
 				66C86400216DF9040054EE16 /* Seasons */,
 				66AE1E0924A0C3EB00FD3FFC /* Studios */,
 				66CBDD9F24649C9C00CA5F83 /* Synopsis */,
@@ -3097,11 +3093,11 @@
 				66C898E724E1770400305C96 /* Show+Intents.swift */,
 				66D0BF8025613E29000AB7BF /* Show+UIKit.swift */,
 				66C898E924E17C3E00305C96 /* ShowAttributes+UIImage.swift */,
-				660E39F025E5BE0600A46EB0 /* Actor */,
 				660E39EB25E5BC5B00A46EB0 /* Cast */,
 				660E39F125E5BE0F00A46EB0 /* Character */,
 				66EA1E0B25B6285F00FCD07A /* Episode */,
 				660E3A0A25E5DA9700A46EB0 /* Genre */,
+				660E39F025E5BE0600A46EB0 /* Person */,
 				660E39E925E5BC4400A46EB0 /* Season */,
 			);
 			path = Show;
@@ -3226,8 +3222,6 @@
 			children = (
 				66DE65292401B0A8001C2773 /* BrowseType.swift */,
 				66DE65272401AEDB001C2773 /* FilterSection.swift */,
-				6614DF692089391600B0BC69 /* ShowAttributes.swift */,
-				66DE652B2401B187001C2773 /* Studios.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -3570,7 +3564,7 @@
 				6647237824601707008E5111 /* ServiceFooterTableViewCell.xib in Resources */,
 				668B165E23EDF0CF00C1306A /* App-Icon-iPad-Product-RED.png in Resources */,
 				668F639120986851003B1C1D /* Aller_It.ttf in Resources */,
-				664AAF9824EEE53700FF4AA5 /* Actors.storyboard in Resources */,
+				664AAF9824EEE53700FF4AA5 /* People.storyboard in Resources */,
 				668B164123EDF0CF00C1306A /* App-Icon-iPhone-Green@2x.png in Resources */,
 				668B163123EDF0CF00C1306A /* App-Icon-iPad-Green@2x.png in Resources */,
 				668B163B23EDF0CF00C1306A /* App-Icon-iPhone-Coral@2x.png in Resources */,
@@ -3627,7 +3621,7 @@
 				66407C9723F625DB008944AB /* App-Icon-iPhone-Love-Bug@3x.png in Resources */,
 				66CBDD9224634AB700CA5F83 /* TitleHeaderCollectionReusableView.xib in Resources */,
 				668B163F23EDF0CF00C1306A /* App-Icon-iPad-Ocean-Blue.png in Resources */,
-				664AAF9424EEA37800FF4AA5 /* ActorLockupCollectionViewCell.xib in Resources */,
+				664AAF9424EEA37800FF4AA5 /* PersonLockupCollectionViewCell.xib in Resources */,
 				668B164723EDF0CF00C1306A /* App-Icon-iPad-Pro-Rose-Gold@2x.png in Resources */,
 				668B163323EDF0CF00C1306A /* App-Icon-iPad-Green.png in Resources */,
 				668B164223EDF0CF00C1306A /* App-Icon-iPhone-Dutch-Orange@2x.png in Resources */,
@@ -3833,7 +3827,7 @@
 				663C65D9226AA60100825F89 /* EpisodesCollectionViewController.swift in Sources */,
 				665A4584246702F100154F41 /* KVibrantVisualEffectView.swift in Sources */,
 				66B13A5D2405AA1000CD732B /* WorkflowController+PushNotifications.swift in Sources */,
-				664AAF8824EE903700FF4AA5 /* ActorImageView.swift in Sources */,
+				664AAF8824EE903700FF4AA5 /* PersonImageView.swift in Sources */,
 				66348C7A22AB17710019AB84 /* SettingsCell.swift in Sources */,
 				66EA1DF425B5F68800FCD07A /* TextViewCollectionViewCellDelegate.swift in Sources */,
 				662B9261233E513A001D49B7 /* SearchForumsResultsCell.swift in Sources */,
@@ -3870,7 +3864,7 @@
 				6640E19522ADD2D800D0F575 /* AuthenticationTableViewController.swift in Sources */,
 				661B26B42351E71B00840AF5 /* UIImageView+Kurozora.swift in Sources */,
 				6659E70D20C1C14E007F139D /* UIDevice+Kurozora.swift in Sources */,
-				664AAF9F24EEED0000FF4AA5 /* ActorDetailsInformationSection.swift in Sources */,
+				664AAF9F24EEED0000FF4AA5 /* PersonDetailsInformationSection.swift in Sources */,
 				664B6D7E230F5AA300F9C726 /* UITableView+Kurozora.swift in Sources */,
 				6646A27B236BAAB000DCC0A4 /* BrowserSettingsTableViewCell.swift in Sources */,
 				66AEABDA22987A4D00949FD8 /* KThemePicker.swift in Sources */,
@@ -3907,18 +3901,18 @@
 				662EDB4A257C37A6005AA29E /* KRefreshControl.swift in Sources */,
 				668B167523EEED0C00C1306A /* SearchHistory.swift in Sources */,
 				66CF6D6F20A9921000F98375 /* NotificationsViewController.swift in Sources */,
-				66EA1DD625B5BB3100FCD07A /* ActorDetailsCollectionViewController+KCollectionViewDataSource.swift in Sources */,
+				66EA1DD625B5BB3100FCD07A /* PersonDetailsCollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				66825BFA21B3E2A700A2F602 /* WorkflowController.swift in Sources */,
 				661D646C25C387EA00822D01 /* MenuController.swift in Sources */,
 				660C042A23D1126B0040C749 /* ShowsListCollectionViewController.swift in Sources */,
 				66B216A821C033B9006E167D /* UIView+Kurozora.swift in Sources */,
 				661F184524A5594C00542AFB /* KCopyableTintedLabel.swift in Sources */,
-				664AAFA124EEEE9F00FF4AA5 /* ActorHeaderCollectionViewCell.swift in Sources */,
+				664AAFA124EEEE9F00FF4AA5 /* PersonHeaderCollectionViewCell.swift in Sources */,
 				664AAFA724EEF3D600FF4AA5 /* CharacterLockupCollectionViewCell.swift in Sources */,
 				66A254D522AABC29002A0E34 /* AlternativeIcons.swift in Sources */,
 				664AAFA324EEF11800FF4AA5 /* CharactersListCollectionViewController.swift in Sources */,
 				6645D5FB23E70A670042B4E0 /* LibraryCompactCollectionViewCell.swift in Sources */,
-				664AAF9D24EEEC4F00FF4AA5 /* ActorDetailsSection.swift in Sources */,
+				664AAF9D24EEEC4F00FF4AA5 /* PersonDetailsSection.swift in Sources */,
 				66DE652A2401B0A8001C2773 /* BrowseType.swift in Sources */,
 				666938B321B1D4E200BA9620 /* ShowMoreCell.swift in Sources */,
 				66AEABED2298AC6A00949FD8 /* NotificationOptions.swift in Sources */,
@@ -3927,7 +3921,7 @@
 				662B925F233E50FA001D49B7 /* SearchShowResultsCell.swift in Sources */,
 				666D9EF025B35FF400EDDC9E /* LibraryListViewControllerDelegate.swift in Sources */,
 				665385BD23D3CD3C008ADEF3 /* KCollectionViewController.swift in Sources */,
-				66999C5024E7586D00001A6E /* ActorAttributes+UIImage.swift in Sources */,
+				66999C5024E7586D00001A6E /* PersonAttributes+UIImage.swift in Sources */,
 				6640E18F22ADD19000D0F575 /* AuthenticationSettingsCell.swift in Sources */,
 				6697DB2325744B9A0054FEFD /* Global+Kurozora.swift in Sources */,
 				6614AD412580033500039BFB /* ShowDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
@@ -3951,7 +3945,7 @@
 				66D1358D228087920079438C /* KButton.swift in Sources */,
 				665099D522FC2B6A0053C2FD /* SearchSuggestionResultCell.swift in Sources */,
 				66CDC089234A829E009E799C /* ServiceFooterString.swift in Sources */,
-				660E39FE25E5D31000A46EB0 /* ActorsListCollectionViewController+UICollectionViewDelegate.swift in Sources */,
+				660E39FE25E5D31000A46EB0 /* PeopleListCollectionViewController+UICollectionViewDelegate.swift in Sources */,
 				664A065E21EA1BA7008CF4A6 /* GenresTableViewController.swift in Sources */,
 				664AAF8324EE8F0C00FF4AA5 /* CharacterHeaderCollectionViewCell.swift in Sources */,
 				66EA1DEC25B5BDD400FCD07A /* StudioDetailsCollectionViewController+KCollectionViewDataSource.swift in Sources */,
@@ -3970,10 +3964,9 @@
 				66F944AC22F0C08E009F1FE2 /* TitleHeaderCollectionReusableView.swift in Sources */,
 				66A08C6D23E3A2F0007B6418 /* PrivacySettingsViewController.swift in Sources */,
 				667B38432361CE6500786EF6 /* KWhatsNewModel.swift in Sources */,
-				66C457FA2598D5E000886374 /* ActorDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
+				66C457FA2598D5E000886374 /* PersonDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				66AE1E1324A0EA1800FD3FFC /* StudioHeaderCollectionViewCell.swift in Sources */,
 				660E3A0C25E5DAA700A46EB0 /* Genre+UIKit.swift in Sources */,
-				66DE652C2401B187001C2773 /* Studios.swift in Sources */,
 				66CBA53522BC452700FBEC13 /* FeedTableViewController.swift in Sources */,
 				66BEC13723191E6D0039D683 /* RatingCollectionViewCell.swift in Sources */,
 				660C042323CFE40D0040C749 /* BadgeCollectionViewCell.swift in Sources */,
@@ -3998,7 +3991,7 @@
 				66EA1E0F25B62DC000FCD07A /* EpisodeLockupCollectionViewCellDelegate.swift in Sources */,
 				6648ED6C22A4630200E1BE18 /* NotificationType.swift in Sources */,
 				662DB4DB237EF3CC00B7FE7E /* KFillBarIndicator.swift in Sources */,
-				664AAF9624EEE29A00FF4AA5 /* ActorsListCollectionViewController.swift in Sources */,
+				664AAF9624EEE29A00FF4AA5 /* PeopleListCollectionViewController.swift in Sources */,
 				66349D07256C74EF000B8523 /* FeedMessages+UIKit.swift in Sources */,
 				66E46E0125056535009938E1 /* CellActionButton.swift in Sources */,
 				66AEABE92298AA8D00949FD8 /* NotificationGroupStyle.swift in Sources */,
@@ -4007,7 +4000,6 @@
 				664AAF8524EE8FDD00FF4AA5 /* CharacterImageView.swift in Sources */,
 				66EA1DF025B5F43B00FCD07A /* ProductActionTableViewCellDelegate.swift in Sources */,
 				664AAF8C24EE986700FF4AA5 /* CharacterInformationSection.swift in Sources */,
-				66AC3D2023D90A2F00D28EE6 /* ShowAttributes.swift in Sources */,
 				66CBDD9424634DBA00CA5F83 /* HeaderButton.swift in Sources */,
 				666938AF21B1D4D200BA9620 /* FeedMessageCell.swift in Sources */,
 				6691B83225869A9C005341F9 /* KCosmosView.swift in Sources */,
@@ -4087,7 +4079,7 @@
 				66CE8116246093CF00DB0C49 /* ServiceHeaderTableViewCell.swift in Sources */,
 				66FC6DD12340014500A454DD /* SettingsSection.swift in Sources */,
 				66AE1E1024A0DB9200FD3FFC /* StudioDetailsSection.swift in Sources */,
-				660E39F525E5BE4000A46EB0 /* Actor+UIKit.swift in Sources */,
+				660E39F525E5BE4000A46EB0 /* Person+UIKit.swift in Sources */,
 				66C457FC2598DA4500886374 /* StudioDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				6619EE74216F969B00655B99 /* ForumsListViewController.swift in Sources */,
 				6674A0C320A45E6D00AAB527 /* LinkCollectionViewCell.swift in Sources */,
@@ -4123,7 +4115,7 @@
 				66EA1DE425B5BCF400FCD07A /* EpisodeDetailCollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				663266CA2444960100295CE7 /* ProductTableViewController.swift in Sources */,
 				660E3A0125E5D38800A46EB0 /* CharactersListCollectionViewController+UICollectionViewDelegate.swift in Sources */,
-				660E39FB25E5D28800A46EB0 /* ActorDetailsCollectionViewController+UICollectionViewDelegate.swift in Sources */,
+				660E39FB25E5D28800A46EB0 /* PersonDetailsCollectionViewController+UICollectionViewDelegate.swift in Sources */,
 				667943652273A33D00E2D0D0 /* EpisodeDetailCollectionViewController.swift in Sources */,
 				66647B542084995500CF624F /* AppDelegate.swift in Sources */,
 				662F117B24E5EEB40000375A /* StudioLogoImageView.swift in Sources */,
@@ -4184,11 +4176,11 @@
 				66CDC090234A9704009E799C /* ProductActionTableViewCell.swift in Sources */,
 				66BEC133231711DD0039D683 /* KWhatsNewViewController.swift in Sources */,
 				66AEABEB2298ABA100949FD8 /* NotificationSegueIdentifier.swift in Sources */,
-				66C898DD24DFEA2B00305C96 /* ActorAttributes+String.swift in Sources */,
+				66C898DD24DFEA2B00305C96 /* PersonAttributes+String.swift in Sources */,
 				6646A26E236A54A700DCC0A4 /* URL+Kurozora.swift in Sources */,
 				664B6D78230F45F400F9C726 /* DarkThemeOption.swift in Sources */,
 				661F186224AB5CCE00542AFB /* SosumiShowCollectionViewCell.swift in Sources */,
-				664AAF9224EEA26300FF4AA5 /* ActorLockupCollectionViewCell.swift in Sources */,
+				664AAF9224EEA26300FF4AA5 /* PersonLockupCollectionViewCell.swift in Sources */,
 				66CE811D2460CCB700DB0C49 /* ServiceType.swift in Sources */,
 				66DB2546245C667A000AA6DB /* KCopyableLabel.swift in Sources */,
 				664B52D322C03D4C00B988B3 /* DisplaySettingsCell.swift in Sources */,
@@ -4200,7 +4192,7 @@
 				663E341A235F7CCC003386D1 /* ActionBaseExploreCollectionViewCell.swift in Sources */,
 				660E3A0525E5D7BB00A46EB0 /* StudioDetailsCollectionViewController+UICollectionViewDelegate.swift in Sources */,
 				66CB8D5024F83F2D0047A2CF /* PostCell.swift in Sources */,
-				668421E425954F25000A09F8 /* ActorDetailsCollectionViewController.swift in Sources */,
+				668421E425954F25000A09F8 /* PersonDetailsCollectionViewController.swift in Sources */,
 				66FC6DF62342BA5C00A454DD /* UIStatusBarStyle+Theme.swift in Sources */,
 				66E46DFD24FDAF7B009938E1 /* FMDetailsTableViewController.swift in Sources */,
 				66EA1DC725B3695200FCD07A /* FeedTableViewController+TouchBar.swift in Sources */,
@@ -4286,7 +4278,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -4345,7 +4337,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "";
@@ -4375,23 +4367,19 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = "Kurozora/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.tracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				RUN_DOCUMENTATION_COMPILER = NO;
 				SUPPORTS_MACCATALYST = YES;
 				TARGETED_DEVICE_FAMILY = "1,2,6";
-				TVOS_DEPLOYMENT_TARGET = 13.0;
 				VERSIONING_SYSTEM = "apple-generic";
-				WATCHOS_DEPLOYMENT_TARGET = 6.0;
 			};
 			name = Debug;
 		};
@@ -4411,23 +4399,19 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = "Kurozora/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.tracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				RUN_DOCUMENTATION_COMPILER = NO;
 				SUPPORTS_MACCATALYST = YES;
 				TARGETED_DEVICE_FAMILY = "1,2,6";
-				TVOS_DEPLOYMENT_TARGET = 13.0;
 				VERSIONING_SYSTEM = "apple-generic";
-				WATCHOS_DEPLOYMENT_TARGET = 6.0;
 			};
 			name = Release;
 		};

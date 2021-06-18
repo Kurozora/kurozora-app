@@ -8,7 +8,7 @@
 
 import UIKit
 import KurozoraKit
-import MobileCoreServices
+import UniformTypeIdentifiers
 
 class ProfileTableViewController: KTableViewController {
 	// MARK: - IBOutlets
@@ -757,11 +757,6 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate {
 		if UIImagePickerController.isSourceTypeAvailable(.camera) {
 			imagePicker.sourceType = .camera
 			imagePicker.allowsEditing = true
-			if User.isPro {
-				imagePicker.mediaTypes = [(kUTTypeGIF as String), (kUTTypePNG as String), (kUTTypeJPEG as String)]
-			} else {
-				imagePicker.mediaTypes = [(kUTTypePNG as String), (kUTTypeJPEG as String)]
-			}
 			imagePicker.delegate = self
 			self.present(imagePicker, animated: true, completion: nil)
 		} else {
@@ -774,7 +769,6 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate {
 		imagePicker.sourceType = .photoLibrary
 		imagePicker.allowsEditing = true
 		imagePicker.delegate = self
-
 		self.present(imagePicker, animated: true, completion: nil)
 	}
 

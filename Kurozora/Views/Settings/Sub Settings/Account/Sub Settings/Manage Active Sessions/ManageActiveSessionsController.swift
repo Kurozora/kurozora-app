@@ -32,7 +32,7 @@ class ManageActiveSessionsController: KTableViewController {
 
 	// Map & Location
 	var pointAnnotation: MKPointAnnotation!
-	var pinAnnotationView: MKPinAnnotationView!
+	var pinAnnotationView: MKMarkerAnnotationView!
 	let locationManager = CLLocationManager()
 
 	// Activity indicator
@@ -235,7 +235,7 @@ extension ManageActiveSessionsController: MKMapViewDelegate {
 		if !annotation.isKind(of: ImageAnnotation.self) {
 			var pinAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "DefaultPinView")
 			if pinAnnotationView == nil {
-				pinAnnotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "DefaultPinView")
+				pinAnnotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "DefaultPinView")
 			}
 			return pinAnnotationView
 		}

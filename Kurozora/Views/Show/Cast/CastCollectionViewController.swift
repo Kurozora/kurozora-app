@@ -113,10 +113,10 @@ class CastCollectionViewController: KCollectionViewController {
 					characterDetailsCollectionViewController.characterID = character.id
 				}
 			}
-		} else if segue.identifier == R.segue.castCollectionViewController.actorDetailsSegue.identifier {
-			if let actorDetailsCollectionViewController = segue.destination as? ActorDetailsCollectionViewController {
-				if let castCollectionViewCell = sender as? CastCollectionViewCell, let actor = castCollectionViewCell.cast.relationships.actors.data.first {
-					actorDetailsCollectionViewController.actorID = actor.id
+		} else if segue.identifier == R.segue.castCollectionViewController.personDetailsSegue.identifier {
+			if let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController {
+				if let castCollectionViewCell = sender as? CastCollectionViewCell, let person = castCollectionViewCell.cast.relationships.people.data.first {
+					personDetailsCollectionViewController.personID = person.id
 				}
 			}
 		}
@@ -125,8 +125,8 @@ class CastCollectionViewController: KCollectionViewController {
 
 // MARK: - CastCollectionViewCellDelegate
 extension CastCollectionViewController: CastCollectionViewCellDelegate {
-	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressActorButton button: UIButton) {
-		self.performSegue(withIdentifier: R.segue.castCollectionViewController.actorDetailsSegue.identifier, sender: cell)
+	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressPersonButton button: UIButton) {
+		self.performSegue(withIdentifier: R.segue.castCollectionViewController.personDetailsSegue.identifier, sender: cell)
 	}
 
 	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressCharacterButton button: UIButton) {

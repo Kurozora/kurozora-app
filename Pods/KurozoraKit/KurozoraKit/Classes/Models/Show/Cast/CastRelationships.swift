@@ -7,12 +7,12 @@
 
 extension Cast {
 	/**
-		A root object that stores information about cast relationships, such as the actors, and characters that belong to it.
+		A root object that stores information about cast relationships, such as the people, and characters that belong to it.
 	*/
 	public struct Relationships: Codable {
 		// MARK: - Properties
-		/// The actors belonging to the cast.
-		public let actors: ActorResponse
+		/// The people belonging to the cast.
+		public let people: PersonResponse
 
 		/// The characters belonging to the cast.
 		public let characters: CharacterResponse

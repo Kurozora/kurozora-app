@@ -21,12 +21,13 @@ class KNavigationController: UINavigationController {
 	// MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
-		NotificationCenter.default.addObserver(self, selector: #selector(updateNormalStyle), name: .ThemeUpdateNotification, object: nil)
-		toggleStyle(.normal)
-		setupToolbarStyle()
+
+		NotificationCenter.default.addObserver(self, selector: #selector(updateTheme(_:)), name: .ThemeUpdateNotification, object: nil)
+
+		self.sharedInit()
 		#if !targetEnvironment(macCatalyst)
-		setupBackwardPanGesture()
-		setupForwardPanGesture()
+//		setupBackwardPanGesture()
+//		setupForwardPanGesture()
 		#endif
 		self.nextViewController = viewControllers
     }
@@ -107,11 +108,11 @@ class KNavigationController: UINavigationController {
 
 	/// Connectes the custom backward pan gesture with the default interactive pop gesture recognizer.
 	private func setupBackwardPanGesture() {
-		guard let interactivePopGestureRecognizer = interactivePopGestureRecognizer, let targets = interactivePopGestureRecognizer.value(forKey: "targets") else { return }
-
-		backwardGestureRecognizer.setValue(targets, forKey: "targets")
-		backwardGestureRecognizer.delegate = self
-		view.addGestureRecognizer(backwardGestureRecognizer)
+//		guard let interactivePopGestureRecognizer = interactivePopGestureRecognizer, let targets = interactivePopGestureRecognizer.value(forKey: "targets") else { return }
+//
+//		backwardGestureRecognizer.setValue(targets, forKey: "targets")
+//		backwardGestureRecognizer.delegate = self
+//		view.addGestureRecognizer(backwardGestureRecognizer)
 	}
 
 	/// Sets up the custom forward pan gesture to forward segue if possible.
@@ -151,11 +152,11 @@ class KNavigationController: UINavigationController {
 
 // MARK: - UINavigationControllerDelegate
 extension KNavigationController: UINavigationControllerDelegate {
-	func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-		if !nextViewController.contains(viewController) {
-			nextViewController.prepend(viewController)
-		}
-	}
+//	func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+//		if !nextViewController.contains(viewController) {
+//			nextViewController.prepend(viewController)
+//		}
+//	}
 }
 
 // MARK: - UIGestureRecognizerDelegate

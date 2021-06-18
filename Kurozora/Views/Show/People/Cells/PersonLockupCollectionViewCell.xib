@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19115.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19107.4"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PersonLockupCollectionViewCell" id="RuL-qC-mds" customClass="PersonLockupCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="128" height="176.5"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="5AR-HQ-YxU">
+                <rect key="frame" x="0.0" y="0.0" width="128" height="176.5"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OxI-dX-Wyq" customClass="PersonImageView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="OxI-dX-Wyq" secondAttribute="height" multiplier="1:1" id="cTu-HU-lcA"/>
+                            <constraint firstAttribute="width" constant="128" id="w4a-pS-UEH"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9es-S6-YO9" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="136" width="128" height="20.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="cbv-To-IAn"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="OxI-dX-Wyq" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="5AR-HQ-YxU" secondAttribute="leading" id="DPU-HT-SLD"/>
+                    <constraint firstItem="OxI-dX-Wyq" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="5AR-HQ-YxU" secondAttribute="trailing" id="JRB-2P-eSR"/>
+                    <constraint firstItem="9es-S6-YO9" firstAttribute="top" secondItem="OxI-dX-Wyq" secondAttribute="bottom" constant="8" symbolic="YES" id="Rje-eF-Jx0"/>
+                    <constraint firstItem="9es-S6-YO9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="5AR-HQ-YxU" secondAttribute="leading" id="Uy3-PF-8gv"/>
+                    <constraint firstItem="9es-S6-YO9" firstAttribute="centerX" secondItem="OxI-dX-Wyq" secondAttribute="centerX" id="VmA-NS-V6w"/>
+                    <constraint firstItem="OxI-dX-Wyq" firstAttribute="width" secondItem="OxI-dX-Wyq" secondAttribute="height" multiplier="1:1" id="cO5-OA-WDj"/>
+                    <constraint firstItem="OxI-dX-Wyq" firstAttribute="top" secondItem="5AR-HQ-YxU" secondAttribute="top" id="e4D-go-fbn"/>
+                    <constraint firstItem="OxI-dX-Wyq" firstAttribute="centerX" secondItem="5AR-HQ-YxU" secondAttribute="centerX" id="lLn-AG-QYt"/>
+                    <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="9es-S6-YO9" secondAttribute="trailing" id="nry-vs-oyd"/>
+                    <constraint firstAttribute="bottom" secondItem="9es-S6-YO9" secondAttribute="bottom" constant="20" symbolic="YES" id="zLn-EG-abd"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <connections>
+                <outlet property="nameLabel" destination="9es-S6-YO9" id="Hff-ek-2My"/>
+                <outlet property="personImageView" destination="OxI-dX-Wyq" id="p4T-zQ-tzU"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="152.34375"/>
+        </collectionViewCell>
+    </objects>
+</document>

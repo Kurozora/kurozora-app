@@ -34,14 +34,14 @@ class LibraryStatisticsCollectionViewCell: UICollectionViewCell {
 	/// Gets number of occurances of the given string in the shows array.
 	func getOccurancesOf(strings: [String]) -> Int {
 		return shows.filter({ show -> Bool in
-			strings.contains(show.attributes.type)
+			strings.contains(show.attributes.type.name)
 		}).count
 	}
 
 	/// Gets number of occurances that doesn't match of the given string in the shows array.
 	func getOccurancesOfNot(strings: [String]) -> Int {
 		return shows.filter({ show -> Bool in
-			!strings.contains(show.attributes.type)
+			!strings.contains(show.attributes.type.name)
 		}).count
 	}
 }

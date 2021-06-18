@@ -120,7 +120,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return false
     }
 
-	@available(iOS 14.0, macCatalyst 14.0, *)
+	@available(iOS 14.0, macOS 11.0, *)
 	private func createTwoColumnSplitViewController() -> UISplitViewController {
 		let sidebarViewController = UINavigationController(rootViewController: SidebarViewController())
 		let tabBarController = KTabBarController()

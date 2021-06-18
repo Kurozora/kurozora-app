@@ -123,7 +123,7 @@ class ShowDetail {
 			case .rating:
 				return R.reuseIdentifier.ratingCollectionViewCell.identifier
 			case .information:
-				return ShowDetail.Information(rawValue: row)?.identifierString ?? ShowDetail.Information.studio.identifierString
+				return ShowDetail.Information(rawValue: row)?.identifierString ?? ShowDetail.Information.type.identifierString
 			case .seasons:
 				return R.reuseIdentifier.lockupCollectionViewCell.identifier
 			case .cast:
@@ -190,9 +190,9 @@ class ShowDetail {
 		List of available show information types.
 	*/
 	enum Information: Int, CaseIterable {
-		case studio = 0
-		case network
-		case type
+//		case studio = 0
+//		case network
+		case type = 0
 		case aireDates
 		case broadcast
 		case genres
@@ -206,10 +206,10 @@ class ShowDetail {
 		/// The string value of an information type.
 		var stringValue: String {
 			switch self {
-			case .studio:
-				return "Studio"
-			case .network:
-				return "Network"
+//			case .studio:
+//				return "Studio"
+//			case .network:
+//				return "Network"
 			case .type:
 				return "Type"
 			case .aireDates:
@@ -234,10 +234,10 @@ class ShowDetail {
 		/// The cell identifier string of a character information section.
 		var identifierString: String {
 			switch self {
-			case .studio:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .network:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
+//			case .studio:
+//				return R.reuseIdentifier.informationCollectionViewCell.identifier
+//			case .network:
+//				return R.reuseIdentifier.informationCollectionViewCell.identifier
 			case .type:
 				return R.reuseIdentifier.informationCollectionViewCell.identifier
 			case .aireDates:
@@ -267,25 +267,25 @@ class ShowDetail {
 		*/
 		func information(from show: Show) -> String {
 			switch self {
-			case .studio:
-				if let studios = show.relationships?.studios?.data, studios.count != 0 {
-					var studioNames = ""
-					for (index, studio) in studios.enumerated() {
-						let studioName = studio.attributes.name
-						if index == studios.count - 1 {
-							studioNames += "\(studioName)"
-							continue
-						}
-						studioNames += "\(studioName), "
-					}
-					return studioNames
-				}
-			case .network:
-				if let network = show.attributes.network {
-					return network
-				}
+//			case .studio:
+//				if let studios = show.relationships?.studios?.data, studios.count != 0 {
+//					var studioNames = ""
+//					for (index, studio) in studios.enumerated() {
+//						let studioName = studio.attributes.name
+//						if index == studios.count - 1 {
+//							studioNames += "\(studioName)"
+//							continue
+//						}
+//						studioNames += "\(studioName), "
+//					}
+//					return studioNames
+//				}
+//			case .network:
+//				if let network = show.attributes.network {
+//					return network
+//				}
 			case .type:
-				return show.attributes.type
+				return show.attributes.type.name
 			case .aireDates:
 				var dateInfo: String = "-"
 
@@ -303,40 +303,16 @@ class ShowDetail {
 				}
 				return broadcastInfo
 			case .genres:
-				if let genres = show.relationships?.genres?.data, genres.count != 0 {
-					var genreNames = ""
-					for (index, genre) in genres.enumerated() {
-						let genreName = genre.attributes.name
-						if index == genres.count - 1 {
-							genreNames += "\(genreName)"
-							continue
-						}
-						genreNames += "\(genreName), "
-					}
-					return genreNames
-				}
+				return show.attributes.genres?.joined(separator: ",") ?? "-"
 			case .rating:
-				let watchRating = show.attributes.watchRating
-				if !watchRating.isEmpty {
-					return watchRating
-				}
+				return show.attributes.tvRating.name
 			case .seasonCount:
-				let seasonCount = show.attributes.seasonCount
-				if seasonCount > 0 {
-					return "\(seasonCount)"
-				}
+				return "\(show.attributes.seasonCount)"
 			case .episodeCount:
-				let episodeCount = show.attributes.episodeCount
-				if episodeCount > 0 {
-					return "\(episodeCount)"
-				}
+				return "\(show.attributes.episodeCount)"
 			case .duration:
-				let duration = show.attributes.runtime
-				if duration > 0 {
-					return "\(duration) min"
-				}
+				return show.attributes.runtime
 			}
-			return "-"
 		}
 	}
 
@@ -344,69 +320,39 @@ class ShowDetail {
 		List of available extenral sites.
 	*/
 	enum ExternalSite: Int, CaseIterable {
-		case aniDB = 0
-		case aniList
-		case imdb
-		case kitsu
-		case mal
-		case tvdb
+		case anidbID = 0
+		case anilistID
+		case imdbID
+		case kitsuID
+		case malID
+		case notifyID
+		case syoboiID
+		case traktID
+		case tvdbID
 
 		// MARK: - Properties
 		/// The string value of an external site.
 		var stringValue: String {
 			switch self {
-			case .aniDB:
+			case .anidbID:
 				return "AniDB"
-			case .aniList:
+			case .anilistID:
 				return "AniList"
-			case .imdb:
+			case .imdbID:
 				return "IMDB"
-			case .kitsu:
+			case .kitsuID:
 				return "Kitsu"
-			case .mal:
+			case .malID:
 				return "MyAnimeList"
-			case .tvdb:
+			case .notifyID:
+				return "Notify Moe"
+			case .syoboiID:
+				return "Syoboi"
+			case .traktID:
+				return "Trakt TV"
+			case .tvdbID:
 				return "TheTVDB"
 			}
 		}
 	}
-	//	enum AiringStatus: Int {
-	//		/// No airing date has been announced.
-	//		case toBeAnnounced = 0
-	//
-	//		/// The show is currently airing its episodes.
-	//		case currentlyAiring = 1
-	//
-	//		/// The show finished airing all of its episodes.
-	//		case finishedAiring = 2
-	//
-	//		/// An array containing all airing status.
-	//		static let all: [AiringStatus] = [.toBeAnnounced, .finishedAiring, .currentlyAiring]
-	//
-	//		/// The string value of an airing status.
-	//		var stringValue: String {
-	//			switch self {
-	//			case .toBeAnnounced:
-	//				return "To Be Announced"
-	//			case .currentlyAiring:
-	//				return "Currently Airing"
-	//			case .finishedAiring:
-	//				return "Finished Airing"
-	//			default:
-	//				return "To Be Announced"
-	//			}
-	//		}
-	//
-	//		/// The color value of an airing status.
-	//		var colorValue: UIColor {
-	//			switch self {
-	//			case .toBeAnnounced:
-	//				return .toBeAnnounced
-	//			case .currentlyAiring:
-	//				return .currentlyAiring
-	//			case .finishedAiring:
-	//				return .finishedAiring
-	//			}
-	//		}
-	//	}
 }

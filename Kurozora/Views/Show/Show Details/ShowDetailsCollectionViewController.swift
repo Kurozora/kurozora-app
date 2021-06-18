@@ -261,10 +261,10 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 					characterDetailsCollectionViewController.characterID = character.id
 				}
 			}
-		} else if segue.identifier == R.segue.showDetailsCollectionViewController.actorDetailsSegue.identifier {
-			if let actorDetailsCollectionViewController = segue.destination as? ActorDetailsCollectionViewController {
-				if let castCollectionViewCell = sender as? CastCollectionViewCell, let actor = castCollectionViewCell.cast.relationships.actors.data.first {
-					actorDetailsCollectionViewController.actorID = actor.id
+		} else if segue.identifier == R.segue.showDetailsCollectionViewController.personDetailsSegue.identifier {
+			if let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController {
+				if let castCollectionViewCell = sender as? CastCollectionViewCell, let person = castCollectionViewCell.cast.relationships.people.data.first {
+					personDetailsCollectionViewController.personID = person.id
 				}
 			}
 		}
@@ -284,7 +284,8 @@ extension ShowDetailsCollectionViewController {
 		if self.show != nil {
 			switch showDetailSection {
 			case .synopsis:
-				if let synopsis = self.show.attributes.synopsis, synopsis.isEmpty {
+				let synopsis = self.show.attributes.synopsis ?? ""
+				if synopsis.isEmpty {
 					itemsPerSection = 0
 				}
 			case .seasons:
@@ -298,7 +299,8 @@ extension ShowDetailsCollectionViewController {
 			case .relatedShows:
 				itemsPerSection = self.relatedShows.count
 			case .sosumi:
-				if let copyright = self.show.attributes.copyright, copyright.isEmpty {
+				let copyright = self.show.attributes.copyright ?? ""
+				if copyright.isEmpty {
 					itemsPerSection = 0
 				}
 			default: break
@@ -331,7 +333,7 @@ extension ShowDetailsCollectionViewController {
 			ratingCollectionViewCell?.show = self.show
 		case .information:
 			let informationCollectionViewCell = showDetailCollectionViewCell as? InformationCollectionViewCell
-			informationCollectionViewCell?.showDetailInformation = ShowDetail.Information(rawValue: indexPath.item) ?? .studio
+			informationCollectionViewCell?.showDetailInformation = ShowDetail.Information(rawValue: indexPath.item) ?? .type
 			informationCollectionViewCell?.show = self.show
 		case .seasons:
 			let lockupCollectionViewCell = showDetailCollectionViewCell as? LockupCollectionViewCell
@@ -367,8 +369,8 @@ extension ShowDetailsCollectionViewController {
 
 // MARK: - CastCollectionViewCellDelegate
 extension ShowDetailsCollectionViewController: CastCollectionViewCellDelegate {
-	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressActorButton button: UIButton) {
-		self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.actorDetailsSegue.identifier, sender: cell)
+	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressPersonButton button: UIButton) {
+		self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.personDetailsSegue.identifier, sender: cell)
 	}
 
 	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressCharacterButton button: UIButton) {

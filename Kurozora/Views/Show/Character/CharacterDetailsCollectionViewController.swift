@@ -17,7 +17,7 @@ class CharacterDetailsCollectionViewController: KCollectionViewController {
 			self.title = character.attributes.name
 		}
 	}
-	var actors: [Actor] = []
+	var people: [Person] = []
 	var shows: [Show] = [] {
 		didSet {
 			self._prefersActivityIndicatorHidden = true
@@ -128,13 +128,13 @@ class CharacterDetailsCollectionViewController: KCollectionViewController {
 	}
 
 	func fetchCharacterDetails() {
-		KService.getDetails(forCharacterID: characterID, including: ["shows", "actors"]) { [weak self] result in
+		KService.getDetails(forCharacterID: characterID, including: ["shows", "people"]) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
 			case .success(let characters):
 				DispatchQueue.main.async {
 					self.character = characters.first
-					self.actors = characters.first?.relationships?.actors?.data ?? []
+					self.people = characters.first?.relationships?.people?.data ?? []
 					self.shows = characters.first?.relationships?.shows?.data ?? []
 				}
 			case .failure: break
@@ -154,14 +154,14 @@ class CharacterDetailsCollectionViewController: KCollectionViewController {
 					showDetailCollectionViewController.showID = show.id
 				}
 			}
-		} else if segue.identifier == R.segue.characterDetailsCollectionViewController.actorsListSegue.identifier {
-			if let actorsListCollectionViewController = segue.destination as? ActorsListCollectionViewController {
-				actorsListCollectionViewController.characterID = self.character.id
+		} else if segue.identifier == R.segue.characterDetailsCollectionViewController.peopleListSegue.identifier {
+			if let peopleListCollectionViewController = segue.destination as? PeopleListCollectionViewController {
+				peopleListCollectionViewController.characterID = self.character.id
 			}
-		} else if segue.identifier == R.segue.characterDetailsCollectionViewController.actorDetailsSegue.identifier {
-			if let actorDetailsCollectionViewController = segue.destination as? ActorDetailsCollectionViewController {
-				if let actor = (sender as? ActorLockupCollectionViewCell)?.actor {
-					actorDetailsCollectionViewController.actorID = actor.id
+		} else if segue.identifier == R.segue.characterDetailsCollectionViewController.personDetailsSegue.identifier {
+			if let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController {
+				if let person = (sender as? PersonLockupCollectionViewCell)?.person {
+					personDetailsCollectionViewController.personID = person.id
 				}
 			}
 		}
@@ -185,8 +185,8 @@ extension CharacterDetailsCollectionViewController {
 			}
 		case .shows:
 			itemsPerSection = self.shows.count
-		case .actors:
-			itemsPerSection = self.actors.count
+		case .people:
+			itemsPerSection = self.people.count
 		default: break
 		}
 
@@ -215,9 +215,9 @@ extension CharacterDetailsCollectionViewController {
 			if self.shows.count != 0 {
 				(characterCollectionViewCell as? SmallLockupCollectionViewCell)?.show = self.shows[indexPath.item]
 			}
-		case .actors:
-			if self.actors.count != 0 {
-				(characterCollectionViewCell as? ActorLockupCollectionViewCell)?.actor = self.actors[indexPath.item]
+		case .people:
+			if self.people.count != 0 {
+				(characterCollectionViewCell as? PersonLockupCollectionViewCell)?.person = self.people[indexPath.item]
 			}
 		}
 

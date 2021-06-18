@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18121" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19115.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18091"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19107.4"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -32,7 +31,7 @@
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <label contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yūsuke Kobayashias" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ph7-Qa-3RF" customClass="KCopyableTintedLabel" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="108" y="0.0" width="131" height="17"/>
+                        <rect key="frame" x="108" y="0.0" width="154.5" height="20.5"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
@@ -40,20 +39,20 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label contentMode="left" text="Voice actor" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q5o-Ip-gRt" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="108" y="17" width="68.5" height="16"/>
+                        <rect key="frame" x="108" y="20.5" width="82" height="19.5"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                         <color key="textColor" systemColor="secondaryLabelColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" text="as Subaru Natsuki" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="crw-ue-ykT" customClass="KCopyableLabel" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="149" y="41" width="117" height="17"/>
+                        <rect key="frame" x="128" y="48" width="138" height="20.5"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label contentMode="left" text="Protagonist" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4JN-MW-Mtv" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="200.5" y="58" width="65.5" height="14.5"/>
+                        <rect key="frame" x="196" y="68.5" width="70" height="16"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                         <color key="textColor" systemColor="secondaryLabelColor"/>
@@ -75,7 +74,7 @@
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ROT-4r-4vA">
                         <rect key="frame" x="0.0" y="0.0" width="100" height="150"/>
                         <connections>
-                            <action selector="actorButtonPressed:" destination="HMo-jL-ZfK" eventType="touchUpInside" id="cUI-uq-XY0"/>
+                            <action selector="personButtonPressed:" destination="HMo-jL-ZfK" eventType="touchUpInside" id="SZN-m2-sLY"/>
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jIB-bQ-1iP">
@@ -118,13 +117,13 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <connections>
-                <outlet property="actorButton" destination="ROT-4r-4vA" id="xgT-6O-m00"/>
-                <outlet property="actorImageView" destination="irr-5j-Rg1" id="VZK-S2-sda"/>
-                <outlet property="actorNameLabel" destination="Ph7-Qa-3RF" id="xzm-U3-Xz9"/>
                 <outlet property="characterButton" destination="jIB-bQ-1iP" id="uxa-YK-CqU"/>
                 <outlet property="characterImageView" destination="qyy-78-Swb" id="PZR-JO-MLI"/>
                 <outlet property="characterNameLabel" destination="crw-ue-ykT" id="bye-zp-e6X"/>
                 <outlet property="characterRoleLabel" destination="4JN-MW-Mtv" id="qaI-ly-7cw"/>
+                <outlet property="personButton" destination="ROT-4r-4vA" id="xgT-6O-m00"/>
+                <outlet property="personImageView" destination="irr-5j-Rg1" id="VZK-S2-sda"/>
+                <outlet property="personNameLabel" destination="Ph7-Qa-3RF" id="xzm-U3-Xz9"/>
             </connections>
             <point key="canvasLocation" x="136.95652173913044" y="20.758928571428569"/>
         </collectionViewCell>

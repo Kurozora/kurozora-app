@@ -27,7 +27,7 @@ class OtherSessionsCell: KTableViewCell {
 
 	// MARK: - Functions
 	override func configureCell() {
-		self.ipAddressValueLabel.text = session.attributes.ip
+		self.ipAddressValueLabel.text = session.attributes.ipAddress
 		self.deviceTypeValueLabel.text = session.relationships.platform.data.first?.attributes.deviceModel
 		self.dateValueLabel?.text = session.attributes.lastValidatedAt
 	}

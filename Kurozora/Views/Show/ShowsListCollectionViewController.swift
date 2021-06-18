@@ -11,9 +11,9 @@ import KurozoraKit
 
 class ShowsListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var actorID: Int! {
+	var personID: Int! {
 		didSet {
-			KService.getShows(forActorID: actorID) { [weak self] result in
+			KService.getShows(forPersonID: personID) { [weak self] result in
 				guard let self = self else { return }
 				switch result {
 				case .success(let shows):
@@ -119,8 +119,8 @@ class ShowsListCollectionViewController: KCollectionViewController {
 			self.showID = showID
 			return
 		}
-		if let actorID = self.actorID {
-			self.actorID = actorID
+		if let personID = self.personID {
+			self.personID = personID
 			return
 		}
 		if let characterID = self.characterID {

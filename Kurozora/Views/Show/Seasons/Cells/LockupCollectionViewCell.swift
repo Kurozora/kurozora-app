@@ -64,7 +64,7 @@ class LockupCollectionViewCell: UICollectionViewCell {
 		self.posterImageView.image = self.relatedShow.show.attributes.posterImage
 
 		// Configure relation type
-		self.countLabel.text = self.relatedShow.attributes.type
+		self.countLabel.text = self.relatedShow.attributes.relation.name
 
 		// Configure title
 		self.titleLabel.text = self.relatedShow.show.attributes.title
@@ -77,6 +77,6 @@ class LockupCollectionViewCell: UICollectionViewCell {
 		self.episodeCountLabel.text = "\(self.relatedShow.show.attributes.episodeCount)"
 
 		// Configure rating
-		self.ratingLabel.text = "\(self.relatedShow.show.attributes.averageRating)"
+		self.ratingLabel.text = "\(self.relatedShow.show.attributes.userRating.averageRating)"
 	}
 }

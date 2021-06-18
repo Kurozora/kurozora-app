@@ -18,7 +18,7 @@ extension FeedMessage {
 		public var metrics: FeedMessage.Attributes.Metrics
 
 		/// Whether the feed message is hearted by the authenticated user.
-		public var isHearted: Bool
+		public var isHearted: Bool?
 
 		/// Whether the feed message is a reply.
 		public let isReply: Bool

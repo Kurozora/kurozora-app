@@ -43,7 +43,7 @@ import Pageboy
 
 	This implementation of `TabmanViewController` implements the following behavior:
 	- [KTabbedViewControllerDataSource](x-source-tag://KTabbedViewControllerDataSource) for managing the tab bar and its data.
-	- [KBar](x-source-tag://KBar), the bar reminiscent of the iOS 13 Photos app bottom tab bar.
+	- [KBar](x-source-tag://KBar), the bar reminiscent of the Photos app bottom tab bar.
 
 	Create a csutom subclass of `KTabbedViewController` for each tabbed view that you manage. You may only initialize a tabbed view controller through a storyboad. You must also override [initializeViewControllers(with:)](x-source-tag://KTabbedViewControllerDataSource-initializeViewControllersWithCount) method.
 

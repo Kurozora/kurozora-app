@@ -18,7 +18,7 @@ extension CharacterDetailsCollectionViewController {
 		case .shows:
 			let columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
 			return columnCount > 0 ? columnCount : 1
-		case .actors:
+		case .people:
 			let columnCount = (width / 200).rounded().int
 			return columnCount > 0 ? columnCount : 1
 		default:
@@ -79,10 +79,10 @@ extension CharacterDetailsCollectionViewController {
 					sectionLayout = showsSectionLayout
 					hasSectionHeader = true
 				}
-			case .actors:
-				if self.actors.count != 0 {
-					let actorsSectionLayout = self.actorsSectionLayout(section, layoutEnvironment: layoutEnvironment)
-					sectionLayout = actorsSectionLayout
+			case .people:
+				if self.people.count != 0 {
+					let peopleSectionLayout = self.peopleSectionLayout(section, layoutEnvironment: layoutEnvironment)
+					sectionLayout = peopleSectionLayout
 					hasSectionHeader = true
 				}
 			}
@@ -114,7 +114,7 @@ extension CharacterDetailsCollectionViewController {
 		return layoutSection
 	}
 
-	func actorsSectionLayout(_ section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+	func peopleSectionLayout(_ section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
 		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.50), heightDimension: .estimated(50.0))
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)

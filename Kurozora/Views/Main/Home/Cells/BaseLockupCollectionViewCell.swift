@@ -40,21 +40,7 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 		self.primaryLabel?.text = show.attributes.title
 
 		// Configure genres
-		if let genres = show.relationships?.genres?.data, genres.count != 0 {
-			var genreNames = ""
-			for (index, genre) in genres.enumerated() {
-				let genreName = genre.attributes.name
-				if index == genres.count - 1 {
-					genreNames += "\(genreName)"
-					continue
-				}
-				genreNames += "\(genreName), "
-			}
-
-			self.secondaryLabel?.text = genreNames
-		} else {
-			self.secondaryLabel?.text = ""
-		}
+		self.secondaryLabel?.text = show.attributes.genres?.joined(separator: ",") ?? "-"
 
 		// Configure banner
 		self.bannerImageView?.image = self.show.attributes.bannerImage

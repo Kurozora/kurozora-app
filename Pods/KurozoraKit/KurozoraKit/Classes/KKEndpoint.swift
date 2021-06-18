@@ -34,14 +34,14 @@ internal struct KKEndpoint {
 		/// The endpoint to the details of a show.
 		case details(_ showID: Int)
 
-		/// The endpoint to the actors belonging to a show.
-		case actors(_ showID: Int)
-
 		/// The endpoint to the cast belonging to a show.
 		case cast(_ showID: Int)
 
 		/// The endpoint to the characters belonging to a show.
 		case characters(_ showID: Int)
+
+		/// The endpoint to the people belonging to a show.
+		case people(_ showID: Int)
 
 		/// The endpoint to leave a rating on a show.
 		case rate(_ showID: Int)
@@ -61,12 +61,12 @@ internal struct KKEndpoint {
 			switch self {
 			case .details(let showID):
 				return "anime/\(showID)"
-			case .actors(let showID):
-				return "anime/\(showID)/actors"
 			case .cast(let showID):
 				return "anime/\(showID)/cast"
 			case .characters(let showID):
 				return "anime/\(showID)/characters"
+			case .people(let showID):
+				return "anime/\(showID)/people"
 			case .rate(let showID):
 				return "anime/\(showID)/rate"
 			case .relatedShows(let showID):

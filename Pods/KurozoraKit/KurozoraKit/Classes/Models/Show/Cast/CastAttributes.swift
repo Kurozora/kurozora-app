@@ -12,7 +12,10 @@ extension Cast {
 	*/
 	public class Attributes: Codable {
 		// MARK: - Properties
-		/// The role of the cast.
-		public let role: String
+		/// The object containing the cast role information.
+		public let role: CastRole
+
+		/// The language in which the cast played.
+		public let language: String?
 	}
 }

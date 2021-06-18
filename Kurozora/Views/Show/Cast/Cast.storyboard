@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Gl9-hb-xRY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19115.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Gl9-hb-xRY">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19107.4"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -30,17 +29,17 @@
                     <navigationItem key="navigationItem" title="Cast" leftItemsSupplementBackButton="YES" id="nT6-bc-Roz"/>
                     <connections>
                         <segue destination="Kw9-GS-BBA" kind="show" identifier="CharacterDetailsSegue" id="O67-1f-vWq"/>
-                        <segue destination="EII-z8-Zmy" kind="show" identifier="ActorDetailsSegue" id="PoR-a8-UaV"/>
+                        <segue destination="EII-z8-Zmy" kind="show" identifier="PersonDetailsSegue" id="PoR-a8-UaV"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LA0-G4-hxj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1557.9710144927537" y="-1014.5089285714286"/>
         </scene>
-        <!--ActorDetailsCollectionViewController-->
+        <!--PersonDetailsCollectionViewController-->
         <scene sceneID="P9h-b6-9Xu">
             <objects>
-                <viewControllerPlaceholder storyboardName="Actors" referencedIdentifier="ActorDetailsCollectionViewController" id="EII-z8-Zmy" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="People" referencedIdentifier="PersonDetailsCollectionViewController" id="EII-z8-Zmy" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="wuW-ee-9FK"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nsO-Do-jg0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

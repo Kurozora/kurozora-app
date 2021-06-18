@@ -12,7 +12,7 @@ extension Session {
 	public struct Attributes: Codable {
 		// MARK: - Properties
 		/// The ip address form where the session was created.
-		public let ip: String
+		public let ipAddress: String
 
 		/// The last time the session has been validated.
 		public let lastValidatedAt: String

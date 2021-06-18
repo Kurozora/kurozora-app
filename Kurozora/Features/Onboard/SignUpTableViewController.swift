@@ -8,7 +8,7 @@
 
 import UIKit
 import KurozoraKit
-import MobileCoreServices
+import UniformTypeIdentifiers
 
 class SignUpTableViewController: AccountOnboardingTableViewController {
 	// MARK: - IBOutlets
@@ -34,11 +34,6 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 		if UIImagePickerController.isSourceTypeAvailable(.camera) {
 			imagePicker.sourceType = .camera
 			imagePicker.allowsEditing = true
-			if User.isPro {
-				imagePicker.mediaTypes = [(kUTTypeGIF as String), (kUTTypePNG as String), (kUTTypeJPEG as String)]
-			} else {
-				imagePicker.mediaTypes = [(kUTTypePNG as String), (kUTTypeJPEG as String)]
-			}
 			imagePicker.delegate = self
 			self.present(imagePicker, animated: true, completion: nil)
 		} else {

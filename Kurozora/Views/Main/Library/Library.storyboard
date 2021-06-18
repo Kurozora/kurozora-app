@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="38B-e3-pz3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19115.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="38B-e3-pz3">
     <device id="retina6_5" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19107.4"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -73,7 +73,8 @@
                                     <action selector="changeLayoutBarButtonItemPressed:" destination="B4w-wJ-4Cf" id="QVS-dG-vWc"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="Filter" image="line.horizontal.3.decrease.circle.fill" catalog="system" id="0uS-C2-wld">
+                            <barButtonItem title="Filter" id="0uS-C2-wld">
+                                <imageReference key="image" image="line.3.horizontal.decrease.circle.fill" catalog="system"/>
                                 <connections>
                                     <action selector="sortTypeBarButtonItemPressed:" destination="B4w-wJ-4Cf" id="iLY-kv-BBQ"/>
                                 </connections>
@@ -99,7 +100,7 @@
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
         <image name="heart.circle" catalog="system" width="128" height="121"/>
-        <image name="line.horizontal.3.decrease.circle.fill" catalog="system" width="128" height="121"/>
-        <image name="rectangle.fill.on.rectangle.fill" catalog="system" width="128" height="96"/>
+        <image name="line.3.horizontal.decrease.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="rectangle.fill.on.rectangle.fill" catalog="system" width="128" height="97"/>
     </resources>
 </document>

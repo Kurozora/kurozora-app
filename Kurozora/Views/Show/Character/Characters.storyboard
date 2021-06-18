@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Wbi-gb-YhQ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19115.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Wbi-gb-YhQ">
     <device id="retina6_5" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19107.4"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -72,8 +71,8 @@
                     <connections>
                         <segue destination="cdP-i1-iOe" kind="show" identifier="ShowDetailsSegue" id="yfp-Pm-pGP"/>
                         <segue destination="KC6-Qs-BNG" kind="show" identifier="ShowsListSegue" id="TEk-dB-pBC"/>
-                        <segue destination="8It-Wp-9UB" kind="show" identifier="ActorsListSegue" id="dF8-nT-d2W"/>
-                        <segue destination="0Jq-Bj-HEL" kind="show" identifier="ActorDetailsSegue" id="xuT-bX-nvW"/>
+                        <segue destination="8It-Wp-9UB" kind="show" identifier="PeopleListSegue" id="dF8-nT-d2W"/>
+                        <segue destination="0Jq-Bj-HEL" kind="show" identifier="PersonDetailsSegue" id="xuT-bX-nvW"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MZB-Hc-Zu0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -100,20 +99,20 @@
             </objects>
             <point key="canvasLocation" x="3699" y="-816"/>
         </scene>
-        <!--ActorDetailsCollectionViewController-->
+        <!--PersonDetailsCollectionViewController-->
         <scene sceneID="wDz-Ao-krm">
             <objects>
-                <viewControllerPlaceholder storyboardName="Actors" referencedIdentifier="ActorDetailsCollectionViewController" id="0Jq-Bj-HEL" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="People" referencedIdentifier="PersonDetailsCollectionViewController" id="0Jq-Bj-HEL" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="PMc-lu-e0Y"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pf0-so-jgl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3709" y="-885"/>
         </scene>
-        <!--ActorsListCollectionViewController-->
+        <!--PeopleListCollectionViewController-->
         <scene sceneID="AB1-jH-UBz">
             <objects>
-                <viewControllerPlaceholder storyboardName="Actors" referencedIdentifier="ActorsListCollectionViewController" id="8It-Wp-9UB" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="People" referencedIdentifier="PeopleListCollectionViewController" id="8It-Wp-9UB" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="las-Ew-9GE"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ehf-JY-gyX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

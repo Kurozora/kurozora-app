@@ -24,12 +24,17 @@ extension MALImport {
 		/// The import will overwrite any existing shows in the library.
 		case overwrite = 0
 
+		/// The import will merge any existing shows in the library with the import.
+		case merge = 1
+
 		// MARK: - Properties
 		/// The string value of a MALImport behavior type.
 		var stringValue: String {
 			switch self {
 			case .overwrite:
 				return "overwrite"
+			case .merge:
+				return "merge"
 			}
 		}
 	}

@@ -16,7 +16,7 @@ import Foundation
 	case about = 1
 	case information = 2
 	case shows = 3
-	case actors = 4
+	case people = 4
 	```
 */
 enum CharacterSection: Int, CaseIterable {
@@ -25,7 +25,7 @@ enum CharacterSection: Int, CaseIterable {
 	case about = 1
 	case information = 2
 	case shows = 3
-	case actors = 4
+	case people = 4
 
 	// MARK: - Properties
 	/// The string value of a character section layout kind.
@@ -39,8 +39,8 @@ enum CharacterSection: Int, CaseIterable {
 			return "Information"
 		case .shows:
 			return "Shows"
-		case .actors:
-			return "Actors"
+		case .people:
+			return "People"
 		}
 	}
 
@@ -55,7 +55,7 @@ enum CharacterSection: Int, CaseIterable {
 			return CharacterInformationSection.allCases.count
 		case .shows:
 			return 0
-		case .actors:
+		case .people:
 			return 0
 		}
 	}
@@ -78,8 +78,8 @@ enum CharacterSection: Int, CaseIterable {
 			return CharacterInformationSection(rawValue: row)?.identifierString ?? CharacterInformationSection.debut.identifierString
 		case .shows:
 			return R.reuseIdentifier.smallLockupCollectionViewCell.identifier
-		case .actors:
-			return R.reuseIdentifier.actorLockupCollectionViewCell.identifier
+		case .people:
+			return R.reuseIdentifier.personLockupCollectionViewCell.identifier
 		}
 	}
 
@@ -94,8 +94,8 @@ enum CharacterSection: Int, CaseIterable {
 			return ""
 		case .shows:
 			return R.segue.characterDetailsCollectionViewController.showsListSegue.identifier
-		case .actors:
-			return R.segue.characterDetailsCollectionViewController.actorsListSegue.identifier
+		case .people:
+			return R.segue.characterDetailsCollectionViewController.peopleListSegue.identifier
 		}
 	}
 }

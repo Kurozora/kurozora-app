@@ -71,6 +71,11 @@ extension UIApplication {
 
 	/// The shared key window of the application.
 	static var sharedKeyWindow: UIWindow? {
-		return UIApplication.shared.windows.first { $0.isKeyWindow }
+		guard let scene = UIApplication.shared.connectedScenes.first,
+			  let windowSceneDelegate = scene.delegate as? UIWindowSceneDelegate,
+			  let window = windowSceneDelegate.window else {
+				  return nil
+			  }
+		return window
 	}
 }

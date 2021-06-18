@@ -11,9 +11,9 @@ import KurozoraKit
 
 class CastCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var actorImageView: UIImageView!
-	@IBOutlet weak var actorNameLabel: KCopyableTintedLabel!
-	@IBOutlet weak var actorButton: UIButton!
+	@IBOutlet weak var personImageView: UIImageView!
+	@IBOutlet weak var personNameLabel: KCopyableTintedLabel!
+	@IBOutlet weak var personButton: UIButton!
 
 	@IBOutlet weak var characterImageView: UIImageView!
 	@IBOutlet weak var characterNameLabel: KCopyableLabel!
@@ -31,21 +31,21 @@ class CastCollectionViewCell: UICollectionViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
-		// Configure actor
-		self.actorNameLabel.text = cast.relationships.actors.data.first?.attributes.fullName ?? "Unknown"
-		self.actorImageView.image = self.cast.relationships.actors.data.first?.attributes.personalImage
+		// Configure person
+		self.personNameLabel.text = cast.relationships.people.data.first?.attributes.fullName ?? "Unknown"
+		self.personImageView.image = self.cast.relationships.people.data.first?.attributes.personalImage
 
 		// Configure character
 		if let characterName = cast.relationships.characters.data.first?.attributes.name {
 			self.characterNameLabel.text = !characterName.isEmpty ? "as \(characterName)" : ""
 		}
-		self.characterRoleLabel.text = cast.attributes.role
+		self.characterRoleLabel.text = cast.attributes.role.name
 		self.characterImageView.image = self.cast.relationships.characters.data.first?.attributes.personalImage
 	}
 
 	// MARK: - IBActions
-	@IBAction func actorButtonPressed(_ sender: UIButton) {
-		self.delegate?.castCollectionViewCell(self, didPressActorButton: sender)
+	@IBAction func personButtonPressed(_ sender: UIButton) {
+		self.delegate?.castCollectionViewCell(self, didPressPersonButton: sender)
 	}
 
 	@IBAction func characterButtonPressed(_ sender: UIButton) {

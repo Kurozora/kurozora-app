@@ -46,25 +46,25 @@ extension KurozoraKit {
 	}
 
 	/**
-		Fetch the actors for the given character id.
+		Fetch the people for the given character id.
 
-		- Parameter characterID: The character id for which the actors should be fetched.
+		- Parameter characterID: The character id for which the people should be fetched.
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getActors(forCharacterID characterID: Int, completion completionHandler: @escaping (_ result: Result<[Actor], KKAPIError>) -> Void) {
-		let charactersActors = KKEndpoint.Shows.Characters.actors(characterID).endpointValue
-		let request: APIRequest<ActorResponse, KKAPIError> = tron.codable.request(charactersActors)
+	public func getPeople(forCharacterID characterID: Int, completion completionHandler: @escaping (_ result: Result<[Person], KKAPIError>) -> Void) {
+		let charactersPeople = KKEndpoint.Shows.Characters.people(characterID).endpointValue
+		let request: APIRequest<PersonResponse, KKAPIError> = tron.codable.request(charactersPeople)
 		request.headers = headers
 		request.method = .get
-		request.perform(withSuccess: { actorResponse in
-			completionHandler(.success(actorResponse.data))
+		request.perform(withSuccess: { personResponse in
+			completionHandler(.success(personResponse.data))
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
-				UIApplication.topViewController?.presentAlertController(title: "Can't Get Character's Actors 😔", message: error.message)
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Character's People 😔", message: error.message)
 			}
-			print("❌ Received get character actors error:", error.errorDescription ?? "Unknown error")
+			print("❌ Received get character people error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
 			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
 			print("└ Failure reason:", error.failureReason ?? "No reason available")

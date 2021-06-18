@@ -33,7 +33,7 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 
 		searchImageView.image = self.show.attributes.posterImage
 
-		statusLabel.text = show.attributes.airStatus
+		statusLabel.text = show.attributes.status.name
 
 		// Configure library status
 		if let libraryStatus = self.show.attributes.libraryStatus {
@@ -42,7 +42,7 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 		actionButton?.setTitle(self.libraryStatus != .none ? "\(self.libraryStatus.stringValue.capitalized) ▾" : "ADD", for: .normal)
 
 		// Cinfigure rating
-		showRatingLabel.text = show.attributes.watchRating
+		showRatingLabel.text = show.attributes.tvRating.name
 		showRatingLabel.isHidden = false
 
 		// Configure episode count
@@ -59,7 +59,7 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 		}
 
 		// Configure score
-		let score = show.attributes.averageRating
+		let score = show.attributes.userRating.averageRating
 		cosmosView.rating = score
 		scoreLabel.text = "\(score)"
 		cosmosView.isHidden = score == 0
