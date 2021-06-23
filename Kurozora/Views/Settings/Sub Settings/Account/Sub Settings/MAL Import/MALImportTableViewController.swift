@@ -36,6 +36,12 @@ class MALImportTableViewController: ServiceTableViewController {
 		rightNavigationBarButton.isEnabled = false
 	}
 
+	// MARK: - Functions
+	/// Dismiss the view. Used by the dismiss button when presented modally.
+	@objc func dismissButtonPressed() {
+		self.dismiss(animated: true, completion: nil)
+	}
+
 	// MARK: - IBActions
 	@IBAction func rightNavigationBarButtonPressed(sender: AnyObject) {
 		DispatchQueue.global(qos: .background).async {
@@ -112,6 +118,17 @@ extension MALImportTableViewController: UITextFieldDelegate {
 // MARK: - UIDocumentPickerDelegate
 extension MALImportTableViewController: UIDocumentPickerDelegate {
 	func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-		selectedFileURL = urls.first
+		guard let url = urls.first else { return }
+
+		// Start accessing a security-scoped resource.
+		guard url.startAccessingSecurityScopedResource() else {
+			// Handle the failure here.
+			return
+		}
+
+		// Make sure you release the security-scoped resource when you finish.
+		defer { url.stopAccessingSecurityScopedResource() }
+
+		self.selectedFileURL = url
 	}
 }

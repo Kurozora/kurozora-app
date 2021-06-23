@@ -104,10 +104,22 @@ class KurozoraDelegate {
 	fileprivate func routeScheme(with url: URL) {
 		if url.pathExtension == "xml" {
 			WorkflowController.shared.isSignedIn {
-				if let malImportTableViewController = R.storyboard.accountSettings.malImportTableViewController() {
+				let topViewController = UIApplication.topViewController
+				if let malImportTableViewController = topViewController as? MALImportTableViewController {
 					malImportTableViewController.selectedFileURL = url
-
-					UIApplication.topViewController?.show(malImportTableViewController, sender: nil)
+				} else if let kNavigationController = (topViewController as? SettingsSplitViewController)?.viewControllers[1] as? KNavigationController {
+					if let malImportTableViewController = kNavigationController.topViewController as? MALImportTableViewController {
+						malImportTableViewController.selectedFileURL = url
+					} else if let malImportTableViewController = R.storyboard.accountSettings.malImportTableViewController() {
+						malImportTableViewController.selectedFileURL = url
+						kNavigationController.show(malImportTableViewController, sender: nil)
+					}
+				} else if let malImportTableViewController = R.storyboard.accountSettings.malImportTableViewController() {
+					let closeBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: malImportTableViewController, action: #selector(malImportTableViewController.dismissButtonPressed))
+					malImportTableViewController.navigationItem.leftBarButtonItem = closeBarButtonItem
+					malImportTableViewController.selectedFileURL = url
+					let kNavigationController = KNavigationController(rootViewController: malImportTableViewController)
+					topViewController?.show(kNavigationController, sender: nil)
 				}
 			}
 		}
