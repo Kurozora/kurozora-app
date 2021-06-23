@@ -19,15 +19,16 @@ class LibraryListCollectionViewController: KCollectionViewController {
 
 			#if !targetEnvironment(macCatalyst)
 			self.refreshControl?.endRefreshing()
-			self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your \(self.libraryStatus.stringValue.lowercased()) list.")
 			#endif
 		}
 	}
+	var nextPageURL: String?
 	var libraryStatus: KKLibrary.Status = .planning
 	var sectionIndex: Int?
 	var librarySortType: KKLibrary.SortType = .none
 	var librarySortTypeOption: KKLibrary.SortType.Options = .none {
 		didSet {
+			self.nextPageURL = nil
 			self.delegate?.libraryListViewController(updateSortWith: librarySortType)
 		}
 	}
@@ -125,6 +126,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	}
 
 	override func handleRefreshControl() {
+		self.nextPageURL = nil
 		DispatchQueue.global(qos: .background).async {
 			self.fetchLibrary()
 		}
@@ -161,7 +163,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	}
 
 	/// Fetch the library items for the current user.
-	private func fetchLibrary() {
+	func fetchLibrary() {
 		if User.isSignedIn {
 			DispatchQueue.main.async {
 				#if !targetEnvironment(macCatalyst)
@@ -169,11 +171,22 @@ class LibraryListCollectionViewController: KCollectionViewController {
 				#endif
 			}
 
-			KService.getLibrary(withLibraryStatus: self.libraryStatus, withSortType: librarySortType, withSortOption: librarySortTypeOption) { [weak self] result in
+			KService.getLibrary(withLibraryStatus: self.libraryStatus, withSortType: librarySortType, withSortOption: librarySortTypeOption, next: self.nextPageURL) { [weak self] result in
 				guard let self = self else { return }
 				switch result {
-				case .success(let shows):
-					self.shows = shows
+				case .success(let showResponse):
+					// Reset data if necessary
+					if self.nextPageURL == nil {
+						self.shows = []
+					}
+					// Append new data and save next page url
+					self.shows.append(contentsOf: showResponse.data)
+					self.nextPageURL = showResponse.next
+
+					// Reset refresh controller title
+					#if !targetEnvironment(macCatalyst)
+					self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your \(self.libraryStatus.stringValue.lowercased()) list.")
+					#endif
 				case .failure: break
 				}
 			}
