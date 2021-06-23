@@ -139,54 +139,6 @@ class ShowDetail {
 	}
 
 	/**
-		List of airing status types.
-
-		```
-		case toBeAnnounced = "Tba"
-		case currentlyAiring = "Continuing"
-		case finishedAiring = "Ended"
-		```
-	*/
-	enum AiringStatus: String {
-		/// No airing date has been announced.
-		case toBeAnnounced = "Tba"
-
-		/// The show is currently airing its episodes.
-		case currentlyAiring = "Continuing"
-
-		/// The show finished airing all of its episodes.
-		case finishedAiring = "Ended"
-
-		// MARK: - Properties
-		/// An array containing all airing status type.
-		static let all: [AiringStatus] = [.toBeAnnounced, .finishedAiring, .currentlyAiring]
-
-		/// The string value of an airing status type.
-		var stringValue: String {
-			switch self {
-			case .toBeAnnounced:
-				return "To Be Announced"
-			case .currentlyAiring:
-				return "Currently Airing"
-			case .finishedAiring:
-				return "Finished Airing"
-			}
-		}
-
-		/// The color value of an airing status type.
-		var colorValue: UIColor {
-			switch self {
-			case .toBeAnnounced:
-				return .toBeAnnounced
-			case .currentlyAiring:
-				return .currentlyAiring
-			case .finishedAiring:
-				return .finishedAiring
-			}
-		}
-	}
-
-	/**
 		List of available show information types.
 	*/
 	enum Information: Int, CaseIterable {
@@ -303,7 +255,7 @@ class ShowDetail {
 				}
 				return broadcastInfo
 			case .genres:
-				return show.attributes.genres?.joined(separator: ",") ?? "-"
+				return show.attributes.genres?.joined(separator: ", ") ?? "-"
 			case .rating:
 				return show.attributes.tvRating.name
 			case .seasonCount:

@@ -40,7 +40,7 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 		self.primaryLabel?.text = show.attributes.title
 
 		// Configure genres
-		self.secondaryLabel?.text = show.attributes.genres?.joined(separator: ",") ?? "-"
+		self.secondaryLabel?.text = show.attributes.genres?.joined(separator: ", ") ?? "-"
 
 		// Configure banner
 		self.bannerImageView?.image = self.show.attributes.bannerImage

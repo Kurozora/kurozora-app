@@ -58,7 +58,7 @@ enum PersonDetailsInformationSection: Int, CaseIterable {
 		case .familyName:
 			return person.attributes.familyName ?? "-"
 		case .nicknames:
-			return person.attributes.nicknames?.joined(separator: ",") ?? "-"
+			return person.attributes.nicknames?.joined(separator: ", ") ?? "-"
 		}
 	}
 }
