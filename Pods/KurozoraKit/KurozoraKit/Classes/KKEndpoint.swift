@@ -275,8 +275,11 @@ internal struct KKEndpoint {
 	/// The set of available Legal API endpoint types.
 	internal enum Legal {
 		// MARK: - Cases
-		/// The endpoint to the privacy policy.
+		/// The endpoint to the Privacy Policy.
 		case privacyPolicy
+
+		/// The endpoint to the Terms of Use.
+		case termsOfUse
 
 		// MARK: - Properties
 		/// The endpoint value of the Legal API type.
@@ -284,6 +287,8 @@ internal struct KKEndpoint {
 			switch self {
 			case .privacyPolicy:
 				return "legal/privacy-policy"
+			case .termsOfUse:
+				return "legal/terms-of-use"
 			}
 		}
 	}

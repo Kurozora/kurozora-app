@@ -18,6 +18,9 @@ public struct AiringStatus: Codable, Hashable {
 	/// The description of the airing status.
 	public let description: String
 
+	/// The color of the airing status.
+	public let color: String
+
 	// MARK: - Functions
 	public static func == (lhs: AiringStatus, rhs: AiringStatus) -> Bool {
 		return lhs.name == rhs.name

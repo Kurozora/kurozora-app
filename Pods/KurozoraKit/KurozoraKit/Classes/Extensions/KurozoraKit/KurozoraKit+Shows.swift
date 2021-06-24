@@ -77,13 +77,18 @@ extension KurozoraKit {
 		Fetch the cast details for the given show id.
 
 		- Parameter showID: The show id for which the cast details should be fetched.
+		- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+		- Parameter limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getCast(forShowID showID: Int, completion completionHandler: @escaping (_ result: Result<[Cast], KKAPIError>) -> Void) {
-		let showsCast = KKEndpoint.Shows.cast(showID).endpointValue
-		let request: APIRequest<CastResponse, KKAPIError> = tron.codable.request(showsCast)
+	public func getCast(forShowID showID: Int, next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<[Cast], KKAPIError>) -> Void) {
+		let showsCast = next ?? KKEndpoint.Shows.cast(showID).endpointValue
+		let request: APIRequest<CastResponse, KKAPIError> = tron.codable.request(showsCast).buildURL(.relativeToBaseURL)
 		request.headers = headers
+
+		request.parameters["limit"] = limit
+
 		request.method = .get
 		request.perform(withSuccess: { castResponse in
 			completionHandler(.success(castResponse.data))

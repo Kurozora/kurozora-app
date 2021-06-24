@@ -32,9 +32,9 @@ extension MALImport {
 		var stringValue: String {
 			switch self {
 			case .overwrite:
-				return "overwrite"
+				return "Overwrite"
 			case .merge:
-				return "merge"
+				return "Merge"
 			}
 		}
 	}

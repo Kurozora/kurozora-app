@@ -102,6 +102,9 @@ extension Show {
 		/// The day the show has aired on.
 		public let airDay: String?
 
+		/// The season the show has aired in.
+		public let airSeason: String?
+
 		/// Whether the show is Not Safe For Work.
 		public let isNSFW: Bool
 
@@ -129,15 +132,21 @@ extension Show.Attributes {
 		Returns a string containing all the necessary information of a show. If one of the informations is missing then that particular part is ommitted.
 
 		```
-		"TV · TV-MA · 25eps · 25min · 2016"
+		"TV · TV-MA · 25 episodes · 25 minutes · Spring 2016"
 		```
 	*/
 	public var informationString: String {
 		var informationString = "\(self.type.name) · \(self.tvRating.name)"
-		informationString += " · \(self.episodeCount)ep\(self.episodeCount > 1 ? "s" : "")"
-		informationString += " · \(self.runtime)min"
+		if self.episodeCount != 0 {
+			informationString += " · \(self.episodeCount) episode\(self.episodeCount > 1 ? "s" : "")"
+		}
+		informationString += " · \(self.runtime)"
 		if let airYear = self.airYear {
-			informationString += " · \(airYear)"
+			informationString += " · "
+			if let airSeason = self.airSeason {
+				informationString += "\(airSeason) "
+			}
+			informationString += "\(airYear)"
 		}
 		return informationString
 	}
