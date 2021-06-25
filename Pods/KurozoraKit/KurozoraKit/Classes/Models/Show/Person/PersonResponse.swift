@@ -12,4 +12,7 @@ public struct PersonResponse: Codable {
 	// MARK: - Properties
 	/// The data included in the repsonse for a person object request.
 	public let data: [Person]
+
+	/// The realtive URL to the next page in the paginated response.
+	public let next: String?
 }

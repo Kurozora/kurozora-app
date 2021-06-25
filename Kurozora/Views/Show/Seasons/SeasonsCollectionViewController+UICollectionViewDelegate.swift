@@ -14,6 +14,16 @@ extension SeasonsCollectionViewController {
 		self.performSegue(withIdentifier: R.segue.seasonsCollectionViewController.episodeSegue, sender: collectionViewCell)
 	}
 
+	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+		let numberOfItems = collectionView.numberOfItems()
+
+		if indexPath.item == numberOfItems - 5 {
+			if self.nextPageURL != nil {
+				self.fetchSeasons()
+			}
+		}
+	}
+
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
 		if let lockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? LockupCollectionViewCell {

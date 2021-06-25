@@ -208,7 +208,7 @@ class ProfileTableViewController: KTableViewController {
 
 	/// Fetches posts for the user whose page is being viewed.
 	func fetchFeedMessages() {
-		KService.getFeedMessages(forUserID: self.userID, next: nextPageURL) { [weak self] result in
+		KService.getFeedMessages(forUserID: self.userID, next: self.nextPageURL) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
 			case .success(let feedMessageResponse):

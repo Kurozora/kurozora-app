@@ -24,6 +24,7 @@ class PeopleListCollectionViewController: KCollectionViewController {
 			#endif
 		}
 	}
+	var nextPageURL: String?
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>! = nil
 
 	// Refresh control
@@ -69,6 +70,7 @@ class PeopleListCollectionViewController: KCollectionViewController {
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
+		self.nextPageURL = nil
 		self.fetchPeople()
 	}
 
@@ -89,11 +91,18 @@ class PeopleListCollectionViewController: KCollectionViewController {
 	}
 
 	func fetchPeople() {
-		KService.getPeople(forCharacterID: characterID) { [weak self] result in
+		KService.getPeople(forCharacterID: self.characterID, next: self.nextPageURL) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
-			case .success(let people):
-				self.people = people
+			case .success(let peopleResponse):
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.people = []
+				}
+
+				// Append new data and save next page url
+				self.people.append(contentsOf: peopleResponse.data)
+				self.nextPageURL = peopleResponse.next
 			case .failure: break
 			}
 		}

@@ -256,7 +256,7 @@ class ThreadTableViewController: KTableViewController {
 
 	/// Fetch the thread replies for the current thread.
 	func fetchThreadReplies() {
-		KService.getReplies(forThread: forumThreadID, orderedBy: repliesOrder, next: nextPageURL) {[weak self] result in
+		KService.getReplies(forThread: self.forumThreadID, orderedBy: self.repliesOrder, next: self.nextPageURL) {[weak self] result in
 			guard let self = self else { return }
 			switch result {
 			case .success(let threadRepliesResponse):

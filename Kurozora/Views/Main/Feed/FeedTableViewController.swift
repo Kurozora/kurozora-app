@@ -127,7 +127,7 @@ class FeedTableViewController: KTableViewController {
 			#endif
 		}
 
-		KService.getFeedExplore(next: nextPageURL) { [weak self] result in
+		KService.getFeedExplore(next: self.nextPageURL) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
 			case .success(let feedMessageResponse):

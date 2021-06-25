@@ -25,6 +25,7 @@ class CharactersListCollectionViewController: KCollectionViewController {
 
 		}
 	}
+	var nextPageURL: String?
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>! = nil
 
 	// Refresh control
@@ -90,11 +91,18 @@ class CharactersListCollectionViewController: KCollectionViewController {
 	}
 
 	func fetchCharacters() {
-		KService.getCharacters(forPersonID: personID) { [weak self] result in
+		KService.getCharacters(forPersonID: self.personID, next: self.nextPageURL) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
-			case .success(let characters):
-				self.characters = characters
+			case .success(let characterResponse):
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.characters = []
+				}
+
+				// Append new data and save next page url
+				self.characters.append(contentsOf: characterResponse.data)
+				self.nextPageURL = characterResponse.next
 			case .failure: break
 			}
 		}

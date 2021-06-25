@@ -49,16 +49,21 @@ extension KurozoraKit {
 		Fetch the characters for the given person id.
 
 		- Parameter personID: The person id for which the characters should be fetched.
+		- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+		- Parameter limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getCharacters(forPersonID personID: Int, completion completionHandler: @escaping (_ result: Result<[Character], KKAPIError>) -> Void) {
-		let charactersPeople = KKEndpoint.Shows.People.characters(personID).endpointValue
+	public func getCharacters(forPersonID personID: Int, next: String?, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<CharacterResponse, KKAPIError>) -> Void) {
+		let charactersPeople = next ?? KKEndpoint.Shows.People.characters(personID).endpointValue
 		let request: APIRequest<CharacterResponse, KKAPIError> = tron.codable.request(charactersPeople)
 		request.headers = headers
+
+		request.parameters["limit"] = limit
+
 		request.method = .get
 		request.perform(withSuccess: { characterResponse in
-			completionHandler(.success(characterResponse.data))
+			completionHandler(.success(characterResponse))
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
@@ -76,16 +81,21 @@ extension KurozoraKit {
 		Fetch the shows for the given person id.
 
 		- Parameter personID: The person id for which the shows should be fetched.
+		- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+		- Parameter limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getShows(forPersonID personID: Int, completion completionHandler: @escaping (_ result: Result<[Show], KKAPIError>) -> Void) {
-		let charactersShows = KKEndpoint.Shows.People.shows(personID).endpointValue
-		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(charactersShows)
+	public func getShows(forPersonID personID: Int, next: String?, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<ShowResponse, KKAPIError>) -> Void) {
+		let charactersShows = next ?? KKEndpoint.Shows.People.shows(personID).endpointValue
+		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(charactersShows).buildURL(.relativeToBaseURL)
 		request.headers = headers
+
+		request.parameters["limit"] = limit
+
 		request.method = .get
 		request.perform(withSuccess: { showResponse in
-			completionHandler(.success(showResponse.data))
+			completionHandler(.success(showResponse))
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {

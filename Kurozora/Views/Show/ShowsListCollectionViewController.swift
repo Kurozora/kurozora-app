@@ -13,52 +13,22 @@ class ShowsListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var personID: Int! {
 		didSet {
-			KService.getShows(forPersonID: personID) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let shows):
-					self.shows = shows
-				case .failure: break
-				}
-			}
+			self.fetchShows()
 		}
 	}
 	var characterID: Int! {
 		didSet {
-			KService.getShows(forCharacterID: characterID) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let shows):
-					self.shows = shows
-				case .failure: break
-				}
-			}
+			self.fetchShows()
 		}
 	}
 	var showID: Int! {
 		didSet {
-			KService.getRelatedShows(forShowID: showID) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let relatedShows):
-					self.shows = relatedShows.compactMap({ relatedShow -> Show? in
-						return relatedShow.show
-					})
-				case .failure: break
-				}
-			}
+			self.fetchShows()
 		}
 	}
 	var studioID: Int! {
 		didSet {
-			KService.getShows(forStudioID: studioID) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let shows):
-					self.shows = shows
-				case .failure: break
-				}
-			}
+			self.fetchShows()
 		}
 	}
 	var shows: [Show] = [] {
@@ -73,6 +43,7 @@ class ShowsListCollectionViewController: KCollectionViewController {
 			#endif
 		}
 	}
+	var nextPageURL: String?
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Show>! = nil
 
 	// Refresh control
@@ -115,21 +86,16 @@ class ShowsListCollectionViewController: KCollectionViewController {
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
+		self.nextPageURL = nil
+
 		if let showID = self.showID {
 			self.showID = showID
-			return
-		}
-		if let personID = self.personID {
+		} else if let personID = self.personID {
 			self.personID = personID
-			return
-		}
-		if let characterID = self.characterID {
+		} else if let characterID = self.characterID {
 			self.characterID = characterID
-			return
-		}
-		if let studioID = self.studioID {
+		} else if let studioID = self.studioID {
 			self.studioID = studioID
-			return
 		}
 	}
 
@@ -146,6 +112,77 @@ class ShowsListCollectionViewController: KCollectionViewController {
 			self.collectionView.backgroundView?.animateFadeIn()
 		} else {
 			self.collectionView.backgroundView?.animateFadeOut()
+		}
+	}
+
+	/// Fetches the characters.
+	func fetchShows() {
+		if self.showID != nil {
+			KService.getRelatedShows(forShowID: self.showID, next: self.nextPageURL) { [weak self] result in
+				guard let self = self else { return }
+				switch result {
+				case .success(let relatedShowsResponse):
+					// Reset data if necessary
+					if self.nextPageURL == nil {
+						self.shows = []
+					}
+
+					// Append new data and save next page url
+					self.shows.append(contentsOf: relatedShowsResponse.data.compactMap({ relatedShow -> Show? in
+						return relatedShow.show
+					}))
+					self.nextPageURL = relatedShowsResponse.next
+				case .failure: break
+				}
+			}
+		} else if self.personID != nil {
+			KService.getShows(forPersonID: self.personID, next: self.nextPageURL) { [weak self] result in
+				guard let self = self else { return }
+				switch result {
+				case .success(let showResponse):
+					// Reset data if necessary
+					if self.nextPageURL == nil {
+						self.shows = []
+					}
+
+					// Append new data and save next page url
+					self.shows.append(contentsOf: showResponse.data)
+					self.nextPageURL = showResponse.next
+				case .failure: break
+				}
+			}
+		} else if self.characterID != nil {
+			KService.getShows(forCharacterID: self.characterID, next: self.nextPageURL) { [weak self] result in
+				guard let self = self else { return }
+				switch result {
+				case .success(let showResponse):
+					// Reset data if necessary
+					if self.nextPageURL == nil {
+						self.shows = []
+					}
+
+					// Append new data and save next page url
+					self.shows.append(contentsOf: showResponse.data)
+					self.nextPageURL = showResponse.next
+				case .failure: break
+				}
+			}
+		} else if self.studioID != nil {
+			KService.getShows(forStudioID: self.studioID, next: self.nextPageURL) { [weak self] result in
+				guard let self = self else { return }
+				switch result {
+				case .success(let showResponse):
+					// Reset data if necessary
+					if self.nextPageURL == nil {
+						self.shows = []
+					}
+
+					// Append new data and save next page url
+					self.shows.append(contentsOf: showResponse.data)
+					self.nextPageURL = showResponse.next
+				case .failure: break
+				}
+			}
 		}
 	}
 

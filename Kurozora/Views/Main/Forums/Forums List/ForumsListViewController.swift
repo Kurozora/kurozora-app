@@ -98,7 +98,7 @@ class ForumsListViewController: KTableViewController {
 			#endif
 		}
 
-		KService.getForumsThreads(forSection: sectionID, orderedBy: forumOrder, next: nextPageURL) { [weak self] result in
+		KService.getForumsThreads(forSection: self.sectionID, orderedBy: self.forumOrder, next: self.nextPageURL) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
 			case .success(let forumsThreadResponse):

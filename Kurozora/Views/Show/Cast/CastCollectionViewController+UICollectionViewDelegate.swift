@@ -9,6 +9,16 @@
 import UIKit
 
 extension CastCollectionViewController {
+	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+		let numberOfItems = collectionView.numberOfItems()
+
+		if indexPath.item == numberOfItems - 5 {
+			if self.nextPageURL != nil {
+				self.fetchCast()
+			}
+		}
+	}
+
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
 		if let castCollectionViewCell = collectionView.cellForItem(at: indexPath) as? CastCollectionViewCell {

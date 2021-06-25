@@ -24,6 +24,7 @@ class SeasonsCollectionViewController: KCollectionViewController {
 			#endif
 		}
 	}
+	var nextPageURL: String?
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Season>! = nil
 
 	// Refresh control
@@ -65,6 +66,8 @@ class SeasonsCollectionViewController: KCollectionViewController {
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
+		self.nextPageURL = nil
+
 		DispatchQueue.global(qos: .background).async {
 			self.fetchSeasons()
 		}
@@ -87,13 +90,20 @@ class SeasonsCollectionViewController: KCollectionViewController {
 	}
 
 	/// Fetch seasons for the current show.
-    fileprivate func fetchSeasons() {
-		KService.getSeasons(forShowID: showID) { [weak self] result in
+	func fetchSeasons() {
+		KService.getSeasons(forShowID: self.showID, next: self.nextPageURL) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
-			case .success(let seasons):
+			case .success(let seasonsResponse):
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.seasons = []
+				}
+
+				// Append new data and save next page url
 				DispatchQueue.main.async {
-					self.seasons = seasons
+					self.seasons.append(contentsOf: seasonsResponse.data)
+					self.nextPageURL = seasonsResponse.next
 				}
 			case .failure: break
 			}

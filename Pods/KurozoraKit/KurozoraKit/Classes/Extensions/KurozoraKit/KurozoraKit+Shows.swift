@@ -50,16 +50,21 @@ extension KurozoraKit {
 		Fetch the person details for the given show id.
 
 		- Parameter showID: The show id for which the person details should be fetched.
+		- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+		- Parameter limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getPeople(forShowID showID: Int, completion completionHandler: @escaping (_ result: Result<[Person], KKAPIError>) -> Void) {
-		let showsPeople = KKEndpoint.Shows.people(showID).endpointValue
-		let request: APIRequest<PersonResponse, KKAPIError> = tron.codable.request(showsPeople)
+	public func getPeople(forShowID showID: Int, next: String?, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<PersonResponse, KKAPIError>) -> Void) {
+		let showsPeople = next ?? KKEndpoint.Shows.people(showID).endpointValue
+		let request: APIRequest<PersonResponse, KKAPIError> = tron.codable.request(showsPeople).buildURL(.relativeToBaseURL)
 		request.headers = headers
+
+		request.parameters["limit"] = limit
+
 		request.method = .get
 		request.perform(withSuccess: { personResponse in
-			completionHandler(.success(personResponse.data))
+			completionHandler(.success(personResponse))
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
@@ -82,7 +87,7 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getCast(forShowID showID: Int, next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<[Cast], KKAPIError>) -> Void) {
+	public func getCast(forShowID showID: Int, next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<CastResponse, KKAPIError>) -> Void) {
 		let showsCast = next ?? KKEndpoint.Shows.cast(showID).endpointValue
 		let request: APIRequest<CastResponse, KKAPIError> = tron.codable.request(showsCast).buildURL(.relativeToBaseURL)
 		request.headers = headers
@@ -91,7 +96,7 @@ extension KurozoraKit {
 
 		request.method = .get
 		request.perform(withSuccess: { castResponse in
-			completionHandler(.success(castResponse.data))
+			completionHandler(.success(castResponse))
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
@@ -109,16 +114,21 @@ extension KurozoraKit {
 		Fetch the character details for the given show id.
 
 		- Parameter showID: The show id for which the character details should be fetched.
+		- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+		- Parameter limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getCharacters(forShowID showID: Int, completion completionHandler: @escaping (_ result: Result<[Character], KKAPIError>) -> Void) {
-		let showsCharacters = KKEndpoint.Shows.characters(showID).endpointValue
-		let request: APIRequest<CharacterResponse, KKAPIError> = tron.codable.request(showsCharacters)
+	public func getCharacters(forShowID showID: Int, next: String?, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<CharacterResponse, KKAPIError>) -> Void) {
+		let showsCharacters = next ?? KKEndpoint.Shows.characters(showID).endpointValue
+		let request: APIRequest<CharacterResponse, KKAPIError> = tron.codable.request(showsCharacters).buildURL(.relativeToBaseURL)
 		request.headers = headers
+
+		request.parameters["limit"] = limit
+
 		request.method = .get
 		request.perform(withSuccess: { characterResponse in
-			completionHandler(.success(characterResponse.data))
+			completionHandler(.success(characterResponse))
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
@@ -136,21 +146,25 @@ extension KurozoraKit {
 		Fetch the related shows for a the given show id.
 
 		- Parameter showID: The show id for which the related shows should be fetched.
+		- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+		- Parameter limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getRelatedShows(forShowID showID: Int, completion completionHandler: @escaping (_ result: Result<[RelatedShow], KKAPIError>) -> Void) {
-		let showsRelatedShows = KKEndpoint.Shows.relatedShows(showID).endpointValue
-		let request: APIRequest<RelatedShowResponse, KKAPIError> = tron.codable.request(showsRelatedShows)
+	public func getRelatedShows(forShowID showID: Int, next: String?, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<RelatedShowResponse, KKAPIError>) -> Void) {
+		let showsRelatedShows = next ?? KKEndpoint.Shows.relatedShows(showID).endpointValue
+		let request: APIRequest<RelatedShowResponse, KKAPIError> = tron.codable.request(showsRelatedShows).buildURL(.relativeToBaseURL)
 
 		request.headers = headers
 		if User.isSignedIn {
 			request.headers["kuro-auth"] = self.authenticationKey
 		}
 
+		request.parameters["limit"] = limit
+
 		request.method = .get
 		request.perform(withSuccess: { relatedShowResponse in
-			completionHandler(.success(relatedShowResponse.data))
+			completionHandler(.success(relatedShowResponse))
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
@@ -168,16 +182,21 @@ extension KurozoraKit {
 		Fetch the seasons for a the given show id.
 
 		- Parameter showID: The show id for which the seasons should be fetched.
+		- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+		- Parameter limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getSeasons(forShowID showID: Int, completion completionHandler: @escaping (_ result: Result<[Season], KKAPIError>) -> Void) {
-		let showsSeasons = KKEndpoint.Shows.seasons(showID).endpointValue
-		let request: APIRequest<SeasonResponse, KKAPIError> = tron.codable.request(showsSeasons)
+	public func getSeasons(forShowID showID: Int, next: String?, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<SeasonResponse, KKAPIError>) -> Void) {
+		let showsSeasons = next ?? KKEndpoint.Shows.seasons(showID).endpointValue
+		let request: APIRequest<SeasonResponse, KKAPIError> = tron.codable.request(showsSeasons).buildURL(.relativeToBaseURL)
 		request.headers = headers
+
+		request.parameters["limit"] = limit
+
 		request.method = .get
 		request.perform(withSuccess: { seasonResponse in
-			completionHandler(.success(seasonResponse.data))
+			completionHandler(.success(seasonResponse))
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {

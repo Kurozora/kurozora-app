@@ -12,4 +12,7 @@ public struct CastResponse: Codable {
 	// MARK: - Properties
 	/// The data included in the repsonse for a cast object request.
 	public let data: [Cast]
+
+	/// The realtive URL to the next page in the paginated response.
+	public let next: String?
 }

@@ -24,6 +24,7 @@ class CastCollectionViewController: KCollectionViewController {
 			#endif
 		}
 	}
+	var nextPageURL: String?
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Cast>! = nil
 
 	// Refresh control
@@ -94,12 +95,19 @@ class CastCollectionViewController: KCollectionViewController {
 	}
 
 	/// Fetch cast for the current show.
-	fileprivate func fetchCast() {
-		KService.getCast(forShowID: self.showID) { [weak self] result in
+	func fetchCast() {
+		KService.getCast(forShowID: self.showID, next: self.nextPageURL) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
-			case .success(let cast):
-				self.cast = cast
+			case .success(let castResponse):
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.cast = []
+				}
+
+				// Append new data and save next page url
+				self.cast.append(contentsOf: castResponse.data)
+				self.nextPageURL = castResponse.next
 			case .failure: break
 			}
 		}

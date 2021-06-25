@@ -49,21 +49,25 @@ extension KurozoraKit {
 		Fetch the shows for the given studio id.
 
 		- Parameter studioID: The studio id for which the shows should be fetched.
+		- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+		- Parameter limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getShows(forStudioID studioID: Int, completion completionHandler: @escaping (_ result: Result<[Show], KKAPIError>) -> Void) {
-		let studiosShows = KKEndpoint.Shows.Studios.shows(studioID).endpointValue
-		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(studiosShows)
+	public func getShows(forStudioID studioID: Int, next: String?, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<ShowResponse, KKAPIError>) -> Void) {
+		let studiosShows = next ?? KKEndpoint.Shows.Studios.shows(studioID).endpointValue
+		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(studiosShows).buildURL(.relativeToBaseURL)
 
 		request.headers = headers
 		if User.isSignedIn {
 			request.headers["kuro-auth"] = self.authenticationKey
 		}
 
+		request.parameters["limit"] = limit
+
 		request.method = .get
 		request.perform(withSuccess: { showResponse in
-			completionHandler(.success(showResponse.data))
+			completionHandler(.success(showResponse))
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {

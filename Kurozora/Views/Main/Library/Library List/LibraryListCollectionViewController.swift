@@ -171,7 +171,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 				#endif
 			}
 
-			KService.getLibrary(withLibraryStatus: self.libraryStatus, withSortType: librarySortType, withSortOption: librarySortTypeOption, next: self.nextPageURL) { [weak self] result in
+			KService.getLibrary(withLibraryStatus: self.libraryStatus, withSortType: self.librarySortType, withSortOption: librarySortTypeOption, next: self.nextPageURL) { [weak self] result in
 				guard let self = self else { return }
 				switch result {
 				case .success(let showResponse):
@@ -179,6 +179,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 					if self.nextPageURL == nil {
 						self.shows = []
 					}
+
 					// Append new data and save next page url
 					self.shows.append(contentsOf: showResponse.data)
 					self.nextPageURL = showResponse.next

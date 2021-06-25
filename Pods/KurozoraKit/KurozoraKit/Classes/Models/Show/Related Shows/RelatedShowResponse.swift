@@ -12,4 +12,7 @@ public struct RelatedShowResponse: Codable {
 	// MARK: - Properties
 	/// The data included in the repsonse for a related show object request.
 	public let data: [RelatedShow]
+
+	/// The realtive URL to the next page in the paginated response.
+	public let next: String?
 }

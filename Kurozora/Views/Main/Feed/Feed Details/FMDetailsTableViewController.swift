@@ -138,7 +138,7 @@ class FMDetailsTableViewController: KTableViewController {
 
 	/// Fetch the feed message replies.
 	func fetchFeedReplies() {
-		KService.getReplies(forFeedMessage: feedMessageID, next: nextPageURL) { [weak self] result in
+		KService.getReplies(forFeedMessage: self.feedMessageID, next: self.nextPageURL) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
 			case .success(let feedMessageResponse):

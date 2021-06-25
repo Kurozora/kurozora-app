@@ -63,27 +63,6 @@ class ManageActiveSessionsController: KTableViewController {
 		// Configure map view
 		mapView.showsUserLocation = true
 
-		if #available(iOS 14.0, macOS 11.0, *) {
-		} else {
-			if CLLocationManager.locationServicesEnabled() == true {
-				let authorizationStatus: CLAuthorizationStatus!
-				authorizationStatus = CLLocationManager.authorizationStatus()
-
-				switch authorizationStatus {
-				case .restricted, .denied, .notDetermined:
-					locationManager.requestWhenInUseAuthorization()
-				default: break
-				}
-
-				locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
-				locationManager.delegate = self
-				locationManager.startUpdatingLocation()
-
-			} else {
-				print("Please turn on location services or GPS")
-			}
-		}
-
 		// Configure table view height
 		tableView.tableHeaderView?.frame.size.height = self.view.frame.height / 3
 	}
@@ -109,7 +88,7 @@ class ManageActiveSessionsController: KTableViewController {
 		}
 		#endif
 
-		KService.getSessions(next: nextPageURL) { [weak self] result in
+		KService.getSessions(next: self.nextPageURL) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
 			case .success(let sessionResponse):
