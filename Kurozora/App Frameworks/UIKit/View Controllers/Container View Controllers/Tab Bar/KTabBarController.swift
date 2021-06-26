@@ -14,6 +14,7 @@ class KTabBarController: ESTabBarController {
 	// MARK: - Properties
 //	fileprivate var once: Bool = false
 
+	// MARK: - Initializers
 	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 		self.sharedInit()
@@ -90,119 +91,168 @@ extension KTabBarController {
 			case 1:
 				((selectedViewController as? KTabbedViewController)?.currentViewController as? UICollectionViewController)?.collectionView.safeScrollToItem(at: [0, 0], at: .top, animated: true)
 			case 2:
-				((selectedViewController as? KTabbedViewController)?.currentViewController as? UITableViewController)?.tableView.safeScrollToRow(at: [0, 0], at: .top, animated: true)
+				(selectedViewController as? UITableViewController)?.tableView.safeScrollToRow(at: [0, 0], at: .top, animated: true)
 			case 3:
 				(selectedViewController as? UITableViewController)?.tableView.safeScrollToRow(at: [0, 0], at: .top, animated: true)
 			case 4:
-				(selectedViewController as? UITableViewController)?.tableView.safeScrollToRow(at: [0, 0], at: .top, animated: true)
+				(selectedViewController as? UICollectionViewController)?.navigationItem.searchController?.searchBar.textField?.becomeFirstResponder()
 			default: break
 			}
 		}
 	}
 }
 
+/**
+	The list of available tab bar items.
+ */
 enum TabBarItem: Int, CaseIterable {
+	// MARK: - Cases
+	/// Representing the home tab.
 	case home = 0
+
+	/// Representing the library tab.
 	case library
-	case forums
-	case notifications
+
+	/// Representing the feed tab.
 	case feed
 
+	/// Representing the notification tab.
+	case notifications
+
+	#if !targetEnvironment(macCatalyst)
+	/// Representing the search tab.
+	case search
+	#endif
+
+	// MARK: - Structs
+	/**
+		List of row identifiers.
+	 */
 	private struct RowIdentifier {
+		/// The unique identifier for the home tab.
 		static let home = UUID()
+
+		/// The unique identifier for the library tab.
 		static let library = UUID()
-		static let forums = UUID()
-		static let notifications = UUID()
+
+		/// The unique identifier for the feed tab.
 		static let feed = UUID()
+
+		/// The unique identifier for the notification tab.
+		static let notifications = UUID()
+
+		#if !targetEnvironment(macCatalyst)
+		/// The unique identifier for the search tab.
+		static let search = UUID()
+		#endif
 	}
 
+	// MARK: - Properties
+	/// The string value of the tab bar item.
 	var stringValue: String {
 		switch self {
 		case .home:
 			return "Explore"
 		case .library:
 			return "Library"
-		case .forums:
-			return "Forums"
-		case .notifications:
-			return "Notifications"
 		case .feed:
 			return "Feed"
+		case .notifications:
+			return "Notifications"
+		#if !targetEnvironment(macCatalyst)
+		case .search:
+			return "Search"
+		#endif
 		}
 	}
 
+	/// The image value of the tab bar item.
 	var imageValue: UIImage {
 		switch self {
 		case .home:
 			return UIImage(systemName: "house")!
 		case .library:
 			return UIImage(systemName: "rectangle.stack")!
-		case .forums:
-			return UIImage(systemName: "doc.plaintext")!
-		case .notifications:
-			return UIImage(systemName: "app.badge")!
 		case .feed:
 			return UIImage(systemName: "person.crop.circle")!
+		case .notifications:
+			return UIImage(systemName: "app.badge")!
+		#if !targetEnvironment(macCatalyst)
+		case .search:
+			return UIImage(systemName: "magnifyingglass")!
+		#endif
 		}
 	}
 
+	/// The selected image value of the tab bar item.
 	var selectedImageValue: UIImage {
 		switch self {
 		case .home:
 			return UIImage(systemName: "house.fill")!
 		case .library:
 			return UIImage(systemName: "rectangle.stack.fill")!
-		case .forums:
-			return UIImage(systemName: "doc.plaintext.fill")!
-		case .notifications:
-			return UIImage(systemName: "app.badge.fill")!
 		case .feed:
 			return UIImage(systemName: "person.crop.circle.fill")!
+		case .notifications:
+			return UIImage(systemName: "app.badge.fill")!
+		#if !targetEnvironment(macCatalyst)
+		case .search:
+			return R.image.symbols.magnifyingglassFill()!
+		#endif
 		}
 	}
 
+	/// The view controller value of the tab bar item.
 	var viewControllerValue: UIViewController {
 		switch self {
 		case .home:
 			return R.storyboard.home.homeCollectionViewController()!
 		case .library:
 			return R.storyboard.library.libraryViewController()!
-		case .forums:
-			return R.storyboard.forums.forumsViewController()!
-		case .notifications:
-			return R.storyboard.notifications.notificationsTableViewController()!
 		case .feed:
 			return R.storyboard.feed.feedTableViewController()!
+		case .notifications:
+			return R.storyboard.notifications.notificationsTableViewController()!
+		#if !targetEnvironment(macCatalyst)
+		case .search:
+			return R.storyboard.search.searchResultsCollectionViewController()!
+		#endif
 		}
 	}
 
+	/// The navigation controller value of the tab bar item.
 	var kViewControllerValue: UIViewController {
 		switch self {
 		case .home:
 			return R.storyboard.home.homeKNavigationController()!
 		case .library:
 			return R.storyboard.library.libraryKNavigationController()!
-		case .forums:
-			return R.storyboard.forums.forumsKNavigationController()!
-		case .notifications:
-			return R.storyboard.notifications.notificationKNvaigationController()!
 		case .feed:
 			return R.storyboard.feed.feedTableKNavigationController()!
+		case .notifications:
+			return R.storyboard.notifications.notificationKNvaigationController()!
+		#if !targetEnvironment(macCatalyst)
+		case .search:
+			return R.storyboard.search.searchKNvaigationController()!
+		#endif
 		}
 	}
 
+	/// The unique row identifier value of the tab bar item.
 	var rowIdentifierValue: UUID {
 		switch self {
 		case .home:
 			return RowIdentifier.home
 		case .library:
 			return RowIdentifier.library
-		case .forums:
-			return RowIdentifier.forums
-		case .notifications:
-			return RowIdentifier.notifications
 		case .feed:
 			return RowIdentifier.feed
+		case .notifications:
+			return RowIdentifier.notifications
+		#if !targetEnvironment(macCatalyst)
+		case .search:
+			return RowIdentifier.search
+		#endif
 		}
 	}
 }

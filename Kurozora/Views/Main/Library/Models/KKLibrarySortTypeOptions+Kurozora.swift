@@ -16,13 +16,13 @@ extension KKLibrary.SortType.Options {
 		case .none:
 			return UIImage(systemName: "line.3.horizontal.decrease.circle.fill")!
 		case .ascending:
-			return R.image.symbols.arrow_up_line_horizontal_3_decrease()!
+			return UIImage(systemName: "line.3.horizontal.decrease")!
 		case .descending:
-			return R.image.symbols.arrow_down_line_horizontal_3_increase()!
+			return R.image.symbols.line3HorizontalIncrease()!
 		case .newest:
-			return R.image.symbols.calendar_badge_arrowshape_turn_up_right()!
+			return R.image.symbols.calendarBadgeArrowshapeTurnUpRight()!
 		case .oldest:
-			return R.image.symbols.calendar_badge_arrowshape_turn_up_left()!
+			return R.image.symbols.calendarBadgeArrowshapeTurnUpLeft()!
 		case .best:
 			return UIImage(systemName: "hand.thumbsup.fill")!
 		case .worst:

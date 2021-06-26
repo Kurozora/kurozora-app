@@ -177,7 +177,7 @@ extension Show.Attributes {
 	*/
 	public var informationStringShort: String {
 		var informationString = ""
-		informationString += "\(self.type)"
+		informationString += "\(self.type.name)"
 
 //		if let watchedEpisodesCount = self.watchedEpisodesCount {
 //			informationString += " · ✓ \(watchedEpisodesCount)/\(self.episodeCount)"
@@ -213,7 +213,7 @@ extension Show.Attributes {
 		```
 	*/
 	public var endDateTime: String? {
-		return (lastAired ?? "?") + " " + (airTime ?? "?")
+		return (self.lastAired ?? "?") + " " + (self.airTime ?? "?")
 	}
 
 	/**
@@ -224,7 +224,7 @@ extension Show.Attributes {
 		```
 	*/
 	public var nextAirDateString: String? {
-		return startDateTime
+		return self.startDateTime
 	}
 
 	/**
@@ -235,6 +235,6 @@ extension Show.Attributes {
 		```
 	*/
 	public var nextAirDate: Date? {
-		return startDateTime?.toDate
+		return self.startDateTime?.toDate
 	}
 }

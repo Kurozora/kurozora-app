@@ -57,7 +57,6 @@
 		6614AD412580033500039BFB /* ShowDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614AD402580033500039BFB /* ShowDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */; };
 		66160C3B215C04B900D0D722 /* AccountTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66160C3A215C04B900D0D722 /* AccountTableViewController.swift */; };
 		66160C40215C2DEB00D0D722 /* Reachability.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66160C3F215C2DEB00D0D722 /* Reachability.storyboard */; };
-		6619EE74216F969B00655B99 /* ForumsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6619EE73216F969B00655B99 /* ForumsListViewController.swift */; };
 		661ACC9B25ADA41B002407A7 /* ShowDetailsCollectionViewController+TouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661ACC9A25ADA41B002407A7 /* ShowDetailsCollectionViewController+TouchBar.swift */; };
 		661B26B42351E71B00840AF5 /* UIImageView+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661B26B22351E5A100840AF5 /* UIImageView+Kurozora.swift */; };
 		661D646C25C387EA00822D01 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661D646B25C387EA00822D01 /* MenuController.swift */; };
@@ -75,7 +74,6 @@
 		66232CDB2310055900C45B5A /* BaseFeedMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66232CDA2310055900C45B5A /* BaseFeedMessageCell.swift */; };
 		66244D91230B774200EC33E0 /* LibraryDetailedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66244D90230B774200EC33E0 /* LibraryDetailedCollectionViewCell.swift */; };
 		662B925F233E50FA001D49B7 /* SearchShowResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662B925E233E50FA001D49B7 /* SearchShowResultsCell.swift */; };
-		662B9261233E513A001D49B7 /* SearchForumsResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662B9260233E513A001D49B7 /* SearchForumsResultsCell.swift */; };
 		662B9263233E515E001D49B7 /* SearchUserResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662B9262233E515E001D49B7 /* SearchUserResultsCell.swift */; };
 		662C307F22A06A5E00AAD69B /* CurrentSessionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662C307E22A06A5E00AAD69B /* CurrentSessionCell.swift */; };
 		662CAD68257594E00045236C /* EmptyBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662CAD67257594E00045236C /* EmptyBackgroundView.swift */; };
@@ -175,7 +173,6 @@
 		665CBBA022C27E90004D0D3E /* SelectableSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665CBB9F22C27E90004D0D3E /* SelectableSettingsCell.swift */; };
 		665CBBA222C2B139004D0D3E /* DateSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665CBBA122C2B139004D0D3E /* DateSettingsCell.swift */; };
 		665CBBA422C2B2C2004D0D3E /* DatePickerSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665CBBA322C2B2C2004D0D3E /* DatePickerSettingsCell.swift */; };
-		665F49C621F766CC00A7A659 /* ReplyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665F49C521F766CC00A7A659 /* ReplyCell.swift */; };
 		6663985B2366298100713B8B /* UICollectionViewCell+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6663985A2366298100713B8B /* UICollectionViewCell+Kurozora.swift */; };
 		66647B542084995500CF624F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66647B532084995500CF624F /* AppDelegate.swift */; };
 		66647B5D2084995E00CF624F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66647B5C2084995E00CF624F /* Assets.xcassets */; };
@@ -210,8 +207,6 @@
 		66707838208B846C00471FBC /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66707837208B846C00471FBC /* SettingsTableViewController.swift */; };
 		66714F4A226FA84C006113DA /* SynopsisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66714F49226FA84C006113DA /* SynopsisViewController.swift */; };
 		6674A0C320A45E6D00AAB527 /* LinkCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6674A0C220A45E6D00AAB527 /* LinkCollectionViewCell.swift */; };
-		6674A0C920A45EB700AAB527 /* ForumsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6674A0C820A45EB700AAB527 /* ForumsCell.swift */; };
-		6674A0D420A5849D00AAB527 /* ThreadTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6674A0D320A5849D00AAB527 /* ThreadTableViewController.swift */; };
 		6675262F22280ACB007C1617 /* Default.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6675262C22280ACA007C1617 /* Default.plist */; };
 		6675263022280ACB007C1617 /* Day.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6675262D22280ACB007C1617 /* Day.plist */; };
 		6675263122280ACB007C1617 /* Night.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6675262E22280ACB007C1617 /* Night.plist */; };
@@ -352,8 +347,6 @@
 		66A254DA22AAE55B002A0E34 /* App Icons.json in Resources */ = {isa = PBXBuildFile; fileRef = 66A254D922AAE55B002A0E34 /* App Icons.json */; };
 		66A254DE22AAEF5D002A0E34 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A254DD22AAEF5D002A0E34 /* MapKit.framework */; };
 		66A48FE021A411A900F34085 /* Notifications.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66A48FDF21A411A900F34085 /* Notifications.storyboard */; };
-		66A552D420A2D24F00E515DB /* ForumsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A552D320A2D24F00E515DB /* ForumsViewController.swift */; };
-		66A552D620A2D40100E515DB /* Forums.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66A552D520A2D40100E515DB /* Forums.storyboard */; };
 		66AA35BC24030E420006EC5B /* Cast.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66AA35BB24030E420006EC5B /* Cast.storyboard */; };
 		66AA35BE24030F570006EC5B /* Seasons.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66AA35BD24030F570006EC5B /* Seasons.storyboard */; };
 		66AA35C024030FA60006EC5B /* Episodes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66AA35BF24030FA60006EC5B /* Episodes.storyboard */; };
@@ -387,7 +380,6 @@
 		66B13A5F2405AA8000CD732B /* WorkflowController+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B13A5E2405AA8000CD732B /* WorkflowController+User.swift */; };
 		66B13A672405DBE000CD732B /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66B13A662405DBE000CD732B /* Onboarding.storyboard */; };
 		66B216A821C033B9006E167D /* UIView+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B216A721C033B9006E167D /* UIView+Kurozora.swift */; };
-		66B216AA21C16817006E167D /* KRichTextEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66825BE921B29F3800A2F602 /* KRichTextEditorViewController.swift */; };
 		66B216AC21C1681F006E167D /* TextEditor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 666938AC21B19E3800BA9620 /* TextEditor.storyboard */; };
 		66B2C73D232D0F350042AB12 /* PostType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B2C73C232D0F350042AB12 /* PostType.swift */; };
 		66B2C73F232F95680042AB12 /* BaseNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B2C73E232F95680042AB12 /* BaseNotificationCell.swift */; };
@@ -408,8 +400,6 @@
 		66BA740A223DB20800AEB8ED /* KKLibrary+CellStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BA7409223DB20800AEB8ED /* KKLibrary+CellStyle.swift */; };
 		66BA99F925E4017600CE4480 /* HomeCollectionViewController+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BA99F825E4017600CE4480 /* HomeCollectionViewController+UICollectionViewDelegate.swift */; };
 		66BA99FB25E4022200CE4480 /* LibraryListCollectionViewController+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BA99FA25E4022200CE4480 /* LibraryListCollectionViewController+UICollectionViewDelegate.swift */; };
-		66BA99FD25E4126300CE4480 /* ForumsListViewController+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BA99FC25E4126300CE4480 /* ForumsListViewController+UITableViewDelegate.swift */; };
-		66BDEC7421C3F0A100D5487B /* KCommentEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BDEC7321C3F0A100D5487B /* KCommentEditorViewController.swift */; };
 		66BEC133231711DD0039D683 /* KWhatsNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BEC132231711DD0039D683 /* KWhatsNewViewController.swift */; };
 		66BEC13523191D090039D683 /* NSLayoutManager+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BEC13423191D090039D683 /* NSLayoutManager+Kurozora.swift */; };
 		66BEC13723191E6D0039D683 /* RatingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BEC13623191E6D0039D683 /* RatingCollectionViewCell.swift */; };
@@ -457,7 +447,6 @@
 		66CDC089234A829E009E799C /* ServiceFooterString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DBC56234A6A74009292DF /* ServiceFooterString.swift */; };
 		66CDC08F234A95B8009E799C /* RedeemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CDC08E234A95B8009E799C /* RedeemTableViewController.swift */; };
 		66CDC090234A9704009E799C /* ProductActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CDC08A234A91A2009E799C /* ProductActionTableViewCell.swift */; };
-		66CE34302325522700A41558 /* ForumOrder+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE342E2325519300A41558 /* ForumOrder+Kurozora.swift */; };
 		66CE80FA2460348100DB0C49 /* KTableViewController+KTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE80F92460348100DB0C49 /* KTableViewController+KTableViewDataSource.swift */; };
 		66CE80FD246035C700DB0C49 /* KTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE80FC246035C700DB0C49 /* KTableViewDataSource.swift */; };
 		66CE81002460361800DB0C49 /* KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE80FF2460361800DB0C49 /* KCollectionViewDataSource.swift */; };
@@ -510,13 +499,8 @@
 		66E54EC3244E1698007248EE /* Array+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E54EC2244E1698007248EE /* Array+String.swift */; };
 		66EA1DB225B3630D00FCD07A /* LibraryViewController+TouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DB125B3630D00FCD07A /* LibraryViewController+TouchBar.swift */; };
 		66EA1DB425B3638200FCD07A /* LibraryViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DB325B3638200FCD07A /* LibraryViewControllerDelegate.swift */; };
-		66EA1DB625B3645900FCD07A /* ForumsCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DB525B3645900FCD07A /* ForumsCellDelegate.swift */; };
-		66EA1DB925B3651C00FCD07A /* ReplyCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DB825B3651C00FCD07A /* ReplyCellDelegate.swift */; };
-		66EA1DBC25B365E200FCD07A /* ForumsListViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DBB25B365E200FCD07A /* ForumsListViewControllerDelegate.swift */; };
-		66EA1DBE25B3663C00FCD07A /* ForumsList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66EA1DBD25B3663C00FCD07A /* ForumsList.storyboard */; };
 		66EA1DC025B3669600FCD07A /* NotificationsViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DBF25B3669600FCD07A /* NotificationsViewControllerDelegate.swift */; };
 		66EA1DC225B366CF00FCD07A /* NotificationsViewController+TouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DC125B366CF00FCD07A /* NotificationsViewController+TouchBar.swift */; };
-		66EA1DC525B3679800FCD07A /* Thread.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66EA1DC425B3679800FCD07A /* Thread.storyboard */; };
 		66EA1DC725B3695200FCD07A /* FeedTableViewController+TouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DC625B3695200FCD07A /* FeedTableViewController+TouchBar.swift */; };
 		66EA1DC925B36DC300FCD07A /* FavoriteShowsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DC825B36DC300FCD07A /* FavoriteShowsCollectionViewController+KCollectionViewDelegateLayout.swift */; };
 		66EA1DCB25B36DE900FCD07A /* FavoriteShowsCollectionViewController+KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DCA25B36DE900FCD07A /* FavoriteShowsCollectionViewController+KCollectionViewDataSource.swift */; };
@@ -548,10 +532,7 @@
 		66EA1E0D25B6287000FCD07A /* Episode+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1E0C25B6287000FCD07A /* Episode+UIKit.swift */; };
 		66EA1E0F25B62DC000FCD07A /* EpisodeLockupCollectionViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1E0E25B62DC000FCD07A /* EpisodeLockupCollectionViewCellDelegate.swift */; };
 		66EA1E1125B634A200FCD07A /* BaseFeedMessageCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1E1025B634A200FCD07A /* BaseFeedMessageCellDelegate.swift */; };
-		66EA1E1325B639B100FCD07A /* KRichTextEditorViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1E1225B639B100FCD07A /* KRichTextEditorViewDelegate.swift */; };
 		66EA1E1525B639D700FCD07A /* KFeedMessageTextEditorViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1E1425B639D700FCD07A /* KFeedMessageTextEditorViewDelegate.swift */; };
-		66EA1E1725B63A0400FCD07A /* KCommentEditorViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1E1625B63A0400FCD07A /* KCommentEditorViewDelegate.swift */; };
-		66EA1E1925B63A5500FCD07A /* ForumsViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1E1825B63A5500FCD07A /* ForumsViewControllerDelegate.swift */; };
 		66EC939A2274B90100D584F7 /* ShowDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EC93992274B90100D584F7 /* ShowDetail.swift */; };
 		66ED9D8722ABD60400C7A45C /* NotificationSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66ED9D8622ABD60400C7A45C /* NotificationSettings.storyboard */; };
 		66ED9D8B22AC15E600C7A45C /* ImageAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ED9D8A22AC15E600C7A45C /* ImageAnnotation.swift */; };
@@ -561,8 +542,6 @@
 		66F944AE22F0C08E009F1FE2 /* BaseLockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F944AA22F0C08E009F1FE2 /* BaseLockupCollectionViewCell.swift */; };
 		66F944AF22F0C08E009F1FE2 /* LegalExploreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F944AB22F0C08E009F1FE2 /* LegalExploreTableViewCell.swift */; };
 		66F944B322F0D11B009F1FE2 /* KWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F944B222F0D11B009F1FE2 /* KWebViewController.swift */; };
-		66FB7EAF2565D5C00028093C /* ForumsThread+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FB7EAE2565D5C00028093C /* ForumsThread+UIKit.swift */; };
-		66FB7ECC2569EE020028093C /* ThreadReply+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FB7ECB2569EE020028093C /* ThreadReply+UIKit.swift */; };
 		66FC6DD12340014500A454DD /* SettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DCF233FE9C900A454DD /* SettingsSection.swift */; };
 		66FC6DD32340028D00A454DD /* AccountSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66FC6DD22340028D00A454DD /* AccountSettings.storyboard */; };
 		66FC6DF62342BA5C00A454DD /* UIStatusBarStyle+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DF32342B79000A454DD /* UIStatusBarStyle+Theme.swift */; };
@@ -661,7 +640,6 @@
 		6614AD402580033500039BFB /* ShowDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShowDetailsCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
 		66160C3A215C04B900D0D722 /* AccountTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTableViewController.swift; sourceTree = "<group>"; };
 		66160C3F215C2DEB00D0D722 /* Reachability.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Reachability.storyboard; sourceTree = "<group>"; };
-		6619EE73216F969B00655B99 /* ForumsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumsListViewController.swift; sourceTree = "<group>"; };
 		661ACC9A25ADA41B002407A7 /* ShowDetailsCollectionViewController+TouchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShowDetailsCollectionViewController+TouchBar.swift"; sourceTree = "<group>"; };
 		661B26B22351E5A100840AF5 /* UIImageView+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Kurozora.swift"; sourceTree = "<group>"; };
 		661D646B25C387EA00822D01 /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
@@ -680,7 +658,6 @@
 		66232CDA2310055900C45B5A /* BaseFeedMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseFeedMessageCell.swift; sourceTree = "<group>"; };
 		66244D90230B774200EC33E0 /* LibraryDetailedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryDetailedCollectionViewCell.swift; sourceTree = "<group>"; };
 		662B925E233E50FA001D49B7 /* SearchShowResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchShowResultsCell.swift; sourceTree = "<group>"; };
-		662B9260233E513A001D49B7 /* SearchForumsResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchForumsResultsCell.swift; sourceTree = "<group>"; };
 		662B9262233E515E001D49B7 /* SearchUserResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserResultsCell.swift; sourceTree = "<group>"; };
 		662C307E22A06A5E00AAD69B /* CurrentSessionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentSessionCell.swift; sourceTree = "<group>"; };
 		662CAD67257594E00045236C /* EmptyBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyBackgroundView.swift; sourceTree = "<group>"; };
@@ -781,7 +758,6 @@
 		665CBB9F22C27E90004D0D3E /* SelectableSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableSettingsCell.swift; sourceTree = "<group>"; };
 		665CBBA122C2B139004D0D3E /* DateSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSettingsCell.swift; sourceTree = "<group>"; };
 		665CBBA322C2B2C2004D0D3E /* DatePickerSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerSettingsCell.swift; sourceTree = "<group>"; };
-		665F49C521F766CC00A7A659 /* ReplyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyCell.swift; sourceTree = "<group>"; };
 		6663985A2366298100713B8B /* UICollectionViewCell+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+Kurozora.swift"; sourceTree = "<group>"; };
 		66647B502084995500CF624F /* Kurozora.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kurozora.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66647B532084995500CF624F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -810,8 +786,6 @@
 		66707837208B846C00471FBC /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		66714F49226FA84C006113DA /* SynopsisViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynopsisViewController.swift; sourceTree = "<group>"; };
 		6674A0C220A45E6D00AAB527 /* LinkCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCollectionViewCell.swift; sourceTree = "<group>"; };
-		6674A0C820A45EB700AAB527 /* ForumsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumsCell.swift; sourceTree = "<group>"; };
-		6674A0D320A5849D00AAB527 /* ThreadTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadTableViewController.swift; sourceTree = "<group>"; };
 		6675262C22280ACA007C1617 /* Default.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Default.plist; sourceTree = "<group>"; };
 		6675262D22280ACB007C1617 /* Day.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Day.plist; sourceTree = "<group>"; };
 		6675262E22280ACB007C1617 /* Night.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Night.plist; sourceTree = "<group>"; };
@@ -827,7 +801,6 @@
 		667F9ADA21B57D5C003F6629 /* Date+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Kurozora.swift"; sourceTree = "<group>"; };
 		667F9ADC21B5F354003F6629 /* SettingsSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSplitViewController.swift; sourceTree = "<group>"; };
 		668142D2245B4804008FC7BE /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
-		66825BE921B29F3800A2F602 /* KRichTextEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KRichTextEditorViewController.swift; sourceTree = "<group>"; };
 		668421E325954F25000A09F8 /* PersonDetailsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetailsCollectionViewController.swift; sourceTree = "<group>"; };
 		668422452595F762000A09F8 /* CharacterDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CharacterDetailsCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
 		6684224725966F97000A09F8 /* PosterLockupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterLockupCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -952,8 +925,6 @@
 		66A254D922AAE55B002A0E34 /* App Icons.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "App Icons.json"; sourceTree = "<group>"; };
 		66A254DD22AAEF5D002A0E34 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		66A48FDF21A411A900F34085 /* Notifications.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Notifications.storyboard; sourceTree = "<group>"; };
-		66A552D320A2D24F00E515DB /* ForumsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumsViewController.swift; sourceTree = "<group>"; };
-		66A552D520A2D40100E515DB /* Forums.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Forums.storyboard; sourceTree = "<group>"; };
 		66AA35BB24030E420006EC5B /* Cast.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Cast.storyboard; sourceTree = "<group>"; };
 		66AA35BD24030F570006EC5B /* Seasons.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Seasons.storyboard; sourceTree = "<group>"; };
 		66AA35BF24030FA60006EC5B /* Episodes.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Episodes.storyboard; sourceTree = "<group>"; };
@@ -1006,9 +977,7 @@
 		66BA7409223DB20800AEB8ED /* KKLibrary+CellStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KKLibrary+CellStyle.swift"; sourceTree = "<group>"; };
 		66BA99F825E4017600CE4480 /* HomeCollectionViewController+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeCollectionViewController+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
 		66BA99FA25E4022200CE4480 /* LibraryListCollectionViewController+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LibraryListCollectionViewController+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
-		66BA99FC25E4126300CE4480 /* ForumsListViewController+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ForumsListViewController+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 		66BB58088C9F6DB65EAAC0DD /* Pods-Kurozora.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kurozora.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Kurozora/Pods-Kurozora.debug.xcconfig"; sourceTree = "<group>"; };
-		66BDEC7321C3F0A100D5487B /* KCommentEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCommentEditorViewController.swift; sourceTree = "<group>"; };
 		66BEC132231711DD0039D683 /* KWhatsNewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KWhatsNewViewController.swift; sourceTree = "<group>"; };
 		66BEC13423191D090039D683 /* NSLayoutManager+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutManager+Kurozora.swift"; sourceTree = "<group>"; };
 		66BEC13623191E6D0039D683 /* RatingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1064,7 +1033,6 @@
 		66CE1B02209BAB350007A4DE /* WriteACommentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WriteACommentCell.xib; sourceTree = "<group>"; };
 		66CE1B05209BAE1B0007A4DE /* ShowMoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowMoreCell.swift; sourceTree = "<group>"; };
 		66CE1B06209BAE1B0007A4DE /* ShowMoreCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowMoreCell.xib; sourceTree = "<group>"; };
-		66CE342E2325519300A41558 /* ForumOrder+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ForumOrder+Kurozora.swift"; sourceTree = "<group>"; };
 		66CE80F92460348100DB0C49 /* KTableViewController+KTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KTableViewController+KTableViewDataSource.swift"; sourceTree = "<group>"; };
 		66CE80FC246035C700DB0C49 /* KTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KTableViewDataSource.swift; sourceTree = "<group>"; };
 		66CE80FF2460361800DB0C49 /* KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCollectionViewDataSource.swift; sourceTree = "<group>"; };
@@ -1117,13 +1085,8 @@
 		66E54EC2244E1698007248EE /* Array+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+String.swift"; sourceTree = "<group>"; };
 		66EA1DB125B3630D00FCD07A /* LibraryViewController+TouchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LibraryViewController+TouchBar.swift"; sourceTree = "<group>"; };
 		66EA1DB325B3638200FCD07A /* LibraryViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewControllerDelegate.swift; sourceTree = "<group>"; };
-		66EA1DB525B3645900FCD07A /* ForumsCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumsCellDelegate.swift; sourceTree = "<group>"; };
-		66EA1DB825B3651C00FCD07A /* ReplyCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyCellDelegate.swift; sourceTree = "<group>"; };
-		66EA1DBB25B365E200FCD07A /* ForumsListViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumsListViewControllerDelegate.swift; sourceTree = "<group>"; };
-		66EA1DBD25B3663C00FCD07A /* ForumsList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ForumsList.storyboard; sourceTree = "<group>"; };
 		66EA1DBF25B3669600FCD07A /* NotificationsViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewControllerDelegate.swift; sourceTree = "<group>"; };
 		66EA1DC125B366CF00FCD07A /* NotificationsViewController+TouchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationsViewController+TouchBar.swift"; sourceTree = "<group>"; };
-		66EA1DC425B3679800FCD07A /* Thread.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Thread.storyboard; sourceTree = "<group>"; };
 		66EA1DC625B3695200FCD07A /* FeedTableViewController+TouchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedTableViewController+TouchBar.swift"; sourceTree = "<group>"; };
 		66EA1DC825B36DC300FCD07A /* FavoriteShowsCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoriteShowsCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
 		66EA1DCA25B36DE900FCD07A /* FavoriteShowsCollectionViewController+KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoriteShowsCollectionViewController+KCollectionViewDataSource.swift"; sourceTree = "<group>"; };
@@ -1155,10 +1118,7 @@
 		66EA1E0C25B6287000FCD07A /* Episode+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Episode+UIKit.swift"; sourceTree = "<group>"; };
 		66EA1E0E25B62DC000FCD07A /* EpisodeLockupCollectionViewCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeLockupCollectionViewCellDelegate.swift; sourceTree = "<group>"; };
 		66EA1E1025B634A200FCD07A /* BaseFeedMessageCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseFeedMessageCellDelegate.swift; sourceTree = "<group>"; };
-		66EA1E1225B639B100FCD07A /* KRichTextEditorViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KRichTextEditorViewDelegate.swift; sourceTree = "<group>"; };
 		66EA1E1425B639D700FCD07A /* KFeedMessageTextEditorViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KFeedMessageTextEditorViewDelegate.swift; sourceTree = "<group>"; };
-		66EA1E1625B63A0400FCD07A /* KCommentEditorViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCommentEditorViewDelegate.swift; sourceTree = "<group>"; };
-		66EA1E1825B63A5500FCD07A /* ForumsViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumsViewControllerDelegate.swift; sourceTree = "<group>"; };
 		66EC93992274B90100D584F7 /* ShowDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetail.swift; sourceTree = "<group>"; };
 		66ED9D8622ABD60400C7A45C /* NotificationSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NotificationSettings.storyboard; sourceTree = "<group>"; };
 		66ED9D8A22AC15E600C7A45C /* ImageAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAnnotation.swift; sourceTree = "<group>"; };
@@ -1168,8 +1128,6 @@
 		66F944AA22F0C08E009F1FE2 /* BaseLockupCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseLockupCollectionViewCell.swift; sourceTree = "<group>"; };
 		66F944AB22F0C08E009F1FE2 /* LegalExploreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegalExploreTableViewCell.swift; sourceTree = "<group>"; };
 		66F944B222F0D11B009F1FE2 /* KWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWebViewController.swift; sourceTree = "<group>"; };
-		66FB7EAE2565D5C00028093C /* ForumsThread+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ForumsThread+UIKit.swift"; sourceTree = "<group>"; };
-		66FB7ECB2569EE020028093C /* ThreadReply+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThreadReply+UIKit.swift"; sourceTree = "<group>"; };
 		66FC6DCF233FE9C900A454DD /* SettingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSection.swift; sourceTree = "<group>"; };
 		66FC6DD22340028D00A454DD /* AccountSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AccountSettings.storyboard; sourceTree = "<group>"; };
 		66FC6DF32342B79000A454DD /* UIStatusBarStyle+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStatusBarStyle+Theme.swift"; sourceTree = "<group>"; };
@@ -1939,16 +1897,6 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		665F49C421F766A400A7A659 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				6674A0C820A45EB700AAB527 /* ForumsCell.swift */,
-				665F49C521F766CC00A7A659 /* ReplyCell.swift */,
-				66EA1DB725B364A200FCD07A /* Delegates */,
-			);
-			path = Cells;
-			sourceTree = "<group>";
-		};
 		66647B472084995500CF624F = {
 			isa = PBXGroup;
 			children = (
@@ -2154,15 +2102,6 @@
 				66C27A7323E3A0C700BC09D3 /* Sub Settings */,
 			);
 			path = Settings;
-			sourceTree = "<group>";
-		};
-		6674A0D220A5848100AAB527 /* Thread */ = {
-			isa = PBXGroup;
-			children = (
-				6674A0D320A5849D00AAB527 /* ThreadTableViewController.swift */,
-				66EA1DC425B3679800FCD07A /* Thread.storyboard */,
-			);
-			path = Thread;
 			sourceTree = "<group>";
 		};
 		6675262B22280AB4007C1617 /* Plist */ = {
@@ -2480,27 +2419,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		66A552D220A2D1F300E515DB /* Forums */ = {
-			isa = PBXGroup;
-			children = (
-				66A552D520A2D40100E515DB /* Forums.storyboard */,
-				66A552D320A2D24F00E515DB /* ForumsViewController.swift */,
-				66EA1E1825B63A5500FCD07A /* ForumsViewControllerDelegate.swift */,
-				66EA1DBA25B365C700FCD07A /* Forums List */,
-				665F49C421F766A400A7A659 /* Cells */,
-				66CE342D2325517600A41558 /* Models */,
-			);
-			path = Forums;
-			sourceTree = "<group>";
-		};
 		66AA35C1240312210006EC5B /* Main */ = {
 			isa = PBXGroup;
 			children = (
 				66E748BA20987E1A0039A105 /* Home */,
 				66D6237520A1BB4000304914 /* Library */,
-				66A552D220A2D1F300E515DB /* Forums */,
-				6601F1AA2118486A0074C1DD /* Notifications */,
 				66CBA53322BC44F100FBEC13 /* Feed */,
+				6601F1AA2118486A0074C1DD /* Notifications */,
+				66B4F1D2223BC901007C5048 /* Search */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -2530,7 +2456,6 @@
 				6684225125974DE9000A09F8 /* Favorites */,
 				66AA35C22403125F0006EC5B /* Show */,
 				66CF6D6320A9875600F98375 /* Profile */,
-				66B4F1D2223BC901007C5048 /* Search */,
 				66707836208B844800471FBC /* Settings */,
 			);
 			path = Views;
@@ -2630,14 +2555,10 @@
 			isa = PBXGroup;
 			children = (
 				666938AC21B19E3800BA9620 /* TextEditor.storyboard */,
-				66BDEC7321C3F0A100D5487B /* KCommentEditorViewController.swift */,
-				66EA1E1625B63A0400FCD07A /* KCommentEditorViewDelegate.swift */,
 				66D8B14A24F8559E00F0DE7B /* KFeedMessageEditorViewController.swift */,
 				66B9BB9624FB1AC7004953C9 /* KFeedMessageReShareTextEditorView.swift */,
 				66EA1E1425B639D700FCD07A /* KFeedMessageTextEditorViewDelegate.swift */,
 				66B9BB9824FC5CC3004953C9 /* KFMReplyTextEditorViewController.swift */,
-				66825BE921B29F3800A2F602 /* KRichTextEditorViewController.swift */,
-				66EA1E1225B639B100FCD07A /* KRichTextEditorViewDelegate.swift */,
 			);
 			path = "Text Editor";
 			sourceTree = "<group>";
@@ -2954,14 +2875,6 @@
 			path = Table;
 			sourceTree = "<group>";
 		};
-		66CE342D2325517600A41558 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				66CE342E2325519300A41558 /* ForumOrder+Kurozora.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		66CE80F72460341C00DB0C49 /* KTableViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -3107,7 +3020,6 @@
 			isa = PBXGroup;
 			children = (
 				66349D04256C74DA000B8523 /* Feed */,
-				66FB7EAC2565D59F0028093C /* Forums */,
 				669E0357256B217900CEB794 /* Session */,
 				66D0BF7E25613DE0000AB7BF /* Show */,
 				660E3A1125E5E1D800A46EB0 /* User */,
@@ -3240,7 +3152,6 @@
 			isa = PBXGroup;
 			children = (
 				66B4F1DA223D2CA5007C5048 /* SearchBaseResultsCell.swift */,
-				662B9260233E513A001D49B7 /* SearchForumsResultsCell.swift */,
 				662B925E233E50FA001D49B7 /* SearchShowResultsCell.swift */,
 				665099D422FC2B6A0053C2FD /* SearchSuggestionResultCell.swift */,
 				662B9262233E515E001D49B7 /* SearchUserResultsCell.swift */,
@@ -3280,27 +3191,6 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
-		66EA1DB725B364A200FCD07A /* Delegates */ = {
-			isa = PBXGroup;
-			children = (
-				66EA1DB525B3645900FCD07A /* ForumsCellDelegate.swift */,
-				66EA1DB825B3651C00FCD07A /* ReplyCellDelegate.swift */,
-			);
-			path = Delegates;
-			sourceTree = "<group>";
-		};
-		66EA1DBA25B365C700FCD07A /* Forums List */ = {
-			isa = PBXGroup;
-			children = (
-				66EA1DBD25B3663C00FCD07A /* ForumsList.storyboard */,
-				6619EE73216F969B00655B99 /* ForumsListViewController.swift */,
-				66BA99FC25E4126300CE4480 /* ForumsListViewController+UITableViewDelegate.swift */,
-				66EA1DBB25B365E200FCD07A /* ForumsListViewControllerDelegate.swift */,
-				6674A0D220A5848100AAB527 /* Thread */,
-			);
-			path = "Forums List";
-			sourceTree = "<group>";
-		};
 		66EA1DCD25B36E7B00FCD07A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -3326,31 +3216,6 @@
 				66EA1E0C25B6287000FCD07A /* Episode+UIKit.swift */,
 			);
 			path = Episode;
-			sourceTree = "<group>";
-		};
-		66FB7EAC2565D59F0028093C /* Forums */ = {
-			isa = PBXGroup;
-			children = (
-				66FB7EAD2565D5B10028093C /* Thread */,
-			);
-			path = Forums;
-			sourceTree = "<group>";
-		};
-		66FB7EAD2565D5B10028093C /* Thread */ = {
-			isa = PBXGroup;
-			children = (
-				66FB7ECA2569EDF10028093C /* Reply */,
-				66FB7EAE2565D5C00028093C /* ForumsThread+UIKit.swift */,
-			);
-			path = Thread;
-			sourceTree = "<group>";
-		};
-		66FB7ECA2569EDF10028093C /* Reply */ = {
-			isa = PBXGroup;
-			children = (
-				66FB7ECB2569EE020028093C /* ThreadReply+UIKit.swift */,
-			);
-			path = Reply;
 			sourceTree = "<group>";
 		};
 		66FC6DCE233FE9AA00A454DD /* Models */ = {
@@ -3529,7 +3394,6 @@
 				668B165F23EDF0CF00C1306A /* App-Icon-iPad-Pro-Product-RED@2x.png in Resources */,
 				668B165123EDF0CF00C1306A /* App-Icon-iPad-Pro-Yellow@2x.png in Resources */,
 				668B163D23EDF0CF00C1306A /* App-Icon-iPhone-Yellow@3x.png in Resources */,
-				66A552D620A2D40100E515DB /* Forums.storyboard in Resources */,
 				66CF6D7120A9934F00F98375 /* Profile.storyboard in Resources */,
 				668B165D23EDF0CF00C1306A /* App-Icon-iPhone-Rose-Gold@2x.png in Resources */,
 				66DEB4A821D248710093725F /* Search.storyboard in Resources */,
@@ -3545,7 +3409,6 @@
 				66E46E05250666AE009938E1 /* FeedMessageReShareCell.xib in Resources */,
 				66CE8114246092FF00DB0C49 /* ServicePreviewTableViewCell.xib in Resources */,
 				66160C40215C2DEB00D0D722 /* Reachability.storyboard in Resources */,
-				66EA1DBE25B3663C00FCD07A /* ForumsList.storyboard in Resources */,
 				6633A52924A3DA11003C6390 /* InformationButtonCollectionViewCell.xib in Resources */,
 				668B164823EDF0CF00C1306A /* App-Icon-iPhone-Peach-Orange@2x.png in Resources */,
 				664AAF8124EE8E2F00FF4AA5 /* Characters.storyboard in Resources */,
@@ -3606,7 +3469,6 @@
 				669A36C324F1C08D0045D04A /* OnboardingFooterTableViewCell.xib in Resources */,
 				668B165223EDF0CF00C1306A /* App-Icon-iPad-Peach-Orange@2x.png in Resources */,
 				664AAFA924EEF3DD00FF4AA5 /* CharacterLockupCollectionViewCell.xib in Resources */,
-				66EA1DC525B3679800FCD07A /* Thread.storyboard in Resources */,
 				668B166E23EDF7FC00C1306A /* App-Icon-iPad-Kurogram@2x.png in Resources */,
 				66C5797D22A864CB001B8F51 /* Legal.storyboard in Resources */,
 				66A48FE021A411A900F34085 /* Notifications.storyboard in Resources */,
@@ -3830,7 +3692,6 @@
 				664AAF8824EE903700FF4AA5 /* PersonImageView.swift in Sources */,
 				66348C7A22AB17710019AB84 /* SettingsCell.swift in Sources */,
 				66EA1DF425B5F68800FCD07A /* TextViewCollectionViewCellDelegate.swift in Sources */,
-				662B9261233E513A001D49B7 /* SearchForumsResultsCell.swift in Sources */,
 				6698D3C924E59427006B7A4C /* ReminderStatus+Kurozora.swift in Sources */,
 				667F9AD921B47FA4003F6629 /* BadgesTableViewController.swift in Sources */,
 				667074D523382756008C1A75 /* AccountOnboardingTableViewController.swift in Sources */,
@@ -3869,7 +3730,6 @@
 				6646A27B236BAAB000DCC0A4 /* BrowserSettingsTableViewCell.swift in Sources */,
 				66AEABDA22987A4D00949FD8 /* KThemePicker.swift in Sources */,
 				66AEABEF22993E9C00949FD8 /* NotificationsOptionsViewController.swift in Sources */,
-				665F49C621F766CC00A7A659 /* ReplyCell.swift in Sources */,
 				66CBDD982464772200CA5F83 /* SecondarySeparatorView.swift in Sources */,
 				661049C022C0E42B00A2A354 /* DisplayTableViewController.swift in Sources */,
 				66AE1E1724A0F74900FD3FFC /* InformationButtonCollectionViewCell.swift in Sources */,
@@ -3972,9 +3832,7 @@
 				660C042323CFE40D0040C749 /* BadgeCollectionViewCell.swift in Sources */,
 				66714F4A226FA84C006113DA /* SynopsisViewController.swift in Sources */,
 				66752633222815C2007C1617 /* KThemeStyle.swift in Sources */,
-				66A552D420A2D24F00E515DB /* ForumsViewController.swift in Sources */,
 				661DBC57234A6A78009292DF /* PurchaseButtonTableViewCell.swift in Sources */,
-				6674A0D420A5849D00AAB527 /* ThreadTableViewController.swift in Sources */,
 				666D9EEC25B35E9E00EDDC9E /* LibraryListCollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				66CBDD96246352E900CA5F83 /* SeparatorView.swift in Sources */,
 				66B4DC3E245797770097135A /* SwitchAccountsTableViewController.swift in Sources */,
@@ -4019,7 +3877,6 @@
 				6645D5FD23E70BC80042B4E0 /* DiscussionCollectionViewCell.swift in Sources */,
 				66B9BB9924FC5CC3004953C9 /* KFMReplyTextEditorViewController.swift in Sources */,
 				660E3A0E25E5DE7800A46EB0 /* GenresTableViewController+UITableViewDelegate.swift in Sources */,
-				66EA1E1925B63A5500FCD07A /* ForumsViewControllerDelegate.swift in Sources */,
 				66472372245E0070008E5111 /* KTextField.swift in Sources */,
 				669E89C72345573600092778 /* KStoreObserver.swift in Sources */,
 				66148D6525E5E625000F2E0A /* FavoriteShowsCollectionViewController+UICollectionViewDelegate.swift in Sources */,
@@ -4046,7 +3903,6 @@
 				660E3A0925E5DA2100A46EB0 /* SeasonsCollectionViewController+UICollectionViewDelegate.swift in Sources */,
 				66ED9D8B22AC15E600C7A45C /* ImageAnnotation.swift in Sources */,
 				666D9EE625B35CE300EDDC9E /* HomeCollectionViewController+KCollectionViewDataSource.swift in Sources */,
-				66EA1E1325B639B100FCD07A /* KRichTextEditorViewDelegate.swift in Sources */,
 				66EA1DC225B366CF00FCD07A /* NotificationsViewController+TouchBar.swift in Sources */,
 				6647236D245DB602008E5111 /* KTintedButton.swift in Sources */,
 				66CAE6892337D04C00991E59 /* OnboardingOptionsTableViewCell.swift in Sources */,
@@ -4058,7 +3914,6 @@
 				66EA1DCF25B36EBD00FCD07A /* SearchResultsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				66AE1E1924A10D7900FD3FFC /* StudioDetailsInformationSection.swift in Sources */,
 				6645D5F923E70A4D0042B4E0 /* ManageIconTableViewController.swift in Sources */,
-				66CE34302325522700A41558 /* ForumOrder+Kurozora.swift in Sources */,
 				66EA1DF825B5FA1500FCD07A /* CastCollectionViewCellDelegate.swift in Sources */,
 				66CE81042460377900DB0C49 /* KCollectionViewDelegateLayout.swift in Sources */,
 				66CAE68D2337D0FF00991E59 /* AccountOnboarding.swift in Sources */,
@@ -4081,15 +3936,12 @@
 				66AE1E1024A0DB9200FD3FFC /* StudioDetailsSection.swift in Sources */,
 				660E39F525E5BE4000A46EB0 /* Person+UIKit.swift in Sources */,
 				66C457FC2598DA4500886374 /* StudioDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
-				6619EE74216F969B00655B99 /* ForumsListViewController.swift in Sources */,
 				6674A0C320A45E6D00AAB527 /* LinkCollectionViewCell.swift in Sources */,
 				66EC939A2274B90100D584F7 /* ShowDetail.swift in Sources */,
 				669C8D562107B7D80014EB7A /* BounceAnimation.swift in Sources */,
 				66EA1DFC25B6199B00FCD07A /* ManageThemesController+KCollectionViewDataSource.swift in Sources */,
 				6634735E23343D55006B7F99 /* String+Kurozora.swift in Sources */,
 				6663985B2366298100713B8B /* UICollectionViewCell+Kurozora.swift in Sources */,
-				66B216AA21C16817006E167D /* KRichTextEditorViewController.swift in Sources */,
-				66EA1E1725B63A0400FCD07A /* KCommentEditorViewDelegate.swift in Sources */,
 				6699A1C123779E6800517C2C /* TimeInterval+String.swift in Sources */,
 				66AEABDC2298A92500949FD8 /* NotificationAlertStyle.swift in Sources */,
 				66999C4A24E71E1A00001A6E /* GenreAttributes+UIImage.swift in Sources */,
@@ -4108,7 +3960,6 @@
 				668142D3245B4804008FC7BE /* ProfileImageView.swift in Sources */,
 				66C4DAE1243BE52900C4B90A /* KKLibrarySortTypeOptions+Kurozora.swift in Sources */,
 				666E0D2122888B2300AA8BA4 /* KNavigationController.swift in Sources */,
-				66FB7ECC2569EE020028093C /* ThreadReply+UIKit.swift in Sources */,
 				66B4F1DD223D334D007C5048 /* SearchScope.swift in Sources */,
 				66CDC08F234A95B8009E799C /* RedeemTableViewController.swift in Sources */,
 				66E54EC3244E1698007248EE /* Array+String.swift in Sources */,
@@ -4120,7 +3971,6 @@
 				66647B542084995500CF624F /* AppDelegate.swift in Sources */,
 				662F117B24E5EEB40000375A /* StudioLogoImageView.swift in Sources */,
 				66B4F1DB223D2CA5007C5048 /* SearchBaseResultsCell.swift in Sources */,
-				6674A0C920A45EB700AAB527 /* ForumsCell.swift in Sources */,
 				662F118224E60F1C0000375A /* SeasonAttributes+UIImage.swift in Sources */,
 				669C8D582107B8170014EB7A /* BasicTabBarItemContentView.swift in Sources */,
 				66CE8107246088DA00DB0C49 /* ServiceTableViewController.swift in Sources */,
@@ -4133,11 +3983,9 @@
 				66CBFB6221217F60006A5E4F /* InformationCollectionViewCell.swift in Sources */,
 				66EA1E0D25B6287000FCD07A /* Episode+UIKit.swift in Sources */,
 				666938B221B1D4DF00BA9620 /* WriteACommentCell.swift in Sources */,
-				66EA1DBC25B365E200FCD07A /* ForumsListViewControllerDelegate.swift in Sources */,
 				664B6D75230F3A3200F9C726 /* FeedType.swift in Sources */,
 				667F9ADD21B5F354003F6629 /* SettingsSplitViewController.swift in Sources */,
 				668422462595F762000A09F8 /* CharacterDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
-				66EA1DB625B3645900FCD07A /* ForumsCellDelegate.swift in Sources */,
 				665CBBA222C2B139004D0D3E /* DateSettingsCell.swift in Sources */,
 				66A1C65C232B75360044EAD1 /* FollowCell.swift in Sources */,
 				669FD80123FA2270001440EC /* MALImportTableViewController.swift in Sources */,
@@ -4149,7 +3997,6 @@
 				669A36BD24F1B0C30045D04A /* OnboardingHeaderTableViewCell.swift in Sources */,
 				66EA1DCB25B36DE900FCD07A /* FavoriteShowsCollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				6698D3D424E5E81D006B7A4C /* StudioAttributes+UIImage.swift in Sources */,
-				66BDEC7421C3F0A100D5487B /* KCommentEditorViewController.swift in Sources */,
 				6640E19922AE7FCB00D0F575 /* AuthenticationOptionsCell.swift in Sources */,
 				665CBBA422C2B2C2004D0D3E /* DatePickerSettingsCell.swift in Sources */,
 				66A08C7023E3B342007B6418 /* SubSettingsViewController.swift in Sources */,
@@ -4164,8 +4011,6 @@
 				66AC3D2223D923ED00D28EE6 /* KViewController.swift in Sources */,
 				66785E2A2363C714003EF24C /* CastCollectionViewCell.swift in Sources */,
 				6611234E208F70CB00E6033A /* UIViewController+Kurozora.swift in Sources */,
-				66BA99FD25E4126300CE4480 /* ForumsListViewController+UITableViewDelegate.swift in Sources */,
-				66EA1DB925B3651C00FCD07A /* ReplyCellDelegate.swift in Sources */,
 				664133E521DA8E5F00CE823A /* NotificationsGroupingCell.swift in Sources */,
 				66973DFA2311E4400097A9F8 /* Notification+Kurozora.swift in Sources */,
 				66CF5D8021E798C800969BBB /* UIScrollView+Kurozora.swift in Sources */,
@@ -4185,7 +4030,6 @@
 				66DB2546245C667A000AA6DB /* KCopyableLabel.swift in Sources */,
 				664B52D322C03D4C00B988B3 /* DisplaySettingsCell.swift in Sources */,
 				66DB254A245D72ED000AA6DB /* KActivityIndicatorView.swift in Sources */,
-				66FB7EAF2565D5C00028093C /* ForumsThread+UIKit.swift in Sources */,
 				66B2C73F232F95680042AB12 /* BaseNotificationCell.swift in Sources */,
 				661F185E24AAA03700542AFB /* SectionBackgroundDecorationView.swift in Sources */,
 				66160C3B215C04B900D0D722 /* AccountTableViewController.swift in Sources */,

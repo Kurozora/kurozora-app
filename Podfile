@@ -13,7 +13,7 @@ def kurozora_pods
 	pod 'ESTabBarController-swift'
 	pod 'KeychainAccess'
 	pod 'Kingfisher'
-	pod 'KurozoraKit', path: '../KurozoraKit'
+	pod 'KurozoraKit'#, path: '../KurozoraKit'
 	pod 'R.swift'
 	pod 'ReachabilitySwift'
 	pod 'Solar'

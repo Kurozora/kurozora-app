@@ -50,13 +50,10 @@ class SidebarViewController: KCollectionViewController {
 	// MARK: - Initializers
 	convenience init() {
 		let layout = UICollectionViewCompositionalLayout { (section, layoutEnvironment) -> NSCollectionLayoutSection? in
-			if #available(iOS 14.0, macOS 11.0, *) {
-				var configuration = UICollectionLayoutListConfiguration(appearance: .sidebar)
-				configuration.showsSeparators = false
-				let section = NSCollectionLayoutSection.list(using: configuration, layoutEnvironment: layoutEnvironment)
-				return section
-			}
-			return nil
+			var configuration = UICollectionLayoutListConfiguration(appearance: .sidebar)
+			configuration.showsSeparators = false
+			let section = NSCollectionLayoutSection.list(using: configuration, layoutEnvironment: layoutEnvironment)
+			return section
 		}
 		self.init(collectionViewLayout: layout)
 	}
@@ -129,13 +126,10 @@ extension SidebarViewController {
 	override func createLayout() -> UICollectionViewLayout? {
 		if dataSource != nil {
 			let layout = UICollectionViewCompositionalLayout { (section, layoutEnvironment) -> NSCollectionLayoutSection? in
-				if #available(iOS 14.0, macOS 11.0, *) {
-					var configuration = UICollectionLayoutListConfiguration(appearance: .sidebar)
-					configuration.showsSeparators = false
-					let section = NSCollectionLayoutSection.list(using: configuration, layoutEnvironment: layoutEnvironment)
-					return section
-				}
-				return nil
+				var configuration = UICollectionLayoutListConfiguration(appearance: .sidebar)
+				configuration.showsSeparators = false
+				let section = NSCollectionLayoutSection.list(using: configuration, layoutEnvironment: layoutEnvironment)
+				return section
 			}
 			return layout
 		}
@@ -147,21 +141,18 @@ extension SidebarViewController {
 // MARK: - KCollectionViewDataSource
 extension SidebarViewController {
 	override func configureDataSource() {
-		if #available(iOS 14.0, macOS 11.0, *) {
-			let rowRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, SidebarItem> { (cell, _, item) in
-				var contentConfiguration = self.getContentConfiguration(UIListContentConfiguration.sidebarCell(), cell: cell)
-				contentConfiguration?.text = item.title
-				contentConfiguration?.image = item.image
-				cell.contentConfiguration = contentConfiguration
-			}
+		let rowRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, SidebarItem> { (cell, _, item) in
+			var contentConfiguration = self.getContentConfiguration(UIListContentConfiguration.sidebarCell(), cell: cell)
+			contentConfiguration?.text = item.title
+			contentConfiguration?.image = item.image
+			cell.contentConfiguration = contentConfiguration
+		}
 
-			dataSource = UICollectionViewDiffableDataSource<SidebarSection, SidebarItem>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell in
-				return collectionView.dequeueConfiguredReusableCell(using: rowRegistration, for: indexPath, item: item)
-			}
+		dataSource = UICollectionViewDiffableDataSource<SidebarSection, SidebarItem>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell in
+			return collectionView.dequeueConfiguredReusableCell(using: rowRegistration, for: indexPath, item: item)
 		}
 	}
 
-	@available(iOS 14.0, *)
 	private func sideBarSnapshot() -> NSDiffableDataSourceSectionSnapshot<SidebarItem> {
 		var snapshot = NSDiffableDataSourceSectionSnapshot<SidebarItem>()
 		let items: [SidebarItem] = TabBarItem.allCases.map {
@@ -171,7 +162,6 @@ extension SidebarViewController {
 		return snapshot
 	}
 
-	@available(iOS 14.0, *)
 	private func applyInitialSnapshot() {
 		dataSource.apply(sideBarSnapshot(), to: .main, animatingDifferences: false) {
 			// Select the home view

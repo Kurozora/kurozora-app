@@ -21,10 +21,10 @@ extension NotificationsViewController {
 		}
 
 		if baseNotificationCell?.notificationType == .session {
-			WorkflowController.shared.openSessionsManager()
+			WorkflowController.shared.openSessionsManager(in: self)
 		} else if baseNotificationCell?.notificationType == .follower {
 			guard let userID = baseNotificationCell?.userNotification?.attributes.payload.userID else { return }
-			WorkflowController.shared.openUserProfile(for: userID)
+			WorkflowController.shared.openUserProfile(for: userID, in: self)
 		} else if baseNotificationCell?.notificationType == .subscriptionStatus {
 			UIApplication.shared.kOpen(nil, deepLink: .subscriptionManagement)
 		}

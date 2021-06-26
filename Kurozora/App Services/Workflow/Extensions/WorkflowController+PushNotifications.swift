@@ -162,10 +162,10 @@ extension WorkflowController: UNUserNotificationCenterDelegate {
 // MARK: - Push Notification Actions
 extension WorkflowController {
 	/// Open the sessions view if the current view is not the sessions view.
-	func openSessionsManager() {
+	func openSessionsManager(in viewController: UIViewController? = UIApplication.topViewController) {
 		if UIApplication.topViewController as? ManageActiveSessionsController == nil {
 			if let manageActiveSessionsController = R.storyboard.accountSettings.manageActiveSessionsController() {
-				UIApplication.topViewController?.show(manageActiveSessionsController, sender: nil)
+				viewController?.show(manageActiveSessionsController, sender: nil)
 			}
 		}
 	}
@@ -175,9 +175,9 @@ extension WorkflowController {
 
 		- Parameter showID: The id of the show with which the details view will be loaded.
 	*/
-	func openShowDetails(for showID: Int) {
+	func openShowDetails(for showID: Int, in viewController: UIViewController? = UIApplication.topViewController) {
 		let showDetailsCollectionViewController = ShowDetailsCollectionViewController.`init`(with: showID)
-		UIApplication.topViewController?.show(showDetailsCollectionViewController, sender: nil)
+		viewController?.show(showDetailsCollectionViewController, sender: nil)
 	}
 
 	/**
@@ -185,8 +185,8 @@ extension WorkflowController {
 
 		- Parameter userID: The id of the user with which the profile view will be loaded.
 	*/
-	func openUserProfile(for userID: Int) {
+	func openUserProfile(for userID: Int, in viewController: UIViewController? = UIApplication.topViewController) {
 		let profileTableViewController = ProfileTableViewController.`init`(with: userID)
-		UIApplication.topViewController?.show(profileTableViewController, sender: nil)
+		viewController?.show(profileTableViewController, sender: nil)
 	}
 }

@@ -106,28 +106,6 @@ internal struct KKEndpoint {
 		}
 	}
 
-	// MARK: - Forums
-	/// The set of available Forums API endpoints types.
-	internal enum Forums {
-		// MARK: - Cases
-		/// The endpoint to the forums sections.
-		case sections
-
-		/// The endpoint to the threads in a forums section.
-		case threads(_ sectionID: Int)
-
-		// MARK: - Properties
-		/// The endpoint value of the Forums API type.
-		var endpointValue: String {
-			switch self {
-			case .sections:
-				return "forum-sections"
-			case .threads(let sectionID):
-				return "forum-sections/\(sectionID)/threads"
-			}
-		}
-	}
-
 	// MARK: - Store
 	/// The set of available Store API endpoint types.
 	internal enum Store {

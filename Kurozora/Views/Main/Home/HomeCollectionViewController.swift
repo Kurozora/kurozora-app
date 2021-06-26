@@ -12,9 +12,6 @@ import WhatsNew
 
 class HomeCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	#if !targetEnvironment(macCatalyst)
-	var kSearchController: KSearchController = KSearchController()
-	#endif
 	var genre: Genre? = nil
 	let actionsArray: [[[String: String]]] = [
 		[["title": "About In-App Purchases", "url": "https://kurozora.app/"], ["title": "About Personalization", "url": "https://kurozora.app/"], ["title": "Welcome to Kurozora", "url": "https://kurozora.app/"]],
@@ -86,9 +83,6 @@ class HomeCollectionViewController: KCollectionViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		// Configure search bar.
-		self.configureSearchBar()
-
 		// Add Refresh Control to Collection View
 		#if DEBUG
 		self._prefersRefreshControlDisabled = false
@@ -126,18 +120,6 @@ class HomeCollectionViewController: KCollectionViewController {
 		}
 	}
 
-	/// Configures the search bar.
-	fileprivate func configureSearchBar() {
-		#if !targetEnvironment(macCatalyst)
-		// Configure search bar
-		kSearchController.viewController = self
-		kSearchController.searchScope = .show
-
-		// Add search bar to navigation controller
-		navigationItem.searchController = kSearchController
-		#endif
-	}
-
 	/// Fetches the explore page from the server.
 	fileprivate func fetchExplore() {
 		KService.getExplore(genre?.id) { [weak self] result in
@@ -148,11 +130,6 @@ class HomeCollectionViewController: KCollectionViewController {
 			case .failure: break
 			}
 		}
-	}
-
-	/// Focuses on the search bar.
-	@objc func toggleSearchBar() {
-		self.navigationItem.searchController?.searchBar.textField?.becomeFirstResponder()
 	}
 
 	// MARK: - Segue

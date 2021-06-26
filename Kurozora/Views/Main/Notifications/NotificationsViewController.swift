@@ -14,9 +14,6 @@ class NotificationsViewController: KTableViewController {
 	@IBOutlet weak var markAllButton: UIBarButtonItem!
 
 	// MARK: - Properties
-	#if !targetEnvironment(macCatalyst)
-	var kSearchController: KSearchController = KSearchController()
-	#endif
 	var grouping: KNotification.GroupStyle = KNotification.GroupStyle(rawValue: UserSettings.notificationsGrouping) ?? .automatic
 	var oldGrouping: Int? = nil
 	var userNotifications: [UserNotification] = [] {
@@ -88,9 +85,6 @@ class NotificationsViewController: KTableViewController {
 			self.toggleEmptyDataView()
 		}
 
-		// Configure search bar.
-		self.configureSearchBar()
-
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your notifications!")
@@ -108,18 +102,6 @@ class NotificationsViewController: KTableViewController {
 	}
 
 	// MARK: - Functions
-	/// Configures the search bar.
-	fileprivate func configureSearchBar() {
-		#if !targetEnvironment(macCatalyst)
-		// Configure search bar
-		kSearchController.searchScope = .user
-		kSearchController.viewController = self
-
-		// Add search bar to navigation controller
-		navigationItem.searchController = kSearchController
-		#endif
-	}
-
 	override func handleRefreshControl() {
 		self.fetchNotifications()
 	}
@@ -198,11 +180,6 @@ class NotificationsViewController: KTableViewController {
 
 			self._prefersActivityIndicatorHidden = true
 		}
-	}
-
-	/// Focuses on the search bar.
-	@objc func toggleSearchBar() {
-		self.navigationItem.searchController?.searchBar.textField?.becomeFirstResponder()
 	}
 
 	// MARK: - IBActions

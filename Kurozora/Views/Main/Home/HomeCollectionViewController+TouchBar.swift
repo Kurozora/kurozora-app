@@ -16,7 +16,6 @@ extension HomeCollectionViewController: NSTouchBarDelegate {
 		touchBar.delegate = self
 		touchBar.defaultItemIdentifiers = [
 			.fixedSpaceSmall,
-			.toggleSearchBar,
 			.fixedSpaceSmall
 		]
 		return touchBar
@@ -26,9 +25,6 @@ extension HomeCollectionViewController: NSTouchBarDelegate {
 		let touchBarItem: NSTouchBarItem?
 
 		switch identifier {
-		case .toggleSearchBar:
-			guard let image = UIImage(systemName: "magnifyingglass") else { return nil }
-			touchBarItem = NSButtonTouchBarItem(identifier: identifier, image: image, target: self, action: #selector(toggleSearchBar))
 		default:
 			touchBarItem = nil
 		}

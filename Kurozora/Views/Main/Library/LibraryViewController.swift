@@ -17,9 +17,6 @@ class LibraryViewController: KTabbedViewController {
 	@IBOutlet var sortTypeBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Properties
-	#if !targetEnvironment(macCatalyst)
-	var kSearchController: KSearchController = KSearchController()
-	#endif
 	var rightBarButtonItems: [UIBarButtonItem]? = nil
 	var leftBarButtonItems: [UIBarButtonItem]? = nil
 
@@ -41,24 +38,9 @@ class LibraryViewController: KTabbedViewController {
 
 		// Actions
 		enableActions()
-
-		// Configure search bar.
-		configureSearchBar()
     }
 
 	// MARK: - Functions
-	/// Configures the search bar.
-	fileprivate func configureSearchBar() {
-		#if !targetEnvironment(macCatalyst)
-		// Configure search controller
-		kSearchController.searchScope = .myLibrary
-		kSearchController.viewController = self
-
-		// Add search bar to navigation controller
-		navigationItem.searchController = kSearchController
-		#endif
-	}
-
 	override func configureTabBarViewVisibility() {
 		if User.isSignedIn {
 			if let barItemsCount = bar.items?.count {
@@ -175,11 +157,6 @@ class LibraryViewController: KTabbedViewController {
 		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
 			self.present(actionSheetAlertController, animated: true, completion: nil)
 		}
-	}
-
-	/// Focuses on the search bar.
-	@objc func toggleSearchBar() {
-		self.navigationItem.searchController?.searchBar.textField?.becomeFirstResponder()
 	}
 
 	#if targetEnvironment(macCatalyst)

@@ -16,9 +16,8 @@ import Foundation
 	case profile, user
 	case explore, home
 	case library, myLibrary, list
-	case forum, forums, forumThread, forumsThread, thread
-	case notification, notifications
 	case feed, timeline
+	case notification, notifications
 	```
 */
 enum Scheme: String {
@@ -26,11 +25,10 @@ enum Scheme: String {
 	case profile, user
 	case explore, home
 	case library, myLibrary, list
-	case forum, forums, forumThread, forumsThread, thread
-	case notification, notifications
 	case feed, timeline
+	case notification, notifications
 
 	// MARK: - Properties
 	/// An array containing all supported schemes.
-	static let all: [Scheme] = [.anime, .show, .profile, .user, .explore, .home, .library, .myLibrary, .list, .forum, .forums, .forumThread, .forumsThread, .thread, .notification, .notifications, .feed, .timeline]
+	static let all: [Scheme] = [.anime, .show, .profile, .user, .explore, .home, .library, .myLibrary, .list, .feed, .timeline, .notification, .notifications]
 }

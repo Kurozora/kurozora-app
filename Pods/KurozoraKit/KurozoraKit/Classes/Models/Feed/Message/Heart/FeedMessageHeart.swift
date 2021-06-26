@@ -6,7 +6,7 @@
 //
 
 /**
-	A root object that stores information about a single forums vote, such as the vote action.
+	A root object that stores information about a single feed message vote, such as the vote action.
 */
 public struct FeedMessageHeart: Codable {
 	// MARK: - Properties

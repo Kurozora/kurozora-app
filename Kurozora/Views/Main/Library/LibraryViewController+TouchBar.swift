@@ -15,7 +15,6 @@ extension LibraryViewController: NSTouchBarDelegate {
 	override func makeTouchBar() -> NSTouchBar? {
 		var itemIdentifiers: [NSTouchBarItem.Identifier] = [
 			.fixedSpaceSmall,
-			.toggleSearchBar,
 			.fixedSpaceSmall
 		]
 		let touchBar = NSTouchBar()
@@ -35,9 +34,6 @@ extension LibraryViewController: NSTouchBarDelegate {
 		let touchBarItem: NSTouchBarItem?
 
 		switch identifier {
-		case .toggleSearchBar:
-			guard let image = UIImage(systemName: "magnifyingglass") else { return nil }
-			touchBarItem = NSButtonTouchBarItem(identifier: identifier, image: image, target: self, action: #selector(toggleSearchBar))
 		case .listTabBar:
 			let labels: [String] = KKLibrary.Status.all.map { (libraryStatus) -> String in
 				libraryStatus.stringValue

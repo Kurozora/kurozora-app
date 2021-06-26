@@ -108,29 +108,26 @@ class ManageActiveSessionsController: KTableViewController {
 
 	/// Creates annotations and adds them to the map view.
 	private func createAnnotations() {
-		let otherUserSessions = sessions
-
-		for userSession in otherUserSessions {
+		for session in sessions {
 			let annotation = ImageAnnotation()
-			if let deviceName = userSession.relationships.platform.data.first?.attributes.deviceModel {
+			if let deviceName = session.relationships.platform.data.first?.attributes.deviceModel {
 				annotation.title = deviceName
 
-				switch deviceName {
-				case "iPhone":
-					annotation.image = R.image.devices.iPhone()
-				case "iPad":
-					annotation.image = R.image.devices.iPad()
-				case "Apple TV":
-					annotation.image = R.image.devices.appleTV()
-				case "MacBook":
-					annotation.image = R.image.devices.macBook()
-				default:
-					annotation.image = R.image.devices.other()
+				if deviceName.contains("iPhone", caseSensitive: false) {
+					annotation.image = UIImage(systemName: "iphone")
+				} else if deviceName.contains("iPad", caseSensitive: false) {
+					annotation.image = UIImage(systemName: "ipad.landscape")
+				} else if deviceName.contains("TV", caseSensitive: false) {
+					annotation.image = UIImage(systemName: "appletv")
+				} else if deviceName.contains("Mac", caseSensitive: false) {
+					annotation.image = UIImage(systemName: "laptopcomputer")
+				} else {
+					annotation.image = UIImage(systemName: "bolt.horizontal")
 				}
 			}
 
-			if let userSessionLocation = userSession.relationships.location.data.first {
-				if let latitude = userSessionLocation.attributes.latitude, let longitude = userSessionLocation.attributes.longitude {
+			if let sessionLocation = session.relationships.location.data.first {
+				if let latitude = sessionLocation.attributes.latitude, let longitude = sessionLocation.attributes.longitude {
 					annotation.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
 				}
 			}

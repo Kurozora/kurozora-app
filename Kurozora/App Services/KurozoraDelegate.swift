@@ -152,24 +152,13 @@ class KurozoraDelegate {
 			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
 				tabBarController.selectedIndex = 1
 			}
-		case .forum, .forums, .forumThread, .forumsThread, .thread:
-			let forumThreadIDString = url.lastPathComponent
+		case .feed, .timeline:
 			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
-				tabBarController.selectedIndex = 2
-
-				if !forumThreadIDString.isEmpty {
-					guard let forumThreadID = forumThreadIDString.int else { return }
-					let threadTableViewController = ThreadTableViewController.`init`(with: forumThreadID)
-					tabBarController.selectedViewController?.show(threadTableViewController, sender: nil)
-				}
+				tabBarController.selectedIndex = 4
 			}
 		case .notification, .notifications:
 			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
 				tabBarController.selectedIndex = 3
-			}
-		case .feed, .timeline:
-			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
-				tabBarController.selectedIndex = 4
 			}
 		}
 	}
