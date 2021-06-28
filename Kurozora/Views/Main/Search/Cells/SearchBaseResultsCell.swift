@@ -11,10 +11,10 @@ import UIKit
 class SearchBaseResultsCell: UICollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var primaryLabel: UILabel!
-	@IBOutlet weak var secondaryLabel: UILabel?
-	@IBOutlet weak var actionButton: KTintedButton?
+	@IBOutlet weak var secondaryLabel: UILabel!
+	@IBOutlet weak var actionButton: KTintedButton!
 	@IBOutlet weak var searchImageView: UIImageView!
-	@IBOutlet weak var separatorView: UIVisualEffectView?
+	@IBOutlet weak var separatorView: SeparatorView!
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.

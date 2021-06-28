@@ -18,12 +18,6 @@ class SettingsSplitViewController: UISplitViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-
-		if #available(iOS 14.0, macOS 11.0, *) {
-			self.preferredDisplayMode = .oneBesideSecondary
-		} else {
-			self.preferredDisplayMode = .allVisible
-		}
 		self.delegate = self
     }
 }

@@ -11,6 +11,7 @@ import KurozoraKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	var window: UIWindow?
+	var authenticationCount = 0
 	var isUnreachable = false
 
 	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -76,6 +77,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	func sceneDidEnterBackground(_ scene: UIScene) {
 		KurozoraDelegate.shared.userShouldAuthenticate()
+		authenticationCount = 0
 	}
 
 	func sceneWillEnterForeground(_ scene: UIScene) {
@@ -91,9 +93,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	}
 
 	func sceneDidBecomeActive(_ scene: UIScene) {
-		if Date.uptime() > KurozoraDelegate.shared.authenticationInterval, KurozoraDelegate.shared.authenticationEnabled {
-			KurozoraDelegate.shared.prepareForAuthentication()
+		if authenticationCount < 1 {
+			if Date.uptime() > KurozoraDelegate.shared.authenticationInterval, KurozoraDelegate.shared.authenticationEnabled {
+				KurozoraDelegate.shared.prepareForAuthentication()
+			}
 		}
+
+		authenticationCount += 1
 
 		// Clear notifications
 		UIApplication.shared.applicationIconBadgeNumber = 0

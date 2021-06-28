@@ -12,7 +12,7 @@ import KurozoraKit
 /**
 	The collection view controller in charge of providing the necessary functionalities for searching shows, threads and users.
 */
-class SearchResultsCollectionViewController: UICollectionViewController {
+class SearchResultsCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	/// The collection of results fetched by the search request.
 	var searchResults: [Codable]? {
@@ -38,8 +38,29 @@ class SearchResultsCollectionViewController: UICollectionViewController {
 		}
 	}
 
-	override var preferredStatusBarStyle: UIStatusBarStyle {
-		return KThemePicker.statusBarStyle.statusBarValue
+	#if !targetEnvironment(macCatalyst)
+	/// The object containing the search controller
+	var kSearchController: KSearchController = KSearchController()
+	#endif
+
+	// Refresh control
+	var _prefersRefreshControlDisabled = false {
+		didSet {
+			self.setNeedsRefreshControlAppearanceUpdate()
+		}
+	}
+	override var prefersRefreshControlDisabled: Bool {
+		return self._prefersRefreshControlDisabled
+	}
+
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return self._prefersActivityIndicatorHidden
 	}
 
 	// MARK: - View
@@ -54,24 +75,32 @@ class SearchResultsCollectionViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+		// Disable Refresh Control & hide Activity Indicator
+		self._prefersRefreshControlDisabled = true
+		self._prefersActivityIndicatorHidden = true
+
+		#if !targetEnvironment(macCatalyst)
+		self.setupSearchController()
+		#endif
 
 		// Create colelction view layout
 		if let collectionViewLayout = self.createLayout() {
 			self.collectionView.collectionViewLayout = collectionViewLayout
 		}
-
-		// Blurred table view background
-		let blurEffect = UIBlurEffect(style: .regular)
-		let blurEffectView = UIVisualEffectView(effect: blurEffect)
-
-		for subview in blurEffectView.subviews {
-			subview.backgroundColor = nil
-		}
-
-		self.collectionView.backgroundView = blurEffectView
     }
 
 	// MARK: - Functions
+	#if !targetEnvironment(macCatalyst)
+	/// Setup the search controller with the desired settings.
+	func setupSearchController() {
+		// Set the current view as the view controller of the search
+		self.kSearchController.viewController = self
+
+		// Add search bar to navigation controller
+		navigationItem.searchController = kSearchController
+	}
+	#endif
+
 	/**
 		Perform search with the given search text and the search scope.
 
@@ -174,13 +203,6 @@ extension SearchResultsCollectionViewController {
 		}
 		searchResultsCell.show = suggestionElements?[indexPath.row]
 		return searchResultsCell
-	}
-}
-
-// MARK: - UISearchResultsUpdating
-extension SearchResultsCollectionViewController: UISearchResultsUpdating {
-	func updateSearchResults(for searchController: UISearchController) {
-		searchController.searchResultsController?.view.isHidden = false
 	}
 }
 

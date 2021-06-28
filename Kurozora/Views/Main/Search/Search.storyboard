@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19115.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ufF-h3-VBA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19115.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ufF-h3-VBA">
     <device id="retina6_5" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19107.4"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19107.5"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,8 +11,8 @@
         <!--Search-->
         <scene sceneID="qKA-7R-4CS">
             <objects>
-                <collectionViewController storyboardIdentifier="SearchResultsCollectionViewController" title="Search" useStoryboardIdentifierAsRestorationIdentifier="YES" id="2ep-aO-hMa" customClass="SearchResultsCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" keyboardDismissMode="onDrag" dataMode="prototypes" id="5zJ-Qq-w0f">
+                <collectionViewController storyboardIdentifier="SearchResultsCollectionViewController" title="Search" extendedLayoutIncludesOpaqueBars="YES" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="2ep-aO-hMa" customClass="SearchResultsCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" keyboardDismissMode="onDrag" dataMode="prototypes" id="5zJ-Qq-w0f">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -24,14 +24,14 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SearchShowResultsCell" id="q1N-DV-obK" customClass="SearchShowResultsCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="10" width="480.66666666666669" height="160"/>
+                                <rect key="frame" x="0.0" y="10" width="480.33333333333331" height="160"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="UBp-TX-PwX">
-                                    <rect key="frame" x="0.0" y="0.0" width="480.66666666666669" height="160"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="480.33333333333331" height="160"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OlS-ok-hS0">
-                                            <rect key="frame" x="0.0" y="0.0" width="480.66666666666669" height="160"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="480.33333333333331" height="160"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Show Poster" translatesAutoresizingMaskIntoConstraints="NO" id="MUS-DF-Bcc">
                                                     <rect key="frame" x="8" y="0.0" width="100" height="150"/>
@@ -52,72 +52,35 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jMT-bG-BUw">
-                                                    <rect key="frame" x="428.66666666666669" y="0.0" width="44" height="18"/>
-                                                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Pa5-VX-a2N">
-                                                        <rect key="frame" x="0.0" y="0.0" width="44" height="18"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                        <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Ended" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L1X-Gb-qwx">
-                                                                <rect key="frame" x="0.0" y="0.0" width="43.666666666666664" height="18"/>
-                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                        </subviews>
-                                                        <constraints>
-                                                            <constraint firstItem="L1X-Gb-qwx" firstAttribute="top" secondItem="Pa5-VX-a2N" secondAttribute="top" id="K6V-m4-Fae"/>
-                                                            <constraint firstAttribute="trailing" secondItem="L1X-Gb-qwx" secondAttribute="trailing" id="iPz-sc-srX"/>
-                                                            <constraint firstAttribute="bottom" secondItem="L1X-Gb-qwx" secondAttribute="bottom" id="mz0-HO-s5c"/>
-                                                            <constraint firstItem="L1X-Gb-qwx" firstAttribute="leading" secondItem="Pa5-VX-a2N" secondAttribute="leading" id="qW5-ON-5nW"/>
-                                                        </constraints>
-                                                    </view>
-                                                    <vibrancyEffect style="secondaryLabel">
-                                                        <blurEffect style="regular"/>
-                                                    </vibrancyEffect>
-                                                </visualEffectView>
-                                                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oY0-J1-cOg">
-                                                    <rect key="frame" x="116" y="20.333333333333329" width="84" height="54"/>
-                                                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="hto-vJ-RfF">
-                                                        <rect key="frame" x="0.0" y="0.0" width="84" height="54"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                        <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TV-MA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="chn-Uj-occ">
-                                                                <rect key="frame" x="0.0" y="0.0" width="84.333333333333329" height="18"/>
-                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="25 Episodes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gkj-n8-ymY">
-                                                                <rect key="frame" x="0.0" y="18.000000000000004" width="84.333333333333329" height="17.999999999999996"/>
-                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MaB-HT-zk9">
-                                                                <rect key="frame" x="0.0" y="36" width="84.333333333333329" height="18"/>
-                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                        </subviews>
-                                                        <constraints>
-                                                            <constraint firstItem="chn-Uj-occ" firstAttribute="top" secondItem="hto-vJ-RfF" secondAttribute="top" id="5T8-tu-9EG"/>
-                                                            <constraint firstItem="MaB-HT-zk9" firstAttribute="leading" secondItem="hto-vJ-RfF" secondAttribute="leading" id="DL2-8P-r05"/>
-                                                            <constraint firstAttribute="trailing" secondItem="MaB-HT-zk9" secondAttribute="trailing" id="QEk-yz-BH4"/>
-                                                            <constraint firstAttribute="bottom" secondItem="MaB-HT-zk9" secondAttribute="bottom" id="RHQ-HD-FKE"/>
-                                                            <constraint firstItem="gkj-n8-ymY" firstAttribute="leading" secondItem="hto-vJ-RfF" secondAttribute="leading" id="SMA-Ir-Ah0"/>
-                                                            <constraint firstAttribute="trailing" secondItem="chn-Uj-occ" secondAttribute="trailing" id="jiq-C0-0hm"/>
-                                                            <constraint firstItem="chn-Uj-occ" firstAttribute="leading" secondItem="hto-vJ-RfF" secondAttribute="leading" id="lNz-vh-WjV"/>
-                                                            <constraint firstItem="gkj-n8-ymY" firstAttribute="bottom" secondItem="MaB-HT-zk9" secondAttribute="top" id="qHn-zk-PWA"/>
-                                                            <constraint firstAttribute="trailing" secondItem="gkj-n8-ymY" secondAttribute="trailing" id="qUA-j5-NZk"/>
-                                                            <constraint firstItem="chn-Uj-occ" firstAttribute="bottom" secondItem="gkj-n8-ymY" secondAttribute="top" id="w5W-U5-UoA"/>
-                                                        </constraints>
-                                                    </view>
-                                                    <vibrancyEffect style="label">
-                                                        <blurEffect style="regular"/>
-                                                    </vibrancyEffect>
-                                                </visualEffectView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Ended" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L1X-Gb-qwx" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                                                    <rect key="frame" x="428.66666666666669" y="0.0" width="43.666666666666686" height="18"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                    <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="CIJ-oq-yg7">
+                                                    <rect key="frame" x="116" y="28.333333333333329" width="84.333333333333314" height="56"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PG-12" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="chn-Uj-occ" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="0.0" width="84.333333333333329" height="18"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                            <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="25 Episodes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gkj-n8-ymY" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="19.000000000000004" width="84.333333333333329" height="17.999999999999996"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                            <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MaB-HT-zk9" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="38" width="84.333333333333329" height="18"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                            <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
                                                 <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Qy-7z-oAZ" userLabel="Rating View">
                                                     <rect key="frame" x="116" y="120" width="138" height="30"/>
                                                     <subviews>
@@ -149,7 +112,7 @@
                                                     </constraints>
                                                 </view>
                                                 <button contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1C5-r3-CYT" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="419.66666666666669" y="120" width="53" height="30"/>
+                                                    <rect key="frame" x="419.33333333333331" y="120" width="53" height="30"/>
                                                     <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="p9H-uf-ERG"/>
@@ -169,42 +132,36 @@
                                                         <action selector="actionButtonPressed:" destination="q1N-DV-obK" eventType="touchUpInside" id="Kya-ak-UZI"/>
                                                     </connections>
                                                 </button>
-                                                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eQA-Y6-YOP">
-                                                    <rect key="frame" x="0.0" y="159" width="480.66666666666669" height="1"/>
-                                                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="EQb-cx-jXW">
-                                                        <rect key="frame" x="0.0" y="0.0" width="480.66666666666669" height="1"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                        <color key="backgroundColor" systemColor="separatorColor"/>
-                                                    </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="19f-ld-oo6" customClass="SeparatorView" customModule="Kurozora" customModuleProvider="target">
+                                                    <rect key="frame" x="8" y="159" width="464.33333333333331" height="1"/>
+                                                    <color key="backgroundColor" systemColor="separatorColor"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="1" id="Oal-TY-CLT"/>
+                                                        <constraint firstAttribute="height" constant="1" id="uCj-2t-GBI"/>
                                                     </constraints>
-                                                    <vibrancyEffect style="separator">
-                                                        <blurEffect style="regular"/>
-                                                    </vibrancyEffect>
-                                                </visualEffectView>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstItem="jMT-bG-BUw" firstAttribute="top" secondItem="OlS-ok-hS0" secondAttribute="top" id="063-SU-ray"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="CIJ-oq-yg7" secondAttribute="trailing" constant="8" id="09g-tR-AsI"/>
                                                 <constraint firstItem="MUS-DF-Bcc" firstAttribute="top" secondItem="OlS-ok-hS0" secondAttribute="top" id="3sf-hB-CtZ"/>
-                                                <constraint firstAttribute="trailing" secondItem="eQA-Y6-YOP" secondAttribute="trailing" id="6HU-KP-x34"/>
-                                                <constraint firstAttribute="trailing" secondItem="jMT-bG-BUw" secondAttribute="trailing" constant="8" id="9kh-dL-6TH"/>
                                                 <constraint firstItem="4Qy-7z-oAZ" firstAttribute="bottom" secondItem="1C5-r3-CYT" secondAttribute="bottom" id="A1D-bR-jhO"/>
+                                                <constraint firstItem="L1X-Gb-qwx" firstAttribute="top" secondItem="xqK-rd-pf8" secondAttribute="top" id="Acu-Pz-O87"/>
                                                 <constraint firstAttribute="bottom" secondItem="1C5-r3-CYT" secondAttribute="bottom" constant="10" id="CmK-H4-XAq"/>
                                                 <constraint firstItem="MUS-DF-Bcc" firstAttribute="leading" secondItem="OlS-ok-hS0" secondAttribute="leading" constant="8" id="GoC-ow-AcP"/>
-                                                <constraint firstItem="eQA-Y6-YOP" firstAttribute="leading" secondItem="OlS-ok-hS0" secondAttribute="leading" id="Ia2-AH-HwH"/>
+                                                <constraint firstItem="19f-ld-oo6" firstAttribute="leading" secondItem="OlS-ok-hS0" secondAttribute="leading" constant="8" id="LR1-Xg-bfL"/>
                                                 <constraint firstAttribute="bottom" secondItem="MUS-DF-Bcc" secondAttribute="bottom" constant="10" id="MLq-Ue-lWe"/>
-                                                <constraint firstItem="jMT-bG-BUw" firstAttribute="leading" secondItem="xqK-rd-pf8" secondAttribute="trailing" constant="8" symbolic="YES" id="P4n-eX-gSJ"/>
+                                                <constraint firstAttribute="bottom" secondItem="19f-ld-oo6" secondAttribute="bottom" id="OW1-tR-KdQ"/>
+                                                <constraint firstItem="CIJ-oq-yg7" firstAttribute="top" secondItem="xqK-rd-pf8" secondAttribute="bottom" constant="8" symbolic="YES" id="Pbv-eV-RVV"/>
                                                 <constraint firstItem="1C5-r3-CYT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="4Qy-7z-oAZ" secondAttribute="trailing" constant="10" id="Sfn-NK-cPK"/>
-                                                <constraint firstAttribute="bottom" secondItem="eQA-Y6-YOP" secondAttribute="bottom" id="Tm8-NP-wFY"/>
                                                 <constraint firstItem="xqK-rd-pf8" firstAttribute="leading" secondItem="MUS-DF-Bcc" secondAttribute="trailing" constant="8" symbolic="YES" id="WhR-Oa-tGs"/>
-                                                <constraint firstItem="oY0-J1-cOg" firstAttribute="leading" secondItem="xqK-rd-pf8" secondAttribute="leading" id="acd-nH-CI2"/>
-                                                <constraint firstItem="oY0-J1-cOg" firstAttribute="top" secondItem="xqK-rd-pf8" secondAttribute="bottom" id="b4S-v3-tgA"/>
+                                                <constraint firstItem="4Qy-7z-oAZ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="CIJ-oq-yg7" secondAttribute="bottom" constant="8" symbolic="YES" id="cZ2-9I-d0i"/>
+                                                <constraint firstItem="L1X-Gb-qwx" firstAttribute="leading" secondItem="xqK-rd-pf8" secondAttribute="trailing" constant="8" symbolic="YES" id="kQA-lK-lnB"/>
                                                 <constraint firstItem="4Qy-7z-oAZ" firstAttribute="top" secondItem="1C5-r3-CYT" secondAttribute="top" id="kzA-ho-3W0"/>
                                                 <constraint firstAttribute="trailing" secondItem="1C5-r3-CYT" secondAttribute="trailing" constant="8" id="mlc-Dc-iws"/>
                                                 <constraint firstItem="xqK-rd-pf8" firstAttribute="top" secondItem="MUS-DF-Bcc" secondAttribute="top" id="nQJ-dx-8gG"/>
-                                                <constraint firstItem="4Qy-7z-oAZ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="oY0-J1-cOg" secondAttribute="bottom" constant="8" symbolic="YES" id="ySV-1l-YWg"/>
+                                                <constraint firstAttribute="trailing" secondItem="L1X-Gb-qwx" secondAttribute="trailing" constant="8" id="pQL-Ww-ZZT"/>
+                                                <constraint firstAttribute="trailing" secondItem="19f-ld-oo6" secondAttribute="trailing" constant="8" id="vzL-Gk-fOn"/>
+                                                <constraint firstItem="CIJ-oq-yg7" firstAttribute="leading" secondItem="xqK-rd-pf8" secondAttribute="leading" id="y1m-bb-OdE"/>
                                             </constraints>
                                         </view>
                                     </subviews>
@@ -223,7 +180,7 @@
                                     <outlet property="primaryLabel" destination="xqK-rd-pf8" id="Tjf-cf-bV8"/>
                                     <outlet property="scoreLabel" destination="c5x-Vn-yvK" id="PwD-Jm-G64"/>
                                     <outlet property="searchImageView" destination="MUS-DF-Bcc" id="jMg-fU-hJx"/>
-                                    <outlet property="separatorView" destination="eQA-Y6-YOP" id="kFl-hV-epK"/>
+                                    <outlet property="separatorView" destination="19f-ld-oo6" id="W3r-vN-NXU"/>
                                     <outlet property="showRatingLabel" destination="chn-Uj-occ" id="BmT-go-UZh"/>
                                     <outlet property="statusLabel" destination="L1X-Gb-qwx" id="wiF-SJ-5pR"/>
                                 </connections>
@@ -245,36 +202,18 @@
                                                         <constraint firstAttribute="height" constant="70" id="sI6-pF-R7I"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="drt-vQ-zrh" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="drt-vQ-zrh" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="86" y="0.0" width="192" height="20.333333333333332"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ol-rj-bPq">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Be the first to follow!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GY7-lH-gUl" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="86" y="20.333333333333332" width="192" height="17.999999999999996"/>
-                                                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="FWB-gm-pSF">
-                                                        <rect key="frame" x="0.0" y="0.0" width="192" height="17.999999999999996"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                        <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Be the first to follow!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GY7-lH-gUl">
-                                                                <rect key="frame" x="0.0" y="0.0" width="192" height="18"/>
-                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                        </subviews>
-                                                        <constraints>
-                                                            <constraint firstItem="GY7-lH-gUl" firstAttribute="leading" secondItem="FWB-gm-pSF" secondAttribute="leading" id="37R-hq-AYO"/>
-                                                            <constraint firstItem="GY7-lH-gUl" firstAttribute="top" secondItem="FWB-gm-pSF" secondAttribute="top" id="50j-Af-mjo"/>
-                                                            <constraint firstAttribute="bottom" secondItem="GY7-lH-gUl" secondAttribute="bottom" id="Qkl-0c-d8W"/>
-                                                            <constraint firstAttribute="trailing" secondItem="GY7-lH-gUl" secondAttribute="trailing" id="oRg-dq-OKn"/>
-                                                        </constraints>
-                                                    </view>
-                                                    <vibrancyEffect>
-                                                        <blurEffect style="regular"/>
-                                                    </vibrancyEffect>
-                                                </visualEffectView>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                    <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                                 <button contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c3B-8L-Hn2" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="286" y="25" width="80" height="30"/>
                                                     <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -296,40 +235,33 @@
                                                         <action selector="actionButtonPressed:" destination="xu7-2k-1Xl" eventType="touchUpInside" id="rv3-68-IUs"/>
                                                     </connections>
                                                 </button>
-                                                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QfY-SC-0np">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qhh-Nz-5n1" customClass="SeparatorView" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="8" y="79" width="358" height="1"/>
-                                                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="1o3-ei-K8N">
-                                                        <rect key="frame" x="0.0" y="0.0" width="358" height="1"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                        <color key="backgroundColor" systemColor="separatorColor"/>
-                                                    </view>
+                                                    <color key="backgroundColor" systemColor="separatorColor"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="1" id="s3Z-ne-Eg6"/>
+                                                        <constraint firstAttribute="height" constant="1" id="qQ5-9s-TUc"/>
                                                     </constraints>
-                                                    <vibrancyEffect style="separator">
-                                                        <blurEffect style="regular"/>
-                                                    </vibrancyEffect>
-                                                </visualEffectView>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
+                                                <constraint firstItem="GY7-lH-gUl" firstAttribute="leading" secondItem="drt-vQ-zrh" secondAttribute="leading" id="0ji-yh-eMh"/>
                                                 <constraint firstItem="h3f-B7-Hl0" firstAttribute="leading" secondItem="mtZ-pe-OJF" secondAttribute="leadingMargin" id="2DL-F5-Mrj"/>
                                                 <constraint firstItem="c3B-8L-Hn2" firstAttribute="leading" secondItem="drt-vQ-zrh" secondAttribute="trailing" constant="8" symbolic="YES" id="4DW-FW-Sv2"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="GY7-lH-gUl" secondAttribute="bottom" constant="10" id="8GS-qI-AEb"/>
                                                 <constraint firstItem="drt-vQ-zrh" firstAttribute="leading" secondItem="h3f-B7-Hl0" secondAttribute="trailing" constant="8" symbolic="YES" id="AiA-nW-g4z"/>
-                                                <constraint firstAttribute="bottom" secondItem="QfY-SC-0np" secondAttribute="bottom" id="AxH-jz-Ul7"/>
-                                                <constraint firstItem="3ol-rj-bPq" firstAttribute="leading" secondItem="drt-vQ-zrh" secondAttribute="leading" id="HoP-2E-km9"/>
-                                                <constraint firstItem="c3B-8L-Hn2" firstAttribute="leading" secondItem="3ol-rj-bPq" secondAttribute="trailing" constant="8" symbolic="YES" id="MF8-0J-OLL"/>
+                                                <constraint firstItem="GY7-lH-gUl" firstAttribute="top" secondItem="drt-vQ-zrh" secondAttribute="bottom" id="Obp-BZ-UR1"/>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="c3B-8L-Hn2" secondAttribute="bottom" constant="10" id="QJR-pS-5pU"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="QfY-SC-0np" secondAttribute="trailing" id="RG4-37-jHb"/>
-                                                <constraint firstItem="QfY-SC-0np" firstAttribute="leading" secondItem="mtZ-pe-OJF" secondAttribute="leadingMargin" id="TuZ-Qn-Sgn"/>
                                                 <constraint firstItem="c3B-8L-Hn2" firstAttribute="centerY" secondItem="mtZ-pe-OJF" secondAttribute="centerY" id="WE0-cg-MoV"/>
                                                 <constraint firstAttribute="bottom" secondItem="h3f-B7-Hl0" secondAttribute="bottom" constant="10" id="fNa-Ci-FHm"/>
-                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="3ol-rj-bPq" secondAttribute="bottom" constant="10" id="gnf-6y-7uj"/>
+                                                <constraint firstAttribute="bottom" secondItem="Qhh-Nz-5n1" secondAttribute="bottom" id="fl7-dc-r15"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="c3B-8L-Hn2" secondAttribute="trailing" id="h4j-TR-JbK"/>
+                                                <constraint firstAttribute="trailing" secondItem="Qhh-Nz-5n1" secondAttribute="trailing" constant="8" id="hdh-hR-wLf"/>
                                                 <constraint firstItem="h3f-B7-Hl0" firstAttribute="top" secondItem="drt-vQ-zrh" secondAttribute="top" id="ht7-V0-54x"/>
+                                                <constraint firstItem="c3B-8L-Hn2" firstAttribute="leading" secondItem="GY7-lH-gUl" secondAttribute="trailing" constant="8" symbolic="YES" id="j9N-Ly-CPl"/>
+                                                <constraint firstItem="Qhh-Nz-5n1" firstAttribute="leading" secondItem="mtZ-pe-OJF" secondAttribute="leading" constant="8" id="oFc-x4-jCG"/>
                                                 <constraint firstItem="h3f-B7-Hl0" firstAttribute="top" secondItem="mtZ-pe-OJF" secondAttribute="top" id="r1T-Q2-JeC"/>
                                                 <constraint firstItem="c3B-8L-Hn2" firstAttribute="top" relation="greaterThanOrEqual" secondItem="mtZ-pe-OJF" secondAttribute="top" constant="10" id="rvl-vq-7ne"/>
-                                                <constraint firstItem="3ol-rj-bPq" firstAttribute="top" secondItem="drt-vQ-zrh" secondAttribute="bottom" constant="7.1054273576010019e-15" id="usi-cp-jpe"/>
                                             </constraints>
                                         </view>
                                     </subviews>
@@ -346,7 +278,7 @@
                                     <outlet property="primaryLabel" destination="drt-vQ-zrh" id="lEP-vk-ScX"/>
                                     <outlet property="searchImageView" destination="h3f-B7-Hl0" id="fVz-nI-U4U"/>
                                     <outlet property="secondaryLabel" destination="GY7-lH-gUl" id="JtH-jH-A3l"/>
-                                    <outlet property="separatorView" destination="QfY-SC-0np" id="jfQ-D8-qus"/>
+                                    <outlet property="separatorView" destination="Qhh-Nz-5n1" id="8fe-db-z8A"/>
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SearchSuggestionResultCell" id="b6f-Wh-sCI" customClass="SearchSuggestionResultCell" customModule="Kurozora" customModuleProvider="target">
@@ -396,7 +328,7 @@
                                                 <constraint firstAttribute="width" secondItem="PV1-iB-RdC" secondAttribute="height" multiplier="2:3" id="xyB-Ey-Urq"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="One Piece" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r55-2U-KMr" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r55-2U-KMr" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="208" width="133.33333333333334" height="20.333333333333343"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
@@ -431,10 +363,10 @@
             </objects>
             <point key="canvasLocation" x="2711.594202898551" y="150.66964285714286"/>
         </scene>
-        <!--Search-->
+        <!--Navigation Controller-->
         <scene sceneID="pLp-US-z77">
             <objects>
-                <navigationController storyboardIdentifier="SearchKNvaigationController" title="Search" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ufF-h3-VBA" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="SearchKNvaigationController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ufF-h3-VBA" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="dAq-P1-otl">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -466,6 +398,9 @@
     <resources>
         <image name="Placeholders/Show Poster" width="680" height="1000"/>
         <image name="Placeholders/User Profile" width="300" height="300"/>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="separatorColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

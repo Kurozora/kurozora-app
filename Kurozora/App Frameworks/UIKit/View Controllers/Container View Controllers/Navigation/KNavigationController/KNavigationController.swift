@@ -36,7 +36,7 @@ class KNavigationController: UINavigationController {
 	/// The shared settings used to initialize tab bar view.
 	private func sharedInit () {
 		// Configure theme
-		self.toggleStyle(.normal)
+		self.setupNavigationBarStyle()
 		self.setupToolbarStyle()
 
 		// configure delegates
@@ -52,50 +52,36 @@ class KNavigationController: UINavigationController {
 		self.sharedInit()
 	}
 
-	/**
-		Toggles between navigation bar styles.
-
-		- Parameter style: The KNavigationStyle to be used on the navigation bar.
-	*/
-	func toggleStyle(_ style: KNavigationStyle) {
+	/// Setup navigation bar style with the currently used theme.
+	func setupNavigationBarStyle() {
 		self.navigationBar.isTranslucent = true
 		self.navigationBar.backgroundColor = .clear
 		self.navigationBar.barStyle = .default
 
-		switch style {
-		case .normal:
-			let appearance = UINavigationBarAppearance()
-			#if targetEnvironment(macCatalyst)
-//			appearance.backgroundColor = KThemePicker.barTintColor.colorValue.withAlphaComponent(0.4)
-			#else
-			appearance.theme_backgroundColor = KThemePicker.barTintColor.rawValue
-			#endif
-			appearance.theme_titleTextAttributes = ThemeStringAttributesPicker(keyPath: KThemePicker.barTitleTextColor.stringValue) { value -> [NSAttributedString.Key: Any]? in
-				guard let rgba = value as? String else { return nil }
-				let color = UIColor(rgba: rgba)
-				let titleTextAttributes = [NSAttributedString.Key.foregroundColor: color]
+		let appearance = UINavigationBarAppearance()
+//		#if targetEnvironment(macCatalyst)
+//		appearance.backgroundColor = KThemePicker.barTintColor.colorValue.withAlphaComponent(0.4)
+//		#else
+		appearance.theme_backgroundColor = KThemePicker.barTintColor.rawValue
+//		#endif
+		appearance.theme_titleTextAttributes = ThemeStringAttributesPicker(keyPath: KThemePicker.barTitleTextColor.stringValue) { value -> [NSAttributedString.Key: Any]? in
+			guard let rgba = value as? String else { return nil }
+			let color = UIColor(rgba: rgba)
+			let titleTextAttributes = [NSAttributedString.Key.foregroundColor: color]
 
-				return titleTextAttributes
-			}
-			appearance.theme_largeTitleTextAttributes = ThemeStringAttributesPicker(keyPath: KThemePicker.barTitleTextColor.stringValue) { value -> [NSAttributedString.Key: Any]? in
-				guard let rgba = value as? String else { return nil }
-				let color = UIColor(rgba: rgba)
-				let titleTextAttributes = [NSAttributedString.Key.foregroundColor: color]
-
-				return titleTextAttributes
-			}
-
-			self.navigationBar.standardAppearance = appearance
-			self.navigationBar.compactAppearance = appearance
-			self.navigationBar.prefersLargeTitles = UserSettings.largeTitlesEnabled
-		case .blurred:
-			#if !targetEnvironment(macCatalyst)
-			self.navigationBar.barStyle = .black
-			self.navigationBar.backgroundColor = .clear
-			self.navigationBar.tintColor = nil
-			self.navigationBar.barTintColor = nil
-			#endif
+			return titleTextAttributes
 		}
+		appearance.theme_largeTitleTextAttributes = ThemeStringAttributesPicker(keyPath: KThemePicker.barTitleTextColor.stringValue) { value -> [NSAttributedString.Key: Any]? in
+			guard let rgba = value as? String else { return nil }
+			let color = UIColor(rgba: rgba)
+			let titleTextAttributes = [NSAttributedString.Key.foregroundColor: color]
+
+			return titleTextAttributes
+		}
+
+		self.navigationBar.standardAppearance = appearance
+		self.navigationBar.compactAppearance = appearance
+		self.navigationBar.prefersLargeTitles = UserSettings.largeTitlesEnabled
 	}
 
 	/// Setup toolbar style with the currently used theme.

@@ -11,8 +11,8 @@ import KurozoraKit
 
 class SearchSuggestionResultCell: UICollectionViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var titleLabel: UILabel?
-	@IBOutlet weak var posterImageView: UIImageView?
+	@IBOutlet weak var titleLabel: UILabel!
+	@IBOutlet weak var posterImageView: UIImageView!
 
 	// MARK: - Properties
 	var show: Show! {
@@ -24,13 +24,13 @@ class SearchSuggestionResultCell: UICollectionViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
-		titleLabel?.text = show.attributes.title
+		titleLabel.text = show.attributes.title
 
 		if let showPoster = show.attributes.poster {
 			if let backgroundColor = showPoster.backgroundColor {
-				posterImageView?.backgroundColor = UIColor(hexString: backgroundColor)
+				posterImageView.backgroundColor = UIColor(hexString: backgroundColor)
 			}
-			posterImageView?.setImage(with: showPoster.url, placeholder: R.image.placeholders.showPoster()!)
+			posterImageView.setImage(with: showPoster.url, placeholder: R.image.placeholders.showPoster()!)
 		}
 	}
 }

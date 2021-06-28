@@ -83,8 +83,8 @@ class SidebarViewController: KCollectionViewController {
 	}
 
 	/// Configures the search bar.
+	#if targetEnvironment(macCatalyst)
 	fileprivate func configureSearchBar() {
-		#if targetEnvironment(macCatalyst)
 		// Configure search bar
 		kSearchController.viewController = self
 		kSearchController.searchScope = .show
@@ -93,8 +93,8 @@ class SidebarViewController: KCollectionViewController {
 		navigationItem.searchController = kSearchController
 		kSearchController.automaticallyShowsCancelButton = false
 		kSearchController.automaticallyShowsScopeBar = false
-		#endif
 	}
+	#endif
 
 	/**
 		Creates and returns a list content configuration for with the given configuration as the basis.

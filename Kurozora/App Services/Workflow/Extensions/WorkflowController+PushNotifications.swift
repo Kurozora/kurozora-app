@@ -124,12 +124,7 @@ extension WorkflowController: UNUserNotificationCenterDelegate {
 
 	func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
 		if UserSettings.notificationsAllowed {
-			#if targetEnvironment(macCatalyst)
-			let alertOptions: UNNotificationPresentationOptions = [.list]
-			#else
-			let alertOptions: UNNotificationPresentationOptions = [.alert]
-			#endif
-			var notificationPresentationOptions: UNNotificationPresentationOptions = alertOptions
+			var notificationPresentationOptions: UNNotificationPresentationOptions = [.list, .banner]
 
 			if UserSettings.notificationsSound {
 				notificationPresentationOptions.insert(.sound)

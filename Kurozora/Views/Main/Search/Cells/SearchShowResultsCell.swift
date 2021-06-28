@@ -11,10 +11,10 @@ import KurozoraKit
 
 class SearchShowResultsCell: SearchBaseResultsCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var statusLabel: UILabel!
-	@IBOutlet weak var showRatingLabel: UILabel!
-	@IBOutlet weak var episodeCountLabel: UILabel!
-	@IBOutlet weak var airDateLabel: UILabel!
+	@IBOutlet weak var statusLabel: KSecondaryLabel!
+	@IBOutlet weak var showRatingLabel: KSecondaryLabel!
+	@IBOutlet weak var episodeCountLabel: KSecondaryLabel!
+	@IBOutlet weak var airDateLabel: KSecondaryLabel!
 	@IBOutlet weak var scoreLabel: UILabel!
 	@IBOutlet weak var cosmosView: KCosmosView!
 
@@ -30,16 +30,14 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 	override func configureCell() {
 		super.configureCell()
 		primaryLabel.text = self.show.attributes.title
-
 		searchImageView.image = self.show.attributes.posterImage
-
 		statusLabel.text = show.attributes.status.name
 
 		// Configure library status
 		if let libraryStatus = self.show.attributes.libraryStatus {
 			self.libraryStatus = libraryStatus
 		}
-		actionButton?.setTitle(self.libraryStatus != .none ? "\(self.libraryStatus.stringValue.capitalized) ▾" : "ADD", for: .normal)
+		actionButton.setTitle(self.libraryStatus != .none ? "\(self.libraryStatus.stringValue.capitalized) ▾" : "ADD", for: .normal)
 
 		// Cinfigure rating
 		showRatingLabel.text = show.attributes.tvRating.name
@@ -81,7 +79,7 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 						case .success:
 							// Update entry in library
 							self.libraryStatus = value
-							self.actionButton?.setTitle("\(title) ▾", for: .normal)
+							self.actionButton.setTitle("\(title) ▾", for: .normal)
 
 							let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
 							NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
@@ -101,7 +99,7 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 						case .success(let libraryUpdate):
 							self.show.attributes.update(using: libraryUpdate)
 							self.libraryStatus = .none
-							self.actionButton?.setTitle("ADD", for: .normal)
+							self.actionButton.setTitle("ADD", for: .normal)
 
 							let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
 							NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)

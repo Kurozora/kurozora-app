@@ -199,7 +199,6 @@
 		666D9EF025B35FF400EDDC9E /* LibraryListViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666D9EEF25B35FF400EDDC9E /* LibraryListViewControllerDelegate.swift */; };
 		666D9EF325B3607600EDDC9E /* LibraryList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 666D9EF225B3607600EDDC9E /* LibraryList.storyboard */; };
 		666E0D2122888B2300AA8BA4 /* KNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666E0D1F22888B2300AA8BA4 /* KNavigationController.swift */; };
-		666E0D2222888B2300AA8BA4 /* KNavigationStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666E0D2022888B2300AA8BA4 /* KNavigationStyle.swift */; };
 		666FBD9022C4E170007DB5D8 /* Black.plist in Resources */ = {isa = PBXBuildFile; fileRef = 666FBD8F22C4E16F007DB5D8 /* Black.plist */; };
 		667074D523382756008C1A75 /* AccountOnboardingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667074D423382756008C1A75 /* AccountOnboardingTableViewController.swift */; };
 		66707823208B1C6800471FBC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66707821208B1C6800471FBC /* LaunchScreen.xib */; };
@@ -418,7 +417,6 @@
 		66C5797922A83726001B8F51 /* ThemeStore.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66C5797822A83726001B8F51 /* ThemeStore.storyboard */; };
 		66C5797B22A86435001B8F51 /* DebugSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66C5797A22A86435001B8F51 /* DebugSettings.storyboard */; };
 		66C5797D22A864CB001B8F51 /* Legal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66C5797C22A864CB001B8F51 /* Legal.storyboard */; };
-		66C5D5FF23BA9A5E003040BE /* SectionBackgroundVisualEffectDecorationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C5D5FE23BA9A5E003040BE /* SectionBackgroundVisualEffectDecorationView.swift */; };
 		66C86402216DF9270054EE16 /* SeasonsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C86401216DF9270054EE16 /* SeasonsCollectionViewController.swift */; };
 		66C86404216DFB850054EE16 /* LockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C86403216DFB850054EE16 /* LockupCollectionViewCell.swift */; };
 		66C898DD24DFEA2B00305C96 /* PersonAttributes+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C898DC24DFEA2B00305C96 /* PersonAttributes+String.swift */; };
@@ -778,7 +776,6 @@
 		666D9EEF25B35FF400EDDC9E /* LibraryListViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryListViewControllerDelegate.swift; sourceTree = "<group>"; };
 		666D9EF225B3607600EDDC9E /* LibraryList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LibraryList.storyboard; sourceTree = "<group>"; };
 		666E0D1F22888B2300AA8BA4 /* KNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KNavigationController.swift; sourceTree = "<group>"; };
-		666E0D2022888B2300AA8BA4 /* KNavigationStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KNavigationStyle.swift; sourceTree = "<group>"; };
 		666FBD8F22C4E16F007DB5D8 /* Black.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Black.plist; sourceTree = "<group>"; };
 		667074D423382756008C1A75 /* AccountOnboardingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountOnboardingTableViewController.swift; sourceTree = "<group>"; };
 		66707822208B1C6800471FBC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -999,7 +996,6 @@
 		66C5797822A83726001B8F51 /* ThemeStore.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ThemeStore.storyboard; sourceTree = "<group>"; };
 		66C5797A22A86435001B8F51 /* DebugSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DebugSettings.storyboard; sourceTree = "<group>"; };
 		66C5797C22A864CB001B8F51 /* Legal.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Legal.storyboard; sourceTree = "<group>"; };
-		66C5D5FE23BA9A5E003040BE /* SectionBackgroundVisualEffectDecorationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionBackgroundVisualEffectDecorationView.swift; sourceTree = "<group>"; };
 		66C86401216DF9270054EE16 /* SeasonsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonsCollectionViewController.swift; sourceTree = "<group>"; };
 		66C86403216DFB850054EE16 /* LockupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockupCollectionViewCell.swift; sourceTree = "<group>"; };
 		66C898DC24DFEA2B00305C96 /* PersonAttributes+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersonAttributes+String.swift"; sourceTree = "<group>"; };
@@ -1335,14 +1331,6 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		661049C222C0E55200A2A354 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				666E0D2022888B2300AA8BA4 /* KNavigationStyle.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		66112343208F6A8E00E6033A /* App Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -1366,7 +1354,6 @@
 			isa = PBXGroup;
 			children = (
 				666E0D1F22888B2300AA8BA4 /* KNavigationController.swift */,
-				661049C222C0E55200A2A354 /* Models */,
 			);
 			path = KNavigationController;
 			sourceTree = "<group>";
@@ -2019,7 +2006,6 @@
 			isa = PBXGroup;
 			children = (
 				661F185C24AA9F6700542AFB /* SectionBackgroundDecorationView.swift */,
-				66C5D5FE23BA9A5E003040BE /* SectionBackgroundVisualEffectDecorationView.swift */,
 				6664B81F24A4061100E73728 /* TitleHeaderReusableView */,
 			);
 			path = UICollectionReusableView;
@@ -3704,7 +3690,6 @@
 				66DE65282401AEDB001C2773 /* FilterSection.swift in Sources */,
 				66CAE6872337CFC800991E59 /* OnboardingBaseTableViewCell.swift in Sources */,
 				661DBC51234A4E00009292DF /* TipJarTableViewController.swift in Sources */,
-				66C5D5FF23BA9A5E003040BE /* SectionBackgroundVisualEffectDecorationView.swift in Sources */,
 				663C95B923084FAC003720A4 /* SceneDelegate.swift in Sources */,
 				66EA1DFE25B619DA00FCD07A /* ManageThemesController+KCollectionViewDelegateLayout.swift in Sources */,
 				663E342B2360D3B8003386D1 /* LargeLockupCollectionViewCell.swift in Sources */,
@@ -4002,7 +3987,6 @@
 				66A08C7023E3B342007B6418 /* SubSettingsViewController.swift in Sources */,
 				66EA1DDB25B5BBAB00FCD07A /* CastCollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				66EA1DEA25B5BD9000FCD07A /* SeasonsCollectionViewController+KCollectionViewDataSource.swift in Sources */,
-				666E0D2222888B2300AA8BA4 /* KNavigationStyle.swift in Sources */,
 				669EA9A022C1490A00784181 /* SubscriptionTableViewController.swift in Sources */,
 				66DEB4AB21D283800093725F /* SearchResultsCollectionViewController.swift in Sources */,
 				66CE80FD246035C700DB0C49 /* KTableViewDataSource.swift in Sources */,
@@ -4201,7 +4185,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Kurozora/Kurozora.entitlements;
-				CURRENT_PROJECT_VERSION = 11766;
+				CURRENT_PROJECT_VERSION = 11769;
 				DEVELOPMENT_ASSET_PATHS = "\"Kurozora/Supporting Files\"";
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				ENABLE_PREVIEWS = YES;
@@ -4233,7 +4217,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Kurozora/Kurozora.entitlements;
-				CURRENT_PROJECT_VERSION = 11766;
+				CURRENT_PROJECT_VERSION = 11769;
 				DEVELOPMENT_ASSET_PATHS = "\"Kurozora/Supporting Files\"";
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				ENABLE_PREVIEWS = YES;

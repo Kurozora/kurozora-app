@@ -17,21 +17,19 @@ extension SearchResultsCollectionViewController {
 			case .show, .myLibrary:
 				if let show = (searchBaseResultsCell as? SearchShowResultsCell)?.show {
 					let showDetailsCollectionViewController = ShowDetailsCollectionViewController.`init`(with: show.id)
-					showDetailsCollectionViewController.edgesForExtendedLayout = .all
 					SearchHistory.saveContentsOf(show)
-					self.presentingViewController?.show(showDetailsCollectionViewController, sender: nil)
+					self.show(showDetailsCollectionViewController, sender: nil)
 				}
 			case .user:
 				if let user = (searchBaseResultsCell as? SearchUserResultsCell)?.user {
 					let profileTableViewController = ProfileTableViewController.`init`(with: user.id)
-					self.presentingViewController?.show(profileTableViewController, sender: nil)
+					self.show(profileTableViewController, sender: nil)
 				}
 			}
 		} else {
 			if let show = (searchBaseResultsCell as? SearchSuggestionResultCell)?.show {
 				let showDetailsCollectionViewController = ShowDetailsCollectionViewController.`init`(with: show.id)
-				showDetailsCollectionViewController.edgesForExtendedLayout = .all
-				self.presentingViewController?.show(showDetailsCollectionViewController, sender: nil)
+				self.show(showDetailsCollectionViewController, sender: nil)
 			}
 		}
 	}
@@ -81,7 +79,7 @@ extension SearchResultsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
 		if let previewViewController = animator.previewViewController {
 			animator.addCompletion {
-				self.presentingViewController?.show(previewViewController, sender: self)
+				self.show(previewViewController, sender: self)
 			}
 		}
 	}

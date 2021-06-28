@@ -40,17 +40,17 @@ class SearchUserResultsCell: SearchBaseResultsCell {
 		let followStatus = self.user.attributes.followStatus
 		switch followStatus {
 		case .followed:
-			self.actionButton?.setTitle("✓ Following", for: .normal)
-			self.actionButton?.isHidden = false
-			self.actionButton?.isUserInteractionEnabled = true
+			self.actionButton.setTitle("✓ Following", for: .normal)
+			self.actionButton.isHidden = false
+			self.actionButton.isUserInteractionEnabled = true
 		case .notFollowed:
-			self.actionButton?.setTitle("＋ Follow", for: .normal)
-			self.actionButton?.isHidden = false
-			self.actionButton?.isUserInteractionEnabled = true
+			self.actionButton.setTitle("＋ Follow", for: .normal)
+			self.actionButton.isHidden = false
+			self.actionButton.isUserInteractionEnabled = true
 		case .disabled:
-			self.actionButton?.setTitle("＋ Follow", for: .normal)
-			self.actionButton?.isHidden = true
-			self.actionButton?.isUserInteractionEnabled = false
+			self.actionButton.setTitle("＋ Follow", for: .normal)
+			self.actionButton.isHidden = true
+			self.actionButton.isUserInteractionEnabled = false
 		}
 	}
 
@@ -82,7 +82,7 @@ class SearchUserResultsCell: SearchBaseResultsCell {
 				}
 			}
 
-			secondaryLabel?.text = secondaryLabelText
+			secondaryLabel.text = secondaryLabelText
 		}
 	}
 
