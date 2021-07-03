@@ -38,10 +38,11 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		}
 	}
 
-	#if !targetEnvironment(macCatalyst)
 	/// The object containing the search controller
-	var kSearchController: KSearchController = KSearchController()
-	#endif
+	lazy var kSearchController: KSearchController = KSearchController()
+
+	/// Whether to include a search controller in the navigation bar
+	var includesSearchBar = true
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
@@ -79,27 +80,20 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		self._prefersRefreshControlDisabled = true
 		self._prefersActivityIndicatorHidden = true
 
-		#if !targetEnvironment(macCatalyst)
-		self.setupSearchController()
-		#endif
-
-		// Create colelction view layout
-		if let collectionViewLayout = self.createLayout() {
-			self.collectionView.collectionViewLayout = collectionViewLayout
+		if includesSearchBar {
+			self.setupSearchController()
 		}
     }
 
 	// MARK: - Functions
-	#if !targetEnvironment(macCatalyst)
 	/// Setup the search controller with the desired settings.
 	func setupSearchController() {
 		// Set the current view as the view controller of the search
 		self.kSearchController.viewController = self
 
 		// Add search bar to navigation controller
-		navigationItem.searchController = kSearchController
+		self.navigationItem.searchController = self.kSearchController
 	}
-	#endif
 
 	/**
 		Perform search with the given search text and the search scope.
@@ -153,8 +147,8 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 
 	/// Sets all search results to nil and reloads the table view
 	fileprivate func emptySearchResults() {
-		searchResults = nil
-		collectionView.reloadData()
+		self.searchResults = nil
+		self.collectionView.reloadData()
 	}
 
 	/**
@@ -165,7 +159,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	@objc func search(_ timer: Timer) {
 		let userInfo = timer.userInfo as? [String: Any]
 		if let text = userInfo?["searchText"] as? String, let searchScope = userInfo?["searchScope"] as? SearchScope {
-			performSearch(withText: text, in: searchScope)
+			self.performSearch(withText: text, in: searchScope)
 		}
 	}
 }
@@ -174,9 +168,6 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 extension SearchResultsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		var resultsCount = suggestionElements?.count
-		if UIDevice.isPhone, UIDevice.isPortrait || UIDevice.isFlat, resultsCount ?? 0 > 8 {
-			resultsCount = 8
-		}
 
 		if searchResults != nil {
 			resultsCount = searchResults?.count

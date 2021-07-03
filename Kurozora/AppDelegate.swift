@@ -178,6 +178,14 @@ extension AppDelegate {
 		}
 	}
 
+	/// User chose "Search" from the Application menu.
+	@objc func handleSearch(_ sender: AnyObject) {
+		let splitViewController = UIApplication.topViewController as? UISplitViewController
+		let navigationController = splitViewController?.viewController(for: .primary) as? KNavigationController
+		let sidebarViewController = navigationController?.topViewController as? SidebarViewController
+		sidebarViewController?.kSearchController.searchBar.textField?.becomeFirstResponder()
+	}
+
 	/// User chose the "View My Account..." from the account menu.
 	@objc func handleViewMyAccount(_ sender: AnyObject) {
 		if let settingsSplitViewController = R.storyboard.settings.instantiateInitialViewController() {

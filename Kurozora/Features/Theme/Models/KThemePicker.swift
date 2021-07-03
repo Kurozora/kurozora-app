@@ -41,7 +41,6 @@ enum KThemePicker: ThemeColorPicker {
 	case tintedButtonTextColor = "Global.tintedButtonTextColor"
 	case separatorColor = "Global.separatorColor"
 	case separatorColorLight = "Global.separatorColorLight"
-	case sidebarBackgroundColor = "Global.sidebarBackgroundColor"
 	case subTextColor = "Global.subTextColor"
 
 	// TableViewCell
@@ -92,8 +91,6 @@ enum KThemePicker: ThemeColorPicker {
 			return "Global.separatorColor"
 		case .separatorColorLight:
 			return "Global.separatorColorLight"
-		case .sidebarBackgroundColor:
-			return "Global.sidebarBackgroundColor"
 		case .subTextColor:
 			return "Global.subTextColor"
 		// TableViewCell

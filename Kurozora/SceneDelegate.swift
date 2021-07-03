@@ -48,12 +48,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		}
 
 		// Initialize tab bar controller
-		if #available(iOS 14.0, macOS 11.0, *) {
-			let splitViewController = self.createTwoColumnSplitViewController()
-			self.window?.rootViewController = splitViewController
-		} else {
-			self.window?.rootViewController = KTabBarController()
-		}
+		let splitViewController = self.createTwoColumnSplitViewController()
+		self.window?.rootViewController = splitViewController
 
 		// Check if user should authenticate
 		KurozoraDelegate.shared.userHasToAuthenticate()
@@ -127,19 +123,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
 	private func createTwoColumnSplitViewController() -> UISplitViewController {
-		let sidebarViewController = UINavigationController(rootViewController: SidebarViewController())
+		let navigationController = KNavigationController(rootViewController: SidebarViewController())
+		navigationController.navigationBar.prefersLargeTitles = false
 		let tabBarController = KTabBarController()
 		let splitViewController = UISplitViewController(style: .doubleColumn)
-		splitViewController.primaryBackgroundStyle = .sidebar
 		splitViewController.preferredDisplayMode = .oneBesideSecondary
-		if #available(macCatalyst 14.5, *) {
-			splitViewController.displayModeButtonVisibility = .never
-		} else {
-			// Fallback on earlier versions
-		}
+		splitViewController.displayModeButtonVisibility = .never
 		splitViewController.minimumPrimaryColumnWidth = 220.0
 		splitViewController.maximumPrimaryColumnWidth = 220.0
-		splitViewController.setViewController(sidebarViewController, for: .primary)
+		splitViewController.setViewController(navigationController, for: .primary)
 		splitViewController.setViewController(tabBarController, for: .compact)
 		return splitViewController
 	}

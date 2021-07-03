@@ -11,9 +11,6 @@ import KurozoraKit
 import ESTabBarController_swift
 
 class KTabBarController: ESTabBarController {
-	// MARK: - Properties
-//	fileprivate var once: Bool = false
-
 	// MARK: - Initializers
 	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -26,19 +23,6 @@ class KTabBarController: ESTabBarController {
 	}
 
 	// MARK: - View
-//	override func viewWillAppear(_ animated: Bool) {
-//		super.viewWillAppear(animated)
-//
-//		if !once {
-//			self.tabBar.isTranslucent = true
-//			self.tabBar.itemPositioning = .centered
-//			self.tabBar.backgroundColor = .clear
-//			self.tabBar.barStyle = .default
-//
-//			once = true
-//		}
-//	}
-
     override func viewDidLoad() {
 		super.viewDidLoad()
 
@@ -58,7 +42,7 @@ class KTabBarController: ESTabBarController {
 	private func sharedInit() {
 		self.tabBar.isTranslucent = true
 		self.tabBar.itemPositioning = .centered
-		self.tabBar.backgroundColor = .clear
+		self.tabBar.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		self.tabBar.barStyle = .default
 	}
 
@@ -77,6 +61,7 @@ class KTabBarController: ESTabBarController {
 	}
 }
 
+// MARK: - UITabBarDelegate
 extension KTabBarController {
 	override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
 		let selectedTwice = tabBar.selectedItem == item
@@ -87,13 +72,33 @@ extension KTabBarController {
 			let selectedViewController = (viewControllers?[selectedIndex] as? KNavigationController)?.visibleViewController
 			switch selectedIndex {
 			case 0:
-				(selectedViewController as? UICollectionViewController)?.collectionView.safeScrollToItem(at: [0, 0], at: .top, animated: true)
+				let collectionView = (selectedViewController as? UICollectionViewController)?.collectionView
+				if collectionView?.isAtTop ?? true {
+					selectedViewController?.dismiss(animated: true, completion: nil)
+				} else {
+					collectionView?.safeScrollToItem(at: [0, 0], at: .top, animated: true)
+				}
 			case 1:
-				((selectedViewController as? KTabbedViewController)?.currentViewController as? UICollectionViewController)?.collectionView.safeScrollToItem(at: [0, 0], at: .top, animated: true)
+				let collectionView = ((selectedViewController as? KTabbedViewController)?.currentViewController as? UICollectionViewController)?.collectionView
+				if collectionView?.isAtTop ?? true {
+					selectedViewController?.dismiss(animated: true, completion: nil)
+				} else {
+					collectionView?.safeScrollToItem(at: [0, 0], at: .top, animated: true)
+				}
 			case 2:
-				(selectedViewController as? UITableViewController)?.tableView.safeScrollToRow(at: [0, 0], at: .top, animated: true)
+				let tableView = (selectedViewController as? UITableViewController)?.tableView
+				if tableView?.isAtTop ?? true {
+					selectedViewController?.dismiss(animated: true, completion: nil)
+				} else {
+					tableView?.safeScrollToRow(at: [0, 0], at: .top, animated: true)
+				}
 			case 3:
-				(selectedViewController as? UITableViewController)?.tableView.safeScrollToRow(at: [0, 0], at: .top, animated: true)
+				let tableView = (selectedViewController as? UITableViewController)?.tableView
+				if tableView?.isAtTop ?? true {
+					selectedViewController?.dismiss(animated: true, completion: nil)
+				} else {
+					tableView?.safeScrollToRow(at: [0, 0], at: .top, animated: true)
+				}
 			case 4:
 				(selectedViewController as? UICollectionViewController)?.navigationItem.searchController?.searchBar.textField?.becomeFirstResponder()
 			default: break
@@ -119,10 +124,11 @@ enum TabBarItem: Int, CaseIterable {
 	/// Representing the notification tab.
 	case notifications
 
-	#if !targetEnvironment(macCatalyst)
 	/// Representing the search tab.
 	case search
-	#endif
+
+	// MARK: - Properties
+	static var sideBarCases: [TabBarItem] = [.home, .library, .feed, .notifications]
 
 	// MARK: - Structs
 	/**
@@ -141,10 +147,8 @@ enum TabBarItem: Int, CaseIterable {
 		/// The unique identifier for the notification tab.
 		static let notifications = UUID()
 
-		#if !targetEnvironment(macCatalyst)
 		/// The unique identifier for the search tab.
 		static let search = UUID()
-		#endif
 	}
 
 	// MARK: - Properties
@@ -159,10 +163,8 @@ enum TabBarItem: Int, CaseIterable {
 			return "Feed"
 		case .notifications:
 			return "Notifications"
-		#if !targetEnvironment(macCatalyst)
 		case .search:
 			return "Search"
-		#endif
 		}
 	}
 
@@ -177,10 +179,8 @@ enum TabBarItem: Int, CaseIterable {
 			return UIImage(systemName: "person.crop.circle")!
 		case .notifications:
 			return UIImage(systemName: "app.badge")!
-		#if !targetEnvironment(macCatalyst)
 		case .search:
 			return UIImage(systemName: "magnifyingglass")!
-		#endif
 		}
 	}
 
@@ -195,10 +195,8 @@ enum TabBarItem: Int, CaseIterable {
 			return UIImage(systemName: "person.crop.circle.fill")!
 		case .notifications:
 			return UIImage(systemName: "app.badge.fill")!
-		#if !targetEnvironment(macCatalyst)
 		case .search:
 			return R.image.symbols.magnifyingglassFill()!
-		#endif
 		}
 	}
 
@@ -213,10 +211,8 @@ enum TabBarItem: Int, CaseIterable {
 			return R.storyboard.feed.feedTableViewController()!
 		case .notifications:
 			return R.storyboard.notifications.notificationsTableViewController()!
-		#if !targetEnvironment(macCatalyst)
 		case .search:
 			return R.storyboard.search.searchResultsCollectionViewController()!
-		#endif
 		}
 	}
 
@@ -231,10 +227,8 @@ enum TabBarItem: Int, CaseIterable {
 			return R.storyboard.feed.feedTableKNavigationController()!
 		case .notifications:
 			return R.storyboard.notifications.notificationKNvaigationController()!
-		#if !targetEnvironment(macCatalyst)
 		case .search:
 			return R.storyboard.search.searchKNvaigationController()!
-		#endif
 		}
 	}
 
@@ -249,10 +243,8 @@ enum TabBarItem: Int, CaseIterable {
 			return RowIdentifier.feed
 		case .notifications:
 			return RowIdentifier.notifications
-		#if !targetEnvironment(macCatalyst)
 		case .search:
 			return RowIdentifier.search
-		#endif
 		}
 	}
 }

@@ -17,41 +17,57 @@ class KSearchController: UISearchController {
 			self.startPlaceholderTimer()
 		}
 	}
+	var forceShowsCancelButton: Bool = true
+
+	// MARK: - Initializers
+	override init(searchResultsController: UIViewController?) {
+		super.init(searchResultsController: searchResultsController)
+		self.delegate = self
+	}
+
+	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+		self.delegate = self
+	}
+
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
+		self.delegate = self
+	}
 
 	// MARK: - View
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		searchBar.placeholder = "I'm searching for..."
+		self.searchBar.placeholder = "I'm searching for..."
 	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		delegate = self
 
-		searchBar.delegate = viewController as? SearchResultsCollectionViewController
-		searchBar.scopeButtonTitles = SearchScope.allString
-		searchBar.selectedScopeButtonIndex = searchScope.rawValue
-		searchBar.textField?.theme_textColor = KThemePicker.textColor.rawValue
+		self.searchBar.delegate = viewController as? SearchResultsCollectionViewController
+		self.searchBar.scopeButtonTitles = SearchScope.allString
+		self.searchBar.selectedScopeButtonIndex = searchScope.rawValue
+		self.searchBar.textField?.theme_textColor = KThemePicker.textColor.rawValue
 	}
 
 	// MARK: - Functions
 	/// Updates the search placeholder with new placeholder string every second.
 	@objc func updateSearchPlaceholder() {
-		searchBar.placeholder = searchScope.placeholderString
+		self.searchBar.placeholder = searchScope.placeholderString
 	}
 
 	/// Starts the placeholder timer for the search bar if no timers are already running.
 	private func startPlaceholderTimer() {
-		if placeholderTimer == nil {
-			placeholderTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(updateSearchPlaceholder), userInfo: nil, repeats: true)
+		if self.placeholderTimer == nil {
+			self.placeholderTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.updateSearchPlaceholder), userInfo: nil, repeats: true)
 		}
 	}
 
 	/// Stops the placeholder timer if one is running.
 	private func stopPlacholderTimer() {
-		if placeholderTimer != nil {
-			placeholderTimer?.invalidate()
-			placeholderTimer = nil
+		if self.placeholderTimer != nil {
+			self.placeholderTimer?.invalidate()
+			self.placeholderTimer = nil
 		}
 	}
 }
@@ -59,19 +75,17 @@ class KSearchController: UISearchController {
 // MARK: - UISearchControllerDelegate
 extension KSearchController: UISearchControllerDelegate {
 	func willPresentSearchController(_ searchController: UISearchController) {
-		#if targetEnvironment(macCatalyst)
-		#else
-		searchBar.showsCancelButton = true
-		#endif
+		if self.forceShowsCancelButton {
+			self.searchBar.showsCancelButton = true
+		}
 
 		self.stopPlacholderTimer()
 	}
 
 	func willDismissSearchController(_ searchController: UISearchController) {
-		#if targetEnvironment(macCatalyst)
-		#else
-		searchBar.showsCancelButton = false
-		#endif
+		if self.forceShowsCancelButton {
+			self.searchBar.showsCancelButton = false
+		}
 
 		self.startPlaceholderTimer()
 	}

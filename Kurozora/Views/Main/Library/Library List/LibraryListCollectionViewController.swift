@@ -88,11 +88,6 @@ class LibraryListCollectionViewController: KCollectionViewController {
 		// Add bottom inset to avoid the tabbar obscuring the view
 		self.collectionView.contentInset.bottom = 50
 
-		// Setup collection view.
-		if let collectionViewLayout = self.createLayout() {
-			self.collectionView.collectionViewLayout = collectionViewLayout
-		}
-
 		// Hide activity indicator if user is not signed in.
 		if !User.isSignedIn {
 			self._prefersActivityIndicatorHidden = true

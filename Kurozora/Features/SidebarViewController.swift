@@ -34,13 +34,13 @@ class SidebarViewController: KCollectionViewController {
 		return true
 	}
 
-	#if targetEnvironment(macCatalyst)
-	var kSearchController: KSearchController = KSearchController()
-	#endif
+	lazy var kSearchController: KSearchController = KSearchController()
+	lazy var searchResultsCollectionViewController: SearchResultsCollectionViewController = R.storyboard.search.searchResultsCollectionViewController()!
+	var listConfiguration: UICollectionLayoutListConfiguration!
 
-	private var selectedItem: TabBarItem = .feed
+	private var selectedItem: TabBarItem?
 	private lazy var viewControllers: [UIViewController] = {
-		return TabBarItem.allCases.map {
+		return TabBarItem.sideBarCases.map {
 			return $0.kViewControllerValue
 		}
 	}()
@@ -49,19 +49,19 @@ class SidebarViewController: KCollectionViewController {
 
 	// MARK: - Initializers
 	convenience init() {
-		let layout = UICollectionViewCompositionalLayout { (section, layoutEnvironment) -> NSCollectionLayoutSection? in
-			var configuration = UICollectionLayoutListConfiguration(appearance: .sidebar)
-			configuration.showsSeparators = false
-			let section = NSCollectionLayoutSection.list(using: configuration, layoutEnvironment: layoutEnvironment)
-			return section
-		}
-		self.init(collectionViewLayout: layout)
+		self.init(collectionViewLayout: UICollectionViewLayout())
 	}
 
 	// MARK: - View
+	override func themeWillReload() {
+		super.themeWillReload()
+
+		self.listConfiguration.backgroundColor = KThemePicker.backgroundColor.colorValue
+		self.applyInitialSnapshot()
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		self.view.theme_backgroundColor = KThemePicker.sidebarBackgroundColor.rawValue
 
 		self.sharedInit()
 		self.configureDataSource()
@@ -70,31 +70,32 @@ class SidebarViewController: KCollectionViewController {
 
 	// MARK: - Functions
 	/// The shared settings used to initialize the sidebar view.
-	private func sharedInit() {
+	fileprivate func sharedInit() {
 		self.collectionView.isScrollEnabled = false
 		self.clearsSelectionOnViewWillAppear = false
 		self.navigationItem.hidesSearchBarWhenScrolling = false
-		self.navigationItem.largeTitleDisplayMode = .always
-		self.navigationController?.navigationBar.showsLargeContentViewer = false
 
-		#if targetEnvironment(macCatalyst)
 		self.configureSearchBar()
-		#endif
 	}
 
 	/// Configures the search bar.
-	#if targetEnvironment(macCatalyst)
 	fileprivate func configureSearchBar() {
+		// Disable search bar in navigation for the results view
+		searchResultsCollectionViewController.includesSearchBar = false
+
 		// Configure search bar
-		kSearchController.viewController = self
+		kSearchController.viewController = searchResultsCollectionViewController
 		kSearchController.searchScope = .show
+		kSearchController.forceShowsCancelButton = false
+		kSearchController.obscuresBackgroundDuringPresentation = false
+		kSearchController.automaticallyShowsCancelButton = false
+		kSearchController.automaticallyShowsScopeBar = true
+		kSearchController.searchResultsUpdater = self
+		kSearchController.delegate = self
 
 		// Add search bar to navigation controller
 		navigationItem.searchController = kSearchController
-		kSearchController.automaticallyShowsCancelButton = false
-		kSearchController.automaticallyShowsScopeBar = false
 	}
-	#endif
 
 	/**
 		Creates and returns a list content configuration for with the given configuration as the basis.
@@ -105,18 +106,30 @@ class SidebarViewController: KCollectionViewController {
 		- Returns: a list content configuration.
 	*/
 	private func getContentConfiguration(_ configuration: UIListContentConfiguration?, cell: UICollectionViewListCell?) -> UIListContentConfiguration? {
-		let isSelected = cell?.configurationState.isSelected ?? false
 		var contentConfiguration = configuration ?? cell?.defaultContentConfiguration()
-		contentConfiguration?.text = self.selectedItem.stringValue
-		contentConfiguration?.textProperties.font = .systemFont(ofSize: 14.0)
+		contentConfiguration?.text = self.selectedItem?.stringValue
 		contentConfiguration?.textProperties.colorTransformer = UIConfigurationColorTransformer { [weak cell] _ in
 			guard let state = cell?.configurationState else { return KThemePicker.textColor.colorValue }
-			return state.isHighlighted ? KThemePicker.textColor.colorValue.lighten(by: 0.4) : KThemePicker.textColor.colorValue
+			return state.isSelected || state.isHighlighted ? KThemePicker.tintedButtonTextColor.colorValue : KThemePicker.textColor.colorValue
 		}
-		contentConfiguration?.image = isSelected ? selectedItem.selectedImageValue : selectedItem.imageValue
-		contentConfiguration?.imageProperties.preferredSymbolConfiguration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 14.0))
+		contentConfiguration?.textProperties.font = .systemFont(ofSize: 14.0)
 		contentConfiguration?.imageToTextPadding = 10.0
+		contentConfiguration?.image = { () -> UIImage? in
+			guard let state = cell?.configurationState else { return self.selectedItem?.imageValue }
+			return state.isSelected || state.isHighlighted ? self.selectedItem?.selectedImageValue : self.selectedItem?.imageValue
+		}()
+		contentConfiguration?.imageProperties.preferredSymbolConfiguration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 14.0))
+		contentConfiguration?.imageProperties.tintColorTransformer = UIConfigurationColorTransformer { [weak cell] _ in
+			guard let state = cell?.configurationState else { return KThemePicker.tintColor.colorValue }
+			return state.isSelected || state.isHighlighted ? KThemePicker.tintedButtonTextColor.colorValue : KThemePicker.tintColor.colorValue
+		}
 		contentConfiguration?.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10.0, leading: 10.0, bottom: 10.0, trailing: 10.0)
+
+		cell?.backgroundConfiguration?.backgroundColorTransformer = UIConfigurationColorTransformer { [weak cell] _ in
+			guard let state = cell?.configurationState else { return .clear }
+			return state.isSelected || state.isHighlighted ? KThemePicker.tintColor.colorValue : .clear
+		}
+		cell?.backgroundConfiguration?.cornerRadius = 8.0
 		return contentConfiguration
 	}
 }
@@ -124,17 +137,15 @@ class SidebarViewController: KCollectionViewController {
 // MARK: - KCollectionViewDelegateLayout
 extension SidebarViewController {
 	override func createLayout() -> UICollectionViewLayout? {
-		if dataSource != nil {
-			let layout = UICollectionViewCompositionalLayout { (section, layoutEnvironment) -> NSCollectionLayoutSection? in
-				var configuration = UICollectionLayoutListConfiguration(appearance: .sidebar)
-				configuration.showsSeparators = false
-				let section = NSCollectionLayoutSection.list(using: configuration, layoutEnvironment: layoutEnvironment)
-				return section
-			}
-			return layout
+		let layout = UICollectionViewCompositionalLayout { (section, layoutEnvironment) -> NSCollectionLayoutSection? in
+			self.listConfiguration = UICollectionLayoutListConfiguration(appearance: .sidebar)
+			self.listConfiguration.backgroundColor = KThemePicker.backgroundColor.colorValue
+			self.listConfiguration.showsSeparators = false
+			let section = NSCollectionLayoutSection.list(using: self.listConfiguration, layoutEnvironment: layoutEnvironment)
+			section.contentInsets.top = 10.0
+			return section
 		}
-
-		return nil
+		return layout
 	}
 }
 
@@ -155,7 +166,7 @@ extension SidebarViewController {
 
 	private func sideBarSnapshot() -> NSDiffableDataSourceSectionSnapshot<SidebarItem> {
 		var snapshot = NSDiffableDataSourceSectionSnapshot<SidebarItem>()
-		let items: [SidebarItem] = TabBarItem.allCases.map {
+		let items: [SidebarItem] = TabBarItem.sideBarCases.map {
 			return .row(title: $0.stringValue, image: $0.imageValue, id: $0.rowIdentifierValue)
 		}
 		snapshot.append(items)
@@ -172,22 +183,53 @@ extension SidebarViewController {
 	}
 }
 
+// MARK: - UICollectionViewDelegate
 extension SidebarViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		let newlySelectedItem = TabBarItem.allCases[indexPath.row]
+		let newlySelectedItem = TabBarItem.sideBarCases[indexPath.row]
 		let shouldSegue = self.selectedItem != newlySelectedItem
 
 		self.selectedItem = newlySelectedItem
 		let cell = collectionView.cellForItem(at: indexPath) as? UICollectionViewListCell
 		cell?.contentConfiguration = self.getContentConfiguration(nil, cell: cell)
 
+		if self.kSearchController.isActive {
+			self.kSearchController.isActive = false
+		}
+
 		if shouldSegue {
-			splitViewController?.setViewController(self.viewControllers[indexPath.row], for: .secondary)
+			self.splitViewController?.setViewController(self.viewControllers[indexPath.row], for: .secondary)
 		}
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
 		let cell = collectionView.cellForItem(at: indexPath) as? UICollectionViewListCell
 		cell?.contentConfiguration = self.getContentConfiguration(nil, cell: cell)
+	}
+}
+
+// MARK: - UISearchControllerDelegate
+extension SidebarViewController: UISearchControllerDelegate, UISearchResultsUpdating {
+	func updateSearchResults(for searchController: UISearchController) {
+		guard let kNavigationController = splitViewController?.viewController(for: .secondary) as? KNavigationController else { return }
+		if (kNavigationController.topViewController as? SearchResultsCollectionViewController) == nil {
+			let kNavigationController = KNavigationController(rootViewController: self.searchResultsCollectionViewController)
+			self.splitViewController?.setViewController(kNavigationController, for: .secondary)
+		}
+	}
+
+	func willPresentSearchController(_ searchController: UISearchController) {
+		self.kSearchController.willPresentSearchController(searchController)
+
+		// Deselect collection view item
+		for indexPath in self.collectionView.indexPathsForSelectedItems ?? [] {
+			self.collectionView.deselectItem(at: indexPath, animated: true)
+			self.collectionView.delegate?.collectionView?(self.collectionView, didDeselectItemAt: indexPath)
+		}
+		self.selectedItem = nil
+	}
+
+	func willDismissSearchController(_ searchController: UISearchController) {
+		self.kSearchController.willDismissSearchController(searchController)
 	}
 }

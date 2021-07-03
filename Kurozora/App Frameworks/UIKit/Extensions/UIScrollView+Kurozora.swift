@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UITableView {
+extension UIScrollView {
 	// MARK: - Properties
 	/// A boolean indicating if the scrollview is at the top
 	var isAtTop: Bool {

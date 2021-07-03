@@ -19,14 +19,10 @@ class MenuController {
 		- Parameter builder: The [UIMenuBuilder]() object used to initialize the menu controller.
 	*/
 	init(with builder: UIMenuBuilder) {
+		builder.remove(menu: .file)
 		builder.remove(menu: .format)
-		builder.remove(menu: .spelling)
-		builder.remove(menu: .substitutions)
-		builder.remove(menu: .transformations)
-		builder.remove(menu: .speech)
-		#if targetEnvironment(macCatalyst)
-		builder.remove(menu: .openRecent)
-		#endif
+		builder.remove(menu: .toolbar)
+		builder.insertSibling(MenuController.search(), beforeMenu: .fullscreen)
 		builder.insertSibling(MenuController.refreshPage(), beforeMenu: .fullscreen)
 		builder.insertSibling(MenuController.openPreferences(), afterMenu: .about)
 		builder.insertSibling(MenuController.account(), beforeMenu: .window)
@@ -50,6 +46,16 @@ class MenuController {
 	class func openPreferences() -> UIMenu {
 		let openPreferencesCommand = UIKeyCommand(title: "Preferences...", action: #selector(AppDelegate.handlePreferences(_:)), input: ",", modifierFlags: .command, discoverabilityTitle: "Preferences...")
 		return UIMenu(title: "Preferences", identifier: UIMenu.Identifier("app.kurozora.menus.preferences"), options: .displayInline, children: [openPreferencesCommand])
+	}
+
+	/**
+		 Builds and returns the "Refresh Page" menu.
+
+		 - Returns: The "Refresh Page" UIMenu object.
+	 */
+	class func search() -> UIMenu {
+		let refreshPageCommand = UIKeyCommand(title: "Search", action: #selector(AppDelegate.handleSearch(_:)), input: "F", modifierFlags: .command, discoverabilityTitle: "Search")
+		return UIMenu(title: "Serach", identifier: UIMenu.Identifier("app.kurozora.menus.search"), options: .displayInline, children: [refreshPageCommand])
 	}
 
 	class func account() -> UIMenu {
