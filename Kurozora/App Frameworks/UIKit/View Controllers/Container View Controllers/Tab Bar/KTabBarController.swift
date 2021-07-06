@@ -196,7 +196,7 @@ enum TabBarItem: Int, CaseIterable {
 		case .notifications:
 			return UIImage(systemName: "app.badge.fill")!
 		case .search:
-			return R.image.symbols.magnifyingglassFill()!
+			return UIImage(systemName: "text.magnifyingglass")!
 		}
 	}
 

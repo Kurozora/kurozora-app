@@ -273,6 +273,20 @@ extension LibraryListCollectionViewController: LibraryViewControllerDelegate {
 	}
 }
 
+// MARK: - UITableViewDelegate
+extension LibraryListCollectionViewController: UITableViewDelegate {
+	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		if let parent = self.parent?.parent as? LibraryViewController {
+			parent.scrollView.contentSize = scrollView.contentSize
+			parent.scrollView.contentInset = scrollView.contentInset
+			parent.scrollView.contentOffset = scrollView.contentOffset
+			parent.scrollView.decelerationRate = scrollView.decelerationRate
+			parent.scrollView.panGestureRecognizer.state = scrollView.panGestureRecognizer.state
+			parent.scrollView.directionalPressGestureRecognizer.state = scrollView.directionalPressGestureRecognizer.state
+		}
+	}
+}
+
 // MARK: - SectionLayoutKind
 extension LibraryListCollectionViewController {
 	/**

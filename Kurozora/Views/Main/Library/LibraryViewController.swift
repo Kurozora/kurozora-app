@@ -13,8 +13,10 @@ import Pageboy
 
 class LibraryViewController: KTabbedViewController {
 	// MARK: - IBOutlets
-	@IBOutlet var changeLayoutBarButtonItem: UIBarButtonItem!
-	@IBOutlet var sortTypeBarButtonItem: UIBarButtonItem!
+	@IBOutlet weak var scrollView: UIScrollView!
+	@IBOutlet weak var scrollViewHeightConstraint: NSLayoutConstraint!
+	@IBOutlet weak var changeLayoutBarButtonItem: UIBarButtonItem!
+	@IBOutlet weak var sortTypeBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Properties
 	var rightBarButtonItems: [UIBarButtonItem]? = nil
@@ -38,6 +40,9 @@ class LibraryViewController: KTabbedViewController {
 
 		// Actions
 		enableActions()
+
+		// Make sure scrollView is always first hierarchically
+		view.sendSubviewToBack(scrollView)
     }
 
 	// MARK: - Functions

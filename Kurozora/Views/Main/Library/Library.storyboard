@@ -25,12 +25,12 @@
                         </textAttributes>
                     </navigationBar>
                     <connections>
-                        <segue destination="B4w-wJ-4Cf" kind="relationship" relationship="rootViewController" id="jOB-5f-7Mn"/>
+                        <segue destination="B4w-wJ-4Cf" kind="relationship" relationship="rootViewController" id="1LR-Yk-cFX"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9vL-CK-tr0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1199" y="865"/>
+            <point key="canvasLocation" x="-1645" y="865"/>
         </scene>
         <!--FavoriteShowsCollectionViewController-->
         <scene sceneID="09n-N4-pM0">
@@ -40,7 +40,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dOT-Nk-9Fq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="157" y="865"/>
+            <point key="canvasLocation" x="-164" y="865"/>
         </scene>
         <!--Library-->
         <scene sceneID="HTe-q8-fSw">
@@ -50,6 +50,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tcz-X9-dwb">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gPc-nI-2L5">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="gPc-nI-2L5" firstAttribute="top" secondItem="tcz-X9-dwb" secondAttribute="top" id="8Pv-AD-g19"/>
+                                    <constraint firstAttribute="trailing" secondItem="gPc-nI-2L5" secondAttribute="trailing" id="Qpu-4m-5wJ"/>
+                                    <constraint firstItem="gPc-nI-2L5" firstAttribute="leading" secondItem="tcz-X9-dwb" secondAttribute="leading" id="QvF-gm-PMR"/>
+                                    <constraint firstAttribute="bottom" secondItem="gPc-nI-2L5" secondAttribute="bottom" id="vOo-ym-1pH"/>
+                                </constraints>
+                            </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JeV-PO-okM">
                                 <rect key="frame" x="20" y="810" width="374" height="44"/>
                                 <constraints>
@@ -61,8 +76,14 @@
                         <viewLayoutGuide key="safeArea" id="66t-RL-IQm"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="tcz-X9-dwb" firstAttribute="leading" secondItem="66t-RL-IQm" secondAttribute="leading" id="0fH-OT-TI9"/>
+                            <constraint firstAttribute="top" secondItem="tcz-X9-dwb" secondAttribute="top" id="3vH-iB-Tad"/>
                             <constraint firstItem="JeV-PO-okM" firstAttribute="leading" secondItem="mUg-UP-NVd" secondAttribute="leadingMargin" id="Uae-7L-uBe"/>
+                            <constraint firstItem="gPc-nI-2L5" firstAttribute="width" secondItem="mUg-UP-NVd" secondAttribute="width" id="Vwp-S1-VXK"/>
+                            <constraint firstItem="gPc-nI-2L5" firstAttribute="height" secondItem="mUg-UP-NVd" secondAttribute="height" id="nzt-3V-8ao"/>
                             <constraint firstItem="66t-RL-IQm" firstAttribute="bottom" secondItem="JeV-PO-okM" secondAttribute="bottom" constant="8" id="pQ5-V8-eO5"/>
+                            <constraint firstItem="66t-RL-IQm" firstAttribute="trailing" secondItem="tcz-X9-dwb" secondAttribute="trailing" id="twA-Je-J4S"/>
+                            <constraint firstItem="66t-RL-IQm" firstAttribute="bottom" secondItem="tcz-X9-dwb" secondAttribute="bottom" constant="-34" id="vcV-WQ-WIv"/>
                             <constraint firstAttribute="trailingMargin" secondItem="JeV-PO-okM" secondAttribute="trailing" id="y1E-ur-s5u"/>
                         </constraints>
                     </view>
@@ -89,12 +110,14 @@
                     <connections>
                         <outlet property="bottomBarView" destination="JeV-PO-okM" id="87a-eg-BSy"/>
                         <outlet property="changeLayoutBarButtonItem" destination="Dnc-bs-5ES" id="SnK-kE-RhL"/>
+                        <outlet property="scrollView" destination="tcz-X9-dwb" id="6gt-P2-2yy"/>
+                        <outlet property="scrollViewHeightConstraint" destination="vcV-WQ-WIv" id="lqY-zo-25h"/>
                         <outlet property="sortTypeBarButtonItem" destination="0uS-C2-wld" id="pgJ-HN-nHY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mIX-KF-4qF" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-478.26086956521743" y="864.50892857142856"/>
+            <point key="canvasLocation" x="-848" y="865"/>
         </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -147,17 +147,17 @@ enum KThemePicker: ThemeColorPicker {
 
 		switch blurEffectStyleString {
 		case "Dark":
-			return .dark
+			return .systemMaterialDark
 		case "Light":
-			return .light
+			return .systemMaterialLight
 		case "Extralight":
 			return .extraLight
 		case "Prominent":
 			return .prominent
 		case "Regular":
-			return .regular
+			return .systemMaterial
 		default:
-			return .light
+			return .systemMaterial
 		}
 	}
 

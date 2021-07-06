@@ -169,11 +169,8 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 		}
 
 		// Layout
-		bar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 8.0, bottom: 0.0, right: 8.0)
+		bar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 5.0, bottom: 0.0, right: 5.0)
 		bar.layout.interButtonSpacing = 0.0
-		if UIDevice.isPad {
-			bar.layout.contentMode = .fit
-		}
 
 		// Style
 		bar.fadesContentEdges = true
