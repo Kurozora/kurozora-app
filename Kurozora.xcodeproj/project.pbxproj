@@ -390,6 +390,7 @@
 		66B4F1DB223D2CA5007C5048 /* SearchBaseResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B4F1DA223D2CA5007C5048 /* SearchBaseResultsCell.swift */; };
 		66B4F1DD223D334D007C5048 /* SearchScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B4F1DC223D334D007C5048 /* SearchScope.swift */; };
 		66B69BD6214544DB007154BD /* LegalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B69BD5214544DB007154BD /* LegalViewController.swift */; };
+		66B853F0269EE3D8006DD34E /* RatingBadgeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B853EF269EE3D8006DD34E /* RatingBadgeCollectionViewCell.swift */; };
 		66B9BB9724FB1AC7004953C9 /* KFeedMessageReShareTextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B9BB9624FB1AC7004953C9 /* KFeedMessageReShareTextEditorView.swift */; };
 		66B9BB9924FC5CC3004953C9 /* KFMReplyTextEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B9BB9824FC5CC3004953C9 /* KFMReplyTextEditorViewController.swift */; };
 		66B9BB9B24FC5CE7004953C9 /* FeedMessageReShareCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B9BB9A24FC5CE7004953C9 /* FeedMessageReShareCell.swift */; };
@@ -421,7 +422,7 @@
 		66C86404216DFB850054EE16 /* LockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C86403216DFB850054EE16 /* LockupCollectionViewCell.swift */; };
 		66C898DD24DFEA2B00305C96 /* PersonAttributes+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C898DC24DFEA2B00305C96 /* PersonAttributes+String.swift */; };
 		66C898E824E1770500305C96 /* Show+Intents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C898E724E1770400305C96 /* Show+Intents.swift */; };
-		66C898EA24E17C3E00305C96 /* ShowAttributes+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C898E924E17C3E00305C96 /* ShowAttributes+UIImage.swift */; };
+		66C898EA24E17C3E00305C96 /* ShowAttributes+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C898E924E17C3E00305C96 /* ShowAttributes+UIKit.swift */; };
 		66C8FBF124671CBC00C82D60 /* SwitchAccountSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66C8FBF024671CBC00C82D60 /* SwitchAccountSettings.storyboard */; };
 		66CAE6852337CFB000991E59 /* OnboardingTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CAE6842337CFB000991E59 /* OnboardingTextFieldTableViewCell.swift */; };
 		66CAE6872337CFC800991E59 /* OnboardingBaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CAE6862337CFC800991E59 /* OnboardingBaseTableViewCell.swift */; };
@@ -965,6 +966,7 @@
 		66B4F1DA223D2CA5007C5048 /* SearchBaseResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBaseResultsCell.swift; sourceTree = "<group>"; };
 		66B4F1DC223D334D007C5048 /* SearchScope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScope.swift; sourceTree = "<group>"; };
 		66B69BD5214544DB007154BD /* LegalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalViewController.swift; sourceTree = "<group>"; };
+		66B853EF269EE3D8006DD34E /* RatingBadgeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingBadgeCollectionViewCell.swift; sourceTree = "<group>"; };
 		66B9BB9624FB1AC7004953C9 /* KFeedMessageReShareTextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KFeedMessageReShareTextEditorView.swift; sourceTree = "<group>"; };
 		66B9BB9824FC5CC3004953C9 /* KFMReplyTextEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KFMReplyTextEditorViewController.swift; sourceTree = "<group>"; };
 		66B9BB9A24FC5CE7004953C9 /* FeedMessageReShareCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedMessageReShareCell.swift; sourceTree = "<group>"; };
@@ -1000,7 +1002,7 @@
 		66C86403216DFB850054EE16 /* LockupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockupCollectionViewCell.swift; sourceTree = "<group>"; };
 		66C898DC24DFEA2B00305C96 /* PersonAttributes+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersonAttributes+String.swift"; sourceTree = "<group>"; };
 		66C898E724E1770400305C96 /* Show+Intents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Show+Intents.swift"; sourceTree = "<group>"; };
-		66C898E924E17C3E00305C96 /* ShowAttributes+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShowAttributes+UIImage.swift"; sourceTree = "<group>"; };
+		66C898E924E17C3E00305C96 /* ShowAttributes+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShowAttributes+UIKit.swift"; sourceTree = "<group>"; };
 		66C8FBF024671CBC00C82D60 /* SwitchAccountSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SwitchAccountSettings.storyboard; sourceTree = "<group>"; };
 		66CAE6842337CFB000991E59 /* OnboardingTextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		66CAE6862337CFC800991E59 /* OnboardingBaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingBaseTableViewCell.swift; sourceTree = "<group>"; };
@@ -2991,7 +2993,7 @@
 			children = (
 				66C898E724E1770400305C96 /* Show+Intents.swift */,
 				66D0BF8025613E29000AB7BF /* Show+UIKit.swift */,
-				66C898E924E17C3E00305C96 /* ShowAttributes+UIImage.swift */,
+				66C898E924E17C3E00305C96 /* ShowAttributes+UIKit.swift */,
 				660E39EB25E5BC5B00A46EB0 /* Cast */,
 				660E39F125E5BE0F00A46EB0 /* Character */,
 				66EA1E0B25B6285F00FCD07A /* Episode */,
@@ -3026,6 +3028,7 @@
 			isa = PBXGroup;
 			children = (
 				660C042223CFE40D0040C749 /* BadgeCollectionViewCell.swift */,
+				66B853EF269EE3D8006DD34E /* RatingBadgeCollectionViewCell.swift */,
 				6674A0C220A45E6D00AAB527 /* LinkCollectionViewCell.swift */,
 				66BEC13623191E6D0039D683 /* RatingCollectionViewCell.swift */,
 				66058DB9212E97670084B79E /* ReviewCollectionViewCell.swift */,
@@ -3664,7 +3667,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				66C898EA24E17C3E00305C96 /* ShowAttributes+UIImage.swift in Sources */,
+				66C898EA24E17C3E00305C96 /* ShowAttributes+UIKit.swift in Sources */,
 				66AE1E0B24A0C41300FD3FFC /* StudioDetailsCollectionViewController.swift in Sources */,
 				66EA1DF225B5F58400FCD07A /* PurchaseButtonTableViewCellDelegate.swift in Sources */,
 				66472370245DC531008E5111 /* CircularView.swift in Sources */,
@@ -4029,6 +4032,7 @@
 				660E39DF25E4644500A46EB0 /* FMDetailsTableViewController+UITableViewDelegate.swift in Sources */,
 				66EA1DB425B3638200FCD07A /* LibraryViewControllerDelegate.swift in Sources */,
 				66CE810A24608D9D00DB0C49 /* ServiceFooterTableViewCell.swift in Sources */,
+				66B853F0269EE3D8006DD34E /* RatingBadgeCollectionViewCell.swift in Sources */,
 				66CE8E1D2406C41500052AE9 /* UIButton+Kurozora.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

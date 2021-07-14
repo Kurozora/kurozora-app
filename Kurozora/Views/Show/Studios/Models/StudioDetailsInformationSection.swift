@@ -64,7 +64,7 @@ enum StudioDetailsInformationSection: Int, CaseIterable {
 	func information(from studio: Studio) -> String {
 		switch self {
 		case .founded:
-			return studio.attributes.founded?.mediumDate ?? "-"
+			return studio.attributes.founded?.formatted(date: .abbreviated, time: .omitted) ?? "-"
 		case .headquarters: break
 		case .website: break
 		}

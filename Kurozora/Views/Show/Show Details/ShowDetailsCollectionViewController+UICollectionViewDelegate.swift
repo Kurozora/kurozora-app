@@ -15,6 +15,27 @@ extension ShowDetailsCollectionViewController {
 		var segueIdentifier = ""
 
 		switch showDetailSection {
+		case .badge:
+			guard let showDetailBadge = ShowDetail.Badge(rawValue: indexPath.item) else { return }
+			switch showDetailBadge {
+			case .rating:
+				collectionView.safeScrollToItem(at: IndexPath(row: 0, section: ShowDetail.Section.rating.rawValue), at: .centeredVertically, animated: true)
+				return
+			case .season:
+				collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.aireDates.rawValue, section: ShowDetail.Section.information.rawValue), at: .centeredVertically, animated: true)
+				return
+			case .rank:
+				collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.genres.rawValue, section: ShowDetail.Section.information.rawValue), at: .centeredVertically, animated: true)
+				return
+			case .tvRating:
+				collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.rating.rawValue, section: ShowDetail.Section.information.rawValue), at: .centeredVertically, animated: true)
+				return
+			case .studio:
+				segueIdentifier = R.segue.showDetailsCollectionViewController.studioSegue.identifier
+			case .language:
+				collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.languages.rawValue, section: ShowDetail.Section.information.rawValue), at: .centeredVertically, animated: true)
+				return
+			}
 		case .seasons:
 			segueIdentifier = R.segue.showDetailsCollectionViewController.episodeSegue.identifier
 		case .moreByStudio, .relatedShows:

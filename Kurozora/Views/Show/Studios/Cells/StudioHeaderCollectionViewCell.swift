@@ -26,8 +26,11 @@ class StudioHeaderCollectionViewCell: UICollectionViewCell {
 	/// Configure the cell with the given details.
 	func configureCell() {
 		self.nameLabel.text = studio.attributes.name
-		let foundingYear = studio.attributes.founded
-		self.foundedLabel.text = foundingYear != nil ? "Founded on " + (foundingYear?.mediumDate)! : ""
+		if let foundingYear = studio.attributes.founded {
+			self.foundedLabel.text = "Founded on " + foundingYear.formatted(date: .abbreviated, time: .omitted)
+		} else {
+			self.foundedLabel.text = nil
+		}
 		self.logoImageView.image = studio.attributes.logoImage
 	}
 }

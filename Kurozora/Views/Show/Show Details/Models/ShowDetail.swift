@@ -9,7 +9,7 @@
 import UIKit
 import KurozoraKit
 
-class ShowDetail {
+struct ShowDetail {
 	/**
 		Set of available show section types.
 	*/
@@ -58,7 +58,7 @@ class ShowDetail {
 			case .header:
 				return 1
 			case .badge:
-				return 1
+				return ShowDetail.Badge.allCases.count
 			case .synopsis:
 				return 1
 			case .rating:
@@ -117,7 +117,7 @@ class ShowDetail {
 			case .header:
 				return R.reuseIdentifier.showDetailHeaderCollectionViewCell.identifier
 			case .badge:
-				return R.reuseIdentifier.badgeCollectionViewCell.identifier
+				return ShowDetail.Badge(rawValue: row)?.identifierString ?? ShowDetail.Badge.season.identifierString
 			case .synopsis:
 				return R.reuseIdentifier.textViewCollectionViewCell.identifier
 			case .rating:
@@ -139,20 +139,120 @@ class ShowDetail {
 	}
 
 	/**
+		List of available show badge types.
+	*/
+	enum Badge: Int, CaseIterable {
+		case rating = 0
+		case season
+		case rank
+		case tvRating
+		case studio
+		case language
+
+		// MARK: - Properties
+		/// The string value of a badge type.
+		var stringValue: String {
+			switch self {
+			case .rating:
+				return "Rating"
+			case .season:
+				return "Season"
+			case .rank:
+				return "Rank"
+			case .tvRating:
+				return "TV Rating"
+			case .studio:
+				return "Studio"
+			case .language:
+				return "Language"
+			}
+		}
+
+		/// The cell identifier string of a character information section.
+		var identifierString: String {
+			switch self {
+			case .rating:
+				return R.reuseIdentifier.ratingBadgeCollectionViewCell.identifier
+			default:
+				return R.reuseIdentifier.badgeCollectionViewCell.identifier
+			}
+		}
+
+		// MARK: - Functions
+		/**
+			Returns the required primary information from the given object.
+
+			- Parameter show: The object used to extract the infromation from.
+
+			- Returns: the required primary information from the given object.
+		*/
+		func primaryInformation(from show: Show) -> String? {
+			switch self {
+			case .rating:
+				return nil
+			case .season:
+				return show.attributes.airSeason ?? "-"
+			case .rank:
+				return "#13" // show.attributes.popularity.rank
+			case .tvRating:
+				return show.attributes.tvRating.name
+			case .studio:
+				return show.relationships?.studios?.data.first?.attributes.name ?? "-"
+			case .language:
+				return show.attributes.languages.first?.attributes.code.uppercased()
+			}
+		}
+
+		/**
+			Returns the required secondary information from the given object.
+
+			- Parameter show: The object used to extract the infromation from.
+
+			- Returns: the required secondary information from the given object.
+		*/
+		func secondaryInformation(from show: Show) -> String? {
+			switch self {
+			case .rating:
+				let averageRating = show.attributes.userRating.averageRating
+				let ratingCount = show.attributes.userRating.ratingCount
+				return averageRating >= 0.00 ? "Not enough ratings" : "\(ratingCount) Ratings"
+			case .season:
+				return "Season"
+			case .rank:
+				return "Thriller" // show.attributes.popularity.genre
+			case .tvRating:
+				return "Rated"
+			case .studio:
+				return "Studio"
+			case .language:
+				let languages = show.attributes.languages
+				switch languages.count - 1 {
+				case 0:
+					return "Language"
+				case 1:
+					return "+1 More Language"
+				default:
+					return "+\(languages.count - 1) More Languages"
+				}
+			}
+		}
+	}
+
+	/**
 		List of available show information types.
 	*/
 	enum Information: Int, CaseIterable {
 //		case studio = 0
 //		case network
 		case type = 0
-		case aireDates
-		case broadcast
+		case source
 		case genres
-		case rating
-		case seasonCount
-		case episodeCount
+		case episodes
 		case duration
-//		case languages
+		case broadcast
+		case aireDates
+		case rating
+		case languages
 
 		// MARK: - Properties
 		/// The string value of an information type.
@@ -164,22 +264,50 @@ class ShowDetail {
 //				return "Network"
 			case .type:
 				return "Type"
-			case .aireDates:
-				return "Aired"
-			case .broadcast:
-				return "Broadcast"
+			case .source:
+				return "Source"
 			case .genres:
 				return "Genres"
-			case .rating:
-				return "Rating"
-			case .seasonCount:
-				return "Seasons"
-			case .episodeCount:
+			case .episodes:
 				return "Episodes"
 			case .duration:
 				return "Duration"
-//			case .languages:
-//				return "Languages"
+			case .broadcast:
+				return "Broadcast"
+			case .aireDates:
+				return "Aired"
+			case .rating:
+				return "Rating"
+			case .languages:
+				return "Languages"
+			}
+		}
+
+		/// The image value of an information type.
+		var imageValue: UIImage? {
+			switch self {
+//			case .studio:
+//				return UIImage(systemName: "building.2")
+//			case .network:
+//				return UIImage(systemName: "dot.radiowaves.left.and.right")
+			case .type:
+				return UIImage(systemName: "tv.and.mediabox")
+			case .source:
+				return UIImage(systemName: "target")
+			case .genres:
+				return UIImage(systemName: "theatermasks")
+			case .episodes:
+				return UIImage(systemName: "film")
+			case .duration:
+				return UIImage(systemName: "hourglass")
+			case .broadcast:
+				return UIImage(systemName: "calendar.badge.clock")
+			case .aireDates:
+				return UIImage(systemName: "calendar")
+			case .rating:
+				return R.image.symbols.pgTv()
+			case .languages:
+				return UIImage(systemName: "globe")
 			}
 		}
 
@@ -192,19 +320,21 @@ class ShowDetail {
 //				return R.reuseIdentifier.informationCollectionViewCell.identifier
 			case .type:
 				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .aireDates:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .broadcast:
+			case .source:
 				return R.reuseIdentifier.informationCollectionViewCell.identifier
 			case .genres:
 				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .rating:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .seasonCount:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .episodeCount:
+			case .episodes:
 				return R.reuseIdentifier.informationCollectionViewCell.identifier
 			case .duration:
+				return R.reuseIdentifier.informationCollectionViewCell.identifier
+			case .broadcast:
+				return R.reuseIdentifier.informationCollectionViewCell.identifier
+			case .aireDates:
+				return R.reuseIdentifier.informationCollectionViewCell.identifier
+			case .rating:
+				return R.reuseIdentifier.informationCollectionViewCell.identifier
+			case .languages:
 				return R.reuseIdentifier.informationCollectionViewCell.identifier
 			}
 		}
@@ -215,9 +345,9 @@ class ShowDetail {
 
 			- Parameter show: The object used to extract the infromation from.
 
-			Returns: the required information from the given object.
+			- Returns: the required information from the given object.
 		*/
-		func information(from show: Show) -> String {
+		func information(from show: Show) -> String? {
 			switch self {
 //			case .studio:
 //				if let studios = show.relationships?.studios?.data, studios.count != 0 {
@@ -238,32 +368,131 @@ class ShowDetail {
 //				}
 			case .type:
 				return show.attributes.type.name
-			case .aireDates:
-				var dateInfo: String = "-"
-
-				let startDateTime = show.attributes.startDateTime
-				dateInfo = (startDateTime?.mediumDate ?? "N/A") + " - "
-
-				let endDateTime = show.attributes.endDateTime
-				dateInfo += (endDateTime?.mediumDate ?? "N/A")
-
-				return dateInfo
-			case .broadcast:
-				var broadcastInfo = show.attributes.airDay ?? "-"
-				if let airTime = show.attributes.airTime {
-					broadcastInfo += airTime.isEmpty ? "" : " at " + airTime
-				}
-				return broadcastInfo
+			case .source:
+				return "\(show.attributes.source.name)"
 			case .genres:
 				return show.attributes.genres?.joined(separator: ", ") ?? "-"
-			case .rating:
-				return show.attributes.tvRating.name
-			case .seasonCount:
-				return "\(show.attributes.seasonCount)"
-			case .episodeCount:
+			case .episodes:
 				return "\(show.attributes.episodeCount)"
 			case .duration:
 				return show.attributes.runtime
+			case .broadcast:
+				var broadcastInfo = show.attributes.airDay ?? "-"
+				if let airTime = show.attributes.airTime {
+					broadcastInfo += airTime.isEmpty ? "" : " at " + airTime + " UTC"
+				}
+				return broadcastInfo
+			case .aireDates:
+				guard let firstAired = show.attributes.firstAired?.formatted(date: .abbreviated, time: .omitted) else { return "-" }
+				return "🚀 \(firstAired)"
+			case .rating:
+				return show.attributes.tvRating.name
+			case .languages:
+				let languages = show.attributes.languages.compactMap {
+					$0.attributes.name
+				}
+				return languages.joined(separator: ", ")
+			}
+		}
+
+		/**
+			Returns the required primary information from the given object.
+
+			- Parameter show: The object used to extract the infromation from.
+
+			- Returns: the required primary information from the given object.
+		*/
+		func primaryInformation(from show: Show) -> String? {
+			switch self {
+			case .broadcast:
+				guard show.attributes.lastAired == nil else { return nil }
+				guard let broadcastDate = show.attributes.broadcastDate else { return nil }
+				return broadcastDate.formatted(.relative(presentation: .named, unitsStyle: .abbreviated))
+			default: return nil
+			}
+		}
+
+		/**
+			Returns the required secondary information from the given object.
+
+			- Parameter show: The object used to extract the infromation from.
+
+			- Returns: the required secondary information from the given object.
+		*/
+		func secondaryInformation(from show: Show) -> String? {
+			switch self {
+			case .aireDates:
+				guard let lastAired = show.attributes.lastAired?.formatted(date: .abbreviated, time: .omitted) else { return nil }
+				return "\(lastAired) 🏁"
+			default: return nil
+			}
+		}
+
+		/**
+			Returns the required primary image from the given object.
+
+			- Parameter show: The object used to extract the infromation from.
+
+			- Returns: the required primary image from the given object.
+		*/
+		func primaryImage(from show: Show) -> UIImage? {
+			switch self {
+			case .aireDates:
+				guard self.secondaryInformation(from: show) != nil else { return nil }
+				return R.image.dotted_line()
+			default: return nil
+			}
+		}
+
+		/**
+			Returns the footnote from the given object.
+
+			- Parameter show: The object used to extract the footnote from.
+
+			- Returns: the footnote from the given object.
+		*/
+		func footnote(from show: Show) -> String? {
+			switch self {
+//			case .studio:
+//				if let studios = show.relationships?.studios?.data, studios.count != 0 {
+//					var studioNames = ""
+//					for (index, studio) in studios.enumerated() {
+//						let studioName = studio.attributes.name
+//						if index == studios.count - 1 {
+//							studioNames += "\(studioName)"
+//							continue
+//						}
+//						studioNames += "\(studioName), "
+//					}
+//					return studioNames
+//				}
+//			case .network:
+//				if let network = show.attributes.network {
+//					return network
+//				}
+			case .type:
+				return show.attributes.type.description
+			case .source:
+				return show.attributes.source.description
+			case .genres:
+				return nil
+			case .episodes:
+				let episodeCount = show.attributes.seasonCount <= 1 ? "one" : "\(show.attributes.seasonCount)"
+				let seasonString = show.attributes.seasonCount > 1 ? "seasons" : "season"
+				return "Across \(episodeCount) \(seasonString)."
+			case .duration:
+				return "With a total of \(show.attributes.runtimeTotal)."
+			case .broadcast:
+				guard show.attributes.lastAired == nil else { return "The broadcasting of this series has ended." }
+				guard show.attributes.broadcastDate == nil else { return nil }
+				return "No broadcast data available at the moment."
+			case .aireDates:
+				guard self.secondaryInformation(from: show) == nil else { return nil }
+				return show.attributes.status.description
+			case .rating:
+				return show.attributes.tvRating.description
+			case .languages:
+				return nil
 			}
 		}
 	}

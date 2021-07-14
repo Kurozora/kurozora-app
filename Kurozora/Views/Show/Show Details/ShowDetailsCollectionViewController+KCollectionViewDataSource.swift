@@ -13,7 +13,6 @@ extension ShowDetailsCollectionViewController {
 		return [
 			TextViewCollectionViewCell.self,
 			RatingCollectionViewCell.self,
-			InformationCollectionViewCell.self,
 			LockupCollectionViewCell.self,
 			SmallLockupCollectionViewCell.self,
 			CastCollectionViewCell.self,

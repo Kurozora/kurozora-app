@@ -49,7 +49,7 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 		episodeCountLabel.isHidden = episodeCount == 0
 
 		// Configure air date
-		if let airYear = show.attributes.airYear {
+		if let airYear = show.attributes.firstAired?.year {
 			airDateLabel.text = "\(airYear)"
 			airDateLabel.isHidden = false
 		} else {

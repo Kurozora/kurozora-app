@@ -14,8 +14,10 @@ extension ShowDetailsCollectionViewController {
 		let width = layoutEnvironment.container.effectiveContentSize.width
 
 		switch ShowDetail.Section(rawValue: section) {
-		case .header, .badge, .synopsis, .sosumi:
+		case .header, .synopsis, .sosumi:
 			return 1
+		case .badge:
+			return width > 414 ? ShowDetail.Badge.allCases.count : (width / 132).rounded().int
 		case .rating:
 			if width > 828 {
 				let columnCount = (width / 374).rounded().int
@@ -26,6 +28,9 @@ extension ShowDetailsCollectionViewController {
 				}
 			}
 			return 1
+		case .information:
+			let columnCount = width >= 414 ? (width / 200).rounded().int : (width / 160).rounded().int
+			return columnCount > 0 ? columnCount : 2
 		case .seasons:
 			let columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
 			return columnCount > 0 ? columnCount : 1
@@ -52,7 +57,7 @@ extension ShowDetailsCollectionViewController {
 		case .rating:
 			return .absolute(88)
 		case .information:
-			return .estimated(55)
+			return .fractionalHeight(1.0)
 		case .sosumi:
 			return .estimated(50)
 		default:
@@ -87,8 +92,8 @@ extension ShowDetailsCollectionViewController {
 				let headerSection = self.fullSection(for: section, layoutEnvironment: layoutEnvironment)
 				sectionLayout = headerSection
 			case .badge:
-				let fullSection = self.fullSection(for: section, layoutEnvironment: layoutEnvironment)
-				sectionLayout = fullSection
+				let badgeSection = self.badgeSection(for: section, layoutEnvironment: layoutEnvironment)
+				sectionLayout = badgeSection
 			case .synopsis:
 				if let synopsis = self.show.attributes.synopsis, !synopsis.isEmpty {
 					let fullSection = self.fullSection(for: section, layoutEnvironment: layoutEnvironment)
@@ -100,7 +105,7 @@ extension ShowDetailsCollectionViewController {
 				sectionLayout = fullSection
 				hasSectionHeader = true
 			case .information:
-				let listSection = self.listSection(for: section, layoutEnvironment: layoutEnvironment)
+				let listSection = self.gridSection(for: section, layoutEnvironment: layoutEnvironment)
 				sectionLayout = listSection
 				hasSectionHeader = true
 			case .seasons:
@@ -190,6 +195,32 @@ extension ShowDetailsCollectionViewController {
 		return layoutSection
 	}
 
+	func badgeSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+		let width = layoutEnvironment.container.effectiveContentSize.width
+		var item: NSCollectionLayoutItem!
+		var layoutGroup: NSCollectionLayoutGroup!
+
+		if width > 828 {
+			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
+			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0))
+			item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0))
+			layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+		} else {
+			let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(100.0), heightDimension: .estimated(50.0))
+			let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+			let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(100.0), heightDimension: .estimated(50.0))
+			layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+		}
+
+		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+		layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
+		return layoutSection
+	}
+
 	func seasonsSectionLayout(_ section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
 		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.90), heightDimension: .fractionalHeight(1.0))
@@ -262,6 +293,21 @@ extension ShowDetailsCollectionViewController {
 
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
+		return layoutSection
+	}
+
+	func gridSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
+		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(160.0))
+		let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(160.0))
+		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+		layoutGroup.interItemSpacing = .fixed(10.0)
+
+		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
+		layoutSection.interGroupSpacing = 10.0
 		return layoutSection
 	}
 }

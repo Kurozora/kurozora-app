@@ -41,45 +41,6 @@ extension String {
 		return "Recent" // If less than 1 hour, then Recent
 	}
 
-	/// Returns a string with a medium fomatted date.
-	var mediumDate: String? {
-		guard let date = self.date else { return nil }
-		return mediumFormatter.string(from: date)
-	}
-
-	/// Returns a string with a medium fomatted date and time.
-	var mediumDateTime: String? {
-		guard let dateTime = self.dateTime else { return nil }
-		return mediumDateTimeFormatter.string(from: dateTime)
-	}
-
-	/// Returns an instance of a DateFormatter with medium date style and time style.
-	private var mediumDateTimeFormatter: DateFormatter {
-		struct Static {
-			static let instance: DateFormatter = {
-				let formatter = DateFormatter()
-				formatter.locale = .posix
-				formatter.dateStyle = .medium
-				formatter.timeStyle = .medium
-				return formatter
-			}()
-		}
-		return Static.instance
-	}
-
-	/// Returns an instance of a DateFormatter with medium date style.
-	private var mediumFormatter: DateFormatter {
-		struct Static {
-			static let instance: DateFormatter = {
-				let formatter = DateFormatter()
-				formatter.locale = .posix
-				formatter.dateStyle = .medium
-				return formatter
-			}()
-		}
-		return Static.instance
-	}
-
 	/// Returns string representing how much time has passed since given date.
 	var timeAgo: String {
 		guard let dateTime = self.dateTime else { return "" }

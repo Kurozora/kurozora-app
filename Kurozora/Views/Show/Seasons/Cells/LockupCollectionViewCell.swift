@@ -50,7 +50,7 @@ class LockupCollectionViewCell: UICollectionViewCell {
 
 		// Configure premiere date
 		let firstAired = self.season.attributes.firstAired
-		self.firstAiredLabel.text = firstAired?.mediumDate ?? "TBA"
+		self.firstAiredLabel.text = firstAired?.formatted(date: .abbreviated, time: .omitted) ?? "TBA"
 
 		// Configure episode count
 		self.episodeCountLabel.text = "\(self.season.attributes.episodeCount)"
@@ -71,7 +71,7 @@ class LockupCollectionViewCell: UICollectionViewCell {
 
 		// Configure premiere date
 		let firstAired = self.relatedShow.show.attributes.firstAired
-		self.firstAiredLabel.text = firstAired?.mediumDate ?? "TBA"
+		self.firstAiredLabel.text = firstAired?.formatted(date: .abbreviated, time: .omitted) ?? "TBA"
 
 		// Configure episode count
 		self.episodeCountLabel.text = "\(self.relatedShow.show.attributes.episodeCount)"

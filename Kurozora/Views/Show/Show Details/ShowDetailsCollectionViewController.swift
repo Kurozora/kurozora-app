@@ -321,7 +321,7 @@ extension ShowDetailsCollectionViewController {
 			showDetailHeaderCollectionViewCell?.show = self.show
 		case .badge:
 			let badgeCollectionViewCell = showDetailCollectionViewCell as? BadgeCollectionViewCell
-			badgeCollectionViewCell?.collectionView = collectionView
+			badgeCollectionViewCell?.showDetailBage = ShowDetail.Badge(rawValue: indexPath.item) ?? .rating
 			badgeCollectionViewCell?.show = self.show
 		case .synopsis:
 			let textViewCollectionViewCell = showDetailCollectionViewCell as? TextViewCollectionViewCell

@@ -21,7 +21,7 @@ extension Studio {
 		public let about: String?
 
 		/// The date the studio was founded.
-		public let founded: String?
+		public let founded: Date?
 
 		/// The link to the website of the studio.
 		public let websiteUrl: String?

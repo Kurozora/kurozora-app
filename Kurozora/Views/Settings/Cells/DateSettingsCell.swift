@@ -20,12 +20,3 @@ class DateSettingsCell: SettingsCell {
 		dateLabel.text = date.convertToAMPM()
 	}
 }
-
-extension Date {
-	func convertToAMPM() -> String {
-		let dateFormatter = DateFormatter()
-		dateFormatter.dateFormat = "hh:mm a"
-		let newDate: String = dateFormatter.string(from: self)
-		return newDate
-	}
-}

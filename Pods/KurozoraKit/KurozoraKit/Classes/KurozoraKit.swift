@@ -62,6 +62,7 @@ public class KurozoraKit {
 		let plugins: [Plugin] = debugURL != nil ? [NetworkLoggerPlugin()] : []
 
 		self.tron = TRON(baseURL: debugURL ?? "https://api.kurozora.app/v1/", plugins: plugins)
+		self.tron.codable.modelDecoder.dateDecodingStrategy = .secondsSince1970
 		self.authenticationKey = authenticationKey
 		self.services = services
 	}
