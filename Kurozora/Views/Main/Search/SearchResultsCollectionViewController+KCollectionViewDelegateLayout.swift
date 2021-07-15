@@ -10,15 +10,15 @@ import UIKit
 
 extension SearchResultsCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
-		if searchResults != nil { return 1 }
-
 		let width = layoutEnvironment.container.contentSize.width
-		var columnCount = (width / 105).rounded().int
+		var columnCount = searchResults != nil ? (width / 374).rounded().int : (width / 105).rounded().int
+
 		if columnCount < 0 {
 			columnCount = 1
 		} else if columnCount > 5 {
 			columnCount = 5
 		}
+
 		return columnCount
 	}
 

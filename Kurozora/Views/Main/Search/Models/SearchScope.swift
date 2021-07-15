@@ -13,7 +13,7 @@ import Foundation
 
 	```
 	case show = 0
-	case myLibrary = 1
+	case library = 1
 	case user = 2
 	```
 */
@@ -22,14 +22,14 @@ enum SearchScope: Int {
 	case show = 0
 
 	/// Search in user's library list.
-	case myLibrary = 1
+	case library = 1
 
 	/// Search in users list.
 	case user = 2
 
 	// MARK: - Variables
 	/// An array containing all search scopes.
-	static let all: [SearchScope] = [.show, .myLibrary, .user]
+	static let all: [SearchScope] = [.show, .library, .user]
 
 	/// An array containing the string value of all search scopes.
 	static var allString: [String] {
@@ -45,8 +45,8 @@ enum SearchScope: Int {
 		switch self {
 		case .show:
 			return "Anime"
-		case .myLibrary:
-			return "My Library"
+		case .library:
+			return "Library"
 		case .user:
 			return "User"
 		}
@@ -57,7 +57,7 @@ enum SearchScope: Int {
 		switch self {
 		case .show:
 			return R.reuseIdentifier.searchShowResultsCell.identifier
-		case .myLibrary:
+		case .library:
 			return R.reuseIdentifier.searchShowResultsCell.identifier
 		case .user:
 			return R.reuseIdentifier.searchUserResultsCell.identifier
@@ -67,7 +67,7 @@ enum SearchScope: Int {
 	/// An array containing the placeholder array of a search scope.
 	fileprivate var placeholderArray: [String] {
 		switch self {
-		case .show, .myLibrary:
+		case .show, .library:
 			return ["One Piece", "Shaman Asakaura", "a young girl with big ambitions", "massively multiplayer online role-playing game", "vampires"]
 		case .user:
 			return ["Kirito", "Usopp"]

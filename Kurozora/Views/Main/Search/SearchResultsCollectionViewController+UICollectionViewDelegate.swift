@@ -14,7 +14,7 @@ extension SearchResultsCollectionViewController {
 		let searchBaseResultsCell = collectionView.cellForItem(at: indexPath)
 		if searchResults != nil {
 			switch currentScope {
-			case .show, .myLibrary:
+			case .show, .library:
 				if let show = (searchBaseResultsCell as? SearchShowResultsCell)?.show {
 					let showDetailsCollectionViewController = ShowDetailsCollectionViewController.`init`(with: show.id)
 					SearchHistory.saveContentsOf(show)
@@ -34,12 +34,24 @@ extension SearchResultsCollectionViewController {
 		}
 	}
 
+	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+		let numberOfItems = collectionView.numberOfItems()
+
+		if indexPath.item == numberOfItems - 10 {
+			if self.nextPageURL != nil {
+				guard let text = kSearchController.searchBar.textField?.text else { return }
+				guard let searchScope = SearchScope(rawValue: kSearchController.searchBar.selectedScopeButtonIndex) else { return }
+				self.performSearch(withText: text, in: searchScope)
+			}
+		}
+	}
+
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
 		let searchBaseResultsCell = collectionView.cellForItem(at: indexPath)
 		if searchResults != nil {
 			switch currentScope {
-			case .show, .myLibrary:
+			case .show, .library:
 				if let searchShowResultsCell = searchBaseResultsCell as? SearchShowResultsCell {
 					SearchHistory.saveContentsOf(searchShowResultsCell.show)
 					return searchShowResultsCell.show?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])

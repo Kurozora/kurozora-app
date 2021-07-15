@@ -543,7 +543,6 @@
                                             </constraints>
                                         </view>
                                     </subviews>
-                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                     <constraints>
                                         <constraint firstItem="RYh-wB-xb0" firstAttribute="top" secondItem="3ai-23-PLn" secondAttribute="bottom" id="03v-TQ-TGk"/>
                                         <constraint firstAttribute="bottom" secondItem="RYh-wB-xb0" secondAttribute="bottom" id="0qw-eA-qZt"/>
@@ -557,6 +556,7 @@
                                         <constraint firstAttribute="trailing" secondItem="3ai-23-PLn" secondAttribute="trailing" id="x75-R2-k2s"/>
                                     </constraints>
                                 </collectionViewCellContentView>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                 <connections>
                                     <outlet property="footerLabel" destination="H8k-dT-oxq" id="p6A-lP-Vuf"/>
                                     <outlet property="headlineLabel" destination="TMc-fM-qJg" id="K0J-d7-fOv"/>

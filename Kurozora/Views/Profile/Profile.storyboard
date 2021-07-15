@@ -53,6 +53,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="250"/>
                                             <gestureRecognizers/>
                                             <constraints>
+                                                <constraint firstAttribute="height" relation="lessThanOrEqual" constant="720" id="mkQ-9H-cPY"/>
                                                 <constraint firstAttribute="width" secondItem="zl8-rJ-jxV" secondAttribute="height" multiplier="3:2" id="opy-3b-JUb"/>
                                             </constraints>
                                         </imageView>

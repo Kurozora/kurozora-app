@@ -89,7 +89,7 @@ extension ShowDetailsCollectionViewController {
 
 			switch showDetailSection {
 			case .header:
-				let headerSection = self.fullSection(for: section, layoutEnvironment: layoutEnvironment)
+				let headerSection = self.headerSection(for: section, layoutEnvironment: layoutEnvironment)
 				sectionLayout = headerSection
 			case .badge:
 				let badgeSection = self.badgeSection(for: section, layoutEnvironment: layoutEnvironment)
@@ -169,11 +169,9 @@ extension ShowDetailsCollectionViewController {
 	func headerSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
 		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
-		let heightDimension = self.heightDimension(forSection: section, with: columns, layout: layoutEnvironment)
-		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: heightDimension)
+		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.65))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
 
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)

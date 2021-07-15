@@ -38,6 +38,9 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		}
 	}
 
+	/// The URL for the next set of resources.
+	var nextPageURL: String?
+
 	/// The object containing the search controller
 	lazy var kSearchController: KSearchController = KSearchController()
 
@@ -101,52 +104,71 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		- Parameter text: The string which to search for.
 		- Parameter searchScope: The scope in which the text should be searched.
 	*/
-	fileprivate func performSearch(withText text: String, in searchScope: SearchScope) {
+	func performSearch(withText text: String, in searchScope: SearchScope) {
 		// Prepare view for search
-		self.emptySearchResults()
 		self.currentScope = searchScope
 
 		// Decide with wich endpoint to perform the search
-		if !text.isEmpty {
-			switch searchScope {
-			case .show:
-				KService.search(forShow: text) { [weak self] result in
+		switch searchScope {
+		case .show:
+			KService.search(forShow: text, next: self.nextPageURL) { [weak self] result in
+				guard let self = self else { return }
+				switch result {
+				case .success(let showResponse):
+					// Reset data if necessary
+					if self.nextPageURL == nil {
+						self.searchResults = []
+					}
+
+					// Append new data and save next page url
+					self.searchResults?.append(contentsOf: showResponse.data)
+					self.nextPageURL = showResponse.next
+				case .failure:
+					break
+				}
+			}
+		case .library:
+			WorkflowController.shared.isSignedIn {
+				KService.searchLibrary(forShow: text, next: self.nextPageURL) { [weak self] result in
 					guard let self = self else { return }
 					switch result {
-					case .success(let showResults):
-						self.searchResults = showResults
-					case .failure:
-						break
-					}
-				}
-			case .myLibrary:
-				WorkflowController.shared.isSignedIn {
-					KService.searchLibrary(forShow: text) { [weak self] result in
-						guard let self = self else { return }
-						switch result {
-						case .success(let showResults):
-							self.searchResults = showResults
-						case .failure:
-							break
+					case .success(let showResponse):
+						// Reset data if necessary
+						if self.nextPageURL == nil {
+							self.searchResults = []
 						}
-					}
-				}
-			case .user:
-				KService.search(forUsername: text) { [weak self] result in
-					guard let self = self else { return }
-					switch result {
-					case .success(let userResults):
-						self.searchResults = userResults
+
+						// Append new data and save next page url
+						self.searchResults?.append(contentsOf: showResponse.data)
+						self.nextPageURL = showResponse.next
 					case .failure:
 						break
 					}
+				}
+			}
+		case .user:
+			KService.search(forUsername: text, next: self.nextPageURL) { [weak self] result in
+				guard let self = self else { return }
+				switch result {
+				case .success(let userResponse):
+					// Reset data if necessary
+					if self.nextPageURL == nil {
+						self.searchResults = []
+					}
+
+					// Append new data and save next page url
+					self.searchResults?.append(contentsOf: userResponse.data)
+					self.nextPageURL = userResponse.next
+				case .failure:
+					break
 				}
 			}
 		}
 	}
 
 	/// Sets all search results to nil and reloads the table view
-	fileprivate func emptySearchResults() {
+	fileprivate func resetSearchResults() {
+		self.nextPageURL = nil
 		self.searchResults = nil
 		self.collectionView.reloadData()
 	}
@@ -154,11 +176,12 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	/**
 		Performs search after the given amount of time has passed.
 
-		 - Parameter timer: The timer object used to determin when to perform the search.
+		- Parameter timer: The timer object used to determin when to perform the search.
 	*/
 	@objc func search(_ timer: Timer) {
 		let userInfo = timer.userInfo as? [String: Any]
 		if let text = userInfo?["searchText"] as? String, let searchScope = userInfo?["searchScope"] as? SearchScope {
+			self.nextPageURL = nil
 			self.performSearch(withText: text, in: searchScope)
 		}
 	}
@@ -169,22 +192,22 @@ extension SearchResultsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		var resultsCount = suggestionElements?.count
 
-		if searchResults != nil {
-			resultsCount = searchResults?.count
+		if self.searchResults != nil {
+			resultsCount = self.searchResults?.count
 		}
 
 		return resultsCount ?? 0
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		if searchResults != nil {
+		if self.searchResults != nil {
 			let searchBaseResultsCell = collectionView.dequeueReusableCell(withReuseIdentifier: currentScope.identifierString, for: indexPath) as! SearchBaseResultsCell
-			searchBaseResultsCell.separatorView?.isHidden = indexPath.item == searchResults!.count - 1
+			searchBaseResultsCell.separatorView?.isHidden = indexPath.item == self.searchResults!.count - 1
 			switch currentScope {
-			case .show, .myLibrary:
-				(searchBaseResultsCell as? SearchShowResultsCell)?.show = searchResults?[indexPath.row] as? Show
+			case .show, .library:
+				(searchBaseResultsCell as? SearchShowResultsCell)?.show = self.searchResults?[indexPath.row] as? Show
 			case .user:
-				(searchBaseResultsCell as? SearchUserResultsCell)?.user = searchResults?[indexPath.row] as? User
+				(searchBaseResultsCell as? SearchUserResultsCell)?.user = self.searchResults?[indexPath.row] as? User
 			}
 			return searchBaseResultsCell
 		}
@@ -202,9 +225,10 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 	func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
 		guard let searchScope = SearchScope(rawValue: selectedScope) else { return }
 		guard let text = searchBar.text else { return }
+		self.nextPageURL = nil
 
 		switch searchScope {
-		case .myLibrary:
+		case .library:
 			WorkflowController.shared.isSignedIn {
 				self.performSearch(withText: text, in: searchScope)
 				return
@@ -218,6 +242,7 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 		guard let searchScope = SearchScope(rawValue: searchBar.selectedScopeButtonIndex) else { return }
 		guard let text = searchBar.text else { return }
+		self.nextPageURL = nil
 		performSearch(withText: text, in: searchScope)
 	}
 
@@ -228,11 +253,11 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 			timer?.invalidate()
 			timer = Timer.scheduledTimer(timeInterval: 0.6, target: self, selector: #selector(search(_:)), userInfo: ["searchText": searchText, "searchScope": searchScope], repeats: false)
 		} else {
-			emptySearchResults()
+			self.resetSearchResults()
 		}
 	}
 
 	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-		emptySearchResults()
+		self.resetSearchResults()
 	}
 }
