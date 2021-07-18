@@ -3329,8 +3329,8 @@
 		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1100;
-				LastUpgradeCheck = 1100;
+				LastSwiftUpdateCheck = 1240;
+				LastUpgradeCheck = 1240;
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 12.0";
@@ -4320,41 +4320,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		0D7E2B3346F5A6D821EDFBB8CA3204BA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = CF909E3C661FD4C22CC4124B1649E114 /* KurozoraKit.debug.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/KurozoraKit/KurozoraKit-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/KurozoraKit/KurozoraKit-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MODULEMAP_FILE = "Target Support Files/KurozoraKit/KurozoraKit.modulemap";
-				PRODUCT_MODULE_NAME = KurozoraKit;
-				PRODUCT_NAME = KurozoraKit;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
 		1AE6798D986F8C9AEA1B158FF77FA062 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1934D99B5B9010BEBC7C7633F67EA75 /* SwiftyJSON.debug.xcconfig */;
@@ -4424,9 +4389,9 @@
 			};
 			name = Debug;
 		};
-		25479BD5883D0AC7FB6CB90B8CE1A6AA /* Release */ = {
+		3B3479548121B74942B9C4C578351551 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7277FC27CAC20ED872509312BB8F66E2 /* KurozoraKit.release.xcconfig */;
+			baseConfigurationReference = CF909E3C661FD4C22CC4124B1649E114 /* KurozoraKit.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -4454,11 +4419,10 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Release;
+			name = Debug;
 		};
 		43246FA729B5B5EA2364C00654DC6D54 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -4527,6 +4491,42 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
+		};
+		52EF7D18D7F9A119EBE98DB8A1FB2E2A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7277FC27CAC20ED872509312BB8F66E2 /* KurozoraKit.release.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/KurozoraKit/KurozoraKit-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/KurozoraKit/KurozoraKit-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/KurozoraKit/KurozoraKit.modulemap";
+				PRODUCT_MODULE_NAME = KurozoraKit;
+				PRODUCT_NAME = KurozoraKit;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
 		};
 		5462E5599586BDFCFB24DC876DE629D7 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -5815,8 +5815,8 @@
 		E0276BDF0E4017F76E13CDB51E4C6912 /* Build configuration list for PBXNativeTarget "KurozoraKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0D7E2B3346F5A6D821EDFBB8CA3204BA /* Debug */,
-				25479BD5883D0AC7FB6CB90B8CE1A6AA /* Release */,
+				3B3479548121B74942B9C4C578351551 /* Debug */,
+				52EF7D18D7F9A119EBE98DB8A1FB2E2A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

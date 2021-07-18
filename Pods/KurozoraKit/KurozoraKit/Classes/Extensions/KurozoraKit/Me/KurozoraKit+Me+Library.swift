@@ -164,22 +164,25 @@ extension KurozoraKit {
 		Fetch a list of shows matching the search query in the authenticated user's library.
 
 		- Parameter show: The search query by which the search list should be fetched.
+		- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func searchLibrary(forShow show: String, completion completionHandler: @escaping (_ result: Result<[Show], KKAPIError>) -> Void) {
-		let meLibrarySearch = KKEndpoint.Me.Library.search.endpointValue
-		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(meLibrarySearch)
+	public func searchLibrary(forShow show: String, next: String?, completion completionHandler: @escaping (_ result: Result<ShowResponse, KKAPIError>) -> Void) {
+		let meLibrarySearch = next ?? KKEndpoint.Me.Library.search.endpointValue
+		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(meLibrarySearch).buildURL(.relativeToBaseURL)
 
 		request.headers = headers
 		request.headers["kuro-auth"] = self.authenticationKey
 
 		request.method = .get
-		request.parameters = [
-			"query": show
-		]
+		if next == nil {
+			request.parameters = [
+				"query": show
+			]
+		}
 		request.perform(withSuccess: { showResponse in
-			completionHandler(.success(showResponse.data))
+			completionHandler(.success(showResponse))
 		}, failure: { error in
 			print("❌ Received library search error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")

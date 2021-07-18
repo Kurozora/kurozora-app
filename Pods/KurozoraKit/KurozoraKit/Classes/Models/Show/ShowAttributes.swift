@@ -54,6 +54,9 @@ extension Show {
 		/// The localized title of the show.
 		public let title: String
 
+		/// The synonym titles of the show.
+		public let synonymTitles: [String]?
+
 		/// The localized tagline of the show.
 		public let tagline: String?
 

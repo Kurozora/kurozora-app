@@ -313,12 +313,13 @@ extension KurozoraKit {
 		Fetch a list of users matching the search query.
 
 		- Parameter username: The search query by which the search list should be fetched.
+		- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
 		- Parameter successHandler: A closure returning a SearchElement array.
 		- Parameter search: The returned SearchElement array.
 	*/
-	public func search(forUsername username: String, completion completionHandler: @escaping (_ result: Result<[User], KKAPIError>) -> Void) {
-		let usersSearch = KKEndpoint.Users.search.endpointValue
-		let request: APIRequest<UserResponse, KKAPIError> = tron.codable.request(usersSearch)
+	public func search(forUsername username: String,  next: String?, completion completionHandler: @escaping (_ result: Result<UserResponse, KKAPIError>) -> Void) {
+		let usersSearch = next ?? KKEndpoint.Users.search.endpointValue
+		let request: APIRequest<UserResponse, KKAPIError> = tron.codable.request(usersSearch).buildURL(.relativeToBaseURL)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -326,11 +327,13 @@ extension KurozoraKit {
 		}
 
 		request.method = .get
-		request.parameters = [
-			"query": username
-		]
+		if next == nil {
+			request.parameters = [
+				"query": username
+			]
+		}
 		request.perform(withSuccess: { userResponse in
-			completionHandler(.success(userResponse.data))
+			completionHandler(.success(userResponse))
 		}, failure: { error in
 			print("❌ Received user search error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")

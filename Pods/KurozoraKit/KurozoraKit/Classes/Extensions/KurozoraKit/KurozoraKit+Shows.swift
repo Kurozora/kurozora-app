@@ -250,12 +250,13 @@ extension KurozoraKit {
 		Fetch a list of shows matching the search query.
 
 		- Parameter show: The search query by which the search list should be fetched.
+		- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func search(forShow show: String, completion completionHandler: @escaping (_ result: Result<[Show], KKAPIError>) -> Void) {
-		let showsSearch = KKEndpoint.Shows.search.endpointValue
-		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(showsSearch)
+	public func search(forShow show: String, next: String?, completion completionHandler: @escaping (_ result: Result<ShowResponse, KKAPIError>) -> Void) {
+		let showsSearch = next ?? KKEndpoint.Shows.search.endpointValue
+		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(showsSearch).buildURL(.relativeToBaseURL)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -263,11 +264,13 @@ extension KurozoraKit {
 		}
 
 		request.method = .get
-		request.parameters = [
-			"query": show
-		]
+		if next == nil {
+			request.parameters = [
+				"query": show
+			]
+		}
 		request.perform(withSuccess: { showResponse in
-			completionHandler(.success(showResponse.data))
+			completionHandler(.success(showResponse))
 		}, failure: { error in
 			print("❌ Received show search error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
