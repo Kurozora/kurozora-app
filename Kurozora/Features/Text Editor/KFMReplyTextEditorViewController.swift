@@ -45,17 +45,19 @@ class KFMReplyTextEditorViewController: KViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.profileImageView.image = User.current?.attributes.profileImage
-		self.currentUsernameLabel.text = User.current?.attributes.username
-		self.characterCountLabel.text = "\(characterLimit)"
-		self.commentTextView.text = placeholderText
+		if let user = User.current {
+			self.currentUsernameLabel.text = user.attributes.username
+			self.profileImageView.setImage(with: user.attributes.profileImageURL ?? "", placeholder: user.attributes.placeholderImage)
+		}
+		self.characterCountLabel.text = "\(self.characterLimit)"
+		self.commentTextView.text = self.placeholderText
 		self.commentTextView.theme_textColor = KThemePicker.textFieldPlaceholderTextColor.rawValue
 		self.commentTextView.becomeFirstResponder()
 		self.commentTextView.selectedTextRange = self.commentTextView.textRange(from: self.commentTextView.beginningOfDocument, to: self.commentTextView.beginningOfDocument)
 
-		if let user = self.opFeedMessage.relationships.users.data.first {
-			self.opProfileImageView.image = user.attributes.profileImage
-			self.opUsernameLabel.text = user.attributes.username
+		if let opUser = self.opFeedMessage.relationships.users.data.first {
+			self.opUsernameLabel.text = opUser.attributes.username
+			self.opProfileImageView.setImage(with: opUser.attributes.profileImageURL ?? "", placeholder: opUser.attributes.placeholderImage)
 		}
 		self.opMessageTextView.text = self.opFeedMessage.attributes.body
 		self.opDateTimeLabel.text = self.opFeedMessage.attributes.createdAt.timeAgo

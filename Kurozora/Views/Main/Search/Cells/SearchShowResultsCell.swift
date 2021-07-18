@@ -30,7 +30,12 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 	override func configureCell() {
 		super.configureCell()
 		primaryLabel.text = self.show.attributes.title
-		searchImageView.image = self.show.attributes.posterImage
+
+		if let posterBackroundColor = self.show.attributes.poster?.backgroundColor {
+			self.searchImageView.backgroundColor = UIColor(hexString: posterBackroundColor)
+		}
+		self.searchImageView.setImage(with: self.show.attributes.poster?.url ?? "", placeholder: R.image.placeholders.showPoster()!)
+
 		statusLabel.text = show.attributes.status.name
 
 		// Configure library status

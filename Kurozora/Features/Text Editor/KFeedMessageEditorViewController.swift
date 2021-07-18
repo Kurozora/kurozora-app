@@ -40,8 +40,10 @@ class KFeedMessageTextEditorViewController: KViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		profileImageView.image = User.current?.attributes.profileImage
-		currentUsernameLabel.text = User.current?.attributes.username
+		if let user = User.current {
+			currentUsernameLabel.text = user.attributes.username
+			profileImageView.setImage(with: user.attributes.profileImageURL ?? "", placeholder: user.attributes.placeholderImage)
+		}
 		characterCountLabel.text = "\(characterLimit)"
 		commentTextView.text = placeholderText
 		commentTextView.theme_textColor = KThemePicker.textFieldPlaceholderTextColor.rawValue

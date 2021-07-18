@@ -31,14 +31,16 @@ class AccountTableViewController: SubSettingsViewController {
 	// MARK: - Functions
 	/// Configures the view with the user's details.
 	func configureUserDetails() {
+		guard let user = User.current else { return }
+
 		// Setup username.
-		self.usernameLabel.text = User.current?.attributes.username
+		self.usernameLabel.text = user.attributes.username
 
 		// Setup email address.
-		self.userEmailLabel.text = User.current?.attributes.email
+		self.userEmailLabel.text = user.attributes.email
 
 		// Setup profile image.
-		self.profileImageView.image = User.current?.attributes.profileImage
+		self.profileImageView.setImage(with: user.attributes.profileImageURL ?? "", placeholder: user.attributes.placeholderImage)
 	}
 }
 

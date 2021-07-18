@@ -32,15 +32,17 @@ class CastCollectionViewCell: UICollectionViewCell {
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
 		// Configure person
-		self.personNameLabel.text = cast.relationships.people.data.first?.attributes.fullName ?? "Unknown"
-		self.personImageView.image = self.cast.relationships.people.data.first?.attributes.personalImage
+		if let person = self.cast.relationships.people.data.first {
+			self.personNameLabel.text = person.attributes.fullName
+			self.personImageView.setImage(with: person.attributes.imageURL ?? "", placeholder: person.attributes.placeholderImage)
+		}
 
 		// Configure character
-		if let characterName = cast.relationships.characters.data.first?.attributes.name {
-			self.characterNameLabel.text = !characterName.isEmpty ? "as \(characterName)" : ""
+		if let character = cast.relationships.characters.data.first {
+			self.characterNameLabel.text = "as \(character.attributes.name)"
+			self.characterImageView.setImage(with: character.attributes.imageURL ?? "", placeholder: character.attributes.placeholderImage)
 		}
 		self.characterRoleLabel.text = cast.attributes.role.name
-		self.characterImageView.image = self.cast.relationships.characters.data.first?.attributes.personalImage
 	}
 
 	// MARK: - IBActions

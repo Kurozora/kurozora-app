@@ -24,7 +24,7 @@ class CharacterHeaderCollectionViewCell: UICollectionViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	func configureCell() {
-		self.nameLabel.text = character.attributes.name
-		self.characterImageView.image = character.attributes.personalImage
+		self.nameLabel.text = self.character.attributes.name
+		self.characterImageView.setImage(with: self.character.attributes.imageURL ?? "", placeholder: self.character.attributes.placeholderImage)
 	}
 }

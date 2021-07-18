@@ -257,91 +257,89 @@ class ProfileTableViewController: KTableViewController {
 
 	/// Configure the profile view with the details of the user whose page is being viewed.
 	private func configureProfile() {
+		guard let user = self.user else { return }
 		let centerAlign = NSMutableParagraphStyle()
 		centerAlign.alignment = .center
 
 		// Configure username
-		usernameLabel.text = self.user?.attributes.username
+		usernameLabel.text = user.attributes.username
 		usernameLabel.isHidden = false
 
 		// Configure online status
-		onlineIndicatorLabel.text = self.user?.attributes.activityStatus.stringValue
+		onlineIndicatorLabel.text = user.attributes.activityStatus.stringValue
 		onlineIndicatorLabel.isHidden = false
 
 		// Configure profile image
-		profileImageView.image = self.user?.attributes.profileImage
+		profileImageView.setImage(with: user.attributes.profileImageURL ?? "", placeholder: user.attributes.placeholderImage)
 
 		// Configure banner image
-		if let bannerImageURL = self.user?.attributes.bannerImageURL {
+		if let bannerImageURL = user.attributes.bannerImageURL {
 			bannerImageView.setImage(with: bannerImageURL, placeholder: R.image.placeholders.userBanner()!)
 		}
 
 		// Configure user bio
-		if let biography = self.user?.attributes.biography {
+		if let biography = user.attributes.biography {
 			self.bioTextView.text = biography
 		}
 
 		// Configure reputation count
-		if let reputationCount = self.user?.attributes.reputationCount {
-			let count = NSAttributedString(string: reputationCount.kkFormatted, attributes: [
-				NSAttributedString.Key.foregroundColor: KThemePicker.textColor.colorValue,
-				NSAttributedString.Key.paragraphStyle: centerAlign
-			])
-			let title = NSAttributedString(string: "\nReputation", attributes: [
-				NSAttributedString.Key.foregroundColor: KThemePicker.subTextColor.colorValue,
-				NSAttributedString.Key.paragraphStyle: centerAlign
-			])
-			let reputationButtonTitle = NSMutableAttributedString()
-			reputationButtonTitle.append(count)
-			reputationButtonTitle.append(title)
+		let reputationCount = user.attributes.reputationCount
+		let reputationCountString = NSAttributedString(string: reputationCount.kkFormatted, attributes: [
+			NSAttributedString.Key.foregroundColor: KThemePicker.textColor.colorValue,
+			NSAttributedString.Key.paragraphStyle: centerAlign
+		])
+		let reputationTitleString = NSAttributedString(string: "\nReputation", attributes: [
+			NSAttributedString.Key.foregroundColor: KThemePicker.subTextColor.colorValue,
+			NSAttributedString.Key.paragraphStyle: centerAlign
+		])
+		let reputationButtonTitle = NSMutableAttributedString()
+		reputationButtonTitle.append(reputationCountString)
+		reputationButtonTitle.append(reputationTitleString)
 
-			self.reputationButton.setAttributedTitle(reputationButtonTitle, for: .normal)
-		}
+		self.reputationButton.setAttributedTitle(reputationButtonTitle, for: .normal)
 
 		// Configure following & followers count
-		if let followingCount = self.user?.attributes.followingCount {
-			let count = NSAttributedString(string: followingCount.kkFormatted, attributes: [
-				NSAttributedString.Key.foregroundColor: KThemePicker.textColor.colorValue,
-				NSAttributedString.Key.paragraphStyle: centerAlign
-			])
-			let title = NSAttributedString(string: "\nFollowing", attributes: [
-				NSAttributedString.Key.foregroundColor: KThemePicker.subTextColor.colorValue,
-				NSAttributedString.Key.paragraphStyle: centerAlign
-			])
-			let followingButtonTitle = NSMutableAttributedString()
-			followingButtonTitle.append(count)
-			followingButtonTitle.append(title)
+		let followingCount = user.attributes.followingCount
+		let followingCountString = NSAttributedString(string: followingCount.kkFormatted, attributes: [
+			NSAttributedString.Key.foregroundColor: KThemePicker.textColor.colorValue,
+			NSAttributedString.Key.paragraphStyle: centerAlign
+		])
+		let followingTitleString = NSAttributedString(string: "\nFollowing", attributes: [
+			NSAttributedString.Key.foregroundColor: KThemePicker.subTextColor.colorValue,
+			NSAttributedString.Key.paragraphStyle: centerAlign
+		])
+		let followingButtonTitle = NSMutableAttributedString()
+		followingButtonTitle.append(followingCountString)
+		followingButtonTitle.append(followingTitleString)
 
-			self.followingButton.setAttributedTitle(followingButtonTitle, for: .normal)
-		}
+		self.followingButton.setAttributedTitle(followingButtonTitle, for: .normal)
 
-		if let followerCount = self.user?.attributes.followerCount {
-			let count = NSAttributedString(string: followerCount.kkFormatted, attributes: [
-				NSAttributedString.Key.foregroundColor: KThemePicker.textColor.colorValue,
-				NSAttributedString.Key.paragraphStyle: centerAlign
-			])
-			let title = NSAttributedString(string: "\nFollowers", attributes: [
-				NSAttributedString.Key.foregroundColor: KThemePicker.subTextColor.colorValue,
-				NSAttributedString.Key.paragraphStyle: centerAlign
-			])
-			let followersButtonTitle = NSMutableAttributedString()
-			followersButtonTitle.append(count)
-			followersButtonTitle.append(title)
+		let followerCount = user.attributes.followerCount
+		let followerCountString = NSAttributedString(string: followerCount.kkFormatted, attributes: [
+			NSAttributedString.Key.foregroundColor: KThemePicker.textColor.colorValue,
+			NSAttributedString.Key.paragraphStyle: centerAlign
+		])
+		let followerTitleString = NSAttributedString(string: "\nFollowers", attributes: [
+			NSAttributedString.Key.foregroundColor: KThemePicker.subTextColor.colorValue,
+			NSAttributedString.Key.paragraphStyle: centerAlign
+		])
+		let followersButtonTitle = NSMutableAttributedString()
+		followersButtonTitle.append(followerCountString)
+		followersButtonTitle.append(followerTitleString)
 
-			self.followersButton.setAttributedTitle(followersButtonTitle, for: .normal)
-		}
+		self.followersButton.setAttributedTitle(followersButtonTitle, for: .normal)
 
 		// Configure edit button
-		self.editProfileButton.isHidden = !(self.user?.id == User.current?.id)
+		self.editProfileButton.isHidden = !(user.id == User.current?.id)
 
 		// Configure follow button
 		self.updateFollowButton()
 
 		// Configure pro badge
-		self.proBadgeButton.isHidden = !(self.user?.attributes.isPro ?? false)
+		self.proBadgeButton.isHidden = !user.attributes.isPro
 
 		// Configure badge & badge button
-		if let badges = self.user?.relationships?.badges?.data {
+		if let badges = user.relationships?.badges?.data {
 			// Configure user badge (a.k.a tag)
 			if !badges.isEmpty {
 				self.tagBadgeButton.isHidden = false

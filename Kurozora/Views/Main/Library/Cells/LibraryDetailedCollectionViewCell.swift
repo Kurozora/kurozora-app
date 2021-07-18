@@ -17,9 +17,19 @@ class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 	override func configureCell() {
 		super.configureCell()
 
+		// Configure title
 		self.titleLabel.textColor = .white
+
+		// Configure user progress
 		self.userProgressLabel.text = show.attributes.informationStringShort
-		self.episodeImageView.image = show.attributes.bannerImage
+
+		// Configure episode preview
+		if let episodeBackgroundColor = self.show.attributes.banner?.backgroundColor {
+			self.episodeImageView.backgroundColor = UIColor(hexString: episodeBackgroundColor)
+		}
+		self.episodeImageView.setImage(with: self.show.attributes.banner?.url ?? "", placeholder: R.image.placeholders.showBanner()!)
+
+		// Configure poster
 		self.posterShadowView?.applyShadow()
 	}
 }

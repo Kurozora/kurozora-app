@@ -65,7 +65,12 @@ class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 
 		// Configure tagline
 		self.taglineLabel?.text = show.attributes.tagline
-		self.thumbnailPlaceholder.image = show.attributes.bannerImage
+
+		// Configure banner
+		if let bannerBackgroundColor = self.show.attributes.banner?.backgroundColor {
+			self.thumbnailPlaceholder.backgroundColor = UIColor(hexString: bannerBackgroundColor)
+		}
+		self.thumbnailPlaceholder.setImage(with: self.show.attributes.banner?.url ?? "", placeholder: R.image.placeholders.showBanner()!)
 
 		// Configure video player
 		configureVideoPlayer()

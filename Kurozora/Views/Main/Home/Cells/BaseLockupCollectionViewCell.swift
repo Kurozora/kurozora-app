@@ -37,16 +37,23 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 	func configureCell() {
 		guard let show = self.show else { return }
 
+		// Configure title
 		self.primaryLabel?.text = show.attributes.title
 
 		// Configure genres
 		self.secondaryLabel?.text = show.attributes.genres?.joined(separator: ", ") ?? "-"
 
 		// Configure banner
-		self.bannerImageView?.image = self.show.attributes.bannerImage
+		if let bannerBackgroundColor = self.show.attributes.banner?.backgroundColor {
+			self.bannerImageView?.backgroundColor = UIColor(hexString: bannerBackgroundColor)
+		}
+		self.bannerImageView?.setImage(with: self.show.attributes.banner?.url ?? "", placeholder: R.image.placeholders.showBanner()!)
 
 		// Configure poster
-		self.posterImageView?.image = self.show.attributes.posterImage
+		if let posterBackgroundColor = self.show.attributes.poster?.backgroundColor {
+			self.posterImageView?.backgroundColor = UIColor(hexString: posterBackgroundColor)
+		}
+		self.posterImageView?.setImage(with: self.show.attributes.poster?.url ?? "", placeholder: R.image.placeholders.showPoster()!)
 
 		// Configure library status
 		if let libraryStatus = self.show.attributes.libraryStatus {

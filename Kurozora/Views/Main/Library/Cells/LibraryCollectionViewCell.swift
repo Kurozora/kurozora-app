@@ -25,13 +25,13 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	func configureCell() {
-		self.titleLabel.text = show.attributes.title
+		// Configure title
+		self.titleLabel.text = self.show.attributes.title
 
-		if let showPoster = show.attributes.poster {
-			if let backgroundColor = showPoster.backgroundColor {
-				self.posterImageView.backgroundColor = UIColor(hexString: backgroundColor)
-			}
-			self.posterImageView.setImage(with: showPoster.url, placeholder: R.image.placeholders.showPoster()!)
+		// Configure poster
+		if let backgroundColor = self.show.attributes.poster?.backgroundColor {
+			self.posterImageView.backgroundColor = UIColor(hexString: backgroundColor)
 		}
+		self.posterImageView.setImage(with: self.show.attributes.poster?.url ?? "", placeholder: R.image.placeholders.showPoster()!)
 	}
 }

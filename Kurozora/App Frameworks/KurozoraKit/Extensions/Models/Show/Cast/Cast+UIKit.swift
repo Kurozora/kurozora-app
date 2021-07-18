@@ -82,7 +82,7 @@ extension Cast {
 		UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
 
 		leftImage.draw(in: CGRect(x: 0, y: 0, width: size.width / 2, height: size.height))
-		rightImage.draw(in: CGRect(x: size.width / 2, y: 0, width: size.width, height: size.height))
+		rightImage.draw(in: CGRect(x: size.width / 2, y: 0, width: size.width / 2, height: size.height))
 
 		let newImage = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()

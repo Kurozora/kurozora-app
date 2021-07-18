@@ -26,10 +26,10 @@ class FollowCell: KTableViewCell {
 	// MARK: - Functions
 	override func configureCell() {
 		// Configure username
-		self.usernameLabel.text = user.attributes.username
+		self.usernameLabel.text = self.user.attributes.username
 
 		// Configure profile image
-		self.profileImageView.image = user.attributes.profileImage
+		self.profileImageView.setImage(with: self.user.attributes.profileImageURL ?? "", placeholder: self.user.attributes.placeholderImage)
 
 		// Configure follow button
 		self.updateFollowButton()

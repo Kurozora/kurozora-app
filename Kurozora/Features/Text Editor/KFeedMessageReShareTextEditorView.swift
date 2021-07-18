@@ -38,17 +38,20 @@ class KFMReShareTextEditorViewController: KViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		profileImageView.image = User.current?.attributes.profileImage
-		currentUsernameLabel.text = User.current?.attributes.username
+		if let user = User.current {
+			currentUsernameLabel.text = user.attributes.username
+			profileImageView.setImage(with: user.attributes.profileImageURL ?? "", placeholder: user.attributes.placeholderImage)
+
+		}
 		characterCountLabel.text = "\(characterLimit)"
 		commentTextView.text = placeholderText
 		commentTextView.theme_textColor = KThemePicker.textFieldPlaceholderTextColor.rawValue
 		commentTextView.becomeFirstResponder()
 		commentTextView.selectedTextRange = commentTextView.textRange(from: commentTextView.beginningOfDocument, to: commentTextView.beginningOfDocument)
 
-		if let user = self.opFeedMessage.relationships.users.data.first {
-			opUsernameLabel.text = user.attributes.username
-			opProfileImageView.image = user.attributes.profileImage
+		if let opUser = self.opFeedMessage.relationships.users.data.first {
+			opUsernameLabel.text = opUser.attributes.username
+			opProfileImageView.setImage(with: opUser.attributes.profileImageURL ?? "", placeholder: opUser.attributes.placeholderImage)
 		}
 		opBodyTextView.text = self.opFeedMessage.attributes.body
 		dateLabel.text = self.opFeedMessage.attributes.createdAt.timeAgo

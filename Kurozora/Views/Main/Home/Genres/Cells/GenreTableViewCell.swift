@@ -25,7 +25,7 @@ class GenreTableViewCell: KTableViewCell {
 	// MARK: - Functions
 	override func configureCell() {
 		nameLabel.text = genre.attributes.name
-		iconImageView.image = genre.attributes.symbolImage
+		iconImageView.setImage(with: genre.attributes.symbol ?? "", placeholder: R.image.kurozoraIcon()!)
 		nsfwButton.isHidden = genre.attributes.isNSFW ? false : true
 	}
 }

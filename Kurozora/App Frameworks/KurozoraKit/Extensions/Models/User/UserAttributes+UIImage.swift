@@ -17,9 +17,17 @@ extension User.Attributes {
 	*/
 	var profileImage: UIImage? {
 		let profileImageView = UIImageView()
-		let usernameInitials = self.username.initials
-		let placeholderImage = usernameInitials.toImage(withFrameSize: CGRect(x: 0, y: 0, width: 300, height: 300), placeholder: R.image.placeholders.userProfile()!)
-		profileImageView.setImage(with: self.profileImageURL ?? "", placeholder: placeholderImage)
+		profileImageView.setImage(with: self.profileImageURL ?? "", placeholder: self.placeholderImage)
 		return profileImageView.image?.withRenderingMode(.alwaysOriginal)
+	}
+
+	/**
+		Returns a placeholder `UIImage` for the user using the user's initials if available, otherwise a placeholder user image is returned.
+
+		- Returns: a placeholder `UIImage` for the user using the user's initials if available, otherwise a placeholder profile image is returned.
+	*/
+	var placeholderImage: UIImage {
+		let userameInitials = self.username.initials
+		return userameInitials.toImage(withFrameSize: CGRect(x: 0, y: 0, width: 300, height: 300), placeholder: R.image.placeholders.userProfile()!)
 	}
 }

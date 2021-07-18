@@ -38,7 +38,7 @@ class LockupCollectionViewCell: UICollectionViewCell {
 	/// Configure the cell with the season's details.
 	fileprivate func configureSeasonCell() {
 		// Configure poster
-		self.posterImageView.image = self.season.attributes.posterImage
+		self.posterImageView.setImage(with: self.season.attributes.posterURL ?? "", placeholder: R.image.placeholders.showPoster()!)
 
 		// Configure season number
 		let seasonNumber = self.season.attributes.number
@@ -61,7 +61,11 @@ class LockupCollectionViewCell: UICollectionViewCell {
 
 	/// Configure the cell with the related show's details.
 	fileprivate func configureRelatedShowCell() {
-		self.posterImageView.image = self.relatedShow.show.attributes.posterImage
+		// Configure poster image
+		if let posterBackgroundColor = self.relatedShow.show.attributes.poster?.backgroundColor {
+			self.posterImageView.backgroundColor = UIColor(hexString: posterBackgroundColor)
+		}
+		self.posterImageView.setImage(with: self.relatedShow.show.attributes.poster?.url ?? "", placeholder: R.image.placeholders.showPoster()!)
 
 		// Configure relation type
 		self.countLabel.text = self.relatedShow.attributes.relation.name

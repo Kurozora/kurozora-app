@@ -24,7 +24,7 @@ class PersonLockupCollectionViewCell: UICollectionViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
-		self.personImageView.image = person.attributes.personalImage
+		self.personImageView.setImage(with: self.person.attributes.imageURL ?? "", placeholder: self.person.attributes.placeholderImage)
 		self.nameLabel.text = person.attributes.fullName
 	}
 }
