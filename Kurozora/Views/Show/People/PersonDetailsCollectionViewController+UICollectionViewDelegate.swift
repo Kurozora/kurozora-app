@@ -19,8 +19,8 @@ extension PersonDetailsCollectionViewController {
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		guard let personDetailsSection = PersonDetailsSection(rawValue: indexPath.section) else { return nil }
-		switch personDetailsSection {
+		guard let personDetailSection = PersonDetail.Section(rawValue: indexPath.section) else { return nil }
+		switch personDetailSection {
 		case .shows:
 			if let smallLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? SmallLockupCollectionViewCell {
 				return smallLockupCollectionViewCell.show?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])

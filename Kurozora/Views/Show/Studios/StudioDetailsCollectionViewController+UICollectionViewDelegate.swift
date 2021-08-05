@@ -17,9 +17,9 @@ extension StudioDetailsCollectionViewController {
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		let studioDetailsSection = StudioDetailsSection(rawValue: indexPath.section) ?? .main
+		let studioDetailSection = StudioDetail.Section(rawValue: indexPath.section) ?? .header
 
-		switch studioDetailsSection {
+		switch studioDetailSection {
 		case .shows:
 			if let smallLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? SmallLockupCollectionViewCell {
 				return smallLockupCollectionViewCell.show?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])

@@ -180,22 +180,22 @@ class EpisodesCollectionViewController: KCollectionViewController {
 
 			if !visibleIndexPath.contains(IndexPath(item: 0, section: 0)) {
 				// Go to first episode
-				let goToFirstEpisode = UIAlertAction.init(title: "Go to first episode", style: .default, handler: { (_) in
+				let goToFirstEpisode = UIAlertAction.init(title: "Go to first episode", style: .default) { _ in
 					self?.goToFirstEpisode()
-				})
+				}
 				actionSheetAlertController.addAction(goToFirstEpisode)
 			} else {
 				// Go to last episode
-				let goToLastEpisode = UIAlertAction.init(title: "Go to last episode", style: .default, handler: { (_) in
+				let goToLastEpisode = UIAlertAction.init(title: "Go to last episode", style: .default) { _ in
 					self?.goToLastEpisode()
-				})
+				}
 				actionSheetAlertController.addAction(goToLastEpisode)
 			}
 
 			// Go to last watched episode
-			let goToLastWatchedEpisode = UIAlertAction.init(title: "Go to last watched episode", style: .default, handler: { (_) in
+			let goToLastWatchedEpisode = UIAlertAction.init(title: "Go to last watched episode", style: .default) { _ in
 				self?.goToLastWatchedEpisode()
-			})
+			}
 			actionSheetAlertController.addAction(goToLastWatchedEpisode)
 		}
 

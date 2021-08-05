@@ -17,7 +17,7 @@ class InformationButtonCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - Properties
 	weak var delegate: InformationButtonCollectionViewCellDelegate?
-	var studioDetailsInformationSection: StudioDetailsInformationSection = .website
+	var studioDetailInformation: StudioDetail.Information = .website
 	var studio: Studio! {
 		didSet {
 			configureCell()
@@ -27,9 +27,9 @@ class InformationButtonCollectionViewCell: UICollectionViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
-		self.titleLabel.text = studioDetailsInformationSection.stringValue
-		self.iconImageView.image = studioDetailsInformationSection.imageValue
-		self.separatorView.isHidden = self.studioDetailsInformationSection == .website
+		self.titleLabel.text = studioDetailInformation.stringValue
+		self.iconImageView.image = studioDetailInformation.imageValue
+		self.separatorView.isHidden = self.studioDetailInformation == .website
 	}
 
 	// MARK: - IBActions

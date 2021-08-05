@@ -171,16 +171,16 @@ class CharacterDetailsCollectionViewController: KCollectionViewController {
 // MARK: - UICollectionViewDataSource
 extension CharacterDetailsCollectionViewController {
 	override func numberOfSections(in collectionView: UICollectionView) -> Int {
-		return self.character != nil ? CharacterSection.allCases.count : 0
+		return self.character != nil ? CharacterDetail.Section.allCases.count : 0
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		let characterSection = CharacterSection(rawValue: section) ?? .main
-		var itemsPerSection = self.character != nil ? characterSection.rowCount : 0
+		let characterDetailSection = CharacterDetail.Section(rawValue: section) ?? .header
+		var itemsPerSection = self.character != nil ? characterDetailSection.rowCount : 0
 
-		switch characterSection {
+		switch characterDetailSection {
 		case .about:
-			if let aboutCharacter = self.character.attributes.about, aboutCharacter.isEmpty {
+			if self.character.attributes.about?.isEmpty ?? true {
 				itemsPerSection = 0
 			}
 		case .shows:
@@ -194,12 +194,12 @@ extension CharacterDetailsCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let characterSection = CharacterSection(rawValue: indexPath.section) ?? .main
-		let reuseIdentifier = characterSection.identifierString(for: indexPath.item)
+		let characterDetailSection = CharacterDetail.Section(rawValue: indexPath.section) ?? .header
+		let reuseIdentifier = characterDetailSection.identifierString(for: indexPath.item)
 		let characterCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
 
-		switch characterSection {
-		case .main:
+		switch characterDetailSection {
+		case .header:
 			(characterCollectionViewCell as? CharacterHeaderCollectionViewCell)?.character = self.character
 		case .about:
 			let textViewCollectionViewCell = characterCollectionViewCell as? TextViewCollectionViewCell
@@ -208,7 +208,7 @@ extension CharacterDetailsCollectionViewController {
 			textViewCollectionViewCell?.textViewContent = self.character.attributes.about
 		case .information:
 			if let informationCollectionViewCell = characterCollectionViewCell as? InformationCollectionViewCell {
-				informationCollectionViewCell.characterInformationSection = CharacterInformationSection(rawValue: indexPath.item) ?? .debut
+				informationCollectionViewCell.characterDetailInformation = CharacterDetail.Information(rawValue: indexPath.item) ?? .debut
 				informationCollectionViewCell.character = self.character
 			}
 		case .shows:
@@ -225,12 +225,12 @@ extension CharacterDetailsCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-		let characterSection = CharacterSection(rawValue: indexPath.section) ?? .main
+		let characterDetailSection = CharacterDetail.Section(rawValue: indexPath.section) ?? .header
 		let titleHeaderCollectionReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
 		titleHeaderCollectionReusableView.delegate = self
-		titleHeaderCollectionReusableView.segueID = characterSection.segueIdentifier
+		titleHeaderCollectionReusableView.segueID = characterDetailSection.segueIdentifier
 		titleHeaderCollectionReusableView.indexPath = indexPath
-		titleHeaderCollectionReusableView.title = characterSection.stringValue
+		titleHeaderCollectionReusableView.title = characterDetailSection.stringValue
 		return titleHeaderCollectionReusableView
 	}
 }

@@ -11,9 +11,10 @@ import KurozoraKit
 
 struct ShowDetail {
 	/**
-		Set of available show section types.
+		List of available show section types.
 	*/
 	enum Section: Int, CaseIterable {
+		// MARK: - Cases
 		case header = 0
 		case badge
 		case synopsis
@@ -52,7 +53,7 @@ struct ShowDetail {
 			}
 		}
 
-		/// The row count of a character section layout kind.
+		/// The row count of a  show section type.
 		var rowCount: Int {
 			switch self {
 			case .header:
@@ -106,11 +107,11 @@ struct ShowDetail {
 
 		// MARK: - Functions
 		/**
-			The cell identifier string of a character section.
+			The cell identifier string of a show section.
 
 			- Parameter row: The row integer used to determine the cell reuse identifier.
 
-			- Returns: The cell identifier string of a show details section.
+			- Returns: The cell identifier string of a show section.
 		*/
 		func identifierString(for row: Int = 0) -> String {
 			switch self {
@@ -137,7 +138,10 @@ struct ShowDetail {
 			}
 		}
 	}
+}
 
+// MARK: - Badge
+extension ShowDetail {
 	/**
 		List of available show badge types.
 	*/
@@ -197,7 +201,9 @@ struct ShowDetail {
 			case .tvRating:
 				return show.attributes.tvRating.name
 			case .studio:
-				return show.relationships?.studios?.data.first?.attributes.name ?? "-"
+				return show.relationships?.studios?.data.first { studio in
+					studio.attributes.isStudio ?? false
+				}?.attributes.name ?? show.relationships?.studios?.data.first?.attributes.name ?? "-"
 			case .language:
 				return show.attributes.languages.first?.attributes.code.uppercased()
 			}
@@ -237,7 +243,10 @@ struct ShowDetail {
 			}
 		}
 	}
+}
 
+// MARK: - Information
+extension ShowDetail {
 	/**
 		List of available show information types.
 	*/
@@ -250,7 +259,7 @@ struct ShowDetail {
 		case episodes
 		case duration
 		case broadcast
-		case aireDates
+		case airDates
 		case rating
 		case languages
 
@@ -274,7 +283,7 @@ struct ShowDetail {
 				return "Duration"
 			case .broadcast:
 				return "Broadcast"
-			case .aireDates:
+			case .airDates:
 				return "Aired"
 			case .rating:
 				return "Rating"
@@ -302,7 +311,7 @@ struct ShowDetail {
 				return UIImage(systemName: "hourglass")
 			case .broadcast:
 				return UIImage(systemName: "calendar.badge.clock")
-			case .aireDates:
+			case .airDates:
 				return UIImage(systemName: "calendar")
 			case .rating:
 				return R.image.symbols.pgTv()
@@ -330,7 +339,7 @@ struct ShowDetail {
 				return R.reuseIdentifier.informationCollectionViewCell.identifier
 			case .broadcast:
 				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .aireDates:
+			case .airDates:
 				return R.reuseIdentifier.informationCollectionViewCell.identifier
 			case .rating:
 				return R.reuseIdentifier.informationCollectionViewCell.identifier
@@ -375,14 +384,14 @@ struct ShowDetail {
 			case .episodes:
 				return "\(show.attributes.episodeCount)"
 			case .duration:
-				return show.attributes.runtime
+				return show.attributes.duration
 			case .broadcast:
 				var broadcastInfo = show.attributes.airDay ?? "-"
 				if let airTime = show.attributes.airTime {
 					broadcastInfo += airTime.isEmpty ? "" : " at " + airTime + " UTC"
 				}
 				return broadcastInfo
-			case .aireDates:
+			case .airDates:
 				guard let firstAired = show.attributes.firstAired?.formatted(date: .abbreviated, time: .omitted) else { return "-" }
 				return "🚀 \(firstAired)"
 			case .rating:
@@ -421,7 +430,10 @@ struct ShowDetail {
 		*/
 		func secondaryInformation(from show: Show) -> String? {
 			switch self {
-			case .aireDates:
+			case .airDates:
+				if show.attributes.type.name == "Movie" {
+					return self.information(from: show)
+				}
 				guard let lastAired = show.attributes.lastAired?.formatted(date: .abbreviated, time: .omitted) else { return nil }
 				return "\(lastAired) 🏁"
 			default: return nil
@@ -437,7 +449,7 @@ struct ShowDetail {
 		*/
 		func primaryImage(from show: Show) -> UIImage? {
 			switch self {
-			case .aireDates:
+			case .airDates:
 				guard self.secondaryInformation(from: show) != nil else { return nil }
 				return R.image.dotted_line()
 			default: return nil
@@ -481,12 +493,12 @@ struct ShowDetail {
 				let seasonString = show.attributes.seasonCount > 1 ? "seasons" : "season"
 				return "Across \(episodeCount) \(seasonString)."
 			case .duration:
-				return "With a total of \(show.attributes.runtimeTotal)."
+				return "With a total of \(show.attributes.durationTotal)."
 			case .broadcast:
 				guard show.attributes.lastAired == nil else { return "The broadcasting of this series has ended." }
 				guard show.attributes.broadcastDate == nil else { return nil }
 				return "No broadcast data available at the moment."
-			case .aireDates:
+			case .airDates:
 				guard self.secondaryInformation(from: show) == nil else { return nil }
 				return show.attributes.status.description
 			case .rating:
@@ -496,7 +508,10 @@ struct ShowDetail {
 			}
 		}
 	}
+}
 
+// MARK: - External Site
+extension ShowDetail {
 	/**
 		List of available extenral sites.
 	*/

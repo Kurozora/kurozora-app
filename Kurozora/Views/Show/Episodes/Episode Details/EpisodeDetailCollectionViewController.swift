@@ -173,7 +173,7 @@ extension EpisodeDetailCollectionViewController {
 		case .header:
 			itemsPerSection = 1
 		case .synopsis:
-			if let overview = self.episode.attributes.overview, !overview.isEmpty {
+			if let synopsis = self.episode.attributes.synopsis, !synopsis.isEmpty {
 				itemsPerSection = 1
 			}
 		case .rating:
@@ -200,7 +200,7 @@ extension EpisodeDetailCollectionViewController {
 			let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: episodeDetailSection.identifierString, for: indexPath) as! TextViewCollectionViewCell
 			textViewCollectionViewCell.delegate = self
 			textViewCollectionViewCell.textViewCollectionViewCellType = .synopsis
-			textViewCollectionViewCell.textViewContent = self.episode.attributes.overview
+			textViewCollectionViewCell.textViewContent = self.episode.attributes.synopsis
 			return textViewCollectionViewCell
 		case .rating:
 			let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: episodeDetailSection.identifierString, for: indexPath) as! RatingCollectionViewCell
@@ -226,7 +226,7 @@ extension EpisodeDetailCollectionViewController: TextViewCollectionViewCellDeleg
 		if let synopsisKNavigationController = R.storyboard.synopsis.instantiateInitialViewController() {
 			if let synopsisViewController = synopsisKNavigationController.viewControllers.first as? SynopsisViewController {
 				synopsisViewController.title = cell.textViewCollectionViewCellType.stringValue
-				synopsisViewController.synopsis = self.episode.attributes.overview
+				synopsisViewController.synopsis = self.episode.attributes.synopsis
 			}
 			synopsisKNavigationController.modalPresentationStyle = .fullScreen
 			self.present(synopsisKNavigationController, animated: true)

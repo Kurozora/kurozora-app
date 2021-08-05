@@ -36,9 +36,7 @@ class EpisodeLockupCollectionViewCell: UICollectionViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	fileprivate func configureWatchButton() {
-		if let episodePreviewImage = self.episode.attributes.previewImage {
-			self.episodeImageView.setImage(with: episodePreviewImage, placeholder: R.image.placeholders.showEpisode()!)
-		}
+		self.episodeImageView.setImage(with: self.episode.attributes.banner?.url ?? "", placeholder: R.image.placeholders.showEpisode()!)
 
 		self.episodeNumberLabel.isHidden = self.simpleModeEnabled
 		self.episodeTitleLabel.isHidden = self.simpleModeEnabled
@@ -54,11 +52,11 @@ class EpisodeLockupCollectionViewCell: UICollectionViewCell {
 		if !self.simpleModeEnabled {
 			self.cornerView.cornerRadius = 10
 
-			let episodeNumber = self.episode.attributes.number
+			let episodeNumber = self.episode.attributes.numberTotal
 			self.episodeNumberLabel.text = "Episode \(episodeNumber)"
 
 			self.episodeTitleLabel.text = self.episode.attributes.title
-			self.episodeFirstAiredLabel.text = self.episode.attributes.firstAired
+			self.episodeFirstAiredLabel.text = self.episode.attributes.firstAired?.formatted(date: .abbreviated, time: .omitted) ?? "TBA"
 
 			self.shadowView.applyShadow()
 		} else {

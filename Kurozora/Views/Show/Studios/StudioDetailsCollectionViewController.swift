@@ -14,11 +14,38 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 	var studioID: Int = 0
 	var studio: Studio! {
 		didSet {
-			_prefersActivityIndicatorHidden = true
+			self.title = studio.attributes.name
+
+			studio.relationships?.shows?.data.forEachInParallel({ show in
+				self.fetchDetails(for: show.id)
+			})
 		}
 	}
-	var shows: [Show] = []
-	var dataSource: UICollectionViewDiffableDataSource<StudioDetailsSection, Int>! = nil
+	var shows: [Show] = [] {
+		didSet {
+			if self.shows.count == self.studio.relationships?.shows?.data.count {
+				_prefersActivityIndicatorHidden = true
+
+				self.collectionView.reloadData()
+
+				#if DEBUG
+				#if !targetEnvironment(macCatalyst)
+				self.refreshControl?.endRefreshing()
+				#endif
+				#endif
+			}
+		}
+	}
+
+	// Refresh control
+	var _prefersRefreshControlDisabled = false {
+		didSet {
+			self.setNeedsRefreshControlAppearanceUpdate()
+		}
+	}
+	override var prefersRefreshControlDisabled: Bool {
+		return self._prefersRefreshControlDisabled
+	}
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -34,20 +61,48 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		#if DEBUG
+		self._prefersRefreshControlDisabled = false
+		#else
+		self._prefersRefreshControlDisabled = true
+		#endif
+
+		// Fetch studio details
 		DispatchQueue.global(qos: .background).async {
-			self.fetchStudios()
+			self.fetchStudioDetails()
 		}
 	}
 
 	// MARK: - Functions
-	func fetchStudios() {
+	override func handleRefreshControl() {
+		self.fetchStudioDetails()
+	}
+
+	/// Fetches the currently viewed studio's details.
+	func fetchStudioDetails() {
 		KService.getDetails(forStudioID: studioID, including: ["shows"]) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
 			case .success(let studios):
 				self.studio = studios.first
-				self.shows = studios.first?.relationships?.shows?.data ?? []
-				self.configureDataSource()
+			case .failure: break
+			}
+		}
+	}
+
+	/**
+		Fetches details for the given show id.
+
+		- Parameter showID: The id used to fetch the show's details.
+	*/
+	func fetchDetails(for showID: Int) {
+		KService.getDetails(forShowID: showID) { [weak self] result in
+			guard let self = self else { return }
+			switch result {
+			case .success(let shows):
+				if let show = shows.first {
+					self.shows.append(show)
+				}
 			case .failure: break
 			}
 		}
@@ -69,10 +124,73 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 	}
 }
 
+// MARK: - UICollectionViewDataSource
+extension StudioDetailsCollectionViewController {
+	override func numberOfSections(in collectionView: UICollectionView) -> Int {
+		return self.studio != nil ? StudioDetail.Section.allCases.count : 0
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		let studioDetailSection = StudioDetail.Section(rawValue: section) ?? .header
+		var itemsPerSection = self.studio != nil ? studioDetailSection.rowCount : 0
+
+		switch studioDetailSection {
+		case .about:
+			if self.studio.attributes.about?.isEmpty ?? true {
+				itemsPerSection = 0
+			}
+		case .shows:
+			if let studioShowsCount = self.studio.relationships?.shows?.data.count {
+				itemsPerSection = studioShowsCount
+			}
+		default: break
+		}
+
+		return itemsPerSection
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		let studioDetailSection = StudioDetail.Section(rawValue: indexPath.section) ?? .header
+		let reuseIdentifier = studioDetailSection.identifierString(for: indexPath.item)
+		let studioCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+
+		switch studioDetailSection {
+		case .header:
+			(studioCollectionViewCell as? StudioHeaderCollectionViewCell)?.studio = self.studio
+		case .about:
+			let textViewCollectionViewCell = studioCollectionViewCell as? TextViewCollectionViewCell
+			textViewCollectionViewCell?.delegate = self
+			textViewCollectionViewCell?.textViewCollectionViewCellType = .about
+			textViewCollectionViewCell?.textViewContent = self.studio.attributes.about
+		case .information:
+			if let informationCollectionViewCell = studioCollectionViewCell as? InformationCollectionViewCell {
+				informationCollectionViewCell.studioDetailInformation = StudioDetail.Information(rawValue: indexPath.item) ?? .founded
+				informationCollectionViewCell.studio = self.studio
+			}
+		case .shows:
+			if self.shows.count != 0 {
+				(studioCollectionViewCell as? SmallLockupCollectionViewCell)?.show = self.shows[indexPath.item]
+			}
+		}
+
+		return studioCollectionViewCell
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+		let studioDetailSection = StudioDetail.Section(rawValue: indexPath.section) ?? .header
+		let titleHeaderCollectionReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
+		titleHeaderCollectionReusableView.delegate = self
+		titleHeaderCollectionReusableView.segueID = studioDetailSection.segueIdentifier
+		titleHeaderCollectionReusableView.indexPath = indexPath
+		titleHeaderCollectionReusableView.title = studioDetailSection.stringValue
+		return titleHeaderCollectionReusableView
+	}
+}
+
 // MARK: - InformationButtonCollectionViewCellDelegate
 extension StudioDetailsCollectionViewController: InformationButtonCollectionViewCellDelegate {
 	func informationButtonCollectionViewCell(_ cell: InformationButtonCollectionViewCell, didPressButton button: UIButton) {
-		guard cell.studioDetailsInformationSection == .website else { return }
+		guard cell.studioDetailInformation == .website else { return }
 		guard let websiteURL = self.studio.attributes.websiteUrl?.url else { return }
 		UIApplication.shared.kOpen(websiteURL)
 	}

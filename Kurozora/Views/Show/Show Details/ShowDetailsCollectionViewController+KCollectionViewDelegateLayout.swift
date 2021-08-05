@@ -105,8 +105,8 @@ extension ShowDetailsCollectionViewController {
 				sectionLayout = fullSection
 				hasSectionHeader = true
 			case .information:
-				let listSection = self.gridSection(for: section, layoutEnvironment: layoutEnvironment)
-				sectionLayout = listSection
+				let gridSection = self.gridSection(for: section, layoutEnvironment: layoutEnvironment)
+				sectionLayout = gridSection
 				hasSectionHeader = true
 			case .seasons:
 				let seasonsCount = self.seasons.count
@@ -123,7 +123,7 @@ extension ShowDetailsCollectionViewController {
 					hasSectionHeader = true
 				}
 			case .moreByStudio:
-				if let studioShowsCount = self.moreByStudio?.relationships?.shows?.data.count {
+				if let studioShowsCount = self.studio?.relationships?.shows?.data.count {
 					if studioShowsCount != 0 {
 						let showsSectionLayout = self.showsSectionLayout(section, layoutEnvironment: layoutEnvironment)
 						sectionLayout = showsSectionLayout

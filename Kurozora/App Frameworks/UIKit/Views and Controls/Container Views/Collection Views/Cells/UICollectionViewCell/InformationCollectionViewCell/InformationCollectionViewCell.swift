@@ -11,21 +11,21 @@ import KurozoraKit
 
 class InformationCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var typeImageView: UIImageView?
+	@IBOutlet weak var typeImageView: UIImageView!
 	@IBOutlet weak var typeLabel: KSecondaryLabel!
 	@IBOutlet weak var headlineLabel: KLabel!
-	@IBOutlet weak var primaryLabel: KLabel? // Make explicit
-	@IBOutlet weak var primaryImageView: UIImageView? // Make explicit
-	@IBOutlet weak var secondaryLabel: KLabel? // Make explicit
-	@IBOutlet weak var footerLabel: KSecondaryLabel? // Make explicit
-	@IBOutlet weak var separatorView: SecondarySeparatorView? // Remove
+	@IBOutlet weak var primaryLabel: KLabel!
+	@IBOutlet weak var primaryImageView: UIImageView!
+	@IBOutlet weak var secondaryLabel: KLabel!
+	@IBOutlet weak var footerLabel: KSecondaryLabel!
+	@IBOutlet weak var primaryImageViewHeightConstraint: NSLayoutConstraint?
 
 	// MARK: - Properties
-	var personDetailsInformationSection: PersonDetailsInformationSection = .givenName
-	var characterInformationSection: CharacterInformationSection = .debut
+	var personDetailInformation: PersonDetail.Information = .aliases
+	var characterDetailInformation: CharacterDetail.Information = .debut
 	var episodeDetailInformation: EpisodeDetail.Information = .number
 	var showDetailInformation: ShowDetail.Information = .type
-	var studioDetailsInformationSection: StudioDetailsInformationSection = .founded
+	var studioDetailInformation: StudioDetail.Information = .founded
 
 	var person: Person! {
 		didSet {
@@ -80,49 +80,84 @@ class InformationCollectionViewCell: UICollectionViewCell {
 
 	/// Configure the cell with the given person details.
 	fileprivate func configureCellWithPerson() {
-		typeLabel.text = self.personDetailsInformationSection.stringValue
-		headlineLabel.text = self.personDetailsInformationSection.information(from: self.person)
-		separatorView?.isHidden = self.personDetailsInformationSection == .givenName
+		typeImageView.image = self.personDetailInformation.imageValue
+		typeLabel.text = self.personDetailInformation.stringValue
+		headlineLabel.text = self.personDetailInformation.information(from: self.person)
+		primaryLabel.text = self.personDetailInformation.primaryInformation(from: self.person)
+		primaryImageView.image = self.personDetailInformation.primaryImage(from: self.person)
+		secondaryLabel.text = self.personDetailInformation.secondaryInformation(from: self.person)
+		footerLabel.text = self.personDetailInformation.footnote(from: self.person)
+
+		// Configure image view height constraint
+		primaryImageViewHeightConstraint?.isActive = false
+		self.layoutIfNeeded()
 	}
 
 	/// Configure the cell with the given character details.
 	fileprivate func configureCellWithCharacter() {
-		typeLabel.text = self.characterInformationSection.stringValue
-		headlineLabel.text = self.characterInformationSection.information(from: self.character)
-		separatorView?.isHidden = self.characterInformationSection == .astrologicalSign
+		typeImageView.image = self.characterDetailInformation.imageValue
+		typeLabel.text = self.characterDetailInformation.stringValue
+		headlineLabel.text = self.characterDetailInformation.information(from: self.character)
+		primaryLabel.text = self.characterDetailInformation.primaryInformation(from: self.character)
+		primaryImageView.image = self.characterDetailInformation.primaryImage(from: self.character)
+		secondaryLabel.text = self.characterDetailInformation.secondaryInformation(from: self.character)
+		footerLabel.text = self.characterDetailInformation.footnote(from: self.character)
+
+		// Configure image view height constraint
+		primaryImageViewHeightConstraint?.isActive = false
+		self.layoutIfNeeded()
 	}
 
 	/// Configure the cell with the given episode details.
 	fileprivate func configureCellWithEpisode() {
+		typeImageView.image = self.episodeDetailInformation.imageValue
 		typeLabel.text = self.episodeDetailInformation.stringValue
 		headlineLabel.text = self.episodeDetailInformation.information(from: self.episode)
-		separatorView?.isHidden = self.episodeDetailInformation == .airDate
+		primaryLabel.text = self.episodeDetailInformation.primaryInformation(from: self.episode)
+		primaryImageView.image = self.episodeDetailInformation.primaryImage(from: self.episode)
+		secondaryLabel.text = self.episodeDetailInformation.secondaryInformation(from: self.episode)
+		footerLabel.text = self.episodeDetailInformation.footnote(from: self.episode)
+
+		// Configure image view height constraint
+		primaryImageViewHeightConstraint?.isActive = false
+		self.layoutIfNeeded()
 	}
 
 	/// Configure the cell with the given show details.
 	fileprivate func configureCellWithShow() {
-		typeImageView?.image = self.showDetailInformation.imageValue
+		typeImageView.image = self.showDetailInformation.imageValue
 		typeLabel.text = self.showDetailInformation.stringValue
 		headlineLabel.text = self.showDetailInformation.information(from: self.show)
-		primaryLabel?.text = self.showDetailInformation.primaryInformation(from: self.show)
-		primaryImageView?.image = self.showDetailInformation.primaryImage(from: self.show)
-		secondaryLabel?.text = self.showDetailInformation.secondaryInformation(from: self.show)
-		footerLabel?.text = self.showDetailInformation.footnote(from: self.show)
+		primaryLabel.text = self.showDetailInformation.primaryInformation(from: self.show)
+		primaryImageView.image = self.showDetailInformation.primaryImage(from: self.show)
+		secondaryLabel.text = self.showDetailInformation.secondaryInformation(from: self.show)
+		footerLabel.text = self.showDetailInformation.footnote(from: self.show)
 
 		switch self.showDetailInformation {
-		case .aireDates:
-			secondaryLabel?.textAlignment = .right
-			secondaryLabel?.font = .preferredFont(forTextStyle: .headline)
+		case .airDates:
+			primaryImageViewHeightConstraint?.isActive = primaryImageView.image != nil
+			secondaryLabel.textAlignment = .right
+			secondaryLabel.font = .preferredFont(forTextStyle: .headline)
 		default:
-			secondaryLabel?.textAlignment = .natural
-			secondaryLabel?.font = .preferredFont(forTextStyle: .body)
+			primaryImageViewHeightConstraint?.isActive = false
+			secondaryLabel.textAlignment = .natural
+			secondaryLabel.font = .preferredFont(forTextStyle: .body)
 		}
+		self.layoutIfNeeded()
 	}
 
 	/// Configure the cell with the given studio details.
 	fileprivate func configureCellWithStudio() {
-		typeLabel.text = self.studioDetailsInformationSection.stringValue
-		headlineLabel.text = self.studioDetailsInformationSection.information(from: self.studio)
-		separatorView?.isHidden = self.studioDetailsInformationSection == .website
+		typeImageView.image = self.studioDetailInformation.imageValue
+		typeLabel.text = self.studioDetailInformation.stringValue
+		headlineLabel.text = self.studioDetailInformation.information(from: self.studio)
+		primaryLabel.text = self.studioDetailInformation.primaryInformation(from: self.studio)
+		primaryImageView.image = self.studioDetailInformation.primaryImage(from: self.studio)
+		secondaryLabel.text = self.studioDetailInformation.secondaryInformation(from: self.studio)
+		footerLabel.text = self.studioDetailInformation.footnote(from: self.studio)
+
+		// Configure image view height constraint
+		primaryImageViewHeightConstraint?.isActive = false
+		self.layoutIfNeeded()
 	}
 }

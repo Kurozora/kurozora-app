@@ -19,8 +19,8 @@ extension CharacterDetailsCollectionViewController {
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		guard let characterSection = CharacterSection(rawValue: indexPath.section) else { return nil }
-		switch characterSection {
+		guard let characterDetailSection = CharacterDetail.Section(rawValue: indexPath.section) else { return nil }
+		switch characterDetailSection {
 		case .shows:
 			if let smallLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? SmallLockupCollectionViewCell {
 				return smallLockupCollectionViewCell.show?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])

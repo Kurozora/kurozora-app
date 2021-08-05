@@ -101,6 +101,7 @@ class PersonDetailsCollectionViewController: KCollectionViewController {
 		self._prefersRefreshControlDisabled = true
 		#endif
 
+		// Fetch person details
 		DispatchQueue.global(qos: .background).async {
 			self.fetchPersonDetails()
 		}
@@ -171,16 +172,16 @@ class PersonDetailsCollectionViewController: KCollectionViewController {
 // MARK: - UICollectionViewDataSource
 extension PersonDetailsCollectionViewController {
 	override func numberOfSections(in collectionView: UICollectionView) -> Int {
-		return self.person != nil ? PersonDetailsSection.allCases.count : 0
+		return self.person != nil ? PersonDetail.Section.allCases.count : 0
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		let characterSection = PersonDetailsSection(rawValue: section) ?? .main
+		let characterSection = PersonDetail.Section(rawValue: section) ?? .header
 		var itemsPerSection = self.person != nil ? characterSection.rowCount : 0
 
 		switch characterSection {
 		case .about:
-			if let aboutPerson = self.person.attributes.about, aboutPerson.isEmpty {
+			if self.person.attributes.about?.isEmpty ?? true {
 				itemsPerSection = 0
 			}
 		case .shows:
@@ -194,12 +195,12 @@ extension PersonDetailsCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let personDetailsSection = PersonDetailsSection(rawValue: indexPath.section) ?? .main
-		let reuseIdentifier = personDetailsSection.identifierString(for: indexPath.item)
+		let personDetailSection = PersonDetail.Section(rawValue: indexPath.section) ?? .header
+		let reuseIdentifier = personDetailSection.identifierString(for: indexPath.item)
 		let personCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
 
-		switch personDetailsSection {
-		case .main:
+		switch personDetailSection {
+		case .header:
 			(personCollectionViewCell as? PersonHeaderCollectionViewCell)?.person = self.person
 		case .about:
 			let textViewCollectionViewCell = personCollectionViewCell as? TextViewCollectionViewCell
@@ -208,7 +209,7 @@ extension PersonDetailsCollectionViewController {
 			textViewCollectionViewCell?.textViewContent = self.person.attributes.about
 		case .information:
 			if let informationCollectionViewCell = personCollectionViewCell as? InformationCollectionViewCell {
-				informationCollectionViewCell.personDetailsInformationSection = PersonDetailsInformationSection(rawValue: indexPath.item) ?? .givenName
+				informationCollectionViewCell.personDetailInformation = PersonDetail.Information(rawValue: indexPath.item) ?? .aliases
 				informationCollectionViewCell.person = self.person
 			}
 		case .shows:
@@ -225,12 +226,12 @@ extension PersonDetailsCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-		let personDetailsSection = PersonDetailsSection(rawValue: indexPath.section) ?? .main
+		let personDetailSection = PersonDetail.Section(rawValue: indexPath.section) ?? .header
 		let titleHeaderCollectionReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
 		titleHeaderCollectionReusableView.delegate = self
-		titleHeaderCollectionReusableView.segueID = personDetailsSection.segueIdentifier
+		titleHeaderCollectionReusableView.segueID = personDetailSection.segueIdentifier
 		titleHeaderCollectionReusableView.indexPath = indexPath
-		titleHeaderCollectionReusableView.title = personDetailsSection.stringValue
+		titleHeaderCollectionReusableView.title = personDetailSection.stringValue
 		return titleHeaderCollectionReusableView
 	}
 }

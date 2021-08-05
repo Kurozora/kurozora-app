@@ -12,8 +12,8 @@ extension PersonDetailsCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
 
-		switch PersonDetailsSection(rawValue: section) {
-		case .main, .about:
+		switch PersonDetail.Section(rawValue: section) {
+		case .header, .about:
 			return 1
 		case .shows:
 			let columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
@@ -28,8 +28,8 @@ extension PersonDetailsCollectionViewController {
 	}
 
 	func heightDimension(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutDimension {
-		switch PersonDetailsSection(rawValue: section) {
-		case .main:
+		switch PersonDetail.Section(rawValue: section) {
+		case .header:
 			return .estimated(230)
 		case .about:
 			return .estimated(20)
@@ -42,8 +42,8 @@ extension PersonDetailsCollectionViewController {
 	}
 
 	override func contentInset(forSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		switch PersonDetailsSection(rawValue: section) {
-		case .main:
+		switch PersonDetail.Section(rawValue: section) {
+		case .header:
 			return NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0)
 		case .information:
 			return NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 20, trailing: 10)
@@ -55,12 +55,12 @@ extension PersonDetailsCollectionViewController {
 	override func createLayout() -> UICollectionViewLayout? {
 		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self, self.person != nil else { return nil }
-			guard let personDetailsSection = PersonDetailsSection(rawValue: section) else { fatalError("Person details section not supported") }
+			guard let personDetailSection = PersonDetail.Section(rawValue: section) else { fatalError("Person details section not supported") }
 			var sectionLayout: NSCollectionLayoutSection? = nil
 			var hasSectionHeader = false
 
-			switch personDetailsSection {
-			case .main:
+			switch personDetailSection {
+			case .header:
 				let fullSection = self.fullSection(for: section, layoutEnvironment: layoutEnvironment)
 				sectionLayout = fullSection
 			case .about:
@@ -70,8 +70,8 @@ extension PersonDetailsCollectionViewController {
 					hasSectionHeader = true
 				}
 			case .information:
-				let listSection = self.listSection(for: section, layoutEnvironment: layoutEnvironment)
-				sectionLayout = listSection
+				let gridSection = self.gridSection(for: section, layoutEnvironment: layoutEnvironment)
+				sectionLayout = gridSection
 				hasSectionHeader = true
 			case .shows:
 				if self.shows.count != 0 {
@@ -166,6 +166,21 @@ extension PersonDetailsCollectionViewController {
 
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
+		return layoutSection
+	}
+
+	func gridSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
+		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(160.0))
+		let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(160.0))
+		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+		layoutGroup.interItemSpacing = .fixed(10.0)
+
+		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
+		layoutSection.interGroupSpacing = 10.0
 		return layoutSection
 	}
 }

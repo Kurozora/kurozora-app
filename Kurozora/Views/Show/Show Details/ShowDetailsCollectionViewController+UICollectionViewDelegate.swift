@@ -22,7 +22,7 @@ extension ShowDetailsCollectionViewController {
 				collectionView.safeScrollToItem(at: IndexPath(row: 0, section: ShowDetail.Section.rating.rawValue), at: .centeredVertically, animated: true)
 				return
 			case .season:
-				collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.aireDates.rawValue, section: ShowDetail.Section.information.rawValue), at: .centeredVertically, animated: true)
+				collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.airDates.rawValue, section: ShowDetail.Section.information.rawValue), at: .centeredVertically, animated: true)
 				return
 			case .rank:
 				collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.genres.rawValue, section: ShowDetail.Section.information.rawValue), at: .centeredVertically, animated: true)
