@@ -23,6 +23,7 @@ import SwiftTheme
 */
 enum KThemePicker: ThemeColorPicker {
 	// MARK: - Cases
+	case version = "Version"
 	case statusBarStyle = "UIStatusBarStyle"
 	case visualEffect = "UIVisualEffectView"
 
@@ -58,6 +59,8 @@ enum KThemePicker: ThemeColorPicker {
 	/// The string value of a theme picker attribute.
 	var stringValue: String {
 		switch self {
+		case .version:
+			return "Version"
 		case .statusBarStyle:
 			return "UIStatusBarStyle"
 		case .visualEffect:
@@ -161,7 +164,7 @@ enum KThemePicker: ThemeColorPicker {
 		}
 	}
 
-	/// Returns a UIStatusBarStyle from the currently selected theme.
+	/// Returns a `UIStatusBarStyle` from the currently selected theme.
 	var statusBarValue: UIStatusBarStyle {
 		guard let statusBarStyleString = ThemeManager.value(for: KThemePicker.statusBarStyle.stringValue) as? String else { return .default }
 
@@ -170,6 +173,18 @@ enum KThemePicker: ThemeColorPicker {
 			return .lightContent
 		default:
 			return .darkContent
+		}
+	}
+
+	/// Returns the `UIUserInterfaceStyle` from the currently selected theme.
+	var userInterfaceStyleValue: UIUserInterfaceStyle {
+		guard let statusBarStyleString = ThemeManager.value(for: KThemePicker.statusBarStyle.stringValue) as? String else { return .unspecified }
+
+		switch statusBarStyleString {
+		case "LightContent":
+			return .dark
+		default:
+			return .light
 		}
 	}
 

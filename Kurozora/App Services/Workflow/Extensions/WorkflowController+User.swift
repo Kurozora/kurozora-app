@@ -32,7 +32,11 @@ extension WorkflowController {
 		if User.isPro {
 			completion?()
 		} else {
-			UIApplication.topViewController?.presentAlertController(title: "That's Unfortunate", message: "This feature is only accessible to pro users 🧐")
+			let subscribeAction = UIAlertAction(title: "Subscribe", style: .default) { _ in
+				self.presentSubscribeView()
+			}
+
+			UIApplication.topViewController?.presentAlertController(title: "That's Unfortunate", message: "This feature is only accessible to pro users 🧐", actions: [subscribeAction])
 		}
 	}
 
@@ -66,11 +70,18 @@ extension WorkflowController {
 		}
 	}
 
-	/// Presents the user with the sign in view.
+	/// Presents the user with the sign in view
 	func presentSignInView() {
 		if let signInTableViewController = R.storyboard.onboarding.signInTableViewController() {
 			let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
 			UIApplication.topViewController?.present(kNavigationController, animated: true)
+		}
+	}
+
+	/// Presents the user with the subscribe view.
+	func presentSubscribeView() {
+		if let subscriptionKNavigationController = R.storyboard.purchase.subscriptionKNavigationController() {
+			UIApplication.topViewController?.present(subscriptionKNavigationController, animated: true)
 		}
 	}
 

@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Version</key>
+	<string>1.0</string>
 	<key>UIStatusBarStyle</key>
 	<string>LightContent</string>
 	<key>UIVisualEffectView</key>
@@ -36,8 +38,6 @@
 		<string>#C6C5C5</string>
 		<key>separatorColorLight</key>
 		<string>#555555</string>
-		<key>sidebarBackgroundColor</key>
-		<string>#2020204D</string>
 		<key>subTextColor</key>
 		<string>#A2A2A2</string>
 	</dict>

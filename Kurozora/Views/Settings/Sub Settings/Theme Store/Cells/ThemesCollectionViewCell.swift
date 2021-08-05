@@ -9,10 +9,12 @@
 import UIKit
 import KurozoraKit
 
+class ScreenshotView: UIView {
+	@IBOutlet weak var screenshotImageView: UIImageView!
+}
+
 class ThemesCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
-    @IBOutlet weak var themeScreenshot: UIImageView!
-	@IBOutlet weak var shadowView: UIView!
 	@IBOutlet weak var titleLabel: KLabel!
 	@IBOutlet weak var downloadCountLabel: KSecondaryLabel!
 	@IBOutlet weak var getThemeButton: KTintedButton! {
@@ -21,38 +23,90 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 		}
 	}
 	@IBOutlet weak var moreButton: UIButton!
+	@IBOutlet var screenshotViews: [ScreenshotView]!
+	@IBOutlet weak var screenshotsStackView: UIStackView!
 
 	// MARK: - Properties
 	weak var delegate: ThemesCollectionViewCellDelegate?
-	var indexPath: IndexPath!
+	var defaultTheme: DefaultTheme? = nil {
+		didSet {
+			if defaultTheme != nil {
+				self.theme = nil
+				self.configureCell()
+			}
+		}
+	}
 	var theme: Theme! {
 		didSet {
-			configureCell()
+			if theme != nil {
+				self.defaultTheme = nil
+				self.configureCell()
+			}
 		}
 	}
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
-		titleLabel.text = theme.attributes.name
+		if let defaultTheme = self.defaultTheme {
+			self.titleLabel.text = defaultTheme.stringValue
+			self.downloadCountLabel.text = defaultTheme.descriptionValue
 
-		let themeBackgroundColorHex = theme.attributes.backgroundColor ?? "#333333"
-		themeScreenshot.backgroundColor = UIColor(hexString: themeBackgroundColorHex)
-		themeScreenshot.setImage(with: theme.attributes.screenshot, placeholder: #imageLiteral(resourceName: "Empty/Themes"))
+			for (index, image) in defaultTheme.imageValues.enumerated() {
+				let screenshotView = self.screenshotViews[index]
+				screenshotView.screenshotImageView.backgroundColor = defaultTheme.colorValue
+				screenshotView.screenshotImageView.image = image
+				screenshotView.isHidden = false
 
-		// Configure buy state
-//		if let themeBought = theme.attributes.currentUser?.themeBought {
-//		}
+				// Stop after 3 screenshots
+				if index == 2 { break }
+			}
+		} else {
+			// Configure title
+			self.titleLabel.text = theme.attributes.name
 
-		// Configure download count
-		let downloadCount = theme.attributes.downloadCount ?? 0
-		switch downloadCount {
-		case 0:
-			downloadCountLabel.text = ""
-		case 1:
-			downloadCountLabel.text = "\(downloadCount) Download"
-		default:
-			downloadCountLabel.text = "\(downloadCount.kkFormatted) Downloads"
+			// Configure download count
+			let downloadCount = self.theme.attributes.downloadCount
+			switch downloadCount {
+			case 0:
+				self.downloadCountLabel.text = "New"
+			case 1:
+				self.downloadCountLabel.text = "\(downloadCount) Download"
+			default:
+				self.downloadCountLabel.text = "\(downloadCount.kkFormatted) Downloads"
+			}
+
+			let screenshots = self.theme.attributes.screenshots
+			for (index, screenshot) in screenshots.enumerated() {
+				switch screenshots.count {
+				case 1:
+					self.screenshotViews.enumerated().forEachReversed { index, screenshotView in
+						if index < 2 {
+							screenshotView.isHidden = true
+						}
+					}
+				case 2:
+					self.screenshotViews.enumerated().forEachReversed { index, screenshotView in
+						if index < 1 {
+							screenshotView.isHidden = true
+						}
+					}
+				default:
+					self.screenshotViews.forEachReversed { screenshotView in
+						screenshotView.isHidden = false
+					}
+				}
+				let screenshotView = self.screenshotViews[index]
+				screenshotView.screenshotImageView.backgroundColor = UIColor(hexString: screenshot.backgroundColor ?? "#333333")
+				screenshotView.screenshotImageView.setImage(with: screenshot.url, placeholder: #imageLiteral(resourceName: "Empty/Themes"))
+
+				// Stop after 3 screenshots
+				if index == 2 { break }
+			}
+
+//			// Configure buy state
+//			if let themeBought = theme.attributes.currentUser?.themeBought {
+//			}
 		}
 
 		shouldHideMoreButton()
@@ -61,10 +115,9 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 
 	/// Checks whether to hide or unhide the more button for the current cell.
 	fileprivate func shouldHideMoreButton() {
-		switch (indexPath.section, indexPath.row) {
-		case (0, 0...5):
+		if defaultTheme != nil {
 			moreButton.isHidden = true
-		default:
+		} else {
 			// More button hidden by default. If theme exists then unhide.
 			moreButton.isHidden = !KThemeStyle.themeExist(for: theme.id)
 		}
@@ -75,38 +128,12 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 		if !UserSettings.currentTheme.isEmpty {
 			let currentThemeID = UserSettings.currentTheme
 
-			switch indexPath {
-			case [0, 0]:
-				if currentThemeID == "Default" {
+			if let defaultTheme = self.defaultTheme {
+				if defaultTheme.isEqual(currentThemeID) {
 					getThemeButton.setTitle("USING", for: .normal)
 					return
 				}
-			case [0, 1]:
-				if currentThemeID == "Day" {
-					getThemeButton.setTitle("USING", for: .normal)
-					return
-				}
-			case [0, 2]:
-				if currentThemeID == "Night" || currentThemeID == "Black" {
-					getThemeButton.setTitle("USING", for: .normal)
-					return
-				}
-			case [0, 3]:
-				if currentThemeID == "Grass" {
-					getThemeButton.setTitle("USING", for: .normal)
-					return
-				}
-			case [0, 4]:
-				if currentThemeID == "Sky" {
-					getThemeButton.setTitle("USING", for: .normal)
-					return
-				}
-			case [0, 5]:
-				if currentThemeID == "Sakkura" {
-					getThemeButton.setTitle("USING", for: .normal)
-					return
-				}
-			default:
+			} else {
 				if Int(currentThemeID) == theme.id {
 					getThemeButton.setTitle("USING", for: .normal)
 					return
@@ -124,10 +151,12 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 	func shouldDownloadTheme() {
 		let themeID = theme.id
 		guard KThemeStyle.themeExist(for: themeID) else {
-			let alertController = UIApplication.topViewController?.presentAlertController(title: "Not Downloaded", message: "Download the theme right now?", defaultActionButtonTitle: "Cancel")
-			alertController?.addAction(UIAlertAction(title: "Download", style: .default) { [weak self] _ in
-				self?.handleDownloadTheme()
-			})
+			WorkflowController.shared.isPro {
+				let alertController = UIApplication.topViewController?.presentAlertController(title: "Not Downloaded", message: "Download the theme right now?", defaultActionButtonTitle: "Cancel")
+				alertController?.addAction(UIAlertAction(title: "Download", style: .default) { [weak self] _ in
+					self?.handleDownloadTheme()
+				})
+			}
 			return
 		}
 
@@ -163,9 +192,11 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 		KThemeStyle.removeThemeTask(for: theme) { isSuccess in
 			alertController?.dismiss(animated: true, completion: nil)
 
-			let alertController = UIApplication.topViewController?.presentAlertController(title: isSuccess ? "Finished removing!" : "Removing failed :(", message: nil)
-			DispatchQueue.main.asyncAfter(deadline: .now() + timeout) {
-				alertController?.dismiss(animated: true, completion: nil)
+			if !timeout.isZero {
+				let alertController = UIApplication.topViewController?.presentAlertController(title: isSuccess ? "Finished removing!" : "Removing failed :(", message: nil)
+				DispatchQueue.main.asyncAfter(deadline: .now() + timeout) {
+					alertController?.dismiss(animated: true, completion: nil)
+				}
 			}
 
 			if isSuccess {

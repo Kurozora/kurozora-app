@@ -11,7 +11,7 @@ import KurozoraKit
 
 class ManageThemesCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var themes: [[Theme]] = [[], []] {
+	var themes: [Theme] = [] {
 		didSet {
 			self.updateDataSource()
 			self._prefersActivityIndicatorHidden = true
@@ -45,81 +45,6 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 		return _prefersActivityIndicatorHidden
 	}
 
-	// Default theme
-	var defaultThemes = ThemeResponse(from:
-	"""
-	{
-		"data": [
-			{
-			  "id": 1,
-			  "type": "themes",
-			  "href": "",
-			  "attributes": {
-				"name": "Default",
-				"backgroundColor": "#353A50",
-				"screenshot": "",
-				"downloadLink": ""
-			  }
-			},
-			{
-			  "id": 2,
-			  "type": "themes",
-			  "href": "",
-			  "attributes": {
-				"name": "Day",
-				"backgroundColor": "#E6E5E5",
-				"screenshot": "",
-				"downloadLink": ""
-			  }
-			},
-			{
-			  "id": 3,
-			  "type": "themes",
-			  "href": "",
-			  "attributes": {
-				"name": "Night",
-				"backgroundColor": "#333333",
-				"screenshot": "",
-				"downloadLink": ""
-			  }
-			},
-			{
-			  "id": 4,
-			  "type": "themes",
-			  "href": "",
-			  "attributes": {
-				"name": "Grass",
-				"backgroundColor": "#E5EFAC",
-				"screenshot": "",
-				"downloadLink": ""
-			  }
-			},
-			{
-			  "id": 5,
-			  "type": "themes",
-			  "href": "",
-			  "attributes": {
-				"name": "Sky",
-				"backgroundColor": "#E5EFAC",
-				"screenshot": "",
-				"downloadLink": ""
-			  }
-			},
-			{
-			  "id": 6,
-			  "type": "themes",
-			  "href": "",
-			  "attributes": {
-				"name": "Sakura",
-				"backgroundColor": "#E5EFAC",
-				"screenshot": "",
-				"downloadLink": ""
-			  }
-			}
-		]
-	}
-	""".data(using: .utf8)!)
-
 	// MARK: - Initializers
 	required init?(coder: NSCoder) {
 		super.init(coder: coder)
@@ -147,15 +72,11 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 		super.viewDidLoad()
 
 		self.configureDataSource()
-
-		// Setup default themes
-		if let defaultThemes = self.defaultThemes?.data {
-			self.themes[0].append(contentsOf: defaultThemes)
-		}
 	}
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
+		self.themes = []
 		self.fetchThemes()
 	}
 
@@ -181,7 +102,7 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 			switch result {
 			case .success(let themes):
 				DispatchQueue.main.async {
-					self?.themes[1].append(contentsOf: themes)
+					self?.themes.append(contentsOf: themes)
 				}
 			case .failure: break
 			}
@@ -191,20 +112,10 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 
 extension ManageThemesCollectionViewController: ThemesCollectionViewCellDelegate {
 	func themesCollectionViewCell(_ cell: ThemesCollectionViewCell, didPressGetButton button: UIButton) {
-		let indexPath = self.collectionView.indexPath(for: cell)
-		switch indexPath {
-		case [0, 0]:
-			KThemeStyle.switchTo(.default)
-		case [0, 1]:
-			KThemeStyle.switchTo(.day)
-		case [0, 2]:
-			KThemeStyle.switchTo(.night)
-		case [0, 3]:
-			KThemeStyle.switchTo(.grass)
-		case [0, 4]:
-			KThemeStyle.switchTo(.sky)
-		case [0, 5]:
-			KThemeStyle.switchTo(.sakura)
+		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+		switch indexPath.section {
+		case 0:
+			DefaultTheme(rawValue: indexPath.item)?.switchToTheme()
 		default:
 			cell.shouldDownloadTheme()
 		}
@@ -212,26 +123,25 @@ extension ManageThemesCollectionViewController: ThemesCollectionViewCellDelegate
 
 	func themesCollectionViewCell(_ cell: ThemesCollectionViewCell, didPressMoreButton button: UIButton) {
 		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { actionSheetAlertController in
-			let redownloadAction = UIAlertAction(title: "Redownload Theme", style: .default, handler: { (_) in
-				cell.handleRedownloadTheme()
-			})
-			let removeAction = UIAlertAction(title: "Remove Theme", style: .destructive, handler: { (_) in
+			if User.isPro {
+				// Add redownload action
+				let redownloadAction = UIAlertAction(title: "Redownload Theme", style: .default) { _ in
+					cell.handleRedownloadTheme()
+				}
+				redownloadAction.setValue(UIImage(systemName: "arrow.uturn.down"), forKey: "image")
+				redownloadAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+				actionSheetAlertController.addAction(redownloadAction)
+			}
+
+			// Add remove action
+			let removeAction = UIAlertAction(title: "Remove Theme", style: .destructive) { _ in
 				cell.handleRemoveTheme()
 				if UserSettings.currentTheme.int == cell.theme.id {
 					KThemeStyle.switchTo(.default)
 				}
-			})
-
-			// Add image
-			redownloadAction.setValue(UIImage(systemName: "arrow.uturn.down"), forKey: "image")
+			}
 			removeAction.setValue(UIImage(systemName: "minus.circle"), forKey: "image")
-
-			// Left align title
-			redownloadAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 			removeAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-
-			// Add actions
-			actionSheetAlertController.addAction(redownloadAction)
 			actionSheetAlertController.addAction(removeAction)
 		}
 

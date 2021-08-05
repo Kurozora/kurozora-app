@@ -56,12 +56,18 @@ extension UIViewController {
 		- Parameter message: Descriptive text that provides additional details about the reason for the alert.
 		- Parameter defaultActionButtonTitle: The text to use for the default button's title. The value you specify should be localized for the user’s current language.
 		- Parameter handler: A block to execute when the user selects the default action. This block has no return value and takes the selected action object as its only parameter.
+		- Parameter actions: Other actions to add to the alert controller.
 
 		- Returns: the presented alert controller.
 	*/
 	@discardableResult
-	func presentAlertController(title: String?, message: String?, defaultActionButtonTitle: String = "OK", handler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
+	func presentAlertController(title: String?, message: String?, defaultActionButtonTitle: String = "OK", handler: ((UIAlertAction) -> Void)? = nil, actions: [UIAlertAction] = []) -> UIAlertController {
 		let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+
+		// Add other actions if available.
+		for action in actions {
+			alertController.addAction(action)
+		}
 
 		// Add the default action to the alert controller
 		let defaultAction = UIAlertAction(title: defaultActionButtonTitle, style: .default, handler: handler)
@@ -83,12 +89,27 @@ extension UIViewController {
 	func presentActivityAlertController(title: String?, message: String?) -> UIAlertController {
 		let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
-		// Add the activity indicator to the alert controller
+		// Prepare the activity indicator
 		let activityIndicator = UIActivityIndicatorView(frame: alertController.view.bounds)
 		activityIndicator.style = .large
-		activityIndicator.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-		alertController.view.addSubview(activityIndicator)
 		activityIndicator.isUserInteractionEnabled = false
+		activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+
+		// Add the activity indicator to the alert controller
+		alertController.view.addSubview(activityIndicator)
+
+		let xConstraint = NSLayoutConstraint(item: activityIndicator, attribute: .centerX, relatedBy: .equal, toItem: alertController.view, attribute: .centerX, multiplier: 1, constant: 0)
+		let yConstraint = NSLayoutConstraint(item: activityIndicator, attribute: .centerY, relatedBy: .equal, toItem: alertController.view, attribute: .centerY, multiplier: 1.4, constant: 0)
+
+		NSLayoutConstraint.activate([ xConstraint, yConstraint])
+		activityIndicator.isUserInteractionEnabled = false
+		activityIndicator.startAnimating()
+
+		if let alertControllerView = alertController.view {
+			let height = NSLayoutConstraint(item: alertControllerView, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: 80)
+			alertController.view.addConstraint(height)
+		}
+
 		activityIndicator.startAnimating()
 
 		self.present(alertController, animated: true, completion: nil)

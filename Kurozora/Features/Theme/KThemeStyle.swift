@@ -83,6 +83,8 @@ enum KThemeStyle: Int {
 	// MARK: - Functions
 	/// Initializes the app's global theme.
 	static func initAppTheme() {
+		UIApplication.shared.theme_setStatusBarStyle(ThemeStatusBarStylePicker(keyPath: KThemePicker.statusBarStyle.stringValue), animated: true)
+
 		if UserSettings.automaticDarkTheme {
 			KThemeStyle.startAutomaticDarkThemeSchedule(true)
 		} else if !UserSettings.currentTheme.isEmpty {
@@ -140,7 +142,7 @@ enum KThemeStyle: Int {
 		}
 
 		if automaticDarkThemeSchedule == nil {
-			automaticDarkThemeSchedule = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (_) in
+			automaticDarkThemeSchedule = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
 				KThemeStyle.checkAutomaticSchedule()
 			}
 		}
@@ -228,6 +230,7 @@ extension KThemeStyle {
 		UserSettings.set("\(themeID)", forKey: .currentTheme)
 		guard let themesDirectoryUrl = themesDirectoryUrl else { return }
 		ThemeManager.setTheme(plistName: "theme-\(themeID)", path: .sandbox(themesDirectoryUrl))
+		UIApplication.sharedKeyWindow?.overrideUserInterfaceStyle = KThemePicker.statusBarStyle.userInterfaceStyleValue
 	}
 
 	/**
