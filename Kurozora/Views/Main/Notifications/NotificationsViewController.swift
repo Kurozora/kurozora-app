@@ -191,17 +191,17 @@ class NotificationsViewController: KTableViewController {
 	@IBAction func moreOptionsButtonPressed(_ sender: UIBarButtonItem) {
 		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
 			// Mark all as read action
-			let markAllAsRead = UIAlertAction.init(title: "Mark all as read", style: .default, handler: { (_) in
+			let markAllAsRead = UIAlertAction.init(title: "Mark all as read", style: .default) { _ in
 				self?.userNotifications.batchUpdate(for: "all", withReadStatus: .read)
-			})
+			}
 			markAllAsRead.setValue(UIImage(systemName: "circlebadge"), forKey: "image")
 			markAllAsRead.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 			actionSheetAlertController.addAction(markAllAsRead)
 
 			// Mark all as unread action
-			let markAllAsUnread = UIAlertAction.init(title: "Mark all as unread", style: .default, handler: { (_) in
+			let markAllAsUnread = UIAlertAction.init(title: "Mark all as unread", style: .default) { _ in
 				self?.userNotifications.batchUpdate(for: "all", withReadStatus: .unread)
-			})
+			}
 			markAllAsUnread.setValue(UIImage(systemName: "circlebadge.fill"), forKey: "image")
 			markAllAsUnread.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 			actionSheetAlertController.addAction(markAllAsUnread)

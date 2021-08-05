@@ -11,26 +11,32 @@ extension Person {
 	*/
 	public struct Attributes: Codable {
 		// MARK: - Properties
-		/// The first name of the person.
-		public let firstName: String
+		/// The link to a profile image of the person.
+		public let profile: Media?
 
-		/// The last name of the person.
-		public let lastName: String?
+		/// The full name of the person.
+		public let fullName: String
 
-		/// The given name of the person. Usually in Japanese.
-		public let givenName: String?
+		/// The full given name of the person. Usually in Japanese.
+		public let fullGivenName: String?
 
-		/// The family name of the person. Usually in Japanese.
-		public let familyName: String?
+		/// The other names the person is also known by.
+		public let alternativeNames: [String]?
 
-		/// The nicknames the person is also known by.
-		public let nicknames: [String]?
+		/// The age of the person.
+		public let age: String?
+
+		/// The birthdate of the person.
+		public let birthdate: Date?
+
+		/// The deceased date of the person.
+		public let deceasedDate: Date?
+
+		/// The astrological sign of the person.
+		public let astrologicalSign: String?
 
 		/// The biogrpahy of the person.
 		public let about: String?
-
-		/// The link to an image of the person.
-		public let imageURL: String?
 
 		/// The link to the website of the person.
 		public let websiteURLs: [String]?

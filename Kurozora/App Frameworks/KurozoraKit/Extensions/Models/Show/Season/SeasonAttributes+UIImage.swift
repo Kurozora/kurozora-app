@@ -18,7 +18,7 @@ extension Season.Attributes {
 	var posterImage: UIImage? {
 		let posterImageView = UIImageView()
 		let placeholderImage = R.image.placeholders.showPoster()!
-		posterImageView.setImage(with: self.posterURL ?? "", placeholder: placeholderImage)
+		posterImageView.setImage(with: self.poster?.url ?? "", placeholder: placeholderImage)
 		return posterImageView.image?.withRenderingMode(.alwaysOriginal)
 	}
 }

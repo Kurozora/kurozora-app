@@ -24,10 +24,6 @@ class KurozoraReachabilityViewController: UIViewController {
 	var window: UIWindow?
 	let networkManager = KNetworkManager.shared
 
-	override var preferredStatusBarStyle: UIStatusBarStyle {
-		return KThemePicker.statusBarStyle.statusBarValue
-	}
-
 	// MARK: - View
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)

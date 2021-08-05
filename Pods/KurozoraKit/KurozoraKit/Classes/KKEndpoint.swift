@@ -8,9 +8,12 @@
 
 import Foundation
 
-/// The object that stores information about the Kurozora API endpoints.
-internal struct KKEndpoint {
-	// MARK: - Explore
+/// The namespace that contains the Kurozora API endpoints.
+internal enum KKEndpoint {
+}
+
+// MARK: - Explore
+extension KKEndpoint {
 	/// The set of available Explore API endpoints types.
 	internal enum Explore {
 		// MARK: - Cases
@@ -26,8 +29,10 @@ internal struct KKEndpoint {
 			}
 		}
 	}
+}
 
-	// MARK: - Shows
+// MARK: - Shows
+extension KKEndpoint {
 	/// The set of available Shows API endpoints types.
 	internal enum Shows {
 		// MARK: - Cases
@@ -78,8 +83,10 @@ internal struct KKEndpoint {
 			}
 		}
 	}
+}
 
-	// MARK: - Feed
+// MARK: - Feed
+extension KKEndpoint {
 	/// The set of available Feed API endpoints types.
 	internal enum Feed {
 		// MARK: - Cases
@@ -105,8 +112,10 @@ internal struct KKEndpoint {
 			}
 		}
 	}
+}
 
-	// MARK: - Store
+// MARK: - Store
+extension KKEndpoint {
 	/// The set of available Store API endpoint types.
 	internal enum Store {
 		// MARK: - Cases
@@ -122,8 +131,10 @@ internal struct KKEndpoint {
 			}
 		}
 	}
+}
 
-	// MARK: - Themes
+// MARK: - Themes
+extension KKEndpoint {
 	/// The set of available Themes API endpoint types.
 	internal enum Themes {
 		// MARK: - Cases
@@ -144,8 +155,10 @@ internal struct KKEndpoint {
 			}
 		}
 	}
+}
 
-	// MARK: - Users
+// MARK: - Users
+extension KKEndpoint {
 	/// The set of available Users API endpoint types.
 	internal enum Users {
 		// MARK: - Cases
@@ -216,8 +229,10 @@ internal struct KKEndpoint {
 			}
 		}
 	}
+}
 
-	// MARK: - Me
+// MARK: - Me
+extension KKEndpoint {
 	/// The set of available Me API endpoint types.
 	internal enum Me {
 		// MARK: - Cases
@@ -248,8 +263,10 @@ internal struct KKEndpoint {
 			}
 		}
 	}
+}
 
-	// MARK: - Legal
+// MARK: - Legal
+extension KKEndpoint {
 	/// The set of available Legal API endpoint types.
 	internal enum Legal {
 		// MARK: - Cases
@@ -271,4 +288,3 @@ internal struct KKEndpoint {
 		}
 	}
 }
-

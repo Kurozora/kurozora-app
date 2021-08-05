@@ -19,7 +19,7 @@ extension Person.Attributes {
 	*/
 	var personalImage: UIImage? {
 		let imageView = UIImageView()
-		imageView.setImage(with: self.imageURL ?? "", placeholder: self.placeholderImage)
+		imageView.setImage(with: self.profile?.url ?? "", placeholder: self.placeholderImage)
 		return imageView.image?.withRenderingMode(.alwaysOriginal)
 	}
 

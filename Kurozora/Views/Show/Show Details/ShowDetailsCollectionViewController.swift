@@ -49,7 +49,14 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 			#endif
 		}
 	}
-	var moreByStudio: Studio!
+	var studio: Studio! {
+		didSet {
+			studio.relationships?.shows?.data.forEachInParallel({ show in
+				self.fetchDetails(for: show.id)
+			})
+		}
+	}
+	var studioShows: [Show] = []
 
 	// Touch Bar
 	#if targetEnvironment(macCatalyst)
@@ -171,21 +178,38 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		}
 	}
 
-	/// Fetches details for the currently viewed show.
-	func fetchDetails() {
-		// If the air status is empty then the details are incomplete and should be fetched anew.
-		KService.getDetails(forShowID: self.showID, including: ["genres", "seasons", "cast", "studios", "related-shows"]) { [weak self] result in
+	/**
+		Fetches details for the given show id. If none given then the currently viewed show's details are fetched.
+
+		- Parameter showID: The id used to fetch the show's details.
+	*/
+	func fetchDetails(for showID: Int? = nil) {
+		var including: [String] = []
+
+		if showID == nil {
+			including = ["seasons", "cast", "studios", "related-shows"]
+		}
+
+		KService.getDetails(forShowID: showID ?? self.showID, including: including) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
 			case .success(let shows):
-				self.show = shows.first
-				self.seasons = shows.first?.relationships?.seasons?.data ?? []
-				self.cast = shows.first?.relationships?.cast?.data ?? []
-				self.moreByStudio = shows.first?.relationships?.studios?.data.randomElement()
-				self.relatedShows = shows.first?.relationships?.relatedShows?.data ?? []
+				if showID == nil {
+					self.show = shows.first
+					self.seasons = shows.first?.relationships?.seasons?.data ?? []
+					self.cast = shows.first?.relationships?.cast?.data ?? []
+					self.studio = shows.first?.relationships?.studios?.data.first { studio in
+						studio.attributes.isStudio ?? false
+					} ?? shows.first?.relationships?.studios?.data.first
+					self.relatedShows = shows.first?.relationships?.relatedShows?.data ?? []
 
-				// Donate suggestion to Siri
-				self.userActivity = self.show.openDetailUserActivity
+						// Donate suggestion to Siri
+					self.userActivity = self.show.openDetailUserActivity
+				} else {
+					if let show = shows.first {
+						self.studioShows.append(show)
+					}
+				}
 			case .failure: break
 			}
 		}
@@ -248,7 +272,9 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 			}
 		} else if segue.identifier == R.segue.showDetailsCollectionViewController.studioSegue.identifier {
 			if let studioDetailsCollectionViewController = segue.destination as? StudioDetailsCollectionViewController {
-				studioDetailsCollectionViewController.studioID = self.moreByStudio.id
+				if let studio = self.studio {
+					studioDetailsCollectionViewController.studioID = studio.id
+				}
 			}
 		} else if segue.identifier == R.segue.showDetailsCollectionViewController.showsListSegue.identifier {
 			if let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController {
@@ -293,7 +319,7 @@ extension ShowDetailsCollectionViewController {
 			case .cast:
 				itemsPerSection = self.cast.count
 			case .moreByStudio:
-				if let studioShowsCount = self.moreByStudio?.relationships?.shows?.data.count {
+				if let studioShowsCount = self.studio?.relationships?.shows?.data.count {
 					itemsPerSection = studioShowsCount
 				}
 			case .relatedShows:
@@ -344,7 +370,7 @@ extension ShowDetailsCollectionViewController {
 			castCollectionViewCell?.cast = self.cast[indexPath.item]
 		case .moreByStudio:
 			let smallLockupCollectionViewCell = showDetailCollectionViewCell as? SmallLockupCollectionViewCell
-			smallLockupCollectionViewCell?.show = self.moreByStudio.relationships?.shows?.data[indexPath.item]
+			smallLockupCollectionViewCell?.show = self.studioShows[indexPath.item]
 		case .relatedShows:
 			let lockupCollectionViewCell = showDetailCollectionViewCell as? LockupCollectionViewCell
 			lockupCollectionViewCell?.relatedShow = self.relatedShows[indexPath.item]
@@ -362,7 +388,7 @@ extension ShowDetailsCollectionViewController {
 		titleHeaderCollectionReusableView.delegate = self
 		titleHeaderCollectionReusableView.segueID = showDetailSection.segueIdentifier
 		titleHeaderCollectionReusableView.indexPath = indexPath
-		titleHeaderCollectionReusableView.title = showDetailSection != .moreByStudio ? showDetailSection.stringValue : showDetailSection.stringValue + self.moreByStudio.attributes.name
+		titleHeaderCollectionReusableView.title = showDetailSection != .moreByStudio ? showDetailSection.stringValue : showDetailSection.stringValue + self.studio.attributes.name
 		return titleHeaderCollectionReusableView
 	}
 }

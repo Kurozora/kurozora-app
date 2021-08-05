@@ -38,7 +38,7 @@ class LockupCollectionViewCell: UICollectionViewCell {
 	/// Configure the cell with the season's details.
 	fileprivate func configureSeasonCell() {
 		// Configure poster
-		self.posterImageView.setImage(with: self.season.attributes.posterURL ?? "", placeholder: R.image.placeholders.showPoster()!)
+		self.posterImageView.setImage(with: self.season.attributes.poster?.url ?? "", placeholder: R.image.placeholders.showPoster()!)
 
 		// Configure season number
 		let seasonNumber = self.season.attributes.number

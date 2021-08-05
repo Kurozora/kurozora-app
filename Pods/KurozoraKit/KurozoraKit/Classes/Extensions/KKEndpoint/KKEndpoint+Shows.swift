@@ -81,9 +81,9 @@ extension KKEndpoint.Shows {
 		var endpointValue: String {
 			switch self {
 			case .details(let episodeID):
-				return "anime-episodes/\(episodeID)"
+				return "episodes/\(episodeID)"
 			case .watched(let episodeID):
-				return "anime-episodes/\(episodeID)/watched"
+				return "episodes/\(episodeID)/watched"
 			}
 		}
 	}
@@ -129,9 +129,9 @@ extension KKEndpoint.Shows {
 		var endpointValue: String {
 			switch self {
 			case .details(let seasonID):
-				return "anime-seasons/\(seasonID)"
+				return "seasons/\(seasonID)"
 			case .episodes(let seasonID):
-				return "anime-seasons/\(seasonID)/episodes"
+				return "seasons/\(seasonID)/episodes"
 			}
 		}
 	}

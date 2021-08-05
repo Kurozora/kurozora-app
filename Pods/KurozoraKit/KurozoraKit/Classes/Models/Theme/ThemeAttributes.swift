@@ -11,20 +11,20 @@ extension Theme {
 	*/
 	public struct Attributes: Codable {
 		// MARK: - Properties
+		/// The link to a screenshot of the theme.
+		public let screenshots: [Media]
+
 		/// The name of the theme.
 		public let name: String
 
-		/// The background color of the theme.
-		public let backgroundColor: String?
+		/// The current version of the theme.
+		public let version: String
 
 		/// The download count of the theme.
-		public let downloadCount: Int?
+		public let downloadCount: Int
 
 		/// The download link of the theme.
 		public let downloadLink: String
-
-		/// The link to a screenshot of the theme.
-		public let screenshot: String
 
 //		/// The current user's information regarding the theme.
 //		public let currentUser: UserProfile?

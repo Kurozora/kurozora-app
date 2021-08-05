@@ -166,6 +166,6 @@ class DisplaySettingsCell: SettingsCell {
 
 	@IBAction func enabledSwitchSwitched(_ sender: KSwitch) {
 		UserSettings.set(sender.isOn, forKey: .largeTitlesEnabled)
-		NotificationCenter.default.post(name: .ThemeUpdateNotification, object: nil)
+		NotificationCenter.default.post(name: .KSPrefersLargeTitlesDidChange, object: nil)
 	}
 }

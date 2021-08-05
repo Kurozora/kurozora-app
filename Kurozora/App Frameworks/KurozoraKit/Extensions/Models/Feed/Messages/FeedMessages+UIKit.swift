@@ -225,13 +225,13 @@ extension FeedMessage {
 		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
 			if User.isSignedIn {
 				// Heart, reply and reshare
-				let heartAction = UIAlertAction(title: "Like the Message", style: .default, handler: { (_) in
+				let heartAction = UIAlertAction(title: "Like the Message", style: .default) { _ in
 					self?.heartMessage(via: viewController, userInfo: userInfo)
-				})
-				let replyAction = UIAlertAction(title: "Reply to Message", style: .default, handler: { (_) in
+				}
+				let replyAction = UIAlertAction(title: "Reply to Message", style: .default) { _ in
 					self?.replyToMessage(via: viewController, userInfo: userInfo)
-				})
-				let reShareAction = UIAlertAction(title: "Re-share the Message", style: .default) { (_) in
+				}
+				let reShareAction = UIAlertAction(title: "Re-share the Message", style: .default) { _ in
 					self?.reShareMessage(via: viewController, userInfo: userInfo)
 				}
 
@@ -251,27 +251,27 @@ extension FeedMessage {
 			// Username action
 			if let user = self?.relationships.users.data.first {
 				let username = user.attributes.username
-				let userAction = UIAlertAction(title: "Show " + username + "'s Profile", style: .default, handler: { _ in
+				let userAction = UIAlertAction(title: "Show " + username + "'s Profile", style: .default) { _ in
 					self?.visitOriginalPosterProfile(from: viewController)
-				})
+				}
 				userAction.setValue(UIImage(systemName: "person.crop.circle.fill"), forKey: "image")
 				userAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 				actionSheetAlertController.addAction(userAction)
 			}
 
 			// Share action
-			let shareAction = UIAlertAction(title: "Share Message", style: .default, handler: { _ in
+			let shareAction = UIAlertAction(title: "Share Message", style: .default) { _ in
 				self?.openShareSheet(on: viewController)
-			})
+			}
 			shareAction.setValue(UIImage(systemName: "square.and.arrow.up.fill"), forKey: "image")
 			shareAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 			actionSheetAlertController.addAction(shareAction)
 
 			if User.isSignedIn {
 				// Report thread action
-				let reportAction = UIAlertAction(title: "Report Message", style: .destructive, handler: { (_) in
+				let reportAction = UIAlertAction(title: "Report Message", style: .destructive) { _ in
 					self?.reportMessage()
-				})
+				}
 				reportAction.setValue(UIImage(systemName: "exclamationmark.circle.fill"), forKey: "image")
 				reportAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 				actionSheetAlertController.addAction(reportAction)

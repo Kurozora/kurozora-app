@@ -16,11 +16,6 @@ class AuthenticationViewController: KViewController {
 	@IBOutlet weak var unlockButton: KTintedButton!
 	@IBOutlet weak var subTextLabel: KLabel!
 
-	// MARK: - Properties
-	override var preferredStatusBarStyle: UIStatusBarStyle {
-		return KThemePicker.statusBarStyle.statusBarValue
-	}
-
 	// MARK: - View
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)

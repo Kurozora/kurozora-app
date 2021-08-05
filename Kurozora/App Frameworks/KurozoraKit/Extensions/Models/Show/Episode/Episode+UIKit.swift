@@ -85,7 +85,7 @@ extension Episode {
 
 		var activityItems: [Any] = []
 		activityItems.append(shareText)
-		if let episodeImage = self.attributes.previewImage {
+		if let episodeImage = self.attributes.banner?.url {
 			activityItems.append(episodeImage)
 		}
 

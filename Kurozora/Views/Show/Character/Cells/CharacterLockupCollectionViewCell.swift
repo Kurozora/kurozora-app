@@ -25,6 +25,6 @@ class CharacterLockupCollectionViewCell: UICollectionViewCell {
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
 		self.nameLabel.text = self.character.attributes.name
-		self.characterImageView.setImage(with: self.character.attributes.imageURL ?? "", placeholder: self.character.attributes.placeholderImage)
+		self.characterImageView.setImage(with: self.character.attributes.profile?.url ?? "", placeholder: self.character.attributes.placeholderImage)
 	}
 }

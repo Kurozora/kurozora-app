@@ -270,10 +270,10 @@ class ProfileTableViewController: KTableViewController {
 		onlineIndicatorLabel.isHidden = false
 
 		// Configure profile image
-		profileImageView.setImage(with: user.attributes.profileImageURL ?? "", placeholder: user.attributes.placeholderImage)
+		profileImageView.setImage(with: user.attributes.profile?.url ?? "", placeholder: user.attributes.placeholderImage)
 
 		// Configure banner image
-		if let bannerImageURL = user.attributes.bannerImageURL {
+		if let bannerImageURL = user.attributes.banner?.url {
 			bannerImageView.setImage(with: bannerImageURL, placeholder: R.image.placeholders.userBanner()!)
 		}
 
@@ -555,9 +555,9 @@ class ProfileTableViewController: KTableViewController {
 		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
 			// Go to last watched episode
 			if User.isSignedIn {
-				let showFavoriteShowsList = UIAlertAction.init(title: "Favorite shows", style: .default, handler: { (_) in
+				let showFavoriteShowsList = UIAlertAction.init(title: "Favorite shows", style: .default) { _ in
 					self?.showFavoriteShowsList()
-				})
+				}
 				showFavoriteShowsList.setValue(UIImage(systemName: "heart.circle"), forKey: "image")
 				showFavoriteShowsList.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 				actionSheetAlertController.addAction(showFavoriteShowsList)

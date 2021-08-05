@@ -29,7 +29,7 @@ class FollowCell: KTableViewCell {
 		self.usernameLabel.text = self.user.attributes.username
 
 		// Configure profile image
-		self.profileImageView.setImage(with: self.user.attributes.profileImageURL ?? "", placeholder: self.user.attributes.placeholderImage)
+		self.profileImageView.setImage(with: self.user.attributes.profile?.url ?? "", placeholder: self.user.attributes.placeholderImage)
 
 		// Configure follow button
 		self.updateFollowButton()

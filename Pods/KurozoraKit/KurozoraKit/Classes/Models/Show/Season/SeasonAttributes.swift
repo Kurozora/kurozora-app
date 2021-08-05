@@ -11,11 +11,11 @@ extension Season {
 	*/
 	public struct Attributes: Codable {
 		// MARK: - Properties
+		/// The link to a poster of the season.
+		public let poster: Media?
+
 		/// The number of the season.
 		public let number: Int
-
-		/// The link to a poster of the season.
-		public let posterURL: String?
 
 		/// The title of the season.
 		public let title: String

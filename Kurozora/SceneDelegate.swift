@@ -124,7 +124,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	private func createTwoColumnSplitViewController() -> UISplitViewController {
 		let navigationController = KNavigationController(rootViewController: SidebarViewController())
-		navigationController.navigationBar.prefersLargeTitles = false
 		let tabBarController = KTabBarController()
 		let splitViewController = UISplitViewController(style: .doubleColumn)
 		splitViewController.preferredDisplayMode = .oneBesideSecondary

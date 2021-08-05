@@ -24,7 +24,7 @@ class FeedMessageReShareCell: FeedMessageCell {
 		self.opMessageTextView.text = opMessage.attributes.body
 
 		if let opUser = opMessage.relationships.users.data.first {
-			self.opProfileImageView.setImage(with: opUser.attributes.profileImageURL ?? "", placeholder: opUser.attributes.placeholderImage)
+			self.opProfileImageView.setImage(with: opUser.attributes.profile?.url ?? "", placeholder: opUser.attributes.placeholderImage)
 			self.opUsernameLabel.text = opUser.attributes.username
 
 			// Attach gestures

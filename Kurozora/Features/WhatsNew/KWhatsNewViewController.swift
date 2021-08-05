@@ -10,11 +10,6 @@ import UIKit
 import WhatsNew
 
 class KWhatsNewViewController: WhatsNewViewController {
-	// MARK: - Properties
-	override var preferredStatusBarStyle: UIStatusBarStyle {
-		return KThemePicker.statusBarStyle.statusBarValue
-	}
-
 	// MARK: - Initializers
 	/**
 		Initialize an instance of `WhatsNewViewController` with the given details.

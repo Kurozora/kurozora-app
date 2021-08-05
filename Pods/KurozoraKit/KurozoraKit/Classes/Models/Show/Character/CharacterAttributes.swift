@@ -11,14 +11,14 @@ extension Character {
 	*/
 	public struct Attributes: Codable {
 		// MARK: - Properties
+		/// The link to a profile image of the chracter.
+		public let profile: Media?
+
 		/// The name of the character.
 		public let name: String
 
 		/// The biogrpahy of the character.
 		public let about: String?
-
-		/// The link to an image of the chracter.
-		public let imageURL: String?
 
 		/// The debut information of the character,
 		public let debut: String?
@@ -44,14 +44,14 @@ extension Character {
 		/// The height of the character.
 		public let height: String?
 
+		/// The weight of the character.
+		public let weight: String?
+
 		/// The age of the character.
-		public let age: Int?
+		public let age: String?
 
-		/// The day the character was born.
-		public let birthDay: Int?
-
-		/// The month the character was born.
-		public let birthMonth: Int?
+		/// The birthdate of the character.
+		public let birthdate: String?
 
 		/// The astronomical sign of the character.
 		public let astrologicalSign: String?

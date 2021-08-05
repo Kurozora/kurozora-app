@@ -34,13 +34,13 @@ class CastCollectionViewCell: UICollectionViewCell {
 		// Configure person
 		if let person = self.cast.relationships.people.data.first {
 			self.personNameLabel.text = person.attributes.fullName
-			self.personImageView.setImage(with: person.attributes.imageURL ?? "", placeholder: person.attributes.placeholderImage)
+			self.personImageView.setImage(with: person.attributes.profile?.url ?? "", placeholder: person.attributes.placeholderImage)
 		}
 
 		// Configure character
 		if let character = cast.relationships.characters.data.first {
 			self.characterNameLabel.text = "as \(character.attributes.name)"
-			self.characterImageView.setImage(with: character.attributes.imageURL ?? "", placeholder: character.attributes.placeholderImage)
+			self.characterImageView.setImage(with: character.attributes.profile?.url ?? "", placeholder: character.attributes.placeholderImage)
 		}
 		self.characterRoleLabel.text = cast.attributes.role.name
 	}

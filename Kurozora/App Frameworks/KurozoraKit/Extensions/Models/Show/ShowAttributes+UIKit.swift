@@ -48,8 +48,8 @@ extension Show.Attributes {
 			informationString += " · \(self.episodeCount) \(self.episodeCount == 1 ? "episode" : "episodes")"
 		}
 
-		// Add the runtime
-		informationString += " · \(self.runtime)"
+		// Add the duration
+		informationString += " · \(self.duration)"
 
 		// Add the year
 		if let airYear = self.firstAired?.year {

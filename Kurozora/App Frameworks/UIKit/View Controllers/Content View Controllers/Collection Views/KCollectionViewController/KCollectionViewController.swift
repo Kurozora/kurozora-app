@@ -127,6 +127,7 @@ class KCollectionViewController: UICollectionViewController {
 		Cells can also be registered during the configuration by using [registerCells(for collectionView: UICollectionView)](x-source-tag://KCollectionViewDataSource-registerCellsForCollectionView).
 	*/
 	fileprivate func configureCollectionView() {
+		collectionView.prefetchDataSource = self
 		if let colllectionViewLayout = self.createLayout() {
 			collectionView.collectionViewLayout = colllectionViewLayout
 		}
@@ -157,6 +158,11 @@ class KCollectionViewController: UICollectionViewController {
 			collectionView.register(nib: UINib(nibName: String(describing: nib), bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withClass: nib)
 		}
 	}
+}
+
+// MARK: - UICollectionViewDataSourcePrefetching
+extension KCollectionViewController: UICollectionViewDataSourcePrefetching {
+	func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) { }
 }
 
 // MARK: - Refresh Control

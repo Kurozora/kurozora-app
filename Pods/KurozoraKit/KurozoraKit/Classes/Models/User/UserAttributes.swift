@@ -28,11 +28,11 @@ extension User {
 		/// The activity status of the user.
 		public let activityStatus: ActivityStatus
 
-		/// The URL to the profile image of the user.
-		public var profileImageURL: String?
+		/// The profile image of the user.
+		public var profile: Media?
 
-		/// The URL to the banner image of the user.
-		public var bannerImageURL: String?
+		/// The banner image of the user.
+		public var banner: Media?
 
 		/// Whether the user has a pro badge.
 		public var isPro: Bool
@@ -103,8 +103,8 @@ extension User.Attributes {
 	*/
 	public mutating func update(using userUpdate: UserUpdate) {
 		self.biography = userUpdate.biography
-		self.profileImageURL = userUpdate.profileImageURL
-		self.bannerImageURL = userUpdate.bannerImageURL
+		self.profile = userUpdate.profile
+		self.banner = userUpdate.banner
 	}
 
 	/**
@@ -117,8 +117,8 @@ extension User.Attributes {
 	public mutating func updated(using userUpdate: UserUpdate) -> Self {
 		var userAttributes = self
 		userAttributes.biography = userUpdate.biography
-		userAttributes.profileImageURL = userUpdate.profileImageURL
-		userAttributes.bannerImageURL = userUpdate.bannerImageURL
+		userAttributes.profile = userUpdate.profile
+		userAttributes.banner = userUpdate.banner
 		return userAttributes
 	}
 

@@ -47,7 +47,7 @@ class KFMReplyTextEditorViewController: KViewController {
 
 		if let user = User.current {
 			self.currentUsernameLabel.text = user.attributes.username
-			self.profileImageView.setImage(with: user.attributes.profileImageURL ?? "", placeholder: user.attributes.placeholderImage)
+			self.profileImageView.setImage(with: user.attributes.profile?.url ?? "", placeholder: user.attributes.placeholderImage)
 		}
 		self.characterCountLabel.text = "\(self.characterLimit)"
 		self.commentTextView.text = self.placeholderText
@@ -57,7 +57,7 @@ class KFMReplyTextEditorViewController: KViewController {
 
 		if let opUser = self.opFeedMessage.relationships.users.data.first {
 			self.opUsernameLabel.text = opUser.attributes.username
-			self.opProfileImageView.setImage(with: opUser.attributes.profileImageURL ?? "", placeholder: opUser.attributes.placeholderImage)
+			self.opProfileImageView.setImage(with: opUser.attributes.profile?.url ?? "", placeholder: opUser.attributes.placeholderImage)
 		}
 		self.opMessageTextView.text = self.opFeedMessage.attributes.body
 		self.opDateTimeLabel.text = self.opFeedMessage.attributes.createdAt.timeAgo

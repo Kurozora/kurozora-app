@@ -17,7 +17,7 @@ extension User.Attributes {
 	*/
 	var profileImage: UIImage? {
 		let profileImageView = UIImageView()
-		profileImageView.setImage(with: self.profileImageURL ?? "", placeholder: self.placeholderImage)
+		profileImageView.setImage(with: self.profile?.url ?? "", placeholder: self.placeholderImage)
 		return profileImageView.image?.withRenderingMode(.alwaysOriginal)
 	}
 

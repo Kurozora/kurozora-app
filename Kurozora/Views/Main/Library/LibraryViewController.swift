@@ -145,9 +145,9 @@ class LibraryViewController: KTabbedViewController {
 		if let sortValue = self.libraryViewControllerDelegate?.sortValue() {
 			if sortValue != .none {
 				// Report thread action
-				let stopSortingAction = UIAlertAction.init(title: "Stop sorting", style: .destructive, handler: { (_) in
+				let stopSortingAction = UIAlertAction.init(title: "Stop sorting", style: .destructive) { _ in
 					self.libraryViewControllerDelegate?.sortLibrary(by: .none, option: .none)
-				})
+				}
 				stopSortingAction.setValue(UIImage(systemName: "xmark.circle.fill"), forKey: "image")
 				stopSortingAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 				actionSheetAlertController.addAction(stopSortingAction)

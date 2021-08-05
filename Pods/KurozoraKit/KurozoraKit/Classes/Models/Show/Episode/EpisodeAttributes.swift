@@ -11,23 +11,26 @@ extension Episode {
 	*/
 	public struct Attributes: Codable {
 		// MARK: - Properties
-		/// The number of the episode.
+		/// The link to a banner image of the episode.
+		public let banner: Media?
+
+		/// The in season number of the episode.
 		public let number: Int
+
+		/// The total number of the episode.
+		public let numberTotal: Int
 
 		/// The title of the episodes.
 		public let title: String
 
-		/// The link to a preview image of the episode.
-		public let previewImage: String?
-
 		/// The duration of the episode.
-		public let duration: Int
+		public let duration: String
 
 		/// The air date of the episode.
-		public let firstAired: String?
+		public let firstAired: Date?
 
-		/// The overview text of the episode.
-		public let overview: String?
+		/// The synopsis text of the episode.
+		public let synopsis: String?
 
 		/// Whether the episode details have been verified.
 		public let isVerified: Bool

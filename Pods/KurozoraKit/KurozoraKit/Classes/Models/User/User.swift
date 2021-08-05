@@ -56,8 +56,8 @@ extension User {
 		- Parameter userDetails: The details used to update the current user's details.
 	*/
 	internal mutating func updateDetails(with userDetails: User) {
-		self.attributes.profileImageURL = userDetails.attributes.profileImageURL
-		self.attributes.bannerImageURL = userDetails.attributes.bannerImageURL
+		self.attributes.profile = userDetails.attributes.profile
+		self.attributes.banner = userDetails.attributes.banner
 		self.attributes.biography = userDetails.attributes.biography
 	}
 }

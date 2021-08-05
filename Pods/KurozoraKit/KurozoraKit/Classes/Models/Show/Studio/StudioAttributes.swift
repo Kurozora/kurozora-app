@@ -11,14 +11,17 @@ extension Studio {
 	*/
 	public struct Attributes: Codable {
 		// MARK: - Properties
+		/// The logo of the studio.
+		public let logo: Media?
+
 		/// The name of the studio.
 		public let name: String
 
-		/// The logo of the studio.
-		public let logo: Studio.Attributes.Media?
-
 		/// The about text of the studio.
 		public let about: String?
+
+		/// The address of the studio.
+		public let address: String?
 
 		/// The date the studio was founded.
 		public let founded: Date?

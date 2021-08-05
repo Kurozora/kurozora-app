@@ -25,6 +25,6 @@ class PersonHeaderCollectionViewCell: UICollectionViewCell {
 	/// Configure the cell with the given details.
 	func configureCell() {
 		self.nameLabel.text = self.person.attributes.fullName
-		self.personImageView.setImage(with: self.person.attributes.imageURL ?? "", placeholder: self.person.attributes.placeholderImage)
+		self.personImageView.setImage(with: self.person.attributes.profile?.url ?? "", placeholder: self.person.attributes.placeholderImage)
 	}
 }

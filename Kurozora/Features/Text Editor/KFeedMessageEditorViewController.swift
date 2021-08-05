@@ -42,7 +42,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 
 		if let user = User.current {
 			currentUsernameLabel.text = user.attributes.username
-			profileImageView.setImage(with: user.attributes.profileImageURL ?? "", placeholder: user.attributes.placeholderImage)
+			profileImageView.setImage(with: user.attributes.profile?.url ?? "", placeholder: user.attributes.placeholderImage)
 		}
 		characterCountLabel.text = "\(characterLimit)"
 		commentTextView.text = placeholderText

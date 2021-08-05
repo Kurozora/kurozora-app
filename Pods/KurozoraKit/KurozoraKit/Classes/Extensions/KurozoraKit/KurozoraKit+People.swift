@@ -56,7 +56,7 @@ extension KurozoraKit {
 	*/
 	public func getCharacters(forPersonID personID: Int, next: String?, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<CharacterResponse, KKAPIError>) -> Void) {
 		let charactersPeople = next ?? KKEndpoint.Shows.People.characters(personID).endpointValue
-		let request: APIRequest<CharacterResponse, KKAPIError> = tron.codable.request(charactersPeople)
+		let request: APIRequest<CharacterResponse, KKAPIError> = tron.codable.request(charactersPeople).buildURL(.relativeToBaseURL)
 		request.headers = headers
 
 		request.parameters["limit"] = limit

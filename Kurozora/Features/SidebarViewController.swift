@@ -74,6 +74,7 @@ class SidebarViewController: KCollectionViewController {
 		self.collectionView.isScrollEnabled = false
 		self.clearsSelectionOnViewWillAppear = false
 		self.navigationItem.hidesSearchBarWhenScrolling = false
+		self.navigationItem.largeTitleDisplayMode = .never
 
 		self.configureSearchBar()
 	}

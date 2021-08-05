@@ -31,6 +31,6 @@ class StudioHeaderCollectionViewCell: UICollectionViewCell {
 		} else {
 			self.foundedLabel.text = nil
 		}
-		self.logoImageView.image = studio.attributes.logoImage
+		self.logoImageView.setImage(with: self.studio.attributes.logo?.url ?? "", placeholder: R.image.placeholders.studioLogo()!)
 	}
 }

@@ -43,10 +43,10 @@ extension Show {
 		public let videoUrl: String?
 
 		/// The media object of the poster of the show.
-		public let poster: Show.Attributes.Media?
+		public let poster: Media?
 
 		/// The media object of the banner of the show.
-		public let banner: Show.Attributes.Media?
+		public let banner: Media?
 
 		/// The original title in the original language of the show.
 		public let originalTitle: String?
@@ -96,11 +96,11 @@ extension Show {
 		/// The last air date of the show.
 		public let lastAired: Date?
 
-		/// The run time of the show.
-		public let runtime: String
+		/// The duration of the show.
+		public let duration: String
 
-		/// The calculated total runtime of the show.
-		public let runtimeTotal: String
+		/// The calculated total duration of the show.
+		public let durationTotal: String
 
 		/// The time the show has aired at in UTC.
 		public let airTime: String?

@@ -10,16 +10,12 @@ import UIKit
 import SwiftTheme
 
 class KNavigationController: UINavigationController {
-	// MARK: - Properties
-	override var preferredStatusBarStyle: UIStatusBarStyle {
-		return KThemePicker.statusBarStyle.statusBarValue
-	}
-
 	// MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
 
 		NotificationCenter.default.addObserver(self, selector: #selector(updateTheme(_:)), name: .ThemeUpdateNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(updatePrefersLargeTitles(_:)), name: .KSPrefersLargeTitlesDidChange, object: nil)
 
 		self.sharedInit()
     }
@@ -28,8 +24,17 @@ class KNavigationController: UINavigationController {
 	/// The shared settings used to initialize tab bar view.
 	private func sharedInit () {
 		// Configure theme
-		self.setupNavigationBarStyle()
+		self.configureNavigationBarStyle()
 		self.setupToolbarStyle()
+	}
+
+	/**
+		Used to update the large title preference.
+
+		- Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
+	*/
+	@objc func updatePrefersLargeTitles(_ notification: NSNotification) {
+		self.navigationBar.prefersLargeTitles = UserSettings.largeTitlesEnabled
 	}
 
 	/**
@@ -38,14 +43,15 @@ class KNavigationController: UINavigationController {
 		- Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
 	*/
 	@objc func updateTheme(_ notification: NSNotification) {
-		self.navigationBar.prefersLargeTitles = UserSettings.largeTitlesEnabled
+		self.configureNavigationBarStyle()
 	}
 
 	/// Setup navigation bar style with the currently used theme.
-	func setupNavigationBarStyle() {
+	func configureNavigationBarStyle() {
 		self.navigationBar.isTranslucent = true
 		self.navigationBar.backgroundColor = .clear
 		self.navigationBar.barStyle = .default
+		self.navigationBar.theme_tintColor = KThemePicker.tintColor.rawValue
 
 		let appearance = UINavigationBarAppearance()
 		appearance.theme_backgroundColor = KThemePicker.barTintColor.rawValue

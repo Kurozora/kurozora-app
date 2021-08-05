@@ -40,7 +40,7 @@ class KFMReShareTextEditorViewController: KViewController {
 
 		if let user = User.current {
 			currentUsernameLabel.text = user.attributes.username
-			profileImageView.setImage(with: user.attributes.profileImageURL ?? "", placeholder: user.attributes.placeholderImage)
+			profileImageView.setImage(with: user.attributes.profile?.url ?? "", placeholder: user.attributes.placeholderImage)
 
 		}
 		characterCountLabel.text = "\(characterLimit)"
@@ -51,7 +51,7 @@ class KFMReShareTextEditorViewController: KViewController {
 
 		if let opUser = self.opFeedMessage.relationships.users.data.first {
 			opUsernameLabel.text = opUser.attributes.username
-			opProfileImageView.setImage(with: opUser.attributes.profileImageURL ?? "", placeholder: opUser.attributes.placeholderImage)
+			opProfileImageView.setImage(with: opUser.attributes.profile?.url ?? "", placeholder: opUser.attributes.placeholderImage)
 		}
 		opBodyTextView.text = self.opFeedMessage.attributes.body
 		dateLabel.text = self.opFeedMessage.attributes.createdAt.timeAgo

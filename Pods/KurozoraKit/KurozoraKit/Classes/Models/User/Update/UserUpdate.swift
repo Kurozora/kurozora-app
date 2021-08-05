@@ -13,9 +13,9 @@ public struct UserUpdate: Codable {
 	/// The biography text of the user.
 	public var biography: String?
 
-	/// The URL to the profile image of the user.
-	public var profileImageURL: String?
+	/// The profile image of the user.
+	public var profile: Media?
 
-	/// The URL to the banner image of the user.
-	public var bannerImageURL: String?
+	/// The banner image of the user.
+	public var banner: Media?
 }
