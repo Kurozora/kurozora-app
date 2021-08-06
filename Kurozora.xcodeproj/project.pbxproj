@@ -291,7 +291,8 @@
 		668B166E23EDF7FC00C1306A /* App-Icon-iPad-Kurogram@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B166923EDF7FC00C1306A /* App-Icon-iPad-Kurogram@2x.png */; };
 		668B166F23EDF7FC00C1306A /* App-Icon-iPad-Pro-Kurogram@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B166A23EDF7FC00C1306A /* App-Icon-iPad-Pro-Kurogram@2x.png */; };
 		668B167523EEED0C00C1306A /* SearchHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668B167423EEED0C00C1306A /* SearchHistory.swift */; };
-		668DBE6526BB2D3D00399BEB /* DefaultTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668DBE6426BB2D3D00399BEB /* DefaultTheme.swift */; };
+		668DBE6726BCA21D00399BEB /* KTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668DBE6626BCA21D00399BEB /* KTheme.swift */; };
+		668DBE6C26BCB00300399BEB /* Icons.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 668DBE6B26BCB00300399BEB /* Icons.storyboard */; };
 		668F638C20986851003B1C1D /* Aller_Lt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 668F638520986843003B1C1D /* Aller_Lt.ttf */; };
 		668F638D20986851003B1C1D /* Aller_Rg.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 668F638620986849003B1C1D /* Aller_Rg.ttf */; };
 		668F638E20986851003B1C1D /* Aller_Bd.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 668F63872098684B003B1C1D /* Aller_Bd.ttf */; };
@@ -865,7 +866,8 @@
 		668B166923EDF7FC00C1306A /* App-Icon-iPad-Kurogram@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Kurogram@2x.png"; sourceTree = "<group>"; };
 		668B166A23EDF7FC00C1306A /* App-Icon-iPad-Pro-Kurogram@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Pro-Kurogram@2x.png"; sourceTree = "<group>"; };
 		668B167423EEED0C00C1306A /* SearchHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistory.swift; sourceTree = "<group>"; };
-		668DBE6426BB2D3D00399BEB /* DefaultTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTheme.swift; sourceTree = "<group>"; };
+		668DBE6626BCA21D00399BEB /* KTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KTheme.swift; sourceTree = "<group>"; };
+		668DBE6B26BCB00300399BEB /* Icons.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Icons.storyboard; sourceTree = "<group>"; };
 		668F638520986843003B1C1D /* Aller_Lt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_Lt.ttf; sourceTree = "<group>"; };
 		668F638620986849003B1C1D /* Aller_Rg.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_Rg.ttf; sourceTree = "<group>"; };
 		668F63872098684B003B1C1D /* Aller_Bd.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_Bd.ttf; sourceTree = "<group>"; };
@@ -1211,7 +1213,6 @@
 		660B5B622152545B002D05F3 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				66A254D722AABCE7002A0E34 /* IconTableViewCell.swift */,
 				660B42AA2125AF830051EF66 /* ThemesCollectionViewCell.swift */,
 				66EA1DFF25B61BB500FCD07A /* ThemesCollectionViewCellDelegate.swift */,
 			);
@@ -1527,7 +1528,6 @@
 			isa = PBXGroup;
 			children = (
 				66C5797822A83726001B8F51 /* ThemeStore.storyboard */,
-				6645D5F823E70A4C0042B4E0 /* ManageIconTableViewController.swift */,
 				660B42A621259E300051EF66 /* ManageThemesController.swift */,
 				66EA1DFB25B6199B00FCD07A /* ManageThemesController+KCollectionViewDataSource.swift */,
 				66EA1DFD25B619DA00FCD07A /* ManageThemesController+KCollectionViewDelegateLayout.swift */,
@@ -1573,7 +1573,6 @@
 		6645D5F223E702920042B4E0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				668DBE6426BB2D3D00399BEB /* DefaultTheme.swift */,
 				66AEABD922987A4D00949FD8 /* KThemePicker.swift */,
 			);
 			path = Models;
@@ -2297,6 +2296,33 @@
 			path = Favorites;
 			sourceTree = "<group>";
 		};
+		668DBE6826BCAFC800399BEB /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				668DBE6B26BCB00300399BEB /* Icons.storyboard */,
+				6645D5F823E70A4C0042B4E0 /* ManageIconTableViewController.swift */,
+				668DBE6A26BCAFE500399BEB /* Cells */,
+				668DBE6926BCAFD900399BEB /* Models */,
+			);
+			path = Icons;
+			sourceTree = "<group>";
+		};
+		668DBE6926BCAFD900399BEB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				66A254D422AABC29002A0E34 /* AlternativeIcons.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		668DBE6A26BCAFE500399BEB /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				66A254D722AABCE7002A0E34 /* IconTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		668F63842098681C003B1C1D /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -2394,7 +2420,7 @@
 		66A254D622AABC3B002A0E34 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				66A254D422AABC29002A0E34 /* AlternativeIcons.swift */,
+				668DBE6626BCA21D00399BEB /* KTheme.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2726,6 +2752,7 @@
 				661049BE22C0425800A2A354 /* Display */,
 				6614409021DA40AB00E54915 /* Notifications */,
 				66C27A7223E3A09E00BC09D3 /* Privacy */,
+				668DBE6826BCAFC800399BEB /* Icons */,
 				664133DE21DA42F900CE823A /* Theme Store */,
 			);
 			path = "Sub Settings";
@@ -3348,6 +3375,7 @@
 				668B165623EDF0CF00C1306A /* App-Icon-iPad-Rose-Gold@2x.png in Resources */,
 				6640E19722ADD30100D0F575 /* AuthenticationSettings.storyboard in Resources */,
 				66FC6DD32340028D00A454DD /* AccountSettings.storyboard in Resources */,
+				668DBE6C26BCB00300399BEB /* Icons.storyboard in Resources */,
 				669FD7F623F9E9DB001440EC /* App-Icon-iPhone-Cookiezora@3x.png in Resources */,
 				668B162D23EDF0CF00C1306A /* App-Icon-iPad-Day@2x.png in Resources */,
 				668B163623EDF0CF00C1306A /* App-Icon-iPad-Red.png in Resources */,
@@ -3679,7 +3707,7 @@
 				66D6237B20A1BFD300304914 /* FavoriteShowsCollectionViewController.swift in Sources */,
 				66EA1E0025B61BB500FCD07A /* ThemesCollectionViewCellDelegate.swift in Sources */,
 				6697DACD2573B50A0054FEFD /* UserNotification+UIKit.swift in Sources */,
-				668DBE6526BB2D3D00399BEB /* DefaultTheme.swift in Sources */,
+				668DBE6726BCA21D00399BEB /* KTheme.swift in Sources */,
 				66148D6325E5E52B000F2E0A /* FollowTableViewController+UITableViewDelegate.swift in Sources */,
 				66DE65282401AEDB001C2773 /* FilterSection.swift in Sources */,
 				66CAE6872337CFC800991E59 /* OnboardingBaseTableViewCell.swift in Sources */,

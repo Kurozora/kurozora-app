@@ -103,11 +103,11 @@ class DisplaySettingsCell: SettingsCell {
 		switch appAppearanceOption {
 		case .light:
 			if !UserSettings.automaticDarkTheme {
-				KThemeStyle.switchTo(.day)
+				KThemeStyle.switchTo(style: .day)
 			}
 		case .dark:
 			if !UserSettings.automaticDarkTheme {
-				KThemeStyle.switchTo(.night)
+				KThemeStyle.switchTo(style: .night)
 			}
 		}
 	}
@@ -160,7 +160,7 @@ class DisplaySettingsCell: SettingsCell {
 		UserSettings.set(sender.isOn, forKey: .trueBlackEnabled)
 
 		if UserSettings.currentTheme == "Night" || UserSettings.currentTheme == "Black" {
-			KThemeStyle.switchTo(.night)
+			KThemeStyle.switchTo(style: .night)
 		}
 	}
 

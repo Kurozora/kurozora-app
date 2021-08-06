@@ -70,7 +70,7 @@ extension UIViewController {
 		}
 
 		// Add the default action to the alert controller
-		let defaultAction = UIAlertAction(title: defaultActionButtonTitle, style: .default, handler: handler)
+		let defaultAction = UIAlertAction(title: defaultActionButtonTitle, style: .cancel, handler: handler)
 		alertController.addAction(defaultAction)
 
 		self.present(alertController, animated: true, completion: nil)
@@ -99,14 +99,14 @@ extension UIViewController {
 		alertController.view.addSubview(activityIndicator)
 
 		let xConstraint = NSLayoutConstraint(item: activityIndicator, attribute: .centerX, relatedBy: .equal, toItem: alertController.view, attribute: .centerX, multiplier: 1, constant: 0)
-		let yConstraint = NSLayoutConstraint(item: activityIndicator, attribute: .centerY, relatedBy: .equal, toItem: alertController.view, attribute: .centerY, multiplier: 1.4, constant: 0)
+		let yConstraint = NSLayoutConstraint(item: activityIndicator, attribute: .centerY, relatedBy: .equal, toItem: alertController.view, attribute: .centerY, multiplier: 1.6, constant: 0)
 
 		NSLayoutConstraint.activate([ xConstraint, yConstraint])
 		activityIndicator.isUserInteractionEnabled = false
 		activityIndicator.startAnimating()
 
 		if let alertControllerView = alertController.view {
-			let height = NSLayoutConstraint(item: alertControllerView, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: 80)
+			let height = NSLayoutConstraint(item: alertControllerView, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: 100)
 			alertController.view.addConstraint(height)
 		}
 
