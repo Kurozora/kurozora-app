@@ -123,7 +123,7 @@
                                                 </button>
                                             </subviews>
                                         </stackView>
-                                        <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Y2a-W5-1K4">
+                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Y2a-W5-1K4">
                                             <rect key="frame" x="0.0" y="51" width="362.5" height="250"/>
                                             <subviews>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gtK-gS-sgf" customClass="ScreenshotView" customModule="Kurozora" customModuleProvider="target">
