@@ -18,8 +18,8 @@ class HomeCollectionViewController: KCollectionViewController {
 		[["title": "Redeem", "segueId": R.segue.homeCollectionViewController.redeemSegue.identifier], ["title": "Become a Pro User", "segueId": R.segue.homeCollectionViewController.subscriptionSegue.identifier]]
 	]
 
-	var dataSource: UICollectionViewDiffableDataSource<Int, Int>! = nil
-	var snapshot: NSDiffableDataSourceSnapshot<Int, Int>! = nil
+	var dataSource: UICollectionViewDiffableDataSource<Int, ItemKind>! = nil
+	var snapshot: NSDiffableDataSourceSnapshot<Int, ItemKind>! = nil
 	var exploreCategories: [ExploreCategory] = [] {
 		didSet {
 			self.updateDataSource()
@@ -186,5 +186,46 @@ extension HomeCollectionViewController {
 extension HomeCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
 	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPressButton button: UIButton) {
 		self.performSegue(withIdentifier: reusableView.segueID, sender: reusableView.indexPath)
+	}
+}
+
+// MARK: - ItemKind
+extension HomeCollectionViewController {
+	/**
+		Set of available Item Kind types.
+	*/
+	enum ItemKind: Hashable {
+		/// Indicates the item kind contains a Show object.
+		case show(_: Show)
+
+		/// Indicates the item kind contains a Genre object.
+		case genre(_: Genre)
+
+		/// Indicates the item kind contains an other type object.
+		case other(_: Int)
+
+		func hash(into hasher: inout Hasher) {
+			switch self {
+			case .show(let show):
+				hasher.combine(show)
+			case .genre(let genre):
+				hasher.combine(genre)
+			case .other(let int):
+				hasher.combine(int)
+			}
+		}
+
+		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
+			switch (lhs, rhs) {
+			case (.show(let show1), .show(let show2)):
+				return show1.id == show2.id
+			case (.genre(let genre1), .genre(let genre2)):
+				return genre1.id == genre2.id
+			case (.other(let int1), .other(let int2)):
+				return int1 == int2
+			default:
+				return false
+			}
+		}
 	}
 }

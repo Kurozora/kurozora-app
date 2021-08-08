@@ -24,7 +24,7 @@ extension HomeCollectionViewController {
 	}
 
 	override func configureDataSource() {
-		self.dataSource = UICollectionViewDiffableDataSource<Int, Int>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, _) -> UICollectionViewCell? in
+		self.dataSource = UICollectionViewDiffableDataSource<Int, ItemKind>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: ItemKind) -> UICollectionViewCell? in
 			guard let self = self else { return nil }
 			if indexPath.section < self.exploreCategories.count {
 				// Get a cell of the desired kind.
@@ -33,11 +33,12 @@ extension HomeCollectionViewController {
 				else { fatalError("Cannot dequeue reusable cell with identifier \(exploreCategorySize.identifierString)") }
 
 				// Populate the cell with our item description.
-				let exploreCategoriesSection = self.exploreCategories[indexPath.section]
-				if let shows = exploreCategoriesSection.relationships.shows?.data {
-					baseLockupCollectionViewCell.show = shows[indexPath.row]
-				} else {
-					baseLockupCollectionViewCell.genre = exploreCategoriesSection.relationships.genres?.data[indexPath.row]
+				switch item {
+				case .show(let show):
+					baseLockupCollectionViewCell.show = show
+				case .genre(let genre):
+					baseLockupCollectionViewCell.genre = genre
+				default: break
 				}
 
 				// Return the cell.
@@ -90,29 +91,49 @@ extension HomeCollectionViewController {
 		let numberOfSections: Int = exploreCategories.count + 2
 
 		// Initialize data
-		self.snapshot = NSDiffableDataSourceSnapshot<Int, Int>()
+		self.snapshot = NSDiffableDataSourceSnapshot<Int, ItemKind>()
 		var identifierOffset = 0
 		var itemsPerSection = 0
 
 		for section in 0...numberOfSections {
+			snapshot.appendSections([section])
+
 			if section < exploreCategories.count {
 				let exploreCategoriesSection = exploreCategories[section]
-				itemsPerSection = exploreCategoriesSection.relationships.shows?.data.count ?? 0
-				if itemsPerSection == 0 {
-					itemsPerSection = exploreCategoriesSection.relationships.genres?.data.count ?? 0
-				}
-			} else if section == numberOfSections - 2 {
-				itemsPerSection = actionsArray.first?.count ?? itemsPerSection
-			} else if section == numberOfSections - 1 {
-				itemsPerSection = actionsArray[1].count
-			} else {
-				itemsPerSection = 1
-			}
 
-			snapshot.appendSections([section])
-			let maxIdentifier = identifierOffset + itemsPerSection
-			snapshot.appendItems(Array(identifierOffset..<maxIdentifier))
-			identifierOffset += itemsPerSection
+				if let shows = exploreCategoriesSection.relationships.shows?.data {
+					let showItems: [ItemKind] = shows.map { show in
+						return .show(show)
+					}
+					snapshot.appendItems(showItems, toSection: section)
+				} else if let genres = exploreCategoriesSection.relationships.genres?.data {
+					let genreItems: [ItemKind] = genres.map { genre in
+						return .genre(genre)
+					}
+					snapshot.appendItems(genreItems, toSection: section)
+				}
+			} else {
+				// Get number of items per section
+				if section == numberOfSections - 2 {
+					itemsPerSection = actionsArray.first?.count ?? itemsPerSection
+				} else if section == numberOfSections - 1 {
+					itemsPerSection = actionsArray[1].count
+				} else {
+					itemsPerSection = 1
+				}
+
+				// Get max identifier
+				let maxIdentifier = identifierOffset + itemsPerSection
+
+				// Append items to section
+				let otherItems: [ItemKind] = (identifierOffset..<maxIdentifier).map { index in
+					return .other(index)
+				}
+				snapshot.appendItems(otherItems, toSection: section)
+
+				// Update identifier offset
+				identifierOffset += itemsPerSection
+			}
 		}
 
 		dataSource.apply(snapshot)
