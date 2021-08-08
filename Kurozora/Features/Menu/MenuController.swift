@@ -26,6 +26,31 @@ class MenuController {
 		builder.insertSibling(MenuController.refreshPage(), beforeMenu: .fullscreen)
 		builder.insertSibling(MenuController.openPreferences(), afterMenu: .about)
 		builder.insertSibling(MenuController.account(), beforeMenu: .window)
+
+		if let minimizeAndZoom = MenuController.minimizeAndZoom(with: builder) {
+			// Remove and add own menu
+			builder.remove(menu: .minimizeAndZoom)
+			builder.insertChild(minimizeAndZoom, atStartOfMenu: .window)
+		}
+	}
+
+	/**
+		Builds and returns the "Minimize and Zoom" menu.
+
+		- Parameter builder: The [UIMenuBuilder]() object used to initialize the menu controller.
+
+		- Returns: The "Minimize and Zoom" menu.
+	*/
+	class func minimizeAndZoom(with builder: UIMenuBuilder) -> UIMenu? {
+		guard let minimizeAndZoomMenu = builder.menu(for: .minimizeAndZoom) else { return nil }
+		let commands: [UIMenuElement] = minimizeAndZoomMenu.children.map { element in
+			if let keyCommand = element as? UICommand, keyCommand.title == "Zoom" {
+				return UIKeyCommand(title: keyCommand.title, image: keyCommand.image, action: keyCommand.action, input: "\r", modifierFlags: [.shift, .command], propertyList: keyCommand.propertyList, alternates: keyCommand.alternates, discoverabilityTitle: keyCommand.discoverabilityTitle, attributes: keyCommand.attributes, state: keyCommand.state)
+			} else {
+				return element
+			}
+		}
+		return UIMenu(title: minimizeAndZoomMenu.title, image: minimizeAndZoomMenu.image, identifier: minimizeAndZoomMenu.identifier, options: minimizeAndZoomMenu.options, children: commands)
 	}
 
 	/**
