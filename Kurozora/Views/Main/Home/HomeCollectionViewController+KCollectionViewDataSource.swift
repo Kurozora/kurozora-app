@@ -24,7 +24,7 @@ extension HomeCollectionViewController {
 	}
 
 	override func configureDataSource() {
-		self.dataSource = UICollectionViewDiffableDataSource<Int, ItemKind>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: ItemKind) -> UICollectionViewCell? in
+		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: ItemKind) -> UICollectionViewCell? in
 			guard let self = self else { return nil }
 			if indexPath.section < self.exploreCategories.count {
 				// Get a cell of the desired kind.
@@ -34,9 +34,9 @@ extension HomeCollectionViewController {
 
 				// Populate the cell with our item description.
 				switch item {
-				case .show(let show):
+				case .show(let show, _):
 					baseLockupCollectionViewCell.show = show
-				case .genre(let genre):
+				case .genre(let genre, _):
 					baseLockupCollectionViewCell.genre = genre
 				default: break
 				}
@@ -91,12 +91,13 @@ extension HomeCollectionViewController {
 		let numberOfSections: Int = exploreCategories.count + 2
 
 		// Initialize data
-		self.snapshot = NSDiffableDataSourceSnapshot<Int, ItemKind>()
+		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 		var identifierOffset = 0
 		var itemsPerSection = 0
 
 		for section in 0...numberOfSections {
-			snapshot.appendSections([section])
+			let sectionHeader = SectionLayoutKind.header()
+			snapshot.appendSections([sectionHeader])
 
 			if section < exploreCategories.count {
 				let exploreCategoriesSection = exploreCategories[section]
@@ -105,12 +106,12 @@ extension HomeCollectionViewController {
 					let showItems: [ItemKind] = shows.map { show in
 						return .show(show)
 					}
-					snapshot.appendItems(showItems, toSection: section)
+					snapshot.appendItems(showItems, toSection: sectionHeader)
 				} else if let genres = exploreCategoriesSection.relationships.genres?.data {
 					let genreItems: [ItemKind] = genres.map { genre in
 						return .genre(genre)
 					}
-					snapshot.appendItems(genreItems, toSection: section)
+					snapshot.appendItems(genreItems, toSection: sectionHeader)
 				}
 			} else {
 				// Get number of items per section
@@ -129,7 +130,7 @@ extension HomeCollectionViewController {
 				let otherItems: [ItemKind] = (identifierOffset..<maxIdentifier).map { index in
 					return .other(index)
 				}
-				snapshot.appendItems(otherItems, toSection: section)
+				snapshot.appendItems(otherItems, toSection: sectionHeader)
 
 				// Update identifier offset
 				identifierOffset += itemsPerSection

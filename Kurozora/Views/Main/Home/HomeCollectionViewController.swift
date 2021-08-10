@@ -18,8 +18,8 @@ class HomeCollectionViewController: KCollectionViewController {
 		[["title": "Redeem", "segueId": R.segue.homeCollectionViewController.redeemSegue.identifier], ["title": "Become a Pro User", "segueId": R.segue.homeCollectionViewController.subscriptionSegue.identifier]]
 	]
 
-	var dataSource: UICollectionViewDiffableDataSource<Int, ItemKind>! = nil
-	var snapshot: NSDiffableDataSourceSnapshot<Int, ItemKind>! = nil
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
 	var exploreCategories: [ExploreCategory] = [] {
 		didSet {
 			self.updateDataSource()
@@ -126,7 +126,15 @@ class HomeCollectionViewController: KCollectionViewController {
 			guard let self = self else { return }
 			switch result {
 			case .success(let exploreCategories):
-				self.exploreCategories = exploreCategories
+				self.exploreCategories = exploreCategories.filter { exploreCategory in
+					let relationships = exploreCategory.relationships
+					if let shows = relationships.shows {
+						return !shows.data.isEmpty
+					} else if let genres = relationships.genres {
+						return !genres.data.isEmpty
+					}
+					return false
+				}
 			case .failure: break
 			}
 		}
@@ -189,27 +197,56 @@ extension HomeCollectionViewController: TitleHeaderCollectionReusableViewDelegat
 	}
 }
 
+// MARK: - SectionLayoutKind
+extension HomeCollectionViewController {
+	/**
+		List of available Section Layout Kind types.
+	*/
+	enum SectionLayoutKind: Hashable {
+		// MARK: - Cases
+		/// Indicates a header section layout type.
+		case header(id: UUID = UUID())
+
+		// MARK: - Functions
+		func hash(into hasher: inout Hasher) {
+			switch self {
+			case .header(let id):
+				hasher.combine(id)
+			}
+		}
+
+		static func == (lhs: SectionLayoutKind, rhs: SectionLayoutKind) -> Bool {
+			switch (lhs, rhs) {
+			case (.header(let id1), .header(let id2)):
+				return id1 == id2
+			}
+		}
+	}
+}
+
 // MARK: - ItemKind
 extension HomeCollectionViewController {
 	/**
-		Set of available Item Kind types.
+		List of available Item Kind types.
 	*/
 	enum ItemKind: Hashable {
 		/// Indicates the item kind contains a Show object.
-		case show(_: Show)
+		case show(_: Show, id: UUID = UUID())
 
 		/// Indicates the item kind contains a Genre object.
-		case genre(_: Genre)
+		case genre(_: Genre, id: UUID = UUID())
 
 		/// Indicates the item kind contains an other type object.
 		case other(_: Int)
 
 		func hash(into hasher: inout Hasher) {
 			switch self {
-			case .show(let show):
+			case .show(let show, let id):
 				hasher.combine(show)
-			case .genre(let genre):
+				hasher.combine(id)
+			case .genre(let genre, let id):
 				hasher.combine(genre)
+				hasher.combine(id)
 			case .other(let int):
 				hasher.combine(int)
 			}
@@ -217,10 +254,10 @@ extension HomeCollectionViewController {
 
 		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
 			switch (lhs, rhs) {
-			case (.show(let show1), .show(let show2)):
-				return show1.id == show2.id
-			case (.genre(let genre1), .genre(let genre2)):
-				return genre1.id == genre2.id
+			case (.show(let show1, let id1), .show(let show2, let id2)):
+				return show1.id == show2.id && id1 == id2
+			case (.genre(let genre1, let id1), .genre(let genre2, let id2)):
+				return genre1.id == genre2.id && id1 == id2
 			case (.other(let int1), .other(let int2)):
 				return int1 == int2
 			default:
