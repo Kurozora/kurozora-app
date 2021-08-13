@@ -19,12 +19,12 @@ let KService = KurozoraKit().services(KurozoraDelegate.shared.services)
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 	// MARK: - Properties
-	var authenticationCount = 0
 	var isUnreachable = false
 	var menuController: MenuController!
 
 	// MARK: - AppDelegate
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+		print("----- UIApplication finished launching.")
 		// Override point for customization after application launch.
 		// Init payment queue
 		SKPaymentQueue.default().add(KStoreObserver.shared)
@@ -60,44 +60,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func applicationWillResignActive(_ application: UIApplication) {
 		// Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
 		// Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+		print("----- UIApplication will resign active.")
 	}
 
 	func applicationDidEnterBackground(_ application: UIApplication) {
 		// Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
 		// If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-		KurozoraDelegate.shared.userShouldAuthenticate()
-		authenticationCount = 0
+		print("----- UIApplication entered background.")
 	}
 
 	func applicationWillEnterForeground(_ application: UIApplication) {
 		// Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-		KNetworkManager.isReachable { _ in
-			if User.isSignedIn {
-				WorkflowController.shared.registerForPushNotifications()
-			}
-		}
-
-		if UserSettings.automaticDarkTheme {
-			KThemeStyle.checkAutomaticSchedule()
-		}
+		print("----- UIApplication will enter foreground.")
 	}
 
 	func applicationDidBecomeActive(_ application: UIApplication) {
 		// Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-		if authenticationCount < 1 {
-			if Date.uptime() > KurozoraDelegate.shared.authenticationInterval, KurozoraDelegate.shared.authenticationEnabled {
-				KurozoraDelegate.shared.prepareForAuthentication()
-			}
-		}
-
-		authenticationCount += 1
-
-		// Clear notifications
-		application.applicationIconBadgeNumber = 0
+		print("----- UIApplication became active.")
 	}
 
 	func applicationWillTerminate(_ application: UIApplication) {
 		// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+		print("----- UIApplication will terminate.")
 		SKPaymentQueue.default().remove(KStoreObserver.shared)
 	}
 }
@@ -106,6 +90,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate {
 	// Here we tell iOS what scene configuration to use
 	func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
+		print("----- UIApplication connecting to scene session.")
 		connectingSceneSession.userInfo?["activity"] = options.userActivities.first?.activityType
 
 		// Based on the name of the configuration iOS will initialize the correct SceneDelegate
@@ -113,6 +98,7 @@ extension AppDelegate {
 	}
 
 	func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
+		print("----- UIApplication discarded scene session.")
 	}
 }
 
@@ -136,17 +122,21 @@ extension AppDelegate {
 		let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
 		let apnDeviceToken = tokenParts.joined()
 
+		print("----- did register notification with device.", tokenParts, apnDeviceToken)
+
 		if User.isSignedIn {
 			guard let sessionID = User.current?.relationships?.sessions?.data.first?.id else { return }
-			KService.updateSession(sessionID, withToken: apnDeviceToken) { _ in
-			}
+			KService.updateSession(sessionID, withToken: apnDeviceToken) { _ in }
 		}
 	}
 
 	func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+		print("----- did fail to register notification with device.", error)
 	}
 
 	func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+		print("----- did receive notification.", userInfo)
+
 		#if DEBUG
 		userInfo.forEach({ print("\($0.key): \($0.value)") })
 		#endif

@@ -11,16 +11,7 @@ import UIKit
 // MARK: - Push Notifications
 extension WorkflowController {
 	func scheduleNotification(_ title: String, body: String) {
-		// Prepare local notification
-		let date = Date()
-		let triggerDate = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
-		let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
-		let identifier = "Local Notification"
-
-		// Prepare actions for notification
-		let showSessionAction = UNNotificationAction(identifier: "NEW_SESSION", title: "Show", options: [])
-		let sessionActions = "Session Actions"
-		let category = UNNotificationCategory(identifier: sessionActions, actions: [showSessionAction], intentIdentifiers: [], options: [])
+		print("----- Schedule notification.")
 
 		// Create notification content
 		let content = UNMutableNotificationContent()
@@ -28,12 +19,10 @@ extension WorkflowController {
 		content.body = "\(body)"
 		content.sound = .default
 		content.badge = 1
-		content.categoryIdentifier = sessionActions
-		let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+		content.categoryIdentifier = NotificationKind.newSession.identifierValue
 
-		// Add notification actions
-		notificationCenter.setNotificationCategories([category])
-		notificationCenter.delegate = self
+		let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2, repeats: false)
+		let request = UNNotificationRequest(identifier: "LocalNotification", content: content, trigger: trigger)
 
 		// Add notification to notification center
 		notificationCenter.add(request) { (error) in
@@ -51,6 +40,7 @@ extension WorkflowController {
 		- Returns: a boolean value indicating whether the app should register the current device for push notifications.
 	*/
 	fileprivate func shouldRegisterForPushNotifications() -> Bool {
+		print("----- Should register for push notifications")
 		if let lastDate = UserSettings.lastNotificationRegistrationRequest {
 			let weekFromLastDate = lastDate.addingTimeInterval(604800)
 			return Date() >= weekFromLastDate
@@ -60,9 +50,10 @@ extension WorkflowController {
 
 	/// Asks the user for permission to register the device for push notifications.
 	func registerForPushNotifications() {
+		print("----- Register for push notifications.")
 		if shouldRegisterForPushNotifications() {
 			UserSettings.set(Date(), forKey: .lastNotificationRegistrationRequest)
-			UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { [weak self] granted, _ in
+			UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge, .providesAppNotificationSettings]) { [weak self] granted, _ in
 				guard granted else { return }
 				self?.getNotificationSettings()
 			}
@@ -73,23 +64,22 @@ extension WorkflowController {
 
 	/// Sets up the notification actions for each of the available categories.
 	func setupCategoryActions() {
-		// Define the custom actions.
-		let showSessionsAction = UNNotificationAction(identifier: "VIEW_SESSION_DETAILS", title: "View Sessions", options: .foreground)
-		let showUpdateAction = UNNotificationAction(identifier: "VIEW_SHOW_DETAILS", title: "View Show Details", options: .foreground)
-		let newUserFollowAction = UNNotificationAction(identifier: "VIEW_PROFILE_DETAILS", title: "View Profile", options: .foreground)
+		print("----- Setup categrory actions.")
+		var notificationCategories: Set<UNNotificationCategory> = []
 
-		// Define the notification type
-		let newSessionCategory =
-		UNNotificationCategory(identifier: "NEW_SESSION", actions: [showSessionsAction], intentIdentifiers: [], options: [.hiddenPreviewsShowTitle])
-		let showUpdateCategory = UNNotificationCategory(identifier: "SHOW_UPDATE", actions: [showUpdateAction], intentIdentifiers: [], options: [.hiddenPreviewsShowTitle])
-		let newUserFollowCategory = UNNotificationCategory(identifier: "NEW_USER_FOLLOW", actions: [newUserFollowAction], intentIdentifiers: [], options: [.hiddenPreviewsShowTitle])
+		// Configure notification categories.
+		NotificationKind.allCases.forEach { notificationKind in
+			let notificationCategory = UNNotificationCategory(identifier: notificationKind.identifierValue, actions: notificationKind.actionValue.actionValue, intentIdentifiers: [], options: [.hiddenPreviewsShowTitle])
+			notificationCategories.insert(notificationCategory)
+		}
 
-		// Register notification types.
-		UNUserNotificationCenter.current().setNotificationCategories([newSessionCategory, showUpdateCategory, newUserFollowCategory])
+		// Register notification categories.
+		UNUserNotificationCenter.current().setNotificationCategories(notificationCategories)
 	}
 
 	/// Registers the device for push notifications if authorized.
 	func getNotificationSettings() {
+		print("----- Get notification settings.")
 		UNUserNotificationCenter.current().getNotificationSettings { settings in
 			guard settings.authorizationStatus == .authorized else { return }
 			DispatchQueue.main.async {
@@ -102,17 +92,18 @@ extension WorkflowController {
 // MARK: - UNUserNotificationCenterDelegate
 extension WorkflowController: UNUserNotificationCenterDelegate {
 	func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+		print("----- Notification center received response.")
 		let userInfo = response.notification.request.content.userInfo
 
 		// Perform the task associated with the action.
 		switch response.actionIdentifier {
-		case "VIEW_SESSION_DETAILS":
+		case NotificationKind.Action.viewSessionDetails.identifierValue:
 			self.openSessionsManager()
-		case "VIEW_SHOW_DETAILS":
+		case NotificationKind.Action.viewShowDetails.identifierValue:
 			if let showID = userInfo["SHOW_ID"] as? Int {
 				self.openShowDetails(for: showID)
 			}
-		case "VIEW_PROFILE_DETAILS":
+		case NotificationKind.Action.viewProfileDetails.identifierValue:
 			if let userID = userInfo["USER_ID"] as? Int {
 				self.openUserProfile(for: userID)
 			}
@@ -123,33 +114,47 @@ extension WorkflowController: UNUserNotificationCenterDelegate {
 	}
 
 	func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-		if UserSettings.notificationsAllowed {
-			var notificationPresentationOptions: UNNotificationPresentationOptions = [.list, .banner]
-
-			if UserSettings.notificationsSound {
-				notificationPresentationOptions.insert(.sound)
-			}
-			if UserSettings.notificationsBadge {
-				notificationPresentationOptions.insert(.badge)
-			}
-
-			switch notification.request.content.categoryIdentifier {
-			case "NEW_SESSION":
-				completionHandler(notificationPresentationOptions)
-			case "SHOW_UPDATE":
-				completionHandler(notificationPresentationOptions)
-			case "NEW_USER_FOLLOW":
-				completionHandler(notificationPresentationOptions)
-			default: break
-			}
+		print("----- Notification center will present notification.")
+		if !UserSettings.notificationsAllowed {
+			completionHandler([])
 		}
 
-		completionHandler([])
+		var notificationPresentationOptions: UNNotificationPresentationOptions = [.list, .banner]
+
+		if UserSettings.notificationsSound {
+			notificationPresentationOptions.insert(.sound)
+		}
+		if UserSettings.notificationsBadge {
+			notificationPresentationOptions.insert(.badge)
+		}
+
+		completionHandler(notificationPresentationOptions)
 	}
 
 	func userNotificationCenter(_ center: UNUserNotificationCenter, openSettingsFor notification: UNNotification?) {
-		if let notificationsSettingsViewController = R.storyboard.notificationSettings.notificationsSettingsViewController() {
-			UIApplication.topViewController?.show(notificationsSettingsViewController, sender: nil)
+		print("----- Notification center open settings.")
+		let topViewController = UIApplication.topViewController
+		if let settingsSplitViewController = topViewController as? SettingsSplitViewController {
+			self.segueToNotificationSettings(settingsSplitViewController: settingsSplitViewController)
+		} else if let settingsSplitViewController = R.storyboard.settings.instantiateInitialViewController() {
+			settingsSplitViewController.modalPresentationStyle = .fullScreen
+			topViewController?.present(settingsSplitViewController, animated: true) {
+				self.segueToNotificationSettings(settingsSplitViewController: settingsSplitViewController)
+			}
+		}
+	}
+
+	/**
+		Segue to the notification settings.
+
+		- Parameter settingsSplitViewController: The object containing an instance of `SettingsSplitViewController`
+	*/
+	fileprivate func segueToNotificationSettings(settingsSplitViewController: SettingsSplitViewController) {
+		let navigationController = settingsSplitViewController.viewControllers.first as? KNavigationController
+		if let settingsTableViewController = navigationController?.viewControllers.first(where: { viewController in
+			viewController is SettingsTableViewController
+		}) as? SettingsTableViewController {
+			settingsTableViewController.performSegue(withIdentifier: R.segue.settingsTableViewController.notificationSegue, sender: nil)
 		}
 	}
 }

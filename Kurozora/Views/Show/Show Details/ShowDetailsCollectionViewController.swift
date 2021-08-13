@@ -51,9 +51,11 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 	}
 	var studio: Studio! {
 		didSet {
-			studio.relationships?.shows?.data.forEachInParallel({ show in
-				self.fetchDetails(for: show.id)
-			})
+			if studio != nil {
+				studio.relationships?.shows?.data.forEachInParallel({ show in
+					self.fetchDetails(for: show.id)
+				})
+			}
 		}
 	}
 	var studioShows: [Show] = []

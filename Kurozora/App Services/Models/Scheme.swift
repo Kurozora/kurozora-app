@@ -20,15 +20,11 @@ import Foundation
 	case notification, notifications
 	```
 */
-enum Scheme: String {
+enum Scheme: String, CaseIterable {
 	case anime, show
 	case profile, user
 	case explore, home
 	case library, myLibrary, list
 	case feed, timeline
 	case notification, notifications
-
-	// MARK: - Properties
-	/// An array containing all supported schemes.
-	static let all: [Scheme] = [.anime, .show, .profile, .user, .explore, .home, .library, .myLibrary, .list, .feed, .timeline, .notification, .notifications]
 }

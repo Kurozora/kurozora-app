@@ -488,6 +488,7 @@
 		66DEB4A821D248710093725F /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66DEB4A721D248710093725F /* Search.storyboard */; };
 		66DEB4AB21D283800093725F /* SearchResultsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DEB4A421D247810093725F /* SearchResultsCollectionViewController.swift */; };
 		66DEB4B221D419420093725F /* KSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DEB4B121D419420093725F /* KSearchController.swift */; };
+		66DF090E26C673D0005AED93 /* NotificationKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF090D26C673CF005AED93 /* NotificationKind.swift */; };
 		66E08369211324D400B39A75 /* OtherSessionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E08368211324D300B39A75 /* OtherSessionsCell.swift */; };
 		66E46DFD24FDAF7B009938E1 /* FMDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E46DFC24FDAF7B009938E1 /* FMDetailsTableViewController.swift */; };
 		66E46DFF25055FEA009938E1 /* Int+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E46DFE25055FEA009938E1 /* Int+Kurozora.swift */; };
@@ -1073,6 +1074,7 @@
 		66DEB4A421D247810093725F /* SearchResultsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsCollectionViewController.swift; sourceTree = "<group>"; };
 		66DEB4A721D248710093725F /* Search.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
 		66DEB4B121D419420093725F /* KSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KSearchController.swift; sourceTree = "<group>"; };
+		66DF090D26C673CF005AED93 /* NotificationKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationKind.swift; sourceTree = "<group>"; };
 		66E08368211324D300B39A75 /* OtherSessionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherSessionsCell.swift; sourceTree = "<group>"; };
 		66E46DFC24FDAF7B009938E1 /* FMDetailsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDetailsTableViewController.swift; sourceTree = "<group>"; };
 		66E46DFE25055FEA009938E1 /* Int+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Kurozora.swift"; sourceTree = "<group>"; };
@@ -2550,6 +2552,7 @@
 			children = (
 				66112348208F6ACE00E6033A /* WorkflowController.swift */,
 				66B13A5B2405A9FC00CD732B /* Extensions */,
+				66DF090F26C673D3005AED93 /* Models */,
 			);
 			path = Workflow;
 			sourceTree = "<group>";
@@ -3173,6 +3176,14 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		66DF090F26C673D3005AED93 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				66DF090D26C673CF005AED93 /* NotificationKind.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		66E54EBC244E1486007248EE /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
@@ -3758,6 +3769,7 @@
 				6699A1C323779E9B00517C2C /* LibraryListCollectionViewCell.swift in Sources */,
 				6640E19B22AE808C00D0F575 /* AuthenticationOptionsViewController.swift in Sources */,
 				661DBC4F234947D7009292DF /* SKProduct+Kurozora.swift in Sources */,
+				66DF090E26C673D0005AED93 /* NotificationKind.swift in Sources */,
 				66B13A5F2405AA8000CD732B /* WorkflowController+User.swift in Sources */,
 				660E39DD25E463B400A46EB0 /* FeedTableViewController+UITableViewDelegate.swift in Sources */,
 				6698D3CB24E594BD006B7A4C /* FavoriteStatus+Kurozora.swift in Sources */,

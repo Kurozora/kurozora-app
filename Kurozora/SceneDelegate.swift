@@ -15,6 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	var isUnreachable = false
 
 	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+		print("----- Scene will connect to session.")
 		guard let windowScene = (scene as? UIWindowScene) else { return }
 
 		// Initialize UIWindow
@@ -72,11 +73,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	}
 
 	func sceneDidEnterBackground(_ scene: UIScene) {
+		print("----- Scene entered background.")
 		KurozoraDelegate.shared.userShouldAuthenticate()
 		authenticationCount = 0
 	}
 
 	func sceneWillEnterForeground(_ scene: UIScene) {
+		print("----- Scene will enter foreground.")
 		KNetworkManager.isReachable { _ in
 			if User.isSignedIn {
 				WorkflowController.shared.registerForPushNotifications()
@@ -89,6 +92,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	}
 
 	func sceneDidBecomeActive(_ scene: UIScene) {
+		print("----- Scene became active.")
 		if authenticationCount < 1 {
 			if Date.uptime() > KurozoraDelegate.shared.authenticationInterval, KurozoraDelegate.shared.authenticationEnabled {
 				KurozoraDelegate.shared.prepareForAuthentication()
