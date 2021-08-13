@@ -56,6 +56,13 @@ extension UIApplication {
 			}
 		}
 
+		if let split = base as? UISplitViewController {
+			if let firstView = split.viewControllers.first ?? split.viewController(for: .secondary) {
+				let top = topViewController(firstView)
+				return top
+			}
+		}
+
 		if let presented = base?.presentedViewController {
 			let top = topViewController(presented)
 			return top

@@ -347,23 +347,29 @@ extension KurozoraDelegate {
 		- Parameter shortcutItem: The action selected by the user. Your app defines the actions that it supports, and the user chooses from among those actions. For information about how to create and configure shortcut items for your app, see [UIApplicationShortcutItem](apple-reference-documentation://hsTvcCjEDQ).
 	*/
 	fileprivate func performAction(for shortcutItem: UIApplicationShortcutItem) {
-		if shortcutItem.type == R.info.uiApplicationShortcutItems.homeShortcut._key {
+		switch shortcutItem.type {
+		case R.info.uiApplicationShortcutItems.libraryShortcut._key:
 			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
-				tabBarController.selectedIndex = 0
+				tabBarController.selectedIndex = 1
 			}
-		} else if shortcutItem.type == R.info.uiApplicationShortcutItems.notificationShortcut._key {
+		case R.info.uiApplicationShortcutItems.profileShortcut._key:
 			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
-				tabBarController.selectedIndex = 3
-			}
-		} else if shortcutItem.type == R.info.uiApplicationShortcutItems.profileShortcut._key {
-			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
-				tabBarController.selectedIndex = 4
+				tabBarController.selectedIndex = 2
 				WorkflowController.shared.isSignedIn {
 					if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
 						tabBarController.navigationController?.show(profileTableViewController, sender: nil)
 					}
 				}
 			}
+		case R.info.uiApplicationShortcutItems.notificationShortcut._key:
+			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
+				tabBarController.selectedIndex = 3
+			}
+		case R.info.uiApplicationShortcutItems.searchShortcut._key:
+			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
+				tabBarController.selectedIndex = 4
+			}
+		default: break
 		}
 	}
 

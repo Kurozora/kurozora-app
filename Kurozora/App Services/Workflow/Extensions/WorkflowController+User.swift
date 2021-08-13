@@ -62,8 +62,8 @@ extension WorkflowController {
 					switch result {
 					case .success(let newAuthenticationKey):
 						try? KurozoraDelegate.shared.keychain.set(newAuthenticationKey, key: accountKey)
-					case .failure:
-						try? KurozoraDelegate.shared.keychain.remove(accountKey)
+					case .failure: break
+//						try? KurozoraDelegate.shared.keychain.remove(accountKey)
 					}
 				}
 			}

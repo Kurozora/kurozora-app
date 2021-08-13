@@ -117,6 +117,7 @@ extension WorkflowController: UNUserNotificationCenterDelegate {
 		print("----- Notification center will present notification.")
 		if !UserSettings.notificationsAllowed {
 			completionHandler([])
+			return
 		}
 
 		var notificationPresentationOptions: UNNotificationPresentationOptions = [.list, .banner]
@@ -133,34 +134,21 @@ extension WorkflowController: UNUserNotificationCenterDelegate {
 
 	func userNotificationCenter(_ center: UNUserNotificationCenter, openSettingsFor notification: UNNotification?) {
 		print("----- Notification center open settings.")
-		let topViewController = UIApplication.topViewController
-		if let settingsSplitViewController = topViewController as? SettingsSplitViewController {
-			self.segueToNotificationSettings(settingsSplitViewController: settingsSplitViewController)
-		} else if let settingsSplitViewController = R.storyboard.settings.instantiateInitialViewController() {
-			settingsSplitViewController.modalPresentationStyle = .fullScreen
-			topViewController?.present(settingsSplitViewController, animated: true) {
-				self.segueToNotificationSettings(settingsSplitViewController: settingsSplitViewController)
-			}
-		}
-	}
-
-	/**
-		Segue to the notification settings.
-
-		- Parameter settingsSplitViewController: The object containing an instance of `SettingsSplitViewController`
-	*/
-	fileprivate func segueToNotificationSettings(settingsSplitViewController: SettingsSplitViewController) {
-		let navigationController = settingsSplitViewController.viewControllers.first as? KNavigationController
-		if let settingsTableViewController = navigationController?.viewControllers.first(where: { viewController in
-			viewController is SettingsTableViewController
-		}) as? SettingsTableViewController {
-			settingsTableViewController.performSegue(withIdentifier: R.segue.settingsTableViewController.notificationSegue, sender: nil)
-		}
+		self.openNotificationSettings()
 	}
 }
 
 // MARK: - Push Notification Actions
 extension WorkflowController {
+	/// Open the notification settings view if the current view is not the sessions view.
+	func openNotificationSettings(in viewController: UIViewController? = UIApplication.topViewController) {
+		if UIApplication.topViewController as? NotificationsSettingsViewController == nil {
+			if let notificationsSettingsViewController = R.storyboard.notificationSettings.notificationsSettingsViewController() {
+				viewController?.show(notificationsSettingsViewController, sender: nil)
+			}
+		}
+	}
+
 	/// Open the sessions view if the current view is not the sessions view.
 	func openSessionsManager(in viewController: UIViewController? = UIApplication.topViewController) {
 		if UIApplication.topViewController as? ManageActiveSessionsController == nil {

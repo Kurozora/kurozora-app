@@ -64,23 +64,14 @@ extension UIViewController {
 	func presentAlertController(title: String?, message: String?, defaultActionButtonTitle: String = "OK", handler: ((UIAlertAction) -> Void)? = nil, actions: [UIAlertAction] = []) -> UIAlertController {
 		let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
-		#if !targetEnvironment(macCatalyst)
 		// Add other actions if available.
 		for action in actions {
 			alertController.addAction(action)
 		}
-		#endif
 
 		// Add the default action to the alert controller
 		let defaultAction = UIAlertAction(title: defaultActionButtonTitle, style: .cancel, handler: handler)
 		alertController.addAction(defaultAction)
-
-		#if targetEnvironment(macCatalyst)
-		// Add other actions if available.
-		for action in actions {
-			alertController.addAction(action)
-		}
-		#endif
 
 		self.present(alertController, animated: true, completion: nil)
 		return alertController
