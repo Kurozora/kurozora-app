@@ -15,11 +15,13 @@ extension WorkflowController {
 
 		- Parameter completion: Optional completion handler (default is `nil`).
 	*/
-	func isSignedIn(_ completion: (() -> Void)? = nil) {
+	@discardableResult func isSignedIn(_ completion: (() -> Void)? = nil) -> Bool {
 		if User.isSignedIn {
 			completion?()
+			return true
 		} else {
 			self.presentSignInView()
+			return false
 		}
 	}
 
@@ -28,15 +30,17 @@ extension WorkflowController {
 
 		- Parameter completion: Optional completion handler (default is `nil`).
 	*/
-	func isPro(_ completion: (() -> Void)? = nil) {
+	@discardableResult func isPro(_ completion: (() -> Void)? = nil) -> Bool {
 		if User.isPro {
 			completion?()
+			return true
 		} else {
 			let subscribeAction = UIAlertAction(title: "Subscribe", style: .default) { _ in
 				self.presentSubscribeView()
 			}
 
 			UIApplication.topViewController?.presentAlertController(title: "That's Unfortunate", message: "This feature is only accessible to pro users 🧐", actions: [subscribeAction])
+			return false
 		}
 	}
 

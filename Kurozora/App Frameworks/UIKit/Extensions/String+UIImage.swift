@@ -29,7 +29,7 @@ extension String {
 		nameLabel.textAlignment = .center
 		nameLabel.backgroundColor = .lightGray
 		nameLabel.textColor = .white
-		nameLabel.font = UIFont.boldSystemFont(ofSize: fontSize)
+		nameLabel.font = .boldSystemFont(ofSize: fontSize)
 		nameLabel.text = self
 
 		// Create a screenshot of the UILabel and return the resulted image

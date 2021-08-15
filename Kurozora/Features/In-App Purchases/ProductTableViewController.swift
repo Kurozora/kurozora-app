@@ -15,13 +15,8 @@ class ProductTableViewController: KTableViewController {
 	@IBOutlet weak var leftNavigationBarButton: UIBarButtonItem?
 
 	// MARK: - Properties
-	/// The titles of the products. Different from the one in `SKProduct` since that doesn't support spacial characters such as emojis.
-	var productTitles: [String] {
-		return []
-	}
-
-	/// The ids of the in app purchases to be displayed.
-	var productIDs: [String] {
+	/// The array containing the purchasable products.
+	var products: [Product] {
 		return []
 	}
 
@@ -52,19 +47,6 @@ class ProductTableViewController: KTableViewController {
 		}
 	}
 
-	fileprivate var _productsArray: [SKProduct] {
-		get { return productsArray }
-		set {
-			productsArray = newValue.sorted(by: { return $0.price.decimalValue < $1.price.decimalValue })
-		}
-	}
-	var productsArray: [SKProduct] = [SKProduct]() {
-		didSet {
-			_prefersActivityIndicatorHidden = true
-			self.tableView.reloadData()
-		}
-	}
-
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
 		didSet {
@@ -92,27 +74,12 @@ class ProductTableViewController: KTableViewController {
 		// Disable refresh control
 		self._prefersRefreshControlDisabled = true
 
-		DispatchQueue.global(qos: .background).async {
-			// Fetch subscriptions.
-			self.fetchProductInformation()
-		}
-	}
+		// Disable activity indicator
+		self._prefersActivityIndicatorHidden = true
 
-	// MARK: - Functions
-	/// Retrieves product information from the App Store.
-	fileprivate func fetchProductInformation() {
-		if KStoreObserver.shared.isAuthorizedForPayments {
-			KStoreObserver.shared.setProductIDs(ids: self.productIDs)
-			KStoreObserver.shared.fetchAvailableProducts { products in
-				DispatchQueue.main.async {
-					self._productsArray = products
-				}
-			}
-		} else {
-			DispatchQueue.main.async {
-				// Warn the user that they are not allowed to make purchases.
-				self.presentAlertController(title: "Can't Purchase", message: KStoreObserver.AlertType.disabled.message)
-			}
+		// Warn the user if they are not allowed to make purchases.
+		if !AppStore.canMakePayments {
+			self.presentAlertController(title: "Can't Purchase", message: KStoreObserver.AlertType.disabled.message)
 		}
 	}
 }
@@ -128,7 +95,7 @@ extension ProductTableViewController {
 		case .header:
 			return 1
 		case .body:
-			return productsArray.count
+			return products.count
 		case .footer:
 			return 1
 		case .none:
@@ -141,9 +108,7 @@ extension ProductTableViewController {
 		case .body:
 			let purchaseButtonTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PurchaseButtonTableViewCell", for: indexPath) as! PurchaseButtonTableViewCell
 			purchaseButtonTableViewCell.productNumber = indexPath.row
-			purchaseButtonTableViewCell.productTitle = productTitles.isEmpty ? "" : productTitles[indexPath.row]
-			purchaseButtonTableViewCell.productsArray = productsArray
-			purchaseButtonTableViewCell.purchaseButton.tag = indexPath.row
+			purchaseButtonTableViewCell.product = products[indexPath.row]
 			purchaseButtonTableViewCell.delegate = self
 			return purchaseButtonTableViewCell
 		default:
@@ -181,13 +146,24 @@ extension ProductTableViewController {
 
 // MARK: - PurchaseButtonTableViewCellDelegate
 extension ProductTableViewController: PurchaseButtonTableViewCellDelegate {
-	func purchaseButtonTableViewCell(_ cell: PurchaseButtonTableViewCell, didPressButton button: UIButton) {
-		if self.productsArray.count != 0 {
-			WorkflowController.shared.isSignedIn {
-				KStoreObserver.shared.purchase(product: self.productsArray[button.tag]) { alertType, _, _ in
-					self.presentAlertController(title: "", message: alertType.message)
+	func purchaseButtonTableViewCell(_ cell: PurchaseButtonTableViewCell, didPressButton button: UIButton) async {
+		guard WorkflowController.shared.isSignedIn() else { return }
+		await self.purchase(cell.product)
+	}
+
+	func purchase(_ product: Product) async {
+		do {
+			if try await store.purchase(product) != nil {
+				DispatchQueue.main.async {
+					self.tableView.reloadData()
 				}
 			}
+		} catch StoreError.failedVerification {
+			DispatchQueue.main.async {
+				self.presentAlertController(title: "Faild purchase", message: "Your purchase could not be verified by the App Store.")
+			}
+		} catch {
+			print("Failed purchase: \(error)")
 		}
 	}
 }

@@ -1,0 +1,182 @@
+{
+  "identifier" : "CA48A3BF",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "3536E2E8",
+      "localizations" : [
+        {
+          "description" : "A tip posing a danger to an unknown degree.",
+          "displayName" : "Wolf tip",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "app.kurozora.temporary.wolfTip",
+      "referenceName" : "Wolf Tip 🐺",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "2.99",
+      "familyShareable" : false,
+      "internalID" : "3ACAA777",
+      "localizations" : [
+        {
+          "description" : "A tip endangering a large number of people.",
+          "displayName" : "Tiger tip",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "app.kurozora.temporary.tigerTip",
+      "referenceName" : "Tiger tip 🐯",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "4.99",
+      "familyShareable" : false,
+      "internalID" : "07C9D797",
+      "localizations" : [
+        {
+          "description" : "A tip endangering a city and its people.",
+          "displayName" : "Demon tip",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "app.kurozora.temporary.demonTip",
+      "referenceName" : "Demon tip 👺",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "9.99",
+      "familyShareable" : false,
+      "internalID" : "FF0363CC",
+      "localizations" : [
+        {
+          "description" : "A tip endangering multiple cities.",
+          "displayName" : "Dragon tip",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "app.kurozora.temporary.dragonTip",
+      "referenceName" : "Dragon tip 🐲",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "19.99",
+      "familyShareable" : false,
+      "internalID" : "300ABC22",
+      "localizations" : [
+        {
+          "description" : "A tip endangering the survival of humanity.",
+          "displayName" : "God tip",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "app.kurozora.temporary.godTip",
+      "referenceName" : "God tip 🙏",
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {
+    "_askToBuyEnabled" : false,
+    "_failTransactionsEnabled" : false,
+    "_storeKitError" : 0,
+    "_timeRate" : 6
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "F2B76A02",
+      "localizations" : [
+
+      ],
+      "name" : "Kurozora+",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "displayPrice" : "3.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "7E106C83",
+          "introductoryOffer" : {
+            "internalID" : "0E29D309",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P1W"
+          },
+          "localizations" : [
+            {
+              "description" : "1 month of awesome Kurozora+ features!",
+              "displayName" : "Kurozora+ 1 Month",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "app.kurozora.temporary.kurozoraPlus1Month",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Kurozora+ 1 Month",
+          "subscriptionGroupID" : "F2B76A02",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "displayPrice" : "11.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "89B28DE5",
+          "introductoryOffer" : {
+            "internalID" : "0C744557",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P2W"
+          },
+          "localizations" : [
+            {
+              "description" : "6 months of awesome Kurozora+ features!",
+              "displayName" : "Kurozora+ 6 Months",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "app.kurozora.temporary.kurozoraPlus6Months",
+          "recurringSubscriptionPeriod" : "P6M",
+          "referenceName" : "Kurozora+ 6 Months",
+          "subscriptionGroupID" : "F2B76A02",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "displayPrice" : "18.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "F4E48100",
+          "introductoryOffer" : {
+            "internalID" : "FF6DB716",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P1M"
+          },
+          "localizations" : [
+            {
+              "description" : "12 months of awesome Kurozora+ features!",
+              "displayName" : "Kurozora+ 12 Months",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "app.kurozora.temporary.kurozoraPlus12Months",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Kurozora+ 12 Months",
+          "subscriptionGroupID" : "F2B76A02",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 1,
+    "minor" : 1
+  }
+}

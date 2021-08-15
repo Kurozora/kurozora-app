@@ -6,25 +6,13 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
+import StoreKit
 import UIKit
 
 class TipJarTableViewController: ProductTableViewController {
 	// MARK: - Properties
-	override var productTitles: [String] {
-		return ["Wolf tip 🐺",
-				"Tiger tip 🐯",
-				"Demon tip 👺",
-				"Dragon tip 🐲",
-				"God tip 🙏"
-		]
-	}
-	override var productIDs: [String] {
-		return ["20000331KTIPWOLF",
-				"20000331KTIPTIGER",
-				"20000331KTIPDEMON",
-				"20000331KTIPDRAGON",
-				"20000331KTIPGOD"
-		]
+	override var products: [Product] {
+		return store.tips
 	}
 	override var serviceType: ServiceType? {
 		return .tipJar

@@ -489,6 +489,9 @@
 		66DEB4AB21D283800093725F /* SearchResultsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DEB4A421D247810093725F /* SearchResultsCollectionViewController.swift */; };
 		66DEB4B221D419420093725F /* KSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DEB4B121D419420093725F /* KSearchController.swift */; };
 		66DF090E26C673D0005AED93 /* NotificationKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF090D26C673CF005AED93 /* NotificationKind.swift */; };
+		66DF091326C7C1FB005AED93 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF091226C7C1FA005AED93 /* Store.swift */; };
+		66DF091526C7C445005AED93 /* Products.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66DF091426C7C445005AED93 /* Products.plist */; };
+		66DF091826C94A47005AED93 /* StoreKit+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF091726C94A47005AED93 /* StoreKit+Kurozora.swift */; };
 		66E08369211324D400B39A75 /* OtherSessionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E08368211324D300B39A75 /* OtherSessionsCell.swift */; };
 		66E46DFD24FDAF7B009938E1 /* FMDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E46DFC24FDAF7B009938E1 /* FMDetailsTableViewController.swift */; };
 		66E46DFF25055FEA009938E1 /* Int+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E46DFE25055FEA009938E1 /* Int+Kurozora.swift */; };
@@ -1075,6 +1078,10 @@
 		66DEB4A721D248710093725F /* Search.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
 		66DEB4B121D419420093725F /* KSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KSearchController.swift; sourceTree = "<group>"; };
 		66DF090D26C673CF005AED93 /* NotificationKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationKind.swift; sourceTree = "<group>"; };
+		66DF091026C71D8E005AED93 /* Configuration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Configuration.storekit; sourceTree = "<group>"; };
+		66DF091226C7C1FA005AED93 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		66DF091426C7C445005AED93 /* Products.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Products.plist; sourceTree = "<group>"; };
+		66DF091726C94A47005AED93 /* StoreKit+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StoreKit+Kurozora.swift"; sourceTree = "<group>"; };
 		66E08368211324D300B39A75 /* OtherSessionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherSessionsCell.swift; sourceTree = "<group>"; };
 		66E46DFC24FDAF7B009938E1 /* FMDetailsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDetailsTableViewController.swift; sourceTree = "<group>"; };
 		66E46DFE25055FEA009938E1 /* Int+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Kurozora.swift"; sourceTree = "<group>"; };
@@ -1596,6 +1603,7 @@
 			isa = PBXGroup;
 			children = (
 				669E89C62345573600092778 /* KStoreObserver.swift */,
+				66DF091226C7C1FA005AED93 /* Store.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -2070,6 +2078,8 @@
 				6614408E21DA387800E54915 /* Settings.bundle */,
 				66CF5D7D21E7773F00969BBB /* Intents.intentdefinition */,
 				66647B612084995E00CF624F /* Info.plist */,
+				66DF091426C7C445005AED93 /* Products.plist */,
+				66DF091026C71D8E005AED93 /* Configuration.storekit */,
 				6645D5F623E709EE0042B4E0 /* R.generated.swift */,
 				66647B5C2084995E00CF624F /* Assets.xcassets */,
 				66AE0141259516FE00308636 /* Preview Content.xcassets */,
@@ -2695,6 +2705,7 @@
 				66E54EBC244E1486007248EE /* Foundation */,
 				66B4DBF6245396490097135A /* KeychainAccess */,
 				666D3E8D244DE73F0068A103 /* KurozoraKit */,
+				66DF091626C94A39005AED93 /* StoreKit */,
 				66E54EC1244E166E007248EE /* Tabman */,
 				668142D5245B494B008FC7BE /* UIKit */,
 			);
@@ -3184,6 +3195,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		66DF091626C94A39005AED93 /* StoreKit */ = {
+			isa = PBXGroup;
+			children = (
+				66DF091726C94A47005AED93 /* StoreKit+Kurozora.swift */,
+			);
+			path = StoreKit;
+			sourceTree = "<group>";
+		};
 		66E54EBC244E1486007248EE /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
@@ -3463,6 +3482,7 @@
 				66C8FBF124671CBC00C82D60 /* SwitchAccountSettings.storyboard in Resources */,
 				66B13A672405DBE000CD732B /* Onboarding.storyboard in Resources */,
 				6614408F21DA387800E54915 /* Settings.bundle in Resources */,
+				66DF091526C7C445005AED93 /* Products.plist in Resources */,
 				668B164F23EDF0CF00C1306A /* App-Icon-iPhone-Night@2x.png in Resources */,
 				668B165323EDF0CF00C1306A /* App-Icon-iPad-Pro-Day@2x.png in Resources */,
 				668B165C23EDF0CF00C1306A /* App-Icon-iPhone-Day@3x.png in Resources */,
@@ -3743,6 +3763,7 @@
 				66C898E824E1770500305C96 /* Show+Intents.swift in Sources */,
 				661F9F822087282500CF4153 /* SignInTableViewController.swift in Sources */,
 				66E54EBE244E1579007248EE /* String+UIImage.swift in Sources */,
+				66DF091826C94A47005AED93 /* StoreKit+Kurozora.swift in Sources */,
 				66C86402216DF9270054EE16 /* SeasonsCollectionViewController.swift in Sources */,
 				665A45822466EFFA00154F41 /* KVisualEffectView.swift in Sources */,
 				66A254D822AABCE8002A0E34 /* IconTableViewCell.swift in Sources */,
@@ -3754,6 +3775,7 @@
 				6646A27B236BAAB000DCC0A4 /* BrowserSettingsTableViewCell.swift in Sources */,
 				66AEABDA22987A4D00949FD8 /* KThemePicker.swift in Sources */,
 				66AEABEF22993E9C00949FD8 /* NotificationsOptionsViewController.swift in Sources */,
+				66DF091326C7C1FB005AED93 /* Store.swift in Sources */,
 				66CBDD982464772200CA5F83 /* SecondarySeparatorView.swift in Sources */,
 				661049C022C0E42B00A2A354 /* DisplayTableViewController.swift in Sources */,
 				66AE1E1724A0F74900FD3FFC /* InformationButtonCollectionViewCell.swift in Sources */,

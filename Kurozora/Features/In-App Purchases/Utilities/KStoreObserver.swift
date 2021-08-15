@@ -18,7 +18,7 @@ protocol KStoreObserverDelegate: AnyObject {
 	func storeObserverDidReceiveMessage(_ message: String)
 }
 
-class KStoreObserver: NSObject {
+final class KStoreObserver: NSObject {
 	// MARK: - Shared Object
 	static let shared = KStoreObserver()
 	private override init() { }

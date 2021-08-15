@@ -149,13 +149,11 @@ extension SettingsTableViewController {
 
 		switch sectionRows {
 		case .account:
-			WorkflowController.shared.isSignedIn()
-			shouldPerformSegue = User.isSignedIn
+			shouldPerformSegue = WorkflowController.shared.isSignedIn()
 		case .reminder:
 			WorkflowController.shared.subscribeToReminders()
 		case .notifications:
-			WorkflowController.shared.isSignedIn()
-			shouldPerformSegue = User.isSignedIn
+			shouldPerformSegue = WorkflowController.shared.isSignedIn()
 		case .cache:
 			let alertController = self.presentAlertController(title: "Clear all Cache?", message: "All of your caches will be cleared.", defaultActionButtonTitle: "Cancel")
 			alertController.addAction(UIAlertAction(title: "Clear 🗑", style: .destructive) { _ in
@@ -180,8 +178,7 @@ extension SettingsTableViewController {
 		case .restoreFeatures:
 			KStoreObserver.shared.restorePurchase()
 			return
-		case .tipjar:
-			shouldPerformSegue = true
+		case .tipjar: break
 		case .followTwitter:
 			UIApplication.shared.kOpen(.twitterPageURL, deepLink: .twitterPageDeepLink)
 			return

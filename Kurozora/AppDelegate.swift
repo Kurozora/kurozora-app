@@ -8,12 +8,12 @@
 
 import UIKit
 import KurozoraKit
-import StoreKit
 import Kingfisher
 import SwifterSwift
 
 // MARK: - KurozoraKit
 let KService = KurozoraKit().services(KurozoraDelegate.shared.services)
+var store: Store! = nil
 
 // MARK: - Kurozora
 @UIApplicationMain
@@ -26,8 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
 		print("----- UIApplication finished launching.")
 		// Override point for customization after application launch.
-		// Init payment queue
-		SKPaymentQueue.default().add(KStoreObserver.shared)
+		store = Store()
 
 		// If the network is unreachable show the offline page
 		KNetworkManager.isUnreachable { _ in
@@ -82,7 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func applicationWillTerminate(_ application: UIApplication) {
 		// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 		print("----- UIApplication will terminate.")
-		SKPaymentQueue.default().remove(KStoreObserver.shared)
+		store.updateListenerTask?.cancel()
 	}
 }
 

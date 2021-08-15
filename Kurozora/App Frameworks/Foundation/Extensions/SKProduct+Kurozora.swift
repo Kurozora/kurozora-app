@@ -101,7 +101,7 @@ extension SKProduct {
 
 		For example with a product that costs 1.99:
 		```
-		product.priceSaved(comparedTo: 4.99)
+		product.priceSaved(comparedTo: 3.99)
 		// Returns "50%"
 		```
 

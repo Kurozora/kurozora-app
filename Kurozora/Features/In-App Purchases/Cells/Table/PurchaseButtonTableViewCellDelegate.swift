@@ -9,5 +9,5 @@
 import UIKit
 
 protocol PurchaseButtonTableViewCellDelegate: AnyObject {
-	func purchaseButtonTableViewCell(_ cell: PurchaseButtonTableViewCell, didPressButton button: UIButton)
+	func purchaseButtonTableViewCell(_ cell: PurchaseButtonTableViewCell, didPressButton button: UIButton) async
 }

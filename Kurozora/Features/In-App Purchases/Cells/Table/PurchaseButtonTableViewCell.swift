@@ -11,60 +11,85 @@ import StoreKit
 
 class PurchaseButtonTableViewCell: UITableViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var bubbleView: UIView? {
-		didSet {
-			bubbleView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-		}
-	}
 	@IBOutlet weak var purchaseButton: KTintedButton!
+	@IBOutlet weak var productImageView: UIImageView!
 	@IBOutlet weak var primaryLabel: KLabel!
+	@IBOutlet weak var secondaryLabel: KSecondaryLabel!
 
 	// MARK: - Properties
 	weak var delegate: PurchaseButtonTableViewCellDelegate?
 	var productNumber: Int = 0
-	var productTitle: String = ""
-	var productsArray: [SKProduct]? {
+	var product: Product! {
 		didSet {
-			configureCell()
+			Task {
+				await self.configureCell()
+			}
 		}
 	}
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
-	func configureCell() {
-		guard let purchaseItem = productsArray?[productNumber] else { return }
-		let localPrice = purchaseItem.priceLocaleFormatted
+	@MainActor
+	func configureCell() async {
+		self.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 
-		// Global configs.
-		self.purchaseButton.tag = productNumber
+		switch product.type {
+		case .consumable, .nonConsumable:
+			self.productImageView.image = store.image(for: product.id).toImage(withFrameSize: CGRect(x: 0, y: 0, width: 150, height: 150), placeholder: #imageLiteral(resourceName: "Icons/Tip Jar"))
+			self.primaryLabel.text = self.product.displayName
+			self.secondaryLabel.text = self.product.description
+			self.purchaseButton.setTitle(product.displayPrice, for: .normal)
+		case .autoRenewable, .nonRenewable:
+			self.productImageView.image = #imageLiteral(resourceName: "Promotional/In App Purchases/Subscriptions/\(store.image(for: product.id))")
 
-		// If the product is a subscription.
-		if let subscriptionPeriod = purchaseItem.subscriptionPeriod, let firstProductPrice = productsArray?.first?.price {
-			let subscriptionDescription: String = subscriptionPeriod.fullString.lowercased() + " at " + purchaseItem.pricePerMonthLocalized + "mo. Save " + purchaseItem.priceSaved(comparedTo: firstProductPrice)
+			if let subscriptionPeriod = product.subscription?.subscriptionPeriod,
+			   let firstProduct = store.subscriptions.first {
+				let subscriptionDescription: String = subscriptionPeriod.displayUnit + " at " + product.displayPricePerMonth + "mo. Save " + product.priceSaved(comparedTo: firstProduct.pricePerMonth)
 
-			self.purchaseButton.setTitle("\(localPrice) / \(subscriptionPeriod.fullString)", for: .normal)
-
-			// If it has an introduction price. For example a week of trial period.
-			if let introductoryPrice = purchaseItem.introductoryPrice {
-				let subscriptionPeriod = introductoryPrice.subscriptionPeriod.fullString.lowercased()
-				let subscriptionTrialPeriod = "Includes " + subscriptionPeriod + " free trial!"
-				if productNumber == 0 {
-					self.primaryLabel.text = subscriptionTrialPeriod
-				} else {
-					self.primaryLabel.text = """
-					\(subscriptionTrialPeriod)
-					(\(subscriptionDescription))
+				// Configure button title
+				if (try? await store.isPurchased(product.id)) ?? false {
+					let purchaseTitle = """
+					\(product.displayPrice)
+					—————
+					\(subscriptionPeriod.unitString) ✔︎
 					"""
+					self.purchaseButton.setTitle(purchaseTitle, for: .normal)
+					self.purchaseButton.isEnabled = false
+					self.purchaseButton.alpha = 0.70
+				} else {
+					let purchaseTitle = """
+					\(product.displayPrice)
+					—————
+					\(subscriptionPeriod.unitString)
+					"""
+					self.purchaseButton.setTitle(purchaseTitle, for: .normal)
+					self.purchaseButton.isEnabled = true
+					self.purchaseButton.alpha = 1.0
+				}
+
+				// If it has an introduction price. For example a week of trial period.
+				if let introductoryOffer = product.subscription?.introductoryOffer {
+					let subscriptionPeriod = introductoryOffer.period.displayUnit
+					let subscriptionTrialPeriod = "Includes " + subscriptionPeriod + " free trial!"
+
+					if productNumber == 0 {
+						self.secondaryLabel.text = subscriptionTrialPeriod
+					} else {
+						self.secondaryLabel.text = """
+						\(subscriptionTrialPeriod)
+						(\(subscriptionDescription))
+						"""
+					}
 				}
 			}
-		} else { // If the product is a one time purchase.
-			self.purchaseButton.setTitle(localPrice, for: .normal)
-			self.primaryLabel.text = self.productTitle
+		default: break
 		}
 	}
 
 	// MARK: - IBActions
 	@IBAction func purchaseButtonPressed(_ sender: UIButton) {
-		self.delegate?.purchaseButtonTableViewCell(self, didPressButton: sender)
+		Task {
+			await self.delegate?.purchaseButtonTableViewCell(self, didPressButton: sender)
+		}
 	}
 }

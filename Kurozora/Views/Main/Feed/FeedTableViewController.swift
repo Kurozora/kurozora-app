@@ -218,8 +218,7 @@ class FeedTableViewController: KTableViewController {
 
 	override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
 		if identifier == R.segue.feedTableViewController.profileSegue.identifier {
-			WorkflowController.shared.isSignedIn()
-			return User.isSignedIn
+			return WorkflowController.shared.isSignedIn()
 		}
 
 		return true
