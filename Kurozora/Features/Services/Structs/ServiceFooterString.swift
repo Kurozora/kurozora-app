@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftTheme
 
 /**
 	Set of available service footer strings.
@@ -30,11 +31,14 @@ struct ServiceFooterString {
 	static let tipJar: String = "Payment will be charged to your Apple ID account at the confirmation of purchase. Unlike Kurozora+ subscription, tips are a one time purchase. Your account will be charged only once every time you tip."
 
 	/// The footer string to visit privacy policy.
-	static var visitPrivacyPolicy: NSMutableAttributedString = {
+	static var visitPrivacyPolicy: ThemeAttributedStringPicker = {
 		let paragraphStyle = NSMutableParagraphStyle()
 		paragraphStyle.alignment = .center
-		let attributedString = NSMutableAttributedString(string: "For more information, please visit our ", attributes: [.foregroundColor: KThemePicker.subTextColor.colorValue, .paragraphStyle: paragraphStyle])
-		attributedString.append(NSAttributedString(string: "Privacy Policy", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue, .paragraphStyle: paragraphStyle]))
-		return attributedString
+		let themeAttributedString = ThemeAttributedStringPicker {
+			let attributedString = NSMutableAttributedString(string: "For more information, please visit our ", attributes: [.foregroundColor: KThemePicker.subTextColor.colorValue, .paragraphStyle: paragraphStyle])
+			attributedString.append(NSAttributedString(string: "Privacy Policy", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue, .paragraphStyle: paragraphStyle]))
+			return attributedString
+		}
+		return themeAttributedString
 	}()
 }

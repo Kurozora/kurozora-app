@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftTheme
 
 /**
 	The visual representation of a single promotional footer row in a table view.
@@ -44,7 +45,7 @@ class ServiceFooterTableViewCell: KTableViewCell {
 	}
 
 	override func configureCell() {
-		self.privacyButton.setAttributedTitle(ServiceFooterString.visitPrivacyPolicy, for: .normal)
+		self.privacyButton.theme_setAttributedTitle(ServiceFooterString.visitPrivacyPolicy, forState: .normal)
 	}
 
 	override func reloadCell() {

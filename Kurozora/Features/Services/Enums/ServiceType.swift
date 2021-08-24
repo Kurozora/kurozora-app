@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftTheme
 
 /**
 	The set of available service types.
@@ -79,12 +80,12 @@ enum ServiceType {
 	}
 
 	/// The attributed footer string value of a service type.
-	var attributedFooterStringValue: NSMutableAttributedString {
+	var attributedFooterStringValue: ThemeAttributedStringPicker {
 		switch self {
 		case .visitPrivacyPolicy:
 			return ServiceFooterString.visitPrivacyPolicy
 		default:
-			return NSMutableAttributedString()
+			return ThemeAttributedStringPicker([])
 		}
 	}
 }
