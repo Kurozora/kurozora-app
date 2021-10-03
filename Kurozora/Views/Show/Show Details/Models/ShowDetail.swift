@@ -126,13 +126,13 @@ struct ShowDetail {
 			case .information:
 				return ShowDetail.Information(rawValue: row)?.identifierString ?? ShowDetail.Information.type.identifierString
 			case .seasons:
-				return R.reuseIdentifier.lockupCollectionViewCell.identifier
+				return R.reuseIdentifier.posterLockupCollectionViewCell.identifier
 			case .cast:
 				return R.reuseIdentifier.castCollectionViewCell.identifier
 			case .moreByStudio:
 				return R.reuseIdentifier.smallLockupCollectionViewCell.identifier
 			case .relatedShows:
-				return R.reuseIdentifier.lockupCollectionViewCell.identifier
+				return R.reuseIdentifier.smallLockupCollectionViewCell.identifier
 			case .sosumi:
 				return R.reuseIdentifier.sosumiShowCollectionViewCell.identifier
 			}
@@ -380,7 +380,7 @@ extension ShowDetail {
 			case .source:
 				return "\(show.attributes.source.name)"
 			case .genres:
-				return show.attributes.genres?.joined(separator: ", ") ?? "-"
+				return show.attributes.genres?.localizedJoined() ?? "-"
 			case .episodes:
 				return "\(show.attributes.episodeCount)"
 			case .duration:
@@ -400,7 +400,7 @@ extension ShowDetail {
 				let languages = show.attributes.languages.compactMap {
 					$0.attributes.name
 				}
-				return languages.joined(separator: ", ")
+				return languages.localizedJoined()
 			}
 		}
 

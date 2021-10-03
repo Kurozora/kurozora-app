@@ -11,7 +11,8 @@ import UIKit
 extension GenresCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
-		let columnCount = (width / 265.0).rounded().int
+		let cellWidth = UIDevice.isPhone ? 200.0 : 265.0
+		let columnCount = (width / cellWidth).rounded().int
 		return columnCount > 0 ? columnCount : 1
 	}
 

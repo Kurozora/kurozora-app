@@ -7,25 +7,23 @@
 //
 
 import UIKit
+import KurozoraKit
 
 class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
+	// MARK: - IBOutlets
+	@IBOutlet weak var ternaryLabel: KSecondaryLabel!
+
+	// MARK: - Properties
+	var relatedShow: RelatedShow? {
+		didSet {
+			self.show = self.relatedShow?.show
+		}
+	}
+
 	// MARK: - Functions
 	override func configureCell() {
 		super.configureCell()
-//		guard let show = show else { return }
-//		let score = show.attributes.averageRating
 
-//		if score != 0.0 {
-//			self.scoreButton?.setTitle(" \(score)", for: .normal)
-//			// Change color based on score
-//			if score >= 2.5 {
-//				self.scoreButton?.backgroundColor = .kYellow
-//			} else {
-//				self.scoreButton?.backgroundColor = .kLightRed
-//			}
-//		} else {
-//			self.scoreButton?.setTitle("New", for: .normal)
-//			self.scoreButton?.backgroundColor = .kGreen
-//		}
+		self.ternaryLabel.text = self.relatedShow?.attributes.relation.name
 	}
 }

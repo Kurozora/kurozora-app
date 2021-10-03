@@ -273,8 +273,8 @@ extension LibraryListCollectionViewController: LibraryViewControllerDelegate {
 	}
 }
 
-// MARK: - UITableViewDelegate
-extension LibraryListCollectionViewController: UITableViewDelegate {
+// MARK: - UIScrollViewDelegate
+extension LibraryListCollectionViewController {
 	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
 		if let parent = self.parent?.parent as? LibraryViewController {
 			parent.scrollView.contentSize = scrollView.contentSize

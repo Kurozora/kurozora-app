@@ -31,4 +31,13 @@ extension Array where Element == String {
 
 		return matches
 	}
+
+	/**
+		Constructs a formatted string from an array of strings that uses the list format specific to the current locale.
+
+		- Returns: A formatted string that joins together a list of strings using a locale-specific list format.
+	*/
+	func localizedJoined() -> String {
+		return ListFormatter.localizedString(byJoining: self)
+	}
 }

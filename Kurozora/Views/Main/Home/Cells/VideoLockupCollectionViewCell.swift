@@ -22,11 +22,7 @@ class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 			secondaryLabel?.theme_textColor = KThemePicker.subTextColor.rawValue
 		}
 	}
-	@IBOutlet weak var taglineLabel: UILabel! {
-		didSet {
-			taglineLabel?.theme_textColor = KThemePicker.subTextColor.rawValue
-		}
-	}
+	@IBOutlet weak var taglineLabel: KLabel!
 	@IBOutlet weak var videoPlayerContainer: UIView!
 
 	// MARK: - Properties
@@ -61,7 +57,10 @@ class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	// MARK: - Functions
 	override func configureCell() {
 		super.configureCell()
-		guard let show = show else { return }
+		guard let show = self.show else { return }
+
+		// Configure genres
+		self.secondaryLabel?.text = show.attributes.genres?.localizedJoined()
 
 		// Configure tagline
 		self.taglineLabel?.text = show.attributes.tagline

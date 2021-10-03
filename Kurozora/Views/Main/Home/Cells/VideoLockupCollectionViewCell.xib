@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19158" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19141"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,20 +11,14 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="VideoLockupCollectionViewCell" id="1g7-EV-SYR" customClass="VideoLockupCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="259.66666666666669" height="332.5"/>
+            <rect key="frame" x="0.0" y="0.0" width="326" height="382"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="we1-58-ZqB">
-                <rect key="frame" x="0.0" y="0.0" width="259.66666666666669" height="332.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="326" height="382"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="I'm gonna be the Pirate King!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wwY-Ge-NA9">
-                        <rect key="frame" x="0.0" y="0.0" width="259.5" height="20.5"/>
-                        <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
-                        <color key="textColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1dl-d0-TOp">
-                        <rect key="frame" x="0.0" y="28.5" width="259.5" height="146"/>
+                        <rect key="frame" x="0.0" y="0.0" width="326" height="183.5"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="1dl-d0-TOp" secondAttribute="height" multiplier="16:9" id="9On-VF-yNn"/>
@@ -37,7 +30,7 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <view userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="9co-1W-qBl" userLabel="Border View">
-                        <rect key="frame" x="0.0" y="28.5" width="259.5" height="146"/>
+                        <rect key="frame" x="0.0" y="0.0" width="326" height="183.5"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                 <real key="value" value="10"/>
@@ -51,7 +44,7 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="4pN-1W-t1C">
-                        <rect key="frame" x="0.0" y="182.5" width="100" height="150"/>
+                        <rect key="frame" x="0.0" y="199.5" width="100" height="150"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LdC-RH-wCf">
                                 <rect key="frame" x="0.0" y="0.0" width="100" height="150"/>
@@ -90,23 +83,29 @@
                             <constraint firstAttribute="bottom" secondItem="iLu-jq-nxA" secondAttribute="bottom" id="rWA-br-K6b"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="One Piece" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4YL-KK-DDQ" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="108" y="182.5" width="89.5" height="24"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="One Piece" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4YL-KK-DDQ">
+                        <rect key="frame" x="108" y="199.5" width="78" height="20.5"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Adventure" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ak8-tP-o1R" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="108" y="206.5" width="70.5" height="18"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Adventure" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ak8-tP-o1R">
+                        <rect key="frame" x="108" y="222" width="58" height="14.5"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                        <nil key="textColor"/>
+                        <color key="textColor" systemColor="secondaryLabelColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IBm-ZA-sZL" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="207.5" y="182.5" width="52" height="30"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="I'm gonna be the Pirate King!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xSi-o9-X2G" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="365.5" width="175" height="16.5"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                        <color key="textColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DOK-hZ-Wha" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="108" y="319.5" width="52" height="30"/>
                         <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="30" id="5Sn-qf-hJY"/>
+                            <constraint firstAttribute="height" constant="30" id="SFf-KN-yjm"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                         <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
@@ -118,48 +117,52 @@
                             <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
                         </userDefinedRuntimeAttributes>
                         <connections>
-                            <action selector="chooseStatusButtonPressed:" destination="1g7-EV-SYR" eventType="touchUpInside" id="Cbj-1q-gh3"/>
+                            <action selector="chooseStatusButtonPressed:" destination="1g7-EV-SYR" eventType="touchUpInside" id="Gsa-jb-Dwv"/>
                         </connections>
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="4pN-1W-t1C" secondAttribute="bottom" id="77l-vl-0RB"/>
-                    <constraint firstItem="wwY-Ge-NA9" firstAttribute="top" secondItem="we1-58-ZqB" secondAttribute="top" id="N95-kX-UZJ"/>
-                    <constraint firstItem="IBm-ZA-sZL" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ak8-tP-o1R" secondAttribute="trailing" constant="10" id="Ngx-lA-pgo"/>
+                    <constraint firstItem="1dl-d0-TOp" firstAttribute="top" secondItem="we1-58-ZqB" secondAttribute="top" id="5GV-gV-1pf"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Ak8-tP-o1R" secondAttribute="trailing" id="5Ox-fb-88F"/>
                     <constraint firstItem="4pN-1W-t1C" firstAttribute="top" secondItem="4YL-KK-DDQ" secondAttribute="top" id="V7d-p6-QBy"/>
-                    <constraint firstItem="1dl-d0-TOp" firstAttribute="top" secondItem="wwY-Ge-NA9" secondAttribute="bottom" constant="8" symbolic="YES" id="WvW-2a-Wak"/>
+                    <constraint firstItem="DOK-hZ-Wha" firstAttribute="bottom" secondItem="4pN-1W-t1C" secondAttribute="bottom" id="XJ6-Sl-uwF"/>
                     <constraint firstItem="Ak8-tP-o1R" firstAttribute="leading" secondItem="4YL-KK-DDQ" secondAttribute="leading" id="XO8-Qj-Lid"/>
-                    <constraint firstItem="wwY-Ge-NA9" firstAttribute="leading" secondItem="we1-58-ZqB" secondAttribute="leading" id="YLh-If-s5E"/>
-                    <constraint firstItem="4pN-1W-t1C" firstAttribute="top" secondItem="1dl-d0-TOp" secondAttribute="bottom" constant="8" symbolic="YES" id="YYM-m3-AGc"/>
+                    <constraint firstItem="4pN-1W-t1C" firstAttribute="top" secondItem="1dl-d0-TOp" secondAttribute="bottom" constant="16" id="YYM-m3-AGc"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="4YL-KK-DDQ" secondAttribute="trailing" id="ZoQ-As-EFq"/>
                     <constraint firstItem="9co-1W-qBl" firstAttribute="trailing" secondItem="1dl-d0-TOp" secondAttribute="trailing" id="aWZ-SE-GKl"/>
-                    <constraint firstItem="IBm-ZA-sZL" firstAttribute="top" secondItem="4YL-KK-DDQ" secondAttribute="top" id="eux-0O-73p"/>
                     <constraint firstItem="9co-1W-qBl" firstAttribute="bottom" secondItem="1dl-d0-TOp" secondAttribute="bottom" id="gA2-bh-gki"/>
                     <constraint firstAttribute="trailing" secondItem="1dl-d0-TOp" secondAttribute="trailing" id="gDG-Du-iSR"/>
                     <constraint firstItem="4pN-1W-t1C" firstAttribute="leading" secondItem="1dl-d0-TOp" secondAttribute="leading" id="gwr-Cw-AxD"/>
+                    <constraint firstAttribute="bottom" secondItem="xSi-o9-X2G" secondAttribute="bottom" id="hVu-9l-n2W"/>
                     <constraint firstItem="1dl-d0-TOp" firstAttribute="leading" secondItem="we1-58-ZqB" secondAttribute="leading" id="iAQ-Kh-kIS"/>
-                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Ak8-tP-o1R" secondAttribute="bottom" id="jAQ-9X-bYO"/>
-                    <constraint firstAttribute="trailing" secondItem="wwY-Ge-NA9" secondAttribute="trailing" id="jex-jz-Nqh"/>
+                    <constraint firstItem="DOK-hZ-Wha" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Ak8-tP-o1R" secondAttribute="bottom" constant="8" symbolic="YES" id="jAQ-9X-bYO"/>
                     <constraint firstItem="9co-1W-qBl" firstAttribute="top" secondItem="1dl-d0-TOp" secondAttribute="top" id="kGQ-Wx-a8u"/>
-                    <constraint firstItem="IBm-ZA-sZL" firstAttribute="trailing" secondItem="1dl-d0-TOp" secondAttribute="trailing" id="nmp-Fy-tue"/>
-                    <constraint firstItem="Ak8-tP-o1R" firstAttribute="top" secondItem="4YL-KK-DDQ" secondAttribute="bottom" id="pNX-Kt-qbF"/>
-                    <constraint firstItem="IBm-ZA-sZL" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="4YL-KK-DDQ" secondAttribute="trailing" constant="10" id="sOM-Iy-g8W"/>
+                    <constraint firstItem="DOK-hZ-Wha" firstAttribute="leading" secondItem="4pN-1W-t1C" secondAttribute="trailing" constant="8" symbolic="YES" id="kvb-Lj-pBy"/>
+                    <constraint firstItem="xSi-o9-X2G" firstAttribute="leading" secondItem="we1-58-ZqB" secondAttribute="leading" id="nEQ-KU-Ecb"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="DOK-hZ-Wha" secondAttribute="trailing" id="o9o-a0-6lj"/>
+                    <constraint firstItem="Ak8-tP-o1R" firstAttribute="top" secondItem="4YL-KK-DDQ" secondAttribute="bottom" constant="2" id="pNX-Kt-qbF"/>
+                    <constraint firstItem="xSi-o9-X2G" firstAttribute="top" secondItem="iLu-jq-nxA" secondAttribute="bottom" constant="16" id="qfK-ez-lxn"/>
                     <constraint firstItem="4YL-KK-DDQ" firstAttribute="leading" secondItem="4pN-1W-t1C" secondAttribute="trailing" constant="8" symbolic="YES" id="ujA-aD-erX"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xSi-o9-X2G" secondAttribute="trailing" id="vK7-Xf-W4v"/>
                     <constraint firstItem="9co-1W-qBl" firstAttribute="leading" secondItem="1dl-d0-TOp" secondAttribute="leading" id="xka-SJ-mfU"/>
                 </constraints>
             </collectionViewCellContentView>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <connections>
-                <outlet property="libraryStatusButton" destination="IBm-ZA-sZL" id="J57-4j-Drz"/>
+                <outlet property="libraryStatusButton" destination="DOK-hZ-Wha" id="tVh-BZ-nln"/>
                 <outlet property="posterImageView" destination="LdC-RH-wCf" id="sHZ-NX-VA1"/>
                 <outlet property="primaryLabel" destination="4YL-KK-DDQ" id="5dg-GR-3Mg"/>
                 <outlet property="secondaryLabel" destination="Ak8-tP-o1R" id="bIW-qu-y3D"/>
-                <outlet property="taglineLabel" destination="wwY-Ge-NA9" id="7bX-9f-4MQ"/>
+                <outlet property="taglineLabel" destination="xSi-o9-X2G" id="KbN-1A-D7k"/>
                 <outlet property="videoPlayerContainer" destination="1dl-d0-TOp" id="U9F-d0-KSA"/>
             </connections>
-            <point key="canvasLocation" x="739" y="226"/>
+            <point key="canvasLocation" x="912" y="230"/>
         </collectionViewCell>
     </objects>
     <resources>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

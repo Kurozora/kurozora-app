@@ -108,7 +108,7 @@ extension KTabBarController {
 }
 
 /**
-	The list of available tab bar items.
+	The set of available tab bar items.
  */
 enum TabBarItem: Int, CaseIterable {
 	// MARK: - Cases

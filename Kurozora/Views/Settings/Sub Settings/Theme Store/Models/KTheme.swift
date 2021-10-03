@@ -10,7 +10,7 @@ import UIKit
 import KurozoraKit
 
 /**
-	The list of available default theme types.
+	The set of available default theme types.
 */
 enum KTheme {
 	// MARK: - Cases

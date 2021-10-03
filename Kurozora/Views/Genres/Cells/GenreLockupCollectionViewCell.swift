@@ -14,7 +14,6 @@ class GenreLockupCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var primaryLabel: KLabel!
 	@IBOutlet weak var secondaryLabel: KSecondaryLabel!
 	@IBOutlet weak var symbolImageView: UIImageView!
-	//	@IBOutlet weak var nsfwButton: UIButton!
 
 	// MARK: - Properties
 	var genre: Genre! {
@@ -26,11 +25,15 @@ class GenreLockupCollectionViewCell: UICollectionViewCell {
 	// MARK: - Functions
 	/// Configures the cell with th
 	func configureCell() {
-		self.contentView.backgroundColor = UIColor(hexString: self.genre.attributes.color)
+		switch self.genre.attributes.color.lowercased() {
+		case "#ffffff":
+			self.contentView.backgroundColor = #colorLiteral(red: 0.2174204886, green: 0.2404745221, blue: 0.3324468732, alpha: 1)
+		default:
+			self.contentView.backgroundColor = UIColor(hexString: self.genre.attributes.color)
+		}
 
 		self.primaryLabel.text = self.genre.attributes.name
 		self.secondaryLabel.text = self.genre.attributes.description
 		self.symbolImageView.setImage(with: self.genre.attributes.symbol ?? "", placeholder: R.image.kurozoraIcon()!)
-//		nsfwButton.isHidden = genre.attributes.isNSFW ? false : true
 	}
 }

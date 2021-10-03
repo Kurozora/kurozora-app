@@ -18,7 +18,12 @@ extension KurozoraKit {
 	public func getGenres(completion completionHandler: @escaping (_ result: Result<[Genre], KKAPIError>) -> Void) {
 		let genresIndex = KKEndpoint.Shows.Genres.index.endpointValue
 		let request: APIRequest<GenreResponse, KKAPIError> = tron.codable.request(genresIndex)
+
 		request.headers = headers
+		if User.isSignedIn {
+			request.headers["kuro-auth"] = self.authenticationKey
+		}
+
 		request.method = .get
 		request.perform(withSuccess: { genreResponse in
 			completionHandler(.success(genreResponse.data))
@@ -45,7 +50,12 @@ extension KurozoraKit {
 	public func getDetails(forGenreID genreID: Int, completion completionHandler: @escaping (_ result: Result<[Genre], KKAPIError>) -> Void) {
 		let genresDetails = KKEndpoint.Shows.Genres.details(genreID).endpointValue
 		let request: APIRequest<GenreResponse, KKAPIError> = tron.codable.request(genresDetails)
+
 		request.headers = headers
+		if User.isSignedIn {
+			request.headers["kuro-auth"] = self.authenticationKey
+		}
+
 		request.method = .get
 		request.perform(withSuccess: { genreResponse in
 			completionHandler(.success(genreResponse.data))

@@ -14,7 +14,7 @@ extension ShowDetailsCollectionViewController {
 			TextViewCollectionViewCell.self,
 			RatingCollectionViewCell.self,
 			InformationCollectionViewCell.self,
-			LockupCollectionViewCell.self,
+			PosterLockupCollectionViewCell.self,
 			SmallLockupCollectionViewCell.self,
 			CastCollectionViewCell.self,
 			SosumiShowCollectionViewCell.self

@@ -11,16 +11,16 @@ import KurozoraKit
 
 extension SeasonsCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
-		return [LockupCollectionViewCell.self]
+		return [PosterLockupCollectionViewCell.self]
 	}
 
 	override func configureDataSource() {
 		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Season>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: Season) -> UICollectionViewCell? in
-			if let lockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.lockupCollectionViewCell, for: indexPath) {
-				lockupCollectionViewCell.season = item
-				return lockupCollectionViewCell
+			if let posterLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.posterLockupCollectionViewCell, for: indexPath) {
+				posterLockupCollectionViewCell.season = item
+				return posterLockupCollectionViewCell
 			} else {
-				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.lockupCollectionViewCell.identifier)")
+				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.posterLockupCollectionViewCell.identifier)")
 			}
 		}
 	}

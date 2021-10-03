@@ -52,8 +52,8 @@ extension ShowDetailsCollectionViewController {
 
 		switch showDetailSection {
 		case .seasons:
-			if let lockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? LockupCollectionViewCell {
-				return lockupCollectionViewCell.season?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			if let posterLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? PosterLockupCollectionViewCell {
+				return posterLockupCollectionViewCell.season?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 			}
 		case .cast:
 			if let castCollectionViewCell = collectionView.cellForItem(at: indexPath) as? CastCollectionViewCell {
@@ -64,8 +64,8 @@ extension ShowDetailsCollectionViewController {
 				return smallLockupCollectionViewCell.show?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 			}
 		case .relatedShows:
-			if let lockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? LockupCollectionViewCell {
-				return lockupCollectionViewCell.relatedShow?.show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			if let smallLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? SmallLockupCollectionViewCell {
+				return smallLockupCollectionViewCell.show?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 			}
 		default: break
 		}

@@ -43,8 +43,9 @@ class ShowsListCollectionViewController: KCollectionViewController {
 			#endif
 		}
 	}
+	var relatedShows: [RelatedShow] = []
 	var nextPageURL: String?
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Show>! = nil
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
@@ -124,10 +125,12 @@ class ShowsListCollectionViewController: KCollectionViewController {
 				case .success(let relatedShowsResponse):
 					// Reset data if necessary
 					if self.nextPageURL == nil {
+						self.relatedShows = []
 						self.shows = []
 					}
 
 					// Append new data and save next page url
+					self.relatedShows.append(contentsOf: relatedShowsResponse.data)
 					self.shows.append(contentsOf: relatedShowsResponse.data.compactMap({ relatedShow -> Show? in
 						return relatedShow.show
 					}))
@@ -205,9 +208,18 @@ extension ShowsListCollectionViewController {
 	}
 
 	override func configureDataSource() {
-		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Show>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: Show) -> UICollectionViewCell? in
+		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: ItemKind) -> UICollectionViewCell? in
 			let smallLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: SmallLockupCollectionViewCell.self, for: indexPath)
-			smallLockupCollectionViewCell.show = item
+
+			// Populate the cell with our item description
+			switch item {
+			case .show(let show, _):
+				smallLockupCollectionViewCell.show = show
+			case .relatedShow(let relatedShow, _):
+				smallLockupCollectionViewCell.relatedShow = relatedShow
+			}
+
+			// Return the cell
 			return smallLockupCollectionViewCell
 		}
 
@@ -215,9 +227,22 @@ extension ShowsListCollectionViewController {
 	}
 
 	override func updateDataSource() {
-		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Show>()
+		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 		snapshot.appendSections([.main])
-		snapshot.appendItems(self.shows)
+
+		// Append items
+		if self.relatedShows.isEmpty {
+			let showItems: [ItemKind] = self.shows.map { show in
+				return .show(show)
+			}
+			snapshot.appendItems(showItems)
+		} else {
+			let relatedShowItems: [ItemKind] = relatedShows.map { relatedShow in
+				return .relatedShow(relatedShow)
+			}
+			snapshot.appendItems(relatedShowItems)
+		}
+
 		dataSource.apply(snapshot)
 	}
 }
@@ -263,6 +288,46 @@ extension ShowsListCollectionViewController {
 		```
 	*/
 	enum SectionLayoutKind: Int, CaseIterable {
+		// MARK: - Cases
+		/// The main section.
 		case main = 0
+	}
+}
+
+// MARK: - ItemKind
+extension ShowsListCollectionViewController {
+	/**
+		List of item layout kind.
+	*/
+	enum ItemKind: Hashable {
+		// MARK: - Cases
+		/// Indicates the item kind contains a Show object.
+		case show(_: Show, id: UUID = UUID())
+
+		/// Indicates the item kind contains a RelatedShow object.
+		case relatedShow(_: RelatedShow, id: UUID = UUID())
+
+		// MARK: - Functions
+		func hash(into hasher: inout Hasher) {
+			switch self {
+			case .show(let show, let id):
+				hasher.combine(show)
+				hasher.combine(id)
+			case .relatedShow(let relatedShow, let id):
+				hasher.combine(relatedShow)
+				hasher.combine(id)
+			}
+		}
+
+		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
+			switch (lhs, rhs) {
+			case (.show(let show1, let id1), .show(let show2, let id2)):
+				return show1.id == show2.id && id1 == id2
+			case (.relatedShow(let relatedShow1, let id1), .relatedShow(let relatedShow2, let id2)):
+				return relatedShow1.id == relatedShow2.id && id1 == id2
+			default:
+				return false
+			}
+		}
 	}
 }

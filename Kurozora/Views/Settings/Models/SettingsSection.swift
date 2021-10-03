@@ -153,11 +153,17 @@ extension SettingsTableViewController {
 		/// The row representing the unlock features cell.
 		case unlockFeatures
 
-		/// The row representing the restore features cell.
-		case restoreFeatures
-
 		/// The row representing the tip jar cell.
 		case tipjar
+
+		/// The row representing the manage subsctions cell.
+		case manageSubscriptions
+
+		/// The row representing the restore cell.
+		case restoreFeatures
+
+//		/// The row representing the refund request cell.
+//		case requestRefund
 
 		/// The row representing the Twitter cell.
 		case followTwitter
@@ -167,10 +173,10 @@ extension SettingsTableViewController {
 
 		#if DEBUG
 		/// An array containing all settings rows.
-		static let all: [Row] = [.account, .switchAccount, .keychain, .notifications, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .rate, .unlockFeatures, .restoreFeatures, .tipjar, .followTwitter, .followMedium]
+		static let all: [Row] = [.account, .switchAccount, .keychain, .notifications, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .unlockFeatures, .tipjar, .manageSubscriptions, .rate, .restoreFeatures, .followTwitter, .followMedium]
 		#else
 		/// An array containing all normal user settings rows.
-		static let all: [Row] = [.account, .switchAccount, .notifications, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .rate, .unlockFeatures, .restoreFeatures, .tipjar, .followTwitter, .followMedium]
+		static let all: [Row] = [.account, .switchAccount, .notifications, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .unlockFeatures, .tipjar, .manageSubscriptions, .restoreFeatures, .rate, .followTwitter, .followMedium]
 		#endif
 
 		/// An array containing all account section settings rows.
@@ -201,10 +207,20 @@ extension SettingsTableViewController {
 		}
 
 		/// An array containing all support section settings rows.
-		static let allSupport: [Row] = [.rate, .unlockFeatures, .restoreFeatures, .tipjar]
+		static var allSupport: [Row] {
+			#if targetEnvironment(macCatalyst)
+			return [.unlockFeatures, .tipjar, .restoreFeatures]
+			#else
+			if ProcessInfo.processInfo.isiOSAppOnMac {
+				return [.unlockFeatures, .tipjar, .restoreFeatures]
+			} else {
+				return [.unlockFeatures, .tipjar, .manageSubscriptions, .restoreFeatures]
+			}
+			#endif
+		}
 
 		/// An array containing all social section settings rows.
-		static let allSocial: [Row] = [.followTwitter, .followMedium]
+		static let allSocial: [Row] = [.rate, .followTwitter, .followMedium]
 
 		/// An array containing all about section settings rows.
 		static let allAbout: [Row] = []
@@ -236,14 +252,18 @@ extension SettingsTableViewController {
 				return ""
 			case .privacy:
 				return R.segue.settingsTableViewController.privacySegue.identifier
-			case .rate:
-				return ""
 			case .unlockFeatures:
 				return R.segue.settingsTableViewController.subscriptionSegue.identifier
-			case .restoreFeatures:
-				return ""
 			case .tipjar:
 				return R.segue.settingsTableViewController.tipJarSegue.identifier
+			case .manageSubscriptions:
+				return ""
+			case .restoreFeatures:
+				return ""
+//			case .requestRefund:
+//				return ""
+			case .rate:
+				return ""
 			case .followTwitter:
 				return ""
 			case .followMedium:
@@ -278,14 +298,18 @@ extension SettingsTableViewController {
 				return .label
 			case .privacy:
 				return .chevron
-			case .rate:
-				return .none
 			case .unlockFeatures:
 				return .chevron
-			case .restoreFeatures:
-				return .none
 			case .tipjar:
 				return .chevron
+			case .manageSubscriptions:
+				return .none
+			case .restoreFeatures:
+				return .none
+//			case .requestRefund:
+//				return .none
+			case .rate:
+				return .none
 			case .followTwitter:
 				return .none
 			case .followMedium:
@@ -327,14 +351,18 @@ extension SettingsTableViewController {
 				return "Cache"
 			case .privacy:
 				return "Privacy"
-			case .rate:
-				return "Rate on App Store"
 			case .unlockFeatures:
 				return "Unlock Features"
-			case .restoreFeatures:
-				return "Restore Purchase"
 			case .tipjar:
 				return "Tip Jar"
+			case .manageSubscriptions:
+				return "Manage Subscriptions"
+			case .restoreFeatures:
+				return "Restore Purchase"
+//			case .requestRefund:
+//				return "Request Refund"
+			case .rate:
+				return "Rate us on App Store"
 			case .followTwitter:
 				return "Follow us on Twitter"
 			case .followMedium:
@@ -386,14 +414,18 @@ extension SettingsTableViewController {
 				return R.image.icons.clearCache()
 			case .privacy:
 				return R.image.icons.privacy()
-			case .rate:
-				return R.image.icons.rate()
 			case .unlockFeatures:
 				return R.image.icons.unlock()
-			case .restoreFeatures:
-				return R.image.icons.restore()
 			case .tipjar:
 				return R.image.icons.tipJar()
+			case .manageSubscriptions:
+				return R.image.icons.manageSubscriptions()
+			case .restoreFeatures:
+				return R.image.icons.restore()
+//			case .requestRefund:
+//				return R.image.icons.refund()
+			case .rate:
+				return R.image.icons.rate()
 			case .followTwitter:
 				return R.image.icons.brands.twitter()
 			case .followMedium:

@@ -41,7 +41,7 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 		self.primaryLabel?.text = show.attributes.title
 
 		// Configure genres
-		self.secondaryLabel?.text = show.attributes.genres?.joined(separator: ", ") ?? "-"
+		self.secondaryLabel?.text = show.attributes.tagline ?? show.attributes.genres?.localizedJoined()
 
 		// Configure banner
 		if let bannerBackgroundColor = self.show.attributes.banner?.backgroundColor {

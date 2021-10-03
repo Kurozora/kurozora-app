@@ -260,16 +260,14 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 			}
 		} else if segue.identifier == R.segue.showDetailsCollectionViewController.episodeSegue.identifier {
 			if let episodesCollectionViewController = segue.destination as? EpisodesCollectionViewController {
-				if let lockupCollectionViewCell = sender as? LockupCollectionViewCell {
-					episodesCollectionViewController.seasonID = lockupCollectionViewCell.season.id
+				if let posterLockupCollectionViewCell = sender as? PosterLockupCollectionViewCell {
+					episodesCollectionViewController.seasonID = posterLockupCollectionViewCell.season.id
 				}
 			}
 		} else if segue.identifier == R.segue.showDetailsCollectionViewController.showDetailsSegue.identifier {
 			if let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController {
 				if let show = (sender as? BaseLockupCollectionViewCell)?.show {
 					showDetailsCollectionViewController.showID = show.id
-				} else if let relatedShow = (sender as? LockupCollectionViewCell)?.relatedShow {
-					showDetailsCollectionViewController.showID = relatedShow.show.id
 				}
 			}
 		} else if segue.identifier == R.segue.showDetailsCollectionViewController.studioSegue.identifier {
@@ -364,8 +362,8 @@ extension ShowDetailsCollectionViewController {
 			informationCollectionViewCell?.showDetailInformation = ShowDetail.Information(rawValue: indexPath.item) ?? .type
 			informationCollectionViewCell?.show = self.show
 		case .seasons:
-			let lockupCollectionViewCell = showDetailCollectionViewCell as? LockupCollectionViewCell
-			lockupCollectionViewCell?.season = self.seasons[indexPath.item]
+			let posterLockupCollectionViewCell = showDetailCollectionViewCell as? PosterLockupCollectionViewCell
+			posterLockupCollectionViewCell?.season = self.seasons[indexPath.item]
 		case .cast:
 			let castCollectionViewCell = showDetailCollectionViewCell as? CastCollectionViewCell
 			castCollectionViewCell?.delegate = self
@@ -374,8 +372,8 @@ extension ShowDetailsCollectionViewController {
 			let smallLockupCollectionViewCell = showDetailCollectionViewCell as? SmallLockupCollectionViewCell
 			smallLockupCollectionViewCell?.show = self.studioShows[indexPath.item]
 		case .relatedShows:
-			let lockupCollectionViewCell = showDetailCollectionViewCell as? LockupCollectionViewCell
-			lockupCollectionViewCell?.relatedShow = self.relatedShows[indexPath.item]
+			let smallLockupCollectionViewCell = showDetailCollectionViewCell as? SmallLockupCollectionViewCell
+			smallLockupCollectionViewCell?.relatedShow = self.relatedShows[indexPath.item]
 		case .sosumi:
 			let sosumiShowCollectionViewCell = showDetailCollectionViewCell as? SosumiShowCollectionViewCell
 			sosumiShowCollectionViewCell?.copyrightText = self.show.attributes.copyright

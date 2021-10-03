@@ -26,8 +26,8 @@ extension SeasonsCollectionViewController {
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		if let lockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? LockupCollectionViewCell {
-			return lockupCollectionViewCell.season?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		if let posterLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? PosterLockupCollectionViewCell {
+			return posterLockupCollectionViewCell.season?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		}
 
 		return nil

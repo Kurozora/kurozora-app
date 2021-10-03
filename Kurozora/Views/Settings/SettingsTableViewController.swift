@@ -175,10 +175,19 @@ extension SettingsTableViewController {
 				UIApplication.shared.open(rateURL)
 			}
 			return
-		case .restoreFeatures:
-			KStoreObserver.shared.restorePurchase()
-			return
 		case .tipjar: break
+		#if !targetEnvironment(macCatalyst)
+		case .manageSubscriptions:
+			Task {
+				await store.manageSubscriptions()
+			}
+			return
+		#endif
+		case .restoreFeatures:
+			Task {
+				await store.restore()
+			}
+			return
 		case .followTwitter:
 			UIApplication.shared.kOpen(.twitterPageURL, deepLink: .twitterPageDeepLink)
 			return

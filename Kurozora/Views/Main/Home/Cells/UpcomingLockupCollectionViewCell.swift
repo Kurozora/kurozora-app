@@ -1,5 +1,5 @@
 //
-//  PosterLockupCollectionViewCell.swift
+//  UpcomingLockupCollectionViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 25/12/2020.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PosterLockupCollectionViewCell: BaseLockupCollectionViewCell {
+class UpcomingLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var reminderButton: KTintedButton!
 

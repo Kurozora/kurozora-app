@@ -10,7 +10,7 @@ import Foundation
 import UserNotifications
 
 /**
-	The list of available notification kind types.
+	The set of available notification kind types.
 */
 enum NotificationKind: Int, CaseIterable {
 	// MARK: - Cases
@@ -47,7 +47,7 @@ enum NotificationKind: Int, CaseIterable {
 // MARK: - Action
 extension NotificationKind {
 	/**
-		The list of available notification action types.
+		The set of available notification action types.
 	*/
 	enum Action: Int, CaseIterable {
 		// MARK: - Cases

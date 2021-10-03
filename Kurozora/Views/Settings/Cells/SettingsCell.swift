@@ -48,7 +48,7 @@ class SettingsCell: KTableViewCell {
 	// MARK: - Properties
 	var sectionRow: SettingsTableViewController.Row? {
 		didSet {
-			configureCell()
+			self.configureCell()
 		}
 	}
 
