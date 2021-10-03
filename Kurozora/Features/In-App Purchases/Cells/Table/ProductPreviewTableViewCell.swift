@@ -7,28 +7,29 @@
 //
 
 import UIKit
+import SwiftTheme
 
 /**
 	- Tag: ProductPreviewTableViewCell
 */
 class ProductPreviewTableViewCell: UITableViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var collectionView: UICollectionView?
-	@IBOutlet weak var previewImageView: UIImageView?
-
-	// MARK: - Properties
-	var previewImages: [UIImage?] = [] {
+	@IBOutlet weak var collectionView: UICollectionView!
+	@IBOutlet weak var pageControl: UIPageControl! {
 		didSet {
-			let isSinglePreviewImage = previewImages.count <= 1
-			collectionView?.isHidden = isSinglePreviewImage
-			previewImageView?.isHidden = !isSinglePreviewImage
-
-			if isSinglePreviewImage {
-				if let previewImage = previewImages.first {
-					previewImageView?.image = previewImage
-				}
+			pageControl.theme_currentPageIndicatorTintColor = KThemePicker.tintColor.rawValue
+			pageControl.theme_pageIndicatorTintColor = ThemeColorPicker {
+				return KThemePicker.tintColor.colorValue.withAlphaComponent(0.5)
 			}
 		}
+	}
+
+	// MARK: - Properties
+	var previewImages: [UIImage?] = []
+
+	// MARK: - IBActions
+	@IBAction func pageControllerTapped(_ sender: UIPageControl) {
+		self.collectionView.safeScrollToItem(at: IndexPath(row: sender.currentPage, section: 0), at: .centeredHorizontally, animated: true)
 	}
 }
 
@@ -39,7 +40,10 @@ extension ProductPreviewTableViewCell: UICollectionViewDataSource {
 	}
 
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return previewImages.count <= 1 ? 0 : previewImages.count
+		let numberOfItems = previewImages.count <= 1 ? 0 : previewImages.count
+		pageControl.numberOfPages = numberOfItems
+		pageControl.currentPage = 0
+		return numberOfItems
 	}
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -67,5 +71,16 @@ extension ProductPreviewTableViewCell: UICollectionViewDelegateFlowLayout {
 			return CGSize(width: collectionView.bounds.width / 2, height: collectionView.bounds.height)
 		}
 		return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height)
+	}
+}
+
+// MARK: - UIScrollViewDelegate
+extension ProductPreviewTableViewCell {
+	func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+		pageControl.currentPage = Int(scrollView.contentOffset.x) / Int(scrollView.frame.width)
+	}
+
+	func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+		pageControl.currentPage = Int(scrollView.contentOffset.x) / Int(scrollView.frame.width)
 	}
 }

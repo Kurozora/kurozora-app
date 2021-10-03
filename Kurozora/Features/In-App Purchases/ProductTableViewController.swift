@@ -9,6 +9,13 @@
 import UIKit
 import StoreKit
 
+protocol ProductTableViewControllerDelegate: AnyObject {
+	/// Updates the subscription status of the purchaser.
+	/// Override this method with your implementation to update the subscription status before the view is (re)loaded.
+	@discardableResult
+	func updateSubscriptionStatus() async -> Bool
+}
+
 class ProductTableViewController: KTableViewController {
 	// MARK: - IBOutlets
 	/// The left navigation bar button of the navigation controller's `navigationItem`.
@@ -29,6 +36,9 @@ class ProductTableViewController: KTableViewController {
 	var serviceType: ServiceType? {
 		return nil
 	}
+
+	/// The `ProductTableViewControllerDelegate` object.
+	weak var productTableViewControllerDelegate: ProductTableViewControllerDelegate?
 
 	/// A storage for the `leftBarButtonItems` of `navigationItem`.
 	fileprivate var _leftBarButtonItems: [UIBarButtonItem]?
@@ -85,55 +95,12 @@ class ProductTableViewController: KTableViewController {
 }
 
 // MARK: - UITableViewDataSource
-extension ProductTableViewController {
-	override func numberOfSections(in tableView: UITableView) -> Int {
-		return Section.allCases.count
-	}
-
-	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		switch Section(rawValue: section) {
-		case .header:
-			return 1
-		case .body:
-			return products.count
-		case .footer:
-			return 1
-		case .none:
-			return 0
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		switch Section(rawValue: indexPath.section) {
-		case .body:
-			let purchaseButtonTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PurchaseButtonTableViewCell", for: indexPath) as! PurchaseButtonTableViewCell
-			purchaseButtonTableViewCell.productNumber = indexPath.row
-			purchaseButtonTableViewCell.product = products[indexPath.row]
-			purchaseButtonTableViewCell.delegate = self
-			return purchaseButtonTableViewCell
-		default:
-			guard let serviceFooterTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.serviceFooterTableViewCell, for: indexPath) else {
-				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.serviceFooterTableViewCell.identifier)")
-			}
-			serviceFooterTableViewCell.delegate = self
-			serviceFooterTableViewCell.serviceType = serviceType
-			return serviceFooterTableViewCell
-		}
-	}
-}
+extension ProductTableViewController { }
 
 // MARK: - UITableViewDelegate
 extension ProductTableViewController {
 	override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
 		return 28
-	}
-
-	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		return UITableView.automaticDimension
-	}
-
-	override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-		return UITableView.automaticDimension
 	}
 }
 
@@ -146,14 +113,17 @@ extension ProductTableViewController {
 
 // MARK: - PurchaseButtonTableViewCellDelegate
 extension ProductTableViewController: PurchaseButtonTableViewCellDelegate {
-	func purchaseButtonTableViewCell(_ cell: PurchaseButtonTableViewCell, didPressButton button: UIButton) async {
+	func purchaseButtonTableViewCell(_ cell: PurchaseButtonTableViewCell, didPressButton button: UIButton) {
 		guard WorkflowController.shared.isSignedIn() else { return }
-		await self.purchase(cell.product)
+		Task {
+			await self.purchase(cell.product)
+		}
 	}
 
 	func purchase(_ product: Product) async {
 		do {
 			if try await store.purchase(product) != nil {
+				await self.productTableViewControllerDelegate?.updateSubscriptionStatus()
 				DispatchQueue.main.async {
 					self.tableView.reloadData()
 				}
@@ -174,23 +144,5 @@ extension ProductTableViewController: ServiceFooterTableViewCellDelegate {
 		if let legalKNavigationViewController = R.storyboard.legal.instantiateInitialViewController() {
 			self.present(legalKNavigationViewController, animated: true)
 		}
-	}
-}
-
-// MARK: - Types
-extension ProductTableViewController {
-	/**
-		Set of available product table view sections.
-	*/
-	enum Section: Int, CaseIterable {
-		// MARK: - Cases
-		/// The heder section of the table view.
-		case header
-
-		/// The body section of the table view.
-		case body
-
-		/// The heder section of the table view.
-		case footer
 	}
 }
