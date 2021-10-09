@@ -13,7 +13,7 @@ class SearchUserResultsCell: SearchBaseResultsCell {
 	// MARK: - Properties
 	var user: User! {
 		didSet {
-			configureCell()
+			self.configureCell()
 		}
 	}
 	var searchImageViewSize: CGSize = .zero
@@ -21,18 +21,19 @@ class SearchUserResultsCell: SearchBaseResultsCell {
 	// MARK: - Functions
 	override func configureCell() {
 		super.configureCell()
+		guard self.user != nil else { return }
 
-		primaryLabel.text = user.attributes.username
+		self.primaryLabel.text = self.user.attributes.username
 
 		// Configure follow status
-		updateFollowStatusLabel()
+		self.updateFollowStatusLabel()
 
 		// Configure profile image
-		searchImageView.borderColor = UIColor.white.withAlphaComponent(0.20)
-		searchImageView.setImage(with: self.user.attributes.profile?.url ?? "", placeholder: self.user.attributes.placeholderImage)
+		self.searchImageView.borderColor = UIColor.white.withAlphaComponent(0.20)
+		self.searchImageView.setImage(with: self.user.attributes.profile?.url ?? "", placeholder: self.user.attributes.placeholderImage)
 
 		// Configure follow button
-		updateFollowButton()
+		self.updateFollowButton()
 	}
 
 	/// Updated the `actionButton` with the follow status of the user.
@@ -57,32 +58,32 @@ class SearchUserResultsCell: SearchBaseResultsCell {
 	/// Updates the (`secondaryLabel`) follow status label.
 	fileprivate func updateFollowStatusLabel() {
 		if let userID = User.current?.id {
-			let followerCount = user.attributes.followerCount
-			var secondaryLabelText = user.id == userID ? "You, followed by you!" : "Be the first to follow!"
+			let followerCount = self.user.attributes.followerCount
+			var secondaryLabelText = self.user.id == userID ? "You, followed by you!" : "Be the first to follow!"
 
 			switch followerCount {
 			case 0: break
 			case 1:
-				if user.id == userID {
+				if self.user.id == userID {
 					secondaryLabelText = "Followed by you... and one fan!"
 				} else {
-					secondaryLabelText = user.attributes.followStatus == .followed ? "Followed by you." :  "Followed by one user."
+					secondaryLabelText = self.user.attributes.followStatus == .followed ? "Followed by you." :  "Followed by one user."
 				}
 			case 2...999:
-				if user.id == userID {
+				if self.user.id == userID {
 					secondaryLabelText = "Followed by you and \(followerCount) fans."
 				} else {
-					secondaryLabelText = user.attributes.followStatus == .followed ? "Followed by you and (\(followerCount) users." :  "Followed by \(followerCount) users."
+					secondaryLabelText = self.user.attributes.followStatus == .followed ? "Followed by you and (\(followerCount) users." :  "Followed by \(followerCount) users."
 				}
 			default:
-				if user.id == userID {
+				if self.user.id == userID {
 					secondaryLabelText = "Followed by \(followerCount.kkFormatted) fans."
 				} else {
 					secondaryLabelText = user.attributes.followStatus == .followed ? "Followed by you and (\((followerCount - 1).kkFormatted)) users." : "Followed by \(followerCount.kkFormatted) users."
 				}
 			}
 
-			secondaryLabel.text = secondaryLabelText
+			self.secondaryLabel.text = secondaryLabelText
 		}
 	}
 

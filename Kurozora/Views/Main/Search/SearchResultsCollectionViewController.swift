@@ -23,9 +23,6 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		}
 	}
 
-	/// A timer that fires after a certain time interval has elapsed, sending a specified message to a target object.
-	var timer: Timer?
-
 	/// The current scope of the search.
 	var currentScope: SearchScope = .show
 
@@ -172,19 +169,6 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		self.searchResults = nil
 		self.collectionView.reloadData()
 	}
-
-	/**
-		Performs search after the given amount of time has passed.
-
-		- Parameter timer: The timer object used to determin when to perform the search.
-	*/
-	@objc func search(_ timer: Timer) {
-		let userInfo = timer.userInfo as? [String: Any]
-		if let text = userInfo?["searchText"] as? String, let searchScope = userInfo?["searchScope"] as? SearchScope {
-			self.nextPageURL = nil
-			self.performSearch(withText: text, in: searchScope)
-		}
-	}
 }
 
 // MARK: - UICollectionViewDataSource
@@ -244,17 +228,6 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 		guard let text = searchBar.text else { return }
 		self.nextPageURL = nil
 		performSearch(withText: text, in: searchScope)
-	}
-
-	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-		guard let searchScope = SearchScope(rawValue: searchBar.selectedScopeButtonIndex) else { return }
-
-		if !searchText.isEmpty {
-			timer?.invalidate()
-			timer = Timer.scheduledTimer(timeInterval: 0.6, target: self, selector: #selector(search(_:)), userInfo: ["searchText": searchText, "searchScope": searchScope], repeats: false)
-		} else {
-			self.resetSearchResults()
-		}
 	}
 
 	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

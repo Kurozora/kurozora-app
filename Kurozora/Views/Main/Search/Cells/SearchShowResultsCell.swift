@@ -21,7 +21,7 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 	// MARK: - Properties
 	var show: Show! {
 		didSet {
-			configureCell()
+			self.configureCell()
 		}
 	}
 	var libraryStatus: KKLibrary.Status = .none
@@ -29,44 +29,46 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 	// MARK: - Functions
 	override func configureCell() {
 		super.configureCell()
-		primaryLabel.text = self.show.attributes.title
+		guard self.show != nil else { return }
+
+		self.primaryLabel.text = self.show.attributes.title
 
 		if let posterBackroundColor = self.show.attributes.poster?.backgroundColor {
 			self.searchImageView.backgroundColor = UIColor(hexString: posterBackroundColor)
 		}
 		self.searchImageView.setImage(with: self.show.attributes.poster?.url ?? "", placeholder: R.image.placeholders.showPoster()!)
 
-		statusLabel.text = show.attributes.status.name
+		self.statusLabel.text = self.show.attributes.status.name
 
 		// Configure library status
 		if let libraryStatus = self.show.attributes.libraryStatus {
 			self.libraryStatus = libraryStatus
 		}
-		actionButton.setTitle(self.libraryStatus != .none ? "\(self.libraryStatus.stringValue.capitalized) ▾" : "ADD", for: .normal)
+		self.actionButton.setTitle(self.libraryStatus != .none ? "\(self.libraryStatus.stringValue.capitalized) ▾" : "ADD", for: .normal)
 
 		// Cinfigure rating
-		showRatingLabel.text = show.attributes.tvRating.name
-		showRatingLabel.isHidden = false
+		self.showRatingLabel.text = self.show.attributes.tvRating.name
+		self.showRatingLabel.isHidden = false
 
 		// Configure episode count
-		let episodeCount = show.attributes.episodeCount
-		episodeCountLabel.text = "\(episodeCount) \(episodeCount >= 1 ? "Episode" : "Episodes")"
-		episodeCountLabel.isHidden = episodeCount == 0
+		let episodeCount = self.show.attributes.episodeCount
+		self.episodeCountLabel.text = "\(episodeCount) \(episodeCount >= 1 ? "Episode" : "Episodes")"
+		self.episodeCountLabel.isHidden = episodeCount == 0
 
 		// Configure air date
-		if let airYear = show.attributes.firstAired?.year {
-			airDateLabel.text = "\(airYear)"
-			airDateLabel.isHidden = false
+		if let airYear = self.show.attributes.firstAired?.year {
+			self.airDateLabel.text = "\(airYear)"
+			self.airDateLabel.isHidden = false
 		} else {
-			airDateLabel.isHidden = true
+			self.airDateLabel.isHidden = true
 		}
 
 		// Configure score
-		let score = show.attributes.userRating.averageRating
-		cosmosView.rating = score
-		scoreLabel.text = "\(score)"
-		cosmosView.isHidden = score == 0
-		scoreLabel.isHidden = score == 0
+		let score = self.show.attributes.userRating.averageRating
+		self.cosmosView.rating = score
+		self.scoreLabel.text = "\(score)"
+		self.cosmosView.isHidden = score == 0
+		self.scoreLabel.isHidden = score == 0
 	}
 
 	// MARK: - IBActions
