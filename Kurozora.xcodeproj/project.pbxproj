@@ -2160,23 +2160,8 @@
 				66A4FD10270F62D300E7C702 /* Info.plist */,
 				66A4FD12270F62D300E7C702 /* Products.plist */,
 				66A4FD0E270F62D300E7C702 /* Configuration.storekit */,
-				66A4FCFF270F629B00E7C702 /* Fonts */,
 			);
 			path = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		66A4FCFF270F629B00E7C702 /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				66A4FD01270F62C000E7C702 /* Aller_Bd.ttf */,
-				66A4FD06270F62C000E7C702 /* Aller_BdIt.ttf */,
-				66A4FD05270F62C000E7C702 /* Aller_It.ttf */,
-				66A4FD00270F62C000E7C702 /* Aller_Lt.ttf */,
-				66A4FD02270F62C000E7C702 /* Aller_LtIt.ttf */,
-				66A4FD04270F62C000E7C702 /* Aller_Rg.ttf */,
-				66A4FD03270F62C000E7C702 /* AllerDisplay.ttf */,
-			);
-			path = Fonts;
 			sourceTree = "<group>";
 		};
 		66AA35C1240312210006EC5B /* Main */ = {
