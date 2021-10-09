@@ -6,47 +6,50 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import TRON
-import SwiftyJSON
+import Foundation
 
 /**
-	A mutable object that stores information about a collection of alternative icons, such as the different collections of icons.
+	A struct that stores information about a collection of alternative icons, such as the different collections of icons.
 */
-class AlternativeIcons: JSONDecodable {
+struct AlternativeIcons {
 	// MARK: - Properties
 	/// The collection of default icons.
-	let defaultIcons: [AlternativeIconsElement]?
+	let defaultIcons: [AlternativeIconsElement]
+
 	/// The collection of premium icons.
-	let premiumIcons: [AlternativeIconsElement]?
+	let premiumIcons: [AlternativeIconsElement]
+
 	/// The collection of limited time icons.
-	let limitedIcons: [AlternativeIconsElement]?
+	let limitedIcons: [AlternativeIconsElement]
 
 	// MARK: - Initializers
-	required init(json: JSON) throws {
-		let defaultIconsArray = json["Default"].arrayValue
-		let premiumIconsArray = json["Premium"].arrayValue
-		let limitedIconsArray = json["Limited"].arrayValue
+	/**
+		Initializes a new instance of `AlternativeIcons` using the given dictionary.
+
+		- Parameter dict: The dictionary that contains the array of alternative icons.
+	*/
+	init(dict: [String: [String]]) {
+		let defaultIconsArray = dict["Default"]!
+		let premiumIconsArray = dict["Premium"]!
+		let limitedIconsArray = dict["Limited"]!
 
 		var defaultIcons = [AlternativeIconsElement]()
 		var premiumIcons = [AlternativeIconsElement]()
 		var limitedIcons = [AlternativeIconsElement]()
 
 		for defaultIconItem in defaultIconsArray {
-			if let alternativeIconElement = try? AlternativeIconsElement(json: defaultIconItem) {
-				defaultIcons.append(alternativeIconElement)
-			}
+			let alternativeIconElement = AlternativeIconsElement(name: defaultIconItem)
+			defaultIcons.append(alternativeIconElement)
 		}
 
 		for premiumIconItem in premiumIconsArray {
-			if let alternativeIconElement = try? AlternativeIconsElement(json: premiumIconItem) {
-				premiumIcons.append(alternativeIconElement)
-			}
+			let alternativeIconElement = AlternativeIconsElement(name: premiumIconItem)
+			premiumIcons.append(alternativeIconElement)
 		}
 
 		for limitedIconItem in limitedIconsArray {
-			if let alternativeIconElement = try? AlternativeIconsElement(json: limitedIconItem) {
-				limitedIcons.append(alternativeIconElement)
-			}
+			let alternativeIconElement = AlternativeIconsElement(name: limitedIconItem)
+			limitedIcons.append(alternativeIconElement)
 		}
 
 		self.defaultIcons = defaultIcons
@@ -56,18 +59,23 @@ class AlternativeIcons: JSONDecodable {
 }
 
 /**
-	A mutable object that stores information about a single alternative icon, such as the icon's name, and image string.
+	A struct that stores information about a single alternative icon, such as the icon's name, and image string.
 */
-class AlternativeIconsElement: JSONDecodable {
+struct AlternativeIconsElement {
 	// MARK: - Properties
 	/// The name of the alternative icon.
-	let name: String?
-	/// The image string of the alternative icon.
-	let image: String?
+	let name: String
+//	/// The image string of the alternative icon.
+//	let image: String?
 
 	// MARK: - Initializers
-	required init(json: JSON) throws {
-		self.name = json["name"].stringValue
-		self.image = json["image"].stringValue
+	/**
+		Initializes a new instance of `AlternativeIconsElement` using the given name.
+
+		- Parameter name: The name of the alternative icon.
+	*/
+	init(name: String) {
+		self.name = name
+//		self.image = json["image"].stringValue
 	}
 }

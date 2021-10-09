@@ -88,8 +88,9 @@ extension KurozoraKit {
 		let request: UploadAPIRequest<UserUpdateResponse, KKAPIError> = tron.codable.uploadMultipart(usersProfile) { formData in
 			if let profileImageFilePath = profileImageFilePath, let profileImageFilePathURL = URL(string: profileImageFilePath) {
 				if let profileImageData = try? Data(contentsOf: profileImageFilePathURL) {
+					let profileImage = UIImage(data: profileImageData)?.jpegData(compressionQuality: 0.1) ?? profileImageData
 					let fileExtension = profileImageFilePathURL.pathExtension
-					formData.append(profileImageData, withName: "profileImage", fileName: "ProfileImage.\(fileExtension)", mimeType: "image/\(fileExtension)")
+					formData.append(profileImage, withName: "profileImage", fileName: "ProfileImage.\(fileExtension)", mimeType: "image/\(fileExtension)")
 				}
 			}
 			if let bannerImage = bannerImage {

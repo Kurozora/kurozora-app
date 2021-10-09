@@ -17,25 +17,18 @@ class IconTableViewCell: SelectableSettingsCell {
 	}
 
 	// MARK: - Properties
-	var alternativeIconsElement: AlternativeIconsElement? {
+	var alternativeIconsElement: AlternativeIconsElement! {
 		didSet {
-			configureCell()
+			self.configureCell()
 		}
 	}
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	override func configureCell() {
-		guard let alternativeIconsElement = alternativeIconsElement else { return }
-		let selected = UserSettings.appIcon
+		self.isSelected = alternativeIconsElement.name == UserSettings.appIcon
 
-		iconTitleLabel.text = alternativeIconsElement.name
-		if let imageString = alternativeIconsElement.image {
-			iconImageView?.image = UIImage(named: imageString)
-
-			if imageString == selected {
-				isSelected = true
-			}
-		}
+		self.iconTitleLabel.text = alternativeIconsElement.name
+		self.iconImageView?.image = UIImage(named: alternativeIconsElement.name)
 	}
 }

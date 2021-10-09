@@ -51,7 +51,6 @@
 		661049C022C0E42B00A2A354 /* DisplayTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661049BF22C0E42B00A2A354 /* DisplayTableViewController.swift */; };
 		6611234E208F70CB00E6033A /* UIViewController+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6611234D208F70CB00E6033A /* UIViewController+Kurozora.swift */; };
 		66112350208F70D200E6033A /* UIApplication+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6611234F208F70D200E6033A /* UIApplication+Navigation.swift */; };
-		6614408F21DA387800E54915 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6614408E21DA387800E54915 /* Settings.bundle */; };
 		66148D6325E5E52B000F2E0A /* FollowTableViewController+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66148D6225E5E52B000F2E0A /* FollowTableViewController+UITableViewDelegate.swift */; };
 		66148D6525E5E625000F2E0A /* FavoriteShowsCollectionViewController+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66148D6425E5E625000F2E0A /* FavoriteShowsCollectionViewController+UICollectionViewDelegate.swift */; };
 		6614ABE4215F65D100A3A0C9 /* KLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614ABE3215F65D100A3A0C9 /* KLabel.swift */; };
@@ -106,11 +105,6 @@
 		663E342D2360D559003386D1 /* VerticalCollectionCellStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663E342C2360D559003386D1 /* VerticalCollectionCellStyle.swift */; };
 		663F8C4B22F1882F00F1EACB /* ProductPreviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663F8C4822F1882F00F1EACB /* ProductPreviewTableViewCell.swift */; };
 		663F8C4F22F199A400F1EACB /* PurchasePreviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663F8C4E22F199A300F1EACB /* PurchasePreviewCollectionViewCell.swift */; };
-		66407C9423F625DB008944AB /* App-Icon-iPad-Love-Bug@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66407C8F23F625DB008944AB /* App-Icon-iPad-Love-Bug@2x.png */; };
-		66407C9523F625DB008944AB /* App-Icon-iPad-Pro-Love-Bug@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66407C9023F625DB008944AB /* App-Icon-iPad-Pro-Love-Bug@2x.png */; };
-		66407C9623F625DB008944AB /* App-Icon-iPhone-Love-Bug@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66407C9123F625DB008944AB /* App-Icon-iPhone-Love-Bug@2x.png */; };
-		66407C9723F625DB008944AB /* App-Icon-iPhone-Love-Bug@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66407C9223F625DB008944AB /* App-Icon-iPhone-Love-Bug@3x.png */; };
-		66407C9823F625DB008944AB /* App-Icon-iPad-Love-Bug.png in Resources */ = {isa = PBXBuildFile; fileRef = 66407C9323F625DB008944AB /* App-Icon-iPad-Love-Bug.png */; };
 		6640E18922AD633500D0F575 /* Authentication.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6640E18822AD633500D0F575 /* Authentication.storyboard */; };
 		6640E18B22AD634600D0F575 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6640E18A22AD634600D0F575 /* AuthenticationViewController.swift */; };
 		6640E18F22ADD19000D0F575 /* AuthenticationSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6640E18E22ADD19000D0F575 /* AuthenticationSettingsCell.swift */; };
@@ -121,7 +115,6 @@
 		6640E19D22AE895A00D0F575 /* AuthenticationInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6640E19C22AE895A00D0F575 /* AuthenticationInterval.swift */; };
 		664133E521DA8E5F00CE823A /* NotificationsGroupingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664133E421DA8E5F00CE823A /* NotificationsGroupingCell.swift */; };
 		664133E821DB828E00CE823A /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664133E721DB828E00CE823A /* UserSettings.swift */; };
-		6645D5F723E709EE0042B4E0 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6645D5F623E709EE0042B4E0 /* R.generated.swift */; };
 		6645D5F923E70A4D0042B4E0 /* ManageIconTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6645D5F823E70A4C0042B4E0 /* ManageIconTableViewController.swift */; };
 		6645D5FB23E70A670042B4E0 /* LibraryCompactCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6645D5FA23E70A660042B4E0 /* LibraryCompactCollectionViewCell.swift */; };
 		6645D5FD23E70BC80042B4E0 /* DiscussionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6645D5FC23E70BC80042B4E0 /* DiscussionCollectionViewCell.swift */; };
@@ -176,7 +169,6 @@
 		665CBBA422C2B2C2004D0D3E /* DatePickerSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665CBBA322C2B2C2004D0D3E /* DatePickerSettingsCell.swift */; };
 		6663985B2366298100713B8B /* UICollectionViewCell+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6663985A2366298100713B8B /* UICollectionViewCell+Kurozora.swift */; };
 		66647B542084995500CF624F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66647B532084995500CF624F /* AppDelegate.swift */; };
-		66647B5D2084995E00CF624F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66647B5C2084995E00CF624F /* Assets.xcassets */; };
 		6664B81324A403C700E73728 /* TextViewCollectionViewCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6664B81224A403C700E73728 /* TextViewCollectionViewCellType.swift */; };
 		666938AF21B1D4D200BA9620 /* FeedMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6669387121AFF87900BA9620 /* FeedMessageCell.swift */; };
 		666938B121B1D4DC00BA9620 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE1AFD209B59600007A4DE /* CommentCell.swift */; };
@@ -212,6 +204,7 @@
 		6675263122280ACB007C1617 /* Night.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6675262E22280ACB007C1617 /* Night.plist */; };
 		66752633222815C2007C1617 /* KThemeStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66752632222815C2007C1617 /* KThemeStyle.swift */; };
 		6676B3C4216FF70B00877AFC /* EpisodeLockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6676B3C3216FF70B00877AFC /* EpisodeLockupCollectionViewCell.swift */; };
+		66775AAA270E57FD000194CE /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66775AA9270E57FD000194CE /* R.generated.swift */; };
 		66785E2A2363C714003EF24C /* CastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66785E292363C714003EF24C /* CastCollectionViewCell.swift */; };
 		667943632273933400E2D0D0 /* TextViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667943622273933400E2D0D0 /* TextViewCollectionViewCell.swift */; };
 		667943652273A33D00E2D0D0 /* EpisodeDetailCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667943642273A33D00E2D0D0 /* EpisodeDetailCollectionViewController.swift */; };
@@ -228,81 +221,8 @@
 		6684224825966F97000A09F8 /* UpcomingLockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6684224725966F97000A09F8 /* UpcomingLockupCollectionViewCell.swift */; };
 		6684225025967A65000A09F8 /* TitleHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6684224F25967A65000A09F8 /* TitleHeaderTableViewCell.xib */; };
 		66842253259760F4000A09F8 /* Favorites.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66842252259760F4000A09F8 /* Favorites.storyboard */; };
-		668B162A23EDF0CF00C1306A /* App-Icon-iPad-Pro-Dutch-Orange@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B15EE23EDF0C500C1306A /* App-Icon-iPad-Pro-Dutch-Orange@2x.png */; };
-		668B162B23EDF0CF00C1306A /* App-Icon-iPad-Ocean-Blue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B15EF23EDF0C500C1306A /* App-Icon-iPad-Ocean-Blue@2x.png */; };
-		668B162C23EDF0CF00C1306A /* App-Icon-iPad-Product-RED@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B15F023EDF0C600C1306A /* App-Icon-iPad-Product-RED@2x.png */; };
-		668B162D23EDF0CF00C1306A /* App-Icon-iPad-Day@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B15F123EDF0C600C1306A /* App-Icon-iPad-Day@2x.png */; };
-		668B162E23EDF0CF00C1306A /* App-Icon-iPhone-Product-RED@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B15F223EDF0C600C1306A /* App-Icon-iPhone-Product-RED@2x.png */; };
-		668B162F23EDF0CF00C1306A /* App-Icon-iPhone-Peach-Orange@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B15F323EDF0C600C1306A /* App-Icon-iPhone-Peach-Orange@3x.png */; };
-		668B163023EDF0CF00C1306A /* App-Icon-iPhone-Red@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B15F423EDF0C600C1306A /* App-Icon-iPhone-Red@3x.png */; };
-		668B163123EDF0CF00C1306A /* App-Icon-iPad-Green@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B15F523EDF0C600C1306A /* App-Icon-iPad-Green@2x.png */; };
-		668B163223EDF0CF00C1306A /* App-Icon-iPad-Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B15F623EDF0C600C1306A /* App-Icon-iPad-Yellow.png */; };
-		668B163323EDF0CF00C1306A /* App-Icon-iPad-Green.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B15F723EDF0C700C1306A /* App-Icon-iPad-Green.png */; };
-		668B163423EDF0CF00C1306A /* App-Icon-iPad-Night@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B15F823EDF0C700C1306A /* App-Icon-iPad-Night@2x.png */; };
-		668B163523EDF0CF00C1306A /* App-Icon-iPad-Pro-Sky-Blue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B15F923EDF0C700C1306A /* App-Icon-iPad-Pro-Sky-Blue@2x.png */; };
-		668B163623EDF0CF00C1306A /* App-Icon-iPad-Red.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B15FA23EDF0C700C1306A /* App-Icon-iPad-Red.png */; };
-		668B163723EDF0CF00C1306A /* App-Icon-iPhone-Rose-Gold@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B15FB23EDF0C700C1306A /* App-Icon-iPhone-Rose-Gold@3x.png */; };
-		668B163823EDF0CF00C1306A /* App-Icon-iPhone-Coral@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B15FC23EDF0C700C1306A /* App-Icon-iPhone-Coral@3x.png */; };
-		668B163923EDF0CF00C1306A /* App-Icon-iPad-Day.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B15FD23EDF0C800C1306A /* App-Icon-iPad-Day.png */; };
-		668B163A23EDF0CF00C1306A /* App-Icon-iPad-Pro-Peach-Orange@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B15FE23EDF0C800C1306A /* App-Icon-iPad-Pro-Peach-Orange@2x.png */; };
-		668B163B23EDF0CF00C1306A /* App-Icon-iPhone-Coral@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B15FF23EDF0C800C1306A /* App-Icon-iPhone-Coral@2x.png */; };
-		668B163C23EDF0CF00C1306A /* App-Icon-iPad-Dutch-Orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B160023EDF0C800C1306A /* App-Icon-iPad-Dutch-Orange.png */; };
-		668B163D23EDF0CF00C1306A /* App-Icon-iPhone-Yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B160123EDF0C800C1306A /* App-Icon-iPhone-Yellow@3x.png */; };
-		668B163E23EDF0CF00C1306A /* App-Icon-iPhone-Yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B160223EDF0C800C1306A /* App-Icon-iPhone-Yellow@2x.png */; };
-		668B163F23EDF0CF00C1306A /* App-Icon-iPad-Ocean-Blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B160323EDF0C900C1306A /* App-Icon-iPad-Ocean-Blue.png */; };
-		668B164023EDF0CF00C1306A /* App-Icon-iPad-Dutch-Orange@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B160423EDF0C900C1306A /* App-Icon-iPad-Dutch-Orange@2x.png */; };
-		668B164123EDF0CF00C1306A /* App-Icon-iPhone-Green@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B160523EDF0C900C1306A /* App-Icon-iPhone-Green@2x.png */; };
-		668B164223EDF0CF00C1306A /* App-Icon-iPhone-Dutch-Orange@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B160623EDF0C900C1306A /* App-Icon-iPhone-Dutch-Orange@2x.png */; };
-		668B164323EDF0CF00C1306A /* App-Icon-iPad-Red@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B160723EDF0C900C1306A /* App-Icon-iPad-Red@2x.png */; };
-		668B164423EDF0CF00C1306A /* App-Icon-iPhone-Product-RED@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B160823EDF0CA00C1306A /* App-Icon-iPhone-Product-RED@3x.png */; };
-		668B164523EDF0CF00C1306A /* App-Icon-iPad-Pro-Ocean-Blue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B160923EDF0CA00C1306A /* App-Icon-iPad-Pro-Ocean-Blue@2x.png */; };
-		668B164623EDF0CF00C1306A /* App-Icon-iPad-Peach-Orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B160A23EDF0CA00C1306A /* App-Icon-iPad-Peach-Orange.png */; };
-		668B164723EDF0CF00C1306A /* App-Icon-iPad-Pro-Rose-Gold@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B160B23EDF0CB00C1306A /* App-Icon-iPad-Pro-Rose-Gold@2x.png */; };
-		668B164823EDF0CF00C1306A /* App-Icon-iPhone-Peach-Orange@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B160C23EDF0CB00C1306A /* App-Icon-iPhone-Peach-Orange@2x.png */; };
-		668B164923EDF0CF00C1306A /* App-Icon-iPad-Rose-Gold.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B160D23EDF0CB00C1306A /* App-Icon-iPad-Rose-Gold.png */; };
-		668B164A23EDF0CF00C1306A /* App-Icon-iPad-Yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B160E23EDF0CB00C1306A /* App-Icon-iPad-Yellow@2x.png */; };
-		668B164B23EDF0CF00C1306A /* App-Icon-iPad-Coral@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B160F23EDF0CB00C1306A /* App-Icon-iPad-Coral@2x.png */; };
-		668B164C23EDF0CF00C1306A /* App-Icon-iPhone-Dutch-Orange@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B161023EDF0CC00C1306A /* App-Icon-iPhone-Dutch-Orange@3x.png */; };
-		668B164D23EDF0CF00C1306A /* App-Icon-iPhone-Ocean-Blue@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B161123EDF0CC00C1306A /* App-Icon-iPhone-Ocean-Blue@3x.png */; };
-		668B164E23EDF0CF00C1306A /* App-Icon-iPad-Sky-Blue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B161223EDF0CC00C1306A /* App-Icon-iPad-Sky-Blue@2x.png */; };
-		668B164F23EDF0CF00C1306A /* App-Icon-iPhone-Night@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B161323EDF0CC00C1306A /* App-Icon-iPhone-Night@2x.png */; };
-		668B165023EDF0CF00C1306A /* App-Icon-iPad-Sky-Blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B161423EDF0CC00C1306A /* App-Icon-iPad-Sky-Blue.png */; };
-		668B165123EDF0CF00C1306A /* App-Icon-iPad-Pro-Yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B161523EDF0CC00C1306A /* App-Icon-iPad-Pro-Yellow@2x.png */; };
-		668B165223EDF0CF00C1306A /* App-Icon-iPad-Peach-Orange@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B161623EDF0CD00C1306A /* App-Icon-iPad-Peach-Orange@2x.png */; };
-		668B165323EDF0CF00C1306A /* App-Icon-iPad-Pro-Day@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B161723EDF0CD00C1306A /* App-Icon-iPad-Pro-Day@2x.png */; };
-		668B165423EDF0CF00C1306A /* App-Icon-iPhone-Sky-Blue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B161823EDF0CD00C1306A /* App-Icon-iPhone-Sky-Blue@2x.png */; };
-		668B165523EDF0CF00C1306A /* App-Icon-iPad-Night.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B161923EDF0CD00C1306A /* App-Icon-iPad-Night.png */; };
-		668B165623EDF0CF00C1306A /* App-Icon-iPad-Rose-Gold@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B161A23EDF0CD00C1306A /* App-Icon-iPad-Rose-Gold@2x.png */; };
-		668B165723EDF0CF00C1306A /* App-Icon-iPad-Pro-Red@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B161B23EDF0CD00C1306A /* App-Icon-iPad-Pro-Red@2x.png */; };
-		668B165823EDF0CF00C1306A /* App-Icon-iPad-Pro-Night@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B161C23EDF0CD00C1306A /* App-Icon-iPad-Pro-Night@2x.png */; };
-		668B165923EDF0CF00C1306A /* App-Icon-iPad-Coral.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B161D23EDF0CD00C1306A /* App-Icon-iPad-Coral.png */; };
-		668B165A23EDF0CF00C1306A /* App-Icon-iPhone-Day@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B161E23EDF0CE00C1306A /* App-Icon-iPhone-Day@2x.png */; };
-		668B165B23EDF0CF00C1306A /* App-Icon-iPhone-Night@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B161F23EDF0CE00C1306A /* App-Icon-iPhone-Night@3x.png */; };
-		668B165C23EDF0CF00C1306A /* App-Icon-iPhone-Day@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B162023EDF0CE00C1306A /* App-Icon-iPhone-Day@3x.png */; };
-		668B165D23EDF0CF00C1306A /* App-Icon-iPhone-Rose-Gold@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B162123EDF0CE00C1306A /* App-Icon-iPhone-Rose-Gold@2x.png */; };
-		668B165E23EDF0CF00C1306A /* App-Icon-iPad-Product-RED.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B162223EDF0CE00C1306A /* App-Icon-iPad-Product-RED.png */; };
-		668B165F23EDF0CF00C1306A /* App-Icon-iPad-Pro-Product-RED@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B162323EDF0CE00C1306A /* App-Icon-iPad-Pro-Product-RED@2x.png */; };
-		668B166023EDF0CF00C1306A /* App-Icon-iPhone-Green@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B162423EDF0CE00C1306A /* App-Icon-iPhone-Green@3x.png */; };
-		668B166123EDF0CF00C1306A /* App-Icon-iPad-Pro-Green@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B162523EDF0CE00C1306A /* App-Icon-iPad-Pro-Green@2x.png */; };
-		668B166223EDF0CF00C1306A /* App-Icon-iPad-Pro-Coral@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B162623EDF0CE00C1306A /* App-Icon-iPad-Pro-Coral@2x.png */; };
-		668B166323EDF0CF00C1306A /* App-Icon-iPhone-Ocean-Blue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B162723EDF0CF00C1306A /* App-Icon-iPhone-Ocean-Blue@2x.png */; };
-		668B166423EDF0CF00C1306A /* App-Icon-iPhone-Red@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B162823EDF0CF00C1306A /* App-Icon-iPhone-Red@2x.png */; };
-		668B166523EDF0CF00C1306A /* App-Icon-iPhone-Sky-Blue@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B162923EDF0CF00C1306A /* App-Icon-iPhone-Sky-Blue@3x.png */; };
-		668B166B23EDF7FC00C1306A /* App-Icon-iPad-Kurogram.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B166623EDF7FC00C1306A /* App-Icon-iPad-Kurogram.png */; };
-		668B166C23EDF7FC00C1306A /* App-Icon-iPhone-Kurogram@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B166723EDF7FC00C1306A /* App-Icon-iPhone-Kurogram@2x.png */; };
-		668B166D23EDF7FC00C1306A /* App-Icon-iPhone-Kurogram@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B166823EDF7FC00C1306A /* App-Icon-iPhone-Kurogram@3x.png */; };
-		668B166E23EDF7FC00C1306A /* App-Icon-iPad-Kurogram@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B166923EDF7FC00C1306A /* App-Icon-iPad-Kurogram@2x.png */; };
-		668B166F23EDF7FC00C1306A /* App-Icon-iPad-Pro-Kurogram@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B166A23EDF7FC00C1306A /* App-Icon-iPad-Pro-Kurogram@2x.png */; };
 		668B167523EEED0C00C1306A /* SearchHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668B167423EEED0C00C1306A /* SearchHistory.swift */; };
 		668DBE6726BCA21D00399BEB /* KTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668DBE6626BCA21D00399BEB /* KTheme.swift */; };
-		668DBE6C26BCB00300399BEB /* Icons.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 668DBE6B26BCB00300399BEB /* Icons.storyboard */; };
-		668F638C20986851003B1C1D /* Aller_Lt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 668F638520986843003B1C1D /* Aller_Lt.ttf */; };
-		668F638D20986851003B1C1D /* Aller_Rg.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 668F638620986849003B1C1D /* Aller_Rg.ttf */; };
-		668F638E20986851003B1C1D /* Aller_Bd.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 668F63872098684B003B1C1D /* Aller_Bd.ttf */; };
-		668F638F20986851003B1C1D /* AllerDisplay.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 668F63882098684C003B1C1D /* AllerDisplay.ttf */; };
-		668F639020986851003B1C1D /* Aller_BdIt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 668F63892098684D003B1C1D /* Aller_BdIt.ttf */; };
-		668F639120986851003B1C1D /* Aller_It.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 668F638A2098684F003B1C1D /* Aller_It.ttf */; };
-		668F639220986851003B1C1D /* Aller_LtIt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 668F638B20986850003B1C1D /* Aller_LtIt.ttf */; };
 		6691B83225869A9C005341F9 /* KCosmosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6691B83125869A9C005341F9 /* KCosmosView.swift */; };
 		66938FD8211CD3E600ADA5D6 /* ShowDetailsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66938FD7211CD3E600ADA5D6 /* ShowDetailsCollectionViewController.swift */; };
 		6694202723EAF1C800D69B5E /* Scheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6694202623EAF1C800D69B5E /* Scheme.swift */; };
@@ -329,16 +249,6 @@
 		669E89C72345573600092778 /* KStoreObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669E89C62345573600092778 /* KStoreObserver.swift */; };
 		669EA9A022C1490A00784181 /* SubscriptionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669EA99F22C1490A00784181 /* SubscriptionTableViewController.swift */; };
 		669EA9A222C1491600784181 /* Purchase.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 669EA9A122C1491600784181 /* Purchase.storyboard */; };
-		669FD7F423F9E9DB001440EC /* App-Icon-iPhone-Cookiezora@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 669FD7EA23F9E9DA001440EC /* App-Icon-iPhone-Cookiezora@2x.png */; };
-		669FD7F523F9E9DB001440EC /* App-Icon-iPad-Kurolicious@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 669FD7EB23F9E9DA001440EC /* App-Icon-iPad-Kurolicious@2x.png */; };
-		669FD7F623F9E9DB001440EC /* App-Icon-iPhone-Cookiezora@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 669FD7EC23F9E9DA001440EC /* App-Icon-iPhone-Cookiezora@3x.png */; };
-		669FD7F723F9E9DB001440EC /* App-Icon-iPad-Kurolicious.png in Resources */ = {isa = PBXBuildFile; fileRef = 669FD7ED23F9E9DB001440EC /* App-Icon-iPad-Kurolicious.png */; };
-		669FD7F823F9E9DB001440EC /* App-Icon-iPad-Pro-Kurolicious@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 669FD7EE23F9E9DB001440EC /* App-Icon-iPad-Pro-Kurolicious@2x.png */; };
-		669FD7F923F9E9DB001440EC /* App-Icon-iPhone-Kurolicious@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 669FD7EF23F9E9DB001440EC /* App-Icon-iPhone-Kurolicious@2x.png */; };
-		669FD7FA23F9E9DB001440EC /* App-Icon-iPad-Cookiezora.png in Resources */ = {isa = PBXBuildFile; fileRef = 669FD7F023F9E9DB001440EC /* App-Icon-iPad-Cookiezora.png */; };
-		669FD7FB23F9E9DB001440EC /* App-Icon-iPad-Pro-Cookiezora@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 669FD7F123F9E9DB001440EC /* App-Icon-iPad-Pro-Cookiezora@2x.png */; };
-		669FD7FC23F9E9DB001440EC /* App-Icon-iPad-Cookiezora@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 669FD7F223F9E9DB001440EC /* App-Icon-iPad-Cookiezora@2x.png */; };
-		669FD7FD23F9E9DB001440EC /* App-Icon-iPhone-Kurolicious@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 669FD7F323F9E9DB001440EC /* App-Icon-iPhone-Kurolicious@3x.png */; };
 		669FD80123FA2270001440EC /* MALImportTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669FD80023FA2270001440EC /* MALImportTableViewController.swift */; };
 		66A08C6A23E3A2D5007B6418 /* PrivacySettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66A08C6923E3A2D5007B6418 /* PrivacySettings.storyboard */; };
 		66A08C6D23E3A2F0007B6418 /* PrivacySettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A08C6C23E3A2F0007B6418 /* PrivacySettingsViewController.swift */; };
@@ -346,9 +256,22 @@
 		66A1C65C232B75360044EAD1 /* FollowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A1C65B232B75360044EAD1 /* FollowCell.swift */; };
 		66A254D522AABC29002A0E34 /* AlternativeIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A254D422AABC29002A0E34 /* AlternativeIcons.swift */; };
 		66A254D822AABCE8002A0E34 /* IconTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A254D722AABCE7002A0E34 /* IconTableViewCell.swift */; };
-		66A254DA22AAE55B002A0E34 /* App Icons.json in Resources */ = {isa = PBXBuildFile; fileRef = 66A254D922AAE55B002A0E34 /* App Icons.json */; };
 		66A254DE22AAEF5D002A0E34 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A254DD22AAEF5D002A0E34 /* MapKit.framework */; };
 		66A48FE021A411A900F34085 /* Notifications.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66A48FDF21A411A900F34085 /* Notifications.storyboard */; };
+		66A4FCFD270EFDCA00E7C702 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66A4FCFC270EFDCA00E7C702 /* Assets.xcassets */; };
+		66A4FD07270F62C100E7C702 /* Aller_Lt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 66A4FD00270F62C000E7C702 /* Aller_Lt.ttf */; };
+		66A4FD08270F62C100E7C702 /* Aller_Bd.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 66A4FD01270F62C000E7C702 /* Aller_Bd.ttf */; };
+		66A4FD09270F62C100E7C702 /* Aller_LtIt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 66A4FD02270F62C000E7C702 /* Aller_LtIt.ttf */; };
+		66A4FD0A270F62C100E7C702 /* AllerDisplay.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 66A4FD03270F62C000E7C702 /* AllerDisplay.ttf */; };
+		66A4FD0B270F62C100E7C702 /* Aller_Rg.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 66A4FD04270F62C000E7C702 /* Aller_Rg.ttf */; };
+		66A4FD0C270F62C100E7C702 /* Aller_It.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 66A4FD05270F62C000E7C702 /* Aller_It.ttf */; };
+		66A4FD0D270F62C100E7C702 /* Aller_BdIt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 66A4FD06270F62C000E7C702 /* Aller_BdIt.ttf */; };
+		66A4FD13270F62D300E7C702 /* Configuration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 66A4FD0E270F62D300E7C702 /* Configuration.storekit */; };
+		66A4FD14270F62D300E7C702 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 66A4FD0F270F62D300E7C702 /* Intents.intentdefinition */; };
+		66A4FD16270F62D300E7C702 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 66A4FD11270F62D300E7C702 /* Settings.bundle */; };
+		66A4FD17270F62D300E7C702 /* Products.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66A4FD12270F62D300E7C702 /* Products.plist */; };
+		66A4FD19270F6CD100E7C702 /* App Icons.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66A4FD18270F6CD100E7C702 /* App Icons.plist */; };
+		66A4FD1A270F7B3900E7C702 /* Icons.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 668DBE6B26BCB00300399BEB /* Icons.storyboard */; };
 		66AA35BC24030E420006EC5B /* Cast.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66AA35BB24030E420006EC5B /* Cast.storyboard */; };
 		66AA35BE24030F570006EC5B /* Seasons.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66AA35BD24030F570006EC5B /* Seasons.storyboard */; };
 		66AA35C024030FA60006EC5B /* Episodes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66AA35BF24030FA60006EC5B /* Episodes.storyboard */; };
@@ -361,7 +284,6 @@
 		66AE01242593D4E200308636 /* Badge.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66AE01232593D4E200308636 /* Badge.storyboard */; };
 		66AE01272593D5D300308636 /* Follow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66AE01262593D5D300308636 /* Follow.storyboard */; };
 		66AE01292594018400308636 /* Genre.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66AE01282594018400308636 /* Genre.storyboard */; };
-		66AE0142259516FE00308636 /* Preview Content.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66AE0141259516FE00308636 /* Preview Content.xcassets */; };
 		66AE1E0B24A0C41300FD3FFC /* StudioDetailsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AE1E0A24A0C41300FD3FFC /* StudioDetailsCollectionViewController.swift */; };
 		66AE1E0D24A0C42600FD3FFC /* Studios.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66AE1E0C24A0C42600FD3FFC /* Studios.storyboard */; };
 		66AE1E1024A0DB9200FD3FFC /* StudioDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AE1E0F24A0DB9200FD3FFC /* StudioDetail.swift */; };
@@ -463,7 +385,6 @@
 		66CE81202460E6F800DB0C49 /* Redeem.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66CE811F2460E6F800DB0C49 /* Redeem.storyboard */; };
 		66CE812724617D3C00DB0C49 /* ServiceHeaderString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE812624617D3C00DB0C49 /* ServiceHeaderString.swift */; };
 		66CE8E1D2406C41500052AE9 /* UIButton+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE8E1C2406C41500052AE9 /* UIButton+Kurozora.swift */; };
-		66CF5D7E21E7773F00969BBB /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 66CF5D7D21E7773F00969BBB /* Intents.intentdefinition */; };
 		66CF5D8021E798C800969BBB /* UIScrollView+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF5D7F21E798C800969BBB /* UIScrollView+Kurozora.swift */; };
 		66CF6D6720A987D100F98375 /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6620A987D100F98375 /* ProfileTableViewController.swift */; };
 		66CF6D6920A98CAA00F98375 /* FollowTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6820A98CAA00F98375 /* FollowTableViewController.swift */; };
@@ -491,7 +412,6 @@
 		66DEB4B221D419420093725F /* KSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DEB4B121D419420093725F /* KSearchController.swift */; };
 		66DF090E26C673D0005AED93 /* NotificationKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF090D26C673CF005AED93 /* NotificationKind.swift */; };
 		66DF091326C7C1FB005AED93 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF091226C7C1FA005AED93 /* Store.swift */; };
-		66DF091526C7C445005AED93 /* Products.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66DF091426C7C445005AED93 /* Products.plist */; };
 		66DF091826C94A47005AED93 /* StoreKit+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF091726C94A47005AED93 /* StoreKit+Kurozora.swift */; };
 		66E08369211324D400B39A75 /* OtherSessionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E08368211324D300B39A75 /* OtherSessionsCell.swift */; };
 		66E46DFD24FDAF7B009938E1 /* FMDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E46DFC24FDAF7B009938E1 /* FMDetailsTableViewController.swift */; };
@@ -556,6 +476,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		6614AA90270E3FC400ABCB8B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 66647B482084995500CF624F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6614AA41270E1FD300ABCB8B;
+			remoteInfo = "Kurozora-Rswift";
+		};
 		66C6A54D23FB05C2000A6617 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 66647B482084995500CF624F /* Project object */;
@@ -564,29 +491,6 @@
 			remoteInfo = XMLImport;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		66C4DAD3243B77FB00C4B90A /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		66C6A54B23FB0568000A6617 /* Embed App Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-			);
-			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		01C3B6E180B1386C434F51B8 /* Pods-KurozoraKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KurozoraKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KurozoraKit/Pods-KurozoraKit.debug.xcconfig"; sourceTree = "<group>"; };
@@ -638,7 +542,6 @@
 		66112348208F6ACE00E6033A /* WorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowController.swift; sourceTree = "<group>"; };
 		6611234D208F70CB00E6033A /* UIViewController+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Kurozora.swift"; sourceTree = "<group>"; };
 		6611234F208F70D200E6033A /* UIApplication+Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Navigation.swift"; sourceTree = "<group>"; };
-		6614408E21DA387800E54915 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		66148D6225E5E52B000F2E0A /* FollowTableViewController+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FollowTableViewController+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 		66148D6425E5E625000F2E0A /* FavoriteShowsCollectionViewController+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoriteShowsCollectionViewController+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
 		6614ABE3215F65D100A3A0C9 /* KLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KLabel.swift; sourceTree = "<group>"; };
@@ -694,11 +597,6 @@
 		663E342C2360D559003386D1 /* VerticalCollectionCellStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalCollectionCellStyle.swift; sourceTree = "<group>"; };
 		663F8C4822F1882F00F1EACB /* ProductPreviewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductPreviewTableViewCell.swift; sourceTree = "<group>"; };
 		663F8C4E22F199A300F1EACB /* PurchasePreviewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchasePreviewCollectionViewCell.swift; sourceTree = "<group>"; };
-		66407C8F23F625DB008944AB /* App-Icon-iPad-Love-Bug@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Love-Bug@2x.png"; sourceTree = "<group>"; };
-		66407C9023F625DB008944AB /* App-Icon-iPad-Pro-Love-Bug@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Pro-Love-Bug@2x.png"; sourceTree = "<group>"; };
-		66407C9123F625DB008944AB /* App-Icon-iPhone-Love-Bug@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Love-Bug@2x.png"; sourceTree = "<group>"; };
-		66407C9223F625DB008944AB /* App-Icon-iPhone-Love-Bug@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Love-Bug@3x.png"; sourceTree = "<group>"; };
-		66407C9323F625DB008944AB /* App-Icon-iPad-Love-Bug.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Love-Bug.png"; sourceTree = "<group>"; };
 		6640E18822AD633500D0F575 /* Authentication.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Authentication.storyboard; sourceTree = "<group>"; };
 		6640E18A22AD634600D0F575 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
 		6640E18E22ADD19000D0F575 /* AuthenticationSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationSettingsCell.swift; sourceTree = "<group>"; };
@@ -709,7 +607,6 @@
 		6640E19C22AE895A00D0F575 /* AuthenticationInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationInterval.swift; sourceTree = "<group>"; };
 		664133E421DA8E5F00CE823A /* NotificationsGroupingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsGroupingCell.swift; sourceTree = "<group>"; };
 		664133E721DB828E00CE823A /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
-		6645D5F623E709EE0042B4E0 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = R.generated.swift; path = "Kurozora/Supporting Files/R.generated.swift"; sourceTree = SOURCE_ROOT; };
 		6645D5F823E70A4C0042B4E0 /* ManageIconTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageIconTableViewController.swift; sourceTree = "<group>"; };
 		6645D5FA23E70A660042B4E0 /* LibraryCompactCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryCompactCollectionViewCell.swift; sourceTree = "<group>"; };
 		6645D5FC23E70BC80042B4E0 /* DiscussionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -766,8 +663,6 @@
 		6663985A2366298100713B8B /* UICollectionViewCell+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+Kurozora.swift"; sourceTree = "<group>"; };
 		66647B502084995500CF624F /* Kurozora.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kurozora.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66647B532084995500CF624F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		66647B5C2084995E00CF624F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		66647B612084995E00CF624F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6664B81224A403C700E73728 /* TextViewCollectionViewCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewCollectionViewCellType.swift; sourceTree = "<group>"; };
 		6669387121AFF87900BA9620 /* FeedMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedMessageCell.swift; sourceTree = "<group>"; };
 		666938AC21B19E3800BA9620 /* TextEditor.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TextEditor.storyboard; sourceTree = "<group>"; };
@@ -795,6 +690,7 @@
 		6675262E22280ACB007C1617 /* Night.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Night.plist; sourceTree = "<group>"; };
 		66752632222815C2007C1617 /* KThemeStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KThemeStyle.swift; sourceTree = "<group>"; };
 		6676B3C3216FF70B00877AFC /* EpisodeLockupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeLockupCollectionViewCell.swift; sourceTree = "<group>"; };
+		66775AA9270E57FD000194CE /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = "<group>"; };
 		66785E292363C714003EF24C /* CastCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastCollectionViewCell.swift; sourceTree = "<group>"; };
 		667943622273933400E2D0D0 /* TextViewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewCollectionViewCell.swift; sourceTree = "<group>"; };
 		667943642273A33D00E2D0D0 /* EpisodeDetailCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDetailCollectionViewController.swift; sourceTree = "<group>"; };
@@ -810,81 +706,9 @@
 		6684224725966F97000A09F8 /* UpcomingLockupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingLockupCollectionViewCell.swift; sourceTree = "<group>"; };
 		6684224F25967A65000A09F8 /* TitleHeaderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TitleHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		66842252259760F4000A09F8 /* Favorites.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Favorites.storyboard; sourceTree = "<group>"; };
-		668B15EE23EDF0C500C1306A /* App-Icon-iPad-Pro-Dutch-Orange@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Pro-Dutch-Orange@2x.png"; sourceTree = "<group>"; };
-		668B15EF23EDF0C500C1306A /* App-Icon-iPad-Ocean-Blue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Ocean-Blue@2x.png"; sourceTree = "<group>"; };
-		668B15F023EDF0C600C1306A /* App-Icon-iPad-Product-RED@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Product-RED@2x.png"; sourceTree = "<group>"; };
-		668B15F123EDF0C600C1306A /* App-Icon-iPad-Day@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Day@2x.png"; sourceTree = "<group>"; };
-		668B15F223EDF0C600C1306A /* App-Icon-iPhone-Product-RED@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Product-RED@2x.png"; sourceTree = "<group>"; };
-		668B15F323EDF0C600C1306A /* App-Icon-iPhone-Peach-Orange@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Peach-Orange@3x.png"; sourceTree = "<group>"; };
-		668B15F423EDF0C600C1306A /* App-Icon-iPhone-Red@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Red@3x.png"; sourceTree = "<group>"; };
-		668B15F523EDF0C600C1306A /* App-Icon-iPad-Green@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Green@2x.png"; sourceTree = "<group>"; };
-		668B15F623EDF0C600C1306A /* App-Icon-iPad-Yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Yellow.png"; sourceTree = "<group>"; };
-		668B15F723EDF0C700C1306A /* App-Icon-iPad-Green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Green.png"; sourceTree = "<group>"; };
-		668B15F823EDF0C700C1306A /* App-Icon-iPad-Night@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Night@2x.png"; sourceTree = "<group>"; };
-		668B15F923EDF0C700C1306A /* App-Icon-iPad-Pro-Sky-Blue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Pro-Sky-Blue@2x.png"; sourceTree = "<group>"; };
-		668B15FA23EDF0C700C1306A /* App-Icon-iPad-Red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Red.png"; sourceTree = "<group>"; };
-		668B15FB23EDF0C700C1306A /* App-Icon-iPhone-Rose-Gold@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Rose-Gold@3x.png"; sourceTree = "<group>"; };
-		668B15FC23EDF0C700C1306A /* App-Icon-iPhone-Coral@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Coral@3x.png"; sourceTree = "<group>"; };
-		668B15FD23EDF0C800C1306A /* App-Icon-iPad-Day.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Day.png"; sourceTree = "<group>"; };
-		668B15FE23EDF0C800C1306A /* App-Icon-iPad-Pro-Peach-Orange@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Pro-Peach-Orange@2x.png"; sourceTree = "<group>"; };
-		668B15FF23EDF0C800C1306A /* App-Icon-iPhone-Coral@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Coral@2x.png"; sourceTree = "<group>"; };
-		668B160023EDF0C800C1306A /* App-Icon-iPad-Dutch-Orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Dutch-Orange.png"; sourceTree = "<group>"; };
-		668B160123EDF0C800C1306A /* App-Icon-iPhone-Yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Yellow@3x.png"; sourceTree = "<group>"; };
-		668B160223EDF0C800C1306A /* App-Icon-iPhone-Yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Yellow@2x.png"; sourceTree = "<group>"; };
-		668B160323EDF0C900C1306A /* App-Icon-iPad-Ocean-Blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Ocean-Blue.png"; sourceTree = "<group>"; };
-		668B160423EDF0C900C1306A /* App-Icon-iPad-Dutch-Orange@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Dutch-Orange@2x.png"; sourceTree = "<group>"; };
-		668B160523EDF0C900C1306A /* App-Icon-iPhone-Green@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Green@2x.png"; sourceTree = "<group>"; };
-		668B160623EDF0C900C1306A /* App-Icon-iPhone-Dutch-Orange@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Dutch-Orange@2x.png"; sourceTree = "<group>"; };
-		668B160723EDF0C900C1306A /* App-Icon-iPad-Red@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Red@2x.png"; sourceTree = "<group>"; };
-		668B160823EDF0CA00C1306A /* App-Icon-iPhone-Product-RED@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Product-RED@3x.png"; sourceTree = "<group>"; };
-		668B160923EDF0CA00C1306A /* App-Icon-iPad-Pro-Ocean-Blue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Pro-Ocean-Blue@2x.png"; sourceTree = "<group>"; };
-		668B160A23EDF0CA00C1306A /* App-Icon-iPad-Peach-Orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Peach-Orange.png"; sourceTree = "<group>"; };
-		668B160B23EDF0CB00C1306A /* App-Icon-iPad-Pro-Rose-Gold@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Pro-Rose-Gold@2x.png"; sourceTree = "<group>"; };
-		668B160C23EDF0CB00C1306A /* App-Icon-iPhone-Peach-Orange@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Peach-Orange@2x.png"; sourceTree = "<group>"; };
-		668B160D23EDF0CB00C1306A /* App-Icon-iPad-Rose-Gold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Rose-Gold.png"; sourceTree = "<group>"; };
-		668B160E23EDF0CB00C1306A /* App-Icon-iPad-Yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Yellow@2x.png"; sourceTree = "<group>"; };
-		668B160F23EDF0CB00C1306A /* App-Icon-iPad-Coral@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Coral@2x.png"; sourceTree = "<group>"; };
-		668B161023EDF0CC00C1306A /* App-Icon-iPhone-Dutch-Orange@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Dutch-Orange@3x.png"; sourceTree = "<group>"; };
-		668B161123EDF0CC00C1306A /* App-Icon-iPhone-Ocean-Blue@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Ocean-Blue@3x.png"; sourceTree = "<group>"; };
-		668B161223EDF0CC00C1306A /* App-Icon-iPad-Sky-Blue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Sky-Blue@2x.png"; sourceTree = "<group>"; };
-		668B161323EDF0CC00C1306A /* App-Icon-iPhone-Night@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Night@2x.png"; sourceTree = "<group>"; };
-		668B161423EDF0CC00C1306A /* App-Icon-iPad-Sky-Blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Sky-Blue.png"; sourceTree = "<group>"; };
-		668B161523EDF0CC00C1306A /* App-Icon-iPad-Pro-Yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Pro-Yellow@2x.png"; sourceTree = "<group>"; };
-		668B161623EDF0CD00C1306A /* App-Icon-iPad-Peach-Orange@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Peach-Orange@2x.png"; sourceTree = "<group>"; };
-		668B161723EDF0CD00C1306A /* App-Icon-iPad-Pro-Day@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Pro-Day@2x.png"; sourceTree = "<group>"; };
-		668B161823EDF0CD00C1306A /* App-Icon-iPhone-Sky-Blue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Sky-Blue@2x.png"; sourceTree = "<group>"; };
-		668B161923EDF0CD00C1306A /* App-Icon-iPad-Night.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Night.png"; sourceTree = "<group>"; };
-		668B161A23EDF0CD00C1306A /* App-Icon-iPad-Rose-Gold@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Rose-Gold@2x.png"; sourceTree = "<group>"; };
-		668B161B23EDF0CD00C1306A /* App-Icon-iPad-Pro-Red@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Pro-Red@2x.png"; sourceTree = "<group>"; };
-		668B161C23EDF0CD00C1306A /* App-Icon-iPad-Pro-Night@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Pro-Night@2x.png"; sourceTree = "<group>"; };
-		668B161D23EDF0CD00C1306A /* App-Icon-iPad-Coral.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Coral.png"; sourceTree = "<group>"; };
-		668B161E23EDF0CE00C1306A /* App-Icon-iPhone-Day@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Day@2x.png"; sourceTree = "<group>"; };
-		668B161F23EDF0CE00C1306A /* App-Icon-iPhone-Night@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Night@3x.png"; sourceTree = "<group>"; };
-		668B162023EDF0CE00C1306A /* App-Icon-iPhone-Day@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Day@3x.png"; sourceTree = "<group>"; };
-		668B162123EDF0CE00C1306A /* App-Icon-iPhone-Rose-Gold@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Rose-Gold@2x.png"; sourceTree = "<group>"; };
-		668B162223EDF0CE00C1306A /* App-Icon-iPad-Product-RED.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Product-RED.png"; sourceTree = "<group>"; };
-		668B162323EDF0CE00C1306A /* App-Icon-iPad-Pro-Product-RED@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Pro-Product-RED@2x.png"; sourceTree = "<group>"; };
-		668B162423EDF0CE00C1306A /* App-Icon-iPhone-Green@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Green@3x.png"; sourceTree = "<group>"; };
-		668B162523EDF0CE00C1306A /* App-Icon-iPad-Pro-Green@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Pro-Green@2x.png"; sourceTree = "<group>"; };
-		668B162623EDF0CE00C1306A /* App-Icon-iPad-Pro-Coral@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Pro-Coral@2x.png"; sourceTree = "<group>"; };
-		668B162723EDF0CF00C1306A /* App-Icon-iPhone-Ocean-Blue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Ocean-Blue@2x.png"; sourceTree = "<group>"; };
-		668B162823EDF0CF00C1306A /* App-Icon-iPhone-Red@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Red@2x.png"; sourceTree = "<group>"; };
-		668B162923EDF0CF00C1306A /* App-Icon-iPhone-Sky-Blue@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Sky-Blue@3x.png"; sourceTree = "<group>"; };
-		668B166623EDF7FC00C1306A /* App-Icon-iPad-Kurogram.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Kurogram.png"; sourceTree = "<group>"; };
-		668B166723EDF7FC00C1306A /* App-Icon-iPhone-Kurogram@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Kurogram@2x.png"; sourceTree = "<group>"; };
-		668B166823EDF7FC00C1306A /* App-Icon-iPhone-Kurogram@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Kurogram@3x.png"; sourceTree = "<group>"; };
-		668B166923EDF7FC00C1306A /* App-Icon-iPad-Kurogram@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Kurogram@2x.png"; sourceTree = "<group>"; };
-		668B166A23EDF7FC00C1306A /* App-Icon-iPad-Pro-Kurogram@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Pro-Kurogram@2x.png"; sourceTree = "<group>"; };
 		668B167423EEED0C00C1306A /* SearchHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistory.swift; sourceTree = "<group>"; };
 		668DBE6626BCA21D00399BEB /* KTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KTheme.swift; sourceTree = "<group>"; };
 		668DBE6B26BCB00300399BEB /* Icons.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Icons.storyboard; sourceTree = "<group>"; };
-		668F638520986843003B1C1D /* Aller_Lt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_Lt.ttf; sourceTree = "<group>"; };
-		668F638620986849003B1C1D /* Aller_Rg.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_Rg.ttf; sourceTree = "<group>"; };
-		668F63872098684B003B1C1D /* Aller_Bd.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_Bd.ttf; sourceTree = "<group>"; };
-		668F63882098684C003B1C1D /* AllerDisplay.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AllerDisplay.ttf; sourceTree = "<group>"; };
-		668F63892098684D003B1C1D /* Aller_BdIt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_BdIt.ttf; sourceTree = "<group>"; };
-		668F638A2098684F003B1C1D /* Aller_It.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_It.ttf; sourceTree = "<group>"; };
-		668F638B20986850003B1C1D /* Aller_LtIt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_LtIt.ttf; sourceTree = "<group>"; };
 		6691B83125869A9C005341F9 /* KCosmosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCosmosView.swift; sourceTree = "<group>"; };
 		66938FD7211CD3E600ADA5D6 /* ShowDetailsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetailsCollectionViewController.swift; sourceTree = "<group>"; };
 		6694202623EAF1C800D69B5E /* Scheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scheme.swift; sourceTree = "<group>"; };
@@ -911,16 +735,6 @@
 		669E89C62345573600092778 /* KStoreObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KStoreObserver.swift; sourceTree = "<group>"; };
 		669EA99F22C1490A00784181 /* SubscriptionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTableViewController.swift; sourceTree = "<group>"; };
 		669EA9A122C1491600784181 /* Purchase.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Purchase.storyboard; sourceTree = "<group>"; };
-		669FD7EA23F9E9DA001440EC /* App-Icon-iPhone-Cookiezora@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Cookiezora@2x.png"; sourceTree = "<group>"; };
-		669FD7EB23F9E9DA001440EC /* App-Icon-iPad-Kurolicious@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Kurolicious@2x.png"; sourceTree = "<group>"; };
-		669FD7EC23F9E9DA001440EC /* App-Icon-iPhone-Cookiezora@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Cookiezora@3x.png"; sourceTree = "<group>"; };
-		669FD7ED23F9E9DB001440EC /* App-Icon-iPad-Kurolicious.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Kurolicious.png"; sourceTree = "<group>"; };
-		669FD7EE23F9E9DB001440EC /* App-Icon-iPad-Pro-Kurolicious@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Pro-Kurolicious@2x.png"; sourceTree = "<group>"; };
-		669FD7EF23F9E9DB001440EC /* App-Icon-iPhone-Kurolicious@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Kurolicious@2x.png"; sourceTree = "<group>"; };
-		669FD7F023F9E9DB001440EC /* App-Icon-iPad-Cookiezora.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Cookiezora.png"; sourceTree = "<group>"; };
-		669FD7F123F9E9DB001440EC /* App-Icon-iPad-Pro-Cookiezora@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Pro-Cookiezora@2x.png"; sourceTree = "<group>"; };
-		669FD7F223F9E9DB001440EC /* App-Icon-iPad-Cookiezora@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Cookiezora@2x.png"; sourceTree = "<group>"; };
-		669FD7F323F9E9DB001440EC /* App-Icon-iPhone-Kurolicious@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Kurolicious@3x.png"; sourceTree = "<group>"; };
 		669FD80023FA2270001440EC /* MALImportTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MALImportTableViewController.swift; sourceTree = "<group>"; };
 		66A08C6923E3A2D5007B6418 /* PrivacySettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PrivacySettings.storyboard; sourceTree = "<group>"; };
 		66A08C6C23E3A2F0007B6418 /* PrivacySettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacySettingsViewController.swift; sourceTree = "<group>"; };
@@ -928,9 +742,22 @@
 		66A1C65B232B75360044EAD1 /* FollowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowCell.swift; sourceTree = "<group>"; };
 		66A254D422AABC29002A0E34 /* AlternativeIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternativeIcons.swift; sourceTree = "<group>"; };
 		66A254D722AABCE7002A0E34 /* IconTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconTableViewCell.swift; sourceTree = "<group>"; };
-		66A254D922AAE55B002A0E34 /* App Icons.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "App Icons.json"; sourceTree = "<group>"; };
 		66A254DD22AAEF5D002A0E34 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		66A48FDF21A411A900F34085 /* Notifications.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Notifications.storyboard; sourceTree = "<group>"; };
+		66A4FCFC270EFDCA00E7C702 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		66A4FD00270F62C000E7C702 /* Aller_Lt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_Lt.ttf; sourceTree = "<group>"; };
+		66A4FD01270F62C000E7C702 /* Aller_Bd.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_Bd.ttf; sourceTree = "<group>"; };
+		66A4FD02270F62C000E7C702 /* Aller_LtIt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_LtIt.ttf; sourceTree = "<group>"; };
+		66A4FD03270F62C000E7C702 /* AllerDisplay.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AllerDisplay.ttf; sourceTree = "<group>"; };
+		66A4FD04270F62C000E7C702 /* Aller_Rg.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_Rg.ttf; sourceTree = "<group>"; };
+		66A4FD05270F62C000E7C702 /* Aller_It.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_It.ttf; sourceTree = "<group>"; };
+		66A4FD06270F62C000E7C702 /* Aller_BdIt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_BdIt.ttf; sourceTree = "<group>"; };
+		66A4FD0E270F62D300E7C702 /* Configuration.storekit */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Configuration.storekit; sourceTree = "<group>"; };
+		66A4FD0F270F62D300E7C702 /* Intents.intentdefinition */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
+		66A4FD10270F62D300E7C702 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		66A4FD11270F62D300E7C702 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		66A4FD12270F62D300E7C702 /* Products.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Products.plist; sourceTree = "<group>"; };
+		66A4FD18270F6CD100E7C702 /* App Icons.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "App Icons.plist"; sourceTree = "<group>"; };
 		66AA35BB24030E420006EC5B /* Cast.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Cast.storyboard; sourceTree = "<group>"; };
 		66AA35BD24030F570006EC5B /* Seasons.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Seasons.storyboard; sourceTree = "<group>"; };
 		66AA35BF24030FA60006EC5B /* Episodes.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Episodes.storyboard; sourceTree = "<group>"; };
@@ -943,7 +770,6 @@
 		66AE01232593D4E200308636 /* Badge.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Badge.storyboard; sourceTree = "<group>"; };
 		66AE01262593D5D300308636 /* Follow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Follow.storyboard; sourceTree = "<group>"; };
 		66AE01282594018400308636 /* Genre.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Genre.storyboard; sourceTree = "<group>"; };
-		66AE0141259516FE00308636 /* Preview Content.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Content.xcassets"; sourceTree = "<group>"; };
 		66AE1E0A24A0C41300FD3FFC /* StudioDetailsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioDetailsCollectionViewController.swift; sourceTree = "<group>"; };
 		66AE1E0C24A0C42600FD3FFC /* Studios.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Studios.storyboard; sourceTree = "<group>"; };
 		66AE1E0F24A0DB9200FD3FFC /* StudioDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioDetail.swift; sourceTree = "<group>"; };
@@ -1053,7 +879,6 @@
 		66CE811F2460E6F800DB0C49 /* Redeem.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Redeem.storyboard; sourceTree = "<group>"; };
 		66CE812624617D3C00DB0C49 /* ServiceHeaderString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceHeaderString.swift; sourceTree = "<group>"; };
 		66CE8E1C2406C41500052AE9 /* UIButton+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Kurozora.swift"; sourceTree = "<group>"; };
-		66CF5D7D21E7773F00969BBB /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		66CF5D7F21E798C800969BBB /* UIScrollView+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Kurozora.swift"; sourceTree = "<group>"; };
 		66CF6D6620A987D100F98375 /* ProfileTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
 		66CF6D6820A98CAA00F98375 /* FollowTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowTableViewController.swift; sourceTree = "<group>"; };
@@ -1080,9 +905,7 @@
 		66DEB4A721D248710093725F /* Search.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
 		66DEB4B121D419420093725F /* KSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KSearchController.swift; sourceTree = "<group>"; };
 		66DF090D26C673CF005AED93 /* NotificationKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationKind.swift; sourceTree = "<group>"; };
-		66DF091026C71D8E005AED93 /* Configuration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Configuration.storekit; sourceTree = "<group>"; };
 		66DF091226C7C1FA005AED93 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
-		66DF091426C7C445005AED93 /* Products.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Products.plist; sourceTree = "<group>"; };
 		66DF091726C94A47005AED93 /* StoreKit+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StoreKit+Kurozora.swift"; sourceTree = "<group>"; };
 		66E08368211324D300B39A75 /* OtherSessionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherSessionsCell.swift; sourceTree = "<group>"; };
 		66E46DFC24FDAF7B009938E1 /* FMDetailsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDetailsTableViewController.swift; sourceTree = "<group>"; };
@@ -1665,94 +1488,6 @@
 			path = "Table Views";
 			sourceTree = "<group>";
 		};
-		66480191222D13A50063143A /* App Icons */ = {
-			isa = PBXGroup;
-			children = (
-				66A254D922AAE55B002A0E34 /* App Icons.json */,
-				669FD7F023F9E9DB001440EC /* App-Icon-iPad-Cookiezora.png */,
-				669FD7F223F9E9DB001440EC /* App-Icon-iPad-Cookiezora@2x.png */,
-				668B161D23EDF0CD00C1306A /* App-Icon-iPad-Coral.png */,
-				668B160F23EDF0CB00C1306A /* App-Icon-iPad-Coral@2x.png */,
-				668B15FD23EDF0C800C1306A /* App-Icon-iPad-Day.png */,
-				668B15F123EDF0C600C1306A /* App-Icon-iPad-Day@2x.png */,
-				668B160023EDF0C800C1306A /* App-Icon-iPad-Dutch-Orange.png */,
-				668B160423EDF0C900C1306A /* App-Icon-iPad-Dutch-Orange@2x.png */,
-				668B15F723EDF0C700C1306A /* App-Icon-iPad-Green.png */,
-				668B15F523EDF0C600C1306A /* App-Icon-iPad-Green@2x.png */,
-				668B166623EDF7FC00C1306A /* App-Icon-iPad-Kurogram.png */,
-				668B166923EDF7FC00C1306A /* App-Icon-iPad-Kurogram@2x.png */,
-				669FD7ED23F9E9DB001440EC /* App-Icon-iPad-Kurolicious.png */,
-				669FD7EB23F9E9DA001440EC /* App-Icon-iPad-Kurolicious@2x.png */,
-				66407C9323F625DB008944AB /* App-Icon-iPad-Love-Bug.png */,
-				66407C8F23F625DB008944AB /* App-Icon-iPad-Love-Bug@2x.png */,
-				668B161923EDF0CD00C1306A /* App-Icon-iPad-Night.png */,
-				668B15F823EDF0C700C1306A /* App-Icon-iPad-Night@2x.png */,
-				668B160323EDF0C900C1306A /* App-Icon-iPad-Ocean-Blue.png */,
-				668B15EF23EDF0C500C1306A /* App-Icon-iPad-Ocean-Blue@2x.png */,
-				668B160A23EDF0CA00C1306A /* App-Icon-iPad-Peach-Orange.png */,
-				668B161623EDF0CD00C1306A /* App-Icon-iPad-Peach-Orange@2x.png */,
-				669FD7F123F9E9DB001440EC /* App-Icon-iPad-Pro-Cookiezora@2x.png */,
-				668B162623EDF0CE00C1306A /* App-Icon-iPad-Pro-Coral@2x.png */,
-				668B161723EDF0CD00C1306A /* App-Icon-iPad-Pro-Day@2x.png */,
-				668B15EE23EDF0C500C1306A /* App-Icon-iPad-Pro-Dutch-Orange@2x.png */,
-				668B162523EDF0CE00C1306A /* App-Icon-iPad-Pro-Green@2x.png */,
-				668B166A23EDF7FC00C1306A /* App-Icon-iPad-Pro-Kurogram@2x.png */,
-				669FD7EE23F9E9DB001440EC /* App-Icon-iPad-Pro-Kurolicious@2x.png */,
-				66407C9023F625DB008944AB /* App-Icon-iPad-Pro-Love-Bug@2x.png */,
-				668B161C23EDF0CD00C1306A /* App-Icon-iPad-Pro-Night@2x.png */,
-				668B160923EDF0CA00C1306A /* App-Icon-iPad-Pro-Ocean-Blue@2x.png */,
-				668B15FE23EDF0C800C1306A /* App-Icon-iPad-Pro-Peach-Orange@2x.png */,
-				668B162323EDF0CE00C1306A /* App-Icon-iPad-Pro-Product-RED@2x.png */,
-				668B161B23EDF0CD00C1306A /* App-Icon-iPad-Pro-Red@2x.png */,
-				668B160B23EDF0CB00C1306A /* App-Icon-iPad-Pro-Rose-Gold@2x.png */,
-				668B15F923EDF0C700C1306A /* App-Icon-iPad-Pro-Sky-Blue@2x.png */,
-				668B161523EDF0CC00C1306A /* App-Icon-iPad-Pro-Yellow@2x.png */,
-				668B162223EDF0CE00C1306A /* App-Icon-iPad-Product-RED.png */,
-				668B15F023EDF0C600C1306A /* App-Icon-iPad-Product-RED@2x.png */,
-				668B15FA23EDF0C700C1306A /* App-Icon-iPad-Red.png */,
-				668B160723EDF0C900C1306A /* App-Icon-iPad-Red@2x.png */,
-				668B160D23EDF0CB00C1306A /* App-Icon-iPad-Rose-Gold.png */,
-				668B161A23EDF0CD00C1306A /* App-Icon-iPad-Rose-Gold@2x.png */,
-				668B161423EDF0CC00C1306A /* App-Icon-iPad-Sky-Blue.png */,
-				668B161223EDF0CC00C1306A /* App-Icon-iPad-Sky-Blue@2x.png */,
-				668B15F623EDF0C600C1306A /* App-Icon-iPad-Yellow.png */,
-				668B160E23EDF0CB00C1306A /* App-Icon-iPad-Yellow@2x.png */,
-				669FD7EA23F9E9DA001440EC /* App-Icon-iPhone-Cookiezora@2x.png */,
-				669FD7EC23F9E9DA001440EC /* App-Icon-iPhone-Cookiezora@3x.png */,
-				668B15FF23EDF0C800C1306A /* App-Icon-iPhone-Coral@2x.png */,
-				668B15FC23EDF0C700C1306A /* App-Icon-iPhone-Coral@3x.png */,
-				668B161E23EDF0CE00C1306A /* App-Icon-iPhone-Day@2x.png */,
-				668B162023EDF0CE00C1306A /* App-Icon-iPhone-Day@3x.png */,
-				668B160623EDF0C900C1306A /* App-Icon-iPhone-Dutch-Orange@2x.png */,
-				668B161023EDF0CC00C1306A /* App-Icon-iPhone-Dutch-Orange@3x.png */,
-				668B160523EDF0C900C1306A /* App-Icon-iPhone-Green@2x.png */,
-				668B162423EDF0CE00C1306A /* App-Icon-iPhone-Green@3x.png */,
-				668B166723EDF7FC00C1306A /* App-Icon-iPhone-Kurogram@2x.png */,
-				668B166823EDF7FC00C1306A /* App-Icon-iPhone-Kurogram@3x.png */,
-				669FD7EF23F9E9DB001440EC /* App-Icon-iPhone-Kurolicious@2x.png */,
-				669FD7F323F9E9DB001440EC /* App-Icon-iPhone-Kurolicious@3x.png */,
-				66407C9123F625DB008944AB /* App-Icon-iPhone-Love-Bug@2x.png */,
-				66407C9223F625DB008944AB /* App-Icon-iPhone-Love-Bug@3x.png */,
-				668B161323EDF0CC00C1306A /* App-Icon-iPhone-Night@2x.png */,
-				668B161F23EDF0CE00C1306A /* App-Icon-iPhone-Night@3x.png */,
-				668B162723EDF0CF00C1306A /* App-Icon-iPhone-Ocean-Blue@2x.png */,
-				668B161123EDF0CC00C1306A /* App-Icon-iPhone-Ocean-Blue@3x.png */,
-				668B160C23EDF0CB00C1306A /* App-Icon-iPhone-Peach-Orange@2x.png */,
-				668B15F323EDF0C600C1306A /* App-Icon-iPhone-Peach-Orange@3x.png */,
-				668B15F223EDF0C600C1306A /* App-Icon-iPhone-Product-RED@2x.png */,
-				668B160823EDF0CA00C1306A /* App-Icon-iPhone-Product-RED@3x.png */,
-				668B162823EDF0CF00C1306A /* App-Icon-iPhone-Red@2x.png */,
-				668B15F423EDF0C600C1306A /* App-Icon-iPhone-Red@3x.png */,
-				668B162123EDF0CE00C1306A /* App-Icon-iPhone-Rose-Gold@2x.png */,
-				668B15FB23EDF0C700C1306A /* App-Icon-iPhone-Rose-Gold@3x.png */,
-				668B161823EDF0CD00C1306A /* App-Icon-iPhone-Sky-Blue@2x.png */,
-				668B162923EDF0CF00C1306A /* App-Icon-iPhone-Sky-Blue@3x.png */,
-				668B160223EDF0C800C1306A /* App-Icon-iPhone-Yellow@2x.png */,
-				668B160123EDF0C800C1306A /* App-Icon-iPhone-Yellow@3x.png */,
-			);
-			path = "App Icons";
-			sourceTree = "<group>";
-		};
 		6648ED7122A4749500E1BE18 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -1916,18 +1651,19 @@
 		66647B522084995500CF624F /* Kurozora */ = {
 			isa = PBXGroup;
 			children = (
+				66A4FCFC270EFDCA00E7C702 /* Assets.xcassets */,
 				660E9FC8214BC6FB00F6813C /* Kurozora.entitlements */,
 				66647B532084995500CF624F /* AppDelegate.swift */,
+				66775AA9270E57FD000194CE /* R.generated.swift */,
 				663C95B823084FAC003720A4 /* SceneDelegate.swift */,
 				66707821208B1C6800471FBC /* LaunchScreen.xib */,
 				66B4F1D9223D1F70007C5048 /* App Frameworks */,
-				66480191222D13A50063143A /* App Icons */,
 				66112343208F6A8E00E6033A /* App Services */,
 				66DE65262401AE80001C2773 /* Enums */,
 				66B4F1D1223BC8EB007C5048 /* Features */,
-				66ABBBFF240215BE00CE8A26 /* Views */,
 				6675262B22280AB4007C1617 /* Plist */,
-				66707833208B836500471FBC /* Supporting Files */,
+				66A4FCFE270F627800E7C702 /* Supporting Files */,
+				66ABBBFF240215BE00CE8A26 /* Views */,
 			);
 			path = Kurozora;
 			sourceTree = "<group>";
@@ -2072,22 +1808,6 @@
 				6611895A25631E7E00CDB347 /* KNavigationController */,
 			);
 			path = Navigation;
-			sourceTree = "<group>";
-		};
-		66707833208B836500471FBC /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				6614408E21DA387800E54915 /* Settings.bundle */,
-				66CF5D7D21E7773F00969BBB /* Intents.intentdefinition */,
-				66647B612084995E00CF624F /* Info.plist */,
-				66DF091426C7C445005AED93 /* Products.plist */,
-				66DF091026C71D8E005AED93 /* Configuration.storekit */,
-				6645D5F623E709EE0042B4E0 /* R.generated.swift */,
-				66647B5C2084995E00CF624F /* Assets.xcassets */,
-				66AE0141259516FE00308636 /* Preview Content.xcassets */,
-				668F63842098681C003B1C1D /* Fonts */,
-			);
-			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		66707836208B844800471FBC /* Settings */ = {
@@ -2343,20 +2063,6 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		668F63842098681C003B1C1D /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				668F63872098684B003B1C1D /* Aller_Bd.ttf */,
-				668F63892098684D003B1C1D /* Aller_BdIt.ttf */,
-				668F638A2098684F003B1C1D /* Aller_It.ttf */,
-				668F638520986843003B1C1D /* Aller_Lt.ttf */,
-				668F638B20986850003B1C1D /* Aller_LtIt.ttf */,
-				668F638620986849003B1C1D /* Aller_Rg.ttf */,
-				668F63882098684C003B1C1D /* AllerDisplay.ttf */,
-			);
-			path = Fonts;
-			sourceTree = "<group>";
-		};
 		6691B83025869A91005341F9 /* Cosmos */ = {
 			isa = PBXGroup;
 			children = (
@@ -2443,6 +2149,34 @@
 				668DBE6626BCA21D00399BEB /* KTheme.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		66A4FCFE270F627800E7C702 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				66A4FD11270F62D300E7C702 /* Settings.bundle */,
+				66A4FD0F270F62D300E7C702 /* Intents.intentdefinition */,
+				66A4FD18270F6CD100E7C702 /* App Icons.plist */,
+				66A4FD10270F62D300E7C702 /* Info.plist */,
+				66A4FD12270F62D300E7C702 /* Products.plist */,
+				66A4FD0E270F62D300E7C702 /* Configuration.storekit */,
+				66A4FCFF270F629B00E7C702 /* Fonts */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		66A4FCFF270F629B00E7C702 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				66A4FD01270F62C000E7C702 /* Aller_Bd.ttf */,
+				66A4FD06270F62C000E7C702 /* Aller_BdIt.ttf */,
+				66A4FD05270F62C000E7C702 /* Aller_It.ttf */,
+				66A4FD00270F62C000E7C702 /* Aller_Lt.ttf */,
+				66A4FD02270F62C000E7C702 /* Aller_LtIt.ttf */,
+				66A4FD04270F62C000E7C702 /* Aller_Rg.ttf */,
+				66A4FD03270F62C000E7C702 /* AllerDisplay.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		66AA35C1240312210006EC5B /* Main */ = {
@@ -3321,13 +3055,29 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXLegacyTarget section */
+		6614AA41270E1FD300ABCB8B /* Kurozora-Rswift */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "generate --target Kurozora --bundleIdentifier app.kurozora.tracker --productModuleName Kurozora --infoPlistFile \"Kurozora/Supporting Files/Info.plist\" --codeSignEntitlements Kurozora/Kurozora.entitlements \"Kurozora/R.generated.swift\"";
+			buildConfigurationList = 6614AA42270E1FD300ABCB8B /* Build configuration list for PBXLegacyTarget "Kurozora-Rswift" */;
+			buildPhases = (
+			);
+			buildToolPath = "${PODS_ROOT}/R.swift/rswift";
+			buildWorkingDirectory = "";
+			dependencies = (
+			);
+			name = "Kurozora-Rswift";
+			passBuildSettingsInEnvironment = 1;
+			productName = "Kurozora-Rswift";
+		};
+/* End PBXLegacyTarget section */
+
 /* Begin PBXNativeTarget section */
 		66647B4F2084995500CF624F /* Kurozora */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 66647B7A2084995E00CF624F /* Build configuration list for PBXNativeTarget "Kurozora" */;
 			buildPhases = (
 				C4D3519F59E49E683C3D0828 /* [CP] Check Pods Manifest.lock */,
-				6645D5F523E7062F0042B4E0 /* R.swift */,
 				66C4DAE4243DE98F00C4B90A /* [CPD] Copy/Paste Detector */,
 				66647B4C2084995500CF624F /* Sources */,
 				66647B4D2084995500CF624F /* Frameworks */,
@@ -3335,14 +3085,13 @@
 				EADEF8E9DAFBA77C64EB699E /* [CP] Embed Pods Frameworks */,
 				66CF0BBC231AEE8A00EEF947 /* SwiftLint */,
 				66022EAE238B287900B5286A /* Add Acknowledgements */,
-				66C6A54B23FB0568000A6617 /* Embed App Extensions */,
-				66C4DAD3243B77FB00C4B90A /* Embed Frameworks */,
 				66B4DC40245A20390097135A /* Add version to Settings.bundle */,
 				6666F88320BF4A4C0003A72F /* Run Build Bump Script */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				6614AA91270E3FC400ABCB8B /* PBXTargetDependency */,
 				66C6A54E23FB05C2000A6617 /* PBXTargetDependency */,
 			);
 			name = Kurozora;
@@ -3360,6 +3109,9 @@
 				LastUpgradeCheck = 1230;
 				ORGANIZATIONNAME = Kurozora;
 				TargetAttributes = {
+					6614AA41270E1FD300ABCB8B = {
+						CreatedOnToolsVersion = 13.0;
+					};
 					66647B4F2084995500CF624F = {
 						CreatedOnToolsVersion = 9.3;
 						ProvisioningStyle = Automatic;
@@ -3394,6 +3146,7 @@
 			projectRoot = "";
 			targets = (
 				66647B4F2084995500CF624F /* Kurozora */,
+				6614AA41270E1FD300ABCB8B /* Kurozora-Rswift */,
 			);
 		};
 /* End PBXProject section */
@@ -3403,175 +3156,95 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				668B165923EDF0CF00C1306A /* App-Icon-iPad-Coral.png in Resources */,
-				668B163423EDF0CF00C1306A /* App-Icon-iPad-Night@2x.png in Resources */,
-				669FD7F523F9E9DB001440EC /* App-Icon-iPad-Kurolicious@2x.png in Resources */,
-				668F638F20986851003B1C1D /* AllerDisplay.ttf in Resources */,
 				66ED9D8722ABD60400C7A45C /* NotificationSettings.storyboard in Resources */,
-				669FD7F423F9E9DB001440EC /* App-Icon-iPhone-Cookiezora@2x.png in Resources */,
 				66B216AC21C1681F006E167D /* TextEditor.storyboard in Resources */,
 				66CB8D4E24F83ECD0047A2CF /* PostImageCell.xib in Resources */,
-				668B165623EDF0CF00C1306A /* App-Icon-iPad-Rose-Gold@2x.png in Resources */,
 				6640E19722ADD30100D0F575 /* AuthenticationSettings.storyboard in Resources */,
+				66A4FD13270F62D300E7C702 /* Configuration.storekit in Resources */,
 				66FC6DD32340028D00A454DD /* AccountSettings.storyboard in Resources */,
-				668DBE6C26BCB00300399BEB /* Icons.storyboard in Resources */,
-				669FD7F623F9E9DB001440EC /* App-Icon-iPhone-Cookiezora@3x.png in Resources */,
-				668B162D23EDF0CF00C1306A /* App-Icon-iPad-Day@2x.png in Resources */,
-				668B163623EDF0CF00C1306A /* App-Icon-iPad-Red.png in Resources */,
 				66D6237F20A1CC1D00304914 /* Library.storyboard in Resources */,
 				66CBDD9E24649C4C00CA5F83 /* TextViewCollectionViewCell.xib in Resources */,
 				666938B821B1D50500BA9620 /* CommentImageCell.xib in Resources */,
-				668B166523EDF0CF00C1306A /* App-Icon-iPhone-Sky-Blue@3x.png in Resources */,
-				668B165B23EDF0CF00C1306A /* App-Icon-iPhone-Night@3x.png in Resources */,
+				66A4FD0B270F62C100E7C702 /* Aller_Rg.ttf in Resources */,
 				666938B921B1D50E00BA9620 /* WriteACommentCell.xib in Resources */,
-				668B165023EDF0CF00C1306A /* App-Icon-iPad-Sky-Blue.png in Resources */,
-				66407C9823F625DB008944AB /* App-Icon-iPad-Love-Bug.png in Resources */,
 				66AE01242593D4E200308636 /* Badge.storyboard in Resources */,
-				668B163223EDF0CF00C1306A /* App-Icon-iPad-Yellow.png in Resources */,
 				66C5797B22A86435001B8F51 /* DebugSettings.storyboard in Resources */,
-				668B164D23EDF0CF00C1306A /* App-Icon-iPhone-Ocean-Blue@3x.png in Resources */,
 				66AE1E0D24A0C42600FD3FFC /* Studios.storyboard in Resources */,
-				668B164E23EDF0CF00C1306A /* App-Icon-iPad-Sky-Blue@2x.png in Resources */,
 				66AA35BC24030E420006EC5B /* Cast.storyboard in Resources */,
 				6675262F22280ACB007C1617 /* Default.plist in Resources */,
-				66407C9623F625DB008944AB /* App-Icon-iPhone-Love-Bug@2x.png in Resources */,
-				668B165A23EDF0CF00C1306A /* App-Icon-iPhone-Day@2x.png in Resources */,
-				668B163523EDF0CF00C1306A /* App-Icon-iPad-Pro-Sky-Blue@2x.png in Resources */,
-				668F638D20986851003B1C1D /* Aller_Rg.ttf in Resources */,
-				668B165F23EDF0CF00C1306A /* App-Icon-iPad-Pro-Product-RED@2x.png in Resources */,
-				668B165123EDF0CF00C1306A /* App-Icon-iPad-Pro-Yellow@2x.png in Resources */,
-				668B163D23EDF0CF00C1306A /* App-Icon-iPhone-Yellow@3x.png in Resources */,
 				66CF6D7120A9934F00F98375 /* Profile.storyboard in Resources */,
-				668B165D23EDF0CF00C1306A /* App-Icon-iPhone-Rose-Gold@2x.png in Resources */,
 				66DEB4A821D248710093725F /* Search.storyboard in Resources */,
 				66C45842259A88ED00886374 /* Sakura.plist in Resources */,
-				668B163923EDF0CF00C1306A /* App-Icon-iPad-Day.png in Resources */,
 				666938BA21B1D51400BA9620 /* ShowMoreCell.xib in Resources */,
-				668B163823EDF0CF00C1306A /* App-Icon-iPhone-Coral@3x.png in Resources */,
-				668B163E23EDF0CF00C1306A /* App-Icon-iPhone-Yellow@2x.png in Resources */,
-				668B163023EDF0CF00C1306A /* App-Icon-iPhone-Red@3x.png in Resources */,
-				668B166F23EDF7FC00C1306A /* App-Icon-iPad-Pro-Kurogram@2x.png in Resources */,
-				668B166423EDF0CF00C1306A /* App-Icon-iPhone-Red@2x.png in Resources */,
+				66A4FD0A270F62C100E7C702 /* AllerDisplay.ttf in Resources */,
 				6675263122280ACB007C1617 /* Night.plist in Resources */,
 				66E46E05250666AE009938E1 /* FeedMessageReShareCell.xib in Resources */,
 				66CE8114246092FF00DB0C49 /* ServicePreviewTableViewCell.xib in Resources */,
 				66160C40215C2DEB00D0D722 /* Reachability.storyboard in Resources */,
 				6633A52924A3DA11003C6390 /* InformationButtonCollectionViewCell.xib in Resources */,
-				668B164823EDF0CF00C1306A /* App-Icon-iPhone-Peach-Orange@2x.png in Resources */,
+				66A4FD0C270F62C100E7C702 /* Aller_It.ttf in Resources */,
 				664AAF8124EE8E2F00FF4AA5 /* Characters.storyboard in Resources */,
 				6684225025967A65000A09F8 /* TitleHeaderTableViewCell.xib in Resources */,
-				668B165423EDF0CF00C1306A /* App-Icon-iPhone-Sky-Blue@2x.png in Resources */,
 				66CE8118246093DE00DB0C49 /* ServiceHeaderTableViewCell.xib in Resources */,
-				668B163A23EDF0CF00C1306A /* App-Icon-iPad-Pro-Peach-Orange@2x.png in Resources */,
 				66707823208B1C6800471FBC /* LaunchScreen.xib in Resources */,
 				66AA35BE24030F570006EC5B /* Seasons.storyboard in Resources */,
-				668B162B23EDF0CF00C1306A /* App-Icon-iPad-Ocean-Blue@2x.png in Resources */,
 				66CBDD9A24647B3500CA5F83 /* EpisodeLockupCollectionViewCell.xib in Resources */,
 				66AC260622F0E58A0064541B /* WebBrowser.storyboard in Resources */,
-				66407C9423F625DB008944AB /* App-Icon-iPad-Love-Bug@2x.png in Resources */,
-				668B163C23EDF0CF00C1306A /* App-Icon-iPad-Dutch-Orange.png in Resources */,
 				660C042523D0CFC00040C749 /* PosterLockupCollectionViewCell.xib in Resources */,
 				6647237824601707008E5111 /* ServiceFooterTableViewCell.xib in Resources */,
-				668B165E23EDF0CF00C1306A /* App-Icon-iPad-Product-RED.png in Resources */,
-				668F639120986851003B1C1D /* Aller_It.ttf in Resources */,
+				66A4FD17270F62D300E7C702 /* Products.plist in Resources */,
+				66A4FD07270F62C100E7C702 /* Aller_Lt.ttf in Resources */,
 				664AAF9824EEE53700FF4AA5 /* People.storyboard in Resources */,
-				668B164123EDF0CF00C1306A /* App-Icon-iPhone-Green@2x.png in Resources */,
-				668B163123EDF0CF00C1306A /* App-Icon-iPad-Green@2x.png in Resources */,
-				668B163B23EDF0CF00C1306A /* App-Icon-iPhone-Coral@2x.png in Resources */,
-				668B164423EDF0CF00C1306A /* App-Icon-iPhone-Product-RED@3x.png in Resources */,
+				66A4FCFD270EFDCA00E7C702 /* Assets.xcassets in Resources */,
 				66CBA53722BC454600FBEC13 /* Feed.storyboard in Resources */,
-				668B166C23EDF7FC00C1306A /* App-Icon-iPhone-Kurogram@2x.png in Resources */,
+				66A4FD1A270F7B3900E7C702 /* Icons.storyboard in Resources */,
 				66CE81202460E6F800DB0C49 /* Redeem.storyboard in Resources */,
+				66A4FD08270F62C100E7C702 /* Aller_Bd.ttf in Resources */,
 				66C8FBF124671CBC00C82D60 /* SwitchAccountSettings.storyboard in Resources */,
 				66B13A672405DBE000CD732B /* Onboarding.storyboard in Resources */,
-				6614408F21DA387800E54915 /* Settings.bundle in Resources */,
-				66DF091526C7C445005AED93 /* Products.plist in Resources */,
-				668B164F23EDF0CF00C1306A /* App-Icon-iPhone-Night@2x.png in Resources */,
-				668B165323EDF0CF00C1306A /* App-Icon-iPad-Pro-Day@2x.png in Resources */,
-				668B165C23EDF0CF00C1306A /* App-Icon-iPhone-Day@3x.png in Resources */,
-				668B164523EDF0CF00C1306A /* App-Icon-iPad-Pro-Ocean-Blue@2x.png in Resources */,
+				66A4FD09270F62C100E7C702 /* Aller_LtIt.ttf in Resources */,
 				66CB8D5224F83FE00047A2CF /* FeedMessageCell.xib in Resources */,
-				66AE0142259516FE00308636 /* Preview Content.xcassets in Resources */,
 				666C825A2168031B00C93A70 /* Home.storyboard in Resources */,
-				668B162A23EDF0CF00C1306A /* App-Icon-iPad-Pro-Dutch-Orange@2x.png in Resources */,
-				668B165723EDF0CF00C1306A /* App-Icon-iPad-Pro-Red@2x.png in Resources */,
 				666FBD9022C4E170007DB5D8 /* Black.plist in Resources */,
-				669FD7FB23F9E9DB001440EC /* App-Icon-iPad-Pro-Cookiezora@2x.png in Resources */,
 				66A08C6A23E3A2D5007B6418 /* PrivacySettings.storyboard in Resources */,
 				66C5797922A83726001B8F51 /* ThemeStore.storyboard in Resources */,
-				66A254DA22AAE55B002A0E34 /* App Icons.json in Resources */,
 				666938B721B1D4FE00BA9620 /* CommentCell.xib in Resources */,
 				66AA35C024030FA60006EC5B /* Episodes.storyboard in Resources */,
 				660C043223D1500A0040C749 /* MediumLockupCollectionViewCell.xib in Resources */,
 				6640E18922AD633500D0F575 /* Authentication.storyboard in Resources */,
-				66647B5D2084995E00CF624F /* Assets.xcassets in Resources */,
 				661F186024AB5C6F00542AFB /* SosumiShowCollectionViewCell.xib in Resources */,
 				665A457F24660D9500154F41 /* RatingCollectionViewCell.xib in Resources */,
-				669FD7F723F9E9DB001440EC /* App-Icon-iPad-Kurolicious.png in Resources */,
-				668B162C23EDF0CF00C1306A /* App-Icon-iPad-Product-RED@2x.png in Resources */,
 				669A36BF24F1BFD60045D04A /* OnboardingHeaderTableViewCell.xib in Resources */,
-				668B166123EDF0CF00C1306A /* App-Icon-iPad-Pro-Green@2x.png in Resources */,
-				668B162F23EDF0CF00C1306A /* App-Icon-iPhone-Peach-Orange@3x.png in Resources */,
-				668F639220986851003B1C1D /* Aller_LtIt.ttf in Resources */,
-				668B166223EDF0CF00C1306A /* App-Icon-iPad-Pro-Coral@2x.png in Resources */,
+				66A4FD0D270F62C100E7C702 /* Aller_BdIt.ttf in Resources */,
 				669A36C324F1C08D0045D04A /* OnboardingFooterTableViewCell.xib in Resources */,
-				668B165223EDF0CF00C1306A /* App-Icon-iPad-Peach-Orange@2x.png in Resources */,
 				664AAFA924EEF3DD00FF4AA5 /* CharacterLockupCollectionViewCell.xib in Resources */,
-				668B166E23EDF7FC00C1306A /* App-Icon-iPad-Kurogram@2x.png in Resources */,
 				66C5797D22A864CB001B8F51 /* Legal.storyboard in Resources */,
 				66A48FE021A411A900F34085 /* Notifications.storyboard in Resources */,
 				669EA9A222C1491600784181 /* Purchase.storyboard in Resources */,
+				66A4FD19270F6CD100E7C702 /* App Icons.plist in Resources */,
 				66AE01292594018400308636 /* Genre.storyboard in Resources */,
 				666D9EF325B3607600EDDC9E /* LibraryList.storyboard in Resources */,
-				668B164923EDF0CF00C1306A /* App-Icon-iPad-Rose-Gold.png in Resources */,
+				66A4FD16270F62D300E7C702 /* Settings.bundle in Resources */,
 				6646A275236A5F7600DCC0A4 /* BrowserSettings.storyboard in Resources */,
-				668B164C23EDF0CF00C1306A /* App-Icon-iPhone-Dutch-Orange@3x.png in Resources */,
 				660C043023D14F760040C749 /* SmallLockupCollectionViewCell.xib in Resources */,
-				669FD7F823F9E9DB001440EC /* App-Icon-iPad-Pro-Kurolicious@2x.png in Resources */,
-				66407C9723F625DB008944AB /* App-Icon-iPhone-Love-Bug@3x.png in Resources */,
 				66CBDD9224634AB700CA5F83 /* TitleHeaderCollectionReusableView.xib in Resources */,
-				668B163F23EDF0CF00C1306A /* App-Icon-iPad-Ocean-Blue.png in Resources */,
 				664AAF9424EEA37800FF4AA5 /* PersonLockupCollectionViewCell.xib in Resources */,
-				668B164723EDF0CF00C1306A /* App-Icon-iPad-Pro-Rose-Gold@2x.png in Resources */,
-				668B163323EDF0CF00C1306A /* App-Icon-iPad-Green.png in Resources */,
-				668B164223EDF0CF00C1306A /* App-Icon-iPhone-Dutch-Orange@2x.png in Resources */,
 				660C043423D150310040C749 /* LargeLockupCollectionViewCell.xib in Resources */,
-				668B164A23EDF0CF00C1306A /* App-Icon-iPad-Yellow@2x.png in Resources */,
-				669FD7FA23F9E9DB001440EC /* App-Icon-iPad-Cookiezora.png in Resources */,
 				666938BB21B1D51800BA9620 /* PostLinkCell.xib in Resources */,
 				660C042C23D149F20040C749 /* CastCollectionViewCell.xib in Resources */,
-				669FD7F923F9E9DB001440EC /* App-Icon-iPhone-Kurolicious@2x.png in Resources */,
 				66CBDD9C24649C3D00CA5F83 /* InformationCollectionViewCell.xib in Resources */,
 				660C043623D150640040C749 /* LegalCollectionViewCell.xib in Resources */,
 				66707835208B842E00471FBC /* Settings.storyboard in Resources */,
-				668B163723EDF0CF00C1306A /* App-Icon-iPhone-Rose-Gold@3x.png in Resources */,
-				668B162E23EDF0CF00C1306A /* App-Icon-iPhone-Product-RED@2x.png in Resources */,
-				668B164623EDF0CF00C1306A /* App-Icon-iPad-Peach-Orange.png in Resources */,
-				668B166023EDF0CF00C1306A /* App-Icon-iPhone-Green@3x.png in Resources */,
 				660C042E23D14F5C0040C749 /* VideoLockupCollectionViewCell.xib in Resources */,
-				668B165523EDF0CF00C1306A /* App-Icon-iPad-Night.png in Resources */,
 				664B52D122C03C0900B988B3 /* DisplaySettings.storyboard in Resources */,
 				6675263022280ACB007C1617 /* Day.plist in Resources */,
-				669FD7FD23F9E9DB001440EC /* App-Icon-iPhone-Kurolicious@3x.png in Resources */,
 				66CBDDA124649CB300CA5F83 /* Synopsis.storyboard in Resources */,
-				668F639020986851003B1C1D /* Aller_BdIt.ttf in Resources */,
 				66C45841259A88ED00886374 /* Grass.plist in Resources */,
-				668B165823EDF0CF00C1306A /* App-Icon-iPad-Pro-Night@2x.png in Resources */,
 				66842253259760F4000A09F8 /* Favorites.storyboard in Resources */,
-				668F638E20986851003B1C1D /* Aller_Bd.ttf in Resources */,
-				668B166D23EDF7FC00C1306A /* App-Icon-iPhone-Kurogram@3x.png in Resources */,
 				66DB11D024E6103900C99754 /* Shows.storyboard in Resources */,
-				668B164323EDF0CF00C1306A /* App-Icon-iPad-Red@2x.png in Resources */,
-				66407C9523F625DB008944AB /* App-Icon-iPad-Pro-Love-Bug@2x.png in Resources */,
 				669A36C124F1BFFA0045D04A /* OnboardingTextFieldTableViewCell.xib in Resources */,
-				668B164023EDF0CF00C1306A /* App-Icon-iPad-Dutch-Orange@2x.png in Resources */,
-				668B166323EDF0CF00C1306A /* App-Icon-iPhone-Ocean-Blue@2x.png in Resources */,
 				66AE01272593D5D300308636 /* Follow.storyboard in Resources */,
-				668B164B23EDF0CF00C1306A /* App-Icon-iPad-Coral@2x.png in Resources */,
-				669FD7FC23F9E9DB001440EC /* App-Icon-iPad-Cookiezora@2x.png in Resources */,
 				66C45843259A88ED00886374 /* Sky.plist in Resources */,
-				668B166B23EDF7FC00C1306A /* App-Icon-iPad-Kurogram.png in Resources */,
-				668F638C20986851003B1C1D /* Aller_Lt.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3594,27 +3267,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Copy pods acknowledgements file to Settings.bundle\nif [$ENABLE_PREVIEWS == \"NO\"]\nthen\n\tPODPATH=\"${PODS_ROOT}/Target Support Files/Pods-Kurozora/Pods-Kurozora-acknowledgements.plist\"\n\tPROJECTPATH=\"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/Acknowledgements.plist\"\n\n\tcp \"${PODPATH}\" \"${PROJECTPATH}\"\n\n\tPLISTBUDDY=\"/usr/libexec/PlistBuddy -c\"\n\n\ti=0\n\twhile true ; do\n\t   # If an item is printable then it exists, otherwise exit loop\n\t   $PLISTBUDDY \"Print PreferenceSpecifiers:$i\" \"${PROJECTPATH}\" >/dev/null 2>/dev/null\n\t   if [ $? -ne 0 ]; then\n\t\t  break\n\t   fi\n\t   i=$(($i + 1))\n\tdone\n\n\t# Get last item in array\n\ti=$(($i - 1))\n\n\t# Delete last item in array\n\t$PLISTBUDDY \"Delete PreferenceSpecifiers:$i\" \"${PROJECTPATH}\" >/dev/null 2>/dev/null\nelse\n\techo \"Skipping Add Acknowledgements script.\"\nfi\n";
-		};
-		6645D5F523E7062F0042B4E0 /* R.swift */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$TEMP_DIR/rswift-lastrun",
-			);
-			name = R.swift;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$SRCROOT/Kurozora/Supporting Files/R.generated.swift",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Add pod 'R.swift' to your Podfile and run pod install\n# In Xcode: Click on your project in the file list, choose your target under TARGETS, click the Build Phases tab and add a New Run Script Phase by clicking the little plus icon in the top left\n# Drag the new Run Script phase above the Compile Sources phase and below Check Pods Manifest.lock, expand it and paste the following script: \"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/R.generated.swift\"\n# Add $TEMP_DIR/rswift-lastrun to the \"Input Files\" and $SRCROOT/R.generated.swift to the \"Output Files\" of the Build Phase\n# Build your project, in Finder you will now see a R.generated.swift in the $SRCROOT-folder, drag the R.generated.swift files into your project and uncheck Copy items if needed\n#if [$ENABLE_PREVIEWS == \"NO\"]\n#then\n\t\"${PODS_ROOT}/R.swift/rswift\" generate \"${SRCROOT}/Kurozora/Supporting Files/R.generated.swift\"\n#else\n#\techo \"Skipping R.swift script.\"\n#fi\n";
+			shellScript = "# Copy pods acknowledgements file to Settings.bundle\n#if [$ENABLE_PREVIEWS == \"NO\"]\n#then\n\tPODPATH=\"${PODS_ROOT}/Target Support Files/Pods-Kurozora/Pods-Kurozora-acknowledgements.plist\"\n\tPROJECTPATH=\"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/Acknowledgements.plist\"\n\n\tcp \"${PODPATH}\" \"${PROJECTPATH}\"\n\n\tPLISTBUDDY=\"/usr/libexec/PlistBuddy -c\"\n\n\ti=0\n\twhile true ; do\n\t   # If an item is printable then it exists, otherwise exit loop\n\t   $PLISTBUDDY \"Print PreferenceSpecifiers:$i\" \"${PROJECTPATH}\" >/dev/null 2>/dev/null\n\t   if [ $? -ne 0 ]; then\n\t\t  break\n\t   fi\n\t   i=$(($i + 1))\n\tdone\n\n\t# Get last item in array\n\ti=$(($i - 1))\n\n\t# Delete last item in array\n\t$PLISTBUDDY \"Delete PreferenceSpecifiers:$i\" \"${PROJECTPATH}\" >/dev/null 2>/dev/null\n#else\n#\techo \"Skipping Add Acknowledgements script.\"\n#fi\n";
 		};
 		6666F88320BF4A4C0003A72F /* Run Build Bump Script */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3628,7 +3281,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [$ENABLE_PREVIEWS == \"NO\"]\nthen\n\tagvtool next-version -all\nelse\n\techo \"Skipping Build Bump script.\"\nfi\n";
+			shellScript = "#if [$ENABLE_PREVIEWS == \"NO\"]\n#then\n#\tagvtool next-version -all\n#else\n#\techo \"Skipping Build Bump script.\"\n#fi\n";
 		};
 		66B4DC40245A20390097135A /* Add version to Settings.bundle */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3646,7 +3299,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [$ENABLE_PREVIEWS == \"NO\"]\nthen\n\tversion=\"${MARKETING_VERSION}\"\n\t/usr/libexec/PlistBuddy \"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/Root.plist\" -c \"set PreferenceSpecifiers:2:DefaultValue $version\"\nelse\n\techo \"Skipping Add version to Settings.bundle script.\"\nfi\n";
+			shellScript = "#if [$ENABLE_PREVIEWS == \"NO\"]\n#then\n#\tagvtool next-version -all\n\t\n\tversion=\"${MARKETING_VERSION}\"\n\t/usr/libexec/PlistBuddy \"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/Root.plist\" -c \"set PreferenceSpecifiers:2:DefaultValue $version\"\n#else\n#\techo \"Skipping Add version to Settings.bundle script.\"\n#fi\n";
 		};
 		66C4DAE4243DE98F00C4B90A /* [CPD] Copy/Paste Detector */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3764,6 +3417,7 @@
 				6609FAD921D90C13008DF5E4 /* KNetworkManager.swift in Sources */,
 				663E342D2360D559003386D1 /* VerticalCollectionCellStyle.swift in Sources */,
 				66C898E824E1770500305C96 /* Show+Intents.swift in Sources */,
+				66A4FD14270F62D300E7C702 /* Intents.intentdefinition in Sources */,
 				661F9F822087282500CF4153 /* SignInTableViewController.swift in Sources */,
 				66E54EBE244E1579007248EE /* String+UIImage.swift in Sources */,
 				66DF091826C94A47005AED93 /* StoreKit+Kurozora.swift in Sources */,
@@ -3773,6 +3427,7 @@
 				6640E19522ADD2D800D0F575 /* AuthenticationTableViewController.swift in Sources */,
 				661B26B42351E71B00840AF5 /* UIImageView+Kurozora.swift in Sources */,
 				6659E70D20C1C14E007F139D /* UIDevice+Kurozora.swift in Sources */,
+				66775AAA270E57FD000194CE /* R.generated.swift in Sources */,
 				664AAF9F24EEED0000FF4AA5 /* PersonDetail.swift in Sources */,
 				664B6D7E230F5AA300F9C726 /* UITableView+Kurozora.swift in Sources */,
 				6646A27B236BAAB000DCC0A4 /* BrowserSettingsTableViewCell.swift in Sources */,
@@ -3891,7 +3546,6 @@
 				66EA1DE125B5BC5900FCD07A /* EpisodesCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				66C4DAE6243E133F00C4B90A /* KTabbedViewController.swift in Sources */,
 				66CF6D6720A987D100F98375 /* ProfileTableViewController.swift in Sources */,
-				66CF5D7E21E7773F00969BBB /* Intents.intentdefinition in Sources */,
 				66112350208F70D200E6033A /* UIApplication+Navigation.swift in Sources */,
 				66B4DBF22450E5930097135A /* SIWAButtonTableViewCell.swift in Sources */,
 				66D0BF8125613E29000AB7BF /* Show+UIKit.swift in Sources */,
@@ -3941,7 +3595,6 @@
 				66B69BD6214544DB007154BD /* LegalViewController.swift in Sources */,
 				66B4DBEF2450E5780097135A /* SignInWithAppleTableViewController.swift in Sources */,
 				662C307F22A06A5E00AAD69B /* CurrentSessionCell.swift in Sources */,
-				6645D5F723E709EE0042B4E0 /* R.generated.swift in Sources */,
 				6640E18B22AD634600D0F575 /* AuthenticationViewController.swift in Sources */,
 				660E3A1025E5E09C00A46EB0 /* SearchResultsCollectionViewController+UICollectionViewDelegate.swift in Sources */,
 				663E34232360D2BE003386D1 /* VideoLockupCollectionViewCell.swift in Sources */,
@@ -4102,6 +3755,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		6614AA91270E3FC400ABCB8B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6614AA41270E1FD300ABCB8B /* Kurozora-Rswift */;
+			targetProxy = 6614AA90270E3FC400ABCB8B /* PBXContainerItemProxy */;
+		};
 		66C6A54E23FB05C2000A6617 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			targetProxy = 66C6A54D23FB05C2000A6617 /* PBXContainerItemProxy */;
@@ -4120,14 +3778,45 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		6614AA43270E1FD300ABCB8B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUGGING_SYMBOLS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 47ZEU5J4BF;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PODS_ROOT = "${SRCROOT}/Pods";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		6614AA44270E1FD300ABCB8B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 47ZEU5J4BF;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PODS_ROOT = "${SRCROOT}/Pods";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		66647B782084995E00CF624F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -4188,11 +3877,10 @@
 		66647B792084995E00CF624F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -4250,27 +3938,20 @@
 			baseConfigurationReference = 66BB58088C9F6DB65EAAC0DD /* Pods-Kurozora.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Kurozora/Kurozora.entitlements;
-				CURRENT_PROJECT_VERSION = 11769;
-				DEVELOPMENT_ASSET_PATHS = "\"Kurozora/Supporting Files\"";
+				CURRENT_PROJECT_VERSION = 11773;
+				DEVELOPMENT_ASSET_PATHS = "Kurozora/Supporting\\ Files";
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
-				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/**",
-					"$(PROJECT_DIR)",
-				);
 				INFOPLIST_FILE = "Kurozora/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.tracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				RUN_DOCUMENTATION_COMPILER = NO;
 				SUPPORTS_MACCATALYST = YES;
 				TARGETED_DEVICE_FAMILY = "1,2,6";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -4282,27 +3963,20 @@
 			baseConfigurationReference = 268B0B9B5A247314B6D3FBD6 /* Pods-Kurozora.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Kurozora/Kurozora.entitlements;
-				CURRENT_PROJECT_VERSION = 11769;
-				DEVELOPMENT_ASSET_PATHS = "\"Kurozora/Supporting Files\"";
+				CURRENT_PROJECT_VERSION = 11773;
+				DEVELOPMENT_ASSET_PATHS = "Kurozora/Supporting\\ Files";
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
-				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/**",
-					"$(PROJECT_DIR)",
-				);
 				INFOPLIST_FILE = "Kurozora/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.tracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				RUN_DOCUMENTATION_COMPILER = NO;
 				SUPPORTS_MACCATALYST = YES;
 				TARGETED_DEVICE_FAMILY = "1,2,6";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -4312,6 +3986,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		6614AA42270E1FD300ABCB8B /* Build configuration list for PBXLegacyTarget "Kurozora-Rswift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6614AA43270E1FD300ABCB8B /* Debug */,
+				6614AA44270E1FD300ABCB8B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		66647B4B2084995500CF624F /* Build configuration list for PBXProject "Kurozora" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

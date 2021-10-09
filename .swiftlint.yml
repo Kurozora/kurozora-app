@@ -17,4 +17,4 @@ disabled_rules: # rule identifiers to exclude from running
 excluded: # paths to ignore during linting. Takes precedence over `included`.
   - Carthage
   - Pods
-  - Kurozora/Supporting Files/R.generated.swift
+  - Kurozora/R.generated.swift

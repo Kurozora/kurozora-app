@@ -7,39 +7,40 @@
 //
 
 import UIKit
-import SwiftyJSON
 
 class ManageIconTableViewController: SubSettingsViewController {
 	// MARK: - Properties
-	var alternativeIcons: AlternativeIcons? {
-		didSet {
-			_prefersActivityIndicatorHidden = true
-			tableView.reloadData()
-		}
+	var alternativeIcons: AlternativeIcons?
+	private var alternativeIconsDict: [String: [String]] = [:]
+
+	// MARK: - Initializers
+	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+		self.sharedInit()
 	}
-	var alternativeIconsArray = JSON()
+
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
+		self.sharedInit()
+	}
 
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		_prefersActivityIndicatorHidden = false
+		// Disable activity indicator
+		_prefersActivityIndicatorHidden = true
+	}
 
-		DispatchQueue.global(qos: .background).async {
-			if let path = Bundle.main.path(forResource: "App Icons", ofType: "json") {
-				do {
-					let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .alwaysMapped)
-					self.alternativeIconsArray = try JSON(data: data)
-
-					DispatchQueue.main.async {
-						self.alternativeIcons = try? AlternativeIcons(json: self.alternativeIconsArray)
-					}
-				} catch let error {
-					print("Parse error: \(error.localizedDescription)")
-				}
-			} else {
-				print("Invalid filename/path.")
-			}
+	// MARK: - Functions
+	/// The shared settings used to initialize tab bar view.
+	private func sharedInit() {
+		if let path = Bundle.main.path(forResource: "App Icons", ofType: "plist"),
+		   let plist = FileManager.default.contents(atPath: path) {
+			self.alternativeIconsDict = (try? PropertyListSerialization.propertyList(from: plist, format: nil) as? [String: [String]]) ?? [:]
+			self.alternativeIcons = AlternativeIcons(dict: alternativeIconsDict)
+		} else {
+			self.alternativeIconsDict = [:]
 		}
 	}
 }
@@ -53,13 +54,13 @@ extension ManageIconTableViewController {
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		switch section {
 		case 0:
-			guard let defaultIconsCount = alternativeIcons?.defaultIcons?.count else { return 0 }
+			guard let defaultIconsCount = alternativeIcons?.defaultIcons.count else { return 0 }
 			return defaultIconsCount
 		case 1:
-			guard let premiumIconsCount = alternativeIcons?.premiumIcons?.count else { return 0 }
+			guard let premiumIconsCount = alternativeIcons?.premiumIcons.count else { return 0 }
 			return premiumIconsCount
 		case 2:
-			guard let limitedIconsCount = alternativeIcons?.limitedIcons?.count else { return 0 }
+			guard let limitedIconsCount = alternativeIcons?.limitedIcons.count else { return 0 }
 			return limitedIconsCount
 		default:
 			return 0
@@ -72,11 +73,11 @@ extension ManageIconTableViewController {
 		}
 		switch indexPath.section {
 		case 0:
-			iconTableViewCell.alternativeIconsElement = alternativeIcons?.defaultIcons?[indexPath.row]
+			iconTableViewCell.alternativeIconsElement = alternativeIcons?.defaultIcons[indexPath.row]
 		case 1:
-			iconTableViewCell.alternativeIconsElement = alternativeIcons?.premiumIcons?[indexPath.row]
+			iconTableViewCell.alternativeIconsElement = alternativeIcons?.premiumIcons[indexPath.row]
 		case 2:
-			iconTableViewCell.alternativeIconsElement = alternativeIcons?.limitedIcons?[indexPath.row]
+			iconTableViewCell.alternativeIconsElement = alternativeIcons?.limitedIcons[indexPath.row]
 		default:
 			iconTableViewCell.alternativeIconsElement = nil
 		}
@@ -86,15 +87,15 @@ extension ManageIconTableViewController {
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		switch section {
 		case 0:
-			if alternativeIcons?.defaultIcons?.count != 0 {
+			if alternativeIcons?.defaultIcons.count != 0 {
 				return "DEFAULT"
 			}
 		case 1:
-			if alternativeIcons?.premiumIcons?.count != 0 {
+			if alternativeIcons?.premiumIcons.count != 0 {
 				return "PREMIUM"
 			}
 		case 2:
-			if alternativeIcons?.limitedIcons?.count != 0 {
+			if alternativeIcons?.limitedIcons.count != 0 {
 				return "LIMITED TIME"
 			}
 		default:
@@ -116,14 +117,14 @@ extension ManageIconTableViewController {
 				KThemeStyle.changeIcon(to: iconTableViewCell.alternativeIconsElement?.name)
 			}
 
-			UserSettings.set(iconTableViewCell.alternativeIconsElement?.image, forKey: .appIcon)
+			UserSettings.set(iconTableViewCell.alternativeIconsElement?.name, forKey: .appIcon)
 			NotificationCenter.default.post(name: .KSAppIconDidChange, object: nil)
 			tableView.reloadData()
 		default:
 			WorkflowController.shared.isPro {
 				KThemeStyle.changeIcon(to: iconTableViewCell.alternativeIconsElement?.name)
 
-				UserSettings.set(iconTableViewCell.alternativeIconsElement?.image, forKey: .appIcon)
+				UserSettings.set(iconTableViewCell.alternativeIconsElement?.name, forKey: .appIcon)
 				NotificationCenter.default.post(name: .KSAppIconDidChange, object: nil)
 				tableView.reloadData()
 			}

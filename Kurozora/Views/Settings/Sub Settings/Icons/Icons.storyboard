@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19150" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="71H-Zn-B4i">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="71H-Zn-B4i">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19134"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -76,7 +76,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="iconImageView" destination="jdH-KA-XQJ" id="DMV-TM-N7q"/>
-                                    <outlet property="iconTitleLabel" destination="5WY-cZ-EeT" id="vXi-KJ-uSO"/>
+                                    <outlet property="iconTitleLabel" destination="5WY-cZ-EeT" id="5aG-2S-xle"/>
                                     <outlet property="selectedImageView" destination="emU-FT-Zkz" id="cVa-K4-oD7"/>
                                     <outlet property="selectedView" destination="Ph3-HI-Rkc" id="Qbx-hK-ytD"/>
                                 </connections>
