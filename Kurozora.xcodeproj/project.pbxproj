@@ -204,7 +204,6 @@
 		6675263122280ACB007C1617 /* Night.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6675262E22280ACB007C1617 /* Night.plist */; };
 		66752633222815C2007C1617 /* KThemeStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66752632222815C2007C1617 /* KThemeStyle.swift */; };
 		6676B3C4216FF70B00877AFC /* EpisodeLockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6676B3C3216FF70B00877AFC /* EpisodeLockupCollectionViewCell.swift */; };
-		66775AAA270E57FD000194CE /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66775AA9270E57FD000194CE /* R.generated.swift */; };
 		66785E2A2363C714003EF24C /* CastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66785E292363C714003EF24C /* CastCollectionViewCell.swift */; };
 		667943632273933400E2D0D0 /* TextViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667943622273933400E2D0D0 /* TextViewCollectionViewCell.swift */; };
 		667943652273A33D00E2D0D0 /* EpisodeDetailCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667943642273A33D00E2D0D0 /* EpisodeDetailCollectionViewController.swift */; };
@@ -259,13 +258,6 @@
 		66A254DE22AAEF5D002A0E34 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A254DD22AAEF5D002A0E34 /* MapKit.framework */; };
 		66A48FE021A411A900F34085 /* Notifications.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66A48FDF21A411A900F34085 /* Notifications.storyboard */; };
 		66A4FCFD270EFDCA00E7C702 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66A4FCFC270EFDCA00E7C702 /* Assets.xcassets */; };
-		66A4FD07270F62C100E7C702 /* Aller_Lt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 66A4FD00270F62C000E7C702 /* Aller_Lt.ttf */; };
-		66A4FD08270F62C100E7C702 /* Aller_Bd.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 66A4FD01270F62C000E7C702 /* Aller_Bd.ttf */; };
-		66A4FD09270F62C100E7C702 /* Aller_LtIt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 66A4FD02270F62C000E7C702 /* Aller_LtIt.ttf */; };
-		66A4FD0A270F62C100E7C702 /* AllerDisplay.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 66A4FD03270F62C000E7C702 /* AllerDisplay.ttf */; };
-		66A4FD0B270F62C100E7C702 /* Aller_Rg.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 66A4FD04270F62C000E7C702 /* Aller_Rg.ttf */; };
-		66A4FD0C270F62C100E7C702 /* Aller_It.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 66A4FD05270F62C000E7C702 /* Aller_It.ttf */; };
-		66A4FD0D270F62C100E7C702 /* Aller_BdIt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 66A4FD06270F62C000E7C702 /* Aller_BdIt.ttf */; };
 		66A4FD13270F62D300E7C702 /* Configuration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 66A4FD0E270F62D300E7C702 /* Configuration.storekit */; };
 		66A4FD14270F62D300E7C702 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 66A4FD0F270F62D300E7C702 /* Intents.intentdefinition */; };
 		66A4FD16270F62D300E7C702 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 66A4FD11270F62D300E7C702 /* Settings.bundle */; };
@@ -414,6 +406,7 @@
 		66DF091326C7C1FB005AED93 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF091226C7C1FA005AED93 /* Store.swift */; };
 		66DF091826C94A47005AED93 /* StoreKit+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF091726C94A47005AED93 /* StoreKit+Kurozora.swift */; };
 		66E08369211324D400B39A75 /* OtherSessionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E08368211324D300B39A75 /* OtherSessionsCell.swift */; };
+		66E1517A2711C478007966A9 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E151792711C478007966A9 /* R.generated.swift */; };
 		66E46DFD24FDAF7B009938E1 /* FMDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E46DFC24FDAF7B009938E1 /* FMDetailsTableViewController.swift */; };
 		66E46DFF25055FEA009938E1 /* Int+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E46DFE25055FEA009938E1 /* Int+Kurozora.swift */; };
 		66E46E0125056535009938E1 /* CellActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E46E0025056535009938E1 /* CellActionButton.swift */; };
@@ -476,13 +469,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		6614AA90270E3FC400ABCB8B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 66647B482084995500CF624F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 6614AA41270E1FD300ABCB8B;
-			remoteInfo = "Kurozora-Rswift";
-		};
 		66C6A54D23FB05C2000A6617 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 66647B482084995500CF624F /* Project object */;
@@ -690,7 +676,6 @@
 		6675262E22280ACB007C1617 /* Night.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Night.plist; sourceTree = "<group>"; };
 		66752632222815C2007C1617 /* KThemeStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KThemeStyle.swift; sourceTree = "<group>"; };
 		6676B3C3216FF70B00877AFC /* EpisodeLockupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeLockupCollectionViewCell.swift; sourceTree = "<group>"; };
-		66775AA9270E57FD000194CE /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = "<group>"; };
 		66785E292363C714003EF24C /* CastCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastCollectionViewCell.swift; sourceTree = "<group>"; };
 		667943622273933400E2D0D0 /* TextViewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewCollectionViewCell.swift; sourceTree = "<group>"; };
 		667943642273A33D00E2D0D0 /* EpisodeDetailCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDetailCollectionViewController.swift; sourceTree = "<group>"; };
@@ -745,13 +730,6 @@
 		66A254DD22AAEF5D002A0E34 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		66A48FDF21A411A900F34085 /* Notifications.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Notifications.storyboard; sourceTree = "<group>"; };
 		66A4FCFC270EFDCA00E7C702 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		66A4FD00270F62C000E7C702 /* Aller_Lt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_Lt.ttf; sourceTree = "<group>"; };
-		66A4FD01270F62C000E7C702 /* Aller_Bd.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_Bd.ttf; sourceTree = "<group>"; };
-		66A4FD02270F62C000E7C702 /* Aller_LtIt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_LtIt.ttf; sourceTree = "<group>"; };
-		66A4FD03270F62C000E7C702 /* AllerDisplay.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AllerDisplay.ttf; sourceTree = "<group>"; };
-		66A4FD04270F62C000E7C702 /* Aller_Rg.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_Rg.ttf; sourceTree = "<group>"; };
-		66A4FD05270F62C000E7C702 /* Aller_It.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_It.ttf; sourceTree = "<group>"; };
-		66A4FD06270F62C000E7C702 /* Aller_BdIt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_BdIt.ttf; sourceTree = "<group>"; };
 		66A4FD0E270F62D300E7C702 /* Configuration.storekit */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Configuration.storekit; sourceTree = "<group>"; };
 		66A4FD0F270F62D300E7C702 /* Intents.intentdefinition */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		66A4FD10270F62D300E7C702 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -908,6 +886,7 @@
 		66DF091226C7C1FA005AED93 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		66DF091726C94A47005AED93 /* StoreKit+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StoreKit+Kurozora.swift"; sourceTree = "<group>"; };
 		66E08368211324D300B39A75 /* OtherSessionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherSessionsCell.swift; sourceTree = "<group>"; };
+		66E151792711C478007966A9 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = "<group>"; };
 		66E46DFC24FDAF7B009938E1 /* FMDetailsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDetailsTableViewController.swift; sourceTree = "<group>"; };
 		66E46DFE25055FEA009938E1 /* Int+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Kurozora.swift"; sourceTree = "<group>"; };
 		66E46E0025056535009938E1 /* CellActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellActionButton.swift; sourceTree = "<group>"; };
@@ -1654,7 +1633,7 @@
 				66A4FCFC270EFDCA00E7C702 /* Assets.xcassets */,
 				660E9FC8214BC6FB00F6813C /* Kurozora.entitlements */,
 				66647B532084995500CF624F /* AppDelegate.swift */,
-				66775AA9270E57FD000194CE /* R.generated.swift */,
+				66E151792711C478007966A9 /* R.generated.swift */,
 				663C95B823084FAC003720A4 /* SceneDelegate.swift */,
 				66707821208B1C6800471FBC /* LaunchScreen.xib */,
 				66B4F1D9223D1F70007C5048 /* App Frameworks */,
@@ -3040,29 +3019,13 @@
 		};
 /* End PBXGroup section */
 
-/* Begin PBXLegacyTarget section */
-		6614AA41270E1FD300ABCB8B /* Kurozora-Rswift */ = {
-			isa = PBXLegacyTarget;
-			buildArgumentsString = "generate --target Kurozora --bundleIdentifier app.kurozora.tracker --productModuleName Kurozora --infoPlistFile \"Kurozora/Supporting Files/Info.plist\" --codeSignEntitlements Kurozora/Kurozora.entitlements \"Kurozora/R.generated.swift\"";
-			buildConfigurationList = 6614AA42270E1FD300ABCB8B /* Build configuration list for PBXLegacyTarget "Kurozora-Rswift" */;
-			buildPhases = (
-			);
-			buildToolPath = "${PODS_ROOT}/R.swift/rswift";
-			buildWorkingDirectory = "";
-			dependencies = (
-			);
-			name = "Kurozora-Rswift";
-			passBuildSettingsInEnvironment = 1;
-			productName = "Kurozora-Rswift";
-		};
-/* End PBXLegacyTarget section */
-
 /* Begin PBXNativeTarget section */
 		66647B4F2084995500CF624F /* Kurozora */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 66647B7A2084995E00CF624F /* Build configuration list for PBXNativeTarget "Kurozora" */;
 			buildPhases = (
 				C4D3519F59E49E683C3D0828 /* [CP] Check Pods Manifest.lock */,
+				66E151782711C2CF007966A9 /* R.swift */,
 				66C4DAE4243DE98F00C4B90A /* [CPD] Copy/Paste Detector */,
 				66647B4C2084995500CF624F /* Sources */,
 				66647B4D2084995500CF624F /* Frameworks */,
@@ -3076,7 +3039,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				6614AA91270E3FC400ABCB8B /* PBXTargetDependency */,
 				66C6A54E23FB05C2000A6617 /* PBXTargetDependency */,
 			);
 			name = Kurozora;
@@ -3094,9 +3056,6 @@
 				LastUpgradeCheck = 1230;
 				ORGANIZATIONNAME = Kurozora;
 				TargetAttributes = {
-					6614AA41270E1FD300ABCB8B = {
-						CreatedOnToolsVersion = 13.0;
-					};
 					66647B4F2084995500CF624F = {
 						CreatedOnToolsVersion = 9.3;
 						ProvisioningStyle = Automatic;
@@ -3131,7 +3090,6 @@
 			projectRoot = "";
 			targets = (
 				66647B4F2084995500CF624F /* Kurozora */,
-				6614AA41270E1FD300ABCB8B /* Kurozora-Rswift */,
 			);
 		};
 /* End PBXProject section */
@@ -3150,7 +3108,6 @@
 				66D6237F20A1CC1D00304914 /* Library.storyboard in Resources */,
 				66CBDD9E24649C4C00CA5F83 /* TextViewCollectionViewCell.xib in Resources */,
 				666938B821B1D50500BA9620 /* CommentImageCell.xib in Resources */,
-				66A4FD0B270F62C100E7C702 /* Aller_Rg.ttf in Resources */,
 				666938B921B1D50E00BA9620 /* WriteACommentCell.xib in Resources */,
 				66AE01242593D4E200308636 /* Badge.storyboard in Resources */,
 				66C5797B22A86435001B8F51 /* DebugSettings.storyboard in Resources */,
@@ -3161,13 +3118,11 @@
 				66DEB4A821D248710093725F /* Search.storyboard in Resources */,
 				66C45842259A88ED00886374 /* Sakura.plist in Resources */,
 				666938BA21B1D51400BA9620 /* ShowMoreCell.xib in Resources */,
-				66A4FD0A270F62C100E7C702 /* AllerDisplay.ttf in Resources */,
 				6675263122280ACB007C1617 /* Night.plist in Resources */,
 				66E46E05250666AE009938E1 /* FeedMessageReShareCell.xib in Resources */,
 				66CE8114246092FF00DB0C49 /* ServicePreviewTableViewCell.xib in Resources */,
 				66160C40215C2DEB00D0D722 /* Reachability.storyboard in Resources */,
 				6633A52924A3DA11003C6390 /* InformationButtonCollectionViewCell.xib in Resources */,
-				66A4FD0C270F62C100E7C702 /* Aller_It.ttf in Resources */,
 				664AAF8124EE8E2F00FF4AA5 /* Characters.storyboard in Resources */,
 				6684225025967A65000A09F8 /* TitleHeaderTableViewCell.xib in Resources */,
 				66CE8118246093DE00DB0C49 /* ServiceHeaderTableViewCell.xib in Resources */,
@@ -3178,16 +3133,13 @@
 				660C042523D0CFC00040C749 /* PosterLockupCollectionViewCell.xib in Resources */,
 				6647237824601707008E5111 /* ServiceFooterTableViewCell.xib in Resources */,
 				66A4FD17270F62D300E7C702 /* Products.plist in Resources */,
-				66A4FD07270F62C100E7C702 /* Aller_Lt.ttf in Resources */,
 				664AAF9824EEE53700FF4AA5 /* People.storyboard in Resources */,
 				66A4FCFD270EFDCA00E7C702 /* Assets.xcassets in Resources */,
 				66CBA53722BC454600FBEC13 /* Feed.storyboard in Resources */,
 				66A4FD1A270F7B3900E7C702 /* Icons.storyboard in Resources */,
 				66CE81202460E6F800DB0C49 /* Redeem.storyboard in Resources */,
-				66A4FD08270F62C100E7C702 /* Aller_Bd.ttf in Resources */,
 				66C8FBF124671CBC00C82D60 /* SwitchAccountSettings.storyboard in Resources */,
 				66B13A672405DBE000CD732B /* Onboarding.storyboard in Resources */,
-				66A4FD09270F62C100E7C702 /* Aller_LtIt.ttf in Resources */,
 				66CB8D5224F83FE00047A2CF /* FeedMessageCell.xib in Resources */,
 				666C825A2168031B00C93A70 /* Home.storyboard in Resources */,
 				666FBD9022C4E170007DB5D8 /* Black.plist in Resources */,
@@ -3200,7 +3152,6 @@
 				661F186024AB5C6F00542AFB /* SosumiShowCollectionViewCell.xib in Resources */,
 				665A457F24660D9500154F41 /* RatingCollectionViewCell.xib in Resources */,
 				669A36BF24F1BFD60045D04A /* OnboardingHeaderTableViewCell.xib in Resources */,
-				66A4FD0D270F62C100E7C702 /* Aller_BdIt.ttf in Resources */,
 				669A36C324F1C08D0045D04A /* OnboardingFooterTableViewCell.xib in Resources */,
 				664AAFA924EEF3DD00FF4AA5 /* CharacterLockupCollectionViewCell.xib in Resources */,
 				66C5797D22A864CB001B8F51 /* Legal.storyboard in Resources */,
@@ -3322,6 +3273,27 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
+		66E151782711C2CF007966A9 /* R.swift */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$TEMP_DIR/rswift-lastrun",
+			);
+			name = R.swift;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				$SRCROOT/Kurozora/R.generated.swift,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Add pod 'R.swift' to your Podfile and run pod install\n# In Xcode: Click on your project in the file list, choose your target under TARGETS, click the Build Phases tab and add a New Run Script Phase by clicking the little plus icon in the top left\n# Drag the new Run Script phase above the Compile Sources phase and below Check Pods Manifest.lock, expand it and paste the following script: \"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/R.generated.swift\"\n# Add $TEMP_DIR/rswift-lastrun to the \"Input Files\" and $SRCROOT/R.generated.swift to the \"Output Files\" of the Build Phase\n# Build your project, in Finder you will now see a R.generated.swift in the $SRCROOT-folder, drag the R.generated.swift files into your project and uncheck Copy items if needed\n\n\"${PODS_ROOT}/R.swift/rswift\" generate \"${SRCROOT}/Kurozora/R.generated.swift\"\n";
+		};
 		C4D3519F59E49E683C3D0828 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3412,7 +3384,6 @@
 				6640E19522ADD2D800D0F575 /* AuthenticationTableViewController.swift in Sources */,
 				661B26B42351E71B00840AF5 /* UIImageView+Kurozora.swift in Sources */,
 				6659E70D20C1C14E007F139D /* UIDevice+Kurozora.swift in Sources */,
-				66775AAA270E57FD000194CE /* R.generated.swift in Sources */,
 				664AAF9F24EEED0000FF4AA5 /* PersonDetail.swift in Sources */,
 				664B6D7E230F5AA300F9C726 /* UITableView+Kurozora.swift in Sources */,
 				6646A27B236BAAB000DCC0A4 /* BrowserSettingsTableViewCell.swift in Sources */,
@@ -3449,6 +3420,7 @@
 				66707838208B846C00471FBC /* SettingsTableViewController.swift in Sources */,
 				66EA1DE825B5BD7000FCD07A /* SeasonsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				662EDB4A257C37A6005AA29E /* KRefreshControl.swift in Sources */,
+				66E1517A2711C478007966A9 /* R.generated.swift in Sources */,
 				668B167523EEED0C00C1306A /* SearchHistory.swift in Sources */,
 				66CF6D6F20A9921000F98375 /* NotificationsViewController.swift in Sources */,
 				66EA1DD625B5BB3100FCD07A /* PersonDetailsCollectionViewController+KCollectionViewDataSource.swift in Sources */,
@@ -3740,11 +3712,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		6614AA91270E3FC400ABCB8B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 6614AA41270E1FD300ABCB8B /* Kurozora-Rswift */;
-			targetProxy = 6614AA90270E3FC400ABCB8B /* PBXContainerItemProxy */;
-		};
 		66C6A54E23FB05C2000A6617 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			targetProxy = 66C6A54D23FB05C2000A6617 /* PBXContainerItemProxy */;
@@ -3763,38 +3730,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		6614AA43270E1FD300ABCB8B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CODE_SIGN_STYLE = Automatic;
-				DEBUGGING_SYMBOLS = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 47ZEU5J4BF;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PODS_ROOT = "${SRCROOT}/Pods";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		6614AA44270E1FD300ABCB8B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CODE_SIGN_STYLE = Automatic;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 47ZEU5J4BF;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PODS_ROOT = "${SRCROOT}/Pods";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 		66647B782084995E00CF624F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3971,15 +3906,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		6614AA42270E1FD300ABCB8B /* Build configuration list for PBXLegacyTarget "Kurozora-Rswift" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				6614AA43270E1FD300ABCB8B /* Debug */,
-				6614AA44270E1FD300ABCB8B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		66647B4B2084995500CF624F /* Build configuration list for PBXProject "Kurozora" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
