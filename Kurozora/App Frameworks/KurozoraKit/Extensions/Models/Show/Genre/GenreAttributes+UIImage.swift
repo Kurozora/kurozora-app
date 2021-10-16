@@ -18,7 +18,7 @@ extension Genre.Attributes {
 	var symbolImage: UIImage? {
 		let symbolImageView = UIImageView()
 		let placeholderImage = R.image.kurozoraIcon()!
-		symbolImageView.setImage(with: self.symbol ?? "", placeholder: placeholderImage)
+		symbolImageView.setImage(with: self.symbol?.url ?? "", placeholder: placeholderImage)
 		return symbolImageView.image?.withRenderingMode(.alwaysOriginal)
 	}
 }

@@ -23,6 +23,6 @@ class MediumLockupCollectionViewCell: BaseLockupCollectionViewCell {
 
 		primaryLabel?.text = genre.attributes.name
 		backgroundColorView?.backgroundColor = UIColor(hexString: genre.attributes.color)
-		bannerImageView?.setImage(with: genre.attributes.symbol ?? "", placeholder: R.image.kurozoraIcon()!)
+		bannerImageView?.setImage(with: genre.attributes.symbol?.url ?? "", placeholder: R.image.kurozoraIcon()!)
 	}
 }

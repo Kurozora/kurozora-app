@@ -26,7 +26,7 @@ class BaseNotificationCell: KTableViewCell {
 
 	// MARK: - Functions
 	override func configureCell() {
-		self.dateLabel.text = userNotification.attributes.createdAt.timeAgo
+		self.dateLabel.text = userNotification.attributes.createdAt.relativeToNow
 		self.contentLabel.text = userNotification.attributes.description
 		self.notificationTypeLabel.text = notificationType?.stringValue.uppercased()
 

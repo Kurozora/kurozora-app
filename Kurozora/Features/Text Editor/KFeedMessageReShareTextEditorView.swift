@@ -54,7 +54,7 @@ class KFMReShareTextEditorViewController: KViewController {
 			opProfileImageView.setImage(with: opUser.attributes.profile?.url ?? "", placeholder: opUser.attributes.placeholderImage)
 		}
 		opBodyTextView.text = self.opFeedMessage.attributes.body
-		dateLabel.text = self.opFeedMessage.attributes.createdAt.timeAgo
+		dateLabel.text = self.opFeedMessage.attributes.createdAt.relativeToNow
 	}
 
 	// MARK: - IBActions

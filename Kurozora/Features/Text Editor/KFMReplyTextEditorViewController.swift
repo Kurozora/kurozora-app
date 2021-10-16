@@ -60,7 +60,7 @@ class KFMReplyTextEditorViewController: KViewController {
 			self.opProfileImageView.setImage(with: opUser.attributes.profile?.url ?? "", placeholder: opUser.attributes.placeholderImage)
 		}
 		self.opMessageTextView.text = self.opFeedMessage.attributes.body
-		self.opDateTimeLabel.text = self.opFeedMessage.attributes.createdAt.timeAgo
+		self.opDateTimeLabel.text = self.opFeedMessage.attributes.createdAt.relativeToNow
 	}
 
 	// MARK: - IBActions

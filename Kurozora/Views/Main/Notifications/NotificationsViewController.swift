@@ -373,7 +373,7 @@ extension NotificationsViewController {
 			}
 
 			// Reorder grouped notifiactions so the recent one is at the top (Recent, Earlier Today, Yesterday, etc.)
-			self.groupedNotifications.sort(by: { $0.sectionNotifications.first?.attributes.createdAt.dateTime ?? Date() > $1.sectionNotifications.first?.attributes.createdAt.dateTime ?? Date() })
+			self.groupedNotifications.sort(by: { $0.sectionNotifications.first?.attributes.createdAt ?? Date() > $1.sectionNotifications.first?.attributes.createdAt ?? Date() })
 		case .byType:
 			self.groupedNotifications = []
 
@@ -393,7 +393,7 @@ extension NotificationsViewController {
 			}
 
 			// Reorder grouped notifiactions so the recent one is at the top (Recent, Earlier Today, Yesterday, etc.)
-			self.groupedNotifications.sort(by: { $0.sectionNotifications.first?.attributes.createdAt.dateTime ?? Date() > $1.sectionNotifications.first?.attributes.createdAt.dateTime ?? Date() })
+			self.groupedNotifications.sort(by: { $0.sectionNotifications.first?.attributes.createdAt ?? Date() > $1.sectionNotifications.first?.attributes.createdAt ?? Date() })
 		case .off:
 			self.groupedNotifications = []
 		}

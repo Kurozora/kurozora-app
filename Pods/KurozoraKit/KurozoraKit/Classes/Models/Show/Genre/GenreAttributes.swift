@@ -20,8 +20,8 @@ extension Genre {
 		/// The color of the genre.
 		public let color: String
 
-		/// The link to the symbol of the genre.
-		public let symbol: String?
+		/// The media object of the symbol of the genre.
+		public let symbol: Media?
 
 		/// Whether the genre is Not Safe For Work.
 		public let isNSFW: Bool

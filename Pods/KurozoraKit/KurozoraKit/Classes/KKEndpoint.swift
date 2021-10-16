@@ -169,10 +169,7 @@ extension KKEndpoint {
 		case signIn
 
 		/// The endpoint to sign in a user using Sign in with Apple.
-		case signInSIWA
-
-		/// The endpoint to sign up a user using Sign in with Apple.
-		case signUpSIWA
+		case siwaSignIn
 
 		/// The edpoint to reset a user's password.
 		case resetPassword
@@ -206,10 +203,8 @@ extension KKEndpoint {
 				return "users"
 			case .signIn:
 				return "users/signin"
-			case .signInSIWA:
-				return "users/signin/siwa"
-			case .signUpSIWA:
-				return "users/signup/siwa"
+			case .siwaSignIn:
+				return "users/siwa/signin"
 			case .resetPassword:
 				return "users/reset-password"
 			case .feedMessages(let userID):

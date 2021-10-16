@@ -16,6 +16,40 @@ extension Date {
 		return calendar.dateComponents([.calendar, .timeZone, .era, .year, .month, .day, .hour, .minute, .second, .nanosecond, .weekday, .weekdayOrdinal, .quarter, .weekOfMonth, .weekOfYear, .yearForWeekOfYear], from: self)
 	}
 
+	/**
+		Locale-aware string representations of a relative date or time.
+
+		Use the strings that the formatter produces, such as “1 hour ago”, “in 2 weeks”, “yesterday”, and “tomorrow” as standalone strings. Embedding them in other strings may not be grammatically correct.
+	*/
+	var relativeToNow: String {
+		let formatter = RelativeDateTimeFormatter()
+		formatter.unitsStyle = .abbreviated
+		return formatter.localizedString(for: self, relativeTo: Date())
+	}
+
+	/// Returns a string indicating the group a given date falls in.
+	var groupTime: String {
+		let timeInterval = Int(-self.timeIntervalSince(Date()))
+
+		// Name of week day
+		let formatter = DateFormatter()
+		formatter.dateFormat = "EEEE"
+		let weekDay = formatter.string(from: self)
+
+		if let yearsAgo = timeInterval / (12*4*7*24*60*60) as Int?, yearsAgo > 0 {
+			return (yearsAgo == 1 ? "Last Year" : "\(yearsAgo) Years Ago") // If exactly 1 year, then Last Year, otherwise # Years Ago
+		} else if let monthsAgo = timeInterval / (4*7*24*60*60) as Int?, monthsAgo > 0 {
+			return (monthsAgo == 1 ? "Last Month" : "\(monthsAgo) Months ago") // If exactly 1 month, then Last Month, otherwise # Months Ago
+		} else if let weeksAgo = timeInterval / (7*24*60*60) as Int?, weeksAgo > 0 {
+			return (weeksAgo == 1 ? "Last Week" : "\(weeksAgo) Weeks Ago") // If 1 week exactly, then Last Week, otherwise # Weeks Ago
+		} else if let daysAgo = timeInterval / (24*60*60) as Int?, daysAgo > 0 {
+			return (daysAgo == 1 ? "Yesterday" : weekDay) // If 1 day exactly, then Yesterday, otherwise Day Of Week
+		} else if let hoursAgo = timeInterval / (60*60) as Int?, hoursAgo > 0 {
+			return "Earlier Today" // If 1 hour or more, then Earlier Today
+		}
+		return "Recent" // If less than 1 hour, then Recent
+	}
+
 	// MARK: - Initializers
 	/**
 		Creates a new Date based on the first date detected on a string using data dectors.

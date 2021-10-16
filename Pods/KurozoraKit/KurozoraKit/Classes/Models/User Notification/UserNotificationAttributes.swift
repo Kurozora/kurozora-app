@@ -27,7 +27,7 @@ extension UserNotification {
 		public let description: String
 
 		/// The creation date of the user notification.
-		public let createdAt: String
+		public let createdAt: Date
 	}
 }
 

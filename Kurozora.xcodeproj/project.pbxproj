@@ -1630,10 +1630,8 @@
 		66647B522084995500CF624F /* Kurozora */ = {
 			isa = PBXGroup;
 			children = (
-				66A4FCFC270EFDCA00E7C702 /* Assets.xcassets */,
 				660E9FC8214BC6FB00F6813C /* Kurozora.entitlements */,
 				66647B532084995500CF624F /* AppDelegate.swift */,
-				66E151792711C478007966A9 /* R.generated.swift */,
 				663C95B823084FAC003720A4 /* SceneDelegate.swift */,
 				66707821208B1C6800471FBC /* LaunchScreen.xib */,
 				66B4F1D9223D1F70007C5048 /* App Frameworks */,
@@ -1641,7 +1639,7 @@
 				66DE65262401AE80001C2773 /* Enums */,
 				66B4F1D1223BC8EB007C5048 /* Features */,
 				6675262B22280AB4007C1617 /* Plist */,
-				66A4FCFE270F627800E7C702 /* Supporting Files */,
+				66E1517B2713628A007966A9 /* Supporting Files */,
 				66ABBBFF240215BE00CE8A26 /* Views */,
 			);
 			path = Kurozora;
@@ -2128,19 +2126,6 @@
 				668DBE6626BCA21D00399BEB /* KTheme.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		66A4FCFE270F627800E7C702 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				66A4FD11270F62D300E7C702 /* Settings.bundle */,
-				66A4FD0F270F62D300E7C702 /* Intents.intentdefinition */,
-				66A4FD18270F6CD100E7C702 /* App Icons.plist */,
-				66A4FD10270F62D300E7C702 /* Info.plist */,
-				66A4FD12270F62D300E7C702 /* Products.plist */,
-				66A4FD0E270F62D300E7C702 /* Configuration.storekit */,
-			);
-			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		66AA35C1240312210006EC5B /* Main */ = {
@@ -2904,6 +2889,21 @@
 			path = StoreKit;
 			sourceTree = "<group>";
 		};
+		66E1517B2713628A007966A9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				66A4FD11270F62D300E7C702 /* Settings.bundle */,
+				66A4FD0F270F62D300E7C702 /* Intents.intentdefinition */,
+				66A4FD18270F6CD100E7C702 /* App Icons.plist */,
+				66A4FD10270F62D300E7C702 /* Info.plist */,
+				66A4FD12270F62D300E7C702 /* Products.plist */,
+				66A4FD0E270F62D300E7C702 /* Configuration.storekit */,
+				66E151792711C478007966A9 /* R.generated.swift */,
+				66A4FCFC270EFDCA00E7C702 /* Assets.xcassets */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		66E54EBC244E1486007248EE /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
@@ -3288,11 +3288,11 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				$SRCROOT/Kurozora/R.generated.swift,
+				"$SRCROOT/Kurozora/Supporting Files/R.generated.swift",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Add pod 'R.swift' to your Podfile and run pod install\n# In Xcode: Click on your project in the file list, choose your target under TARGETS, click the Build Phases tab and add a New Run Script Phase by clicking the little plus icon in the top left\n# Drag the new Run Script phase above the Compile Sources phase and below Check Pods Manifest.lock, expand it and paste the following script: \"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/R.generated.swift\"\n# Add $TEMP_DIR/rswift-lastrun to the \"Input Files\" and $SRCROOT/R.generated.swift to the \"Output Files\" of the Build Phase\n# Build your project, in Finder you will now see a R.generated.swift in the $SRCROOT-folder, drag the R.generated.swift files into your project and uncheck Copy items if needed\n\n\"${PODS_ROOT}/R.swift/rswift\" generate \"${SRCROOT}/Kurozora/R.generated.swift\"\n";
+			shellScript = "# Add pod 'R.swift' to your Podfile and run pod install\n# In Xcode: Click on your project in the file list, choose your target under TARGETS, click the Build Phases tab and add a New Run Script Phase by clicking the little plus icon in the top left\n# Drag the new Run Script phase above the Compile Sources phase and below Check Pods Manifest.lock, expand it and paste the following script: \"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/R.generated.swift\"\n# Add $TEMP_DIR/rswift-lastrun to the \"Input Files\" and $SRCROOT/R.generated.swift to the \"Output Files\" of the Build Phase\n# Build your project, in Finder you will now see a R.generated.swift in the $SRCROOT-folder, drag the R.generated.swift files into your project and uncheck Copy items if needed\n\n\"${PODS_ROOT}/R.swift/rswift\" generate \"${SRCROOT}/Kurozora/Supporting Files/R.generated.swift\"\n";
 		};
 		C4D3519F59E49E683C3D0828 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3860,8 +3860,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Kurozora/Kurozora.entitlements;
-				CURRENT_PROJECT_VERSION = 11773;
-				DEVELOPMENT_ASSET_PATHS = "Kurozora/Supporting\\ Files";
+				CURRENT_PROJECT_VERSION = 11775;
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				INFOPLIST_FILE = "Kurozora/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3885,8 +3885,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Kurozora/Kurozora.entitlements;
-				CURRENT_PROJECT_VERSION = 11773;
-				DEVELOPMENT_ASSET_PATHS = "Kurozora/Supporting\\ Files";
+				CURRENT_PROJECT_VERSION = 11775;
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				INFOPLIST_FILE = "Kurozora/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (

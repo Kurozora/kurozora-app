@@ -20,7 +20,7 @@ class FeedMessageReShareCell: FeedMessageCell {
 	override func configureCell() {
 		super.configureCell()
 		guard let opMessage = self.feedMessage.relationships.parent?.data.first else { return }
-		self.opDateTimeLabel.text = opMessage.attributes.createdAt.timeAgo
+		self.opDateTimeLabel.text = opMessage.attributes.createdAt.relativeToNow
 		self.opMessageTextView.text = opMessage.attributes.body
 
 		if let opUser = opMessage.relationships.users.data.first {

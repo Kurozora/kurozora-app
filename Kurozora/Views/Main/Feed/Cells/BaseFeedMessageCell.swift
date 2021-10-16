@@ -62,7 +62,7 @@ class BaseFeedMessageCell: KTableViewCell {
 		postTextView.text = self.feedMessage.attributes.body
 
 		// Configure date time
-		dateTimeLabel.text = self.feedMessage.attributes.createdAt.timeAgo
+		dateTimeLabel.text = self.feedMessage.attributes.createdAt.relativeToNow
 
 		// Configure metrics
 		let heartsCount = self.feedMessage.attributes.metrics.heartCount

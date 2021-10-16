@@ -3,8 +3,8 @@ PODS:
   - Cosmos (23.0.0)
   - ESTabBarController-swift (2.8.0)
   - KeychainAccess (4.2.2)
-  - Kingfisher (7.0.0)
-  - KurozoraKit (0.17.7):
+  - Kingfisher (7.1.1)
+  - KurozoraKit (0.17.10):
     - KeychainAccess
     - TRON
   - Pageboy (3.6.2)
@@ -95,8 +95,8 @@ SPEC CHECKSUMS:
   Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
   ESTabBarController-swift: 05593a6ad64700b03c0eb60ff625916370aa4136
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
-  Kingfisher: 5efc54fec3980f92354898532e562cc17f31efb4
-  KurozoraKit: b01cfcd8a061d2be80e16bd53beab7b4bea4fcfe
+  Kingfisher: f738f9c4a3415823b8e2985d10aa2d6a9f37bc4d
+  KurozoraKit: f55e5a2493daa9f53f120a302d2c0435082308e7
   Pageboy: cf121b9dd48c63f3f281b2a9ec93d02e0f23879b
   R.swift: 35cc10e781ae1dfff20ced6f74dee53cbf90bd14
   R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962

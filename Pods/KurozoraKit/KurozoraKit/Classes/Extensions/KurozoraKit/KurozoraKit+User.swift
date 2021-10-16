@@ -106,8 +106,8 @@ extension KurozoraKit {
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
 	public func signIn(withAppleID token: String, completion completionHandler: @escaping (_ result: Result<OAuthResponse, KKAPIError>) -> Void) {
-		let usersSignUpSIWA = KKEndpoint.Users.signInSIWA.endpointValue
-		let request: APIRequest<OAuthResponse, KKAPIError> = tron.codable.request(usersSignUpSIWA)
+		let siwaSignIn = KKEndpoint.Users.siwaSignIn.endpointValue
+		let request: APIRequest<OAuthResponse, KKAPIError> = tron.codable.request(siwaSignIn)
 		request.headers = headers
 		request.method = .post
 		request.parameters = [

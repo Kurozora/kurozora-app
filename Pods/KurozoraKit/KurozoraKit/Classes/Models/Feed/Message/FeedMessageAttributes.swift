@@ -36,7 +36,7 @@ extension FeedMessage {
 		public let isSpoiler: Bool
 
 		/// The date the feed message was created at.
-		public let createdAt: String
+		public let createdAt: Date
 	}
 }
 

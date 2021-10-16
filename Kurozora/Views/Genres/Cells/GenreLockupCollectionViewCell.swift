@@ -34,6 +34,6 @@ class GenreLockupCollectionViewCell: UICollectionViewCell {
 
 		self.primaryLabel.text = self.genre.attributes.name
 		self.secondaryLabel.text = self.genre.attributes.description
-		self.symbolImageView.setImage(with: self.genre.attributes.symbol ?? "", placeholder: R.image.kurozoraIcon()!)
+		self.symbolImageView.setImage(with: self.genre.attributes.symbol?.url ?? "", placeholder: R.image.kurozoraIcon()!)
 	}
 }
