@@ -16,15 +16,13 @@ class SelectableSettingsCell: SettingsCell {
 		}
 	}
 
-	// MARK: - Properties
-	override var isSelected: Bool {
-		didSet {
-			if isSelected {
-				self.selectedImageView.image = UIImage(systemName: "checkmark")
-				self.selectedImageView.theme_tintColor = KThemePicker.tintColor.rawValue
-			} else {
-				self.selectedImageView.image = nil
-			}
-		}
+	// MARK: - Functions
+	/**
+		Sets the selected status of the cell.
+
+		- Parameter selected: The boolean value indicating whether the cell is selected.
+	*/
+	func setSelected(_ selected: Bool) {
+		self.selectedImageView?.image = selected ? UIImage(systemName: "checkmark") : nil
 	}
 }

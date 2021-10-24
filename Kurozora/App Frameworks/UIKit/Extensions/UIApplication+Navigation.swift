@@ -25,7 +25,7 @@ extension UIApplication {
 		}
 
 		if let url = url {
-			if KBrowser(rawValue: UserSettings.defaultBrowser) == .kurozora {
+			if UserSettings.defaultBrowser == .kurozora {
 				let sfSafariViewController = SFSafariViewController(url: url)
 				UIApplication.topViewController?.present(sfSafariViewController, animated: true, completion: nil)
 			} else {

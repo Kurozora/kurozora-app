@@ -23,7 +23,10 @@ extension AuthenticationOptionsViewController {
 		guard let authenticationOptionsCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.authenticationOptionsCell, for: indexPath) else {
 			fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.authenticationOptionsCell.identifier)")
 		}
-		authenticationOptionsCell.authenticationInterval = authenticationIntervals[indexPath.row]
+		let authenticationInterval = authenticationIntervals[indexPath.row]
+		let selectedAuthenticationInterval = UserSettings.authenticationInterval
+		authenticationOptionsCell.authenticationInterval = authenticationInterval
+		authenticationOptionsCell.setSelected(authenticationInterval == selectedAuthenticationInterval)
 		return authenticationOptionsCell
 	}
 }
@@ -31,10 +34,13 @@ extension AuthenticationOptionsViewController {
 // MARK: - UITableViewDelegate
 extension AuthenticationOptionsViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let authenticationOptionsCell = tableView.cellForRow(at: indexPath) as! AuthenticationOptionsCell
-		authenticationOptionsCell.isSelected = true
+		let authenticationInterval = authenticationIntervals[indexPath.row]
+		UserSettings.set(authenticationInterval.rawValue, forKey: .authenticationInterval)
 
-		NotificationCenter.default.post(name: .KSAuthenticationRequireTimeoutValueDidChange, object: nil)
+		DispatchQueue.main.async {
+			NotificationCenter.default.post(name: .KSAuthenticationRequireTimeoutValueDidChange, object: nil)
+		}
+
 		tableView.reloadData()
 	}
 }

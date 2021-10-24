@@ -44,10 +44,10 @@ extension NotificationsOptionsViewController {
 		let notificationsGroupingCell = tableView.dequeueReusableCell(withIdentifier: "SelectableSettingsCell", for: indexPath) as! SelectableSettingsCell
 		switch notificationSegueIdentifier {
 		case .notificationsGrouping:
-			let grouping = KNotification.GroupStyle(rawValue: indexPath.item)!
-			let selected = UserSettings.notificationsGrouping
+			let notificationGrouping = KNotification.GroupStyle(rawValue: indexPath.item) ?? .automatic
+			let selectedNotificationGrouping = UserSettings.notificationsGrouping
 
-			switch grouping {
+			switch notificationGrouping {
 			case .automatic:
 				notificationsGroupingCell.primaryLabel?.text = "Automatic"
 			case .byType:
@@ -56,9 +56,7 @@ extension NotificationsOptionsViewController {
 				notificationsGroupingCell.primaryLabel?.text = "Off"
 			}
 
-			if grouping.rawValue == selected {
-				notificationsGroupingCell.isSelected = true
-			}
+			notificationsGroupingCell.setSelected(notificationGrouping.rawValue == selectedNotificationGrouping)
 		}
 
 		return notificationsGroupingCell
@@ -75,5 +73,12 @@ extension NotificationsOptionsViewController {
 
 		NotificationCenter.default.post(name: .KSNotificationOptionsValueLabelsNotification, object: nil)
 		tableView.reloadData()
+	}
+}
+
+// MARK: - KTableViewDataSource
+extension NotificationsOptionsViewController {
+	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
+		return [SelectableSettingsCell.self]
 	}
 }

@@ -14,7 +14,7 @@ class SettingsCell: KTableViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var iconImageView: UIImageView? {
 		didSet {
-			iconImageView?.borderColor = UIColor.white.withAlphaComponent(0.2)
+			self.iconImageView?.borderColor = UIColor.white.withAlphaComponent(0.2)
 		}
 	}
 	@IBOutlet weak var primaryLabel: UILabel? {

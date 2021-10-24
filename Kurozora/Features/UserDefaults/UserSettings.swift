@@ -46,9 +46,10 @@ extension UserSettings {
 		return (UIImage(named: appIcon) != nil) ? appIcon : primaryIcon
 	}
 
-	/// Returns an integer indicating the default browser.
-	static var defaultBrowser: Int {
-		return shared.integer(forKey: #function)
+	/// Returns a `KBrowser` type indicating the preferred default browser.
+	static var defaultBrowser: KBrowser {
+		guard let defaultBrowser = KBrowser(rawValue: shared.integer(forKey: #function)) else { return .kurozora }
+		return defaultBrowser
 	}
 }
 

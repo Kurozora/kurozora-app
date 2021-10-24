@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19115.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="svG-2R-sWh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="svG-2R-sWh">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19107.5"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -20,7 +20,7 @@
                             <tableViewSection headerTitle="Appearance" id="PWQ-vE-3Vx">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="212" id="XOO-96-8EI" customClass="DisplaySettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="55.5" width="374" height="212"/>
+                                        <rect key="frame" x="20" y="49.5" width="374" height="212"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XOO-96-8EI" id="5tX-qv-LMy">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="212"/>
@@ -40,7 +40,7 @@
                                                                     </constraints>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Light" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FZV-pF-2Uf" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                                                    <rect key="frame" x="20" y="128" width="38.5" height="26"/>
+                                                                    <rect key="frame" x="22.5" y="128" width="33" height="26"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
@@ -90,7 +90,7 @@
                                                                     </constraints>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dark" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1e3-1i-68v" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                                                    <rect key="frame" x="21" y="128" width="36" height="26"/>
+                                                                    <rect key="frame" x="24" y="128" width="30.5" height="26"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
@@ -154,14 +154,14 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="50" id="vez-MJ-1rS" customClass="DisplaySettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="267.5" width="374" height="50"/>
+                                        <rect key="frame" x="20" y="261.5" width="374" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vez-MJ-1rS" id="PUN-pw-yfG">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Automatic" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" translatesAutoresizingMaskIntoConstraints="NO" id="h67-1d-CaR" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="15" width="77.5" height="20.5"/>
+                                                    <rect key="frame" x="8" y="16.5" width="65.5" height="17"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -192,7 +192,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="50" translatesAutoresizingMaskIntoConstraints="NO" id="qUb-FK-NCN" customClass="DisplaySettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="317.5" width="374" height="50"/>
+                                        <rect key="frame" x="20" y="311.5" width="374" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qUb-FK-NCN" id="Hex-fY-tgp">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
@@ -202,14 +202,14 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                                     <subviews>
                                                         <label multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" insetsLayoutMarginsFromSafeArea="NO" text="Options" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aSb-K7-bBy" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="8" y="10" width="60" height="30"/>
+                                                            <rect key="frame" x="8" y="10" width="51" height="30"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Dark Until Sunrise" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="9gr-0c-sbs" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="218.5" y="15.5" width="130" height="19.5"/>
+                                                            <rect key="frame" x="239.5" y="17" width="109" height="16"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -259,14 +259,14 @@
                                 <string key="footerTitle">Enable this option if you prefer a darker black color. Or if you value your eyes' health while using the app in the dark. Or those precious battery juices. Or or or...</string>
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="50" translatesAutoresizingMaskIntoConstraints="NO" id="UFt-sw-KLe" customClass="DisplaySettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="430.5" width="374" height="50"/>
+                                        <rect key="frame" x="20" y="418.5" width="374" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="UFt-sw-KLe" id="mwQ-cc-SXz">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="True Black" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BWx-Ky-TvQ" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="15" width="80" height="20.5"/>
+                                                    <rect key="frame" x="8" y="16.5" width="68" height="17"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
@@ -302,14 +302,14 @@
                             <tableViewSection footerTitle="Disable this option if you hate the large titles in the navigation bar #annoying #too_ugly_for_me" id="qHo-ad-Xw6">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="50" translatesAutoresizingMaskIntoConstraints="NO" id="Idl-Sy-4tK" customClass="DisplaySettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="560.5" width="374" height="50"/>
+                                        <rect key="frame" x="20" y="541" width="374" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Idl-Sy-4tK" id="wIn-nf-umu">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Large Titles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B7h-A4-wen" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="15" width="89" height="20.5"/>
+                                                    <rect key="frame" x="8" y="16.5" width="76" height="17"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
@@ -389,64 +389,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="4T8-xq-hoD"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SelectableSettingsCell" id="xUA-jL-Hgh" customClass="SelectableSettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="55.5" width="374" height="41.5"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xUA-jL-Hgh" id="Mw7-Y8-UoC">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="41.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vxs-MW-Ztg">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="41.5"/>
-                                            <subviews>
-                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sunset to Sunrise" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gsi-g5-vk1" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="10" width="134" height="21.5"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <size key="shadowOffset" width="0.0" height="0.0"/>
-                                                </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="PHE-Wb-uCl">
-                                                    <rect key="frame" x="347.5" y="13" width="18.5" height="16.5"/>
-                                                </imageView>
-                                            </subviews>
-                                            <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <constraints>
-                                                <constraint firstItem="PHE-Wb-uCl" firstAttribute="centerY" secondItem="Gsi-g5-vk1" secondAttribute="centerY" id="K8g-y6-vrY"/>
-                                                <constraint firstAttribute="bottom" secondItem="Gsi-g5-vk1" secondAttribute="bottom" constant="10" id="LQq-Az-e9i"/>
-                                                <constraint firstItem="Gsi-g5-vk1" firstAttribute="top" secondItem="Vxs-MW-Ztg" secondAttribute="top" constant="10" id="OFB-Pq-rYv"/>
-                                                <constraint firstItem="Gsi-g5-vk1" firstAttribute="leading" secondItem="Vxs-MW-Ztg" secondAttribute="leadingMargin" id="gIS-XJ-VST"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="PHE-Wb-uCl" secondAttribute="trailing" id="x1M-5P-mnQ"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="Vxs-MW-Ztg" secondAttribute="trailing" id="9zf-XJ-cWV"/>
-                                        <constraint firstAttribute="bottom" secondItem="Vxs-MW-Ztg" secondAttribute="bottom" id="CSn-Tk-cGS"/>
-                                        <constraint firstItem="Vxs-MW-Ztg" firstAttribute="leading" secondItem="Mw7-Y8-UoC" secondAttribute="leading" id="ITd-EL-cPz"/>
-                                        <constraint firstItem="Vxs-MW-Ztg" firstAttribute="top" secondItem="Mw7-Y8-UoC" secondAttribute="top" id="fEJ-P2-Ux8"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <connections>
-                                    <outlet property="primaryLabel" destination="Gsi-g5-vk1" id="5Jj-qa-Fh9"/>
-                                    <outlet property="selectedImageView" destination="PHE-Wb-uCl" id="2pC-CS-Y7d"/>
-                                    <outlet property="selectedView" destination="Vxs-MW-Ztg" id="9cI-lT-Wzt"/>
-                                </connections>
-                            </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="DateSettingsCell" id="uL8-Ph-RYR" customClass="DateSettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="97" width="374" height="41.5"/>
+                                <rect key="frame" x="20" y="49.5" width="374" height="37.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uL8-Ph-RYR" id="qf7-8g-iCz">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="41.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="37.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v6M-B0-z2V">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="41.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="37.5"/>
                                             <subviews>
                                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Light Appearance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dVR-to-nVy" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="10" width="135" height="21.5"/>
+                                                    <rect key="frame" x="8" y="10" width="114.5" height="17.5"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
@@ -454,7 +408,7 @@
                                                     <size key="shadowOffset" width="0.0" height="0.0"/>
                                                 </label>
                                                 <label multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="7:00 AM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HJS-jZ-b10" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="305" y="11" width="61" height="19.5"/>
+                                                    <rect key="frame" x="315" y="11" width="51" height="16"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -486,21 +440,21 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="DatePickerSettingsCell" id="JUg-XW-ius" customClass="DatePickerSettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="138.5" width="374" height="55"/>
+                                <rect key="frame" x="20" y="87" width="374" height="51.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JUg-XW-ius" id="4ma-HZ-R9o">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="55"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="51.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Starts at" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="418-MU-fP6" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="8" y="17.5" width="65" height="20.5"/>
+                                            <rect key="frame" x="8" y="17.5" width="55.5" height="17"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="MC1-jj-Ic6">
-                                            <rect key="frame" x="267" y="10" width="99" height="35"/>
+                                            <rect key="frame" x="276" y="10" width="90" height="31.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" priority="999" constant="90" id="qOw-W3-R4g"/>
                                             </constraints>
@@ -542,7 +496,6 @@
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
-        <image name="checkmark" catalog="system" width="128" height="114"/>
         <image name="checkmark.circle.fill" catalog="system" width="128" height="121"/>
         <image name="chevron.right" catalog="system" width="96" height="128"/>
     </resources>

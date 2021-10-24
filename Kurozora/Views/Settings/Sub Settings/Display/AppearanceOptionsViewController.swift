@@ -66,7 +66,7 @@ extension AppearanceOptionsViewController {
 			}
 			if let darkThemeOption = DarkThemeOption(rawValue: indexPath.item) {
 				selectableSettingsCell.primaryLabel?.text = automaticOptions[indexPath.row]
-				selectableSettingsCell.isSelected = darkThemeOption.rawValue == UserSettings.darkThemeOption
+				selectableSettingsCell.setSelected(darkThemeOption.rawValue == UserSettings.darkThemeOption)
 			}
 			return selectableSettingsCell
 		} else if datePickerIndexPath == indexPath {
@@ -81,7 +81,7 @@ extension AppearanceOptionsViewController {
 		guard let dateSettingsCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dateSettingsCell, for: indexPath) else {
 			fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.dateSettingsCell.identifier)")
 		}
-		let indexPathRow = datePickerIndexPath != nil && indexPath.row != 0 ? indexPath.row - 1 : indexPath.row
+		let indexPathRow = datePickerIndexPath != nil && indexPath.row != 0 ? (datePickerIndexPath?.row ?? 1) - 1 : indexPath.row
 		dateSettingsCell.primaryLabel?.text = customScheduleOptions[indexPathRow]
 		dateSettingsCell.updateText(with: inputDates[indexPathRow])
 		return dateSettingsCell
@@ -125,6 +125,13 @@ extension AppearanceOptionsViewController {
 
 	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return 55
+	}
+}
+
+// MARK: - KTableViewDataSource
+extension AppearanceOptionsViewController {
+	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
+		return [SelectableSettingsCell.self]
 	}
 }
 

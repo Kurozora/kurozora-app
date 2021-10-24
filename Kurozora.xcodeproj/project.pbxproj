@@ -72,6 +72,8 @@
 		661F9F822087282500CF4153 /* SignInTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661F9F7E2087282400CF4153 /* SignInTableViewController.swift */; };
 		661F9F832087282500CF4153 /* SignUpTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661F9F7F2087282500CF4153 /* SignUpTableViewController.swift */; };
 		66232CDB2310055900C45B5A /* BaseFeedMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66232CDA2310055900C45B5A /* BaseFeedMessageCell.swift */; };
+		6623CB1E2724C7F800050EAA /* SelectableSettingsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6623CB1D2724C7F800050EAA /* SelectableSettingsCell.xib */; };
+		6623CB202724D27600050EAA /* IconTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6623CB1F2724D27600050EAA /* IconTableViewCell.xib */; };
 		66244D91230B774200EC33E0 /* LibraryDetailedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66244D90230B774200EC33E0 /* LibraryDetailedCollectionViewCell.swift */; };
 		662B925F233E50FA001D49B7 /* SearchShowResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662B925E233E50FA001D49B7 /* SearchShowResultsCell.swift */; };
 		662B9263233E515E001D49B7 /* SearchUserResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662B9262233E515E001D49B7 /* SearchUserResultsCell.swift */; };
@@ -122,7 +124,6 @@
 		6646A272236A5D8400DCC0A4 /* BrowserSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6646A270236A5D8400DCC0A4 /* BrowserSettingsTableViewController.swift */; };
 		6646A275236A5F7600DCC0A4 /* BrowserSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6646A274236A5F7600DCC0A4 /* BrowserSettings.storyboard */; };
 		6646A278236B8AE600DCC0A4 /* KBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6646A277236B8AE600DCC0A4 /* KBrowser.swift */; };
-		6646A27B236BAAB000DCC0A4 /* BrowserSettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6646A27A236BAAB000DCC0A4 /* BrowserSettingsTableViewCell.swift */; };
 		6647236D245DB602008E5111 /* KTintedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6647236C245DB602008E5111 /* KTintedButton.swift */; };
 		66472370245DC531008E5111 /* CircularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6647236F245DC531008E5111 /* CircularView.swift */; };
 		66472372245E0070008E5111 /* KTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66472371245E0070008E5111 /* KTextField.swift */; };
@@ -550,6 +551,8 @@
 		661F9F7E2087282400CF4153 /* SignInTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInTableViewController.swift; sourceTree = "<group>"; };
 		661F9F7F2087282500CF4153 /* SignUpTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpTableViewController.swift; sourceTree = "<group>"; };
 		66232CDA2310055900C45B5A /* BaseFeedMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseFeedMessageCell.swift; sourceTree = "<group>"; };
+		6623CB1D2724C7F800050EAA /* SelectableSettingsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectableSettingsCell.xib; sourceTree = "<group>"; };
+		6623CB1F2724D27600050EAA /* IconTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IconTableViewCell.xib; sourceTree = "<group>"; };
 		66244D90230B774200EC33E0 /* LibraryDetailedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryDetailedCollectionViewCell.swift; sourceTree = "<group>"; };
 		662B925E233E50FA001D49B7 /* SearchShowResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchShowResultsCell.swift; sourceTree = "<group>"; };
 		662B9262233E515E001D49B7 /* SearchUserResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserResultsCell.swift; sourceTree = "<group>"; };
@@ -600,7 +603,6 @@
 		6646A270236A5D8400DCC0A4 /* BrowserSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserSettingsTableViewController.swift; sourceTree = "<group>"; };
 		6646A274236A5F7600DCC0A4 /* BrowserSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BrowserSettings.storyboard; sourceTree = "<group>"; };
 		6646A277236B8AE600DCC0A4 /* KBrowser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KBrowser.swift; sourceTree = "<group>"; };
-		6646A27A236BAAB000DCC0A4 /* BrowserSettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserSettingsTableViewCell.swift; sourceTree = "<group>"; };
 		6647236C245DB602008E5111 /* KTintedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KTintedButton.swift; sourceTree = "<group>"; };
 		6647236F245DC531008E5111 /* CircularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularView.swift; sourceTree = "<group>"; };
 		66472371245E0070008E5111 /* KTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KTextField.swift; sourceTree = "<group>"; };
@@ -1417,7 +1419,6 @@
 			children = (
 				6646A274236A5F7600DCC0A4 /* BrowserSettings.storyboard */,
 				6646A270236A5D8400DCC0A4 /* BrowserSettingsTableViewController.swift */,
-				6646A279236BAAA400DCC0A4 /* Cells */,
 				6646A276236B8AD700DCC0A4 /* Models */,
 			);
 			path = Browser;
@@ -1429,14 +1430,6 @@
 				6646A277236B8AE600DCC0A4 /* KBrowser.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		6646A279236BAAA400DCC0A4 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				6646A27A236BAAB000DCC0A4 /* BrowserSettingsTableViewCell.swift */,
-			);
-			path = Cells;
 			sourceTree = "<group>";
 		};
 		6647236E245DC514008E5111 /* View Fundementals */ = {
@@ -1639,8 +1632,8 @@
 				66DE65262401AE80001C2773 /* Enums */,
 				66B4F1D1223BC8EB007C5048 /* Features */,
 				6675262B22280AB4007C1617 /* Plist */,
-				66E1517B2713628A007966A9 /* Supporting Files */,
 				66ABBBFF240215BE00CE8A26 /* Views */,
+				66E1517B2713628A007966A9 /* Supporting Files */,
 			);
 			path = Kurozora;
 			sourceTree = "<group>";
@@ -2036,6 +2029,7 @@
 			isa = PBXGroup;
 			children = (
 				66A254D722AABCE7002A0E34 /* IconTableViewCell.swift */,
+				6623CB1F2724D27600050EAA /* IconTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -2806,10 +2800,11 @@
 			isa = PBXGroup;
 			children = (
 				665CBBA322C2B2C2004D0D3E /* DatePickerSettingsCell.swift */,
+				66EA1E0125B61E8A00FCD07A /* DatePickerSettingsCellDelegate.swift */,
 				665CBBA122C2B139004D0D3E /* DateSettingsCell.swift */,
 				665CBB9F22C27E90004D0D3E /* SelectableSettingsCell.swift */,
 				66348C7922AB17710019AB84 /* SettingsCell.swift */,
-				66EA1E0125B61E8A00FCD07A /* DatePickerSettingsCellDelegate.swift */,
+				6623CB1D2724C7F800050EAA /* SelectableSettingsCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -3113,6 +3108,7 @@
 				66C5797B22A86435001B8F51 /* DebugSettings.storyboard in Resources */,
 				66AE1E0D24A0C42600FD3FFC /* Studios.storyboard in Resources */,
 				66AA35BC24030E420006EC5B /* Cast.storyboard in Resources */,
+				6623CB202724D27600050EAA /* IconTableViewCell.xib in Resources */,
 				6675262F22280ACB007C1617 /* Default.plist in Resources */,
 				66CF6D7120A9934F00F98375 /* Profile.storyboard in Resources */,
 				66DEB4A821D248710093725F /* Search.storyboard in Resources */,
@@ -3123,6 +3119,7 @@
 				66CE8114246092FF00DB0C49 /* ServicePreviewTableViewCell.xib in Resources */,
 				66160C40215C2DEB00D0D722 /* Reachability.storyboard in Resources */,
 				6633A52924A3DA11003C6390 /* InformationButtonCollectionViewCell.xib in Resources */,
+				6623CB1E2724C7F800050EAA /* SelectableSettingsCell.xib in Resources */,
 				664AAF8124EE8E2F00FF4AA5 /* Characters.storyboard in Resources */,
 				6684225025967A65000A09F8 /* TitleHeaderTableViewCell.xib in Resources */,
 				66CE8118246093DE00DB0C49 /* ServiceHeaderTableViewCell.xib in Resources */,
@@ -3203,7 +3200,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Copy pods acknowledgements file to Settings.bundle\n#if [$ENABLE_PREVIEWS == \"NO\"]\n#then\n\tPODPATH=\"${PODS_ROOT}/Target Support Files/Pods-Kurozora/Pods-Kurozora-acknowledgements.plist\"\n\tPROJECTPATH=\"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/Acknowledgements.plist\"\n\n\tcp \"${PODPATH}\" \"${PROJECTPATH}\"\n\n\tPLISTBUDDY=\"/usr/libexec/PlistBuddy -c\"\n\n\ti=0\n\twhile true ; do\n\t   # If an item is printable then it exists, otherwise exit loop\n\t   $PLISTBUDDY \"Print PreferenceSpecifiers:$i\" \"${PROJECTPATH}\" >/dev/null 2>/dev/null\n\t   if [ $? -ne 0 ]; then\n\t\t  break\n\t   fi\n\t   i=$(($i + 1))\n\tdone\n\n\t# Get last item in array\n\ti=$(($i - 1))\n\n\t# Delete last item in array\n\t$PLISTBUDDY \"Delete PreferenceSpecifiers:$i\" \"${PROJECTPATH}\" >/dev/null 2>/dev/null\n#else\n#\techo \"Skipping Add Acknowledgements script.\"\n#fi\n";
+			shellScript = "\nPODPATH=\"${PODS_ROOT}/Target Support Files/Pods-Kurozora/Pods-Kurozora-acknowledgements.plist\"\nPROJECTPATH=\"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/Acknowledgements.plist\"\n\ncp \"${PODPATH}\" \"${PROJECTPATH}\"\n\nPLISTBUDDY=\"/usr/libexec/PlistBuddy -c\"\n\ni=0\nwhile true ; do\n   # If an item is printable then it exists, otherwise exit loop\n   $PLISTBUDDY \"Print PreferenceSpecifiers:$i\" \"${PROJECTPATH}\" >/dev/null 2>/dev/null\n   if [ $? -ne 0 ]; then\n\t  break\n   fi\n   i=$(($i + 1))\ndone\n\n# Get last item in array\ni=$(($i - 1))\n\n# Delete last item in array\n$PLISTBUDDY \"Delete PreferenceSpecifiers:$i\" \"${PROJECTPATH}\" >/dev/null 2>/dev/null\n";
 		};
 		6666F88320BF4A4C0003A72F /* Run Build Bump Script */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3217,7 +3214,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#if [$ENABLE_PREVIEWS == \"NO\"]\n#then\n#\tagvtool next-version -all\n#else\n#\techo \"Skipping Build Bump script.\"\n#fi\n";
+			shellScript = "agvtool next-version -all\n";
 		};
 		66B4DC40245A20390097135A /* Add version to Settings.bundle */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3235,7 +3232,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#if [$ENABLE_PREVIEWS == \"NO\"]\n#then\n#\tagvtool next-version -all\n\t\n\tversion=\"${MARKETING_VERSION}\"\n\t/usr/libexec/PlistBuddy \"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/Root.plist\" -c \"set PreferenceSpecifiers:2:DefaultValue $version\"\n#else\n#\techo \"Skipping Add version to Settings.bundle script.\"\n#fi\n";
+			shellScript = "version=\"${MARKETING_VERSION}\"\n/usr/libexec/PlistBuddy \"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/Root.plist\" -c \"set PreferenceSpecifiers:2:DefaultValue $version\"\n";
 		};
 		66C4DAE4243DE98F00C4B90A /* [CPD] Copy/Paste Detector */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3253,7 +3250,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [$ENABLE_PREVIEWS == \"NO\"]\nthen\n\tif which pmd >/dev/null; then\n\t  # Running CPD\n\t  pmd cpd --files ${EXECUTABLE_NAME} --minimum-tokens 50 --language swift --format xml > cpd-output.xml --failOnViolation true\n\n\t  # Running script\n\t  php ./cpd_script.php -cpd-xml cpd-output.xml\n\telse\n\t  echo \"warning: PMD not installed, run brew install pmd\"\n\tfi\nelse\n\techo \"Skipping Copy/Past Detector script.\"\nfi\n";
+			shellScript = "if which pmd >/dev/null; then\n  # Running CPD\n  pmd cpd --files ${EXECUTABLE_NAME} --minimum-tokens 50 --language swift --format xml > cpd-output.xml --failOnViolation true\n\n  # Running script\n  php ./cpd_script.php -cpd-xml cpd-output.xml\nelse\n  echo \"warning: PMD not installed, run brew install pmd\"\nfi\n";
 		};
 		66CF0BBC231AEE8A00EEF947 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3386,7 +3383,6 @@
 				6659E70D20C1C14E007F139D /* UIDevice+Kurozora.swift in Sources */,
 				664AAF9F24EEED0000FF4AA5 /* PersonDetail.swift in Sources */,
 				664B6D7E230F5AA300F9C726 /* UITableView+Kurozora.swift in Sources */,
-				6646A27B236BAAB000DCC0A4 /* BrowserSettingsTableViewCell.swift in Sources */,
 				66AEABDA22987A4D00949FD8 /* KThemePicker.swift in Sources */,
 				66AEABEF22993E9C00949FD8 /* NotificationsOptionsViewController.swift in Sources */,
 				66DF091326C7C1FB005AED93 /* Store.swift in Sources */,
@@ -3860,7 +3856,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Kurozora/Kurozora.entitlements;
-				CURRENT_PROJECT_VERSION = 11775;
+				CURRENT_PROJECT_VERSION = 11849;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				INFOPLIST_FILE = "Kurozora/Supporting Files/Info.plist";
@@ -3885,7 +3881,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Kurozora/Kurozora.entitlements;
-				CURRENT_PROJECT_VERSION = 11775;
+				CURRENT_PROJECT_VERSION = 11849;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				INFOPLIST_FILE = "Kurozora/Supporting Files/Info.plist";

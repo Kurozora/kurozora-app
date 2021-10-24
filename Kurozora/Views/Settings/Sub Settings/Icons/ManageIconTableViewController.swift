@@ -29,7 +29,7 @@ class ManageIconTableViewController: SubSettingsViewController {
 		super.viewDidLoad()
 
 		// Disable activity indicator
-		_prefersActivityIndicatorHidden = true
+		self._prefersActivityIndicatorHidden = true
 	}
 
 	// MARK: - Functions
@@ -38,7 +38,7 @@ class ManageIconTableViewController: SubSettingsViewController {
 		if let path = Bundle.main.path(forResource: "App Icons", ofType: "plist"),
 		   let plist = FileManager.default.contents(atPath: path) {
 			self.alternativeIconsDict = (try? PropertyListSerialization.propertyList(from: plist, format: nil) as? [String: [String]]) ?? [:]
-			self.alternativeIcons = AlternativeIcons(dict: alternativeIconsDict)
+			self.alternativeIcons = AlternativeIcons(dict: self.alternativeIconsDict)
 		} else {
 			self.alternativeIconsDict = [:]
 		}
@@ -54,13 +54,13 @@ extension ManageIconTableViewController {
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		switch section {
 		case 0:
-			guard let defaultIconsCount = alternativeIcons?.defaultIcons.count else { return 0 }
+			guard let defaultIconsCount = self.alternativeIcons?.defaultIcons.count else { return 0 }
 			return defaultIconsCount
 		case 1:
-			guard let premiumIconsCount = alternativeIcons?.premiumIcons.count else { return 0 }
+			guard let premiumIconsCount = self.alternativeIcons?.premiumIcons.count else { return 0 }
 			return premiumIconsCount
 		case 2:
-			guard let limitedIconsCount = alternativeIcons?.limitedIcons.count else { return 0 }
+			guard let limitedIconsCount = self.alternativeIcons?.limitedIcons.count else { return 0 }
 			return limitedIconsCount
 		default:
 			return 0
@@ -71,15 +71,19 @@ extension ManageIconTableViewController {
 		guard let iconTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.iconTableViewCell, for: indexPath) else {
 			fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.iconTableViewCell.identifier)")
 		}
+		var alternativeIconsElement: AlternativeIconsElement? = nil
 		switch indexPath.section {
 		case 0:
-			iconTableViewCell.alternativeIconsElement = alternativeIcons?.defaultIcons[indexPath.row]
+			alternativeIconsElement = self.alternativeIcons?.defaultIcons[indexPath.row]
 		case 1:
-			iconTableViewCell.alternativeIconsElement = alternativeIcons?.premiumIcons[indexPath.row]
+			alternativeIconsElement = self.alternativeIcons?.premiumIcons[indexPath.row]
 		case 2:
-			iconTableViewCell.alternativeIconsElement = alternativeIcons?.limitedIcons[indexPath.row]
-		default:
-			iconTableViewCell.alternativeIconsElement = nil
+			alternativeIconsElement = self.alternativeIcons?.limitedIcons[indexPath.row]
+		default: break
+		}
+		iconTableViewCell.alternativeIconsElement = alternativeIconsElement
+		if let alternativeIconsElement = alternativeIconsElement {
+			iconTableViewCell.setSelected(alternativeIconsElement.name == UserSettings.appIcon)
 		}
 		return iconTableViewCell
 	}
@@ -87,19 +91,18 @@ extension ManageIconTableViewController {
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		switch section {
 		case 0:
-			if alternativeIcons?.defaultIcons.count != 0 {
+			if self.alternativeIcons?.defaultIcons.count != 0 {
 				return "DEFAULT"
 			}
 		case 1:
-			if alternativeIcons?.premiumIcons.count != 0 {
+			if self.alternativeIcons?.premiumIcons.count != 0 {
 				return "PREMIUM"
 			}
 		case 2:
-			if alternativeIcons?.limitedIcons.count != 0 {
+			if self.alternativeIcons?.limitedIcons.count != 0 {
 				return "LIMITED TIME"
 			}
-		default:
-			return nil
+		default: break
 		}
 		return nil
 	}
@@ -129,5 +132,12 @@ extension ManageIconTableViewController {
 				tableView.reloadData()
 			}
 		}
+	}
+}
+
+// MARK: - KTableViewDataSource
+extension ManageIconTableViewController {
+	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
+		return [IconTableViewCell.self]
 	}
 }

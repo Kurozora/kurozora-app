@@ -59,14 +59,12 @@ struct AlternativeIcons {
 }
 
 /**
-	A struct that stores information about a single alternative icon, such as the icon's name, and image string.
+	A struct that stores information about a single alternative icon, such as the icon's name.
 */
 struct AlternativeIconsElement {
 	// MARK: - Properties
 	/// The name of the alternative icon.
 	let name: String
-//	/// The image string of the alternative icon.
-//	let image: String?
 
 	// MARK: - Initializers
 	/**
@@ -76,6 +74,5 @@ struct AlternativeIconsElement {
 	*/
 	init(name: String) {
 		self.name = name
-//		self.image = json["image"].stringValue
 	}
 }

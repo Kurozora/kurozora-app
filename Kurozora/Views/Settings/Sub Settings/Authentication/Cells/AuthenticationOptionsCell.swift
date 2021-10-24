@@ -8,33 +8,14 @@
 
 import UIKit
 
-class AuthenticationOptionsCell: SettingsCell {
-	@IBOutlet weak var selectedImageView: UIImageView! {
-		didSet {
-			self.selectedImageView.image = nil
-		}
-	}
-
+class AuthenticationOptionsCell: SelectableSettingsCell {
 	var authenticationInterval: AuthenticationInterval = .immediately {
 		didSet {
-			configureCell()
-		}
-	}
-
-	override var isSelected: Bool {
-		didSet {
-			if isSelected {
-				self.selectedImageView.image = UIImage(systemName: "checkmark")
-				self.selectedImageView.theme_tintColor = KThemePicker.tintColor.rawValue
-				UserSettings.set(authenticationInterval.rawValue, forKey: .authenticationInterval)
-			} else {
-				self.selectedImageView.image = nil
-			}
+			self.configureCell()
 		}
 	}
 
 	// MARK: - Functions
-	/// Configure the cell with the given details.
 	override func configureCell() {
 		primaryLabel?.text = authenticationInterval.stringValue
 		self.isSelected = authenticationInterval == UserSettings.authenticationInterval

@@ -22,11 +22,14 @@ extension BrowserSettingsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		guard let browserSettingsTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.browserSettingsTableViewCell, for: indexPath) else {
-			fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.browserSettingsTableViewCell.identifier)")
+		guard let iconTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.iconTableViewCell, for: indexPath) else {
+			fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.iconTableViewCell.identifier)")
 		}
-		browserSettingsTableViewCell.browser = KBrowser.allCases[indexPath.row]
-		return browserSettingsTableViewCell
+		let defaultBrowser = KBrowser.allCases[indexPath.row]
+		let selectedDefaultBrowser = UserSettings.defaultBrowser
+		iconTableViewCell.browser = defaultBrowser
+		iconTableViewCell.setSelected(defaultBrowser == selectedDefaultBrowser)
+		return iconTableViewCell
 	}
 
 	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
@@ -41,9 +44,14 @@ extension BrowserSettingsTableViewController {
 // MARK: - UITableViewDelegate
 extension BrowserSettingsTableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		if let browserSettingsTableViewCell = tableView.cellForRow(at: indexPath) as? BrowserSettingsTableViewCell {
-			UserSettings.set(browserSettingsTableViewCell.browser?.rawValue, forKey: .defaultBrowser)
-			tableView.reloadData()
-		}
+		UserSettings.set(indexPath.item, forKey: .defaultBrowser)
+		tableView.reloadData()
+	}
+}
+
+// MARK: - KTableViewDataSource
+extension BrowserSettingsTableViewController {
+	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
+		return [IconTableViewCell.self]
 	}
 }

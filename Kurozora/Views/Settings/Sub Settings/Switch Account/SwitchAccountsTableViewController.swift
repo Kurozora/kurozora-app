@@ -47,7 +47,7 @@ extension SwitchAccountsTableViewController {
 		}
 		let accountKey = accounts[indexPath.item]
 		selectableSettingsCell.primaryLabel?.text = accountKey
-		selectableSettingsCell.isSelected = accountKey == UserSettings.selectedAccount
+		selectableSettingsCell.setSelected(accountKey == UserSettings.selectedAccount)
 		return selectableSettingsCell
 	}
 
@@ -85,5 +85,12 @@ extension SwitchAccountsTableViewController {
 		})
 
 		return UISwipeActionsConfiguration(actions: [removeAction])
+	}
+}
+
+// MARK: - KTableViewDataSource
+extension SwitchAccountsTableViewController {
+	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
+		return [SelectableSettingsCell.self]
 	}
 }

@@ -5,15 +5,15 @@
 	<key>INEnums</key>
 	<array/>
 	<key>INIntentDefinitionModelVersion</key>
-	<string>1.1</string>
+	<string>1.2</string>
 	<key>INIntentDefinitionNamespace</key>
 	<string>m7PQAB</string>
 	<key>INIntentDefinitionSystemVersion</key>
-	<string>19A558d</string>
+	<string>21A5543b</string>
 	<key>INIntentDefinitionToolsBuildVersion</key>
-	<string>11A419c</string>
+	<string>13A233</string>
 	<key>INIntentDefinitionToolsVersion</key>
-	<string>11.0</string>
+	<string>13.0</string>
 	<key>INIntents</key>
 	<array>
 		<dict>
@@ -61,6 +61,8 @@
 			<key>INIntentParameters</key>
 			<array>
 				<dict>
+					<key>INIntentParameterConfigurable</key>
+					<true/>
 					<key>INIntentParameterCustomDisambiguation</key>
 					<true/>
 					<key>INIntentParameterDisplayName</key>
@@ -99,14 +101,6 @@
 							<string>DisambiguationIntroduction</string>
 						</dict>
 						<dict>
-							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>Which one?</string>
-							<key>INIntentParameterPromptDialogFormatStringID</key>
-							<string>VYCi7U</string>
-							<key>INIntentParameterPromptDialogType</key>
-							<string>DisambiguationSelection</string>
-						</dict>
-						<dict>
 							<key>INIntentParameterPromptDialogCustom</key>
 							<true/>
 							<key>INIntentParameterPromptDialogFormatString</key>
@@ -125,6 +119,8 @@
 					<string>String</string>
 				</dict>
 				<dict>
+					<key>INIntentParameterConfigurable</key>
+					<true/>
 					<key>INIntentParameterCustomDisambiguation</key>
 					<true/>
 					<key>INIntentParameterDisplayName</key>
@@ -161,14 +157,6 @@
 							<string>vBeR15</string>
 							<key>INIntentParameterPromptDialogType</key>
 							<string>DisambiguationIntroduction</string>
-						</dict>
-						<dict>
-							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>Which one?</string>
-							<key>INIntentParameterPromptDialogFormatStringID</key>
-							<string>q4Utd3</string>
-							<key>INIntentParameterPromptDialogType</key>
-							<string>DisambiguationSelection</string>
 						</dict>
 						<dict>
 							<key>INIntentParameterPromptDialogCustom</key>
@@ -246,6 +234,8 @@
 			<key>INIntentParameters</key>
 			<array>
 				<dict>
+					<key>INIntentParameterConfigurable</key>
+					<true/>
 					<key>INIntentParameterCustomDisambiguation</key>
 					<true/>
 					<key>INIntentParameterDisplayName</key>
@@ -282,14 +272,6 @@
 							<string>MnSlVE</string>
 							<key>INIntentParameterPromptDialogType</key>
 							<string>DisambiguationIntroduction</string>
-						</dict>
-						<dict>
-							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>Which one?</string>
-							<key>INIntentParameterPromptDialogFormatStringID</key>
-							<string>hRp8UT</string>
-							<key>INIntentParameterPromptDialogType</key>
-							<string>DisambiguationSelection</string>
 						</dict>
 						<dict>
 							<key>INIntentParameterPromptDialogCustom</key>
@@ -367,6 +349,8 @@
 			<key>INIntentParameters</key>
 			<array>
 				<dict>
+					<key>INIntentParameterConfigurable</key>
+					<true/>
 					<key>INIntentParameterCustomDisambiguation</key>
 					<true/>
 					<key>INIntentParameterDisplayName</key>
@@ -403,14 +387,6 @@
 							<string>gWro6W</string>
 							<key>INIntentParameterPromptDialogType</key>
 							<string>DisambiguationIntroduction</string>
-						</dict>
-						<dict>
-							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>Which one?</string>
-							<key>INIntentParameterPromptDialogFormatStringID</key>
-							<string>8ayrtp</string>
-							<key>INIntentParameterPromptDialogType</key>
-							<string>DisambiguationSelection</string>
 						</dict>
 						<dict>
 							<key>INIntentParameterPromptDialogCustom</key>

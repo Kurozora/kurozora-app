@@ -42,7 +42,7 @@ extension URL {
 	*/
 	func withPreferredScheme() -> URL {
 		guard let scheme = self.scheme?.appending("://") else { return self }
-		let kBrowser = KBrowser(rawValue: UserSettings.defaultBrowser) ?? .kurozora
+		let kBrowser = UserSettings.defaultBrowser
 		guard kBrowser.schemeValue(for: scheme) != "" else { return self }
 
 		var urlWithPreferredScheme = self

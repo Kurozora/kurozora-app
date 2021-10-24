@@ -50,24 +50,22 @@ extension SubSettingsViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-		let settingsCell = tableView.cellForRow(at: indexPath) as? SettingsCell
-		if settingsCell?.selectedView != nil {
-			settingsCell?.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
-			settingsCell?.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellSelectedChevronColor.rawValue
+		if let selectableSettingsCell = tableView.cellForRow(at: indexPath) as? SelectableSettingsCell {
+			selectableSettingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
+			selectableSettingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellSelectedChevronColor.rawValue
 
-			settingsCell?.primaryLabel?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-			settingsCell?.notificationGroupingValueLabel?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
+			selectableSettingsCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+			selectableSettingsCell.notificationGroupingValueLabel?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
 		}
 	}
 
 	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-		let settingsCell = tableView.cellForRow(at: indexPath) as? SettingsCell
-		if settingsCell?.selectedView != nil {
-			settingsCell?.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-			settingsCell?.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
+		if let selectableSettingsCell = tableView.cellForRow(at: indexPath) as? SelectableSettingsCell {
+			selectableSettingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+			selectableSettingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
 
-			settingsCell?.primaryLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-			settingsCell?.notificationGroupingValueLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+			selectableSettingsCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			selectableSettingsCell.notificationGroupingValueLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
 		}
 	}
 

@@ -9,26 +9,36 @@
 import UIKit
 
 class IconTableViewCell: SelectableSettingsCell {
-	// MARK: - IBOutlets
-	@IBOutlet weak var iconTitleLabel: UILabel! {
+	// MARK: - Properties
+	/// The object containing the `AlternativeIconsElement` information.
+	var alternativeIconsElement: AlternativeIconsElement! {
 		didSet {
-			iconTitleLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			if self.alternativeIconsElement != nil {
+				self.browser = nil
+				self.configureCell()
+			}
 		}
 	}
 
-	// MARK: - Properties
-	var alternativeIconsElement: AlternativeIconsElement! {
+	/// The object containing the `KBrowser` type.
+	var browser: KBrowser! {
 		didSet {
-			self.configureCell()
+			if self.browser != nil {
+				self.alternativeIconsElement = nil
+				self.configureCell()
+			}
 		}
 	}
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	override func configureCell() {
-		self.isSelected = alternativeIconsElement.name == UserSettings.appIcon
-
-		self.iconTitleLabel.text = alternativeIconsElement.name
-		self.iconImageView?.image = UIImage(named: alternativeIconsElement.name)
+		if self.alternativeIconsElement != nil {
+			self.primaryLabel?.text = self.alternativeIconsElement.name
+			self.iconImageView?.image = UIImage(named: self.alternativeIconsElement.name)
+		} else {
+			primaryLabel?.text = browser.stringValue
+			iconImageView?.image = browser.image
+		}
 	}
 }
