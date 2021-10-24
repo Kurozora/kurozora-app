@@ -23,7 +23,6 @@ extension UIImageView {
 				.transition(.fade(0.2))
 				.placeholder(placeholder)
 				.loadDiskFileSynchronously()
-				.cacheMemoryOnly()
 				.lowDataModeSource(.network(imageURL))
 				.onProgress { _, _ in } // receivedSize, totalSize
 				.onSuccess { _ in } // result
