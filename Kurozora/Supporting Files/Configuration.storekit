@@ -78,6 +78,21 @@
       "productID" : "app.kurozora.temporary.godTip",
       "referenceName" : "God tip 🙏",
       "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "34.99",
+      "familyShareable" : false,
+      "internalID" : "2CDBF8DA",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "app.kurozora.temporary.pro",
+      "referenceName" : "Kurozora Pro",
+      "type" : "NonConsumable"
     }
   ],
   "settings" : {
@@ -151,7 +166,7 @@
 
           ],
           "displayPrice" : "18.99",
-          "familyShareable" : false,
+          "familyShareable" : true,
           "groupNumber" : 1,
           "internalID" : "F4E48100",
           "introductoryOffer" : {
