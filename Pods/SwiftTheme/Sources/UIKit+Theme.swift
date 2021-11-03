@@ -133,6 +133,22 @@ import UIKit
         get { return getThemePicker(self, "setBarTintColor:") as? ThemeColorPicker }
         set { setThemePicker(self, "setBarTintColor:", newValue) }
     }
+
+    @available(iOS 13.0, tvOS 13.0, *)
+    var theme_standardAppearance: ThemeTabBarAppearancePicker? {
+        get { return getThemePicker(self, "setStandardAppearance:") as? ThemeTabBarAppearancePicker }
+        set { setThemePicker(self, "setStandardAppearance:", newValue) }
+    }
+    @available(iOS 13.0, tvOS 13.0, *)
+    var theme_compactAppearance: ThemeTabBarAppearancePicker? {
+        get { return getThemePicker(self, "setCompactAppearance:") as? ThemeTabBarAppearancePicker }
+        set { setThemePicker(self, "setCompactAppearance:", newValue) }
+    }
+    @available(iOS 13.0, tvOS 13.0, *)
+    var theme_scrollEdgeAppearance: ThemeTabBarAppearancePicker? {
+        get { return getThemePicker(self, "setScrollEdgeAppearance:") as? ThemeTabBarAppearancePicker }
+        set { setThemePicker(self, "setScrollEdgeAppearance:", newValue) }
+    }
 }
 @objc public extension UITabBarItem
 {

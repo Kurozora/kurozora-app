@@ -43,31 +43,30 @@ import UIKit
         self.init(keyPath: value)
     }
     
-	class func getEffect(stringEffect: String, vibrancyEnabled: Bool = false) -> UIVisualEffect {
+    class func getEffect(stringEffect: String, vibrancyEnabled: Bool = false) -> UIVisualEffect {
 		var uiVisualEffect = UIBlurEffect()
-		switch stringEffect.replacingOccurrences(of: "_", with: "").lowercased() {
-		case "dark":
+        switch stringEffect.replacingOccurrences(of: "_", with: "").lowercased() {
+        case "dark":
 			uiVisualEffect = UIBlurEffect(style: .dark)
-		case "extralight":
+        case "extralight":
 			uiVisualEffect = UIBlurEffect(style: .extraLight)
-		case "prominent":
-			if #available(iOS 10.0, *) {
+        case "prominent":
+            if #available(iOS 10.0, *) {
 				uiVisualEffect = UIBlurEffect(style: .prominent)
-			} else {
+            } else {
 				uiVisualEffect = UIBlurEffect(style: .light)
-			}
-		case "regular":
-			if #available(iOS 10.0, *) {
+            }
+        case "regular":
+            if #available(iOS 10.0, *) {
 				uiVisualEffect = UIBlurEffect(style: .regular)
-			} else {
+            } else {
 				uiVisualEffect = UIBlurEffect(style: .light)
-			}
-		default:
+            }
+        default:
 			uiVisualEffect = UIBlurEffect(style: .light)
-		}
-
+        }
 		return vibrancyEnabled ? UIVibrancyEffect(blurEffect: uiVisualEffect) : uiVisualEffect
-	}
+    }
 
 }
 

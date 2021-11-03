@@ -9,6 +9,7 @@
 import UIKit
 import KurozoraKit
 import ESTabBarController_swift
+import FLEX
 
 class KTabBarController: ESTabBarController {
 	// MARK: - Initializers
@@ -44,6 +45,21 @@ class KTabBarController: ESTabBarController {
 		self.tabBar.itemPositioning = .centered
 		self.tabBar.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		self.tabBar.barStyle = .default
+
+		let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.showFlex))
+		longPressGestureRecognizer.numberOfTouchesRequired = 2
+		self.tabBar.addGestureRecognizer(longPressGestureRecognizer)
+	}
+
+	/**
+		Show FLEX explorer.
+
+		- Parameter gestureRecognizer: The gesture object containing information about the recognized gesture.
+	 */
+	@objc private func showFlex(_ gestureRecognizer: UILongPressGestureRecognizer) {
+		if FLEXManager.shared.isHidden {
+			FLEXManager.shared.showExplorer()
+		}
 	}
 
 	/// Toggles the badge on/off on the tab bar item.

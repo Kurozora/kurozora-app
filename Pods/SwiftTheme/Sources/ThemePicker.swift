@@ -6,7 +6,7 @@
 //  Copyright © 2016年 Gesen. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 @objc public class ThemePicker: NSObject, NSCopying {
     
