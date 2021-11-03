@@ -31,18 +31,24 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 		super.configureCell()
 		guard self.show != nil else { return }
 
+		// Configure labels
 		self.primaryLabel.text = self.show.attributes.title
+		self.secondaryLabel.text = self.show.attributes.tagline ?? self.show.attributes.genres?.localizedJoined()
+		self.statusLabel.text = self.show.attributes.status.name
 
+		// Configure poster image
 		if let posterBackroundColor = self.show.attributes.poster?.backgroundColor {
 			self.searchImageView.backgroundColor = UIColor(hexString: posterBackroundColor)
+		} else {
+			self.searchImageView.backgroundColor = .clear
 		}
 		self.searchImageView.setImage(with: self.show.attributes.poster?.url ?? "", placeholder: R.image.placeholders.showPoster()!)
-
-		self.statusLabel.text = self.show.attributes.status.name
 
 		// Configure library status
 		if let libraryStatus = self.show.attributes.libraryStatus {
 			self.libraryStatus = libraryStatus
+		} else {
+			self.libraryStatus = .none
 		}
 		self.actionButton.setTitle(self.libraryStatus != .none ? "\(self.libraryStatus.stringValue.capitalized) ▾" : "ADD", for: .normal)
 
