@@ -64,6 +64,18 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 		}
 	}
 
+	/**
+		Disables or enables the user interaction on the current view. Also shows a loading indicator.
+
+		- Parameter disable: Indicates whether to disable the interaction.
+	*/
+	func disableUserInteraction(_ disable: Bool) {
+		self.navigationItem.hidesBackButton = disable
+		self.navigationItem.rightBarButtonItem?.isEnabled = !disable
+		self._prefersActivityIndicatorHidden = !disable
+		self.view.isUserInteractionEnabled = !disable
+	}
+
 	// MARK: - IBActions
 	override func rightNavigationBarButtonPressed(sender: AnyObject) {
 		super.rightNavigationBarButtonPressed(sender: sender)
@@ -73,21 +85,35 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 			guard let username = textFieldArray.first??.trimmedText else { return }
 			guard let emailAddress = textFieldArray[1]?.trimmedText else { return }
 			guard let password = textFieldArray.last??.text else { return }
-			let profileImage = profileImageView.image
+			let profileImage = profileImageFilePath != nil ? profileImageView.image : nil
 
+			// Disable user interaction.
+			self.disableUserInteraction(true)
+
+			// Perform sign up request.
 			KService.signUp(withUsername: username, emailAddress: emailAddress, password: password, profileImage: profileImage) { [weak self] result in
 				guard let self = self else { return }
 				switch result {
 				case .success:
+					// Re-enable user interaction.
+					self.disableUserInteraction(false)
+
+					// Present welcome message.
 					self.presentAlertController(title: "Hooray!", message: "Account created successfully! Please check your email for confirmation.", defaultActionButtonTitle: "Done") { [weak self] _ in
 						self?.dismiss(animated: true, completion: nil)
 					}
-				case .failure: break
+				case .failure:
+					// Re-enable user interaction.
+					self.disableUserInteraction(false)
 				}
 			}
 		case .siwa:
 			let username = textFieldArray.first??.trimmedText
 
+			// Disable user interaction.
+			self.disableUserInteraction(true)
+
+			// Perform information update request.
 			KService.updateInformation(profileImageFilePath: profileImageFilePath, username: username) { [weak self] result in
 				guard let self = self else { return }
 				switch result {
@@ -95,10 +121,16 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 					// Get user details after completing account setup.
 					self.getProfileDetails()
 
+					// Re-enable user interaction.
+					self.disableUserInteraction(false)
+
+					// Present welcome message.
 					self.presentAlertController(title: "Hooray!", message: "Your account was successfully created!", defaultActionButtonTitle: "Done") { [weak self] _ in
 						self?.dismiss(animated: true, completion: nil)
 					}
-				case .failure: break
+				case .failure:
+					// Re-enable user interaction.
+					self.disableUserInteraction(false)
 				}
 			}
 		default: break

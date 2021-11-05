@@ -86,7 +86,7 @@ extension UIViewController {
 		- Returns: the presented alert controller.
 	*/
 	@discardableResult
-	func presentActivityAlertController(title: String?, message: String?) -> UIAlertController {
+	func presentActivityAlertController(title: String? = nil, message: String? = nil) -> UIAlertController {
 		let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
 		// Prepare the activity indicator
