@@ -11,6 +11,9 @@ import UIKit.UIApplication
 
 extension URL {
 	// MARK: - Properties
+	/// The Discord invitation URL of Kurozora.
+	static let discordPageURL = URL(string: "https://discord.gg/f3QFzGqsah")
+
 	/// The deep link URL to the Twitter page of Kurozora.
 	static let twitterPageDeepLink = URL(string: "twitter://user?id=991929359052177409")
 

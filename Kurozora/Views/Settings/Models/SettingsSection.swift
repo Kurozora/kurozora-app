@@ -165,6 +165,9 @@ extension SettingsTableViewController {
 //		/// The row representing the refund request cell.
 //		case requestRefund
 
+		/// The row representing the Discord cell.
+		case joinDiscord
+
 		/// The row representing the Twitter cell.
 		case followTwitter
 
@@ -173,10 +176,10 @@ extension SettingsTableViewController {
 
 		#if DEBUG
 		/// An array containing all settings rows.
-		static let all: [Row] = [.account, .switchAccount, .keychain, .notifications, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .unlockFeatures, .tipjar, .manageSubscriptions, .rate, .restoreFeatures, .followTwitter, .followMedium]
+		static let all: [Row] = [.account, .switchAccount, .keychain, .notifications, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .unlockFeatures, .tipjar, .manageSubscriptions, .rate, .restoreFeatures, .joinDiscord, .followTwitter, .followMedium]
 		#else
 		/// An array containing all normal user settings rows.
-		static let all: [Row] = [.account, .switchAccount, .notifications, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .unlockFeatures, .tipjar, .manageSubscriptions, .restoreFeatures, .rate, .followTwitter, .followMedium]
+		static let all: [Row] = [.account, .switchAccount, .notifications, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .unlockFeatures, .tipjar, .manageSubscriptions, .restoreFeatures, .rate, .joinDiscord, .followTwitter, .followMedium]
 		#endif
 
 		/// An array containing all account section settings rows.
@@ -220,7 +223,7 @@ extension SettingsTableViewController {
 		}
 
 		/// An array containing all social section settings rows.
-		static let allSocial: [Row] = [.rate, .followTwitter, .followMedium]
+		static let allSocial: [Row] = [.rate, .joinDiscord, .followTwitter, .followMedium]
 
 		/// An array containing all about section settings rows.
 		static let allAbout: [Row] = []
@@ -263,6 +266,8 @@ extension SettingsTableViewController {
 //			case .requestRefund:
 //				return ""
 			case .rate:
+				return ""
+			case .joinDiscord:
 				return ""
 			case .followTwitter:
 				return ""
@@ -309,6 +314,8 @@ extension SettingsTableViewController {
 //			case .requestRefund:
 //				return .none
 			case .rate:
+				return .none
+			case .joinDiscord:
 				return .none
 			case .followTwitter:
 				return .none
@@ -363,6 +370,8 @@ extension SettingsTableViewController {
 //				return "Request Refund"
 			case .rate:
 				return "Rate us on App Store"
+			case .joinDiscord:
+				return "Join our Discord Community"
 			case .followTwitter:
 				return "Follow us on Twitter"
 			case .followMedium:
@@ -426,6 +435,8 @@ extension SettingsTableViewController {
 //				return R.image.icons.refund()
 			case .rate:
 				return R.image.icons.rate()
+			case .joinDiscord:
+				return R.image.icons.brands.discord()
 			case .followTwitter:
 				return R.image.icons.brands.twitter()
 			case .followMedium:

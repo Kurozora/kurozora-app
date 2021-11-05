@@ -188,6 +188,9 @@ extension SettingsTableViewController {
 				await store.restore()
 			}
 			return
+		case .joinDiscord:
+			UIApplication.shared.kOpen(.discordPageURL)
+			return
 		case .followTwitter:
 			UIApplication.shared.kOpen(.twitterPageURL, deepLink: .twitterPageDeepLink)
 			return
