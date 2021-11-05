@@ -96,15 +96,6 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	}
 
 	/**
-		Disables or enables the user interaction on the current view. Also shows a loading indicator.
-
-		- Parameter disable: Indicates whether to disable the interaction.
-	*/
-	func disableUserInteraction(_ disable: Bool) {
-		self._prefersActivityIndicatorHidden = !disable
-	}
-
-	/**
 		Perform search with the given search text and the search scope.
 
 		- Parameter text: The string which to search for.
