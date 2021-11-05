@@ -42,7 +42,7 @@ class KTextField: UITextField {
 
 			return titleTextAttributes
 		}
-		self.theme_borderColor = KThemePicker.borderColor.rawValue
+		self.layer.theme_borderColor = KThemePicker.borderColor.cgColorPicker
 		self.borderStyle = .roundedRect
 		self.borderWidth = 1
 		self.cornerRadius = 10

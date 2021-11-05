@@ -144,6 +144,14 @@ enum KThemePicker: ThemeColorPicker {
 		}
 	}
 
+	var cgColorPicker: ThemeCGColorPicker? {
+		switch self {
+		case .borderColor:
+			return ThemeCGColorPicker(stringLiteral: KThemePicker.borderColor.stringValue)
+		default: return nil
+		}
+	}
+
 	/// Returns a UIBlurEffect.Style from the currently selected theme.
 	var blurValue: UIBlurEffect.Style {
 		guard let blurEffectStyleString = ThemeManager.value(for: KThemePicker.visualEffect.stringValue) as? String else { return .light }

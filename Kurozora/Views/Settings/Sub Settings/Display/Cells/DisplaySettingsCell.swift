@@ -21,7 +21,7 @@ class DisplaySettingsCell: SettingsCell {
 	@IBOutlet weak var lightOptionSelectedImageView: UIImageView? {
 		didSet {
 			lightOptionSelectedImageView?.theme_tintColor = KThemePicker.tintColor.rawValue
-			lightOptionSelectedImageView?.theme_borderColor = KThemePicker.borderColor.rawValue
+			lightOptionSelectedImageView?.layer.theme_borderColor = KThemePicker.borderColor.cgColorPicker
 		}
 	}
 	@IBOutlet weak var lightOptionButton: UIButton?
@@ -35,7 +35,7 @@ class DisplaySettingsCell: SettingsCell {
 	@IBOutlet weak var darkOptionSelectedImageView: UIImageView? {
 		didSet {
 			darkOptionSelectedImageView?.theme_tintColor = KThemePicker.tintColor.rawValue
-			darkOptionSelectedImageView?.theme_borderColor = KThemePicker.borderColor.rawValue
+			darkOptionSelectedImageView?.layer.theme_borderColor = KThemePicker.borderColor.cgColorPicker
 		}
 	}
 	@IBOutlet weak var darkOptionButton: UIButton?
