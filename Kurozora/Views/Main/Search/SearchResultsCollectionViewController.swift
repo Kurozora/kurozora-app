@@ -96,6 +96,15 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	}
 
 	/**
+		Disables or enables the user interaction on the current view. Also shows a loading indicator.
+
+		- Parameter disable: Indicates whether to disable the interaction.
+	*/
+	func disableUserInteraction(_ disable: Bool) {
+		self._prefersActivityIndicatorHidden = !disable
+	}
+
+	/**
 		Perform search with the given search text and the search scope.
 
 		- Parameter text: The string which to search for.
@@ -108,6 +117,12 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		// Decide with wich endpoint to perform the search
 		switch searchScope {
 		case .show:
+			if self.nextPageURL == nil {
+				// Show activity indicator.
+				self._prefersActivityIndicatorHidden = false
+			}
+
+			// Perform show search request.
 			KService.search(forShow: text, next: self.nextPageURL) { [weak self] result in
 				guard let self = self else { return }
 				switch result {
@@ -120,12 +135,22 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 					// Append new data and save next page url
 					self.searchResults?.append(contentsOf: showResponse.data)
 					self.nextPageURL = showResponse.next
+
+					// Hide activity indicator.
+					self._prefersActivityIndicatorHidden = true
 				case .failure:
-					break
+					// Hide activity indicator.
+					self._prefersActivityIndicatorHidden = true
 				}
 			}
 		case .library:
 			WorkflowController.shared.isSignedIn {
+				if self.nextPageURL == nil {
+					// Show activity indicator.
+					self._prefersActivityIndicatorHidden = false
+				}
+
+				// Perform library search request.
 				KService.searchLibrary(forShow: text, next: self.nextPageURL) { [weak self] result in
 					guard let self = self else { return }
 					switch result {
@@ -138,12 +163,22 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 						// Append new data and save next page url
 						self.searchResults?.append(contentsOf: showResponse.data)
 						self.nextPageURL = showResponse.next
+
+						// Hide activity indicator.
+						self._prefersActivityIndicatorHidden = true
 					case .failure:
-						break
+						// Hide activity indicator.
+						self._prefersActivityIndicatorHidden = true
 					}
 				}
 			}
 		case .user:
+			if self.nextPageURL == nil {
+				// Show activity indicator.
+				self._prefersActivityIndicatorHidden = false
+			}
+
+			// Perform user search request.
 			KService.search(forUsername: text, next: self.nextPageURL) { [weak self] result in
 				guard let self = self else { return }
 				switch result {
@@ -156,8 +191,12 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 					// Append new data and save next page url
 					self.searchResults?.append(contentsOf: userResponse.data)
 					self.nextPageURL = userResponse.next
+
+					// Hide activity indicator.
+					self._prefersActivityIndicatorHidden = true
 				case .failure:
-					break
+					// Hide activity indicator.
+					self._prefersActivityIndicatorHidden = true
 				}
 			}
 		}
