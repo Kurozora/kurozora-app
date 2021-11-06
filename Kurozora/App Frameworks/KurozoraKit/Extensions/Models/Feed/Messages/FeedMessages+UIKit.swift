@@ -117,7 +117,12 @@ extension FeedMessage {
 				kfmReplyTextEditorViewController.opFeedMessage = self
 
 				let kurozoraNavigationController = KNavigationController.init(rootViewController: kfmReplyTextEditorViewController)
+				kurozoraNavigationController.presentationController?.delegate = kfmReplyTextEditorViewController
 				kurozoraNavigationController.navigationBar.prefersLargeTitles = false
+				kurozoraNavigationController.sheetPresentationController?.detents = [.medium(), .large()]
+				kurozoraNavigationController.sheetPresentationController?.selectedDetentIdentifier = .large
+				kurozoraNavigationController.sheetPresentationController?.prefersEdgeAttachedInCompactHeight = true
+				kurozoraNavigationController.sheetPresentationController?.prefersGrabberVisible = true
 				viewController?.present(kurozoraNavigationController, animated: true)
 			}
 		}
@@ -138,7 +143,12 @@ extension FeedMessage {
 					kfmReShareTextEditorViewController.opFeedMessage = self
 
 					let kurozoraNavigationController = KNavigationController.init(rootViewController: kfmReShareTextEditorViewController)
+					kurozoraNavigationController.presentationController?.delegate = kfmReShareTextEditorViewController
 					kurozoraNavigationController.navigationBar.prefersLargeTitles = false
+					kurozoraNavigationController.sheetPresentationController?.detents = [.medium(), .large()]
+					kurozoraNavigationController.sheetPresentationController?.selectedDetentIdentifier = .large
+					kurozoraNavigationController.sheetPresentationController?.prefersEdgeAttachedInCompactHeight = true
+					kurozoraNavigationController.sheetPresentationController?.prefersGrabberVisible = true
 					viewController?.present(kurozoraNavigationController, animated: true)
 				}
 			} else {

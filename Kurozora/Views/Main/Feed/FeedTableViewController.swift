@@ -189,7 +189,12 @@ class FeedTableViewController: KTableViewController {
 				kFeedMessageTextEditorViewController.delegate = self
 
 				let kurozoraNavigationController = KNavigationController.init(rootViewController: kFeedMessageTextEditorViewController)
+				kurozoraNavigationController.presentationController?.delegate = kFeedMessageTextEditorViewController
 				kurozoraNavigationController.navigationBar.prefersLargeTitles = false
+				kurozoraNavigationController.sheetPresentationController?.detents = [.medium(), .large()]
+				kurozoraNavigationController.sheetPresentationController?.selectedDetentIdentifier = .large
+				kurozoraNavigationController.sheetPresentationController?.prefersEdgeAttachedInCompactHeight = true
+				kurozoraNavigationController.sheetPresentationController?.prefersGrabberVisible = true
 				self.present(kurozoraNavigationController, animated: true)
 			}
 		}

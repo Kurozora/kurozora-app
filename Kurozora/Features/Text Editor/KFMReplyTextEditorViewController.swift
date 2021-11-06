@@ -9,37 +9,24 @@
 import UIKit
 import KurozoraKit
 
-class KFMReplyTextEditorViewController: KViewController {
+class KFMReplyTextEditorViewController: KFeedMessageTextEditorViewController {
 	// MARK: - IBOutlets
-	@IBOutlet weak var isSpoilerSwitch: KSwitch!
-	@IBOutlet weak var isNSFWSwitch: KSwitch!
-	@IBOutlet weak var profileImageView: ProfileImageView!
-	@IBOutlet weak var currentUsernameLabel: KLabel!
-	@IBOutlet weak var characterCountLabel: UILabel!
-	@IBOutlet weak var commentTextView: KTextView!
-	@IBOutlet weak var commentPreviewContainer: UIView! {
-		didSet {
-			commentPreviewContainer.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-		}
-	}
-
 	@IBOutlet weak var opProfileImageView: ProfileImageView!
 	@IBOutlet weak var opUsernameLabel: KLabel!
-	@IBOutlet weak var opMessageTextView: KTextView!
+	@IBOutlet weak var opMessageTextView: KSelectableTextView!
 	@IBOutlet weak var opDateTimeLabel: KSecondaryLabel!
 	@IBOutlet weak var opMessagePreviewContainer: UIView! {
 		didSet {
-			opMessagePreviewContainer.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+			self.opMessagePreviewContainer.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 		}
 	}
 
 	// MARK: - Properties
-	let characterLimit = 240
-	let placeholderText = "What's on your mind..."
-
+	override var placeholderText: String {
+		return "What's on your mind..."
+	}
 	var opFeedMessage: FeedMessage!
 	var segueToOPFeedDetails: Bool = false
-	weak var delegate: KFeedMessageTextEditorViewDelegate?
 
 	// MARK: - View
 	override func viewDidLoad() {
@@ -63,55 +50,20 @@ class KFMReplyTextEditorViewController: KViewController {
 		self.opDateTimeLabel.text = self.opFeedMessage.attributes.createdAt.relativeToNow
 	}
 
-	// MARK: - IBActions
-	@IBAction func dismissButtonPressed(_ sender: UIBarButtonItem) {
-		self.dismiss(animated: true, completion: nil)
-	}
-
-	@IBAction func sendButtonPressed(_ sender: UIBarButtonItem) {
-		if let characterCount = characterCountLabel.text?.int, characterCount >= 0 {
-			let feedMessage = commentTextView.text.trimmed
-			if feedMessage.isEmpty || feedMessage == placeholderText && commentTextView.textColor == KThemePicker.textFieldPlaceholderTextColor.colorValue {
-				return
-			}
-
-			self.view.endEditing(true)
-			KService.postFeedMessage(withBody: feedMessage, relatedToParent: opFeedMessage.id, isReply: true, isReShare: false, isNSFW: isNSFWSwitch.isOn, isSpoiler: isSpoilerSwitch.isOn) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let feedMessages):
-					if self.segueToOPFeedDetails {
-						self.delegate?.segueToOPFeedDetails(self.opFeedMessage)
-					} else {
-						self.delegate?.kFeedMessageTextEditorView(updateMessagesWith: feedMessages)
-					}
-					self.dismiss(animated: true, completion: nil)
-				case .failure: break
+	// MARK: - Functions
+	override func performFeedMessageRequest(feedMessage: String) {
+		KService.postFeedMessage(withBody: feedMessage, relatedToParent: self.opFeedMessage.id, isReply: true, isReShare: false, isNSFW: self.isNSFWSwitch.isOn, isSpoiler: self.isSpoilerSwitch.isOn) { [weak self] result in
+			guard let self = self else { return }
+			switch result {
+			case .success(let feedMessages):
+				if self.segueToOPFeedDetails {
+					self.delegate?.segueToOPFeedDetails(self.opFeedMessage)
+				} else {
+					self.delegate?.kFeedMessageTextEditorView(updateMessagesWith: feedMessages)
 				}
+				self.dismiss(animated: true, completion: nil)
+			case .failure: break
 			}
-		} else {
-			self.presentAlertController(title: "Limit Reached", message: "You have exceeded the character limit for a message.")
-		}
-	}
-}
-
-// MARK: - UITextViewDelegate
-extension KFMReplyTextEditorViewController: UITextViewDelegate {
-	func textViewDidChange(_ textView: UITextView) {
-		characterCountLabel.text = "\(characterLimit - textView.text.count)"
-	}
-
-	func textViewDidBeginEditing(_ textView: UITextView) {
-		if textView.text == placeholderText, textView.textColor == KThemePicker.textFieldPlaceholderTextColor.colorValue {
-			textView.text = ""
-			textView.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
-
-	func textViewDidEndEditing(_ textView: UITextView) {
-		if textView.text.isEmpty {
-			textView.text = placeholderText
-			textView.theme_textColor = KThemePicker.textFieldPlaceholderTextColor.rawValue
 		}
 	}
 }

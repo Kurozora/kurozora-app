@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17700" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -25,32 +24,32 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Kurozora" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="27X-h2-WMd" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="60" y="8" width="71.5" height="20.5"/>
+                        <rect key="frame" x="60" y="8" width="60.5" height="17"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2d" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yad-DN-7du" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="351" y="8" width="15" height="20.5"/>
+                        <rect key="frame" x="352.5" y="8" width="13.5" height="17"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                         <color key="textColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="_test" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I35-Go-4sT" customClass="KTextView" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="60" y="28.5" width="306" height="41"/>
+                    <textView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="_test" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="I35-Go-4sT" customClass="KSelectableTextView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="60" y="25" width="306" height="44.5"/>
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                        <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES" shipmentTrackingNumber="YES" flightNumber="YES" lookupSuggestion="YES"/>
+                        <dataDetectorType key="dataDetectorTypes" link="YES" calendarEvent="YES" lookupSuggestion="YES"/>
                     </textView>
                     <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cfl-Ds-ElJ" customClass="KVisualEffectView" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="60" y="28.5" width="306" height="41"/>
+                        <rect key="frame" x="60" y="25" width="306" height="44.5"/>
                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="tiF-e9-Zs7">
-                            <rect key="frame" x="0.0" y="0.0" width="306" height="41"/>
+                            <rect key="frame" x="0.0" y="0.0" width="306" height="44.5"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZDW-d9-wqu" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                    <rect key="frame" x="134.5" y="11" width="37" height="19.5"/>
+                                    <rect key="frame" x="137.5" y="14" width="31" height="16"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -76,10 +75,10 @@
                         <rect key="frame" x="60" y="77.5" width="306" height="44"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="2r3-Rh-BUE">
-                                <rect key="frame" x="0.0" y="0.0" width="123" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="111" height="44"/>
                                 <subviews>
                                     <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7eR-Hg-lR6" customClass="CellActionButton" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="37.5" height="44"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="32.5" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="XNf-jS-xWL"/>
                                         </constraints>
@@ -96,7 +95,7 @@
                                         </connections>
                                     </button>
                                     <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZRS-WP-vqK" customClass="CellActionButton" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="45.5" y="0.0" width="29" height="44"/>
+                                        <rect key="frame" x="40.5" y="0.0" width="27" height="44"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <color key="tintColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <state key="normal" title="0" image="Symbols/message.left.and.message.right.fill">
@@ -110,7 +109,7 @@
                                         </connections>
                                     </button>
                                     <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wjh-je-WtR" customClass="CellActionButton" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="82.5" y="0.0" width="40.5" height="44"/>
+                                        <rect key="frame" x="75.5" y="0.0" width="35.5" height="44"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <color key="tintColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <state key="normal" title="0" image="square.and.arrow.up.on.square.fill" catalog="system">
@@ -181,6 +180,7 @@
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <connections>
                 <outlet property="commentButton" destination="ZRS-WP-vqK" id="ZAU-oa-ewb"/>
                 <outlet property="dateTimeLabel" destination="Yad-DN-7du" id="0aO-Xm-b11"/>

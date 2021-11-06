@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19115.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="omk-JT-iW1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="omk-JT-iW1">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19107.4"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Nr-QT-4ft" userLabel="OP Message Preview Container">
-                                <rect key="frame" x="20" y="104" width="374" height="87"/>
+                                <rect key="frame" x="20" y="104" width="374" height="80"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/User Profile" translatesAutoresizingMaskIntoConstraints="NO" id="gJ1-Pl-djc" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="8" y="8" width="44" height="44"/>
@@ -31,22 +31,23 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="748" text="Usopp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xep-Jx-5iG" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="60" y="8" width="52" height="21"/>
+                                        <rect key="frame" x="60" y="8" width="44" height="17"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="2d ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hXr-U9-OHg" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="324" y="8" width="42" height="21"/>
+                                        <rect key="frame" x="327" y="8" width="39" height="17"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="_test" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qkR-jN-Jdi" customClass="KTextView" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="60" y="29" width="306" height="38"/>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="_test" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="qkR-jN-Jdi" customClass="KSelectableTextView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="60" y="25" width="306" height="35"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <dataDetectorType key="dataDetectorTypes" link="YES" calendarEvent="YES" lookupSuggestion="YES"/>
                                         <connections>
                                             <outlet property="delegate" destination="44K-MY-IEQ" id="tgM-td-UBn"/>
                                         </connections>
@@ -74,7 +75,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w3g-lc-1VF">
-                                <rect key="frame" x="20" y="199" width="374" height="113.5"/>
+                                <rect key="frame" x="20" y="192" width="374" height="107"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/User Profile" translatesAutoresizingMaskIntoConstraints="NO" id="kls-an-ezp" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="8" y="8" width="44" height="44"/>
@@ -85,19 +86,19 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="748" text="Kirito" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wQ8-1b-Fef" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="60" y="8" width="42.5" height="20.5"/>
+                                        <rect key="frame" x="60" y="8" width="36.5" height="17"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="240" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="03q-PX-EpV">
-                                        <rect key="frame" x="342" y="8" width="24" height="20.5"/>
+                                        <rect key="frame" x="343.5" y="8" width="22.5" height="17"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="zBs-tE-y2u" customClass="KTextView" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="60" y="28.5" width="306" height="38"/>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" text="_test" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="zBs-tE-y2u" customClass="KTextView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="60" y="25" width="306" height="35"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -105,20 +106,20 @@
                                             <outlet property="delegate" destination="44K-MY-IEQ" id="kjJ-hd-2SP"/>
                                         </connections>
                                     </textView>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" title="Not Safe For Work" translatesAutoresizingMaskIntoConstraints="NO" id="Jr7-fT-oT6" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="317" y="74.5" width="51" height="31"/>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Jr7-fT-oT6" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="317" y="68" width="51" height="31"/>
                                     </switch>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" title="Spoiler" translatesAutoresizingMaskIntoConstraints="NO" id="CcU-Jc-lzq" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="197" y="74.5" width="51" height="31"/>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="CcU-Jc-lzq" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="204.5" y="68" width="51" height="31"/>
                                     </switch>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NSFW" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LHC-gU-1WR" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="266" y="81" width="43" height="18"/>
+                                        <rect key="frame" x="273.5" y="76.5" width="35.5" height="14.5"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Spoiler" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y7d-hD-Niq" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="141" y="81" width="48" height="18"/>
+                                        <rect key="frame" x="157" y="76.5" width="39.5" height="14.5"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -236,7 +237,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YBx-ol-UEo">
-                                <rect key="frame" x="20" y="104" width="374" height="165"/>
+                                <rect key="frame" x="20" y="104" width="374" height="152"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/User Profile" translatesAutoresizingMaskIntoConstraints="NO" id="FgP-VV-4bc" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="8" y="8" width="44" height="44"/>
@@ -247,19 +248,19 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="748" text="Kirito" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S0c-80-c6W" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="60" y="8" width="42.5" height="20.5"/>
+                                        <rect key="frame" x="60" y="8" width="36.5" height="17"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="240" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k7h-np-Ufc" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="342" y="8" width="24" height="20.5"/>
+                                        <rect key="frame" x="343.5" y="8" width="22.5" height="17"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" text="_test" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="S23-Ao-1Rk" customClass="KTextView" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="60" y="28.5" width="306" height="38"/>
+                                        <rect key="frame" x="60" y="25" width="306" height="35"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -268,7 +269,7 @@
                                         </connections>
                                     </textView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cwV-UP-jOj">
-                                        <rect key="frame" x="60" y="74.5" width="306" height="82.5"/>
+                                        <rect key="frame" x="60" y="68" width="306" height="76"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/User Profile" translatesAutoresizingMaskIntoConstraints="NO" id="xCg-WK-oOs" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
                                                 <rect key="frame" x="8" y="8" width="32" height="32"/>
@@ -278,22 +279,23 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Usopp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vTS-Ro-gTX" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                <rect key="frame" x="48" y="8" width="52" height="20.5"/>
+                                                <rect key="frame" x="48" y="8" width="44" height="17"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2d ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lId-Og-VbP" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                                <rect key="frame" x="256" y="8" width="42" height="20.5"/>
+                                                <rect key="frame" x="259" y="8" width="39" height="17"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="_test" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3SH-Rj-P3x" customClass="KTextView" customModule="Kurozora" customModuleProvider="target">
-                                                <rect key="frame" x="48" y="36.5" width="250" height="38"/>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="_test" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="3SH-Rj-P3x" customClass="KSelectableTextView" customModule="Kurozora" customModuleProvider="target">
+                                                <rect key="frame" x="48" y="33" width="250" height="35"/>
                                                 <color key="textColor" systemColor="labelColor"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                <dataDetectorType key="dataDetectorTypes" link="YES" calendarEvent="YES" lookupSuggestion="YES"/>
                                             </textView>
                                         </subviews>
                                         <constraints>
@@ -375,7 +377,7 @@
                         <outlet property="commentTextView" destination="S23-Ao-1Rk" id="k0B-oy-jst"/>
                         <outlet property="currentUsernameLabel" destination="S0c-80-c6W" id="qWj-9X-K8U"/>
                         <outlet property="dateLabel" destination="lId-Og-VbP" id="ujt-yX-FcY"/>
-                        <outlet property="opBodyTextView" destination="3SH-Rj-P3x" id="jBD-yS-ixe"/>
+                        <outlet property="opMessageTextView" destination="3SH-Rj-P3x" id="vtL-Ou-OC6"/>
                         <outlet property="opProfileImageView" destination="xCg-WK-oOs" id="bhJ-xv-oWa"/>
                         <outlet property="opUsernameLabel" destination="vTS-Ro-gTX" id="81z-Gi-gIj"/>
                         <outlet property="profileImageView" destination="FgP-VV-4bc" id="Uzz-iw-csn"/>
@@ -424,7 +426,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zx8-Kw-x5t">
-                                <rect key="frame" x="20" y="104" width="374" height="113.5"/>
+                                <rect key="frame" x="20" y="104" width="374" height="107"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/User Profile" translatesAutoresizingMaskIntoConstraints="NO" id="kY2-fu-icv" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="8" y="8" width="44" height="44"/>
@@ -435,19 +437,19 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="748" text="Kirito" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RPn-w9-EvA" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="60" y="8" width="42.5" height="20.5"/>
+                                        <rect key="frame" x="60" y="8" width="36.5" height="17"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="240" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cEI-jU-9lS">
-                                        <rect key="frame" x="342" y="8" width="24" height="20.5"/>
+                                        <rect key="frame" x="343.5" y="8" width="22.5" height="17"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ylV-vR-Rhd" customClass="KTextView" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="60" y="28.5" width="306" height="38"/>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" text="_test" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ylV-vR-Rhd" customClass="KTextView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="60" y="25" width="306" height="35"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -456,19 +458,19 @@
                                         </connections>
                                     </textView>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="qhL-Md-fEg" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="317" y="74.5" width="51" height="31"/>
+                                        <rect key="frame" x="317" y="68" width="51" height="31"/>
                                     </switch>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="EgE-4B-Lb6" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="197" y="74.5" width="51" height="31"/>
+                                        <rect key="frame" x="204.5" y="68" width="51" height="31"/>
                                     </switch>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NSFW" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kul-10-rfC" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="266" y="81" width="43" height="18"/>
+                                        <rect key="frame" x="273.5" y="76.5" width="35.5" height="14.5"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Spoiler" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wJ5-GM-S1V" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="141" y="81" width="48" height="18"/>
+                                        <rect key="frame" x="157" y="76.5" width="39.5" height="14.5"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>

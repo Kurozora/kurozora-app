@@ -27,10 +27,12 @@ class KTextView: UITextView {
 
 	// MARK: - Functions
 	/// The shared settings used to initialize the label.
-	private func sharedInit() {
+	func sharedInit() {
 		self.theme_textColor = KThemePicker.textColor.rawValue
 
 		self.textContainerInset = .zero
 		self.textContainer.lineFragmentPadding = 0
+		self.isEditable = true
+		self.isSelectable = true
 	}
 }
