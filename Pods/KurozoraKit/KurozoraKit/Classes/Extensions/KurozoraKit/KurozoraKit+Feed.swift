@@ -234,29 +234,98 @@ extension KurozoraKit {
 	}
 
 	/**
+		Update the details for the given feed message id.
+
+		- Parameter messageID: The id of the feed message to be updated.
+		- Parameter body: The content of the message to be posted in the feed.
+		- Parameter isNSFW: Whether the message contains NSFW material.
+		- Parameter isSpoiler: Whether the message contains spoiler material.
+		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
+	*/
+	public func updateMessage(_ messageID: Int, withBody body: String, isNSFW: Bool, isSpoiler: Bool, completion completionHandler: @escaping (_ result: Result<FeedMessageUpdate, KKAPIError>) -> Void) {
+		guard User.current != nil else { fatalError("User must be signed in and have a session attached to call the updateMessage(messageID:withBody:isNSFW:isSpoiler:completion:) method.") }
+		let feedMessageUpdate = KKEndpoint.Feed.Messages.update(messageID).endpointValue
+		let request: APIRequest<FeedMessageUpdateResponse, KKAPIError> = tron.codable.request(feedMessageUpdate)
+
+		request.headers = headers
+		request.headers["kuro-auth"] = self.authenticationKey
+
+		request.method = .post
+		request.parameters = [
+			"body": body,
+			"is_nsfw": isNSFW,
+			"is_spoiler": isSpoiler
+		]
+		request.perform(withSuccess: { feedMessageUpdateResponse in
+			completionHandler(.success(feedMessageUpdateResponse.data))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
+			if self.services.showAlerts {
+				UIApplication.topViewController?.presentAlertController(title: "Can't Update Message 😔", message: error.message)
+			}
+			print("❌ Received update message error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
+		})
+	}
+
+	/**
 		Heart or un-heart a feed message.
 
 		- Parameter messageID: The id of the message to heart or un-heart.
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func heartMessage(_ messageID: Int, completion completionHandler: @escaping (_ result: Result<FeedMessageHeart, KKAPIError>) -> Void) {
+	public func heartMessage(_ messageID: Int, completion completionHandler: @escaping (_ result: Result<FeedMessageUpdate, KKAPIError>) -> Void) {
 		guard User.current != nil else { fatalError("User must be signed in and have a session attached to call the heartMessage(messageID:completion:) method.") }
 		let feedPost = KKEndpoint.Feed.Messages.heart(messageID).endpointValue
-		let request: APIRequest<FeedMessageHeartResponse, KKAPIError> = tron.codable.request(feedPost)
+		let request: APIRequest<FeedMessageUpdateResponse, KKAPIError> = tron.codable.request(feedPost)
 
 		request.headers = headers
 		request.headers["kuro-auth"] = self.authenticationKey
 
 		request.method = .post
-		request.perform(withSuccess: { feedMessageHeartResponse in
-			completionHandler(.success(feedMessageHeartResponse.data))
+		request.perform(withSuccess: { feedMessageupdateResponse in
+			completionHandler(.success(feedMessageupdateResponse.data))
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
 				UIApplication.topViewController?.presentAlertController(title: "Can't Heart Message 😔", message: error.message)
 			}
 			print("❌ Received heart feed message error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
+			completionHandler(.failure(error))
+		})
+	}
+
+	/**
+		Delete the specified message ID from the user's messages.
+
+		- Parameter messageID: The message ID to be deleted.
+		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
+	*/
+	public func deleteMessage(_ messageID: Int, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) {
+		guard User.current != nil else { fatalError("User must be signed in and have a session attached to call the deleteMessage(messageID:completion:) method.") }
+		let feedMessagesDelete = KKEndpoint.Feed.Messages.delete(messageID).endpointValue
+		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(feedMessagesDelete)
+
+		request.headers = headers
+		request.headers["kuro-auth"] = self.authenticationKey
+
+		request.method = .post
+		request.perform(withSuccess: { success in
+			completionHandler(.success(success))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
+			if self.services.showAlerts {
+				UIApplication.topViewController?.presentAlertController(title: "Can't Delete Message 😔", message: error.message)
+			}
+			print("❌ Received delete feed message error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
 			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
 			print("└ Failure reason:", error.failureReason ?? "No reason available")

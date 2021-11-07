@@ -16,7 +16,6 @@ class FeedTableViewController: KTableViewController {
 
 	// MARK: - Properties
 	var rightBarButtonItems: [UIBarButtonItem]? = nil
-
 	var feedMessages: [FeedMessage] = [] {
 		didSet {
 			self.tableView.reloadData {
@@ -53,7 +52,8 @@ class FeedTableViewController: KTableViewController {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		NotificationCenter.default.addObserver(self, selector: #selector(updateFeedMessage(_:)), name: .KFTMessageDidUpdate, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(updateFeedMessage(_:)), name: .KFMDidUpdate, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(deleteFeedMessage(_:)), name: .KFMDidDelete, object: nil)
 	}
 
 	override func viewDidLoad() {
@@ -74,8 +74,9 @@ class FeedTableViewController: KTableViewController {
 	}
 
 	override func viewDidDisappear(_ animated: Bool) {
-		super.viewDidDisappear(true)
-		NotificationCenter.default.removeObserver(self, name: .KFTMessageDidUpdate, object: nil)
+		super.viewDidDisappear(animated)
+		NotificationCenter.default.removeObserver(self, name: .KFMDidUpdate, object: nil)
+		NotificationCenter.default.removeObserver(self, name: .KFMDidDelete, object: nil)
 	}
 
 	// MARK: - Functions
@@ -101,15 +102,39 @@ class FeedTableViewController: KTableViewController {
 	}
 
 	/**
+		Deletes a message from the given index path.
+
+		- Parameter indexPath: The index path of the message to be deleted.
+	*/
+	func deleteMessage(at indexPath: IndexPath) {
+		self.tableView.performBatchUpdates({
+			self.feedMessages.remove(at: indexPath.section)
+			self.tableView.deleteSections([indexPath.section], with: .automatic)
+		}, completion: nil)
+	}
+
+	/**
 		Updates the feed message with the received information.
 
 		- Parameter notification: An object containing information broadcast to registered observers.
 	*/
 	@objc func updateFeedMessage(_ notification: NSNotification) {
+		// Start update process
+		if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
+			self.tableView.reloadSections([indexPath.section], with: .none)
+		}
+	}
+
+	/**
+		Deletes the feed message with the received information.
+
+		- Parameter notification: An object containing information broadcast to registered observers.
+	*/
+	@objc func deleteFeedMessage(_ notification: NSNotification) {
 		// Start delete process
 		self.tableView.performBatchUpdates({
 			if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
-				self.tableView.reloadSections([indexPath.section], with: .none)
+				self.deleteMessage(at: indexPath)
 			}
 		}, completion: nil)
 	}
@@ -212,10 +237,11 @@ class FeedTableViewController: KTableViewController {
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == R.segue.feedTableViewController.feedMessageDetailsSegue.identifier {
-			// Show detail for explore cell
+			// Show details of feed message
 			if let fmDetailsTableViewController = segue.destination as? FMDetailsTableViewController {
 				if let feedMessageID = sender as? Int {
 					fmDetailsTableViewController.feedMessageID = feedMessageID
+					fmDetailsTableViewController.fmDetailsTableViewControllerDelegate = self
 				}
 			}
 		}
@@ -316,5 +342,15 @@ extension FeedTableViewController: KFeedMessageTextEditorViewDelegate {
 
 	func segueToOPFeedDetails(_ feedMessage: FeedMessage) {
 		self.performSegue(withIdentifier: R.segue.feedTableViewController.feedMessageDetailsSegue.identifier, sender: feedMessage.id)
+	}
+}
+
+// MARK: - FMDetailsTableViewControllerDelegate
+extension FeedTableViewController: FMDetailsTableViewControllerDelegate {
+	func fmDetailsTableViewController(delete messageID: Int) {
+		self.feedMessages.removeFirst { feedMessage in
+			feedMessage.id == messageID
+		}
+		self.tableView.reloadData()
 	}
 }

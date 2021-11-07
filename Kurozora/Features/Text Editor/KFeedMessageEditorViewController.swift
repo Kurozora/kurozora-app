@@ -42,9 +42,35 @@ class KFeedMessageTextEditorViewController: KViewController {
 			self.viewIfLoaded?.setNeedsLayout()
 		}
 	}
+	var originalNSFW = false {
+		didSet {
+			self.editedNSFW = self.originalNSFW
+		}
+	}
+	var editedNSFW = false {
+		didSet {
+			self.viewIfLoaded?.setNeedsLayout()
+		}
+	}
+	var originalSpoiler = false {
+		didSet {
+			self.editedSpoiler = self.originalSpoiler
+		}
+	}
+	var editedSpoiler = false {
+		didSet {
+			self.viewIfLoaded?.setNeedsLayout()
+		}
+	}
 	var hasChanges: Bool {
+		if self.editingFeedMessage != nil {
+			return self.originalText != self.editedText || self.originalNSFW != self.editedNSFW || self.originalSpoiler != self.editedSpoiler
+		}
+
 		return self.originalText != self.editedText
 	}
+	var editingFeedMessage: FeedMessage?
+	var userInfo: [AnyHashable: Any]?
 	weak var delegate: KFeedMessageTextEditorViewDelegate?
 
 	// MARK: - View
@@ -64,11 +90,23 @@ class KFeedMessageTextEditorViewController: KViewController {
 			self.currentUsernameLabel.text = user.attributes.username
 			self.profileImageView.setImage(with: user.attributes.profile?.url ?? "", placeholder: user.attributes.placeholderImage)
 		}
+
 		self.characterCountLabel.text = "\(self.characterLimit)"
-		self.commentTextView.text = self.placeholderText
-		self.commentTextView.theme_textColor = KThemePicker.textFieldPlaceholderTextColor.rawValue
+
+		if let feedMessage = self.editingFeedMessage {
+			self.commentTextView.text = nil
+			self.commentTextView.insertText(feedMessage.attributes.body)
+			self.originalText = feedMessage.attributes.body
+			self.isNSFWSwitch?.isOn = feedMessage.attributes.isNSFW
+			self.originalNSFW = feedMessage.attributes.isNSFW
+			self.isSpoilerSwitch?.isOn = feedMessage.attributes.isSpoiler
+			self.originalSpoiler = feedMessage.attributes.isSpoiler
+		} else {
+			self.commentTextView.text = self.placeholderText
+			self.commentTextView.theme_textColor = KThemePicker.textFieldPlaceholderTextColor.rawValue
+			self.commentTextView.selectedTextRange = self.commentTextView.textRange(from: self.commentTextView.beginningOfDocument, to: self.commentTextView.beginningOfDocument)
+		}
 		self.commentTextView.becomeFirstResponder()
-		self.commentTextView.selectedTextRange = self.commentTextView.textRange(from: self.commentTextView.beginningOfDocument, to: self.commentTextView.beginningOfDocument)
 	}
 
 	// MARK: - Functions
@@ -108,33 +146,39 @@ class KFeedMessageTextEditorViewController: KViewController {
 	func sendMessage() {
 		// Post is within the allowed character limit.
 		if let characterCount = self.characterCountLabel.text?.int, characterCount >= 0 {
-			// Trim any spaces and make sure the text isn't a placeholder
-			let feedMessage = self.commentTextView.text.trimmed
-
 			// Disable editing to hide the keyboard.
 			self.view.endEditing(true)
 
 			// Perform feed message request.
-			self.performFeedMessageRequest(feedMessage: feedMessage)
+			self.performFeedMessageRequest()
 		} else {
 			// Character limit reached. Present an alert to the user.
 			self.presentAlertController(title: "Limit Reached", message: "You have exceeded the character limit for a message.")
 		}
 	}
 
-	/**
-		Performs the request to post the feed message.
-	 
-		- Parameter feedMessage: The feed message to post.
-	*/
-	func performFeedMessageRequest(feedMessage: String) {
-		KService.postFeedMessage(withBody: feedMessage, relatedToParent: nil, isReply: nil, isReShare: nil, isNSFW: self.isNSFWSwitch.isOn, isSpoiler: self.isSpoilerSwitch.isOn) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let feedMessages):
-				self.delegate?.kFeedMessageTextEditorView(updateMessagesWith: feedMessages)
-				self.dismiss(animated: true, completion: nil)
-			case .failure: break
+	/// Performs the request to post the feed message.
+	func performFeedMessageRequest() {
+		if let feedMessage = self.editingFeedMessage {
+			KService.updateMessage(feedMessage.id, withBody: self.editedText, isNSFW: self.isNSFWSwitch.isOn, isSpoiler: self.isSpoilerSwitch.isOn) { [weak self] result in
+				guard let self = self else { return }
+				switch result {
+				case .success(let feedMessageUpdate):
+					self.editingFeedMessage?.attributes.update(using: feedMessageUpdate)
+					NotificationCenter.default.post(name: .KFMDidUpdate, object: nil, userInfo: self.userInfo)
+					self.dismiss(animated: true, completion: nil)
+				case .failure: break
+				}
+			}
+		} else {
+			KService.postFeedMessage(withBody: self.editedText, relatedToParent: nil, isReply: nil, isReShare: nil, isNSFW: self.isNSFWSwitch.isOn, isSpoiler: self.isSpoilerSwitch.isOn) { [weak self] result in
+				guard let self = self else { return }
+				switch result {
+				case .success(let feedMessages):
+					self.delegate?.kFeedMessageTextEditorView(updateMessagesWith: feedMessages)
+					self.dismiss(animated: true, completion: nil)
+				case .failure: break
+				}
 			}
 		}
 	}
@@ -153,6 +197,14 @@ class KFeedMessageTextEditorViewController: KViewController {
 	@IBAction func sendButtonPressed(_ sender: UIBarButtonItem) {
 		// Post the feed message and dismiss the controller.
 		self.sendMessage()
+	}
+
+	@IBAction func nsfwSwitchChanged(_ sender: UISwitch) {
+		self.editedNSFW = sender.isOn
+	}
+
+	@IBAction func spoilertSwitchChanged(_ sender: UISwitch) {
+		self.editedSpoiler = sender.isOn
 	}
 }
 

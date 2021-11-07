@@ -108,9 +108,15 @@
                                     </textView>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Jr7-fT-oT6" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="317" y="68" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="nsfwSwitchChanged:" destination="44K-MY-IEQ" eventType="valueChanged" id="3Jt-BE-7wp"/>
+                                        </connections>
                                     </switch>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="CcU-Jc-lzq" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="204.5" y="68" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="spoilertSwitchChanged:" destination="44K-MY-IEQ" eventType="valueChanged" id="hzS-QV-QUg"/>
+                                        </connections>
                                     </switch>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NSFW" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LHC-gU-1WR" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="273.5" y="76.5" width="35.5" height="14.5"/>
@@ -459,9 +465,15 @@
                                     </textView>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="qhL-Md-fEg" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="317" y="68" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="nsfwSwitchChanged:" destination="Bwf-p5-zHb" eventType="valueChanged" id="7V4-X6-0kU"/>
+                                        </connections>
                                     </switch>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="EgE-4B-Lb6" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="204.5" y="68" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="spoilertSwitchChanged:" destination="Bwf-p5-zHb" eventType="valueChanged" id="3gV-Ve-EMz"/>
+                                        </connections>
                                     </switch>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NSFW" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kul-10-rfC" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="273.5" y="76.5" width="35.5" height="14.5"/>

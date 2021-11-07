@@ -37,7 +37,12 @@ extension Notification.Name {
 // MARK: - Feed
 extension Notification.Name {
 	/// A notification posted when the feed message is updated.
-	static var KFTMessageDidUpdate: NSNotification.Name {
+	static var KFMDidUpdate: NSNotification.Name {
+		return NSNotification.Name(#function)
+	}
+
+	/// A notification posted when the feed message is deleted.
+	static var KFMDidDelete: NSNotification.Name {
 		return NSNotification.Name(#function)
 	}
 }

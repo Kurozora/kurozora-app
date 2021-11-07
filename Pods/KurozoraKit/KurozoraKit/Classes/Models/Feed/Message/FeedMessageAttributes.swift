@@ -12,7 +12,7 @@ extension FeedMessage {
 	public struct Attributes: Codable {
 		// MARK: - Properties
 		/// The body of the feed message.
-		public let body: String
+		public var body: String
 
 		/// The metrics of the feed message.
 		public var metrics: FeedMessage.Attributes.Metrics
@@ -29,11 +29,11 @@ extension FeedMessage {
 		/// Whether the feed message is a re-shared by the authenticated user.
 		public let isReShared: Bool
 
-		/// Whether the feed message is locked.
-		public let isNSFW: Bool
+		/// Whether the feed message is NSFW.
+		public var isNSFW: Bool
 
-		/// The count of replies on the feed message.
-		public let isSpoiler: Bool
+		/// Whether the feed message is spoiler.
+		public var isSpoiler: Bool
 
 		/// The date the feed message was created at.
 		public let createdAt: Date
@@ -44,17 +44,23 @@ extension FeedMessage {
 extension FeedMessage.Attributes {
 	// MARK: - Functions
 	/**
-		Updates the `isHearted` attribute with the given value.
+		Updates the message's attribute with the given `FeedMessageUpdate` object.
 
-		- Parameter isHearted: The new bool value of the `isHearted` property.
+		- Parameter feedMessageUpdate: The object containing the new attribute values.
 	*/
-	public mutating func update(heartStatus isHearted: Bool) {
-		self.isHearted = isHearted
+	public mutating func update(using feedMessageUpdate: FeedMessageUpdate) {
+		self.body = feedMessageUpdate.body ?? self.body
+		self.isNSFW = feedMessageUpdate.isNSFW ?? self.isNSFW
+		self.isSpoiler = feedMessageUpdate.isSpoiler ?? self.isSpoiler
 
-		if isHearted {
-			self.metrics.heartCount += 1
-		} else {
-			self.metrics.heartCount -= 1
+		if let isHearted = feedMessageUpdate.isHearted {
+			self.isHearted = isHearted
+
+			if isHearted {
+				self.metrics.heartCount += 1
+			} else {
+				self.metrics.heartCount -= 1
+			}
 		}
 	}
 }

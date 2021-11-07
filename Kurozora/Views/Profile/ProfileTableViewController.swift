@@ -138,7 +138,8 @@ class ProfileTableViewController: KTableViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		NotificationCenter.default.addObserver(self, selector: #selector(updateFeedMessage(_:)), name: .KFTMessageDidUpdate, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(updateFeedMessage(_:)), name: .KFMDidUpdate, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(deleteFeedMessage(_:)), name: .KFMDidDelete, object: nil)
 
 		// Setup refresh control
 		#if !targetEnvironment(macCatalyst)
@@ -157,6 +158,12 @@ class ProfileTableViewController: KTableViewController {
 		DispatchQueue.main.async {
 			self.tableView.updateHeaderViewFrame()
 		}
+	}
+
+	override func viewDidDisappear(_ animated: Bool) {
+		super.viewDidDisappear(animated)
+		NotificationCenter.default.removeObserver(self, name: .KFMDidUpdate, object: nil)
+		NotificationCenter.default.removeObserver(self, name: .KFMDidDelete, object: nil)
 	}
 
 	// MARK: - Functions
@@ -198,10 +205,25 @@ class ProfileTableViewController: KTableViewController {
 		- Parameter notification: An object containing information broadcast to registered observers.
 	*/
 	@objc func updateFeedMessage(_ notification: NSNotification) {
-		// Start delete process
+		// Start update process
 		self.tableView.performBatchUpdates({
 			if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
 				self.tableView.reloadSections([indexPath.section], with: .none)
+			}
+		}, completion: nil)
+	}
+
+	/**
+		Deletes the feed message with the received information.
+
+		- Parameter notification: An object containing information broadcast to registered observers.
+	*/
+	@objc func deleteFeedMessage(_ notification: NSNotification) {
+		// Start delete process
+		self.tableView.performBatchUpdates({
+			if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
+				self.feedMessages.remove(at: indexPath.section)
+				self.tableView.deleteSections([indexPath.section], with: .automatic)
 			}
 		}, completion: nil)
 	}
