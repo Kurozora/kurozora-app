@@ -212,7 +212,6 @@
                                                                                 <constraint firstAttribute="width" constant="30" id="bNa-Cw-gpg"/>
                                                                             </constraints>
                                                                             <color key="tintColor" red="1" green="0.25490196079999999" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                            <inset key="contentEdgeInsets" minX="4" minY="5" maxX="4" maxY="5"/>
                                                                             <state key="normal" image="heart" catalog="system">
                                                                                 <color key="titleColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             </state>
@@ -234,7 +233,6 @@
                                                                                 <constraint firstAttribute="width" constant="30" id="wPf-au-1zn"/>
                                                                             </constraints>
                                                                             <color key="tintColor" red="1" green="0.80000000000000004" blue="0.070588235289999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                                            <inset key="contentEdgeInsets" minX="5" minY="4" maxX="5" maxY="4"/>
                                                                             <state key="normal" image="bell" catalog="system">
                                                                                 <color key="titleColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             </state>

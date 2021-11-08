@@ -32,7 +32,5 @@ class KTextView: UITextView {
 
 		self.textContainerInset = .zero
 		self.textContainer.lineFragmentPadding = 0
-		self.isEditable = true
-		self.isSelectable = true
 	}
 }
