@@ -111,7 +111,7 @@ extension PersonDetail {
 		// MARK: - Cases
 		case aliases = 0
 		case age
-		case characteristics
+		case website
 
 		// MARK: - Properties
 		/// The string value of a person infromation type.
@@ -121,8 +121,8 @@ extension PersonDetail {
 				return "Aliases"
 			case .age:
 				return "Age"
-			case .characteristics:
-				return "Characteristics"
+			case .website:
+				return "Websites"
 			}
 		}
 
@@ -133,8 +133,8 @@ extension PersonDetail {
 				return UIImage(systemName: "person")
 			case .age:
 				return UIImage(systemName: "calendar")
-			case .characteristics:
-				return UIImage(systemName: "list.bullet.rectangle")
+			case .website:
+				return UIImage(systemName: "safari")
 			}
 		}
 
@@ -145,7 +145,7 @@ extension PersonDetail {
 				return R.reuseIdentifier.informationCollectionViewCell.identifier
 			case .age:
 				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .characteristics:
+			case .website:
 				return R.reuseIdentifier.informationCollectionViewCell.identifier
 			}
 		}
@@ -174,8 +174,8 @@ extension PersonDetail {
 				if let age = person.attributes.age, !age.isEmpty {
 					return age
 				}
-			case .characteristics:
-				return nil
+			case .website:
+				return person.attributes.websiteURLs?.joined(separator: ", ") ?? "-"
 			}
 			return nil
 		}

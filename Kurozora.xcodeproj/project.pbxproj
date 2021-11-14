@@ -3027,7 +3027,6 @@
 			buildPhases = (
 				C4D3519F59E49E683C3D0828 /* [CP] Check Pods Manifest.lock */,
 				66E151782711C2CF007966A9 /* R.swift */,
-				66C4DAE4243DE98F00C4B90A /* [CPD] Copy/Paste Detector */,
 				66647B4C2084995500CF624F /* Sources */,
 				66647B4D2084995500CF624F /* Frameworks */,
 				66647B4E2084995500CF624F /* Resources */,
@@ -3239,24 +3238,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "version=\"${MARKETING_VERSION}\"\n/usr/libexec/PlistBuddy \"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/Root.plist\" -c \"set PreferenceSpecifiers:2:DefaultValue $version\"\n";
-		};
-		66C4DAE4243DE98F00C4B90A /* [CPD] Copy/Paste Detector */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "[CPD] Copy/Paste Detector";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if which pmd >/dev/null; then\n  # Running CPD\n  pmd cpd --files ${EXECUTABLE_NAME} --minimum-tokens 50 --language swift --format xml > cpd-output.xml --failOnViolation true\n\n  # Running script\n  php ./cpd_script.php -cpd-xml cpd-output.xml\nelse\n  echo \"warning: PMD not installed, run brew install pmd\"\nfi\n";
 		};
 		66CF0BBC231AEE8A00EEF947 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3864,7 +3845,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Kurozora/Kurozora.entitlements;
-				CURRENT_PROJECT_VERSION = 11862;
+				CURRENT_PROJECT_VERSION = 11877;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				INFOPLIST_FILE = "Kurozora/Supporting Files/Info.plist";
@@ -3889,7 +3870,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Kurozora/Kurozora.entitlements;
-				CURRENT_PROJECT_VERSION = 11862;
+				CURRENT_PROJECT_VERSION = 11877;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				INFOPLIST_FILE = "Kurozora/Supporting Files/Info.plist";
