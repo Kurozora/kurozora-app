@@ -2,7 +2,7 @@ PODS:
   - Alamofire (5.4.4)
   - Cosmos (23.0.0)
   - ESTabBarController-swift (2.8.0)
-  - FLEX (4.6.0)
+  - FLEX (4.6.1)
   - KeychainAccess (4.2.2)
   - Kingfisher (7.1.1)
   - KurozoraKit (0.18.0):
@@ -97,7 +97,7 @@ SPEC CHECKSUMS:
   Alamofire: f3b09a368f1582ab751b3fff5460276e0d2cf5c9
   Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
   ESTabBarController-swift: 05593a6ad64700b03c0eb60ff625916370aa4136
-  FLEX: 6223ad3d853fb6177a6ab1cda85f372a72768da8
+  FLEX: bbc55d197f87d7cde2454c3981aa47069b694144
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   Kingfisher: f738f9c4a3415823b8e2985d10aa2d6a9f37bc4d
   KurozoraKit: 99d138db85e5a583f3f428ff0c1a7c40fb840076
