@@ -29,7 +29,7 @@ extension Show.Attributes {
 	var bannerImage: UIImage? {
 		let bannerImageView = UIImageView()
 		let placeholderImage = R.image.placeholders.showBanner()!
-		bannerImageView.setImage(with: self.banner?.url ?? "", placeholder: placeholderImage)
+		bannerImageView.setImage(with: self.banner?.url ?? self.poster?.url ?? "", placeholder: placeholderImage)
 		return bannerImageView.image?.withRenderingMode(.alwaysOriginal)
 	}
 

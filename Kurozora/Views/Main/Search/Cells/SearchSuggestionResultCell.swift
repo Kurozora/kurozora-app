@@ -24,13 +24,11 @@ class SearchSuggestionResultCell: UICollectionViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
-		titleLabel.text = show.attributes.title
+		self.titleLabel.text = self.show.attributes.title
 
-		if let showPoster = show.attributes.poster {
-			if let backgroundColor = showPoster.backgroundColor {
-				posterImageView.backgroundColor = UIColor(hexString: backgroundColor)
-			}
-			posterImageView.setImage(with: showPoster.url, placeholder: R.image.placeholders.showPoster()!)
+		if let backgroundColor = self.show.attributes.poster?.backgroundColor {
+			self.posterImageView.backgroundColor = UIColor(hexString: backgroundColor)
 		}
+		self.posterImageView.image = self.show.attributes.posterImage
 	}
 }

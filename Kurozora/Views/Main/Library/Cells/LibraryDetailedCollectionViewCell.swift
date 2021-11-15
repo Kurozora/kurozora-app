@@ -27,7 +27,7 @@ class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 		if let episodeBackgroundColor = self.show.attributes.banner?.backgroundColor {
 			self.episodeImageView.backgroundColor = UIColor(hexString: episodeBackgroundColor)
 		}
-		self.episodeImageView.setImage(with: self.show.attributes.banner?.url ?? "", placeholder: R.image.placeholders.showBanner()!)
+		self.episodeImageView.image = self.show.attributes.bannerImage
 
 		// Configure poster
 		self.posterShadowView?.applyShadow()

@@ -42,7 +42,7 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 		} else {
 			self.searchImageView.backgroundColor = .clear
 		}
-		self.searchImageView.setImage(with: self.show.attributes.poster?.url ?? "", placeholder: R.image.placeholders.showPoster()!)
+		self.searchImageView.image = self.show.attributes.posterImage
 
 		// Configure library status
 		if let libraryStatus = self.show.attributes.libraryStatus {

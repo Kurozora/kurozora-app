@@ -29,7 +29,7 @@ extension UIImageView {
 				.onFailure { _ in } // error
 				.set(to: self)
 		} else {
-			self.image = placeholder.original
+			self.image = placeholder.withRenderingMode(.alwaysOriginal)
 		}
 	}
 }

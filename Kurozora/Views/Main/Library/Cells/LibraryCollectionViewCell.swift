@@ -32,6 +32,6 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 		if let backgroundColor = self.show.attributes.poster?.backgroundColor {
 			self.posterImageView.backgroundColor = UIColor(hexString: backgroundColor)
 		}
-		self.posterImageView.setImage(with: self.show.attributes.poster?.url ?? "", placeholder: R.image.placeholders.showPoster()!)
+		self.posterImageView.image = self.show.attributes.posterImage
 	}
 }
