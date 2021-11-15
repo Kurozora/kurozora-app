@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19158" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="q9O-KI-xnB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="q9O-KI-xnB">
     <device id="retina5_9" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19141"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -47,18 +47,17 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ct4-sA-QJa" userLabel="User Details Banner">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="250"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalCompressionResistancePriority="250" image="Placeholders/User Banner" translatesAutoresizingMaskIntoConstraints="NO" id="zl8-rJ-jxV">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="250"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
                                             <gestureRecognizers/>
                                             <constraints>
-                                                <constraint firstAttribute="height" relation="lessThanOrEqual" constant="720" id="mkQ-9H-cPY"/>
-                                                <constraint firstAttribute="width" secondItem="zl8-rJ-jxV" secondAttribute="height" multiplier="3:2" id="opy-3b-JUb"/>
+                                                <constraint firstAttribute="height" constant="200" id="dfq-Qf-U2G"/>
                                             </constraints>
                                         </imageView>
                                         <button alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dG8-Sp-07m" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="250"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
                                             <color key="backgroundColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.17999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                             <state key="normal" title="Select">
@@ -81,7 +80,7 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L3e-NK-2YU" userLabel="User Details Header">
-                                    <rect key="frame" x="8" y="201" width="359" height="98"/>
+                                    <rect key="frame" x="8" y="151" width="359" height="98"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PR0-Kq-mbS" userLabel="Profile Photo Wrapper">
                                             <rect key="frame" x="8" y="0.0" width="80" height="90"/>
@@ -186,13 +185,13 @@
                                             </connections>
                                         </button>
                                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" text="Kurozora" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ak5-fH-5eB" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="96" y="57.666666666666693" width="73.666666666666686" height="20.333333333333336"/>
+                                            <rect key="frame" x="96" y="57.666666666666664" width="73.666666666666686" height="20.333333333333336"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Online" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kxg-Vi-HwP" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="177.66666666666666" y="57.666666666666693" width="44" height="20.333333333333336"/>
+                                            <rect key="frame" x="177.66666666666666" y="57.666666666666664" width="44" height="20.333333333333336"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -242,10 +241,10 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qhJ-dz-VUa" userLabel="User Details Body">
-                                    <rect key="frame" x="8" y="299" width="359" height="62"/>
+                                    <rect key="frame" x="8" y="249" width="359" height="112"/>
                                     <subviews>
                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="gIa-4A-kfT" customClass="KTextView" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="8" y="0.0" width="343" height="11"/>
+                                            <rect key="frame" x="8" y="0.0" width="343" height="61"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -255,7 +254,7 @@
                                             </connections>
                                         </textView>
                                         <stackView opaque="NO" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="LNz-X2-qla">
-                                            <rect key="frame" x="8" y="11" width="343" height="40"/>
+                                            <rect key="frame" x="8" y="61" width="343" height="40"/>
                                             <subviews>
                                                 <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ldj-y1-nlK" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="82" height="40"/>
@@ -375,7 +374,7 @@
                                             </constraints>
                                         </stackView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OmS-Rs-je8" customClass="SeparatorView" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="8" y="61" width="343" height="1"/>
+                                            <rect key="frame" x="8" y="111" width="343" height="1"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="1" id="f9O-an-uNu"/>

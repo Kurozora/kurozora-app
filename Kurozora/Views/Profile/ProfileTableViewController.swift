@@ -156,7 +156,7 @@ class ProfileTableViewController: KTableViewController {
 		super.viewWillTransition(to: size, with: coordinator)
 
 		DispatchQueue.main.async {
-			self.tableView.updateHeaderViewFrame()
+//			self.tableView.updateHeaderViewFrame()
 		}
 	}
 
@@ -284,20 +284,18 @@ class ProfileTableViewController: KTableViewController {
 		centerAlign.alignment = .center
 
 		// Configure username
-		usernameLabel.text = user.attributes.username
-		usernameLabel.isHidden = false
+		self.usernameLabel.text = user.attributes.username
+		self.usernameLabel.isHidden = false
 
 		// Configure online status
-		onlineIndicatorLabel.text = user.attributes.activityStatus.stringValue
-		onlineIndicatorLabel.isHidden = false
+		self.onlineIndicatorLabel.text = user.attributes.activityStatus.stringValue
+		self.onlineIndicatorLabel.isHidden = false
 
 		// Configure profile image
-		profileImageView.setImage(with: user.attributes.profile?.url ?? "", placeholder: user.attributes.placeholderImage)
+		self.profileImageView.image = user.attributes.profileImage
 
 		// Configure banner image
-		if let bannerImageURL = user.attributes.banner?.url {
-			bannerImageView.setImage(with: bannerImageURL, placeholder: R.image.placeholders.userBanner()!)
-		}
+		self.bannerImageView.image = self.user.attributes.bannerImage
 
 		// Configure user bio
 		if let biography = user.attributes.biography {
@@ -397,7 +395,7 @@ class ProfileTableViewController: KTableViewController {
 		self.tableView.setTableHeaderView(headerView: self.tableView.tableHeaderView)
 
 		// First layout update
-		self.tableView.updateHeaderViewFrame()
+//		self.tableView.updateHeaderViewFrame()
 	}
 
 	/// Hides and unhides elements to prepare for starting and ending of the edit mode.

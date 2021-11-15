@@ -40,7 +40,7 @@ class AccountTableViewController: SubSettingsViewController {
 		self.userEmailLabel.text = user.attributes.email
 
 		// Setup profile image.
-		self.profileImageView.setImage(with: user.attributes.profile?.url ?? "", placeholder: user.attributes.placeholderImage)
+		self.profileImageView.image = user.attributes.profileImage
 	}
 }
 

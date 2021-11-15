@@ -51,7 +51,7 @@ class BaseFeedMessageCell: KTableViewCell {
 		// Configure poster details
 		if let user = self.feedMessage.relationships.users.data.first {
 			self.usernameLabel.text = user.attributes.username
-			self.profileImageView.setImage(with: user.attributes.profile?.url ?? "", placeholder: user.attributes.placeholderImage)
+			self.profileImageView.image = user.attributes.profileImage
 
 			// Attach gestures
 			self.configureProfilePageGesture(for: self.usernameLabel)
