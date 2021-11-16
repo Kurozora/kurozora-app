@@ -16,6 +16,14 @@ extension HomeCollectionViewController {
 			} else {
 				performSegue(withIdentifier: R.segue.homeCollectionViewController.exploreSegue, sender: baseLockupCollectionViewCell.genre)
 			}
+		} else if let characterLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? CharacterLockupCollectionViewCell {
+			if self.exploreCategories[indexPath.section].relationships.characters != nil {
+				performSegue(withIdentifier: R.segue.homeCollectionViewController.characterSegue, sender: characterLockupCollectionViewCell.character.id)
+			}
+		} else if let personLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? PersonLockupCollectionViewCell {
+			if self.exploreCategories[indexPath.section].relationships.people != nil {
+				performSegue(withIdentifier: R.segue.homeCollectionViewController.personSegue, sender: personLockupCollectionViewCell.person.id)
+			}
 		} else if let legalCollectionViewCell = collectionView.cellForItem(at: indexPath) as? LegalCollectionViewCell {
 			performSegue(withIdentifier: R.segue.homeCollectionViewController.legalSegue, sender: legalCollectionViewCell)
 		}
@@ -29,6 +37,10 @@ extension HomeCollectionViewController {
 			} else {
 				return baseLockupCollectionViewCell.genre?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 			}
+		} else if let characterLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? CharacterLockupCollectionViewCell {
+			return characterLockupCollectionViewCell.character.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		} else if let personLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? PersonLockupCollectionViewCell {
+			return personLockupCollectionViewCell.person.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		}
 
 		return nil

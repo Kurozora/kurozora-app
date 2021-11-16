@@ -13,41 +13,48 @@ extension HomeCollectionViewController {
 		let width = layoutEnvironment.container.effectiveContentSize.width
 		var columnCount = 0
 		let exploreCategoriesCount = self.exploreCategories.count
-		switch section {
-		case let section where section < exploreCategoriesCount:
-			let exploreCategorySize = section != 0 ? self.exploreCategories[section].attributes.exploreCategorySize : .banner
-			switch exploreCategorySize {
-			case .banner:
-				if width >= 414 {
-					columnCount = (width / 562).rounded().int
-				} else {
-					columnCount = (width / 374).rounded().int
+
+		switch self.dataSource.itemIdentifier(for: IndexPath(item: 0, section: section)) {
+		case .show(_, _), .genre(_, _):
+			switch section {
+			case let section where section < exploreCategoriesCount:
+				let exploreCategorySize = section != 0 ? self.exploreCategories[section].attributes.exploreCategorySize : .banner
+				switch exploreCategorySize {
+				case .banner:
+					if width >= 414 {
+						columnCount = (width / 562).rounded().int
+					} else {
+						columnCount = (width / 374).rounded().int
+					}
+				case .large:
+					if width >= 414 {
+						columnCount = (width / 500).rounded().int
+					} else {
+						columnCount = (width / 324).rounded().int
+					}
+				case .medium:
+					if width >= 414 {
+						columnCount = (width / 384).rounded().int
+					} else {
+						columnCount = (width / 284).rounded().int
+					}
+				case .small:
+					if width >= 414 {
+						columnCount = (width / 384).rounded().int
+					} else {
+						columnCount = (width / 284).rounded().int
+					}
+				case .video:
+					if width >= 414 {
+						columnCount = (width / 500).rounded().int
+					} else {
+						columnCount = (width / 360).rounded().int
+					}
 				}
-			case .large:
-				if width >= 414 {
-					columnCount = (width / 500).rounded().int
-				} else {
-					columnCount = (width / 324).rounded().int
-				}
-			case .medium:
-				if width >= 414 {
-					columnCount = (width / 384).rounded().int
-				} else {
-					columnCount = (width / 284).rounded().int
-				}
-			case .small:
-				if width >= 414 {
-					columnCount = (width / 384).rounded().int
-				} else {
-					columnCount = (width / 284).rounded().int
-				}
-			case .video:
-				if width >= 414 {
-					columnCount = (width / 500).rounded().int
-				} else {
-					columnCount = (width / 360).rounded().int
-				}
+			default: break
 			}
+		case .character(_, _), .person(_, _):
+			columnCount = UIDevice.isPhone ? (width / 200).rounded().int : (width / 300).rounded().int
 		default:
 			var verticalCollectionCellStyle: VerticalCollectionCellStyle = .actionList
 			switch section {
@@ -115,8 +122,9 @@ extension HomeCollectionViewController {
 	override func createLayout() -> UICollectionViewLayout? {
 		return UICollectionViewCompositionalLayout { section, layoutEnvironment -> NSCollectionLayoutSection? in
 			let exploreCategoriesCount = self.exploreCategories.count
-			switch section {
-			case let section where section < exploreCategoriesCount:
+
+			switch self.dataSource.itemIdentifier(for: IndexPath(item: 0, section: section)) {
+			case .show(_, _), .genre(_, _):
 				let exploreCategorySize = section != 0 ? self.exploreCategories[section].attributes.exploreCategorySize : .banner
 				var sectionLayout: NSCollectionLayoutSection? = nil
 
@@ -141,6 +149,26 @@ extension HomeCollectionViewController {
 					elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
 				sectionLayout?.boundarySupplementaryItems = [sectionHeader]
 
+				return sectionLayout
+			case .character(_, _):
+				let sectionLayout = self.charactersSectionLayout(section, layoutEnvironment: layoutEnvironment)
+
+				// Add header supplementary view.
+				let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50))
+				let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+					layoutSize: headerFooterSize,
+					elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+				sectionLayout.boundarySupplementaryItems = [sectionHeader]
+				return sectionLayout
+			case .person(_, _):
+				let sectionLayout = self.peopleSectionLayout(section, layoutEnvironment: layoutEnvironment)
+
+				// Add header supplementary view.
+				let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50))
+				let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+					layoutSize: headerFooterSize,
+					elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+				sectionLayout.boundarySupplementaryItems = [sectionHeader]
 				return sectionLayout
 			default:
 				var listSection: NSCollectionLayoutSection!
@@ -192,6 +220,46 @@ extension HomeCollectionViewController {
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
 		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.90), heightDimension: .estimated(150.0))
+		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+		layoutGroup.interItemSpacing = .fixed(10.0)
+
+		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+		layoutSection.interGroupSpacing = 10.0
+		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
+		#if targetEnvironment(macCatalyst)
+		layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+		#else
+		layoutSection.orthogonalScrollingBehavior = .groupPaging
+		#endif
+		return layoutSection
+	}
+
+	func charactersSectionLayout(_ section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
+		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.50), heightDimension: .estimated(50.0))
+		let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.50), heightDimension: .estimated(50.0))
+		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+		layoutGroup.interItemSpacing = .fixed(10.0)
+
+		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+		layoutSection.interGroupSpacing = 10.0
+		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
+		#if targetEnvironment(macCatalyst)
+		layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+		#else
+		layoutSection.orthogonalScrollingBehavior = .groupPaging
+		#endif
+		return layoutSection
+	}
+
+	func peopleSectionLayout(_ section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
+		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.50), heightDimension: .estimated(50.0))
+		let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.50), heightDimension: .estimated(50.0))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
 		layoutGroup.interItemSpacing = .fixed(10.0)
 

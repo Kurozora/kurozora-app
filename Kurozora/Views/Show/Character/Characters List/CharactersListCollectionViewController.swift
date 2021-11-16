@@ -64,14 +64,19 @@ class CharactersListCollectionViewController: KCollectionViewController {
 		self._prefersRefreshControlDisabled = true
 		#endif
 
-		DispatchQueue.global(qos: .background).async {
-			self.fetchCharacters()
+		if self.personID != 0 {
+			DispatchQueue.global(qos: .background).async {
+				self.fetchCharacters()
+			}
 		}
 	}
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		self.fetchCharacters()
+		if self.personID != 0 {
+			self.nextPageURL = nil
+			self.fetchCharacters()
+		}
 	}
 
 	override func configureEmptyDataView() {

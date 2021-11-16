@@ -126,12 +126,17 @@ class HomeCollectionViewController: KCollectionViewController {
 			guard let self = self else { return }
 			switch result {
 			case .success(let exploreCategories):
+				// Remove any empty sections
 				self.exploreCategories = exploreCategories.filter { exploreCategory in
 					let relationships = exploreCategory.relationships
 					if let shows = relationships.shows {
 						return !shows.data.isEmpty
 					} else if let genres = relationships.genres {
 						return !genres.data.isEmpty
+					} else if let characters = relationships.characters {
+						return !characters.data.isEmpty
+					} else if let people = relationships.people {
+						return !people.data.isEmpty
 					}
 					return false
 				}
@@ -143,22 +148,49 @@ class HomeCollectionViewController: KCollectionViewController {
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == R.segue.homeCollectionViewController.showDetailsSegue.identifier {
-			// Show detail for explore cell
+			// Segue to show details
 			if let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController {
 				guard let showID = sender as? Int else { return }
 				showDetailCollectionViewController.showID = showID
 			}
-		} else if segue.identifier == R.segue.homeCollectionViewController.exploreSegue.identifier {
-			// Show explore view with specified genre
-			if let homeCollectionViewController = segue.destination as? HomeCollectionViewController {
-				guard let genre = sender as? Genre else { return }
-				homeCollectionViewController.genre = genre
-			}
 		} else if segue.identifier == R.segue.homeCollectionViewController.showsListSegue.identifier {
+			// Segue to shows list
 			if let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController {
 				guard let indexPath = sender as? IndexPath else { return }
 				showsListCollectionViewController.title = exploreCategories[indexPath.section].attributes.title
 				showsListCollectionViewController.shows = exploreCategories[indexPath.section].relationships.shows?.data ?? []
+			}
+		} else if segue.identifier == R.segue.homeCollectionViewController.exploreSegue.identifier {
+			// Segue to genre explore
+			if let homeCollectionViewController = segue.destination as? HomeCollectionViewController {
+				guard let genre = sender as? Genre else { return }
+				homeCollectionViewController.genre = genre
+			}
+		} else if segue.identifier == R.segue.homeCollectionViewController.characterSegue.identifier {
+			// Segue to character details
+			if let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController {
+				guard let characterID = sender as? Int else { return }
+				characterDetailsCollectionViewController.characterID = characterID
+			}
+		} else if segue.identifier == R.segue.homeCollectionViewController.charactersListSegue.identifier {
+			// Segue to characters list
+			if let charactersListCollectionViewController = segue.destination as? CharactersListCollectionViewController {
+				guard let indexPath = sender as? IndexPath else { return }
+				charactersListCollectionViewController.title = exploreCategories[indexPath.section].attributes.title
+				charactersListCollectionViewController.characters = exploreCategories[indexPath.section].relationships.characters?.data ?? []
+			}
+		} else if segue.identifier == R.segue.homeCollectionViewController.personSegue.identifier {
+			// Segue to person details
+			if let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController {
+				guard let personID = sender as? Int else { return }
+				personDetailsCollectionViewController.personID = personID
+			}
+		} else if segue.identifier == R.segue.homeCollectionViewController.peopleListSegue.identifier {
+			// Segue to people list
+			if let peopleListCollectionViewController = segue.destination as? PeopleListCollectionViewController {
+				guard let indexPath = sender as? IndexPath else { return }
+				peopleListCollectionViewController.title = exploreCategories[indexPath.section].attributes.title
+				peopleListCollectionViewController.people = exploreCategories[indexPath.section].relationships.people?.data ?? []
 			}
 		}
 	}
@@ -236,6 +268,12 @@ extension HomeCollectionViewController {
 		/// Indicates the item kind contains a Genre object.
 		case genre(_: Genre, id: UUID = UUID())
 
+		/// Indicates the item kind contains a Character object.
+		case character(_: Character, id: UUID = UUID())
+
+		/// Indicates the item kind contains a Person object.
+		case person(_: Person, id: UUID = UUID())
+
 		/// Indicates the item kind contains an other type object.
 		case other(_: Int)
 
@@ -246,6 +284,12 @@ extension HomeCollectionViewController {
 				hasher.combine(id)
 			case .genre(let genre, let id):
 				hasher.combine(genre)
+				hasher.combine(id)
+			case .character(let character, let id):
+				hasher.combine(character)
+				hasher.combine(id)
+			case .person(let person, let id):
+				hasher.combine(person)
 				hasher.combine(id)
 			case .other(let int):
 				hasher.combine(int)
@@ -258,6 +302,10 @@ extension HomeCollectionViewController {
 				return show1.id == show2.id && id1 == id2
 			case (.genre(let genre1, let id1), .genre(let genre2, let id2)):
 				return genre1.id == genre2.id && id1 == id2
+			case (.character(let character1, let id1), .character(let character2, let id2)):
+				return character1.id == character2.id && id1 == id2
+			case (.person(let person1, let id1), .person(let person2, let id2)):
+				return person1.id == person2.id && id1 == id2
 			case (.other(let int1), .other(let int2)):
 				return int1 == int2
 			default:

@@ -15,6 +15,8 @@ extension HomeCollectionViewController {
 			MediumLockupCollectionViewCell.self,
 			LargeLockupCollectionViewCell.self,
 			VideoLockupCollectionViewCell.self,
+			PersonLockupCollectionViewCell.self,
+			CharacterLockupCollectionViewCell.self,
 			LegalCollectionViewCell.self
 		]
 	}
@@ -29,20 +31,36 @@ extension HomeCollectionViewController {
 			if indexPath.section < self.exploreCategories.count {
 				// Get a cell of the desired kind.
 				let exploreCategorySize = indexPath.section != 0 ? self.exploreCategories[indexPath.section].attributes.exploreCategorySize : .banner
-				guard let baseLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: exploreCategorySize.identifierString, for: indexPath) as? BaseLockupCollectionViewCell
-				else { fatalError("Cannot dequeue reusable cell with identifier \(exploreCategorySize.identifierString)") }
 
 				// Populate the cell with our item description.
 				switch item {
 				case .show(let show, _):
+					guard let baseLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: exploreCategorySize.identifierString, for: indexPath) as? BaseLockupCollectionViewCell
+					else { fatalError("Cannot dequeue reusable cell with identifier \(exploreCategorySize.identifierString)") }
 					baseLockupCollectionViewCell.show = show
+					return baseLockupCollectionViewCell
 				case .genre(let genre, _):
+					guard let baseLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: exploreCategorySize.identifierString, for: indexPath) as? BaseLockupCollectionViewCell
+					else { fatalError("Cannot dequeue reusable cell with identifier \(exploreCategorySize.identifierString)") }
 					baseLockupCollectionViewCell.genre = genre
+					return baseLockupCollectionViewCell
+				case .character(let character, _):
+					let reuseIdentifier = R.reuseIdentifier.characterLockupCollectionViewCell.identifier
+					guard let baseLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? CharacterLockupCollectionViewCell
+					else { fatalError("Cannot dequeue reusable cell with identifier \(reuseIdentifier)") }
+					baseLockupCollectionViewCell.character = character
+					return baseLockupCollectionViewCell
+				case .person(let person, _):
+					let reuseIdentifier = R.reuseIdentifier.personLockupCollectionViewCell.identifier
+					guard let baseLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? PersonLockupCollectionViewCell
+					else { fatalError("Cannot dequeue reusable cell with identifier \(reuseIdentifier)") }
+					baseLockupCollectionViewCell.person = person
+					return baseLockupCollectionViewCell
 				default: break
 				}
 
 				// Return the cell.
-				return baseLockupCollectionViewCell
+				return nil
 			}
 
 			var verticalCollectionCellStyle: VerticalCollectionCellStyle = .actionList
@@ -70,11 +88,15 @@ extension HomeCollectionViewController {
 			exploreSectionTitleCell.indexPath = indexPath
 
 			if indexPath.section < exploreCategoriesCount {
-				let sectionTitle = self.exploreCategories[indexPath.section].attributes.title
-				if sectionTitle.contains("categories", caseSensitive: false) || sectionTitle.contains("genres", caseSensitive: false) {
-					exploreSectionTitleCell.segueID = R.segue.homeCollectionViewController.genresSegue.identifier
-				} else {
+				let exploreCategory = self.exploreCategories[indexPath.section]
+				if exploreCategory.relationships.shows != nil {
 					exploreSectionTitleCell.segueID = R.segue.homeCollectionViewController.showsListSegue.identifier
+				} else if exploreCategory.relationships.genres != nil {
+					exploreSectionTitleCell.segueID = R.segue.homeCollectionViewController.genresSegue.identifier
+				} else if exploreCategory.relationships.characters != nil {
+					exploreSectionTitleCell.segueID = R.segue.homeCollectionViewController.charactersListSegue.identifier
+				} else if exploreCategory.relationships.people != nil {
+					exploreSectionTitleCell.segueID = R.segue.homeCollectionViewController.peopleListSegue.identifier
 				}
 				exploreSectionTitleCell.title = self.exploreCategories[indexPath.section].attributes.title
 			} else {
@@ -112,6 +134,16 @@ extension HomeCollectionViewController {
 						return .genre(genre)
 					}
 					snapshot.appendItems(genreItems, toSection: sectionHeader)
+				} else if let characters = exploreCategoriesSection.relationships.characters?.data {
+					let characterItems: [ItemKind] = characters.map { character in
+						return .character(character)
+					}
+					snapshot.appendItems(characterItems, toSection: sectionHeader)
+				} else if let people = exploreCategoriesSection.relationships.people?.data {
+					let personItems: [ItemKind] = people.map { person in
+						return .person(person)
+					}
+					snapshot.appendItems(personItems, toSection: sectionHeader)
 				}
 			} else {
 				// Get number of items per section

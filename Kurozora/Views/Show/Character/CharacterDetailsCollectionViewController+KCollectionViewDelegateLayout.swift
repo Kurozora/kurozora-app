@@ -19,7 +19,7 @@ extension CharacterDetailsCollectionViewController {
 			let columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
 			return columnCount > 0 ? columnCount : 1
 		case .people:
-			let columnCount = (width / 200).rounded().int
+			let columnCount = UIDevice.isPhone ? (width / 200).rounded().int : (width / 300).rounded().int
 			return columnCount > 0 ? columnCount : 1
 		default:
 			let columnCount = (width / 374).rounded().int
