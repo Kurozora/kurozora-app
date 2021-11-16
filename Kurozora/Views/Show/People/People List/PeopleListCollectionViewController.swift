@@ -63,15 +63,19 @@ class PeopleListCollectionViewController: KCollectionViewController {
 		self._prefersRefreshControlDisabled = true
 		#endif
 
-		DispatchQueue.global(qos: .background).async {
-			self.fetchPeople()
+		if characterID != 0 {
+			DispatchQueue.global(qos: .background).async {
+				self.fetchPeople()
+			}
 		}
 	}
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		self.nextPageURL = nil
-		self.fetchPeople()
+		if characterID != 0 {
+			self.nextPageURL = nil
+			self.fetchPeople()
+		}
 	}
 
 	override func configureEmptyDataView() {
