@@ -19,13 +19,13 @@ class AccountTableViewController: SubSettingsViewController {
 	override func viewWillReload() {
 		super.viewWillReload()
 
-		configureUserDetails()
+		self.configureUserDetails()
 	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		configureUserDetails()
+		self.configureUserDetails()
 	}
 
 	// MARK: - Functions
@@ -46,6 +46,18 @@ class AccountTableViewController: SubSettingsViewController {
 
 // MARK: - UITableViewDataSource
 extension AccountTableViewController {
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		if section == 0 {
+			guard let user = User.current else { return 0 }
+
+			if user.attributes.siwaIsEnabled ?? false {
+				return 1
+			}
+		}
+
+		return super.tableView(tableView, numberOfRowsInSection: section)
+	}
+
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath as IndexPath, animated: true)
 
