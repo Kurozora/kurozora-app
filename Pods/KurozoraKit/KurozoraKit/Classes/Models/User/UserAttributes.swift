@@ -22,6 +22,11 @@ extension User {
 		/// Included only for the currently signed in user.
 		public let email: String?
 
+		/// Whether the user has Sign in with Apple enabled.
+		///
+		/// Included only for the currently signed in user.
+		public let siwaIsEnabled: Bool
+
 		/// The biography text of the user.
 		public var biography: String?
 

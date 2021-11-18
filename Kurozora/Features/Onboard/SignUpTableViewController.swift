@@ -17,7 +17,16 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 
 	// MARK: - Properties
 	lazy var imagePicker = UIImagePickerController()
-	var profileImageFilePath: String? = nil
+	var originalProfileImage: UIImage! = UIImage() {
+		didSet {
+			self.editedProfileImage = self.originalProfileImage
+		}
+	}
+	var editedProfileImage: UIImage! = UIImage() {
+		didSet {
+			self.viewIfLoaded?.setNeedsLayout()
+		}
+	}
 	var isSIWA = false
 
 	// MARK: - View
@@ -25,6 +34,7 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 		super.viewDidLoad()
 
 		// Configure properties
+		self.originalProfileImage = #imageLiteral(resourceName: "Placeholders/User Profile")
 		self.accountOnboardingType = isSIWA ? .siwa : .signUp
 	}
 
@@ -85,7 +95,7 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 			guard let username = textFieldArray.first??.trimmedText else { return }
 			guard let emailAddress = textFieldArray[1]?.trimmedText else { return }
 			guard let password = textFieldArray.last??.text else { return }
-			let profileImage = profileImageFilePath != nil ? profileImageView.image : nil
+			let profileImage = !self.originalProfileImage.isEqual(to: self.editedProfileImage) ? self.editedProfileImage : nil
 
 			// Disable user interaction.
 			self.disableUserInteraction(true)
@@ -110,11 +120,15 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 		case .siwa:
 			let username = textFieldArray.first??.trimmedText
 
+			// If `originalProfileImage` is equal to `editedProfileImage`, then no change has happened: return `nil`
+			// If `originalProfileImage` is not equal to `editedProfileImage`, then something changed: return `editedProfileImage`
+			let profileImage = self.originalProfileImage.isEqual(to: self.editedProfileImage) ? nil : self.editedProfileImage
+
 			// Disable user interaction.
 			self.disableUserInteraction(true)
 
 			// Perform information update request.
-			KService.updateInformation(profileImageFilePath: profileImageFilePath, username: username) { [weak self] result in
+			KService.updateInformation(profileImage: profileImage, username: username) { [weak self] result in
 				guard let self = self else { return }
 				switch result {
 				case .success:
@@ -139,13 +153,21 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 
 	@IBAction func chooseImageButtonPressed(_ sender: UIButton) {
 		let actionSheetAlertController = UIAlertController.actionSheet(title: "Profile Photo", message: "Choose an awesome photo 😉") { [weak self] actionSheetAlertController in
+			guard let self = self else { return }
 			actionSheetAlertController.addAction(UIAlertAction(title: "Take a photo 📷", style: .default, handler: { _ in
-				self?.openCamera()
+				self.openCamera()
 			}))
 
 			actionSheetAlertController.addAction(UIAlertAction(title: "Choose from Photo Library 🏛", style: .default, handler: { _ in
-				self?.openPhotoLibrary()
+				self.openPhotoLibrary()
 			}))
+
+			if !self.editedProfileImage.isEqual(to: #imageLiteral(resourceName: "Placeholders/User Profile")) {
+				actionSheetAlertController.addAction(UIAlertAction(title: "Remove", style: .destructive, handler: { _ in
+					self.profileImageView.image = #imageLiteral(resourceName: "Placeholders/User Profile")
+					self.editedProfileImage = self.profileImageView.image
+				}))
+			}
 
 			if let popoverController = actionSheetAlertController.popoverPresentationController {
 				popoverController.sourceView = sender
@@ -173,10 +195,7 @@ extension SignUpTableViewController: UIImagePickerControllerDelegate {
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
 		if let editedImage = info[.editedImage] as? UIImage {
 			self.profileImageView.image = editedImage
-		}
-
-		if let imageURL = info[.imageURL] as? URL {
-			profileImageFilePath = imageURL.absoluteString
+			self.editedProfileImage = editedImage
 		}
 
 		// Dismiss the UIImagePicker after selection
