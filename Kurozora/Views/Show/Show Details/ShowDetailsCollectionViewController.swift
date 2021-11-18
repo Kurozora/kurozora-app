@@ -218,15 +218,15 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 	}
 
 	@objc func toggleFavorite() {
-		self.show.toggleFavorite()
+		self.show?.toggleFavorite()
 	}
 
 	@objc func toggleReminder() {
-		self.show.toggleReminder()
+		self.show?.toggleReminder()
 	}
 
 	@objc func shareShow() {
-		self.show.openShareSheet(on: self)
+		self.show?.openShareSheet(on: self)
 	}
 
 	@objc func handleFavoriteToggle(_ notification: NSNotification) {
@@ -245,7 +245,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 
 	// MARK: - IBActions
 	@IBAction func moreButtonPressed(_ sender: UIBarButtonItem) {
-		self.show.openShareSheet(on: self, barButtonItem: sender)
+		self.show?.openShareSheet(on: self, barButtonItem: sender)
 	}
 
 	// MARK: - Segue

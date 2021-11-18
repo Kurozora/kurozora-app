@@ -29,12 +29,12 @@ extension ShowDetailsCollectionViewController: NSTouchBarDelegate {
 		case .toggleShowIsFavorite:
 			let name = show.attributes.favoriteStatus == .favorited ? "heart.fill" : "heart"
 			guard let image = UIImage(systemName: name) else { return nil }
-			toggleShowIsFavoriteTouchBarItem = NSButtonTouchBarItem(identifier: identifier, image: image, target: self, action: #selector(toggleFavorite))
+			toggleShowIsFavoriteTouchBarItem = NSButtonTouchBarItem(identifier: identifier, image: image, target: self, action: #selector(self.toggleFavorite))
 			touchBarItem = toggleShowIsFavoriteTouchBarItem
 		case .toggleShowIsReminded:
 			let name = show.attributes.reminderStatus == .reminded ? "bell.fill" : "bell"
 			guard let image = UIImage(systemName: name) else { return nil }
-			toggleShowIsRemindedTouchBarItem = NSButtonTouchBarItem(identifier: identifier, image: image, target: self, action: #selector(toggleReminder))
+			toggleShowIsRemindedTouchBarItem = NSButtonTouchBarItem(identifier: identifier, image: image, target: self, action: #selector(self.toggleReminder))
 			touchBarItem = toggleShowIsRemindedTouchBarItem
 		default:
 			touchBarItem = nil
