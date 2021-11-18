@@ -44,11 +44,11 @@ extension User.Attributes {
 	}
 
 	/**
-		Returns a placeholder `UIImage` for the user's banner using a random solid color.
+		Returns a placeholder `UIImage` for the user's banner using `UIColor.kurozora` color.
 
-		- Returns: a placeholder `UIImage` user's banner using a random solid color.
+		- Returns: a placeholder `UIImage` user's banner using `UIColor.kurozora` color.
 	*/
 	var bannerPlaceholderImage: UIImage {
-		return UIImage(color: .random, size: CGSize(width: 50, height: 50))
+		return UIImage(color: .kurozora, size: CGSize(width: 50, height: 50))
 	}
 }

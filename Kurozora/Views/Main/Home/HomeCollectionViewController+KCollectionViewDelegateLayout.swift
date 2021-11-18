@@ -15,7 +15,7 @@ extension HomeCollectionViewController {
 		let exploreCategoriesCount = self.exploreCategories.count
 
 		switch self.dataSource.itemIdentifier(for: IndexPath(item: 0, section: section)) {
-		case .show(_, _), .genre(_, _):
+		case .show, .genre:
 			switch section {
 			case let section where section < exploreCategoriesCount:
 				let exploreCategorySize = section != 0 ? self.exploreCategories[section].attributes.exploreCategorySize : .banner
@@ -53,7 +53,7 @@ extension HomeCollectionViewController {
 				}
 			default: break
 			}
-		case .character(_, _), .person(_, _):
+		case .character, .person:
 			columnCount = UIDevice.isPhone ? (width / 200).rounded().int : (width / 300).rounded().int
 		default:
 			var verticalCollectionCellStyle: VerticalCollectionCellStyle = .actionList
@@ -124,7 +124,7 @@ extension HomeCollectionViewController {
 			let exploreCategoriesCount = self.exploreCategories.count
 
 			switch self.dataSource.itemIdentifier(for: IndexPath(item: 0, section: section)) {
-			case .show(_, _), .genre(_, _):
+			case .show, .genre:
 				let exploreCategorySize = section != 0 ? self.exploreCategories[section].attributes.exploreCategorySize : .banner
 				var sectionLayout: NSCollectionLayoutSection? = nil
 
@@ -150,7 +150,7 @@ extension HomeCollectionViewController {
 				sectionLayout?.boundarySupplementaryItems = [sectionHeader]
 
 				return sectionLayout
-			case .character(_, _):
+			case .character:
 				let sectionLayout = self.charactersSectionLayout(section, layoutEnvironment: layoutEnvironment)
 
 				// Add header supplementary view.
@@ -160,7 +160,7 @@ extension HomeCollectionViewController {
 					elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
 				sectionLayout.boundarySupplementaryItems = [sectionHeader]
 				return sectionLayout
-			case .person(_, _):
+			case .person:
 				let sectionLayout = self.peopleSectionLayout(section, layoutEnvironment: layoutEnvironment)
 
 				// Add header supplementary view.

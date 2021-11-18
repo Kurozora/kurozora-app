@@ -44,4 +44,16 @@ extension UIImage {
 		}
 		return imageData?.base64EncodedString()
 	}
+
+	/**
+		Returns whether the given image is equal to the current image.
+
+		- Parameter image: The UIImage object to compare the current image with.
+
+		- Returns: whether the given image is equal to the current image.
+	*/
+	func isEqual(to image: UIImage?) -> Bool {
+		guard let image = image else { return false }
+		return self.pngData() == image.pngData()
+	}
 }
