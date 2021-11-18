@@ -6,6 +6,7 @@
 //
 
 import TRON
+import UIKit
 
 extension KurozoraKit {
 	/**
@@ -83,20 +84,20 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func updateInformation(biography: String? = nil, bannerImage: UIImage? = nil, profileImageFilePath: String? = nil, username: String? = nil, completion completionHandler: @escaping (_ result: Result<UserUpdate, KKAPIError>) -> Void) {
+	public func updateInformation(biography: String? = nil, profileImage: UIImage? = nil, bannerImage: UIImage? = nil, username: String? = nil, completion completionHandler: @escaping (_ result: Result<UserUpdate, KKAPIError>) -> Void) {
 		let usersProfile = KKEndpoint.Me.update.endpointValue
 		let request: UploadAPIRequest<UserUpdateResponse, KKAPIError> = tron.codable.uploadMultipart(usersProfile) { formData in
-			if let profileImageFilePath = profileImageFilePath, let profileImageFilePathURL = URL(string: profileImageFilePath) {
-				if let profileImageData = try? Data(contentsOf: profileImageFilePathURL) {
-					let profileImage = UIImage(data: profileImageData)?.jpegData(compressionQuality: 0.1) ?? profileImageData
-					let fileExtension = profileImageFilePathURL.pathExtension
-					formData.append(profileImage, withName: "profileImage", fileName: "ProfileImage.\(fileExtension)", mimeType: "image/\(fileExtension)")
+			if let profileImage = profileImage {
+				if !profileImage.isEqual(UIImage()) {
+					if let profileImage = profileImage.jpegData(compressionQuality: 0.1) {
+						formData.append(profileImage, withName: "profileImage", fileName: "ProfileImage.jpg", mimeType: "image/jpg")
+					}
 				}
 			}
 			if let bannerImage = bannerImage {
-				if bannerImage.size.width != 0 {
+				if !bannerImage.isEqual(UIImage()) {
 					if let bannerImageData = bannerImage.jpegData(compressionQuality: 0.1) {
-						formData.append(bannerImageData, withName: "bannerImage", fileName: "BannerImage.png", mimeType: "image/png")
+						formData.append(bannerImageData, withName: "bannerImage", fileName: "BannerImage.jpg", mimeType: "image/jpg")
 					}
 				}
 			}
@@ -114,6 +115,12 @@ extension KurozoraKit {
 		}
 		if let username = username {
 			request.parameters["username"] = username
+		}
+		if profileImage?.isEqual(UIImage()) ?? false {
+			request.parameters["profileImage"] = "null"
+		}
+		if bannerImage?.isEqual(UIImage()) ?? false {
+			request.parameters["bannerImage"] = "null"
 		}
 
 		request.perform(withSuccess: { userUpdateResponse in

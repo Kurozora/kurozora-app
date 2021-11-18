@@ -5,11 +5,11 @@ PODS:
   - FLEX (4.6.1)
   - KeychainAccess (4.2.2)
   - Kingfisher (7.1.1)
-  - KurozoraKit (0.18.1):
+  - KurozoraKit (0.18.2):
     - KeychainAccess
     - TRON
   - Pageboy (3.6.2)
-  - R.swift (6.0.0-alpha.3):
+  - R.swift (6.0.0):
     - R.swift.Library (~> 5.3.0)
   - R.swift.Library (5.3.0)
   - ReachabilitySwift (5.0.0)
@@ -61,7 +61,7 @@ DEPENDENCIES:
   - KeychainAccess
   - Kingfisher
   - KurozoraKit
-  - R.swift (~> 6.0.0-alpha)
+  - R.swift
   - ReachabilitySwift
   - Solar
   - SwifterSwift
@@ -100,9 +100,9 @@ SPEC CHECKSUMS:
   FLEX: bbc55d197f87d7cde2454c3981aa47069b694144
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   Kingfisher: f738f9c4a3415823b8e2985d10aa2d6a9f37bc4d
-  KurozoraKit: 544b0af47cc62ca9e99208520b96de9c4d44dec9
+  KurozoraKit: 987daa4f6f0ee3db2c9eeb7e56ece14985583c50
   Pageboy: cf121b9dd48c63f3f281b2a9ec93d02e0f23879b
-  R.swift: 35cc10e781ae1dfff20ced6f74dee53cbf90bd14
+  R.swift: 5ec056f5ba2744de1c3f6deeb4882ae2630f6e63
   R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
@@ -113,6 +113,6 @@ SPEC CHECKSUMS:
   TRON: 1d635dad9a55c9441cb2bcf0571a14a5ede59440
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
 
-PODFILE CHECKSUM: f47bf30b011a505f6b288e73591581361d134e9b
+PODFILE CHECKSUM: 62b948904402caad38dde4f310d2cfaffc7a071a
 
 COCOAPODS: 1.11.2

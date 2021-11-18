@@ -15,7 +15,7 @@ def kurozora_pods
 	pod 'KeychainAccess'
 	pod 'Kingfisher'
 	pod 'KurozoraKit'#, path: '../KurozoraKit'
-	pod 'R.swift', '~> 6.0.0-alpha'
+	pod 'R.swift'
 	pod 'ReachabilitySwift'
 	pod 'Solar'
 #	pod 'SnowGlobe'

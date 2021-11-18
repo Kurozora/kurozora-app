@@ -3266,7 +3266,6 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$TEMP_DIR/rswift-lastrun",
 			);
 			name = R.swift;
 			outputFileListPaths = (
@@ -3845,7 +3844,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Kurozora/Kurozora.entitlements;
-				CURRENT_PROJECT_VERSION = 11941;
+				CURRENT_PROJECT_VERSION = 11899;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				INFOPLIST_FILE = "Kurozora/Supporting Files/Info.plist";
@@ -3870,7 +3869,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Kurozora/Kurozora.entitlements;
-				CURRENT_PROJECT_VERSION = 11941;
+				CURRENT_PROJECT_VERSION = 11899;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				INFOPLIST_FILE = "Kurozora/Supporting Files/Info.plist";
