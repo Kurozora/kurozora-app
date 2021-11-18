@@ -8,7 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import UniformTypeIdentifiers
 
 class SignUpTableViewController: AccountOnboardingTableViewController {
 	// MARK: - IBOutlets
@@ -42,10 +41,10 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 	/// Open the camera if the device has one, otherwise show a warning.
 	func openCamera() {
 		if UIImagePickerController.isSourceTypeAvailable(.camera) {
-			imagePicker.sourceType = .camera
-			imagePicker.allowsEditing = true
-			imagePicker.delegate = self
-			self.present(imagePicker, animated: true, completion: nil)
+			self.imagePicker.sourceType = .camera
+			self.imagePicker.allowsEditing = true
+			self.imagePicker.delegate = self
+			self.present(self.imagePicker, animated: true, completion: nil)
 		} else {
 			self.presentAlertController(title: "Well, this is awkward.", message: "You don't seem to have a camera 😓")
 		}
@@ -53,10 +52,10 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 
 	/// Open the Photo Library so the user can choose an image.
 	func openPhotoLibrary() {
-		imagePicker.sourceType = .photoLibrary
-		imagePicker.allowsEditing = true
-		imagePicker.delegate = self
-		self.present(imagePicker, animated: true, completion: nil)
+		self.imagePicker.sourceType = .photoLibrary
+		self.imagePicker.allowsEditing = true
+		self.imagePicker.delegate = self
+		self.present(self.imagePicker, animated: true, completion: nil)
 	}
 
 	/// Fetches the user's profile details.

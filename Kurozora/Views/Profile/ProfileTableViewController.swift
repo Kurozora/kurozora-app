@@ -177,8 +177,10 @@ class ProfileTableViewController: KTableViewController {
 
 		// If there are unsaved changes, enable the Save button and disable the ability to
 		// dismiss using the pull-down gesture.
-		self.navigationItem.rightBarButtonItem?.isEnabled = self.hasChanges
-		self.isModalInPresentation = self.hasChanges
+		if self.editingMode {
+			self.navigationItem.rightBarButtonItem?.isEnabled = self.hasChanges
+			self.isModalInPresentation = self.hasChanges
+		}
 	}
 
 	override func viewDidLoad() {
