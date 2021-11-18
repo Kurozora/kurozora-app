@@ -73,18 +73,54 @@ class ProfileTableViewController: KTableViewController {
 	}
 	var nextPageURL: String?
 
-	var currentImageView: UIImageView?
-	var placeholderText = "Describe yourself!"
 	var editingMode: Bool = false
+	var currentImageView: String = ""
+	var placeholderText = "Describe yourself!"
+	var originalBioText: String? = nil {
+		didSet {
+			self.editedBioText = self.originalBioText
+		}
+	}
+	var editedBioText: String? = nil {
+		didSet {
+			self.viewIfLoaded?.setNeedsLayout()
+		}
+	}
+	var originalProfileImage: UIImage! = UIImage() {
+		didSet {
+			self.editedProfileImage = self.originalProfileImage
+		}
+	}
+	var editedProfileImage: UIImage! = UIImage() {
+		didSet {
+			self.viewIfLoaded?.setNeedsLayout()
+		}
+	}
+	var originalBannerImage: UIImage! = UIImage() {
+		didSet {
+			self.editedBannerImage = self.originalBannerImage
+		}
+	}
+	var editedBannerImage: UIImage! = UIImage() {
+		didSet {
+			self.viewIfLoaded?.setNeedsLayout()
+		}
+	}
+	var hasChanges: Bool {
+		return self.originalBioText != self.editedBioText
+		|| self.profileImageHasChanges
+		|| self.bannerImageHasChanges
+	}
+	var profileImageHasChanges: Bool {
+		return !self.originalProfileImage.isEqual(to: self.editedProfileImage)
+	}
+	var bannerImageHasChanges: Bool {
+		return !self.originalBannerImage.isEqual(to: self.editedBannerImage)
+	}
 
 	var imagePicker = UIImagePickerController()
-	var profileImageFilePath: String? = nil
 	var oldLeftBarItems: [UIBarButtonItem]?
 	var oldRightBarItems: [UIBarButtonItem]?
-
-	var bioTextCache: String?
-	var profileImageCache: UIImage?
-	var bannerImageCache: UIImage?
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -136,6 +172,15 @@ class ProfileTableViewController: KTableViewController {
 		self.handleRefreshControl()
 	}
 
+	override func viewWillLayoutSubviews() {
+		super.viewWillLayoutSubviews()
+
+		// If there are unsaved changes, enable the Save button and disable the ability to
+		// dismiss using the pull-down gesture.
+		self.navigationItem.rightBarButtonItem?.isEnabled = self.hasChanges
+		self.isModalInPresentation = self.hasChanges
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		NotificationCenter.default.addObserver(self, selector: #selector(updateFeedMessage(_:)), name: .KFMDidUpdate, object: nil)
@@ -156,7 +201,7 @@ class ProfileTableViewController: KTableViewController {
 		super.viewWillTransition(to: size, with: coordinator)
 
 		DispatchQueue.main.async {
-//			self.tableView.updateHeaderViewFrame()
+			self.tableView.updateHeaderViewFrame()
 		}
 	}
 
@@ -295,12 +340,10 @@ class ProfileTableViewController: KTableViewController {
 		self.profileImageView.image = user.attributes.profileImage
 
 		// Configure banner image
-		self.bannerImageView.image = self.user.attributes.bannerImage
+		self.bannerImageView.image = user.attributes.bannerImage
 
 		// Configure user bio
-		if let biography = user.attributes.biography {
-			self.bioTextView.text = biography
-		}
+		self.bioTextView.text = user.attributes.biography
 
 		// Configure reputation count
 		let reputationCount = user.attributes.reputationCount
@@ -395,12 +438,12 @@ class ProfileTableViewController: KTableViewController {
 		self.tableView.setTableHeaderView(headerView: self.tableView.tableHeaderView)
 
 		// First layout update
-//		self.tableView.updateHeaderViewFrame()
+		self.tableView.updateHeaderViewFrame()
 	}
 
 	/// Hides and unhides elements to prepare for starting and ending of the edit mode.
 	private func editMode(_ enabled: Bool) {
-		editingMode = enabled
+		self.editingMode = enabled
 		if enabled {
 			UIView.animate(withDuration: 0.5) {
 				self.buttonsStackView.alpha = 0.5
@@ -418,7 +461,7 @@ class ProfileTableViewController: KTableViewController {
 				self.profileNavigationItem.setRightBarButton(nil, animated: true)
 
 				// Set new actions
-				let leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(self.cancelProfileEdit(_:)))
+				let leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(self.cancelButtonPressed(_:)))
 				let rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(self.applyProfileEdit(_:)))
 				self.profileNavigationItem.setLeftBarButton(leftBarButtonItem, animated: true)
 				self.profileNavigationItem.setRightBarButton(rightBarButtonItem, animated: true)
@@ -482,15 +525,85 @@ class ProfileTableViewController: KTableViewController {
 
 		- Parameter sender: The object requesting the cancelation of the edit mode.
 	*/
-	@objc func cancelProfileEdit(_ sender: Any) {
+	@objc func cancelButtonPressed(_ sender: Any) {
+		self.confirmCancel(showingUpdate: self.hasChanges)
+	}
+
+	func cancelProfileEdit() {
 		// User doesn't want changes to be saved, pute everything back.
-		self.bioTextView.text = self.bioTextCache
-		self.profileImageView.image = self.profileImageCache
-		self.bannerImageView.image = self.bannerImageCache
+		self.bioTextView.text = self.originalBioText
+		self.profileImageView.image = self.originalProfileImage.copy() as? UIImage
+		self.bannerImageView.image = self.originalBannerImage.copy() as? UIImage
 
 		// Return to view mode
-		editMode(false)
+		self.editMode(false)
 		self.tableView.updateHeaderViewFrame()
+	}
+
+	/**
+		Confirm whether to cancel the profile update.
+
+		- Parameter showingUpdate: Indicates whether to show the update option.
+	*/
+	func confirmCancel(showingUpdate: Bool) {
+		// Present a UIAlertController as an action sheet to have the user confirm losing any recent changes.
+		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
+			// Only ask if the user wants to send if they attempt to pull to dismiss, not if they tap Cancel.
+			if showingUpdate {
+				// Send action.
+				actionSheetAlertController.addAction(UIAlertAction(title: "Update", style: .default) { _ in
+					self?.updateProfileDetails()
+				})
+			}
+
+			// Discard action.
+			actionSheetAlertController.addAction(UIAlertAction(title: "Discard", style: .destructive) { _ in
+				self?.cancelProfileEdit()
+			})
+		}
+
+		// Present the controller
+		if let popoverController = actionSheetAlertController.popoverPresentationController {
+			popoverController.barButtonItem = self.navigationItem.leftBarButtonItem
+		}
+
+		if (navigationController?.visibleViewController as? UIAlertController) == nil {
+			self.present(actionSheetAlertController, animated: true, completion: nil)
+		}
+	}
+
+	/// Update the user's profile details.
+	/// Sends `nil` if nothing should be updated.
+	/// Sends an empty instance of the object to delete it.
+	/// Otherwise sends the data that should be updated.
+	func updateProfileDetails() {
+		let biography = self.originalBioText == self.editedBioText ? nil : self.editedBioText
+
+		// If `originalProfileImage` is equal to `editedProfileImage`, then no change has happened: return `nil`
+		// If `originalProfileImage` is not equal to `editedProfileImage`, then something changed: return `editedProfileImage`
+		// If `editedProfileImage` is equal to the user's placeholder, then the user removed the current profile image: return `UIImage()`
+		var profileImage: UIImage? = nil
+		if let indefinitiveProfileImage = self.originalProfileImage.isEqual(to: self.editedProfileImage) ? nil : self.editedProfileImage {
+			profileImage = indefinitiveProfileImage.isEqual(to: self.user.attributes.profilePlaceholderImage) ? UIImage() : indefinitiveProfileImage
+		}
+
+		// If `originalBannerImage` is equal to `editedBannerImage`, then no change has happened: return `nil`
+		// If `originalBannerImage` is not equal to `editedBannerImage`, then something changed: return `editedBannerImage`
+		// If `editedBannerImage` is equal to the user's placeholder, then the user removed the current banner image: return `UIImage()`
+		var bannerImage: UIImage? = nil
+		if let indefinitiveBannerImage = self.originalBannerImage.isEqual(to: self.editedBannerImage) ? nil : self.editedBannerImage {
+			bannerImage = indefinitiveBannerImage.isEqual(to: self.user.attributes.bannerPlaceholderImage) ? UIImage() : indefinitiveBannerImage
+		}
+
+		// Perform update request.
+		KService.updateInformation(biography: biography, profileImage: profileImage, bannerImage: bannerImage) { [weak self] result in
+			guard let self = self else { return }
+			switch result {
+			case .success:
+				self.editMode(false)
+			case .failure: break
+			}
+		}
 	}
 
 	/**
@@ -499,46 +612,7 @@ class ProfileTableViewController: KTableViewController {
 		- Parameter sender: The object requesting the changes to be applied.
 	*/
 	@objc func applyProfileEdit(_ sender: UIBarButtonItem) {
-		var bioText: String? = bioTextView.text.trimmed
-		var bannerImage = bannerImageView.image
-		var bioTextUnchanged = false
-
-		// If everything is the same then dismiss and don't send a request to apply new information.
-		if self.bioTextCache == self.placeholderText,
-		   self.bioTextView.textColor == KThemePicker.textFieldPlaceholderTextColor.colorValue {
-			bioTextUnchanged = true
-			bioText = nil
-		}
-
-		if bioTextUnchanged &&
-			self.profileImageFilePath == nil,
-			self.bannerImageCache == bannerImage {
-			// Nothing to change, clear the cache.
-			self.bioTextCache = nil
-			self.profileImageCache = nil
-			self.bannerImageCache = nil
-			self.editMode(false)
-			return
-		}
-
-		// If the banner is the same, then ignore.
-		if self.bannerImageCache == bannerImage {
-			bannerImage = UIImage().cropped(to: .zero)
-		}
-
-		// User wants to save changes, clear the cache.
-		self.bioTextCache = nil
-		self.profileImageCache = nil
-		self.bannerImageCache = nil
-
-		KService.updateInformation(biography: bioText, bannerImage: bannerImage, profileImageFilePath: profileImageFilePath) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success:
-				self.editMode(false)
-			case .failure: break
-			}
-		}
+		self.updateProfileDetails()
 	}
 
 	/// Enable and show the dismiss button.
@@ -614,9 +688,9 @@ class ProfileTableViewController: KTableViewController {
 	// MARK: - IBActions
 	@IBAction func editProfileButtonPressed(_ sender: UIButton) {
 		// Cache current profile data
-		self.bioTextCache = self.bioTextView.text.isNilOrEmpty ? placeholderText : self.bioTextView.text.trimmed
-		self.profileImageCache = self.profileImageView.image
-		self.bannerImageCache = self.bannerImageView.image
+		self.originalBioText = self.bioTextView.text
+		self.originalProfileImage = self.profileImageView.image
+		self.originalBannerImage = self.bannerImageView.image
 
 		self.editMode(true)
 	}
@@ -753,13 +827,20 @@ extension ProfileTableViewController: KFeedMessageTextEditorViewDelegate {
 // MARK: - UIImagePickerControllerDelegate
 extension ProfileTableViewController: UIImagePickerControllerDelegate {
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-		if let editedImage = info[.editedImage] as? UIImage {
-			self.currentImageView?.image = editedImage
+		if self.currentImageView == "profile" {
+			if let editedImage = info[.editedImage] as? UIImage {
+				self.profileImageView.image = editedImage
+				self.editedProfileImage = editedImage
+			}
+		} else if self.currentImageView == "banner" {
+			if let editedImage = info[.editedImage] as? UIImage {
+				self.bannerImageView.image = editedImage
+				self.editedBannerImage = editedImage
+			}
 		}
 
-		if let imageURL = info[.imageURL] as? URL {
-			profileImageFilePath = imageURL.absoluteString
-		}
+		// Reset selcted image view
+		self.currentImageView = ""
 
 		// Dismiss the UIImagePicker after selection
 		picker.dismiss(animated: true, completion: nil)
@@ -792,15 +873,24 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate {
 
 	// MARK: - IBActions
 	@IBAction func selectProfileImageButtonPressed(_ sender: UIButton) {
-		self.currentImageView = self.profileImageView
+		self.currentImageView = "profile"
+
 		let actionSheetAlertController = UIAlertController.actionSheet(title: "Profile Photo", message: "Choose an awesome photo 😉") { [weak self] actionSheetAlertController in
+			guard let self = self else { return }
 			actionSheetAlertController.addAction(UIAlertAction(title: "Take a photo 📷", style: .default, handler: { _ in
-				self?.openCamera()
+				self.openCamera()
 			}))
 
 			actionSheetAlertController.addAction(UIAlertAction(title: "Choose from Photo Library 🏛", style: .default, handler: { _ in
-				self?.openPhotoLibrary()
+				self.openPhotoLibrary()
 			}))
+
+			if !self.editedProfileImage.isEqual(to: self.user.attributes.profilePlaceholderImage) {
+				actionSheetAlertController.addAction(UIAlertAction(title: "Remove", style: .destructive, handler: { _ in
+					self.profileImageView.image = self.user.attributes.profilePlaceholderImage
+					self.editedProfileImage = self.profileImageView.image
+				}))
+			}
 		}
 
 		// Present the controller
@@ -814,15 +904,24 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate {
 	}
 
 	@IBAction func selectBannerImageButtonPressed(_ sender: UIButton) {
-		self.currentImageView = self.bannerImageView
+		self.currentImageView = "banner"
+
 		let actionSheetAlertController = UIAlertController.actionSheet(title: "Banner Photo", message: "Choose a breathtaking photo 🌄") { [weak self] actionSheetAlertController in
+			guard let self = self else { return }
 			actionSheetAlertController.addAction(UIAlertAction(title: "Take a photo 📷", style: .default, handler: { _ in
-				self?.openCamera()
+				self.openCamera()
 			}))
 
 			actionSheetAlertController.addAction(UIAlertAction(title: "Choose from Photo Library 🏛", style: .default, handler: { _ in
-				self?.openPhotoLibrary()
+				self.openPhotoLibrary()
 			}))
+
+			if !self.editedBannerImage.isEqual(to: self.user.attributes.bannerPlaceholderImage) {
+				actionSheetAlertController.addAction(UIAlertAction(title: "Remove", style: .destructive, handler: { _ in
+					self.bannerImageView.image = self.user.attributes.bannerPlaceholderImage
+					self.editedBannerImage = self.bannerImageView.image
+				}))
+			}
 		}
 
 		// Present the controller
@@ -836,25 +935,34 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate {
 	}
 }
 
+// MARK: - UIAdaptivePresentationControllerDelegate
+extension ProfileTableViewController: UIAdaptivePresentationControllerDelegate {
+	func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
+		// The system calls this delegate method whenever the user attempts to pull down to dismiss and `isModalInPresentation` is false.
+		// Clarify the user's intent by asking whether they want to cancel or update.
+		self.confirmCancel(showingUpdate: true)
+	}
+}
+
 // MARK: - UITextViewDelegate
 extension ProfileTableViewController: UITextViewDelegate {
-	func textViewDidBeginEditing(_ textView: UITextView) {
-		bioTextCache = textView.text
-		if textView.text == placeholderText && textView.textColor == KThemePicker.textFieldPlaceholderTextColor.colorValue && editingMode {
-			textView.text = ""
-			textView.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
-
 	func textViewDidChange(_ textView: UITextView) {
+		self.editedBioText = textView.text
 		DispatchQueue.main.async {
 			self.tableView.updateHeaderViewFrame()
 		}
 	}
 
+	func textViewDidBeginEditing(_ textView: UITextView) {
+		if textView.text == self.placeholderText && textView.textColor == KThemePicker.textFieldPlaceholderTextColor.colorValue && editingMode {
+			textView.text = ""
+			textView.theme_textColor = KThemePicker.textColor.rawValue
+		}
+	}
+
 	func textViewDidEndEditing(_ textView: UITextView) {
-		if textView.text.isEmpty && editingMode {
-			textView.text = placeholderText
+		if textView.text.isEmpty && self.editingMode {
+			textView.text = self.placeholderText
 			textView.theme_textColor = KThemePicker.textFieldPlaceholderTextColor.rawValue
 		}
 	}
