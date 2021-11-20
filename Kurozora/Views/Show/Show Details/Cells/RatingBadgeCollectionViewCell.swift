@@ -19,8 +19,8 @@ class RatingBadgeCollectionViewCell: BadgeCollectionViewCell {
 		super.configureCell()
 
 		// Configure rating view
-		let averageRating = show.attributes.userRating.averageRating
-		cosmosView.rating = averageRating
-		ratingScoreLabel.text = "\(averageRating)"
+		let ratingAverage = show.attributes.stats.ratingAverage
+		cosmosView.rating = ratingAverage
+		ratingScoreLabel.text = "\(ratingAverage)"
 	}
 }

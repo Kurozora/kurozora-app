@@ -87,8 +87,8 @@ extension Show {
 		/// The number of seasons in the show.
 		public let seasonCount: Int
 
-		/// The user rating of the show.
-		public let userRating: UserRating
+		/// The stats of the show.
+		public let stats: MediaStat
 
 		/// The first air date of the show.
 		public let firstAired: Date?

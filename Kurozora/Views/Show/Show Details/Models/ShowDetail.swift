@@ -219,9 +219,9 @@ extension ShowDetail {
 		func secondaryInformation(from show: Show) -> String? {
 			switch self {
 			case .rating:
-				let averageRating = show.attributes.userRating.averageRating
-				let ratingCount = show.attributes.userRating.ratingCount
-				return averageRating >= 0.00 ? "Not enough ratings" : "\(ratingCount) Ratings"
+				let ratingAverage = show.attributes.stats.ratingAverage
+				let ratingCount = show.attributes.stats.ratingCount
+				return ratingAverage >= 0.00 ? "Not enough ratings" : "\(ratingCount) Ratings"
 			case .season:
 				return "Season"
 			case .rank:

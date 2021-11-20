@@ -3219,7 +3219,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "agvtool next-version -all\n";
+			shellScript = "#agvtool next-version -all\n";
 		};
 		66B4DC40245A20390097135A /* Add version to Settings.bundle */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3237,7 +3237,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "version=\"${MARKETING_VERSION}\"\n/usr/libexec/PlistBuddy \"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/Root.plist\" -c \"set PreferenceSpecifiers:2:DefaultValue $version\"\n";
+			shellScript = "#version=\"${MARKETING_VERSION}\"\n#/usr/libexec/PlistBuddy \"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/Root.plist\" -c \"set PreferenceSpecifiers:2:DefaultValue $version\"\n";
 		};
 		66CF0BBC231AEE8A00EEF947 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;

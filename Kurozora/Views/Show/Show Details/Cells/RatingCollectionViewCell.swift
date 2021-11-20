@@ -41,10 +41,10 @@ class RatingCollectionViewCell: UICollectionViewCell {
         }
 
 		// Configure average rating
-		ratingLabel.text = "\(show.attributes.userRating.averageRating)"
+		ratingLabel.text = "\(show.attributes.stats.ratingAverage)"
 
 		// Configure rating count
-		let ratingCount = show.attributes.userRating.ratingCount
+		let ratingCount = show.attributes.stats.ratingCount
 		cosmosDetailLabel.text = ratingCount != 0 ? "\(ratingCount) Ratings" : "Not enough ratings"
 	}
 
