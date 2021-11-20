@@ -242,6 +242,42 @@ extension ShowDetail {
 				}
 			}
 		}
+
+		/**
+			Returns the required primary image from the given object.
+
+			- Parameter show: The object used to extract the infromation from.
+
+			- Returns: the required primary image from the given object.
+		*/
+		func primaryImage(from show: Show) -> UIImage? {
+			switch self {
+			case .rating:
+				return nil
+			case .season:
+				switch show.attributes.airSeason?.lowercased() {
+				case "spring":
+					return UIImage(systemName: "leaf.fill")
+				case "summer":
+					return UIImage(systemName: "sun.max.fill")
+				case "fall":
+					return UIImage(systemName: "wind")
+				default:
+					return UIImage(systemName: "snowflake")
+				}
+			case .rank:
+				return UIImage(systemName: "chart.bar.fill")
+			case .tvRating:
+				switch show.attributes.tvRating.name.lowercased() {
+				default:
+					return UIImage(systemName: "tv.fill")
+				}
+			case .studio:
+				return UIImage(systemName: "building.2.fill")
+			case .language:
+				return UIImage(systemName: "character.bubble.fill")
+			}
+		}
 	}
 }
 
