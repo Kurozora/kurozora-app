@@ -84,22 +84,40 @@ final class Store: ObservableObject {
 	/// The dictionary containing all `StoreKit` products.
 	private let products: [String: String]
 
+	#if DEBUG
 	/// A dictionary of `StoreKit` subscriptions and their respective `SubscriptionTier` type.
 	private static let subscriptionTier: [String: SubscriptionTier] = [
 		"app.kurozora.temporary.kurozoraPlus1Month": .plus1Month,
 		"app.kurozora.temporary.kurozoraPlus6Months": .plus6Months,
 		"app.kurozora.temporary.kurozoraPlus12Months": .plus12Months
 	]
+	#else
+	/// A dictionary of `StoreKit` subscriptions and their respective `SubscriptionTier` type.
+	private static let subscriptionTier: [String: SubscriptionTier] = [
+		"app.kurozora.kurozoraPlus1Month": .plus1Month,
+		"app.kurozora.kurozoraPlus6Months": .plus6Months,
+		"app.kurozora.kurozoraPlus12Months": .plus12Months
+	]
+	#endif
 
 	// MARK: - Initializers
 	init() {
 		print("------ StoreKit 2 initialized.")
+		#if DEBUG
+		if let path = Bundle.main.path(forResource: "Debug Products", ofType: "plist"),
+		   let plist = FileManager.default.contents(atPath: path) {
+			products = (try? PropertyListSerialization.propertyList(from: plist, format: nil) as? [String: String]) ?? [:]
+		} else {
+			products = [:]
+		}
+		#else
 		if let path = Bundle.main.path(forResource: "Products", ofType: "plist"),
 		   let plist = FileManager.default.contents(atPath: path) {
 			products = (try? PropertyListSerialization.propertyList(from: plist, format: nil) as? [String: String]) ?? [:]
 		} else {
 			products = [:]
 		}
+		#endif
 
 		// Initialize empty products then do a product request asynchronously to fill them in.
 		tips = []
@@ -363,6 +381,7 @@ final class Store: ObservableObject {
 		- Returns: a `SubscriptionTier` object.
 	*/
 	func tier(for productId: String) -> SubscriptionTier {
+		#if DEBUG
 		switch productId {
 		case "app.kurozora.temporary.kurozoraPlus1Month":
 			return .plus1Month
@@ -373,5 +392,17 @@ final class Store: ObservableObject {
 		default:
 			return .none
 		}
+		#else
+		switch productId {
+		case "app.kurozora.kurozoraPlus1Month":
+			return .plus1Month
+		case "app.kurozora.kurozoraPlus6Months":
+			return .plus6Months
+		case "app.kurozora.kurozoraPlus12Months":
+			return .plus12Months
+		default:
+			return .none
+		}
+		#endif
 	}
 }
