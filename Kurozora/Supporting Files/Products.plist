@@ -2,21 +2,21 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>app.kurozora.temporary.wolfTip</key>
+	<key>app.kurozora.wolfTip</key>
 	<string>🐺</string>
-	<key>app.kurozora.temporary.tigerTip</key>
+	<key>app.kurozora.tigerTip</key>
 	<string>🐯</string>
-	<key>app.kurozora.temporary.demonTip</key>
+	<key>app.kurozora.demonTip</key>
 	<string>👺</string>
-	<key>app.kurozora.temporary.dragonTip</key>
+	<key>app.kurozora.dragonTip</key>
 	<string>🐲</string>
-	<key>app.kurozora.temporary.godTip</key>
+	<key>app.kurozora.godTip</key>
 	<string>🙏</string>
-	<key>app.kurozora.temporary.kurozoraPlus1Month</key>
+	<key>app.kurozora.kurozoraPlus1Month</key>
 	<string>One Month</string>
-	<key>app.kurozora.temporary.kurozoraPlus6Months</key>
+	<key>app.kurozora.kurozoraPlus6Months</key>
 	<string>Six Months</string>
-	<key>app.kurozora.temporary.kurozoraPlus12Months</key>
+	<key>app.kurozora.kurozoraPlus12Months</key>
 	<string>Twelve Months</string>
 </dict>
 </plist>

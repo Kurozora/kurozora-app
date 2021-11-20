@@ -230,6 +230,7 @@
 		66973DFD231202AF0097A9F8 /* UserSettingsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66973DFC231202AF0097A9F8 /* UserSettingsKey.swift */; };
 		6697DACD2573B50A0054FEFD /* UserNotification+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6697DACC2573B50A0054FEFD /* UserNotification+UIKit.swift */; };
 		6697DB2325744B9A0054FEFD /* Global+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6697DB2225744B9A0054FEFD /* Global+Kurozora.swift */; };
+		6698394227493A2E0083C479 /* Debug Products.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6698394127493A2E0083C479 /* Debug Products.plist */; };
 		6698D3C924E59427006B7A4C /* ReminderStatus+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6698D3C824E59427006B7A4C /* ReminderStatus+Kurozora.swift */; };
 		6698D3CB24E594BD006B7A4C /* FavoriteStatus+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6698D3CA24E594BD006B7A4C /* FavoriteStatus+Kurozora.swift */; };
 		6698D3D424E5E81D006B7A4C /* StudioAttributes+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6698D3D324E5E81D006B7A4C /* StudioAttributes+UIImage.swift */; };
@@ -705,6 +706,7 @@
 		66973DFC231202AF0097A9F8 /* UserSettingsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettingsKey.swift; sourceTree = "<group>"; };
 		6697DACC2573B50A0054FEFD /* UserNotification+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserNotification+UIKit.swift"; sourceTree = "<group>"; };
 		6697DB2225744B9A0054FEFD /* Global+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Global+Kurozora.swift"; sourceTree = "<group>"; };
+		6698394127493A2E0083C479 /* Debug Products.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Debug Products.plist"; sourceTree = "<group>"; };
 		6698D3C824E59427006B7A4C /* ReminderStatus+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReminderStatus+Kurozora.swift"; sourceTree = "<group>"; };
 		6698D3CA24E594BD006B7A4C /* FavoriteStatus+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoriteStatus+Kurozora.swift"; sourceTree = "<group>"; };
 		6698D3D324E5E81D006B7A4C /* StudioAttributes+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StudioAttributes+UIImage.swift"; sourceTree = "<group>"; };
@@ -1639,6 +1641,7 @@
 				6675262B22280AB4007C1617 /* Plist */,
 				66ABBBFF240215BE00CE8A26 /* Views */,
 				66E1517B2713628A007966A9 /* Supporting Files */,
+				6698394327493A970083C479 /* Supporting Files Dev */,
 			);
 			path = Kurozora;
 			sourceTree = "<group>";
@@ -2070,6 +2073,15 @@
 				6697DACC2573B50A0054FEFD /* UserNotification+UIKit.swift */,
 			);
 			path = "User Notification";
+			sourceTree = "<group>";
+		};
+		6698394327493A970083C479 /* Supporting Files Dev */ = {
+			isa = PBXGroup;
+			children = (
+				6698394127493A2E0083C479 /* Debug Products.plist */,
+				66A4FD0E270F62D300E7C702 /* Configuration.storekit */,
+			);
+			path = "Supporting Files Dev";
 			sourceTree = "<group>";
 		};
 		669C8D542107B7AD0014EB7A /* Tab Bar */ = {
@@ -2898,7 +2910,6 @@
 				66A4FD18270F6CD100E7C702 /* App Icons.plist */,
 				66A4FD10270F62D300E7C702 /* Info.plist */,
 				66A4FD12270F62D300E7C702 /* Products.plist */,
-				66A4FD0E270F62D300E7C702 /* Configuration.storekit */,
 				66E151792711C478007966A9 /* R.generated.swift */,
 				66A4FCFC270EFDCA00E7C702 /* Assets.xcassets */,
 			);
@@ -3163,6 +3174,7 @@
 				66AE01292594018400308636 /* Genre.storyboard in Resources */,
 				666D9EF325B3607600EDDC9E /* LibraryList.storyboard in Resources */,
 				66A4FD16270F62D300E7C702 /* Settings.bundle in Resources */,
+				6698394227493A2E0083C479 /* Debug Products.plist in Resources */,
 				6646A275236A5F7600DCC0A4 /* BrowserSettings.storyboard in Resources */,
 				660C043023D14F760040C749 /* SmallLockupCollectionViewCell.xib in Resources */,
 				66CBDD9224634AB700CA5F83 /* TitleHeaderCollectionReusableView.xib in Resources */,
@@ -3845,7 +3857,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Kurozora/Kurozora.entitlements;
 				CURRENT_PROJECT_VERSION = 11899;
-				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_ASSET_PATHS = "Kurozora/Supporting\\ Files\\ Dev";
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				INFOPLIST_FILE = "Kurozora/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3870,7 +3882,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Kurozora/Kurozora.entitlements;
 				CURRENT_PROJECT_VERSION = 11899;
-				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_ASSET_PATHS = "Kurozora/Supporting\\ Files\\ Dev";
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				INFOPLIST_FILE = "Kurozora/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
