@@ -340,7 +340,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fX4-qF-SfM" customClass="KCosmosView" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="21" width="109" height="18"/>
+                                            <rect key="frame" x="3.5" y="21" width="102" height="18"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="updateOnTouch" value="NO"/>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="starSize">
@@ -365,7 +365,7 @@
                                         <constraint firstAttribute="trailing" secondItem="75x-YE-Dah" secondAttribute="trailing" constant="8" id="Lbr-f3-44f"/>
                                         <constraint firstItem="771-Bz-wj4" firstAttribute="top" secondItem="QHt-Tj-vdt" secondAttribute="top" id="U7R-H1-OG8"/>
                                         <constraint firstItem="75x-YE-Dah" firstAttribute="centerX" secondItem="771-Bz-wj4" secondAttribute="centerX" id="Vt2-A7-8eb"/>
-                                        <constraint firstItem="fX4-qF-SfM" firstAttribute="leading" secondItem="QHt-Tj-vdt" secondAttribute="leading" id="W6R-Q7-R2z"/>
+                                        <constraint firstItem="fX4-qF-SfM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="QHt-Tj-vdt" secondAttribute="leading" id="W6R-Q7-R2z"/>
                                         <constraint firstItem="771-Bz-wj4" firstAttribute="leading" secondItem="QHt-Tj-vdt" secondAttribute="leading" id="Xc5-pf-kIo"/>
                                         <constraint firstItem="fX4-qF-SfM" firstAttribute="centerX" secondItem="771-Bz-wj4" secondAttribute="centerX" id="p2p-Ad-9oQ"/>
                                         <constraint firstAttribute="trailing" secondItem="771-Bz-wj4" secondAttribute="trailing" constant="8" id="u00-xy-7c5"/>

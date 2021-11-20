@@ -45,7 +45,7 @@ class RatingCollectionViewCell: UICollectionViewCell {
 
 		// Configure rating count
 		let ratingCount = show.attributes.stats?.ratingCount ?? 0
-		cosmosDetailLabel.text = ratingCount != 0 ? "\(ratingCount) Ratings" : "Not enough ratings"
+		cosmosDetailLabel.text = ratingCount != 0 ? "\(ratingCount.kkFormatted) Ratings" : "Not enough ratings"
 	}
 
 	/**

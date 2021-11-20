@@ -197,7 +197,7 @@ extension ShowDetail {
 			case .season:
 				return show.attributes.airSeason ?? "-"
 			case .rank:
-				return "#13" // show.attributes.popularity.rank
+				return "-" // e.g #13 — show.attributes.popularity.rank
 			case .tvRating:
 				return show.attributes.tvRating.name
 			case .studio:
@@ -219,13 +219,12 @@ extension ShowDetail {
 		func secondaryInformation(from show: Show) -> String? {
 			switch self {
 			case .rating:
-				let ratingAverage = show.attributes.stats?.ratingAverage ?? 0.0
 				let ratingCount = show.attributes.stats?.ratingCount ?? 0
-				return ratingAverage >= 0.00 ? "Not enough ratings" : "\(ratingCount) Ratings"
+				return ratingCount != 0 ? "\(ratingCount.kkFormatted) Ratings" : "Not enough ratings"
 			case .season:
 				return "Season"
 			case .rank:
-				return "Thriller" // show.attributes.popularity.genre
+				return "Chart" // e.g. Thriller — show.attributes.popularity.genre
 			case .tvRating:
 				return "Rated"
 			case .studio:
