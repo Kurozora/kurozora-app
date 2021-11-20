@@ -122,4 +122,21 @@ extension Product.SubscriptionPeriod {
 			return plural ? unitString : "a \(unitString)"
 		}
 	}
+
+	/// Returns the localized unit of the subscription in a shorter format.
+	var shortDisplayUnit: String {
+		let plural = 1 < value
+		switch unit {
+		case .year:
+			return plural ? "\(value)y" : "y"
+		case .month:
+			return plural ? "\(value)m" : "m"
+		case .week:
+			return plural ? "\(value)w" : "w"
+		case .day:
+			return plural ? "\(value)d" : "d"
+		default:
+			return unitString
+		}
+	}
 }

@@ -49,14 +49,13 @@ class PurchaseButtonTableViewCell: KTableViewCell {
 	/// Updates the purchase button with the relevant information.
 	fileprivate func updateSubscriptionPurchaseButton(withSubscription subscription: Product.SubscriptionInfo) {
 		let displayPrice = self.product.displayPrice
-		let displayUnit = subscription.subscriptionPeriod.displayUnit
+		let displayUnit = subscription.subscriptionPeriod.shortDisplayUnit
 		let paragraphStyle = NSMutableParagraphStyle()
 		paragraphStyle.alignment = .center
 
 		let purchaseTitle = NSMutableAttributedString()
 		purchaseTitle.append(NSAttributedString(string: displayPrice, attributes: [.font: UIFont.preferredFont(forTextStyle: .headline), .paragraphStyle: paragraphStyle]))
-		purchaseTitle.append(NSAttributedString(string: "\n———", attributes: [.paragraphStyle: paragraphStyle]))
-		purchaseTitle.append(NSAttributedString(string: "\n\(displayUnit)", attributes: [.font: UIFont.preferredFont(forTextStyle: .caption1), .paragraphStyle: paragraphStyle]))
+		purchaseTitle.append(NSAttributedString(string: "/\(displayUnit)", attributes: [.font: UIFont.preferredFont(forTextStyle: .caption1), .paragraphStyle: paragraphStyle]))
 
 		if self.purchased {
 			self.purchaseButton.isEnabled = false

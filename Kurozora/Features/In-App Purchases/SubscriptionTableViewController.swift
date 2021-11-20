@@ -115,8 +115,7 @@ extension SubscriptionTableViewController {
 	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		switch Section(rawValue: indexPath.section) {
 		case .header:
-			let cellRatio: CGFloat = UIDevice.isLandscape ? 1.5 : 3
-			return view.frame.height / cellRatio
+			return view.frame.height > 260 ? 260 : view.frame.height * 0.33
 		default:
 			return UITableView.automaticDimension
 		}

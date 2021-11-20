@@ -61,9 +61,6 @@ extension ProductPreviewTableViewCell: UICollectionViewDataSource {
 extension ProductPreviewTableViewCell: UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 		if UIDevice.isPad {
-			if UIDevice.isLandscape {
-				return CGSize(width: collectionView.bounds.width / 3, height: collectionView.bounds.height)
-			}
 			return CGSize(width: collectionView.bounds.width / 2, height: collectionView.bounds.height)
 		}
 
