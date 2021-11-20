@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19115.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="L5B-1B-AEl">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="L5B-1B-AEl">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19107.5"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -92,7 +92,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Manage Active Sessions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="com-5g-Jx0">
-                                                            <rect key="frame" x="46" y="15" width="185" height="21"/>
+                                                            <rect key="frame" x="46" y="17" width="156.5" height="17"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -178,7 +178,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign in with Apple" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uo0-tx-sLu">
-                                                            <rect key="frame" x="46" y="15" width="136" height="21"/>
+                                                            <rect key="frame" x="46" y="17" width="115.5" height="17"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -268,7 +268,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Import From MAL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DM1-7u-B1i">
-                                                            <rect key="frame" x="46" y="15" width="133" height="21"/>
+                                                            <rect key="frame" x="46" y="17" width="112.5" height="17"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -337,7 +337,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="374" height="44.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign Out" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FvH-H3-tLK">
-                                                            <rect key="frame" x="152.5" y="6" width="69" height="32.5"/>
+                                                            <rect key="frame" x="158" y="6" width="58.5" height="32.5"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="32" id="iaj-6a-iBJ"/>
                                                             </constraints>
@@ -421,32 +421,32 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="CurrentSessionCell" id="1as-8p-vJZ" customClass="CurrentSessionCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="235.5" width="374" height="72"/>
+                                <rect key="frame" x="20" y="229.5" width="374" height="65"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1as-8p-vJZ" id="VMf-CC-jxD">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="72"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="65"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="dWC-cf-Fou">
-                                            <rect key="frame" x="8" y="8" width="358" height="64"/>
+                                            <rect key="frame" x="8" y="8" width="358" height="57"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vhz-eV-Fqj">
-                                                    <rect key="frame" x="0.0" y="0.0" width="358" height="28"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="358" height="24.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="IP-Address" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OFM-3n-inF" userLabel="IP-Address Label" customClass="KTintedLabel" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="80.5" height="19.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="67" height="16"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                             <color key="textColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="" textAlignment="natural" lineBreakMode="characterWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bo9-kX-eyd" userLabel="IP-Address Value Label" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="358" y="0.0" width="0.0" height="19.5"/>
+                                                            <rect key="frame" x="358" y="0.0" width="0.0" height="16"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yUb-sP-0hz" customClass="SeparatorView" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="27.5" width="358" height="0.5"/>
+                                                            <rect key="frame" x="0.0" y="24" width="358" height="0.5"/>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="0.5" id="FYA-eF-N67"/>
@@ -467,22 +467,22 @@
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gbC-E0-dIP">
-                                                    <rect key="frame" x="0.0" y="36" width="358" height="28"/>
+                                                    <rect key="frame" x="0.0" y="32.5" width="358" height="24.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Device" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tsv-GT-qiw" customClass="KTintedLabel" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="49.5" height="19.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="41.5" height="16"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                             <color key="textColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="" textAlignment="natural" lineBreakMode="characterWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VjX-Xk-xWm" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="358" y="0.0" width="0.0" height="19.5"/>
+                                                            <rect key="frame" x="358" y="0.0" width="0.0" height="16"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aJu-gf-qMW">
-                                                            <rect key="frame" x="0.0" y="27.5" width="358" height="0.5"/>
+                                                            <rect key="frame" x="0.0" y="24" width="358" height="0.5"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="0.5" id="SST-Fd-rOr"/>
                                                             </constraints>
@@ -521,32 +521,32 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="OtherSessionsCell" id="hrX-oG-rVI" customClass="OtherSessionsCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="307.5" width="374" height="108"/>
+                                <rect key="frame" x="20" y="294.5" width="374" height="97.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hrX-oG-rVI" id="ye5-86-LeX">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="108"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="97.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="EU0-hY-7cZ">
-                                            <rect key="frame" x="8" y="8" width="358" height="100"/>
+                                            <rect key="frame" x="8" y="8" width="358" height="89.5"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v57-Kg-plb">
-                                                    <rect key="frame" x="0.0" y="0.0" width="358" height="28"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="358" height="24.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="IP-Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Abb-T4-PAu" customClass="KTintedLabel" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="80.5" height="19.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="67" height="16"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                             <color key="textColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zBx-zO-vzr" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="358" y="0.0" width="0.0" height="19.5"/>
+                                                            <rect key="frame" x="358" y="0.0" width="0.0" height="16"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lf8-T3-GgY" customClass="SecondarySeparatorView" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="27.5" width="358" height="0.5"/>
+                                                            <rect key="frame" x="0.0" y="24" width="358" height="0.5"/>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="0.5" id="DgT-Rf-G8b"/>
@@ -567,22 +567,22 @@
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NKo-tD-onZ">
-                                                    <rect key="frame" x="0.0" y="36" width="358" height="28"/>
+                                                    <rect key="frame" x="0.0" y="32.5" width="358" height="24.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Device" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q3O-Rh-T29" customClass="KTintedLabel" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="49.5" height="19.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="41.5" height="16"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                             <color key="textColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1VX-KO-WAY" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="358" y="0.0" width="0.0" height="19.5"/>
+                                                            <rect key="frame" x="358" y="0.0" width="0.0" height="16"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eIk-aO-DZz" customClass="SecondarySeparatorView" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="27.5" width="358" height="0.5"/>
+                                                            <rect key="frame" x="0.0" y="24" width="358" height="0.5"/>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="0.5" id="roc-Kv-IHg"/>
@@ -603,22 +603,22 @@
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pea-hR-nKC">
-                                                    <rect key="frame" x="0.0" y="72" width="358" height="28"/>
+                                                    <rect key="frame" x="0.0" y="65" width="358" height="24.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Last Accessed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xG4-lo-jD6" customClass="KTintedLabel" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="105.5" height="19.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="88" height="16"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                             <color key="textColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WpT-WF-Tg5" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="358" y="0.0" width="0.0" height="19.5"/>
+                                                            <rect key="frame" x="358" y="0.0" width="0.0" height="16"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hXO-2f-08p">
-                                                            <rect key="frame" x="0.0" y="27.5" width="358" height="0.5"/>
+                                                            <rect key="frame" x="0.0" y="24" width="358" height="0.5"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="0.5" id="2nX-3y-p4P"/>
                                                             </constraints>
@@ -713,14 +713,14 @@
                         <viewLayoutGuide key="frameLayoutGuide" id="EKX-29-mXG"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MALImportActionTableViewCell" id="wzI-fo-fZU" customClass="MALImportActionTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="414" height="77"/>
+                                <rect key="frame" x="0.0" y="49.5" width="414" height="73"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wzI-fo-fZU" id="RzM-O7-AXb">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="77"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="73"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eYh-Je-pHY">
-                                            <rect key="frame" x="167.5" y="0.0" width="79" height="33"/>
+                                            <rect key="frame" x="173.5" y="0.0" width="67" height="29"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <state key="normal" title="Select File">
                                                 <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -730,7 +730,7 @@
                                             </connections>
                                         </button>
                                         <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="My Anime List.xml" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="E7m-eK-qXP" customClass="KTextField" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="20" y="43" width="374" height="34"/>
+                                            <rect key="frame" x="20" y="39" width="374" height="34"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="jEe-eB-nI0"/>
                                             </constraints>
@@ -790,7 +790,7 @@
                         <viewLayoutGuide key="frameLayoutGuide" id="28X-av-ogq"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SIWAButtonTableViewCell" id="9Dz-AS-Ze4" customClass="SIWAButtonTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="49.5" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9Dz-AS-Ze4" id="b1l-fR-G61">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>

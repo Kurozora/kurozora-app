@@ -70,11 +70,11 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 		}
 
 		// Configure score
-		let ratingAverage = self.show.attributes.stats.ratingAverage
+		let ratingAverage = self.show.attributes.stats?.ratingAverage ?? 0.0
 		self.cosmosView.rating = ratingAverage
 		self.scoreLabel.text = "\(ratingAverage)"
-		self.cosmosView.isHidden = ratingAverage == 0
-		self.scoreLabel.isHidden = ratingAverage == 0
+		self.cosmosView.isHidden = ratingAverage == 0.0
+		self.scoreLabel.isHidden = ratingAverage == 0.0
 	}
 
 	// MARK: - IBActions

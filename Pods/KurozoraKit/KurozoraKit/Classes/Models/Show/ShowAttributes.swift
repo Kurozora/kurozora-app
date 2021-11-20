@@ -88,7 +88,7 @@ extension Show {
 		public let seasonCount: Int
 
 		/// The stats of the show.
-		public let stats: MediaStat
+		public let stats: MediaStat?
 
 		/// The first air date of the show.
 		public let firstAired: Date?

@@ -106,6 +106,9 @@
                                                                 <userDefinedRuntimeAttribute type="number" keyPath="starSize">
                                                                     <real key="value" value="18"/>
                                                                 </userDefinedRuntimeAttribute>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="fillMode">
+                                                                    <integer key="value" value="2"/>
+                                                                </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
                                                     </subviews>
