@@ -139,14 +139,16 @@ extension Show {
 	}
 
 	func toggleReminder() {
-		WorkflowController.shared.isPro {
-			KService.updateReminderStatus(forShow: self.id) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let reminderStatus):
-					self.attributes.reminderStatus = reminderStatus
-					NotificationCenter.default.post(name: .KShowReminderIsToggled, object: nil)
-				case .failure: break
+		Task {
+			await WorkflowController.shared.isPro {
+				KService.updateReminderStatus(forShow: self.id) { [weak self] result in
+					guard let self = self else { return }
+					switch result {
+					case .success(let reminderStatus):
+						self.attributes.reminderStatus = reminderStatus
+						NotificationCenter.default.post(name: .KShowReminderIsToggled, object: nil)
+					case .failure: break
+					}
 				}
 			}
 		}

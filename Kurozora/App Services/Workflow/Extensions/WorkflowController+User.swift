@@ -30,8 +30,22 @@ extension WorkflowController {
 
 		- Parameter completion: Optional completion handler (default is `nil`).
 	*/
-	@discardableResult func isPro(_ completion: (() -> Void)? = nil) -> Bool {
-		if User.isPro {
+	@MainActor
+	@discardableResult func isPro(_ completion: (() -> Void)? = nil) async -> Bool {
+//		if User.isPro {
+		// Get entitled subscription ID
+		var entitledProductID = ""
+		for await result in Transaction.currentEntitlements {
+			if case .verified(let transaction) = result {
+				entitledProductID = transaction.productID
+			}
+		}
+
+		// Check if purchased which also validates with StoreKit.
+		let isPurchased = try? await store.isPurchased(entitledProductID)
+
+		// Perform action if everything is ok, otherwise prompt for subscription.
+		if isPurchased ?? false {
 			completion?()
 			return true
 		} else {
@@ -46,11 +60,16 @@ extension WorkflowController {
 
 	/// Subscribes user with their reminders.
 	func subscribeToReminders() {
-		WorkflowController.shared.isPro {
-			let reminderSubscriptionURL = KService.reminderSubscriptionURL
-			let reminderSubscriptionString = reminderSubscriptionURL.absoluteString.removingPrefix(reminderSubscriptionURL.scheme ?? "")
-			UIApplication.shared.kOpen(nil, deepLink: URL(string: "webcal\(reminderSubscriptionString)"))
-		}
+		UIApplication.topViewController?.presentAlertController(title: "Work in Progress", message: "Reminders have temporarily been disabled. An improved version is being worked on and should be available soon!")
+//		Task {
+//			await WorkflowController.shared.isPro {
+//				let reminderSubscriptionURL = KService.reminderSubscriptionURL
+//				let reminderSubscriptionString = reminderSubscriptionURL.absoluteString.removingPrefix(reminderSubscriptionURL.scheme ?? "")
+//				DispatchQueue.main.async {
+//					UIApplication.shared.kOpen(nil, deepLink: URL(string: "webcal\(reminderSubscriptionString)"))
+//				}
+//			}
+//		}
 	}
 
 	/**

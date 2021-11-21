@@ -122,7 +122,14 @@ extension ProductTableViewController: PurchaseButtonTableViewCellDelegate {
 
 	func purchase(_ product: Product) async {
 		do {
-			if try await store.purchase(product) != nil {
+			let transaction = try await store.purchase(product)
+			if transaction != nil {
+//				KService.verifyReceipt() { result in
+//					switch result {
+//					case .success(let receipts)
+//					case .failure: break
+//					}
+//				}
 				await self.productTableViewControllerDelegate?.updateSubscriptionStatus()
 				DispatchQueue.main.async {
 					self.tableView.reloadData()
