@@ -30,14 +30,16 @@ class KTabBarController: ESTabBarController {
 		super.viewDidLoad()
 
 		// Initialize views
-		viewControllers = TabBarItem.allCases.map {
+
+		self.viewControllers = TabBarItem.allCases.map {
 			let rootNavigationController = $0.kViewControllerValue
-			rootNavigationController.tabBarItem = ESTabBarItem(BounceAnimation(), title: $0.stringValue, image: $0.imageValue, selectedImage: $0.selectedImageValue)
+			let tabBarItem = ESTabBarItem(BounceAnimation(), title: $0.stringValue, image: $0.imageValue, selectedImage: $0.selectedImageValue)
+			rootNavigationController.tabBarItem = tabBarItem
 			return rootNavigationController
 		}
 
-		setupBadgeValue()
-		NotificationCenter.default.addObserver(self, selector: #selector(toggleBadge), name: .KSNotificationsBadgeIsOn, object: nil)
+		self.setupBadgeValue()
+		NotificationCenter.default.addObserver(self, selector: #selector(self.toggleBadge), name: .KSNotificationsBadgeIsOn, object: nil)
     }
 
 	// MARK: - Functions
@@ -49,10 +51,14 @@ class KTabBarController: ESTabBarController {
 		self.tabBar.barStyle = .default
 
 		#if DEBUG
-		let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.showFlex))
-		longPressGestureRecognizer.numberOfTouchesRequired = 2
-		self.tabBar.addGestureRecognizer(longPressGestureRecognizer)
+		let showFlexLongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.showFlex))
+		showFlexLongPressGestureRecognizer.numberOfTouchesRequired = 2
+		self.tabBar.addGestureRecognizer(showFlexLongPressGestureRecognizer)
 		#endif
+
+		let showAccountSwitcherLongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.showAccountSwitcher))
+		showAccountSwitcherLongPressGestureRecognizer.numberOfTouchesRequired = 1
+		self.tabBar.addGestureRecognizer(showAccountSwitcherLongPressGestureRecognizer)
 	}
 
 	#if DEBUG
@@ -67,6 +73,24 @@ class KTabBarController: ESTabBarController {
 		}
 	}
 	#endif
+
+	/**
+		Show Account Switcher.
+
+		- Parameter gestureRecognizer: The gesture object containing information about the recognized gesture.
+	*/
+	@objc private func showAccountSwitcher(_ gestureRecognizer: UILongPressGestureRecognizer) {
+		if UIApplication.topViewController as? SwitchAccountsTableViewController == nil {
+			if let switchAccountKNavigationController = R.storyboard.switchAccountSettings.switchAccountKNavigationController() {
+				switchAccountKNavigationController.sheetPresentationController?.detents = [.medium()]
+				switchAccountKNavigationController.sheetPresentationController?.selectedDetentIdentifier = .medium
+				switchAccountKNavigationController.sheetPresentationController?.prefersEdgeAttachedInCompactHeight = true
+				switchAccountKNavigationController.sheetPresentationController?.prefersGrabberVisible = true
+				UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+				self.show(switchAccountKNavigationController, sender: nil)
+			}
+		}
+	}
 
 	/// Toggles the badge on/off on the tab bar item.
 	@objc func toggleBadge() {
