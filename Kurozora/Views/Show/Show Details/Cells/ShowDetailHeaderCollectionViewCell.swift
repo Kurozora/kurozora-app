@@ -52,9 +52,7 @@ extension ShowDetailHeaderCollectionViewCell {
 		NotificationCenter.default.addObserver(self, selector: #selector(handleReminderToggle(_:)), name: .KShowReminderIsToggled, object: nil)
 
 		// Configure library status
-		if let libraryStatus = self.show.attributes.libraryStatus {
-			self.libraryStatus = libraryStatus
-		}
+		self.libraryStatus = self.show.attributes.libraryStatus ?? .none
 		updateLibraryActions()
 
 		// Configure title label
@@ -196,6 +194,8 @@ extension ShowDetailHeaderCollectionViewCell {
 						switch result {
 						case .success(let libraryUpdate):
 							self.show.attributes.update(using: libraryUpdate)
+
+							// Update edntry in library
 							self.libraryStatus = .none
 
 							let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")

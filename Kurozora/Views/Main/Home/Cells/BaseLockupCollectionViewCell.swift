@@ -56,9 +56,7 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 		self.posterImageView?.image = self.show.attributes.posterImage
 
 		// Configure library status
-		if let libraryStatus = self.show.attributes.libraryStatus {
-			self.libraryStatus = libraryStatus
-		}
+		self.libraryStatus = self.show.attributes.libraryStatus ?? .none
 		self.libraryStatusButton?.setTitle(self.libraryStatus != .none ? "\(self.libraryStatus.stringValue.capitalized) ▾" : "ADD", for: .normal)
 	}
 
@@ -71,7 +69,9 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 				KService.addToLibrary(withLibraryStatus: value, showID: self.show.id) { [weak self] result in
 					guard let self = self else { return }
 					switch result {
-					case .success:
+					case .success(let libraryUpdate):
+						self.show.attributes.update(using: libraryUpdate)
+
 						// Update entry in library
 						self.libraryStatus = value
 						self.libraryStatusButton?.setTitle("\(title) ▾", for: .normal)
@@ -92,6 +92,8 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 						switch result {
 						case .success(let libraryUpdate):
 							self.show.attributes.update(using: libraryUpdate)
+
+							// Update edntry in library
 							self.libraryStatus = .none
 							self.libraryStatusButton?.setTitle("ADD", for: .normal)
 

@@ -45,11 +45,7 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 		self.searchImageView.image = self.show.attributes.posterImage
 
 		// Configure library status
-		if let libraryStatus = self.show.attributes.libraryStatus {
-			self.libraryStatus = libraryStatus
-		} else {
-			self.libraryStatus = .none
-		}
+		self.libraryStatus = self.show.attributes.libraryStatus ?? .none
 		self.actionButton.setTitle(self.libraryStatus != .none ? "\(self.libraryStatus.stringValue.capitalized) ▾" : "ADD", for: .normal)
 
 		// Cinfigure rating
@@ -89,7 +85,9 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 					KService.addToLibrary(withLibraryStatus: value, showID: self.show.id) { [weak self] result in
 						guard let self = self else { return }
 						switch result {
-						case .success:
+						case .success(let libraryUpdate):
+							self.show.attributes.update(using: libraryUpdate)
+
 							// Update entry in library
 							self.libraryStatus = value
 							self.actionButton.setTitle("\(title) ▾", for: .normal)
@@ -111,6 +109,8 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 						switch result {
 						case .success(let libraryUpdate):
 							self.show.attributes.update(using: libraryUpdate)
+
+							// Update edntry in library
 							self.libraryStatus = .none
 							self.actionButton.setTitle("ADD", for: .normal)
 
