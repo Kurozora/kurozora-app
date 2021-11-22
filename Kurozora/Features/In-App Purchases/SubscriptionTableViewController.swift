@@ -19,7 +19,7 @@ class SubscriptionTableViewController: ProductTableViewController {
 	}
 
 	override var previewImages: [UIImage?] {
-		return [R.image.promotional.inAppPurchases.icons(), R.image.promotional.inAppPurchases.gifs()]
+		return [R.image.promotional.inAppPurchases.reminders(), R.image.promotional.inAppPurchases.themes(), R.image.promotional.inAppPurchases.icons(), R.image.promotional.inAppPurchases.gifs()]
 	}
 
 	override var serviceType: ServiceType? {

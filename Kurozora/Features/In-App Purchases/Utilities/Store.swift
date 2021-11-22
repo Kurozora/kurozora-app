@@ -94,9 +94,9 @@ final class Store: ObservableObject {
 	#else
 	/// A dictionary of `StoreKit` subscriptions and their respective `SubscriptionTier` type.
 	private static let subscriptionTier: [String: SubscriptionTier] = [
-		"app.kurozora.kurozoraPlus1Month": .plus1Month,
-		"app.kurozora.kurozoraPlus6Months": .plus6Months,
-		"app.kurozora.kurozoraPlus12Months": .plus12Months
+		"20000331KPLUS1M": .plus1Month,
+		"20000331KPLUS6M": .plus6Months,
+		"20000331KPLUS12M": .plus12Months
 	]
 	#endif
 
@@ -394,11 +394,11 @@ final class Store: ObservableObject {
 		}
 		#else
 		switch productId {
-		case "app.kurozora.kurozoraPlus1Month":
+		case "20000331KPLUS1M":
 			return .plus1Month
-		case "app.kurozora.kurozoraPlus6Months":
+		case "20000331KPLUS6M":
 			return .plus6Months
-		case "app.kurozora.kurozoraPlus12Months":
+		case "20000331KPLUS12M":
 			return .plus12Months
 		default:
 			return .none
