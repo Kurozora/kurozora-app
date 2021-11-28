@@ -30,7 +30,7 @@ class SearchUserResultsCell: SearchBaseResultsCell {
 
 		// Configure profile image
 		self.searchImageView.borderColor = UIColor.white.withAlphaComponent(0.20)
-		self.searchImageView.image = user.attributes.profileImage
+		user.attributes.profileImage(imageView: self.searchImageView)
 
 		// Configure follow button
 		self.updateFollowButton()

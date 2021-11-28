@@ -69,13 +69,13 @@ extension ShowDetailHeaderCollectionViewCell {
 		if let posterBackgroundColor = self.show.attributes.poster?.backgroundColor {
 			self.posterImageView.backgroundColor = UIColor(hexString: posterBackgroundColor)
 		}
-		self.posterImageView.image = self.show.attributes.posterImage
+		self.show.attributes.posterImage(imageView: self.posterImageView)
 
 		// Configure banner view
 		if let bannerBackgroundColor = self.show.attributes.banner?.backgroundColor {
 			self.bannerImageView.backgroundColor = UIColor(hexString: bannerBackgroundColor)
 		}
-		self.bannerImageView.image = self.show.attributes.bannerImage
+		self.show.attributes.bannerImage(imageView: self.bannerImageView)
 
 		// Configure shadows
 		self.shadowView.applyShadow()

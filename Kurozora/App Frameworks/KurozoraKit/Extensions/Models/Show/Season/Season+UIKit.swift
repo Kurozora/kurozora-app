@@ -22,13 +22,13 @@ extension Season {
 	}
 
 	private func makeContextMenu(in viewController: UIViewController) -> UIMenu {
-		let menuElements: [UIMenuElement] = []
+		var menuElements: [UIMenuElement] = []
 
-//		// Create "share" element
-//		let shareAction = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
-//			self.openShareSheet(on: viewController)
-//		}
-//		menuElements.append(shareAction)
+		// Create "share" element
+		let shareAction = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
+			self.openShareSheet(on: viewController)
+		}
+		menuElements.append(shareAction)
 
 		// Create and return a UIMenu with the share action
 		return UIMenu(title: "", children: menuElements)
@@ -44,7 +44,7 @@ extension Season {
 		- Parameter barButtonItem: The `UIBarButtonItem` sending the request.
 	*/
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
-		let shareText = "https://kurozora.app/anime/\(self.id)\nYou should watch \"\(self.attributes.title)\" via @KurozoraApp"
+		let shareText = "https://kurozora.app/seasons/\(self.id)/episodes\nYou should watch \"\(self.attributes.title)\" season via @KurozoraApp"
 		let activityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
 
 		if let popoverController = activityViewController.popoverPresentationController {

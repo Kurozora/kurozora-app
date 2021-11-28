@@ -47,13 +47,17 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 		if let bannerBackgroundColor = self.show.attributes.banner?.backgroundColor {
 			self.bannerImageView?.backgroundColor = UIColor(hexString: bannerBackgroundColor)
 		}
-		self.bannerImageView?.image = self.show.attributes.bannerImage
+		if self.bannerImageView != nil {
+			self.show.attributes.bannerImage(imageView: self.bannerImageView!)
+		}
 
 		// Configure poster
 		if let posterBackgroundColor = self.show.attributes.poster?.backgroundColor {
 			self.posterImageView?.backgroundColor = UIColor(hexString: posterBackgroundColor)
 		}
-		self.posterImageView?.image = self.show.attributes.posterImage
+		if self.posterImageView != nil {
+			self.show.attributes.posterImage(imageView: self.posterImageView!)
+		}
 
 		// Configure library status
 		self.libraryStatus = self.show.attributes.libraryStatus ?? .none

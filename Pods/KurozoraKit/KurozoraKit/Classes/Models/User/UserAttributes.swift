@@ -14,6 +14,9 @@ extension User {
 //		/// The role of the user.
 //		public let role: Int?
 
+		/// The slug of the user.
+		public let slug: String
+
 		/// The username of the user.
 		public let username: String
 

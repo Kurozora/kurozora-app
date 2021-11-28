@@ -11,6 +11,9 @@ extension Character {
 	*/
 	public struct Attributes: Codable {
 		// MARK: - Properties
+		/// The slug of the character.
+		public let slug: String
+
 		/// The link to a profile image of the chracter.
 		public let profile: Media?
 

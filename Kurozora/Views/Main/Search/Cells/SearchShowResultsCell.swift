@@ -42,7 +42,7 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 		} else {
 			self.searchImageView.backgroundColor = .clear
 		}
-		self.searchImageView.image = self.show.attributes.posterImage
+		self.show.attributes.posterImage(imageView: self.searchImageView)
 
 		// Configure library status
 		self.libraryStatus = self.show.attributes.libraryStatus ?? .none

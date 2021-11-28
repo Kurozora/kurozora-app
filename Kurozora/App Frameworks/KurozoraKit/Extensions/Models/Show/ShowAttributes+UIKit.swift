@@ -9,30 +9,7 @@
 import KurozoraKit
 
 extension Show.Attributes {
-	/**
-		Returns a `UIImage` with the poster.
-
-		If the show has no poster image, then a placeholder show poster image is returned.
-	*/
-	var posterImage: UIImage? {
-		let posterImageView = UIImageView()
-		let placeholderImage = R.image.placeholders.showPoster()!
-		posterImageView.setImage(with: self.poster?.url ?? "", placeholder: placeholderImage)
-		return posterImageView.image?.withRenderingMode(.alwaysOriginal)
-	}
-
-	/**
-		Returns a `UIImage` with the banner.
-
-		If the show has no banner image, then a placeholder show banner image is returned.
-	*/
-	var bannerImage: UIImage? {
-		let bannerImageView = UIImageView()
-		let placeholderImage = R.image.placeholders.showBanner()!
-		bannerImageView.setImage(with: self.banner?.url ?? self.poster?.url ?? "", placeholder: placeholderImage)
-		return bannerImageView.image?.withRenderingMode(.alwaysOriginal)
-	}
-
+	// MARK: - Properties
 	/**
 		Returns a string containing all the necessary information of a show. If one of the informations is missing then that particular part is ommitted.
 
@@ -89,5 +66,30 @@ extension Show.Attributes {
 	var broadcastDate: Date? {
 		guard let airDay = self.airDay, let airTime = airTime else { return nil }
 		return Date(from: "\(airDay) at \(airTime)")
+	}
+
+	// MARK: - Functions
+	/**
+		Set the poster.
+
+		If the show has no poster image, then a placeholder show poster image is returned.
+
+		- Parameter imageView: The image view on which to set the poster image.
+	*/
+	func posterImage(imageView: UIImageView) {
+		let placeholderImage = R.image.placeholders.showPoster()!
+		imageView.setImage(with: self.poster?.url ?? "", placeholder: placeholderImage)
+	}
+
+	/**
+		Set the banner.
+
+		If the show has no banner image, then a placeholder show banner image is returned.
+
+		- Parameter imageView: The image view on which to set the banner image.
+	*/
+	func bannerImage(imageView: UIImageView) {
+		let placeholderImage = R.image.placeholders.showBanner()!
+		imageView.setImage(with: self.banner?.url ?? self.poster?.url ?? "", placeholder: placeholderImage)
 	}
 }

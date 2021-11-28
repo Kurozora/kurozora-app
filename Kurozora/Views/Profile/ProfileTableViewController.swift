@@ -339,10 +339,10 @@ class ProfileTableViewController: KTableViewController {
 		self.onlineIndicatorLabel.isHidden = false
 
 		// Configure profile image
-		self.profileImageView.image = user.attributes.profileImage
+		user.attributes.profileImage(imageView: self.profileImageView)
 
 		// Configure banner image
-		self.bannerImageView.image = user.attributes.bannerImage
+		user.attributes.bannerImage(imageView: self.bannerImageView)
 
 		// Configure user bio
 		self.bioTextView.text = user.attributes.biography

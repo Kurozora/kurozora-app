@@ -61,7 +61,7 @@ extension Show {
 		- Parameter barButtonItem: The `UIBarButtonItem` sending the request.
 	*/
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
-		let shareText = "https://kurozora.app/anime/\(self.id)\nYou should watch \"\(self.attributes.title)\" via @KurozoraApp"
+		let shareText = "https://kurozora.app/anime/\(self.attributes.slug)\nYou should watch \"\(self.attributes.title)\" via @KurozoraApp"
 		let activityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
 
 		if let popoverController = activityViewController.popoverPresentationController {

@@ -45,10 +45,10 @@ extension Person {
 	*/
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
 		var activityItems: [Any] = []
-		let shareText = self.attributes.fullName
+		let shareText = "https://kurozora.app/people/\(self.attributes.slug)\nYou should check out \"\(self.attributes.fullName)\" via @KurozoraApp"
 		activityItems.append(shareText)
 
-		if let personalImage = self.attributes.personalImage {
+		if let personalImage = self.attributes.personalImage.image {
 			activityItems.append(personalImage)
 		}
 

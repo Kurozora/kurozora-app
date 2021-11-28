@@ -44,10 +44,10 @@ extension User {
 		- Parameter barButtonItem: The `UIBarButtonItem` sending the request.
 	*/
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
-		let shareText = "https://kurozora.app/user/\(self.id)\nFollow \(self.attributes.username) via @KurozoraApp"
+		let shareText = "https://kurozora.app/profile/\(self.attributes.slug)\nFollow \(self.attributes.username) via @KurozoraApp"
 		var activityItems: [Any] = [shareText]
 
-		if let personalImage = self.attributes.profileImage {
+		if let personalImage = self.attributes.profileImageView.image {
 			activityItems.append(personalImage)
 		}
 

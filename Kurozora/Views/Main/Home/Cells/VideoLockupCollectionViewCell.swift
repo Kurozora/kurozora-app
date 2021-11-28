@@ -69,7 +69,7 @@ class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		if let bannerBackgroundColor = self.show.attributes.banner?.backgroundColor {
 			self.thumbnailPlaceholder.backgroundColor = UIColor(hexString: bannerBackgroundColor)
 		}
-		self.thumbnailPlaceholder.image = self.show.attributes.bannerImage
+		self.show.attributes.bannerImage(imageView: self.thumbnailPlaceholder)
 
 		// Configure video player
 		configureVideoPlayer()

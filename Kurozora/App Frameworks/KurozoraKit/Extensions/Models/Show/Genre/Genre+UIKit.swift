@@ -45,7 +45,7 @@ extension Genre {
 	*/
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
 		var activityItems: [Any] = []
-		let shareText = "Discover \(self.attributes.name) shows on Kurozora."
+		let shareText = "https://kurozora.app/genres/\(self.attributes.slug)\nDiscover \(self.attributes.name) shows on Kurozora."
 		activityItems.append(shareText)
 
 		if let appStoreURL = URL.appStoreURL {

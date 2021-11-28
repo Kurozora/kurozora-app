@@ -9,6 +9,7 @@
 import KurozoraKit
 
 extension Character.Attributes {
+	// MARK: - Properties
 	/**
 		Returns a `UIImage` with the image url of the character.
 
@@ -17,10 +18,10 @@ extension Character.Attributes {
 
 		- Returns: a `UIImage` with the image url of the character.
 	*/
-	var personalImage: UIImage? {
+	var personalImage: UIImageView {
 		let imageView = UIImageView()
 		imageView.setImage(with: self.profile?.url ?? "", placeholder: self.placeholderImage)
-		return imageView.image?.withRenderingMode(.alwaysOriginal)
+		return imageView
 	}
 
 	/**
@@ -31,5 +32,18 @@ extension Character.Attributes {
 	var placeholderImage: UIImage {
 		let fullNameInitials = self.name.initials
 		return fullNameInitials.toImage(withFrameSize: CGRect(x: 0, y: 0, width: 300, height: 300), placeholder: R.image.placeholders.userProfile()!)
+	}
+
+	// MARK: - Functions
+	/**
+		Set the image of the character.
+
+		If the character has no image set, then an image with the initials of the character's name is returned.
+		If no name is available then a placeholder character image is returned.
+
+		- Parameter imageView: The image view on which to set the personal image.
+	*/
+	func personalImage(imageView: UIImageView) {
+		imageView.setImage(with: self.profile?.url ?? "", placeholder: self.placeholderImage)
 	}
 }

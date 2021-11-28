@@ -103,7 +103,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 
 		if let user = User.current {
 			self.currentUsernameLabel.text = user.attributes.username
-			self.profileImageView.image = user.attributes.profileImage
+			user.attributes.profileImage(imageView: self.profileImageView)
 		}
 
 		self.characterCountLabel.text = "\(self.characterLimit)"

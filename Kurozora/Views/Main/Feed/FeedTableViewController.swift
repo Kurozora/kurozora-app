@@ -141,7 +141,7 @@ class FeedTableViewController: KTableViewController {
 
 	/// Configures the view with the user's details.
 	func configureUserDetails() {
-		profileImageButton.setImage(User.current?.attributes.profileImage ?? R.image.placeholders.userProfile(), for: .normal)
+		profileImageButton.setImage(User.current?.attributes.profileImageView.image ?? R.image.placeholders.userProfile(), for: .normal)
 	}
 
 	/// Fetch feed posts for the current section.

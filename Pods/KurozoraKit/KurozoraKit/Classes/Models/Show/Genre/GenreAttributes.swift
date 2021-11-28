@@ -11,6 +11,9 @@ extension Genre {
 	*/
 	public struct Attributes: Codable {
 		// MARK: - Properties
+		/// The slug of the resource.
+		public let slug: String
+
 		/// The name of the genre.
 		public let name: String
 

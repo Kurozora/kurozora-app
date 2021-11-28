@@ -73,8 +73,8 @@ extension Cast {
 		- Returns: a combined image of the cast.
 	*/
 	private func castImage() -> UIImage? {
-		guard let personImage = self.relationships.people.data.first?.attributes.personalImage else { return nil}
-		guard let characterImage = self.relationships.characters.data.first?.attributes.personalImage else {return nil }
+		guard let personImage = self.relationships.people.data.first?.attributes.personalImage.image else { return nil}
+		guard let characterImage = self.relationships.characters.data.first?.attributes.personalImage.image else {return nil }
 		let leftImage = personImage
 		let rightImage = characterImage
 

@@ -11,6 +11,9 @@ extension Person {
 	*/
 	public struct Attributes: Codable {
 		// MARK: - Properties
+		/// The slug of the person.
+		public let slug: String
+
 		/// The link to a profile image of the person.
 		public let profile: Media?
 

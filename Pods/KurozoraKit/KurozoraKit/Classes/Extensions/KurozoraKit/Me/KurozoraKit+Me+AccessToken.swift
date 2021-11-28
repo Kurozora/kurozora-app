@@ -46,8 +46,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getDetails(foraccessToken accessToken: String, completion completionHandler: @escaping (_ result: Result<[AccessToken], KKAPIError>) -> Void) {
-		let meAccessTokensDetail = KKEndpoint.Me.AccessTokens.details(accessToken).endpointValue
+	public func getDetails(forAccessToken accessToken: String, completion completionHandler: @escaping (_ result: Result<[AccessToken], KKAPIError>) -> Void) {
+		let tokenID = accessToken.components(separatedBy: "|")[0]
+		let meAccessTokensDetail = KKEndpoint.Me.AccessTokens.details(tokenID).endpointValue
 		let request: APIRequest<AccessTokenResponse, KKAPIError> = tron.codable.request(meAccessTokensDetail)
 		request.headers = headers
 		request.method = .get
@@ -74,7 +75,8 @@ extension KurozoraKit {
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
 	public func updateAccessToken(withAPNToken apnDeviceToken: String, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) {
-		let meAccessTokensUpdate = KKEndpoint.Me.AccessTokens.update(self.authenticationKey).endpointValue
+		let tokenID = self.authenticationKey.components(separatedBy: "|")[0]
+		let meAccessTokensUpdate = KKEndpoint.Me.AccessTokens.update(tokenID).endpointValue
 		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(meAccessTokensUpdate)
 
 		request.headers = headers
@@ -103,7 +105,8 @@ extension KurozoraKit {
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
 	public func deleteAccessToken(_ accessToken: String, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) {
-		let meAccessTokensDelete = KKEndpoint.Me.AccessTokens.delete(accessToken).endpointValue
+		let tokenID = accessToken.components(separatedBy: "|")[0]
+		let meAccessTokensDelete = KKEndpoint.Me.AccessTokens.delete(tokenID).endpointValue
 		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(meAccessTokensDelete)
 
 		request.headers = headers

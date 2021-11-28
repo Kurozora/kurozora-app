@@ -45,10 +45,10 @@ extension Character {
 	*/
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
 		var activityItems: [Any] = []
-		let shareText = self.attributes.name
+		let shareText = "https://kurozora.app/characters/\(self.attributes.slug)\nYou should check out \"\(self.attributes.name)\" via @KurozoraApp"
 		activityItems.append(shareText)
 
-		if let personalImage = self.attributes.personalImage {
+		if let personalImage = self.attributes.personalImage.image {
 			activityItems.append(personalImage)
 		}
 

@@ -29,7 +29,7 @@ class KFMReShareTextEditorViewController: KFeedMessageTextEditorViewController {
 
 		if let opUser = self.opFeedMessage.relationships.users.data.first {
 			self.opUsernameLabel.text = opUser.attributes.username
-			self.opProfileImageView.image = opUser.attributes.profileImage
+			opUser.attributes.profileImage(imageView: self.opProfileImageView)
 		}
 		self.opMessageTextView.text = self.opFeedMessage.attributes.body
 		self.dateLabel.text = self.opFeedMessage.attributes.createdAt.relativeToNow

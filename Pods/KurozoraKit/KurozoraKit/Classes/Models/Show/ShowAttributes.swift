@@ -39,6 +39,9 @@ extension Show {
 		/// The TVDB id of the show.
 		public let tvdbID: Int?
 
+		/// The slug of the show.
+		public let slug: String
+
 		/// The video url of the show.
 		public let videoUrl: String?
 
