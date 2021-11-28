@@ -463,7 +463,7 @@ extension KThemeStyle {
 
 	/// Wheather it's currently night time.
 	static var isSolarNighttime: Bool {
-		guard let currentUserSession = User.current?.relationships?.sessions?.data.first else { return false }
+		guard let currentUserSession = User.current?.relationships?.accessTokens?.data.first else { return false }
 		guard let userSessionLocation = currentUserSession.relationships.location.data.first else { return false }
 		guard let latitude = userSessionLocation.attributes.latitude else { return false }
 		guard let longitude = userSessionLocation.attributes.longitude else { return false }

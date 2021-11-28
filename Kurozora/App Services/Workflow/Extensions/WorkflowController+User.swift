@@ -80,15 +80,10 @@ extension WorkflowController {
 	func restoreCurrentUserSession() {
 		let accountKey = UserSettings.selectedAccount
 		if let authenticationKey = KurozoraDelegate.shared.keychain[accountKey] {
+			KService.authenticationKey = authenticationKey
+
 			DispatchQueue.global(qos: .background).async {
-				KService.restoreDetails(forUserWith: authenticationKey) { result in
-					switch result {
-					case .success(let newAuthenticationKey):
-						try? KurozoraDelegate.shared.keychain.set(newAuthenticationKey, key: accountKey)
-					case .failure: break
-//						try? KurozoraDelegate.shared.keychain.remove(accountKey)
-					}
-				}
+				KService.getProfileDetails { _ in }
 			}
 		}
 	}

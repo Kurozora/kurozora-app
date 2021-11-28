@@ -184,7 +184,7 @@ extension ManageActiveSessionsController {
 			guard let currentSessionCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.currentSessionCell, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.currentSessionCell.identifier)")
 			}
-			currentSessionCell.session = User.current?.relationships?.sessions?.data.first
+			currentSessionCell.accessToken = User.current?.relationships?.accessTokens?.data.first
 			return currentSessionCell
 		} else {
 			// Other sessions found

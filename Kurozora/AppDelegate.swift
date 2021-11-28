@@ -124,8 +124,7 @@ extension AppDelegate {
 		print("----- did register notification with device.", tokenParts, apnDeviceToken)
 
 		if User.isSignedIn {
-			guard let sessionID = User.current?.relationships?.sessions?.data.first?.id else { return }
-			KService.updateSession(sessionID, withToken: apnDeviceToken) { _ in }
+			KService.updateAccessToken(withAPNToken: apnDeviceToken) { _ in }
 		}
 	}
 

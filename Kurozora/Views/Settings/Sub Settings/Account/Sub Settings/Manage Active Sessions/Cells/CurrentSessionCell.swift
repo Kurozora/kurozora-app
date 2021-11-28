@@ -18,7 +18,7 @@ class CurrentSessionCell: KTableViewCell {
 	@IBOutlet weak var separatorView: SeparatorView!
 
 	// MARK: - Properties
-	var session: Session! {
+	var accessToken: AccessToken! {
 		didSet {
 			configureCell()
 		}
@@ -32,7 +32,7 @@ class CurrentSessionCell: KTableViewCell {
 
 	// MARK: - Functions
 	override func configureCell() {
-		self.ipAddressValueLabel.text = session.attributes.ipAddress
-		self.deviceValueLabel.text = session.relationships.platform.data.first?.attributes.deviceModel
+		self.ipAddressValueLabel.text = accessToken.attributes.ipAddress
+		self.deviceValueLabel.text = accessToken.relationships.platform.data.first?.attributes.deviceModel
 	}
 }
