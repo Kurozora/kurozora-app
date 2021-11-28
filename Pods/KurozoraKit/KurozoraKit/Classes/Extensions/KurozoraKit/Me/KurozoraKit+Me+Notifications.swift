@@ -20,7 +20,7 @@ extension KurozoraKit {
 		let request: APIRequest<UserNotificationResponse, KKAPIError> = tron.codable.request(meNotificationsIndex)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self.authenticationKey
+		request.headers.add(.authorization(bearerToken: self.authenticationKey))
 
 		request.method = .get
 		request.perform(withSuccess: { userNotificationResponse in
@@ -78,7 +78,7 @@ extension KurozoraKit {
 		let request: APIRequest<UserNotificationUpdateResponse, KKAPIError> = tron.codable.request(neNotificationsUpdate)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self.authenticationKey
+		request.headers.add(.authorization(bearerToken: self.authenticationKey))
 
 		request.method = .post
 		request.parameters = [
@@ -111,7 +111,7 @@ extension KurozoraKit {
 		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(meNotificationsDelete)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self.authenticationKey
+		request.headers.add(.authorization(bearerToken: self.authenticationKey))
 
 		request.method = .post
 		request.perform(withSuccess: { success in

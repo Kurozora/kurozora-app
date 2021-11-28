@@ -21,7 +21,7 @@ extension KurozoraKit {
 		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(meReminderShowIndex).buildURL(.relativeToBaseURL)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self.authenticationKey
+		request.headers.add(.authorization(bearerToken: self.authenticationKey))
 
 		request.parameters["limit"] = limit
 
@@ -53,7 +53,7 @@ extension KurozoraKit {
 		let request: APIRequest<ReminderShowResponse, KKAPIError> = tron.codable.request(meReminderShowUpdate)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self.authenticationKey
+		request.headers.add(.authorization(bearerToken: self.authenticationKey))
 
 		request.method = .post
 		request.parameters = [

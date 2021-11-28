@@ -20,8 +20,8 @@ extension KurozoraKit {
 		let request: APIRequest<GenreResponse, KKAPIError> = tron.codable.request(genresIndex)
 
 		request.headers = headers
-		if User.isSignedIn {
-			request.headers["kuro-auth"] = self.authenticationKey
+		if !self.authenticationKey.isEmpty {
+			request.headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
 		request.method = .get
@@ -52,8 +52,8 @@ extension KurozoraKit {
 		let request: APIRequest<GenreResponse, KKAPIError> = tron.codable.request(genresDetails)
 
 		request.headers = headers
-		if User.isSignedIn {
-			request.headers["kuro-auth"] = self.authenticationKey
+		if !self.authenticationKey.isEmpty {
+			request.headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
 		request.method = .get

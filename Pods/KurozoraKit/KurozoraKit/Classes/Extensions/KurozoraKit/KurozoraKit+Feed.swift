@@ -23,8 +23,8 @@ extension KurozoraKit {
 		let request: APIRequest<FeedMessageResponse, KKAPIError> = tron.codable.request(usersFeedMessages).buildURL(.relativeToBaseURL)
 
 		request.headers = headers
-		if User.isSignedIn {
-			request.headers["kuro-auth"] = self.authenticationKey
+		if !self.authenticationKey.isEmpty {
+			request.headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
 		request.parameters["limit"] = limit
@@ -58,8 +58,8 @@ extension KurozoraKit {
 		let request: APIRequest<FeedMessageResponse, KKAPIError> = tron.codable.request(feedHome).buildURL(.relativeToBaseURL)
 
 		request.headers = headers
-		if User.isSignedIn {
-			request.headers["kuro-auth"] = self.authenticationKey
+		if !self.authenticationKey.isEmpty {
+			request.headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
 		request.parameters["limit"] = limit
@@ -93,8 +93,8 @@ extension KurozoraKit {
 		let request: APIRequest<FeedMessageResponse, KKAPIError> = tron.codable.request(feedExplore).buildURL(.relativeToBaseURL)
 
 		request.headers = headers
-		if User.isSignedIn {
-			request.headers["kuro-auth"] = self.authenticationKey
+		if !self.authenticationKey.isEmpty {
+			request.headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
 		request.parameters["limit"] = limit
@@ -130,12 +130,11 @@ extension KurozoraKit {
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
 	public func postFeedMessage(withBody body: String, relatedToParent messageID: Int?, isReply: Bool?, isReShare: Bool?, isNSFW: Bool, isSpoiler: Bool, completion completionHandler: @escaping (_ result: Result<[FeedMessage], KKAPIError>) -> Void) {
-		guard User.current != nil else { fatalError("User must be signed in and have a session attached to call the postFeedMessage(withBody:relatedToParent:isReply:isReShare:isNSFW:isSpoiler:completion:) method.") }
 		let feedPost = KKEndpoint.Feed.post.endpointValue
 		let request: APIRequest<FeedMessageResponse, KKAPIError> = tron.codable.request(feedPost)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self.authenticationKey
+		request.headers.add(.authorization(bearerToken: self.authenticationKey))
 
 		request.parameters = [
 			"body": body,
@@ -176,8 +175,8 @@ extension KurozoraKit {
 		let request: APIRequest<FeedMessageResponse, KKAPIError> = tron.codable.request(feedMessagesDetails)
 
 		request.headers = headers
-		if User.isSignedIn {
-			request.headers["kuro-auth"] = self.authenticationKey
+		if !self.authenticationKey.isEmpty {
+			request.headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
 		request.method = .get
@@ -210,8 +209,8 @@ extension KurozoraKit {
 		let request: APIRequest<FeedMessageResponse, KKAPIError> = tron.codable.request(feedMessagesResplies).buildURL(.relativeToBaseURL)
 
 		request.headers = headers
-		if User.isSignedIn {
-			request.headers["kuro-auth"] = self.authenticationKey
+		if !self.authenticationKey.isEmpty {
+			request.headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
 		request.method = .get
@@ -244,12 +243,11 @@ extension KurozoraKit {
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
 	public func updateMessage(_ messageID: Int, withBody body: String, isNSFW: Bool, isSpoiler: Bool, completion completionHandler: @escaping (_ result: Result<FeedMessageUpdate, KKAPIError>) -> Void) {
-		guard User.current != nil else { fatalError("User must be signed in and have a session attached to call the updateMessage(messageID:withBody:isNSFW:isSpoiler:completion:) method.") }
 		let feedMessageUpdate = KKEndpoint.Feed.Messages.update(messageID).endpointValue
 		let request: APIRequest<FeedMessageUpdateResponse, KKAPIError> = tron.codable.request(feedMessageUpdate)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self.authenticationKey
+		request.headers.add(.authorization(bearerToken: self.authenticationKey))
 
 		request.method = .post
 		request.parameters = [
@@ -279,12 +277,11 @@ extension KurozoraKit {
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
 	public func heartMessage(_ messageID: Int, completion completionHandler: @escaping (_ result: Result<FeedMessageUpdate, KKAPIError>) -> Void) {
-		guard User.current != nil else { fatalError("User must be signed in and have a session attached to call the heartMessage(messageID:completion:) method.") }
 		let feedPost = KKEndpoint.Feed.Messages.heart(messageID).endpointValue
 		let request: APIRequest<FeedMessageUpdateResponse, KKAPIError> = tron.codable.request(feedPost)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self.authenticationKey
+		request.headers.add(.authorization(bearerToken: self.authenticationKey))
 
 		request.method = .post
 		request.perform(withSuccess: { feedMessageupdateResponse in
@@ -310,12 +307,11 @@ extension KurozoraKit {
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
 	public func deleteMessage(_ messageID: Int, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) {
-		guard User.current != nil else { fatalError("User must be signed in and have a session attached to call the deleteMessage(messageID:completion:) method.") }
 		let feedMessagesDelete = KKEndpoint.Feed.Messages.delete(messageID).endpointValue
 		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(feedMessagesDelete)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self.authenticationKey
+		request.headers.add(.authorization(bearerToken: self.authenticationKey))
 
 		request.method = .post
 		request.perform(withSuccess: { success in

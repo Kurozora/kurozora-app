@@ -27,7 +27,7 @@ extension KurozoraKit {
 			}
 		}
 		request.headers = [
-			"Content-Type": "multipart/form-data"
+			.contentType("multipart/form-data")
 		]
 		request.method = .post
 		request.parameters = [
@@ -187,8 +187,8 @@ extension KurozoraKit {
 		let request: APIRequest<UserFollow, KKAPIError> = tron.codable.request(usersFollowerOrFollowing).buildURL(.relativeToBaseURL)
 
 		request.headers = headers
-		if User.isSignedIn {
-			request.headers["kuro-auth"] = self.authenticationKey
+		if !self.authenticationKey.isEmpty {
+			request.headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
 		request.parameters["limit"] = limit
@@ -221,8 +221,8 @@ extension KurozoraKit {
 		let request: APIRequest<FollowUpdateResponse, KKAPIError> = tron.codable.request(usersFollow)
 
 		request.headers = headers
-		if User.isSignedIn {
-			request.headers["kuro-auth"] = self.authenticationKey
+		if !self.authenticationKey.isEmpty {
+			request.headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
 		request.method = .post
@@ -255,8 +255,8 @@ extension KurozoraKit {
 		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(usersFavoriteShow).buildURL(.relativeToBaseURL)
 
 		request.headers = headers
-		if User.isSignedIn {
-			request.headers["kuro-auth"] = self.authenticationKey
+		if !self.authenticationKey.isEmpty {
+			request.headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
 		request.parameters["limit"] = limit
@@ -289,8 +289,8 @@ extension KurozoraKit {
 		let request: APIRequest<UserResponse, KKAPIError> = tron.codable.request(usersProfile)
 
 		request.headers = headers
-		if User.isSignedIn {
-			request.headers["kuro-auth"] = self.authenticationKey
+		if !self.authenticationKey.isEmpty {
+			request.headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
 		request.method = .get
@@ -322,8 +322,8 @@ extension KurozoraKit {
 		let request: APIRequest<UserResponse, KKAPIError> = tron.codable.request(usersSearch).buildURL(.relativeToBaseURL)
 
 		request.headers = headers
-		if User.isSignedIn {
-			request.headers["kuro-auth"] = self.authenticationKey
+		if !self.authenticationKey.isEmpty {
+			request.headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
 		request.method = .get

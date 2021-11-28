@@ -22,8 +22,8 @@ extension KurozoraKit {
 		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(showsDetails)
 
 		request.headers = headers
-		if User.isSignedIn {
-			request.headers["kuro-auth"] = self.authenticationKey
+		if !self.authenticationKey.isEmpty {
+			request.headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
 		if !relationships.isEmpty {
@@ -156,8 +156,8 @@ extension KurozoraKit {
 		let request: APIRequest<RelatedShowResponse, KKAPIError> = tron.codable.request(showsRelatedShows).buildURL(.relativeToBaseURL)
 
 		request.headers = headers
-		if User.isSignedIn {
-			request.headers["kuro-auth"] = self.authenticationKey
+		if !self.authenticationKey.isEmpty {
+			request.headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
 		request.parameters["limit"] = limit
@@ -223,8 +223,8 @@ extension KurozoraKit {
 		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(showsRate)
 
 		request.headers = headers
-		if User.isSignedIn {
-			request.headers["kuro-auth"] = self.authenticationKey
+		if !self.authenticationKey.isEmpty {
+			request.headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
 		request.method = .post
@@ -259,8 +259,8 @@ extension KurozoraKit {
 		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(showsSearch).buildURL(.relativeToBaseURL)
 
 		request.headers = headers
-		if User.isSignedIn {
-			request.headers["kuro-auth"] = self.authenticationKey
+		if !self.authenticationKey.isEmpty {
+			request.headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
 		request.method = .get

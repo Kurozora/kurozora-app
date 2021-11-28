@@ -21,8 +21,8 @@ extension KurozoraKit {
 		let request: APIRequest<PersonResponse, KKAPIError> = tron.codable.request(peopleDetails)
 
 		request.headers = headers
-		if User.isSignedIn {
-			request.headers["kuro-auth"] = self.authenticationKey
+		if !self.authenticationKey.isEmpty {
+			request.headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
 		if !relationships.isEmpty {

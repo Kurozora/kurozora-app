@@ -24,7 +24,7 @@ extension KurozoraKit {
 		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(meLibraryIndex).buildURL(.relativeToBaseURL)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self.authenticationKey
+		request.headers.add(.authorization(bearerToken: self.authenticationKey))
 
 		request.method = .get
 		request.parameters = [
@@ -62,7 +62,7 @@ extension KurozoraKit {
 		let request: APIRequest<LibraryUpdateResponse, KKAPIError> = tron.codable.request(meLibraryIndex)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self.authenticationKey
+		request.headers.add(.authorization(bearerToken: self.authenticationKey))
 
 		request.method = .post
 		request.parameters = [
@@ -96,7 +96,7 @@ extension KurozoraKit {
 		let request: APIRequest<LibraryUpdateResponse, KKAPIError> = tron.codable.request(meLibraryDelete)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self.authenticationKey
+		request.headers.add(.authorization(bearerToken: self.authenticationKey))
 
 		request.method = .post
 		request.parameters = [
@@ -132,10 +132,10 @@ extension KurozoraKit {
 		}
 
 		request.headers = [
-			"accept": "application/json",
-			"Content-Type": "multipart/form-data"
+			.contentType("multipart/form-data"),
+			.accept("application/json")
 		]
-		request.headers["kuro-auth"] = self.authenticationKey
+		request.headers.add(.authorization(bearerToken: self.authenticationKey))
 
 		request.method = .post
 		request.parameters = [
@@ -173,7 +173,7 @@ extension KurozoraKit {
 		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(meLibrarySearch).buildURL(.relativeToBaseURL)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self.authenticationKey
+		request.headers.add(.authorization(bearerToken: self.authenticationKey))
 
 		request.method = .get
 		if next == nil {

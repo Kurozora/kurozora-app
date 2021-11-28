@@ -16,12 +16,11 @@ extension KurozoraKit {
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
 	public func verifyReceipt(_ receipt: String, completion completionHandler: @escaping (_ result: Result<[Receipt], KKAPIError>) -> Void) {
-		guard User.current != nil else { fatalError("User must be signed in and have a session attached to call the verifyReceipt(_:completion:) method.") }
 		let storeVerify = KKEndpoint.Store.verify.endpointValue
 		let request: APIRequest<ReceiptResponse, KKAPIError> = tron.codable.request(storeVerify)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self.authenticationKey
+		request.headers.add(.authorization(bearerToken: self.authenticationKey))
 
 		request.parameters = [
 			"receipt": receipt

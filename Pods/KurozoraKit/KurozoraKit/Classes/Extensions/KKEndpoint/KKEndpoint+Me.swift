@@ -7,6 +7,40 @@
 
 import Foundation
 
+// MARK: - Access Tokens
+extension KKEndpoint.Me {
+	/// The set of available Access Token API endpoint types.
+	internal enum AccessTokens {
+		// MARK: - Cases
+		/// The endpoint to the authenticated user's access tokens.
+		case index
+
+		/// The endpoint to the details of an access token.
+		case details(_ accessToken: String)
+
+		/// The endpoint to update an access token.
+		case update(_ accessToken: String)
+
+		/// The endpoint to delete an access token.
+		case delete(_ accessToken: String)
+
+		// MARK: - Properties
+		/// The endpoint value of the Access Tokens API type.
+		var endpointValue: String {
+			switch self {
+			case .index:
+				return "me/access-tokens"
+			case .details(let sessionID):
+				return "me/access-tokens/\(sessionID)"
+			case .update(let sessionID):
+				return "me/access-tokens/\(sessionID)/update"
+			case .delete(let sessionID):
+				return "me/access-tokens/\(sessionID)/delete"
+			}
+		}
+	}
+}
+
 // MARK: - Favorite Show
 extension KKEndpoint.Me {
 	/// The set of available Favorite Show API endpoint types.
@@ -156,13 +190,10 @@ extension KKEndpoint.Me {
 		case index
 
 		/// The endpoint to the details of a session.
-		case details(_ sessionID: Int)
+		case details(_ sessionID: String)
 
 		/// The endpoint to delete a session.
-		case delete(_ sessionID: Int)
-
-		/// The endpoint to update a session.
-		case update(_ sessionID: Int)
+		case delete(_ sessionID: String)
 
 		// MARK: - Properties
 		/// The endpoint value of the Sessions API type.
@@ -174,8 +205,6 @@ extension KKEndpoint.Me {
 				return "me/sessions/\(sessionID)"
 			case .delete(let sessionID):
 				return "me/sessions/\(sessionID)/delete"
-			case .update(let sessionID):
-				return "me/sessions/\(sessionID)/update"
 			}
 		}
 	}

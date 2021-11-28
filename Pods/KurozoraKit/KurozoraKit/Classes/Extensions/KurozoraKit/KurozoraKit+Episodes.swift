@@ -22,8 +22,8 @@ extension KurozoraKit {
 		let request: APIRequest<EpisodeResponse, KKAPIError> = tron.codable.request(episodesDetails)
 
 		request.headers = headers
-		if User.isSignedIn {
-			request.headers["kuro-auth"] = self.authenticationKey
+		if !self.authenticationKey.isEmpty {
+			request.headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
 		if !relationships.isEmpty {
@@ -58,8 +58,8 @@ extension KurozoraKit {
 		let request: APIRequest<EpisodeUpdateResponse, KKAPIError> = tron.codable.request(episodesWatched)
 
 		request.headers = headers
-		if User.isSignedIn {
-			request.headers["kuro-auth"] = self.authenticationKey
+		if !self.authenticationKey.isEmpty {
+			request.headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
 		request.method = .post

@@ -40,8 +40,8 @@ public class KurozoraKit {
 		```
 	*/
 	internal let headers: HTTPHeaders = [
-		"Content-Type": "application/x-www-form-urlencoded",
-		"Accept": "application/json"
+		.contentType("application/x-www-form-urlencoded"),
+		.accept("application/json")
 	]
 
 	/// The TRON singleton used to perform API requests.

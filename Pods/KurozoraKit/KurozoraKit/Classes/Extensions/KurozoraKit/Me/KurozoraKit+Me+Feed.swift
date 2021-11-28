@@ -21,8 +21,8 @@ extension KurozoraKit {
 		let request: APIRequest<FeedMessageResponse, KKAPIError> = tron.codable.request(meFeedMessages).buildURL(.relativeToBaseURL)
 
 		request.headers = headers
-		if User.isSignedIn {
-			request.headers["kuro-auth"] = self.authenticationKey
+		if !self.authenticationKey.isEmpty {
+			request.headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
 		request.parameters["limit"] = limit

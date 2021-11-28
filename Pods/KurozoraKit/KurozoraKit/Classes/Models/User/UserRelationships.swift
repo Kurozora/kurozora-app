@@ -11,8 +11,8 @@ extension User {
 	*/
 	public struct Relationships: Codable {
 		// MARK: - Properties
-		/// The sessions belonging to the user.
-		public let sessions: SessionResponse?
+		/// The access tokens belonging to the user.
+		public let accessTokens: AccessTokenResponse?
 
 		/// The badges belonging to the user.
 		public let badges: BadgeResponse?

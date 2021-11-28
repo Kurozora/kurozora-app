@@ -15,56 +15,23 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getProfileDetails(completion completionHandler: @escaping (_ result: Result<String, KKAPIError>) -> Void) {
+	public func getProfileDetails(completion completionHandler: @escaping (_ result: Result<[User], KKAPIError>) -> Void) {
 		let meProfile = KKEndpoint.Me.profile.endpointValue
-		let request: APIRequest<SignInResponse, KKAPIError> = tron.codable.request(meProfile)
+		let request: APIRequest<UserResponse, KKAPIError> = tron.codable.request(meProfile)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self.authenticationKey
+		request.headers.add(.authorization(bearerToken: self.authenticationKey))
 
 		request.method = .get
-		request.perform(withSuccess: { [weak self] signInResponse in
-			guard let self = self else { return }
-			self.authenticationKey = signInResponse.authenticationToken
-			User.current = signInResponse.data.first
-			completionHandler(.success(self.authenticationKey))
-			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
+		request.perform(withSuccess: { userResponse in
+			User.current = userResponse.data.first
+			completionHandler(.success(userResponse.data))
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
 				UIApplication.topViewController?.presentAlertController(title: "Can't Get Profile Details 😔", message: error.message)
 			}
 			print("❌ Received get profile details error", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message ?? "No message")
-			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
-			print("└ Failure reason:", error.failureReason ?? "No reason available")
-			completionHandler(.failure(error))
-		})
-	}
-
-	/**
-		Fetches and restores the details for the authenticated user.
-
-		- Parameter authenticationKey: The authentication key of the user whose details should be fetched.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
-	public func restoreDetails(forUserWith authenticationKey: String, completion completionHandler: @escaping (_ result: Result<String, KKAPIError>) -> Void) {
-		let meProfile = KKEndpoint.Me.profile.endpointValue
-		let request: APIRequest<SignInResponse, KKAPIError> = tron.codable.request(meProfile)
-
-		request.headers = headers
-		request.headers["kuro-auth"] = authenticationKey
-
-		request.method = .get
-		request.perform(withSuccess: { [weak self] signInResponse in
-			guard let self = self else { return }
-			self.authenticationKey = signInResponse.authenticationToken
-			User.current = signInResponse.data.first
-			completionHandler(.success(self.authenticationKey))
-			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
-		}, failure: { error in
-			print("❌ Received restore details error", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
 			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
 			print("└ Failure reason:", error.failureReason ?? "No reason available")
@@ -104,10 +71,10 @@ extension KurozoraKit {
 		}
 
 		request.headers = [
-			"Content-Type": "multipart/form-data",
-			"Accept": "application/json"
+			.contentType("multipart/form-data"),
+			.accept("application/json")
 		]
-		request.headers["kuro-auth"] = self.authenticationKey
+		request.headers.add(.authorization(bearerToken: self.authenticationKey))
 
 		request.method = .post
 		if let biography = biography {
@@ -154,7 +121,7 @@ extension KurozoraKit {
 		let request: APIRequest<UserFollow, KKAPIError> = tron.codable.request(meFollowersOrFollowing).buildURL(.relativeToBaseURL)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self.authenticationKey
+		request.headers.add(.authorization(bearerToken: self.authenticationKey))
 
 		request.parameters["limit"] = limit
 

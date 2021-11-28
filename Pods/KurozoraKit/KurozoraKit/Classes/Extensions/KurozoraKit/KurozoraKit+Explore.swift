@@ -22,8 +22,8 @@ extension KurozoraKit {
 		let request: APIRequest<ExploreCategoryResponse, KKAPIError> = tron.codable.request(exploreIndex)
 
 		request.headers = headers
-		if User.isSignedIn {
-			request.headers["kuro-auth"] = self.authenticationKey
+		if !self.authenticationKey.isEmpty {
+			request.headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
 		if genreID != nil || genreID != 0 {

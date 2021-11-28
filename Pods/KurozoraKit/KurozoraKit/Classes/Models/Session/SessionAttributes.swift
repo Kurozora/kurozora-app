@@ -7,7 +7,7 @@
 
 extension Session {
 	/**
-		A root object that stores information about a single session, such as the session's ip address, last validated date, and platform.
+		A root object that stores information about a single session, such as the session's ip address, and last validated date.
 	*/
 	public struct Attributes: Codable {
 		// MARK: - Properties

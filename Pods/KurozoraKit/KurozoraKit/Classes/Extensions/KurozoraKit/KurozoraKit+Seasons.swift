@@ -55,8 +55,8 @@ extension KurozoraKit {
 		let request: APIRequest<EpisodeResponse, KKAPIError> = tron.codable.request(seasonsEpisodes)
 
 		request.headers = headers
-		if User.isSignedIn {
-			request.headers["kuro-auth"] = self.authenticationKey
+		if !self.authenticationKey.isEmpty {
+			request.headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
 		request.method = .get
