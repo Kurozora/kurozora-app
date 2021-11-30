@@ -76,14 +76,24 @@ extension WorkflowController {
 		Repopulates the current user's data.
 
 		This method can be used to restore the current user's data after the app has been completely closed.
+
+		 - Parameter completionHandler: The block to execute with the results. Provide a value for this parameter if you want to be informed of the success or failure of restoring user details. This block is executed asynchronously on your app's main thread. The block has no return value and takes the following parameter:
+		 - Parameter success: A Boolean indicating whether the user's details were restored successfully.
 	*/
-	func restoreCurrentUserSession() {
+	func restoreCurrentUserSession(completionHandler completion: ((_ success: Bool) -> Void)? = nil) {
 		let accountKey = UserSettings.selectedAccount
 		if let authenticationKey = KurozoraDelegate.shared.keychain[accountKey] {
 			KService.authenticationKey = authenticationKey
 
 			DispatchQueue.global(qos: .background).async {
-				KService.getProfileDetails { _ in }
+				KService.getProfileDetails { result in
+					switch result {
+					case .success:
+						completion?(true)
+					case .failure:
+						completion?(false)
+					}
+				}
 			}
 		}
 	}

@@ -61,7 +61,7 @@ extension SwitchAccountsTableViewController {
 extension SwitchAccountsTableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let accountKey = accounts[indexPath.item]
-		// Update user settings for selected account
+		// Update user settings for selected account.
 		UserSettings.set(accountKey, forKey: .selectedAccount)
 
 		// Retrieve selected user's session.
@@ -70,7 +70,12 @@ extension SwitchAccountsTableViewController {
 			KService.authenticationKey = authenticationKey
 
 			// Restore the user's session.
-			WorkflowController.shared.restoreCurrentUserSession()
+			WorkflowController.shared.restoreCurrentUserSession { success in
+				if success {
+					// Notify views the user has changed.
+					NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
+				}
+			}
 		}
 	}
 
