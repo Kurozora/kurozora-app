@@ -177,4 +177,14 @@ extension WorkflowController {
 		let profileTableViewController = ProfileTableViewController.`init`(with: userID)
 		viewController?.show(profileTableViewController, sender: nil)
 	}
+
+	/**
+		Open the feed message details view for the given feed message ID.
+
+		- Parameter userID: The id of the feed message with which the feed message details view will be loaded.
+	*/
+	func openFeedMessage(for feedMessageID: Int, in viewController: UIViewController? = UIApplication.topViewController) {
+		let fmDetailsTableViewController = FMDetailsTableViewController.`init`(with: feedMessageID)
+		viewController?.show(fmDetailsTableViewController, sender: nil)
+	}
 }

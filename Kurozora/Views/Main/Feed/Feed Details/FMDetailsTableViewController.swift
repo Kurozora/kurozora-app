@@ -54,6 +54,39 @@ class FMDetailsTableViewController: KTableViewController {
 		return _prefersActivityIndicatorHidden
 	}
 
+	// MARK: - Initializers
+	/**
+		Initialize a new instance of FMDetailsTableViewController with the given feed message id.
+
+		- Parameter feedMessageID: The feed message id to use when initializing the view.
+
+		- Returns: an initialized instance of FMDetailsTableViewController.
+	*/
+	static func `init`(with feedMessageID: Int) -> FMDetailsTableViewController {
+		if let fmDetailsTableViewController = R.storyboard.feed.fmDetailsTableViewController() {
+			fmDetailsTableViewController.feedMessageID = feedMessageID
+			return fmDetailsTableViewController
+		}
+
+		fatalError("Failed to instantiate FMDetailsTableViewController with the given feed message id.")
+	}
+
+	/**
+		Initialize a new instance of FMDetailsTableViewController with the given feed message object.
+
+		- Parameter user: The `FeedMessage` object to use when initializing the view controller.
+
+		- Returns: an initialized instance of FMDetailsTableViewController.
+	*/
+	static func `init`(with feedMessage: FeedMessage) -> FMDetailsTableViewController {
+		if let fmDetailsTableViewController = R.storyboard.feed.fmDetailsTableViewController() {
+			fmDetailsTableViewController.feedMessage = feedMessage
+			return fmDetailsTableViewController
+		}
+
+		fatalError("Failed to instantiate FMDetailsTableViewController with the given FeedMessage object.")
+	}
+
 	// MARK: - View
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -69,7 +102,11 @@ class FMDetailsTableViewController: KTableViewController {
 		#endif
 
 		DispatchQueue.global(qos: .background).async {
-			self.fetchDetails()
+			if self.feedMessage == nil {
+				self.fetchDetails()
+			} else {
+				self.fetchFeedReplies()
+			}
 		}
 	}
 

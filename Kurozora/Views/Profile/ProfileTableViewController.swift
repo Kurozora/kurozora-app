@@ -193,7 +193,7 @@ class ProfileTableViewController: KTableViewController {
 		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh profile details!")
 		#endif
 
-		// Fetch posts
+		// Fetch user details
 		DispatchQueue.global(qos: .background).async {
 			self.fetchUserDetails()
 		}

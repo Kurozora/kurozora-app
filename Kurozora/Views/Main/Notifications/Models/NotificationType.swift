@@ -22,8 +22,11 @@ enum KNotification {
 		/// Indicates that the notification has a `follower` type and thus has the follower style.
 		case follower = "NewFollower"
 
-		/// Indicates that the notification has a `message` type and thus has the message style.
-		case message = "NewMessage"
+		/// Indicates that the notification has a `newFeedMessageReply` type and thus has the message style.
+		case newFeedMessageReply = "NewFeedMessageReply"
+
+		/// Indicates that the notification has a `newFeedMessageReShare` type and thus has the message style.
+		case newFeedMessageReShare = "NewFeedMessageReShare"
 
 		/// Indicates that the notification has a `malImport` type and thus thas the import style.
 		case malImport = "MALImportFinished"
@@ -40,7 +43,7 @@ enum KNotification {
 				return "New Session"
 			case .follower:
 				return "Follower"
-			case .message:
+			case .newFeedMessageReply, .newFeedMessageReShare:
 				return "Message"
 			case .malImport:
 				return "Library Import"
@@ -58,7 +61,7 @@ enum KNotification {
 				return R.reuseIdentifier.basicNotificationCell.identifier
 			case .follower:
 				return R.reuseIdentifier.iconNotificationCell.identifier
-			case .message:
+			case .newFeedMessageReply, .newFeedMessageReShare:
 				return R.reuseIdentifier.iconNotificationCell.identifier
 			case .malImport:
 				return R.reuseIdentifier.basicNotificationCell.identifier
@@ -76,7 +79,7 @@ enum KNotification {
 				return R.image.icons.session()
 			case .follower:
 				return R.image.icons.follower()
-			case .message:
+			case .newFeedMessageReply, .newFeedMessageReShare:
 				return R.image.icons.message()
 			case .malImport:
 				return R.image.icons.library()

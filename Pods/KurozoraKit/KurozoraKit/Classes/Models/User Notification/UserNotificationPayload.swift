@@ -27,5 +27,9 @@ extension UserNotification {
 
 		/// [Follower] The profile image of the follower.
 		public let profileImageURL: String?
+
+		// Feed Message
+		/// [FeedMessage] The id of a feed message.
+		public let feedMessageID: Int?
 	}
 }

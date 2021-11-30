@@ -22,6 +22,10 @@ extension UserNotification {
 				}
 			case .session:
 				return R.storyboard.accountSettings.manageActiveSessionsController()
+			case .newFeedMessageReply, .newFeedMessageReShare:
+				if let feedMessageID = self.attributes.payload.feedMessageID {
+					return FMDetailsTableViewController.`init`(with: feedMessageID)
+				}
 			default: break
 			}
 

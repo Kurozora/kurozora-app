@@ -17,6 +17,8 @@ enum NotificationKind: Int, CaseIterable {
 	case newSession = 0
 	case showUpdate
 	case newFollower
+	case feedMessageReply
+	case feedMessageReShare
 
 	// MARK: - Properties
 	/// The identifier value of a notification kind type.
@@ -28,6 +30,10 @@ enum NotificationKind: Int, CaseIterable {
 			return "SHOW_UPDATE"
 		case .newFollower:
 			return "NEW_FOLLOW"
+		case .feedMessageReply:
+			return "NEW_FEED_MESSAGE_REPLY"
+		case .feedMessageReShare:
+			return "NEW_FEED_MESSSAGE_RESAHRE"
 		}
 	}
 
@@ -40,6 +46,10 @@ enum NotificationKind: Int, CaseIterable {
 			return .viewShowDetails
 		case .newFollower:
 			return .viewProfileDetails
+		case .feedMessageReply:
+			return .viewFeedMessageReply
+		case .feedMessageReShare:
+			return .viewFeedMessageReShare
 		}
 	}
 }
@@ -54,6 +64,8 @@ extension NotificationKind {
 		case viewSessionDetails = 0
 		case viewShowDetails
 		case viewProfileDetails
+		case viewFeedMessageReply
+		case viewFeedMessageReShare
 
 		// MARK: - Properties
 		/// The identifier value of a notification action  type.
@@ -65,6 +77,10 @@ extension NotificationKind {
 				return "VIEW_SHOW_DETAILS"
 			case .viewProfileDetails:
 				return "VIEW_PROFILE_DETAILS"
+			case .viewFeedMessageReply:
+				return "VIEW_FEED_MESSAGE_REPLY"
+			case .viewFeedMessageReShare:
+				return "VIEW_FEED_MESSAGE_RESHARE"
 			}
 		}
 
@@ -77,6 +93,10 @@ extension NotificationKind {
 				return "View Show Details"
 			case .viewProfileDetails:
 				return "View Profile"
+			case .viewFeedMessageReply:
+				return "View Message Reply"
+			case .viewFeedMessageReShare:
+				return "View Message Re-Share"
 			}
 		}
 
@@ -92,6 +112,12 @@ extension NotificationKind {
 			case .viewProfileDetails:
 				let newUserFollowAction = UNNotificationAction(identifier: self.identifierValue, title: self.titleValue, options: .foreground)
 				return [newUserFollowAction]
+			case .viewFeedMessageReply:
+				let newFeedMessageReplyAction = UNNotificationAction(identifier: self.identifierValue, title: self.titleValue, options: .foreground)
+				return [newFeedMessageReplyAction]
+			case .viewFeedMessageReShare:
+				let newFeedMessageReShareAction = UNNotificationAction(identifier: self.identifierValue, title: self.titleValue, options: .foreground)
+				return [newFeedMessageReShareAction]
 			}
 		}
 	}

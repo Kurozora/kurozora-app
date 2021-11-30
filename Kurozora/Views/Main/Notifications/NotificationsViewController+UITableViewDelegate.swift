@@ -20,13 +20,18 @@ extension NotificationsViewController {
 			self.userNotifications[indexPath.row].update(at: indexPath, withReadStatus: .read)
 		}
 
-		if baseNotificationCell?.notificationType == .session {
+		switch baseNotificationCell?.notificationType ?? .other {
+		case .session:
 			WorkflowController.shared.openSessionsManager(in: self)
-		} else if baseNotificationCell?.notificationType == .follower {
+		case .follower:
 			guard let userID = baseNotificationCell?.userNotification?.attributes.payload.userID else { return }
 			WorkflowController.shared.openUserProfile(for: userID, in: self)
-		} else if baseNotificationCell?.notificationType == .subscriptionStatus {
+		case .subscriptionStatus:
 			UIApplication.shared.kOpen(nil, deepLink: .subscriptionManagement)
+		case .newFeedMessageReply, .newFeedMessageReShare:
+			guard let feedMessageID = baseNotificationCell?.userNotification?.attributes.payload.feedMessageID else { return }
+			WorkflowController.shared.openFeedMessage(for: feedMessageID, in: self)
+		default: break
 		}
 	}
 
