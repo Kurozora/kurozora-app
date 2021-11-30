@@ -15,6 +15,13 @@ class BadgeCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var primaryImageView: UIImageView?
 	@IBOutlet weak var secondaryLabel: KSecondaryLabel!
 
+	// MARK: - Initializers
+	override func awakeFromNib() {
+		super.awakeFromNib()
+
+		self.primaryImageView?.theme_tintColor = KThemePicker.tintColor.rawValue
+	}
+
 	// MARK: - Properties
 	var showDetailBage: ShowDetail.Badge = .rating
 	var show: Show! {
