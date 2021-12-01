@@ -21,13 +21,13 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 	var showDetailsCollectionViewController: ShowDetailsCollectionViewController?
 	var show: Show! {
 		didSet {
-			configureCell()
+			self.configureCell()
 		}
 	}
 	var genre: Genre! = nil {
 		didSet {
 			self.show = nil
-			configureCell()
+			self.configureCell()
 		}
 	}
 	var libraryStatus: KKLibrary.Status = .none

@@ -21,6 +21,8 @@ extension ExploreCategorySize {
 			return R.reuseIdentifier.mediumLockupCollectionViewCell.identifier
 		case .small:
 			return R.reuseIdentifier.smallLockupCollectionViewCell.identifier
+		case .upcoming:
+			return R.reuseIdentifier.upcomingLockupCollectionViewCell.identifier
 		case .video:
 			return R.reuseIdentifier.videoLockupCollectionViewCell.identifier
 		}

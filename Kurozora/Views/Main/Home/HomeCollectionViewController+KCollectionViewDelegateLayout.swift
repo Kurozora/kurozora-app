@@ -44,6 +44,12 @@ extension HomeCollectionViewController {
 					} else {
 						columnCount = (width / 284).rounded().int
 					}
+				case .upcoming:
+					if width >= 414 {
+						columnCount = (width / 384).rounded().int
+					} else {
+						columnCount = (width / 284).rounded().int
+					}
 				case .video:
 					if width >= 414 {
 						columnCount = (width / 500).rounded().int
@@ -138,6 +144,8 @@ extension HomeCollectionViewController {
 					sectionLayout = self.gridSection(for: section, layoutEnvironment: layoutEnvironment)
 				case .small:
 					sectionLayout = self.smallSectionLayout(section, layoutEnvironment: layoutEnvironment)
+				case .upcoming:
+					sectionLayout = self.upcomingSectionLayout(section, layoutEnvironment: layoutEnvironment)
 				case .video:
 					sectionLayout = self.gridSection(for: section, layoutEnvironment: layoutEnvironment)
 				}
@@ -220,6 +228,26 @@ extension HomeCollectionViewController {
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
 		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.90), heightDimension: .estimated(150.0))
+		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+		layoutGroup.interItemSpacing = .fixed(10.0)
+
+		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+		layoutSection.interGroupSpacing = 10.0
+		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
+		#if targetEnvironment(macCatalyst)
+		layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+		#else
+		layoutSection.orthogonalScrollingBehavior = .groupPaging
+		#endif
+		return layoutSection
+	}
+
+	func upcomingSectionLayout(_ section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
+		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.90), heightDimension: .fractionalHeight(1.0))
+		let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.90), heightDimension: .estimated(460.0))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
 		layoutGroup.interItemSpacing = .fixed(10.0)
 
