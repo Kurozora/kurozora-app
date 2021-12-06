@@ -4,7 +4,7 @@
     <sup><em>Discover, share and track anime with friends.</em></sup>
 </p>
 
-# Kurozora [![Swift 5](https://img.shields.io/badge/Swift-5-orange.svg?style=flat&logo=Swift)](https://swift.org) [![Platform](https://img.shields.io/badge/Platform-iOS%20|%20ipadOS%20|%20macOS-lightgrey.svg?style=flat&logo=Apple)](https://www.apple.com/ios) [![License: GPL v3](https://img.shields.io/badge/License-AGPLv3-blue.svg?style=flat)](https://www.gnu.org/licenses/agpl-3.0) [![Discord](https://img.shields.io/discord/449250093623934977?style=flat&label=Discord&logo=Discord&color=7289DA)](https://discord.gg/bHUmr3h)
+# Kurozora [![Swift 5](https://img.shields.io/badge/Swift-5-orange.svg?style=flat&logo=Swift)](https://swift.org) [![Platform](https://img.shields.io/badge/Platform-iOS%20|%20ipadOS%20|%20macOS-lightgrey.svg?style=flat&logo=Apple)](https://www.apple.com/ios) [![Discord](https://img.shields.io/discord/449250093623934977?style=flat&label=Discord&logo=Discord&color=7289DA)](https://discord.gg/bHUmr3h)
 
 [Kurozora](https://kurozora.app) is your go-to platform **discovering**, **sharing** and **tracking** anime and much more! `kurozora-app` is the client side of the Kurozora service. It is designed to be:
 
@@ -14,11 +14,11 @@
 
 * **🎨 Chameleon:** Whether black, blue, purple, or orange, it looks too good to… uh oh, it’s gone hiding again, dammit!
 
-* **📚 Documented:** With up to 65% documentation coverage and more in production. Just need my publisher to finalise some last minute details.
+* **📚 Documented:** With up to 75% documentation coverage and more in production. Just need my publisher to finalise some last minute details.
 
-* **💕 Excellence:** [Kurozora API](https://github.com/musa11971/kurozora-web) and Kurozora app are simply meant to be for each other. It’s like peanut butter and jelly, like yin and yang, like a lace in a shoe, like you're the sail of my love boat wait.. ughhh…
+* **💕 Excellence:** [Kurozora API](https://github.com/kurozora/kurozora-web) and Kurozora app are simply meant to be for each other. It’s like peanut butter and jelly, like yin and yang, like a lace in a shoe, like you're the sail of my love boat wait.. ughhh…
 
-* **🧩 Essence:** All brought together with [KurozoraKit](https://github.com/kiritokatklian/KurozoraKit), creating a perfect harmony. It’s the piece of the puzzle you don’t want to be missing.
+* **🧩 Essence:** All brought together with [KurozoraKit](https://github.com/kurozora/KurozoraKit), creating a perfect harmony. It’s the piece of the puzzle you don’t want to be missing.
 
 # Screenshots
 ![The explore page containing multiple sections of shows, used to discover new shows.](.github/Assets/Screenshots/1.jpg)
@@ -35,7 +35,7 @@
 
 # Requirements
 
-An iPhone/iPad running iOS 12+ or a Mac running macOS 10.15+
+An iPhone/iPad running iOS 15+ or a Mac running macOS 12+
 
 # Tools
 
