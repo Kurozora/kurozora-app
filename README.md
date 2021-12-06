@@ -71,4 +71,4 @@ If you have any questions or just want to say hi, join the Kurozora [Discord](ht
 
 # License
 
-Kurozora app is an Open Source project covered by the [GNU Affero General Public License v3.0](LICENSE).
+All rights reserved.
