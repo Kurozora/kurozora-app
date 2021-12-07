@@ -16,6 +16,9 @@ struct AlternativeIcons {
 	/// The collection of default icons.
 	let defaultIcons: [AlternativeIconsElement]
 
+	/// The collection of nature icons.
+	let natureIcons: [AlternativeIconsElement]
+
 	/// The collection of premium icons.
 	let premiumIcons: [AlternativeIconsElement]
 
@@ -30,16 +33,23 @@ struct AlternativeIcons {
 	*/
 	init(dict: [String: [String]]) {
 		let defaultIconsArray = dict["Default"]!
+		let natureIconsArray = dict["Nature"]!
 		let premiumIconsArray = dict["Premium"]!
 		let limitedIconsArray = dict["Limited"]!
 
 		var defaultIcons = [AlternativeIconsElement]()
+		var natureIcons = [AlternativeIconsElement]()
 		var premiumIcons = [AlternativeIconsElement]()
 		var limitedIcons = [AlternativeIconsElement]()
 
 		for defaultIconItem in defaultIconsArray {
 			let alternativeIconElement = AlternativeIconsElement(name: defaultIconItem)
 			defaultIcons.append(alternativeIconElement)
+		}
+
+		for natureIconItem in natureIconsArray {
+			let alternativeIconElement = AlternativeIconsElement(name: natureIconItem)
+			natureIcons.append(alternativeIconElement)
 		}
 
 		for premiumIconItem in premiumIconsArray {
@@ -53,6 +63,7 @@ struct AlternativeIcons {
 		}
 
 		self.defaultIcons = defaultIcons
+		self.natureIcons = natureIcons
 		self.premiumIcons = premiumIcons
 		self.limitedIcons = limitedIcons
 	}
