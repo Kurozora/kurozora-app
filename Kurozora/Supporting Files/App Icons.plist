@@ -8,6 +8,13 @@
 		<string>Day</string>
 		<string>Night</string>
 	</array>
+	<key>Nature</key>
+	<array>
+		<string>Winter</string>
+		<string>Spring</string>
+		<string>Summer</string>
+		<string>Fall</string>
+	</array>
 	<key>Premium</key>
 	<array>
 		<string>Coral</string>
@@ -22,6 +29,7 @@
 	</array>
 	<key>Limited</key>
 	<array>
+		<string>Monozora</string>
 		<string>Cookiezora</string>
 		<string>Kurogram</string>
 		<string>Kurolicious</string>

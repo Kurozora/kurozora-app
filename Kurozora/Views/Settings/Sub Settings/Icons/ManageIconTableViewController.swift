@@ -48,7 +48,7 @@ class ManageIconTableViewController: SubSettingsViewController {
 // MARK: - UITableViewDataSource
 extension ManageIconTableViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return 3
+		return 4
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -57,9 +57,12 @@ extension ManageIconTableViewController {
 			guard let defaultIconsCount = self.alternativeIcons?.defaultIcons.count else { return 0 }
 			return defaultIconsCount
 		case 1:
+			guard let natureIconsCount = self.alternativeIcons?.natureIcons.count else { return 0 }
+			return natureIconsCount
+		case 2:
 			guard let premiumIconsCount = self.alternativeIcons?.premiumIcons.count else { return 0 }
 			return premiumIconsCount
-		case 2:
+		case 3:
 			guard let limitedIconsCount = self.alternativeIcons?.limitedIcons.count else { return 0 }
 			return limitedIconsCount
 		default:
@@ -76,8 +79,10 @@ extension ManageIconTableViewController {
 		case 0:
 			alternativeIconsElement = self.alternativeIcons?.defaultIcons[indexPath.row]
 		case 1:
-			alternativeIconsElement = self.alternativeIcons?.premiumIcons[indexPath.row]
+			alternativeIconsElement = self.alternativeIcons?.natureIcons[indexPath.row]
 		case 2:
+			alternativeIconsElement = self.alternativeIcons?.premiumIcons[indexPath.row]
+		case 3:
 			alternativeIconsElement = self.alternativeIcons?.limitedIcons[indexPath.row]
 		default: break
 		}
@@ -96,9 +101,13 @@ extension ManageIconTableViewController {
 			}
 		case 1:
 			if self.alternativeIcons?.premiumIcons.count != 0 {
-				return "PREMIUM"
+				return "NATURE"
 			}
 		case 2:
+			if self.alternativeIcons?.premiumIcons.count != 0 {
+				return "PREMIUM"
+			}
+		case 3:
 			if self.alternativeIcons?.limitedIcons.count != 0 {
 				return "LIMITED TIME"
 			}

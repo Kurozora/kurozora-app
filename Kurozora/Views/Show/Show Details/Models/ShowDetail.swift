@@ -195,7 +195,7 @@ extension ShowDetail {
 			case .rating:
 				return nil
 			case .season:
-				return show.attributes.airSeason ?? "-"
+				return show.attributes.airSeason ?? "Winter"
 			case .rank:
 				return "-" // e.g #13 — show.attributes.popularity.rank
 			case .tvRating:
