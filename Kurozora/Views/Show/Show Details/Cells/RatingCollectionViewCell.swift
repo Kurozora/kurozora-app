@@ -54,7 +54,7 @@ class RatingCollectionViewCell: UICollectionViewCell {
 		- Parameter rating: The rating to be saved when the show has been rated by the user.
 	*/
 	func rateShow(with rating: Double) {
-		KService.rateShow(self.show.id, with: rating) { result in
+		KService.rateShow(self.show.id, with: rating, description: nil) { result in
 			switch result {
 			case .success:
 				// Update current rating for the user.

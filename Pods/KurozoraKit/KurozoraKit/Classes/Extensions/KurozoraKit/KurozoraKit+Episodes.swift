@@ -77,4 +77,45 @@ extension KurozoraKit {
 			completionHandler(.failure(error))
 		})
 	}
+
+	/**
+		Rate the show with the given show id.
+
+		- Parameter episodeID: The id of the show which should be rated.
+		- Parameter score: The rating to leave.
+		- Parameter description: The description of the rating.
+		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
+	*/
+	public func rateEpisode(_ episodeID: Int, with score: Double, description: String?, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) {
+		let showsRate = KKEndpoint.Shows.Episodes.rate(episodeID).endpointValue
+		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(showsRate)
+
+		request.headers = headers
+		if !self.authenticationKey.isEmpty {
+			request.headers.add(.authorization(bearerToken: self.authenticationKey))
+		}
+
+		request.method = .post
+		request.parameters = [
+			"rating": score
+		]
+		if let description = description {
+			request.parameters["description"] = description
+		}
+
+		request.perform(withSuccess: { success in
+			completionHandler(.success(success))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
+			if self.services.showAlerts {
+				UIApplication.topViewController?.presentAlertController(title: "Can't Rate Show 😔", message: error.message)
+			}
+			print("❌ Received show rating error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
+			completionHandler(.failure(error))
+		})
+	}
 }

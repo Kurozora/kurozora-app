@@ -76,6 +76,9 @@ extension KKEndpoint.Shows {
 		/// The endpoint to update the watch status of an episode.
 		case watched(_ episodeID: Int)
 
+		/// The endpoint to leave a rating on an episode.
+		case rate(_ episodeID: Int)
+
 		// MARK: - Properties
 		/// The endpoint value of the Episodes API type.
 		var endpointValue: String {
@@ -84,6 +87,8 @@ extension KKEndpoint.Shows {
 				return "episodes/\(episodeID)"
 			case .watched(let episodeID):
 				return "episodes/\(episodeID)/watched"
+			case .rate(let episodeID):
+				return "episodes/\(episodeID)/rate"
 			}
 		}
 	}

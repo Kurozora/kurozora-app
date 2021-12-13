@@ -398,7 +398,7 @@ import UIKit
     }
 }
 @available(iOS 13.0, *)
-public extension UINavigationBarAppearance
+@objc public extension UINavigationBarAppearance
 {
     var theme_titleTextAttributes: ThemeStringAttributesPicker? {
         get { return getThemePicker(self, "setTitleTextAttributes:") as? ThemeStringAttributesPicker }

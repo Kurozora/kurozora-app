@@ -215,10 +215,11 @@ extension KurozoraKit {
 
 		- Parameter showID: The id of the show which should be rated.
 		- Parameter score: The rating to leave.
+		- Parameter description: The description of the rating.
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func rateShow(_ showID: Int, with score: Double, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) {
+	public func rateShow(_ showID: Int, with score: Double, description: String?, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) {
 		let showsRate = KKEndpoint.Shows.rate(showID).endpointValue
 		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(showsRate)
 
@@ -231,6 +232,10 @@ extension KurozoraKit {
 		request.parameters = [
 			"rating": score
 		]
+		if let description = description {
+			request.parameters["description"] = description
+		}
+
 		request.perform(withSuccess: { success in
 			completionHandler(.success(success))
 		}, failure: { [weak self] error in
