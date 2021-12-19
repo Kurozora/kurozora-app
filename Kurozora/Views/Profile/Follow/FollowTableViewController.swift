@@ -55,7 +55,7 @@ class FollowTableViewController: KTableViewController {
 		#endif
 
 		// Fetch follow list.
-		DispatchQueue.global(qos: .background).async {
+		DispatchQueue.global(qos: .userInteractive).async {
 			self.fetchFollowList()
 		}
     }

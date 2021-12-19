@@ -59,7 +59,7 @@ class NotificationsViewController: KTableViewController {
 			let notificationsGrouping = UserSettings.notificationsGrouping
 			grouping = KNotification.GroupStyle(rawValue: notificationsGrouping)!
 
-			DispatchQueue.global(qos: .background).async {
+			DispatchQueue.global(qos: .userInteractive).async {
 				self.fetchNotifications()
 			}
 		}

@@ -65,7 +65,7 @@ class CharactersListCollectionViewController: KCollectionViewController {
 		#endif
 
 		if self.personID != 0 {
-			DispatchQueue.global(qos: .background).async {
+			DispatchQueue.global(qos: .userInteractive).async {
 				self.fetchCharacters()
 			}
 		}

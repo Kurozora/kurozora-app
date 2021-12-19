@@ -93,7 +93,7 @@ class HomeCollectionViewController: KCollectionViewController {
 		self.configureDataSource()
 
 		// Fetch explore details.
-		DispatchQueue.global(qos: .background).async {
+		DispatchQueue.global(qos: .userInteractive).async {
 			self.fetchExplore()
 		}
 	}
@@ -107,7 +107,7 @@ class HomeCollectionViewController: KCollectionViewController {
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		DispatchQueue.global(qos: .background).async {
+		DispatchQueue.global(qos: .userInteractive).async {
 			self.fetchExplore()
 		}
 	}

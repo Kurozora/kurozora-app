@@ -76,7 +76,7 @@ class GenresCollectionViewController: KCollectionViewController {
 
 		self.configureDataSource()
 
-		DispatchQueue.global(qos: .background).async {
+		DispatchQueue.global(qos: .userInteractive).async {
 			self.fetchGenres()
 		}
 	}

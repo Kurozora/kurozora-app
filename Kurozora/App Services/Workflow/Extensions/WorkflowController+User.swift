@@ -85,7 +85,7 @@ extension WorkflowController {
 		if let authenticationKey = KurozoraDelegate.shared.keychain[accountKey] {
 			KService.authenticationKey = authenticationKey
 
-			DispatchQueue.global(qos: .background).async {
+			DispatchQueue.global(qos: .userInteractive).async {
 				KService.getProfileDetails { result in
 					switch result {
 					case .success:

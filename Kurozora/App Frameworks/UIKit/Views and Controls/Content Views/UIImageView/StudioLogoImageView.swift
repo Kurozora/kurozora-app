@@ -41,7 +41,7 @@ class StudioLogoImageView: CircularImageView {
 	// MARK: - Functions
 	/// The shared settings used to initialize the image view.
 	func sharedInit() {
-		self.image = R.image.placeholders.studioLogo()
+		self.image = R.image.placeholders.studioProfile()
 
 		self.borderWidth = 2
 		self.borderColor = UIColor.white.withAlphaComponent(0.20)

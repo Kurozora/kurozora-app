@@ -56,7 +56,7 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 		#endif
 
 		// Fetch themes
-		DispatchQueue.global(qos: .background).async {
+		DispatchQueue.global(qos: .userInteractive).async {
 			self.fetchThemes()
 		}
 	}

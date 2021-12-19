@@ -59,7 +59,7 @@ class SeasonsCollectionViewController: KCollectionViewController {
 
 		self.configureDataSource()
 
-		DispatchQueue.global(qos: .background).async {
+		DispatchQueue.global(qos: .userInteractive).async {
 			self.fetchSeasons()
 		}
     }
@@ -68,7 +68,7 @@ class SeasonsCollectionViewController: KCollectionViewController {
 	override func handleRefreshControl() {
 		self.nextPageURL = nil
 
-		DispatchQueue.global(qos: .background).async {
+		DispatchQueue.global(qos: .userInteractive).async {
 			self.fetchSeasons()
 		}
 	}

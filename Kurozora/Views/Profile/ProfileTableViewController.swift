@@ -194,7 +194,7 @@ class ProfileTableViewController: KTableViewController {
 		#endif
 
 		// Fetch user details
-		DispatchQueue.global(qos: .background).async {
+		DispatchQueue.global(qos: .userInteractive).async {
 			self.fetchUserDetails()
 		}
 	}

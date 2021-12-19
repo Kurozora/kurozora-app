@@ -120,7 +120,7 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 		self.tabBarDataSource = self
 
 		// Fetch sections.
-		DispatchQueue.global(qos: .background).async {
+		DispatchQueue.global(qos: .userInteractive).async {
 			self.tabBarDataSource?.fetchSections?()
 		}
 	}

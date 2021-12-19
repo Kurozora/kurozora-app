@@ -64,7 +64,7 @@ class PeopleListCollectionViewController: KCollectionViewController {
 		#endif
 
 		if characterID != 0 {
-			DispatchQueue.global(qos: .background).async {
+			DispatchQueue.global(qos: .userInteractive).async {
 				self.fetchPeople()
 			}
 		}

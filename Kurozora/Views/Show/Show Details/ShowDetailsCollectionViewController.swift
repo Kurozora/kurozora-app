@@ -205,7 +205,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 					} ?? shows.first?.relationships?.studios?.data.first
 					self.relatedShows = shows.first?.relationships?.relatedShows?.data ?? []
 
-						// Donate suggestion to Siri
+					// Donate suggestion to Siri
 					self.userActivity = self.show.openDetailUserActivity
 				} else {
 					if let show = shows.first {

@@ -91,7 +91,7 @@ class EpisodesCollectionViewController: KCollectionViewController {
 		self.configureDataSource()
 
 		// Fetch episodes
-		DispatchQueue.global(qos: .background).async {
+		DispatchQueue.global(qos: .userInteractive).async {
 			self.fetchEpisodes()
 		}
 	}

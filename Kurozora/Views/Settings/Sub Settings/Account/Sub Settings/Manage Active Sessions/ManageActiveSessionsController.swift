@@ -56,7 +56,7 @@ class ManageActiveSessionsController: KTableViewController {
 		#endif
 
 		// Fetch sessions
-		DispatchQueue.global(qos: .background).async {
+		DispatchQueue.global(qos: .userInteractive).async {
 			self.fetchSessions()
 		}
 

@@ -68,7 +68,7 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 		#endif
 
 		// Fetch studio details
-		DispatchQueue.global(qos: .background).async {
+		DispatchQueue.global(qos: .userInteractive).async {
 			self.fetchStudioDetails()
 		}
 	}

@@ -41,7 +41,7 @@ class CharacterImageView: CircularImageView {
 	// MARK: - Functions
 	/// The shared settings used to initialize the image view.
 	func sharedInit() {
-		self.image = R.image.placeholders.showPerson()
+		self.image = R.image.placeholders.personPoster()
 
 		self.borderWidth = 2
 		self.borderColor = UIColor.white.withAlphaComponent(0.20)

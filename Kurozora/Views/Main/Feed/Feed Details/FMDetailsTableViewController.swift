@@ -101,7 +101,7 @@ class FMDetailsTableViewController: KTableViewController {
 		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh message details and replies!")
 		#endif
 
-		DispatchQueue.global(qos: .background).async {
+		DispatchQueue.global(qos: .userInteractive).async {
 			if self.feedMessage == nil {
 				self.fetchDetails()
 			} else {

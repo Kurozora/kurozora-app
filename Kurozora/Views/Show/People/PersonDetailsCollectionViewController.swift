@@ -102,7 +102,7 @@ class PersonDetailsCollectionViewController: KCollectionViewController {
 		#endif
 
 		// Fetch person details
-		DispatchQueue.global(qos: .background).async {
+		DispatchQueue.global(qos: .userInteractive).async {
 			self.fetchPersonDetails()
 		}
 	}
