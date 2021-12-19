@@ -11,6 +11,9 @@ extension Episode {
 	*/
 	public struct Attributes: Codable {
 		// MARK: - Properties
+		/// The link to a poster image of the episode.
+		public let poster: Media?
+
 		/// The link to a banner image of the episode.
 		public let banner: Media?
 
@@ -26,6 +29,9 @@ extension Episode {
 		/// The duration of the episode.
 		public let duration: String
 
+		/// The stats of the episode.
+		public let stats: MediaStat?
+
 		/// The air date of the episode.
 		public let firstAired: Date?
 
@@ -35,10 +41,14 @@ extension Episode {
 		/// Whether the episode details have been verified.
 		public let isVerified: Bool
 
-		/// Whether the episode is watched.
+		// Authenticated Attirbutes
+		/// The rating given by the authenticated user.
+		public var givenRating: Double?
+
+		/// Whether the authenticated user has watched the episode.
 		fileprivate let isWatched: Bool?
 
-		/// The watch status of the episode.
+		/// The watch status of the episode for the authenticated user.
 		fileprivate var _watchStatus: WatchStatus?
 	}
 }

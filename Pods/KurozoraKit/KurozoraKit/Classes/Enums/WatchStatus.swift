@@ -26,6 +26,19 @@ public enum WatchStatus: Int, Codable {
 	/// The episode is watched.
 	case watched = 1
 
+	// MARK: - Properties
+	/// The string value of a watch status type.
+	public var stringValue: String {
+		switch self {
+		case .notWatched:
+			return "Not Watched"
+		case .disabled:
+			return "Disabled"
+		case .watched:
+			return "Watched"
+		}
+	}
+
 	// MARK: - Functions
 	/**
 		Initializes an instance of `WatchStatus` with the given bool value.
