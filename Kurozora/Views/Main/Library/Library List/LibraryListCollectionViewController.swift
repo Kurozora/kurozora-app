@@ -104,7 +104,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 
 		// Fetch library if user is signed in
 		if User.isSignedIn {
-			DispatchQueue.global(qos: .background).async {
+			DispatchQueue.global(qos: .userInteractive).async {
 				self.fetchLibrary()
 			}
 		}
@@ -122,7 +122,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 
 	override func handleRefreshControl() {
 		self.nextPageURL = nil
-		DispatchQueue.global(qos: .background).async {
+		DispatchQueue.global(qos: .userInteractive).async {
 			self.fetchLibrary()
 		}
 	}
@@ -202,7 +202,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 		- Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
 	*/
 	@objc func addToLibrary(_ notification: NSNotification) {
-		DispatchQueue.global(qos: .background).async {
+		DispatchQueue.global(qos: .userInteractive).async {
 			self.fetchLibrary()
 		}
 	}
@@ -213,7 +213,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 		- Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
 	*/
 	@objc func removeFromLibrary(_ notification: NSNotification) {
-		DispatchQueue.global(qos: .background).async {
+		DispatchQueue.global(qos: .userInteractive).async {
 			self.fetchLibrary()
 		}
 	}
@@ -259,7 +259,7 @@ extension LibraryListCollectionViewController: LibraryViewControllerDelegate {
 //		default: break
 //		}
 
-		DispatchQueue.global(qos: .background).async {
+		DispatchQueue.global(qos: .userInteractive).async {
 			self.fetchLibrary()
 		}
 	}

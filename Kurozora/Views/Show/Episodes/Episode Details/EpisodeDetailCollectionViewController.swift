@@ -26,6 +26,7 @@ class EpisodeDetailCollectionViewController: KCollectionViewController {
 			#endif
 		}
 	}
+	var indexPath = IndexPath()
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
@@ -103,7 +104,7 @@ class EpisodeDetailCollectionViewController: KCollectionViewController {
 		#endif
 
 		// Fetch cast
-		DispatchQueue.global(qos: .background).async {
+		DispatchQueue.global(qos: .userInteractive).async {
 			self.fetchEpisodeDetails()
 		}
 	}
@@ -158,6 +159,16 @@ class EpisodeDetailCollectionViewController: KCollectionViewController {
 		guard let indexPath = notification.userInfo?["indexPath"] as? IndexPath else { return }
 		collectionView.reloadItems(at: [indexPath])
 	}
+
+	/// Opens the share sheet of the episode.
+	@objc func shareEpisode() {
+		self.episode?.openShareSheet(on: self)
+	}
+
+	// MARK: - IBActions
+	@IBAction func moreButtonPressed(_ sender: UIBarButtonItem) {
+		self.episode?.openShareSheet(on: self, barButtonItem: sender)
+	}
 }
 
 // MARK: - UICollectionViewDataSource
@@ -191,11 +202,10 @@ extension EpisodeDetailCollectionViewController {
 
 		switch episodeDetailSection {
 		case .header:
-			let episodeLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: episodeDetailSection.identifierString, for: indexPath) as! EpisodeLockupCollectionViewCell
-			episodeLockupCollectionViewCell.delegate = self
-			episodeLockupCollectionViewCell.simpleModeEnabled = true
-			episodeLockupCollectionViewCell.episode = self.episode
-			return episodeLockupCollectionViewCell
+			let episodeDetailHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: episodeDetailSection.identifierString, for: indexPath) as! EpisodeDetailHeaderCollectionViewCell
+			episodeDetailHeaderCollectionViewCell.indexPath = self.indexPath
+			episodeDetailHeaderCollectionViewCell.episode = self.episode
+			return episodeDetailHeaderCollectionViewCell
 		case .synopsis:
 			let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: episodeDetailSection.identifierString, for: indexPath) as! TextViewCollectionViewCell
 			textViewCollectionViewCell.delegate = self
@@ -204,7 +214,7 @@ extension EpisodeDetailCollectionViewController {
 			return textViewCollectionViewCell
 		case .rating:
 			let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: episodeDetailSection.identifierString, for: indexPath) as! RatingCollectionViewCell
-//			ratingCollectionViewCell.showDetailsElement = showDetailsElement
+			ratingCollectionViewCell.episode = self.episode
 			return ratingCollectionViewCell
 		case .information:
 			let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: episodeDetailSection.identifierString, for: indexPath) as! InformationCollectionViewCell
@@ -238,37 +248,5 @@ extension EpisodeDetailCollectionViewController: TextViewCollectionViewCellDeleg
 extension EpisodeDetailCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
 	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPressButton button: UIButton) {
 		self.performSegue(withIdentifier: reusableView.segueID, sender: reusableView.indexPath)
-	}
-}
-
-// MARK: - episodeLockupCollectionViewCellDelegate
-extension EpisodeDetailCollectionViewController: EpisodeLockupCollectionViewCellDelegate {
-	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressWatchButton button: UIButton) {
-		guard let indexPath = collectionView.indexPath(for: cell) else { return }
-		cell.episode.updateWatchStatus(userInfo: ["indexPath": indexPath])
-	}
-
-	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressMoreButton button: UIButton) {
-		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
-			let actionTitle = button.tag == 0 ? "Mark as Watched" : "Mark as Un-watched"
-			actionSheetAlertController.addAction(UIAlertAction(title: actionTitle, style: .default, handler: { _ in
-				guard let indexPath = self?.collectionView.indexPath(for: cell) else { return }
-				cell.episode.updateWatchStatus(userInfo: ["indexPath": indexPath])
-			}))
-			actionSheetAlertController.addAction(UIAlertAction(title: "Rate", style: .default, handler: nil))
-			actionSheetAlertController.addAction(UIAlertAction(title: "Share", style: .default, handler: { _ in
-				cell.episode.openShareSheet(on: self, button)
-			}))
-		}
-
-		// Present the controller
-		if let popoverController = actionSheetAlertController.popoverPresentationController {
-			popoverController.sourceView = button
-			popoverController.sourceRect = button.bounds
-		}
-
-		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
-			self.present(actionSheetAlertController, animated: true, completion: nil)
-		}
 	}
 }

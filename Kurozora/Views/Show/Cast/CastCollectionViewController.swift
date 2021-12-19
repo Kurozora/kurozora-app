@@ -66,14 +66,14 @@ class CastCollectionViewController: KCollectionViewController {
 		self.configureDataSource()
 
 		// Fetch cast
-		DispatchQueue.global(qos: .background).async {
+		DispatchQueue.global(qos: .userInteractive).async {
 			self.fetchCast()
 		}
     }
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		DispatchQueue.global(qos: .background).async {
+		DispatchQueue.global(qos: .userInteractive).async {
 			self.fetchCast()
 		}
 	}

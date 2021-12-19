@@ -10,10 +10,10 @@ import UIKit
 
 extension EpisodeDetailCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
-		return [EpisodeLockupCollectionViewCell.self,
-				TextViewCollectionViewCell.self,
-				RatingCollectionViewCell.self,
-				InformationCollectionViewCell.self
+		return [
+			TextViewCollectionViewCell.self,
+			RatingCollectionViewCell.self,
+			InformationCollectionViewCell.self
 		]
 	}
 

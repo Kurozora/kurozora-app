@@ -7,17 +7,12 @@
 //
 
 import UIKit
-import EventKit
 import KurozoraKit
 
 class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBoutlet
 	@IBOutlet weak var bannerImageView: UIImageView!
-	@IBOutlet weak var visualEffectView: KVisualEffectView! {
-		didSet {
-			visualEffectView.cornerRadius = 10
-		}
-	}
+	@IBOutlet weak var visualEffectView: KVisualEffectView!
 	@IBOutlet weak var bannerContainerView: UIView!
 
 	// Action buttons
@@ -27,8 +22,8 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 
 	// Quick details view
 	@IBOutlet weak var quickDetailsView: UIView!
-	@IBOutlet weak var showTitleLabel: UILabel!
-	@IBOutlet weak var tagsLabel: UILabel!
+	@IBOutlet weak var primaryLabel: UILabel!
+	@IBOutlet weak var secondaryLabel: UILabel!
 	@IBOutlet weak var statusButton: UIButton!
 	@IBOutlet weak var shadowView: UIView!
 	@IBOutlet weak var posterImageView: UIImageView!
@@ -56,10 +51,10 @@ extension ShowDetailHeaderCollectionViewCell {
 		updateLibraryActions()
 
 		// Configure title label
-		self.showTitleLabel.text = self.show.attributes.title
+		self.primaryLabel.text = self.show.attributes.title
 
 		// Configure tags label
-		self.tagsLabel.text = self.show.attributes.informationString
+		self.secondaryLabel.text = self.show.attributes.informationString
 
 		// Configure airing status label
 		self.statusButton.setTitle(self.show.attributes.status.name, for: .normal)

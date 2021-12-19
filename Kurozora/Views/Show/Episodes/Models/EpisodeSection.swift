@@ -46,7 +46,7 @@ class EpisodeDetail {
 		var identifierString: String {
 			switch self {
 			case .header:
-				return R.reuseIdentifier.episodeLockupCollectionViewCell.identifier
+				return R.reuseIdentifier.episodeDetailHeaderCollectionViewCell.identifier
 			case .synopsis:
 				return R.reuseIdentifier.textViewCollectionViewCell.identifier
 			case .rating:

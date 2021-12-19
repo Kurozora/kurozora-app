@@ -73,14 +73,10 @@ class EpisodesCollectionViewController: KCollectionViewController {
 		self.handleRefreshControl()
 	}
 
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-
-		NotificationCenter.default.addObserver(self, selector: #selector(updateEpisodes(_:)), name: .KEpisodeWatchStatusDidUpdate, object: nil)
-	}
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		NotificationCenter.default.addObserver(self, selector: #selector(updateEpisodes(_:)), name: .KEpisodeWatchStatusDidUpdate, object: nil)
 
 		#if DEBUG
 		self._prefersRefreshControlDisabled = false
@@ -94,12 +90,6 @@ class EpisodesCollectionViewController: KCollectionViewController {
 		DispatchQueue.global(qos: .userInteractive).async {
 			self.fetchEpisodes()
 		}
-	}
-
-	override func viewWillDisappear(_ animated: Bool) {
-		super.viewWillDisappear(animated)
-
-		NotificationCenter.default.removeObserver(self, name: .KEpisodeWatchStatusDidUpdate, object: nil)
 	}
 
 	// MARK: - Functions
@@ -216,10 +206,8 @@ class EpisodesCollectionViewController: KCollectionViewController {
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == R.segue.episodesCollectionViewController.episodeDetailSegue.identifier, let episodeCell = sender as? EpisodeLockupCollectionViewCell {
 			if let episodeDetailViewController = segue.destination as? EpisodeDetailCollectionViewController, let indexPath = collectionView.indexPath(for: episodeCell) {
+				episodeDetailViewController.indexPath = indexPath
 				episodeDetailViewController.episodeID = episodes[indexPath.row].id
-
-				let notificationName = NSNotification.Name(rawValue: "\(episodes[indexPath.row].attributes.title)DidUpdate")
-				NotificationCenter.default.addObserver(self, selector: #selector(updateEpisodes(_:)), name: notificationName, object: nil)
 			}
 		}
 	}

@@ -22,6 +22,11 @@ class RatingCollectionViewCell: UICollectionViewCell {
 			configureCell()
 		}
 	}
+	var episode: Episode! {
+		didSet {
+			configureEpisodeCell()
+		}
+	}
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
@@ -48,6 +53,30 @@ class RatingCollectionViewCell: UICollectionViewCell {
 		cosmosDetailLabel.text = ratingCount != 0 ? "\(ratingCount.kkFormatted) Ratings" : "Not enough ratings"
 	}
 
+	/// Configure the cell with the episode details.
+	fileprivate func configureEpisodeCell() {
+		// Configure cosmos view
+		let userRating = self.episode.attributes.givenRating
+		self.cosmosView.rating = userRating ?? 0.0
+
+		cosmosView.didFinishTouchingCosmos = { rating in
+			WorkflowController.shared.isSignedIn {
+				self.rateEpisode(with: rating)
+			}
+
+			if !User.isSignedIn {
+				self.cosmosView.rating = 0.0
+			}
+		}
+
+		// Configure average rating
+		ratingLabel.text = "\(episode.attributes.stats?.ratingAverage ?? 0.0)"
+
+		// Configure rating count
+		let ratingCount = episode.attributes.stats?.ratingCount ?? 0
+		cosmosDetailLabel.text = ratingCount != 0 ? "\(ratingCount.kkFormatted) Ratings" : "Not enough ratings"
+	}
+
 	/**
 		Rate the show with the given rating.
 
@@ -59,6 +88,29 @@ class RatingCollectionViewCell: UICollectionViewCell {
 			case .success:
 				// Update current rating for the user.
 				self.show.attributes.givenRating = rating
+
+				// Show a success alert thanking the user for rating.
+				let alertController = UIApplication.topViewController?.presentAlertController(title: "Rating Submitted", message: "Thank you for rating.")
+
+				DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+					alertController?.dismiss(animated: true, completion: nil)
+				}
+			case .failure: break
+			}
+		}
+	}
+
+	/**
+		Rate the show with the given rating.
+
+		- Parameter rating: The rating to be saved when the show has been rated by the user.
+	*/
+	func rateEpisode(with rating: Double) {
+		KService.rateEpisode(self.episode.id, with: rating, description: nil) { result in
+			switch result {
+			case .success:
+				// Update current rating for the user.
+				self.episode.attributes.givenRating = rating
 
 				// Show a success alert thanking the user for rating.
 				let alertController = UIApplication.topViewController?.presentAlertController(title: "Rating Submitted", message: "Thank you for rating.")
