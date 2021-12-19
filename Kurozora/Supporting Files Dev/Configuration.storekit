@@ -93,6 +93,21 @@
       "productID" : "app.kurozora.temporary.pro",
       "referenceName" : "Kurozora Pro",
       "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "34.99",
+      "familyShareable" : false,
+      "internalID" : "8F21BBB0",
+      "localizations" : [
+        {
+          "description" : "Unlock all features with a one-time purchase!",
+          "displayName" : "Kurozora One",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "app.kurozora.temporary.nonConsumable.kurozoraOne",
+      "referenceName" : "Kurozora One",
+      "type" : "NonConsumable"
     }
   ],
   "settings" : {
