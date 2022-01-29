@@ -25,7 +25,7 @@ extension ManageThemesCollectionViewController {
 				if indexPath.section == 0 {
 					themesCollectionViewCell.kTheme = KTheme(rawValue: indexPath.item) ?? .kurozora
 				} else {
-					themesCollectionViewCell.kTheme = KTheme.other(self.themes[indexPath.item])
+					themesCollectionViewCell.kTheme = KTheme.other(self.appThemes[indexPath.item])
 				}
 				return themesCollectionViewCell
 			} else {
@@ -50,7 +50,7 @@ extension ManageThemesCollectionViewController {
 		var itemsPerSection = 0
 
 		SectionLayoutKind.allCases.forEach {
-			itemsPerSection = $0 == .def ? KTheme.defaultCases.count : self.themes.count
+			itemsPerSection = $0 == .def ? KTheme.defaultCases.count : self.appThemes.count
 			snapshot.appendSections([$0])
 			let maxIdentifier = identifierOffset + itemsPerSection
 			snapshot.appendItems(Array(identifierOffset..<maxIdentifier), toSection: $0)

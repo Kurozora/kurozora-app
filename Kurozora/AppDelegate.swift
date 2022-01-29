@@ -12,7 +12,7 @@ import Kingfisher
 import SwifterSwift
 
 // MARK: - KurozoraKit
-let KService = KurozoraKit().services(KurozoraDelegate.shared.services)
+let KService = KurozoraKit(debugURL: "https://4b5d-86-91-117-161.eu.ngrok.io/api/v1/").services(KurozoraDelegate.shared.services)
 var store: Store! = nil
 
 // MARK: - Kurozora

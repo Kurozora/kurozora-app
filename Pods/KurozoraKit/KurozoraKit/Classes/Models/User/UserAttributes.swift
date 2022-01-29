@@ -63,8 +63,8 @@ extension User {
 		/// The follow status of the user.
 		fileprivate var _followStatus: FollowStatus?
 
-//		/// Whether the theme has been bought by the user.
-//		public let themeBought: Bool?
+//		/// Whether the app theme has been bought by the user.
+//		public let appThemeBought: Bool?
 	}
 }
 

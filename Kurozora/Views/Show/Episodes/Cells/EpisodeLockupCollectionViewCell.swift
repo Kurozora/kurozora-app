@@ -65,20 +65,20 @@ class EpisodeLockupCollectionViewCell: UICollectionViewCell {
 	*/
 	func configureWatchButton(with watchStatus: WatchStatus?) {
 		switch watchStatus ?? .disabled {
-        case .disabled:
-            self.episodeWatchedButton.isEnabled = false
+		case .disabled:
+			self.episodeWatchedButton.isEnabled = false
 			self.episodeWatchedButton.isHidden = true
-        case .watched:
-            self.episodeWatchedButton.isEnabled = true
+		case .watched:
+			self.episodeWatchedButton.isEnabled = true
 			self.episodeWatchedButton.isHidden = false
 			self.episodeWatchedButton.backgroundColor = .kurozora
 			self.episodeWatchedButton.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        case .notWatched:
-            self.episodeWatchedButton.isEnabled = true
+		case .notWatched:
+			self.episodeWatchedButton.isEnabled = true
 			self.episodeWatchedButton.isHidden = false
-            self.episodeWatchedButton.backgroundColor = #colorLiteral(red: 0.1568627451, green: 0.1568627451, blue: 0.1568627451, alpha: 1).withAlphaComponent(0.80)
+			self.episodeWatchedButton.backgroundColor = #colorLiteral(red: 0.1568627451, green: 0.1568627451, blue: 0.1568627451, alpha: 1).withAlphaComponent(0.80)
 			self.episodeWatchedButton.tintColor = #colorLiteral(red: 0.5019607843, green: 0.5019607843, blue: 0.5019607843, alpha: 1).withAlphaComponent(0.80)
-        }
+		}
     }
 
 	// MARK: - IBActions

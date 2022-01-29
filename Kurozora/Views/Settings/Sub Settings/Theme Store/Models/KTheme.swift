@@ -20,7 +20,7 @@ enum KTheme {
 	case grass
 	case sky
 	case sakura
-	case other(_: Theme)
+	case other(_: AppTheme)
 
 	// MARK: - Initializers
 	/**
@@ -157,8 +157,8 @@ enum KTheme {
 			KThemeStyle.switchTo(style: .sky)
 		case .sakura:
 			KThemeStyle.switchTo(style: .sakura)
-		case .other(let theme):
-			KThemeStyle.switchTo(theme: theme)
+		case .other(let appTheme):
+			KThemeStyle.switchTo(appTheme: appTheme)
 		}
 	}
 

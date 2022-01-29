@@ -16,7 +16,7 @@ import SwiftTheme
 */
 struct ServiceFooterString {
 	/// The footer string for the MAL Improt view.
-	static let malImport: String = "Kurozora does not guarantee all shows will be imported to your library. Once the request has been processed an email which contains the status of the import request will be sent. Furthermore the uploaded file is deleted as soon as the import request has been processed."
+	static let malImport: String = "Kurozora does not guarantee all shows will be imported to your library. Once the request has been processed a notification which contains the status of the import request will be sent. Furthermore the uploaded file is deleted as soon as the import request has been processed."
 
 	/// The footer string for the Redeem view.
 	static let redeem: String = "Redeeming a code will immediately apply the credits onto your account. Please keep in mind Kurozora codes are redeemable only once per account and expire after one use."
