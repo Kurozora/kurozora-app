@@ -250,49 +250,42 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == R.segue.showDetailsCollectionViewController.seasonSegue.identifier {
-			if let seasonsCollectionViewController = segue.destination as? SeasonsCollectionViewController {
-				seasonsCollectionViewController.showID = self.show.id
-			}
-		} else if segue.identifier == R.segue.showDetailsCollectionViewController.castSegue.identifier {
-			if let castCollectionViewController = segue.destination as? CastCollectionViewController {
-				castCollectionViewController.showID = self.show.id
-			}
-		} else if segue.identifier == R.segue.showDetailsCollectionViewController.episodeSegue.identifier {
-			if let episodesCollectionViewController = segue.destination as? EpisodesCollectionViewController {
-				if let posterLockupCollectionViewCell = sender as? PosterLockupCollectionViewCell {
-					episodesCollectionViewController.seasonID = posterLockupCollectionViewCell.season.id
-				}
-			}
-		} else if segue.identifier == R.segue.showDetailsCollectionViewController.showDetailsSegue.identifier {
-			if let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController {
-				if let show = (sender as? BaseLockupCollectionViewCell)?.show {
-					showDetailsCollectionViewController.showID = show.id
-				}
-			}
-		} else if segue.identifier == R.segue.showDetailsCollectionViewController.studioSegue.identifier {
-			if let studioDetailsCollectionViewController = segue.destination as? StudioDetailsCollectionViewController {
-				if let studio = self.studio {
-					studioDetailsCollectionViewController.studioID = studio.id
-				}
-			}
-		} else if segue.identifier == R.segue.showDetailsCollectionViewController.showsListSegue.identifier {
-			if let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController {
-				showsListCollectionViewController.title = "Related"
-				showsListCollectionViewController.showID = self.show.id
-			}
-		} else if segue.identifier == R.segue.showDetailsCollectionViewController.characterDetailsSegue.identifier {
-			if let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController {
-				if let castCollectionViewCell = sender as? CastCollectionViewCell, let character = castCollectionViewCell.cast.relationships.characters.data.first {
-					characterDetailsCollectionViewController.characterID = character.id
-				}
-			}
-		} else if segue.identifier == R.segue.showDetailsCollectionViewController.personDetailsSegue.identifier {
-			if let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController {
-				if let castCollectionViewCell = sender as? CastCollectionViewCell, let person = castCollectionViewCell.cast.relationships.people.data.first {
-					personDetailsCollectionViewController.personID = person.id
-				}
-			}
+		switch segue.identifier {
+		case R.segue.showDetailsCollectionViewController.seasonSegue.identifier:
+			guard let seasonsCollectionViewController = segue.destination as? SeasonsCollectionViewController else { return }
+			seasonsCollectionViewController.showID = self.show.id
+		case R.segue.showDetailsCollectionViewController.castSegue.identifier:
+			guard let castCollectionViewController = segue.destination as? CastCollectionViewController else { return }
+			castCollectionViewController.showID = self.show.id
+		case R.segue.showDetailsCollectionViewController.episodeSegue.identifier:
+			guard let episodesCollectionViewController = segue.destination as? EpisodesCollectionViewController else { return }
+			guard let season = sender as? Season else { return }
+			episodesCollectionViewController.seasonID = season.id
+		case R.segue.showDetailsCollectionViewController.showDetailsSegue.identifier:
+			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
+			guard let show = sender as? Show else { return }
+			showDetailsCollectionViewController.showID = show.id
+		case R.segue.showDetailsCollectionViewController.studioSegue.identifier:
+			guard let studioDetailsCollectionViewController = segue.destination as? StudioDetailsCollectionViewController else { return }
+			guard let studio = self.studio else { return }
+			studioDetailsCollectionViewController.studioID = studio.id
+		case R.segue.showDetailsCollectionViewController.showsListSegue.identifier:
+			guard let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController else { return }
+			showsListCollectionViewController.title = "Related"
+			showsListCollectionViewController.showID = self.show.id
+		case R.segue.showDetailsCollectionViewController.characterDetailsSegue.identifier:
+			guard let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController else { return }
+			guard let cell = sender as? CastCollectionViewCell else { return }
+			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+			guard let character = self.cast[indexPath.item].relationships.characters.data.first else { return }
+			characterDetailsCollectionViewController.characterID = character.id
+		case R.segue.showDetailsCollectionViewController.personDetailsSegue.identifier:
+			guard let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController else { return }
+			guard let cell = sender as? CastCollectionViewCell else { return }
+			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+			guard let person = self.cast[indexPath.item].relationships.people.data.first else { return }
+			personDetailsCollectionViewController.personID = person.id
+		default: break
 		}
 	}
 }
@@ -370,10 +363,10 @@ extension ShowDetailsCollectionViewController {
 			castCollectionViewCell?.cast = self.cast[indexPath.item]
 		case .moreByStudio:
 			let smallLockupCollectionViewCell = showDetailCollectionViewCell as? SmallLockupCollectionViewCell
-			smallLockupCollectionViewCell?.show = self.studioShows[indexPath.item]
+			smallLockupCollectionViewCell?.configureCell(with: self.studioShows[indexPath.item])
 		case .relatedShows:
 			let smallLockupCollectionViewCell = showDetailCollectionViewCell as? SmallLockupCollectionViewCell
-			smallLockupCollectionViewCell?.relatedShow = self.relatedShows[indexPath.item]
+			smallLockupCollectionViewCell?.configureCell(with: self.relatedShows[indexPath.item])
 		case .sosumi:
 			let sosumiShowCollectionViewCell = showDetailCollectionViewCell as? SosumiShowCollectionViewCell
 			sosumiShowCollectionViewCell?.copyrightText = self.show.attributes.copyright

@@ -10,10 +10,15 @@ import UIKit
 
 extension PersonDetailsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		if let baseLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? BaseLockupCollectionViewCell {
-			performSegue(withIdentifier: R.segue.personDetailsCollectionViewController.showDetailsSegue, sender: baseLockupCollectionViewCell)
-		} else if let characterLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? CharacterLockupCollectionViewCell {
-			performSegue(withIdentifier: R.segue.personDetailsCollectionViewController.characterDetailsSegue, sender: characterLockupCollectionViewCell)
+		guard let personDetailSection = PersonDetail.Section(rawValue: indexPath.section) else { return }
+		switch personDetailSection {
+		case .shows:
+			let show = self.shows[indexPath.item]
+			performSegue(withIdentifier: R.segue.personDetailsCollectionViewController.showDetailsSegue, sender: show)
+		case .characters:
+			let character = self.characters[indexPath.item]
+			performSegue(withIdentifier: R.segue.personDetailsCollectionViewController.characterDetailsSegue, sender: character)
+		default: break
 		}
 	}
 
@@ -22,13 +27,9 @@ extension PersonDetailsCollectionViewController {
 		guard let personDetailSection = PersonDetail.Section(rawValue: indexPath.section) else { return nil }
 		switch personDetailSection {
 		case .shows:
-			if let smallLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? SmallLockupCollectionViewCell {
-				return smallLockupCollectionViewCell.show?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-			}
+			return self.shows[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .characters:
-			if let characterLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? CharacterLockupCollectionViewCell {
-				return characterLockupCollectionViewCell.character?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-			}
+			return self.characters[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		default: break
 		}
 

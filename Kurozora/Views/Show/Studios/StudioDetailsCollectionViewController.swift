@@ -110,16 +110,16 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == R.segue.studioDetailsCollectionViewController.showDetailsSegue.identifier {
-			if let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController {
-				if let show = (sender as? BaseLockupCollectionViewCell)?.show {
-					showDetailCollectionViewController.showID = show.id
-				}
-			}
-		} else if segue.identifier == R.segue.studioDetailsCollectionViewController.showsListSegue.identifier {
+		switch segue.identifier {
+		case R.segue.studioDetailsCollectionViewController.showDetailsSegue.identifier:
+			guard let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
+			guard let show = sender as? Show else { return }
+			showDetailCollectionViewController.showID = show.id
+		case R.segue.studioDetailsCollectionViewController.showsListSegue.identifier:
 			if let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController {
 				showsListCollectionViewController.studioID = self.studio.id
 			}
+		default: break
 		}
 	}
 }
@@ -169,7 +169,7 @@ extension StudioDetailsCollectionViewController {
 			}
 		case .shows:
 			if self.shows.count != 0 {
-				(studioCollectionViewCell as? SmallLockupCollectionViewCell)?.show = self.shows[indexPath.item]
+				(studioCollectionViewCell as? SmallLockupCollectionViewCell)?.configureCell(with: self.shows[indexPath.item])
 			}
 		}
 

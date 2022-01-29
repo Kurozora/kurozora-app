@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import AVKit
 import AVFoundation
 
@@ -55,9 +56,8 @@ class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	}
 
 	// MARK: - Functions
-	override func configureCell() {
-		super.configureCell()
-		guard let show = self.show else { return }
+	override func configureCell(with show: Show) {
+		super.configureCell(with: show)
 
 		// Configure genres
 		self.secondaryLabel?.text = show.attributes.genres?.localizedJoined()
@@ -66,18 +66,18 @@ class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.taglineLabel?.text = show.attributes.tagline
 
 		// Configure banner
-		if let bannerBackgroundColor = self.show.attributes.banner?.backgroundColor {
+		if let bannerBackgroundColor = show.attributes.banner?.backgroundColor {
 			self.thumbnailPlaceholder.backgroundColor = UIColor(hexString: bannerBackgroundColor)
 		}
-		self.show.attributes.bannerImage(imageView: self.thumbnailPlaceholder)
+		show.attributes.bannerImage(imageView: self.thumbnailPlaceholder)
 
 		// Configure video player
-		configureVideoPlayer()
+		configureVideoPlayer(with: show)
 	}
 
 	/// Configures the video player with the defined settings.
-	func configureVideoPlayer() {
-		if let videoUrlString = show?.attributes.videoUrl, !videoUrlString.isEmpty {
+	func configureVideoPlayer(with show: Show) {
+		if let videoUrlString = show.attributes.videoUrl, !videoUrlString.isEmpty {
 			if let videoUrl = URL(string: videoUrlString) {
 				let avPlayerItem = AVPlayerItem(url: videoUrl)
 				self.avPlayerViewController.player?.replaceCurrentItem(with: avPlayerItem)

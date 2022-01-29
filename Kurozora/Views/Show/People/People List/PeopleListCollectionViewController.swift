@@ -114,12 +114,12 @@ class PeopleListCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == R.segue.peopleListCollectionViewController.personDetailsSegue.identifier {
-			if let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController {
-				if let personID = sender as? Int {
-					personDetailsCollectionViewController.personID = personID
-				}
-			}
+		switch segue.identifier {
+		case R.segue.peopleListCollectionViewController.personDetailsSegue.identifier:
+			guard let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController else { return }
+			guard let person = sender as? Person else { return }
+			personDetailsCollectionViewController.personID = person.id
+		default: break
 		}
 	}
 }
@@ -134,7 +134,7 @@ extension PeopleListCollectionViewController {
 		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, _) -> UICollectionViewCell? in
 			guard let self = self else { return nil }
 			let personLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: PersonLockupCollectionViewCell.self, for: indexPath)
-			personLockupCollectionViewCell.person = self.people[indexPath.row]
+			personLockupCollectionViewCell.configureCell(with: self.people[indexPath.item])
 			return personLockupCollectionViewCell
 		}
 

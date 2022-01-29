@@ -14,17 +14,14 @@ class CharacterLockupCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var characterImageView: CharacterImageView!
 	@IBOutlet weak var nameLabel: KLabel!
 
-	// MARK: - Properties
-	var character: Character! {
-		didSet {
-			configureCell()
-		}
-	}
-
 	// MARK: - Functions
-	/// Configure the cell with the given details.
-	fileprivate func configureCell() {
-		self.nameLabel.text = self.character.attributes.name
-		self.characterImageView.setImage(with: self.character.attributes.profile?.url ?? "", placeholder: self.character.attributes.placeholderImage)
+	/**
+		Configure the cell with the given details.
+
+		- Parameter character: The character object used to configure the cell.
+	*/
+	func configureCell(with character: Character) {
+		self.nameLabel.text = character.attributes.name
+		self.characterImageView.setImage(with: character.attributes.profile?.url ?? "", placeholder: character.attributes.placeholderImage)
 	}
 }

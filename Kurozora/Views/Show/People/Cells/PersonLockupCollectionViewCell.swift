@@ -14,17 +14,14 @@ class PersonLockupCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var personImageView: PersonImageView!
 	@IBOutlet weak var nameLabel: KLabel!
 
-	// MARK: - Properties
-	var person: Person! {
-		didSet {
-			configureCell()
-		}
-	}
-
 	// MARK: - Functions
-	/// Configure the cell with the given details.
-	fileprivate func configureCell() {
-		self.personImageView.setImage(with: self.person.attributes.profile?.url ?? "", placeholder: self.person.attributes.placeholderImage)
+	/**
+		Configure the cell with the given details.
+
+		- Parameter person: The person object used to configure the cell.
+	*/
+	func configureCell(with person: Person) {
+		self.personImageView.setImage(with: person.attributes.profile?.url ?? "", placeholder: person.attributes.placeholderImage)
 		self.nameLabel.text = person.attributes.fullName
 	}
 }

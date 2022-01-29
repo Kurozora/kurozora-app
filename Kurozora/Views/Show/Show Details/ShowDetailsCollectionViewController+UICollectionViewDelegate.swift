@@ -11,8 +11,6 @@ import UIKit
 extension ShowDetailsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		guard let showDetailSection = ShowDetail.Section(rawValue: indexPath.section) else { return }
-		let collectionViewCell = collectionView.cellForItem(at: indexPath)
-		var segueIdentifier = ""
 
 		switch showDetailSection {
 		case .badge:
@@ -31,19 +29,22 @@ extension ShowDetailsCollectionViewController {
 				collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.rating.rawValue, section: ShowDetail.Section.information.rawValue), at: .centeredVertically, animated: true)
 				return
 			case .studio:
-				segueIdentifier = R.segue.showDetailsCollectionViewController.studioSegue.identifier
+				self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.studioSegue.identifier, sender: nil)
 			case .language:
 				collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.languages.rawValue, section: ShowDetail.Section.information.rawValue), at: .centeredVertically, animated: true)
 				return
 			}
 		case .seasons:
-			segueIdentifier = R.segue.showDetailsCollectionViewController.episodeSegue.identifier
-		case .moreByStudio, .relatedShows:
-			segueIdentifier = R.segue.showDetailsCollectionViewController.showDetailsSegue.identifier
+			let season = self.seasons[indexPath.item]
+			self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.episodeSegue.identifier, sender: season)
+		case .moreByStudio:
+			let show = self.studioShows[indexPath.item]
+			self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.showDetailsSegue.identifier, sender: show)
+		case .relatedShows:
+			let show = self.relatedShows[indexPath.item].show
+			self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.showDetailsSegue.identifier, sender: show)
 		default: return
 		}
-
-		self.performSegue(withIdentifier: segueIdentifier, sender: collectionViewCell)
 	}
 
 	// MARK: - Managing Context Menus
@@ -52,21 +53,17 @@ extension ShowDetailsCollectionViewController {
 
 		switch showDetailSection {
 		case .seasons:
-			if let posterLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? PosterLockupCollectionViewCell {
-				return posterLockupCollectionViewCell.season?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-			}
+			let season = self.seasons[indexPath.item]
+			return season.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .cast:
-			if let castCollectionViewCell = collectionView.cellForItem(at: indexPath) as? CastCollectionViewCell {
-				return castCollectionViewCell.cast?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-			}
+			let cast = self.cast[indexPath.item]
+			return cast.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .moreByStudio:
-			if let smallLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? SmallLockupCollectionViewCell {
-				return smallLockupCollectionViewCell.show?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-			}
+			let show = self.studioShows[indexPath.item]
+			return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .relatedShows:
-			if let smallLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? SmallLockupCollectionViewCell {
-				return smallLockupCollectionViewCell.show?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-			}
+			let show = self.relatedShows[indexPath.item].show
+			return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		default: break
 		}
 

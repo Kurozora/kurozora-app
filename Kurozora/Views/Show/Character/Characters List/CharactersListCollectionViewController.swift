@@ -115,12 +115,13 @@ class CharactersListCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == R.segue.charactersListCollectionViewController.characterDetailsSegue.identifier {
-			if let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController {
-				if let characterID = sender as? Int {
-					characterDetailsCollectionViewController.characterID = characterID
-				}
+		switch segue.identifier {
+		case R.segue.charactersListCollectionViewController.characterDetailsSegue.identifier:
+		guard let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController else { return }
+			if let character = sender as? Character {
+				characterDetailsCollectionViewController.characterID = character.id
 			}
+		default: break
 		}
 	}
 }
@@ -135,7 +136,7 @@ extension CharactersListCollectionViewController {
 		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, _) -> UICollectionViewCell? in
 			guard let self = self else { return nil }
 			let characterLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: CharacterLockupCollectionViewCell.self, for: indexPath)
-			characterLockupCollectionViewCell.character = self.characters[indexPath.row]
+			characterLockupCollectionViewCell.configureCell(with: self.characters[indexPath.item])
 			return characterLockupCollectionViewCell
 		}
 

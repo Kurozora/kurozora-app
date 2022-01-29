@@ -12,7 +12,8 @@ import WhatsNew
 
 class HomeCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var genre: Genre? = nil
+	lazy var genre: Genre? = nil
+	lazy var theme: Theme? = nil
 	let actionsArray: [[[String: String]]] = [
 		[["title": "About In-App Purchases", "url": "https://kurozora.app/kb/iap"], ["title": "About Personalisation", "url": "https://kurozora.app/kb/personalisation"], ["title": "Welcome to Kurozora", "url": "https://kurozora.app/welcome"]],
 		[["title": "Redeem", "segueId": R.segue.homeCollectionViewController.redeemSegue.identifier], ["title": "Become a Pro User", "segueId": R.segue.homeCollectionViewController.subscriptionSegue.identifier]]
@@ -69,6 +70,22 @@ class HomeCollectionViewController: KCollectionViewController {
 		fatalError("Failed to instantiate HomeCollectionViewController with the given Genre object.")
 	}
 
+	/**
+		Initialize a new instance of HomeCollectionViewController with the given theme object.
+
+		- Parameter theme: The theme object to use when initializing the view.
+
+		- Returns: an initialized instance of HomeCollectionViewController.
+	*/
+	static func `init`(with theme: Theme) -> HomeCollectionViewController {
+		if let homeCollectionViewController = R.storyboard.home.homeCollectionViewController() {
+			homeCollectionViewController.theme = theme
+			return homeCollectionViewController
+		}
+
+		fatalError("Failed to instantiate HomeCollectionViewController with the given Theme object.")
+	}
+
 	// MARK: - View
 	override func viewWillReload() {
 		super.viewWillReload()
@@ -78,7 +95,7 @@ class HomeCollectionViewController: KCollectionViewController {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		self.title = genre?.attributes.name ?? "Explore"
+		self.title = self.genre?.attributes.name ?? self.theme?.attributes.name ?? "Explore"
 	}
 
 	override func viewDidLoad() {
@@ -122,23 +139,24 @@ class HomeCollectionViewController: KCollectionViewController {
 
 	/// Fetches the explore page from the server.
 	fileprivate func fetchExplore() {
-		KService.getExplore(genre?.id) { [weak self] result in
+		KService.getExplore(genreID: self.genre?.id, themeID: self.theme?.id) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
 			case .success(let exploreCategories):
 				// Remove any empty sections
 				self.exploreCategories = exploreCategories.filter { exploreCategory in
-					let relationships = exploreCategory.relationships
-					if let shows = relationships.shows {
-						return !shows.data.isEmpty
-					} else if let genres = relationships.genres {
-						return !genres.data.isEmpty
-					} else if let characters = relationships.characters {
-						return !characters.data.isEmpty
-					} else if let people = relationships.people {
-						return !people.data.isEmpty
+					switch exploreCategory.attributes.exploreCategoryType {
+					case .shows, .upcomingShows, .mostPopularShows:
+						return !(exploreCategory.relationships.shows?.data.isEmpty ?? false)
+					case .genres:
+						return !(exploreCategory.relationships.genres?.data.isEmpty ?? false)
+					case .themes:
+						return !(exploreCategory.relationships.themes?.data.isEmpty ?? false)
+					case .characters:
+						return !(exploreCategory.relationships.characters?.data.isEmpty ?? false)
+					case .people:
+						return !(exploreCategory.relationships.people?.data.isEmpty ?? false)
 					}
-					return false
 				}
 			case .failure: break
 			}
@@ -147,51 +165,56 @@ class HomeCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == R.segue.homeCollectionViewController.showDetailsSegue.identifier {
+		switch segue.identifier {
+		case R.segue.homeCollectionViewController.showDetailsSegue.identifier:
 			// Segue to show details
 			if let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController {
-				guard let showID = sender as? Int else { return }
-				showDetailCollectionViewController.showID = showID
+				guard let show = sender as? Show else { return }
+				showDetailCollectionViewController.showID = show.id
 			}
-		} else if segue.identifier == R.segue.homeCollectionViewController.showsListSegue.identifier {
+		case R.segue.homeCollectionViewController.showsListSegue.identifier:
 			// Segue to shows list
 			if let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController {
 				guard let indexPath = sender as? IndexPath else { return }
 				showsListCollectionViewController.title = exploreCategories[indexPath.section].attributes.title
 				showsListCollectionViewController.shows = exploreCategories[indexPath.section].relationships.shows?.data ?? []
 			}
-		} else if segue.identifier == R.segue.homeCollectionViewController.exploreSegue.identifier {
-			// Segue to genre explore
+		case R.segue.homeCollectionViewController.exploreSegue.identifier:
+			// Segue to genre or theme explore
 			if let homeCollectionViewController = segue.destination as? HomeCollectionViewController {
-				guard let genre = sender as? Genre else { return }
-				homeCollectionViewController.genre = genre
+				if let genre = sender as? Genre {
+					homeCollectionViewController.genre = genre
+				} else if let theme = sender as? Theme {
+					homeCollectionViewController.theme = theme
+				}
 			}
-		} else if segue.identifier == R.segue.homeCollectionViewController.characterSegue.identifier {
+		case R.segue.homeCollectionViewController.characterSegue.identifier:
 			// Segue to character details
 			if let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController {
-				guard let characterID = sender as? Int else { return }
-				characterDetailsCollectionViewController.characterID = characterID
+				guard let character = sender as? Character else { return }
+				characterDetailsCollectionViewController.characterID = character.id
 			}
-		} else if segue.identifier == R.segue.homeCollectionViewController.charactersListSegue.identifier {
+		case R.segue.homeCollectionViewController.charactersListSegue.identifier:
 			// Segue to characters list
 			if let charactersListCollectionViewController = segue.destination as? CharactersListCollectionViewController {
 				guard let indexPath = sender as? IndexPath else { return }
 				charactersListCollectionViewController.title = exploreCategories[indexPath.section].attributes.title
 				charactersListCollectionViewController.characters = exploreCategories[indexPath.section].relationships.characters?.data ?? []
 			}
-		} else if segue.identifier == R.segue.homeCollectionViewController.personSegue.identifier {
+		case R.segue.homeCollectionViewController.personSegue.identifier:
 			// Segue to person details
 			if let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController {
-				guard let personID = sender as? Int else { return }
-				personDetailsCollectionViewController.personID = personID
+				guard let person = sender as? Person else { return }
+				personDetailsCollectionViewController.personID = person.id
 			}
-		} else if segue.identifier == R.segue.homeCollectionViewController.peopleListSegue.identifier {
+		case R.segue.homeCollectionViewController.peopleListSegue.identifier:
 			// Segue to people list
 			if let peopleListCollectionViewController = segue.destination as? PeopleListCollectionViewController {
 				guard let indexPath = sender as? IndexPath else { return }
 				peopleListCollectionViewController.title = exploreCategories[indexPath.section].attributes.title
 				peopleListCollectionViewController.people = exploreCategories[indexPath.section].relationships.people?.data ?? []
 			}
+		default: break
 		}
 	}
 }
@@ -229,6 +252,71 @@ extension HomeCollectionViewController: TitleHeaderCollectionReusableViewDelegat
 	}
 }
 
+// MARK: - BaseLockupCollectionViewCellDelegate
+extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
+	func reminderButtonPressed(on cell: BaseLockupCollectionViewCell) {
+		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+		guard let show = self.exploreCategories[indexPath.section].relationships.shows?.data[indexPath.item] else { return }
+		show.toggleReminder()
+	}
+
+	func chooseStatusButtonPressed(_ sender: UIButton, on cell: BaseLockupCollectionViewCell) {
+		WorkflowController.shared.isSignedIn {
+			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+			guard let show = self.exploreCategories[indexPath.section].relationships.shows?.data[indexPath.item] else { return }
+
+			let oldLibraryStatus = cell.libraryStatus
+			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: oldLibraryStatus, action: { (title, value)  in
+				KService.addToLibrary(withLibraryStatus: value, showID: show.id) { result in
+					switch result {
+					case .success(let libraryUpdate):
+						show.attributes.update(using: libraryUpdate)
+
+						// Update entry in library
+						cell.libraryStatus = value
+						cell.libraryStatusButton?.setTitle("\(title) ▾", for: .normal)
+
+						let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
+						NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
+					case .failure:
+						break
+					}
+				}
+			})
+
+			if cell.libraryStatus != .none {
+				actionSheetAlertController.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { _ in
+					KService.removeFromLibrary(showID: show.id) { result in
+						switch result {
+						case .success(let libraryUpdate):
+							show.attributes.update(using: libraryUpdate)
+
+							// Update edntry in library
+							cell.libraryStatus = .none
+							cell.libraryStatusButton?.setTitle("ADD", for: .normal)
+
+							let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
+							NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
+						case .failure:
+							break
+						}
+					}
+				}))
+			}
+
+			// Present the controller
+			if let popoverController = actionSheetAlertController.popoverPresentationController {
+				popoverController.sourceView = sender
+				popoverController.sourceRect = sender.bounds
+			}
+
+			if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
+				self.present(actionSheetAlertController, animated: true, completion: nil)
+			}
+		}
+	}
+}
+
 // MARK: - SectionLayoutKind
 extension HomeCollectionViewController {
 	/**
@@ -262,11 +350,15 @@ extension HomeCollectionViewController {
 		List of available Item Kind types.
 	*/
 	enum ItemKind: Hashable {
+		// MARK: - Cases
 		/// Indicates the item kind contains a Show object.
 		case show(_: Show, id: UUID = UUID())
 
 		/// Indicates the item kind contains a Genre object.
 		case genre(_: Genre, id: UUID = UUID())
+
+		/// Indicates the item kind contains a Theme object.
+		case theme(_: Theme, id: UUID = UUID())
 
 		/// Indicates the item kind contains a Character object.
 		case character(_: Character, id: UUID = UUID())
@@ -277,6 +369,7 @@ extension HomeCollectionViewController {
 		/// Indicates the item kind contains an other type object.
 		case other(_: Int)
 
+		// MARK: - Functions
 		func hash(into hasher: inout Hasher) {
 			switch self {
 			case .show(let show, let id):
@@ -284,6 +377,9 @@ extension HomeCollectionViewController {
 				hasher.combine(id)
 			case .genre(let genre, let id):
 				hasher.combine(genre)
+				hasher.combine(id)
+			case .theme(let theme, let id):
+				hasher.combine(theme)
 				hasher.combine(id)
 			case .character(let character, let id):
 				hasher.combine(character)
@@ -302,6 +398,8 @@ extension HomeCollectionViewController {
 				return show1.id == show2.id && id1 == id2
 			case (.genre(let genre1, let id1), .genre(let genre2, let id2)):
 				return genre1.id == genre2.id && id1 == id2
+			case (.theme(let theme1, let id1), .theme(let theme2, let id2)):
+				return theme1.id == theme2.id && id1 == id2
 			case (.character(let character1, let id1), .character(let character2, let id2)):
 				return character1.id == character2.id && id1 == id2
 			case (.person(let person1, let id1), .person(let person2, let id2)):

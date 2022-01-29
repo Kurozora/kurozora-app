@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 
 class MediumLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	// MARK: - IBOutlets
@@ -18,11 +19,15 @@ class MediumLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	@IBOutlet weak var backgroundColorView: UIView?
 
 	// MARK: - Functions
-	override func configureCell() {
-		guard let genre = genre else { return }
-
+	override func configureCell(with genre: Genre) {
 		primaryLabel?.text = genre.attributes.name
 		backgroundColorView?.backgroundColor = UIColor(hexString: genre.attributes.color)
 		bannerImageView?.setImage(with: genre.attributes.symbol?.url ?? "", placeholder: R.image.kurozoraIcon()!)
+	}
+
+	override func configureCell(with theme: Theme) {
+		primaryLabel?.text = theme.attributes.name
+		backgroundColorView?.backgroundColor = UIColor(hexString: theme.attributes.color)
+		bannerImageView?.setImage(with: theme.attributes.symbol?.url ?? "", placeholder: R.image.kurozoraIcon()!)
 	}
 }

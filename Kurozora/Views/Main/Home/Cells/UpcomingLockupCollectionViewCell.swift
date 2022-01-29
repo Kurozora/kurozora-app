@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 
 class UpcomingLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	// MARK: - IBOutlets
@@ -14,10 +15,10 @@ class UpcomingLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	@IBOutlet weak var reminderButton: KTintedButton!
 
 	// MARK: - Functions
-	override func configureCell() {
-		super.configureCell()
+	override func configureCell(with show: Show) {
+		super.configureCell(with: show)
 
-		if let firstAired = self.show.attributes.firstAired {
+		if let firstAired = show.attributes.firstAired {
 			self.secondaryLabel?.text = "EXPECTED \(firstAired.formatted(date: .abbreviated, time: .omitted))"
 		} else {
 			self.secondaryLabel?.text = "COMING SOON"
@@ -26,6 +27,6 @@ class UpcomingLockupCollectionViewCell: BaseLockupCollectionViewCell {
 
 	// MARK: - IBActions
 	@IBAction func reminderButtonPressed(_ sender: UIButton) {
-		self.show.toggleReminder()
+		self.baseLockupCollectionViewCellDelegate?.reminderButtonPressed(on: self)
 	}
 }

@@ -10,8 +10,13 @@ import UIKit
 
 extension StudioDetailsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		if let baseLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? BaseLockupCollectionViewCell {
-			performSegue(withIdentifier: R.segue.studioDetailsCollectionViewController.showDetailsSegue, sender: baseLockupCollectionViewCell)
+		let studioDetailSection = StudioDetail.Section(rawValue: indexPath.section) ?? .header
+
+		switch studioDetailSection {
+		case .shows:
+			let show = self.shows[indexPath.item]
+			performSegue(withIdentifier: R.segue.studioDetailsCollectionViewController.showDetailsSegue, sender: show)
+		default: break
 		}
 	}
 
@@ -21,9 +26,7 @@ extension StudioDetailsCollectionViewController {
 
 		switch studioDetailSection {
 		case .shows:
-			if let smallLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? SmallLockupCollectionViewCell {
-				return smallLockupCollectionViewCell.show?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-			}
+			return self.shows[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		default: break
 		}
 

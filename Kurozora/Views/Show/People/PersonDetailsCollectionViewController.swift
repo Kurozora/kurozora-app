@@ -145,26 +145,26 @@ class PersonDetailsCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == R.segue.personDetailsCollectionViewController.showsListSegue.identifier {
+		switch segue.identifier {
+		case R.segue.personDetailsCollectionViewController.showsListSegue.identifier:
 			if let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController {
 				showsListCollectionViewController.personID = self.person.id
 			}
-		} else if segue.identifier == R.segue.personDetailsCollectionViewController.showDetailsSegue.identifier {
+		case R.segue.personDetailsCollectionViewController.showDetailsSegue.identifier:
 			if let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController {
-				if let show = (sender as? BaseLockupCollectionViewCell)?.show {
-					showDetailCollectionViewController.showID = show.id
-				}
+				guard let show = sender as? Show else { return }
+				showDetailCollectionViewController.showID = show.id
 			}
-		} else if segue.identifier == R.segue.personDetailsCollectionViewController.charactersListSegue.identifier {
+		case R.segue.personDetailsCollectionViewController.charactersListSegue.identifier:
 			if let charactersListCollectionViewController = segue.destination as? CharactersListCollectionViewController {
 				charactersListCollectionViewController.personID = self.person.id
 			}
-		} else if segue.identifier == R.segue.personDetailsCollectionViewController.characterDetailsSegue.identifier {
+		case R.segue.personDetailsCollectionViewController.characterDetailsSegue.identifier:
 			if let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController {
-				if let character = (sender as? CharacterLockupCollectionViewCell)?.character {
-					characterDetailsCollectionViewController.characterID = character.id
-				}
+				guard let character = sender as? Character else { return }
+				characterDetailsCollectionViewController.characterID = character.id
 			}
+		default: break
 		}
 	}
 }
@@ -214,11 +214,11 @@ extension PersonDetailsCollectionViewController {
 			}
 		case .shows:
 			if self.shows.count != 0 {
-				(personCollectionViewCell as? SmallLockupCollectionViewCell)?.show = self.shows[indexPath.item]
+				(personCollectionViewCell as? SmallLockupCollectionViewCell)?.configureCell(with: self.shows[indexPath.item])
 			}
 		case .characters:
 			if self.characters.count != 0 {
-				(personCollectionViewCell as? CharacterLockupCollectionViewCell)?.character = self.characters[indexPath.item]
+				(personCollectionViewCell as? CharacterLockupCollectionViewCell)?.configureCell(with: self.characters[indexPath.item])
 			}
 		}
 
