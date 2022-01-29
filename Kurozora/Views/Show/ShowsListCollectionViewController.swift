@@ -191,12 +191,12 @@ class ShowsListCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == R.segue.showsListCollectionViewController.showDetailsSegue.identifier {
-			if let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController {
-				if let showID = sender as? Int {
-					showDetailCollectionViewController.showID = showID
-				}
-			}
+		switch segue.identifier {
+		case R.segue.showsListCollectionViewController.showDetailsSegue.identifier:
+			guard let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
+			guard let show = sender as? Show else { return }
+			showDetailCollectionViewController.showID = show.id
+		default: break
 		}
 	}
 }
@@ -214,9 +214,9 @@ extension ShowsListCollectionViewController {
 			// Populate the cell with our item description
 			switch item {
 			case .show(let show, _):
-				smallLockupCollectionViewCell.show = show
+				smallLockupCollectionViewCell.configureCell(with: show)
 			case .relatedShow(let relatedShow, _):
-				smallLockupCollectionViewCell.relatedShow = relatedShow
+				smallLockupCollectionViewCell.configureCell(with: relatedShow)
 			}
 
 			// Return the cell

@@ -9,6 +9,11 @@
 import UIKit
 import KurozoraKit
 
+protocol BaseLockupCollectionViewCellDelegate: AnyObject {
+	func chooseStatusButtonPressed(_ sender: UIButton, on cell: BaseLockupCollectionViewCell)
+	func reminderButtonPressed(on cell: BaseLockupCollectionViewCell)
+}
+
 class BaseLockupCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var primaryLabel: UILabel?
@@ -19,24 +24,12 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - Properties
 	var showDetailsCollectionViewController: ShowDetailsCollectionViewController?
-	var show: Show! {
-		didSet {
-			self.configureCell()
-		}
-	}
-	var genre: Genre! = nil {
-		didSet {
-			self.show = nil
-			self.configureCell()
-		}
-	}
 	var libraryStatus: KKLibrary.Status = .none
+	weak var baseLockupCollectionViewCellDelegate: BaseLockupCollectionViewCellDelegate?
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
-	func configureCell() {
-		guard let show = self.show else { return }
-
+	func configureCell(with show: Show) {
 		// Configure title
 		self.primaryLabel?.text = show.attributes.title
 
@@ -44,81 +37,42 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 		self.secondaryLabel?.text = show.attributes.tagline ?? show.attributes.genres?.localizedJoined()
 
 		// Configure banner
-		if let bannerBackgroundColor = self.show.attributes.banner?.backgroundColor {
+		if let bannerBackgroundColor = show.attributes.banner?.backgroundColor {
 			self.bannerImageView?.backgroundColor = UIColor(hexString: bannerBackgroundColor)
 		}
 		if self.bannerImageView != nil {
-			self.show.attributes.bannerImage(imageView: self.bannerImageView!)
+			show.attributes.bannerImage(imageView: self.bannerImageView!)
 		}
 
 		// Configure poster
-		if let posterBackgroundColor = self.show.attributes.poster?.backgroundColor {
+		if let posterBackgroundColor = show.attributes.poster?.backgroundColor {
 			self.posterImageView?.backgroundColor = UIColor(hexString: posterBackgroundColor)
 		}
 		if self.posterImageView != nil {
-			self.show.attributes.posterImage(imageView: self.posterImageView!)
+			show.attributes.posterImage(imageView: self.posterImageView!)
 		}
 
 		// Configure library status
-		self.libraryStatus = self.show.attributes.libraryStatus ?? .none
+		self.libraryStatus = show.attributes.libraryStatus ?? .none
 		self.libraryStatusButton?.setTitle(self.libraryStatus != .none ? "\(self.libraryStatus.stringValue.capitalized) ▾" : "ADD", for: .normal)
 	}
 
+	/**
+		Configures the cell with the given `Genre` obejct.
+
+		- Parameter genre: The `Genre` object used to configure the cell.
+	*/
+	func configureCell(with genre: Genre) {}
+
+	/**
+		Configures the cell with the given `Theme` obejct.
+
+		- Parameter theme: The `Theme` object used to configure the cell.
+	*/
+	func configureCell(with theme: Theme) {}
+
 	// MARK: - IBActions
 	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
-		WorkflowController.shared.isSignedIn {
-			let oldLibraryStatus = self.libraryStatus
-			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: oldLibraryStatus, action: { [weak self] (title, value)  in
-				guard let self = self else { return }
-				KService.addToLibrary(withLibraryStatus: value, showID: self.show.id) { [weak self] result in
-					guard let self = self else { return }
-					switch result {
-					case .success(let libraryUpdate):
-						self.show.attributes.update(using: libraryUpdate)
-
-						// Update entry in library
-						self.libraryStatus = value
-						self.libraryStatusButton?.setTitle("\(title) ▾", for: .normal)
-
-						let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
-						NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
-					case .failure:
-						break
-					}
-				}
-			})
-
-			if self.libraryStatus != .none {
-				actionSheetAlertController.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { [weak self] _ in
-					guard let self = self else { return }
-					KService.removeFromLibrary(showID: self.show.id) { [weak self] result in
-						guard let self = self else { return }
-						switch result {
-						case .success(let libraryUpdate):
-							self.show.attributes.update(using: libraryUpdate)
-
-							// Update edntry in library
-							self.libraryStatus = .none
-							self.libraryStatusButton?.setTitle("ADD", for: .normal)
-
-							let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
-							NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
-						case .failure:
-							break
-						}
-					}
-				}))
-			}
-
-			// Present the controller
-			if let popoverController = actionSheetAlertController.popoverPresentationController {
-				popoverController.sourceView = sender
-				popoverController.sourceRect = sender.bounds
-			}
-
-			if (self.parentViewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
-				self.parentViewController?.present(actionSheetAlertController, animated: true, completion: nil)
-			}
-		}
+		self.baseLockupCollectionViewCellDelegate?.chooseStatusButtonPressed(sender, on: self)
 	}
 }

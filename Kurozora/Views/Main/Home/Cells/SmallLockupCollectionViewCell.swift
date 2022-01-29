@@ -13,17 +13,10 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var ternaryLabel: KSecondaryLabel!
 
-	// MARK: - Properties
-	var relatedShow: RelatedShow? {
-		didSet {
-			self.show = self.relatedShow?.show
-		}
-	}
-
 	// MARK: - Functions
-	override func configureCell() {
-		super.configureCell()
+	func configureCell(with relatedShow: RelatedShow) {
+		self.configureCell(with: relatedShow.show)
 
-		self.ternaryLabel.text = self.relatedShow?.attributes.relation.name
+		self.ternaryLabel.text = relatedShow.attributes.relation.name
 	}
 }

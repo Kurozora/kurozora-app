@@ -10,9 +10,7 @@ import UIKit
 
 extension CharactersListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		if let characterLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? CharacterLockupCollectionViewCell {
-			self.performSegue(withIdentifier: R.segue.charactersListCollectionViewController.characterDetailsSegue, sender: characterLockupCollectionViewCell.character.id)
-		}
+		self.performSegue(withIdentifier: R.segue.charactersListCollectionViewController.characterDetailsSegue, sender: self.characters[indexPath.item])
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -27,11 +25,7 @@ extension CharactersListCollectionViewController {
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		if let characterLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? CharacterLockupCollectionViewCell {
-			return characterLockupCollectionViewCell.character?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-		}
-
-		return nil
+		return self.characters[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {

@@ -15,7 +15,7 @@ extension HomeCollectionViewController {
 		let exploreCategoriesCount = self.exploreCategories.count
 
 		switch self.dataSource.itemIdentifier(for: IndexPath(item: 0, section: section)) {
-		case .show, .genre:
+		case .show, .genre, .theme:
 			switch section {
 			case let section where section < exploreCategoriesCount:
 				let exploreCategorySize = section != 0 ? self.exploreCategories[section].attributes.exploreCategorySize : .banner
@@ -130,7 +130,7 @@ extension HomeCollectionViewController {
 			let exploreCategoriesCount = self.exploreCategories.count
 
 			switch self.dataSource.itemIdentifier(for: IndexPath(item: 0, section: section)) {
-			case .show, .genre:
+			case .show, .genre, .theme:
 				let exploreCategorySize = section != 0 ? self.exploreCategories[section].attributes.exploreCategorySize : .banner
 				var sectionLayout: NSCollectionLayoutSection? = nil
 

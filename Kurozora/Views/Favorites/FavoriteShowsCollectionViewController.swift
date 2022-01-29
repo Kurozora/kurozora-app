@@ -141,7 +141,8 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if let show = (sender as? SmallLockupCollectionViewCell)?.show, let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController {
+		if let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController {
+			guard let show = sender as? Show else { return }
 			showDetailCollectionViewController.showID = show.id
 		}
 	}

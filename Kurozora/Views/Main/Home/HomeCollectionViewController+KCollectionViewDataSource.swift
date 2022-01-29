@@ -37,24 +37,29 @@ extension HomeCollectionViewController {
 				case .show(let show, _):
 					guard let baseLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: exploreCategorySize.identifierString, for: indexPath) as? BaseLockupCollectionViewCell
 					else { fatalError("Cannot dequeue reusable cell with identifier \(exploreCategorySize.identifierString)") }
-					baseLockupCollectionViewCell.show = show
+					baseLockupCollectionViewCell.configureCell(with: show)
 					return baseLockupCollectionViewCell
 				case .genre(let genre, _):
 					guard let baseLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: exploreCategorySize.identifierString, for: indexPath) as? BaseLockupCollectionViewCell
 					else { fatalError("Cannot dequeue reusable cell with identifier \(exploreCategorySize.identifierString)") }
-					baseLockupCollectionViewCell.genre = genre
+					baseLockupCollectionViewCell.configureCell(with: genre)
+					return baseLockupCollectionViewCell
+				case .theme(let theme, _):
+					guard let baseLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: exploreCategorySize.identifierString, for: indexPath) as? BaseLockupCollectionViewCell
+					else { fatalError("Cannot dequeue reusable cell with identifier \(exploreCategorySize.identifierString)") }
+					baseLockupCollectionViewCell.configureCell(with: theme)
 					return baseLockupCollectionViewCell
 				case .character(let character, _):
 					let reuseIdentifier = R.reuseIdentifier.characterLockupCollectionViewCell.identifier
 					guard let baseLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? CharacterLockupCollectionViewCell
 					else { fatalError("Cannot dequeue reusable cell with identifier \(reuseIdentifier)") }
-					baseLockupCollectionViewCell.character = character
+					baseLockupCollectionViewCell.configureCell(with: character)
 					return baseLockupCollectionViewCell
 				case .person(let person, _):
 					let reuseIdentifier = R.reuseIdentifier.personLockupCollectionViewCell.identifier
 					guard let baseLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? PersonLockupCollectionViewCell
 					else { fatalError("Cannot dequeue reusable cell with identifier \(reuseIdentifier)") }
-					baseLockupCollectionViewCell.person = person
+					baseLockupCollectionViewCell.configureCell(with: person)
 					return baseLockupCollectionViewCell
 				default: break
 				}
@@ -93,6 +98,8 @@ extension HomeCollectionViewController {
 					exploreSectionTitleCell.segueID = R.segue.homeCollectionViewController.showsListSegue.identifier
 				} else if exploreCategory.relationships.genres != nil {
 					exploreSectionTitleCell.segueID = R.segue.homeCollectionViewController.genresSegue.identifier
+				} else if exploreCategory.relationships.themes != nil {
+					exploreSectionTitleCell.segueID = R.segue.homeCollectionViewController.themesSegue.identifier
 				} else if exploreCategory.relationships.characters != nil {
 					exploreSectionTitleCell.segueID = R.segue.homeCollectionViewController.charactersListSegue.identifier
 				} else if exploreCategory.relationships.people != nil {
@@ -124,26 +131,42 @@ extension HomeCollectionViewController {
 			if section < exploreCategories.count {
 				let exploreCategoriesSection = exploreCategories[section]
 
-				if let shows = exploreCategoriesSection.relationships.shows?.data {
-					let showItems: [ItemKind] = shows.map { show in
-						return .show(show)
+				switch exploreCategories[section].attributes.exploreCategoryType {
+				case .shows, .upcomingShows, .mostPopularShows:
+					if let shows = exploreCategoriesSection.relationships.shows?.data {
+						let showItems: [ItemKind] = shows.map { show in
+							return .show(show)
+						}
+						snapshot.appendItems(showItems, toSection: sectionHeader)
 					}
-					snapshot.appendItems(showItems, toSection: sectionHeader)
-				} else if let genres = exploreCategoriesSection.relationships.genres?.data {
-					let genreItems: [ItemKind] = genres.map { genre in
-						return .genre(genre)
+				case .genres:
+					if let genres = exploreCategoriesSection.relationships.genres?.data {
+						let genreItems: [ItemKind] = genres.map { genre in
+							return .genre(genre)
+						}
+						snapshot.appendItems(genreItems, toSection: sectionHeader)
 					}
-					snapshot.appendItems(genreItems, toSection: sectionHeader)
-				} else if let characters = exploreCategoriesSection.relationships.characters?.data {
-					let characterItems: [ItemKind] = characters.map { character in
-						return .character(character)
+				case .themes:
+					if let themes = exploreCategoriesSection.relationships.themes?.data {
+						let themeItems: [ItemKind] = themes.map { theme in
+							return .theme(theme)
+						}
+						snapshot.appendItems(themeItems, toSection: sectionHeader)
 					}
-					snapshot.appendItems(characterItems, toSection: sectionHeader)
-				} else if let people = exploreCategoriesSection.relationships.people?.data {
-					let personItems: [ItemKind] = people.map { person in
-						return .person(person)
+				case .characters:
+					if let characters = exploreCategoriesSection.relationships.characters?.data {
+						let characterItems: [ItemKind] = characters.map { character in
+							return .character(character)
+						}
+						snapshot.appendItems(characterItems, toSection: sectionHeader)
 					}
-					snapshot.appendItems(personItems, toSection: sectionHeader)
+				case .people:
+					if let people = exploreCategoriesSection.relationships.people?.data {
+						let personItems: [ItemKind] = people.map { person in
+							return .person(person)
+						}
+						snapshot.appendItems(personItems, toSection: sectionHeader)
+					}
 				}
 			} else {
 				// Get number of items per section

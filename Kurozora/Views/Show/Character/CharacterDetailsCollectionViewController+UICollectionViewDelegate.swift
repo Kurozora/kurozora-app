@@ -10,25 +10,28 @@ import UIKit
 
 extension CharacterDetailsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		if let baseLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? BaseLockupCollectionViewCell {
-			performSegue(withIdentifier: R.segue.characterDetailsCollectionViewController.showDetailsSegue, sender: baseLockupCollectionViewCell)
-		} else if let personLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? PersonLockupCollectionViewCell {
-			performSegue(withIdentifier: R.segue.characterDetailsCollectionViewController.personDetailsSegue, sender: personLockupCollectionViewCell)
+		guard let characterDetailSection = CharacterDetail.Section(rawValue: indexPath.section) else { return }
+
+		switch characterDetailSection {
+		case .shows:
+			let show = self.shows[indexPath.item]
+			performSegue(withIdentifier: R.segue.characterDetailsCollectionViewController.showDetailsSegue, sender: show)
+		case .people:
+			let person = self.people[indexPath.item]
+			performSegue(withIdentifier: R.segue.characterDetailsCollectionViewController.personDetailsSegue, sender: person)
+		default: break
 		}
 	}
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
 		guard let characterDetailSection = CharacterDetail.Section(rawValue: indexPath.section) else { return nil }
+
 		switch characterDetailSection {
 		case .shows:
-			if let smallLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? SmallLockupCollectionViewCell {
-				return smallLockupCollectionViewCell.show?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-			}
+			return self.shows[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .people:
-			if let personLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? PersonLockupCollectionViewCell {
-				return personLockupCollectionViewCell.person?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-			}
+			return self.people[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		default: break
 		}
 
