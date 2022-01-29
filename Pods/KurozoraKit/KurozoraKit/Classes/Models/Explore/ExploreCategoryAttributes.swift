@@ -11,8 +11,14 @@ extension ExploreCategory {
 	*/
 	public struct Attributes: Codable {
 		// MARK: - Properties
+		/// The slug of the resource.
+		public let slug: String
+
 		/// The title of the explore category.
 		public let title: String
+
+		/// The description of the explore category.
+		public let description: String?
 
 		/// The position of the explore category.
 		public let position: Int
@@ -30,5 +36,10 @@ extension ExploreCategory.Attributes {
 	/// The size of the explore category.
 	public var exploreCategorySize: ExploreCategorySize {
 		return ExploreCategorySize(rawValue: self.size) ?? .small
+	}
+
+	/// The type of the explore category.
+	public var exploreCategoryType: ExploreCategoryType {
+		return ExploreCategoryType(rawValue: self.type) ?? .shows
 	}
 }

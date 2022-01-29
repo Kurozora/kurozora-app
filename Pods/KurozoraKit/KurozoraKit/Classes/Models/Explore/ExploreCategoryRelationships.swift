@@ -17,6 +17,9 @@ extension ExploreCategory {
 		/// The genres belonging to the explore category.
 		public let genres: GenreResponse?
 
+		/// The themes belonging to the explore category.
+		public let themes: ThemeResponse?
+
 		/// The characters belonging to the explore category.
 		public let characters: CharacterResponse?
 
