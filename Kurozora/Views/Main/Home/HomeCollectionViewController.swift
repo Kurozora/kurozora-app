@@ -14,7 +14,7 @@ class HomeCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var genre: Genre? = nil
 	let actionsArray: [[[String: String]]] = [
-		[["title": "About In-App Purchases", "url": "https://kurozora.app/"], ["title": "About Personalization", "url": "https://kurozora.app/"], ["title": "Welcome to Kurozora", "url": "https://kurozora.app/"]],
+		[["title": "About In-App Purchases", "url": "https://kurozora.app/kb/iap"], ["title": "About Personalisation", "url": "https://kurozora.app/kb/personalisation"], ["title": "Welcome to Kurozora", "url": "https://kurozora.app/welcome"]],
 		[["title": "Redeem", "segueId": R.segue.homeCollectionViewController.redeemSegue.identifier], ["title": "Become a Pro User", "segueId": R.segue.homeCollectionViewController.subscriptionSegue.identifier]]
 	]
 
