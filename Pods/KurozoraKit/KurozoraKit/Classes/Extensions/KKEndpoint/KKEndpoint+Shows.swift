@@ -165,3 +165,27 @@ extension KKEndpoint.Shows {
 		}
 	}
 }
+
+// MARK: - Themes
+extension KKEndpoint.Shows {
+	/// The set of available Themes API endpoint types.
+	internal enum Themes {
+		// MARK: - Cases
+		/// The endpoint to the index of themes.
+		case index
+
+		/// The endpoint to the details of a theme.
+		case details(_ themeID: Int)
+
+		// MARK: - Properties
+		/// The endpoint value of the Themes API type.
+		var endpointValue: String {
+			switch self {
+			case .index:
+				return "themes"
+			case .details(let themeID):
+				return "themes/\(themeID)"
+			}
+		}
+	}
+}

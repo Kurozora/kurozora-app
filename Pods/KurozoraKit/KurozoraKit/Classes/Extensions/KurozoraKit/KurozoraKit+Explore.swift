@@ -11,13 +11,14 @@ extension KurozoraKit {
 	/**
 		Fetch the explore page content. Explore page can be filtered by a specific genre by passing the genre id.
 
-		Leaving the `genreID` empty or passing `nil` will return the global explore page which contains hand picked and staff curated shows.
+		Leaving the `genreID` and `themeID` empty or passing `nil` will return the global explore page which contains hand picked and staff curated shows.
 
 		- Parameter genreID: The id of a genre by which the explore page should be filtered.
+		- Parameter themeID: The id of a theme by which the explore page should be filtered.
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getExplore(_ genreID: Int? = nil, completion completionHandler: @escaping (_ result: Result<[ExploreCategory], KKAPIError>) -> Void) {
+	public func getExplore(genreID: Int? = nil, themeID: Int?, completion completionHandler: @escaping (_ result: Result<[ExploreCategory], KKAPIError>) -> Void) {
 		let exploreIndex = KKEndpoint.Explore.index.endpointValue
 		let request: APIRequest<ExploreCategoryResponse, KKAPIError> = tron.codable.request(exploreIndex)
 
@@ -26,11 +27,17 @@ extension KurozoraKit {
 			request.headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
+		// Check if genre was passed
 		if genreID != nil || genreID != 0 {
 			if let genreID = genreID {
-				request.parameters = [
-					"genre_id": String(genreID)
-				]
+				request.parameters["genre_id"] = String(genreID)
+			}
+		}
+
+		// Check if theme was passed
+		if themeID != nil || themeID != 0 {
+			if let themeID = themeID {
+				request.parameters["theme_id"] = String(themeID)
 			}
 		}
 
