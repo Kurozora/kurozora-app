@@ -1,5 +1,5 @@
 //
-//  Theme.swift
+//  AppTheme.swift
 //  KurozoraKit
 //
 //  Created by Khoren Katklian on 28/02/2019.
@@ -7,9 +7,9 @@
 //
 
 /**
-	A root object that stores information about a theme resource.
+	A root object that stores information about an app theme resource.
 */
-public struct Theme: IdentityResource, Hashable {
+public struct AppTheme: IdentityResource, Hashable {
 	// MARK: - Properties
 	public let id: Int
 
@@ -17,11 +17,11 @@ public struct Theme: IdentityResource, Hashable {
 
 	public let href: String
 
-	/// The attributes belonging to the theme.
-	public let attributes: Theme.Attributes
+	/// The attributes belonging to the app theme.
+	public let attributes: AppTheme.Attributes
 
 	// MARK: - Functions
-	public static func == (lhs: Theme, rhs: Theme) -> Bool {
+	public static func == (lhs: AppTheme, rhs: AppTheme) -> Bool {
 		lhs.id == rhs.id
 	}
 

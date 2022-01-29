@@ -133,29 +133,53 @@ extension KKEndpoint {
 	}
 }
 
-// MARK: - Themes
+// MARK: - Theme Store
 extension KKEndpoint {
-	/// The set of available Themes API endpoint types.
-	internal enum Themes {
+	/// The set of available Theme Store API endpoint types.
+	internal enum ThemeStore {
 		// MARK: - Cases
-		/// The endpoint to the index of themes.
+		/// The endpoint to the index of theme store.
 		case index
 
-		/// The endpoint to the details of a theme.
-		case details(_ themeID: Int)
+		/// The endpoint to the details of a theme store item.
+		case details(_ appThemeID: Int)
 
 		// MARK: - Properties
-		/// The endpoint value of the Themes API type.
+		/// The endpoint value of the Theme Store API type.
 		var endpointValue: String {
 			switch self {
 			case .index:
-				return "themes"
-			case .details(let themeID):
-				return "themes/\(themeID)"
+				return "theme-store"
+			case .details(let appThemeID):
+				return "theme-store/\(appThemeID)"
 			}
 		}
 	}
 }
+
+//// MARK: - Themes
+//extension KKEndpoint {
+//	/// The set of available Themes API endpoint types.
+//	internal enum Themes {
+//		// MARK: - Cases
+//		/// The endpoint to the index of themes.
+//		case index
+//
+//		/// The endpoint to the details of a theme.
+//		case details(_ themeID: Int)
+//
+//		// MARK: - Properties
+//		/// The endpoint value of the Themes API type.
+//		var endpointValue: String {
+//			switch self {
+//			case .index:
+//				return "themes"
+//			case .details(let themeID):
+//				return "themes/\(themeID)"
+//			}
+//		}
+//	}
+//}
 
 // MARK: - Users
 extension KKEndpoint {

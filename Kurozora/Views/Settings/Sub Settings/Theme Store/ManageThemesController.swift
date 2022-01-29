@@ -11,7 +11,7 @@ import KurozoraKit
 
 class ManageThemesCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var themes: [Theme] = [] {
+	var appThemes: [AppTheme] = [] {
 		didSet {
 			self.updateDataSource()
 			self._prefersActivityIndicatorHidden = true
@@ -55,9 +55,9 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 		self._prefersRefreshControlDisabled = true
 		#endif
 
-		// Fetch themes
+		// Fetch app themes
 		DispatchQueue.global(qos: .userInteractive).async {
-			self.fetchThemes()
+			self.fetchAppThemes()
 		}
 	}
 
@@ -76,8 +76,8 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		self.themes = []
-		self.fetchThemes()
+		self.appThemes = []
+		self.fetchAppThemes()
 	}
 
 	override func configureEmptyDataView() {
@@ -97,12 +97,12 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 	}
 
 	/// Fetches themes from the server.
-	func fetchThemes() {
-		KService.getThemes { [weak self] result in
+	func fetchAppThemes() {
+		KService.getThemeStore { [weak self] result in
 			switch result {
-			case .success(let themes):
+			case .success(let appThemes):
 				DispatchQueue.main.async {
-					self?.themes.append(contentsOf: themes)
+					self?.appThemes.append(contentsOf: appThemes)
 				}
 			case .failure: break
 			}
@@ -185,8 +185,8 @@ extension ManageThemesCollectionViewController: ThemesCollectionViewCellDelegate
 	/// Checks whether the selected theme should be downloaded or else applied.
 	fileprivate func shouldDownloadTheme(_ cell: ThemesCollectionViewCell) {
 		switch cell.kTheme {
-		case .other(let theme):
-			guard KThemeStyle.themeExist(for: theme) else {
+		case .other(let appTheme):
+			guard KThemeStyle.themeExist(for: appTheme) else {
 				let alertController = self.presentAlertController(title: "Not Downloaded", message: "Download the theme right now?", defaultActionButtonTitle: "Cancel")
 				alertController.addAction(UIAlertAction(title: "Download", style: .default) { [weak self] _ in
 					self?.handleDownloadTheme(cell)
@@ -194,7 +194,7 @@ extension ManageThemesCollectionViewController: ThemesCollectionViewCellDelegate
 				return
 			}
 
-			KThemeStyle.switchTo(theme: theme)
+			KThemeStyle.switchTo(appTheme: appTheme)
 		default: break
 		}
 	}
@@ -202,18 +202,18 @@ extension ManageThemesCollectionViewController: ThemesCollectionViewCellDelegate
 	/// Handle the download process for the selected theme.
 	fileprivate func handleDownloadTheme(_ cell: ThemesCollectionViewCell) {
 		switch cell.kTheme {
-		case .other(let theme):
-			let themeName = theme.attributes.name
-			let alertController = self.presentActivityAlertController(title: "Downloading \(themeName)...", message: nil)
+		case .other(let appTheme):
+			let appThemeName = appTheme.attributes.name
+			let alertController = self.presentActivityAlertController(title: "Downloading \(appThemeName)...", message: nil)
 
-			KThemeStyle.downloadThemeTask(for: theme) { isSuccess in
+			KThemeStyle.downloadThemeTask(for: appTheme) { isSuccess in
 				alertController.title = isSuccess ? "Finished downloading!" : "Download failed :("
 				DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
 					alertController.dismiss(animated: true, completion: nil)
 				}
 
 				if isSuccess {
-					KThemeStyle.switchTo(theme: theme)
+					KThemeStyle.switchTo(appTheme: appTheme)
 					cell.shouldHideMoreButton()
 				}
 			}
@@ -224,11 +224,11 @@ extension ManageThemesCollectionViewController: ThemesCollectionViewCellDelegate
 	/// Handle the removing process for a downloaded theme.
 	fileprivate func handleRemoveTheme(_ cell: ThemesCollectionViewCell, timeout: Double = 0.5, withSuccess successHandler: ((_ isSuccess: Bool) -> Void)? = nil) {
 		switch cell.kTheme {
-		case .other(let theme):
-			let themeName = theme.attributes.name
-			let alertController = self.presentActivityAlertController(title: "Removing \(themeName)...", message: nil)
+		case .other(let appTheme):
+			let appThemeName = appTheme.attributes.name
+			let alertController = self.presentActivityAlertController(title: "Removing \(appThemeName)...", message: nil)
 
-			KThemeStyle.removeThemeTask(for: theme) { isSuccess in
+			KThemeStyle.removeThemeTask(for: appTheme) { isSuccess in
 				alertController.title = isSuccess ? "Finished removing!" : "Removing failed :("
 				DispatchQueue.main.asyncAfter(deadline: .now() + timeout) {
 					alertController.dismiss(animated: true, completion: nil)

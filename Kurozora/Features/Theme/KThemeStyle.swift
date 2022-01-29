@@ -225,15 +225,15 @@ extension KThemeStyle {
 	}
 
 	/**
-		Switch theme based on the passed `Theme` object.
+		Switch theme based on the passed `AppTheme` object.
 
-		- Parameter theme: The `Theme` object to switch to.
+		- Parameter appTheme: The `AppTheme` object to switch to.
 	*/
-	static func switchTo(theme: Theme) {
+	static func switchTo(appTheme: AppTheme) {
 		before  = current
 		current = .other
 
-		self.setTheme(themeID: theme.id)
+		self.setTheme(themeID: appTheme.id)
 	}
 
 	/**
@@ -266,11 +266,11 @@ extension KThemeStyle {
 	/**
 		Remove a theme for a given theme element.
 
-		- Parameter theme: The theme element which contains the link.
+		- Parameter appTheme: The app theme element which contains the link.
 		- Parameter successHandler: A closure returning a boolean indicating whether remove is successful.
 		- Parameter isSuccess: A boolean value indicating whether the remove is successful.
 	*/
-	static func removeThemeTask(for theme: Theme, _ successHandler:@escaping (_ isSuccess: Bool) -> Void) {
+	static func removeThemeTask(for appTheme: AppTheme, _ successHandler:@escaping (_ isSuccess: Bool) -> Void) {
 		guard let themesDirectoryUrl = themesDirectoryUrl else {
 			DispatchQueue.main.async {
 				successHandler(false)
@@ -279,14 +279,14 @@ extension KThemeStyle {
 		}
 
 		do {
-			try FileManager.default.removeItem(at: themesDirectoryUrl.appendingPathComponent("theme-\(theme.id).plist"))
+			try FileManager.default.removeItem(at: themesDirectoryUrl.appendingPathComponent("theme-\(appTheme.id).plist"))
 
 			DispatchQueue.main.async {
-				successHandler(!themeExist(for: theme))
+				successHandler(!themeExist(for: appTheme))
 			}
 		} catch {
 			DispatchQueue.main.async {
-				successHandler(themeExist(for: theme))
+				successHandler(themeExist(for: appTheme))
 			}
 		}
 	}
@@ -294,12 +294,12 @@ extension KThemeStyle {
 	/**
 		Downlaoad a theme for a given theme element.
 
-		- Parameter theme: The theme element which contains the link.
+		- Parameter appTheme: The app theme element which contains the link.
 		- Parameter successHandler: A closure returning a boolean indicating whether download is successful.
 		- Parameter isSuccess: A boolean value indicating whether the download is successful.
 	*/
-	static func downloadThemeTask(for theme: Theme, _ successHandler:@escaping (_ isSuccess: Bool) -> Void) {
-		let urlString = theme.attributes.downloadLink
+	static func downloadThemeTask(for appTheme: AppTheme, _ successHandler:@escaping (_ isSuccess: Bool) -> Void) {
+		let urlString = appTheme.attributes.downloadLink
 		guard let libraryDirectoryUrl = libraryDirectoryUrl else {
 			DispatchQueue.main.async {
 				successHandler(false)
@@ -335,25 +335,25 @@ extension KThemeStyle {
 						try FileManager.default.createDirectory(atPath: libraryDirectoryUrl.appendingPathComponent("Themes/").path, withIntermediateDirectories: true, attributes: nil)
 					} catch {
 						DispatchQueue.main.async {
-							successHandler(themeExist(for: theme))
+							successHandler(themeExist(for: appTheme))
 						}
 					}
 				}
 
 				// Move file to Themes folder
 				do {
-					try FileManager.default.copyItem(at: tempLocalUrl, to: themesDirectoryUrl.appendingPathComponent("theme-\(theme.id).plist"))
+					try FileManager.default.copyItem(at: tempLocalUrl, to: themesDirectoryUrl.appendingPathComponent("theme-\(appTheme.id).plist"))
 					DispatchQueue.main.async {
-						successHandler(themeExist(for: theme))
+						successHandler(themeExist(for: appTheme))
 					}
 				} catch {
 					DispatchQueue.main.async {
-						successHandler(themeExist(for: theme))
+						successHandler(themeExist(for: appTheme))
 					}
 				}
 			} else {
 				DispatchQueue.main.async {
-					successHandler(themeExist(for: theme))
+					successHandler(themeExist(for: appTheme))
 				}
 			}
 		}
@@ -374,15 +374,15 @@ extension KThemeStyle {
 	}
 
 	/**
-		Check if theme exists for a given theme ID.
+		Check if theme exists for a given app theme.
 
-		- Parameter themeID: The theme ID which should be checked
+		- Parameter appTheme: The app theme which should be checked
 
 		- Returns: a boolean indicating whether a theme exists.
 	*/
-	static func themeExist(for theme: Theme) -> Bool {
+	static func themeExist(for appTheme: AppTheme) -> Bool {
 		guard let themesDirectoryUrl = themesDirectoryUrl else { return false }
-		let themeFileDirectoryUrl: URL = themesDirectoryUrl.appendingPathComponent("theme-\(theme.id).plist")
+		let themeFileDirectoryUrl: URL = themesDirectoryUrl.appendingPathComponent("theme-\(appTheme.id).plist")
 		return FileManager.default.fileExists(atPath: themeFileDirectoryUrl.path)
 	}
 }
