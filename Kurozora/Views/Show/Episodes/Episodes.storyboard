@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3U2-4Z-cqf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19528" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3U2-4Z-cqf">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
@@ -30,14 +30,22 @@
                     </collectionView>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Episodes" id="jkQ-Jp-mFu">
-                        <barButtonItem key="rightBarButtonItem" title="Go to" image="chevron.down.circle" catalog="system" id="JHc-4N-4gk">
-                            <connections>
-                                <action selector="goToButtonPressed:" destination="0cA-m7-5sS" id="ZId-8p-cFd"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Filter" image="line.3.horizontal.decrease.circle" catalog="system" id="9sC-Ml-ISR">
+                                <connections>
+                                    <action selector="filterButtonPressed:" destination="0cA-m7-5sS" id="0qj-tk-x36"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Go to" image="chevron.down.circle" catalog="system" id="JHc-4N-4gk">
+                                <connections>
+                                    <action selector="goToButtonPressed:" destination="0cA-m7-5sS" id="ZId-8p-cFd"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="filterButton" destination="9sC-Ml-ISR" id="6yI-V9-5bR"/>
                         <outlet property="goToButton" destination="JHc-4N-4gk" id="c3x-l8-Ppb"/>
                         <segue destination="W7w-EE-TzB" kind="show" identifier="EpisodeDetailSegue" id="3RX-8T-Ezs"/>
                     </connections>
@@ -380,5 +388,6 @@
         <image name="chevron.down.circle" catalog="system" width="128" height="121"/>
         <image name="ellipsis.circle" catalog="system" width="128" height="121"/>
         <image name="heart.fill" catalog="system" width="128" height="109"/>
+        <image name="line.3.horizontal.decrease.circle" catalog="system" width="128" height="121"/>
     </resources>
 </document>
