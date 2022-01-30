@@ -47,21 +47,27 @@ extension KurozoraKit {
 		Fetch the episodes for the given season id.
 
 		- Parameter seasonID: The id of the season for which the episodes should be fetched.
+		- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+		- Parameter limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
+		- Parameter hideFillers: A boolean indicating whether fillers should be included in the request.
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getEpisodes(forSeasonID seasonID: Int, completion completionHandler: @escaping (_ result: Result<[Episode], KKAPIError>) -> Void) {
-		let seasonsEpisodes = KKEndpoint.Shows.Seasons.episodes(seasonID).endpointValue
-		let request: APIRequest<EpisodeResponse, KKAPIError> = tron.codable.request(seasonsEpisodes)
+	public func getEpisodes(forSeasonID seasonID: Int, next: String? = nil, limit: Int = 25, hideFillers: Bool = false, completion completionHandler: @escaping (_ result: Result<EpisodeResponse, KKAPIError>) -> Void) {
+		let seasonsEpisodes = next ?? KKEndpoint.Shows.Seasons.episodes(seasonID).endpointValue
+		let request: APIRequest<EpisodeResponse, KKAPIError> = tron.codable.request(seasonsEpisodes).buildURL(.relativeToBaseURL)
 
 		request.headers = headers
 		if !self.authenticationKey.isEmpty {
 			request.headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
+		request.parameters["limit"] = limit
+		request.parameters["hide_fillers"] = hideFillers ? 1 : 0
+
 		request.method = .get
 		request.perform(withSuccess: { episodeResponse in
-			completionHandler(.success(episodeResponse.data))
+			completionHandler(.success(episodeResponse))
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 
 extension EpisodesCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
@@ -14,25 +15,23 @@ extension EpisodesCollectionViewController {
 	}
 
 	override func configureDataSource() {
-		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, identifier: Int) -> UICollectionViewCell? in
+		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Episode>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: Episode) -> UICollectionViewCell? in
 			guard let episodesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.episodeLockupCollectionViewCell, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.episodeLockupCollectionViewCell.identifier)")
 			}
 			episodesCollectionViewCell.delegate = self
-			episodesCollectionViewCell.episode = self.episodes[indexPath.row]
+			episodesCollectionViewCell.episode = item
 			return episodesCollectionViewCell
 		}
 	}
 
 	override func updateDataSource() {
-		let itemsPerSection = episodes.count
-		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
-		SectionLayoutKind.allCases.forEach {
-			snapshot.appendSections([$0])
-			let itemOffset = $0.rawValue * itemsPerSection
-			let itemUpperbound = itemOffset + itemsPerSection
-			snapshot.appendItems(Array(itemOffset..<itemUpperbound))
-		}
+		let episodes = self.shouldHideFillers ? self.episodes.filter({ episode in
+			!episode.attributes.isFiller
+		}) : self.episodes
+		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Episode>()
+		snapshot.appendSections([.main])
+		snapshot.appendItems(episodes, toSection: .main)
 		dataSource.apply(snapshot)
 	}
 }

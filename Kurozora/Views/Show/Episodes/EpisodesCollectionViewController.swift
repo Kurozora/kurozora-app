@@ -12,6 +12,7 @@ import KurozoraKit
 class EpisodesCollectionViewController: KCollectionViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var goToButton: UIBarButtonItem!
+	@IBOutlet weak var filterButton: UIBarButtonItem!
 
 	// MARK: - Properties
 	var seasonID: Int = 0
@@ -27,7 +28,13 @@ class EpisodesCollectionViewController: KCollectionViewController {
 			#endif
 		}
 	}
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>! = nil
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Episode>! = nil
+
+	/// The next page url of the pagination.
+	var nextPageURL: String?
+
+	/// Indicates whether fillers should be hidden from the user.
+	var shouldHideFillers: Bool = false
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
@@ -84,6 +91,11 @@ class EpisodesCollectionViewController: KCollectionViewController {
 		self._prefersRefreshControlDisabled = true
 		#endif
 
+		// Add Refresh Control to Collection View
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the episodes.")
+		#endif
+
 		self.configureDataSource()
 
 		// Fetch episodes
@@ -94,7 +106,10 @@ class EpisodesCollectionViewController: KCollectionViewController {
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		self.fetchEpisodes()
+		self.nextPageURL = nil
+		DispatchQueue.global(qos: .userInteractive).async {
+			self.fetchEpisodes()
+		}
 	}
 
 	override func configureEmptyDataView() {
@@ -115,13 +130,29 @@ class EpisodesCollectionViewController: KCollectionViewController {
 
 	/// Fetches the episodes from the server.
 	func fetchEpisodes() {
-		KService.getEpisodes(forSeasonID: seasonID) { [weak self] result in
+		DispatchQueue.main.async {
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing episodes...")
+			#endif
+		}
+
+		KService.getEpisodes(forSeasonID: self.seasonID, next: self.nextPageURL) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
-			case .success(let episodes):
-				DispatchQueue.main.async {
-					self.episodes = episodes
+			case .success(let episodeResponse):
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.episodes = []
 				}
+
+				// Append new data and save next page url
+				self.episodes.append(contentsOf: episodeResponse.data)
+				self.nextPageURL = episodeResponse.next
+
+				// Reset refresh controller title
+				#if !targetEnvironment(macCatalyst)
+				self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the episodes.")
+				#endif
 			case .failure: break
 			}
 		}
@@ -142,29 +173,29 @@ class EpisodesCollectionViewController: KCollectionViewController {
 
 	/// Goes to the first item in the presented collection view.
 	fileprivate func goToFirstEpisode() {
-		collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredVertically, animated: true)
+		collectionView.safeScrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredVertically, animated: true)
 		goToButton.image = UIImage(systemName: "chevron.down.circle")
 	}
 
 	/// Goes to the last item in the presented collection view.
 	fileprivate func goToLastEpisode() {
-		collectionView.scrollToItem(at: IndexPath(row: episodes.count - 1, section: 0), at: .centeredVertically, animated: true)
+		collectionView.safeScrollToItem(at: IndexPath(row: dataSource.snapshot().numberOfItems - 1, section: 0), at: .centeredVertically, animated: true)
 		goToButton.image = UIImage(systemName: "chevron.up.circle")
 	}
 
 	/// Goes to the last watched episode in the presented collection view.
 	fileprivate func goToLastWatchedEpisode() {
-		guard let lastWatchedEpisode = episodes.closestMatch(index: 0, predicate: { episode in
+		guard let lastWatchedEpisode = self.dataSource.snapshot().itemIdentifiers.closestMatch(index: 0, predicate: { episode in
 			if let episodeWatchStatus = episode.attributes.watchStatus {
 				return episodeWatchStatus == .notWatched
 			}
 			return false
 		}) else { return }
-		collectionView.scrollToItem(at: IndexPath(row: lastWatchedEpisode.0, section: 0), at: .centeredVertically, animated: true)
+		collectionView.safeScrollToItem(at: IndexPath(row: lastWatchedEpisode.0, section: 0), at: .centeredVertically, animated: true)
 	}
 
 	/// Builds and presents an action sheet.
-	fileprivate func showActionList() {
+	fileprivate func showActionList(_ sender: AnyObject) {
 		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
 			let visibleIndexPath = collectionView.indexPathsForVisibleItems
 
@@ -191,7 +222,28 @@ class EpisodesCollectionViewController: KCollectionViewController {
 
 		// Present the controller
 		if let popoverController = actionSheetAlertController.popoverPresentationController {
-			popoverController.barButtonItem = goToButton
+			popoverController.barButtonItem = sender as? UIBarButtonItem
+		}
+
+		self.present(actionSheetAlertController, animated: true, completion: nil)
+	}
+
+	/// Builds and presents the filter action sheet.
+	fileprivate func showFilterActionList(_ sender: AnyObject) {
+		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
+			// Toggle fillers
+			let title = self?.shouldHideFillers ?? false ? "Show fillers" : "Hide fillers"
+
+			let toggleFillers = UIAlertAction.init(title: title, style: .default) { _ in
+				self?.shouldHideFillers = !(self?.shouldHideFillers ?? true)
+				self?.updateDataSource()
+			}
+			actionSheetAlertController.addAction(toggleFillers)
+		}
+
+		// Present the controller
+		if let popoverController = actionSheetAlertController.popoverPresentationController {
+			popoverController.barButtonItem = sender as? UIBarButtonItem
 		}
 
 		self.present(actionSheetAlertController, animated: true, completion: nil)
@@ -199,7 +251,11 @@ class EpisodesCollectionViewController: KCollectionViewController {
 
 	// MARK: - IBActions
 	@IBAction func goToButtonPressed(_ sender: UIBarButtonItem) {
-		showActionList()
+		self.showActionList(sender)
+	}
+
+	@IBAction func filterButtonPressed(_ sender: UIBarButtonItem) {
+		self.showFilterActionList(sender)
 	}
 
 	// MARK: - Segue

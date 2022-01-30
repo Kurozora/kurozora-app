@@ -69,6 +69,9 @@ extension Show {
 		/// The genres of the show.
 		public let genres: [String]?
 
+		/// The themes of the show.
+		public let themes: [String]?
+
 		/// The languages of the show.
 		public let languages: [Language]
 

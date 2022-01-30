@@ -291,6 +291,7 @@ extension ShowDetail {
 		case type = 0
 		case source
 		case genres
+		case themes
 		case episodes
 		case duration
 		case broadcast
@@ -312,6 +313,8 @@ extension ShowDetail {
 				return "Source"
 			case .genres:
 				return "Genres"
+			case .themes:
+				return "Themes"
 			case .episodes:
 				return "Episodes"
 			case .duration:
@@ -340,6 +343,8 @@ extension ShowDetail {
 				return UIImage(systemName: "target")
 			case .genres:
 				return UIImage(systemName: "theatermasks")
+			case .themes:
+				return UIImage(systemName: "crown")
 			case .episodes:
 				return UIImage(systemName: "film")
 			case .duration:
@@ -367,6 +372,8 @@ extension ShowDetail {
 			case .source:
 				return R.reuseIdentifier.informationCollectionViewCell.identifier
 			case .genres:
+				return R.reuseIdentifier.informationCollectionViewCell.identifier
+			case .themes:
 				return R.reuseIdentifier.informationCollectionViewCell.identifier
 			case .episodes:
 				return R.reuseIdentifier.informationCollectionViewCell.identifier
@@ -416,6 +423,8 @@ extension ShowDetail {
 				return "\(show.attributes.source.name)"
 			case .genres:
 				return show.attributes.genres?.localizedJoined() ?? "-"
+			case .themes:
+				return show.attributes.themes?.localizedJoined() ?? "-"
 			case .episodes:
 				return "\(show.attributes.episodeCount)"
 			case .duration:
@@ -522,6 +531,8 @@ extension ShowDetail {
 			case .source:
 				return show.attributes.source.description
 			case .genres:
+				return nil
+			case .themes:
 				return nil
 			case .episodes:
 				let episodeCount = show.attributes.seasonCount <= 1 ? "one" : "\(show.attributes.seasonCount)"

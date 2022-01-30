@@ -38,6 +38,9 @@ extension Episode {
 		/// The synopsis text of the episode.
 		public let synopsis: String?
 
+		/// Whether the episode is a filler.
+		public let isFiller: Bool
+
 		/// Whether the episode details have been verified.
 		public let isVerified: Bool
 

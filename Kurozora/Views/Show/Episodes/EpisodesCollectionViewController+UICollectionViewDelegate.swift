@@ -16,6 +16,16 @@ extension EpisodesCollectionViewController {
 		self.performSegue(withIdentifier: segueIdentifier, sender: collectionViewCell)
 	}
 
+	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+		let numberOfItems = collectionView.numberOfItems()
+
+		if indexPath.item == numberOfItems - 5 {
+			if self.nextPageURL != nil {
+				self.fetchEpisodes()
+			}
+		}
+	}
+
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
 		return self.episodes[indexPath.row].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
