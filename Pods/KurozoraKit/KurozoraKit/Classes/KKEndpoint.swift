@@ -195,6 +195,9 @@ extension KKEndpoint {
 		/// The endpoint to search for users.
 		case search
 
+		/// The endpoint to delete a user's account.
+		case delete
+
 		// MARK: - Properties
 		/// The endpoint value of the Users API type.
 		var endpointValue: String {
@@ -221,6 +224,8 @@ extension KKEndpoint {
 				return "users/\(userID)/profile"
 			case .search:
 				return "users/search"
+			case .delete:
+				return "users/delete"
 			}
 		}
 	}
