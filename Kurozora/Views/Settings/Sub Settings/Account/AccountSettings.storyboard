@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="L5B-1B-AEl">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="L5B-1B-AEl">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -367,6 +367,49 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <outlet property="selectedView" destination="3XG-NP-mug" id="CzG-0s-Fa0"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" id="oMj-Jf-hkk" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="20" y="455" width="374" height="44.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oMj-Jf-hkk" id="Mif-7N-BlW">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="44.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RXs-c3-zca">
+                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="44.5"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete Account" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TMU-bF-sJl">
+                                                            <rect key="frame" x="135.5" y="6" width="103" height="32.5"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="32" id="qDk-g0-kdQ"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                            <color key="textColor" red="1" green="0.30196078430000001" blue="0.26274509800000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstItem="TMU-bF-sJl" firstAttribute="top" secondItem="RXs-c3-zca" secondAttribute="top" constant="6" id="HHG-zt-erL"/>
+                                                        <constraint firstItem="TMU-bF-sJl" firstAttribute="centerX" secondItem="RXs-c3-zca" secondAttribute="centerX" id="HOc-J7-GF8"/>
+                                                        <constraint firstAttribute="bottom" secondItem="TMU-bF-sJl" secondAttribute="bottom" constant="6" id="Rh5-fH-YtF"/>
+                                                        <constraint firstItem="TMU-bF-sJl" firstAttribute="centerY" secondItem="RXs-c3-zca" secondAttribute="centerY" id="gZs-e9-Ega"/>
+                                                        <constraint firstItem="TMU-bF-sJl" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="RXs-c3-zca" secondAttribute="leadingMargin" id="ge9-RM-xMe"/>
+                                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="TMU-bF-sJl" secondAttribute="trailing" id="m8O-Wz-Y1N"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="RXs-c3-zca" firstAttribute="leading" secondItem="Mif-7N-BlW" secondAttribute="leading" id="4HM-Pc-vlg"/>
+                                                <constraint firstAttribute="bottom" secondItem="RXs-c3-zca" secondAttribute="bottom" id="6yo-Lh-xeL"/>
+                                                <constraint firstItem="RXs-c3-zca" firstAttribute="top" secondItem="Mif-7N-BlW" secondAttribute="top" id="TZ7-MF-fl7"/>
+                                                <constraint firstAttribute="trailing" secondItem="RXs-c3-zca" secondAttribute="trailing" id="o5L-Ca-fzo"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="selectedView" destination="RXs-c3-zca" id="U0S-1A-jv3"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>

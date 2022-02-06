@@ -342,4 +342,36 @@ extension KurozoraKit {
 			completionHandler(.failure(error))
 		})
 	}
+
+	/**
+		 Deletes the authenticated user's account.
+
+		 - Parameter password: The authenticated user's password.
+		 - Parameter successHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+		 - Parameter result: A value that represents either a success or a failure, including an associated value in each case.
+	*/
+	public func deleteUser(password: String, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) {
+		let usersSearch = KKEndpoint.Users.delete.endpointValue
+		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(usersSearch)
+
+		request.headers = headers
+		request.headers.add(.authorization(bearerToken: self.authenticationKey))
+
+		request.parameters["password"] = password
+
+		request.method = .delete
+		request.perform(withSuccess: { success in
+			completionHandler(.success(success))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
+			if self.services.showAlerts {
+				UIApplication.topViewController?.presentAlertController(title: "Can't Delete Account 😔", message: error.message)
+			}
+			print("❌ Received delete user error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
+			completionHandler(.failure(error))
+		})
+	}
 }

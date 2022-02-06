@@ -70,6 +70,21 @@ extension AccountTableViewController {
 				WorkflowController.shared.signOut()
 				self?.dismiss(animated: true, completion: nil)
 			})
+		case (2, 1):
+			let alertController = self.presentAlertController(title: "Delete Account", message: "Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account. ", defaultActionButtonTitle: "Cancel")
+			alertController.addTextField { (textField) in
+				textField.textType = .password
+				textField.placeholder = "Password"
+			}
+			alertController.addAction(UIAlertAction(title: "Delete Permanently", style: .destructive) { [weak self] _ in
+				guard let passwordTextField = alertController.textFields?.first else { return }
+				guard let password = passwordTextField.text else { return }
+				WorkflowController.shared.deleteUser(password: password) { [weak self] success in
+					if success {
+						self?.dismiss(animated: true, completion: nil)
+					}
+				}
+			})
 		default: break
 		}
 	}
