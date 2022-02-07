@@ -105,9 +105,9 @@ class CastCollectionViewController: KCollectionViewController {
 					self.cast = []
 				}
 
-				// Append new data and save next page url
-				self.cast.append(contentsOf: castResponse.data)
+				// Save next page url and append new data
 				self.nextPageURL = castResponse.next
+				self.cast.append(contentsOf: castResponse.data)
 			case .failure: break
 			}
 		}

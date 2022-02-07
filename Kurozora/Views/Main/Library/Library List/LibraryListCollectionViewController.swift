@@ -175,9 +175,9 @@ class LibraryListCollectionViewController: KCollectionViewController {
 						self.shows = []
 					}
 
-					// Append new data and save next page url
-					self.shows.append(contentsOf: showResponse.data)
+					// Save next page url and append new data
 					self.nextPageURL = showResponse.next
+					self.shows.append(contentsOf: showResponse.data)
 
 					// Reset refresh controller title
 					#if !targetEnvironment(macCatalyst)

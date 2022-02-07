@@ -129,12 +129,12 @@ class ShowsListCollectionViewController: KCollectionViewController {
 						self.shows = []
 					}
 
-					// Append new data and save next page url
+					// Save next page url and append new data
+					self.nextPageURL = relatedShowsResponse.next
 					self.relatedShows.append(contentsOf: relatedShowsResponse.data)
 					self.shows.append(contentsOf: relatedShowsResponse.data.compactMap({ relatedShow -> Show? in
 						return relatedShow.show
 					}))
-					self.nextPageURL = relatedShowsResponse.next
 				case .failure: break
 				}
 			}
@@ -148,9 +148,9 @@ class ShowsListCollectionViewController: KCollectionViewController {
 						self.shows = []
 					}
 
-					// Append new data and save next page url
-					self.shows.append(contentsOf: showResponse.data)
+					// Save next page url and append new data
 					self.nextPageURL = showResponse.next
+					self.shows.append(contentsOf: showResponse.data)
 				case .failure: break
 				}
 			}
@@ -164,9 +164,9 @@ class ShowsListCollectionViewController: KCollectionViewController {
 						self.shows = []
 					}
 
-					// Append new data and save next page url
-					self.shows.append(contentsOf: showResponse.data)
+					// Save next page url and append new data
 					self.nextPageURL = showResponse.next
+					self.shows.append(contentsOf: showResponse.data)
 				case .failure: break
 				}
 			}
@@ -180,9 +180,9 @@ class ShowsListCollectionViewController: KCollectionViewController {
 						self.shows = []
 					}
 
-					// Append new data and save next page url
-					self.shows.append(contentsOf: showResponse.data)
+					// Save next page url and append new data
 					self.nextPageURL = showResponse.next
+					self.shows.append(contentsOf: showResponse.data)
 				case .failure: break
 				}
 			}

@@ -97,10 +97,9 @@ class ManageActiveSessionsController: KTableViewController {
 					self.sessions = []
 				}
 
-				// Append new data and save next page url
-				self.sessions.append(contentsOf: sessionResponse.data)
-
+				// Save next page url and append new data
 				self.nextPageURL = sessionResponse.next
+				self.sessions.append(contentsOf: sessionResponse.data)
 			case .failure: break
 			}
 		}

@@ -10,12 +10,8 @@ import UIKit
 
 extension FollowTableViewController {
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		let numberOfSections = tableView.numberOfSections
-
-		if indexPath.section == numberOfSections - 5 {
-			if self.nextPageURL != nil {
-				self.fetchFollowList()
-			}
+		if indexPath.section == self.userFollow.count - 20 && self.nextPageURL != nil {
+			self.fetchFollowList()
 		}
 	}
 

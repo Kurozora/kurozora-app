@@ -104,9 +104,9 @@ class PeopleListCollectionViewController: KCollectionViewController {
 					self.people = []
 				}
 
-				// Append new data and save next page url
-				self.people.append(contentsOf: peopleResponse.data)
+				// Save next page url and append new data
 				self.nextPageURL = peopleResponse.next
+				self.people.append(contentsOf: peopleResponse.data)
 			case .failure: break
 			}
 		}

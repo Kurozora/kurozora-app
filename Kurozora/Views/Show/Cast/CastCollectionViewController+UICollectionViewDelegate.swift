@@ -10,12 +10,8 @@ import UIKit
 
 extension CastCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		let numberOfItems = collectionView.numberOfItems()
-
-		if indexPath.item == numberOfItems - 5 {
-			if self.nextPageURL != nil {
-				self.fetchCast()
-			}
+		if indexPath.item == self.cast.count - 20 && self.nextPageURL != nil {
+			self.fetchCast()
 		}
 	}
 

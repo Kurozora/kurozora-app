@@ -100,10 +100,10 @@ class SeasonsCollectionViewController: KCollectionViewController {
 					self.seasons = []
 				}
 
-				// Append new data and save next page url
+				// Save next page url and append new data
 				DispatchQueue.main.async {
-					self.seasons.append(contentsOf: seasonsResponse.data)
 					self.nextPageURL = seasonsResponse.next
+					self.seasons.append(contentsOf: seasonsResponse.data)
 				}
 			case .failure: break
 			}

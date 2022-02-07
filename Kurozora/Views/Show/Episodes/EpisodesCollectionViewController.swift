@@ -145,9 +145,9 @@ class EpisodesCollectionViewController: KCollectionViewController {
 					self.episodes = []
 				}
 
-				// Append new data and save next page url
-				self.episodes.append(contentsOf: episodeResponse.data)
+				// Save next page url and append new data
 				self.nextPageURL = episodeResponse.next
+				self.episodes.append(contentsOf: episodeResponse.data)
 
 				// Reset refresh controller title
 				#if !targetEnvironment(macCatalyst)

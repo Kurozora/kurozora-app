@@ -16,12 +16,8 @@ extension FeedTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		let numberOfSections = tableView.numberOfSections
-
-		if indexPath.section == numberOfSections - 5 {
-			if self.nextPageURL != nil {
-				self.fetchFeedMessages()
-			}
+		if indexPath.section == self.feedMessages.count - 20 && self.nextPageURL != nil {
+			self.fetchFeedMessages()
 		}
 	}
 

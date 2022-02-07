@@ -287,9 +287,9 @@ class ProfileTableViewController: KTableViewController {
 						self.feedMessages = []
 					}
 
-					// Append new data and save next page url
-					self.feedMessages.append(contentsOf: feedMessageResponse.data)
+					// Save next page url and append new data
 					self.nextPageURL = feedMessageResponse.next
+					self.feedMessages.append(contentsOf: feedMessageResponse.data)
 				}
 			case .failure: break
 			}

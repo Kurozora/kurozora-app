@@ -17,12 +17,8 @@ extension EpisodesCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		let numberOfItems = collectionView.numberOfItems()
-
-		if indexPath.item == numberOfItems - 5 {
-			if self.nextPageURL != nil {
-				self.fetchEpisodes()
-			}
+		if indexPath.item == self.episodes.count - 20 && self.nextPageURL != nil {
+			self.fetchEpisodes()
 		}
 	}
 

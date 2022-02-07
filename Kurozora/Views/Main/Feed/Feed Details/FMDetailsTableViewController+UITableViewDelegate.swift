@@ -20,12 +20,8 @@ extension FMDetailsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		let numberOfRows = tableView.numberOfRows()
-
-		if indexPath.row == numberOfRows - 5 {
-			if self.nextPageURL != nil {
-				self.fetchFeedReplies()
-			}
+		if indexPath.row == self.feedMessageReplies.count - 20 && self.nextPageURL != nil {
+			self.fetchFeedReplies()
 		}
 	}
 
