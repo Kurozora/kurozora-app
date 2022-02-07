@@ -105,9 +105,9 @@ class CharactersListCollectionViewController: KCollectionViewController {
 					self.characters = []
 				}
 
-				// Append new data and save next page url
-				self.characters.append(contentsOf: characterResponse.data)
+				// Save next page url and append new data
 				self.nextPageURL = characterResponse.next
+				self.characters.append(contentsOf: characterResponse.data)
 			case .failure: break
 			}
 		}

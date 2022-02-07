@@ -129,10 +129,10 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 					self.shows = []
 				}
 
-				// Append new data and save next page url
+				// Save next page url and append new data
+				self.nextPageURL = showResponse.next
 				self.shows.append(contentsOf: showResponse.data)
 
-				self.nextPageURL = showResponse.next
 				self.updateDataSource()
 			case .failure: break
 			}

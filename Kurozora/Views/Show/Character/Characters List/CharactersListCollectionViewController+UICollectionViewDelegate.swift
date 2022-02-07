@@ -14,12 +14,8 @@ extension CharactersListCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		let numberOfItems = collectionView.numberOfItems()
-
-		if indexPath.item == numberOfItems - 5 {
-			if self.nextPageURL != nil {
-				self.fetchCharacters()
-			}
+		if indexPath.item == self.characters.count - 20 && self.nextPageURL != nil {
+			self.fetchCharacters()
 		}
 	}
 

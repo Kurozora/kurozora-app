@@ -10,12 +10,8 @@ import UIKit
 
 extension ManageActiveSessionsController {
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		let numberOfSections = tableView.numberOfSections
-
-		if indexPath.section == numberOfSections - 5 {
-			if self.nextPageURL != nil {
-				self.fetchSessions()
-			}
+		if indexPath.section == self.sessions.count - 20 && self.nextPageURL != nil {
+			self.fetchSessions()
 		}
 	}
 

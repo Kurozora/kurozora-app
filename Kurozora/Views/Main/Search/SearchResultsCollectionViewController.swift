@@ -123,9 +123,9 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 						self.searchResults = []
 					}
 
-					// Append new data and save next page url
-					self.searchResults?.append(contentsOf: showResponse.data)
+					// Save next page url and append new data
 					self.nextPageURL = showResponse.next
+					self.searchResults?.append(contentsOf: showResponse.data)
 
 					// Hide activity indicator.
 					self._prefersActivityIndicatorHidden = true
@@ -151,9 +151,9 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 							self.searchResults = []
 						}
 
-						// Append new data and save next page url
-						self.searchResults?.append(contentsOf: showResponse.data)
+						// Save next page url and append new data
 						self.nextPageURL = showResponse.next
+						self.searchResults?.append(contentsOf: showResponse.data)
 
 						// Hide activity indicator.
 						self._prefersActivityIndicatorHidden = true
@@ -179,9 +179,9 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 						self.searchResults = []
 					}
 
-					// Append new data and save next page url
-					self.searchResults?.append(contentsOf: userResponse.data)
+					// Save next page url and append new data
 					self.nextPageURL = userResponse.next
+					self.searchResults?.append(contentsOf: userResponse.data)
 
 					// Hide activity indicator.
 					self._prefersActivityIndicatorHidden = true

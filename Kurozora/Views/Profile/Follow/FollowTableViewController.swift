@@ -145,9 +145,9 @@ class FollowTableViewController: KTableViewController {
 						self.userFollow = []
 					}
 
-					// Append new data and save next page url
-					self.userFollow.append(contentsOf: userFollow.data)
+					// Save next page url and append new data
 					self.nextPageURL = userFollow.next
+					self.userFollow.append(contentsOf: userFollow.data)
 				}
 			case .failure: break
 			}

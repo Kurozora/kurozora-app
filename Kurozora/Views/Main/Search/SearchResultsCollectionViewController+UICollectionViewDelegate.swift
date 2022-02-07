@@ -35,14 +35,10 @@ extension SearchResultsCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		let numberOfItems = collectionView.numberOfItems()
-
-		if indexPath.item == numberOfItems - 10 {
-			if self.nextPageURL != nil {
-				guard let text = kSearchController.searchBar.textField?.text else { return }
-				guard let searchScope = SearchScope(rawValue: kSearchController.searchBar.selectedScopeButtonIndex) else { return }
-				self.performSearch(withText: text, in: searchScope)
-			}
+		if indexPath.item == self.searchResults?.count ?? 0 - 10 && self.nextPageURL != nil {
+			guard let text = kSearchController.searchBar.textField?.text else { return }
+			guard let searchScope = SearchScope(rawValue: kSearchController.searchBar.selectedScopeButtonIndex) else { return }
+			self.performSearch(withText: text, in: searchScope)
 		}
 	}
 

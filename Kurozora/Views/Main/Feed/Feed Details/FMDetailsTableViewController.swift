@@ -211,9 +211,9 @@ class FMDetailsTableViewController: KTableViewController {
 						self.feedMessageReplies = []
 					}
 
-					// Append new data and save next page url
-					self.feedMessageReplies.append(contentsOf: feedMessageResponse.data)
+					// Save next page url and append new data
 					self.nextPageURL = feedMessageResponse.next
+					self.feedMessageReplies.append(contentsOf: feedMessageResponse.data)
 				}
 			case .failure: break
 			}

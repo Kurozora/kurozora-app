@@ -15,12 +15,8 @@ extension PeopleListCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		let numberOfItems = collectionView.numberOfItems()
-
-		if indexPath.item == numberOfItems - 5 {
-			if self.nextPageURL != nil {
-				self.fetchPeople()
-			}
+		if indexPath.item == self.people.count - 20 && self.nextPageURL != nil {
+			self.fetchPeople()
 		}
 	}
 
