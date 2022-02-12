@@ -37,6 +37,7 @@ extension HomeCollectionViewController {
 				case .show(let show, _):
 					guard let baseLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: exploreCategorySize.identifierString, for: indexPath) as? BaseLockupCollectionViewCell
 					else { fatalError("Cannot dequeue reusable cell with identifier \(exploreCategorySize.identifierString)") }
+					baseLockupCollectionViewCell.baseLockupCollectionViewCellDelegate = self
 					baseLockupCollectionViewCell.configureCell(with: show)
 					return baseLockupCollectionViewCell
 				case .genre(let genre, _):
