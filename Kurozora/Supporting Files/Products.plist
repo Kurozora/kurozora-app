@@ -4,21 +4,21 @@
 <dict>
 	<key>app.kurozora.nonConsumable.kurozoraOne</key>
 	<string>Kurozora One</string>
-	<key>20000331KTIPWOLF</key>
+	<key>app.kurozora.consumable.wolfTip</key>
 	<string>🐺</string>
-	<key>20000331KTIPTIGER</key>
+	<key>app.kurozora.consumable.tigerTip</key>
 	<string>🐯</string>
-	<key>20000331KTIPDEMON</key>
+	<key>app.kurozora.consumable.demonTip</key>
 	<string>👺</string>
-	<key>20000331KTIPDRAGON</key>
+	<key>app.kurozora.consumable.dragonTip</key>
 	<string>🐲</string>
-	<key>20000331KTIPGOD</key>
+	<key>app.kurozora.consumable.godTip</key>
 	<string>🙏</string>
-	<key>20000331KPLUS1M</key>
+	<key>app.kurozora.autoRenewableSubscription.kPlus1Month</key>
 	<string>One Month</string>
-	<key>20000331KPLUS6M</key>
+	<key>app.kurozora.autoRenewableSubscription.kPlus6Months</key>
 	<string>Six Months</string>
-	<key>20000331KPLUS12M</key>
+	<key>app.kurozora.autoRenewableSubscription.kPlus12Months</key>
 	<string>Twelve Months</string>
 </dict>
 </plist>
