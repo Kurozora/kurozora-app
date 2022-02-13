@@ -15,7 +15,7 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 	@IBOutlet weak var showRatingLabel: KSecondaryLabel!
 	@IBOutlet weak var episodeCountLabel: KSecondaryLabel!
 	@IBOutlet weak var airDateLabel: KSecondaryLabel!
-	@IBOutlet weak var scoreLabel: UILabel!
+	@IBOutlet weak var scoreLabel: KTintedLabel!
 	@IBOutlet weak var cosmosView: KCosmosView!
 
 	// MARK: - Properties
