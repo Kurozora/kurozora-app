@@ -36,6 +36,25 @@ extension KKEndpoint.Shows {
 	}
 }
 
+// MARK: - Cast
+extension KKEndpoint.Shows {
+	/// The set of available Cast API endpoints.
+	internal enum Cast {
+		// MARK: - Cases
+		/// The endpoint to the details of a cast.
+		case details(_ castID: Int)
+
+		// MARK: - Properties
+		/// The endpoint value of the Cast API type.
+		var endpointValue: String {
+			switch self {
+			case .details(let castID):
+				return "cast/\(castID)"
+			}
+		}
+	}
+}
+
 // MARK: - Characters
 extension KKEndpoint.Shows {
 	/// The set of available Charactes API endpoints.

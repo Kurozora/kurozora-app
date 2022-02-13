@@ -217,6 +217,7 @@
 		66785E2A2363C714003EF24C /* CastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66785E292363C714003EF24C /* CastCollectionViewCell.swift */; };
 		667943632273933400E2D0D0 /* TextViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667943622273933400E2D0D0 /* TextViewCollectionViewCell.swift */; };
 		667943652273A33D00E2D0D0 /* EpisodeDetailCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667943642273A33D00E2D0D0 /* EpisodeDetailCollectionViewController.swift */; };
+		667AB11427B1AB810026971A /* ShowDetailsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667AB11327B1AB810026971A /* ShowDetailsDataSource.swift */; };
 		667B38432361CE6500786EF6 /* KWhatsNewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667B38422361CE6500786EF6 /* KWhatsNewModel.swift */; };
 		667C0F13224CC50200A8CB56 /* ExploreCategorySize+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667C0F12224CC50200A8CB56 /* ExploreCategorySize+Kurozora.swift */; };
 		667F9AD421B47E6D003F6629 /* BadgeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9AD321B47E6D003F6629 /* BadgeTableViewCell.swift */; };
@@ -427,6 +428,8 @@
 		66E54EBE244E1579007248EE /* String+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E54EBD244E1579007248EE /* String+UIImage.swift */; };
 		66E54EC0244E160F007248EE /* String+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E54EBF244E160F007248EE /* String+Date.swift */; };
 		66E54EC3244E1698007248EE /* Array+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E54EC2244E1698007248EE /* Array+String.swift */; };
+		66E7F9EA27B887E300CDC4FE /* SeasonAsyncFetcherOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667AB11727B1ADDD0026971A /* SeasonAsyncFetcherOperation.swift */; };
+		66E7F9EB27B887FB00CDC4FE /* SeasonAsyncFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667AB11527B1AC210026971A /* SeasonAsyncFetcher.swift */; };
 		66EA1DB225B3630D00FCD07A /* LibraryViewController+TouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DB125B3630D00FCD07A /* LibraryViewController+TouchBar.swift */; };
 		66EA1DB425B3638200FCD07A /* LibraryViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DB325B3638200FCD07A /* LibraryViewControllerDelegate.swift */; };
 		66EA1DC025B3669600FCD07A /* NotificationsViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DBF25B3669600FCD07A /* NotificationsViewControllerDelegate.swift */; };
@@ -702,6 +705,9 @@
 		66785E292363C714003EF24C /* CastCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastCollectionViewCell.swift; sourceTree = "<group>"; };
 		667943622273933400E2D0D0 /* TextViewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewCollectionViewCell.swift; sourceTree = "<group>"; };
 		667943642273A33D00E2D0D0 /* EpisodeDetailCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDetailCollectionViewController.swift; sourceTree = "<group>"; };
+		667AB11327B1AB810026971A /* ShowDetailsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetailsDataSource.swift; sourceTree = "<group>"; };
+		667AB11527B1AC210026971A /* SeasonAsyncFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonAsyncFetcher.swift; sourceTree = "<group>"; };
+		667AB11727B1ADDD0026971A /* SeasonAsyncFetcherOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonAsyncFetcherOperation.swift; sourceTree = "<group>"; };
 		667B38422361CE6500786EF6 /* KWhatsNewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KWhatsNewModel.swift; sourceTree = "<group>"; };
 		667C0F12224CC50200A8CB56 /* ExploreCategorySize+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExploreCategorySize+Kurozora.swift"; sourceTree = "<group>"; };
 		667F9AD321B47E6D003F6629 /* BadgeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeTableViewCell.swift; sourceTree = "<group>"; };
@@ -1033,6 +1039,7 @@
 				661ACC9A25ADA41B002407A7 /* ShowDetailsCollectionViewController+TouchBar.swift */,
 				660E39E725E5BAC700A46EB0 /* ShowDetailsCollectionViewController+UICollectionViewDelegate.swift */,
 				66D16CA0212D52AB00B6B882 /* Cells */,
+				667AB11227B1AB6F0026971A /* Data Source */,
 				66D1358B227F17180079438C /* Models */,
 			);
 			path = "Show Details";
@@ -1860,6 +1867,16 @@
 				66C45840259A88ED00886374 /* Sky.plist */,
 			);
 			path = Plist;
+			sourceTree = "<group>";
+		};
+		667AB11227B1AB6F0026971A /* Data Source */ = {
+			isa = PBXGroup;
+			children = (
+				667AB11327B1AB810026971A /* ShowDetailsDataSource.swift */,
+				667AB11527B1AC210026971A /* SeasonAsyncFetcher.swift */,
+				667AB11727B1ADDD0026971A /* SeasonAsyncFetcherOperation.swift */,
+			);
+			path = "Data Source";
 			sourceTree = "<group>";
 		};
 		667B38412361CE5300786EF6 /* Models */ = {
@@ -3465,6 +3482,7 @@
 				663E34292360D34C003386D1 /* SmallLockupCollectionViewCell.swift in Sources */,
 				6614ABE4215F65D100A3A0C9 /* KLabel.swift in Sources */,
 				6671F28B27A586AD005D3A0D /* ThemesCollectionViewController.swift in Sources */,
+				66E7F9EA27B887E300CDC4FE /* SeasonAsyncFetcherOperation.swift in Sources */,
 				66EA1DDD25B5BBF600FCD07A /* CharacterDetailsCollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				662DB4DD237EF40800B7FE7E /* Tabman+Kurozora.swift in Sources */,
 				66707838208B846C00471FBC /* SettingsTableViewController.swift in Sources */,
@@ -3638,6 +3656,7 @@
 				66DB2548245D6B1D000AA6DB /* KTextView.swift in Sources */,
 				660E3A1325E5E1EE00A46EB0 /* User+UIKit.swift in Sources */,
 				660E39E825E5BAC700A46EB0 /* ShowDetailsCollectionViewController+UICollectionViewDelegate.swift in Sources */,
+				667AB11427B1AB810026971A /* ShowDetailsDataSource.swift in Sources */,
 				660E3A0325E5D40100A46EB0 /* CastCollectionViewController+UICollectionViewDelegate.swift in Sources */,
 				6640E19D22AE895A00D0F575 /* AuthenticationInterval.swift in Sources */,
 				66593123259CE689006732C8 /* TouchBar+Kurozora.swift in Sources */,
@@ -3738,6 +3757,7 @@
 				66BEC133231711DD0039D683 /* KWhatsNewViewController.swift in Sources */,
 				66AEABEB2298ABA100949FD8 /* NotificationSegueIdentifier.swift in Sources */,
 				6646A26E236A54A700DCC0A4 /* URL+Kurozora.swift in Sources */,
+				66E7F9EB27B887FB00CDC4FE /* SeasonAsyncFetcher.swift in Sources */,
 				664B6D78230F45F400F9C726 /* DarkThemeOption.swift in Sources */,
 				661F186224AB5CCE00542AFB /* SosumiShowCollectionViewCell.swift in Sources */,
 				664AAF9224EEA26300FF4AA5 /* PersonLockupCollectionViewCell.swift in Sources */,

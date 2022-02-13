@@ -7,6 +7,7 @@
 //
 
 import TRON
+import Alamofire
 
 extension KurozoraKit {
 	/**
@@ -17,7 +18,8 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getDetails(forSeasonID seasonID: Int, including relationships: [String] = [], completion completionHandler: @escaping (_ result: Result<[Season], KKAPIError>) -> Void) {
+	@discardableResult
+	public func getDetails(forSeasonID seasonID: Int, including relationships: [String] = [], completion completionHandler: @escaping (_ result: Result<[Season], KKAPIError>) -> Void) -> DataRequest {
 		let seasonsDetails = KKEndpoint.Shows.Seasons.details(seasonID).endpointValue
 		let request: APIRequest<SeasonResponse, KKAPIError> = tron.codable.request(seasonsDetails)
 
@@ -28,7 +30,7 @@ extension KurozoraKit {
 		}
 
 		request.method = .get
-		request.perform(withSuccess: { seasonResponse in
+		return request.perform(withSuccess: { seasonResponse in
 			completionHandler(.success(seasonResponse.data))
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
@@ -53,7 +55,8 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getEpisodes(forSeasonID seasonID: Int, next: String? = nil, limit: Int = 25, hideFillers: Bool = false, completion completionHandler: @escaping (_ result: Result<EpisodeResponse, KKAPIError>) -> Void) {
+	@discardableResult
+	public func getEpisodes(forSeasonID seasonID: Int, next: String? = nil, limit: Int = 25, hideFillers: Bool = false, completion completionHandler: @escaping (_ result: Result<EpisodeResponse, KKAPIError>) -> Void) -> DataRequest {
 		let seasonsEpisodes = next ?? KKEndpoint.Shows.Seasons.episodes(seasonID).endpointValue
 		let request: APIRequest<EpisodeResponse, KKAPIError> = tron.codable.request(seasonsEpisodes).buildURL(.relativeToBaseURL)
 
@@ -66,7 +69,7 @@ extension KurozoraKit {
 		request.parameters["hide_fillers"] = hideFillers ? 1 : 0
 
 		request.method = .get
-		request.perform(withSuccess: { episodeResponse in
+		return request.perform(withSuccess: { episodeResponse in
 			completionHandler(.success(episodeResponse))
 		}, failure: { [weak self] error in
 			guard let self = self else { return }

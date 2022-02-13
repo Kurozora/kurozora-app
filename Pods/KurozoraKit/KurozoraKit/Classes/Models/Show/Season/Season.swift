@@ -8,7 +8,7 @@
 /**
 	A root object that stores information about a season resource.
 */
-public struct Season: IdentityResource, Hashable {
+public class Season: IdentityResource, Hashable {
 	// MARK: - Properties
 	public let id: Int
 
