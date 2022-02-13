@@ -16,49 +16,13 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 	@IBOutlet weak var navigationTitleView: UIView!
 	@IBOutlet weak var navigationTitleLabel: UILabel! {
 		didSet {
-			navigationTitleLabel.theme_textColor = KThemePicker.barTitleTextColor.rawValue
+			self.navigationTitleLabel.theme_textColor = KThemePicker.barTitleTextColor.rawValue
 		}
 	}
 
 	// MARK: - Properties
-	var dataSource: UICollectionViewDiffableDataSource<ShowDetail.Section, Int>! = nil
-	var snapshot: NSDiffableDataSourceSnapshot<ShowDetail.Section, Int>! = nil
+	var dataSource: ShowDetailsDataSource = ShowDetailsDataSource()
 	var showID: Int = 0
-	var show: Show! {
-		didSet {
-			self.navigationTitleLabel.text = show.attributes.title
-			self.showID = show.id
-		}
-	}
-	var seasons: [Season] = []
-	var cast: [Cast] = []
-	var relatedShows: [RelatedShow] = [] {
-		didSet {
-			_prefersActivityIndicatorHidden = true
-			self.collectionView.reloadData {
-				self.toggleEmptyDataView()
-			}
-			#if targetEnvironment(macCatalyst)
-			self.touchBar = nil
-			#endif
-
-			#if DEBUG
-			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.endRefreshing()
-			#endif
-			#endif
-		}
-	}
-	var studio: Studio! {
-		didSet {
-			if studio != nil {
-				studio.relationships?.shows?.data.forEachInParallel({ show in
-					self.fetchDetails(for: show.id)
-				})
-			}
-		}
-	}
-	var studioShows: [Show] = []
 
 	// Touch Bar
 	#if targetEnvironment(macCatalyst)
@@ -112,7 +76,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 	*/
 	static func `init`(with show: Show) -> ShowDetailsCollectionViewController {
 		if let showDetailsCollectionViewController = R.storyboard.shows.showDetailsCollectionViewController() {
-			showDetailsCollectionViewController.show = show
+			showDetailsCollectionViewController.dataSource.show = show
 			return showDetailsCollectionViewController
 		}
 
@@ -143,8 +107,13 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		self._prefersRefreshControlDisabled = true
 		#endif
 
+		// Configure data sources
+		self.dataSource.viewControlelr = self
+		self.collectionView.dataSource = self.dataSource
+		self.collectionView.prefetchDataSource = self.dataSource
+
 		// Fetch show details.
-		if show == nil {
+		if self.dataSource.show == nil {
 			DispatchQueue.global(qos: .background).async {
 				self.fetchDetails()
 			}
@@ -196,56 +165,50 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 			guard let self = self else { return }
 			switch result {
 			case .success(let shows):
-				if showID == nil {
-					self.show = shows.first
-					self.seasons = shows.first?.relationships?.seasons?.data ?? []
-					self.cast = shows.first?.relationships?.cast?.data ?? []
-					self.studio = shows.first?.relationships?.studios?.data.first { studio in
-						studio.attributes.isStudio ?? false
-					} ?? shows.first?.relationships?.studios?.data.first
-					self.relatedShows = shows.first?.relationships?.relatedShows?.data ?? []
+				self.dataSource.show = shows.first
+				self.dataSource.seasonIdentities = shows.first?.relationships?.seasons?.data ?? []
+				self.dataSource.castIdentities = shows.first?.relationships?.cast?.data ?? []
+				self.dataSource.studio = shows.first?.relationships?.studios?.data.first { studio in
+					studio.attributes.isStudio ?? false
+				} ?? shows.first?.relationships?.studios?.data.first
+				self.dataSource.relatedShows = shows.first?.relationships?.relatedShows?.data ?? []
 
-					// Donate suggestion to Siri
-					self.userActivity = self.show.openDetailUserActivity
-				} else {
-					if let show = shows.first {
-						self.studioShows.append(show)
-					}
-				}
+				// Donate suggestion to Siri
+				self.userActivity = self.dataSource.show.openDetailUserActivity
 			case .failure: break
 			}
 		}
 	}
 
 	@objc func toggleFavorite() {
-		self.show?.toggleFavorite()
+		self.dataSource.show?.toggleFavorite()
 	}
 
 	@objc func toggleReminder() {
-		self.show?.toggleReminder()
+		self.dataSource.show?.toggleReminder()
 	}
 
 	@objc func shareShow() {
-		self.show?.openShareSheet(on: self)
+		self.dataSource.show?.openShareSheet(on: self)
 	}
 
 	@objc func handleFavoriteToggle(_ notification: NSNotification) {
 		#if targetEnvironment(macCatalyst)
-		let name = show.attributes.favoriteStatus == .favorited ? "heart.fill" : "heart"
+		let name = self.dataSource.show.attributes.favoriteStatus == .favorited ? "heart.fill" : "heart"
 		self.toggleShowIsFavoriteTouchBarItem?.image = UIImage(systemName: name)
 		#endif
 	}
 
 	@objc func handleReminderToggle(_ notification: NSNotification) {
 		#if targetEnvironment(macCatalyst)
-		let name = show.attributes.reminderStatus == .reminded ? "bell.fill" : "bell"
+		let name = self.dataSource.show.attributes.reminderStatus == .reminded ? "bell.fill" : "bell"
 		self.toggleShowIsRemindedTouchBarItem?.image = UIImage(systemName: name)
 		#endif
 	}
 
 	// MARK: - IBActions
 	@IBAction func moreButtonPressed(_ sender: UIBarButtonItem) {
-		self.show?.openShareSheet(on: self, barButtonItem: sender)
+		self.dataSource.show?.openShareSheet(on: self, barButtonItem: sender)
 	}
 
 	// MARK: - Segue
@@ -253,10 +216,10 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		switch segue.identifier {
 		case R.segue.showDetailsCollectionViewController.seasonSegue.identifier:
 			guard let seasonsCollectionViewController = segue.destination as? SeasonsCollectionViewController else { return }
-			seasonsCollectionViewController.showID = self.show.id
+			seasonsCollectionViewController.showID = self.dataSource.show.id
 		case R.segue.showDetailsCollectionViewController.castSegue.identifier:
 			guard let castCollectionViewController = segue.destination as? CastCollectionViewController else { return }
-			castCollectionViewController.showID = self.show.id
+			castCollectionViewController.showID = self.dataSource.show.id
 		case R.segue.showDetailsCollectionViewController.episodeSegue.identifier:
 			guard let episodesCollectionViewController = segue.destination as? EpisodesCollectionViewController else { return }
 			guard let season = sender as? Season else { return }
@@ -267,122 +230,26 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 			showDetailsCollectionViewController.showID = show.id
 		case R.segue.showDetailsCollectionViewController.studioSegue.identifier:
 			guard let studioDetailsCollectionViewController = segue.destination as? StudioDetailsCollectionViewController else { return }
-			guard let studio = self.studio else { return }
+			guard let studio = self.dataSource.studio else { return }
 			studioDetailsCollectionViewController.studioID = studio.id
 		case R.segue.showDetailsCollectionViewController.showsListSegue.identifier:
 			guard let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController else { return }
 			showsListCollectionViewController.title = "Related"
-			showsListCollectionViewController.showID = self.show.id
+			showsListCollectionViewController.showID = self.dataSource.show.id
 		case R.segue.showDetailsCollectionViewController.characterDetailsSegue.identifier:
 			guard let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController else { return }
 			guard let cell = sender as? CastCollectionViewCell else { return }
 			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-			guard let character = self.cast[indexPath.item].relationships.characters.data.first else { return }
+			guard let character = self.dataSource.cast[indexPath.item].relationships.characters.data.first else { return }
 			characterDetailsCollectionViewController.characterID = character.id
 		case R.segue.showDetailsCollectionViewController.personDetailsSegue.identifier:
 			guard let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController else { return }
 			guard let cell = sender as? CastCollectionViewCell else { return }
 			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-			guard let person = self.cast[indexPath.item].relationships.people.data.first else { return }
+			guard let person = self.dataSource.cast[indexPath.item].relationships.people.data.first else { return }
 			personDetailsCollectionViewController.personID = person.id
 		default: break
 		}
-	}
-}
-
-// MARK: - UICollectionViewDataSource
-extension ShowDetailsCollectionViewController {
-	override func numberOfSections(in collectionView: UICollectionView) -> Int {
-		return self.show != nil ? ShowDetail.Section.allCases.count : 0
-	}
-
-	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		let showDetailSection = ShowDetail.Section(rawValue: section) ?? .header
-		var itemsPerSection = self.show != nil ? showDetailSection.rowCount : 0
-
-		if self.show != nil {
-			switch showDetailSection {
-			case .synopsis:
-				let synopsis = self.show.attributes.synopsis ?? ""
-				if synopsis.isEmpty {
-					itemsPerSection = 0
-				}
-			case .seasons:
-				itemsPerSection = self.seasons.count
-			case .cast:
-				itemsPerSection = self.cast.count
-			case .moreByStudio:
-				if let studioShowsCount = self.studio?.relationships?.shows?.data.count {
-					itemsPerSection = studioShowsCount
-				}
-			case .relatedShows:
-				itemsPerSection = self.relatedShows.count
-			case .sosumi:
-				let copyright = self.show.attributes.copyright ?? ""
-				if copyright.isEmpty {
-					itemsPerSection = 0
-				}
-			default: break
-			}
-		}
-
-		return itemsPerSection
-	}
-
-	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let showDetailSection = ShowDetail.Section(rawValue: indexPath.section) ?? .header
-		let reuseIdentifier = showDetailSection.identifierString(for: indexPath.item)
-		let showDetailCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-
-		switch showDetailSection {
-		case .header:
-			let showDetailHeaderCollectionViewCell = showDetailCollectionViewCell as? ShowDetailHeaderCollectionViewCell
-			showDetailHeaderCollectionViewCell?.show = self.show
-		case .badge:
-			let badgeCollectionViewCell = showDetailCollectionViewCell as? BadgeCollectionViewCell
-			badgeCollectionViewCell?.showDetailBage = ShowDetail.Badge(rawValue: indexPath.item) ?? .rating
-			badgeCollectionViewCell?.show = self.show
-		case .synopsis:
-			let textViewCollectionViewCell = showDetailCollectionViewCell as? TextViewCollectionViewCell
-			textViewCollectionViewCell?.delegate = self
-			textViewCollectionViewCell?.textViewCollectionViewCellType = .synopsis
-			textViewCollectionViewCell?.textViewContent = self.show.attributes.synopsis
-		case .rating:
-			let ratingCollectionViewCell = showDetailCollectionViewCell as? RatingCollectionViewCell
-			ratingCollectionViewCell?.show = self.show
-		case .information:
-			let informationCollectionViewCell = showDetailCollectionViewCell as? InformationCollectionViewCell
-			informationCollectionViewCell?.showDetailInformation = ShowDetail.Information(rawValue: indexPath.item) ?? .type
-			informationCollectionViewCell?.show = self.show
-		case .seasons:
-			let posterLockupCollectionViewCell = showDetailCollectionViewCell as? PosterLockupCollectionViewCell
-			posterLockupCollectionViewCell?.season = self.seasons[indexPath.item]
-		case .cast:
-			let castCollectionViewCell = showDetailCollectionViewCell as? CastCollectionViewCell
-			castCollectionViewCell?.delegate = self
-			castCollectionViewCell?.cast = self.cast[indexPath.item]
-		case .moreByStudio:
-			let smallLockupCollectionViewCell = showDetailCollectionViewCell as? SmallLockupCollectionViewCell
-			smallLockupCollectionViewCell?.configureCell(with: self.studioShows[indexPath.item])
-		case .relatedShows:
-			let smallLockupCollectionViewCell = showDetailCollectionViewCell as? SmallLockupCollectionViewCell
-			smallLockupCollectionViewCell?.configureCell(with: self.relatedShows[indexPath.item])
-		case .sosumi:
-			let sosumiShowCollectionViewCell = showDetailCollectionViewCell as? SosumiShowCollectionViewCell
-			sosumiShowCollectionViewCell?.copyrightText = self.show.attributes.copyright
-		}
-
-		return showDetailCollectionViewCell
-	}
-
-	override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-		let showDetailSection = ShowDetail.Section(rawValue: indexPath.section) ?? .header
-		let titleHeaderCollectionReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
-		titleHeaderCollectionReusableView.delegate = self
-		titleHeaderCollectionReusableView.segueID = showDetailSection.segueIdentifier
-		titleHeaderCollectionReusableView.indexPath = indexPath
-		titleHeaderCollectionReusableView.title = showDetailSection != .moreByStudio ? showDetailSection.stringValue : showDetailSection.stringValue + self.studio.attributes.name
-		return titleHeaderCollectionReusableView
 	}
 }
 
@@ -403,7 +270,7 @@ extension ShowDetailsCollectionViewController: TextViewCollectionViewCellDelegat
 		if let synopsisKNavigationController = R.storyboard.synopsis.instantiateInitialViewController() {
 			if let synopsisViewController = synopsisKNavigationController.viewControllers.first as? SynopsisViewController {
 				synopsisViewController.title = cell.textViewCollectionViewCellType.stringValue
-				synopsisViewController.synopsis = self.show.attributes.synopsis
+				synopsisViewController.synopsis = self.dataSource.show.attributes.synopsis
 			}
 			synopsisKNavigationController.modalPresentationStyle = .fullScreen
 			self.present(synopsisKNavigationController, animated: true)

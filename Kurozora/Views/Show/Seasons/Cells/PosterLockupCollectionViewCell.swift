@@ -22,30 +22,28 @@ class PosterLockupCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var ratingLabel: KLabel!
 	@IBOutlet var separatorViewLight: [SecondarySeparatorView]?
 
-	// MARK: - Properties
-	var season: Season! {
-		didSet {
-			self.configureCell()
-		}
-	}
-
 	// MARK: - Functions
 	/// Configure the cell with the season's details.
-	func configureCell() {
+	///
+	/// - Parameters:
+	/// 	- season: The `Season` object used to configure the cell.
+	func configure(with season: Season?) {
+		guard let season = season else { return }
+
 		// Configure poster
-		self.posterImageView.setImage(with: self.season.attributes.poster?.url ?? "", placeholder: R.image.placeholders.showPoster()!)
+		self.posterImageView.setImage(with: season.attributes.poster?.url ?? "", placeholder: R.image.placeholders.showPoster()!)
 
 		// Configure season number
-		self.countLabel.text = "Season \(self.season.attributes.number)"
+		self.countLabel.text = "Season \(season.attributes.number)"
 
 		// Configure title
-		self.titleLabel.text = self.season.attributes.title
+		self.titleLabel.text = season.attributes.title
 
 		// Configure premiere date
-		self.firstAiredLabel.text = self.season.attributes.firstAired?.formatted(date: .abbreviated, time: .omitted) ?? "TBA"
+		self.firstAiredLabel.text = season.attributes.firstAired?.formatted(date: .abbreviated, time: .omitted) ?? "TBA"
 
 		// Configure episode count
-		self.episodeCountLabel.text = "\(self.season.attributes.episodeCount)"
+		self.episodeCountLabel.text = "\(season.attributes.episodeCount)"
 
 		// Configure rating
 		self.ratingLabel.text = "0.00"

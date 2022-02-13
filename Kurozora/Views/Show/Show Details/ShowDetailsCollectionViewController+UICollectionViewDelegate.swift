@@ -35,13 +35,13 @@ extension ShowDetailsCollectionViewController {
 				return
 			}
 		case .seasons:
-			let season = self.seasons[indexPath.item]
+			let season = self.dataSource.seasons[indexPath.item]
 			self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.episodeSegue.identifier, sender: season)
 		case .moreByStudio:
-			let show = self.studioShows[indexPath.item]
+			let show = self.dataSource.studioShows[indexPath.item]
 			self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.showDetailsSegue.identifier, sender: show)
 		case .relatedShows:
-			let show = self.relatedShows[indexPath.item].show
+			let show = self.dataSource.relatedShows[indexPath.item].show
 			self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.showDetailsSegue.identifier, sender: show)
 		default: return
 		}
@@ -53,16 +53,16 @@ extension ShowDetailsCollectionViewController {
 
 		switch showDetailSection {
 		case .seasons:
-			let season = self.seasons[indexPath.item]
+			let season = self.dataSource.seasons[indexPath.item]
 			return season.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .cast:
-			let cast = self.cast[indexPath.item]
+			let cast = self.dataSource.cast[indexPath.item]
 			return cast.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .moreByStudio:
-			let show = self.studioShows[indexPath.item]
+			let show = self.dataSource.studioShows[indexPath.item]
 			return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .relatedShows:
-			let show = self.relatedShows[indexPath.item].show
+			let show = self.dataSource.relatedShows[indexPath.item].show
 			return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		default: break
 		}

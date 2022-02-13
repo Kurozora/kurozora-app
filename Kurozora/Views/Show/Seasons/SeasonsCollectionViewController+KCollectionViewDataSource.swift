@@ -15,20 +15,19 @@ extension SeasonsCollectionViewController {
 	}
 
 	override func configureDataSource() {
-		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Season>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: Season) -> UICollectionViewCell? in
-			if let posterLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.posterLockupCollectionViewCell, for: indexPath) {
-				posterLockupCollectionViewCell.season = item
-				return posterLockupCollectionViewCell
-			} else {
+		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Season>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, season: Season) -> UICollectionViewCell? in
+			guard let posterLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.posterLockupCollectionViewCell, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.posterLockupCollectionViewCell.identifier)")
 			}
+			posterLockupCollectionViewCell.configure(with: season)
+			return posterLockupCollectionViewCell
 		}
 	}
 
 	override func updateDataSource() {
 		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Season>()
 		snapshot.appendSections([.main])
-		snapshot.appendItems(seasons)
-		dataSource.apply(snapshot)
+		snapshot.appendItems(self.seasons)
+		self.dataSource.apply(snapshot)
 	}
 }
