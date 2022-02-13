@@ -8,7 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import Alamofire
 
 /// - Tag: ShowDetailsDataSource
 class ShowDetailsDataSource: NSObject {

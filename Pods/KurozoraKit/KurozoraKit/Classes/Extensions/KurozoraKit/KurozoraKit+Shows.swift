@@ -7,6 +7,7 @@
 //
 
 import TRON
+import Alamofire
 
 extension KurozoraKit {
 	/**
@@ -17,7 +18,8 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getDetails(forShowID showID: Int, including relationships: [String] = [], completion completionHandler: @escaping (_ result: Result<[Show], KKAPIError>) -> Void) {
+	@discardableResult
+	public func getDetails(forShowID showID: Int, including relationships: [String] = [], completion completionHandler: @escaping (_ result: Result<[Show], KKAPIError>) -> Void) -> DataRequest {
 		let showsDetails = KKEndpoint.Shows.details(showID).endpointValue
 		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(showsDetails)
 
@@ -31,7 +33,7 @@ extension KurozoraKit {
 		}
 
 		request.method = .get
-		request.perform(withSuccess: { showResponse in
+		return request.perform(withSuccess: { showResponse in
 			completionHandler(.success(showResponse.data))
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
@@ -55,7 +57,8 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getPeople(forShowID showID: Int, next: String?, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<PersonResponse, KKAPIError>) -> Void) {
+	@discardableResult
+	public func getPeople(forShowID showID: Int, next: String?, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<PersonResponse, KKAPIError>) -> Void) -> DataRequest {
 		let showsPeople = next ?? KKEndpoint.Shows.people(showID).endpointValue
 		let request: APIRequest<PersonResponse, KKAPIError> = tron.codable.request(showsPeople).buildURL(.relativeToBaseURL)
 		request.headers = headers
@@ -63,7 +66,7 @@ extension KurozoraKit {
 		request.parameters["limit"] = limit
 
 		request.method = .get
-		request.perform(withSuccess: { personResponse in
+		return request.perform(withSuccess: { personResponse in
 			completionHandler(.success(personResponse))
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
@@ -87,7 +90,8 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getCast(forShowID showID: Int, next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<CastResponse, KKAPIError>) -> Void) {
+	@discardableResult
+	public func getCast(forShowID showID: Int, next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<CastResponse, KKAPIError>) -> Void) -> DataRequest {
 		let showsCast = next ?? KKEndpoint.Shows.cast(showID).endpointValue
 		let request: APIRequest<CastResponse, KKAPIError> = tron.codable.request(showsCast).buildURL(.relativeToBaseURL)
 		request.headers = headers
@@ -95,7 +99,7 @@ extension KurozoraKit {
 		request.parameters["limit"] = limit
 
 		request.method = .get
-		request.perform(withSuccess: { castResponse in
+		return request.perform(withSuccess: { castResponse in
 			completionHandler(.success(castResponse))
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
@@ -119,7 +123,8 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getCharacters(forShowID showID: Int, next: String?, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<CharacterResponse, KKAPIError>) -> Void) {
+	@discardableResult
+	public func getCharacters(forShowID showID: Int, next: String?, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<CharacterResponse, KKAPIError>) -> Void) -> DataRequest {
 		let showsCharacters = next ?? KKEndpoint.Shows.characters(showID).endpointValue
 		let request: APIRequest<CharacterResponse, KKAPIError> = tron.codable.request(showsCharacters).buildURL(.relativeToBaseURL)
 		request.headers = headers
@@ -127,7 +132,7 @@ extension KurozoraKit {
 		request.parameters["limit"] = limit
 
 		request.method = .get
-		request.perform(withSuccess: { characterResponse in
+		return request.perform(withSuccess: { characterResponse in
 			completionHandler(.success(characterResponse))
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
@@ -151,7 +156,8 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getRelatedShows(forShowID showID: Int, next: String?, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<RelatedShowResponse, KKAPIError>) -> Void) {
+	@discardableResult
+	public func getRelatedShows(forShowID showID: Int, next: String?, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<RelatedShowResponse, KKAPIError>) -> Void) -> DataRequest {
 		let showsRelatedShows = next ?? KKEndpoint.Shows.relatedShows(showID).endpointValue
 		let request: APIRequest<RelatedShowResponse, KKAPIError> = tron.codable.request(showsRelatedShows).buildURL(.relativeToBaseURL)
 
@@ -163,7 +169,7 @@ extension KurozoraKit {
 		request.parameters["limit"] = limit
 
 		request.method = .get
-		request.perform(withSuccess: { relatedShowResponse in
+		return request.perform(withSuccess: { relatedShowResponse in
 			completionHandler(.success(relatedShowResponse))
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
@@ -187,7 +193,8 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getSeasons(forShowID showID: Int, next: String?, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<SeasonResponse, KKAPIError>) -> Void) {
+	@discardableResult
+	public func getSeasons(forShowID showID: Int, next: String?, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<SeasonResponse, KKAPIError>) -> Void) -> DataRequest {
 		let showsSeasons = next ?? KKEndpoint.Shows.seasons(showID).endpointValue
 		let request: APIRequest<SeasonResponse, KKAPIError> = tron.codable.request(showsSeasons).buildURL(.relativeToBaseURL)
 		request.headers = headers
@@ -195,7 +202,7 @@ extension KurozoraKit {
 		request.parameters["limit"] = limit
 
 		request.method = .get
-		request.perform(withSuccess: { seasonResponse in
+		return request.perform(withSuccess: { seasonResponse in
 			completionHandler(.success(seasonResponse))
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
@@ -219,7 +226,8 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func rateShow(_ showID: Int, with score: Double, description: String?, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) {
+	@discardableResult
+	public func rateShow(_ showID: Int, with score: Double, description: String?, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) -> DataRequest {
 		let showsRate = KKEndpoint.Shows.rate(showID).endpointValue
 		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(showsRate)
 
@@ -236,7 +244,7 @@ extension KurozoraKit {
 			request.parameters["description"] = description
 		}
 
-		request.perform(withSuccess: { success in
+		return request.perform(withSuccess: { success in
 			completionHandler(.success(success))
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
@@ -259,7 +267,8 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func search(forShow show: String, next: String?, completion completionHandler: @escaping (_ result: Result<ShowResponse, KKAPIError>) -> Void) {
+	@discardableResult
+	public func search(forShow show: String, next: String?, completion completionHandler: @escaping (_ result: Result<ShowResponse, KKAPIError>) -> Void) -> DataRequest {
 		let showsSearch = next ?? KKEndpoint.Shows.search.endpointValue
 		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(showsSearch).buildURL(.relativeToBaseURL)
 
@@ -274,7 +283,7 @@ extension KurozoraKit {
 				"query": show
 			]
 		}
-		request.perform(withSuccess: { showResponse in
+		return request.perform(withSuccess: { showResponse in
 			completionHandler(.success(showResponse))
 		}, failure: { error in
 			print("❌ Received show search error:", error.errorDescription ?? "Unknown error")
