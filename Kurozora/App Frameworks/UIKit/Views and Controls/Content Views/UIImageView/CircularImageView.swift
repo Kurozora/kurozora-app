@@ -14,7 +14,7 @@ import UIKit
 	`CircularImageView` adjusts some options to achieve its design, this includes:
 	- Rounding the image's corners.
 */
-class CircularImageView: UIImageView {
+class CircularImageView: KImageView {
 	// MARK: - View
 	override func layoutSubviews() {
 		super.layoutSubviews()

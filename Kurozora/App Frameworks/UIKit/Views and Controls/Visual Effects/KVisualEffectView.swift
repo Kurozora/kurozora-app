@@ -30,5 +30,6 @@ class KVisualEffectView: UIVisualEffectView {
 	func sharedInit() {
 		// Configure properties
 		self.theme_effect = KThemePicker.visualEffect.effectValue()
+		self.theme_backgroundColor = KThemePicker.blurBackgroundColor.rawValue
 	}
 }

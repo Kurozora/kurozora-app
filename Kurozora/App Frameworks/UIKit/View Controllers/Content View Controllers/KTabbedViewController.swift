@@ -153,7 +153,7 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 	/// Applies the the style for the currently enabled theme on the tab bar.
 	private func styleTabBarView() {
 		// Background view
-		bar.backgroundView.style = .blur(style: KThemePicker.visualEffect.blurValue)
+		bar.backgroundView.style = .custom(view: KVisualEffectView())
 
 		// Indicator
 		bar.indicator.layout(in: bar)
@@ -164,8 +164,8 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 		// State
 		bar.buttons.customize { (button) in
 			button.contentInset = UIEdgeInsets(top: 12.0, left: 12.0, bottom: 12.0, right: 12.0)
-			button.selectedTintColor = KThemePicker.tintColor.colorValue
-			button.tintColor = button.selectedTintColor.withAlphaComponent(0.25)
+			button.selectedTintColor = KThemePicker.textColor.colorValue
+			button.tintColor = button.selectedTintColor.withAlphaComponent(0.50)
 		}
 
 		// Layout
