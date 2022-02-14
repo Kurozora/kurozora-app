@@ -180,9 +180,7 @@ extension StudioDetailsCollectionViewController {
 		let studioDetailSection = StudioDetail.Section(rawValue: indexPath.section) ?? .header
 		let titleHeaderCollectionReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
 		titleHeaderCollectionReusableView.delegate = self
-		titleHeaderCollectionReusableView.segueID = studioDetailSection.segueIdentifier
-		titleHeaderCollectionReusableView.indexPath = indexPath
-		titleHeaderCollectionReusableView.title = studioDetailSection.stringValue
+		titleHeaderCollectionReusableView.configure(withTitle: studioDetailSection.stringValue, indexPath: indexPath, segueID: studioDetailSection.segueIdentifier)
 		return titleHeaderCollectionReusableView
 	}
 }
