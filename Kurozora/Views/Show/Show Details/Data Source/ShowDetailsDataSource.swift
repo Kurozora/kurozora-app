@@ -237,11 +237,11 @@ extension ShowDetailsDataSource: UICollectionViewDataSource {
 
 	func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 		let showDetailSection = ShowDetail.Section(rawValue: indexPath.section) ?? .header
+		let sectionTitle = showDetailSection != .moreByStudio ? showDetailSection.stringValue : showDetailSection.stringValue + self.studio.attributes.name
+
 		let titleHeaderCollectionReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
 		titleHeaderCollectionReusableView.delegate = self.viewControlelr
-		titleHeaderCollectionReusableView.segueID = showDetailSection.segueIdentifier
-		titleHeaderCollectionReusableView.indexPath = indexPath
-		titleHeaderCollectionReusableView.title = showDetailSection != .moreByStudio ? showDetailSection.stringValue : showDetailSection.stringValue + self.studio.attributes.name
+		titleHeaderCollectionReusableView.configure(withTitle: sectionTitle, indexPath: indexPath, segueID: showDetailSection.segueIdentifier)
 		return titleHeaderCollectionReusableView
 	}
 }

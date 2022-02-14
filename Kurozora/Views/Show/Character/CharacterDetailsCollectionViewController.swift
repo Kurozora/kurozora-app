@@ -228,9 +228,7 @@ extension CharacterDetailsCollectionViewController {
 		let characterDetailSection = CharacterDetail.Section(rawValue: indexPath.section) ?? .header
 		let titleHeaderCollectionReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
 		titleHeaderCollectionReusableView.delegate = self
-		titleHeaderCollectionReusableView.segueID = characterDetailSection.segueIdentifier
-		titleHeaderCollectionReusableView.indexPath = indexPath
-		titleHeaderCollectionReusableView.title = characterDetailSection.stringValue
+		titleHeaderCollectionReusableView.configure(withTitle: characterDetailSection.stringValue, indexPath: indexPath, segueID: characterDetailSection.segueIdentifier)
 		return titleHeaderCollectionReusableView
 	}
 }

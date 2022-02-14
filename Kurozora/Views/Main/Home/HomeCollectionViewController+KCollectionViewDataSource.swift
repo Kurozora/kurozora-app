@@ -91,27 +91,28 @@ extension HomeCollectionViewController {
 			// Get a supplementary view of the desired kind.
 			let exploreSectionTitleCell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
 			exploreSectionTitleCell.delegate = self
-			exploreSectionTitleCell.indexPath = indexPath
 
 			if indexPath.section < exploreCategoriesCount {
 				let exploreCategory = self.exploreCategories[indexPath.section]
-				if exploreCategory.relationships.shows != nil {
-					exploreSectionTitleCell.segueID = R.segue.homeCollectionViewController.showsListSegue.identifier
-				} else if exploreCategory.relationships.genres != nil {
-					exploreSectionTitleCell.segueID = R.segue.homeCollectionViewController.genresSegue.identifier
-				} else if exploreCategory.relationships.themes != nil {
-					exploreSectionTitleCell.segueID = R.segue.homeCollectionViewController.themesSegue.identifier
-				} else if exploreCategory.relationships.characters != nil {
-					exploreSectionTitleCell.segueID = R.segue.homeCollectionViewController.charactersListSegue.identifier
-				} else if exploreCategory.relationships.people != nil {
-					exploreSectionTitleCell.segueID = R.segue.homeCollectionViewController.peopleListSegue.identifier
-				}
-				exploreSectionTitleCell.title = self.exploreCategories[indexPath.section].attributes.title
-			} else {
-				exploreSectionTitleCell.segueID = ""
-				exploreSectionTitleCell.title = "Quick Links"
-			}
+				var segueID = ""
 
+				switch exploreCategory.attributes.exploreCategoryType {
+				case .shows, .mostPopularShows, .upcomingShows:
+					segueID = R.segue.homeCollectionViewController.showsListSegue.identifier
+				case .genres:
+					segueID = R.segue.homeCollectionViewController.genresSegue.identifier
+				case .themes:
+					segueID = R.segue.homeCollectionViewController.themesSegue.identifier
+				case .characters:
+					segueID = R.segue.homeCollectionViewController.charactersListSegue.identifier
+				case .people:
+					segueID = R.segue.homeCollectionViewController.peopleListSegue.identifier
+				}
+
+				exploreSectionTitleCell.configure(withTitle: exploreCategory.attributes.title, exploreCategory.attributes.description, indexPath: indexPath, segueID: segueID)
+			} else {
+				exploreSectionTitleCell.configure(withTitle: "Quick Links", indexPath: indexPath)
+			}
 			// Return the view.
 			return exploreSectionTitleCell
 		}

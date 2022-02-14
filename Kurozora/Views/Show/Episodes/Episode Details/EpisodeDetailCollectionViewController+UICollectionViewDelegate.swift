@@ -13,7 +13,6 @@ extension EpisodeDetailCollectionViewController {
 		guard let sectionHeaderReusableView = view as? TitleHeaderCollectionReusableView else { return }
 		guard let episodeDetailSection = EpisodeDetail.Section(rawValue: indexPath.section) else { return }
 		sectionHeaderReusableView.delegate = self
-		sectionHeaderReusableView.title = episodeDetailSection.stringValue
-		sectionHeaderReusableView.indexPath = indexPath
+		sectionHeaderReusableView.configure(withTitle: episodeDetailSection.stringValue, indexPath: indexPath)
 	}
 }
