@@ -10,7 +10,7 @@ import UIKit
 
 class SelectableSettingsCell: SettingsCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var selectedImageView: UIImageView! {
+	@IBOutlet weak var selectedImageView: KImageView! {
 		didSet {
 			self.selectedImageView.image = nil
 		}

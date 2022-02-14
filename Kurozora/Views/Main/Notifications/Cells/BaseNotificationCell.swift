@@ -14,7 +14,7 @@ class BaseNotificationCell: KTableViewCell {
 	@IBOutlet weak var notificationTypeLabel: KSecondaryLabel!
 	@IBOutlet weak var dateLabel: KSecondaryLabel!
 	@IBOutlet weak var contentLabel: KLabel!
-	@IBOutlet weak var readStatusImageView: UIImageView!
+	@IBOutlet weak var readStatusImageView: KImageView!
 
 	// MARK: - Properties
 	var notificationType: KNotification.CustomType?

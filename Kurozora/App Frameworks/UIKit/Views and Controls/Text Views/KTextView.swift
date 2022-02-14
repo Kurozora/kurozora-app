@@ -29,6 +29,7 @@ class KTextView: UITextView {
 	/// The shared settings used to initialize the label.
 	func sharedInit() {
 		self.theme_textColor = KThemePicker.textColor.rawValue
+		self.theme_tintColor = KThemePicker.tintColor.rawValue
 
 		self.textContainerInset = .zero
 		self.textContainer.lineFragmentPadding = 0

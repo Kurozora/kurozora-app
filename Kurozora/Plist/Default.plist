@@ -7,7 +7,7 @@
 	<key>UIStatusBarStyle</key>
 	<string>LightContent</string>
 	<key>UIVisualEffectView</key>
-	<string>Dark</string>
+	<string>Light</string>
 	<key>Global</key>
 	<dict>
 		<key>backgroundColor</key>
@@ -17,7 +17,7 @@
 		<key>barTitleTextColor</key>
 		<string>#EEEEEE</string>
 		<key>blurBackgroundColor</key>
-		<string>#33333380</string>
+		<string>#353A50BF</string>
 		<key>borderColor</key>
 		<string>#AFAFAF</string>
 		<key>textColor</key>

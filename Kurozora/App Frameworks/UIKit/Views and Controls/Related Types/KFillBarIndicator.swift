@@ -42,7 +42,7 @@ class KFillBarIndicator: TMBarIndicator {
 		bottomConstraint.isActive = true
 		self.bottomConstraint = bottomConstraint
 
-		self.theme_tintColor = KThemePicker.tintColor.rawValue
+		self.theme_tintColor = KThemePicker.textColor.rawValue
 		self.backgroundColor = tintColor.withAlphaComponent(0.25)
 		self.overscrollBehavior = .bounce
 		self.transitionStyle = .progressive
