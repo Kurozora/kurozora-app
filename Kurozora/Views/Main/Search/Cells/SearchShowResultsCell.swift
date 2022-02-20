@@ -33,7 +33,7 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 
 		// Configure labels
 		self.primaryLabel.text = self.show.attributes.title
-		self.secondaryLabel.text = self.show.attributes.tagline ?? self.show.attributes.genres?.localizedJoined()
+		self.secondaryLabel.text = (self.show.attributes.tagline ?? "").isEmpty ? self.show.attributes.genres?.localizedJoined() : self.show.attributes.tagline
 		self.statusLabel.text = self.show.attributes.status.name
 
 		// Configure poster image

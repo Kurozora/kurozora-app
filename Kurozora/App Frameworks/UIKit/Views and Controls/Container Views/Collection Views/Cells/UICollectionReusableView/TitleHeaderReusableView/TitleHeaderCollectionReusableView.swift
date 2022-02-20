@@ -11,7 +11,7 @@ import UIKit
 class TitleHeaderCollectionReusableView: UICollectionReusableView {
 	// MARK: - IBOutlets
 	@IBOutlet weak var titleLabel: KLabel!
-	@IBOutlet weak var subTitleHeader: KLabel!
+	@IBOutlet weak var subTitleHeader: KSecondaryLabel!
 	@IBOutlet weak var headerButton: HeaderButton!
 	@IBOutlet weak var separatorView: SeparatorView!
 

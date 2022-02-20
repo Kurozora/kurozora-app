@@ -28,13 +28,15 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 	weak var baseLockupCollectionViewCellDelegate: BaseLockupCollectionViewCellDelegate?
 
 	// MARK: - Functions
-	/// Configure the cell with the given details.
+	/// Configure the cell with the `Show` object.
+	///
+	/// - Parameter show: The `Show` object used to configure the cell.
 	func configureCell(with show: Show) {
 		// Configure title
 		self.primaryLabel?.text = show.attributes.title
 
 		// Configure genres
-		self.secondaryLabel?.text = show.attributes.tagline ?? show.attributes.genres?.localizedJoined()
+		self.secondaryLabel?.text = (show.attributes.tagline ?? "").isEmpty ? show.attributes.genres?.localizedJoined() : show.attributes.tagline
 
 		// Configure banner
 		if let bannerBackgroundColor = show.attributes.banner?.backgroundColor {
@@ -57,18 +59,14 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 		self.libraryStatusButton?.setTitle(self.libraryStatus != .none ? "\(self.libraryStatus.stringValue.capitalized) ▾" : "ADD", for: .normal)
 	}
 
-	/**
-		Configures the cell with the given `Genre` obejct.
-
-		- Parameter genre: The `Genre` object used to configure the cell.
-	*/
+	/// Configures the cell with the given `Genre` obejct.
+	///
+	/// - Parameter genre: The `Genre` object used to configure the cell.
 	func configureCell(with genre: Genre) {}
 
-	/**
-		Configures the cell with the given `Theme` obejct.
-
-		- Parameter theme: The `Theme` object used to configure the cell.
-	*/
+	/// Configures the cell with the given `Theme` obejct.
+	///
+	/// - Parameter theme: The `Theme` object used to configure the cell.
 	func configureCell(with theme: Theme) {}
 
 	// MARK: - IBActions
