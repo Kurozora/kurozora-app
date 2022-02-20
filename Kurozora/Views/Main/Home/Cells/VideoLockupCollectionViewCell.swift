@@ -45,8 +45,8 @@ class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		// Cancel and remove youTube operation
 		DispatchQueue.global(qos: .background).async {
 			self.youtubeOperation?.cancel()
+			self.youtubeOperation = nil
 		}
-		self.youtubeOperation = nil
 
 		// Re-configure video player
 		self.avQueuePlayer = AVQueuePlayer()
@@ -101,6 +101,7 @@ class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 										self.avPlayerLooper = nil
 										self.avPlayerLooper = AVPlayerLooper(player: self.avQueuePlayer, templateItem: avPlayerItem)
 									}
+									self.youtubeOperation = nil
 								}
 							}
 						}
