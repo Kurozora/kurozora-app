@@ -10,6 +10,7 @@ import UIKit
 import KurozoraKit
 import AVKit
 import AVFoundation
+import XCDYouTubeKit
 
 class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	// MARK: - IBOutlets
@@ -24,35 +25,32 @@ class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		}
 	}
 	@IBOutlet weak var taglineLabel: KLabel!
-	@IBOutlet weak var videoPlayerContainer: UIView!
+	@IBOutlet weak var videoPlayerContainer: KTrailerPlayerView!
 
 	// MARK: - Properties
-	var avPlayerStatus: NSKeyValueObservation? = nil
-	var avPlayerTimeControl: NSKeyValueObservation? = nil
-	var avPlayerViewController: AVPlayerViewController = {
-		let avPlayerViewController = AVPlayerViewController()
-		avPlayerViewController.exitsFullScreenWhenPlaybackEnds = true
-		avPlayerViewController.player = AVPlayer()
-		avPlayerViewController.player?.actionAtItemEnd = .none
-		avPlayerViewController.player?.isMuted = true
-		return avPlayerViewController
-	}()
-	var thumbnailPlaceholder: UIImageView = UIImageView()
+	var avQueuePlayer: AVQueuePlayer = AVQueuePlayer()
+	private var avPlayerLooper: AVPlayerLooper?
+	var youtubeOperation: XCDYouTubeOperation?
 
 	// MARK: - View
 	override func awakeFromNib() {
 		super.awakeFromNib()
 
-		videoPlayerContainer.addSubview(avPlayerViewController.view)
-		avPlayerViewController.view.fillToSuperview()
-		setupAVPlayerControllerThumbnail()
+		self.configureVideoPlayerContainer()
 	}
 
 	override func prepareForReuse() {
 		super.prepareForReuse()
 
-		avPlayerViewController.player?.pause()
-		avPlayerViewController.player = AVPlayer()
+		// Cancel and remove youTube operation
+		DispatchQueue.global(qos: .background).async {
+			self.youtubeOperation?.cancel()
+		}
+		self.youtubeOperation = nil
+
+		// Re-configure video player
+		self.avQueuePlayer = AVQueuePlayer()
+		self.configureVideoPlayerContainer()
 	}
 
 	// MARK: - Functions
@@ -65,57 +63,53 @@ class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		// Configure tagline
 		self.taglineLabel?.text = show.attributes.tagline
 
-		// Configure banner
-		if let bannerBackgroundColor = show.attributes.banner?.backgroundColor {
-			self.thumbnailPlaceholder.backgroundColor = UIColor(hexString: bannerBackgroundColor)
-		}
-		show.attributes.bannerImage(imageView: self.thumbnailPlaceholder)
-
 		// Configure video player
-		configureVideoPlayer(with: show)
+		if self.youtubeOperation == nil {
+			self.configureVideoPlayer(with: show)
+		}
+	}
+
+	func configureVideoPlayerContainer() {
+		self.videoPlayerContainer.player = self.avQueuePlayer
+		self.videoPlayerContainer.playerLayer.videoGravity = .resizeAspectFill
+		self.avQueuePlayer.actionAtItemEnd = .none
+		self.avQueuePlayer.isMuted = true
 	}
 
 	/// Configures the video player with the defined settings.
 	func configureVideoPlayer(with show: Show) {
 		if let videoUrlString = show.attributes.videoUrl, !videoUrlString.isEmpty {
-			if let videoUrl = URL(string: videoUrlString) {
-				let avPlayerItem = AVPlayerItem(url: videoUrl)
-				self.avPlayerViewController.player?.replaceCurrentItem(with: avPlayerItem)
+			let videoID = URLComponents(string: videoUrlString)?.queryItems?.first(where: { $0.name == "v" })?.value
+
+			DispatchQueue.global(qos: .background).async {
+				self.youtubeOperation = XCDYouTubeClient.default().getVideoWithIdentifier(videoID) { [weak self] video, error in
+					if let video = video {
+						let streamURLs = video.streamURLs
+						let streamURL = streamURLs[XCDYouTubeVideoQuality.medium360.rawValue] ?? streamURLs[XCDYouTubeVideoQuality.small240.rawValue]
+
+						if let streamURL = streamURL {
+							let options = [AVURLAssetAllowsCellularAccessKey: false]
+							let avURLAsset = AVURLAsset(url: streamURL, options: options)
+
+							/// Load needed values asynchronously
+							avURLAsset.loadValuesAsynchronously(forKeys: ["duration", "playable"]) {
+								/// UI actions should executed on the main thread
+								DispatchQueue.main.async { [weak self] in
+									guard let self = self else { return }
+									let avPlayerItem = AVPlayerItem(asset: avURLAsset)
+									if self.avQueuePlayer.currentItem != avPlayerItem {
+										self.avPlayerLooper = nil
+										self.avPlayerLooper = AVPlayerLooper(player: self.avQueuePlayer, templateItem: avPlayerItem)
+									}
+								}
+							}
+						}
+					} else {
+						print("----- YouTube Error -----")
+						print(error?.localizedDescription ?? "------ No YouTube error even though video not working")
+					}
+				}
 			}
-		} else {
-			addThumbnailPlaceholder()
-			self.avPlayerViewController.showsPlaybackControls = false
 		}
-	}
-
-	/// Sets up the necessary AVPlayerController observers to add and remove the video thumbnail.
-	func setupAVPlayerControllerThumbnail() {
-		addThumbnailToAVPlayerController()
-		observeAVPlayerControllerPlayStatus()
-	}
-
-	func addThumbnailPlaceholder() {
-		self.avPlayerViewController.contentOverlayView?.removeSubviews()
-		self.avPlayerViewController.contentOverlayView?.addSubview(self.thumbnailPlaceholder)
-		self.thumbnailPlaceholder.fillToSuperview()
-	}
-
-	/// Adds a thumbnail to the video player.
-	fileprivate func addThumbnailToAVPlayerController() {
-		avPlayerStatus = self.avPlayerViewController.player?.observe(\.status, changeHandler: { (_, _) in
-			if self.avPlayerViewController.player?.status == .readyToPlay {
-				self.addThumbnailPlaceholder()
-				self.avPlayerViewController.showsPlaybackControls = true
-			}
-		})
-	}
-
-	/// Observes and removes the video thumbnail when the video is playing.
-	fileprivate func observeAVPlayerControllerPlayStatus() {
-		avPlayerTimeControl = self.avPlayerViewController.player?.observe(\.timeControlStatus, changeHandler: { (_, _) in
-			if self.avPlayerViewController.player?.timeControlStatus == .playing {
-				self.avPlayerViewController.contentOverlayView?.removeSubviews()
-			}
-		})
 	}
 }

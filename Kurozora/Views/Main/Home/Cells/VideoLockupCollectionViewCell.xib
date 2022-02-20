@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19158" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19141"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -17,29 +17,52 @@
                 <rect key="frame" x="0.0" y="0.0" width="326" height="382"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1dl-d0-TOp">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OXr-yS-u4I">
                         <rect key="frame" x="0.0" y="0.0" width="326" height="183.5"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2p3-mu-mj3">
+                                <rect key="frame" x="0.0" y="0.0" width="326" height="183.5"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1dl-d0-TOp" customClass="KTrailerPlayerView" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="326" height="183.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="1dl-d0-TOp" secondAttribute="height" multiplier="16:9" id="9On-VF-yNn"/>
+                                </constraints>
+                            </view>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="9co-1W-qBl" userLabel="Border View">
+                                <rect key="frame" x="0.0" y="0.0" width="326" height="183.5"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="width" secondItem="1dl-d0-TOp" secondAttribute="height" multiplier="16:9" id="9On-VF-yNn"/>
+                            <constraint firstItem="2p3-mu-mj3" firstAttribute="top" secondItem="OXr-yS-u4I" secondAttribute="top" id="69z-hJ-zhs"/>
+                            <constraint firstAttribute="width" secondItem="OXr-yS-u4I" secondAttribute="height" multiplier="16:9" id="7cy-sj-TeZ"/>
+                            <constraint firstItem="9co-1W-qBl" firstAttribute="leading" secondItem="OXr-yS-u4I" secondAttribute="leading" id="7vE-m4-BPc"/>
+                            <constraint firstAttribute="bottom" secondItem="2p3-mu-mj3" secondAttribute="bottom" id="9xJ-cG-t0r"/>
+                            <constraint firstAttribute="trailing" secondItem="1dl-d0-TOp" secondAttribute="trailing" id="ECT-lh-SSX"/>
+                            <constraint firstItem="1dl-d0-TOp" firstAttribute="leading" secondItem="OXr-yS-u4I" secondAttribute="leading" id="EKT-4s-xT9"/>
+                            <constraint firstItem="9co-1W-qBl" firstAttribute="top" secondItem="OXr-yS-u4I" secondAttribute="top" id="HyP-HR-iAy"/>
+                            <constraint firstAttribute="bottom" secondItem="1dl-d0-TOp" secondAttribute="bottom" id="JE3-t7-t6Z"/>
+                            <constraint firstItem="1dl-d0-TOp" firstAttribute="top" secondItem="OXr-yS-u4I" secondAttribute="top" id="c6A-m9-Qxw"/>
+                            <constraint firstAttribute="bottom" secondItem="9co-1W-qBl" secondAttribute="bottom" id="dFZ-Ze-Vzx"/>
+                            <constraint firstItem="2p3-mu-mj3" firstAttribute="leading" secondItem="OXr-yS-u4I" secondAttribute="leading" id="k1z-19-vQ8"/>
+                            <constraint firstAttribute="trailing" secondItem="2p3-mu-mj3" secondAttribute="trailing" id="ked-FP-xWt"/>
+                            <constraint firstAttribute="trailing" secondItem="9co-1W-qBl" secondAttribute="trailing" id="u6u-na-i7T"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="10"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
-                    </view>
-                    <view userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="9co-1W-qBl" userLabel="Border View">
-                        <rect key="frame" x="0.0" y="0.0" width="326" height="183.5"/>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="10"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                <real key="value" value="1"/>
+                                <integer key="value" value="10"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
@@ -122,41 +145,38 @@
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="1dl-d0-TOp" firstAttribute="top" secondItem="we1-58-ZqB" secondAttribute="top" id="5GV-gV-1pf"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Ak8-tP-o1R" secondAttribute="trailing" id="5Ox-fb-88F"/>
+                    <constraint firstItem="OXr-yS-u4I" firstAttribute="top" secondItem="we1-58-ZqB" secondAttribute="top" id="INI-LQ-JFN"/>
+                    <constraint firstItem="OXr-yS-u4I" firstAttribute="leading" secondItem="we1-58-ZqB" secondAttribute="leading" id="Itc-LG-Kig"/>
+                    <constraint firstItem="4pN-1W-t1C" firstAttribute="top" secondItem="OXr-yS-u4I" secondAttribute="bottom" constant="16" id="UQk-Fq-QgJ"/>
                     <constraint firstItem="4pN-1W-t1C" firstAttribute="top" secondItem="4YL-KK-DDQ" secondAttribute="top" id="V7d-p6-QBy"/>
                     <constraint firstItem="DOK-hZ-Wha" firstAttribute="bottom" secondItem="4pN-1W-t1C" secondAttribute="bottom" id="XJ6-Sl-uwF"/>
                     <constraint firstItem="Ak8-tP-o1R" firstAttribute="leading" secondItem="4YL-KK-DDQ" secondAttribute="leading" id="XO8-Qj-Lid"/>
-                    <constraint firstItem="4pN-1W-t1C" firstAttribute="top" secondItem="1dl-d0-TOp" secondAttribute="bottom" constant="16" id="YYM-m3-AGc"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="4YL-KK-DDQ" secondAttribute="trailing" id="ZoQ-As-EFq"/>
-                    <constraint firstItem="9co-1W-qBl" firstAttribute="trailing" secondItem="1dl-d0-TOp" secondAttribute="trailing" id="aWZ-SE-GKl"/>
-                    <constraint firstItem="9co-1W-qBl" firstAttribute="bottom" secondItem="1dl-d0-TOp" secondAttribute="bottom" id="gA2-bh-gki"/>
-                    <constraint firstAttribute="trailing" secondItem="1dl-d0-TOp" secondAttribute="trailing" id="gDG-Du-iSR"/>
-                    <constraint firstItem="4pN-1W-t1C" firstAttribute="leading" secondItem="1dl-d0-TOp" secondAttribute="leading" id="gwr-Cw-AxD"/>
+                    <constraint firstAttribute="trailing" secondItem="OXr-yS-u4I" secondAttribute="trailing" id="gHn-gS-4NR"/>
                     <constraint firstAttribute="bottom" secondItem="xSi-o9-X2G" secondAttribute="bottom" id="hVu-9l-n2W"/>
-                    <constraint firstItem="1dl-d0-TOp" firstAttribute="leading" secondItem="we1-58-ZqB" secondAttribute="leading" id="iAQ-Kh-kIS"/>
                     <constraint firstItem="DOK-hZ-Wha" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Ak8-tP-o1R" secondAttribute="bottom" constant="8" symbolic="YES" id="jAQ-9X-bYO"/>
-                    <constraint firstItem="9co-1W-qBl" firstAttribute="top" secondItem="1dl-d0-TOp" secondAttribute="top" id="kGQ-Wx-a8u"/>
                     <constraint firstItem="DOK-hZ-Wha" firstAttribute="leading" secondItem="4pN-1W-t1C" secondAttribute="trailing" constant="8" symbolic="YES" id="kvb-Lj-pBy"/>
                     <constraint firstItem="xSi-o9-X2G" firstAttribute="leading" secondItem="we1-58-ZqB" secondAttribute="leading" id="nEQ-KU-Ecb"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="DOK-hZ-Wha" secondAttribute="trailing" id="o9o-a0-6lj"/>
                     <constraint firstItem="Ak8-tP-o1R" firstAttribute="top" secondItem="4YL-KK-DDQ" secondAttribute="bottom" constant="2" id="pNX-Kt-qbF"/>
                     <constraint firstItem="xSi-o9-X2G" firstAttribute="top" secondItem="iLu-jq-nxA" secondAttribute="bottom" constant="16" id="qfK-ez-lxn"/>
+                    <constraint firstItem="4pN-1W-t1C" firstAttribute="leading" secondItem="we1-58-ZqB" secondAttribute="leading" id="uCC-Lr-mPD"/>
                     <constraint firstItem="4YL-KK-DDQ" firstAttribute="leading" secondItem="4pN-1W-t1C" secondAttribute="trailing" constant="8" symbolic="YES" id="ujA-aD-erX"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xSi-o9-X2G" secondAttribute="trailing" id="vK7-Xf-W4v"/>
-                    <constraint firstItem="9co-1W-qBl" firstAttribute="leading" secondItem="1dl-d0-TOp" secondAttribute="leading" id="xka-SJ-mfU"/>
                 </constraints>
             </collectionViewCellContentView>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <connections>
-                <outlet property="libraryStatusButton" destination="DOK-hZ-Wha" id="tVh-BZ-nln"/>
-                <outlet property="posterImageView" destination="LdC-RH-wCf" id="sHZ-NX-VA1"/>
-                <outlet property="primaryLabel" destination="4YL-KK-DDQ" id="5dg-GR-3Mg"/>
-                <outlet property="secondaryLabel" destination="Ak8-tP-o1R" id="bIW-qu-y3D"/>
-                <outlet property="taglineLabel" destination="xSi-o9-X2G" id="KbN-1A-D7k"/>
-                <outlet property="videoPlayerContainer" destination="1dl-d0-TOp" id="U9F-d0-KSA"/>
+                <outlet property="bannerImageView" destination="2p3-mu-mj3" id="pls-OC-85R"/>
+                <outlet property="libraryStatusButton" destination="DOK-hZ-Wha" id="rPV-Zl-H62"/>
+                <outlet property="posterImageView" destination="LdC-RH-wCf" id="O4l-2P-PlB"/>
+                <outlet property="primaryLabel" destination="4YL-KK-DDQ" id="KRm-84-qU0"/>
+                <outlet property="secondaryLabel" destination="Ak8-tP-o1R" id="fgQ-K3-YRQ"/>
+                <outlet property="taglineLabel" destination="xSi-o9-X2G" id="xcb-Dp-jO0"/>
+                <outlet property="videoPlayerContainer" destination="1dl-d0-TOp" id="zxa-GU-fTm"/>
             </connections>
-            <point key="canvasLocation" x="912" y="230"/>
+            <point key="canvasLocation" x="911.59420289855075" y="229.6875"/>
         </collectionViewCell>
     </objects>
     <resources>

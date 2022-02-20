@@ -58,6 +58,7 @@
 		66160C3B215C04B900D0D722 /* AccountTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66160C3A215C04B900D0D722 /* AccountTableViewController.swift */; };
 		66160C40215C2DEB00D0D722 /* Reachability.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66160C3F215C2DEB00D0D722 /* Reachability.storyboard */; };
 		661A002527BA9FDE00DC646C /* KImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A002427BA9FDD00DC646C /* KImageView.swift */; };
+		661A002A27C28F7A00DC646C /* KTrailerPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A002927C28F7A00DC646C /* KTrailerPlayerView.swift */; };
 		661ACC9B25ADA41B002407A7 /* ShowDetailsCollectionViewController+TouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661ACC9A25ADA41B002407A7 /* ShowDetailsCollectionViewController+TouchBar.swift */; };
 		661B26B42351E71B00840AF5 /* UIImageView+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661B26B22351E5A100840AF5 /* UIImageView+Kurozora.swift */; };
 		661D646C25C387EA00822D01 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661D646B25C387EA00822D01 /* MenuController.swift */; };
@@ -552,6 +553,7 @@
 		66160C3A215C04B900D0D722 /* AccountTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTableViewController.swift; sourceTree = "<group>"; };
 		66160C3F215C2DEB00D0D722 /* Reachability.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Reachability.storyboard; sourceTree = "<group>"; };
 		661A002427BA9FDD00DC646C /* KImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KImageView.swift; sourceTree = "<group>"; };
+		661A002927C28F7A00DC646C /* KTrailerPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KTrailerPlayerView.swift; sourceTree = "<group>"; };
 		661ACC9A25ADA41B002407A7 /* ShowDetailsCollectionViewController+TouchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShowDetailsCollectionViewController+TouchBar.swift"; sourceTree = "<group>"; };
 		661B26B22351E5A100840AF5 /* UIImageView+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Kurozora.swift"; sourceTree = "<group>"; };
 		661D646B25C387EA00822D01 /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
@@ -1264,6 +1266,30 @@
 				6645D5F323E702B10042B4E0 /* Utilities */,
 			);
 			path = Reachability;
+			sourceTree = "<group>";
+		};
+		661A002627C28F2D00DC646C /* AVFoundation */ = {
+			isa = PBXGroup;
+			children = (
+				661A002727C28F3B00DC646C /* Media Playback and Selection */,
+			);
+			path = AVFoundation;
+			sourceTree = "<group>";
+		};
+		661A002727C28F3B00DC646C /* Media Playback and Selection */ = {
+			isa = PBXGroup;
+			children = (
+				661A002827C28F5200DC646C /* Player Presentation */,
+			);
+			path = "Media Playback and Selection";
+			sourceTree = "<group>";
+		};
+		661A002827C28F5200DC646C /* Player Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				661A002927C28F7A00DC646C /* KTrailerPlayerView.swift */,
+			);
+			path = "Player Presentation";
 			sourceTree = "<group>";
 		};
 		661D646D25C38C4800822D01 /* Menu */ = {
@@ -2465,6 +2491,7 @@
 		66B4F1D9223D1F70007C5048 /* App Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				661A002627C28F2D00DC646C /* AVFoundation */,
 				6697DB2225744B9A0054FEFD /* Global+Kurozora.swift */,
 				6691B83025869A91005341F9 /* Cosmos */,
 				66E54EBC244E1486007248EE /* Foundation */,
@@ -3428,6 +3455,7 @@
 				66148D6325E5E52B000F2E0A /* FollowTableViewController+UITableViewDelegate.swift in Sources */,
 				66DE65282401AEDB001C2773 /* FilterSection.swift in Sources */,
 				66CAE6872337CFC800991E59 /* OnboardingBaseTableViewCell.swift in Sources */,
+				661A002A27C28F7A00DC646C /* KTrailerPlayerView.swift in Sources */,
 				661DBC51234A4E00009292DF /* TipJarTableViewController.swift in Sources */,
 				663C95B923084FAC003720A4 /* SceneDelegate.swift in Sources */,
 				661A002527BA9FDE00DC646C /* KImageView.swift in Sources */,

@@ -10,6 +10,7 @@ import UIKit
 import KurozoraKit
 import Kingfisher
 import SwifterSwift
+import XCDYouTubeKit
 
 // MARK: - KurozoraKit
 let KService = KurozoraKit().services(KurozoraDelegate.shared.services)
@@ -52,6 +53,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Restore current user session
 		NotificationCenter.default.addObserver(self, selector: #selector(updateMenuBuilder(_:)), name: .KUserIsSignedInDidChange, object: nil)
 		WorkflowController.shared.restoreCurrentUserSession()
+
+		// Set YouTube API Key
+		XCDYouTubeClient.setInnertubeApiKey("***REMOVED***")
 
 		return true
 	}
