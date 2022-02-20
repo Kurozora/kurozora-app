@@ -53,6 +53,7 @@ PODS:
     - SwiftyJSON (~> 5.0)
     - TRON/Core
   - WhatsNew (0.4.6)
+  - XCDYouTubeKit (2.15.2)
 
 DEPENDENCIES:
   - Cosmos
@@ -70,6 +71,7 @@ DEPENDENCIES:
   - TRON
   - TRON/SwiftyJSON
   - WhatsNew
+  - XCDYouTubeKit (from `https://github.com/armendh/XCDYouTubeKit`, commit `651a6a51c695c5819eb51ba2f98d0b64094315b9`, branch `master`)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -93,6 +95,17 @@ SPEC REPOS:
   https://github.com/kiritokatklian/Specs.git:
     - KurozoraKit
 
+EXTERNAL SOURCES:
+  XCDYouTubeKit:
+    :branch: master
+    :commit: 651a6a51c695c5819eb51ba2f98d0b64094315b9
+    :git: https://github.com/armendh/XCDYouTubeKit
+
+CHECKOUT OPTIONS:
+  XCDYouTubeKit:
+    :commit: 651a6a51c695c5819eb51ba2f98d0b64094315b9
+    :git: https://github.com/armendh/XCDYouTubeKit
+
 SPEC CHECKSUMS:
   Alamofire: 1c4fb5369c3fe93d2857c780d8bbe09f06f97e7c
   Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
@@ -112,7 +125,8 @@ SPEC CHECKSUMS:
   Tabman: 792ac76fd1ec95af175c93db880a3c47cabedc91
   TRON: 1d635dad9a55c9441cb2bcf0571a14a5ede59440
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
+  XCDYouTubeKit: b120aced3d8638ffb570c5450cddb5a1dac448c7
 
-PODFILE CHECKSUM: 62b948904402caad38dde4f310d2cfaffc7a071a
+PODFILE CHECKSUM: 7072257f2ec73646cce7ccdedf9851a1c53427f5
 
 COCOAPODS: 1.11.2
