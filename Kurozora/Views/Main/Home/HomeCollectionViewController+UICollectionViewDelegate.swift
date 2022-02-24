@@ -11,24 +11,26 @@ import KurozoraKit
 
 extension HomeCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		let exploreCategory = self.exploreCategories[indexPath.section]
+		if indexPath.section <= self.exploreCategories.count {
+			let exploreCategory = self.exploreCategories[indexPath.section]
 
-		switch exploreCategory.attributes.exploreCategoryType {
-		case .shows, .upcomingShows, .mostPopularShows:
-			let show = exploreCategory.relationships.shows?.data[indexPath.item]
-			performSegue(withIdentifier: R.segue.homeCollectionViewController.showDetailsSegue, sender: show)
-		case .genres:
-			let genre = exploreCategory.relationships.genres?.data[indexPath.item]
-			performSegue(withIdentifier: R.segue.homeCollectionViewController.exploreSegue, sender: genre)
-		case .themes:
-			let theme = exploreCategory.relationships.themes?.data[indexPath.item]
-			performSegue(withIdentifier: R.segue.homeCollectionViewController.exploreSegue, sender: theme)
-		case .characters:
-			let character = exploreCategory.relationships.characters?.data[indexPath.item]
-			performSegue(withIdentifier: R.segue.homeCollectionViewController.characterSegue, sender: character)
-		case .people:
-			let person = exploreCategory.relationships.people?.data[indexPath.item]
-			performSegue(withIdentifier: R.segue.homeCollectionViewController.personSegue, sender: person)
+			switch exploreCategory.attributes.exploreCategoryType {
+			case .shows, .upcomingShows, .mostPopularShows:
+				let show = exploreCategory.relationships.shows?.data[indexPath.item]
+				performSegue(withIdentifier: R.segue.homeCollectionViewController.showDetailsSegue, sender: show)
+			case .genres:
+				let genre = exploreCategory.relationships.genres?.data[indexPath.item]
+				performSegue(withIdentifier: R.segue.homeCollectionViewController.exploreSegue, sender: genre)
+			case .themes:
+				let theme = exploreCategory.relationships.themes?.data[indexPath.item]
+				performSegue(withIdentifier: R.segue.homeCollectionViewController.exploreSegue, sender: theme)
+			case .characters:
+				let character = exploreCategory.relationships.characters?.data[indexPath.item]
+				performSegue(withIdentifier: R.segue.homeCollectionViewController.characterSegue, sender: character)
+			case .people:
+				let person = exploreCategory.relationships.people?.data[indexPath.item]
+				performSegue(withIdentifier: R.segue.homeCollectionViewController.personSegue, sender: person)
+			}
 		}
 
 		if let legalCollectionViewCell = collectionView.cellForItem(at: indexPath) as? LegalCollectionViewCell {
@@ -38,25 +40,28 @@ extension HomeCollectionViewController {
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		let exploreCategory = self.exploreCategories[indexPath.section]
+		if indexPath.section <= self.exploreCategories.count {
+			let exploreCategory = self.exploreCategories[indexPath.section]
 
-		switch exploreCategory.attributes.exploreCategoryType {
-		case .shows, .upcomingShows, .mostPopularShows:
-			let show = exploreCategory.relationships.shows?.data[indexPath.item]
-			return show?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-		case .genres:
-			let genre = exploreCategory.relationships.genres?.data[indexPath.item]
-			return genre?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-		case .themes:
-			let theme = exploreCategory.relationships.themes?.data[indexPath.item]
-			return theme?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-		case .characters:
-			let character = exploreCategory.relationships.characters?.data[indexPath.item]
-			return character?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-		case .people:
-			let person = exploreCategory.relationships.people?.data[indexPath.item]
-			return person?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			switch exploreCategory.attributes.exploreCategoryType {
+			case .shows, .upcomingShows, .mostPopularShows:
+				let show = exploreCategory.relationships.shows?.data[indexPath.item]
+				return show?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			case .genres:
+				let genre = exploreCategory.relationships.genres?.data[indexPath.item]
+				return genre?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			case .themes:
+				let theme = exploreCategory.relationships.themes?.data[indexPath.item]
+				return theme?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			case .characters:
+				let character = exploreCategory.relationships.characters?.data[indexPath.item]
+				return character?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			case .people:
+				let person = exploreCategory.relationships.people?.data[indexPath.item]
+				return person?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			}
 		}
+		return nil
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
