@@ -21,25 +21,23 @@ class LibraryListCollectionViewCell: LibraryBaseCollectionViewCell {
 	override func prepareForReuse() {
 		super.prepareForReuse()
 
-		timer?.invalidate()
+		self.timer?.invalidate()
 	}
 
 	// MARK: - Functions
 	override func configureCell() {
 		super.configureCell()
 		self.informationLabel.text = show.attributes.informationStringShort
+		self.estimatedAiringLabel.text = ""
 
-		guard self.show.attributes.broadcastDate != nil else {
-			self.estimatedAiringLabel.text = ""
-			return
+		if self.show.attributes.status.name == "Currently Airing" && self.show.attributes.broadcastDate != nil {
+			self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateEstimatedAiringLabel), userInfo: nil, repeats: true)
 		}
-
-		timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateEstimatedAiringLabel), userInfo: nil, repeats: true)
 	}
 
 	@objc func updateEstimatedAiringLabel() {
-		guard let timeUntilBroadcast = self.show.attributes.broadcastDate?.formatted(.relative(presentation: .named, unitsStyle: .abbreviated)) else { return }
-		let estimatedAiringString = "Episode # - \(timeUntilBroadcast)"
+		guard let timeUntilBroadcast = self.show.attributes.broadcastDate?.formatted(.relative(presentation: .numeric, unitsStyle: .wide)) else { return }
+		let estimatedAiringString = "\(timeUntilBroadcast.capitalizedFirstLetter)"
 		self.estimatedAiringLabel.text = estimatedAiringString
 	}
 }

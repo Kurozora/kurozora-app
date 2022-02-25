@@ -17,6 +17,11 @@ extension String {
 		return initials
 	}
 
+	/// Returns a copy of the sequence with the first element capitalized.
+	var capitalizedFirstLetter: String {
+		return self.prefix(1).capitalized + self.dropFirst()
+	}
+
 	/// Returns HTML string as `NSAttributedString`.
 	func htmlAttributedString() -> NSAttributedString? {
 		let htmlTemplate = """
