@@ -218,6 +218,35 @@ extension KurozoraKit {
 	}
 
 	/**
+		Fetch the songs for a the given show id.
+
+		- Parameter showID: The show id for which the songs should be fetched.
+		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
+	*/
+	@discardableResult
+	public func getSongs(forShowID showID: Int, completion completionHandler: @escaping (_ result: Result<ShowSongResponse, KKAPIError>) -> Void) -> DataRequest {
+		let showsSongs = KKEndpoint.Shows.songs(showID).endpointValue
+		let request: APIRequest<ShowSongResponse, KKAPIError> = tron.codable.request(showsSongs).buildURL(.relativeToBaseURL)
+		request.headers = headers
+
+		request.method = .get
+		return request.perform(withSuccess: { showSongResponse in
+			completionHandler(.success(showSongResponse))
+		}, failure: { [weak self] error in
+			guard let self = self else { return }
+			if self.services.showAlerts {
+				UIApplication.topViewController?.presentAlertController(title: "Can't Get Show's Songs 😔", message: error.message)
+			}
+			print("❌ Received get show songs error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message ?? "No message")
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
+			completionHandler(.failure(error))
+		})
+	}
+
+	/**
 		Rate the show with the given show id.
 
 		- Parameter showID: The id of the show which should be rated.
@@ -229,7 +258,7 @@ extension KurozoraKit {
 	@discardableResult
 	public func rateShow(_ showID: Int, with score: Double, description: String?, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) -> DataRequest {
 		let showsRate = KKEndpoint.Shows.rate(showID).endpointValue
-		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(showsRate)
+		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(showsRate).buildURL(.relativeToBaseURL)
 
 		request.headers = headers
 		if !self.authenticationKey.isEmpty {

@@ -22,6 +22,7 @@ struct ShowDetail {
 		case information
 		case seasons
 		case cast
+		case songs
 		case moreByStudio
 		case relatedShows
 		case sosumi
@@ -44,6 +45,8 @@ struct ShowDetail {
 				return "Seasons"
 			case .cast:
 				return "Cast"
+			case .songs:
+				return "Songs"
 			case .moreByStudio:
 				return "More by "
 			case .relatedShows:
@@ -69,6 +72,8 @@ struct ShowDetail {
 			case .seasons:
 				return 0
 			case .cast:
+				return 0
+			case .songs:
 				return 0
 			case .moreByStudio:
 				return 0
@@ -96,6 +101,8 @@ struct ShowDetail {
 				return R.segue.showDetailsCollectionViewController.seasonSegue.identifier
 			case .cast:
 				return R.segue.showDetailsCollectionViewController.castSegue.identifier
+			case .songs:
+				return R.segue.showDetailsCollectionViewController.showSongsListSegue.identifier
 			case .moreByStudio:
 				return R.segue.showDetailsCollectionViewController.studioSegue.identifier
 			case .relatedShows:
@@ -129,6 +136,8 @@ struct ShowDetail {
 				return R.reuseIdentifier.posterLockupCollectionViewCell.identifier
 			case .cast:
 				return R.reuseIdentifier.castCollectionViewCell.identifier
+			case .songs:
+				return R.reuseIdentifier.musicLockupCollectionViewCell.identifier
 			case .moreByStudio:
 				return R.reuseIdentifier.smallLockupCollectionViewCell.identifier
 			case .relatedShows:

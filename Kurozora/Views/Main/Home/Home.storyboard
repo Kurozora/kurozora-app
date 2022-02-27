@@ -24,7 +24,7 @@
                 <viewControllerPlaceholder storyboardName="Purchase" id="0a7-9G-Fd6" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X9D-7O-4i7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1970" y="345"/>
+            <point key="canvasLocation" x="1973" y="382"/>
         </scene>
         <!--Legal-->
         <scene sceneID="TgQ-yC-U46">
@@ -32,7 +32,7 @@
                 <viewControllerPlaceholder storyboardName="Legal" id="iCt-dj-RF4" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qr2-al-HuS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1951" y="382"/>
+            <point key="canvasLocation" x="1954" y="419"/>
         </scene>
         <!--Explore-->
         <scene sceneID="cmd-mB-OEl">
@@ -393,6 +393,7 @@
                         <segue destination="iUi-Ed-iEq" kind="show" identifier="CharactersListSegue" id="5ed-SR-Z6h"/>
                         <segue destination="MLY-mr-JLD" kind="show" identifier="PeopleListSegue" id="Wgj-Ad-SkG"/>
                         <segue destination="9dW-1f-CLB" kind="show" identifier="ThemesSegue" id="MxL-F5-FxR"/>
+                        <segue destination="1ZL-Bt-evP" kind="show" identifier="ShowSongsListSegue" id="fCm-nL-TRo"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XSz-C9-PSE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -430,7 +431,7 @@
                 <viewControllerPlaceholder storyboardName="Redeem" id="SJ2-V2-Ihb" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5a5-ET-Z3V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1964" y="309"/>
+            <point key="canvasLocation" x="1967" y="346"/>
         </scene>
         <!--HomeCollectionViewController-->
         <scene sceneID="JZQ-XP-0tx">
@@ -511,6 +512,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oXL-DI-6I3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2070" y="40"/>
+        </scene>
+        <!--ShowSongsListCollectionViewController-->
+        <scene sceneID="L08-1Y-q6k">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Songs" referencedIdentifier="ShowSongsListCollectionViewController" id="1ZL-Bt-evP" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="T2Q-L8-FS7"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4Cz-OP-sPl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2107" y="311"/>
         </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

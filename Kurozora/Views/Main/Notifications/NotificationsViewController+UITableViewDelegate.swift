@@ -1,5 +1,5 @@
 //
-//  NotificationsViewController+UITableViewDelegate.swift
+//  NotificationsTableViewController+UITableViewDelegate.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 22/02/2021.
@@ -9,7 +9,7 @@
 import UIKit
 import KurozoraKit
 
-extension NotificationsViewController {
+extension NotificationsTableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let baseNotificationCell = tableView.cellForRow(at: indexPath) as? BaseNotificationCell
 

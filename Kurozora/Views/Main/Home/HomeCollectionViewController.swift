@@ -148,6 +148,8 @@ class HomeCollectionViewController: KCollectionViewController {
 					switch exploreCategory.attributes.exploreCategoryType {
 					case .shows, .upcomingShows, .mostPopularShows:
 						return !(exploreCategory.relationships.shows?.data.isEmpty ?? false)
+					case .songs:
+						return !(exploreCategory.relationships.showSongs?.data.isEmpty ?? false)
 					case .genres:
 						return !(exploreCategory.relationships.genres?.data.isEmpty ?? false)
 					case .themes:
@@ -178,6 +180,13 @@ class HomeCollectionViewController: KCollectionViewController {
 				guard let indexPath = sender as? IndexPath else { return }
 				showsListCollectionViewController.title = exploreCategories[indexPath.section].attributes.title
 				showsListCollectionViewController.shows = exploreCategories[indexPath.section].relationships.shows?.data ?? []
+			}
+		case R.segue.homeCollectionViewController.showSongsListSegue.identifier:
+			// Segue to show songs list
+			if let showSongsListCollectionViewController = segue.destination as? ShowSongsListCollectionViewController {
+				guard let indexPath = sender as? IndexPath else { return }
+				showSongsListCollectionViewController.title = exploreCategories[indexPath.section].attributes.title
+				showSongsListCollectionViewController.showSongs = exploreCategories[indexPath.section].relationships.showSongs?.data ?? []
 			}
 		case R.segue.homeCollectionViewController.exploreSegue.identifier:
 			// Segue to genre or theme explore
@@ -317,6 +326,14 @@ extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 	}
 }
 
+// MARK: - MusicLockupCollectionViewCellDelegate
+extension HomeCollectionViewController: MusicLockupCollectionViewCellDelegate {
+	func showButtonPressed(_ sender: UIButton, indexPath: IndexPath) {
+		let show = self.exploreCategories[indexPath.section].relationships.showSongs?.data[indexPath.item].show
+		self.performSegue(withIdentifier: R.segue.homeCollectionViewController.showDetailsSegue.identifier, sender: show)
+	}
+}
+
 // MARK: - SectionLayoutKind
 extension HomeCollectionViewController {
 	/**
@@ -351,19 +368,22 @@ extension HomeCollectionViewController {
 	*/
 	enum ItemKind: Hashable {
 		// MARK: - Cases
-		/// Indicates the item kind contains a Show object.
+		/// Indicates the item kind contains a `Show` object.
 		case show(_: Show, id: UUID = UUID())
 
-		/// Indicates the item kind contains a Genre object.
+		/// Indicates the item kind contains a `ShowSong` object.
+		case showSong(_: ShowSong, id: UUID = UUID())
+
+		/// Indicates the item kind contains a `Genre` object.
 		case genre(_: Genre, id: UUID = UUID())
 
-		/// Indicates the item kind contains a Theme object.
+		/// Indicates the item kind contains a `Theme` object.
 		case theme(_: Theme, id: UUID = UUID())
 
-		/// Indicates the item kind contains a Character object.
+		/// Indicates the item kind contains a `Character` object.
 		case character(_: Character, id: UUID = UUID())
 
-		/// Indicates the item kind contains a Person object.
+		/// Indicates the item kind contains a `Person` object.
 		case person(_: Person, id: UUID = UUID())
 
 		/// Indicates the item kind contains an other type object.
@@ -374,6 +394,9 @@ extension HomeCollectionViewController {
 			switch self {
 			case .show(let show, let id):
 				hasher.combine(show)
+				hasher.combine(id)
+			case .showSong(let showSong, let id):
+				hasher.combine(showSong)
 				hasher.combine(id)
 			case .genre(let genre, let id):
 				hasher.combine(genre)
@@ -396,6 +419,8 @@ extension HomeCollectionViewController {
 			switch (lhs, rhs) {
 			case (.show(let show1, let id1), .show(let show2, let id2)):
 				return show1.id == show2.id && id1 == id2
+			case (.showSong(let showSong1, let id1), .showSong(let showSong2, let id2)):
+				return showSong1.id == showSong2.id && id1 == id2
 			case (.genre(let genre1, let id1), .genre(let genre2, let id2)):
 				return genre1.id == genre2.id && id1 == id2
 			case (.theme(let theme1, let id1), .theme(let theme2, let id2)):

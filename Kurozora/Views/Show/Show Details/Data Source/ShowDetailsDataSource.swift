@@ -40,6 +40,16 @@ class ShowDetailsDataSource: NSObject {
 		}
 	}
 
+	// Songs properties
+	var showSongs: [ShowSong] = []
+//	{
+//		didSet {
+//			self.showSongs.forEachInParallel({ showSong in
+//				self.fetchDetails(using: showSong)
+//			})
+//		}
+//	}
+
 	var relatedShows: [RelatedShow] = [] {
 		didSet {
 			self.viewControlelr?._prefersActivityIndicatorHidden = true
@@ -70,8 +80,7 @@ class ShowDetailsDataSource: NSObject {
 
 	/// Fetch details for a season.
 	///
-	/// - Parameters:
-	///  - seasonIdentity: A `SeasonIdentity` object that identifies which season's details to fetch.
+	/// - Parameter seasonIdentity: A `SeasonIdentity` object that identifies which season's details to fetch.
 	private func fetchDetails(using seasonIdentity: SeasonIdentity) {
 		KService.getDetails(forSeasonID: seasonIdentity.id) { [weak self] result in
 			switch result {
@@ -92,8 +101,7 @@ class ShowDetailsDataSource: NSObject {
 
 	/// Fetch details for a cast.
 	///
-	/// - Parameters:
-	///  - castIdentity: A `CastIdentity` object that identifies which cast's details to fetch.
+	/// - Parameter castIdentity: A `CastIdentity` object that identifies which cast's details to fetch.
 	private func fetchDetails(using castIdentity: CastIdentity) {
 		KService.getDetails(forCast: castIdentity.id) { [weak self] result in
 			switch result {
@@ -106,10 +114,14 @@ class ShowDetailsDataSource: NSObject {
 		}
 	}
 
+	/// Fetch details for a show song.
+	///
+	/// - Parameter showSong: A `ShowSong` object that identifies which show song's details to fetch.
+	private func fetchDetails(using showSong: ShowSong) {	}
+
 	/// Fetch details for a show.
 	///
-	/// - Parameters:
-	///  - showIdentity: A `ShowIdentity` object that identifies which show's details to fetch.
+	/// - Parameter showIdentity: A `ShowIdentity` object that identifies which show's details to fetch.
 	private func fetchDetails(using showIdentity: ShowIdentity) {
 		KService.getDetails(forShowID: showIdentity.id) { [weak self] result in
 			guard let self = self else { return }
@@ -144,6 +156,8 @@ extension ShowDetailsDataSource: UICollectionViewDataSource {
 				itemsPerSection = self.seasonIdentities.count
 			case .cast:
 				itemsPerSection = self.castIdentities.count
+			case .songs:
+				itemsPerSection = self.showSongs.count
 			case .moreByStudio:
 				if let studioShowsCount = self.studio?.relationships?.shows?.data.count {
 					itemsPerSection = studioShowsCount
@@ -221,6 +235,9 @@ extension ShowDetailsDataSource: UICollectionViewDataSource {
 			let castCollectionViewCell = showDetailCollectionViewCell as? CastCollectionViewCell
 			castCollectionViewCell?.delegate = self.viewControlelr
 			castCollectionViewCell?.cast = self.cast[indexPath.item]
+		case .songs:
+			let musicLockupCollectionViewCell = showDetailCollectionViewCell as? MusicLockupCollectionViewCell
+			musicLockupCollectionViewCell?.configureCell(with: self.showSongs[indexPath.item], at: indexPath)
 		case .moreByStudio:
 			let smallLockupCollectionViewCell = showDetailCollectionViewCell as? SmallLockupCollectionViewCell
 			smallLockupCollectionViewCell?.configureCell(with: self.studioShows[indexPath.item])

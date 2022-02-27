@@ -23,6 +23,9 @@ extension Show {
 		/// The seasons belonging to the show.
 		public let seasons: SeasonIdentityResponse?
 
+		/// The relationships belonging to the show.
+		public let showSongs: ShowSongResponse?
+
 		/// The staff belonging to the show.
 		public let staff: StaffResponse?
 

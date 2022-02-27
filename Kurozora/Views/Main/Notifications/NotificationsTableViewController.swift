@@ -1,5 +1,5 @@
 //
-//  NotificationsViewController.swift
+//  NotificationsTableViewController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 14/05/2018.
@@ -9,7 +9,7 @@
 import UIKit
 import KurozoraKit
 
-class NotificationsViewController: KTableViewController {
+class NotificationsTableViewController: KTableViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var markAllButton: UIBarButtonItem!
 
@@ -275,7 +275,7 @@ class NotificationsViewController: KTableViewController {
 }
 
 // MARK: - UITableViewDataSource
-extension NotificationsViewController {
+extension NotificationsTableViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
 		switch self.grouping {
 		case .automatic, .byType:
@@ -312,6 +312,7 @@ extension NotificationsViewController {
 		switch self.grouping {
 		case .automatic, .byType:
 			titleHeaderTableViewCell?.titleLabel.text = groupedNotifications[section].sectionTitle
+			titleHeaderTableViewCell?.subTitleLabel.text = nil
 			let allNotificationsRead = groupedNotifications[section].sectionNotifications.contains(where: { $0.attributes.readStatus == .read })
 			titleHeaderTableViewCell?.headerButton.setTitle(allNotificationsRead ? "Mark as unread" : "Mark as read", for: .normal)
 			return titleHeaderTableViewCell?.contentView
@@ -340,14 +341,14 @@ extension NotificationsViewController {
 }
 
 // MARK: - KTableViewDataSource
-extension NotificationsViewController {
+extension NotificationsTableViewController {
 	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
 		return [TitleHeaderTableViewCell.self]
 	}
 }
 
 // MARK: - Helper functions
-extension NotificationsViewController {
+extension NotificationsTableViewController {
 	/**
 		Group the fetched notifications according to the user's notification preferences.
 

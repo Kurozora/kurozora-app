@@ -22,6 +22,8 @@ public struct RelatedShow: Codable, Hashable {
 	// MARK: - Enums
 	/**
 		The keys to encode and decode.
+
+		Necessary since UUID shouldn't be a codable property.
 	*/
 	enum CodingKeys: String, CodingKey {
 		/// The key of the `show` property.
