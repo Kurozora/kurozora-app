@@ -19,6 +19,9 @@ public enum ExploreCategoryType: String, Codable {
 	/// Indicates that the explore category is of the `shows` type.
 	case shows
 
+	/// Indicates that the explore category is of the `songs` type.
+	case songs
+
 	/// Indicates that the explore category is of the `characters` type.
 	case characters
 

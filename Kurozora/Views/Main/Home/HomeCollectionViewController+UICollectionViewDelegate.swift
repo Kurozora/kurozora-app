@@ -18,6 +18,7 @@ extension HomeCollectionViewController {
 			case .shows, .upcomingShows, .mostPopularShows:
 				let show = exploreCategory.relationships.shows?.data[indexPath.item]
 				performSegue(withIdentifier: R.segue.homeCollectionViewController.showDetailsSegue, sender: show)
+			case .songs: break
 			case .genres:
 				let genre = exploreCategory.relationships.genres?.data[indexPath.item]
 				performSegue(withIdentifier: R.segue.homeCollectionViewController.exploreSegue, sender: genre)
@@ -47,6 +48,7 @@ extension HomeCollectionViewController {
 			case .shows, .upcomingShows, .mostPopularShows:
 				let show = exploreCategory.relationships.shows?.data[indexPath.item]
 				return show?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			case .songs: break
 			case .genres:
 				let genre = exploreCategory.relationships.genres?.data[indexPath.item]
 				return genre?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])

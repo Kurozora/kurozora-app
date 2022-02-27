@@ -88,6 +88,11 @@
 		662F118224E60F1C0000375A /* SeasonAttributes+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662F118124E60F1C0000375A /* SeasonAttributes+UIImage.swift */; };
 		662F706D22A45C2A00C3599D /* TitleHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662F706C22A45C2A00C3599D /* TitleHeaderTableViewCell.swift */; };
 		662F706F22A45D0F00C3599D /* BasicNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662F706E22A45D0F00C3599D /* BasicNotificationCell.swift */; };
+		66319DAD27C82EAD0063DE7F /* MusicLockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66319DAC27C82EAD0063DE7F /* MusicLockupCollectionViewCell.swift */; };
+		66319DAF27C858CD0063DE7F /* MusicLockupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66319DAE27C858CD0063DE7F /* MusicLockupCollectionViewCell.xib */; };
+		66319DCD27C9A6A90063DE7F /* ShowSongsListCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66319DCB27C9A5EE0063DE7F /* ShowSongsListCollectionViewController.swift */; };
+		66319DCF27C9AF090063DE7F /* Songs.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66319DCE27C9AE230063DE7F /* Songs.storyboard */; };
+		66319DD027C9AF130063DE7F /* ShowSongsListCollectionViewController+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66319DCC27C9A5EE0063DE7F /* ShowSongsListCollectionViewController+UICollectionViewDelegate.swift */; };
 		663266CA2444960100295CE7 /* ProductTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663266C92444960100295CE7 /* ProductTableViewController.swift */; };
 		6633A52924A3DA11003C6390 /* InformationButtonCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6633A52824A3DA11003C6390 /* InformationButtonCollectionViewCell.xib */; };
 		6633A52B24A3E5CE003C6390 /* KSecondaryLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6633A52A24A3E5CE003C6390 /* KSecondaryLabel.swift */; };
@@ -395,7 +400,7 @@
 		66CF5D8021E798C800969BBB /* UIScrollView+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF5D7F21E798C800969BBB /* UIScrollView+Kurozora.swift */; };
 		66CF6D6720A987D100F98375 /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6620A987D100F98375 /* ProfileTableViewController.swift */; };
 		66CF6D6920A98CAA00F98375 /* FollowTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6820A98CAA00F98375 /* FollowTableViewController.swift */; };
-		66CF6D6F20A9921000F98375 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6E20A9921000F98375 /* NotificationsViewController.swift */; };
+		66CF6D6F20A9921000F98375 /* NotificationsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6E20A9921000F98375 /* NotificationsTableViewController.swift */; };
 		66CF6D7120A9934F00F98375 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66CF6D7020A9934F00F98375 /* Profile.storyboard */; };
 		66D0BF8125613E29000AB7BF /* Show+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D0BF8025613E29000AB7BF /* Show+UIKit.swift */; };
 		66D0BF9C25616637000AB7BF /* ShowDetailsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D0BF9B25616637000AB7BF /* ShowDetailsCollectionView.swift */; };
@@ -584,6 +589,11 @@
 		662F118124E60F1C0000375A /* SeasonAttributes+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SeasonAttributes+UIImage.swift"; sourceTree = "<group>"; };
 		662F706C22A45C2A00C3599D /* TitleHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		662F706E22A45D0F00C3599D /* BasicNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicNotificationCell.swift; sourceTree = "<group>"; };
+		66319DAC27C82EAD0063DE7F /* MusicLockupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicLockupCollectionViewCell.swift; sourceTree = "<group>"; };
+		66319DAE27C858CD0063DE7F /* MusicLockupCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MusicLockupCollectionViewCell.xib; sourceTree = "<group>"; };
+		66319DCB27C9A5EE0063DE7F /* ShowSongsListCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowSongsListCollectionViewController.swift; sourceTree = "<group>"; };
+		66319DCC27C9A5EE0063DE7F /* ShowSongsListCollectionViewController+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShowSongsListCollectionViewController+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
+		66319DCE27C9AE230063DE7F /* Songs.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Songs.storyboard; sourceTree = "<group>"; };
 		663266C92444960100295CE7 /* ProductTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductTableViewController.swift; sourceTree = "<group>"; };
 		6633A52824A3DA11003C6390 /* InformationButtonCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InformationButtonCollectionViewCell.xib; sourceTree = "<group>"; };
 		6633A52A24A3E5CE003C6390 /* KSecondaryLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KSecondaryLabel.swift; sourceTree = "<group>"; };
@@ -895,7 +905,7 @@
 		66CF5D7F21E798C800969BBB /* UIScrollView+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Kurozora.swift"; sourceTree = "<group>"; };
 		66CF6D6620A987D100F98375 /* ProfileTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
 		66CF6D6820A98CAA00F98375 /* FollowTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowTableViewController.swift; sourceTree = "<group>"; };
-		66CF6D6E20A9921000F98375 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
+		66CF6D6E20A9921000F98375 /* NotificationsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsTableViewController.swift; sourceTree = "<group>"; };
 		66CF6D7020A9934F00F98375 /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		66D0BF8025613E29000AB7BF /* Show+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Show+UIKit.swift"; sourceTree = "<group>"; };
 		66D0BF9B25616637000AB7BF /* ShowDetailsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetailsCollectionView.swift; sourceTree = "<group>"; };
@@ -1023,7 +1033,7 @@
 			isa = PBXGroup;
 			children = (
 				66A48FDF21A411A900F34085 /* Notifications.storyboard */,
-				66CF6D6E20A9921000F98375 /* NotificationsViewController.swift */,
+				66CF6D6E20A9921000F98375 /* NotificationsTableViewController.swift */,
 				66EA1DC125B366CF00FCD07A /* NotificationsViewController+TouchBar.swift */,
 				660E39DA25E4451300A46EB0 /* NotificationsViewController+UITableViewDelegate.swift */,
 				66EA1DBF25B3669600FCD07A /* NotificationsViewControllerDelegate.swift */,
@@ -1347,6 +1357,24 @@
 				66B2C73E232F95680042AB12 /* BaseNotificationCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		66319DC927C9A1FA0063DE7F /* Songs */ = {
+			isa = PBXGroup;
+			children = (
+				66319DCE27C9AE230063DE7F /* Songs.storyboard */,
+				66319DCA27C9A5ED0063DE7F /* Songs List */,
+			);
+			path = Songs;
+			sourceTree = "<group>";
+		};
+		66319DCA27C9A5ED0063DE7F /* Songs List */ = {
+			isa = PBXGroup;
+			children = (
+				66319DCB27C9A5EE0063DE7F /* ShowSongsListCollectionViewController.swift */,
+				66319DCC27C9A5EE0063DE7F /* ShowSongsListCollectionViewController+UICollectionViewDelegate.swift */,
+			);
+			path = "Songs List";
 			sourceTree = "<group>";
 		};
 		66349D04256C74DA000B8523 /* Feed */ = {
@@ -2271,6 +2299,7 @@
 				6671F28627A5854F005D3A0D /* Themes */,
 				6684225125974DE9000A09F8 /* Favorites */,
 				66AA35C22403125F0006EC5B /* Show */,
+				66319DC927C9A1FA0063DE7F /* Songs */,
 				66CF6D6320A9875600F98375 /* Profile */,
 				66707836208B844800471FBC /* Settings */,
 			);
@@ -2884,12 +2913,14 @@
 				663E342A2360D3B8003386D1 /* LargeLockupCollectionViewCell.swift */,
 				66F944AB22F0C08E009F1FE2 /* LegalExploreTableViewCell.swift */,
 				663E34262360D333003386D1 /* MediumLockupCollectionViewCell.swift */,
+				66319DAC27C82EAD0063DE7F /* MusicLockupCollectionViewCell.swift */,
 				663E34282360D34C003386D1 /* SmallLockupCollectionViewCell.swift */,
 				6684224725966F97000A09F8 /* UpcomingLockupCollectionViewCell.swift */,
 				663E34222360D2BE003386D1 /* VideoLockupCollectionViewCell.swift */,
 				660C043323D150310040C749 /* LargeLockupCollectionViewCell.xib */,
 				660C043523D150640040C749 /* LegalCollectionViewCell.xib */,
 				660C043123D1500A0040C749 /* MediumLockupCollectionViewCell.xib */,
+				66319DAE27C858CD0063DE7F /* MusicLockupCollectionViewCell.xib */,
 				660C042F23D14F760040C749 /* SmallLockupCollectionViewCell.xib */,
 				660C042D23D14F5C0040C749 /* VideoLockupCollectionViewCell.xib */,
 			);
@@ -3233,6 +3264,8 @@
 				66CE8114246092FF00DB0C49 /* ServicePreviewTableViewCell.xib in Resources */,
 				66160C40215C2DEB00D0D722 /* Reachability.storyboard in Resources */,
 				6633A52924A3DA11003C6390 /* InformationButtonCollectionViewCell.xib in Resources */,
+				66319DCF27C9AF090063DE7F /* Songs.storyboard in Resources */,
+				66319DAF27C858CD0063DE7F /* MusicLockupCollectionViewCell.xib in Resources */,
 				6623CB1E2724C7F800050EAA /* SelectableSettingsCell.xib in Resources */,
 				664AAF8124EE8E2F00FF4AA5 /* Characters.storyboard in Resources */,
 				6684225025967A65000A09F8 /* TitleHeaderTableViewCell.xib in Resources */,
@@ -3464,6 +3497,7 @@
 				663E342B2360D3B8003386D1 /* LargeLockupCollectionViewCell.swift in Sources */,
 				66244D91230B774200EC33E0 /* LibraryDetailedCollectionViewCell.swift in Sources */,
 				660E39F325E5BE3400A46EB0 /* Cast+UIKit.swift in Sources */,
+				66319DD027C9AF130063DE7F /* ShowSongsListCollectionViewController+UICollectionViewDelegate.swift in Sources */,
 				6671F28C27A58700005D3A0D /* ThemesCollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				666D9EEA25B35DED00EDDC9E /* LibraryListCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				66BA99F925E4017600CE4480 /* HomeCollectionViewController+UICollectionViewDelegate.swift in Sources */,
@@ -3522,12 +3556,13 @@
 				662EDB4A257C37A6005AA29E /* KRefreshControl.swift in Sources */,
 				66E1517A2711C478007966A9 /* R.generated.swift in Sources */,
 				668B167523EEED0C00C1306A /* SearchHistory.swift in Sources */,
-				66CF6D6F20A9921000F98375 /* NotificationsViewController.swift in Sources */,
+				66CF6D6F20A9921000F98375 /* NotificationsTableViewController.swift in Sources */,
 				66EA1DD625B5BB3100FCD07A /* PersonDetailsCollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				66825BFA21B3E2A700A2F602 /* WorkflowController.swift in Sources */,
 				661D646C25C387EA00822D01 /* MenuController.swift in Sources */,
 				660C042A23D1126B0040C749 /* ShowsListCollectionViewController.swift in Sources */,
 				66B216A821C033B9006E167D /* UIView+Kurozora.swift in Sources */,
+				66319DAD27C82EAD0063DE7F /* MusicLockupCollectionViewCell.swift in Sources */,
 				661F184524A5594C00542AFB /* KCopyableTintedLabel.swift in Sources */,
 				664AAFA124EEEE9F00FF4AA5 /* PersonHeaderCollectionViewCell.swift in Sources */,
 				664AAFA724EEF3D600FF4AA5 /* CharacterLockupCollectionViewCell.swift in Sources */,
@@ -3639,6 +3674,7 @@
 				6645D5FD23E70BC80042B4E0 /* DiscussionCollectionViewCell.swift in Sources */,
 				66B9BB9924FC5CC3004953C9 /* KFMReplyTextEditorViewController.swift in Sources */,
 				660E3A0E25E5DE7800A46EB0 /* GenresCollectionViewController+UICollectionViewDelegate.swift in Sources */,
+				66319DCD27C9A6A90063DE7F /* ShowSongsListCollectionViewController.swift in Sources */,
 				66472372245E0070008E5111 /* KTextField.swift in Sources */,
 				669E89C72345573600092778 /* KStoreObserver.swift in Sources */,
 				66148D6525E5E625000F2E0A /* FavoriteShowsCollectionViewController+UICollectionViewDelegate.swift in Sources */,
@@ -3968,7 +4004,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Kurozora/Kurozora.entitlements;
-				CURRENT_PROJECT_VERSION = 11945;
+				CURRENT_PROJECT_VERSION = 11950;
 				DEVELOPMENT_ASSET_PATHS = "Kurozora/Supporting\\ Files\\ Dev";
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				INFOPLIST_FILE = "Kurozora/Supporting Files/Info.plist";
@@ -3993,7 +4029,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Kurozora/Kurozora.entitlements;
-				CURRENT_PROJECT_VERSION = 11945;
+				CURRENT_PROJECT_VERSION = 11950;
 				DEVELOPMENT_ASSET_PATHS = "Kurozora/Supporting\\ Files\\ Dev";
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				INFOPLIST_FILE = "Kurozora/Supporting Files/Info.plist";

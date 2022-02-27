@@ -158,7 +158,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		var including: [String] = []
 
 		if showID == nil {
-			including = ["seasons", "cast", "studios", "related-shows"]
+			including = ["cast", "seasons", "songs", "studios", "related-shows"]
 		}
 
 		KService.getDetails(forShowID: showID ?? self.showID, including: including) { [weak self] result in
@@ -168,6 +168,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 				self.dataSource.show = shows.first
 				self.dataSource.seasonIdentities = shows.first?.relationships?.seasons?.data ?? []
 				self.dataSource.castIdentities = shows.first?.relationships?.cast?.data ?? []
+				self.dataSource.showSongs = shows.first?.relationships?.showSongs?.data ?? []
 				self.dataSource.studio = shows.first?.relationships?.studios?.data.first { studio in
 					studio.attributes.isStudio ?? false
 				} ?? shows.first?.relationships?.studios?.data.first
@@ -220,6 +221,9 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		case R.segue.showDetailsCollectionViewController.castSegue.identifier:
 			guard let castCollectionViewController = segue.destination as? CastCollectionViewController else { return }
 			castCollectionViewController.showID = self.dataSource.show.id
+		case R.segue.showDetailsCollectionViewController.showSongsListSegue.identifier:
+			guard let showSongsListCollectionViewController = segue.destination as? ShowSongsListCollectionViewController else { return }
+			showSongsListCollectionViewController.showID = self.dataSource.show.id
 		case R.segue.showDetailsCollectionViewController.episodeSegue.identifier:
 			guard let episodesCollectionViewController = segue.destination as? EpisodesCollectionViewController else { return }
 			guard let season = sender as? Season else { return }

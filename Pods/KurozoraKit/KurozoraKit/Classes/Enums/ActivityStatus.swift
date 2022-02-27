@@ -56,11 +56,11 @@ public enum ActivityStatus: String, Codable {
 	public var colorValue: UIColor {
 		switch self {
 		case .online:
-			return .green
+			return .systemGreen
 		case .seenRecently:
-			return .yellow
+			return .systemYellow
 		case .offline:
-			return .red
+			return .systemRed
 		}
 	}
 }

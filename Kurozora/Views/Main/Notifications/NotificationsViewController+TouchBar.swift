@@ -1,5 +1,5 @@
 //
-//  NotificationsViewController+TouchBar.swift
+//  NotificationsTableViewController+TouchBar.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 16/01/2021.
@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - NSTouchBarDelegate
 #if targetEnvironment(macCatalyst)
-extension NotificationsViewController: NSTouchBarDelegate {
+extension NotificationsTableViewController: NSTouchBarDelegate {
 	override func makeTouchBar() -> NSTouchBar? {
 		let touchBar = NSTouchBar()
 		touchBar.delegate = self

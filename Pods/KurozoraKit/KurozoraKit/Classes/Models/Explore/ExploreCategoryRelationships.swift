@@ -14,6 +14,9 @@ extension ExploreCategory {
 		/// The shows belonging to the explore category.
 		public let shows: ShowResponse?
 
+		/// The shows belonging to the explore category.
+		public let showSongs: ShowSongResponse?
+
 		/// The genres belonging to the explore category.
 		public let genres: GenreResponse?
 

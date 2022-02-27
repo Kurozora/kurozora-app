@@ -10,7 +10,7 @@
 */
 public struct ShowIdentityResponse: Codable {
 	// MARK: - Properties
-	/// The data included in the repsonse for a show object request.
+	/// The data included in the repsonse for a show identity object request.
 	public let data: [ShowIdentity]
 
 	/// The realtive URL to the next page in the paginated response.

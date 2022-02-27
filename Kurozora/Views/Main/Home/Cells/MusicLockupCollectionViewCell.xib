@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MusicLockupCollectionViewCell" id="yZT-dr-fI8" customClass="MusicLockupCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="374" height="489"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="fKa-Te-e8n">
+                <rect key="frame" x="0.0" y="0.0" width="374" height="489"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zJc-3a-J3j">
+                        <rect key="frame" x="0.0" y="0.0" width="374" height="374"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Music Album" translatesAutoresizingMaskIntoConstraints="NO" id="YXm-9u-Lva">
+                                <rect key="frame" x="0.0" y="0.0" width="374" height="374"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ccz-cN-UH9" userLabel="Border View">
+                                <rect key="frame" x="0.0" y="0.0" width="374" height="374"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.33333334329999997" green="0.3333333731" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstItem="Ccz-cN-UH9" firstAttribute="leading" secondItem="zJc-3a-J3j" secondAttribute="leading" id="2QE-E4-SPQ"/>
+                            <constraint firstAttribute="bottom" secondItem="Ccz-cN-UH9" secondAttribute="bottom" id="82g-OT-lRt"/>
+                            <constraint firstItem="YXm-9u-Lva" firstAttribute="leading" secondItem="zJc-3a-J3j" secondAttribute="leading" id="H7q-kA-4JA"/>
+                            <constraint firstAttribute="bottom" secondItem="YXm-9u-Lva" secondAttribute="bottom" id="JPW-2e-PJi"/>
+                            <constraint firstAttribute="trailing" secondItem="YXm-9u-Lva" secondAttribute="trailing" id="SHC-C1-1Yi"/>
+                            <constraint firstAttribute="width" secondItem="zJc-3a-J3j" secondAttribute="height" multiplier="1:1" id="XRB-b7-Xrd"/>
+                            <constraint firstItem="YXm-9u-Lva" firstAttribute="top" secondItem="zJc-3a-J3j" secondAttribute="top" id="hDm-lL-WPA"/>
+                            <constraint firstAttribute="trailing" secondItem="Ccz-cN-UH9" secondAttribute="trailing" id="scK-aS-sbO"/>
+                            <constraint firstItem="Ccz-cN-UH9" firstAttribute="top" secondItem="zJc-3a-J3j" secondAttribute="top" id="txF-Rs-7ol"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="10"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="uWl-P2-skn">
+                        <rect key="frame" x="0.0" y="390" width="374" height="99"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4i9-gZ-0FR">
+                                <rect key="frame" x="0.0" y="0.0" width="374" height="37"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oI7-ug-axO" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="77" height="37"/>
+                                        <string key="text">Strike It Out
+
+asdasdasdasd aks dkjahsdk jhaks jdhak sjdhasd</string>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aUA-ib-z7o" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="319" y="-3.5" width="55" height="24"/>
+                                        <color key="backgroundColor" systemColor="linkColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="24" id="pgU-FZ-Pja"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        <inset key="contentEdgeInsets" minX="8" minY="4" maxX="8" maxY="4"/>
+                                        <state key="normal" title="OP #1"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="12"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="aUA-ib-z7o" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="oI7-ug-axO" secondAttribute="trailing" constant="8" id="1Wp-6n-o4i"/>
+                                    <constraint firstAttribute="trailing" secondItem="aUA-ib-z7o" secondAttribute="trailing" id="1gv-2D-pAt"/>
+                                    <constraint firstItem="oI7-ug-axO" firstAttribute="top" secondItem="4i9-gZ-0FR" secondAttribute="top" id="5d0-kP-5tN"/>
+                                    <constraint firstItem="oI7-ug-axO" firstAttribute="leading" secondItem="4i9-gZ-0FR" secondAttribute="leading" id="OhT-iw-1dq"/>
+                                    <constraint firstItem="aUA-ib-z7o" firstAttribute="firstBaseline" secondItem="oI7-ug-axO" secondAttribute="firstBaseline" id="Q4V-S1-35b"/>
+                                    <constraint firstAttribute="bottom" secondItem="oI7-ug-axO" secondAttribute="bottom" id="Vv2-RP-MDV"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="MIYAVI" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4we-rF-AnJ" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="39" width="374" height="14.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                <color key="textColor" red="0.90065288200000004" green="0.89906244960000004" blue="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V26-yf-swu" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="55.5" width="374" height="27"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                <state key="normal" title="One Piece">
+                                    <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="showButtonPressed:" destination="yZT-dr-fI8" eventType="touchUpInside" id="PWZ-qr-fZu"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Episode: 1" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XVm-ok-rXW" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="84.5" width="374" height="14.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                <color key="textColor" red="0.90065288200000004" green="0.89906244960000004" blue="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="uWl-P2-skn" firstAttribute="top" secondItem="zJc-3a-J3j" secondAttribute="bottom" constant="16" id="53F-sA-VVr"/>
+                    <constraint firstAttribute="trailing" secondItem="zJc-3a-J3j" secondAttribute="trailing" id="5qe-XQ-Bdi"/>
+                    <constraint firstAttribute="trailing" secondItem="uWl-P2-skn" secondAttribute="trailing" id="TMf-4E-uzD"/>
+                    <constraint firstItem="zJc-3a-J3j" firstAttribute="leading" secondItem="fKa-Te-e8n" secondAttribute="leading" id="V5Q-aQ-Rw7"/>
+                    <constraint firstAttribute="bottom" secondItem="uWl-P2-skn" secondAttribute="bottom" id="hSZ-8l-fVY"/>
+                    <constraint firstItem="zJc-3a-J3j" firstAttribute="top" secondItem="fKa-Te-e8n" secondAttribute="top" id="huy-Df-fvB"/>
+                    <constraint firstItem="uWl-P2-skn" firstAttribute="leading" secondItem="fKa-Te-e8n" secondAttribute="leading" id="wPd-qo-AV5"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <size key="customSize" width="374" height="489"/>
+            <connections>
+                <outlet property="posterImageView" destination="YXm-9u-Lva" id="rPh-fh-bAy"/>
+                <outlet property="primaryLabel" destination="oI7-ug-axO" id="44o-KZ-guC"/>
+                <outlet property="secondaryLabel" destination="4we-rF-AnJ" id="lkq-ML-qli"/>
+                <outlet property="showButton" destination="V26-yf-swu" id="rtZ-eY-1ew"/>
+                <outlet property="tertiaryLable" destination="XVm-ok-rXW" id="jWd-gH-Ap8"/>
+                <outlet property="typeButton" destination="aUA-ib-z7o" id="l5e-wR-XE6"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="165.73660714285714"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="Placeholders/Music Album" width="1080" height="1080"/>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

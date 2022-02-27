@@ -17,6 +17,7 @@ extension ShowDetailsCollectionViewController {
 			PosterLockupCollectionViewCell.self,
 			SmallLockupCollectionViewCell.self,
 			CastCollectionViewCell.self,
+			MusicLockupCollectionViewCell.self,
 			SosumiShowCollectionViewCell.self
 		]
 	}

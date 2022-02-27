@@ -11,5 +11,6 @@ import UIKit
 class TitleHeaderTableViewCell: UITableViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var titleLabel: KLabel!
+	@IBOutlet weak var subTitleLabel: KSecondaryLabel!
 	@IBOutlet weak var headerButton: HeaderButton!
 }

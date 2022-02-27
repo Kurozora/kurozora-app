@@ -57,6 +57,9 @@ extension KKEndpoint {
 		/// The endpoint to the seasons belonging to a show.
 		case seasons(_ showID: Int)
 
+		/// The endpoint to the songs belonging to a show.
+		case songs(_ showID: Int)
+
 		/// The endpoint to search for shows.
 		case search
 
@@ -78,8 +81,34 @@ extension KKEndpoint {
 				return "anime/\(showID)/related-shows"
 			case .seasons(let showID):
 				return "anime/\(showID)/seasons"
+			case .songs(let showID):
+				return "anime/\(showID)/songs"
 			case .search:
 				return "anime/search"
+			}
+		}
+	}
+}
+
+// MARK: - Songs
+extension KKEndpoint {
+	/// The set of available Songs API endpoints.
+	internal enum Songs {
+		// MARK: - Cases
+		/// The endpoint to the details of a song.
+		case details(_ songID: Int)
+
+		/// The endpoint to the shows of a song.
+		case shows(_ songID: Int)
+
+		// MARK: - Properties
+		/// The endpoint value of the Songs API type.
+		var endpointValue: String {
+			switch self {
+			case .details(let songID):
+				return "songs/\(songID)"
+			case .shows(let songID):
+				return "songs/\(songID)/anime"
 			}
 		}
 	}

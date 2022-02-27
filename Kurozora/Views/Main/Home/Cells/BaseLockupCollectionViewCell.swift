@@ -59,6 +59,14 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 		self.libraryStatusButton?.setTitle(self.libraryStatus != .none ? "\(self.libraryStatus.stringValue.capitalized) ▾" : "ADD", for: .normal)
 	}
 
+	/// Configures the cell with the given `ShowSong` object.
+	///
+	/// - Parameter showSong: The `ShowSong` objet used to confgiure the cell.
+	/// - Parameter indexPath: The index path of the cell within the collection view.
+	/// - Parameter showEpisodes: Whether to show which episodes this song played in.
+	/// - Parameter showShow: Whether to show which show this song belongs to.
+	func configureCell(with showSong: ShowSong, at indexPath: IndexPath, showEpisodes: Bool = true, showShow: Bool = false) {}
+
 	/// Configures the cell with the given `Genre` obejct.
 	///
 	/// - Parameter genre: The `Genre` object used to configure the cell.

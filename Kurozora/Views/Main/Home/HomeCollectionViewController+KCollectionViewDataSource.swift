@@ -17,6 +17,7 @@ extension HomeCollectionViewController {
 			VideoLockupCollectionViewCell.self,
 			PersonLockupCollectionViewCell.self,
 			CharacterLockupCollectionViewCell.self,
+			MusicLockupCollectionViewCell.self,
 			LegalCollectionViewCell.self
 		]
 	}
@@ -39,6 +40,13 @@ extension HomeCollectionViewController {
 					else { fatalError("Cannot dequeue reusable cell with identifier \(exploreCategorySize.identifierString)") }
 					baseLockupCollectionViewCell.baseLockupCollectionViewCellDelegate = self
 					baseLockupCollectionViewCell.configureCell(with: show)
+					return baseLockupCollectionViewCell
+				case .showSong(let showSong, _):
+					let reuseIdentifier = R.reuseIdentifier.musicLockupCollectionViewCell.identifier
+					guard let baseLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? MusicLockupCollectionViewCell
+					else { fatalError("Cannot dequeue reusable cell with identifier \(reuseIdentifier)") }
+					baseLockupCollectionViewCell.delegate = self
+					baseLockupCollectionViewCell.configureCell(with: showSong, at: indexPath, showEpisodes: false, showShow: true)
 					return baseLockupCollectionViewCell
 				case .genre(let genre, _):
 					guard let baseLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: exploreCategorySize.identifierString, for: indexPath) as? BaseLockupCollectionViewCell
@@ -99,6 +107,8 @@ extension HomeCollectionViewController {
 				switch exploreCategory.attributes.exploreCategoryType {
 				case .shows, .mostPopularShows, .upcomingShows:
 					segueID = R.segue.homeCollectionViewController.showsListSegue.identifier
+				case .songs:
+					segueID = R.segue.homeCollectionViewController.showSongsListSegue.identifier
 				case .genres:
 					segueID = R.segue.homeCollectionViewController.genresSegue.identifier
 				case .themes:
@@ -140,6 +150,13 @@ extension HomeCollectionViewController {
 							return .show(show)
 						}
 						snapshot.appendItems(showItems, toSection: sectionHeader)
+					}
+				case .songs:
+					if let showSongs = exploreCategoriesSection.relationships.showSongs?.data {
+						let showSongsItems: [ItemKind] = showSongs.map { showSong in
+							return .showSong(showSong)
+						}
+						snapshot.appendItems(showSongsItems, toSection: sectionHeader)
 					}
 				case .genres:
 					if let genres = exploreCategoriesSection.relationships.genres?.data {

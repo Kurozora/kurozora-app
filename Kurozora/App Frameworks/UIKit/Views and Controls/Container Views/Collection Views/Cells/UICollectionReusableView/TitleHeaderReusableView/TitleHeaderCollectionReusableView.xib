@@ -25,10 +25,7 @@
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C54-Ie-qpN" customClass="HeaderButton" customModule="Kurozora" customModuleProvider="target">
-                            <rect key="frame" x="369" y="10" width="45" height="44"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="44" id="92s-wE-pTP"/>
-                            </constraints>
+                            <rect key="frame" x="369" y="10" width="45" height="32"/>
                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                             <state key="normal" title="See All">
                                 <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -37,13 +34,13 @@
                                 <action selector="headerButtonPressed:" destination="Hf8-gr-7y4" eventType="touchUpInside" id="Uj2-Yk-alj"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Top Anime" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BPG-X0-YJI" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Top Anime" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BPG-X0-YJI" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="10" width="108" height="26.5"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1da-OZ-n7O" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1da-OZ-n7O" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="40.5" width="31" height="24.5"/>
                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -60,6 +57,7 @@
                         <constraint firstItem="daF-G8-yJ2" firstAttribute="leading" secondItem="As0-2d-X7c" secondAttribute="leading" id="KR8-Ic-YIW"/>
                         <constraint firstItem="C54-Ie-qpN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="BPG-X0-YJI" secondAttribute="trailing" constant="8" symbolic="YES" id="L8R-hA-Xna"/>
                         <constraint firstItem="1da-OZ-n7O" firstAttribute="leading" secondItem="As0-2d-X7c" secondAttribute="leading" id="Pme-69-Jef"/>
+                        <constraint firstItem="BPG-X0-YJI" firstAttribute="firstBaseline" secondItem="C54-Ie-qpN" secondAttribute="firstBaseline" id="SlR-cW-cQc"/>
                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="C54-Ie-qpN" secondAttribute="bottom" constant="10" id="fzo-ue-pMn"/>
                         <constraint firstItem="C54-Ie-qpN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1da-OZ-n7O" secondAttribute="trailing" constant="8" symbolic="YES" id="kac-rX-4Dr"/>
                         <constraint firstItem="daF-G8-yJ2" firstAttribute="top" secondItem="As0-2d-X7c" secondAttribute="top" id="lBB-3l-0UZ"/>
