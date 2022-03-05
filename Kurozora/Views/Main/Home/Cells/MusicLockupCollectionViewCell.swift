@@ -8,14 +8,20 @@
 
 import UIKit
 import KurozoraKit
+import MusicKit
+import SwiftyJSON
 
 protocol MusicLockupCollectionViewCellDelegate: AnyObject {
+	func playButtonPressed(_ sender: UIButton, cell: MusicLockupCollectionViewCell)
 	func showButtonPressed(_ sender: UIButton, indexPath: IndexPath)
 }
 
 class MusicLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet var tertiaryLable: KSecondaryLabel!
+
+	/// A button representing the type of the music.
+	@IBOutlet var playButton: KButton!
 
 	/// A button representing the show a music belongs to.
 	@IBOutlet var showButton: KButton!
@@ -26,6 +32,9 @@ class MusicLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	// MARK: - Properties
 	/// The index path of the cell within the parent collection view.
 	var indexPath: IndexPath?
+
+	/// A single music item.
+	var song: MusicItemCollection<MusicKit.Song>.Element?
 
 	/// The `MusicLockupCollectionViewCellDelegate` object responsible for delegating actions.
 	weak var delegate: MusicLockupCollectionViewCellDelegate?
@@ -58,11 +67,76 @@ class MusicLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		// Confgiure type button
 		self.showButton.isHidden = !showShow
 		self.showButton.setTitle(showSong.show?.attributes.title, for: .normal)
+
+		// Configure play button
+		self.playButton.isHidden = true
+		self.playButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
+
+		if let appleMusicID = showSong.song.attributes.amID {
+			let developerToken = "***REMOVED***"
+			if var urlRequest = URLRequest(urlString: "https://api.music.apple.com/v1/catalog/jp/songs/\(appleMusicID)") {
+				urlRequest.httpMethod = "GET"
+				urlRequest.addValue("Bearer \(developerToken)", forHTTPHeaderField: "Authorization")
+
+				URLSession.shared.dataTask(with: urlRequest) { (data, _, error) in
+					guard error == nil else { return }
+					var song: MusicKit.Song?
+
+					if let data = data,
+					   let songJson = try? JSON(data: data) {
+						do {
+							let songJsonString = songJson["data"][0]
+							let songJsonData = try songJsonString.rawData()
+							song = MusicKit.Song(from: songJsonData)
+							self.updateArtwork(using: song)
+						} catch {
+							self.resetArtwork()
+						}
+					}
+
+					self.updateArtwork(using: song)
+				}.resume()
+			}
+		} else {
+			self.resetArtwork()
+		}
+	}
+
+	/// Updates the artwork using the given song.
+	///
+	/// - Parameters song: A music item that represents a song.
+	func updateArtwork(using song: MusicKit.Song?) {
+		self.song = song
+
+		guard let song = song else {
+			self.resetArtwork()
+			return
+		}
+		guard let artworkURL = song.artwork?.url(width: 320, height: 320)?.absoluteString else { return }
+		DispatchQueue.main.async {
+			self.playButton.isHidden = false
+			self.posterImageView?.backgroundColor = song.artwork?.backgroundColor?.uiColor
+			self.posterImageView?.setImage(with: artworkURL, placeholder: #imageLiteral(resourceName: "Placeholders/Music Album"))
+		}
+	}
+
+	private func resetArtwork() {
+		self.song = nil
+
+		DispatchQueue.main.async {
+			self.playButton.isHidden = true
+			self.posterImageView?.backgroundColor = .clear
+			self.posterImageView?.image = #imageLiteral(resourceName: "Placeholders/Music Album")
+		}
 	}
 
 	// MARK: - IBActions
+	@IBAction func playButtonPressed(_ sender: UIButton) {
+		self.delegate?.playButtonPressed(sender, cell: self)
+	}
+
 	@IBAction func showButtonPressed(_ sender: UIButton) {
-		guard let indexPath = indexPath else { return }
+		guard let indexPath = self.indexPath else { return }
 		self.delegate?.showButtonPressed(sender, indexPath: indexPath)
 	}
 }

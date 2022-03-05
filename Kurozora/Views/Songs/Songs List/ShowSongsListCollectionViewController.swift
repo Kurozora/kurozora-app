@@ -8,6 +8,7 @@
 
 import UIKit
 import KurozoraKit
+import AVFoundation
 
 class ShowSongsListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
@@ -31,6 +32,12 @@ class ShowSongsListCollectionViewController: KCollectionViewController {
 	}
 	lazy var showSongCategories: [SongType: [ShowSong]] = [:]
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
+
+	/// The object that provides the interface to control the player’s transport behavior.
+	var player: AVPlayer?
+
+	/// The index path of the song that's currently playing.
+	var currentPlayerIndexPath: IndexPath?
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
@@ -73,6 +80,12 @@ class ShowSongsListCollectionViewController: KCollectionViewController {
 				self.fetchShowSongs()
 			}
 		}
+	}
+
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+
+		self.player?.pause()
 	}
 
 	// MARK: - Functions
@@ -258,6 +271,43 @@ extension ShowSongsListCollectionViewController: TitleHeaderCollectionReusableVi
 
 // MARK: - MusicLockupCollectionViewCellDelegate
 extension ShowSongsListCollectionViewController: MusicLockupCollectionViewCellDelegate {
+	func playButtonPressed(_ sender: UIButton, cell: MusicLockupCollectionViewCell) {
+		guard let song = cell.song else { return }
+
+		if let songURL = song.previewAssets?.first?.url {
+			let playerItem = AVPlayerItem(url: songURL)
+
+			if (self.player?.currentItem?.asset as? AVURLAsset)?.url == (playerItem.asset as? AVURLAsset)?.url {
+				switch self.player?.timeControlStatus {
+				case .playing:
+					cell.playButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
+					self.player?.pause()
+				case .paused:
+					cell.playButton.setImage(UIImage(systemName: "pause.circle.fill"), for: .normal)
+					self.player?.play()
+				default: break
+				}
+			} else {
+				if let indexPath = self.currentPlayerIndexPath {
+					if let cell = collectionView.cellForItem(at: indexPath) as? MusicLockupCollectionViewCell {
+						cell.playButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
+					}
+				}
+
+				self.currentPlayerIndexPath = cell.indexPath
+				self.player = AVPlayer(playerItem: playerItem)
+				self.player?.actionAtItemEnd = .none
+				self.player?.play()
+				cell.playButton.setImage(UIImage(systemName: "pause.circle.fill"), for: .normal)
+
+				NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: nil, queue: .current, using: { [weak self] _ in
+					self?.player = nil
+					cell.playButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
+				})
+			}
+		}
+	}
+
 	func showButtonPressed(_ sender: UIButton, indexPath: IndexPath) {
 		let show = self.showSongs[indexPath.item].show
 		self.performSegue(withIdentifier: R.segue.homeCollectionViewController.showDetailsSegue.identifier, sender: show)

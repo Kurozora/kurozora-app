@@ -91,6 +91,8 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>$(PRODUCT_NAME) requires access to your Apple Music library so you can add anime songs directly from within the app. You can also listen to the full version of the songs instead of the preview version.</string>
 	<key>NSCalendarsUsageDescription</key>
 	<string>$(PRODUCT_NAME) requires access to your calendar so it can create events when subscribing to reminders in the app.</string>
 	<key>NSCameraUsageDescription</key>

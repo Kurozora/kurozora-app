@@ -105,7 +105,20 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 	func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
 		switch authorization.credential {
 		case let appleIDCredential as ASAuthorizationAppleIDCredential:
-			guard let identityTokenString = appleIDCredential.identityToken?.string(encoding: .utf8) else { return }
+			print("----------- Statrted authorizationController() -----------")
+			print("User ID - \(appleIDCredential.user)")
+			print("User Name - \(appleIDCredential.fullName?.description ?? "N/A")")
+			print("User Email - \(appleIDCredential.email ?? "N/A")")
+			print("Real User Status - \(appleIDCredential.realUserStatus.rawValue)")
+
+			let authorizationCode = appleIDCredential.authorizationCode ?? Data()
+			if let authorizationCodeString = String(data: authorizationCode, encoding: .utf8) {
+				print("Refresh Token \(authorizationCodeString)")
+			}
+
+			let identityTokenData = appleIDCredential.identityToken ?? Data()
+			guard let identityTokenString = String(data: identityTokenData, encoding: .utf8) else { return }
+			print("Identity Token \(identityTokenString)")
 
 			KService.signIn(withAppleID: identityTokenString) { [weak self] result in
 				guard let self = self else { return }
