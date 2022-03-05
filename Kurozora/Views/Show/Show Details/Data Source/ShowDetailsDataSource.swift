@@ -8,15 +8,16 @@
 
 import UIKit
 import KurozoraKit
+import AVFoundation
 
 /// - Tag: ShowDetailsDataSource
 class ShowDetailsDataSource: NSObject {
 	// MARK: Properties
-	weak var viewControlelr: ShowDetailsCollectionViewController?
+	weak var viewController: ShowDetailsCollectionViewController?
 	var show: Show! {
 		didSet {
-			self.viewControlelr?.navigationTitleLabel.text = self.show.attributes.title
-			self.viewControlelr?.showID = self.show.id
+			self.viewController?.navigationTitleLabel.text = self.show.attributes.title
+			self.viewController?.showID = self.show.id
 		}
 	}
 
@@ -52,17 +53,17 @@ class ShowDetailsDataSource: NSObject {
 
 	var relatedShows: [RelatedShow] = [] {
 		didSet {
-			self.viewControlelr?._prefersActivityIndicatorHidden = true
-			self.viewControlelr?.collectionView.reloadData {
-				self.viewControlelr?.toggleEmptyDataView()
+			self.viewController?._prefersActivityIndicatorHidden = true
+			self.viewController?.collectionView.reloadData {
+				self.viewController?.toggleEmptyDataView()
 			}
 			#if targetEnvironment(macCatalyst)
-			self.viewControlelr?.touchBar = nil
+			self.viewController?.touchBar = nil
 			#endif
 
 			#if DEBUG
 			#if !targetEnvironment(macCatalyst)
-			self.viewControlelr?.refreshControl?.endRefreshing()
+			self.viewController?.refreshControl?.endRefreshing()
 			#endif
 			#endif
 		}
@@ -77,6 +78,12 @@ class ShowDetailsDataSource: NSObject {
 		}
 	}
 	var studioShows: [Show] = []
+
+	/// The object that provides the interface to control the player’s transport behavior.
+	var player: AVPlayer?
+
+	/// The index path of the song that's currently playing.
+	var currentPlayerIndexPath: IndexPath?
 
 	/// Fetch details for a season.
 	///
@@ -191,7 +198,7 @@ extension ShowDetailsDataSource: UICollectionViewDataSource {
 			badgeCollectionViewCell?.show = self.show
 		case .synopsis:
 			let textViewCollectionViewCell = showDetailCollectionViewCell as? TextViewCollectionViewCell
-			textViewCollectionViewCell?.delegate = self.viewControlelr
+			textViewCollectionViewCell?.delegate = self.viewController
 			textViewCollectionViewCell?.textViewCollectionViewCellType = .synopsis
 			textViewCollectionViewCell?.textViewContent = self.show.attributes.synopsis
 		case .rating:
@@ -233,10 +240,11 @@ extension ShowDetailsDataSource: UICollectionViewDataSource {
 //			}
 		case .cast:
 			let castCollectionViewCell = showDetailCollectionViewCell as? CastCollectionViewCell
-			castCollectionViewCell?.delegate = self.viewControlelr
+			castCollectionViewCell?.delegate = self.viewController
 			castCollectionViewCell?.cast = self.cast[indexPath.item]
 		case .songs:
 			let musicLockupCollectionViewCell = showDetailCollectionViewCell as? MusicLockupCollectionViewCell
+			musicLockupCollectionViewCell?.delegate = self
 			musicLockupCollectionViewCell?.configureCell(with: self.showSongs[indexPath.item], at: indexPath)
 		case .moreByStudio:
 			let smallLockupCollectionViewCell = showDetailCollectionViewCell as? SmallLockupCollectionViewCell
@@ -257,7 +265,7 @@ extension ShowDetailsDataSource: UICollectionViewDataSource {
 		let sectionTitle = showDetailSection != .moreByStudio ? showDetailSection.stringValue : showDetailSection.stringValue + self.studio.attributes.name
 
 		let titleHeaderCollectionReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
-		titleHeaderCollectionReusableView.delegate = self.viewControlelr
+		titleHeaderCollectionReusableView.delegate = self.viewController
 		titleHeaderCollectionReusableView.configure(withTitle: sectionTitle, indexPath: indexPath, segueID: showDetailSection.segueIdentifier)
 		return titleHeaderCollectionReusableView
 	}
@@ -296,4 +304,46 @@ extension ShowDetailsDataSource: UICollectionViewDataSourcePrefetching {
 //			}
 //		}
 	}
+}
+
+// MARK: - MusicLockupCollectionViewCellDelegate
+extension ShowDetailsDataSource: MusicLockupCollectionViewCellDelegate {
+	func playButtonPressed(_ sender: UIButton, cell: MusicLockupCollectionViewCell) {
+		guard let song = cell.song else { return }
+
+		if let songURL = song.previewAssets?.first?.url {
+			let playerItem = AVPlayerItem(url: songURL)
+
+			if (self.player?.currentItem?.asset as? AVURLAsset)?.url == (playerItem.asset as? AVURLAsset)?.url {
+				switch self.player?.timeControlStatus {
+				case .playing:
+					cell.playButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
+					self.player?.pause()
+				case .paused:
+					cell.playButton.setImage(UIImage(systemName: "pause.circle.fill"), for: .normal)
+					self.player?.play()
+				default: break
+				}
+			} else {
+				if let indexPath = self.currentPlayerIndexPath {
+					if let cell = self.viewController?.collectionView.cellForItem(at: indexPath) as? MusicLockupCollectionViewCell {
+						cell.playButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
+					}
+				}
+
+				self.currentPlayerIndexPath = cell.indexPath
+				self.player = AVPlayer(playerItem: playerItem)
+				self.player?.actionAtItemEnd = .none
+				self.player?.play()
+				cell.playButton.setImage(UIImage(systemName: "pause.circle.fill"), for: .normal)
+
+				NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: nil, queue: .current, using: { [weak self] _ in
+					self?.player = nil
+					cell.playButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
+				})
+			}
+		}
+	}
+
+	func showButtonPressed(_ sender: UIButton, indexPath: IndexPath) {}
 }

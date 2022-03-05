@@ -108,7 +108,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		#endif
 
 		// Configure data sources
-		self.dataSource.viewControlelr = self
+		self.dataSource.viewController = self
 		self.collectionView.dataSource = self.dataSource
 		self.collectionView.prefetchDataSource = self.dataSource
 

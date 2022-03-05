@@ -37,14 +37,35 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TIv-B1-PS8" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="152" y="152" width="70" height="70"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="TIv-B1-PS8" secondAttribute="height" multiplier="1:1" id="MGE-Um-egd"/>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="100" id="VXt-Sk-ZcC"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="tintColor" systemColor="secondaryLabelColor"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="play.circle.fill" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="60"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="playButtonPressed:" destination="yZT-dr-fI8" eventType="touchUpInside" id="cCg-Uh-AvZ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.33333334329999997" green="0.3333333731" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="Ccz-cN-UH9" firstAttribute="leading" secondItem="zJc-3a-J3j" secondAttribute="leading" id="2QE-E4-SPQ"/>
+                            <constraint firstItem="TIv-B1-PS8" firstAttribute="centerY" secondItem="zJc-3a-J3j" secondAttribute="centerY" id="7dN-zD-WIO"/>
                             <constraint firstAttribute="bottom" secondItem="Ccz-cN-UH9" secondAttribute="bottom" id="82g-OT-lRt"/>
                             <constraint firstItem="YXm-9u-Lva" firstAttribute="leading" secondItem="zJc-3a-J3j" secondAttribute="leading" id="H7q-kA-4JA"/>
                             <constraint firstAttribute="bottom" secondItem="YXm-9u-Lva" secondAttribute="bottom" id="JPW-2e-PJi"/>
                             <constraint firstAttribute="trailing" secondItem="YXm-9u-Lva" secondAttribute="trailing" id="SHC-C1-1Yi"/>
+                            <constraint firstItem="TIv-B1-PS8" firstAttribute="centerX" secondItem="zJc-3a-J3j" secondAttribute="centerX" id="TpA-ce-ySO"/>
                             <constraint firstAttribute="width" secondItem="zJc-3a-J3j" secondAttribute="height" multiplier="1:1" id="XRB-b7-Xrd"/>
                             <constraint firstItem="YXm-9u-Lva" firstAttribute="top" secondItem="zJc-3a-J3j" secondAttribute="top" id="hDm-lL-WPA"/>
                             <constraint firstAttribute="trailing" secondItem="Ccz-cN-UH9" secondAttribute="trailing" id="scK-aS-sbO"/>
@@ -138,6 +159,7 @@ asdasdasdasd aks dkjahsdk jhaks jdhak sjdhasd</string>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <size key="customSize" width="374" height="489"/>
             <connections>
+                <outlet property="playButton" destination="TIv-B1-PS8" id="zta-SN-AtI"/>
                 <outlet property="posterImageView" destination="YXm-9u-Lva" id="rPh-fh-bAy"/>
                 <outlet property="primaryLabel" destination="oI7-ug-axO" id="44o-KZ-guC"/>
                 <outlet property="secondaryLabel" destination="4we-rF-AnJ" id="lkq-ML-qli"/>
@@ -150,8 +172,12 @@ asdasdasdasd aks dkjahsdk jhaks jdhak sjdhasd</string>
     </objects>
     <resources>
         <image name="Placeholders/Music Album" width="1080" height="1080"/>
+        <image name="play.circle.fill" catalog="system" width="128" height="121"/>
         <systemColor name="linkColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

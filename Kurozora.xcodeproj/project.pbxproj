@@ -57,6 +57,7 @@
 		6614AD412580033500039BFB /* ShowDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614AD402580033500039BFB /* ShowDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */; };
 		66160C3B215C04B900D0D722 /* AccountTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66160C3A215C04B900D0D722 /* AccountTableViewController.swift */; };
 		66160C40215C2DEB00D0D722 /* Reachability.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66160C3F215C2DEB00D0D722 /* Reachability.storyboard */; };
+		66192D7327CEA3720041D102 /* WorkflowController+MusicKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66192D7227CEA3720041D102 /* WorkflowController+MusicKit.swift */; };
 		661A002527BA9FDE00DC646C /* KImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A002427BA9FDD00DC646C /* KImageView.swift */; };
 		661A002A27C28F7A00DC646C /* KTrailerPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A002927C28F7A00DC646C /* KTrailerPlayerView.swift */; };
 		661ACC9B25ADA41B002407A7 /* ShowDetailsCollectionViewController+TouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661ACC9A25ADA41B002407A7 /* ShowDetailsCollectionViewController+TouchBar.swift */; };
@@ -557,6 +558,7 @@
 		6614AD402580033500039BFB /* ShowDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShowDetailsCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
 		66160C3A215C04B900D0D722 /* AccountTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTableViewController.swift; sourceTree = "<group>"; };
 		66160C3F215C2DEB00D0D722 /* Reachability.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Reachability.storyboard; sourceTree = "<group>"; };
+		66192D7227CEA3720041D102 /* WorkflowController+MusicKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkflowController+MusicKit.swift"; sourceTree = "<group>"; };
 		661A002427BA9FDD00DC646C /* KImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KImageView.swift; sourceTree = "<group>"; };
 		661A002927C28F7A00DC646C /* KTrailerPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KTrailerPlayerView.swift; sourceTree = "<group>"; };
 		661ACC9A25ADA41B002407A7 /* ShowDetailsCollectionViewController+TouchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShowDetailsCollectionViewController+TouchBar.swift"; sourceTree = "<group>"; };
@@ -2390,6 +2392,7 @@
 		66B13A5B2405A9FC00CD732B /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				66192D7227CEA3720041D102 /* WorkflowController+MusicKit.swift */,
 				66B13A5C2405AA1000CD732B /* WorkflowController+PushNotifications.swift */,
 				66B13A5E2405AA8000CD732B /* WorkflowController+User.swift */,
 			);
@@ -3732,6 +3735,7 @@
 				66CAE6852337CFB000991E59 /* OnboardingTextFieldTableViewCell.swift in Sources */,
 				661F9F832087282500CF4153 /* SignUpTableViewController.swift in Sources */,
 				66CE8116246093CF00DB0C49 /* ServiceHeaderTableViewCell.swift in Sources */,
+				66192D7327CEA3720041D102 /* WorkflowController+MusicKit.swift in Sources */,
 				66FC6DD12340014500A454DD /* SettingsSection.swift in Sources */,
 				66AE1E1024A0DB9200FD3FFC /* StudioDetail.swift in Sources */,
 				660E39F525E5BE4000A46EB0 /* Person+UIKit.swift in Sources */,
