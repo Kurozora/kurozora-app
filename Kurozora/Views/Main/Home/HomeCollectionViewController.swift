@@ -192,8 +192,14 @@ class HomeCollectionViewController: KCollectionViewController {
 			// Segue to shows list
 			if let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController {
 				guard let indexPath = sender as? IndexPath else { return }
+				let exploreCategory = exploreCategories[indexPath.section]
 				showsListCollectionViewController.title = exploreCategories[indexPath.section].attributes.title
-				showsListCollectionViewController.shows = exploreCategories[indexPath.section].relationships.shows?.data ?? []
+
+				if exploreCategory.attributes.exploreCategoryType == .upcomingShows {
+					showsListCollectionViewController.showUpcoming = true
+				} else {
+					showsListCollectionViewController.shows =  exploreCategory.relationships.shows?.data ?? []
+				}
 			}
 		case R.segue.homeCollectionViewController.showSongsListSegue.identifier:
 			// Segue to show songs list
