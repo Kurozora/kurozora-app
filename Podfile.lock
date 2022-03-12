@@ -5,7 +5,7 @@ PODS:
   - FLEX (4.6.1)
   - KeychainAccess (4.2.2)
   - Kingfisher (7.2.0)
-  - KurozoraKit (0.30.1):
+  - KurozoraKit (0.30.2):
     - KeychainAccess
     - TRON
   - Pageboy (3.6.2)
@@ -113,7 +113,7 @@ SPEC CHECKSUMS:
   FLEX: bbc55d197f87d7cde2454c3981aa47069b694144
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   Kingfisher: 3ac0b75b155cabc0e544877d1a4deea29feece92
-  KurozoraKit: b455a8464d57ffc6cc632c47522f215eee013408
+  KurozoraKit: c7e9da12d9385c9899a5127ce3f724e87ac13692
   Pageboy: cf121b9dd48c63f3f281b2a9ec93d02e0f23879b
   R.swift: ec98ff71c4ab2f6fd01dd077e5afd15e63a4834c
   R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962

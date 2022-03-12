@@ -343,6 +343,7 @@
 		66BFF4EB25FFF879009EBA30 /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BFF4EA25FFF879009EBA30 /* SidebarViewController.swift */; };
 		66C27A7123E243FB00BC09D3 /* LibraryStatisticsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C27A7023E243FB00BC09D3 /* LibraryStatisticsCollectionViewCell.swift */; };
 		66C2C5262107ACA10020E21F /* KTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C2C5252107ACA10020E21F /* KTabBarController.swift */; };
+		66C34FC327DCDBC900298C81 /* UpcomingLockupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66C34FC227DCD9D900298C81 /* UpcomingLockupCollectionViewCell.xib */; };
 		66C457FA2598D5E000886374 /* PersonDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C457F92598D5E000886374 /* PersonDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */; };
 		66C457FC2598DA4500886374 /* StudioDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C457FB2598DA4500886374 /* StudioDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */; };
 		66C45841259A88ED00886374 /* Grass.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66C4583E259A88ED00886374 /* Grass.plist */; };
@@ -844,6 +845,7 @@
 		66BFF4EA25FFF879009EBA30 /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
 		66C27A7023E243FB00BC09D3 /* LibraryStatisticsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryStatisticsCollectionViewCell.swift; sourceTree = "<group>"; };
 		66C2C5252107ACA10020E21F /* KTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KTabBarController.swift; sourceTree = "<group>"; };
+		66C34FC227DCD9D900298C81 /* UpcomingLockupCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpcomingLockupCollectionViewCell.xib; sourceTree = "<group>"; };
 		66C457F92598D5E000886374 /* PersonDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersonDetailsCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
 		66C457FB2598DA4500886374 /* StudioDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StudioDetailsCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
 		66C4583E259A88ED00886374 /* Grass.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Grass.plist; sourceTree = "<group>"; };
@@ -2925,6 +2927,7 @@
 				660C043123D1500A0040C749 /* MediumLockupCollectionViewCell.xib */,
 				66319DAE27C858CD0063DE7F /* MusicLockupCollectionViewCell.xib */,
 				660C042F23D14F760040C749 /* SmallLockupCollectionViewCell.xib */,
+				66C34FC227DCD9D900298C81 /* UpcomingLockupCollectionViewCell.xib */,
 				660C042D23D14F5C0040C749 /* VideoLockupCollectionViewCell.xib */,
 			);
 			path = Cells;
@@ -3305,6 +3308,7 @@
 				66A48FE021A411A900F34085 /* Notifications.storyboard in Resources */,
 				669EA9A222C1491600784181 /* Purchase.storyboard in Resources */,
 				66A4FD19270F6CD100E7C702 /* App Icons.plist in Resources */,
+				66C34FC327DCDBC900298C81 /* UpcomingLockupCollectionViewCell.xib in Resources */,
 				66AE01292594018400308636 /* Genre.storyboard in Resources */,
 				666D9EF325B3607600EDDC9E /* LibraryList.storyboard in Resources */,
 				66A4FD16270F62D300E7C702 /* Settings.bundle in Resources */,

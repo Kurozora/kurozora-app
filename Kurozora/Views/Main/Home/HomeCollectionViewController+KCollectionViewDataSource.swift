@@ -18,7 +18,8 @@ extension HomeCollectionViewController {
 			PersonLockupCollectionViewCell.self,
 			CharacterLockupCollectionViewCell.self,
 			MusicLockupCollectionViewCell.self,
-			LegalCollectionViewCell.self
+			LegalCollectionViewCell.self,
+			UpcomingLockupCollectionViewCell.self
 		]
 	}
 

@@ -128,7 +128,8 @@ extension HomeCollectionViewController {
 	}
 
 	override func createLayout() -> UICollectionViewLayout? {
-		return UICollectionViewCompositionalLayout { section, layoutEnvironment -> NSCollectionLayoutSection? in
+		return UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+			guard let self = self else { return nil }
 			let exploreCategoriesCount = self.exploreCategories.count
 
 			switch self.dataSource.itemIdentifier(for: IndexPath(item: 0, section: section)) {
