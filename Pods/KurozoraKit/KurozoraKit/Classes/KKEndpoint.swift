@@ -60,6 +60,9 @@ extension KKEndpoint {
 		/// The endpoint to the songs belonging to a show.
 		case songs(_ showID: Int)
 
+		/// The endpoint to upcoming for shows.
+		case upcoming
+
 		/// The endpoint to search for shows.
 		case search
 
@@ -83,6 +86,8 @@ extension KKEndpoint {
 				return "anime/\(showID)/seasons"
 			case .songs(let showID):
 				return "anime/\(showID)/songs"
+			case .upcoming:
+				return "anime/upcoming"
 			case .search:
 				return "anime/search"
 			}
