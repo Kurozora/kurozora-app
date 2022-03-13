@@ -11,27 +11,42 @@ import KurozoraKit
 
 extension EpisodesCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
-		return [EpisodeLockupCollectionViewCell.self]
+		return [
+//			EpisodeLockupCollectionViewCell.self
+		]
 	}
 
 	override func configureDataSource() {
-		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Episode>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: Episode) -> UICollectionViewCell? in
-			guard let episodesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.episodeLockupCollectionViewCell, for: indexPath) else {
-				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.episodeLockupCollectionViewCell.identifier)")
-			}
+		let cellRegistration = UICollectionView.CellRegistration<EpisodeLockupCollectionViewCell, EpisodeIdentity>(cellNib: UINib(resource: R.nib.episodeLockupCollectionViewCell)) { [weak self] episodesCollectionViewCell, indexPath, episodeIdentity in
+			guard let self = self else { return }
+			guard self.episodes[indexPath] != nil else { return }
+			guard let episode = self.fetchEpisode(at: indexPath) else { return }
 			episodesCollectionViewCell.delegate = self
-			episodesCollectionViewCell.episode = item
-			return episodesCollectionViewCell
+			episodesCollectionViewCell.configureCell(using: episode)
+		}
+
+		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, EpisodeIdentity>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: EpisodeIdentity) -> UICollectionViewCell? in
+			return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
 		}
 	}
 
+	func fetchEpisode(at indexPath: IndexPath) -> Episode? {
+		guard let episode = self.episodes[indexPath] else { return nil }
+		return episode
+	}
+
 	override func updateDataSource() {
-		let episodes = self.shouldHideFillers ? self.episodes.filter({ episode in
-			!episode.attributes.isFiller
-		}) : self.episodes
-		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Episode>()
+//		let episodes = self.shouldHideFillers ? self.episodes.filter({ episode in
+//			!episode.attributes.isFiller
+//		}) : self.episodes
+
+//		let episodeIdentities = self.shouldHideFillers ? self.episodeIdentities.filter({ episodeIdentity in
+//			!(self.episodes[episodeIdentity.id]?.attributes.isFiller ?? false)
+//		}) :
+		let episodeIdentities = self.episodeIdentities
+		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, EpisodeIdentity>()
 		snapshot.appendSections([.main])
-		snapshot.appendItems(episodes, toSection: .main)
-		dataSource.apply(snapshot)
+		snapshot.appendItems(episodeIdentities, toSection: .main)
+		self.dataSource.apply(snapshot)
 	}
 }

@@ -25,37 +25,46 @@ class EpisodeLockupCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - Properties
 	weak var delegate: EpisodeLockupCollectionViewCellDelegate?
-	var episode: Episode! {
-		didSet {
-			self.configureCell()
-		}
-	}
+//	var episode: Episode! {
+//		didSet {
+//			self.configureCell()
+//		}
+//	}
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
-	fileprivate func configureCell() {
-		self.episodeImageView.setImage(with: self.episode.attributes.banner?.url ?? "", placeholder: R.image.placeholders.episodeBanner()!)
+	func configureCell(using episode: Episode?) {
+		guard let episode = episode else {
+			prepareSkeleton()
+			return
+		}
+
+		self.episodeImageView.setImage(with: episode.attributes.banner?.url ?? "", placeholder: R.image.placeholders.episodeBanner()!)
 
 		// Configure watch status
-		self.configureWatchButton(with: self.episode.attributes.watchStatus)
+		self.configureWatchButton(with: episode.attributes.watchStatus)
 
 		// Configure cosmos view
-		let userRating = self.episode.attributes.givenRating
+		let userRating = episode.attributes.givenRating
 		self.cosmosView.rating = userRating ?? 0.0
 
 		// Configure episode number label
-		let episodeNumber = self.episode.attributes.numberTotal
+		let episodeNumber = episode.attributes.numberTotal
 		self.episodeNumberLabel.text = "Episode \(episodeNumber)"
 
 		// Configure episode title label
-		self.episodeTitleLabel.text = self.episode.attributes.title
-		self.episodeFirstAiredLabel.text = self.episode.attributes.firstAired?.formatted(date: .abbreviated, time: .omitted) ?? "TBA"
+		self.episodeTitleLabel.text = episode.attributes.title
+		self.episodeFirstAiredLabel.text = episode.attributes.firstAired?.formatted(date: .abbreviated, time: .omitted) ?? "TBA"
 
 		// Round corners
 		self.cornerView.cornerRadius = 10
 
 		// Apply shadow
 		self.shadowView.applyShadow()
+	}
+
+	fileprivate func prepareSkeleton() {
+		print("---------- episode skeleton")
 	}
 
 	/**

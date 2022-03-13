@@ -8,6 +8,42 @@
 
 import UIKit
 import KurozoraKit
+import Alamofire
+
+// MARK: - UICollectionViewDataSourcePrefetching
+extension EpisodesCollectionViewController {
+	override func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+		// Begin asynchronously fetching data for the requested index paths.
+		for indexPath in indexPaths {
+			// Don't start a new prefetching operation if one is in process.
+			guard prefetchingIndexPathOperations[indexPath] == nil else { continue }
+			guard let episodeIdentity = self.dataSource.itemIdentifier(for: indexPath) else { continue }
+
+			self.prefetchingIndexPathOperations[indexPath] = KService.getDetails(forEpisode: episodeIdentity) { [weak self] result in
+				// After the episode fetching completes, trigger a reconfigure for the item so the cell can be updated if
+				// it is visible.
+				switch result {
+				case .success(let episodes):
+					self?.episodes[indexPath] = episodes.first
+					self?.setEpisodeNeedsUpdate(episodeIdentity)
+				case .failure: break
+				}
+			}
+		}
+	}
+
+	private func setEpisodeNeedsUpdate(_ episodeIdentity: EpisodeIdentity) {
+		var snapshot = self.dataSource.snapshot()
+		snapshot.reconfigureItems([episodeIdentity])
+		self.dataSource.apply(snapshot, animatingDifferences: true)
+	}
+
+	func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
+		for indexPath in indexPaths {
+			self.prefetchingIndexPathOperations.removeValue(forKey: indexPath)?.cancelRequest()
+		}
+	}
+}
 
 class EpisodesCollectionViewController: KCollectionViewController {
 	// MARK: - IBOutlets
@@ -16,7 +52,8 @@ class EpisodesCollectionViewController: KCollectionViewController {
 
 	// MARK: - Properties
 	var seasonID: Int = 0
-	var episodes: [Episode] = [] {
+	var episodes: [IndexPath: Episode] = [:]
+	var episodeIdentities: [EpisodeIdentity] = [] {
 		didSet {
 			self.updateDataSource()
 			self._prefersActivityIndicatorHidden = true
@@ -28,7 +65,8 @@ class EpisodesCollectionViewController: KCollectionViewController {
 			#endif
 		}
 	}
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Episode>! = nil
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, EpisodeIdentity>! = nil
+	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
 
 	/// The next page url of the pagination.
 	var nextPageURL: String?
@@ -102,6 +140,8 @@ class EpisodesCollectionViewController: KCollectionViewController {
 		DispatchQueue.global(qos: .userInteractive).async {
 			self.fetchEpisodes()
 		}
+
+//		self.collectionView.prefetchDataSource = self
 	}
 
 	// MARK: - Functions
@@ -139,15 +179,15 @@ class EpisodesCollectionViewController: KCollectionViewController {
 		KService.getEpisodes(forSeasonID: self.seasonID, next: self.nextPageURL) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
-			case .success(let episodeResponse):
+			case .success(let episodeIdentityResponse):
 				// Reset data if necessary
 				if self.nextPageURL == nil {
-					self.episodes = []
+					self.episodeIdentities = []
 				}
 
 				// Save next page url and append new data
-				self.nextPageURL = episodeResponse.next
-				self.episodes.append(contentsOf: episodeResponse.data)
+				self.nextPageURL = episodeIdentityResponse.next
+				self.episodeIdentities.append(contentsOf: episodeIdentityResponse.data)
 
 				// Reset refresh controller title
 				#if !targetEnvironment(macCatalyst)
@@ -185,13 +225,13 @@ class EpisodesCollectionViewController: KCollectionViewController {
 
 	/// Goes to the last watched episode in the presented collection view.
 	fileprivate func goToLastWatchedEpisode() {
-		guard let lastWatchedEpisode = self.dataSource.snapshot().itemIdentifiers.closestMatch(index: 0, predicate: { episode in
-			if let episodeWatchStatus = episode.attributes.watchStatus {
-				return episodeWatchStatus == .notWatched
-			}
-			return false
-		}) else { return }
-		collectionView.safeScrollToItem(at: IndexPath(row: lastWatchedEpisode.0, section: 0), at: .centeredVertically, animated: true)
+//		guard let lastWatchedEpisode = self.dataSource.snapshot().itemIdentifiers.closestMatch(index: 0, predicate: { episodeIdentity in
+//			if let episodeWatchStatus = self.episodes[episodeIdentity.id]?.attributes.watchStatus {
+//				return episodeWatchStatus == .notWatched
+//			}
+//			return false
+//		}) else { return }
+//		collectionView.safeScrollToItem(at: IndexPath(row: lastWatchedEpisode.0, section: 0), at: .centeredVertically, animated: true)
 	}
 
 	/// Builds and presents an action sheet.
@@ -263,7 +303,7 @@ class EpisodesCollectionViewController: KCollectionViewController {
 		if segue.identifier == R.segue.episodesCollectionViewController.episodeDetailSegue.identifier, let episodeCell = sender as? EpisodeLockupCollectionViewCell {
 			if let episodeDetailViewController = segue.destination as? EpisodeDetailCollectionViewController, let indexPath = collectionView.indexPath(for: episodeCell) {
 				episodeDetailViewController.indexPath = indexPath
-				episodeDetailViewController.episodeID = episodes[indexPath.row].id
+				episodeDetailViewController.episodeID = self.episodes[indexPath]?.id ?? 0
 			}
 		}
 	}
@@ -272,20 +312,20 @@ class EpisodesCollectionViewController: KCollectionViewController {
 // MARK: - EpisodeLockupCollectionViewCellDelegate
 extension EpisodesCollectionViewController: EpisodeLockupCollectionViewCellDelegate {
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressWatchButton button: UIButton) {
-		guard let indexPath = collectionView.indexPath(for: cell) else { return }
-		cell.episode.updateWatchStatus(userInfo: ["indexPath": indexPath])
+//		guard let indexPath = collectionView.indexPath(for: cell) else { return }
+//		cell.episode.updateWatchStatus(userInfo: ["indexPath": indexPath])
 	}
 
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressMoreButton button: UIButton) {
 		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
 			let actionTitle = button.tag == 0 ? "Mark as Watched" : "Mark as Un-watched"
 			actionSheetAlertController.addAction(UIAlertAction(title: actionTitle, style: .default, handler: { _ in
-				guard let indexPath = self?.collectionView.indexPath(for: cell) else { return }
-				cell.episode.updateWatchStatus(userInfo: ["indexPath": indexPath])
+//				guard let indexPath = self?.collectionView.indexPath(for: cell) else { return }
+//				cell.episode.updateWatchStatus(userInfo: ["indexPath": indexPath])
 			}))
 			actionSheetAlertController.addAction(UIAlertAction(title: "Rate", style: .default, handler: nil))
 			actionSheetAlertController.addAction(UIAlertAction(title: "Share", style: .default, handler: { _ in
-				cell.episode.openShareSheet(on: self, button)
+//				cell.episode.openShareSheet(on: self, button)
 			}))
 		}
 
