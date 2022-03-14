@@ -46,6 +46,7 @@ extension EpisodesCollectionViewController {
 
 			let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 			layoutSection.interGroupSpacing = 10.0
+			layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
 			return layoutSection
 		}
 		return layout
