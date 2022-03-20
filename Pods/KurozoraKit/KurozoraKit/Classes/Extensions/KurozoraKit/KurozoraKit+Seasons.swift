@@ -56,9 +56,9 @@ extension KurozoraKit {
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
 	@discardableResult
-	public func getEpisodes(forSeasonID seasonID: Int, next: String? = nil, limit: Int = 25, hideFillers: Bool = false, completion completionHandler: @escaping (_ result: Result<EpisodeResponse, KKAPIError>) -> Void) -> DataRequest {
+	public func getEpisodes(forSeasonID seasonID: Int, next: String? = nil, limit: Int = 25, hideFillers: Bool = false, completion completionHandler: @escaping (_ result: Result<EpisodeIdentityResponse, KKAPIError>) -> Void) -> DataRequest {
 		let seasonsEpisodes = next ?? KKEndpoint.Shows.Seasons.episodes(seasonID).endpointValue
-		let request: APIRequest<EpisodeResponse, KKAPIError> = tron.codable.request(seasonsEpisodes).buildURL(.relativeToBaseURL)
+		let request: APIRequest<EpisodeIdentityResponse, KKAPIError> = tron.codable.request(seasonsEpisodes).buildURL(.relativeToBaseURL)
 
 		request.headers = headers
 		if !self.authenticationKey.isEmpty {
@@ -69,8 +69,8 @@ extension KurozoraKit {
 		request.parameters["hide_fillers"] = hideFillers ? 1 : 0
 
 		request.method = .get
-		return request.perform(withSuccess: { episodeResponse in
-			completionHandler(.success(episodeResponse))
+		return request.perform(withSuccess: { episodeIdentityResponse in
+			completionHandler(.success(episodeIdentityResponse))
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {

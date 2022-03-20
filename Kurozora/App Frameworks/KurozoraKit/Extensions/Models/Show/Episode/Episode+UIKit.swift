@@ -37,11 +37,11 @@ extension Episode {
 			menuElements.append(watchAction)
 		}
 
-		// Create "rate" element
-		let rateAction = UIAction(title: "Rate", image: UIImage(systemName: "star.circle")) { _ in
-			// TODO: - Implement rate episode feature.
-		}
-		menuElements.append(rateAction)
+//		// Create "rate" element
+//		let rateAction = UIAction(title: "Rate", image: UIImage(systemName: "star.circle")) { _ in
+//			// TODO: - Implement rate episode feature.
+//		}
+//		menuElements.append(rateAction)
 
 		// Create "share" element
 		let shareAction = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
@@ -81,7 +81,7 @@ extension Episode {
 		- Parameter barButtonItem: The `UIBarButtonItem` sending the request.
 	*/
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
-		let shareText = "https://kurozora.app/episode/\(self.id)\nYou should watch \"\(self.attributes.title)\" via @KurozoraApp"
+		let shareText = "https://kurozora.app/episodes/\(self.id)\nYou should watch \"\(self.attributes.title)\" via @KurozoraApp"
 
 		var activityItems: [Any] = []
 		activityItems.append(shareText)

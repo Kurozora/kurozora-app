@@ -9,7 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="EpisodeLockupCollectionViewCell" id="SsL-f8-fZ9" customClass="EpisodeLockupCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
+        <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="SsL-f8-fZ9" customClass="EpisodeLockupCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="374" height="210"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="V2V-DS-t2y">
