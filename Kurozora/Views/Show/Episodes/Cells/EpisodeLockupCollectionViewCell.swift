@@ -8,6 +8,7 @@
 
 import UIKit
 import KurozoraKit
+import Alamofire
 
 class EpisodeLockupCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
@@ -25,19 +26,32 @@ class EpisodeLockupCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - Properties
 	weak var delegate: EpisodeLockupCollectionViewCellDelegate?
-//	var episode: Episode! {
-//		didSet {
-//			self.configureCell()
-//		}
-//	}
+	var episodeDataRequest: DataRequest?
+
+	// MARK: - Initializers
+	deinit {
+		self.episodeDataRequest?.cancel()
+		self.episodeDataRequest = nil
+	}
+
+	// MARK: - View
+	override func prepareForReuse() {
+		super.prepareForReuse()
+
+		self.episodeDataRequest?.cancel()
+		self.episodeDataRequest = nil
+		self.prepareSkeleton()
+	}
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	func configureCell(using episode: Episode?) {
 		guard let episode = episode else {
-			prepareSkeleton()
+			self.prepareSkeleton()
 			return
 		}
+		self.backgroundColor = nil
+		self.contentView.isHidden = false
 
 		self.episodeImageView.setImage(with: episode.attributes.banner?.url ?? "", placeholder: R.image.placeholders.episodeBanner()!)
 
@@ -64,7 +78,9 @@ class EpisodeLockupCollectionViewCell: UICollectionViewCell {
 	}
 
 	fileprivate func prepareSkeleton() {
-		print("---------- episode skeleton")
+		self.roundCorners(.allCorners, radius: 10.0)
+		self.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+		self.contentView.isHidden = true
 	}
 
 	/**

@@ -6,8 +6,8 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import TRON
 import Alamofire
+import TRON
 
 extension KurozoraKit {
 	///	Fetch the show details for the given show id.
