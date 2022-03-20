@@ -104,8 +104,10 @@ class EpisodeDetailCollectionViewController: KCollectionViewController {
 		#endif
 
 		// Fetch cast
-		DispatchQueue.global(qos: .userInteractive).async {
-			self.fetchEpisodeDetails()
+		if self.episode == nil {
+			DispatchQueue.global(qos: .userInteractive).async {
+				self.fetchEpisodeDetails()
+			}
 		}
 	}
 

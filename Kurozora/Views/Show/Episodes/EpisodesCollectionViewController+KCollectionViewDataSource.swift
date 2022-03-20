@@ -11,18 +11,36 @@ import KurozoraKit
 
 extension EpisodesCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
-		return [
-//			EpisodeLockupCollectionViewCell.self
-		]
+		return []
 	}
 
 	override func configureDataSource() {
-		let cellRegistration = UICollectionView.CellRegistration<EpisodeLockupCollectionViewCell, EpisodeIdentity>(cellNib: UINib(resource: R.nib.episodeLockupCollectionViewCell)) { [weak self] episodesCollectionViewCell, indexPath, episodeIdentity in
+		let cellRegistration = UICollectionView.CellRegistration<EpisodeLockupCollectionViewCell, EpisodeIdentity>(cellNib: UINib(resource: R.nib.episodeLockupCollectionViewCell)) { [weak self] episodeLockupCollectionViewCell, indexPath, episodeIdentity in
 			guard let self = self else { return }
-			guard self.episodes[indexPath] != nil else { return }
-			guard let episode = self.fetchEpisode(at: indexPath) else { return }
-			episodesCollectionViewCell.delegate = self
-			episodesCollectionViewCell.configureCell(using: episode)
+			let episode = self.fetchEpisode(at: indexPath)
+
+			// Retrieve the token that's tracking this asset from either the prefetching operations dictionary
+			// or just use a token that's already set on the cell, which is the case when a cell is being reconfigured.
+			var episodeDataRequest = self.prefetchingIndexPathOperations[indexPath] ?? episodeLockupCollectionViewCell.episodeDataRequest
+
+			// If the asset is a placeholder and there is no token, ask the asset store to load it, reconfiguring
+			// the cell in its completion handler.
+			if episodeDataRequest == nil && episode == nil {
+				episodeDataRequest = KService.getDetails(forEpisode: episodeIdentity) { [weak self] result in
+					// After the episode fetching completes, trigger a reconfigure for the item so the cell can be updated if
+					// it is visible.
+					switch result {
+					case .success(let episodes):
+						self?.episodes[indexPath] = episodes.first
+						self?.setEpisodeNeedsUpdate(episodeIdentity)
+					case .failure: break
+					}
+				}
+			}
+
+			episodeLockupCollectionViewCell.episodeDataRequest = episodeDataRequest
+			episodeLockupCollectionViewCell.delegate = self
+			episodeLockupCollectionViewCell.configureCell(using: episode)
 		}
 
 		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, EpisodeIdentity>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: EpisodeIdentity) -> UICollectionViewCell? in
@@ -35,15 +53,18 @@ extension EpisodesCollectionViewController {
 		return episode
 	}
 
-	override func updateDataSource() {
-//		let episodes = self.shouldHideFillers ? self.episodes.filter({ episode in
-//			!episode.attributes.isFiller
-//		}) : self.episodes
+	func setEpisodeNeedsUpdate(_ episodeIdentity: EpisodeIdentity) {
+		var snapshot = self.dataSource.snapshot()
+		snapshot.reconfigureItems([episodeIdentity])
+		self.dataSource.apply(snapshot, animatingDifferences: true)
+	}
 
-//		let episodeIdentities = self.shouldHideFillers ? self.episodeIdentities.filter({ episodeIdentity in
-//			!(self.episodes[episodeIdentity.id]?.attributes.isFiller ?? false)
-//		}) :
-		let episodeIdentities = self.episodeIdentities
+	override func updateDataSource() {
+		let episodeIdentities = self.shouldHideFillers ? self.dataSource.snapshot().itemIdentifiers.filter({ episodeIdentity in
+			!(self.episodes.values.first(where: { episode in
+				episode.id == episodeIdentity.id
+			})?.attributes.isFiller ?? false)
+		}) : self.episodeIdentities
 		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, EpisodeIdentity>()
 		snapshot.appendSections([.main])
 		snapshot.appendItems(episodeIdentities, toSection: .main)
