@@ -17,15 +17,20 @@ internal let TMBarItemableNeedsUpdateNotification = Notification.Name(rawValue: 
 /// Tabman adds extensions to UIKit components to natively support `TMBarItemable`, such as `UINavigationItem` and
 /// `UITabBarItem`. Therefore for example, simply returning a `UIViewController` `navigationItem` as a `TMBarItemable` is
 /// fully supported.
-public protocol TMBarItemable: class {
+public protocol TMBarItemable: AnyObject {
     
     /// Title of the item.
     var title: String? { get set }
     /// Image to display.
     ///
-    /// - Note: If you want the image to be colored by tint colors when within a `TMBar`,
-    /// you must use the `.alwaysTemplate` image rendering mode.
+    /// - Note: If you want the image to be colored by tint colors when within a `TMBar`, you must use the `.alwaysTemplate` image rendering mode.
+    /// - Warning: The usage of this property is dependent on the type of `TMBarButton` within the bar.
     var image: UIImage? { get set }
+    
+    /// Image for the selected state.
+    ///
+    /// - Warning: The usage of this property is dependent on the type of `TMBarButton` within the bar.
+    var selectedImage: UIImage? { get set }
     
     /// Badge value to display.
     var badgeValue: String? { get set }
@@ -82,7 +87,14 @@ open class TMBarItem: TMBarItemable {
             setNeedsUpdate()
         }
     }
+    
     open var image: UIImage?  {
+        didSet {
+            setNeedsUpdate()
+        }
+    }
+    
+    open var selectedImage: UIImage?  {
         didSet {
             setNeedsUpdate()
         }
@@ -116,16 +128,17 @@ open class TMBarItem: TMBarItemable {
     ///   - title: Title of the item.
     ///   - badgeValue: Badge value to display.
     public convenience init(title: String, badgeValue: String? = nil) {
-        self.init(with: title, image: nil, badgeValue: badgeValue)
+        self.init(with: title, image: nil, selectedImage: nil, badgeValue: badgeValue)
     }
     
     /// Create an Item with an image.
     ///
     /// - Parameters:
     ///   - image: Image of the item.
+    ///   - selectedImage: Image of the item when selected.
     ///   - badgeValue: Badge value to display.
-    public convenience init(image: UIImage, badgeValue: String? = nil) {
-        self.init(with: nil, image: image, badgeValue: badgeValue)
+    public convenience init(image: UIImage, selectedImage: UIImage? = nil, badgeValue: String? = nil) {
+        self.init(with: nil, image: image, selectedImage: selectedImage, badgeValue: badgeValue)
     }
     
     /// Create an Item with a title and an image.
@@ -133,14 +146,16 @@ open class TMBarItem: TMBarItemable {
     /// - Parameters:
     ///   - title: Title of the item.
     ///   - image: Image of the item.
+    ///   - selectedImage: Image of the item when selected.
     ///   - badgeValue: Badge value to display.
-    public convenience init(title: String, image: UIImage, badgeValue: String? = nil) {
-        self.init(with: title, image: image, badgeValue: badgeValue)
+    public convenience init(title: String, image: UIImage, selectedImage: UIImage? = nil, badgeValue: String? = nil) {
+        self.init(with: title, image: image, selectedImage: selectedImage, badgeValue: badgeValue)
     }
     
-    private init(with title: String?, image: UIImage?, badgeValue: String?) {
+    private init(with title: String?, image: UIImage?, selectedImage: UIImage?, badgeValue: String?) {
         self.title = title
         self.image = image
+        self.selectedImage = selectedImage
         self.badgeValue = badgeValue
     }
 }

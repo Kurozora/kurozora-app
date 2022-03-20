@@ -17,14 +17,14 @@ extension EpisodesCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		if indexPath.item == self.episodes.count - 20 && self.nextPageURL != nil {
+		if indexPath.item == self.episodeIdentities.count - 20 && self.nextPageURL != nil {
 			self.fetchEpisodes()
 		}
 	}
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		return self.episodes[indexPath.row].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		return self.episodes[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {

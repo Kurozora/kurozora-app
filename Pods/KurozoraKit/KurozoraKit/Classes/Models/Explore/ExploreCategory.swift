@@ -15,7 +15,7 @@ public struct ExploreCategory: Codable {
 
 	/// The relative link to where the resource is located.
 	public let href: String
-	
+
 	/// The attributes belonging to the explore category.
 	public let attributes: ExploreCategory.Attributes
 

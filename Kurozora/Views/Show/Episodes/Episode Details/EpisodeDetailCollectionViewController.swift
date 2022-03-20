@@ -104,8 +104,10 @@ class EpisodeDetailCollectionViewController: KCollectionViewController {
 		#endif
 
 		// Fetch cast
-		DispatchQueue.global(qos: .userInteractive).async {
-			self.fetchEpisodeDetails()
+		if self.episode == nil {
+			DispatchQueue.global(qos: .userInteractive).async {
+				self.fetchEpisodeDetails()
+			}
 		}
 	}
 
@@ -138,16 +140,16 @@ class EpisodeDetailCollectionViewController: KCollectionViewController {
 
 	/// Fetch details for the current episode.
 	fileprivate func fetchEpisodeDetails() {
-		KService.getDetails(forEpisodeID: self.episodeID) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let episode):
-				DispatchQueue.main.async {
-					self.episode = episode.first
-				}
-			case .failure: break
-			}
-		}
+//		KService.getDetails(forEpisode: self.episodeID) { [weak self] result in
+//			guard let self = self else { return }
+//			switch result {
+//			case .success(let episode):
+//				DispatchQueue.main.async {
+//					self.episode = episode.first
+//				}
+//			case .failure: break
+//			}
+//		}
 	}
 
 	/**
