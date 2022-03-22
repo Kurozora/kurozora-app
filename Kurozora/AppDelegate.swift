@@ -207,16 +207,9 @@ extension AppDelegate {
 
 	/// User chose "Upgrade to Pro..." from the Account menu.
 	@objc func handleUpgradeToPro(_ sender: AnyObject) {
-		let topViewController = UIApplication.topViewController
-		if topViewController?.navigationController != nil {
-			if let subscriptionTableViewController = R.storyboard.purchase.subscriptionTableViewController() {
-				subscriptionTableViewController.navigationItem.leftBarButtonItem = nil
-				topViewController?.show(subscriptionTableViewController, sender: nil)
-			}
-		} else {
-			if let subscriptionTableViewController = R.storyboard.purchase.instantiateInitialViewController() {
-				topViewController?.present(subscriptionTableViewController, animated: true)
-			}
+		if let subscriptionKNavigationController = R.storyboard.purchase.subscriptionKNavigationController() {
+			subscriptionKNavigationController.navigationItem.leftBarButtonItem = nil
+			UIApplication.topViewController?.show(subscriptionKNavigationController, sender: nil)
 		}
 	}
 
@@ -227,16 +220,18 @@ extension AppDelegate {
 
 	/// User chose "Redeem" from the Account menu.
 	@objc func handleRedeem(_ sender: AnyObject) {
-		if let redeemTableViewController = R.storyboard.redeem.redeemTableViewController() {
-			redeemTableViewController.navigationItem.leftBarButtonItem = nil
-			UIApplication.topViewController?.show(redeemTableViewController, sender: nil)
+		if let redeemKNavigationController = R.storyboard.redeem.redeemKNavigationController() {
+			redeemKNavigationController.navigationItem.leftBarButtonItem = nil
+			UIApplication.topViewController?.show(redeemKNavigationController, sender: nil)
 		}
 	}
 
 	/// User chose "Favorite Shows" from the Account menu.
 	@objc func handleFavoriteShows(_ sender: AnyObject) {
-		if let favoriteShowsCollectionViewController = R.storyboard.favorites.favoriteShowsCollectionViewController() {
-			UIApplication.topViewController?.show(favoriteShowsCollectionViewController, sender: nil)
+		WorkflowController.shared.isSignedIn {
+			if let favoriteShowsCollectionViewController = R.storyboard.favorites.favoriteShowsCollectionViewController() {
+				UIApplication.topViewController?.show(favoriteShowsCollectionViewController, sender: nil)
+			}
 		}
 	}
 }
