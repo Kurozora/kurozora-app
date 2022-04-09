@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -12,10 +12,10 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Launchscreen Background" translatesAutoresizingMaskIntoConstraints="NO" id="J4c-lr-ccx">
+                <imageView userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Launch Background.png" translatesAutoresizingMaskIntoConstraints="NO" id="J4c-lr-ccx">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Kurozora Icon" translatesAutoresizingMaskIntoConstraints="NO" id="CGz-qn-85c">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Launch Icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="CGz-qn-85c">
                     <rect key="frame" x="123.5" y="269.5" width="128" height="128"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="CGz-qn-85c" secondAttribute="height" multiplier="1:1" id="QMO-wV-MPk"/>
@@ -36,7 +36,7 @@
         </view>
     </objects>
     <resources>
-        <image name="Kurozora Icon" width="341.33334350585938" height="341.33334350585938"/>
-        <image name="Launchscreen Background" width="3072" height="3072"/>
+        <image name="Launch Background.png" width="1024" height="1024"/>
+        <image name="Launch Icon.png" width="1024" height="1024"/>
     </resources>
 </document>
