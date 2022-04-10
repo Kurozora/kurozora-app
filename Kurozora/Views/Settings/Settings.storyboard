@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19158" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FEY-7R-0UY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FEY-7R-0UY">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19141"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -32,7 +32,7 @@
         <!--Settings Split View Controller-->
         <scene sceneID="BXT-wn-ldl">
             <objects>
-                <splitViewController storyboardIdentifier="SettingsSplitViewController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" preferredDisplayMode="beside" id="FEY-7R-0UY" customClass="SettingsSplitViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <splitViewController storyboardIdentifier="SettingsSplitViewController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" allowDoubleColumnStyle="YES" id="FEY-7R-0UY" customClass="SettingsSplitViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <connections>
                         <segue destination="j9b-id-9wy" kind="relationship" relationship="masterViewController" id="VeX-CZ-O8W"/>
                         <segue destination="urf-Ka-1Pe" kind="relationship" relationship="detailViewController" id="CVK-QH-6Cy"/>
@@ -347,7 +347,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="JqT-i1-ECV"/>
+        <segue reference="CVK-QH-6Cy"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
