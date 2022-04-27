@@ -8,16 +8,14 @@
 
 import UIKit
 
-/**
-	A control that executes your custom code in response to user interactions.
-
-	When you tap a button, or select a button that has focus, the button performs any actions attached to it.
-	You communicate the purpose of a button using a text label, an image, or both.
-	The appearance of buttons is configurable, so you can tint buttons or format titles to match the design of your app.
-	You can add buttons to your interface programmatically or using Interface Builder.
-
-	`KButton` provides selection feedback using [UISelectionFeedbackGenerator](apple-reference-documentation://hsnDczB7p0).
-*/
+/// A control that executes your custom code in response to user interactions.
+///
+/// When you tap a button, or select a button that has focus, the button performs any actions attached to it.
+/// You communicate the purpose of a button using a text label, an image, or both.
+/// The appearance of buttons is configurable, so you can tint buttons or format titles to match the design of your app.
+/// You can add buttons to your interface programmatically or using Interface Builder.
+///
+/// `KButton` provides selection feedback using [UISelectionFeedbackGenerator](apple-reference-documentation://hsnDczB7p0).
 class KButton: UIButton {
 	// MARK: - IBInspectables
 	/// Inidicates whether highlighting the button is enabled.

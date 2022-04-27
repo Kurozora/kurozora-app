@@ -10,9 +10,7 @@ import UIKit
 import KurozoraKit
 
 enum StudioDetail {
-	/**
-		List of available studio section types.
-	*/
+	/// List of available studio section types.
 	enum Section: Int, CaseIterable {
 		// MARK: - Cases
 		case header = 0
@@ -64,13 +62,11 @@ enum StudioDetail {
 		}
 
 		// MARK: - Functions
-		/**
-			The cell identifier string of a studio section.
-
-			- Parameter row: The row integer used to determine the cell reuse identifier.
-
-			- Returns: The cell identifier string of a studio section.
-		*/
+		/// The cell identifier string of a studio section.
+		///
+		/// - Parameter row: The row integer used to determine the cell reuse identifier.
+		///
+		/// - Returns: The cell identifier string of a studio section.
 		func identifierString(for row: Int = 0) -> String {
 			switch self {
 			case .header:
@@ -88,9 +84,7 @@ enum StudioDetail {
 
 // MARK: - Information
 extension StudioDetail {
-	/**
-		List of available studio information types.
-	*/
+	/// List of available studio information types.
 	enum Information: Int, CaseIterable {
 		// MARK: - Cases
 		/// The year in which the studio was founded.
@@ -140,13 +134,11 @@ extension StudioDetail {
 		}
 
 		// MARK: - Functions
-		/**
-			Returns the required information from the given object.
-
-			- Parameter studio: The object used to extract the infromation from.
-
-			- Returns: the required information from the given object.
-		*/
+		/// Returns the required information from the given object.
+		///
+		/// - Parameter studio: The object used to extract the infromation from.
+		///
+		/// - Returns: the required information from the given object.
 		func information(from studio: Studio) -> String {
 			switch self {
 			case .founded:
@@ -158,52 +150,44 @@ extension StudioDetail {
 			}
 		}
 
-		/**
-			Returns the required primary information from the given object.
-
-			- Parameter studio: The object used to extract the infromation from.
-
-			- Returns: the required primary information from the given object.
-		*/
+		/// Returns the required primary information from the given object.
+		///
+		/// - Parameter studio: The object used to extract the infromation from.
+		///
+		/// - Returns: the required primary information from the given object.
 		func primaryInformation(from studio: Studio) -> String? {
 			switch self {
 			default: return nil
 			}
 		}
 
-		/**
-			Returns the required secondary information from the given object.
-
-			- Parameter studio: The object used to extract the infromation from.
-
-			- Returns: the required secondary information from the given object.
-		*/
+		/// Returns the required secondary information from the given object.
+		///
+		/// - Parameter studio: The object used to extract the infromation from.
+		///
+		/// - Returns: the required secondary information from the given object.
 		func secondaryInformation(from studio: Studio) -> String? {
 			switch self {
 			default: return nil
 			}
 		}
 
-		/**
-			Returns the required primary image from the given object.
-
-			- Parameter studio: The object used to extract the infromation from.
-
-			- Returns: the required primary image from the given object.
-		*/
+		/// Returns the required primary image from the given object.
+		///
+		/// - Parameter studio: The object used to extract the infromation from.
+		///
+		/// - Returns: the required primary image from the given object.
 		func primaryImage(from studio: Studio) -> UIImage? {
 			switch self {
 			default: return nil
 			}
 		}
 
-		/**
-			Returns the footnote from the given object.
-
-			- Parameter studio: The object used to extract the footnote from.
-
-			- Returns: the footnote from the given object.
-		*/
+		/// Returns the footnote from the given object.
+		///
+		/// - Parameter studio: The object used to extract the footnote from.
+		///
+		/// - Returns: the footnote from the given object.
 		func footnote(from studio: Studio) -> String? {
 			switch self {
 			default:

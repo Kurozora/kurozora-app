@@ -8,18 +8,16 @@
 
 import Foundation
 
-/**
-	List of supported schemes.
-
-	```
-	case anime, show
-	case profile, user
-	case explore, home
-	case library, myLibrary, list
-	case feed, timeline
-	case notification, notifications
-	```
-*/
+/// List of supported schemes.
+///
+/// ```
+/// case anime, show
+/// case profile, user
+/// case explore, home
+/// case library, myLibrary, list
+/// case feed, timeline
+/// case notification, notifications
+/// ```
 enum Scheme: String, CaseIterable {
 	case anime, show
 	case profile, user

@@ -83,11 +83,9 @@ class EpisodeLockupCollectionViewCell: UICollectionViewCell {
 		self.contentView.isHidden = true
 	}
 
-	/**
-		Configures the watch button of the episode.
-
-		- Parameter watchStatus: The WatchStatus object used to configure the button.
-	*/
+	/// Configures the watch button of the episode.
+	///
+	/// - Parameter watchStatus: The WatchStatus object used to configure the button.
 	func configureWatchButton(with watchStatus: WatchStatus?) {
 		switch watchStatus ?? .disabled {
 		case .disabled:

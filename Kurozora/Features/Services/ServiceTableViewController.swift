@@ -8,20 +8,18 @@
 
 import UIKit
 
-/**
-	A view controller that specializes in managing a service view.
-
-	Subclass `ServiceTableViewController` when your interface consists of a table that provides a service.
-	Table view controllers already adopt the protocols you need to manage your table view's content and respond to changes.
-	In addition, `ServiceTableViewController` implements the following behaviors:
-	- Disables refresh control.
-	- Disables activity indicator.
-	- Registers an instance of [ServicePreviewTableViewCell](x-source-tag://ServicePreviewTableViewCell)
-	- Registers an instance of [ServiceHeaderTableViewCell](x-source-tag://ServiceHeaderTableViewCell)
-	- Registers an instance of [ServiceFooterTableViewCell](x-source-tag://ServiceFooterTableViewCell)
-
-	- Tag: ServiceTableViewController
-*/
+/// A view controller that specializes in managing a service view.
+///
+/// Subclass `ServiceTableViewController` when your interface consists of a table that provides a service.
+/// Table view controllers already adopt the protocols you need to manage your table view's content and respond to changes.
+/// In addition, `ServiceTableViewController` implements the following behaviors:
+/// - Disables refresh control.
+/// - Disables activity indicator.
+/// - Registers an instance of [ServicePreviewTableViewCell](x-source-tag://ServicePreviewTableViewCell)
+/// - Registers an instance of [ServiceHeaderTableViewCell](x-source-tag://ServiceHeaderTableViewCell)
+/// - Registers an instance of [ServiceFooterTableViewCell](x-source-tag://ServiceFooterTableViewCell)
+///
+/// - Tag: ServiceTableViewController
 class ServiceTableViewController: KTableViewController {
 	/// The preview image shown at the top of the table view.
 	var previewImage: UIImage?
@@ -128,9 +126,7 @@ extension ServiceTableViewController: ServiceFooterTableViewCellDelegate {
 }
 
 extension ServiceTableViewController {
-	/**
-		The set of available [ServiceTableViewController](x-source-tag://ServiceTableViewController) sections.
-	*/
+	/// The set of available [ServiceTableViewController](x-source-tag://ServiceTableViewController) sections.
 	enum Section: Int, CaseIterable {
 		/// The preview section of the table view.
 		case preview

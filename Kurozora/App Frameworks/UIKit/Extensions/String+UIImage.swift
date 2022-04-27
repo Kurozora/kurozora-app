@@ -10,17 +10,16 @@ import UIKit
 
 extension String {
 	// MARK: - Functions
-	/**
-		Returns a UIImage from the string. If no image can be created then the specified placeholder is returned.
-
-		- Parameter frame: The size used to create the image. Default value is `50x50`.
-		- Parameter backgroundColor: The color of the image's background. Default is `.lightGray`.
-		- Parameter textColor: The color of the image's text. Default is `.white`.
-		- Parameter fontSize: The string's font size. Default value is `20`.
-		- Parameter placeholderImage: The UIImage to return if no image can be create from the string.
-
-		- Returns: A UIImage from the string.
-	*/
+	/// Returns a UIImage from the string. If no image can be created then the specified placeholder is returned.
+	///
+	/// - Parameters:
+	///    - frame: The size used to create the image. Default value is `50x50`.
+	///    - backgroundColor: The color of the image's background. Default is `.lightGray`.
+	///    - textColor: The color of the image's text. Default is `.white`.
+	///    - fontSize: The string's font size. Default value is `20`.
+	///    - placeholderImage: The UIImage to return if no image can be create from the string.
+	///
+	/// - Returns: A UIImage from the string.
 	func toImage(withFrameSize frame: CGRect = CGRect(x: 0, y: 0, width: 50, height: 50), backgroundColor: UIColor = .lightGray, textColor: UIColor = .white, fontSize: CGFloat = 20, placeholder placeholderImage: UIImage) -> UIImage {
 		// Calculate optimal font size
 		let shortestLength = frame.size.minDimension

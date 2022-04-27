@@ -8,12 +8,10 @@
 
 import UIKit
 
-/**
-	`KImageView` is a sepcially crafted object that displays a single image or a sequence of animated images in your interface.
-
-	`KImageView` adjusts some options to achieve its design, this includes:
-	- Applies global tint color.
-*/
+/// `KImageView` is a sepcially crafted object that displays a single image or a sequence of animated images in your interface.
+///
+/// `KImageView` adjusts some options to achieve its design, this includes:
+/// - Applies global tint color.
 class KImageView: UIImageView {
 	// MARK: - Initializers
 	override init(frame: CGRect) {

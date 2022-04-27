@@ -139,11 +139,9 @@ class ManageActiveSessionsController: KTableViewController {
 		locationManager.startUpdatingLocation()
 	}
 
-	/**
-		Removes the session specified in the received information.
-
-		- Parameter notification: An object containing information broadcast to registered observers.
-	*/
+	/// Removes the session specified in the received information.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers.
 	@objc func removeSession(_ notification: NSNotification) {
 		// Start delete process
 		self.tableView.beginUpdates()

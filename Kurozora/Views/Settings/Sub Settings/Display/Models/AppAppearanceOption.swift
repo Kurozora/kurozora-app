@@ -8,14 +8,12 @@
 
 import Foundation
 
-/**
-	List of app appearance options
-
-	```
-	case light = 0
-	case dark = 1
-	```
-*/
+/// List of app appearance options
+///
+/// ```
+/// case light = 0
+/// case dark = 1
+/// ```
 enum AppAppearanceOption: Int {
 	/// The app has the light appearance.
 	case light = 0

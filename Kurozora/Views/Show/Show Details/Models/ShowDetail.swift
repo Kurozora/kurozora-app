@@ -10,9 +10,7 @@ import UIKit
 import KurozoraKit
 
 struct ShowDetail {
-	/**
-		List of available show section types.
-	*/
+	/// List of available show section types.
 	enum Section: Int, CaseIterable {
 		// MARK: - Cases
 		case header = 0
@@ -113,13 +111,11 @@ struct ShowDetail {
 		}
 
 		// MARK: - Functions
-		/**
-			The cell identifier string of a show section.
-
-			- Parameter row: The row integer used to determine the cell reuse identifier.
-
-			- Returns: The cell identifier string of a show section.
-		*/
+		/// The cell identifier string of a show section.
+		///
+		/// - Parameter row: The row integer used to determine the cell reuse identifier.
+		///
+		/// - Returns: The cell identifier string of a show section.
 		func identifierString(for row: Int = 0) -> String {
 			switch self {
 			case .header:
@@ -151,9 +147,7 @@ struct ShowDetail {
 
 // MARK: - Badge
 extension ShowDetail {
-	/**
-		List of available show badge types.
-	*/
+	/// List of available show badge types.
 	enum Badge: Int, CaseIterable {
 		case rating = 0
 		case season
@@ -192,13 +186,11 @@ extension ShowDetail {
 		}
 
 		// MARK: - Functions
-		/**
-			Returns the required primary information from the given object.
-
-			- Parameter show: The object used to extract the infromation from.
-
-			- Returns: the required primary information from the given object.
-		*/
+		/// Returns the required primary information from the given object.
+		///
+		/// - Parameter show: The object used to extract the infromation from.
+		///
+		/// - Returns: the required primary information from the given object.
 		func primaryInformation(from show: Show) -> String? {
 			switch self {
 			case .rating:
@@ -218,13 +210,11 @@ extension ShowDetail {
 			}
 		}
 
-		/**
-			Returns the required secondary information from the given object.
-
-			- Parameter show: The object used to extract the infromation from.
-
-			- Returns: the required secondary information from the given object.
-		*/
+		/// Returns the required secondary information from the given object.
+		///
+		/// - Parameter show: The object used to extract the infromation from.
+		///
+		/// - Returns: the required secondary information from the given object.
 		func secondaryInformation(from show: Show) -> String? {
 			switch self {
 			case .rating:
@@ -251,13 +241,11 @@ extension ShowDetail {
 			}
 		}
 
-		/**
-			Returns the required primary image from the given object.
-
-			- Parameter show: The object used to extract the infromation from.
-
-			- Returns: the required primary image from the given object.
-		*/
+		/// Returns the required primary image from the given object.
+		///
+		/// - Parameter show: The object used to extract the infromation from.
+		///
+		/// - Returns: the required primary image from the given object.
 		func primaryImage(from show: Show) -> UIImage? {
 			switch self {
 			case .rating:
@@ -291,9 +279,7 @@ extension ShowDetail {
 
 // MARK: - Information
 extension ShowDetail {
-	/**
-		List of available show information types.
-	*/
+	/// List of available show information types.
 	enum Information: Int, CaseIterable {
 //		case studio = 0
 //		case network
@@ -400,13 +386,11 @@ extension ShowDetail {
 		}
 
 		// MARK: - Functions
-		/**
-			Returns the required information from the given object.
-
-			- Parameter show: The object used to extract the infromation from.
-
-			- Returns: the required information from the given object.
-		*/
+		/// Returns the required information from the given object.
+		///
+		/// - Parameter show: The object used to extract the infromation from.
+		///
+		/// - Returns: the required information from the given object.
 		func information(from show: Show) -> String? {
 			switch self {
 //			case .studio:
@@ -457,13 +441,11 @@ extension ShowDetail {
 			}
 		}
 
-		/**
-			Returns the required primary information from the given object.
-
-			- Parameter show: The object used to extract the infromation from.
-
-			- Returns: the required primary information from the given object.
-		*/
+		/// Returns the required primary information from the given object.
+		///
+		/// - Parameter show: The object used to extract the infromation from.
+		///
+		/// - Returns: the required primary information from the given object.
 		func primaryInformation(from show: Show) -> String? {
 			switch self {
 			case .broadcast:
@@ -474,13 +456,11 @@ extension ShowDetail {
 			}
 		}
 
-		/**
-			Returns the required secondary information from the given object.
-
-			- Parameter show: The object used to extract the infromation from.
-
-			- Returns: the required secondary information from the given object.
-		*/
+		/// Returns the required secondary information from the given object.
+		///
+		/// - Parameter show: The object used to extract the infromation from.
+		///
+		/// - Returns: the required secondary information from the given object.
 		func secondaryInformation(from show: Show) -> String? {
 			switch self {
 			case .airDates:
@@ -493,13 +473,11 @@ extension ShowDetail {
 			}
 		}
 
-		/**
-			Returns the required primary image from the given object.
-
-			- Parameter show: The object used to extract the infromation from.
-
-			- Returns: the required primary image from the given object.
-		*/
+		/// Returns the required primary image from the given object.
+		///
+		/// - Parameter show: The object used to extract the infromation from.
+		///
+		/// - Returns: the required primary image from the given object.
 		func primaryImage(from show: Show) -> UIImage? {
 			switch self {
 			case .airDates:
@@ -509,13 +487,11 @@ extension ShowDetail {
 			}
 		}
 
-		/**
-			Returns the footnote from the given object.
-
-			- Parameter show: The object used to extract the footnote from.
-
-			- Returns: the footnote from the given object.
-		*/
+		/// Returns the footnote from the given object.
+		///
+		/// - Parameter show: The object used to extract the footnote from.
+		///
+		/// - Returns: the footnote from the given object.
 		func footnote(from show: Show) -> String? {
 			switch self {
 //			case .studio:
@@ -567,9 +543,7 @@ extension ShowDetail {
 
 // MARK: - External Site
 extension ShowDetail {
-	/**
-		List of available extenral sites.
-	*/
+	/// List of available extenral sites.
 	enum ExternalSite: Int, CaseIterable {
 		case anidbID = 0
 		case anilistID

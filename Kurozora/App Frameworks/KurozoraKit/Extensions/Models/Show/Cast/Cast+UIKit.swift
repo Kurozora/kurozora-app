@@ -32,15 +32,13 @@ extension Cast {
 		return UIMenu(title: "", children: menuElements)
 	}
 
-	/**
-		Present share sheet for the cast.
-
-		Make sure to send either the view or the bar button item that's sending the request.
-
-		- Parameter viewController: The view controller presenting the share sheet.
-		- Parameter view: The `UIView` sending the request.
-		- Parameter barButtonItem: The `UIBarButtonItem` sending the request.
-	*/
+	/// Present share sheet for the cast.
+	///
+	/// Make sure to send either the view or the bar button item that's sending the request.
+	///
+	/// - Parameter viewController: The view controller presenting the share sheet.
+	/// - Parameter view: The `UIView` sending the request.
+	/// - Parameter barButtonItem: The `UIBarButtonItem` sending the request.
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
 		var activityItems: [Any] = []
 
@@ -67,11 +65,9 @@ extension Cast {
 		viewController?.present(activityViewController, animated: true, completion: nil)
 	}
 
-	/**
-		Merges and returns the combined image of the cast.
-
-		- Returns: a combined image of the cast.
-	*/
+	/// Merges and returns the combined image of the cast.
+	///
+	/// - Returns: a combined image of the cast.
 	private func castImage() -> UIImage? {
 		guard let personImage = self.relationships.people.data.first?.attributes.personalImage.image else { return nil}
 		guard let characterImage = self.relationships.characters.data.first?.attributes.personalImage.image else {return nil }

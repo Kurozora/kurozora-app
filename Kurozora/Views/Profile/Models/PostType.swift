@@ -8,19 +8,17 @@
 
 import Foundation
 
-/**
-	List of post types used to differentiate between post layouts.
-
-	```
-	case text
-	case image
-	case image2
-	case image3
-	case image4
-	case image5
-	case video
-	```
-*/
+/// List of post types used to differentiate between post layouts.
+///
+/// ```
+/// case text
+/// case image
+/// case image2
+/// case image3
+/// case image4
+/// case image5
+/// case video
+/// ```
 enum PostType {
 	case text
 	case image

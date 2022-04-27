@@ -9,43 +9,35 @@
 import Foundation
 import StoreKit
 
-/**
-	Information that represents the customer’s purchase of a product in your app.
-
-	A _transaction_ represents a successful in-app purchase. The App Store generates a transaction each time a customer purchases an in-app purchase product or renews a subscription. For each transaction that represents a current purchase, your app unlocks the purchased content or service and finishes the transaction.
-
-	Use the `Transaction` type to perform these transaction-related tasks:
-	- Get the user’s transaction history, latest transactions, and current entitlements to unlock content and services.
-	- Access transaction properties.
-	- Finish a transaction after your app delivers the purchased content or service.
-	- Access the raw JSON Web Signature (JWS) string and supporting values to verify the transaction information.
-	- Listen for new transactions while the app is running.
-	- Begin a refund request from within your app.
-*/
+/// Information that represents the customer’s purchase of a product in your app.
+///
+/// A _transaction_ represents a successful in-app purchase. The App Store generates a transaction each time a customer purchases an in-app purchase product or renews a subscription. For each transaction that represents a current purchase, your app unlocks the purchased content or service and finishes the transaction.
+///
+/// Use the `Transaction` type to perform these transaction-related tasks:
+/// - Get the user’s transaction history, latest transactions, and current entitlements to unlock content and services.
+/// - Access transaction properties.
+/// - Finish a transaction after your app delivers the purchased content or service.
+/// - Access the raw JSON Web Signature (JWS) string and supporting values to verify the transaction information.
+/// - Listen for new transactions while the app is running.
+/// - Begin a refund request from within your app.
 typealias Transaction = StoreKit.Transaction
 
-/**
-	The renewal information for an auto-renewable subscription.
-
-	The `Product.SubscriptionInfo.RenewalInfo` provides information about the next subscription renewal period.
-*/
+/// The renewal information for an auto-renewable subscription.
+///
+/// The `Product.SubscriptionInfo.RenewalInfo` provides information about the next subscription renewal period.
 typealias RenewalInfo = StoreKit.Product.SubscriptionInfo.RenewalInfo
 
 /// The renewal states of auto-renewable subscriptions.
 typealias RenewalState = StoreKit.Product.SubscriptionInfo.RenewalState
 
-/**
-	The set of available store errors.
-*/
+/// The set of available store errors.
 public enum StoreError: Error {
 	// MARK: - Cases
 	/// Indicating the verification has failed.
 	case failedVerification
 }
 
-/**
-	The set of available  subscription tier types.
-*/
+/// The set of available  subscription tier types.
 public enum SubscriptionTier: Int, Comparable {
 	// MARK: - Cases
 	/// Indicating no subscription tier.
@@ -138,11 +130,9 @@ final class Store: ObservableObject {
 	}
 
 	// MARK: - Functions
-	/**
-		Start listening for `StoreKit` transactions.
-
-		- Returns: a `Task` that listenes to `StoreKit` transaction requests.
-	*/
+	/// Start listening for `StoreKit` transactions.
+	///
+	/// - Returns: a `Task` that listenes to `StoreKit` transaction requests.
 	func listenForTransactions() -> Task<Void, Error> {
 		return Task.detached {
 			// Iterate through any transactions which didn't come from a direct call to `purchase()`.
@@ -194,13 +184,11 @@ final class Store: ObservableObject {
 		}
 	}
 
-	/**
-		Purchase a product.
-
-		- Parameter product: The product to be purchased.
-
-		- Returns: The transaction of the purchase if succeeded, otherwise `nil`.
-	*/
+	/// Purchase a product.
+	///
+	/// - Parameter product: The product to be purchased.
+	///
+	/// - Returns: The transaction of the purchase if succeeded, otherwise `nil`.
 	func purchase(_ product: Product) async throws -> Transaction? {
 		// Begin a purchase.
 		let result = try await product.purchase()
@@ -223,13 +211,11 @@ final class Store: ObservableObject {
 		}
 	}
 
-	/**
-		Restores the purchases of the user.
-
-		This call displays a system prompt that asks users to authenticate with their App Store credentials.
-
-		Call this function only in response to an explicit user action, such as tapping a button.
-	*/
+	/// Restores the purchases of the user.
+	///
+	/// This call displays a system prompt that asks users to authenticate with their App Store credentials.
+	///
+	/// Call this function only in response to an explicit user action, such as tapping a button.
 	func restore() async {
 		try? await AppStore.sync()
 	}
@@ -243,13 +229,11 @@ final class Store: ObservableObject {
 	}
 	#endif
 
-	/**
-		Indicates whether a product is purchased.
-
-		- Parameter productIdentifier: The identifier used to determin the product to be checked.
-
-		- Returns: a boolean indicating whether a product is purchased.
-	*/
+	/// Indicates whether a product is purchased.
+	///
+	/// - Parameter productIdentifier: The identifier used to determin the product to be checked.
+	///
+	/// - Returns: a boolean indicating whether a product is purchased.
 	func isPurchased(_ productIdentifier: String) async throws -> Bool {
 		// Get the most recent transaction receipt for this `productIdentifier`.
 		guard let result = await Transaction.latest(for: productIdentifier) else {
@@ -267,13 +251,11 @@ final class Store: ObservableObject {
 		return transaction.revocationDate == nil && !transaction.isUpgraded
 	}
 
-	/**
-		Checks whether the transaction passses StoreKit verification.
-
-		- Parameter result: The verification result.
-
-		- Returns: the result of the transaction verification check.
-	*/
+	/// Checks whether the transaction passses StoreKit verification.
+	///
+	/// - Parameter result: The verification result.
+	///
+	/// - Returns: the result of the transaction verification check.
 	func checkVerified<T>(_ result: VerificationResult<T>) throws -> T {
 		// Check if the transaction passes StoreKit verification.
 		switch result {
@@ -297,36 +279,30 @@ final class Store: ObservableObject {
 		}
 	}
 
-	/**
-		Returns the title of a product.
-
-		- Parameter productId: The id of the product used to determine the title.
-
-		- Returns: The product's title.
-	*/
+	/// Returns the title of a product.
+	///
+	/// - Parameter productId: The id of the product used to determine the title.
+	///
+	/// - Returns: The product's title.
 	func title(for productId: String) -> String {
 		return self.products[productId]!
 	}
 
-	/**
-		Returns the image of a product.
-
-		- Parameter productId: The id of the product used to determine the image.
-
-		- Returns: The product's image.
-	*/
+	/// Returns the image of a product.
+	///
+	/// - Parameter productId: The id of the product used to determine the image.
+	///
+	/// - Returns: The product's image.
 	func image(for productId: String) -> UIImage? {
 		let product = self.title(for: productId)
 		return product.toImage(withFrameSize: CGRect(x: 0, y: 0, width: 150, height: 150), backgroundColor: .secondaryLabel, fontSize: 40, placeholder: #imageLiteral(resourceName: "Icons/Tip Jar"))
 	}
 
-	/**
-		How much money the user saves between subscription tiers.
-
-		- Parameter product: The object of the product used to compare the price with.
-
-		- Returns: a string indicating how much money the user saves between tiers.
-	*/
+	/// How much money the user saves between subscription tiers.
+	///
+	/// - Parameter product: The object of the product used to compare the price with.
+	///
+	/// - Returns: a string indicating how much money the user saves between tiers.
 	func saving(for product: Product) -> String {
 		guard let subscription = product.subscription,
 		   let firstProduct = store.subscriptions.first else {
@@ -353,33 +329,27 @@ final class Store: ObservableObject {
 		return ""
 	}
 
-	/**
-		Sorts the products in place, using the price as predicate for the comparison between the products.
-
-		- Parameter products: The products to sort by price.
-	*/
+	/// Sorts the products in place, using the price as predicate for the comparison between the products.
+	///
+	/// - Parameter products: The products to sort by price.
 	func sortedByPrice(_ products: inout [Product]) {
 		products.sort(by: { return $0.price < $1.price })
 	}
 
-	/**
-		Returns the products, using the price as predicate for the comparison between the products.
-
-		- Parameter products: The products to sort by price.
-
-		- Returns: a sorted array of the products.
-	 */
+	/// Returns the products, using the price as predicate for the comparison between the products.
+	///
+	/// - Parameter products: The products to sort by price.
+	///
+	/// - Returns: a sorted array of the products.
 	func sortByPrice(_ products: [Product]) -> [Product] {
 		products.sorted(by: { return $0.price < $1.price })
 	}
 
-	/**
-		Returns a `SubscriptionTier` object using the given product id.
-
-		- Parameter productId: The id of the product used to determine the subscription tier.
-
-		- Returns: a `SubscriptionTier` object.
-	*/
+	/// Returns a `SubscriptionTier` object using the given product id.
+	///
+	/// - Parameter productId: The id of the product used to determine the subscription tier.
+	///
+	/// - Returns: a `SubscriptionTier` object.
 	func tier(for productId: String) -> SubscriptionTier {
 		#if DEBUG
 		switch productId {

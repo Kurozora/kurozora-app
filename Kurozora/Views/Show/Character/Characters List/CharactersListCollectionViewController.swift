@@ -187,13 +187,11 @@ extension CharactersListCollectionViewController {
 
 // MARK: - SectionLayoutKind
 extension CharactersListCollectionViewController {
-	/**
-		List of section layout kind.
-
-		```
-		case main = 0
-		```
-	*/
+	/// List of section layout kind.
+	///
+	/// ```
+	/// case main = 0
+	/// ```
 	enum SectionLayoutKind: Int, CaseIterable {
 		case main = 0
 	}

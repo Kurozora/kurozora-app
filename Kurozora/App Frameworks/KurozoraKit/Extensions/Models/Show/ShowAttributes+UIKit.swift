@@ -10,13 +10,11 @@ import KurozoraKit
 
 extension Show.Attributes {
 	// MARK: - Properties
-	/**
-		Returns a string containing all the necessary information of a show. If one of the informations is missing then that particular part is ommitted.
-
-		```
-		"TV · R15+ · 25 episodes · 25 minutes · Spring 2016"
-		```
-	*/
+	/// Returns a string containing all the necessary information of a show. If one of the informations is missing then that particular part is ommitted.
+	///
+	/// ```
+	/// "TV · R15+ · 25 episodes · 25 minutes · Spring 2016"
+	/// ```
 	var informationString: String {
 		var informationString = "\(self.type.name) · \(self.tvRating.name)"
 
@@ -40,13 +38,11 @@ extension Show.Attributes {
 		return informationString
 	}
 
-	/**
-		Returns a short version of the shows information. If one of the informations is missing then that particular part is ommitted.
-
-		```
-		"TV · ✓ 10/25 · ☆ 5"
-		```
-	*/
+	/// Returns a short version of the shows information. If one of the informations is missing then that particular part is ommitted.
+	///
+	/// ```
+	/// "TV · ✓ 10/25 · ☆ 5"
+	/// ```
 	var informationStringShort: String {
 		var informationString = ""
 		informationString += "\(self.type.name)"
@@ -69,25 +65,21 @@ extension Show.Attributes {
 	}
 
 	// MARK: - Functions
-	/**
-		Set the poster.
-
-		If the show has no poster image, then a placeholder show poster image is returned.
-
-		- Parameter imageView: The image view on which to set the poster image.
-	*/
+	/// Set the poster.
+	///
+	/// If the show has no poster image, then a placeholder show poster image is returned.
+	///
+	/// - Parameter imageView: The image view on which to set the poster image.
 	func posterImage(imageView: UIImageView) {
 		let placeholderImage = R.image.placeholders.showPoster()!
 		imageView.setImage(with: self.poster?.url ?? "", placeholder: placeholderImage)
 	}
 
-	/**
-		Set the banner.
-
-		If the show has no banner image, then a placeholder show banner image is returned.
-
-		- Parameter imageView: The image view on which to set the banner image.
-	*/
+	/// Set the banner.
+	///
+	/// If the show has no banner image, then a placeholder show banner image is returned.
+	///
+	/// - Parameter imageView: The image view on which to set the banner image.
 	func bannerImage(imageView: UIImageView) {
 		let placeholderImage = R.image.placeholders.showBanner()!
 		imageView.setImage(with: self.banner?.url ?? self.poster?.url ?? "", placeholder: placeholderImage)

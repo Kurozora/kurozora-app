@@ -15,11 +15,9 @@ class CharacterLockupCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var nameLabel: KLabel!
 
 	// MARK: - Functions
-	/**
-		Configure the cell with the given details.
-
-		- Parameter character: The character object used to configure the cell.
-	*/
+	/// Configure the cell with the given details.
+	///
+	/// - Parameter character: The character object used to configure the cell.
 	func configureCell(with character: Character) {
 		self.nameLabel.text = character.attributes.name
 		self.characterImageView.setImage(with: character.attributes.profile?.url ?? "", placeholder: character.attributes.placeholderImage)

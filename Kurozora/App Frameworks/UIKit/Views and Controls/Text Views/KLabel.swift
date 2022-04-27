@@ -8,12 +8,10 @@
 
 import UIKit
 
-/**
-	A themed view that displays one or more lines of read-only text, often used in conjunction with controls to describe their intended purpose.
-
-	The color of the labels is pre-configured with the currently selected theme.
-	You can add labels to your interface programmatically or by using Interface Builder.
-*/
+/// A themed view that displays one or more lines of read-only text, often used in conjunction with controls to describe their intended purpose.
+///
+/// The color of the labels is pre-configured with the currently selected theme.
+/// You can add labels to your interface programmatically or by using Interface Builder.
 class KLabel: UILabel {
 	// MARK: - Initializers
 	override init(frame: CGRect) {

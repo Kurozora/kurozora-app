@@ -8,11 +8,9 @@
 
 import UIKit
 
-/**
-	A themed, scrollable, multiline text region.
-
-	KSelectableTextView supports the display of text using custom style information and also supports URL selection. You typically use a text view to display multiple lines of text, such as when displaying the body of a large text document.
-*/
+/// A themed, scrollable, multiline text region.
+///
+/// KSelectableTextView supports the display of text using custom style information and also supports URL selection. You typically use a text view to display multiple lines of text, such as when displaying the body of a large text document.
 class KSelectableTextView: KTextView {
 	// MARK: - Functions
 	override func sharedInit() {

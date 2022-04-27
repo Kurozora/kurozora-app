@@ -22,13 +22,11 @@ extension UIDevice {
 			return identifier + String(UnicodeScalar(UInt8(value)))
 		}
 
-		/**
-			Maps the given identifier to a device name.
-
-			- Parameter identifier: The identifier used to map to a device name.
-
-			- Returns: the mapped device name. If no device with the given identifier is found then the `identifier` is returned.
-		*/
+		/// Maps the given identifier to a device name.
+		///
+		/// - Parameter identifier: The identifier used to map to a device name.
+		///
+		/// - Returns: the mapped device name. If no device with the given identifier is found then the `identifier` is returned.
 		func mapToDevice(identifier: String) -> String {
 			#if os(iOS)
 			switch identifier {
@@ -227,17 +225,15 @@ extension UIDevice {
 // MARK: - Screen
 extension UIDevice {
 	// MARK: - Enums
-	/**
-		A set of available device types.
-
-		```
-		case iPhone5SSE
-		case iPhone66S78
-		case iPhone66S78PLUS
-		case iPhoneXXs
-		...
-		```
-	*/
+	/// A set of available device types.
+	///
+	/// ```
+	/// case iPhone5SSE
+	/// case iPhone66S78
+	/// case iPhone66S78PLUS
+	/// case iPhoneXXs
+	/// ...
+	/// ```
 	enum `Type` {
 		// MARK: - Cases
 		// iPhone

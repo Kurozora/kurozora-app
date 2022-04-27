@@ -8,11 +8,9 @@
 
 import UIKit
 
-/**
-	A themed control that executes your custom code in response to user interactions.
-
-	`CellActionButton` provides themed buttons that match with the currently enabled theme. This style is usually used in [UIColelctionView](apple-reference-documentation://hsLSvaK1nM) and [UITableView](apple-reference-documentation://hs8FRRfKne) cells.
-*/
+/// A themed control that executes your custom code in response to user interactions.
+///
+/// `CellActionButton` provides themed buttons that match with the currently enabled theme. This style is usually used in [UIColelctionView](apple-reference-documentation://hsLSvaK1nM) and [UITableView](apple-reference-documentation://hs8FRRfKne) cells.
 class CellActionButton: KButton {
 	override func sharedInit() {
 		super.sharedInit()

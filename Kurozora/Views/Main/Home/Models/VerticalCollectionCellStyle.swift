@@ -8,15 +8,13 @@
 
 import UIKit
 
-/**
-	List of vertival explore cell styles.
-
-	```
-	case actionList = 0
-	case actionButton = 1
-	case legal = 2
-	```
-*/
+/// List of vertival explore cell styles.
+///
+/// ```
+/// case actionList = 0
+/// case actionButton = 1
+/// case legal = 2
+/// ```
 enum VerticalCollectionCellStyle: Int {
 	/// Indicates that the cell has the `actionList` style.
 	case actionList = 0

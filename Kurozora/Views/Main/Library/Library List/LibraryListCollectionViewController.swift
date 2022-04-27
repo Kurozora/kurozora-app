@@ -196,22 +196,18 @@ class LibraryListCollectionViewController: KCollectionViewController {
 		}
 	}
 
-	/**
-		Add the given show to the library.
-
-		- Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
-	*/
+	/// Add the given show to the library.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
 	@objc func addToLibrary(_ notification: NSNotification) {
 		DispatchQueue.global(qos: .userInteractive).async {
 			self.fetchLibrary()
 		}
 	}
 
-	/**
-		Removes the given show from the library.
-
-		- Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
-	*/
+	/// Removes the given show from the library.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
 	@objc func removeFromLibrary(_ notification: NSNotification) {
 		DispatchQueue.global(qos: .userInteractive).async {
 			self.fetchLibrary()
@@ -289,13 +285,11 @@ extension LibraryListCollectionViewController {
 
 // MARK: - SectionLayoutKind
 extension LibraryListCollectionViewController {
-	/**
-		List of cast section layout kind.
-
-		```
-		case main = 0
-		```
-	*/
+	/// List of cast section layout kind.
+	///
+	/// ```
+	/// case main = 0
+	/// ```
 	enum SectionLayoutKind: Int, CaseIterable {
 		case main = 0
 	}

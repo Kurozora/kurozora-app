@@ -8,14 +8,12 @@
 
 import UIKit
 
-/**
-	`ProfileImageView` is a sepcially crafted object that displays a single image or a sequence of animated images in your interface.
-
-	`ProfileImageView` adjusts some options to achieve its design, this includes:
-	- Applying a border width and border color.
-	- Presenting a default profile image if none is specified.
-	- Rounding the image's corners.
-*/
+/// `ProfileImageView` is a sepcially crafted object that displays a single image or a sequence of animated images in your interface.
+///
+/// `ProfileImageView` adjusts some options to achieve its design, this includes:
+/// - Applying a border width and border color.
+/// - Presenting a default profile image if none is specified.
+/// - Rounding the image's corners.
 class ProfileImageView: CircularImageView {
 	// MARK: - Initializers
 	override init(frame: CGRect) {

@@ -8,13 +8,11 @@
 
 import UIKit
 
-/**
-	An object that manages the content for a circular area on the screen.
-
-	Views are the fundamental building blocks of your app's user interface, and the `CircularView` class defines the behaviors that are common to all views.
-	A view object renders content within its bounds circle and handles any interactions with that content. The `CircularView` class is a concrete class that you can instantiate and use to display a fixed background color.
-	You can also subclass it to draw more sophisticated content.
-*/
+/// An object that manages the content for a circular area on the screen.
+///
+/// Views are the fundamental building blocks of your app's user interface, and the `CircularView` class defines the behaviors that are common to all views.
+/// A view object renders content within its bounds circle and handles any interactions with that content. The `CircularView` class is a concrete class that you can instantiate and use to display a fixed background color.
+/// You can also subclass it to draw more sophisticated content.
 class CircularView: UIView {
 	// MARK: - Initializers
 	override init(frame: CGRect) {

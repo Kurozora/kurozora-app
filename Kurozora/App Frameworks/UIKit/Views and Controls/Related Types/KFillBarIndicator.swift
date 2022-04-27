@@ -58,15 +58,13 @@ class KFillBarIndicator: TMBarIndicator {
 
 extension KFillBarIndicator {
 	// MARK: - Types
-	/**
-		The set of available corner style types.
-
-		```
-		case square
-		case rounded
-		case eliptical
-		```
-	*/
+	/// The set of available corner style types.
+	///
+	/// ```
+	/// case square
+	/// case rounded
+	/// case eliptical
+	/// ```
 	public enum CornerStyle {
 		/// Corners are squared off.
 		case square
@@ -78,13 +76,11 @@ extension KFillBarIndicator {
 		case eliptical
 
 		// MARK: - Functions
-		/**
-			Returns a `CGFloat` value indicating how much the corners should be rounded.
-
-			- Parameter frame: The frame that should be rounded.
-
-			- Returns: a `CGFloat` value indicating how much the corners should be rounded.
-		*/
+		/// Returns a `CGFloat` value indicating how much the corners should be rounded.
+		///
+		/// - Parameter frame: The frame that should be rounded.
+		///
+		/// - Returns: a `CGFloat` value indicating how much the corners should be rounded.
 		func cornerRadius(for frame: CGRect) -> CGFloat {
 			switch self {
 			case .square:

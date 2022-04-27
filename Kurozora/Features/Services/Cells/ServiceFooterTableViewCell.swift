@@ -9,13 +9,11 @@
 import UIKit
 import SwiftTheme
 
-/**
-	The visual representation of a single promotional footer row in a table view.
-
-	A `ServiceFooterTableViewCell` object is a specialized type of view that displays footer information about the content of a table view.
-
-	- Tag: ServiceFooterTableViewCell
-*/
+/// The visual representation of a single promotional footer row in a table view.
+///
+/// A `ServiceFooterTableViewCell` object is a specialized type of view that displays footer information about the content of a table view.
+///
+/// - Tag: ServiceFooterTableViewCell
 class ServiceFooterTableViewCell: KTableViewCell {
 	// MARK: - IBOutlet
 	@IBOutlet weak var restorePurchaseButton: KButton?

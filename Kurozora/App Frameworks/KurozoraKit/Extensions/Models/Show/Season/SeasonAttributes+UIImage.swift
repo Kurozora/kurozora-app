@@ -10,11 +10,9 @@ import KurozoraKit
 
 extension Season.Attributes {
 	// MARK: - Properties
-	/**
-		Returns a `UIImage` with the poster.
-
-		If the show has no poster image, then a placeholder show poster image is returned.
-	*/
+	/// Returns a `UIImage` with the poster.
+	///
+	/// If the show has no poster image, then a placeholder show poster image is returned.
 	var posterImage: UIImage? {
 		let posterImageView = UIImageView()
 		let placeholderImage = R.image.placeholders.showPoster()!

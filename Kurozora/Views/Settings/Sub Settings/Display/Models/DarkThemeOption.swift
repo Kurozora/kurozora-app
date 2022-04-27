@@ -8,14 +8,12 @@
 
 import Foundation
 
-/**
-	List of dark theme options.
-
-	```
-	case automatic = 0
-	case custom = 1
-	```
-*/
+/// List of dark theme options.
+///
+/// ```
+/// case automatic = 0
+/// case custom = 1
+/// ```
 enum DarkThemeOption: Int {
 	/// The app switches between dark and light theme at sunset and sunrise.
 	case automatic	= 0

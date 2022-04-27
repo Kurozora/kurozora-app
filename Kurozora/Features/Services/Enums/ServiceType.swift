@@ -9,9 +9,7 @@
 import Foundation
 import SwiftTheme
 
-/**
-	The set of available service types.
-*/
+/// The set of available service types.
 enum ServiceType {
 	// MARK: - Cases
 	/// Used to display information related to importing from MAL.

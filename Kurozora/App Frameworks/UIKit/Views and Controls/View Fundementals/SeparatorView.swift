@@ -8,12 +8,10 @@
 
 import UIKit
 
-/**
-	An object that manages the content for a rectangular area on the screen.
-
-	Views are the fundamental building blocks of your app's user interface, and the `SeparatorView` class defines the behaviors that are common to separators.
-	A view object renders content within its bounds rectangle and handles any interactions with that content. However, the `SeparatorView` class is a concrete class that you can only instantiate and use to display a separator view.
-*/
+/// An object that manages the content for a rectangular area on the screen.
+///
+/// Views are the fundamental building blocks of your app's user interface, and the `SeparatorView` class defines the behaviors that are common to separators.
+/// A view object renders content within its bounds rectangle and handles any interactions with that content. However, the `SeparatorView` class is a concrete class that you can only instantiate and use to display a separator view.
 class SeparatorView: UIView {
 	// MARK: - Initializers
 	override init(frame: CGRect) {

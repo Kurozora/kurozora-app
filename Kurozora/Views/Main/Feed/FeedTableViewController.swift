@@ -101,11 +101,9 @@ class FeedTableViewController: KTableViewController {
 		}
 	}
 
-	/**
-		Deletes a message from the given index path.
-
-		- Parameter indexPath: The index path of the message to be deleted.
-	*/
+	/// Deletes a message from the given index path.
+	///
+	/// - Parameter indexPath: The index path of the message to be deleted.
 	func deleteMessage(at indexPath: IndexPath) {
 		self.tableView.performBatchUpdates({
 			self.feedMessages.remove(at: indexPath.section)
@@ -113,11 +111,9 @@ class FeedTableViewController: KTableViewController {
 		}, completion: nil)
 	}
 
-	/**
-		Updates the feed message with the received information.
-
-		- Parameter notification: An object containing information broadcast to registered observers.
-	*/
+	/// Updates the feed message with the received information.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers.
 	@objc func updateFeedMessage(_ notification: NSNotification) {
 		// Start update process
 		if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
@@ -125,11 +121,9 @@ class FeedTableViewController: KTableViewController {
 		}
 	}
 
-	/**
-		Deletes the feed message with the received information.
-
-		- Parameter notification: An object containing information broadcast to registered observers.
-	*/
+	/// Deletes the feed message with the received information.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers.
 	@objc func deleteFeedMessage(_ notification: NSNotification) {
 		// Start delete process
 		self.tableView.performBatchUpdates({

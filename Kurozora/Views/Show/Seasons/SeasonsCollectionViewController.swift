@@ -122,13 +122,11 @@ class SeasonsCollectionViewController: KCollectionViewController {
 
 // MARK: - SectionLayoutKind
 extension SeasonsCollectionViewController {
-	/**
-		List of season section layout kind.
-
-		```
-		case main = 0
-		```
-	*/
+	/// List of season section layout kind.
+	///
+	/// ```
+	/// case main = 0
+	/// ```
 	enum SectionLayoutKind: Int, CaseIterable {
 		case main = 0
 	}

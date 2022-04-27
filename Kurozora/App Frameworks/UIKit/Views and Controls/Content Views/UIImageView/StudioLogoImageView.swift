@@ -8,14 +8,12 @@
 
 import UIKit
 
-/**
-	`StudioLogoImageView` is a sepcially crafted object that displays a single image or a sequence of animated images in your interface.
-
-	`StudioLogoImageView` adjusts some options to achieve its design, this includes:
-	- Applying a border width and border color.
-	- Presenting a default studio logo image if none is specified.
-	- Rounding the image's corners.
-*/
+/// `StudioLogoImageView` is a sepcially crafted object that displays a single image or a sequence of animated images in your interface.
+///
+/// `StudioLogoImageView` adjusts some options to achieve its design, this includes:
+/// - Applying a border width and border color.
+/// - Presenting a default studio logo image if none is specified.
+/// - Rounding the image's corners.
 class StudioLogoImageView: CircularImageView {
 	// MARK: - Initializers
 	override init(frame: CGRect) {

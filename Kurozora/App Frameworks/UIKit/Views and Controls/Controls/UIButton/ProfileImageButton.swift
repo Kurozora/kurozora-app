@@ -8,13 +8,11 @@
 
 import UIKit
 
-/**
-	`ProfileImageButton` is a sepcially crafted object that displays a single image in your interface.
-
-	`ProfileImageButton` adjusts some options to achieve its design, this includes:
-	- Applying a border width and border color.
-	- Rounding the image's corners.
-*/
+/// `ProfileImageButton` is a sepcially crafted object that displays a single image in your interface.
+///
+/// `ProfileImageButton` adjusts some options to achieve its design, this includes:
+/// - Applying a border width and border color.
+/// - Rounding the image's corners.
 class ProfileImageButton: UIButton {
 	// MARK: - Initializers
 	override init(frame: CGRect) {

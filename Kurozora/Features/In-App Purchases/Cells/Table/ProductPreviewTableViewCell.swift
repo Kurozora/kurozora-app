@@ -9,9 +9,7 @@
 import UIKit
 import SwiftTheme
 
-/**
-	- Tag: ProductPreviewTableViewCell
-*/
+/// - Tag: ProductPreviewTableViewCell
 class ProductPreviewTableViewCell: UITableViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var collectionView: UICollectionView!

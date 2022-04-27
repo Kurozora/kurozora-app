@@ -9,9 +9,7 @@
 import UIKit
 
 enum KNotification {
-	/**
-		List of custom notification types.
-	*/
+	/// List of custom notification types.
 	enum CustomType: String {
 		/// Indicates that the notification has no specific type and thus has the default style.
 		case other

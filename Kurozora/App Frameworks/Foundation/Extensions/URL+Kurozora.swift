@@ -36,13 +36,11 @@ extension URL {
 	static let rateURL = URL(string: "itms-apps://apps.apple.com/us/app/kurozora/id1476153872?action=write-review")
 
 	// MARK: - Functions
-	/**
-		Returns the preferred `URL` to open by the app.
-
-		Replaces the scheme of the url with ther user's preferred scheme if the scheme can be opened by the system, otherwise the url is returned as is.
-
-		- Returns: the preferred `URL` to open by the app.
-	*/
+	/// Returns the preferred `URL` to open by the app.
+	///
+	/// Replaces the scheme of the url with ther user's preferred scheme if the scheme can be opened by the system, otherwise the url is returned as is.
+	///
+	/// - Returns: the preferred `URL` to open by the app.
 	func withPreferredScheme() -> URL {
 		guard let scheme = self.scheme?.appending("://") else { return self }
 		let kBrowser = UserSettings.defaultBrowser

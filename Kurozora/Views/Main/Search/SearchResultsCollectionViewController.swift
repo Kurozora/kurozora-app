@@ -9,9 +9,7 @@
 import UIKit
 import KurozoraKit
 
-/**
-	The collection view controller in charge of providing the necessary functionalities for searching shows, threads and users.
-*/
+/// The collection view controller in charge of providing the necessary functionalities for searching shows, threads and users.
 class SearchResultsCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	/// The collection of results fetched by the search request.
@@ -96,12 +94,11 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		self.navigationItem.searchController = self.kSearchController
 	}
 
-	/**
-		Perform search with the given search text and the search scope.
-
-		- Parameter text: The string which to search for.
-		- Parameter searchScope: The scope in which the text should be searched.
-	*/
+	/// Perform search with the given search text and the search scope.
+	///
+	/// - Parameters:
+	///    - text: The string which to search for.
+	///    - searchScope: The scope in which the text should be searched.
 	func performSearch(withText text: String, in searchScope: SearchScope) {
 		// Prepare view for search
 		self.currentScope = searchScope

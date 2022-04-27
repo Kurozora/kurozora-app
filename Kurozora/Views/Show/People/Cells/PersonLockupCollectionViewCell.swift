@@ -15,11 +15,9 @@ class PersonLockupCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var nameLabel: KLabel!
 
 	// MARK: - Functions
-	/**
-		Configure the cell with the given details.
-
-		- Parameter person: The person object used to configure the cell.
-	*/
+	/// Configure the cell with the given details.
+	///
+	/// - Parameter person: The person object used to configure the cell.
 	func configureCell(with person: Person) {
 		self.personImageView.setImage(with: person.attributes.profile?.url ?? "", placeholder: person.attributes.placeholderImage)
 		self.nameLabel.text = person.attributes.fullName

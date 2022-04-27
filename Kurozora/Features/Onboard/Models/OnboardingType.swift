@@ -9,9 +9,7 @@
 import Foundation
 
 extension AccountOnboarding {
-	/**
-		Set of available onboarding text field types.
-	*/
+	/// Set of available onboarding text field types.
 	enum TextField: Int, CaseIterable {
 		// MARK: - Cases
 		/// Username cell type.

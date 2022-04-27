@@ -8,11 +8,9 @@
 
 import Foundation
 
-/**
-	Set of available service header strings.
-
-	- Tag: ServiceHeaderString
-*/
+/// Set of available service header strings.
+///
+/// - Tag: ServiceHeaderString
 struct ServiceHeaderString {
 	/// The headline string for the MAL Improt view.
 	static let malImportHeadline: String = "Move from MyAnimeList"

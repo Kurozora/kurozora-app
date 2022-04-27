@@ -55,13 +55,11 @@ class FMDetailsTableViewController: KTableViewController {
 	}
 
 	// MARK: - Initializers
-	/**
-		Initialize a new instance of FMDetailsTableViewController with the given feed message id.
-
-		- Parameter feedMessageID: The feed message id to use when initializing the view.
-
-		- Returns: an initialized instance of FMDetailsTableViewController.
-	*/
+	/// Initialize a new instance of FMDetailsTableViewController with the given feed message id.
+	///
+	/// - Parameter feedMessageID: The feed message id to use when initializing the view.
+	///
+	/// - Returns: an initialized instance of FMDetailsTableViewController.
 	static func `init`(with feedMessageID: Int) -> FMDetailsTableViewController {
 		if let fmDetailsTableViewController = R.storyboard.feed.fmDetailsTableViewController() {
 			fmDetailsTableViewController.feedMessageID = feedMessageID
@@ -71,13 +69,11 @@ class FMDetailsTableViewController: KTableViewController {
 		fatalError("Failed to instantiate FMDetailsTableViewController with the given feed message id.")
 	}
 
-	/**
-		Initialize a new instance of FMDetailsTableViewController with the given feed message object.
-
-		- Parameter user: The `FeedMessage` object to use when initializing the view controller.
-
-		- Returns: an initialized instance of FMDetailsTableViewController.
-	*/
+	/// Initialize a new instance of FMDetailsTableViewController with the given feed message object.
+	///
+	/// - Parameter user: The `FeedMessage` object to use when initializing the view controller.
+	///
+	/// - Returns: an initialized instance of FMDetailsTableViewController.
 	static func `init`(with feedMessage: FeedMessage) -> FMDetailsTableViewController {
 		if let fmDetailsTableViewController = R.storyboard.feed.fmDetailsTableViewController() {
 			fmDetailsTableViewController.feedMessage = feedMessage
@@ -141,11 +137,9 @@ class FMDetailsTableViewController: KTableViewController {
 		}
 	}
 
-	/**
-		Updates the feed message with the received information.
-
-		- Parameter notification: An object containing information broadcast to registered observers.
-	*/
+	/// Updates the feed message with the received information.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers.
 	@objc func updateFeedMessage(_ notification: NSNotification) {
 		// Start update process
 		self.tableView.performBatchUpdates({
@@ -155,11 +149,9 @@ class FMDetailsTableViewController: KTableViewController {
 		}, completion: nil)
 	}
 
-	/**
-		Deletes the feed message with the received information.
-
-		- Parameter notification: An object containing information broadcast to registered observers.
-	*/
+	/// Deletes the feed message with the received information.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers.
 	@objc func deleteFeedMessage(_ notification: NSNotification) {
 		if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
 			switch indexPath.section {

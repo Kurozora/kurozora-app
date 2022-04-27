@@ -8,15 +8,13 @@
 
 import Foundation
 
-/**
-	List of feeds the user can choose from to view posts shared by other users.
-
-	```
-	case feed = 0
-	case popular = 1
-	case global = 2
-	```
-*/
+/// List of feeds the user can choose from to view posts shared by other users.
+///
+/// ```
+/// case feed = 0
+/// case popular = 1
+/// case global = 2
+/// ```
 enum FeedType: Int {
 	/// Refers to the posts shared by the users followed by the current user.
 	case feed = 0

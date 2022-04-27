@@ -49,13 +49,11 @@ class EpisodeDetailCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - Initializers
-	/**
-		Initialize a new instance of EpisodeDetailCollectionViewController with the given episode id.
-
-		- Parameter episodeID: The episode id to use when initializing the view.
-
-		- Returns: an initialized instance of EpisodeDetailCollectionViewController.
-	*/
+	/// Initialize a new instance of EpisodeDetailCollectionViewController with the given episode id.
+	///
+	/// - Parameter episodeID: The episode id to use when initializing the view.
+	///
+	/// - Returns: an initialized instance of EpisodeDetailCollectionViewController.
 	static func `init`(with episodeID: Int) -> EpisodeDetailCollectionViewController {
 		if let episodeDetailCollectionViewController = R.storyboard.episodes.episodeDetailCollectionViewController() {
 			episodeDetailCollectionViewController.episodeID = episodeID
@@ -65,13 +63,11 @@ class EpisodeDetailCollectionViewController: KCollectionViewController {
 		fatalError("Failed to instantiate EpisodeDetailCollectionViewController with the given show id.")
 	}
 
-	/**
-		Initialize a new instance of EpisodeDetailCollectionViewController with the given episode object.
-
-		- Parameter episode: The `Episode` object to use when initializing the view controller.
-
-		- Returns: an initialized instance of EpisodeDetailCollectionViewController.
-	*/
+	/// Initialize a new instance of EpisodeDetailCollectionViewController with the given episode object.
+	///
+	/// - Parameter episode: The `Episode` object to use when initializing the view controller.
+	///
+	/// - Returns: an initialized instance of EpisodeDetailCollectionViewController.
 	static func `init`(with episode: Episode) -> EpisodeDetailCollectionViewController {
 		if let episodeDetailCollectionViewController = R.storyboard.episodes.episodeDetailCollectionViewController() {
 			episodeDetailCollectionViewController.episode = episode
@@ -152,11 +148,9 @@ class EpisodeDetailCollectionViewController: KCollectionViewController {
 //		}
 	}
 
-	/**
-		Update the episodes list.
-
-		- Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
-	*/
+	/// Update the episodes list.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
 	@objc func updateEpisodes(_ notification: NSNotification) {
 		guard let indexPath = notification.userInfo?["indexPath"] as? IndexPath else { return }
 		collectionView.reloadItems(at: [indexPath])

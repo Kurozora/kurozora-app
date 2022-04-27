@@ -28,20 +28,16 @@ class KNavigationController: UINavigationController {
 		self.setupToolbarStyle()
 	}
 
-	/**
-		Used to update the large title preference.
-
-		- Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
-	*/
+	/// Used to update the large title preference.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
 	@objc func updatePrefersLargeTitles(_ notification: NSNotification) {
 		self.navigationBar.prefersLargeTitles = UserSettings.largeTitlesEnabled
 	}
 
-	/**
-		Used to update the theme of the view.
-
-		- Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
-	*/
+	/// Used to update the theme of the view.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
 	@objc func updateTheme(_ notification: NSNotification) {
 		self.configureNavigationBarStyle()
 	}

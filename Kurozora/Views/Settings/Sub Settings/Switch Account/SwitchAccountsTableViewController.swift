@@ -9,9 +9,7 @@
 import UIKit
 import KurozoraKit
 
-/**
-	The table view controller responsible for adding, deleting and listing of user's accounts.
-*/
+/// The table view controller responsible for adding, deleting and listing of user's accounts.
 class SwitchAccountsTableViewController: SubSettingsViewController {
 	// MARK: - Properties
 	/// All user accounts.

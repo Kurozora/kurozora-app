@@ -185,13 +185,11 @@ extension PeopleListCollectionViewController {
 
 // MARK: - SectionLayoutKind
 extension PeopleListCollectionViewController {
-	/**
-		List of section layout kind.
-
-		```
-		case main = 0
-		```
-	*/
+	/// List of section layout kind.
+	///
+	/// ```
+	/// case main = 0
+	/// ```
 	enum SectionLayoutKind: Int, CaseIterable {
 		case main = 0
 	}

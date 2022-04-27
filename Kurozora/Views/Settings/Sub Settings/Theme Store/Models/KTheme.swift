@@ -9,9 +9,7 @@
 import UIKit
 import KurozoraKit
 
-/**
-	The set of available default theme types.
-*/
+/// The set of available default theme types.
 enum KTheme {
 	// MARK: - Cases
 	case kurozora
@@ -23,13 +21,11 @@ enum KTheme {
 	case other(_: AppTheme)
 
 	// MARK: - Initializers
-	/**
-		Creates a new instance with the specified raw value.
-
-		If there is no value of the type that corresponds with the specified raw value, this initializer returns nil.
-
-		- Parameter rawValue: The raw value to use for the new instance.
-	*/
+	/// Creates a new instance with the specified raw value.
+	///
+	/// If there is no value of the type that corresponds with the specified raw value, this initializer returns nil.
+	///
+	/// - Parameter rawValue: The raw value to use for the new instance.
 	init?(rawValue: Int) {
 		switch rawValue {
 		case 0:
@@ -162,11 +158,9 @@ enum KTheme {
 		}
 	}
 
-	/**
-		Checks and returns if the given string is equal to the default theme type.
-
-		- Returns: true if the given string is equal to the default theme type.
-	*/
+	/// Checks and returns if the given string is equal to the default theme type.
+	///
+	/// - Returns: true if the given string is equal to the default theme type.
 	func isEqual(_ theme: String) -> Bool {
 		switch self {
 		case .night:
