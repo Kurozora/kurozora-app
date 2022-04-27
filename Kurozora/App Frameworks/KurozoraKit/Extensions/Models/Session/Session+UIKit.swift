@@ -14,9 +14,9 @@ extension Session {
 	-> UIContextMenuConfiguration? {
 		let identifier = userInfo?["indexPath"] as? NSCopying
 
-		return UIContextMenuConfiguration(identifier: identifier, previewProvider: nil, actionProvider: { _ in
+		return UIContextMenuConfiguration(identifier: identifier, previewProvider: nil) { _ in
 			return self.makeContextMenu(in: viewController, userInfo: userInfo)
-		})
+		}
 	}
 
 	private func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?) -> UIMenu {

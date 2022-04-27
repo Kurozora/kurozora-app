@@ -33,7 +33,8 @@ extension EpisodesCollectionViewController {
 	}
 
 	override func createLayout() -> UICollectionViewLayout? {
-		let layout = UICollectionViewCompositionalLayout { (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+			guard let self = self else { return nil }
 			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
 												  heightDimension: .fractionalHeight(1.0))
 			let item = NSCollectionLayoutItem(layoutSize: itemSize)

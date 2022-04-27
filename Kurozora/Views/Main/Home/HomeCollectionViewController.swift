@@ -62,13 +62,11 @@ class HomeCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - Initializers
-	/**
-		Initialize a new instance of HomeCollectionViewController with the given genre object.
-
-		- Parameter genre: The genre object to use when initializing the view.
-
-		- Returns: an initialized instance of HomeCollectionViewController.
-	*/
+	/// Initialize a new instance of HomeCollectionViewController with the given genre object.
+	///
+	/// - Parameter genre: The genre object to use when initializing the view.
+	///
+	/// - Returns: an initialized instance of HomeCollectionViewController.
 	static func `init`(with genre: Genre) -> HomeCollectionViewController {
 		if let homeCollectionViewController = R.storyboard.home.homeCollectionViewController() {
 			homeCollectionViewController.genre = genre
@@ -78,13 +76,11 @@ class HomeCollectionViewController: KCollectionViewController {
 		fatalError("Failed to instantiate HomeCollectionViewController with the given Genre object.")
 	}
 
-	/**
-		Initialize a new instance of HomeCollectionViewController with the given theme object.
-
-		- Parameter theme: The theme object to use when initializing the view.
-
-		- Returns: an initialized instance of HomeCollectionViewController.
-	*/
+	/// Initialize a new instance of HomeCollectionViewController with the given theme object.
+	///
+	/// - Parameter theme: The theme object to use when initializing the view.
+	///
+	/// - Returns: an initialized instance of HomeCollectionViewController.
 	static func `init`(with theme: Theme) -> HomeCollectionViewController {
 		if let homeCollectionViewController = R.storyboard.home.homeCollectionViewController() {
 			homeCollectionViewController.theme = theme
@@ -250,14 +246,13 @@ class HomeCollectionViewController: KCollectionViewController {
 
 // MARK: - Helper functions
 extension HomeCollectionViewController {
-	/**
-		Dequeues and returns collection view cells for the vertical collection view cell style.
-
-		- Parameter verticalCollectionCellStyle: The style of the collection view cell to be dequeued.
-		- Parameter indexPath: The indexPath for which the collection view cell should be dequeued.
-
-		- Returns: The dequeued collection view cell.
-	*/
+	/// Dequeues and returns collection view cells for the vertical collection view cell style.
+	///
+	/// - Parameters:
+	///    - verticalCollectionCellStyle: The style of the collection view cell to be dequeued.
+	///    - indexPath: The indexPath for which the collection view cell should be dequeued.
+	///
+	/// - Returns: The dequeued collection view cell.
 	func createExploreCell(with verticalCollectionCellStyle: VerticalCollectionCellStyle, for indexPath: IndexPath) -> UICollectionViewCell {
 		switch verticalCollectionCellStyle {
 		case .legal:
@@ -295,7 +290,7 @@ extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 			guard let show = self.exploreCategories[indexPath.section].relationships.shows?.data[indexPath.item] else { return }
 
 			let oldLibraryStatus = cell.libraryStatus
-			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: oldLibraryStatus, action: { (title, value)  in
+			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: oldLibraryStatus, action: { title, value  in
 				KService.addToLibrary(withLibraryStatus: value, showID: show.id) { result in
 					switch result {
 					case .success(let libraryUpdate):
@@ -314,7 +309,7 @@ extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 			})
 
 			if cell.libraryStatus != .none {
-				actionSheetAlertController.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { _ in
+				actionSheetAlertController.addAction(UIAlertAction(title: "Remove from library", style: .destructive, handler: { _ in
 					KService.removeFromLibrary(showID: show.id) { result in
 						switch result {
 						case .success(let libraryUpdate):
@@ -378,7 +373,8 @@ extension HomeCollectionViewController: MusicLockupCollectionViewCellDelegate {
 				cell.playButton.setImage(UIImage(systemName: "pause.circle.fill"), for: .normal)
 
 				NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: nil, queue: .current, using: { [weak self] _ in
-					self?.player = nil
+					guard let self = self else { return }
+					self.player = nil
 					cell.playButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
 				})
 			}
@@ -393,9 +389,7 @@ extension HomeCollectionViewController: MusicLockupCollectionViewCellDelegate {
 
 // MARK: - SectionLayoutKind
 extension HomeCollectionViewController {
-	/**
-		List of available Section Layout Kind types.
-	*/
+	/// List of available Section Layout Kind types.
 	enum SectionLayoutKind: Hashable {
 		// MARK: - Cases
 		/// Indicates a header section layout type.
@@ -420,9 +414,7 @@ extension HomeCollectionViewController {
 
 // MARK: - ItemKind
 extension HomeCollectionViewController {
-	/**
-		List of available Item Kind types.
-	*/
+	/// List of available Item Kind types.
 	enum ItemKind: Hashable {
 		// MARK: - Cases
 		/// Indicates the item kind contains a `Show` object.

@@ -60,13 +60,11 @@ class EpisodesCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - Initializers
-	/**
-		Initialize a new instance of EpisodesCollectionViewController with the given season id.
-
-		- Parameter seasonID: The season id to use when initializing the view.
-
-		- Returns: an initialized instance of EpisodesCollectionViewController.
-	*/
+	/// Initialize a new instance of EpisodesCollectionViewController with the given season id.
+	///
+	/// - Parameter seasonID: The season id to use when initializing the view.
+	///
+	/// - Returns: an initialized instance of EpisodesCollectionViewController.
 	static func `init`(with seasonID: Int) -> EpisodesCollectionViewController {
 		if let episodesCollectionViewController = R.storyboard.episodes.episodesCollectionViewController() {
 			episodesCollectionViewController.seasonID = seasonID
@@ -161,11 +159,9 @@ class EpisodesCollectionViewController: KCollectionViewController {
 		}
 	}
 
-	/**
-		Update the episodes list.
-
-		- Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
-	*/
+	/// Update the episodes list.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
 	@objc func updateEpisodes(_ notification: NSNotification) {
 		guard let indexPath = notification.userInfo?["indexPath"] as? IndexPath, let selectedEpisode = dataSource.itemIdentifier(for: indexPath) else { return }
 
@@ -203,25 +199,26 @@ class EpisodesCollectionViewController: KCollectionViewController {
 	/// Builds and presents an action sheet.
 	fileprivate func showActionList(_ sender: AnyObject) {
 		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
+			guard let self = self else { return }
 			let visibleIndexPath = collectionView.indexPathsForVisibleItems
 
 			if !visibleIndexPath.contains(IndexPath(item: 0, section: 0)) {
 				// Go to first episode
-				let goToFirstEpisode = UIAlertAction.init(title: "Go to first episode", style: .default) { _ in
-					self?.goToFirstEpisode()
+				let goToFirstEpisode = UIAlertAction(title: "Go to first episode", style: .default) { _ in
+					self.goToFirstEpisode()
 				}
 				actionSheetAlertController.addAction(goToFirstEpisode)
 			} else {
 				// Go to last episode
-				let goToLastEpisode = UIAlertAction.init(title: "Go to last episode", style: .default) { _ in
-					self?.goToLastEpisode()
+				let goToLastEpisode = UIAlertAction(title: "Go to last episode", style: .default) { _ in
+					self.goToLastEpisode()
 				}
 				actionSheetAlertController.addAction(goToLastEpisode)
 			}
 
 			// Go to last watched episode
-			let goToLastWatchedEpisode = UIAlertAction.init(title: "Go to last watched episode", style: .default) { _ in
-				self?.goToLastWatchedEpisode()
+			let goToLastWatchedEpisode = UIAlertAction(title: "Go to last watched episode", style: .default) { _ in
+				self.goToLastWatchedEpisode()
 			}
 			actionSheetAlertController.addAction(goToLastWatchedEpisode)
 		}
@@ -237,12 +234,13 @@ class EpisodesCollectionViewController: KCollectionViewController {
 	/// Builds and presents the filter action sheet.
 	fileprivate func showFilterActionList(_ sender: AnyObject) {
 		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
+			guard let self = self else { return }
 			// Toggle fillers
-			let title = self?.shouldHideFillers ?? false ? "Show fillers" : "Hide fillers"
+			let title = self.shouldHideFillers ? "Show fillers" : "Hide fillers"
 
-			let toggleFillers = UIAlertAction.init(title: title, style: .default) { _ in
-				self?.shouldHideFillers = !(self?.shouldHideFillers ?? true)
-				self?.updateDataSource()
+			let toggleFillers = UIAlertAction(title: title, style: .default) { _ in
+				self.shouldHideFillers = !self.shouldHideFillers
+				self.updateDataSource()
 			}
 			actionSheetAlertController.addAction(toggleFillers)
 		}
@@ -284,15 +282,17 @@ extension EpisodesCollectionViewController: EpisodeLockupCollectionViewCellDeleg
 
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressMoreButton button: UIButton) {
 		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
+			guard let self = self else { return }
 			let actionTitle = button.tag == 0 ? "Mark as Watched" : "Mark as Un-watched"
+
 			actionSheetAlertController.addAction(UIAlertAction(title: actionTitle, style: .default, handler: { _ in
-				guard let indexPath = self?.collectionView.indexPath(for: cell) else { return }
-				self?.episodes[indexPath]?.updateWatchStatus(userInfo: ["indexPath": indexPath])
+				guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+				self.episodes[indexPath]?.updateWatchStatus(userInfo: ["indexPath": indexPath])
 			}))
 //			actionSheetAlertController.addAction(UIAlertAction(title: "Rate", style: .default, handler: nil))
-			actionSheetAlertController.addAction(UIAlertAction(title: "Share", style: .default, handler: { [weak self] _ in
-				guard let indexPath = self?.collectionView.indexPath(for: cell) else { return }
-				self?.episodes[indexPath]?.openShareSheet(on: self, button)
+			actionSheetAlertController.addAction(UIAlertAction(title: "Share", style: .default, handler: { _ in
+				guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+				self.episodes[indexPath]?.openShareSheet(on: self, button)
 			}))
 		}
 
@@ -310,13 +310,11 @@ extension EpisodesCollectionViewController: EpisodeLockupCollectionViewCellDeleg
 
 // MARK: - SectionLayoutKind
 extension EpisodesCollectionViewController {
-	/**
-		List of episode section layout kind.
-
-		```
-		case main = 0
-		```
-	*/
+	/// List of episode section layout kind.
+	///
+	/// ```
+	/// case main = 0
+	/// ```
 	enum SectionLayoutKind: Int, CaseIterable {
 		case main = 0
 	}

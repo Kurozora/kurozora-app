@@ -14,11 +14,13 @@ extension Show {
 	-> UIContextMenuConfiguration? {
 		let identifier = userInfo?["indexPath"] as? NSCopying
 
-		return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
+		return UIContextMenuConfiguration(identifier: identifier, previewProvider: { [weak self] in
+			guard let self = self else { return nil }
 			return ShowDetailsCollectionViewController.`init`(with: self.id)
-		}, actionProvider: { _ in
+		}) { [weak self] _ in
+			guard let self = self else { return nil }
 			return self.makeContextMenu(in: viewController)
-		})
+		}
 	}
 
 	private func makeContextMenu(in viewController: UIViewController) -> UIMenu {
@@ -32,14 +34,16 @@ extension Show {
 		}
 
 		// Create "share" element
-		let shareAction = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
+		let shareAction = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
+			guard let self = self else { return }
 			self.openShareSheet(on: viewController)
 		}
 		menuElements.append(shareAction)
 
 		if User.isSignedIn {
 			if libraryStatus != .none {
-				let removeFromLibraryAction = UIAction(title: "Remove from Library", image: UIImage(systemName: "minus.circle"), attributes: .destructive) { _ in
+				let removeFromLibraryAction = UIAction(title: "Remove from Library", image: UIImage(systemName: "minus.circle"), attributes: .destructive) { [weak self] _ in
+					guard let self = self else { return }
 					self.removeFromLibrary()
 				}
 				let subMenu = UIMenu(title: "", options: .displayInline, children: [removeFromLibraryAction])
@@ -82,12 +86,13 @@ extension Show {
 		let addToLibraryMenuImage = libraryStatus == .none ? UIImage(systemName: "plus") : UIImage(systemName: "arrow.left.arrow.right")
 		var menuElements: [UIMenuElement] = []
 
-		KKLibrary.Status.all.forEach { actionLibraryStatus in
+		KKLibrary.Status.all.forEach { [weak self] actionLibraryStatus in
+			guard let self = self else { return }
 			let selectedLibraryStatus = libraryStatus == actionLibraryStatus
+
 			menuElements.append(UIAction(title: actionLibraryStatus.stringValue, image: selectedLibraryStatus ? UIImage(systemName: "checkmark") : nil, handler: { _ in
 				WorkflowController.shared.isSignedIn {
-					KService.addToLibrary(withLibraryStatus: actionLibraryStatus, showID: self.id) { [weak self] result in
-						guard let self = self else { return }
+					KService.addToLibrary(withLibraryStatus: actionLibraryStatus, showID: self.id) { result in
 						switch result {
 						case .success(let libraryUpdate):
 							// Update entry in library

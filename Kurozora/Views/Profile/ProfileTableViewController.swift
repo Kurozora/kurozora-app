@@ -133,13 +133,11 @@ class ProfileTableViewController: KTableViewController {
 	}
 
 	// MARK: - Initializers
-	/**
-		Initialize a new instance of ProfileTableViewController with the given user id.
-
-		- Parameter userID: The user id to use when initializing the view.
-
-		- Returns: an initialized instance of ProfileTableViewController.
-	*/
+	/// Initialize a new instance of ProfileTableViewController with the given user id.
+	///
+	/// - Parameter userID: The user id to use when initializing the view.
+	///
+	/// - Returns: an initialized instance of ProfileTableViewController.
 	static func `init`(with userID: Int) -> ProfileTableViewController {
 		if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
 			profileTableViewController.userID = userID
@@ -149,13 +147,11 @@ class ProfileTableViewController: KTableViewController {
 		fatalError("Failed to instantiate ProfileTableViewController with the given user id.")
 	}
 
-	/**
-		Initialize a new instance of ProfileTableViewController with the given user object.
-
-		- Parameter user: The `User` object to use when initializing the view controller.
-
-		- Returns: an initialized instance of ProfileTableViewController.
-	*/
+	/// Initialize a new instance of ProfileTableViewController with the given user object.
+	///
+	/// - Parameter user: The `User` object to use when initializing the view controller.
+	///
+	/// - Returns: an initialized instance of ProfileTableViewController.
 	static func `init`(with user: User) -> ProfileTableViewController {
 		if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
 			profileTableViewController.user = user
@@ -246,11 +242,9 @@ class ProfileTableViewController: KTableViewController {
 		}
 	}
 
-	/**
-		Updates the feed message with the received information.
-
-		- Parameter notification: An object containing information broadcast to registered observers.
-	*/
+	/// Updates the feed message with the received information.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers.
 	@objc func updateFeedMessage(_ notification: NSNotification) {
 		// Start update process
 		self.tableView.performBatchUpdates({
@@ -260,11 +254,9 @@ class ProfileTableViewController: KTableViewController {
 		}, completion: nil)
 	}
 
-	/**
-		Deletes the feed message with the received information.
-
-		- Parameter notification: An object containing information broadcast to registered observers.
-	*/
+	/// Deletes the feed message with the received information.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers.
 	@objc func deleteFeedMessage(_ notification: NSNotification) {
 		// Start delete process
 		self.tableView.performBatchUpdates({
@@ -522,11 +514,9 @@ class ProfileTableViewController: KTableViewController {
 		}
 	}
 
-	/**
-		Cancel profile edit mode and return to view mode.
-
-		- Parameter sender: The object requesting the cancelation of the edit mode.
-	*/
+	/// Cancel profile edit mode and return to view mode.
+	///
+	/// - Parameter sender: The object requesting the cancelation of the edit mode.
 	@objc func cancelButtonPressed(_ sender: Any) {
 		self.confirmCancel(showingUpdate: self.hasChanges)
 	}
@@ -542,25 +532,25 @@ class ProfileTableViewController: KTableViewController {
 		self.tableView.updateHeaderViewFrame()
 	}
 
-	/**
-		Confirm whether to cancel the profile update.
-
-		- Parameter showingUpdate: Indicates whether to show the update option.
-	*/
+	/// Confirm whether to cancel the profile update.
+	///
+	/// - Parameter showingUpdate: Indicates whether to show the update option.
 	func confirmCancel(showingUpdate: Bool) {
 		// Present a UIAlertController as an action sheet to have the user confirm losing any recent changes.
 		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
+			guard let self = self else { return }
+
 			// Only ask if the user wants to send if they attempt to pull to dismiss, not if they tap Cancel.
 			if showingUpdate {
 				// Send action.
 				actionSheetAlertController.addAction(UIAlertAction(title: "Update", style: .default) { _ in
-					self?.updateProfileDetails()
+					self.updateProfileDetails()
 				})
 			}
 
 			// Discard action.
 			actionSheetAlertController.addAction(UIAlertAction(title: "Discard", style: .destructive) { _ in
-				self?.cancelProfileEdit()
+				self.cancelProfileEdit()
 			})
 		}
 
@@ -608,11 +598,9 @@ class ProfileTableViewController: KTableViewController {
 		}
 	}
 
-	/**
-		Apply profile changes.
-
-		- Parameter sender: The object requesting the changes to be applied.
-	*/
+	/// Apply profile changes.
+	///
+	/// - Parameter sender: The object requesting the changes to be applied.
 	@objc func applyProfileEdit(_ sender: UIBarButtonItem) {
 		self.updateProfileDetails()
 	}
@@ -649,10 +637,12 @@ class ProfileTableViewController: KTableViewController {
 	/// Builds and presents an action sheet.
 	fileprivate func showActionList(_ sender: UIBarButtonItem) {
 		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
+			guard let self = self else { return }
+
 			// Go to last watched episode
 			if User.isSignedIn {
-				let showFavoriteShowsList = UIAlertAction.init(title: "Favorite shows", style: .default) { _ in
-					self?.showFavoriteShowsList()
+				let showFavoriteShowsList = UIAlertAction(title: "Favorite shows", style: .default) { _ in
+					self.showFavoriteShowsList()
 				}
 				showFavoriteShowsList.setValue(UIImage(systemName: "heart.circle"), forKey: "image")
 				showFavoriteShowsList.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")

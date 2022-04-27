@@ -10,11 +10,9 @@ import KurozoraKit
 
 // MARK: - User
 extension WorkflowController {
-	/**
-		Checks whether the current user is signed in. If the user is signed in then a success block is run. Otherwise the user is asked to sign in.
-
-		- Parameter completion: Optional completion handler (default is `nil`).
-	*/
+	/// Checks whether the current user is signed in. If the user is signed in then a success block is run. Otherwise the user is asked to sign in.
+	///
+	/// - Parameter completion: Optional completion handler (default is `nil`).
 	@discardableResult func isSignedIn(_ completion: (() -> Void)? = nil) -> Bool {
 		if User.isSignedIn {
 			completion?()
@@ -25,11 +23,9 @@ extension WorkflowController {
 		}
 	}
 
-	/**
-		Checks whether the current user is pro. If the user is pro in then a success block is run. Otherwise pro features are turned off.
-
-		- Parameter completion: Optional completion handler (default is `nil`).
-	*/
+	/// Checks whether the current user is pro. If the user is pro in then a success block is run. Otherwise pro features are turned off.
+	///
+	/// - Parameter completion: Optional completion handler (default is `nil`).
 	@MainActor
 	@discardableResult func isPro(_ completion: (() -> Void)? = nil) async -> Bool {
 //		if User.isPro {
@@ -49,7 +45,8 @@ extension WorkflowController {
 			completion?()
 			return true
 		} else {
-			let subscribeAction = UIAlertAction(title: "Subscribe", style: .default) { _ in
+			let subscribeAction = UIAlertAction(title: "Subscribe", style: .default) { [weak self] _ in
+				guard let self = self else { return }
 				self.presentSubscribeView()
 			}
 
@@ -72,14 +69,13 @@ extension WorkflowController {
 //		}
 	}
 
-	/**
-		Repopulates the current user's data.
-
-		This method can be used to restore the current user's data after the app has been completely closed.
-
-		 - Parameter completionHandler: The block to execute with the results. Provide a value for this parameter if you want to be informed of the success or failure of restoring user details. This block is executed asynchronously on your app's main thread. The block has no return value and takes the following parameter:
-		 - Parameter success: A Boolean indicating whether the user's details were restored successfully.
-	*/
+	/// Repopulates the current user's data.
+	///
+	/// This method can be used to restore the current user's data after the app has been completely closed.
+	///
+	/// - Parameters:
+	///    - completionHandler: The block to execute with the results. Provide a value for this parameter if you want to be informed of the success or failure of restoring user details. This block is executed asynchronously on your app's main thread. The block has no return value and takes the following parameter:
+	///    - success: A Boolean indicating whether the user's details were restored successfully.
 	func restoreCurrentUserSession(completionHandler completion: ((_ success: Bool) -> Void)? = nil) {
 		let accountKey = UserSettings.selectedAccount
 		if let authenticationKey = KurozoraDelegate.shared.keychain[accountKey] {
@@ -116,6 +112,7 @@ extension WorkflowController {
 	/// Signs out the user and removes all data from the keychain.
 	func signOut() {
 		let username = User.current?.attributes.username ?? ""
+
 		if User.isSignedIn {
 			KService.signOut { result in
 				switch result {
@@ -128,16 +125,16 @@ extension WorkflowController {
 		}
 	}
 
-	/**
-		Deletes the user's account.
-
-		- Parameter password: The password of the user.
-		- Parameter completionHandler: The block to execute with the results. Provide a value for this parameter if you want to be informed of the success or failure of restoring user details. This block is executed asynchronously on your app's main thread. The block has no return value and takes the following parameter:
-		- Parameter success: A Boolean indicating whether the user's account was deleted successfully.
-	*/
+	/// Deletes the user's account.
+	///
+	/// - Parameters:
+	///    - password: The password of the user.
+	///    - completionHandler: The block to execute with the results. Provide a value for this parameter if you want to be informed of the success or failure of restoring user details. This block is executed asynchronously on your app's main thread. The block has no return value and takes the following parameter:
+	///    - success: A Boolean indicating whether the user's account was deleted successfully.
 	func deleteUser(password: String, completionHandler completion: ((_ success: Bool) -> Void)? = nil) {
-		let username = User.current?.attributes.username ?? ""
 		if User.isSignedIn {
+			let username = User.current?.attributes.username ?? ""
+
 			KService.deleteUser(password: password) { result in
 				switch result {
 				case .success:

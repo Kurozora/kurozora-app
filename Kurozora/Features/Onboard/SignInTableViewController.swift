@@ -37,12 +37,11 @@ class SignInTableViewController: AccountOnboardingTableViewController {
 		authorizationController.performRequests()
 	}
 
-	/**
-		Signs in a user using their email address and password.
-
-		- Parameter email: The email address of the user.
-		- Parameter password: The password of the user.
-	*/
+	/// Signs in a user using their email address and password.
+	///
+	/// - Parameters:
+	///    - email: The email address of the user.
+	///    - password: The password of the user.
 	func signInWithKurozora(email: String? = nil, password: String? = nil) {
 		guard let kurozoraID = email ?? textFieldArray.first??.trimmedText else { return }
 		guard let password = password ?? textFieldArray.last??.text else { return }

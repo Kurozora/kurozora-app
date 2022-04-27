@@ -227,8 +227,9 @@ extension HomeCollectionViewController {
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.interGroupSpacing = 10.0
 		layoutSection.visibleItemsInvalidationHandler = { [weak self] visibleItems, offset, environment in
+			guard let self = self else { return }
 			visibleItems.forEach { item in
-				guard let cell = self?.collectionView.cellForItem(at: item.indexPath) as? VideoLockupCollectionViewCell else { return }
+				guard let cell = self.collectionView.cellForItem(at: item.indexPath) as? VideoLockupCollectionViewCell else { return }
 
 				if cell.avQueuePlayer.items().count > 0 {
 					let distanceFromCenter = abs((item.frame.midX - offset.x) - environment.container.contentSize.width / 2.0)

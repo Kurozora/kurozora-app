@@ -9,18 +9,16 @@
 import UIKit
 import SwiftTheme
 
-/**
-	List of theme picker attributes.
-
-	```
-	case statusBarStyle = "UIStatusBarStyle"
-	case visualEffect = "UIVisualEffectView"
-	case backgroundColor = "Global.backgroundColor"
-	case tintedBackgroundColor = "Global.tintedBackgroundColor"
-	case barTintColor = "Global.barTintColor"
-	```
-	etc.
-*/
+/// List of theme picker attributes.
+///
+///  ```
+///  case statusBarStyle = "UIStatusBarStyle"
+///  case visualEffect = "UIVisualEffectView"
+///  case backgroundColor = "Global.backgroundColor"
+///  case tintedBackgroundColor = "Global.tintedBackgroundColor"
+///  case barTintColor = "Global.barTintColor"
+///  etc.
+///  ```
 enum KThemePicker: ThemeColorPicker {
 	// MARK: - Cases
 	case version = "Version"
@@ -197,24 +195,21 @@ enum KThemePicker: ThemeColorPicker {
 	}
 
 	// MARK: - Functions
-	/**
-		Returns a ThemeVisualEffectPicker from the currently selected theme.
 
-		- Parameter vibrancyEnabled: Boolean indicating whether the visual effect is vibrant.
-
-		- Returns: a ThemeVisualEffectPicker from the currently selected theme.
-	*/
+	/// Returns a ThemeVisualEffectPicker from the currently selected theme.
+	///
+	/// - Parameter vibrancyEnabled: Boolean indicating whether the visual effect is vibrant.
+	///
+	/// - Returns: a ThemeVisualEffectPicker from the currently selected theme.
 	func effectValue(vibrancyEnabled: Bool = false) -> ThemeVisualEffectPicker {
 		return ThemeVisualEffectPicker(keyPath: KThemePicker.visualEffect.stringValue, vibrancyEnabled: vibrancyEnabled)
 	}
 
-	/**
-		Return attributed string theme from the currently selected theme.
-
-		- Parameter attributes: The attributes to merge with the theme color attribute.
-
-		- Returns: attributed string theme from the currently selected theme.
-	*/
+	/// Return attributed string theme from the currently selected theme.
+	///
+	/// - Parameter attributes: The attributes to merge with the theme color attribute.
+	///
+	/// - Returns: attributed string theme from the currently selected theme.
 	func attributedStringValue(attributes: [NSAttributedString.Key: Any] = [:]) -> ThemeStringAttributesPicker {
 		return ThemeStringAttributesPicker(keyPath: self.stringValue) { value -> [NSAttributedString.Key: Any]? in
 			guard let rgba = value as? String else { return nil }

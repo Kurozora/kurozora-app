@@ -16,9 +16,10 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 		didSet {
 			self.title = studio.attributes.name
 
-			studio.relationships?.shows?.data.forEachInParallel({ show in
+			studio.relationships?.shows?.data.forEachInParallel { [weak self] show in
+				guard let self = self else { return }
 				self.fetchDetails(for: show.id)
-			})
+			}
 		}
 	}
 	var shows: [Show] = [] {

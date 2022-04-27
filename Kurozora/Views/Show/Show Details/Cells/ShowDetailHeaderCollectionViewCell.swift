@@ -159,8 +159,7 @@ extension ShowDetailHeaderCollectionViewCell {
 			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: oldLibraryStatus, action: { [weak self] (_, value)  in
 				guard let self = self else { return }
 				if oldLibraryStatus != value {
-					KService.addToLibrary(withLibraryStatus: value, showID: self.show.id) { [weak self] result in
-						guard let self = self else { return }
+					KService.addToLibrary(withLibraryStatus: value, showID: self.show.id) { result in
 						switch result {
 						case .success(let libraryUpdate):
 							self.show.attributes.update(using: libraryUpdate)
@@ -182,10 +181,9 @@ extension ShowDetailHeaderCollectionViewCell {
 			})
 
 			if self.libraryStatus != .none {
-				actionSheetAlertController.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { [weak self] _ in
+				actionSheetAlertController.addAction(UIAlertAction(title: "Remove from library", style: .destructive, handler: { [weak self] _ in
 					guard let self = self else { return }
-					KService.removeFromLibrary(showID: self.show.id) { [weak self] result in
-						guard let self = self else { return }
+					KService.removeFromLibrary(showID: self.show.id) { result in
 						switch result {
 						case .success(let libraryUpdate):
 							self.show.attributes.update(using: libraryUpdate)

@@ -8,13 +8,11 @@
 
 import UIKit
 
-/**
-	A themed view that displays one or more lines of read-only text, often used in conjunction with controls to describe their intended purpose.
-
-	The color of the labels is pre-configured with the currently selected theme.
-	You can add labels to your interface programmatically or by using Interface Builder.
-	The view also allows users to long press to copy the text within the label.
-*/
+/// A themed view that displays one or more lines of read-only text, often used in conjunction with controls to describe their intended purpose.
+///
+/// The color of the labels is pre-configured with the currently selected theme.
+/// You can add labels to your interface programmatically or by using Interface Builder.
+/// The view also allows users to long press to copy the text within the label.
 class KCopyableLabel: KLabel {
 	// MARK: - Properties
 	override var canBecomeFirstResponder: Bool {
@@ -31,11 +29,9 @@ class KCopyableLabel: KLabel {
 		self.addInteraction(interaction)
 	}
 
-	/**
-		Shows a menu with the given gesture recognizer object as the source.
-
-		- Parameter gestureRecognizer: The gesture object containing information about the recognized gesture.
-	*/
+	/// Shows a menu with the given gesture recognizer object as the source.
+	///
+	/// - Parameter gestureRecognizer: The gesture object containing information about the recognized gesture.
 	@objc private func showMenu(_ gestureRecognizer: UILongPressGestureRecognizer) {
 		guard let gestureView = gestureRecognizer.view, let superView = gestureView.superview else { return }
 		let menuController = UIMenuController.shared
@@ -45,14 +41,13 @@ class KCopyableLabel: KLabel {
 		menuController.showMenu(from: superView, rect: gestureView.frame)
 	}
 
-	/**
-		Creates and returns a `UIMenu` object with the preconfigured actions.
-
-		- Returns: a `UIMenu` object with the preconfigured actions.
-	*/
+	/// Creates and returns a `UIMenu` object with the preconfigured actions.
+	///
+	/// - Returns: a `UIMenu` object with the preconfigured actions.
 	private func makeContextMenu() -> UIMenu {
 		// Create a UIAction for sharing
-		let copyAction = UIAction(title: "Copy") { action in
+		let copyAction = UIAction(title: "Copy") { [weak self] action in
+			guard let self = self else { return }
 			self.copy(action)
 		}
 
@@ -70,14 +65,15 @@ class KCopyableLabel: KLabel {
 	}
 
 	override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-		return (action == #selector(copy(_:)))
+		return (action == #selector(self.copy(_:)))
 	}
 }
 
 // MARK: - UIContextMenuInteractionDelegate
 extension KCopyableLabel: UIContextMenuInteractionDelegate {
 	func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
-		return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ -> UIMenu? in
+		return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { [weak self] _ -> UIMenu? in
+			guard let self = self else { return nil }
 			return self.makeContextMenu()
 		}
 	}

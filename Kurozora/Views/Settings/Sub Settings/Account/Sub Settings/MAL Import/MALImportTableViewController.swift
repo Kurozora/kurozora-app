@@ -17,9 +17,9 @@ class MALImportTableViewController: ServiceTableViewController {
 	var textFieldArray: [UITextField?] = []
 	var selectedFileURL: URL? {
 		didSet {
-			if selectedFileURL != nil {
-				if let lastPathComponent = selectedFileURL?.lastPathComponent {
-					textFieldArray.first??.text = ".../" + lastPathComponent
+			if self.selectedFileURL != nil {
+				if let lastPathComponent = self.selectedFileURL?.lastPathComponent {
+					self.textFieldArray.first??.text = ".../" + lastPathComponent
 					self.rightNavigationBarButton.isEnabled = true
 				}
 			}
@@ -33,7 +33,7 @@ class MALImportTableViewController: ServiceTableViewController {
 		self.previewImage = R.image.promotional.moveToKurozora()
 		self.serviceType = .malImport
 
-		rightNavigationBarButton.isEnabled = false
+		self.rightNavigationBarButton.isEnabled = false
 	}
 
 	// MARK: - Functions
@@ -47,8 +47,7 @@ class MALImportTableViewController: ServiceTableViewController {
 		DispatchQueue.global(qos: .userInitiated).async {
 			guard let filePath = self.selectedFileURL else { return }
 
-			KService.importMALLibrary(filePath: filePath, importBehavior: .overwrite) { _ in
-			}
+			KService.importMALLibrary(filePath: filePath, importBehavior: .overwrite) { _ in }
 		}
 
 		self.rightNavigationBarButton.isEnabled = false
@@ -66,13 +65,13 @@ extension MALImportTableViewController {
 			malImportActionTableViewCell.actionTextField.tag = indexPath.row
 			malImportActionTableViewCell.actionTextField.delegate = self
 			malImportActionTableViewCell.actionTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
-			if selectedFileURL != nil {
-				if let lastPathComponent = selectedFileURL?.lastPathComponent {
+			if self.selectedFileURL != nil {
+				if let lastPathComponent = self.selectedFileURL?.lastPathComponent {
 					malImportActionTableViewCell.actionTextField.text = ".../" + lastPathComponent
 					self.rightNavigationBarButton.isEnabled = true
 				}
 			}
-			textFieldArray.append(malImportActionTableViewCell.actionTextField)
+			self.textFieldArray.append(malImportActionTableViewCell.actionTextField)
 			return malImportActionTableViewCell
 		default:
 			return super.tableView(tableView, cellForRowAt: indexPath)
@@ -89,7 +88,7 @@ extension MALImportTableViewController: UITextFieldDelegate {
 		}
 
 		var rightNavigationBarButtonIsEnabled = false
-		textFieldArray.forEach({
+		self.textFieldArray.forEach({
 			if let textField = $0?.text, !textField.isEmpty {
 				rightNavigationBarButtonIsEnabled = true
 				return
@@ -97,18 +96,18 @@ extension MALImportTableViewController: UITextFieldDelegate {
 			rightNavigationBarButtonIsEnabled = false
 		})
 
-		rightNavigationBarButton.isEnabled = rightNavigationBarButtonIsEnabled
+		self.rightNavigationBarButton.isEnabled = rightNavigationBarButtonIsEnabled
 	}
 
 	func textFieldDidBeginEditing(_ textField: UITextField) {
-		textField.returnKeyType = textField.tag == textFieldArray.count - 1 ? .send : .next
+		textField.returnKeyType = textField.tag == self.textFieldArray.count - 1 ? .send : .next
 	}
 
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-		if textField.tag == textFieldArray.count - 1 {
+		if textField.tag == self.textFieldArray.count - 1 {
 			rightNavigationBarButtonPressed(sender: textField)
 		} else {
-			textFieldArray[textField.tag + 1]?.becomeFirstResponder()
+			self.textFieldArray[textField.tag + 1]?.becomeFirstResponder()
 		}
 
 		return true

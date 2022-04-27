@@ -66,7 +66,7 @@ class FeedMessageReShareCell: FeedMessageCell {
 			let profileTableViewController = ProfileTableViewController.`init`(with: opUser.id)
 			profileTableViewController.dismissButtonIsEnabled = true
 
-			let kurozoraNavigationController = KNavigationController.init(rootViewController: profileTableViewController)
+			let kurozoraNavigationController = KNavigationController(rootViewController: profileTableViewController)
 			self.parentViewController?.present(kurozoraNavigationController, animated: true)
 		}
 	}

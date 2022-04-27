@@ -183,24 +183,23 @@ class NotificationsTableViewController: KTableViewController {
 	}
 
 	// MARK: - IBActions
-	/**
-		Show options for editing notifications in batch.
-
-		- Parameter sender: The object containing a reference to the button that initiated this action.
-	*/
+	/// Show options for editing notifications in batch.
+	///
+	/// - Parameter sender: The object containing a reference to the button that initiated this action.
 	@IBAction func moreOptionsButtonPressed(_ sender: UIBarButtonItem) {
 		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
+			guard let self = self else { return }
 			// Mark all as read action
-			let markAllAsRead = UIAlertAction.init(title: "Mark all as read", style: .default) { _ in
-				self?.userNotifications.batchUpdate(for: "all", withReadStatus: .read)
+			let markAllAsRead = UIAlertAction(title: "Mark all as read", style: .default) { _ in
+				self.userNotifications.batchUpdate(for: "all", withReadStatus: .read)
 			}
 			markAllAsRead.setValue(UIImage(systemName: "circlebadge"), forKey: "image")
 			markAllAsRead.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 			actionSheetAlertController.addAction(markAllAsRead)
 
 			// Mark all as unread action
-			let markAllAsUnread = UIAlertAction.init(title: "Mark all as unread", style: .default) { _ in
-				self?.userNotifications.batchUpdate(for: "all", withReadStatus: .unread)
+			let markAllAsUnread = UIAlertAction(title: "Mark all as unread", style: .default) { _ in
+				self.userNotifications.batchUpdate(for: "all", withReadStatus: .unread)
 			}
 			markAllAsUnread.setValue(UIImage(systemName: "circlebadge.fill"), forKey: "image")
 			markAllAsUnread.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
@@ -217,11 +216,9 @@ class NotificationsTableViewController: KTableViewController {
 		}
 	}
 
-	/**
-		Update notifications status withtin a specific section.
-
-		- Parameter sender: The object containing a reference to the button that initiated this action.
-	*/
+	/// Update notifications status withtin a specific section.
+	///
+	/// - Parameter sender: The object containing a reference to the button that initiated this action.
 	@objc func notificationMarkButtonPressed(_ sender: UIButton) {
 		let section = sender.tag
 		let numberOfRows = tableView.numberOfRows(inSection: section)
@@ -349,11 +346,9 @@ extension NotificationsTableViewController {
 
 // MARK: - Helper functions
 extension NotificationsTableViewController {
-	/**
-		Group the fetched notifications according to the user's notification preferences.
-
-		- Parameter userNotifications: The array of the fetched notifications.
-	*/
+	/// Group the fetched notifications according to the user's notification preferences.
+	///
+	/// - Parameter userNotifications: The array of the fetched notifications.
 	func groupNotifications(_ userNotifications: [UserNotification]) {
 		switch self.grouping {
 		case .automatic:
@@ -400,11 +395,9 @@ extension NotificationsTableViewController {
 		}
 	}
 
-	/**
-		Updates the user's notifications with the received information.
-
-		- Parameter notification: An object containing information broadcast to registered observers.
-	*/
+	/// Updates the user's notifications with the received information.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers.
 	@objc fileprivate func updateNotifications(_ notification: NSNotification) {
 		let userInfo = notification.userInfo
 		if let indexPath = userInfo?["indexPath"] as? IndexPath {
@@ -418,11 +411,9 @@ extension NotificationsTableViewController {
 		}
 	}
 
-	/**
-		Removes the replies specified in the received information.
-
-		- Parameter notification: An object containing information broadcast to registered observers.
-	*/
+	/// Removes the replies specified in the received information.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers.
 	@objc fileprivate func removeNotification(_ notification: NSNotification) {
 		let userInfo = notification.userInfo
 		if let indexPath = userInfo?["indexPath"] as? IndexPath {

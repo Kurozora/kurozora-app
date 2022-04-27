@@ -25,9 +25,10 @@ class ShowDetailsDataSource: NSObject {
 	var seasons: [Season] = []
 	var seasonIdentities: [SeasonIdentity] = [] {
 		didSet {
-			self.seasonIdentities.forEachInParallel({ seasonIdentity in
+			self.seasonIdentities.forEachInParallel { [weak self] seasonIdentity in
+				guard let self = self else { return }
 				self.fetchDetails(using: seasonIdentity)
-			})
+			}
 		}
 	}
 
@@ -35,9 +36,10 @@ class ShowDetailsDataSource: NSObject {
 	var cast: [Cast] = []
 	var castIdentities: [CastIdentity] = [] {
 		didSet {
-			self.castIdentities.forEachInParallel({ castIdentity in
+			self.castIdentities.forEachInParallel { [weak self] castIdentity in
+				guard let self = self else { return }
 				self.fetchDetails(using: castIdentity)
-			})
+			}
 		}
 	}
 
@@ -45,9 +47,10 @@ class ShowDetailsDataSource: NSObject {
 	var showSongs: [ShowSong] = []
 //	{
 //		didSet {
-//			self.showSongs.forEachInParallel({ showSong in
+//			self.showSongs.forEachInParallel { [weak self] showSong in
+//				guard let self = self else { return }
 //				self.fetchDetails(using: showSong)
-//			})
+//			}
 //		}
 //	}
 
@@ -72,9 +75,10 @@ class ShowDetailsDataSource: NSObject {
 	// Studio properties
 	var studio: Studio! {
 		didSet {
-			self.studio?.relationships?.shows?.data.forEachInParallel({ showIdentity in
+			self.studio?.relationships?.shows?.data.forEachInParallel { [weak self] showIdentity in
+				guard let self = self else { return }
 				self.fetchDetails(using: showIdentity)
-			})
+			}
 		}
 	}
 	var studioShows: [Show] = []
@@ -90,13 +94,15 @@ class ShowDetailsDataSource: NSObject {
 	/// - Parameter seasonIdentity: A `SeasonIdentity` object that identifies which season's details to fetch.
 	private func fetchDetails(using seasonIdentity: SeasonIdentity) {
 		KService.getDetails(forSeasonID: seasonIdentity.id) { [weak self] result in
+			guard let self = self else { return }
+
 			switch result {
 			case .success(let seasons):
 				// Save data
-				self?.seasons.append(contentsOf: seasons)
+				self.seasons.append(contentsOf: seasons)
 
-				if (self?.seasons.count ?? 0) == (self?.seasonIdentities.count ?? 0) {
-					self?.seasons.sort { season1, season2 in
+				if self.seasons.count == self.seasonIdentities.count {
+					self.seasons.sort { season1, season2 in
 						season1.attributes.number > season2.attributes.number
 					}
 				}
@@ -111,10 +117,12 @@ class ShowDetailsDataSource: NSObject {
 	/// - Parameter castIdentity: A `CastIdentity` object that identifies which cast's details to fetch.
 	private func fetchDetails(using castIdentity: CastIdentity) {
 		KService.getDetails(forCast: castIdentity.id) { [weak self] result in
+			guard let self = self else { return }
+
 			switch result {
 			case .success(let cast):
 				// Save data
-				self?.cast.append(contentsOf: cast)
+				self.cast.append(contentsOf: cast)
 			case .failure:
 				break
 			}
@@ -338,7 +346,9 @@ extension ShowDetailsDataSource: MusicLockupCollectionViewCellDelegate {
 				cell.playButton.setImage(UIImage(systemName: "pause.circle.fill"), for: .normal)
 
 				NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: nil, queue: .current, using: { [weak self] _ in
-					self?.player = nil
+					guard let self = self else { return }
+
+					self.player = nil
 					cell.playButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
 				})
 			}

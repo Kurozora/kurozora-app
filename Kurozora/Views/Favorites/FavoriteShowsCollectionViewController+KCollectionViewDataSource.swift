@@ -27,7 +27,8 @@ extension FavoriteShowsCollectionViewController {
 		snapshot.appendSections([.main])
 		snapshot.appendItems(self.shows)
 		self.snapshot = snapshot
-		self.dataSource.apply(snapshot) {
+		self.dataSource.apply(snapshot) { [weak self] in
+			guard let self = self else { return }
 			self.toggleEmptyDataView()
 		}
 	}

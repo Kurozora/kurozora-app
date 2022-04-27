@@ -150,13 +150,11 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 
 // MARK: - SectionLayoutKind
 extension FavoriteShowsCollectionViewController {
-	/**
-		List of  favorites section layout kind.
-
-		```
-		case main = 0
-		```
-	*/
+	/// List of  favorites section layout kind.
+	///
+	/// ```
+	/// case main = 0
+	/// ```
 	enum SectionLayoutKind: Int, CaseIterable {
 		case main = 0
 	}

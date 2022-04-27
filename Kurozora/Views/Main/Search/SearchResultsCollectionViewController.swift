@@ -69,7 +69,8 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		super.viewWillAppear(animated)
 
 		// Fetch user's search history.
-		SearchHistory.getContent { showDetailsElements in
+		SearchHistory.getContent { [weak self] showDetailsElements in
+			guard let self = self else { return }
 			self.suggestionElements = showDetailsElements
 		}
 	}

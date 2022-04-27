@@ -12,19 +12,17 @@ import ESTabBarController_swift
 import KeychainAccess
 import LocalAuthentication
 
-/**
-	A set of methods and properties used to manage shared behaviors for the `Kurozora` app.
-
-	The `KurozoraDelegate` object manages the app’s shared behaviors.
-	Use the `KurozoraDelegate` object to handle the following tasks:
-	- Ask the user for authentication before using the app.
-	- Handle URL schemes supported by the app.
-	- Initializing your app’s central data structures.
-	- Present aproriate views when the devices reachability changes.
-	- Registering for any required services at launch time, such as [KKServices](x-source-tag://KKServices).
-
-	- Tag: Kurozora
-*/
+/// A set of methods and properties used to manage shared behaviors for the `Kurozora` app.
+///
+/// The `KurozoraDelegate` object manages the app’s shared behaviors.
+/// Use the `KurozoraDelegate` object to handle the following tasks:
+/// - Ask the user for authentication before using the app.
+/// - Handle URL schemes supported by the app.
+/// - Initializing your app’s central data structures.
+/// - Present aproriate views when the devices reachability changes.
+/// - Registering for any required services at launch time, such as [KKServices](x-source-tag://KKServices).
+///
+/// - Tag: Kurozora
 class KurozoraDelegate {
 	// MARK: - Properties
 	// Authentication
@@ -55,12 +53,11 @@ class KurozoraDelegate {
 	}
 
 	// MARK: - Functions
-	/**
-		Dismiss the current view controller and show the main view controller.
-
-		- Parameter window: The window on which the offline view will be shown.
-		- Parameter viewController: The view controller that should be dismissed.
-	*/
+	/// Dismiss the current view controller and show the main view controller.
+	///
+	/// - Parameters:
+	///    - window: The window on which the offline view will be shown.
+	///    - viewController: The view controller that should be dismissed.
 	func showMainPage(for window: UIWindow?, viewController: UIViewController) {
 		if window?.rootViewController is KurozoraReachabilityViewController {
 			let customTabBar = KTabBarController()
@@ -75,11 +72,9 @@ class KurozoraDelegate {
 		}
 	}
 
-	/**
-		Show the offline page when wifi and data is out.
-
-		- Parameter window: The window on which the offline view will be shown.
-	*/
+	/// Show the offline page when wifi and data is out.
+	///
+	/// - Parameter window: The window on which the offline view will be shown.
 	func showOfflinePage(for window: UIWindow?) {
 		if window != nil {
 			if let reachabilityViewController = R.storyboard.reachability.kurozoraReachabilityViewController() {
@@ -96,11 +91,9 @@ class KurozoraDelegate {
 		}
 	}
 
-	/**
-		Routes the scheme with the specified url to an in app resource.
-
-		- Parameter url: The URL resource to open. This resource can be a network resource or a file. For information about the Apple-registered URL schemes, see Apple URL Scheme Reference.
-	*/
+	/// Routes the scheme with the specified url to an in app resource.
+	///
+	/// - Parameter url: The URL resource to open. This resource can be a network resource or a file. For information about the Apple-registered URL schemes, see Apple URL Scheme Reference.
 	fileprivate func routeScheme(with url: URL) {
 		if url.pathExtension == "xml" {
 			WorkflowController.shared.isSignedIn {
@@ -163,12 +156,11 @@ class KurozoraDelegate {
 		}
 	}
 
-	/**
-		Opens a resource specified by a URL.
-
-		- Parameter scene: The object that represents one instance of the app's user interface.
-		- Parameter url: The URL resource to open. This resource can be a network resource or a file. For information about the Apple-registered URL schemes, see Apple URL Scheme Reference.
-	*/
+	/// Opens a resource specified by a URL.
+	///
+	/// - Parameters:
+	///    - scene: The object that represents one instance of the app's user interface.
+	///    - url: The URL resource to open. This resource can be a network resource or a file. For information about the Apple-registered URL schemes, see Apple URL Scheme Reference.
 	func schemeHandler(_ scene: UIScene, open url: URL) {
 		routeScheme(with: url)
 	}
@@ -224,7 +216,7 @@ extension KurozoraDelegate {
 	func handleUserAuthentication() {
 		guard let viewController = UIApplication.topViewController as? AuthenticationViewController else { return }
 
-		localAuthentication(viewController: viewController, withSuccess: { success in
+		self.localAuthentication(viewController: viewController) { success in
 			if success {
 				DispatchQueue.main.async {
 					viewController.dismiss(animated: true, completion: nil)
@@ -232,16 +224,15 @@ extension KurozoraDelegate {
 			} else {
 				viewController.toggleHide()
 			}
-		})
+		}
 	}
 
-	/**
-		Start local authentication.
-
-		- Parameter viewController: The view controller on which the authentication is taking place.
-		- Parameter successHandler: A closure returning a boolean indicating whether authentication is successful.
-		- Parameter isSuccess: A boolean value indicating whether authentication is successful.
-	*/
+	/// Start local authentication.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller on which the authentication is taking place.
+	///    - successHandler: A closure returning a boolean indicating whether authentication is successful.
+	///    - isSuccess: A boolean value indicating whether authentication is successful.
 	fileprivate func localAuthentication(viewController: AuthenticationViewController, withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void) {
 		let localAuthenticationContext = LAContext()
 		var authError: NSError?
@@ -280,13 +271,11 @@ extension KurozoraDelegate {
 		}
 	}
 
-	/**
-		Return a string describing the evaluated Policy Fail Error error code.
-
-		- Parameter errorCode: The error code to evaluate.
-
-		- Returns: a string describing the evaluated error code.
-	*/
+	/// Return a string describing the evaluated Policy Fail Error error code.
+	///
+	/// - Parameter errorCode: The error code to evaluate.
+	///
+	/// - Returns: a string describing the evaluated error code.
 	fileprivate func evaluatePolicyFailErrorMessageForLA(errorCode: Int) -> String {
 		var message = ""
 
@@ -304,13 +293,11 @@ extension KurozoraDelegate {
 		return message
 	}
 
-	/**
-		Return a string describing the evaluated Authentication Policy error code.
-
-		- Parameter errorCode: The error code to evaluate.
-
-		- Returns: a string describing the evaluated error code.
-	*/
+	/// Return a string describing the evaluated Authentication Policy error code.
+	///
+	/// - Parameter errorCode: The error code to evaluate.
+	///
+	/// - Returns: a string describing the evaluated error code.
 	fileprivate func evaluateAuthenticationPolicyMessageForLA(errorCode: Int) -> String {
 		var message = ""
 
@@ -341,11 +328,9 @@ extension KurozoraDelegate {
 
 // MARK: - Quick Actions
 extension KurozoraDelegate {
-	/**
-		Performs an action for the specified shortcut item.
-
-		- Parameter shortcutItem: The action selected by the user. Your app defines the actions that it supports, and the user chooses from among those actions. For information about how to create and configure shortcut items for your app, see [UIApplicationShortcutItem](apple-reference-documentation://hsTvcCjEDQ).
-	*/
+	/// Performs an action for the specified shortcut item.
+	///
+	/// - Parameter shortcutItem: The action selected by the user. Your app defines the actions that it supports, and the user chooses from among those actions. For information about how to create and configure shortcut items for your app, see [UIApplicationShortcutItem](apple-reference-documentation://hsTvcCjEDQ).
 	fileprivate func performAction(for shortcutItem: UIApplicationShortcutItem) {
 		switch shortcutItem.type {
 		case R.info.uiApplicationShortcutItems.libraryShortcut._key:
@@ -373,12 +358,11 @@ extension KurozoraDelegate {
 		}
 	}
 
-	/**
-		Handle the selected quick action.
-
-		- Parameter windowScene: The window scene object receiving the shortcut item.
-		- Parameter shortcutItem: The application's shortcut item.
-	*/
+	/// Handle the selected quick action.
+	///
+	/// - Parameters:
+	///    - windowScene: The window scene object receiving the shortcut item.
+	///    - shortcutItem: The application's shortcut item.
 	func shortcutHandler(_ windowScene: UIWindowScene, performActionFor shortcutItem: UIApplicationShortcutItem) {
 		performAction(for: shortcutItem)
 	}

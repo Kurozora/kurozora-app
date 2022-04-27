@@ -189,7 +189,8 @@ extension ShowSongsListCollectionViewController {
 		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 
 		if self.showID != 0 {
-			SongType.allCases.forEach { songType in
+			SongType.allCases.forEach { [weak self] songType in
+				guard let self = self else { return }
 				if self.showSongCategories.has(key: songType) {
 					let sectionHeader = SectionLayoutKind.header()
 					snapshot.appendSections([sectionHeader])
@@ -233,7 +234,8 @@ extension ShowSongsListCollectionViewController {
 	}
 
 	override func createLayout() -> UICollectionViewLayout? {
-		let layout = UICollectionViewCompositionalLayout { (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+			guard let self = self else { return nil }
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 
 			// Add layout item.
@@ -301,7 +303,9 @@ extension ShowSongsListCollectionViewController: MusicLockupCollectionViewCellDe
 				cell.playButton.setImage(UIImage(systemName: "pause.circle.fill"), for: .normal)
 
 				NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: nil, queue: .current, using: { [weak self] _ in
-					self?.player = nil
+					guard let self = self else { return }
+
+					self.player = nil
 					cell.playButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
 				})
 			}

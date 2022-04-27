@@ -206,7 +206,7 @@ extension UIDevice {
 
 	/// The type of biometric the current device supports.
 	static let supportedBiomtetric: LABiometryType = {
-		let context = LAContext.init()
+		let context = LAContext()
 		var error: NSError?
 
 		if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, error: &error) {

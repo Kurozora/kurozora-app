@@ -38,13 +38,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		self.window?.theme_tintColor = KThemePicker.tintColor.rawValue
 
 		// If the network is unreachable show the offline page
-		KNetworkManager.isUnreachable { _ in
+		KNetworkManager.isUnreachable { [weak self] _ in
+			guard let self = self else { return }
 			self.isUnreachable = true
 		}
 
 		// Check network availability
-		if isUnreachable {
-			KurozoraDelegate.shared.showOfflinePage(for: window)
+		if self.isUnreachable {
+			KurozoraDelegate.shared.showOfflinePage(for: self.window)
 			return
 		}
 
@@ -57,9 +58,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 		// Configure window or resotre previous activity.
 		if let userActivity = connectionOptions.userActivities.first ?? session.stateRestorationActivity {
-			 if !configure(window: window, with: userActivity) {
+			if !configure(window: self.window, with: userActivity) {
 				print("Failed to restore from \(userActivity)")
-			 }
+			}
 		}
 	}
 
@@ -94,25 +95,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	func sceneDidBecomeActive(_ scene: UIScene) {
 		print("----- Scene became active.")
-		if authenticationCount < 1 {
+		if self.authenticationCount < 1 {
 			if Date.uptime() > KurozoraDelegate.shared.authenticationInterval, KurozoraDelegate.shared.authenticationEnabled {
 				KurozoraDelegate.shared.prepareForAuthentication()
 			}
 		}
 
-		authenticationCount += 1
+		self.authenticationCount += 1
 
 		// Clear notifications
 		UIApplication.shared.applicationIconBadgeNumber = 0
 	}
 
 	// MARK: - Functions
-	/**
-		Configures the scene according to the passed activity.
-
-		- Parameter window: The backdrop for your app’s user interface and the object that dispatches events to your views.
-		- Parameter activity: A representation of the state of your app at a moment in time.
-	*/
+	/// Configures the scene according to the passed activity.
+	///
+	/// - Parameter window: The backdrop for your app’s user interface and the object that dispatches events to your views.
+	/// - Parameter activity: A representation of the state of your app at a moment in time.
     func configure(window: UIWindow?, with activity: NSUserActivity) -> Bool {
         if activity.title == "OpenShowDetail" {
 			if let parameters = activity.userInfo as? [String: Int] {

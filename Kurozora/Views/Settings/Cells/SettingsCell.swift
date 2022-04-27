@@ -63,7 +63,8 @@ class SettingsCell: KTableViewCell {
 		case .icon:
 			NotificationCenter.default.addObserver(self, selector: #selector(updateAppIcon), name: .KSAppIconDidChange, object: nil)
 		case .cache:
-			self.calculateCache(withSuccess: { (cacheSize) in
+			self.calculateCache(withSuccess: { [weak self] cacheSize in
+				guard let self = self else { return }
 				DispatchQueue.main.async {
 					self.secondaryLabel?.text = cacheSize
 				}
@@ -92,7 +93,7 @@ class SettingsCell: KTableViewCell {
 		- Parameter cacheString: The string representing the amount of data that is cached by the app.
 	*/
 	fileprivate func calculateCache(withSuccess successHandler:@escaping (_ cacheString: String) -> Void) {
-		ImageCache.default.calculateDiskStorageSize { (result) in
+		ImageCache.default.calculateDiskStorageSize { result in
 			switch result {
 			case .success(let size):
 				// Convert from bytes to mebibytes (2^20)
