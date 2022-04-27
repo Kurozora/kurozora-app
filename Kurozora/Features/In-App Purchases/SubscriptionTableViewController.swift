@@ -196,9 +196,7 @@ extension SubscriptionTableViewController: ProductTableViewControllerDelegate {
 
 // MARK: - Section
 extension SubscriptionTableViewController {
-	/**
-		Set of available subscription table view sections.
-	*/
+	/// Set of available subscription table view sections.
 	enum Section: Int, CaseIterable {
 		// MARK: - Cases
 		/// The heder section of the table view.

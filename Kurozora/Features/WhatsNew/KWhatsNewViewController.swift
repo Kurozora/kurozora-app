@@ -11,13 +11,12 @@ import WhatsNew
 
 class KWhatsNewViewController: WhatsNewViewController {
 	// MARK: - Initializers
-	/**
-		Initialize an instance of `WhatsNewViewController` with the given details.
-
-		- Parameter titleText: Text of the top title.
-		- Parameter buttonText: Text of the bottom button that dismisses the view controller.
-		- Parameter items: Items presented on the view controller.
-	*/
+	/// Initialize an instance of `WhatsNewViewController` with the given details.
+	///
+	/// - Parameters:
+	///    - titleText: Text of the top title.
+	///    - buttonText: Text of the bottom button that dismisses the view controller.
+	///    - items: Items presented on the view controller.
 	required init(titleText: String, buttonText: String, items: [WhatsNewItem]) {
 		super.init(items: items)
 		self.titleText = titleText

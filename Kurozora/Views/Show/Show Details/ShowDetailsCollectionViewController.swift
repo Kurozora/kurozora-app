@@ -51,13 +51,11 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - Initializers
-	/**
-		Initialize a new instance of ShowDetailsCollectionViewController with the given show id.
-
-		- Parameter showID: The show id to use when initializing the view.
-
-		- Returns: an initialized instance of ShowDetailsCollectionViewController.
-	*/
+	/// Initialize a new instance of ShowDetailsCollectionViewController with the given show id.
+	///
+	/// - Parameter showID: The show id to use when initializing the view.
+	///
+	/// - Returns: an initialized instance of ShowDetailsCollectionViewController.
 	static func `init`(with showID: Int) -> ShowDetailsCollectionViewController {
 		if let showDetailsCollectionViewController = R.storyboard.shows.showDetailsCollectionViewController() {
 			showDetailsCollectionViewController.showID = showID
@@ -67,13 +65,11 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		fatalError("Failed to instantiate ShowDetailsCollectionViewController with the given show id.")
 	}
 
-	/**
-		Initialize a new instance of ShowDetailsCollectionViewController with the given show object.
-
-		- Parameter show: The `Show` object to use when initializing the view controller.
-
-		- Returns: an initialized instance of ShowDetailsCollectionViewController.
-	*/
+	/// Initialize a new instance of ShowDetailsCollectionViewController with the given show object.
+	///
+	/// - Parameter show: The `Show` object to use when initializing the view controller.
+	///
+	/// - Returns: an initialized instance of ShowDetailsCollectionViewController.
 	static func `init`(with show: Show) -> ShowDetailsCollectionViewController {
 		if let showDetailsCollectionViewController = R.storyboard.shows.showDetailsCollectionViewController() {
 			showDetailsCollectionViewController.dataSource.show = show
@@ -149,11 +145,9 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		}
 	}
 
-	/**
-		Fetches details for the given show id. If none given then the currently viewed show's details are fetched.
-
-		- Parameter showID: The id used to fetch the show's details.
-	*/
+	/// Fetches details for the given show id. If none given then the currently viewed show's details are fetched.
+	///
+	/// - Parameter showID: The id used to fetch the show's details.
 	func fetchDetails(for showID: Int? = nil) {
 		var including: [String] = []
 

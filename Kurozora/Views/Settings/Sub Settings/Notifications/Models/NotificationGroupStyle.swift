@@ -9,15 +9,13 @@
 import Foundation
 
 extension KNotification {
-	/**
-		List of notification group styles.
-
-		```
-		case automatic = 0
-		case byType = 1
-		case off = 2
-		```
-	*/
+	/// List of notification group styles.
+	///
+	/// ```
+	/// case automatic = 0
+	/// case byType = 1
+	/// case off = 2
+	/// ```
 	enum GroupStyle: Int {
 		/// Groups the notifications in sections by their date and time.
 		case automatic = 0

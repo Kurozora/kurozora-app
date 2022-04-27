@@ -8,14 +8,12 @@
 
 import UIKit
 
-/**
-	`PersonImageView` is a sepcially crafted object that displays a single image or a sequence of animated images in your interface.
-
-	`PersonImageView` adjusts some options to achieve its design, this includes:
-	- Applying a border width and border color.
-	- Presenting a default person image if none is specified.
-	- Rounding the image's corners.
-*/
+/// `PersonImageView` is a sepcially crafted object that displays a single image or a sequence of animated images in your interface.
+///
+/// `PersonImageView` adjusts some options to achieve its design, this includes:
+/// - Applying a border width and border color.
+/// - Presenting a default person image if none is specified.
+/// - Rounding the image's corners.
 class PersonImageView: CircularImageView {
 	// MARK: - Initializers
 	override init(frame: CGRect) {

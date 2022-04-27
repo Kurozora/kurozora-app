@@ -10,24 +10,18 @@ import UIKit
 import KurozoraKit
 
 protocol LibraryViewControllerDelegate: AnyObject {
-	/**
-		Tells your `LibraryViewControllerDelegate` to sort the library with the specified sort type.
-
-		- Parameter sortType: The sort type by which the library should be sorted.
-	*/
+	/// Tells your `LibraryViewControllerDelegate` to sort the library with the specified sort type.
+	///
+	/// - Parameter sortType: The sort type by which the library should be sorted.
 	func sortLibrary(by sortType: KKLibrary.SortType, option: KKLibrary.SortType.Options)
 
-	/**
-		Tells your `LibraryViewControllerDelegate` the current sort value used to sort the items in the library.
-
-		- Returns: The current sort value used to sort the items in the library.
-	*/
+	/// Tells your `LibraryViewControllerDelegate` the current sort value used to sort the items in the library.
+	///
+	/// - Returns: The current sort value used to sort the items in the library.
 	func sortValue() -> KKLibrary.SortType
 
-	/**
-		Tells your `LibraryViewControllerDelegate` the current sort option value used to sort the items in the library.
-
-		- Returns: The current sort option value used to sort the items in the library.
-	*/
+	/// Tells your `LibraryViewControllerDelegate` the current sort option value used to sort the items in the library.
+	///
+	/// - Returns: The current sort option value used to sort the items in the library.
 	func sortOptionValue() -> KKLibrary.SortType.Options
 }

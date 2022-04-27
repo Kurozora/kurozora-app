@@ -29,11 +29,9 @@ class OnboardingFooterTableViewCell: OnboardingBaseTableViewCell {
 		legalButton?.setAttributedTitle(attributedString, for: .normal)
 	}
 
-	/**
-		Modally presents the legal view controller.
-
-		- Parameter sender: The object containing a reference to the button that initiated this action.
-	*/
+	/// Modally presents the legal view controller.
+	///
+	/// - Parameter sender: The object containing a reference to the button that initiated this action.
 	@objc fileprivate func legalButtonPressed(_ sender: UIButton) {
 		sender.alpha = 1.0
 
@@ -43,11 +41,9 @@ class OnboardingFooterTableViewCell: OnboardingBaseTableViewCell {
 		}
 	}
 
-	/**
-		Changes the opacity of the button to match the default UIButton mechanic.
-
-		- Parameter sender: The object containing a reference to the button that initiated this action.
-	*/
+	/// Changes the opacity of the button to match the default UIButton mechanic.
+	///
+	/// - Parameter sender: The object containing a reference to the button that initiated this action.
 	@objc fileprivate func legalButtonTouched(_ sender: UIButton) {
 		if sender.state == .highlighted {
 			sender.alpha = 0.5

@@ -9,13 +9,11 @@
 import KeychainAccess
 
 extension Keychain {
-	/**
-		Returns all keys that match with the given regex.
-
-		- Parameter regex: The regex used to match keys.
-
-		- Returns: all keys that match with the given regex.
-	*/
+	/// Returns all keys that match with the given regex.
+	///
+	/// - Parameter regex: The regex used to match keys.
+	///
+	/// - Returns: all keys that match with the given regex.
 	func allKeys(matching regex: String) -> [String] {
 		return self.allKeys().matching(regex: regex)
 	}

@@ -60,31 +60,27 @@ extension Product {
 	}
 
 	// MARK: - Functions
-	/**
-		Format the given `Decimal` to a localized string.
-
-		- Parameter price: The price that should be converted to a localized string.
-
-		- Returns: The localized string of the price or the price only as a string.
-	*/
+	/// Format the given `Decimal` to a localized string.
+	///
+	/// - Parameter price: The price that should be converted to a localized string.
+	///
+	/// - Returns: The localized string of the price or the price only as a string.
 	fileprivate func formattedToLocale(price: Decimal) -> String {
 		let currencySymbol = String(displayPrice.filter { String($0).rangeOfCharacter(from: CharacterSet(charactersIn: "0123456789.,")) == nil }).trimmingCharacters(in: .whitespacesAndNewlines)
 		return currencySymbol + "\(price)"
 	}
 
-	/**
-		Returns a string of the percentage saved compared to the given price.
-
-		For example with a product that costs 1.99:
-		```
-		product.priceSaved(comparedTo: 3.99)
-		// Returns "50%"
-		```
-
-		- Parameter price: The price by which the comparision is done.
-
-		- Returns: a string of the percentage saved compared to the given price.
-	*/
+	/// Returns a string of the percentage saved compared to the given price.
+	///
+	/// For example with a product that costs 1.99:
+	/// ```
+	/// product.priceSaved(comparedTo: 3.99)
+	/// // Returns "50%"
+	/// ```
+	///
+	/// - Parameter price: The price by which the comparision is done.
+	///
+	/// - Returns: a string of the percentage saved compared to the given price.
 	func priceSaved(comparedTo price: Decimal) -> String {
 		let percentageSaved = NSDecimalNumber(decimal: 100 - (100 / price * self.pricePerMonth))
 		let behavior = NSDecimalNumberHandler(roundingMode: .bankers, scale: 0, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)

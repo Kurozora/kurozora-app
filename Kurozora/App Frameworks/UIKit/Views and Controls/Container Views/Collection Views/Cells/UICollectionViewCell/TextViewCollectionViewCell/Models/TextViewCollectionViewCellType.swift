@@ -8,9 +8,7 @@
 
 import Foundation
 
-/**
-	List of available text view collection view cell types.
-*/
+/// List of available text view collection view cell types.
 enum TextViewCollectionViewCellType {
 	// MARK: - Cases
 	/// Indicates the cell is of synopsis type.

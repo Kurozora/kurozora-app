@@ -8,9 +8,7 @@
 
 import Foundation
 
-/**
-	A struct that stores information about a collection of alternative icons, such as the different collections of icons.
-*/
+/// A struct that stores information about a collection of alternative icons, such as the different collections of icons.
 struct AlternativeIcons {
 	// MARK: - Properties
 	/// The collection of default icons.
@@ -26,11 +24,9 @@ struct AlternativeIcons {
 	let limitedIcons: [AlternativeIconsElement]
 
 	// MARK: - Initializers
-	/**
-		Initializes a new instance of `AlternativeIcons` using the given dictionary.
-
-		- Parameter dict: The dictionary that contains the array of alternative icons.
-	*/
+	/// Initializes a new instance of `AlternativeIcons` using the given dictionary.
+	///
+	/// - Parameter dict: The dictionary that contains the array of alternative icons.
 	init(dict: [String: [String]]) {
 		let defaultIconsArray = dict["Default"]!
 		let natureIconsArray = dict["Nature"]!
@@ -69,20 +65,16 @@ struct AlternativeIcons {
 	}
 }
 
-/**
-	A struct that stores information about a single alternative icon, such as the icon's name.
-*/
+/// A struct that stores information about a single alternative icon, such as the icon's name.
 struct AlternativeIconsElement {
 	// MARK: - Properties
 	/// The name of the alternative icon.
 	let name: String
 
 	// MARK: - Initializers
-	/**
-		Initializes a new instance of `AlternativeIconsElement` using the given name.
-
-		- Parameter name: The name of the alternative icon.
-	*/
+	/// Initializes a new instance of `AlternativeIconsElement` using the given name.
+	///
+	/// - Parameter name: The name of the alternative icon.
 	init(name: String) {
 		self.name = name
 	}

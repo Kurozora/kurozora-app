@@ -65,20 +65,16 @@ extension EpisodeDetailHeaderCollectionViewCell {
 		self.quickDetailsView.isHidden = false
 	}
 
-	/**
-		Update the watch status of the episode.
-
-		- Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
-	*/
+	/// Update the watch status of the episode.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
 	@objc func handleWatchStatusUpdate(_ notification: NSNotification) {
 		self.configureWatchButton(with: self.episode.attributes.watchStatus)
 	}
 
-	/**
-		Configures the watch status button of the episode.
-
-		- Parameter watchStatus: The WatchStatus object used to configure the button.
-	*/
+	/// Configures the watch status button of the episode.
+	///
+	/// - Parameter watchStatus: The WatchStatus object used to configure the button.
 	func configureWatchButton(with watchStatus: WatchStatus?) {
 		switch watchStatus ?? .disabled {
 		case .watched:

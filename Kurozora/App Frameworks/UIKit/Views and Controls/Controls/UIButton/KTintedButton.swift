@@ -8,11 +8,9 @@
 
 import UIKit
 
-/**
-	A themed control that executes your custom code in response to user interactions.
-
-	`KTintedButton` provides themed buttons that match with the currently enabled theme.
-*/
+/// A themed control that executes your custom code in response to user interactions.
+///
+/// `KTintedButton` provides themed buttons that match with the currently enabled theme.
 class KTintedButton: KButton {
 	override func sharedInit() {
 		super.sharedInit()

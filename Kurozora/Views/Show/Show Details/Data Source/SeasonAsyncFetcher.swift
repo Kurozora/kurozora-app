@@ -32,13 +32,11 @@
 //
 //	// MARK: Object fetching
 //
-//	/**
-//		Asynchronously fetches data for a specified `Int`.
-//
-//		- Parameters:
-//		- identifier: The `Int` to fetch data for.
-//		- completion: An optional called when the data has been fetched.
-//	*/
+//	/// Asynchronously fetches data for a specified `Int`.
+//	///
+//	/// - Parameters:
+//	///    - identifier: The `Int` to fetch data for.
+//	///    - completion: An optional called when the data has been fetched.
 //	func fetchAsync(_ identifier: Int, completion: ((Season?) -> Void)? = nil) {
 //		// Use the serial queue while we access the fetch queue and completion handlers.
 //		serialAccessQueue.addOperation {
@@ -52,22 +50,19 @@
 //		}
 //	}
 //
-//	/**
-//		Returns the previously fetched data for a specified `Int`.
-//
-//		- Parameter identifier: The `Int` of the object to return.
-//		- Returns: The 'Season' that has previously been fetched or nil.
-//	*/
+//	/// Returns the previously fetched data for a specified `Int`.
+//	///
+//	/// - Parameter identifier: The `Int` of the object to return.
+//	///
+//	/// - Returns: The 'Season' that has previously been fetched or nil.
 //	func fetchedData(for identifier: Int) -> Season? {
 //		return cache.object(forKey: identifier as NSNumber)
 //	}
 //
-//	/**
-//		Cancels any enqueued asychronous fetches for a specified `Int`. Completion
+//	/// Cancels any enqueued asychronous fetches for a specified `Int`. Completion
 //		handlers are not called if a fetch is canceled.
-//
-//		- Parameter identifier: The `Int` to cancel fetches for.
-//	*/
+//	///
+//	/// - Parameter identifier: The `Int` to cancel fetches for.
 //	func cancelFetch(_ identifier: Int) {
 //		serialAccessQueue.addOperation {
 //			self.fetchQueue.isSuspended = true
@@ -83,12 +78,10 @@
 //
 // // MARK: Convenience
 // extension SeasonAsyncFetcher {
-//	/**
-//		Begins fetching data for the provided `identifier` invoking the associated
+//	/// Begins fetching data for the provided `identifier` invoking the associated
 //		completion handler when complete.
-//
-//		- Parameter identifier: The `Int` to fetch data for.
-//	*/
+//	///
+//	/// - Parameter identifier: The `Int` to fetch data for.
 //	private func fetchData(for identifier: Int) {
 //		// If a request has already been made for the object, do nothing more.
 //		guard operation(for: identifier) == nil else { return }
@@ -114,12 +107,11 @@
 //		}
 //	}
 //
-//	/**
-//		Returns any enqueued `ObjectFetcherOperation` for a specified `Int`.
-//
-//		- Parameter identifier: The `Int` of the operation to return.
-//		- Returns: The enqueued `ObjectFetcherOperation` or nil.
-//	*/
+//	/// Returns any enqueued `ObjectFetcherOperation` for a specified `Int`.
+//	///
+//	/// - Parameter identifier: The `Int` of the operation to return.
+//	///
+//	/// - Returns: The enqueued `ObjectFetcherOperation` or nil.
 //	private func operation(for identifier: Int) -> SeasonAsyncFetcherOperation? {
 //		for case let fetchOperation as SeasonAsyncFetcherOperation in fetchQueue.operations
 //		where !fetchOperation.isCancelled && fetchOperation.identifier == identifier {
@@ -129,14 +121,12 @@
 //		return nil
 //	}
 //
-//	/**
-//		Invokes any completion handlers for a specified `Int`. Once called,
+//	/// Invokes any completion handlers for a specified `Int`. Once called,
 //		the stored array of completion handlers for the `Int` is cleared.
-//
-//		- Parameters:
-//		- identifier: The `Int` of the completion handlers to call.
-//		- object: The fetched object to pass when calling a completion handler.
-//	*/
+//	///
+//	/// - Parameters:
+//	///	   - identifier: The `Int` of the completion handlers to call.
+//	///	   - object: The fetched object to pass when calling a completion handler.
 //	private func invokeCompletionHandlers(for identifier: Int, with fetchedData: Season) {
 //		let completionHandlers = self.completionHandlers[identifier, default: []]
 //		self.completionHandlers[identifier] = nil

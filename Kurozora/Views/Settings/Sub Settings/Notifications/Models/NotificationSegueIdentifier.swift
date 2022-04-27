@@ -9,13 +9,11 @@
 import Foundation
 
 extension KNotification {
-	/**
-		List of notification settings.
-
-		```
-		case notificationsGrouping = 0
-		```
-	*/
+	/// List of notification settings.
+	///
+	/// ```
+	/// case notificationsGrouping = 0
+	/// ```
 	enum Settings: Int {
 		/// Indicates the view should segue to the notifications grouping options view.
 		case notificationsGrouping = 0

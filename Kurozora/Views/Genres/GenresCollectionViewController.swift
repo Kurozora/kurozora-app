@@ -11,13 +11,11 @@ import KurozoraKit
 
 // MARK: - SectionLayoutKind
 extension GenresCollectionViewController {
-	/**
-		List of  genres section layout kind.
-
-		```
-		case main = 0
-		```
-	*/
+	/// List of  genres section layout kind.
+	///
+	/// ```
+	/// case main = 0
+	/// ```
 	enum SectionLayoutKind: Int, CaseIterable {
 		case main = 0
 	}

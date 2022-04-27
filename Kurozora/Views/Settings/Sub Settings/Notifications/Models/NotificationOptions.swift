@@ -9,15 +9,13 @@
 import Foundation
 
 extension KNotification {
-	/**
-		List of notification options.
-
-		```
-		case allowNotifications = 0
-		case sounds = 1
-		case badge = 2
-		```
-	*/
+	/// List of notification options.
+	///
+	/// ```
+	/// case allowNotifications = 0
+	/// case sounds = 1
+	/// case badge = 2
+	/// ```
 	enum Options: Int {
 		/// Indicates if the in-app notifications are allowed.
 		case allowNotifications = 0

@@ -122,11 +122,9 @@ class BaseFeedMessageCell: KTableViewCell {
 		}
 	}
 
-	/**
-		Adds a `UITapGestureRecognizer` which opens the profile image onto the given view.
-
-		- Parameter view: The view to which the tap gesture should be attached.
-	*/
+	/// Adds a `UITapGestureRecognizer` which opens the profile image onto the given view.
+	///
+	/// - Parameter view: The view to which the tap gesture should be attached.
 	fileprivate func configureProfilePageGesture(for view: UIView) {
 		if view.gestureRecognizers.isNilOrEmpty {
 			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(usernameLabelPressed(_:)))

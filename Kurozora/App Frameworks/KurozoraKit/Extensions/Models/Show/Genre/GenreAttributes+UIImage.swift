@@ -10,11 +10,9 @@ import KurozoraKit
 
 extension Genre.Attributes {
 	// MARK: - Properties
-	/**
-		Returns a `UIImage` with the symbol.
-
-		If the show has no symbol image, then a placeholder genre symbol image is returned.
-	*/
+	/// Returns a `UIImage` with the symbol.
+	///
+	/// If the show has no symbol image, then a placeholder genre symbol image is returned.
 	var symbolImage: UIImage? {
 		let symbolImageView = UIImageView()
 		let placeholderImage = R.image.kurozoraIcon()!

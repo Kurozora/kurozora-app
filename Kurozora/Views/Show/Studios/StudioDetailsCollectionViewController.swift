@@ -91,11 +91,9 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 		}
 	}
 
-	/**
-		Fetches details for the given show id.
-
-		- Parameter showID: The id used to fetch the show's details.
-	*/
+	/// Fetches details for the given show id.
+	///
+	/// - Parameter showID: The id used to fetch the show's details.
 	func fetchDetails(for showID: Int) {
 		KService.getDetails(forShowID: showID) { [weak self] result in
 			guard let self = self else { return }

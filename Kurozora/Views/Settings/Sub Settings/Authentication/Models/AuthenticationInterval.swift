@@ -8,19 +8,17 @@
 
 import Foundation
 
-/**
-	The set of available authentication interval types.
-
-	```
-	case immediately = 0
-	case thirtySeconds = 1
-	case oneMinute = 2
-	case twoMinutes = 3
-	case threeMinutes = 4
-	case fourMinutes = 5
-	case fiveMinutes = 6
-	```
-*/
+/// The set of available authentication interval types.
+///
+/// ```
+/// case immediately = 0
+/// case thirtySeconds = 1
+/// case oneMinute = 2
+/// case twoMinutes = 3
+/// case threeMinutes = 4
+/// case fourMinutes = 5
+/// case fiveMinutes = 6
+/// ```
 enum AuthenticationInterval: Int {
 	// MARK: - Cases
 	/// The app asks for authentication immediately.

@@ -70,9 +70,7 @@ extension TipJarTableViewController {
 
 // MARK: - Section
 extension TipJarTableViewController {
-	/**
-		Set of available tip jar table view sections.
-	*/
+	/// Set of available tip jar table view sections.
 	enum Section: Int, CaseIterable {
 		// MARK: - Cases
 		/// The heder section of the table view.

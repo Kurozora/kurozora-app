@@ -86,12 +86,11 @@ class SettingsCell: KTableViewCell {
 		}
 	}
 
-	/**
-		Calculate the amount of data that is cached by the app.
-
-		- Parameter successHandler: A closure that returns a string representing the amount of data that is cached by the app.
-		- Parameter cacheString: The string representing the amount of data that is cached by the app.
-	*/
+	/// Calculate the amount of data that is cached by the app.
+	///
+	/// - Parameters:
+	///    - successHandler: A closure that returns a string representing the amount of data that is cached by the app.
+	///    - cacheString: The string representing the amount of data that is cached by the app.
 	fileprivate func calculateCache(withSuccess successHandler:@escaping (_ cacheString: String) -> Void) {
 		ImageCache.default.calculateDiskStorageSize { result in
 			switch result {

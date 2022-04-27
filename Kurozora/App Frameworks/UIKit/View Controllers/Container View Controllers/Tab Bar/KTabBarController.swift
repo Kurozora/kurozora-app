@@ -62,11 +62,9 @@ class KTabBarController: ESTabBarController {
 	}
 
 	#if DEBUG
-	/**
-		Show FLEX explorer.
-
-		- Parameter gestureRecognizer: The gesture object containing information about the recognized gesture.
-	 */
+	/// Show FLEX explorer.
+	///
+	/// - Parameter gestureRecognizer: The gesture object containing information about the recognized gesture.
 	@objc private func showFlex(_ gestureRecognizer: UILongPressGestureRecognizer) {
 		if FLEXManager.shared.isHidden {
 			FLEXManager.shared.showExplorer()
@@ -74,11 +72,9 @@ class KTabBarController: ESTabBarController {
 	}
 	#endif
 
-	/**
-		Show Account Switcher.
-
-		- Parameter gestureRecognizer: The gesture object containing information about the recognized gesture.
-	*/
+	/// Show Account Switcher.
+	///
+	/// - Parameter gestureRecognizer: The gesture object containing information about the recognized gesture.
 	@objc private func showAccountSwitcher(_ gestureRecognizer: UILongPressGestureRecognizer) {
 		if UIApplication.topViewController as? SwitchAccountsTableViewController == nil {
 			if let switchAccountKNavigationController = R.storyboard.switchAccountSettings.switchAccountKNavigationController() {
@@ -153,9 +149,7 @@ extension KTabBarController {
 	}
 }
 
-/**
-	The set of available tab bar items.
- */
+/// The set of available tab bar items.
 enum TabBarItem: Int, CaseIterable {
 	// MARK: - Cases
 	/// Representing the home tab.
@@ -177,9 +171,7 @@ enum TabBarItem: Int, CaseIterable {
 	static var sideBarCases: [TabBarItem] = [.home, .library, .feed, .notifications]
 
 	// MARK: - Structs
-	/**
-		List of row identifiers.
-	 */
+	/// List of row identifiers.
 	private struct RowIdentifier {
 		/// The unique identifier for the home tab.
 		static let home = UUID()

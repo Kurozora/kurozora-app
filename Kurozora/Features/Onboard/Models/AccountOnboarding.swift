@@ -8,9 +8,7 @@
 
 import Foundation
 
-/**
-	Set of available account onboarding types.
-*/
+/// Set of available account onboarding types.
 enum AccountOnboarding: Int, CaseIterable {
 	// MARK: - Cases
 	/// Sign up onboarding.
@@ -96,9 +94,7 @@ enum AccountOnboarding: Int, CaseIterable {
 		}
 	}
 
-	/**
-		Set of available onboarding section types.
-	*/
+	/// Set of available onboarding section types.
 	enum Sections: Int, CaseIterable {
 		// MARK: - Cases
 		/// Header section.

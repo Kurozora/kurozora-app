@@ -53,13 +53,11 @@ class PersonDetailsCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - Initializers
-	/**
-		Initialize a new instance of PersonDetailsCollectionViewController with the given person id.
-
-		- Parameter personID: The person id to use when initializing the view.
-
-		- Returns: an initialized instance of PersonDetailsCollectionViewController.
-	*/
+	/// Initialize a new instance of PersonDetailsCollectionViewController with the given person id.
+	///
+	/// - Parameter personID: The person id to use when initializing the view.
+	///
+	/// - Returns: an initialized instance of PersonDetailsCollectionViewController.
 	static func `init`(with personID: Int) -> PersonDetailsCollectionViewController {
 		if let personDetailsCollectionViewController = R.storyboard.people.personDetailsCollectionViewController() {
 			personDetailsCollectionViewController.personID = personID
@@ -69,13 +67,11 @@ class PersonDetailsCollectionViewController: KCollectionViewController {
 		fatalError("Failed to instantiate PersonDetailsCollectionViewController with the given perosn id.")
 	}
 
-	/**
-		Initialize a new instance of PersonDetailsCollectionViewController with the given person object.
-
-		- Parameter show: The `Show` object to use when initializing the view controller.
-
-		- Returns: an initialized instance of PersonDetailsCollectionViewController.
-	*/
+	/// Initialize a new instance of PersonDetailsCollectionViewController with the given person object.
+	///
+	/// - Parameter show: The `Show` object to use when initializing the view controller.
+	///
+	/// - Returns: an initialized instance of PersonDetailsCollectionViewController.
 	static func `init`(with person: Person) -> PersonDetailsCollectionViewController {
 		if let personDetailsCollectionViewController = R.storyboard.people.personDetailsCollectionViewController() {
 			personDetailsCollectionViewController.person = person

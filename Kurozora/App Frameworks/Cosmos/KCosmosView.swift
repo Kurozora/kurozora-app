@@ -9,9 +9,7 @@
 import UIKit
 import Cosmos
 
-/**
-	A themed star rating view that can be used to show ratings for products. One can select stars by tapping on them when updateOnTouch settings is true. An optional text can be supplied that is shown on the right side.
-*/
+/// A themed star rating view that can be used to show ratings for products. One can select stars by tapping on them when updateOnTouch settings is true. An optional text can be supplied that is shown on the right side.
 @IBDesignable
 class KCosmosView: CosmosView {
 	// MARK: - Initializers
@@ -53,11 +51,9 @@ class KCosmosView: CosmosView {
 		self.settings.filledBorderColor = KThemePicker.tintColor.colorValue
 	}
 
-	/**
-		Used to update the theme of the view.
-
-		- Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
-	*/
+	/// Used to update the theme of the view.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
 	@objc fileprivate func updateTheme(_ notification: NSNotification) {
 		self.configureTheme()
 	}

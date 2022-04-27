@@ -9,11 +9,9 @@
 import KurozoraKit
 
 extension Studio.Attributes {
-	/**
-		Returns a `UIImage` with the logo.
-
-		If the show has no logo image, then a placeholder studio logo image is returned.
-	*/
+	/// Returns a `UIImage` with the logo.
+	///
+	/// If the show has no logo image, then a placeholder studio logo image is returned.
 	var logoImage: UIImage? {
 		let logoImageView = UIImageView()
 		let placeholderImage = R.image.placeholders.studioProfile()!

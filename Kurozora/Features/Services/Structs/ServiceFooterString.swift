@@ -9,11 +9,9 @@
 import UIKit
 import SwiftTheme
 
-/**
-	Set of available service footer strings.
-
-	- Tag: ServiceFooterString
-*/
+/// Set of available service footer strings.
+///
+/// - Tag: ServiceFooterString
 struct ServiceFooterString {
 	/// The footer string for the MAL Improt view.
 	static let malImport: String = "Kurozora does not guarantee all shows will be imported to your library. Once the request has been processed a notification which contains the status of the import request will be sent. Furthermore the uploaded file is deleted as soon as the import request has been processed."

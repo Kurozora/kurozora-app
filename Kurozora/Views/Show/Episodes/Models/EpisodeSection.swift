@@ -10,9 +10,7 @@ import Foundation
 import KurozoraKit
 
 class EpisodeDetail {
-	/**
-		List of available episode section types.
-	*/
+	/// List of available episode section types.
 	enum Section: Int, CaseIterable {
 		// MARK: - Cases
 		/// The header section of the episode detail view.
@@ -60,9 +58,7 @@ class EpisodeDetail {
 
 // MARK: - Information
 extension EpisodeDetail {
-	/**
-		List of available episode information types.
-	*/
+	/// List of available episode information types.
 	enum Information: Int, CaseIterable {
 		// MARK: - Cases
 		/// The number of the episode.
@@ -100,13 +96,11 @@ extension EpisodeDetail {
 		}
 
 		// MARK: - Functions
-		/**
-			Returns the required information from the given object.
-
-			- Parameter episode: The object used to extract the infromation from.
-
-			Returns: the required information from the given object.
-		*/
+		/// Returns the required information from the given object.
+		///
+		/// - Parameter episode: The object used to extract the infromation from.
+		///
+		/// Returns: the required information from the given object.
 		func information(from episode: Episode) -> String? {
 			switch self {
 			case .number:
@@ -118,52 +112,44 @@ extension EpisodeDetail {
 			}
 		}
 
-		/**
-			Returns the required primary information from the given object.
-
-			- Parameter episode: The object used to extract the infromation from.
-
-			- Returns: the required primary information from the given object.
-		*/
+		/// Returns the required primary information from the given object.
+		///
+		/// - Parameter episode: The object used to extract the infromation from.
+		///
+		/// - Returns: the required primary information from the given object.
 		func primaryInformation(from episode: Episode) -> String? {
 			switch self {
 			default: return nil
 			}
 		}
 
-		/**
-			Returns the required secondary information from the given object.
-
-			- Parameter episode: The object used to extract the infromation from.
-
-			- Returns: the required secondary information from the given object.
-		*/
+		/// Returns the required secondary information from the given object.
+		///
+		/// - Parameter episode: The object used to extract the infromation from.
+		///
+		/// - Returns: the required secondary information from the given object.
 		func secondaryInformation(from episode: Episode) -> String? {
 			switch self {
 			default: return nil
 			}
 		}
 
-		/**
-			Returns the required primary image from the given object.
-
-			- Parameter episode: The object used to extract the infromation from.
-
-			- Returns: the required primary image from the given object.
-		*/
+		/// Returns the required primary image from the given object.
+		///
+		/// - Parameter episode: The object used to extract the infromation from.
+		///
+		/// - Returns: the required primary image from the given object.
 		func primaryImage(from episode: Episode) -> UIImage? {
 			switch self {
 			default: return nil
 			}
 		}
 
-		/**
-			Returns the footnote from the given object.
-
-			- Parameter episode: The object used to extract the footnote from.
-
-			- Returns: the footnote from the given object.
-		*/
+		/// Returns the footnote from the given object.
+		///
+		/// - Parameter episode: The object used to extract the footnote from.
+		///
+		/// - Returns: the footnote from the given object.
 		func footnote(from episode: Episode) -> String? {
 			switch self {
 			case .number:

@@ -16,11 +16,9 @@ extension Date {
 		return calendar.dateComponents([.calendar, .timeZone, .era, .year, .month, .day, .hour, .minute, .second, .nanosecond, .weekday, .weekdayOrdinal, .quarter, .weekOfMonth, .weekOfYear, .yearForWeekOfYear], from: self)
 	}
 
-	/**
-		Locale-aware string representations of a relative date or time.
-
-		Use the strings that the formatter produces, such as “1 hour ago”, “in 2 weeks”, “yesterday”, and “tomorrow” as standalone strings. Embedding them in other strings may not be grammatically correct.
-	*/
+	/// Locale-aware string representations of a relative date or time.
+	///
+	/// Use the strings that the formatter produces, such as “1 hour ago”, “in 2 weeks”, “yesterday”, and “tomorrow” as standalone strings. Embedding them in other strings may not be grammatically correct.
 	var relativeToNow: String {
 		let formatter = RelativeDateTimeFormatter()
 		formatter.unitsStyle = .abbreviated
@@ -51,13 +49,11 @@ extension Date {
 	}
 
 	// MARK: - Initializers
-	/**
-		Creates a new Date based on the first date detected on a string using data dectors.
-
-		- Parameter string: The string from which the date should be detected.
-
-		- Returns: `null` if a date object cannot be initiated from the given string.
-	 */
+	/// Creates a new Date based on the first date detected on a string using data dectors.
+	///
+	/// - Parameter string: The string from which the date should be detected.
+	///
+	/// - Returns: `null` if a date object cannot be initiated from the given string.
 	init?(from string: String) {
 		if string == "now" {
 			self = Date.now
@@ -76,17 +72,16 @@ extension Date {
 	}
 
 	// MARK: - Functions
-	/**
-		 Converts the date to string based on DateFormatter's date style and time style with optional relative date formatting, optional time zone and optional locale.
-
-		 - Parameter dateStyle: The style of the date.
-		 - Parameter timeStyle: The style of the time.
-		 - Parameter isRelative: Whether relative syntax is used. (Today, Tomorrow, etc.)
-		 - Parameter timeZone: The time zone of the time.
-		 - Parameter locale: The locale of the string.
-
-		 - Returns: the date as a formatted string.
-	 */
+	/// Converts the date to string based on DateFormatter's date style and time style with optional relative date formatting, optional time zone and optional locale.
+	///
+	/// - Parameters:
+	///    - dateStyle: The style of the date.
+	///    - timeStyle: The style of the time.
+	///    - isRelative: Whether relative syntax is used. (Today, Tomorrow, etc.)
+	///    - timeZone: The time zone of the time.
+	///    - locale: The locale of the string.
+	///
+	/// - Returns: the date as a formatted string.
 	func toString(dateStyle: DateFormatter.Style, timeStyle: DateFormatter.Style, isRelative: Bool = false, timeZone: TimeZone = TimeZone.current, locale: Locale = Locale.current) -> String {
 		let formatter = DateFormatter()
 		formatter.dateStyle = dateStyle
@@ -97,13 +92,11 @@ extension Date {
 		return formatter.string(from: self)
 	}
 
-	/**
-		 Converts the date to string using the short date and time style.
-
-		 - Parameter style: The style of the formatted string.
-
-		 - Returns: the date as a formatted string.
-	 */
+	///  Converts the date to string using the short date and time style.
+	///
+	/// - Parameter style: The style of the formatted string.
+	///
+	/// - Returns: the date as a formatted string.
 	func toString(style: DateFormatter.Style = .short) -> String {
 		switch style {
 		case .short:
@@ -124,11 +117,9 @@ extension Date {
 		return dateFormatter.string(from: self)
 	}
 
-	/**
-		Return device's system uptime.
-
-		- Returns: device's system uptime.
-	*/
+	/// Return device's system uptime.
+	///
+	/// - Returns: device's system uptime.
 	static func uptime() -> time_t {
 		var boottime = timeval()
 		var mib: [Int32] = [CTL_KERN, KERN_BOOTTIME]
@@ -144,11 +135,9 @@ extension Date {
 		return uptime
 	}
 
-	/**
-		Returns the date components of the date object in days, hours and minutes.
-
-		- Returns: the date components of the date object in days, hours and minutes.
-	*/
+	/// Returns the date components of the date object in days, hours and minutes.
+	///
+	/// - Returns: the date components of the date object in days, hours and minutes.
 	func etaDate() -> (days: Int, hours: Int, minutes: Int, seconds: Int) {
 		let now = Date()
 		let cal = Calendar.current
@@ -158,15 +147,13 @@ extension Date {
 		return (components.day ?? 0, components.hour ?? 0, components.minute ?? 0, components.second ?? 0)
 	}
 
-	/**
-		Returns the date components of the date object in days, hours and minutes and the eta string of the date string in readable form.
-
-		If `short` is set to `true` the returned string will be in short format. Default value is `false`.
-
-		- Parameter short: Boolean value indicating whether to shorten the returned date string.
-
-		- Returns: the date components of the date object in days, hours and minutes and the eta string of the date string in readable form.
-	*/
+	/// Returns the date components of the date object in days, hours and minutes and the eta string of the date string in readable form.
+	///
+	/// If `short` is set to `true` the returned string will be in short format. Default value is `false`.
+	///
+	/// - Parameter short: Boolean value indicating whether to shorten the returned date string.
+	///
+	/// - Returns: the date components of the date object in days, hours and minutes and the eta string of the date string in readable form.
 	func etaForDateWithString(short: Bool = false) -> (days: Int?, hours: Int?, minutes: Int?, etaString: String) {
 		let (days, hours, minutes, seconds) = etaDate()
 
@@ -182,15 +169,13 @@ extension Date {
 		return (days, hours, minutes, etaTime)
 	}
 
-	/**
-		Returns the eta string of the date in a human readable form.
-
-		If `short` is set to `true` the returned string will be in short format. Default value is `false`.
-
-		- Parameter short: Boolean value indicating whether to shorten the returned date string.
-
-		- Returns: the eta string of the date in a human readable form.
-	*/
+	/// Returns the eta string of the date in a human readable form.
+	///
+	/// If `short` is set to `true` the returned string will be in short format. Default value is `false`.
+	///
+	/// - Parameter short: Boolean value indicating whether to shorten the returned date string.
+	///
+	/// - Returns: the eta string of the date in a human readable form.
 	func etaStringForDate(short: Bool = false) -> String {
 		return etaForDateWithString(short: short).etaString
 	}

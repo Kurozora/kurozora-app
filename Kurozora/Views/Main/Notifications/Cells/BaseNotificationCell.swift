@@ -34,11 +34,9 @@ class BaseNotificationCell: KTableViewCell {
 		updateReadStatus()
 	}
 
-	/**
-		Update the read status of the user notification.
-
-		- Parameter animation: A boolean value indicating whether the update should be animated.
-	*/
+	/// Update the read status of the user notification.
+	///
+	/// - Parameter animation: A boolean value indicating whether the update should be animated.
 	func updateReadStatus(with readStatus: ReadStatus? = nil, animated: Bool = false) {
 		if let readStatus = readStatus {
 			self.userNotification.attributes.readStatus = readStatus

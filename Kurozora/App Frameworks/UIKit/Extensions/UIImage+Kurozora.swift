@@ -8,14 +8,12 @@
 
 import UIKit
 
-/**
-	A set of available image formats.
-
-	```
-	case png
-	case jpeg(CGFloat)
-	```
-*/
+/// A set of available image formats.
+///
+/// ```
+/// case png
+/// case jpeg(CGFloat)
+/// ```
 public enum ImageFormat {
 	// MARK: - Cases
 	/// Indicates the image has a `png` format.
@@ -27,13 +25,12 @@ public enum ImageFormat {
 
 extension UIImage {
 	// MARK: - Functions
-	/**
-		Convert UIImage to Base-64.
 
-		- Parameter format: The format of the image.
-
-		- Returns: the Base-64 encoded string.
-	*/
+	/// Convert UIImage to Base-64.
+	///
+	/// - Parameter format: The format of the image.
+	///
+	/// - Returns: the Base-64 encoded string.
 	func toBase64(format: ImageFormat) -> String? {
 		var imageData: Data?
 		switch format {
@@ -45,13 +42,11 @@ extension UIImage {
 		return imageData?.base64EncodedString()
 	}
 
-	/**
-		Returns whether the given image is equal to the current image.
-
-		- Parameter image: The UIImage object to compare the current image with.
-
-		- Returns: whether the given image is equal to the current image.
-	*/
+	/// Returns whether the given image is equal to the current image.
+	///
+	/// - Parameter image: The UIImage object to compare the current image with.
+	///
+	/// - Returns: whether the given image is equal to the current image.
 	func isEqual(to image: UIImage?) -> Bool {
 		guard let image = image else { return false }
 		return self.pngData() == image.pngData()

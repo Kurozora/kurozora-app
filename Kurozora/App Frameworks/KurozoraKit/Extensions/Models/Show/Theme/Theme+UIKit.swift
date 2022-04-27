@@ -34,15 +34,14 @@ extension Theme {
 		return UIMenu(title: "", children: menuElements)
 	}
 
-	/**
-		Present share sheet for the genre.
-
-		Make sure to send either the view or the bar button item that's sending the request.
-
-		- Parameter viewController: The view controller presenting the share sheet.
-		- Parameter view: The `UIView` sending the request.
-		- Parameter barButtonItem: The `UIBarButtonItem` sending the request.
-	*/
+	/// Present share sheet for the genre.
+	///
+	/// Make sure to send either the view or the bar button item that's sending the request.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller presenting the share sheet.
+	///    - view: The `UIView` sending the request.
+	///    - barButtonItem: The `UIBarButtonItem` sending the request.
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
 		var activityItems: [Any] = []
 	let shareText = "https://kurozora.app/themes/\(self.attributes.slug)\nDiscover \(self.attributes.name) shows on Kurozora."

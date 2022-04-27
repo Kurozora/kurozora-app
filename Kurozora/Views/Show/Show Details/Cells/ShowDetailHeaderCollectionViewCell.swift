@@ -93,11 +93,9 @@ extension ShowDetailHeaderCollectionViewCell {
 		updateReminderStatus()
 	}
 
-	/**
-		Updates the `favoriteButton` appearance with the favorite status of the show.
-
-		- Parameter animated: A boolean value indicating whether to update changes with animations.
-	*/
+	/// Updates the `favoriteButton` appearance with the favorite status of the show.
+	///
+	/// - Parameter animated: A boolean value indicating whether to update changes with animations.
 	func updateFavoriteStatus(animated: Bool = false) {
 		let favoriteStatus = self.show.attributes.favoriteStatus
 		if self.libraryStatus == .none || favoriteStatus == .disabled {
@@ -116,11 +114,9 @@ extension ShowDetailHeaderCollectionViewCell {
 		}
 	}
 
-	/**
-		Updates the `reminderButton` appearance with the reminder status of the show.
-
-		- Parameter animated: A boolean value indicating whether to update changes with animations.
-	*/
+	/// Updates the `reminderButton` appearance with the reminder status of the show.
+	///
+	/// - Parameter animated: A boolean value indicating whether to update changes with animations.
 	func updateReminderStatus(animated: Bool = false) {
 		let reminderStatus = self.show.attributes.reminderStatus
 		if self.libraryStatus == .none || reminderStatus == .disabled {
@@ -139,11 +135,9 @@ extension ShowDetailHeaderCollectionViewCell {
 		}
 	}
 
-	/**
-		Updates `favoriteButton`, `reminderButton` and `libraryStatusButton` with the attributes of the show.
-
-		- Parameter animated: A boolean value indicating whether to update changes with animations.
-	*/
+	/// Updates `favoriteButton`, `reminderButton` and `libraryStatusButton` with the attributes of the show.
+	///
+	/// - Parameter animated: A boolean value indicating whether to update changes with animations.
 	func updateLibraryActions(animated: Bool = false) {
 		self.updateLibraryStatus()
 		self.updateFavoriteStatus(animated: animated)

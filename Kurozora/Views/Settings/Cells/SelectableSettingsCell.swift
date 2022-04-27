@@ -17,11 +17,9 @@ class SelectableSettingsCell: SettingsCell {
 	}
 
 	// MARK: - Functions
-	/**
-		Sets the selected status of the cell.
-
-		- Parameter selected: The boolean value indicating whether the cell is selected.
-	*/
+	/// Sets the selected status of the cell.
+	///
+	/// - Parameter selected: The boolean value indicating whether the cell is selected.
 	func setSelected(_ selected: Bool) {
 		self.selectedImageView?.image = selected ? UIImage(systemName: "checkmark") : nil
 	}

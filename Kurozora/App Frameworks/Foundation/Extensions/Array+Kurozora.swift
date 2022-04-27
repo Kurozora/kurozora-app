@@ -10,15 +10,14 @@ import Foundation
 
 extension Array {
 	// MARK: - Functions
-	/**
-		Find the colsest match to the given predicate in an array with the given start index.
-
-		- Parameter index: The index where the search should start from.
-		- Parameter predicate: The logic which should be matched.
-		- Parameter element: The element that is being checked for a match.
-
-		- Returns: the index where a match has been found and the item that has matched the predicate.
-	*/
+	/// Find the colsest match to the given predicate in an array with the given start index.
+	///
+	/// - Parameters:
+	///    - index: The index where the search should start from.
+	///    - predicate: The logic which should be matched.
+	///    - element: The element that is being checked for a match.
+	///
+	/// - Returns: the index where a match has been found and the item that has matched the predicate.
 	func closestMatch(index: Index, predicate: (_ element: Element) -> Bool) -> (Int, Element)? {
 		if predicate(self[index]) {
 			return (index, self[index])

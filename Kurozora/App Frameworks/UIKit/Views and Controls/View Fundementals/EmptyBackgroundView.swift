@@ -8,9 +8,7 @@
 
 import UIKit
 
-/**
-	An object that manages the content for an empty view such as a table view or a collection view.
-*/
+/// An object that manages the content for an empty view such as a table view or a collection view.
 class EmptyBackgroundView: UIView {
 	// MARK: - Properties
 	/// The property managing the content view.
@@ -119,19 +117,18 @@ class EmptyBackgroundView: UIView {
 	var didTapButtonHandle: (() -> Void)?
 
 	// MARK: - Initializers
-	/**
-		Initializes and returns a newly allocated view object with the specified data.
-
-		The new view object must be inserted into the view hierarchy of a window before it can be used. If you create a view object programmatically, this method is the designated initializer for the `EmptyBackgroundView` class. Subclasses can override this method to perform any custom initialization but must call super at the beginning of their implementation.
-
-		If you use Interface Builder to design your interface, this method is not called when your view objects are subsequently loaded from the nib file. Objects in a nib file are reconstituted and then initialized using their [init(coder:)](apple-reference-documentation://ls%2Fdocumentation%2Ffoundation%2Fnscoding%2F1416145-init) method, which modifies the attributes of the view to match the attributes stored in the nib file. For detailed information about how views are loaded from a nib file, see [Resource Programming Guide](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/LoadingResources/Introduction/Introduction.html#//apple_ref/doc/uid/10000051i).
-
-		- Parameter image: An object that contains the image data you want to display.
-		- Parameter title: The string you want to display as the title.
-		- Parameter detail: The string you want to display as the detail.
-		- Parameter buttonTitle: The string you want to display as the button's title.
-		- Parameter buttonAction: The method you want to be called when the button is tapped.
-	*/
+	/// Initializes and returns a newly allocated view object with the specified data.
+	///
+	/// The new view object must be inserted into the view hierarchy of a window before it can be used. If you create a view object programmatically, this method is the designated initializer for the `EmptyBackgroundView` class. Subclasses can override this method to perform any custom initialization but must call super at the beginning of their implementation.
+	///
+	/// If you use Interface Builder to design your interface, this method is not called when your view objects are subsequently loaded from the nib file. Objects in a nib file are reconstituted and then initialized using their [init(coder:)](apple-reference-documentation://ls%2Fdocumentation%2Ffoundation%2Fnscoding%2F1416145-init) method, which modifies the attributes of the view to match the attributes stored in the nib file. For detailed information about how views are loaded from a nib file, see [Resource Programming Guide](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/LoadingResources/Introduction/Introduction.html#//apple_ref/doc/uid/10000051i).
+	///
+	/// - Parameters:
+	///    - image: An object that contains the image data you want to display.
+	///    - title: The string you want to display as the title.
+	///    - detail: The string you want to display as the detail.
+	///    - buttonTitle: The string you want to display as the button's title.
+	///    - buttonAction: The method you want to be called when the button is tapped.
 	convenience init(image: UIImage?, title: String, detail: String?, buttonTitle: String?, buttonAction: (() -> Void)?) {
 		self.init(frame: .zero)
 		self.configureInitialView()
@@ -160,11 +157,9 @@ class EmptyBackgroundView: UIView {
 		self.addSubview(self.contentView)
 	}
 
-	/**
-		Configures the image view with the given image object.
-
-		- Parameter image: The object containing the image data to be displayed.
-	*/
+	/// Configures the image view with the given image object.
+	///
+	/// - Parameter image: The object containing the image data to be displayed.
 	func configureImageView(image: UIImage) {
 		self.imageView.image = image
 
@@ -175,12 +170,11 @@ class EmptyBackgroundView: UIView {
 		}
 	}
 
-	/**
-		Configures the labels with the given strings.
-
-		- Parameter title: The string that will be displayed as the title.
-		- Parameter detail: The string that will be displayed as the detail.
-	*/
+	/// Configures the labels with the given strings.
+	///
+	/// - Parameters:
+	///    - title: The string that will be displayed as the title.
+	///    - detail: The string that will be displayed as the detail.
 	func configureLabels(title: String, detail: String?) {
 		self.titleLabel.text = title
 		self.detailLabel.text = detail
@@ -198,12 +192,11 @@ class EmptyBackgroundView: UIView {
 		}
 	}
 
-	/**
-		Configures the button with the given data.
-
-		- Parameter title: The string that will be displayed as the button's title.
-		- Parameter handler: The method to be called when the button is tapped.
-	*/
+	/// Configures the button with the given data.
+	///
+	/// - Parameters:
+	///    - title: The string that will be displayed as the button's title.
+	///    - handler: The method to be called when the button is tapped.
 	func configureButton(title: String, handler: (() -> Void)?) {
 		self.button.setAttributedTitle(.init(string: title), for: .normal)
 		self.didTapButtonHandle = handler
@@ -216,11 +209,9 @@ class EmptyBackgroundView: UIView {
 		}
 	}
 
-	/**
-		Handles the method called when a button is pressed.
-
-		- Parameter sender: The `UIButton` object calling the method.
-	*/
+	/// Handles the method called when a button is pressed.
+	///
+	/// - Parameter sender: The `UIButton` object calling the method.
 	@objc func didTapButton(_ sender: UIButton) {
 		self.didTapButtonHandle?()
 	}

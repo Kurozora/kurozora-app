@@ -10,17 +10,15 @@ import UIKit
 import KurozoraKit
 
 enum CharacterDetail {
-	/**
-		List of charcter section types.
-
-		```
-		case header = 0
-		case about
-		case information
-		case shows
-		case people
-		```
-	*/
+	/// List of charcter section types.
+	///
+	/// ```
+	/// case header = 0
+	/// case about
+	/// case information
+	/// case shows
+	/// case people
+	/// ```
 	enum Section: Int, CaseIterable {
 		// MARK: - Cases
 		case header = 0
@@ -79,13 +77,11 @@ enum CharacterDetail {
 		}
 
 		// MARK: - Functions
-		/**
-			The cell identifier string of a character section type.
-
-			- Parameter row: The row integer used to determine the cell reuse identifier.
-
-			- Returns: The cell identifier string of a character section.
-		*/
+		/// The cell identifier string of a character section type.
+		///
+		/// - Parameter row: The row integer used to determine the cell reuse identifier.
+		///
+		/// - Returns: The cell identifier string of a character section.
 		func identifierString(for row: Int = 0) -> String {
 			switch self {
 			case .header:
@@ -105,9 +101,7 @@ enum CharacterDetail {
 
 // MARK: - Information
 extension CharacterDetail {
-	/**
-		Set of available character information types.
-	*/
+	/// Set of available character information types.
 	enum Information: Int, CaseIterable {
 		// MARK: - Cases
 		case debut = 0
@@ -159,13 +153,11 @@ extension CharacterDetail {
 		}
 
 		// MARK: - Functions
-		/**
-			Returns the required information from the given object.
-
-			- Parameter character: The object used to extract the infromation from.
-
-			Returns: the required information from the given object.
-		*/
+		/// Returns the required information from the given object.
+		///
+		/// - Parameter character: The object used to extract the infromation from.
+		///
+		/// Returns: the required information from the given object.
 		func information(from character: Character) -> String? {
 			switch self {
 			case .debut:
@@ -217,52 +209,44 @@ extension CharacterDetail {
 			return nil
 		}
 
-		/**
-			Returns the required primary information from the given object.
-
-			- Parameter character: The object used to extract the infromation from.
-
-			- Returns: the required primary information from the given object.
-		*/
+		/// Returns the required primary information from the given object.
+		///
+		/// - Parameter character: The object used to extract the infromation from.
+		///
+		/// - Returns: the required primary information from the given object.
 		func primaryInformation(from character: Character) -> String? {
 			switch self {
 			default: return nil
 			}
 		}
 
-		/**
-			Returns the required secondary information from the given object.
-
-			- Parameter character: The object used to extract the infromation from.
-
-			- Returns: the required secondary information from the given object.
-		*/
+		/// Returns the required secondary information from the given object.
+		///
+		/// - Parameter character: The object used to extract the infromation from.
+		///
+		/// - Returns: the required secondary information from the given object.
 		func secondaryInformation(from character: Character) -> String? {
 			switch self {
 			default: return nil
 			}
 		}
 
-		/**
-			Returns the required primary image from the given object.
-
-			- Parameter character: The object used to extract the infromation from.
-
-			- Returns: the required primary image from the given object.
-		*/
+		/// Returns the required primary image from the given object.
+		///
+		/// - Parameter character: The object used to extract the infromation from.
+		///
+		/// - Returns: the required primary image from the given object.
 		func primaryImage(from character: Character) -> UIImage? {
 			switch self {
 			default: return nil
 			}
 		}
 
-		/**
-			Returns the footnote from the given object.
-
-			- Parameter character: The object used to extract the footnote from.
-
-			- Returns: the footnote from the given object.
-		*/
+		/// Returns the footnote from the given object.
+		///
+		/// - Parameter character: The object used to extract the footnote from.
+		///
+		/// - Returns: the footnote from the given object.
 		func footnote(from character: Character) -> String? {
 			switch self {
 			case .debut:

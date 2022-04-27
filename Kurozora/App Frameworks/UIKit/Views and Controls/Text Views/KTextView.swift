@@ -8,11 +8,9 @@
 
 import UIKit
 
-/**
-	A themed, scrollable, multiline text region.
-
-	KTextView supports the display of text using custom style information and also supports text editing. You typically use a text view to display multiple lines of text, such as when displaying the body of a large text document.
-*/
+/// A themed, scrollable, multiline text region.
+///
+/// KTextView supports the display of text using custom style information and also supports text editing. You typically use a text view to display multiple lines of text, such as when displaying the body of a large text document.
 class KTextView: UITextView {
 	// MARK: - Initializers
 	override init(frame: CGRect, textContainer: NSTextContainer?) {

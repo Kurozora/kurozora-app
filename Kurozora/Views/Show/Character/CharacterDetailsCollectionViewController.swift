@@ -53,13 +53,11 @@ class CharacterDetailsCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - Initializers
-	/**
-		Initialize a new instance of CharacterDetailsCollectionViewController with the given character id.
-
-		- Parameter characterID: The character id to use when initializing the view.
-
-		- Returns: an initialized instance of CharacterDetailsCollectionViewController.
-	*/
+	/// Initialize a new instance of CharacterDetailsCollectionViewController with the given character id.
+	///
+	/// - Parameter characterID: The character id to use when initializing the view.
+	///
+	/// - Returns: an initialized instance of CharacterDetailsCollectionViewController.
 	static func `init`(with characterID: Int) -> CharacterDetailsCollectionViewController {
 		if let characterDetailsCollectionViewController = R.storyboard.characters.characterDetailsCollectionViewController() {
 			characterDetailsCollectionViewController.characterID = characterID
@@ -69,13 +67,11 @@ class CharacterDetailsCollectionViewController: KCollectionViewController {
 		fatalError("Failed to instantiate CharacterDetailsCollectionViewController with the given character id.")
 	}
 
-	/**
-		Initialize a new instance of CharacterDetailsCollectionViewController with the given character object.
-
-		- Parameter show: The `Show` object to use when initializing the view controller.
-
-		- Returns: an initialized instance of CharacterDetailsCollectionViewController.
-	*/
+	/// Initialize a new instance of CharacterDetailsCollectionViewController with the given character object.
+	///
+	/// - Parameter show: The `Show` object to use when initializing the view controller.
+	///
+	/// - Returns: an initialized instance of CharacterDetailsCollectionViewController.
 	static func `init`(with character: Character) -> CharacterDetailsCollectionViewController {
 		if let characterDetailsCollectionViewController = R.storyboard.characters.characterDetailsCollectionViewController() {
 			characterDetailsCollectionViewController.character = character

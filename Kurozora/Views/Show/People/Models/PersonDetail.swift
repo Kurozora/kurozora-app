@@ -10,16 +10,14 @@ import UIKit
 import KurozoraKit
 
 enum PersonDetail {
-	/**
-		List of person section type.
-
-		```
-		case header = 0
-		case about
-		case information
-		case shows
-		```
-	*/
+	/// List of person section type.
+	///
+	/// ```
+	/// case header = 0
+	/// case about
+	/// case information
+	/// case shows
+	/// ```
 	enum Section: Int, CaseIterable {
 		// MARK: - Cases
 		case header = 0
@@ -78,13 +76,11 @@ enum PersonDetail {
 		}
 
 		// MARK: - Functions
-		/**
-			The cell identifier string of a character section.
-
-			- Parameter row: The row integer used to determine the cell reuse identifier.
-
-			- Returns: The cell identifier string of a character section.
-		*/
+		/// The cell identifier string of a character section.
+		///
+		/// - Parameter row: The row integer used to determine the cell reuse identifier.
+		///
+		/// - Returns: The cell identifier string of a character section.
 		func identifierString(for row: Int = 0) -> String {
 			switch self {
 			case .header:
@@ -104,9 +100,7 @@ enum PersonDetail {
 
 // MARK: Information
 extension PersonDetail {
-	/**
-		Set of available person infromation types.
-	*/
+	/// Set of available person infromation types.
 	enum Information: Int, CaseIterable {
 		// MARK: - Cases
 		case aliases = 0
@@ -151,13 +145,11 @@ extension PersonDetail {
 		}
 
 		// MARK: - Functions
-		/**
-			Returns the required information from the given object.
-
-			- Parameter person: The object used to extract the infromation from.
-
-			Returns: the required information from the given object.
-		*/
+		/// Returns the required information from the given object.
+		///
+		/// - Parameter person: The object used to extract the infromation from.
+		///
+		/// Returns: the required information from the given object.
 		func information(from person: Person) -> String? {
 			switch self {
 			case .aliases:
@@ -180,52 +172,44 @@ extension PersonDetail {
 			return nil
 		}
 
-		/**
-			Returns the required primary information from the given object.
-
-			- Parameter person: The object used to extract the infromation from.
-
-			- Returns: the required primary information from the given object.
-		*/
+		/// Returns the required primary information from the given object.
+		///
+		/// - Parameter person: The object used to extract the infromation from.
+		///
+		/// - Returns: the required primary information from the given object.
 		func primaryInformation(from person: Person) -> String? {
 			switch self {
 			default: return nil
 			}
 		}
 
-		/**
-			Returns the required secondary information from the given object.
-
-			- Parameter person: The object used to extract the infromation from.
-
-			- Returns: the required secondary information from the given object.
-		*/
+		/// Returns the required secondary information from the given object.
+		///
+		/// - Parameter person: The object used to extract the infromation from.
+		///
+		/// - Returns: the required secondary information from the given object.
 		func secondaryInformation(from person: Person) -> String? {
 			switch self {
 			default: return nil
 			}
 		}
 
-		/**
-			Returns the required primary image from the given object.
-
-			- Parameter person: The object used to extract the infromation from.
-
-			- Returns: the required primary image from the given object.
-		*/
+		/// Returns the required primary image from the given object.
+		///
+		/// - Parameter person: The object used to extract the infromation from.
+		///
+		/// - Returns: the required primary image from the given object.
 		func primaryImage(from person: Person) -> UIImage? {
 			switch self {
 			default: return nil
 			}
 		}
 
-		/**
-			Returns the footnote from the given object.
-
-			- Parameter person: The object used to extract the footnote from.
-
-			- Returns: the footnote from the given object.
-		*/
+		/// Returns the footnote from the given object.
+		///
+		/// - Parameter person: The object used to extract the footnote from.
+		///
+		/// - Returns: the footnote from the given object.
 		func footnote(from person: Person) -> String? {
 			switch self {
 			case .age:

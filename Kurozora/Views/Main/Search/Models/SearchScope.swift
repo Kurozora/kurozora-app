@@ -8,15 +8,13 @@
 
 import Foundation
 
-/**
-	List of search scopes used to filter search results.
-
-	```
-	case show = 0
-	case library = 1
-	case user = 2
-	```
-*/
+/// List of search scopes used to filter search results.
+///
+/// ```
+/// case show = 0
+/// case library = 1
+/// case user = 2
+/// ```
 enum SearchScope: Int {
 	/// Search in shows list.
 	case show = 0

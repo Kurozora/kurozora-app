@@ -8,13 +8,11 @@
 
 import UIKit
 
-/**
-	The visual representation of a single promotional header row in a table view.
-
-	A `ServiceHeaderTableViewCell` object is a specialized type of view that displays header information about the content of a table view.
-
-	- Tag: ServiceHeaderTableViewCell
-*/
+/// The visual representation of a single promotional header row in a table view.
+///
+/// A `ServiceHeaderTableViewCell` object is a specialized type of view that displays header information about the content of a table view.
+///
+/// - Tag: ServiceHeaderTableViewCell
 class ServiceHeaderTableViewCell: KTableViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var headlineLabel: KLabel!

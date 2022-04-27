@@ -9,15 +9,13 @@
 import Foundation
 
 extension KNotification {
-	/**
-		List of notification alert styles
-
-		```
-		case basic = 0
-		case icon = 1
-		case status = 2
-		```
-	*/
+	/// List of notification alert styles
+	///
+	/// ```
+	/// case basic = 0
+	/// case icon = 1
+	/// case status = 2
+	/// ```
 	enum AlertStyle: Int {
 		/// The notification showed has a text only.
 		case basic = 0

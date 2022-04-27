@@ -8,13 +8,11 @@
 
 import UIKit
 
-/**
-	A themed view that displays one or more lines of read-only text, often used in conjunction with controls to describe their intended purpose.
-
-	The color of the labels matches with the currently selected theme's tint color.
-	You can add labels to your interface programmatically or by using Interface Builder.
-	The view also allows users to long press to copy the text within the label.
-*/
+/// A themed view that displays one or more lines of read-only text, often used in conjunction with controls to describe their intended purpose.
+///
+/// The color of the labels matches with the currently selected theme's tint color.
+/// You can add labels to your interface programmatically or by using Interface Builder.
+/// The view also allows users to long press to copy the text within the label.
 class KCopyableTintedLabel: KCopyableLabel {
 	// MARK: - Functions
 	override func sharedInit() {

@@ -9,25 +9,21 @@
 import KurozoraKit
 
 extension Episode.Attributes {
-	/**
-		Set the poster.
-
-		If the episode has no poster image, then a placeholder episode poster image is returned.
-
-		- Parameter imageView: The image view on which to set the poster image.
-	*/
+	/// Set the poster.
+	///
+	/// If the episode has no poster image, then a placeholder episode poster image is returned.
+	///
+	/// - Parameter imageView: The image view on which to set the poster image.
 	func posterImage(imageView: UIImageView) {
 		let placeholderImage = R.image.placeholders.showPoster()!
 		imageView.setImage(with: self.poster?.url ?? "", placeholder: placeholderImage)
 	}
 
-	/**
-		Set the banner.
-
-		If the episode has no banner image, then a placeholder episode banner image is returned.
-
-		- Parameter imageView: The image view on which to set the banner image.
-	*/
+	/// Set the banner.
+	///
+	/// If the episode has no banner image, then a placeholder episode banner image is returned.
+	///
+	/// - Parameter imageView: The image view on which to set the banner image.
 	func bannerImage(imageView: UIImageView) {
 		let placeholderImage = R.image.placeholders.episodeBanner()!
 		imageView.setImage(with: self.banner?.url ?? self.poster?.url ?? "", placeholder: placeholderImage)

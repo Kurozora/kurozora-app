@@ -8,9 +8,7 @@
 
 import UIKit
 
-/**
-	- Tag: ProductHeaderTableViewCell
-*/
+/// - Tag: ProductHeaderTableViewCell
 class ProductHeaderTableViewCell: UITableViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var primaryLabel: KLabel!

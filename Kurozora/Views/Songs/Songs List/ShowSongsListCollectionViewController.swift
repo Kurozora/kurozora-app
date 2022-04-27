@@ -320,9 +320,7 @@ extension ShowSongsListCollectionViewController: MusicLockupCollectionViewCellDe
 
 // MARK: - SectionLayoutKind
 extension ShowSongsListCollectionViewController {
-	/**
-		List of available Section Layout Kind types.
-	*/
+	/// List of available Section Layout Kind types.
 	enum SectionLayoutKind: Hashable {
 		// MARK: - Cases
 		/// Indicates a header section layout type.
@@ -347,9 +345,7 @@ extension ShowSongsListCollectionViewController {
 
 // MARK: - ItemKind
 extension ShowSongsListCollectionViewController {
-	/**
-		List of available Item Kind types.
-	*/
+	/// List of available Item Kind types.
 	enum ItemKind: Hashable {
 		// MARK: - Cases
 		/// Indicates the item kind contains a `ShowSong` object.

@@ -10,15 +10,13 @@ import UIKit
 import KurozoraKit
 
 extension KKLibrary {
-	/**
-		List of library layout styles.
-
-		```
-		case detailed = 0
-		case compact = 1
-		case list = 2
-		```
-	*/
+	/// List of library layout styles.
+	///
+	/// ```
+	/// case detailed = 0
+	/// case compact = 1
+	/// case list = 2
+	/// ```
 	enum CellStyle: Int {
 		// MARK: - Cases
 		/// Indicates that the cell has the `detailed` style.
