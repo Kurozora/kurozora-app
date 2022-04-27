@@ -94,7 +94,8 @@ extension HomeCollectionViewController {
 			actionBaseExploreCollectionViewCell?.actionItem = actionsArray?[indexPath.item]
 			return actionBaseExploreCollectionViewCell
 		}
-		dataSource.supplementaryViewProvider = { (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
+		dataSource.supplementaryViewProvider = { [weak self] (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
+			guard let self = self else { return nil }
 			let exploreCategoriesCount = self.exploreCategories.count
 
 			// Get a supplementary view of the desired kind.

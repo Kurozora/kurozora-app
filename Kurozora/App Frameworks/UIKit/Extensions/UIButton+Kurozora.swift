@@ -10,12 +10,11 @@ import UIKit
 import Kingfisher
 
 extension UIButton {
-	/**
-		Sets up the image view of the button with the given image url and placeholder. The downloaded image is also saved in the cache storage, so subsequent requests will load from the cache if the image is found.
-
-		- Parameter urlString: The url string from where the image should be downloaded.
-		- Parameter placeholder: The placeholder to show until the downloaded image is loaded or in case the url is dead.
-	*/
+	/// Sets up the image view of the button with the given image url and placeholder. The downloaded image is also saved in the cache storage, so subsequent requests will load from the cache if the image is found.
+	///
+	/// - Parameters:
+	///    - urlString: The url string from where the image should be downloaded.
+	///    - placeholder: The placeholder to show until the downloaded image is loaded or in case the url is dead.
 	func setImage(with urlString: String, placeholder: UIImage) {
 		if !urlString.isEmpty, let imageURL = URL(string: urlString) {
 			KF.url(imageURL)

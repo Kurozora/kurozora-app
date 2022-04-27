@@ -23,7 +23,8 @@ extension ThemesCollectionViewController {
 		snapshot.appendSections([.main])
 		snapshot.appendItems(self.themes)
 		self.snapshot = snapshot
-		self.dataSource.apply(snapshot) {
+		self.dataSource.apply(snapshot) { [weak self] in
+			guard let self = self else { return }
 			self.toggleEmptyDataView()
 		}
 	}

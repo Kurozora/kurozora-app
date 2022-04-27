@@ -14,7 +14,9 @@ extension UserNotification {
 	-> UIContextMenuConfiguration? {
 		let identifier = userInfo?["indexPath"] as? NSCopying
 
-		return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
+		return UIContextMenuConfiguration(identifier: identifier, previewProvider: { [weak self] in
+			guard let self = self else { return nil }
+
 			switch KNotification.CustomType(rawValue: self.attributes.type) {
 			case .follower:
 				if let userID = self.attributes.payload.userID {
@@ -30,7 +32,8 @@ extension UserNotification {
 			}
 
 			return nil
-		}, actionProvider: { _ in
+		}, actionProvider: { [weak self] _ in
+			guard let self = self else { return nil }
 			return self.makeContextMenu(in: viewController, userInfo: userInfo)
 		})
 	}
@@ -42,7 +45,8 @@ extension UserNotification {
 		let readStatus: ReadStatus = self.attributes.readStatus == .unread ? .read : .unread
 		let title = readStatus == .read ? "Mark as Read" : "Mark as Unread"
 		let image = readStatus == .read ? UIImage(systemName: "circlebadge") : UIImage(systemName: "circlebadge.fill")
-		let updateReadStatusAction = UIAction(title: title, image: image) { _ in
+		let updateReadStatusAction = UIAction(title: title, image: image) { [weak self] _ in
+			guard let self = self else { return }
 			if let indexPath = userInfo?["indexPath"] as? IndexPath {
 				self.update(at: indexPath, withReadStatus: readStatus)
 			}
@@ -50,7 +54,8 @@ extension UserNotification {
 		menuElements.append(updateReadStatusAction)
 
 		// Delete action
-		let deleteAction = UIAction(title: "Remove Notification", image: UIImage(systemName: "minus.circle"), attributes: .destructive) { _ in
+		let deleteAction = UIAction(title: "Remove Notification", image: UIImage(systemName: "minus.circle"), attributes: .destructive) { [weak self] _ in
+			guard let self = self else { return }
 			if let indexPath = userInfo?["indexPath"] as? IndexPath {
 				self.remove(at: indexPath)
 			}
@@ -61,12 +66,11 @@ extension UserNotification {
 		return UIMenu(title: "", children: menuElements)
 	}
 
-	/**
-		Update the read/unread status of the user's notification.
-
-		- Parameter indexPath: The index path of the notification.
-		- Parameter readStatus: The `ReadStatus` value indicating whether to mark the notification as read or unread.
-	*/
+	/// Update the read/unread status of the user's notification.
+	///
+	/// - Parameters:
+	///    - indexPath: The index path of the notification.
+	///    - readStatus: The `ReadStatus` value indicating whether to mark the notification as read or unread.
 	func update(at indexPath: IndexPath, withReadStatus readStatus: ReadStatus) {
 		KService.updateNotification(self.id, withReadStatus: readStatus) { [weak self] result in
 			guard let self = self else { return }
@@ -80,11 +84,9 @@ extension UserNotification {
 		}
 	}
 
-	/**
-		Remove the notification from the user's notification list.
-
-		- Parameter indexPath: The index path of the notification.
-	*/
+	/// Remove the notification from the user's notification list.
+	///
+	/// - Parameter indexPath: The index path of the notification.
 	func remove(at indexPath: IndexPath) {
 		KService.deleteNotification(self.id) { result in
 			switch result {
@@ -98,12 +100,11 @@ extension UserNotification {
 }
 
 extension Array where Element == UserNotification {
-	/**
-		Batch update the read/unread status of the user's notifications.
-
-		- Parameter indexPaths: The index paths of the notifications.
-		- Parameter readStatus: The `ReadStatus` value indicating whether to mark the notification as read or unread.
-	*/
+	/// Batch update the read/unread status of the user's notifications.
+	///
+	/// - Parameters:
+	///    - indexPaths: The index paths of the notifications.
+	///    - readStatus: The `ReadStatus` value indicating whether to mark the notification as read or unread.
 	func batchUpdate(at indexPaths: [IndexPath]? = nil, for notificationIDs: String, withReadStatus readStatus: ReadStatus) {
 		KService.updateNotification(notificationIDs, withReadStatus: readStatus) { result in
 			switch result {

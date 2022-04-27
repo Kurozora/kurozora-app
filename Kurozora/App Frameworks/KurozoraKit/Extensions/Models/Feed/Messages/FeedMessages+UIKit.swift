@@ -14,9 +14,10 @@ extension FeedMessage {
 	-> UIContextMenuConfiguration? {
 		let identifier = userInfo?["identifier"] as? NSCopying
 
-		return UIContextMenuConfiguration(identifier: identifier, previewProvider: nil, actionProvider: { _ in
+		return UIContextMenuConfiguration(identifier: identifier, previewProvider: nil) { [weak self] _ in
+			guard let self = self else { return nil }
 			return self.makeContextMenu(in: viewController, userInfo: userInfo)
-		})
+		}
 	}
 
 	private func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?) -> UIMenu {
@@ -26,18 +27,22 @@ extension FeedMessage {
 			// Heart, reply and reshare
 			var heartAction: UIAction
 			if self.attributes.isHearted ?? false {
-				heartAction = UIAction(title: "Unlike", image: UIImage(systemName: "heart.slash.fill")) { _ in
+				heartAction = UIAction(title: "Unlike", image: UIImage(systemName: "heart.slash.fill")) { [weak self] _ in
+					guard let self = self else { return }
 					self.heartMessage(via: viewController, userInfo: userInfo)
 				}
 			} else {
-				heartAction = UIAction(title: "Like", image: UIImage(systemName: "heart.fill")) { _ in
+				heartAction = UIAction(title: "Like", image: UIImage(systemName: "heart.fill")) { [weak self] _ in
+					guard let self = self else { return }
 					self.heartMessage(via: viewController, userInfo: userInfo)
 				}
 			}
-			let replyAction = UIAction(title: "Reply", image: #imageLiteral(resourceName: "Symbols/message.left.and.message.right.fill")) { _ in
+			let replyAction = UIAction(title: "Reply", image: #imageLiteral(resourceName: "Symbols/message.left.and.message.right.fill")) { [weak self] _ in
+				guard let self = self else { return }
 				self.replyToMessage(via: viewController, userInfo: userInfo)
 			}
-			let reShareAction = UIAction(title: "Re-share", image: UIImage(systemName: "square.and.arrow.up.on.square.fill")) { _ in
+			let reShareAction = UIAction(title: "Re-share", image: UIImage(systemName: "square.and.arrow.up.on.square.fill")) { [weak self] _ in
+				guard let self = self else { return }
 				self.reShareMessage(via: viewController, userInfo: userInfo)
 			}
 
@@ -48,14 +53,16 @@ extension FeedMessage {
 			// Edit and delete
 			if let currentUserID = User.current?.id, let messageUserID = self.relationships.users.data.first?.id, currentUserID == messageUserID {
 				// Edit action
-				let editAction = UIAction(title: "Edit", image: UIImage(systemName: "pencil.circle.fill")) { _ in
+				let editAction = UIAction(title: "Edit", image: UIImage(systemName: "pencil.circle.fill")) { [weak self] _ in
+					guard let self = self else { return }
 					self.editMessage(via: viewController, userInfo: userInfo)
 				}
 				menuElements.append(editAction)
 
 				var deleteMenuElements: [UIMenuElement] = []
 				// Delete action
-				let deleteAction = UIAction(title: "Delete Message", attributes: .destructive) { _ in
+				let deleteAction = UIAction(title: "Delete Message", attributes: .destructive) { [weak self] _ in
+					guard let self = self else { return }
 					if let indexPath = userInfo?["indexPath"] as? IndexPath {
 						self.remove(at: indexPath)
 					}
@@ -68,7 +75,8 @@ extension FeedMessage {
 
 		var userMenuElements: [UIMenuElement] = []
 		// Replies action
-		let showRepliesAction = UIAction(title: "Show Replies", image: #imageLiteral(resourceName: "Symbols/message.left.and.message.right.fill")) { _ in
+		let showRepliesAction = UIAction(title: "Show Replies", image: #imageLiteral(resourceName: "Symbols/message.left.and.message.right.fill")) { [weak self] _ in
+			guard let self = self else { return }
 			self.visitRepliesView(from: viewController)
 		}
 		userMenuElements.append(showRepliesAction)
@@ -76,14 +84,16 @@ extension FeedMessage {
 		// Username action
 		if let user = self.relationships.users.data.first {
 			let username = user.attributes.username
-			let userAction = UIAction(title: "Show " + username + "'s Profile", image: UIImage(systemName: "person.crop.circle.fill")) { _ in
+			let userAction = UIAction(title: "Show " + username + "'s Profile", image: UIImage(systemName: "person.crop.circle.fill")) { [weak self] _ in
+				guard let self = self else { return }
 				self.visitOriginalPosterProfile(from: viewController)
 			}
 			userMenuElements.append(userAction)
 		}
 
 		// Create "share" element
-		let shareAction = UIAction(title: "Share Message", image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
+		let shareAction = UIAction(title: "Share Message", image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
+			guard let self = self else { return }
 			self.openShareSheet(on: viewController)
 		}
 		userMenuElements.append(shareAction)
@@ -94,7 +104,8 @@ extension FeedMessage {
 		if User.isSignedIn {
 			// Report message action
 			var reportMenuElements: [UIMenuElement] = []
-			let reportAction = UIAction(title: "Report Message", image: UIImage(systemName: "exclamationmark.circle.fill"), attributes: .destructive) { _ in
+			let reportAction = UIAction(title: "Report Message", image: UIImage(systemName: "exclamationmark.circle.fill"), attributes: .destructive) { [weak self] _ in
+				guard let self = self else { return }
 				self.reportMessage()
 			}
 			reportMenuElements.append(reportAction)
@@ -107,12 +118,11 @@ extension FeedMessage {
 		return UIMenu(title: "", children: menuElements)
 	}
 
-	/**
-		Heart or un-heart the message.
-
-		- Parameter viewController: The view controller initiating the action.
-		- Parameter userInfo: Any infromation passed by the user.
-	*/
+	/// Heart or un-heart the message.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller initiating the action.
+	///    - userInfo: Any infromation passed by the user.
 	func heartMessage(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?) {
 		WorkflowController.shared.isSignedIn {
 			KService.heartMessage(self.id) { [weak self] result in
@@ -130,24 +140,22 @@ extension FeedMessage {
 		}
 	}
 
-	/**
-		Presents the reply view for the current message.
-
-		- Parameter viewController: The view controller initiating the action.
-		- Parameter userInfo: Any infromation passed by the user.
-	*/
+	/// Presents the reply view for the current message.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller initiating the action.
+	///    - userInfo: Any infromation passed by the user.
 	func replyToMessage(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?) {
 		WorkflowController.shared.isSignedIn {
 			self.openReplyTextEditor(via: viewController, userInfo: userInfo, isEditingMessage: false)
 		}
 	}
 
-	/**
-		Presents the re-share view for the current message.
-
-		- Parameter viewController: The view controller initiating the action.
-		- Parameter userInfo: Any infromation passed by the user.
-	*/
+	/// Presents the re-share view for the current message.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller initiating the action.
+	///    - userInfo: Any infromation passed by the user.
 	func reShareMessage(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?) {
 		WorkflowController.shared.isSignedIn {
 			if !self.attributes.isReShared {
@@ -158,13 +166,12 @@ extension FeedMessage {
 		}
 	}
 
-	/**
-		Presents the reply text editor on the given view controller. Otherwise the view is presented on the top most view controller.
-
-		- Parameter viewController: The view controller initiating the action.
-		- Parameter userInfo: Any infromation passed by the user.
-		- Parameter isEditingMessage: Whether the user is editing a message.
-	*/
+	/// Presents the reply text editor on the given view controller. Otherwise the view is presented on the top most view controller.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller initiating the action.
+	///    - userInfo: Any infromation passed by the user.
+	///    - isEditingMessage: Whether the user is editing a message.
 	func openReplyTextEditor(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?, isEditingMessage: Bool) {
 		if let kfmReplyTextEditorViewController = R.storyboard.textEditor.kfmReplyTextEditorViewController() {
 			kfmReplyTextEditorViewController.delegate = viewController as? KFeedMessageTextEditorViewDelegate
@@ -177,7 +184,7 @@ extension FeedMessage {
 				kfmReplyTextEditorViewController.opFeedMessage = self
 			}
 
-			let kurozoraNavigationController = KNavigationController.init(rootViewController: kfmReplyTextEditorViewController)
+			let kurozoraNavigationController = KNavigationController(rootViewController: kfmReplyTextEditorViewController)
 			kurozoraNavigationController.presentationController?.delegate = kfmReplyTextEditorViewController
 			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
 			kurozoraNavigationController.sheetPresentationController?.detents = [.medium(), .large()]
@@ -188,13 +195,12 @@ extension FeedMessage {
 		}
 	}
 
-	/**
-		Presents the re-share text editor on the given view controller. Otherwise the view is presented on the top most view controller.
-
-		- Parameter viewController: The view controller initiating the action.
-		- Parameter userInfo: Any infromation passed by the user.
-		- Parameter isEditingMessage: Whether the user is editing a message.
-	*/
+	/// Presents the re-share text editor on the given view controller. Otherwise the view is presented on the top most view controller.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller initiating the action.
+	///    - userInfo: Any infromation passed by the user.
+	///    - isEditingMessage: Whether the user is editing a message.
 	func openReShareTextEditor(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?, isEditingMessage: Bool) {
 		if let kfmReShareTextEditorViewController = R.storyboard.textEditor.kfmReShareTextEditorViewController() {
 			kfmReShareTextEditorViewController.delegate = viewController as? KFeedMessageTextEditorViewDelegate
@@ -207,7 +213,7 @@ extension FeedMessage {
 				kfmReShareTextEditorViewController.opFeedMessage = self
 			}
 
-			let kurozoraNavigationController = KNavigationController.init(rootViewController: kfmReShareTextEditorViewController)
+			let kurozoraNavigationController = KNavigationController(rootViewController: kfmReShareTextEditorViewController)
 			kurozoraNavigationController.presentationController?.delegate = kfmReShareTextEditorViewController
 			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
 			kurozoraNavigationController.sheetPresentationController?.detents = [.medium(), .large()]
@@ -218,13 +224,12 @@ extension FeedMessage {
 		}
 	}
 
-	/**
-		Presents the default text editor on the given view controller. Otherwise the view is presented on the top most view controller.
-
-		- Parameter viewController: The view controller initiating the action.
-		- Parameter userInfo: Any infromation passed by the user.
-		- Parameter isEditingMessage: Whether the user is editing a message.
-	*/
+	/// Presents the default text editor on the given view controller. Otherwise the view is presented on the top most view controller.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller initiating the action.
+	///    - userInfo: Any infromation passed by the user.
+	///    - isEditingMessage: Whether the user is editing a message.
 	func openDefaultTextEditor(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?, isEditingMessage: Bool) {
 		if let kFeedMessageTextEditorViewController = R.storyboard.textEditor.kFeedMessageTextEditorViewController() {
 			if isEditingMessage {
@@ -232,7 +237,7 @@ extension FeedMessage {
 				kFeedMessageTextEditorViewController.userInfo = userInfo
 			}
 
-			let kurozoraNavigationController = KNavigationController.init(rootViewController: kFeedMessageTextEditorViewController)
+			let kurozoraNavigationController = KNavigationController(rootViewController: kFeedMessageTextEditorViewController)
 			kurozoraNavigationController.presentationController?.delegate = kFeedMessageTextEditorViewController
 			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
 			kurozoraNavigationController.sheetPresentationController?.detents = [.medium(), .large()]
@@ -243,12 +248,11 @@ extension FeedMessage {
 		}
 	}
 
-	/**
-		Presents the edit view for the current message.
-
-		- Parameter viewController: The view controller initiating the action.
-		- Parameter userInfo: Any infromation passed by the user.
-	*/
+	/// Presents the edit view for the current message.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller initiating the action.
+	///    - userInfo: Any infromation passed by the user.
 	func editMessage(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?) {
 		if self.attributes.isReply {
 			self.openReplyTextEditor(via: viewController, userInfo: userInfo, isEditingMessage: true)
@@ -259,11 +263,9 @@ extension FeedMessage {
 		}
 	}
 
-	/**
-		Remove the feed message from the user's messages list.
-
-		- Parameter indexPath: The index path of the message.
-	*/
+	/// Remove the feed message from the user's messages list.
+	///
+	/// - Parameter indexPath: The index path of the message.
 	func remove(at indexPath: IndexPath) {
 		KService.deleteMessage(self.id) { result in
 			switch result {
@@ -277,7 +279,9 @@ extension FeedMessage {
 
 	/// Confirm if the user wants to delete the message.
 	func confirmDelete(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?) {
-		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: "Message will be deleted permanently.") { actionSheetAlertController in
+		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: "Message will be deleted permanently.") { [weak self] actionSheetAlertController in
+			guard let self = self else { return }
+
 			let deleteAction = UIAlertAction(title: "Delete Message", style: .destructive) { _ in
 				if let indexPath = userInfo?["indexPath"] as? IndexPath {
 					self.remove(at: indexPath)
@@ -298,11 +302,9 @@ extension FeedMessage {
 		viewController?.present(actionSheetAlertController, animated: true, completion: nil)
 	}
 
-	/**
-		Presents the details view of the message.
-
-		- Parameter viewController: The view controller initiaing the segue.
-	*/
+	/// Presents the details view of the message.
+	///
+	/// - Parameter viewController: The view controller initiaing the segue.
 	func visitRepliesView(from viewController: UIViewController? = UIApplication.topViewController) {
 		if let fmDetailsTableViewController = R.storyboard.feed.fmDetailsTableViewController() {
 			fmDetailsTableViewController.feedMessageID = self.id
@@ -311,30 +313,27 @@ extension FeedMessage {
 		}
 	}
 
-	/**
-		Presents the profile view for the message poster.
-
-		- Parameter viewController: The view controller initiaing the segue.
-	*/
+	/// Presents the profile view for the message poster.
+	///
+	/// - Parameter viewController: The view controller initiaing the segue.
 	func visitOriginalPosterProfile(from viewController: UIViewController? = UIApplication.topViewController) {
 		guard let user = self.relationships.users.data.first else { return }
 
 		let profileTableViewController = ProfileTableViewController.`init`(with: user.id)
 		profileTableViewController.dismissButtonIsEnabled = true
 
-		let kurozoraNavigationController = KNavigationController.init(rootViewController: profileTableViewController)
+		let kurozoraNavigationController = KNavigationController(rootViewController: profileTableViewController)
 		viewController?.present(kurozoraNavigationController, animated: true)
 	}
 
-	/**
-		Present share sheet for the feed message.
-
-		Make sure to send either the view or the bar button item that's sending the request.
-
-		- Parameter viewController: The view controller presenting the share sheet.
-		- Parameter view: The `UIView` sending the request.
-		- Parameter barButtonItem: The `UIBarButtonItem` sending the request.
-	*/
+	/// Present share sheet for the feed message.
+	///
+	/// Make sure to send either the view or the bar button item that's sending the request.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller presenting the share sheet.
+	///    - view: The `UIView` sending the request.
+	///    - barButtonItem: The `UIBarButtonItem` sending the request.
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
 		var shareText = "\"\(self.attributes.body)\""
 		if let user = self.relationships.users.data.first {
@@ -362,38 +361,38 @@ extension FeedMessage {
 		}
 	}
 
-	/**
-		Builds and presents the feed message actions in an action sheet.
-
-		Make sure to send either the view or the bar button item that's sending the request.
-
-		- Parameter viewController: The view controller presenting the action sheet.
-		- Parameter view: The `UIView` sending the request.
-		- Parameter barButtonItem: The `UIBarButtonItem` sending the request.
-		- Parameter userInfo: Any infromation passed by the user.
-	*/
+	/// Builds and presents the feed message actions in an action sheet.
+	///
+	/// Make sure to send either the view or the bar button item that's sending the request.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller presenting the action sheet.
+	///    - view: The `UIView` sending the request.
+	///    - barButtonItem: The `UIBarButtonItem` sending the request.
+	///    - userInfo: Any infromation passed by the user.
 	func actionList(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil, userInfo: [AnyHashable: Any]?) {
 		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
+			guard let self = self else { return }
 			if User.isSignedIn {
 				// Heart, reply and reshare
 				var heartAction: UIAlertAction
-				if self?.attributes.isHearted ?? false {
+				if self.attributes.isHearted ?? false {
 					heartAction = UIAlertAction(title: "Unlike", style: .default) { _ in
-						self?.heartMessage(via: viewController, userInfo: userInfo)
+						self.heartMessage(via: viewController, userInfo: userInfo)
 					}
 				} else {
 					heartAction = UIAlertAction(title: "Like", style: .default) { _ in
-						self?.heartMessage(via: viewController, userInfo: userInfo)
+						self.heartMessage(via: viewController, userInfo: userInfo)
 					}
 				}
 				let replyAction = UIAlertAction(title: "Reply", style: .default) { _ in
-					self?.replyToMessage(via: viewController, userInfo: userInfo)
+					self.replyToMessage(via: viewController, userInfo: userInfo)
 				}
 				let reShareAction = UIAlertAction(title: "Re-share", style: .default) { _ in
-					self?.reShareMessage(via: viewController, userInfo: userInfo)
+					self.reShareMessage(via: viewController, userInfo: userInfo)
 				}
 
-				if self?.attributes.isHearted ?? false {
+				if self.attributes.isHearted ?? false {
 					heartAction.setValue(UIImage(systemName: "heart.slash.fill"), forKey: "image")
 				} else {
 					heartAction.setValue(UIImage(systemName: "heart.fill"), forKey: "image")
@@ -410,12 +409,12 @@ extension FeedMessage {
 				actionSheetAlertController.addAction(reShareAction)
 
 				// Edit and delete
-				if let currentUserID = User.current?.id, let messageUserID = self?.relationships.users.data.first?.id, currentUserID == messageUserID {
+				if let currentUserID = User.current?.id, let messageUserID = self.relationships.users.data.first?.id, currentUserID == messageUserID {
 					let editAction = UIAlertAction(title: "Edit", style: .default) { _ in
-						self?.editMessage(via: viewController, userInfo: userInfo)
+						self.editMessage(via: viewController, userInfo: userInfo)
 					}
 					let deleteAction = UIAlertAction(title: "Delete", style: .default) { _ in
-						self?.confirmDelete(via: viewController, userInfo: userInfo)
+						self.confirmDelete(via: viewController, userInfo: userInfo)
 					}
 
 					editAction.setValue(UIImage(systemName: "pencil.circle.fill"), forKey: "image")
@@ -430,10 +429,10 @@ extension FeedMessage {
 			}
 
 			// Username action
-			if let user = self?.relationships.users.data.first {
+			if let user = self.relationships.users.data.first {
 				let username = user.attributes.username
 				let userAction = UIAlertAction(title: "Show " + username + "'s Profile", style: .default) { _ in
-					self?.visitOriginalPosterProfile(from: viewController)
+					self.visitOriginalPosterProfile(from: viewController)
 				}
 				userAction.setValue(UIImage(systemName: "person.crop.circle.fill"), forKey: "image")
 				userAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
@@ -442,7 +441,7 @@ extension FeedMessage {
 
 			// Share action
 			let shareAction = UIAlertAction(title: "Share Message", style: .default) { _ in
-				self?.openShareSheet(on: viewController)
+				self.openShareSheet(on: viewController)
 			}
 			shareAction.setValue(UIImage(systemName: "square.and.arrow.up.fill"), forKey: "image")
 			shareAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
@@ -451,7 +450,7 @@ extension FeedMessage {
 			if User.isSignedIn {
 				// Report thread action
 				let reportAction = UIAlertAction(title: "Report Message", style: .destructive) { _ in
-					self?.reportMessage()
+					self.reportMessage()
 				}
 				reportAction.setValue(UIImage(systemName: "exclamationmark.circle.fill"), forKey: "image")
 				reportAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")

@@ -16,7 +16,7 @@ class KurozoraReachabilityViewController: UIViewController {
 	@IBOutlet weak var secondaryLabel: KLabel!
 	@IBOutlet weak var reconnectButton: UIButton! {
 		didSet {
-			reconnectButton.theme_tintColor = KThemePicker.tintColor.rawValue
+			self.reconnectButton.theme_tintColor = KThemePicker.tintColor.rawValue
 		}
 	}
 
@@ -36,7 +36,8 @@ class KurozoraReachabilityViewController: UIViewController {
 		super.viewDidLoad()
 
 		// If the network is reachable show the main controller
-		networkManager.reachability.whenReachable = { _ in
+		self.networkManager.reachability.whenReachable = { [weak self] _ in
+			guard let self = self else { return }
 			KurozoraDelegate.shared.showMainPage(for: self.window, viewController: self)
 		}
 	}
@@ -50,7 +51,8 @@ class KurozoraReachabilityViewController: UIViewController {
 
 	// MARK: - IBActions
 	@IBAction func reconnectButtonPressed(_ sender: UIButton) {
-		KNetworkManager.isReachable { _ in
+		KNetworkManager.isReachable { [weak self] _ in
+			guard let self = self else { return }
 			KurozoraDelegate.shared.showMainPage(for: self.window, viewController: self)
 		}
 	}

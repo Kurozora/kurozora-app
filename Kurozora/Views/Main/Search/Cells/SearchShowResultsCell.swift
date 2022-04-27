@@ -79,11 +79,10 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 
 		WorkflowController.shared.isSignedIn {
 			let oldLibraryStatus = self.libraryStatus
-			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: oldLibraryStatus, action: { [weak self] (title, value)  in
+			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: oldLibraryStatus, action: { [weak self] title, value  in
 				guard let self = self else { return }
 				if self.libraryStatus != value {
-					KService.addToLibrary(withLibraryStatus: value, showID: self.show.id) { [weak self] result in
-						guard let self = self else { return }
+					KService.addToLibrary(withLibraryStatus: value, showID: self.show.id) { result in
 						switch result {
 						case .success(let libraryUpdate):
 							self.show.attributes.update(using: libraryUpdate)
@@ -102,10 +101,9 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 			})
 
 			if self.libraryStatus != .none {
-				actionSheetAlertController.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { [weak self] _ in
+				actionSheetAlertController.addAction(UIAlertAction(title: "Remove from library", style: .destructive, handler: { [weak self] _ in
 					guard let self = self else { return }
-					KService.removeFromLibrary(showID: self.show.id) { [weak self] result in
-						guard let self = self else { return }
+					KService.removeFromLibrary(showID: self.show.id) { result in
 						switch result {
 						case .success(let libraryUpdate):
 							self.show.attributes.update(using: libraryUpdate)

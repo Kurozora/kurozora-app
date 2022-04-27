@@ -9,15 +9,13 @@
 import UIKit
 import SwiftTheme
 
-/**
-	A themed object that displays an editable text area in your interface.
-
-	You use text fields to gather text-based input from the user using the onscreen keyboard.
-	The keyboard is configurable for many different types of input such as plain text, emails, numbers, and so on.
-	Text fields use the target-action mechanism and a delegate object to report changes made during the course of editing.
-
-	`KTextField` applys a rounded border style to the text field and applys colors according to the currently selected theme.
-*/
+/// A themed object that displays an editable text area in your interface.
+///
+/// You use text fields to gather text-based input from the user using the onscreen keyboard.
+/// The keyboard is configurable for many different types of input such as plain text, emails, numbers, and so on.
+/// Text fields use the target-action mechanism and a delegate object to report changes made during the course of editing.
+///
+/// `KTextField` applys a rounded border style to the text field and applys colors according to the currently selected theme.
 class KTextField: UITextField {
 	// MARK: - Initializers
 	override init(frame: CGRect) {

@@ -30,7 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		store = Store()
 
 		// If the network is unreachable show the offline page
-		KNetworkManager.isUnreachable { _ in
+		KNetworkManager.isUnreachable { [weak self] _ in
+			guard let self = self else { return }
 			self.isUnreachable = true
 		}
 
@@ -43,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		ImageCache.default.diskStorage.config.sizeLimit = 300 * 1024 * 1024
 
 		// Check network availability
-		if isUnreachable {
+		if self.isUnreachable {
 			return true
 		}
 
@@ -147,11 +148,9 @@ extension AppDelegate {
 
 // MARK: - Notification Handlers
 extension AppDelegate {
-	/**
-		Used to update the menu builder.
-
-		- Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
-	*/
+	/// Used to update the menu builder.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
 	@objc func updateMenuBuilder(_ notification: NSNotification) {
 		UIMenuSystem.main.setNeedsRebuild()
 	}
@@ -239,6 +238,6 @@ extension AppDelegate {
 // MARK: - Menu
 extension AppDelegate {
 	override func buildMenu(with builder: UIMenuBuilder) {
-		menuController = MenuController(with: builder)
+		self.menuController = MenuController(with: builder)
 	}
 }

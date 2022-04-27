@@ -25,20 +25,17 @@ extension WorkflowController {
 		let request = UNNotificationRequest(identifier: "LocalNotification", content: content, trigger: trigger)
 
 		// Add notification to notification center
-		notificationCenter.add(request) { (error) in
-			if let error = error {
-				print("Error \(error.localizedDescription)")
-			}
+		self.notificationCenter.add(request) { error in
+			guard let error = error else { return }
+			print("Error \(error.localizedDescription)")
 		}
 	}
 
-	/**
-		Returns a boolean value indicating whether the app should register the current device for push notifications.
-
-		A value of `true` is returned if the device has not been registered before or if the last registration date is an old week. For all other cases `false` is returned.
-
-		- Returns: a boolean value indicating whether the app should register the current device for push notifications.
-	*/
+	/// Returns a boolean value indicating whether the app should register the current device for push notifications.
+	///
+	/// A value of `true` is returned if the device has not been registered before or if the last registration date is an old week. For all other cases `false` is returned.
+	///
+	/// - Returns: a boolean value indicating whether the app should register the current device for push notifications.
 	fileprivate func shouldRegisterForPushNotifications() -> Bool {
 		print("----- Should register for push notifications")
 		if let lastDate = UserSettings.lastNotificationRegistrationRequest {
@@ -54,8 +51,9 @@ extension WorkflowController {
 		if shouldRegisterForPushNotifications() {
 			UserSettings.set(Date(), forKey: .lastNotificationRegistrationRequest)
 			UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge, .providesAppNotificationSettings]) { [weak self] granted, _ in
+				guard let self = self else { return }
 				guard granted else { return }
-				self?.getNotificationSettings()
+				self.getNotificationSettings()
 			}
 		}
 
@@ -158,31 +156,25 @@ extension WorkflowController {
 		}
 	}
 
-	/**
-		Open the show details view for the given show ID.
-
-		- Parameter showID: The id of the show with which the details view will be loaded.
-	*/
+	/// Open the show details view for the given show ID.
+	///
+	/// - Parameter showID: The id of the show with which the details view will be loaded.
 	func openShowDetails(for showID: Int, in viewController: UIViewController? = UIApplication.topViewController) {
 		let showDetailsCollectionViewController = ShowDetailsCollectionViewController.`init`(with: showID)
 		viewController?.show(showDetailsCollectionViewController, sender: nil)
 	}
 
-	/**
-		Open the profile view for the given user ID.
-
-		- Parameter userID: The id of the user with which the profile view will be loaded.
-	*/
+	/// Open the profile view for the given user ID.
+	///
+	/// - Parameter userID: The id of the user with which the profile view will be loaded.
 	func openUserProfile(for userID: Int, in viewController: UIViewController? = UIApplication.topViewController) {
 		let profileTableViewController = ProfileTableViewController.`init`(with: userID)
 		viewController?.show(profileTableViewController, sender: nil)
 	}
 
-	/**
-		Open the feed message details view for the given feed message ID.
-
-		- Parameter userID: The id of the feed message with which the feed message details view will be loaded.
-	*/
+	/// Open the feed message details view for the given feed message ID.
+	///
+	/// - Parameter userID: The id of the feed message with which the feed message details view will be loaded.
 	func openFeedMessage(for feedMessageID: Int, in viewController: UIViewController? = UIApplication.topViewController) {
 		let fmDetailsTableViewController = FMDetailsTableViewController.`init`(with: feedMessageID)
 		viewController?.show(fmDetailsTableViewController, sender: nil)

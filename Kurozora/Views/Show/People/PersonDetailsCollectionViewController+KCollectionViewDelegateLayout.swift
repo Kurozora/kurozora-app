@@ -54,7 +54,8 @@ extension PersonDetailsCollectionViewController {
 
 	override func createLayout() -> UICollectionViewLayout? {
 		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-			guard let self = self, self.person != nil else { return nil }
+			guard let self = self else { return nil }
+			guard self.person != nil else { return nil }
 			guard let personDetailSection = PersonDetail.Section(rawValue: section) else { fatalError("Person details section not supported") }
 			var sectionLayout: NSCollectionLayoutSection? = nil
 			var hasSectionHeader = false

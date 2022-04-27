@@ -337,7 +337,7 @@ extension ShowsListCollectionViewController: BaseLockupCollectionViewCellDelegat
 			let show = self.shows[indexPath.item]
 
 			let oldLibraryStatus = cell.libraryStatus
-			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: oldLibraryStatus, action: { (title, value)  in
+			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: oldLibraryStatus, action: { title, value  in
 				KService.addToLibrary(withLibraryStatus: value, showID: show.id) { result in
 					switch result {
 					case .success(let libraryUpdate):
@@ -356,7 +356,7 @@ extension ShowsListCollectionViewController: BaseLockupCollectionViewCellDelegat
 			})
 
 			if cell.libraryStatus != .none {
-				actionSheetAlertController.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { _ in
+				actionSheetAlertController.addAction(UIAlertAction(title: "Remove from library", style: .destructive) { _ in
 					KService.removeFromLibrary(showID: show.id) { result in
 						switch result {
 						case .success(let libraryUpdate):
@@ -372,10 +372,10 @@ extension ShowsListCollectionViewController: BaseLockupCollectionViewCellDelegat
 							break
 						}
 					}
-				}))
+				})
 			}
 
-				// Present the controller
+			// Present the controller
 			if let popoverController = actionSheetAlertController.popoverPresentationController {
 				popoverController.sourceView = sender
 				popoverController.sourceRect = sender.bounds
@@ -395,13 +395,11 @@ extension ShowsListCollectionViewController: BaseLockupCollectionViewCellDelegat
 
 // MARK: - SectionLayoutKind
 extension ShowsListCollectionViewController {
-	/**
-		List of section layout kind.
-
-		```
-		case main = 0
-		```
-	*/
+	/// List of section layout kind.
+	///
+	/// ```
+	/// case main = 0
+	/// ```
 	enum SectionLayoutKind: Int, CaseIterable {
 		// MARK: - Cases
 		/// The main section.
@@ -411,9 +409,7 @@ extension ShowsListCollectionViewController {
 
 // MARK: - ItemKind
 extension ShowsListCollectionViewController {
-	/**
-		List of item layout kind.
-	*/
+	/// List of item layout kind.
 	enum ItemKind: Hashable {
 		// MARK: - Cases
 		/// Indicates the item kind contains a Show object.

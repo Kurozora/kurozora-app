@@ -78,7 +78,9 @@ extension NotificationsTableViewController {
 		}
 
 		let isRead = readStatus == .read
-		let readUnreadAction = UIContextualAction(style: .normal, title: "") { _, _, completionHandler in
+		let readUnreadAction = UIContextualAction(style: .normal, title: "") { [weak self] _, _, completionHandler in
+			guard let self = self else { return }
+
 			switch self.grouping {
 			case .automatic, .byType:
 				self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].update(at: indexPath, withReadStatus: readStatus)
@@ -97,7 +99,9 @@ extension NotificationsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-		let deleteAction = UIContextualAction(style: .destructive, title: "Remove") { _, _, completionHandler in
+		let deleteAction = UIContextualAction(style: .destructive, title: "Remove") { [weak self] _, _, completionHandler in
+			guard let self = self else { return }
+
 			switch self.grouping {
 			case .automatic, .byType:
 				self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].remove(at: indexPath)

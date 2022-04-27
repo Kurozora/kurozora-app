@@ -12,16 +12,14 @@ import CoreLocation
 import Solar
 import SwiftTheme
 
-/**
-	List of app-wide theme styles.
-
-	```
-	case `default` = 0
-	case day = 1
-	case night = 2
-	case other = 3
-	```
-*/
+/// List of app-wide theme styles.
+///
+/// ```
+/// case `default` = 0
+/// case day = 1
+/// case night = 2
+/// case other = 3
+/// ```
 enum KThemeStyle: Int {
 	// MARK: - Cases
 	/// The default style of the app with purple background.
@@ -103,7 +101,7 @@ enum KThemeStyle: Int {
 			// If themeID is an integer
 			if let themeID = Int(currentTheme) {
 				// Use a non default theme if it exists
-				if let themeDirectoryURLPath = themesDirectoryUrl?.appendingPathComponent("theme-\(themeID).plist").path, FileManager.default.fileExists(atPath: themeDirectoryURLPath) {
+				if let themeDirectoryURLPath = self.themesDirectoryUrl?.appendingPathComponent("theme-\(themeID).plist").path, FileManager.default.fileExists(atPath: themeDirectoryURLPath) {
 					KThemeStyle.switchTo(themeID: themeID)
 				} else {
 					// Fallback to default if theme doesn't exist
@@ -122,13 +120,11 @@ enum KThemeStyle: Int {
 		UIApplication.shared.theme_setStatusBarStyle(ThemeStatusBarStylePicker(keyPath: KThemePicker.statusBarStyle.stringValue), animated: true)
 	}
 
-	/**
-		Return a KThemeStyle value for a given string.
-
-		- Parameter string: The string from which a
-
-		- Returns: a `KThemeStyle` reflecting the given string.
-	*/
+	/// Return a KThemeStyle value for a given string.
+	///
+	/// - Parameter string: The string from which a
+	///
+	/// - Returns: a `KThemeStyle` reflecting the given string.
 	static func themeValue(from string: String) -> KThemeStyle {
 		switch string {
 		case "Kurozora":
@@ -154,21 +150,20 @@ enum KThemeStyle: Int {
 			KThemeStyle.checkAutomaticSchedule()
 		}
 
-		if automaticDarkThemeSchedule == nil {
-			automaticDarkThemeSchedule = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+		if self.automaticDarkThemeSchedule == nil {
+			self.automaticDarkThemeSchedule = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
 				KThemeStyle.checkAutomaticSchedule()
 			}
 		}
 	}
 
-	/**
-		Returns whether the given theme matches the expected version.
-
-		- Parameter themeID: The theme used to compare the version.
-		- Parameter version: The expected version.
-
-		- Returns: whether the given theme matches the expected version.
-	*/
+	/// Returns whether the given theme matches the expected version.
+	///
+	/// - Parameters:
+	///    - themeID: The theme used to compare the version.
+	///    - version: The expected version.
+	///
+	/// - Returns: whether the given theme matches the expected version.
 	static func isUpToDate(_ themeID: Int, version: String) -> Bool {
 		guard let themesDirectoryUrl = themesDirectoryUrl else { return true }
 		guard let themeContents = FileManager.default.contents(atPath: themesDirectoryUrl.appendingPathComponent("theme-\(themeID).plist").path) else { return true }
@@ -180,14 +175,12 @@ enum KThemeStyle: Int {
 
 // MARK: - Switch Theme
 extension KThemeStyle {
-	/**
-		Switch theme to one of the default styles.
-
-		- Parameter style: The `KThemeStyle` to which to switch to.
-	*/
+	/// Switch theme to one of the default styles.
+	///
+	/// - Parameter style: The `KThemeStyle` to which to switch to.
 	static func switchTo(style: KThemeStyle) {
-		before = current
-		current = style
+		self.before = self.current
+		self.current = style
 
 		UserSettings.set(style.stringValue, forKey: .currentTheme)
 		ThemeManager.setTheme(plistName: style.plistValue, path: .mainBundle)
@@ -202,19 +195,17 @@ extension KThemeStyle {
 		}
 	}
 
-	/**
-		Switch theme based on the passed theme name.
-
-		- Parameter themeName: A string value reflecting the name of the theme.
-	*/
+	/// Switch theme based on the passed theme name.
+	///
+	/// - Parameter themeName: A string value reflecting the name of the theme.
 	static func switchTo(themeName: String) {
-		before  = current
-		current = themeValue(from: themeName)
+		self.before  = self.current
+		self.current = themeValue(from: themeName)
 
 		UserSettings.set(themeName, forKey: .currentTheme)
 		ThemeManager.setTheme(plistName: themeName, path: .mainBundle)
 
-		switch current {
+		switch self.current {
 		case .day, .grass, .sky, .sakura:
 			UIApplication.sharedKeyWindow?.overrideUserInterfaceStyle = .light
 		case .night, .default:
@@ -224,38 +215,32 @@ extension KThemeStyle {
 		}
 	}
 
-	/**
-		Switch theme based on the passed `AppTheme` object.
-
-		- Parameter appTheme: The `AppTheme` object to switch to.
-	*/
+	/// Switch theme based on the passed `AppTheme` object.
+	///
+	/// - Parameter appTheme: The `AppTheme` object to switch to.
 	static func switchTo(appTheme: AppTheme) {
-		before  = current
-		current = .other
+		self.before  = self.current
+		self.current = .other
 
 		self.setTheme(themeID: appTheme.id)
 	}
 
-	/**
-		Switch theme based on the passed theme id.
-
-		- Parameter themeID: An integer value reflecting the ID of the theme.
-	*/
+	/// Switch theme based on the passed theme id.
+	///
+	/// - Parameter themeID: An integer value reflecting the ID of the theme.
 	static func switchTo(themeID: Int) {
-		before  = current
-		current = .other
+		self.before  = self.current
+		self.current = .other
 
 		self.setTheme(themeID: themeID)
 	}
 
-	/**
-		Sets the theme with the given `Theme` object.
-
-		- Parameter theme: The `Theme` object used to set the theme.
-	*/
+	/// Sets the theme with the given `Theme` object.
+	///
+	/// - Parameter theme: The `Theme` object used to set the theme.
 	fileprivate static func setTheme(themeID: Int) {
 		UserSettings.set("\(themeID)", forKey: .currentTheme)
-		guard let themesDirectoryUrl = themesDirectoryUrl else { return }
+		guard let themesDirectoryUrl = self.themesDirectoryUrl else { return }
 		ThemeManager.setTheme(plistName: "theme-\(themeID)", path: .sandbox(themesDirectoryUrl))
 		UIApplication.sharedKeyWindow?.overrideUserInterfaceStyle = KThemePicker.statusBarStyle.userInterfaceStyleValue
 	}
@@ -263,15 +248,14 @@ extension KThemeStyle {
 
 // MARK: - Download
 extension KThemeStyle {
-	/**
-		Remove a theme for a given theme element.
-
-		- Parameter appTheme: The app theme element which contains the link.
-		- Parameter successHandler: A closure returning a boolean indicating whether remove is successful.
-		- Parameter isSuccess: A boolean value indicating whether the remove is successful.
-	*/
-	static func removeThemeTask(for appTheme: AppTheme, _ successHandler:@escaping (_ isSuccess: Bool) -> Void) {
-		guard let themesDirectoryUrl = themesDirectoryUrl else {
+	/// Remove a theme for a given theme element.
+	///
+	/// - Parameters:
+	///    - appTheme: The app theme element which contains the link.
+	///    - successHandler: A closure returning a boolean indicating whether remove is successful.
+	///    - isSuccess: A boolean value indicating whether the remove is successful.
+	static func removeThemeTask(for appTheme: AppTheme, _ successHandler: @escaping (_ isSuccess: Bool) -> Void) {
+		guard let themesDirectoryUrl = self.themesDirectoryUrl else {
 			DispatchQueue.main.async {
 				successHandler(false)
 			}
@@ -282,31 +266,30 @@ extension KThemeStyle {
 			try FileManager.default.removeItem(at: themesDirectoryUrl.appendingPathComponent("theme-\(appTheme.id).plist"))
 
 			DispatchQueue.main.async {
-				successHandler(!themeExist(for: appTheme))
+				successHandler(!self.themeExist(for: appTheme))
 			}
 		} catch {
 			DispatchQueue.main.async {
-				successHandler(themeExist(for: appTheme))
+				successHandler(self.themeExist(for: appTheme))
 			}
 		}
 	}
 
-	/**
-		Downlaoad a theme for a given theme element.
-
-		- Parameter appTheme: The app theme element which contains the link.
-		- Parameter successHandler: A closure returning a boolean indicating whether download is successful.
-		- Parameter isSuccess: A boolean value indicating whether the download is successful.
-	*/
+	/// Downlaoad a theme for a given theme element.
+	///
+	/// - Parameters:
+	///    - appTheme: The app theme element which contains the link.
+	///    - successHandler: A closure returning a boolean indicating whether download is successful.
+	///    - isSuccess: A boolean value indicating whether the download is successful.
 	static func downloadThemeTask(for appTheme: AppTheme, _ successHandler:@escaping (_ isSuccess: Bool) -> Void) {
 		let urlString = appTheme.attributes.downloadLink
-		guard let libraryDirectoryUrl = libraryDirectoryUrl else {
+		guard let libraryDirectoryUrl = self.libraryDirectoryUrl else {
 			DispatchQueue.main.async {
 				successHandler(false)
 			}
 			return
 		}
-		guard let themesDirectoryUrl = themesDirectoryUrl else {
+		guard let themesDirectoryUrl = self.themesDirectoryUrl else {
 			DispatchQueue.main.async {
 				successHandler(false)
 			}
@@ -322,7 +305,7 @@ extension KThemeStyle {
 			return
 		}
 
-		let task = session.downloadTask(with: request) { (tempLocalUrl, response, error) in
+		let task = session.downloadTask(with: request) { tempLocalUrl, response, error in
 			if let tempLocalUrl = tempLocalUrl, error == nil {
 				// Reponse code
 				if let statusCode = (response as? HTTPURLResponse)?.statusCode {
@@ -330,12 +313,12 @@ extension KThemeStyle {
 				}
 
 				// Create Themes folder if it doesn't exist
-				if !directoryExist(atPath: themesDirectoryUrl.path) {
+				if !self.directoryExist(atPath: themesDirectoryUrl.path) {
 					do {
 						try FileManager.default.createDirectory(atPath: libraryDirectoryUrl.appendingPathComponent("Themes/").path, withIntermediateDirectories: true, attributes: nil)
 					} catch {
 						DispatchQueue.main.async {
-							successHandler(themeExist(for: appTheme))
+							successHandler(self.themeExist(for: appTheme))
 						}
 					}
 				}
@@ -344,44 +327,40 @@ extension KThemeStyle {
 				do {
 					try FileManager.default.copyItem(at: tempLocalUrl, to: themesDirectoryUrl.appendingPathComponent("theme-\(appTheme.id).plist"))
 					DispatchQueue.main.async {
-						successHandler(themeExist(for: appTheme))
+						successHandler(self.themeExist(for: appTheme))
 					}
 				} catch {
 					DispatchQueue.main.async {
-						successHandler(themeExist(for: appTheme))
+						successHandler(self.themeExist(for: appTheme))
 					}
 				}
 			} else {
 				DispatchQueue.main.async {
-					successHandler(themeExist(for: appTheme))
+					successHandler(self.themeExist(for: appTheme))
 				}
 			}
 		}
 		task.resume()
 	}
 
-	/**
-		Check if directory exists at a given path.
-
-		- Parameter path: The string of the path which should be checked.
-
-		- Returns: a boolean indicating whether a path exists.
-	*/
+	/// Check if directory exists at a given path.
+	///
+	/// - Parameter path: The string of the path which should be checked.
+	///
+	/// - Returns: a boolean indicating whether a path exists.
 	static func directoryExist(atPath path: String) -> Bool {
 		var isDirectory = ObjCBool(true)
 		let exists = FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory)
 		return exists && isDirectory.boolValue
 	}
 
-	/**
-		Check if theme exists for a given app theme.
-
-		- Parameter appTheme: The app theme which should be checked
-
-		- Returns: a boolean indicating whether a theme exists.
-	*/
+	/// Check if theme exists for a given app theme.
+	///
+	/// - Parameter appTheme: The app theme which should be checked
+	///
+	/// - Returns: a boolean indicating whether a theme exists.
 	static func themeExist(for appTheme: AppTheme) -> Bool {
-		guard let themesDirectoryUrl = themesDirectoryUrl else { return false }
+		guard let themesDirectoryUrl = self.themesDirectoryUrl else { return false }
 		let themeFileDirectoryUrl: URL = themesDirectoryUrl.appendingPathComponent("theme-\(appTheme.id).plist")
 		return FileManager.default.fileExists(atPath: themeFileDirectoryUrl.path)
 	}
@@ -389,23 +368,21 @@ extension KThemeStyle {
 
 // MARK: - Icon
 extension KThemeStyle {
-	/**
-		Changes the app icon to a given icon name.
-
-		- Parameter iconName: The name of the icon to switch to.
-	*/
+	/// Changes the app icon to a given icon name.
+	///
+	/// - Parameter iconName: The name of the icon to switch to.
 	static func changeIcon(to iconName: String?) {
 		// Check if app supports alternate icons
 		guard UIApplication.shared.supportsAlternateIcons else { return }
 
 		// Set alternate icon
-		UIApplication.shared.setAlternateIconName(iconName, completionHandler: { (error) in
+		UIApplication.shared.setAlternateIconName(iconName) { error in
 			if let error = error {
 				print("App icon failed to change due to \(error.localizedDescription)")
 			} else {
 				print("App icon changed successfully")
 			}
-		})
+		}
 	}
 }
 
@@ -436,29 +413,25 @@ extension KThemeStyle {
 
 	/// Whether the specified custom `start` and `end` time is in nighttime on `date`.
 	static var isCustomNighttime: Bool {
-		return !isCustomDaytime
+		return !self.isCustomDaytime
 	}
 
-	/**
-		Switch between Night them and the theme before.
-
-		- Parameter isToNight: A boolean indicating whether to switch to night theme.
-	*/
+	/// Switch between Night them and the theme before.
+	///
+	/// - Parameter isToNight: A boolean indicating whether to switch to night theme.
 	static func switchNight(_ isToNight: Bool) {
-		if before == .night && current == .night {
-			switchTo(style: .day)
+		if self.before == .night && self.current == .night {
+			self.switchTo(style: .day)
 		} else {
-			switchTo(style: isToNight ? .night : before)
+			self.switchTo(style: isToNight ? .night : self.before)
 		}
 	}
 
-	/**
-		Decides whether the current theme is the `Night` theme.
-
-		- Returns: a boolean value indicating if current theme is the Night theme.
-	*/
+	/// Decides whether the current theme is the `Night` theme.
+	///
+	/// - Returns: a boolean value indicating if current theme is the Night theme.
 	static func isNightTheme() -> Bool {
-		return current == .night
+		return self.current == .night
 	}
 
 	/// Wheather it's currently night time.
@@ -476,18 +449,18 @@ extension KThemeStyle {
 	/// Switch between Light and Dark theme according to `sunrise` and `sunset` or custom `start` and `end` time.
 	static func checkAutomaticSchedule() {
 		if UserSettings.automaticDarkTheme, let darkThemeOption = DarkThemeOption(rawValue: UserSettings.darkThemeOption) {
-			if isSolarNighttime && darkThemeOption == .automatic && current != .night || isCustomNighttime && darkThemeOption == .custom  && current != .night {
-				before = current
+			if self.isSolarNighttime && darkThemeOption == .automatic && self.current != .night || self.isCustomNighttime && darkThemeOption == .custom  && self.current != .night {
+				self.before = self.current
 
 				KThemeStyle.switchTo(style: .night)
-				current = .night
+				self.current = .night
 				UserSettings.set(1, forKey: .appearanceOption)
 				NotificationCenter.default.post(name: .KSAppAppearanceDidChange, object: nil, userInfo: ["option": 1])
-			} else if !isSolarNighttime && darkThemeOption == .automatic && current != .day || !isCustomNighttime && darkThemeOption == .custom  && current != .day {
-				before = current
+			} else if !self.isSolarNighttime && darkThemeOption == .automatic && self.current != .day || !self.isCustomNighttime && darkThemeOption == .custom  && self.current != .day {
+				self.before = self.current
 
 				KThemeStyle.switchTo(style: .day)
-				current = .day
+				self.current = .day
 				NotificationCenter.default.post(name: .KSAppAppearanceDidChange, object: nil, userInfo: ["option": 0])
 				UserSettings.set(0, forKey: .appearanceOption)
 			}

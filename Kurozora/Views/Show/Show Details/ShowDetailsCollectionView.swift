@@ -79,7 +79,7 @@ struct ShowDetailsCollectionView: View {
 						.scaledToFill()
 						.frame(width: 86, height: 128)
 						.clipShape(RoundedRectangle(cornerRadius: 10))
-						.shadow(color: .init(.brown), radius: 4, x: 0.0, y: 0.0)
+						.shadow(color: .brown, radius: 4, x: 0.0, y: 0.0)
 
 					VStack(alignment: .leading) {
 						Text("Article Written By")

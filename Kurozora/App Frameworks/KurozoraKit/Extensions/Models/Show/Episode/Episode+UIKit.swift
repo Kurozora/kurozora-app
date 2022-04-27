@@ -14,9 +14,11 @@ extension Episode {
 	-> UIContextMenuConfiguration? {
 		let identifier = userInfo?["indexPath"] as? NSCopying
 
-		return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
+		return UIContextMenuConfiguration(identifier: identifier, previewProvider: { [weak self] in
+			guard let self = self else { return nil }
 			return EpisodeDetailCollectionViewController.`init`(with: self.id)
-		}, actionProvider: { _ in
+		}, actionProvider: { [weak self] _ in
+			guard let self = self else { return nil }
 			return self.makeContextMenu(in: viewController, userInfo: userInfo)
 		})
 	}
@@ -31,20 +33,23 @@ extension Episode {
 			let updateWatchStatusImage = watchStatus == .notWatched ? UIImage(systemName: "plus.circle") : UIImage(systemName: "minus.circle")
 			let attributes: UIAction.Attributes = watchStatus == .notWatched ? [] : .destructive
 
-			let watchAction = UIAction(title: updateWatchStatusTitle, image: updateWatchStatusImage, attributes: attributes) { _ in
+			let watchAction = UIAction(title: updateWatchStatusTitle, image: updateWatchStatusImage, attributes: attributes) { [weak self] _ in
+				guard let self = self else { return }
 				self.updateWatchStatus(userInfo: userInfo)
 			}
 			menuElements.append(watchAction)
 		}
 
 //		// Create "rate" element
-//		let rateAction = UIAction(title: "Rate", image: UIImage(systemName: "star.circle")) { _ in
+//		let rateAction = UIAction(title: "Rate", image: UIImage(systemName: "star.circle")) { [weak self] _ in
 //			// TODO: - Implement rate episode feature.
+//			guard let self = self else { return }
 //		}
 //		menuElements.append(rateAction)
 
 		// Create "share" element
-		let shareAction = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
+		let shareAction = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
+			guard let self = self else { return }
 			self.openShareSheet(on: viewController)
 		}
 		menuElements.append(shareAction)
@@ -53,13 +58,12 @@ extension Episode {
 		return UIMenu(title: "", children: menuElements)
 	}
 
-	/**
-		Updates the watch status of the episode.
-
-		- Parameter userInfo: A dictionary that contains information related to the notification.
-	*/
+	/// Updates the watch status of the episode.
+	///
+	/// - Parameter userInfo: A dictionary that contains information related to the notification.
 	func updateWatchStatus(userInfo: [AnyHashable: Any]?) {
-		KService.updateEpisodeWatchStatus(self.id) { result in
+		KService.updateEpisodeWatchStatus(self.id) { [weak self] result in
+			guard let self = self else { return }
 			switch result {
 			case .success(let watchStatus):
 				// Update watch status
@@ -71,15 +75,14 @@ extension Episode {
 		}
 	}
 
-	/**
-		Present share sheet for the episode.
-
-		Make sure to send either the view or the bar button item that's sending the request.
-
-		- Parameter viewController: The view controller presenting the share sheet.
-		- Parameter view: The `UIView` sending the request.
-		- Parameter barButtonItem: The `UIBarButtonItem` sending the request.
-	*/
+	/// Present share sheet for the episode.
+	///
+	/// Make sure to send either the view or the bar button item that's sending the request.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller presenting the share sheet.
+	///    - view: The `UIView` sending the request.
+	///    - barButtonItem: The `UIBarButtonItem` sending the request.
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
 		let shareText = "https://kurozora.app/episodes/\(self.id)\nYou should watch \"\(self.attributes.title)\" via @KurozoraApp"
 

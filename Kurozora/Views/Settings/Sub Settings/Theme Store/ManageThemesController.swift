@@ -99,10 +99,12 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 	/// Fetches themes from the server.
 	func fetchAppThemes() {
 		KService.getThemeStore { [weak self] result in
+			guard let self = self else { return }
+
 			switch result {
 			case .success(let appThemes):
 				DispatchQueue.main.async {
-					self?.appThemes.append(contentsOf: appThemes)
+					self.appThemes.append(contentsOf: appThemes)
 				}
 			case .failure: break
 			}
@@ -146,7 +148,9 @@ extension ManageThemesCollectionViewController: ThemesCollectionViewCellDelegate
 	func themesCollectionViewCell(_ cell: ThemesCollectionViewCell, didPressMoreButton button: UIButton) {
 		switch cell.kTheme {
 		case .other(let theme):
-			let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { actionSheetAlertController in
+			let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
+				guard let self = self else { return }
+
 				if User.isPro {
 					// Add redownload action
 					let redownloadAction = UIAlertAction(title: "Redownload Theme", style: .default) { _ in
@@ -189,7 +193,8 @@ extension ManageThemesCollectionViewController: ThemesCollectionViewCellDelegate
 			guard KThemeStyle.themeExist(for: appTheme) else {
 				let alertController = self.presentAlertController(title: "Not Downloaded", message: "Download the theme right now?", defaultActionButtonTitle: "Cancel")
 				alertController.addAction(UIAlertAction(title: "Download", style: .default) { [weak self] _ in
-					self?.handleDownloadTheme(cell)
+					guard let self = self else { return }
+					self.handleDownloadTheme(cell)
 				})
 				return
 			}
@@ -246,7 +251,8 @@ extension ManageThemesCollectionViewController: ThemesCollectionViewCellDelegate
 
 	/// Handle the redownload process for a downloaded theme.
 	fileprivate func handleRedownloadTheme(_ cell: ThemesCollectionViewCell) {
-		handleRemoveTheme(cell, timeout: 0) { success in
+		handleRemoveTheme(cell, timeout: 0) { [weak self] success in
+			guard let self = self else { return }
 			if success {
 				self.handleDownloadTheme(cell)
 			}
@@ -256,14 +262,12 @@ extension ManageThemesCollectionViewController: ThemesCollectionViewCellDelegate
 
 // MARK: - SectionLayoutKind
 extension ManageThemesCollectionViewController {
-	/**
-		List of theme section layout kind.
-
-		```
-		case def = 0
-		case main = 1
-		```
-	*/
+	/// List of theme section layout kind.
+	///
+	/// ```
+	/// case def = 0
+	/// case main = 1
+	/// ```
 	enum SectionLayoutKind: Int, CaseIterable {
 		case def = 0
 		case main = 1

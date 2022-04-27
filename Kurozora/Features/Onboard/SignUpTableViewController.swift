@@ -73,11 +73,9 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 		}
 	}
 
-	/**
-		Disables or enables the user interaction on the current view. Also shows a loading indicator.
-
-		- Parameter disable: Indicates whether to disable the interaction.
-	*/
+	/// Disables or enables the user interaction on the current view. Also shows a loading indicator.
+	///
+	/// - Parameter disable: Indicates whether to disable the interaction.
 	func disableUserInteraction(_ disable: Bool) {
 		self.navigationItem.hidesBackButton = disable
 		self.navigationItem.rightBarButtonItem?.isEnabled = !disable
@@ -108,8 +106,8 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 					self.disableUserInteraction(false)
 
 					// Present welcome message.
-					self.presentAlertController(title: "Hooray!", message: "Account created successfully! Please check your email for confirmation.", defaultActionButtonTitle: "Done") { [weak self] _ in
-						self?.dismiss(animated: true, completion: nil)
+					self.presentAlertController(title: "Hooray!", message: "Account created successfully! Please check your email for confirmation.", defaultActionButtonTitle: "Done") { _ in
+						self.dismiss(animated: true, completion: nil)
 					}
 				case .failure:
 					// Re-enable user interaction.
@@ -138,8 +136,8 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 					self.disableUserInteraction(false)
 
 					// Present welcome message.
-					self.presentAlertController(title: "Hooray!", message: "Your account was successfully created!", defaultActionButtonTitle: "Done") { [weak self] _ in
-						self?.dismiss(animated: true, completion: nil)
+					self.presentAlertController(title: "Hooray!", message: "Your account was successfully created!", defaultActionButtonTitle: "Done") { _ in
+						self.dismiss(animated: true, completion: nil)
 					}
 				case .failure:
 					// Re-enable user interaction.

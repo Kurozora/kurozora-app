@@ -131,25 +131,24 @@ class KFeedMessageTextEditorViewController: KViewController {
 //	}
 
 	// MARK: - Functions
-	/**
-		Confirm whether to cancel the message.
-
-		- Parameter showingSend: Indicates whether to show the send message option.
-	*/
+	/// Confirm whether to cancel the message.
+	///
+	/// - Parameter showingSend: Indicates whether to show the send message option.
 	func confirmCancel(showingSend: Bool) {
 		// Present a UIAlertController as an action sheet to have the user confirm losing any recent changes.
 		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
+			guard let self = self else { return }
 			// Only ask if the user wants to send if they attempt to pull to dismiss, not if they tap Cancel.
 			if showingSend {
 				// Send action.
 				actionSheetAlertController.addAction(UIAlertAction(title: "Send", style: .default) { _ in
-					self?.sendMessage()
+					self.sendMessage()
 				})
 			}
 
 			// Discard action.
 			actionSheetAlertController.addAction(UIAlertAction(title: "Discard", style: .destructive) { _ in
-				self?.dismiss(animated: true, completion: nil)
+				self.dismiss(animated: true, completion: nil)
 			})
 		}
 

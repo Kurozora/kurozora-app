@@ -98,35 +98,35 @@ class SidebarViewController: KCollectionViewController {
 		navigationItem.searchController = kSearchController
 	}
 
-	/**
-		Creates and returns a list content configuration for with the given configuration as the basis.
-
-		- Parameter configuration: A content configuration for a list-based content view.
-		- Parameter cell: A collection view cell that provides list features and default styling.
-
-		- Returns: a list content configuration.
-	*/
+	/// Creates and returns a list content configuration for with the given configuration as the basis.
+	///
+	/// - Parameters:
+	///    - configuration: A content configuration for a list-based content view.
+	///    - cell: A collection view cell that provides list features and default styling.
+	///
+	/// - Returns: a list content configuration.
 	private func getContentConfiguration(_ configuration: UIListContentConfiguration?, cell: UICollectionViewListCell?) -> UIListContentConfiguration? {
 		var contentConfiguration = configuration ?? cell?.defaultContentConfiguration()
 		contentConfiguration?.text = self.selectedItem?.stringValue
-		contentConfiguration?.textProperties.colorTransformer = UIConfigurationColorTransformer { [weak cell] _ in
+		contentConfiguration?.textProperties.colorTransformer = UIConfigurationColorTransformer { _ in
 			guard let state = cell?.configurationState else { return KThemePicker.textColor.colorValue }
 			return state.isSelected || state.isHighlighted ? KThemePicker.tintedButtonTextColor.colorValue : KThemePicker.textColor.colorValue
 		}
 		contentConfiguration?.textProperties.font = .systemFont(ofSize: 14.0)
 		contentConfiguration?.imageToTextPadding = 10.0
-		contentConfiguration?.image = { () -> UIImage? in
+		contentConfiguration?.image = { [weak self] in
+			guard let self = self else { return nil }
 			guard let state = cell?.configurationState else { return self.selectedItem?.imageValue }
 			return state.isSelected || state.isHighlighted ? self.selectedItem?.selectedImageValue : self.selectedItem?.imageValue
 		}()
 		contentConfiguration?.imageProperties.preferredSymbolConfiguration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 14.0))
-		contentConfiguration?.imageProperties.tintColorTransformer = UIConfigurationColorTransformer { [weak cell] _ in
+		contentConfiguration?.imageProperties.tintColorTransformer = UIConfigurationColorTransformer { _ in
 			guard let state = cell?.configurationState else { return KThemePicker.tintColor.colorValue }
 			return state.isSelected || state.isHighlighted ? KThemePicker.tintedButtonTextColor.colorValue : KThemePicker.tintColor.colorValue
 		}
 		contentConfiguration?.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10.0, leading: 10.0, bottom: 10.0, trailing: 10.0)
 
-		cell?.backgroundConfiguration?.backgroundColorTransformer = UIConfigurationColorTransformer { [weak cell] _ in
+		cell?.backgroundConfiguration?.backgroundColorTransformer = UIConfigurationColorTransformer { _ in
 			guard let state = cell?.configurationState else { return .clear }
 			return state.isSelected || state.isHighlighted ? KThemePicker.tintColor.colorValue : .clear
 		}
@@ -138,7 +138,8 @@ class SidebarViewController: KCollectionViewController {
 // MARK: - KCollectionViewDelegateLayout
 extension SidebarViewController {
 	override func createLayout() -> UICollectionViewLayout? {
-		let layout = UICollectionViewCompositionalLayout { (section, layoutEnvironment) -> NSCollectionLayoutSection? in
+		let layout = UICollectionViewCompositionalLayout { [weak self] (section, layoutEnvironment) -> NSCollectionLayoutSection? in
+			guard let self = self else { return nil }
 			self.listConfiguration = UICollectionLayoutListConfiguration(appearance: .sidebar)
 			self.listConfiguration.backgroundColor = KThemePicker.backgroundColor.colorValue
 			self.listConfiguration.showsSeparators = false
@@ -153,14 +154,15 @@ extension SidebarViewController {
 // MARK: - KCollectionViewDataSource
 extension SidebarViewController {
 	override func configureDataSource() {
-		let rowRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, SidebarItem> { (cell, _, item) in
+		let rowRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, SidebarItem> { [weak self] cell, _, item in
+			guard let self = self else { return }
 			var contentConfiguration = self.getContentConfiguration(UIListContentConfiguration.sidebarCell(), cell: cell)
 			contentConfiguration?.text = item.title
 			contentConfiguration?.image = item.image
 			cell.contentConfiguration = contentConfiguration
 		}
 
-		dataSource = UICollectionViewDiffableDataSource<SidebarSection, SidebarItem>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell in
+		self.dataSource = UICollectionViewDiffableDataSource<SidebarSection, SidebarItem>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell in
 			return collectionView.dequeueConfiguredReusableCell(using: rowRegistration, for: indexPath, item: item)
 		}
 	}
@@ -175,7 +177,8 @@ extension SidebarViewController {
 	}
 
 	private func applyInitialSnapshot() {
-		dataSource.apply(sideBarSnapshot(), to: .main, animatingDifferences: false) {
+		self.dataSource.apply(sideBarSnapshot(), to: .main, animatingDifferences: false) { [weak self] in
+			guard let self = self else { return }
 			// Select the home view
 			let indexPath = IndexPath(row: 0, section: 0)
 			self.collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])

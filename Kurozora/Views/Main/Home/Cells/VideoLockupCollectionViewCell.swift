@@ -83,6 +83,7 @@ class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 
 			DispatchQueue.global(qos: .background).async {
 				self.youtubeOperation = XCDYouTubeClient.default().getVideoWithIdentifier(videoID) { [weak self] video, error in
+					guard let self = self else { return }
 					if let video = video {
 						let streamURLs = video.streamURLs
 						let streamURL = streamURLs[XCDYouTubeVideoQuality.medium360.rawValue] ?? streamURLs[XCDYouTubeVideoQuality.small240.rawValue]
@@ -94,8 +95,7 @@ class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 							/// Load needed values asynchronously
 							avURLAsset.loadValuesAsynchronously(forKeys: ["duration", "playable"]) {
 								/// UI actions should executed on the main thread
-								DispatchQueue.main.async { [weak self] in
-									guard let self = self else { return }
+								DispatchQueue.main.async {
 									let avPlayerItem = AVPlayerItem(asset: avURLAsset)
 									if self.avQueuePlayer.currentItem != avPlayerItem {
 										self.avPlayerLooper = nil

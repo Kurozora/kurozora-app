@@ -78,7 +78,8 @@ class MusicLockupCollectionViewCell: BaseLockupCollectionViewCell {
 				urlRequest.httpMethod = "GET"
 				urlRequest.addValue("Bearer \(developerToken)", forHTTPHeaderField: "Authorization")
 
-				URLSession.shared.dataTask(with: urlRequest) { (data, _, error) in
+				URLSession.shared.dataTask(with: urlRequest) { [weak self] data, _, error in
+					guard let self = self else { return }
 					guard error == nil else { return }
 					var song: MusicKit.Song?
 

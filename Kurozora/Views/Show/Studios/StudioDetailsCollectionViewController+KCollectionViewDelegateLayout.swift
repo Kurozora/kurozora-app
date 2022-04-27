@@ -60,7 +60,8 @@ extension StudioDetailsCollectionViewController {
 
 	override func createLayout() -> UICollectionViewLayout? {
 		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-			guard let self = self, self.studio != nil else { return nil }
+			guard let self = self else { return nil }
+			guard self.studio != nil else { return nil }
 			guard let studioDetailSection = StudioDetail.Section(rawValue: section) else { fatalError("Studio section not supported") }
 			var sectionLayout: NSCollectionLayoutSection? = nil
 			var hasSectionHeader = false

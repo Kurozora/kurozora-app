@@ -26,13 +26,13 @@ extension EpisodesCollectionViewController {
 			// If the asset is a placeholder and there is no token, ask the asset store to load it, reconfiguring
 			// the cell in its completion handler.
 			if episodeDataRequest == nil && episode == nil {
-				episodeDataRequest = KService.getDetails(forEpisode: episodeIdentity) { [weak self] result in
+				episodeDataRequest = KService.getDetails(forEpisode: episodeIdentity) { result in
 					// After the episode fetching completes, trigger a reconfigure for the item so the cell can be updated if
 					// it is visible.
 					switch result {
 					case .success(let episodes):
-						self?.episodes[indexPath] = episodes.first
-						self?.setEpisodeNeedsUpdate(episodeIdentity)
+						self.episodes[indexPath] = episodes.first
+						self.setEpisodeNeedsUpdate(episodeIdentity)
 					case .failure: break
 					}
 				}
@@ -60,8 +60,9 @@ extension EpisodesCollectionViewController {
 	}
 
 	override func updateDataSource() {
-		let episodeIdentities = self.shouldHideFillers ? self.dataSource.snapshot().itemIdentifiers.filter({ episodeIdentity in
-			!(self.episodes.values.first(where: { episode in
+		let episodeIdentities = self.shouldHideFillers ? self.dataSource.snapshot().itemIdentifiers.filter({ [weak self] episodeIdentity in
+			guard let self = self else { return false }
+			return !(self.episodes.values.first(where: { episode in
 				episode.id == episodeIdentity.id
 			})?.attributes.isFiller ?? false)
 		}) : self.episodeIdentities

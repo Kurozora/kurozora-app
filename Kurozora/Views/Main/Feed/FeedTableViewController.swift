@@ -213,7 +213,7 @@ class FeedTableViewController: KTableViewController {
 			if let kFeedMessageTextEditorViewController = R.storyboard.textEditor.kFeedMessageTextEditorViewController() {
 				kFeedMessageTextEditorViewController.delegate = self
 
-				let kurozoraNavigationController = KNavigationController.init(rootViewController: kFeedMessageTextEditorViewController)
+				let kurozoraNavigationController = KNavigationController(rootViewController: kFeedMessageTextEditorViewController)
 				kurozoraNavigationController.presentationController?.delegate = kFeedMessageTextEditorViewController
 				kurozoraNavigationController.navigationBar.prefersLargeTitles = false
 				kurozoraNavigationController.sheetPresentationController?.detents = [.medium(), .large()]

@@ -15,7 +15,8 @@ extension CastCollectionViewController {
 	}
 
 	override func configureDataSource() {
-		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Cast>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: Cast) -> UICollectionViewCell? in
+		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Cast>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: Cast) -> UICollectionViewCell? in
+			guard let self = self else { return nil }
 			guard let castCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.castCollectionViewCell, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.castCollectionViewCell.identifier)")
 			}
@@ -29,6 +30,6 @@ extension CastCollectionViewController {
 		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Cast>()
 		snapshot.appendSections([.main])
 		snapshot.appendItems(self.cast)
-		dataSource.apply(snapshot)
+		self.dataSource.apply(snapshot)
 	}
 }

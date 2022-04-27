@@ -9,15 +9,11 @@
 import UIKit
 import KurozoraKit
 
-/**
-	A class that handles the Kurozora's main (statusbar) menu.
-*/
+/// A class that handles the Kurozora's main (statusbar) menu.
 class MenuController {
-	/**
-		Initialize a new `MenuController` object from the given builder.
-
-		- Parameter builder: The [UIMenuBuilder]() object used to initialize the menu controller.
-	*/
+	/// Initialize a new `MenuController` object from the given builder.
+	///
+	/// - Parameter builder: The [UIMenuBuilder](doc://com.apple.documentation/documentation/uikit/uimenubuilder?language=swift) object used to initialize the menu controller.
 	init(with builder: UIMenuBuilder) {
 		builder.remove(menu: .file)
 		builder.remove(menu: .format)
@@ -34,13 +30,11 @@ class MenuController {
 		}
 	}
 
-	/**
-		Builds and returns the "Minimize and Zoom" menu.
-
-		- Parameter builder: The [UIMenuBuilder]() object used to initialize the menu controller.
-
-		- Returns: The "Minimize and Zoom" menu.
-	*/
+	/// Builds and returns the "Minimize and Zoom" menu.
+	///
+	/// - Parameter builder: The [UIMenuBuilder](doc://com.apple.documentation/documentation/uikit/uimenubuilder?language=swift) object used to initialize the menu controller.
+	///
+	/// - Returns: The "Minimize and Zoom" menu.
 	class func minimizeAndZoom(with builder: UIMenuBuilder) -> UIMenu? {
 		guard let minimizeAndZoomMenu = builder.menu(for: .minimizeAndZoom) else { return nil }
 		let commands: [UIMenuElement] = minimizeAndZoomMenu.children.map { element in
@@ -53,31 +47,25 @@ class MenuController {
 		return UIMenu(title: minimizeAndZoomMenu.title, image: minimizeAndZoomMenu.image, identifier: minimizeAndZoomMenu.identifier, options: minimizeAndZoomMenu.options, children: commands)
 	}
 
-	/**
-		Builds and returns the "Refresh Page" menu.
-
-		- Returns: The "Refresh Page" UIMenu object.
-	*/
+	/// Builds and returns the "Refresh Page" menu.
+	///
+	/// - Returns: The "Refresh Page" UIMenu object.
 	class func refreshPage() -> UIMenu {
 		let refreshPageCommand = UIKeyCommand(title: "Refresh Page", action: #selector(AppDelegate.handleRefreshControl), input: "R", modifierFlags: .command, discoverabilityTitle: "Refresh Page")
 		return UIMenu(title: "Refresh", identifier: UIMenu.Identifier("app.kurozora.menus.refreshPage"), options: .displayInline, children: [refreshPageCommand])
 	}
 
-	/**
-		Builds and returns the "Preferences" menu.
-
-		- Returns: The "Preferences" UIMenu object.
-	*/
+	/// Builds and returns the "Preferences" menu.
+	///
+	/// - Returns: The "Preferences" UIMenu object.
 	class func openPreferences() -> UIMenu {
 		let openPreferencesCommand = UIKeyCommand(title: "Preferences...", action: #selector(AppDelegate.handlePreferences(_:)), input: ",", modifierFlags: .command, discoverabilityTitle: "Preferences...")
 		return UIMenu(title: "Preferences", identifier: UIMenu.Identifier("app.kurozora.menus.preferences"), options: .displayInline, children: [openPreferencesCommand])
 	}
 
-	/**
-		 Builds and returns the "Refresh Page" menu.
-
-		 - Returns: The "Refresh Page" UIMenu object.
-	 */
+	///  Builds and returns the "Refresh Page" menu.
+	///
+	///  - Returns: The "Refresh Page" UIMenu object.
 	class func search() -> UIMenu {
 		let refreshPageCommand = UIKeyCommand(title: "Search", action: #selector(AppDelegate.handleSearch(_:)), input: "F", modifierFlags: .command, discoverabilityTitle: "Search")
 		return UIMenu(title: "Serach", identifier: UIMenu.Identifier("app.kurozora.menus.search"), options: .displayInline, children: [refreshPageCommand])

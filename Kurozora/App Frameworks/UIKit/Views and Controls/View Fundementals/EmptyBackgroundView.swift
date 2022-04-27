@@ -245,7 +245,7 @@ class EmptyBackgroundView: UIView {
 			// Assign the image view's horizontal constraints
 			subviewStrings.append("imageView")
 			views[subviewStrings.last!] = self.imageView
-			self.contentView.addConstraint(NSLayoutConstraint.init(item: self.imageView, attribute: .centerX, relatedBy: .equal, toItem: self.contentView, attribute: .centerX, multiplier: 1.0, constant: 0.0))
+			self.contentView.addConstraint(NSLayoutConstraint(item: self.imageView, attribute: .centerX, relatedBy: .equal, toItem: self.contentView, attribute: .centerX, multiplier: 1.0, constant: 0.0))
 
 			// Assign the title label's horizontal constraints
 			subviewStrings.append("titleLabel")

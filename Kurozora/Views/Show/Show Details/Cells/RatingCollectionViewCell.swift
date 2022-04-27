@@ -35,7 +35,9 @@ class RatingCollectionViewCell: UICollectionViewCell {
 		let userRating = self.show.attributes.givenRating
 		self.cosmosView.rating = userRating ?? 0.0
 
-		cosmosView.didFinishTouchingCosmos = { rating in
+		self.cosmosView.didFinishTouchingCosmos = { [weak self] rating in
+			guard let self = self else { return }
+
 			WorkflowController.shared.isSignedIn {
 				self.rateShow(with: rating)
 			}
@@ -46,11 +48,11 @@ class RatingCollectionViewCell: UICollectionViewCell {
         }
 
 		// Configure average rating
-		ratingLabel.text = "\(show.attributes.stats?.ratingAverage ?? 0.0)"
+		self.ratingLabel.text = "\(self.show.attributes.stats?.ratingAverage ?? 0.0)"
 
 		// Configure rating count
-		let ratingCount = show.attributes.stats?.ratingCount ?? 0
-		cosmosDetailLabel.text = ratingCount != 0 ? "\(ratingCount.kkFormatted) Ratings" : "Not enough ratings"
+		let ratingCount = self.show.attributes.stats?.ratingCount ?? 0
+		self.cosmosDetailLabel.text = ratingCount != 0 ? "\(ratingCount.kkFormatted) Ratings" : "Not enough ratings"
 	}
 
 	/// Configure the cell with the episode details.
@@ -59,7 +61,9 @@ class RatingCollectionViewCell: UICollectionViewCell {
 		let userRating = self.episode.attributes.givenRating
 		self.cosmosView.rating = userRating ?? 0.0
 
-		cosmosView.didFinishTouchingCosmos = { rating in
+		self.cosmosView.didFinishTouchingCosmos = { [weak self] rating in
+			guard let self = self else { return }
+
 			WorkflowController.shared.isSignedIn {
 				self.rateEpisode(with: rating)
 			}
@@ -70,20 +74,20 @@ class RatingCollectionViewCell: UICollectionViewCell {
 		}
 
 		// Configure average rating
-		ratingLabel.text = "\(episode.attributes.stats?.ratingAverage ?? 0.0)"
+		self.ratingLabel.text = "\(self.episode.attributes.stats?.ratingAverage ?? 0.0)"
 
 		// Configure rating count
-		let ratingCount = episode.attributes.stats?.ratingCount ?? 0
-		cosmosDetailLabel.text = ratingCount != 0 ? "\(ratingCount.kkFormatted) Ratings" : "Not enough ratings"
+		let ratingCount = self.episode.attributes.stats?.ratingCount ?? 0
+		self.cosmosDetailLabel.text = ratingCount != 0 ? "\(ratingCount.kkFormatted) Ratings" : "Not enough ratings"
 	}
 
-	/**
-		Rate the show with the given rating.
-
-		- Parameter rating: The rating to be saved when the show has been rated by the user.
-	*/
+	/// Rate the show with the given rating.
+	///
+	/// - Parameter rating: The rating to be saved when the show has been rated by the user.
 	func rateShow(with rating: Double) {
-		KService.rateShow(self.show.id, with: rating, description: nil) { result in
+		KService.rateShow(self.show.id, with: rating, description: nil) { [weak self] result in
+			guard let self = self else { return }
+
 			switch result {
 			case .success:
 				// Update current rating for the user.
@@ -100,13 +104,13 @@ class RatingCollectionViewCell: UICollectionViewCell {
 		}
 	}
 
-	/**
-		Rate the show with the given rating.
-
-		- Parameter rating: The rating to be saved when the show has been rated by the user.
-	*/
+	/// Rate the show with the given rating.
+	///
+	/// - Parameter rating: The rating to be saved when the show has been rated by the user.
 	func rateEpisode(with rating: Double) {
-		KService.rateEpisode(self.episode.id, with: rating, description: nil) { result in
+		KService.rateEpisode(self.episode.id, with: rating, description: nil) { [weak self] result in
+			guard let self = self else { return }
+
 			switch result {
 			case .success:
 				// Update current rating for the user.

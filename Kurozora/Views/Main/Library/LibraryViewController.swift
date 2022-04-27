@@ -120,15 +120,13 @@ class LibraryViewController: KTabbedViewController {
 		}
 	}
 
-	/**
-		Builds and presents the sort types in an action sheet.
-
-		- Parameter sender: The object containing a reference to the button that initiated this action.
-	*/
+	/// Builds and presents the sort types in an action sheet.
+	///
+	/// - Parameter sender: The object containing a reference to the button that initiated this action.
 	fileprivate func populateSortActions(_ sender: UIBarButtonItem) {
-		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.SortType.alertControllerItems, currentSelection: self.libraryViewControllerDelegate?.sortValue()) { [weak self] (_, value, _)  in
+		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.SortType.alertControllerItems, currentSelection: self.libraryViewControllerDelegate?.sortValue()) { [weak self] _, value, _  in
 			guard let self = self else { return }
-			let subActionSheetAlertController = UIAlertController.actionSheetWithItems(items: value.subAlertControllerItems, currentSelection: self.libraryViewControllerDelegate?.sortOptionValue()) { (_, subValue, _) in
+			let subActionSheetAlertController = UIAlertController.actionSheetWithItems(items: value.subAlertControllerItems, currentSelection: self.libraryViewControllerDelegate?.sortOptionValue()) { _, subValue, _ in
 				self.libraryViewControllerDelegate?.sortLibrary(by: value, option: subValue)
 			}
 
@@ -145,7 +143,8 @@ class LibraryViewController: KTabbedViewController {
 		if let sortValue = self.libraryViewControllerDelegate?.sortValue() {
 			if sortValue != .none {
 				// Report thread action
-				let stopSortingAction = UIAlertAction.init(title: "Stop sorting", style: .destructive) { _ in
+				let stopSortingAction = UIAlertAction(title: "Stop sorting", style: .destructive) { [weak self] _ in
+					guard let self = self else { return }
 					self.libraryViewControllerDelegate?.sortLibrary(by: .none, option: .none)
 				}
 				stopSortingAction.setValue(UIImage(systemName: "xmark.circle.fill"), forKey: "image")

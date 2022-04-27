@@ -15,7 +15,8 @@ extension LibraryListCollectionViewController {
 	}
 
 	override func configureDataSource() {
-		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Show>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: Show) -> UICollectionViewCell? in
+		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Show>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: Show) -> UICollectionViewCell? in
+			guard let self = self else { return nil }
 			if let libraryBaseCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: self.libraryCellStyle.identifierString, for: indexPath) as? LibraryBaseCollectionViewCell {
 				libraryBaseCollectionViewCell.show = item
 				return libraryBaseCollectionViewCell
@@ -29,6 +30,6 @@ extension LibraryListCollectionViewController {
 		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Show>()
 		snapshot.appendSections([.main])
 		snapshot.appendItems(self.shows)
-		dataSource.apply(snapshot, animatingDifferences: true)
+		self.dataSource.apply(snapshot, animatingDifferences: true)
 	}
 }

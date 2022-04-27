@@ -27,10 +27,11 @@ class RedeemTableViewController: ServiceTableViewController {
 		self.previewImage = R.image.promotional.redeemCode()
 		self.serviceType = .redeem
 
-		rightNavigationBarButton.isEnabled = false
+		self.rightNavigationBarButton.isEnabled = false
 
 		// Prepare Vision
-		textRecognitionRequest = VNRecognizeTextRequest(completionHandler: { (request, _) in
+		self.textRecognitionRequest = VNRecognizeTextRequest(completionHandler: { [weak self] (request, _) in
+			guard let self = self else { return }
 			if let results = request.results, !results.isEmpty {
 				if let requestResults = request.results as? [VNRecognizedTextObservation] {
 					DispatchQueue.main.async {
@@ -39,29 +40,27 @@ class RedeemTableViewController: ServiceTableViewController {
 				}
 			}
 		})
-		textRecognitionRequest.revision = VNRecognizeTextRequestRevision1
-		textRecognitionRequest.recognitionLevel = .fast
-		textRecognitionRequest.usesLanguageCorrection = false
+		self.textRecognitionRequest.revision = VNRecognizeTextRequestRevision1
+		self.textRecognitionRequest.recognitionLevel = .fast
+		self.textRecognitionRequest.usesLanguageCorrection = false
 	}
 
 	// MARK: - Functions
 	/// Open the camera if the device has one, otherwise show a warning.
 	func openCamera() {
 		if UIImagePickerController.isSourceTypeAvailable(.camera) {
-			imagePicker.sourceType = .camera
-			imagePicker.allowsEditing = true
-			imagePicker.delegate = self
+			self.imagePicker.sourceType = .camera
+			self.imagePicker.allowsEditing = true
+			self.imagePicker.delegate = self
 			self.present(imagePicker, animated: true, completion: nil)
 		} else {
 			self.presentAlertController(title: "Well, this is awkward.", message: "You don't seem to have a camera 😓")
 		}
 	}
 
-	/**
-		Processes the specified image with VNImageRequestHandler.
-
-		- Parameter image: The image specified to be processed
-	*/
+	/// Processes the specified image with VNImageRequestHandler.
+	///
+	/// - Parameter image: The image specified to be processed
 	func processImage(image: UIImage) {
 		guard let cgImage = image.cgImage else {
 			print("Failed to get cgimage from input image")
@@ -70,17 +69,15 @@ class RedeemTableViewController: ServiceTableViewController {
 
 		let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
 		do {
-			try handler.perform([textRecognitionRequest])
+			try handler.perform([self.textRecognitionRequest])
 		} catch {
 			print(error)
 		}
 	}
 
-	/**
-		Shows a string on an alert view controller.
-
-		- Parameter redeemCode: The string to show on the alert view.
-	*/
+	/// Shows a string on an alert view controller.
+	///
+	/// - Parameter redeemCode: The string to show on the alert view.
 	func showSuccess(for redeemCode: String?) {
 		guard let redeemCode = redeemCode else {
 			self.presentAlertController(title: "Error Redeeming Code", message: "The code entered is not valid.")
@@ -90,11 +87,9 @@ class RedeemTableViewController: ServiceTableViewController {
 		self.presentAlertController(title: "Zoop, badoop, fruitloop!", message: "\(redeemCode) was successfully redeemed 🤩")
 	}
 
-	/**
-		Processes the specified array of recognized text observation by creating a full transcript to run analysis on.
-
-		- Parameter recognizedtext: An array of recognized text observation.
-	*/
+	/// Processes the specified array of recognized text observation by creating a full transcript to run analysis on.
+	///
+	/// - Parameter recognizedtext: An array of recognized text observation.
 	fileprivate func processRecognizedText(_ recognizedText: [Any]) {
 		if let recognizedText = recognizedText as? [VNRecognizedTextObservation] {
 			let maximumCandidates = 1
@@ -113,16 +108,19 @@ class RedeemTableViewController: ServiceTableViewController {
 	}
 
 	@IBAction func rightNavigationBarButtonPressed(sender: AnyObject) {
-		view.endEditing(true)
+		self.view.endEditing(true)
 
 		let redeemCode = textFieldArray.first??.trimmedText
 		showSuccess(for: redeemCode)
-//		KurozoraKit.shared.redeem(code, withSuccess: { (success) in
+//		KurozoraKit.shared.redeem(code, withSuccess: { [weak self] success in
+//			guard let self = self else { return }
+//
 //			if success {
 //				DispatchQueue.main.async {
 //
 //				}
 //			}
+//
 //			self.rightNavigationBarButton.isEnabled = false
 //		})
 	}
