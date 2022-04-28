@@ -9,20 +9,6 @@
 import UIKit
 
 class SidebarViewController: KCollectionViewController {
-	private enum SidebarSection: Int {
-		case main
-	}
-
-	private struct SidebarItem: Hashable, Identifiable {
-		let id: UUID
-		let title: String
-		let image: UIImage?
-
-		static func row(title: String, image: UIImage, id: UUID = UUID()) -> Self {
-			return SidebarItem(id: id, title: title, image: image)
-		}
-	}
-
 	// MARK: - Properties
 	// Refresh control
 	override var prefersRefreshControlDisabled: Bool {

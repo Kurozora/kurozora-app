@@ -19,8 +19,3 @@ enum FilterSection: String {
 	case classification = "Classification"
 	case genres = "Genres"
 }
-
-enum LayoutType: String {
-	case chart
-	case seasonalChart
-}

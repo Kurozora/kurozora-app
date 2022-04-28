@@ -8,24 +8,8 @@
 
 import UIKit
 
-/// A set of available image formats.
-///
-/// ```
-/// case png
-/// case jpeg(CGFloat)
-/// ```
-public enum ImageFormat {
-	// MARK: - Cases
-	/// Indicates the image has a `png` format.
-	case png
-
-	/// Indicates the image has a `jpeg` format. This option also takes a compression value.
-	case jpeg(CGFloat)
-}
-
 extension UIImage {
 	// MARK: - Functions
-
 	/// Convert UIImage to Base-64.
 	///
 	/// - Parameter format: The format of the image.

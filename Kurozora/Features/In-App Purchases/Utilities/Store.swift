@@ -30,34 +30,6 @@ typealias RenewalInfo = StoreKit.Product.SubscriptionInfo.RenewalInfo
 /// The renewal states of auto-renewable subscriptions.
 typealias RenewalState = StoreKit.Product.SubscriptionInfo.RenewalState
 
-/// The set of available store errors.
-public enum StoreError: Error {
-	// MARK: - Cases
-	/// Indicating the verification has failed.
-	case failedVerification
-}
-
-/// The set of available  subscription tier types.
-public enum SubscriptionTier: Int, Comparable {
-	// MARK: - Cases
-	/// Indicating no subscription tier.
-	case none = 0
-
-	/// Indicating the 1 month subscription tier type.
-	case plus1Month = 1
-
-	/// Indicating the 6 months subscription tier type.
-	case plus6Months = 2
-
-	/// Indicating the 12 months subscription tier type.
-	case plus12Months = 3
-
-	// MARK: - Functions
-	public static func < (lhs: Self, rhs: Self) -> Bool {
-		return lhs.rawValue < rhs.rawValue
-	}
-}
-
 /// The object responsible for managing in-app purchases with StoreKit.
 final class Store: ObservableObject {
 	// MARK: - Properties

@@ -12,8 +12,8 @@ import Foundation
 ///
 /// ```
 /// case feed = 0
-/// case popular = 1
-/// case global = 2
+/// case popular
+/// case global
 /// ```
 enum FeedType: Int {
 	/// Refers to the posts shared by the users followed by the current user.
