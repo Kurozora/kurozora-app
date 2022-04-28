@@ -1,5 +1,5 @@
 //
-//  KWhatsNewModel.swift
+//  KWhatsNew.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 24/10/2019.
@@ -8,7 +8,7 @@
 
 import WhatsNew
 
-class KWhatsNewModel {
+class KWhatsNew {
 	/// Features of the current version of the app. Don't forget to change
 	static var current: [WhatsNewItem] {
 		return v1
