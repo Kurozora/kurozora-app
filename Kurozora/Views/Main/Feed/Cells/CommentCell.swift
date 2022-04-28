@@ -8,10 +8,4 @@
 
 import UIKit
 
-class CommentCell: PostCell {
-    public enum CommentType {
-        case text
-        case image
-        case video
-    }
-}
+class CommentCell: PostCell { }

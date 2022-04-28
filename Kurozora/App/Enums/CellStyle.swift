@@ -1,5 +1,5 @@
 //
-//  KKLibrary+CellStyle.swift
+//  CellStyle.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 16/03/2019.
