@@ -1676,7 +1676,6 @@
 				66FA97CD281A15750054FC2E /* Resources */,
 				66B4F1D9223D1F70007C5048 /* App Frameworks */,
 				66B4F1D1223BC8EB007C5048 /* Features */,
-				6675262B22280AB4007C1617 /* Plist */,
 				66E1517B2713628A007966A9 /* Supporting Files */,
 				6698394327493A970083C479 /* Supporting Files Dev */,
 			);
@@ -1855,20 +1854,6 @@
 				6671F29227A58883005D3A0D /* ThemeLockupCollectionViewCell.swift */,
 			);
 			path = Cells;
-			sourceTree = "<group>";
-		};
-		6675262B22280AB4007C1617 /* Plist */ = {
-			isa = PBXGroup;
-			children = (
-				666FBD8F22C4E16F007DB5D8 /* Black.plist */,
-				6675262D22280ACB007C1617 /* Day.plist */,
-				6675262C22280ACA007C1617 /* Default.plist */,
-				66C4583E259A88ED00886374 /* Grass.plist */,
-				6675262E22280ACB007C1617 /* Night.plist */,
-				66C4583F259A88ED00886374 /* Sakura.plist */,
-				66C45840259A88ED00886374 /* Sky.plist */,
-			);
-			path = Plist;
 			sourceTree = "<group>";
 		};
 		667AB11227B1AB6F0026971A /* Data Source */ = {
@@ -3009,6 +2994,13 @@
 		66FA97D0281A16150054FC2E /* Themes */ = {
 			isa = PBXGroup;
 			children = (
+				666FBD8F22C4E16F007DB5D8 /* Black.plist */,
+				6675262D22280ACB007C1617 /* Day.plist */,
+				6675262C22280ACA007C1617 /* Default.plist */,
+				66C4583E259A88ED00886374 /* Grass.plist */,
+				6675262E22280ACB007C1617 /* Night.plist */,
+				66C4583F259A88ED00886374 /* Sakura.plist */,
+				66C45840259A88ED00886374 /* Sky.plist */,
 			);
 			path = Themes;
 			sourceTree = "<group>";
