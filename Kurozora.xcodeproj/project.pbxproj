@@ -1214,13 +1214,13 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		66112343208F6A8E00E6033A /* App Services */ = {
+		66112343208F6A8E00E6033A /* Services */ = {
 			isa = PBXGroup;
 			children = (
 				6609FAD621D8D237008DF5E4 /* KurozoraDelegate.swift */,
 				66B13A5A2405A9E300CD732B /* Workflow */,
 			);
-			path = "App Services";
+			path = Services;
 			sourceTree = "<group>";
 		};
 		6611895825631E0E00CDB347 /* Container View Controllers */ = {
@@ -1667,17 +1667,16 @@
 		66647B522084995500CF624F /* Kurozora */ = {
 			isa = PBXGroup;
 			children = (
-				66FA97B4281A098A0054FC2E /* App */,
 				660E9FC8214BC6FB00F6813C /* Kurozora.entitlements */,
 				66647B532084995500CF624F /* AppDelegate.swift */,
 				663C95B823084FAC003720A4 /* SceneDelegate.swift */,
 				66707821208B1C6800471FBC /* LaunchScreen.xib */,
+				66FA97B4281A098A0054FC2E /* App */,
+				66FA97D2281A169F0054FC2E /* Lang */,
+				66FA97CD281A15750054FC2E /* Resources */,
 				66B4F1D9223D1F70007C5048 /* App Frameworks */,
-				66112343208F6A8E00E6033A /* App Services */,
-				66DE65262401AE80001C2773 /* Enums */,
 				66B4F1D1223BC8EB007C5048 /* Features */,
 				6675262B22280AB4007C1617 /* Plist */,
-				66ABBBFF240215BE00CE8A26 /* Views */,
 				66E1517B2713628A007966A9 /* Supporting Files */,
 				6698394327493A970083C479 /* Supporting Files Dev */,
 			);
@@ -2200,6 +2199,7 @@
 		66ABBBFF240215BE00CE8A26 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				66FA97D4281A174D0054FC2E /* Components */,
 				66AA35C1240312210006EC5B /* Main */,
 				664A066121EA23CA008CF4A6 /* Genres */,
 				6671F28627A5854F005D3A0D /* Themes */,
@@ -2838,13 +2838,6 @@
 			path = UIButton;
 			sourceTree = "<group>";
 		};
-		66DE65262401AE80001C2773 /* Enums */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Enums;
-			sourceTree = "<group>";
-		};
 		66DE85B322C0E6B500FACDD2 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -2950,7 +2943,9 @@
 			isa = PBXGroup;
 			children = (
 				66FA97B5281A09B90054FC2E /* Enums */,
+				66FA97D3281A16D90054FC2E /* Extensions */,
 				6648ED7122A4749500E1BE18 /* Models */,
+				66112343208F6A8E00E6033A /* Services */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -3000,6 +2995,43 @@
 				663E342C2360D559003386D1 /* VerticalCollectionCellStyle.swift */,
 			);
 			path = Enums;
+			sourceTree = "<group>";
+		};
+		66FA97CD281A15750054FC2E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				66FA97D0281A16150054FC2E /* Themes */,
+				66ABBBFF240215BE00CE8A26 /* Views */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		66FA97D0281A16150054FC2E /* Themes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Themes;
+			sourceTree = "<group>";
+		};
+		66FA97D2281A169F0054FC2E /* Lang */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Lang;
+			sourceTree = "<group>";
+		};
+		66FA97D3281A16D90054FC2E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		66FA97D4281A174D0054FC2E /* Components */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		66FC6DF52342B91600A454DD /* Extensions */ = {
