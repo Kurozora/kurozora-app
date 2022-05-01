@@ -191,8 +191,8 @@ extension ManageThemesCollectionViewController: ThemesCollectionViewCellDelegate
 		switch cell.kTheme {
 		case .other(let appTheme):
 			guard KThemeStyle.themeExist(for: appTheme) else {
-				let alertController = self.presentAlertController(title: "Not Downloaded", message: "Download the theme right now?", defaultActionButtonTitle: "Cancel")
-				alertController.addAction(UIAlertAction(title: "Download", style: .default) { [weak self] _ in
+				let alertController = self.presentAlertController(title: "Not Downloaded", message: "Download the theme right now?", defaultActionButtonTitle: Trans.cancel)
+				alertController.addAction(UIAlertAction(title: Trans.download, style: .default) { [weak self] _ in
 					guard let self = self else { return }
 					self.handleDownloadTheme(cell)
 				})

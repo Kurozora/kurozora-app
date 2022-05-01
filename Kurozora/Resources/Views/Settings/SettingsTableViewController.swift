@@ -155,7 +155,7 @@ extension SettingsTableViewController {
 		case .notifications:
 			shouldPerformSegue = WorkflowController.shared.isSignedIn()
 		case .cache:
-			let alertController = self.presentAlertController(title: "Clear all Cache?", message: "All of your caches will be cleared.", defaultActionButtonTitle: "Cancel")
+			let alertController = self.presentAlertController(title: "Clear all Cache?", message: "All of your caches will be cleared.", defaultActionButtonTitle: Trans.cancel)
 			alertController.addAction(UIAlertAction(title: "Clear 🗑", style: .destructive) { _ in
 				// Clear memory cache right away.
 				KingfisherManager.shared.cache.clearMemoryCache()

@@ -18,7 +18,7 @@ class KFMReShareTextEditorViewController: KFeedMessageTextEditorViewController {
 
 	// MARK: - Properties
 	override var placeholderText: String {
-		return "Write a comment..."
+		return Trans.writeAComment
 	}
 	var opFeedMessage: FeedMessage!
 	var segueToOPFeedDetails: Bool = false

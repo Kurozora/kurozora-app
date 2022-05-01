@@ -23,7 +23,7 @@ class KFMReplyTextEditorViewController: KFeedMessageTextEditorViewController {
 
 	// MARK: - Properties
 	override var placeholderText: String {
-		return "What's on your mind..."
+		return Trans.whatsOnYourMind
 	}
 	var opFeedMessage: FeedMessage!
 	var segueToOPFeedDetails: Bool = false

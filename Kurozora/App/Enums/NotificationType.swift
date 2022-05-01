@@ -36,17 +36,17 @@ enum KNotification {
 		var stringValue: String {
 			switch self {
 			case .other:
-				return "Other"
+				return Trans.other
 			case .session:
-				return "New Session"
+				return Trans.newSession
 			case .follower:
-				return "Follower"
+				return Trans.follower
 			case .newFeedMessageReply, .newFeedMessageReShare:
-				return "Message"
+				return Trans.message
 			case .malImport:
-				return "Library Import"
+				return Trans.libraryImport
 			case .subscriptionStatus:
-				return "Subscription Update"
+				return Trans.subscriptionUpdate
 			}
 		}
 

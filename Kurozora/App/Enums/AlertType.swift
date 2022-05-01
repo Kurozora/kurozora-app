@@ -11,22 +11,31 @@ import Foundation
 extension KStoreObserver {
 	/// List of available alert types.
 	enum AlertType {
+		// MARK: - Cases
+		/// Indicates that the product ID is not set.
 		case setProductIDs
+
+		/// Indicates that IAP is disabled.
 		case disabled
+
+		/// Indicates that the restoring IAP has failed.
 		case restoreFailed
+
+		/// Indicates that restoring IAP has succeeded.
 		case restoreSucceeded
 
+		// MARK: - Properties
 		/// The message linked to an alert type.
 		var message: String {
 			switch self {
 			case .setProductIDs:
-				return "Product ids not set, call setProductIDs method!"
+				return Trans.productIDsNotSet
 			case .disabled:
-				return "You are not authorized to make payments. In-App Purchases may be restricted on your device."
+				return Trans.iapDisabled
 			case .restoreFailed:
-				return "There are no restorable purchases.\nOnly previously bought non-consumable products and auto-renewable subscriptions can be restored."
+				return Trans.iapRestoreFailed
 			case .restoreSucceeded:
-				return "All purchases have been restored.\nPlease remember that only previously bought non-consumable products and auto-renewable subscriptions can be restored."
+				return Trans.iapRestoreSucceeded
 			}
 		}
 	}

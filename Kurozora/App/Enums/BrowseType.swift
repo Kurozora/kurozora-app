@@ -9,6 +9,7 @@
 import Foundation
 
 enum BrowseType: Int {
+	// MARK: - Cases
 	case topAnime = 0
 	case topAiring
 	case topUpcoming
@@ -18,11 +19,11 @@ enum BrowseType: Int {
 	case topSpecials
 	case justAdded
 	case mostPopular
-	case filtering
+	case advancedSearch
 
 	// MARK: - Properties
 	/// An array containing all browse types.
-	static let all: [BrowseType] = [.topAnime, .topAiring, .topUpcoming, .topTVSeries, .topMovies, .topOVA, .topSpecials, .justAdded, .mostPopular, .filtering]
+	static let all: [BrowseType] = [.topAnime, .topAiring, .topUpcoming, .topTVSeries, .topMovies, .topOVA, .topSpecials, .justAdded, .mostPopular, .advancedSearch]
 
 	/// An array containing the string value of all browse types.
 	static var allString: [String] {
@@ -37,25 +38,25 @@ enum BrowseType: Int {
 	var stringValue: String {
 		switch self {
 		case .topAnime:
-			return "Top Anime"
+			return Trans.topAnime
 		case .topAiring:
-			return "Top Airing"
+			return Trans.topAiring
 		case .topUpcoming:
-			return "Top Upcoming"
+			return Trans.topUpcoming
 		case .topTVSeries:
-			return "Top TV Series"
+			return Trans.topTVSeries
 		case .topMovies:
-			return "Top Movies"
+			return Trans.topMovies
 		case .topOVA:
-			return "Top OVA"
+			return Trans.topOVA
 		case .topSpecials:
-			return "Top Specials"
+			return Trans.topSpecials
 		case .justAdded:
-			return "Just Added"
+			return Trans.justAdded
 		case .mostPopular:
-			return "Most Popular"
-		case .filtering:
-			return "Advanced Search"
+			return Trans.mostPopular
+		case .advancedSearch:
+			return Trans.advancedSearch
 		}
 	}
 }

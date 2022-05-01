@@ -74,7 +74,7 @@ extension UIAlertController {
 	///    - actionSheetAlertController: The instantiated alert controller instance.
 	///
 	/// - Returns: an action sheet with the default style and a default action button.
-	static func actionSheet(title: String?, message: String?, defaultActionButtonTitle: String = "Cancel", handler: ((UIAlertAction) -> Void)? = nil, actions: ((_ actionSheetAlertController: UIAlertController) -> Void)) -> UIAlertController {
+	static func actionSheet(title: String?, message: String?, defaultActionButtonTitle: String = Trans.cancel, handler: ((UIAlertAction) -> Void)? = nil, actions: ((_ actionSheetAlertController: UIAlertController) -> Void)) -> UIAlertController {
 		let alertController = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
 		alertController.view.tintColor = .label
 

@@ -13,8 +13,8 @@ extension KNotification {
 	///
 	/// ```
 	/// case automatic = 0
-	/// case byType = 1
-	/// case off = 2
+	/// case byType
+	/// case off
 	/// ```
 	enum GroupStyle: Int {
 		/// Groups the notifications in sections by their date and time.
@@ -30,11 +30,11 @@ extension KNotification {
 		var stringValue: String {
 			switch self {
 			case .automatic:
-				return "Automatic"
+				return Trans.automatic
 			case .byType:
-				return "By Type"
+				return Trans.byType
 			case .off:
-				return "Off"
+				return Trans.off
 			}
 		}
 	}

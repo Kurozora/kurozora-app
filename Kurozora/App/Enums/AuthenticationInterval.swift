@@ -12,12 +12,12 @@ import Foundation
 ///
 /// ```
 /// case immediately = 0
-/// case thirtySeconds = 1
-/// case oneMinute = 2
-/// case twoMinutes = 3
-/// case threeMinutes = 4
-/// case fourMinutes = 5
-/// case fiveMinutes = 6
+/// case thirtySeconds
+/// case oneMinute
+/// case twoMinutes
+/// case threeMinutes
+/// case fourMinutes
+/// case fiveMinutes
 /// ```
 enum AuthenticationInterval: Int {
 	// MARK: - Cases
@@ -25,22 +25,22 @@ enum AuthenticationInterval: Int {
 	case immediately = 0
 
 	/// The app asks for authentication after thirty seconds of it being in the background.
-	case thirtySeconds = 1
+	case thirtySeconds
 
 	/// The app asks for authentication after one minute of it being in the background.
-	case oneMinute = 2
+	case oneMinute
 
 	/// The app asks for authentication after two minutes of it being in the background.
-	case twoMinutes = 3
+	case twoMinutes
 
 	/// The app asks for authentication after three minutes of it being in the background.
-	case threeMinutes = 4
+	case threeMinutes
 
 	/// The app asks for authentication after four minutes of it being in the background.
-	case fourMinutes = 5
+	case fourMinutes
 
 	/// The app asks for authentication after five minute of it being in the background.
-	case fiveMinutes = 6
+	case fiveMinutes
 
 	// MARK: - Properties
 	/// An array of all `AuthenticationInterval` types.
@@ -50,19 +50,19 @@ enum AuthenticationInterval: Int {
 	var stringValue: String {
 		switch self {
 		case .immediately:
-			return "Immediately"
+			return Trans.immediately
 		case .thirtySeconds:
-			return "30 Seconds"
+			return Trans.thirtySeconds
 		case .oneMinute:
-			return "1 Minute"
+			return Trans.oneMinute
 		case .twoMinutes:
-			return "2 Minutes"
+			return Trans.twoMinutes
 		case .threeMinutes:
-			return "3 Minutes"
+			return Trans.threeMinutes
 		case .fourMinutes:
-			return "4 Minutes"
+			return Trans.fourMinutes
 		case .fiveMinutes:
-			return "5 Minutes"
+			return Trans.fiveMinutes
 		}
 	}
 

@@ -9,13 +9,13 @@
 import UIKit
 
 enum FilterSection: String {
-	case view = "View"
-	case sort = "Sort"
-	case filterTitle = "Filter"
-	case animeType = "Type"
-	case year = "Year"
-	case status = "Status"
-	case studio = "Studio"
-	case classification = "Classification"
-	case genres = "Genres"
+	case view
+	case sort
+	case filterTitle
+	case animeType
+	case year
+	case status
+	case studio
+	case classification
+	case genres
 }

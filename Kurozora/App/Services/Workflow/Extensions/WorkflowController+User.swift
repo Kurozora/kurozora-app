@@ -45,7 +45,7 @@ extension WorkflowController {
 			completion?()
 			return true
 		} else {
-			let subscribeAction = UIAlertAction(title: "Subscribe", style: .default) { [weak self] _ in
+			let subscribeAction = UIAlertAction(title: Trans.subscribe, style: .default) { [weak self] _ in
 				guard let self = self else { return }
 				self.presentSubscribeView()
 			}

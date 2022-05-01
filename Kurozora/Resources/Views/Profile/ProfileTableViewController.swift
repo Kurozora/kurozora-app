@@ -455,8 +455,8 @@ class ProfileTableViewController: KTableViewController {
 				self.profileNavigationItem.setRightBarButton(nil, animated: true)
 
 				// Set new actions
-				let leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(self.cancelButtonPressed(_:)))
-				let rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(self.applyProfileEdit(_:)))
+				let leftBarButtonItem = UIBarButtonItem(title: Trans.cancel, style: .plain, target: self, action: #selector(self.cancelButtonPressed(_:)))
+				let rightBarButtonItem = UIBarButtonItem(title: Trans.done, style: .done, target: self, action: #selector(self.applyProfileEdit(_:)))
 				self.profileNavigationItem.setLeftBarButton(leftBarButtonItem, animated: true)
 				self.profileNavigationItem.setRightBarButton(rightBarButtonItem, animated: true)
 

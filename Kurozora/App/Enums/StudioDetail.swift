@@ -23,13 +23,13 @@ enum StudioDetail {
 		var stringValue: String {
 			switch self {
 			case .header:
-				return "Header"
+				return Trans.header
 			case .about:
-				return "About"
+				return Trans.about
 			case .information:
-				return "Information"
+				return Trans.information
 			case .shows:
-				return "Shows"
+				return Trans.shows
 			}
 		}
 
@@ -101,11 +101,11 @@ extension StudioDetail {
 		var stringValue: String {
 			switch self {
 			case .founded:
-				return "Founded"
+				return Trans.founded
 			case .headquarters:
-				return "Headquarters"
+				return Trans.headquarters
 			case .website:
-				return "Website"
+				return Trans.websites
 			}
 		}
 

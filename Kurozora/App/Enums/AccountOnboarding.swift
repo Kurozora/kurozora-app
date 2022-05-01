@@ -15,26 +15,26 @@ enum AccountOnboarding: Int, CaseIterable {
 	case signUp = 0
 
 	/// Sign in with Apple onboarding.
-	case siwa = 1
+	case siwa
 
 	/// Sign in onboarding.
-	case signIn = 2
+	case signIn
 
 	/// Reset password onboarding.
-	case reset = 3
+	case reset
 
 	// MARK: - Properties
 	/// The title value of an account onboarding type.
 	var titleValue: String {
 		switch self {
 		case .signUp:
-			return "New to Kurozora?"
+			return Trans.signInHeadline
 		case .siwa:
-			return "Setup Account"
+			return Trans.siwaHeadline
 		case .signIn:
-			return "Kurozora ID"
+			return Trans.signInHeadline
 		case .reset:
-			return "Forgot Password?"
+			return Trans.forgotPasswordHeadline
 		}
 	}
 
@@ -42,13 +42,13 @@ enum AccountOnboarding: Int, CaseIterable {
 	var subTextValue: String {
 		switch self {
 		case .signUp:
-			return "Create an account and join the community."
+			return Trans.signUpSubheadline
 		case .siwa:
-			return "Finish setting up your account and join the comminty."
+			return Trans.siwaSubheadline
 		case .signIn:
-			return "Sign in with your Kurozora ID to use the library and other Kurozora services."
+			return Trans.signInSubheadline
 		case .reset:
-			return "Enter your Kurozora ID to continue."
+			return Trans.forgotPasswordSubheadline
 		}
 	}
 
@@ -56,13 +56,13 @@ enum AccountOnboarding: Int, CaseIterable {
 	var navigationBarButtonTitleValue: String {
 		switch self {
 		case .signUp:
-			return "Join 🤗"
+			return Trans.signUpButton
 		case .siwa:
-			return "Join 🤗"
+			return Trans.siwaButton
 		case .signIn:
-			return "Open sesame 👐"
+			return Trans.signInButton
 		case .reset:
-			return "Send ✨"
+			return Trans.forgotPasswordButton
 		}
 	}
 
