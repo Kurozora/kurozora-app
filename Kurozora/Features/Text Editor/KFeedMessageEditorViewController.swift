@@ -30,7 +30,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 	// MARK: - Properties
 	let characterLimit = 240
 	var placeholderText: String {
-		return "What's on your mind..."
+		return Trans.whatsOnYourMind
 	}
 	var originalText = "" {
 		didSet {
@@ -141,13 +141,13 @@ class KFeedMessageTextEditorViewController: KViewController {
 			// Only ask if the user wants to send if they attempt to pull to dismiss, not if they tap Cancel.
 			if showingSend {
 				// Send action.
-				actionSheetAlertController.addAction(UIAlertAction(title: "Send", style: .default) { _ in
+				actionSheetAlertController.addAction(UIAlertAction(title: Trans.send, style: .default) { _ in
 					self.sendMessage()
 				})
 			}
 
 			// Discard action.
-			actionSheetAlertController.addAction(UIAlertAction(title: "Discard", style: .destructive) { _ in
+			actionSheetAlertController.addAction(UIAlertAction(title: Trans.discard, style: .destructive) { _ in
 				self.dismiss(animated: true, completion: nil)
 			})
 		}
@@ -173,7 +173,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 			self.performFeedMessageRequest()
 		} else {
 			// Character limit reached. Present an alert to the user.
-			self.presentAlertController(title: "Limit Reached", message: "You have exceeded the character limit for a message.")
+			self.presentAlertController(title: Trans.characterLimitReachedHeadline, message: Trans.characterLimitReachedSubheadline)
 		}
 	}
 

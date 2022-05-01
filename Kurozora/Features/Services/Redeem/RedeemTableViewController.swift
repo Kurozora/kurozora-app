@@ -80,11 +80,11 @@ class RedeemTableViewController: ServiceTableViewController {
 	/// - Parameter redeemCode: The string to show on the alert view.
 	func showSuccess(for redeemCode: String?) {
 		guard let redeemCode = redeemCode else {
-			self.presentAlertController(title: "Error Redeeming Code", message: "The code entered is not valid.")
+			self.presentAlertController(title: Trans.redeemErrorHeadline, message: Trans.redeemErrorSubheadline)
 			return
 		}
 
-		self.presentAlertController(title: "Zoop, badoop, fruitloop!", message: "\(redeemCode) was successfully redeemed 🤩")
+		self.presentAlertController(title: Trans.redeemSuccessHeadline, message: "\(redeemCode) was successfully redeemed 🤩")
 	}
 
 	/// Processes the specified array of recognized text observation by creating a full transcript to run analysis on.
@@ -199,7 +199,7 @@ extension RedeemTableViewController: ProductActionTableViewCellDelegate {
 // MARK: - VNDocumentCameraViewControllerDelegate
 extension RedeemTableViewController: VNDocumentCameraViewControllerDelegate {
 	func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
-		let alertController = self.presentActivityAlertController(title: "Processing redeem code.", message: nil)
+		let alertController = self.presentActivityAlertController(title: Trans.redeemProcessingHeadline, message: nil)
 
 		controller.dismiss(animated: true) {
 			DispatchQueue.global(qos: .userInitiated).async {
@@ -222,7 +222,7 @@ extension RedeemTableViewController: VNDocumentCameraViewControllerDelegate {
 // MARK: - UIImagePickerControllerDelegate
 extension RedeemTableViewController: UIImagePickerControllerDelegate {
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-		let alertController = self.presentActivityAlertController(title: "Processing redeem code.", message: nil)
+		let alertController = self.presentActivityAlertController(title: Trans.redeemProcessingHeadline, message: nil)
 
 		picker.dismiss(animated: true) {
 			DispatchQueue.global(qos: .userInitiated).async {

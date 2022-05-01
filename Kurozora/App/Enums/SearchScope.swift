@@ -42,11 +42,11 @@ enum SearchScope: Int {
 	var stringValue: String {
 		switch self {
 		case .show:
-			return "Anime"
+			return Trans.anime
 		case .library:
-			return "Library"
+			return Trans.library
 		case .user:
-			return "User"
+			return Trans.user
 		}
 	}
 

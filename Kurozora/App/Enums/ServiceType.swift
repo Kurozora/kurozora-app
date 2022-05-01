@@ -35,11 +35,11 @@ enum ServiceType {
 	var headlineStringValue: String {
 		switch self {
 		case .malImport:
-			return ServiceHeaderString.malImportHeadline
+			return Trans.malImportHeadline
 		case .redeem:
-			return ServiceHeaderString.redeemHeadline
+			return Trans.redeemHeadline
 		case .signInWithApple:
-			return ServiceHeaderString.signInWithAppleHeadline
+			return Trans.signInWithAppleHeadline
 		default:
 			return ""
 		}
@@ -49,11 +49,11 @@ enum ServiceType {
 	var subheadStringValue: String {
 		switch self {
 		case .malImport:
-			return ServiceHeaderString.malImportSubhead
+			return Trans.malImportSubheadline
 		case .redeem:
-			return ServiceHeaderString.redeemSubhead
+			return Trans.redeemSubheadline
 		case .signInWithApple:
-			return ServiceHeaderString.signInWithAppleSubhead
+			return Trans.signInWithAppleSubheadline
 		default:
 			return ""
 		}
@@ -63,15 +63,15 @@ enum ServiceType {
 	var footerStringValue: String {
 		switch self {
 		case .malImport:
-			return ServiceFooterString.malImport
+			return Trans.malImportFooter
 		case .redeem:
-			return ServiceFooterString.redeem
+			return Trans.redeemFooter
 		case .signInWithApple:
-			return ServiceFooterString.signInWithApple
+			return Trans.signInWithAppleFooter
 		case .subscription:
-			return ServiceFooterString.subscription
+			return Trans.subscriptionFooter
 		case .tipJar:
-			return ServiceFooterString.tipJar
+			return Trans.tipJarFooter
 		default:
 			return ""
 		}
@@ -81,7 +81,7 @@ enum ServiceType {
 	var attributedFooterStringValue: ThemeAttributedStringPicker {
 		switch self {
 		case .visitPrivacyPolicy:
-			return ServiceFooterString.visitPrivacyPolicy
+			return Trans.visitPrivacyPolicy
 		default:
 			return ThemeAttributedStringPicker([])
 		}

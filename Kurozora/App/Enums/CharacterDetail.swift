@@ -32,15 +32,15 @@ enum CharacterDetail {
 		var stringValue: String {
 			switch self {
 			case .header:
-				return "Header"
+				return Trans.header
 			case .about:
-				return "About"
+				return Trans.about
 			case .information:
-				return "Information"
+				return Trans.information
 			case .shows:
-				return "Shows"
+				return Trans.shows
 			case .people:
-				return "People"
+				return Trans.people
 			}
 		}
 
@@ -114,13 +114,13 @@ extension CharacterDetail {
 		var stringValue: String {
 			switch self {
 			case .debut:
-				return "Debut"
+				return Trans.debut
 			case .age:
-				return "Age"
+				return Trans.age
 			case .measurments:
-				return "Measurments"
+				return Trans.measurments
 			case .characteristics:
-				return "Characteristics"
+				return Trans.characteristics
 			}
 		}
 

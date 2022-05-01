@@ -21,9 +21,9 @@ enum TextViewCollectionViewCellType {
 	var stringValue: String {
 		switch self {
 		case .synopsis:
-			return "Synopsis"
+			return Trans.synopsis
 		case .about:
-			return "About"
+			return Trans.about
 		}
 	}
 

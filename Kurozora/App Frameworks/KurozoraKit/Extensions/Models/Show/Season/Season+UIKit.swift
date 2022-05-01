@@ -27,7 +27,7 @@ extension Season {
 		var menuElements: [UIMenuElement] = []
 
 		// Create "share" element
-		let shareAction = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
+		let shareAction = UIAction(title: Trans.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
 			guard let self = self else { return }
 			self.openShareSheet(on: viewController)
 		}

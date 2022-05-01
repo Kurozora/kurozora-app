@@ -106,7 +106,7 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 					self.disableUserInteraction(false)
 
 					// Present welcome message.
-					self.presentAlertController(title: "Hooray!", message: "Account created successfully! Please check your email for confirmation.", defaultActionButtonTitle: "Done") { _ in
+					self.presentAlertController(title: "Hooray!", message: "Account created successfully! Please check your email for confirmation.", defaultActionButtonTitle: Trans.done) { _ in
 						self.dismiss(animated: true, completion: nil)
 					}
 				case .failure:
@@ -136,7 +136,7 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 					self.disableUserInteraction(false)
 
 					// Present welcome message.
-					self.presentAlertController(title: "Hooray!", message: "Your account was successfully created!", defaultActionButtonTitle: "Done") { _ in
+					self.presentAlertController(title: "Hooray!", message: "Your account was successfully created!", defaultActionButtonTitle: Trans.done) { _ in
 						self.dismiss(animated: true, completion: nil)
 					}
 				case .failure:

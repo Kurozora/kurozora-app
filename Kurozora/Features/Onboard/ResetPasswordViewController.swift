@@ -29,7 +29,7 @@ class ResetPasswordTableViewController: AccountOnboardingTableViewController {
 			guard let self = self else { return }
 			switch result {
 			case .success:
-				self.presentAlertController(title: "Success!", message: "If an account exists with this Kurozora ID, you should receive an email with your reset link shortly.", defaultActionButtonTitle: "Done") { _ in
+				self.presentAlertController(title: "Success!", message: "If an account exists with this Kurozora ID, you should receive an email with your reset link shortly.", defaultActionButtonTitle: Trans.done) { _ in
 					self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
 				}
 			case .failure: break

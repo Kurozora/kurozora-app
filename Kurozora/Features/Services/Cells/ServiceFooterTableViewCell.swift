@@ -43,7 +43,7 @@ class ServiceFooterTableViewCell: KTableViewCell {
 	}
 
 	override func configureCell() {
-		self.privacyButton.theme_setAttributedTitle(ServiceFooterString.visitPrivacyPolicy, forState: .normal)
+		self.privacyButton.theme_setAttributedTitle(Trans.visitPrivacyPolicy, forState: .normal)
 	}
 
 	override func reloadCell() {

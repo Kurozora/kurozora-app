@@ -290,7 +290,7 @@ extension EpisodesCollectionViewController: EpisodeLockupCollectionViewCellDeleg
 				self.episodes[indexPath]?.updateWatchStatus(userInfo: ["indexPath": indexPath])
 			}))
 //			actionSheetAlertController.addAction(UIAlertAction(title: "Rate", style: .default, handler: nil))
-			actionSheetAlertController.addAction(UIAlertAction(title: "Share", style: .default, handler: { _ in
+			actionSheetAlertController.addAction(UIAlertAction(title: Trans.share, style: .default, handler: { _ in
 				guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 				self.episodes[indexPath]?.openShareSheet(on: self, button)
 			}))

@@ -31,15 +31,15 @@ enum PersonDetail {
 		var stringValue: String {
 			switch self {
 			case .header:
-				return "Header"
+				return Trans.header
 			case .about:
-				return "About"
+				return Trans.about
 			case .information:
-				return "Information"
+				return Trans.information
 			case .shows:
-				return "Shows"
+				return Trans.shows
 			case .characters:
-				return "Characters"
+				return Trans.characters
 			}
 		}
 
@@ -112,11 +112,11 @@ extension PersonDetail {
 		var stringValue: String {
 			switch self {
 			case .aliases:
-				return "Aliases"
+				return Trans.aliases
 			case .age:
-				return "Age"
+				return Trans.age
 			case .website:
-				return "Websites"
+				return Trans.websites
 			}
 		}
 

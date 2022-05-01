@@ -89,21 +89,21 @@ extension SettingsTableViewController {
 		var stringValue: String {
 			switch self {
 			case .account:
-				return "Account"
+				return Trans.account
 			case .debug:
-				return "Debug"
+				return Trans.debug
 			case .pro:
-				return "Pro"
+				return Trans.pro
 			case .alerts:
-				return "Alerts"
+				return Trans.alerts
 			case .general:
-				return "General"
+				return Trans.general
 			case .support:
-				return "Support Us"
+				return Trans.supportUs
 			case .social:
-				return "Social"
+				return Trans.social
 			case .about:
-				return "About"
+				return Trans.about
 			}
 		}
 	}
@@ -328,54 +328,54 @@ extension SettingsTableViewController {
 		var primaryStringValue: String {
 			switch self {
 			case .account:
-				return User.current?.attributes.username ?? "Sign in to your Kurozora account"
+				return User.current?.attributes.username ?? Trans.accountHeadline
 			case .switchAccount:
-				return "Switch Account"
+				return Trans.switchAccount
 			case .keychain:
-				return "Keys Manager"
+				return Trans.keysManager
 			case .reminder:
-				return "Subscribe to Reminders"
+				return Trans.subscribeToReminders
 			case .notifications:
-				return "Notifications"
+				return Trans.notifications
 			case .displayBlindness:
-				return "Display & Blindness"
+				return Trans.displayBlindness
 			case .theme:
-				return "Theme"
+				return Trans.theme
 			case .icon:
-				return "Icon"
+				return Trans.icon
 			case .browser:
-				return "Browser"
+				return Trans.browser
 			case .biometrics:
 				switch UIDevice.supportedBiomtetric {
 				case .faceID:
-					return "Face ID & Passcode"
+					return Trans.faceIDPasscode
 				case .touchID:
-					return "Touch ID & Passcode"
+					return Trans.touchIDPasscode
 				default:
-					return "Passcode"
+					return Trans.passcode
 				}
 			case .cache:
-				return "Cache"
+				return Trans.cache
 			case .privacy:
-				return "Privacy"
+				return Trans.privacy
 			case .unlockFeatures:
-				return "Unlock Features"
+				return Trans.unlockFeatures
 			case .tipjar:
-				return "Tip Jar"
+				return Trans.tipJar
 			case .manageSubscriptions:
-				return "Manage Subscriptions"
+				return Trans.manageSubscriptions
 			case .restoreFeatures:
-				return "Restore Purchase"
+				return Trans.restorePurchase
 //			case .requestRefund:
-//				return "Request Refund"
+//				return Trans.RequestRefund
 			case .rate:
-				return "Rate us on App Store"
+				return Trans.rateAppStore
 			case .joinDiscord:
-				return "Join our Discord Community"
+				return Trans.joinDiscord
 			case .followTwitter:
-				return "Follow us on Twitter"
+				return Trans.followTwitter
 			case .followMedium:
-				return "Follow our story on Medium"
+				return Trans.followMedium
 			}
 		}
 
@@ -383,7 +383,7 @@ extension SettingsTableViewController {
 		var secondaryStringValue: String {
 			switch self {
 			case .account:
-				return User.isSignedIn ? "Kurozora ID, Sign in with Apple & MAL Import" : "Setup Kurozora ID and more."
+				return User.isSignedIn ? Trans.accountSignedInSubheadline : Trans.accountSubheadline
 			default:
 				return ""
 			}
