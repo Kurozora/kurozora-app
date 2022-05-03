@@ -17,7 +17,7 @@ extension FavoriteShowsCollectionViewController {
 	override func configureDataSource() {
 		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Show>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: Show) -> UICollectionViewCell? in
 			let smallLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: SmallLockupCollectionViewCell.self, for: indexPath)
-			smallLockupCollectionViewCell.configureCell(with: item)
+			smallLockupCollectionViewCell.configure(using: item)
 			return smallLockupCollectionViewCell
 		}
 	}

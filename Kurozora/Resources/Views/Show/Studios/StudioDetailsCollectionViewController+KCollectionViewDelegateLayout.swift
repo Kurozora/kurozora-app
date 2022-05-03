@@ -82,8 +82,9 @@ extension StudioDetailsCollectionViewController {
 				hasSectionHeader = true
 			case .shows:
 				if self.shows.count != 0 {
-					let showsSectionLayout = self.showsSectionLayout(for: section, layoutEnvironment: layoutEnvironment)
-					sectionLayout = showsSectionLayout
+					let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
+					let smallSectionLayout = Layouts.smallSectionLayout(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					sectionLayout = smallSectionLayout
 					hasSectionHeader = true
 				}
 			}
@@ -112,27 +113,6 @@ extension StudioDetailsCollectionViewController {
 
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
-		return layoutSection
-	}
-
-	func showsSectionLayout(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.90), heightDimension: .fractionalHeight(1.0))
-		let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-		let heightFraction = self.groupHeightFraction(forSection: section, with: columns, layout: layoutEnvironment)
-		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.90), heightDimension: .fractionalWidth(heightFraction))
-		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-		layoutGroup.interItemSpacing = .fixed(10.0)
-
-		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-		layoutSection.interGroupSpacing = 10.0
-		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
-		#if targetEnvironment(macCatalyst)
-		layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
-		#else
-		layoutSection.orthogonalScrollingBehavior = .groupPaging
-		#endif
 		return layoutSection
 	}
 

@@ -30,4 +30,32 @@ extension UIButton {
 			self.setImage(placeholder.original, for: .normal)
 		}
 	}
+
+	/// Adds a blur effect to the button.
+	///
+	/// - Parameters:
+	///    - style: The style of the blur view added to the button.
+	///    - cornerRadius: The corner radius applied to the blur view.
+	///    - padding: The padding between the blur view and the button's frame.
+	func addBlurEffect(style: UIBlurEffect.Style = .regular, cornerRadius: CGFloat = 0, padding: CGFloat = 0) {
+		self.backgroundColor = .clear
+		let blurView = KVisualEffectView()
+		blurView.isUserInteractionEnabled = false
+		if cornerRadius > 0 {
+			blurView.layer.cornerRadius = cornerRadius
+			blurView.layer.masksToBounds = true
+		}
+		self.insertSubview(blurView, at: 0)
+
+		blurView.translatesAutoresizingMaskIntoConstraints = false
+		self.leadingAnchor.constraint(equalTo: blurView.leadingAnchor, constant: padding).isActive = true
+		self.trailingAnchor.constraint(equalTo: blurView.trailingAnchor, constant: -padding).isActive = true
+		self.topAnchor.constraint(equalTo: blurView.topAnchor, constant: padding).isActive = true
+		self.bottomAnchor.constraint(equalTo: blurView.bottomAnchor, constant: -padding).isActive = true
+
+		if let imageView = self.imageView {
+			imageView.backgroundColor = .clear
+			self.bringSubviewToFront(imageView)
+		}
+	}
 }

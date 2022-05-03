@@ -133,10 +133,10 @@ extension CharactersListCollectionViewController {
 	}
 
 	override func configureDataSource() {
-		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, _) -> UICollectionViewCell? in
+		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, _) -> UICollectionViewCell? in
 			guard let self = self else { return nil }
 			let characterLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: CharacterLockupCollectionViewCell.self, for: indexPath)
-			characterLockupCollectionViewCell.configureCell(with: self.characters[indexPath.item])
+			characterLockupCollectionViewCell.configure(using: self.characters[indexPath.item])
 			return characterLockupCollectionViewCell
 		}
 
@@ -145,7 +145,7 @@ extension CharactersListCollectionViewController {
 			snapshot.appendSections([$0])
 			snapshot.appendItems(Array(0..<self.characters.count), toSection: $0)
 		}
-		dataSource.apply(snapshot)
+		self.dataSource.apply(snapshot)
 	}
 }
 
@@ -157,29 +157,11 @@ extension CharactersListCollectionViewController {
 		return columnCount > 0 ? columnCount : 1
 	}
 
-	override func contentInset(forItemInSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-	}
-
-	override func contentInset(forSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-	}
-
 	override func createLayout() -> UICollectionViewLayout? {
 		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-			let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(200.0))
-			let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-			layoutGroup.interItemSpacing = .fixed(10.0)
-
-			let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-			layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
-			layoutSection.interGroupSpacing = 10.0
-			return layoutSection
+			return Layouts.charactersSectionLayout(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
 		}
 		return layout
 	}

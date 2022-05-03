@@ -168,7 +168,7 @@ extension ShowSongsListCollectionViewController {
 			case .showSong(let showSong, _):
 				let musicLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: MusicLockupCollectionViewCell.self, for: indexPath)
 				musicLockupCollectionViewCell.delegate = self
-				musicLockupCollectionViewCell.configureCell(with: showSong, at: indexPath, showEpisodes: showIDExists, showShow: !showIDExists)
+				musicLockupCollectionViewCell.configure(using: showSong, at: indexPath, showEpisodes: showIDExists, showShow: !showIDExists)
 				return musicLockupCollectionViewCell
 			}
 		}
@@ -221,36 +221,16 @@ extension ShowSongsListCollectionViewController {
 extension ShowSongsListCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
-		let columnCount = (width / 200).rounded().int
+		var columnCount = (width / 254).rounded().int
+		columnCount = columnCount > 8 ? 8 : columnCount
 		return columnCount > 0 ? columnCount : 1
-	}
-
-	override func contentInset(forItemInSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-	}
-
-	override func contentInset(forSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
 	}
 
 	override func createLayout() -> UICollectionViewLayout? {
 		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-
-			// Add layout item.
-			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(100.0))
-			let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-			// Add layout group
-			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(100.0))
-			let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-			layoutGroup.interItemSpacing = .fixed(10.0)
-
-			// Add layout section.
-			let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-			layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
-			layoutSection.interGroupSpacing = 10.0
+			let layoutSection = Layouts.musicSectionLayout(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
 
 			if self.showID != 0 {
 				// Add header supplementary view.
@@ -282,17 +262,17 @@ extension ShowSongsListCollectionViewController: MusicLockupCollectionViewCellDe
 			if (self.player?.currentItem?.asset as? AVURLAsset)?.url == (playerItem.asset as? AVURLAsset)?.url {
 				switch self.player?.timeControlStatus {
 				case .playing:
-					cell.playButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
+					cell.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
 					self.player?.pause()
 				case .paused:
-					cell.playButton.setImage(UIImage(systemName: "pause.circle.fill"), for: .normal)
+					cell.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
 					self.player?.play()
 				default: break
 				}
 			} else {
 				if let indexPath = self.currentPlayerIndexPath {
 					if let cell = collectionView.cellForItem(at: indexPath) as? MusicLockupCollectionViewCell {
-						cell.playButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
+						cell.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
 					}
 				}
 
@@ -300,13 +280,13 @@ extension ShowSongsListCollectionViewController: MusicLockupCollectionViewCellDe
 				self.player = AVPlayer(playerItem: playerItem)
 				self.player?.actionAtItemEnd = .none
 				self.player?.play()
-				cell.playButton.setImage(UIImage(systemName: "pause.circle.fill"), for: .normal)
+				cell.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
 
 				NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: nil, queue: .current, using: { [weak self] _ in
 					guard let self = self else { return }
 
 					self.player = nil
-					cell.playButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
+					cell.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
 				})
 			}
 		}

@@ -825,4 +825,14 @@ struct Trans {
 	/// - Tag: Trans-download
 	static let download: String = String(localized: "Download",
 										 comment: "The string for the word 'download'.")
+	/// The string for the word 'coming soon'.
+	///
+	/// - Tag: Trans-comingSoon
+	static let comingSoon: String = String(localized: "Coming Soon",
+										   comment: "The string for the word 'coming soon'.")
+	/// The string for the word 'expected'.
+	///
+	/// - Tag: Trans-expected
+	static let expected: String = String(localized: "Expected",
+										 comment: "The string for the word 'expected'.")
 }

@@ -57,6 +57,7 @@ extension CharacterDetailsCollectionViewController {
 			guard let self = self else { return nil }
 			guard self.character != nil else { return nil }
 			guard let characterDetailSection = CharacterDetail.Section(rawValue: section) else { fatalError("character section not supported") }
+			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 			var sectionLayout: NSCollectionLayoutSection? = nil
 			var hasSectionHeader = false
 
@@ -76,13 +77,13 @@ extension CharacterDetailsCollectionViewController {
 				hasSectionHeader = true
 			case .shows:
 				if self.shows.count != 0 {
-					let showsSectionLayout = self.showsSectionLayout(section, layoutEnvironment: layoutEnvironment)
-					sectionLayout = showsSectionLayout
+					let smallSectionLayout = Layouts.smallSectionLayout(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					sectionLayout = smallSectionLayout
 					hasSectionHeader = true
 				}
 			case .people:
 				if self.people.count != 0 {
-					let peopleSectionLayout = self.peopleSectionLayout(section, layoutEnvironment: layoutEnvironment)
+					let peopleSectionLayout = Layouts.peopleSectionLayout(section, columns: columns, layoutEnvironment: layoutEnvironment)
 					sectionLayout = peopleSectionLayout
 					hasSectionHeader = true
 				}
@@ -112,46 +113,6 @@ extension CharacterDetailsCollectionViewController {
 
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
-		return layoutSection
-	}
-
-	func peopleSectionLayout(_ section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.50), heightDimension: .estimated(50.0))
-		let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.50), heightDimension: .estimated(50.0))
-		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-		layoutGroup.interItemSpacing = .fixed(10.0)
-
-		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-		layoutSection.interGroupSpacing = 10.0
-		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
-		#if targetEnvironment(macCatalyst)
-		layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
-		#else
-		layoutSection.orthogonalScrollingBehavior = .groupPaging
-		#endif
-		return layoutSection
-	}
-
-	func showsSectionLayout(_ section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.90), heightDimension: .fractionalHeight(1.0))
-		let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.90), heightDimension: .estimated(150.0))
-		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-		layoutGroup.interItemSpacing = .fixed(10.0)
-
-		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-		layoutSection.interGroupSpacing = 10.0
-		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
-		#if targetEnvironment(macCatalyst)
-		layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
-		#else
-		layoutSection.orthogonalScrollingBehavior = .groupPaging
-		#endif
 		return layoutSection
 	}
 

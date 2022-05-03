@@ -209,11 +209,12 @@ extension CharacterDetailsCollectionViewController {
 			}
 		case .shows:
 			if self.shows.count != 0 {
-				(characterCollectionViewCell as? SmallLockupCollectionViewCell)?.configureCell(with: self.shows[indexPath.item])
+				(characterCollectionViewCell as? SmallLockupCollectionViewCell)?.configure(using: self.shows[indexPath.item])
+				(characterCollectionViewCell as? SmallLockupCollectionViewCell)?.delegate = self
 			}
 		case .people:
 			if self.people.count != 0 {
-				(characterCollectionViewCell as? PersonLockupCollectionViewCell)?.configureCell(with: self.people[indexPath.item])
+				(characterCollectionViewCell as? PersonLockupCollectionViewCell)?.configure(using: self.people[indexPath.item])
 			}
 		}
 
@@ -247,5 +248,69 @@ extension CharacterDetailsCollectionViewController: TextViewCollectionViewCellDe
 extension CharacterDetailsCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
 	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPressButton button: UIButton) {
 		self.performSegue(withIdentifier: reusableView.segueID, sender: reusableView.indexPath)
+	}
+}
+
+// MARK: - BaseLockupCollectionViewCellDelegate
+extension CharacterDetailsCollectionViewController: BaseLockupCollectionViewCellDelegate {
+	func chooseStatusButtonPressed(_ sender: UIButton, on cell: BaseLockupCollectionViewCell) {
+		WorkflowController.shared.isSignedIn {
+			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+			let show = self.shows[indexPath.item]
+
+			let oldLibraryStatus = cell.libraryStatus
+			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: oldLibraryStatus, action: { title, value  in
+				KService.addToLibrary(withLibraryStatus: value, showID: show.id) { result in
+					switch result {
+					case .success(let libraryUpdate):
+						show.attributes.update(using: libraryUpdate)
+
+							// Update entry in library
+						cell.libraryStatus = value
+						cell.libraryStatusButton?.setTitle("\(title) ▾", for: .normal)
+
+						let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
+						NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
+					case .failure:
+						break
+					}
+				}
+			})
+
+			if cell.libraryStatus != .none {
+				actionSheetAlertController.addAction(UIAlertAction(title: "Remove from library", style: .destructive) { _ in
+					KService.removeFromLibrary(showID: show.id) { result in
+						switch result {
+						case .success(let libraryUpdate):
+							show.attributes.update(using: libraryUpdate)
+
+								// Update edntry in library
+							cell.libraryStatus = .none
+							cell.libraryStatusButton?.setTitle("ADD", for: .normal)
+
+							let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
+							NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
+						case .failure:
+							break
+						}
+					}
+				})
+			}
+
+				// Present the controller
+			if let popoverController = actionSheetAlertController.popoverPresentationController {
+				popoverController.sourceView = sender
+				popoverController.sourceRect = sender.bounds
+			}
+
+			if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
+				self.present(actionSheetAlertController, animated: true, completion: nil)
+			}
+		}
+	}
+
+	func reminderButtonPressed(on cell: BaseLockupCollectionViewCell) {
+		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+		self.shows[indexPath.item].toggleReminder()
 	}
 }

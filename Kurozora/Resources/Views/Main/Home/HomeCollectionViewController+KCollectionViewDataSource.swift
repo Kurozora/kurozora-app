@@ -11,6 +11,7 @@ import UIKit
 extension HomeCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
 		return [
+			BannerLockupCollectionViewCell.self,
 			SmallLockupCollectionViewCell.self,
 			MediumLockupCollectionViewCell.self,
 			LargeLockupCollectionViewCell.self,
@@ -39,37 +40,37 @@ extension HomeCollectionViewController {
 				case .show(let show, _):
 					guard let baseLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: exploreCategorySize.identifierString, for: indexPath) as? BaseLockupCollectionViewCell
 					else { fatalError("Cannot dequeue reusable cell with identifier \(exploreCategorySize.identifierString)") }
-					baseLockupCollectionViewCell.baseLockupCollectionViewCellDelegate = self
-					baseLockupCollectionViewCell.configureCell(with: show)
+					baseLockupCollectionViewCell.delegate = self
+					baseLockupCollectionViewCell.configure(using: show)
 					return baseLockupCollectionViewCell
 				case .showSong(let showSong, _):
 					let reuseIdentifier = R.reuseIdentifier.musicLockupCollectionViewCell.identifier
 					guard let baseLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? MusicLockupCollectionViewCell
 					else { fatalError("Cannot dequeue reusable cell with identifier \(reuseIdentifier)") }
 					baseLockupCollectionViewCell.delegate = self
-					baseLockupCollectionViewCell.configureCell(with: showSong, at: indexPath, showEpisodes: false, showShow: true)
+					baseLockupCollectionViewCell.configure(using: showSong, at: indexPath, showEpisodes: false, showShow: true)
 					return baseLockupCollectionViewCell
 				case .genre(let genre, _):
-					guard let baseLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: exploreCategorySize.identifierString, for: indexPath) as? BaseLockupCollectionViewCell
+					guard let baseLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: exploreCategorySize.identifierString, for: indexPath) as? MediumLockupCollectionViewCell
 					else { fatalError("Cannot dequeue reusable cell with identifier \(exploreCategorySize.identifierString)") }
-					baseLockupCollectionViewCell.configureCell(with: genre)
+					baseLockupCollectionViewCell.configure(using: genre)
 					return baseLockupCollectionViewCell
 				case .theme(let theme, _):
-					guard let baseLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: exploreCategorySize.identifierString, for: indexPath) as? BaseLockupCollectionViewCell
+					guard let baseLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: exploreCategorySize.identifierString, for: indexPath) as? MediumLockupCollectionViewCell
 					else { fatalError("Cannot dequeue reusable cell with identifier \(exploreCategorySize.identifierString)") }
-					baseLockupCollectionViewCell.configureCell(with: theme)
+					baseLockupCollectionViewCell.configure(using: theme)
 					return baseLockupCollectionViewCell
 				case .character(let character, _):
 					let reuseIdentifier = R.reuseIdentifier.characterLockupCollectionViewCell.identifier
 					guard let baseLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? CharacterLockupCollectionViewCell
 					else { fatalError("Cannot dequeue reusable cell with identifier \(reuseIdentifier)") }
-					baseLockupCollectionViewCell.configureCell(with: character)
+					baseLockupCollectionViewCell.configure(using: character)
 					return baseLockupCollectionViewCell
 				case .person(let person, _):
 					let reuseIdentifier = R.reuseIdentifier.personLockupCollectionViewCell.identifier
 					guard let baseLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? PersonLockupCollectionViewCell
 					else { fatalError("Cannot dequeue reusable cell with identifier \(reuseIdentifier)") }
-					baseLockupCollectionViewCell.configureCell(with: person)
+					baseLockupCollectionViewCell.configure(using: person)
 					return baseLockupCollectionViewCell
 				default: break
 				}
@@ -213,6 +214,6 @@ extension HomeCollectionViewController {
 			}
 		}
 
-		dataSource.apply(snapshot)
+		self.dataSource.apply(self.snapshot)
 	}
 }

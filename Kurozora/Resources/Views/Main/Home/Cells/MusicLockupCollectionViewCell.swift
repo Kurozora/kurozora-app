@@ -16,18 +16,28 @@ protocol MusicLockupCollectionViewCellDelegate: AnyObject {
 	func showButtonPressed(_ sender: UIButton, indexPath: IndexPath)
 }
 
-class MusicLockupCollectionViewCell: BaseLockupCollectionViewCell {
+class MusicLockupCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet var tertiaryLable: KSecondaryLabel!
+	/// The primary lable of the cell.
+	@IBOutlet weak var primaryLabel: UILabel!
 
-	/// A button representing the type of the music.
-	@IBOutlet var playButton: KButton!
+	/// The secondary lable of the cell.
+	@IBOutlet weak var secondaryLabel: UILabel!
+
+	/// The tertiary lable of the cell.
+	@IBOutlet weak var tertiaryLable: KSecondaryLabel!
+
+	/// A button representing the state of the music.
+	@IBOutlet weak var albumImageView: UIImageView!
+
+	/// A button representing the state of the music.
+	@IBOutlet weak var playButton: KButton!
 
 	/// A button representing the show a music belongs to.
-	@IBOutlet var showButton: KButton!
+	@IBOutlet weak var showButton: KButton!
 
 	/// A button representing the type of the music.
-	@IBOutlet var typeButton: UIButton!
+	@IBOutlet weak var typeButton: UIButton!
 
 	// MARK: - Properties
 	/// The index path of the cell within the parent collection view.
@@ -46,14 +56,16 @@ class MusicLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	/// - Parameter indexPath: The index path of the cell within the collection view.
 	/// - Parameter showEpisodes: Whether to show which episodes this song played in.
 	/// - Parameter showShow: Whether to show which show this song belongs to.
-	override func configureCell(with showSong: ShowSong, at indexPath: IndexPath, showEpisodes: Bool = true, showShow: Bool = false) {
+	func configure(using showSong: ShowSong?, at indexPath: IndexPath, showEpisodes: Bool = true, showShow: Bool = false) {
+		guard let showSong = showSong else { return }
+
 		self.indexPath = indexPath
 
 		// Configure title
-		self.primaryLabel?.text = showSong.song.attributes.title
+		self.primaryLabel.text = showSong.song.attributes.title
 
 		// Configure artist
-		self.secondaryLabel?.text = showSong.song.attributes.artist
+		self.secondaryLabel.text = showSong.song.attributes.artist
 
 		// Configure episodes
 		self.tertiaryLable.isHidden = !showEpisodes
@@ -70,13 +82,13 @@ class MusicLockupCollectionViewCell: BaseLockupCollectionViewCell {
 
 		// Configure play button
 		self.playButton.isHidden = true
-		self.playButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
+		self.playButton.roundCorners(.allCorners, radius: self.playButton.height / 2)
+		self.playButton.addBlurEffect()
 
 		if let appleMusicID = showSong.song.attributes.amID {
-			let developerToken = "eyJraWQiOiIzOExGSjhTNkJLIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiI0N1pFVTVKNEJGIiwiaWF0IjoxNjM4NzM2NzM2LCJleHAiOjE2NTQyODg3MzYsImF1ZCI6Imh0dHBzOi8vYXBwbGVpZC5hcHBsZS5jb20iLCJzdWIiOiJhcHAua3Vyb3pvcmEud2ViLnRyYWNrZXIifQ.YPmoT2FOQzCZU2TLRj8IRD6HdLaCp0-GiM5ZD2aQ4_AlvwNvpSZyYp5sWVaQP_z1nzIFxKHGIj_GM15VxZWLNw"
 			if var urlRequest = URLRequest(urlString: "https://api.music.apple.com/v1/catalog/jp/songs/\(appleMusicID)") {
 				urlRequest.httpMethod = "GET"
-				urlRequest.addValue("Bearer \(developerToken)", forHTTPHeaderField: "Authorization")
+				urlRequest.addValue("Bearer \(Services.appleMusicDeveloperToken)", forHTTPHeaderField: "Authorization")
 
 				URLSession.shared.dataTask(with: urlRequest) { [weak self] data, _, error in
 					guard let self = self else { return }
@@ -116,8 +128,8 @@ class MusicLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		guard let artworkURL = song.artwork?.url(width: 320, height: 320)?.absoluteString else { return }
 		DispatchQueue.main.async {
 			self.playButton.isHidden = false
-			self.posterImageView?.backgroundColor = song.artwork?.backgroundColor?.uiColor
-			self.posterImageView?.setImage(with: artworkURL, placeholder: #imageLiteral(resourceName: "Placeholders/Music Album"))
+			self.albumImageView?.backgroundColor = song.artwork?.backgroundColor?.uiColor
+			self.albumImageView?.setImage(with: artworkURL, placeholder: #imageLiteral(resourceName: "Placeholders/Music Album"))
 		}
 	}
 
@@ -126,8 +138,8 @@ class MusicLockupCollectionViewCell: BaseLockupCollectionViewCell {
 
 		DispatchQueue.main.async {
 			self.playButton.isHidden = true
-			self.posterImageView?.backgroundColor = .clear
-			self.posterImageView?.image = #imageLiteral(resourceName: "Placeholders/Music Album")
+			self.albumImageView?.backgroundColor = .clear
+			self.albumImageView?.image = #imageLiteral(resourceName: "Placeholders/Music Album")
 		}
 	}
 

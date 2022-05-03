@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -106,14 +106,14 @@
                             <constraint firstAttribute="bottom" secondItem="iLu-jq-nxA" secondAttribute="bottom" id="rWA-br-K6b"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="One Piece" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4YL-KK-DDQ">
-                        <rect key="frame" x="108" y="199.5" width="78" height="20.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="One Piece" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4YL-KK-DDQ" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="116" y="199.5" width="78" height="20.5"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Adventure" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ak8-tP-o1R">
-                        <rect key="frame" x="108" y="222" width="58" height="14.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Adventure" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ak8-tP-o1R" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="116" y="222" width="58" height="14.5"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                         <color key="textColor" systemColor="secondaryLabelColor"/>
                         <nil key="highlightedColor"/>
@@ -125,7 +125,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DOK-hZ-Wha" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="108" y="319.5" width="52" height="30"/>
+                        <rect key="frame" x="116" y="319.5" width="52" height="30"/>
                         <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="SFf-KN-yjm"/>
@@ -156,13 +156,13 @@
                     <constraint firstAttribute="trailing" secondItem="OXr-yS-u4I" secondAttribute="trailing" id="gHn-gS-4NR"/>
                     <constraint firstAttribute="bottom" secondItem="xSi-o9-X2G" secondAttribute="bottom" id="hVu-9l-n2W"/>
                     <constraint firstItem="DOK-hZ-Wha" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Ak8-tP-o1R" secondAttribute="bottom" constant="8" symbolic="YES" id="jAQ-9X-bYO"/>
-                    <constraint firstItem="DOK-hZ-Wha" firstAttribute="leading" secondItem="4pN-1W-t1C" secondAttribute="trailing" constant="8" symbolic="YES" id="kvb-Lj-pBy"/>
+                    <constraint firstItem="DOK-hZ-Wha" firstAttribute="leading" secondItem="4pN-1W-t1C" secondAttribute="trailing" constant="16" id="kvb-Lj-pBy"/>
                     <constraint firstItem="xSi-o9-X2G" firstAttribute="leading" secondItem="we1-58-ZqB" secondAttribute="leading" id="nEQ-KU-Ecb"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="DOK-hZ-Wha" secondAttribute="trailing" id="o9o-a0-6lj"/>
                     <constraint firstItem="Ak8-tP-o1R" firstAttribute="top" secondItem="4YL-KK-DDQ" secondAttribute="bottom" constant="2" id="pNX-Kt-qbF"/>
                     <constraint firstItem="xSi-o9-X2G" firstAttribute="top" secondItem="iLu-jq-nxA" secondAttribute="bottom" constant="16" id="qfK-ez-lxn"/>
                     <constraint firstItem="4pN-1W-t1C" firstAttribute="leading" secondItem="we1-58-ZqB" secondAttribute="leading" id="uCC-Lr-mPD"/>
-                    <constraint firstItem="4YL-KK-DDQ" firstAttribute="leading" secondItem="4pN-1W-t1C" secondAttribute="trailing" constant="8" symbolic="YES" id="ujA-aD-erX"/>
+                    <constraint firstItem="4YL-KK-DDQ" firstAttribute="leading" secondItem="4pN-1W-t1C" secondAttribute="trailing" constant="16" id="ujA-aD-erX"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xSi-o9-X2G" secondAttribute="trailing" id="vK7-Xf-W4v"/>
                 </constraints>
             </collectionViewCellContentView>

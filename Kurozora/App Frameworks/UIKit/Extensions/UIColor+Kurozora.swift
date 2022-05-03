@@ -76,3 +76,17 @@ extension UIColor {
 	/// Gray color of value `#646464`.
 	static var dropped: UIColor = #colorLiteral(red: 0.3921568627, green: 0.3921568627, blue: 0.3921568627, alpha: 1)
 }
+
+// MARK: - Helpers
+extension UIColor {
+	/// Whether the color contrast is light or dark.
+	///
+	/// This uses the algorithm proposed by [W3](https://www.w3.org/WAI/ER/WD-AERT/#color-contrast)
+	///
+	/// Returns: a boolean indicating whether the color contrast is light or dark.
+	var isLight: Bool {
+		let (red, green, blue) = self.rgbComponents
+		let colorContrast = ((red * 299) + (green * 587) + (blue * 114)) / 1000
+		return colorContrast > 125
+	}
+}
