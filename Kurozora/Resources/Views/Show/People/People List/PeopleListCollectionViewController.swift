@@ -131,10 +131,10 @@ extension PeopleListCollectionViewController {
 	}
 
 	override func configureDataSource() {
-		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, _) -> UICollectionViewCell? in
+		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, _) -> UICollectionViewCell? in
 			guard let self = self else { return nil }
 			let personLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: PersonLockupCollectionViewCell.self, for: indexPath)
-			personLockupCollectionViewCell.configureCell(with: self.people[indexPath.item])
+			personLockupCollectionViewCell.configure(using: self.people[indexPath.item])
 			return personLockupCollectionViewCell
 		}
 
@@ -143,7 +143,7 @@ extension PeopleListCollectionViewController {
 			snapshot.appendSections([$0])
 			snapshot.appendItems(Array(0..<people.count), toSection: $0)
 		}
-		dataSource.apply(snapshot)
+		self.dataSource.apply(snapshot)
 	}
 }
 
@@ -155,29 +155,11 @@ extension PeopleListCollectionViewController {
 		return columnCount > 0 ? columnCount : 1
 	}
 
-	override func contentInset(forItemInSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-	}
-
-	override func contentInset(forSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-	}
-
 	override func createLayout() -> UICollectionViewLayout? {
 		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-			let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(200))
-			let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-			layoutGroup.interItemSpacing = .fixed(10.0)
-
-			let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-			layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
-			layoutSection.interGroupSpacing = 10.0
-			return layoutSection
+			return Layouts.peopleSectionLayout(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
 		}
 		return layout
 	}

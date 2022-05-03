@@ -253,13 +253,15 @@ extension ShowDetailsDataSource: UICollectionViewDataSource {
 		case .songs:
 			let musicLockupCollectionViewCell = showDetailCollectionViewCell as? MusicLockupCollectionViewCell
 			musicLockupCollectionViewCell?.delegate = self
-			musicLockupCollectionViewCell?.configureCell(with: self.showSongs[indexPath.item], at: indexPath)
+			musicLockupCollectionViewCell?.configure(using: self.showSongs[indexPath.item], at: indexPath)
 		case .moreByStudio:
 			let smallLockupCollectionViewCell = showDetailCollectionViewCell as? SmallLockupCollectionViewCell
-			smallLockupCollectionViewCell?.configureCell(with: self.studioShows[indexPath.item])
+			smallLockupCollectionViewCell?.delegate = self
+			smallLockupCollectionViewCell?.configure(using: self.studioShows[indexPath.item])
 		case .relatedShows:
 			let smallLockupCollectionViewCell = showDetailCollectionViewCell as? SmallLockupCollectionViewCell
-			smallLockupCollectionViewCell?.configureCell(with: self.relatedShows[indexPath.item])
+			smallLockupCollectionViewCell?.delegate = self
+			smallLockupCollectionViewCell?.configure(using: self.relatedShows[indexPath.item])
 		case .sosumi:
 			let sosumiShowCollectionViewCell = showDetailCollectionViewCell as? SosumiShowCollectionViewCell
 			sosumiShowCollectionViewCell?.copyrightText = self.show.attributes.copyright
@@ -325,17 +327,17 @@ extension ShowDetailsDataSource: MusicLockupCollectionViewCellDelegate {
 			if (self.player?.currentItem?.asset as? AVURLAsset)?.url == (playerItem.asset as? AVURLAsset)?.url {
 				switch self.player?.timeControlStatus {
 				case .playing:
-					cell.playButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
+					cell.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
 					self.player?.pause()
 				case .paused:
-					cell.playButton.setImage(UIImage(systemName: "pause.circle.fill"), for: .normal)
+					cell.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
 					self.player?.play()
 				default: break
 				}
 			} else {
 				if let indexPath = self.currentPlayerIndexPath {
 					if let cell = self.viewController?.collectionView.cellForItem(at: indexPath) as? MusicLockupCollectionViewCell {
-						cell.playButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
+						cell.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
 					}
 				}
 
@@ -343,17 +345,98 @@ extension ShowDetailsDataSource: MusicLockupCollectionViewCellDelegate {
 				self.player = AVPlayer(playerItem: playerItem)
 				self.player?.actionAtItemEnd = .none
 				self.player?.play()
-				cell.playButton.setImage(UIImage(systemName: "pause.circle.fill"), for: .normal)
+				cell.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
 
 				NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: nil, queue: .current, using: { [weak self] _ in
 					guard let self = self else { return }
 
 					self.player = nil
-					cell.playButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
+					cell.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
 				})
 			}
 		}
 	}
 
 	func showButtonPressed(_ sender: UIButton, indexPath: IndexPath) {}
+}
+
+// MARK: - BaseLockupCollectionViewCellDelegate
+extension ShowDetailsDataSource: BaseLockupCollectionViewCellDelegate {
+	func chooseStatusButtonPressed(_ sender: UIButton, on cell: BaseLockupCollectionViewCell) {
+		WorkflowController.shared.isSignedIn {
+			guard let indexPath = self.viewController?.collectionView.indexPath(for: cell) else { return }
+			let showDetailSection = ShowDetail.Section(rawValue: indexPath.section) ?? .header
+			var show: Show
+
+			switch showDetailSection {
+			case .moreByStudio:
+				show = self.studioShows[indexPath.item]
+			case .relatedShows:
+				show = self.relatedShows[indexPath.item].show
+			default: return
+			}
+
+			let oldLibraryStatus = cell.libraryStatus
+			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: oldLibraryStatus, action: { title, value  in
+				KService.addToLibrary(withLibraryStatus: value, showID: show.id) { result in
+					switch result {
+					case .success(let libraryUpdate):
+						show.attributes.update(using: libraryUpdate)
+
+						// Update entry in library
+						cell.libraryStatus = value
+						cell.libraryStatusButton?.setTitle("\(title) ▾", for: .normal)
+
+						let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
+						NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
+					case .failure:
+						break
+					}
+				}
+			})
+
+			if cell.libraryStatus != .none {
+				actionSheetAlertController.addAction(UIAlertAction(title: "Remove from library", style: .destructive) { _ in
+					KService.removeFromLibrary(showID: show.id) { result in
+						switch result {
+						case .success(let libraryUpdate):
+							show.attributes.update(using: libraryUpdate)
+
+							// Update edntry in library
+							cell.libraryStatus = .none
+							cell.libraryStatusButton?.setTitle("ADD", for: .normal)
+
+							let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
+							NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
+						case .failure:
+							break
+						}
+					}
+				})
+			}
+
+			// Present the controller
+			if let popoverController = actionSheetAlertController.popoverPresentationController {
+				popoverController.sourceView = sender
+				popoverController.sourceRect = sender.bounds
+			}
+
+			if (self.viewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
+				self.viewController?.present(actionSheetAlertController, animated: true, completion: nil)
+			}
+		}
+	}
+
+	func reminderButtonPressed(on cell: BaseLockupCollectionViewCell) {
+		guard let indexPath = self.viewController?.collectionView.indexPath(for: cell) else { return }
+		let showDetailSection = ShowDetail.Section(rawValue: indexPath.section) ?? .header
+
+		switch showDetailSection {
+		case .moreByStudio:
+			self.studioShows[indexPath.item].toggleReminder()
+		case .relatedShows:
+			self.relatedShows[indexPath.item].show.toggleReminder()
+		default: break
+		}
+	}
 }

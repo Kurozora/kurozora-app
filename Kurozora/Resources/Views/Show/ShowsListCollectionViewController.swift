@@ -236,14 +236,14 @@ extension ShowsListCollectionViewController {
 			guard let self = self else { return nil }
 			let cellClass = self.showUpcoming ? UpcomingLockupCollectionViewCell.self : SmallLockupCollectionViewCell.self
 			let baseLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: cellClass, for: indexPath)
-			baseLockupCollectionViewCell.baseLockupCollectionViewCellDelegate = self
+			baseLockupCollectionViewCell.delegate = self
 
 			// Populate the cell with our item description
 			switch item {
 			case .show(let show, _):
-				baseLockupCollectionViewCell.configureCell(with: show)
+				baseLockupCollectionViewCell.configure(using: show)
 			case .relatedShow(let relatedShow, _):
-				(baseLockupCollectionViewCell as? SmallLockupCollectionViewCell)?.configureCell(with: relatedShow)
+				(baseLockupCollectionViewCell as? SmallLockupCollectionViewCell)?.configure(using: relatedShow)
 			}
 
 			// Return the cell
@@ -282,50 +282,17 @@ extension ShowsListCollectionViewController {
 		return columnCount > 0 ? columnCount : 1
 	}
 
-	override func contentInset(forSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 20, trailing: 10)
-	}
-
 	override func createLayout() -> UICollectionViewLayout? {
 		return UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
+			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 
 			if self.showUpcoming {
-				return self.upcomingSectionLayout(section, layoutEnvironment: layoutEnvironment)
+				return Layouts.upcomingSectionLayout(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
 			}
 
-			return self.smallSectionLayout(section, layoutEnvironment: layoutEnvironment)
+			return Layouts.smallSectionLayout(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
 		}
-	}
-
-	func smallSectionLayout(_ section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-		let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(150.0))
-		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-		layoutGroup.interItemSpacing = .fixed(10.0)
-
-		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-		layoutSection.interGroupSpacing = 10.0
-		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
-		return layoutSection
-	}
-
-	func upcomingSectionLayout(_ section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-		let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(460.0))
-		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-		layoutGroup.interItemSpacing = .fixed(10.0)
-
-		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-		layoutSection.interGroupSpacing = 10.0
-		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
-		return layoutSection
 	}
 }
 

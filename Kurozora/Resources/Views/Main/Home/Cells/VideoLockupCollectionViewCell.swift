@@ -14,16 +14,6 @@ import XCDYouTubeKit
 
 class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	// MARK: - IBOutlets
-	override var primaryLabel: UILabel? {
-		didSet {
-			primaryLabel?.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
-	override var secondaryLabel: UILabel? {
-		didSet {
-			secondaryLabel?.theme_textColor = KThemePicker.subTextColor.rawValue
-		}
-	}
 	@IBOutlet weak var taglineLabel: KLabel!
 	@IBOutlet weak var videoPlayerContainer: KTrailerPlayerView!
 
@@ -54,8 +44,9 @@ class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	}
 
 	// MARK: - Functions
-	override func configureCell(with show: Show) {
-		super.configureCell(with: show)
+	override func configure(using show: Show?) {
+		super.configure(using: show)
+		guard let show = show else { return }
 
 		// Configure genres
 		self.secondaryLabel?.text = show.attributes.genres?.localizedJoined()
@@ -65,7 +56,7 @@ class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 
 		// Configure video player
 		if self.youtubeOperation == nil {
-			self.configureVideoPlayer(with: show)
+//			self.configureVideoPlayer(with: show)
 		}
 	}
 

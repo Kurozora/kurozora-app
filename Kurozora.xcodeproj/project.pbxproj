@@ -492,6 +492,11 @@
 		66FA97C8281A12320054FC2E /* SidebarSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FA97C7281A12320054FC2E /* SidebarSection.swift */; };
 		66FA97CA281A12620054FC2E /* SidebarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FA97C9281A12620054FC2E /* SidebarItem.swift */; };
 		66FA97E1281BD37A0054FC2E /* Trans.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FA97E0281BD37A0054FC2E /* Trans.swift */; };
+		66FA97E3281EC9B10054FC2E /* QuickAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FA97E2281EC9B10054FC2E /* QuickAction.swift */; };
+		66FA97E5281EC9DC0054FC2E /* QuickLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FA97E4281EC9DC0054FC2E /* QuickLink.swift */; };
+		66FA97E8281ECA320054FC2E /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FA97E7281ECA320054FC2E /* Services.swift */; };
+		66FA97EA281F07AE0054FC2E /* BannerLockupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66FA97E9281F07AE0054FC2E /* BannerLockupCollectionViewCell.xib */; };
+		66FA97EC281F34300054FC2E /* Layouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FA97EB281F34300054FC2E /* Layouts.swift */; };
 		66FC6DD12340014500A454DD /* SettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DCF233FE9C900A454DD /* SettingsSection.swift */; };
 		66FC6DD32340028D00A454DD /* AccountSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66FC6DD22340028D00A454DD /* AccountSettings.storyboard */; };
 		66FC6DF62342BA5C00A454DD /* UIStatusBarStyle+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DF32342B79000A454DD /* UIStatusBarStyle+Theme.swift */; };
@@ -1005,6 +1010,11 @@
 		66FA97C7281A12320054FC2E /* SidebarSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarSection.swift; sourceTree = "<group>"; };
 		66FA97C9281A12620054FC2E /* SidebarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarItem.swift; sourceTree = "<group>"; };
 		66FA97E0281BD37A0054FC2E /* Trans.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trans.swift; sourceTree = "<group>"; };
+		66FA97E2281EC9B10054FC2E /* QuickAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAction.swift; sourceTree = "<group>"; };
+		66FA97E4281EC9DC0054FC2E /* QuickLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLink.swift; sourceTree = "<group>"; };
+		66FA97E7281ECA320054FC2E /* Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
+		66FA97E9281F07AE0054FC2E /* BannerLockupCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BannerLockupCollectionViewCell.xib; sourceTree = "<group>"; };
+		66FA97EB281F34300054FC2E /* Layouts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layouts.swift; sourceTree = "<group>"; };
 		66FC6DCF233FE9C900A454DD /* SettingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSection.swift; sourceTree = "<group>"; };
 		66FC6DD22340028D00A454DD /* AccountSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AccountSettings.storyboard; sourceTree = "<group>"; };
 		66FC6DF32342B79000A454DD /* UIStatusBarStyle+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStatusBarStyle+Theme.swift"; sourceTree = "<group>"; };
@@ -1516,6 +1526,8 @@
 				6648ED6F22A4636E00E1BE18 /* GroupedNotifications.swift */,
 				667B38422361CE6500786EF6 /* KWhatsNew.swift */,
 				661D646B25C387EA00822D01 /* MenuController.swift */,
+				66FA97E2281EC9B10054FC2E /* QuickAction.swift */,
+				66FA97E4281EC9DC0054FC2E /* QuickLink.swift */,
 				66DF091226C7C1FA005AED93 /* Store.swift */,
 				664133E721DB828E00CE823A /* UserSettings.swift */,
 			);
@@ -1631,6 +1643,7 @@
 				663C95B823084FAC003720A4 /* SceneDelegate.swift */,
 				66707821208B1C6800471FBC /* LaunchScreen.xib */,
 				66FA97B4281A098A0054FC2E /* App */,
+				66FA97E6281ECA1E0054FC2E /* Config */,
 				66FA97D2281A169F0054FC2E /* Lang */,
 				66FA97CD281A15750054FC2E /* Resources */,
 				66B4F1D9223D1F70007C5048 /* App Frameworks */,
@@ -2677,6 +2690,7 @@
 				660C042F23D14F760040C749 /* SmallLockupCollectionViewCell.xib */,
 				66C34FC227DCD9D900298C81 /* UpcomingLockupCollectionViewCell.xib */,
 				660C042D23D14F5C0040C749 /* VideoLockupCollectionViewCell.xib */,
+				66FA97E9281F07AE0054FC2E /* BannerLockupCollectionViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -2805,6 +2819,7 @@
 		66EA1DCD25B36E7B00FCD07A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				66FA97EB281F34300054FC2E /* Layouts.swift */,
 				668B167423EEED0C00C1306A /* SearchHistory.swift */,
 				66FA97E0281BD37A0054FC2E /* Trans.swift */,
 			);
@@ -2956,6 +2971,14 @@
 			path = Observers;
 			sourceTree = "<group>";
 		};
+		66FA97E6281ECA1E0054FC2E /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				66FA97E7281ECA320054FC2E /* Services.swift */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
 		66FDDB7423B97F6300364886 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -3087,6 +3110,7 @@
 				66CBDD9E24649C4C00CA5F83 /* TextViewCollectionViewCell.xib in Resources */,
 				666938B821B1D50500BA9620 /* CommentImageCell.xib in Resources */,
 				666938B921B1D50E00BA9620 /* WriteACommentCell.xib in Resources */,
+				66FA97EA281F07AE0054FC2E /* BannerLockupCollectionViewCell.xib in Resources */,
 				66AE01242593D4E200308636 /* Badge.storyboard in Resources */,
 				66C5797B22A86435001B8F51 /* DebugSettings.storyboard in Resources */,
 				66AE1E0D24A0C42600FD3FFC /* Studios.storyboard in Resources */,
@@ -3455,6 +3479,7 @@
 				66FA97C4281A11720054FC2E /* SubscriptionTier.swift in Sources */,
 				66B13A572403CA4F00CD732B /* UICollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				665A0B7620CC72F20024E2E2 /* ManageActiveSessionsController.swift in Sources */,
+				66FA97E5281EC9DC0054FC2E /* QuickLink.swift in Sources */,
 				665385BB23D3CD1E008ADEF3 /* KTableViewController.swift in Sources */,
 				66472374245E164B008E5111 /* ProfileImageButton.swift in Sources */,
 				6676B3C4216FF70B00877AFC /* EpisodeLockupCollectionViewCell.swift in Sources */,
@@ -3542,6 +3567,7 @@
 				663E34232360D2BE003386D1 /* VideoLockupCollectionViewCell.swift in Sources */,
 				66F944AF22F0C08E009F1FE2 /* LegalExploreTableViewCell.swift in Sources */,
 				660E39E425E466C300A46EB0 /* ManageActiveSessionsController+UITableViewDelegate.swift in Sources */,
+				66FA97E8281ECA320054FC2E /* Services.swift in Sources */,
 				666C82582162898400C93A70 /* CastCollectionViewController.swift in Sources */,
 				660E3A0925E5DA2100A46EB0 /* SeasonsCollectionViewController+UICollectionViewDelegate.swift in Sources */,
 				66ED9D8B22AC15E600C7A45C /* ImageAnnotation.swift in Sources */,
@@ -3675,7 +3701,9 @@
 				6646A26E236A54A700DCC0A4 /* URL+Kurozora.swift in Sources */,
 				664B6D78230F45F400F9C726 /* DarkThemeOption.swift in Sources */,
 				661F186224AB5CCE00542AFB /* SosumiShowCollectionViewCell.swift in Sources */,
+				66FA97E3281EC9B10054FC2E /* QuickAction.swift in Sources */,
 				664AAF9224EEA26300FF4AA5 /* PersonLockupCollectionViewCell.swift in Sources */,
+				66FA97EC281F34300054FC2E /* Layouts.swift in Sources */,
 				66CE811D2460CCB700DB0C49 /* ServiceType.swift in Sources */,
 				66DB2546245C667A000AA6DB /* KCopyableLabel.swift in Sources */,
 				664B52D322C03D4C00B988B3 /* DisplaySettingsCell.swift in Sources */,

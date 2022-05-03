@@ -15,18 +15,33 @@ class UpcomingLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	@IBOutlet weak var reminderButton: KTintedButton!
 
 	// MARK: - Functions
-	override func configureCell(with show: Show) {
-		super.configureCell(with: show)
+	override func configure(using show: Show?) {
+		super.configure(using: show)
+		guard let show = show else { return }
 
 		if let firstAired = show.attributes.firstAired {
-			self.secondaryLabel?.text = "EXPECTED \(firstAired.formatted(date: .abbreviated, time: .omitted))"
+			self.secondaryLabel?.text = "\(Trans.expected.capitalized) \(firstAired.formatted(date: .abbreviated, time: .omitted))"
 		} else {
-			self.secondaryLabel?.text = "COMING SOON"
+			self.secondaryLabel?.text = Trans.comingSoon.capitalized
+		}
+
+		// Configure banner
+		if let bannerBackgroundColor = show.attributes.poster?.backgroundColor, let color = UIColor(hexString: bannerBackgroundColor) {
+			let textColor: UIColor = color.isLight ? .black : .white
+			self.bannerImageView?.backgroundColor = color
+			self.shadowImageView?.tintColor = color
+			self.primaryLabel?.textColor = textColor
+			self.secondaryLabel?.textColor = textColor.withAlphaComponent(0.60)
+		} else {
+			self.bannerImageView?.backgroundColor = .clear
+			self.shadowImageView?.tintColor = .black
+			self.primaryLabel?.textColor = .white
+			self.secondaryLabel?.textColor = .white.withAlphaComponent(0.60)
 		}
 	}
 
 	// MARK: - IBActions
 	@IBAction func reminderButtonPressed(_ sender: UIButton) {
-		self.baseLockupCollectionViewCellDelegate?.reminderButtonPressed(on: self)
+		self.delegate?.reminderButtonPressed(on: self)
 	}
 }
