@@ -22,7 +22,7 @@ class EpisodeDetailHeaderCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var quickDetailsView: UIView!
 	@IBOutlet weak var primaryLabel: UILabel!
 	@IBOutlet weak var shadowView: UIView!
-	@IBOutlet weak var posterImageView: UIImageView!
+	@IBOutlet weak var posterImageView: PosterImageView!
 
 	// MARK: - Properties
 	var episode: Episode! {

@@ -125,6 +125,10 @@
 		6640E19D22AE895A00D0F575 /* AuthenticationInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6640E19C22AE895A00D0F575 /* AuthenticationInterval.swift */; };
 		664133E521DA8E5F00CE823A /* NotificationsGroupingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664133E421DA8E5F00CE823A /* NotificationsGroupingCell.swift */; };
 		664133E821DB828E00CE823A /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664133E721DB828E00CE823A /* UserSettings.swift */; };
+		664540792821EDFE0001E5B2 /* AlbumImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664540782821EDFE0001E5B2 /* AlbumImageView.swift */; };
+		6645407B2821EE2B0001E5B2 /* BannerImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6645407A2821EE2B0001E5B2 /* BannerImageView.swift */; };
+		6645407D2821EEC60001E5B2 /* PosterImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6645407C2821EEC60001E5B2 /* PosterImageView.swift */; };
+		6645407F2821EF090001E5B2 /* RoundedRectangleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6645407E2821EF090001E5B2 /* RoundedRectangleImageView.swift */; };
 		6645D5F923E70A4D0042B4E0 /* ManageIconTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6645D5F823E70A4C0042B4E0 /* ManageIconTableViewController.swift */; };
 		6645D5FB23E70A670042B4E0 /* LibraryCompactCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6645D5FA23E70A660042B4E0 /* LibraryCompactCollectionViewCell.swift */; };
 		6645D5FD23E70BC80042B4E0 /* DiscussionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6645D5FC23E70BC80042B4E0 /* DiscussionCollectionViewCell.swift */; };
@@ -640,6 +644,10 @@
 		6640E19C22AE895A00D0F575 /* AuthenticationInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationInterval.swift; sourceTree = "<group>"; };
 		664133E421DA8E5F00CE823A /* NotificationsGroupingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsGroupingCell.swift; sourceTree = "<group>"; };
 		664133E721DB828E00CE823A /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
+		664540782821EDFE0001E5B2 /* AlbumImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumImageView.swift; sourceTree = "<group>"; };
+		6645407A2821EE2B0001E5B2 /* BannerImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerImageView.swift; sourceTree = "<group>"; };
+		6645407C2821EEC60001E5B2 /* PosterImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterImageView.swift; sourceTree = "<group>"; };
+		6645407E2821EF090001E5B2 /* RoundedRectangleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedRectangleImageView.swift; sourceTree = "<group>"; };
 		6645D5F823E70A4C0042B4E0 /* ManageIconTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageIconTableViewController.swift; sourceTree = "<group>"; };
 		6645D5FA23E70A660042B4E0 /* LibraryCompactCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryCompactCollectionViewCell.swift; sourceTree = "<group>"; };
 		6645D5FC23E70BC80042B4E0 /* DiscussionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1550,11 +1558,15 @@
 		664AAF8624EE901800FF4AA5 /* UIImageView */ = {
 			isa = PBXGroup;
 			children = (
+				664540782821EDFE0001E5B2 /* AlbumImageView.swift */,
+				6645407A2821EE2B0001E5B2 /* BannerImageView.swift */,
 				664AAF8424EE8FDD00FF4AA5 /* CharacterImageView.swift */,
 				66AE1E1424A0EE1D00FD3FFC /* CircularImageView.swift */,
 				661A002427BA9FDD00DC646C /* KImageView.swift */,
 				664AAF8724EE903700FF4AA5 /* PersonImageView.swift */,
+				6645407C2821EEC60001E5B2 /* PosterImageView.swift */,
 				668142D2245B4804008FC7BE /* ProfileImageView.swift */,
+				6645407E2821EF090001E5B2 /* RoundedRectangleImageView.swift */,
 				662F117A24E5EEB40000375A /* StudioLogoImageView.swift */,
 			);
 			path = UIImageView;
@@ -3384,6 +3396,7 @@
 				664AAF9F24EEED0000FF4AA5 /* PersonDetail.swift in Sources */,
 				664B6D7E230F5AA300F9C726 /* UITableView+Kurozora.swift in Sources */,
 				66AEABDA22987A4D00949FD8 /* KThemePicker.swift in Sources */,
+				6645407F2821EF090001E5B2 /* RoundedRectangleImageView.swift in Sources */,
 				66AEABEF22993E9C00949FD8 /* NotificationsOptionsViewController.swift in Sources */,
 				66DF091326C7C1FB005AED93 /* Store.swift in Sources */,
 				66CBDD982464772200CA5F83 /* SecondarySeparatorView.swift in Sources */,
@@ -3427,6 +3440,7 @@
 				661D646C25C387EA00822D01 /* MenuController.swift in Sources */,
 				660C042A23D1126B0040C749 /* ShowsListCollectionViewController.swift in Sources */,
 				66FA97C2281A11150054FC2E /* LayoutType.swift in Sources */,
+				664540792821EDFE0001E5B2 /* AlbumImageView.swift in Sources */,
 				66B216A821C033B9006E167D /* UIView+Kurozora.swift in Sources */,
 				66319DAD27C82EAD0063DE7F /* MusicLockupCollectionViewCell.swift in Sources */,
 				661F184524A5594C00542AFB /* KCopyableTintedLabel.swift in Sources */,
@@ -3583,6 +3597,7 @@
 				664A066021EA2089008CF4A6 /* GenreLockupCollectionViewCell.swift in Sources */,
 				66C27A7123E243FB00BC09D3 /* LibraryStatisticsCollectionViewCell.swift in Sources */,
 				66ABF5FA233835FF00795750 /* OnboardingType.swift in Sources */,
+				6645407D2821EEC60001E5B2 /* PosterImageView.swift in Sources */,
 				66EA1DCF25B36EBD00FCD07A /* SearchResultsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				6645D5F923E70A4D0042B4E0 /* ManageIconTableViewController.swift in Sources */,
 				66EA1DF825B5FA1500FCD07A /* CastCollectionViewCellDelegate.swift in Sources */,
@@ -3643,6 +3658,7 @@
 				660E3A0125E5D38800A46EB0 /* CharactersListCollectionViewController+UICollectionViewDelegate.swift in Sources */,
 				660E39FB25E5D28800A46EB0 /* PersonDetailsCollectionViewController+UICollectionViewDelegate.swift in Sources */,
 				667943652273A33D00E2D0D0 /* EpisodeDetailCollectionViewController.swift in Sources */,
+				6645407B2821EE2B0001E5B2 /* BannerImageView.swift in Sources */,
 				66647B542084995500CF624F /* AppDelegate.swift in Sources */,
 				662F117B24E5EEB40000375A /* StudioLogoImageView.swift in Sources */,
 				66B4F1DB223D2CA5007C5048 /* SearchBaseResultsCell.swift in Sources */,

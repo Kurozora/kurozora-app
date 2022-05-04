@@ -48,7 +48,12 @@ class KurozoraDelegate {
 	// MARK: - Initializers
 	/// Initializes an instance of `Kurozora` with `Keychain` and `KKService` objects.
 	private init() {
-		self.keychain = Keychain(service: "Kurozora", accessGroup: "\(self.appIdentifierPrefix)app.kurozora.shared").synchronizable(true).accessibility(.afterFirstUnlock)
+		#if DEBUG
+		let accessGroup = "\(self.appIdentifierPrefix)app.kurozora.shared.debug"
+		#else
+		let accessGroup = "\(self.appIdentifierPrefix)app.kurozora.shared"
+		#endif
+		self.keychain = Keychain(service: "Kurozora", accessGroup: "\(accessGroup)").synchronizable(true).accessibility(.afterFirstUnlock)
 		self.services = KKServices(keychain: self.keychain, showAlerts: true)
 	}
 

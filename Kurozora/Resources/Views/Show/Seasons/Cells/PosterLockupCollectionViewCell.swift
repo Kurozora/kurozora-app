@@ -11,7 +11,7 @@ import KurozoraKit
 
 class PosterLockupCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var posterImageView: UIImageView!
+	@IBOutlet weak var posterImageView: PosterImageView!
 	@IBOutlet weak var countLabel: KSecondaryLabel!
 	@IBOutlet weak var startDateTitleLabel: KSecondaryLabel!
 	@IBOutlet weak var episodeCountTitleLabel: KSecondaryLabel!

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ufF-h3-VBA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ufF-h3-VBA">
     <device id="retina6_5" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -33,17 +33,12 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OlS-ok-hS0">
                                             <rect key="frame" x="0.0" y="0.0" width="426.66666666666669" height="160"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Show Poster" translatesAutoresizingMaskIntoConstraints="NO" id="MUS-DF-Bcc">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Show Poster" translatesAutoresizingMaskIntoConstraints="NO" id="MUS-DF-Bcc" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="8" y="0.0" width="100" height="150"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="150" id="5Vk-eb-dpG"/>
                                                         <constraint firstAttribute="width" secondItem="MUS-DF-Bcc" secondAttribute="height" multiplier="2:3" id="nH4-86-BO2"/>
                                                     </constraints>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <real key="value" value="10"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Re: Zero Kara Hajimeru Isekai Seikatsu" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xqK-rd-pf8" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="116" y="0.0" width="258.66666666666669" height="17"/>
@@ -308,38 +303,15 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PV1-iB-RdC">
                                             <rect key="frame" x="0.0" y="0.0" width="133.33333333333334" height="200"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="Placeholders/Show Poster" translatesAutoresizingMaskIntoConstraints="NO" id="ivd-fa-jIq">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="Placeholders/Show Poster" translatesAutoresizingMaskIntoConstraints="NO" id="ivd-fa-jIq" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="133.33333333333334" height="200"/>
                                                     <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <real key="value" value="10"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
                                                 </imageView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7n8-CT-pRT" userLabel="Border View">
-                                                    <rect key="frame" x="0.0" y="0.0" width="133.33333333333334" height="200"/>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <real key="value" value="10"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                            <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                            <real key="value" value="1"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
-                                                </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="7n8-CT-pRT" firstAttribute="top" secondItem="PV1-iB-RdC" secondAttribute="top" id="0In-hi-SuL"/>
                                                 <constraint firstItem="ivd-fa-jIq" firstAttribute="leading" secondItem="PV1-iB-RdC" secondAttribute="leading" id="2G7-gP-ExP"/>
                                                 <constraint firstAttribute="bottom" secondItem="ivd-fa-jIq" secondAttribute="bottom" id="4Ss-Mb-MeE"/>
-                                                <constraint firstItem="7n8-CT-pRT" firstAttribute="leading" secondItem="PV1-iB-RdC" secondAttribute="leading" id="6fX-AI-78o"/>
-                                                <constraint firstAttribute="bottom" secondItem="7n8-CT-pRT" secondAttribute="bottom" id="C8u-qg-PYB"/>
                                                 <constraint firstItem="ivd-fa-jIq" firstAttribute="top" secondItem="PV1-iB-RdC" secondAttribute="top" id="N3C-CR-UTD"/>
-                                                <constraint firstAttribute="trailing" secondItem="7n8-CT-pRT" secondAttribute="trailing" id="RHm-b2-Ew9"/>
                                                 <constraint firstAttribute="height" constant="200" id="TuY-mV-Urr"/>
                                                 <constraint firstAttribute="trailing" secondItem="ivd-fa-jIq" secondAttribute="trailing" id="aQE-aV-O2D"/>
                                                 <constraint firstAttribute="width" secondItem="PV1-iB-RdC" secondAttribute="height" multiplier="2:3" id="xyB-Ey-Urq"/>

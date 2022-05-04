@@ -20,7 +20,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OXr-yS-u4I">
                         <rect key="frame" x="0.0" y="0.0" width="326" height="183.5"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2p3-mu-mj3">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2p3-mu-mj3" customClass="BannerImageView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="326" height="183.5"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1dl-d0-TOp" customClass="KTrailerPlayerView" customModule="Kurozora" customModuleProvider="target">
@@ -69,41 +69,18 @@
                     <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="4pN-1W-t1C">
                         <rect key="frame" x="0.0" y="199.5" width="100" height="150"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LdC-RH-wCf">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LdC-RH-wCf" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="100" height="150"/>
                                 <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iLu-jq-nxA" userLabel="Border View">
-                                <rect key="frame" x="0.0" y="0.0" width="100" height="150"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="LdC-RH-wCf" secondAttribute="bottom" id="5br-pd-KLi"/>
                             <constraint firstAttribute="trailing" secondItem="LdC-RH-wCf" secondAttribute="trailing" id="7mL-tP-rDc"/>
-                            <constraint firstAttribute="trailing" secondItem="iLu-jq-nxA" secondAttribute="trailing" id="MOX-7c-kE6"/>
                             <constraint firstItem="LdC-RH-wCf" firstAttribute="leading" secondItem="4pN-1W-t1C" secondAttribute="leading" id="NDP-Sa-NRY"/>
-                            <constraint firstItem="iLu-jq-nxA" firstAttribute="leading" secondItem="4pN-1W-t1C" secondAttribute="leading" id="O8H-z5-PIQ"/>
                             <constraint firstItem="LdC-RH-wCf" firstAttribute="top" secondItem="4pN-1W-t1C" secondAttribute="top" id="PaF-Lg-45b"/>
-                            <constraint firstItem="iLu-jq-nxA" firstAttribute="top" secondItem="4pN-1W-t1C" secondAttribute="top" id="Zgj-QU-75o"/>
                             <constraint firstAttribute="width" secondItem="4pN-1W-t1C" secondAttribute="height" multiplier="2:3" id="hIl-8k-Hmv"/>
                             <constraint firstAttribute="height" constant="150" id="ql3-uY-xIe"/>
-                            <constraint firstAttribute="bottom" secondItem="iLu-jq-nxA" secondAttribute="bottom" id="rWA-br-K6b"/>
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="One Piece" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4YL-KK-DDQ" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
@@ -156,11 +133,11 @@
                     <constraint firstAttribute="trailing" secondItem="OXr-yS-u4I" secondAttribute="trailing" id="gHn-gS-4NR"/>
                     <constraint firstAttribute="bottom" secondItem="xSi-o9-X2G" secondAttribute="bottom" id="hVu-9l-n2W"/>
                     <constraint firstItem="DOK-hZ-Wha" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Ak8-tP-o1R" secondAttribute="bottom" constant="8" symbolic="YES" id="jAQ-9X-bYO"/>
+                    <constraint firstItem="xSi-o9-X2G" firstAttribute="top" secondItem="4pN-1W-t1C" secondAttribute="bottom" constant="16" id="kOm-bA-cAB"/>
                     <constraint firstItem="DOK-hZ-Wha" firstAttribute="leading" secondItem="4pN-1W-t1C" secondAttribute="trailing" constant="16" id="kvb-Lj-pBy"/>
                     <constraint firstItem="xSi-o9-X2G" firstAttribute="leading" secondItem="we1-58-ZqB" secondAttribute="leading" id="nEQ-KU-Ecb"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="DOK-hZ-Wha" secondAttribute="trailing" id="o9o-a0-6lj"/>
                     <constraint firstItem="Ak8-tP-o1R" firstAttribute="top" secondItem="4YL-KK-DDQ" secondAttribute="bottom" constant="2" id="pNX-Kt-qbF"/>
-                    <constraint firstItem="xSi-o9-X2G" firstAttribute="top" secondItem="iLu-jq-nxA" secondAttribute="bottom" constant="16" id="qfK-ez-lxn"/>
                     <constraint firstItem="4pN-1W-t1C" firstAttribute="leading" secondItem="we1-58-ZqB" secondAttribute="leading" id="uCC-Lr-mPD"/>
                     <constraint firstItem="4YL-KK-DDQ" firstAttribute="leading" secondItem="4pN-1W-t1C" secondAttribute="trailing" constant="16" id="ujA-aD-erX"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xSi-o9-X2G" secondAttribute="trailing" id="vK7-Xf-W4v"/>

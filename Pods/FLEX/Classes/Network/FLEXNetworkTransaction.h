@@ -6,12 +6,13 @@
 //  Copyright (c) 2020 FLEX Team. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "UIKit/UIKit.h"
+#import <UIKit/UIKit.h>
+#import "Firestore.h"
 
 typedef NS_ENUM(NSInteger, FLEXNetworkTransactionState) {
-    FLEXNetworkTransactionStateUnstarted,
-    FLEXNetworkTransactionStateAwaitingResponse,
+    FLEXNetworkTransactionStateUnstarted = -1,
+    /// This is the default; it's usually nonsense for a request to be marked as "unstarted"
+    FLEXNetworkTransactionStateAwaitingResponse = 0,
     FLEXNetworkTransactionStateReceivingData,
     FLEXNetworkTransactionStateFinished,
     FLEXNetworkTransactionStateFailed
@@ -24,7 +25,13 @@ typedef NS_ENUM(NSUInteger, FLEXWebsocketMessageDirection) {
 
 /// The shared base class for all types of network transactions.
 /// Subclasses should implement the descriptions and details properties, and assign a thumbnail.
-@interface FLEXNetworkTransaction : NSObject
+@interface FLEXNetworkTransaction : NSObject {
+    @protected
+
+    NSString *_primaryDescription;
+    NSString *_secondaryDescription;
+    NSString *_tertiaryDescription;
+}
 
 + (instancetype)withStartTime:(NSDate *)startTime;
 
@@ -35,7 +42,7 @@ typedef NS_ENUM(NSUInteger, FLEXWebsocketMessageDirection) {
 @property (nonatomic, readonly) BOOL displayAsError;
 @property (nonatomic, readonly) NSDate *startTime;
 
-@property (nonatomic) FLEXNetworkTransactionState transactionState;
+@property (nonatomic) FLEXNetworkTransactionState state;
 @property (nonatomic) int64_t receivedDataLength;
 /// A small thumbnail to preview the type of/the response
 @property (nonatomic) UIImage *thumbnail;
@@ -48,14 +55,14 @@ typedef NS_ENUM(NSUInteger, FLEXWebsocketMessageDirection) {
 /// Minor details to display at the bottom of the cell, such as a timestamp, HTTP method, or status.
 @property (nonatomic, readonly) NSString *tertiaryDescription;
 
-/// Subclasses should implement for when the transaction is complete
-@property (nonatomic, readonly) NSArray<NSString *> *details;
-
 /// The string to copy when the user selects the "copy" action
 @property (nonatomic, readonly) NSString *copyString;
 
 /// Whether or not this request should show up when the user searches for a given string
 - (BOOL)matchesQuery:(NSString *)filterString;
+
+/// For internal use
+- (NSString *)timestampStringFromRequestDate:(NSDate *)date;
 
 @end
 
@@ -66,6 +73,8 @@ typedef NS_ENUM(NSUInteger, FLEXWebsocketMessageDirection) {
 + (instancetype)withRequest:(NSURLRequest *)request startTime:(NSDate *)startTime;
 
 @property (nonatomic, readonly) NSURLRequest *request;
+/// Subclasses should implement for when the transaction is complete
+@property (nonatomic, readonly) NSArray<NSString *> *details;
 
 @end
 
@@ -103,5 +112,67 @@ typedef NS_ENUM(NSUInteger, FLEXWebsocketMessageDirection) {
 @property (nonatomic, readonly) FLEXWebsocketMessageDirection direction API_AVAILABLE(ios(13.0));
 
 @property (nonatomic, readonly) int64_t dataLength API_AVAILABLE(ios(13.0));
+
+@end
+
+
+typedef NS_ENUM(NSUInteger, FLEXFIRTransactionDirection) {
+    FLEXFIRTransactionDirectionNone,
+    FLEXFIRTransactionDirectionPush,
+    FLEXFIRTransactionDirectionPull,
+};
+
+typedef NS_ENUM(NSUInteger, FLEXFIRRequestType) {
+    FLEXFIRRequestTypeNotFirebase,
+    FLEXFIRRequestTypeFetchQuery,
+    FLEXFIRRequestTypeFetchDocument,
+    FLEXFIRRequestTypeSetData,
+    FLEXFIRRequestTypeUpdateData,
+    FLEXFIRRequestTypeAddDocument,
+    FLEXFIRRequestTypeDeleteDocument,
+};
+
+@interface FLEXFirebaseSetDataInfo : NSObject
+/// The data that was set
+@property (nonatomic, readonly) NSDictionary *documentData;
+/// \c nil if \c mergeFields is populated
+@property (nonatomic, readonly) NSNumber *merge;
+/// \c nil if \c merge is populated
+@property (nonatomic, readonly) NSArray *mergeFields;
+@end
+
+@interface FLEXFirebaseTransaction : FLEXNetworkTransaction
+
++ (instancetype)queryFetch:(FIRQuery *)initiator;
++ (instancetype)documentFetch:(FIRDocumentReference *)initiator;
++ (instancetype)setData:(FIRDocumentReference *)initiator
+                   data:(NSDictionary *)data
+                  merge:(NSNumber *)merge
+            mergeFields:(NSArray *)mergeFields;
++ (instancetype)updateData:(FIRDocumentReference *)initiator data:(NSDictionary *)data;
++ (instancetype)addDocument:(FIRCollectionReference *)initiator document:(FIRDocumentReference *)doc;
++ (instancetype)deleteDocument:(FIRDocumentReference *)initiator;
+
+@property (nonatomic, readonly) FLEXFIRTransactionDirection direction;
+@property (nonatomic, readonly) FLEXFIRRequestType requestType;
+
+@property (nonatomic, readonly) id initiator;
+@property (nonatomic, readonly) FIRQuery *initiator_query;
+@property (nonatomic, readonly) FIRDocumentReference *initiator_doc;
+@property (nonatomic, readonly) FIRCollectionReference *initiator_collection;
+
+/// Only used for fetch types
+@property (nonatomic, copy) NSArray<FIRDocumentSnapshot *> *documents;
+/// Only used for the "set data" type
+@property (nonatomic, readonly) FLEXFirebaseSetDataInfo *setDataInfo;
+/// Only used for the "update data" type
+@property (nonatomic, readonly) NSDictionary *updateData;
+/// Only used for the "add document" type
+@property (nonatomic, readonly) FIRDocumentReference *addedDocument;
+
+@property (nonatomic, readonly) NSString *path;
+
+//@property (nonatomic, readonly) NSString *responseString;
+//@property (nonatomic, readonly) NSDictionary *responseObject;
 
 @end

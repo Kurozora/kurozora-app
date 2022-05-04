@@ -16,22 +16,22 @@ class KImageView: UIImageView {
 	// MARK: - Initializers
 	override init(frame: CGRect) {
 		super.init(frame: frame)
-		sharedInit()
+		self.sharedInit()
 	}
 
 	override init(image: UIImage?) {
 		super.init(image: image)
-		sharedInit()
+		self.sharedInit()
 	}
 
 	override init(image: UIImage?, highlightedImage: UIImage?) {
 		super.init(image: image, highlightedImage: highlightedImage)
-		sharedInit()
+		self.sharedInit()
 	}
 
 	required init?(coder: NSCoder) {
 		super.init(coder: coder)
-		sharedInit()
+		self.sharedInit()
 	}
 
 	// MARK: - Functions

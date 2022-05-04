@@ -12,7 +12,7 @@ import KurozoraKit
 class SearchSuggestionResultCell: UICollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var titleLabel: UILabel!
-	@IBOutlet weak var posterImageView: UIImageView!
+	@IBOutlet weak var posterImageView: PosterImageView!
 
 	// MARK: - Properties
 	var show: Show! {
