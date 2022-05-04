@@ -10,7 +10,7 @@ import UIKit
 
 class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var episodeImageView: UIImageView!
+	@IBOutlet weak var episodeImageView: BannerImageView!
 	@IBOutlet weak var userProgressLabel: UILabel!
 
 	// MARK: - Functions

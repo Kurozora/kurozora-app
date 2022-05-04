@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19158" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19141"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -21,38 +21,15 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dls-0h-dle">
                         <rect key="frame" x="0.0" y="0.0" width="100" height="150"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" image="Placeholders/Show Poster" translatesAutoresizingMaskIntoConstraints="NO" id="f7H-8b-Tc3">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" image="Placeholders/Show Poster" translatesAutoresizingMaskIntoConstraints="NO" id="f7H-8b-Tc3" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="100" height="150"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="48z-Ma-ySx" userLabel="Border View">
-                                <rect key="frame" x="0.0" y="0.0" width="100" height="150"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="48z-Ma-ySx" firstAttribute="top" secondItem="f7H-8b-Tc3" secondAttribute="top" id="Mnb-Ke-ZRy"/>
                             <constraint firstAttribute="trailing" secondItem="f7H-8b-Tc3" secondAttribute="trailing" id="N8R-6a-ntI"/>
-                            <constraint firstItem="48z-Ma-ySx" firstAttribute="bottom" secondItem="f7H-8b-Tc3" secondAttribute="bottom" id="PCK-Zk-lh4"/>
                             <constraint firstAttribute="bottom" secondItem="f7H-8b-Tc3" secondAttribute="bottom" id="iED-Hr-IHs"/>
-                            <constraint firstItem="48z-Ma-ySx" firstAttribute="leading" secondItem="f7H-8b-Tc3" secondAttribute="leading" id="jn9-Gx-cKm"/>
                             <constraint firstAttribute="height" constant="150" id="lEJ-ZJ-P19"/>
-                            <constraint firstItem="48z-Ma-ySx" firstAttribute="trailing" secondItem="f7H-8b-Tc3" secondAttribute="trailing" id="ozo-XY-ydA"/>
                             <constraint firstItem="f7H-8b-Tc3" firstAttribute="leading" secondItem="dls-0h-dle" secondAttribute="leading" id="ptx-kF-fTD"/>
                             <constraint firstAttribute="width" secondItem="dls-0h-dle" secondAttribute="height" multiplier="2:3" id="wsG-dZ-teJ"/>
                             <constraint firstItem="f7H-8b-Tc3" firstAttribute="top" secondItem="dls-0h-dle" secondAttribute="top" id="zj1-pn-p1Q"/>

@@ -26,7 +26,7 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var secondaryLabel: UILabel!
 	@IBOutlet weak var statusButton: UIButton!
 	@IBOutlet weak var shadowView: UIView!
-	@IBOutlet weak var posterImageView: UIImageView!
+	@IBOutlet weak var posterImageView: PosterImageView!
 
 	// MARK: - Properties
 	var show: Show! {

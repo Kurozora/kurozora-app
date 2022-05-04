@@ -20,23 +20,9 @@
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zJc-3a-J3j">
                         <rect key="frame" x="0.0" y="0.0" width="374" height="374"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Music Album" translatesAutoresizingMaskIntoConstraints="NO" id="YXm-9u-Lva">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Music Album" translatesAutoresizingMaskIntoConstraints="NO" id="YXm-9u-Lva" customClass="AlbumImageView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="374" height="374"/>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ccz-cN-UH9" userLabel="Border View">
-                                <rect key="frame" x="0.0" y="0.0" width="374" height="374"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TIv-B1-PS8" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="156" y="156" width="62" height="62"/>
                                 <constraints>
@@ -60,17 +46,13 @@
                         </subviews>
                         <color key="backgroundColor" red="0.33333334329999997" green="0.3333333731" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
-                            <constraint firstItem="Ccz-cN-UH9" firstAttribute="leading" secondItem="zJc-3a-J3j" secondAttribute="leading" id="2QE-E4-SPQ"/>
                             <constraint firstItem="TIv-B1-PS8" firstAttribute="centerY" secondItem="zJc-3a-J3j" secondAttribute="centerY" id="7dN-zD-WIO"/>
-                            <constraint firstAttribute="bottom" secondItem="Ccz-cN-UH9" secondAttribute="bottom" id="82g-OT-lRt"/>
                             <constraint firstItem="YXm-9u-Lva" firstAttribute="leading" secondItem="zJc-3a-J3j" secondAttribute="leading" id="H7q-kA-4JA"/>
                             <constraint firstAttribute="bottom" secondItem="YXm-9u-Lva" secondAttribute="bottom" id="JPW-2e-PJi"/>
                             <constraint firstAttribute="trailing" secondItem="YXm-9u-Lva" secondAttribute="trailing" id="SHC-C1-1Yi"/>
                             <constraint firstItem="TIv-B1-PS8" firstAttribute="centerX" secondItem="zJc-3a-J3j" secondAttribute="centerX" id="TpA-ce-ySO"/>
                             <constraint firstAttribute="width" secondItem="zJc-3a-J3j" secondAttribute="height" multiplier="1:1" id="XRB-b7-Xrd"/>
                             <constraint firstItem="YXm-9u-Lva" firstAttribute="top" secondItem="zJc-3a-J3j" secondAttribute="top" id="hDm-lL-WPA"/>
-                            <constraint firstAttribute="trailing" secondItem="Ccz-cN-UH9" secondAttribute="trailing" id="scK-aS-sbO"/>
-                            <constraint firstItem="Ccz-cN-UH9" firstAttribute="top" secondItem="zJc-3a-J3j" secondAttribute="top" id="txF-Rs-7ol"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">

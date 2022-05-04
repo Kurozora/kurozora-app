@@ -1,20 +1,20 @@
 //
-//  StudioLogoImageView.swift
+//  BannerImageView.swift
 //  Kurozora
 //
-//  Created by Khoren Katklian on 13/08/2020.
-//  Copyright © 2020 Kurozora. All rights reserved.
+//  Created by Khoren Katklian on 26/04/2022.
+//  Copyright © 2022 Kurozora. All rights reserved.
 //
 
 import UIKit
 
-/// `StudioLogoImageView` is a sepcially crafted object that displays a single image or a sequence of animated images in your interface.
+/// `BannerImageView` is a sepcially crafted object that displays a single image or a sequence of animated images in your interface.
 ///
-/// `StudioLogoImageView` adjusts some options to achieve its design, this includes:
+/// `BannerImageView` adjusts some options to achieve its design, this includes:
 /// - Applying a border width and border color.
-/// - Presenting a default studio logo image if none is specified.
+/// - Presenting a default banner image if none is specified.
 /// - Rounding the image's corners.
-class StudioLogoImageView: CircularImageView {
+class BannerImageView: RoundedRectangleImageView {
 	// MARK: - Initializers
 	override init(frame: CGRect) {
 		super.init(frame: frame)
@@ -39,7 +39,7 @@ class StudioLogoImageView: CircularImageView {
 	// MARK: - Functions
 	/// The shared settings used to initialize the image view.
 	func sharedInit() {
-		self.image = self.image ?? R.image.placeholders.studioProfile()
+		self.image = self.image ?? R.image.placeholders.showBanner()
 
 		self.borderWidth = 2
 		self.borderColor = UIColor.white.withAlphaComponent(0.20)

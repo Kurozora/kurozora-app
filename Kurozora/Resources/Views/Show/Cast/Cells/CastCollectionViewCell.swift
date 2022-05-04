@@ -11,11 +11,11 @@ import KurozoraKit
 
 class CastCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var personImageView: UIImageView!
+	@IBOutlet weak var personImageView: PosterImageView!
 	@IBOutlet weak var personNameLabel: KCopyableTintedLabel!
 	@IBOutlet weak var personButton: UIButton!
 
-	@IBOutlet weak var characterImageView: UIImageView!
+	@IBOutlet weak var characterImageView: PosterImageView!
 	@IBOutlet weak var characterNameLabel: KCopyableLabel!
 	@IBOutlet weak var characterRoleLabel: KSecondaryLabel!
 	@IBOutlet weak var characterButton: UIButton!

@@ -10,16 +10,6 @@
 #import "FLEXResources.h"
 #import "FLEXUtility.h"
 
-@interface FLEXNetworkTransaction () {
-    @protected
-    
-    NSString *_primaryDescription;
-    NSString *_secondaryDescription;
-    NSString *_tertiaryDescription;
-}
-
-@end
-
 @implementation FLEXNetworkTransaction
 
 + (NSString *)readableStringFromTransactionState:(FLEXNetworkTransactionState)state {
@@ -54,6 +44,23 @@
     return transaction;
 }
 
+- (NSString *)timestampStringFromRequestDate:(NSDate *)date {
+    static NSDateFormatter *dateFormatter = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        dateFormatter = [NSDateFormatter new];
+        dateFormatter.dateFormat = @"HH:mm:ss";
+    });
+    
+    return [dateFormatter stringFromDate:date];
+}
+
+- (void)setState:(FLEXNetworkTransactionState)transactionState {
+    _state = transactionState;
+    // Reset bottom description
+    _tertiaryDescription = nil;
+}
+
 - (BOOL)displayAsError {
     return _error != nil;
 }
@@ -79,17 +86,6 @@
     FLEXURLTransaction *transaction = [self withStartTime:startTime];
     transaction->_request = request;
     return transaction;
-}
-
-- (NSString *)timestampStringFromRequestDate:(NSDate *)date {
-    static NSDateFormatter *dateFormatter = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        dateFormatter = [NSDateFormatter new];
-        dateFormatter.dateFormat = @"HH:mm:ss";
-    });
-    
-    return [dateFormatter stringFromDate:date];
 }
 
 - (NSString *)primaryDescription {
@@ -142,11 +138,11 @@
             [detailComponents addObject:httpMethod];
         }
         
-        if (self.transactionState == FLEXNetworkTransactionStateFinished || self.transactionState == FLEXNetworkTransactionStateFailed) {
+        if (self.state == FLEXNetworkTransactionStateFinished || self.state == FLEXNetworkTransactionStateFailed) {
             [detailComponents addObjectsFromArray:self.details];
         } else {
             // Unstarted, Awaiting Response, Receiving Data, etc.
-            NSString *state = [self.class readableStringFromTransactionState:self.transactionState];
+            NSString *state = [self.class readableStringFromTransactionState:self.state];
             [detailComponents addObject:state];
         }
         
@@ -154,12 +150,6 @@
     }
     
     return _tertiaryDescription;
-}
-
-- (void)setTransactionState:(FLEXNetworkTransactionState)transactionState {
-    super.transactionState = transactionState;
-    // Reset bottom description
-    _tertiaryDescription = nil;
 }
 
 - (NSString *)copyString {
@@ -261,7 +251,7 @@
     // Populate receivedDataLength
     if (direction == FLEXWebsocketIncoming) {
         wst.receivedDataLength = wst.dataLength;
-        wst.transactionState = FLEXNetworkTransactionStateFinished;
+        wst.state = FLEXNetworkTransactionStateFinished;
     }
     
     // Populate thumbnail image

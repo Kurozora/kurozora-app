@@ -13,7 +13,7 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var titleLabel: KLabel!
 	@IBOutlet weak var posterShadowView: UIView!
-	@IBOutlet weak var posterImageView: UIImageView!
+	@IBOutlet weak var posterImageView: PosterImageView!
 
 	// MARK: - Properties
 	var show: Show! {

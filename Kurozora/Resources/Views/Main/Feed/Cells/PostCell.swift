@@ -9,7 +9,7 @@
 import UIKit
 
 class PostCell: UITableViewCell {
-	@IBOutlet weak public var profileImage: UIImageView!
+	@IBOutlet weak public var profileImage: ProfileImageView!
 	@IBOutlet weak public var usernameLabel: UILabel?
 	@IBOutlet weak public var dateTime: UILabel!
 

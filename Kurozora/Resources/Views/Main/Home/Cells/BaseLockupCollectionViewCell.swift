@@ -19,8 +19,8 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var primaryLabel: UILabel?
 	@IBOutlet weak var secondaryLabel: UILabel?
 	@IBOutlet weak var ternaryLabel: UILabel?
-	@IBOutlet weak var bannerImageView: UIImageView?
-	@IBOutlet weak var posterImageView: UIImageView?
+	@IBOutlet weak var bannerImageView: BannerImageView?
+	@IBOutlet weak var posterImageView: PosterImageView?
 	@IBOutlet weak var shadowImageView: UIImageView?
 	@IBOutlet weak var libraryStatusButton: KTintedButton?
 

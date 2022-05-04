@@ -15,11 +15,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 	@IBOutlet weak var isNSFWSwitch: KSwitch!
 	@IBOutlet weak var profileImageView: ProfileImageView!
 	@IBOutlet weak var currentUsernameLabel: KLabel!
-	@IBOutlet weak var characterCountLabel: UILabel! {
-		didSet {
-			self.characterCountLabel.theme_textColor = KThemePicker.subTextColor.rawValue
-		}
-	}
+	@IBOutlet weak var characterCountLabel: KSecondaryLabel!
 	@IBOutlet weak var commentTextView: KTextView!
 	@IBOutlet weak var commentPreviewContainer: UIView! {
 		didSet {

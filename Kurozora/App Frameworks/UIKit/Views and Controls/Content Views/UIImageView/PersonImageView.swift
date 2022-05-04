@@ -18,28 +18,28 @@ class PersonImageView: CircularImageView {
 	// MARK: - Initializers
 	override init(frame: CGRect) {
 		super.init(frame: frame)
-		sharedInit()
+		self.sharedInit()
 	}
 
 	override init(image: UIImage?) {
 		super.init(image: image)
-		sharedInit()
+		self.sharedInit()
 	}
 
 	override init(image: UIImage?, highlightedImage: UIImage?) {
 		super.init(image: image, highlightedImage: highlightedImage)
-		sharedInit()
+		self.sharedInit()
 	}
 
 	required init?(coder: NSCoder) {
 		super.init(coder: coder)
-		sharedInit()
+		self.sharedInit()
 	}
 
 	// MARK: - Functions
 	/// The shared settings used to initialize the image view.
 	func sharedInit() {
-		self.image = R.image.placeholders.personPoster()
+		self.image = self.image ?? R.image.placeholders.personPoster()
 
 		self.borderWidth = 2
 		self.borderColor = UIColor.white.withAlphaComponent(0.20)
