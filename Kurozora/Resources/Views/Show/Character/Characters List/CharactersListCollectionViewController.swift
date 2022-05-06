@@ -161,7 +161,7 @@ extension CharactersListCollectionViewController {
 		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-			return Layouts.charactersSectionLayout(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
+			return Layouts.charactersSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
 		}
 		return layout
 	}

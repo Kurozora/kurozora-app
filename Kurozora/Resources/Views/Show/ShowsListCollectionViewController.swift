@@ -288,10 +288,10 @@ extension ShowsListCollectionViewController {
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 
 			if self.showUpcoming {
-				return Layouts.upcomingSectionLayout(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
+				return Layouts.upcomingSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
 			}
 
-			return Layouts.smallSectionLayout(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
+			return Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
 		}
 	}
 }
