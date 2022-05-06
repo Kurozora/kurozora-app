@@ -77,13 +77,13 @@ extension PersonDetailsCollectionViewController {
 				hasSectionHeader = true
 			case .shows:
 				if self.shows.count != 0 {
-					let smallSectionLayout = Layouts.smallSectionLayout(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					let smallSectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 					sectionLayout = smallSectionLayout
 					hasSectionHeader = true
 				}
 			case .characters:
 				if self.characters.count != 0 {
-					let charactersSectionLayout = Layouts.charactersSectionLayout(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					let charactersSectionLayout = Layouts.charactersSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 					sectionLayout = charactersSectionLayout
 					hasSectionHeader = true
 				}
@@ -110,21 +110,6 @@ extension PersonDetailsCollectionViewController {
 		let item = NSCollectionLayoutItem(layoutSize: layoutSize)
 
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitem: item, count: columns)
-
-		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
-		return layoutSection
-	}
-
-	func listSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-		let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-		let heightDimension = self.heightDimension(forSection: section, with: columns, layout: layoutEnvironment)
-		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: heightDimension)
-		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-		layoutGroup.interItemSpacing = .fixed(10)
 
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)

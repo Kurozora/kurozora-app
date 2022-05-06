@@ -230,7 +230,7 @@ extension ShowSongsListCollectionViewController {
 		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-			let layoutSection = Layouts.musicSectionLayout(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
+			let layoutSection = Layouts.musicSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
 
 			if self.showID != 0 {
 				// Add header supplementary view.

@@ -116,28 +116,28 @@ extension ShowDetailsCollectionViewController {
 			case .seasons:
 				let seasonsCount = self.dataSource.seasonIdentities.count
 				if seasonsCount != 0 {
-					let seasonsSectionLayout = self.seasonsSectionLayout(section, layoutEnvironment: layoutEnvironment)
+					let seasonsSectionLayout = self.seasonsSection(section, layoutEnvironment: layoutEnvironment)
 					sectionLayout = seasonsSectionLayout
 					hasSectionHeader = true
 				}
 			case .cast:
 				let castCount = self.dataSource.castIdentities.count
 				if castCount != 0 {
-					let castSectionLayout = self.castSectionLayout(section, layoutEnvironment: layoutEnvironment)
+					let castSectionLayout = self.castSection(section, layoutEnvironment: layoutEnvironment)
 					sectionLayout = castSectionLayout
 					hasSectionHeader = true
 				}
 			case .songs:
 				let showSongsCount = self.dataSource.showSongs.count
 				if showSongsCount != 0 {
-					let musicSectionLayout = Layouts.musicSectionLayout(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					let musicSectionLayout = Layouts.musicSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 					sectionLayout = musicSectionLayout
 					hasSectionHeader = true
 				}
 			case .moreByStudio:
 				if let studioShowsCount = self.dataSource.studio?.relationships?.shows?.data.count {
 					if studioShowsCount != 0 {
-						let smallSectionLayout = Layouts.smallSectionLayout(section, columns: columns, layoutEnvironment: layoutEnvironment)
+						let smallSectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 						sectionLayout = smallSectionLayout
 						hasSectionHeader = true
 						hasBackgroundDecoration = true
@@ -146,7 +146,7 @@ extension ShowDetailsCollectionViewController {
 			case .relatedShows:
 				let relatedShowsCount = self.dataSource.relatedShows.count
 				if relatedShowsCount != 0 {
-					let smallSectionLayout = Layouts.smallSectionLayout(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					let smallSectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 					sectionLayout = smallSectionLayout
 					hasSectionHeader = true
 					hasBackgroundDecoration = true
@@ -231,7 +231,7 @@ extension ShowDetailsCollectionViewController {
 		return layoutSection
 	}
 
-	func seasonsSectionLayout(_ section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+	func seasonsSection(_ section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
 		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.90), heightDimension: .fractionalHeight(1.0))
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -251,7 +251,7 @@ extension ShowDetailsCollectionViewController {
 		return layoutSection
 	}
 
-	func castSectionLayout(_ section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+	func castSection(_ section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
 		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.90), heightDimension: .fractionalHeight(1.0))
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -268,21 +268,6 @@ extension ShowDetailsCollectionViewController {
 		#else
 		layoutSection.orthogonalScrollingBehavior = .groupPaging
 		#endif
-		return layoutSection
-	}
-
-	func listSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-		let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-		let heightDimension = self.heightDimension(forSection: section, with: columns, layout: layoutEnvironment)
-		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: heightDimension)
-		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-		layoutGroup.interItemSpacing = .fixed(10)
-
-		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
 		return layoutSection
 	}
 
