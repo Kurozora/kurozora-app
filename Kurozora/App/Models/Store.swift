@@ -39,6 +39,9 @@ final class Store: ObservableObject {
 	/// An array containing all `Subscription` products.
 	@Published private(set) var subscriptions: [Product]
 
+	/// An array containing all `Non-Consumable` products.
+	@Published private(set) var nonConsumables: [Product]
+
 	/// The set of pruchased product identifiers.
 	@Published private(set) var purchasedIdentifiers = Set<String>()
 
@@ -84,21 +87,22 @@ final class Store: ObservableObject {
 		#endif
 
 		// Initialize empty products then do a product request asynchronously to fill them in.
-		tips = []
-		subscriptions = []
+		self.tips = []
+		self.subscriptions = []
+		self.nonConsumables = []
 
 		// Start a transaction listener as close to app launch as possible so you don't miss any transactions.
-		updateListenerTask = listenForTransactions()
+		self.updateListenerTask = listenForTransactions()
 
 		Task {
 			// Initialize the store by starting a product request.
-			await requestProducts()
+			await self.requestProducts()
 		}
 	}
 
 	deinit {
 		print("----- StoreKit 2 deinitialized.")
-		updateListenerTask?.cancel()
+		self.updateListenerTask?.cancel()
 	}
 
 	// MARK: - Functions
@@ -134,6 +138,7 @@ final class Store: ObservableObject {
 
 			var newTips: [Product] = []
 			var newSubscriptions: [Product] = []
+			var newNonConsumables: [Product] = []
 
 			// Filter the products into different categories based on their type.
 			for product in storeProducts {
@@ -142,15 +147,18 @@ final class Store: ObservableObject {
 					newTips.append(product)
 				case .autoRenewable:
 					newSubscriptions.append(product)
+				case .nonConsumable:
+					newNonConsumables.append(product)
 				default:
 					// Ignore this product.
-					print("Unknown product")
+					print("Unknown product", product)
 				}
 			}
 
 			// Sort each product category by price, lowest to highest, to update the store.
-			tips = sortByPrice(newTips)
-			subscriptions = sortByPrice(newSubscriptions)
+			self.tips = sortByPrice(newTips)
+			self.subscriptions = sortByPrice(newSubscriptions)
+			self.nonConsumables = sortByPrice(newNonConsumables)
 		} catch {
 			print("Failed product request: \(error)")
 		}
@@ -267,7 +275,7 @@ final class Store: ObservableObject {
 	/// - Returns: The product's image.
 	func image(for productId: String) -> UIImage? {
 		let product = self.title(for: productId)
-		return product.toImage(withFrameSize: CGRect(x: 0, y: 0, width: 150, height: 150), backgroundColor: .secondaryLabel, fontSize: 40, placeholder: #imageLiteral(resourceName: "Icons/Tip Jar"))
+		return product.toImage(withFrameSize: CGRect(x: 0, y: 0, width: 150, height: 150), backgroundColor: .secondaryLabel, fontSize: 40, placeholder: 	#imageLiteral(resourceName: "Icons/Tip Jar"))
 	}
 
 	/// How much money the user saves between subscription tiers.
@@ -277,9 +285,9 @@ final class Store: ObservableObject {
 	/// - Returns: a string indicating how much money the user saves between tiers.
 	func saving(for product: Product) -> String {
 		guard let subscription = product.subscription,
-		   let firstProduct = store.subscriptions.first else {
-			   return ""
-		   }
+			  let firstProduct = store.subscriptions.first else {
+			return ""
+		}
 
 		let subscriptionDescription: String = subscription.subscriptionPeriod.displayUnit + " at " + product.displayPricePerMonth + "mo. Save " + product.priceSaved(comparedTo: firstProduct.pricePerMonth)
 
@@ -319,12 +327,12 @@ final class Store: ObservableObject {
 
 	/// Returns a `SubscriptionTier` object using the given product id.
 	///
-	/// - Parameter productId: The id of the product used to determine the subscription tier.
+	/// - Parameter productID: The id of the product used to determine the subscription tier.
 	///
 	/// - Returns: a `SubscriptionTier` object.
-	func tier(for productId: String) -> SubscriptionTier {
+	func tier(for productID: String) -> SubscriptionTier {
 		#if DEBUG
-		switch productId {
+		switch productID {
 		case "app.kurozora.temporary.kurozoraPlus1Month":
 			return .plus1Month
 		case "app.kurozora.temporary.kurozoraPlus6Months":
@@ -335,7 +343,7 @@ final class Store: ObservableObject {
 			return .none
 		}
 		#else
-		switch productId {
+		switch productID {
 		case "app.kurozora.autoRenewableSubscription.kPlus1Month":
 			return .plus1Month
 		case "app.kurozora.autoRenewableSubscription.kPlus6Months":
