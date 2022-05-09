@@ -10,42 +10,53 @@ import Foundation
 
 /// The set of available authentication interval types.
 ///
-/// ```
-/// case immediately = 0
-/// case thirtySeconds
-/// case oneMinute
-/// case twoMinutes
-/// case threeMinutes
-/// case fourMinutes
-/// case fiveMinutes
-/// ```
-enum AuthenticationInterval: Int {
+/// - `immediately`:  authenticate immediately.
+/// - `thirtySeconds`: authenticate after thirty seconds of it being in the background.
+/// - `oneMinute`: authenticate after one minute of it being in the background.
+/// - `twoMinutes`: authenticate after two minutes of it being in the background.
+/// - `threeMinutes`: authenticate after three minutes of it being in the background.
+/// - `fourMinutes`: authenticate after four minutes of it being in the background.
+/// - `fiveMinutes`: authenticate after five minute of it being in the background.
+///
+/// - Tag: AuthenticationInterval
+enum AuthenticationInterval: Int, CaseIterable {
 	// MARK: - Cases
 	/// The app asks for authentication immediately.
+	///
+	/// - Tag: AuthenticationInterval-immediately
 	case immediately = 0
 
 	/// The app asks for authentication after thirty seconds of it being in the background.
-	case thirtySeconds
+	///
+	/// - Tag: AuthenticationInterval-thirtySeconds
+	case thirtySeconds = 30
 
 	/// The app asks for authentication after one minute of it being in the background.
-	case oneMinute
+	///
+	/// - Tag: AuthenticationInterval-oneMinute
+	case oneMinute = 60
 
 	/// The app asks for authentication after two minutes of it being in the background.
-	case twoMinutes
+	///
+	/// - Tag: AuthenticationInterval-twoMinutes
+	case twoMinutes = 120
 
 	/// The app asks for authentication after three minutes of it being in the background.
-	case threeMinutes
+	///
+	/// - Tag: AuthenticationInterval-threeMinutes
+	case threeMinutes = 180
 
 	/// The app asks for authentication after four minutes of it being in the background.
-	case fourMinutes
+	///
+	/// - Tag: AuthenticationInterval-fourMinutes
+	case fourMinutes = 240
 
 	/// The app asks for authentication after five minute of it being in the background.
-	case fiveMinutes
+	///
+	/// - Tag: AuthenticationInterval-fiveMinutes
+	case fiveMinutes = 300
 
 	// MARK: - Properties
-	/// An array of all `AuthenticationInterval` types.
-	static let all: [AuthenticationInterval] = [.immediately, .thirtySeconds, .oneMinute, .twoMinutes, .threeMinutes, .fourMinutes, .fiveMinutes]
-
 	/// The string value of an authentication interval type.
 	var stringValue: String {
 		switch self {
@@ -63,26 +74,6 @@ enum AuthenticationInterval: Int {
 			return Trans.fourMinutes
 		case .fiveMinutes:
 			return Trans.fiveMinutes
-		}
-	}
-
-	/// The interval value of an authentication interval type.
-	var intervalValue: Int {
-		switch self {
-		case .immediately:
-			return 0
-		case .thirtySeconds:
-			return 30
-		case .oneMinute:
-			return 60
-		case .twoMinutes:
-			return 120
-		case .threeMinutes:
-			return 180
-		case .fourMinutes:
-			return 240
-		case .fiveMinutes:
-			return 300
 		}
 	}
 }

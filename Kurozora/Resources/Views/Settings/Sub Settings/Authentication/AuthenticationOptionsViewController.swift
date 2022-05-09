@@ -10,7 +10,7 @@ import UIKit
 
 class AuthenticationOptionsViewController: SubSettingsViewController {
 	/// Set of available authentication intervals.
-	let authenticationIntervals: [AuthenticationInterval] = AuthenticationInterval.all
+	let authenticationIntervals: [AuthenticationInterval] = AuthenticationInterval.allCases
 }
 
 // MARK: - UITableViewDataSource
