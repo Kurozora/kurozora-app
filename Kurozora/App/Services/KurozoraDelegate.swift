@@ -198,7 +198,7 @@ extension KurozoraDelegate {
 
 	/// Sets the authentication interval.
 	func setAuthenticationInterval() {
-		self.authenticationInterval = Date.uptime() + UserSettings.authenticationInterval.intervalValue
+		self.authenticationInterval = Date.uptime() + UserSettings.authenticationInterval.rawValue
 	}
 
 	/// Prepare the app for authentication.
