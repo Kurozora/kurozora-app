@@ -835,4 +835,52 @@ struct Trans {
 	/// - Tag: Trans-expected
 	static let expected: String = String(localized: "Expected",
 										 comment: "The string for the word 'expected'.")
+
+	/// The string for the word 'badges'.
+	///
+	/// - Tag: Trans-badges
+	static let badges: String = String(localized: "Badges",
+									   comment: "The string for the word 'badges'.")
+
+	/// The string for the word 'ratings'.
+	///
+	/// - Tag: Trans-ratings
+	static let ratings: String = String(localized: "Ratings",
+										comment: "The string for the word 'ratings'.")
+
+	/// The string for the word 'seasons'.
+	///
+	/// - Tag: Trans-seasons
+	static let seasons: String = String(localized: "Seasons",
+										comment: "The string for the word 'seasons'.")
+
+	/// The string for the word 'cast'.
+	///
+	/// - Tag: Trans-cast
+	static let cast: String = String(localized: "Cast",
+									 comment: "The string for the word 'cast'.")
+
+	/// The string for the word 'songs'.
+	///
+	/// - Tag: Trans-songs
+	static let songs: String = String(localized: "Songs",
+									  comment: "The string for the word 'songs'.")
+
+	/// The string for the word 'more by'.
+	///
+	/// - Tag: Trans-moreBy
+	static let moreBy: String = String(localized: "More by",
+									   comment: "The string for the word 'more by'.")
+
+	/// The string for the word 'related'.
+	///
+	/// - Tag: Trans-related
+	static let related: String = String(localized: "Related",
+										comment: "The string for the word 'related'.")
+
+	/// The string for the word 'copyright'.
+	///
+	/// - Tag: Trans-copyright
+	static let copyright: String = String(localized: "Copyright",
+										  comment: "The string for the word 'copyright'.")
 }
