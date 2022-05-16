@@ -197,6 +197,22 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		self.searchResults = nil
 		self.collectionView.reloadData()
 	}
+
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		switch segue.identifier {
+		case R.segue.searchResultsCollectionViewController.showDetailsSegue.identifier:
+			// Segue to show details
+			guard let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
+			guard let show = sender as? Show else { return }
+			showDetailCollectionViewController.show = show
+		case R.segue.searchResultsCollectionViewController.profileSegue.identifier:
+			// Segue to profile details
+			guard let profileTableViewController = segue.destination as? ProfileTableViewController else { return }
+			guard let user = sender as? User else { return }
+			profileTableViewController.user = user
+		default: break
+		}
+	}
 }
 
 // MARK: - UICollectionViewDataSource

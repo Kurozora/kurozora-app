@@ -6,9 +6,7 @@
 //
 
 extension Platform {
-	/**
-		A root object that stores information about a single platform, such as the platform's system name, version, and device vendor.
-	*/
+	/// A root object that stores information about a single platform, such as the platform's system name, version, and device vendor.
 	public struct Attributes: Codable {
 		// MARK: - Properties
 		/// The description of the platform.

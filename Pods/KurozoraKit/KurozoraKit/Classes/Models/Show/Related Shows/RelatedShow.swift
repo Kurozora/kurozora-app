@@ -5,9 +5,7 @@
 //  Created by Khoren Katklian on 13/08/2020.
 //
 
-/**
-	A root object that stores information about a related show resource.
-*/
+/// A root object that stores information about a related show resource.
 public struct RelatedShow: Codable, Hashable {
 	// MARK: - Properties
 	/// The id of the related show.
@@ -20,11 +18,9 @@ public struct RelatedShow: Codable, Hashable {
 	public var attributes: RelatedShow.Attributes
 
 	// MARK: - Enums
-	/**
-		The keys to encode and decode.
-
-		Necessary since UUID shouldn't be a codable property.
-	*/
+	/// The keys to encode and decode.
+	///
+	/// Necessary since UUID shouldn't be a codable property.
 	enum CodingKeys: String, CodingKey {
 		/// The key of the `show` property.
 		case show

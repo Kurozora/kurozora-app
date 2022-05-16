@@ -6,9 +6,7 @@
 //
 
 extension Episode {
-	/**
-		A root object that stores information about a single episode, such as the episodes's number, name, and air date.
-	*/
+	/// A root object that stores information about a single episode, such as the episodes's number, name, and air date.
 	public struct Attributes: Codable {
 		// MARK: - Properties
 		/// The link to a poster image of the episode.
@@ -70,22 +68,18 @@ extension Episode.Attributes {
 	}
 
 	// MARK: - Functions
-	/**
-		Updates the attributes with the given `WatchStatus` object.
-
-		- Parameter watchStatus: The `WatchStatus` object used to update the attributes.
-	*/
+	/// Updates the attributes with the given `WatchStatus` object.
+	///
+	/// - Parameter watchStatus: The `WatchStatus` object used to update the attributes.
 	public mutating func update(using watchStatus: WatchStatus) {
 		self.watchStatus = watchStatus
 	}
 
-	/**
-		Returns a copy of the object with the updated attributes from the given `WatchStatus` object.
-
-		- Parameter watchStatus: The `WatchStatus` object used to update the attributes.
-
-		- Returns: a copy of the object with the updated attributes from the given `WatchStatus` object.
-	*/
+	/// Returns a copy of the object with the updated attributes from the given `WatchStatus` object.
+	///
+	/// - Parameter watchStatus: The `WatchStatus` object used to update the attributes.
+	///
+	/// - Returns: a copy of the object with the updated attributes from the given `WatchStatus` object.
 	public mutating func updated(using watchStatus: WatchStatus) -> Self {
 		var episodeAttributes = self
 		episodeAttributes.watchStatus = watchStatus

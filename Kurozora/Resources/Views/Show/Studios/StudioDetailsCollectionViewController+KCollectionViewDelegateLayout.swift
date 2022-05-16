@@ -12,7 +12,7 @@ extension StudioDetailsCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
 
-		switch StudioDetail.Section(rawValue: section) {
+		switch self.snapshot.sectionIdentifiers[section] {
 		case .header, .about:
 			return 1
 		case .shows:
@@ -25,7 +25,7 @@ extension StudioDetailsCollectionViewController {
 	}
 
 	func heightDimension(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutDimension {
-		switch StudioDetail.Section(rawValue: section) {
+		switch self.snapshot.sectionIdentifiers[section] {
 		case .header:
 			return .estimated(230)
 		case .about:
@@ -33,22 +33,12 @@ extension StudioDetailsCollectionViewController {
 		case .information:
 			return .estimated(55)
 		default:
-			let heightFraction = self.groupHeightFraction(forSection: section, with: columnsCount, layout: layoutEnvironment)
-			return .fractionalWidth(heightFraction)
-		}
-	}
-
-	override func groupHeightFraction(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> CGFloat {
-		switch StudioDetail.Section(rawValue: section) {
-		case .shows:
-			return (0.55 / columnsCount.double).cgFloat
-		default:
-			return .zero
+			return .fractionalWidth(.zero)
 		}
 	}
 
 	override func contentInset(forSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		switch StudioDetail.Section(rawValue: section) {
+		switch self.snapshot.sectionIdentifiers[section] {
 		case .header:
 			return NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0)
 		case .information:
@@ -62,7 +52,7 @@ extension StudioDetailsCollectionViewController {
 		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
 			guard self.studio != nil else { return nil }
-			guard let studioDetailSection = StudioDetail.Section(rawValue: section) else { fatalError("Studio section not supported") }
+			let studioDetailSection = self.snapshot.sectionIdentifiers[section]
 			var sectionLayout: NSCollectionLayoutSection? = nil
 			var hasSectionHeader = false
 

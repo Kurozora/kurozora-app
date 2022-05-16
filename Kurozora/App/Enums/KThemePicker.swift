@@ -143,11 +143,7 @@ enum KThemePicker: ThemeColorPicker {
 	}
 
 	var cgColorPicker: ThemeCGColorPicker? {
-		switch self {
-		case .borderColor:
-			return ThemeCGColorPicker(stringLiteral: KThemePicker.borderColor.stringValue)
-		default: return nil
-		}
+		return ThemeCGColorPicker(stringLiteral: self.stringValue)
 	}
 
 	/// Returns a UIBlurEffect.Style from the currently selected theme.
@@ -195,14 +191,13 @@ enum KThemePicker: ThemeColorPicker {
 	}
 
 	// MARK: - Functions
-
 	/// Returns a ThemeVisualEffectPicker from the currently selected theme.
 	///
 	/// - Parameter vibrancyEnabled: Boolean indicating whether the visual effect is vibrant.
 	///
 	/// - Returns: a ThemeVisualEffectPicker from the currently selected theme.
 	func effectValue(vibrancyEnabled: Bool = false) -> ThemeVisualEffectPicker {
-		return ThemeVisualEffectPicker(keyPath: KThemePicker.visualEffect.stringValue, vibrancyEnabled: vibrancyEnabled)
+		return ThemeVisualEffectPicker(keyPath: self.stringValue, vibrancyEnabled: vibrancyEnabled)
 	}
 
 	/// Return attributed string theme from the currently selected theme.

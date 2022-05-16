@@ -6,9 +6,7 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
-/**
-	A root object that stores information about an episode update resource.
-*/
+/// A root object that stores information about an episode update resource.
 public struct EpisodeUpdate: Codable {
 	// MARK: - Properties
 	/// Whether the episode is watched.

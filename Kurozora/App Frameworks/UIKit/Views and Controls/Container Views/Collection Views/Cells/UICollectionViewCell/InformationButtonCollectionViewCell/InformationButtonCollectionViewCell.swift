@@ -9,6 +9,10 @@
 import UIKit
 import KurozoraKit
 
+protocol InformationButtonCollectionViewCellDelegate: AnyObject {
+	func informationButtonCollectionViewCell(_ cell: InformationButtonCollectionViewCell, didPressButton button: UIButton)
+}
+
 class InformationButtonCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var titleLabel: KTintedLabel!
@@ -17,19 +21,15 @@ class InformationButtonCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - Properties
 	weak var delegate: InformationButtonCollectionViewCellDelegate?
-	var studioDetailInformation: StudioDetail.Information = .website
-	var studio: Studio! {
-		didSet {
-			configureCell()
-		}
-	}
+	private(set) var studioInformation: StudioInformation = .website
 
 	// MARK: - Functions
-	/// Configure the cell with the given details.
-	fileprivate func configureCell() {
-		self.titleLabel.text = studioDetailInformation.stringValue
-		self.iconImageView.image = studioDetailInformation.imageValue
-		self.separatorView.isHidden = self.studioDetailInformation == .website
+	/// Configure the cell with the given studio information.
+	func configure(using studioInformation: StudioInformation) {
+		self.studioInformation = studioInformation
+		self.titleLabel.text = studioInformation.stringValue
+		self.iconImageView.image = studioInformation.imageValue
+		self.separatorView.isHidden = studioInformation == .website
 	}
 
 	// MARK: - IBActions

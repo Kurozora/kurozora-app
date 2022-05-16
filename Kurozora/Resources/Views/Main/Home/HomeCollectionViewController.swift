@@ -8,21 +8,28 @@
 
 import UIKit
 import KurozoraKit
+import Alamofire
 import AVFoundation
-import WhatsNew
 import MediaPlayer
+import WhatsNew
 
 class HomeCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	lazy var genre: Genre? = nil
 	lazy var theme: Theme? = nil
-	let actionsArray: [[[String: String]]] = [
-		[["title": "About In-App Purchases", "url": "https://kurozora.app/kb/iap"], ["title": "About Personalisation", "url": "https://kurozora.app/kb/personalisation"], ["title": "Welcome to Kurozora", "url": "https://kurozora.app/welcome"]],
-		[["title": "Redeem", "segueId": R.segue.homeCollectionViewController.redeemSegue.identifier], ["title": "Become a Pro User", "segueId": R.segue.homeCollectionViewController.subscriptionSegue.identifier]]
+	let quickLinks: [QuickLink] = [
+		QuickLink(title: "About In-App Purchases", url: "https://kurozora.app/kb/iap"),
+		QuickLink(title: "About Personalisation", url: "https://kurozora.app/kb/personalisation"),
+		QuickLink(title: "Welcome to Kurozora", url: "https://kurozora.app/welcome")
+	]
+	let quickActions: [QuickAction] = [
+		QuickAction(title: "Redeem", segueID: R.segue.homeCollectionViewController.redeemSegue.identifier),
+		QuickAction(title: "Become a Pro User", segueID: R.segue.homeCollectionViewController.subscriptionSegue.identifier)
 	]
 
+	var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
-	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
+	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
 	var exploreCategories: [ExploreCategory] = [] {
 		didSet {
 			self.updateDataSource()
@@ -40,6 +47,13 @@ class HomeCollectionViewController: KCollectionViewController {
 
 	/// The index path of the song that's currently playing.
 	var currentPlayerIndexPath: IndexPath?
+
+	/// Which is used? This or exploreCategories?
+	var shows: [IndexPath: Show] = [:]
+	var characters: [IndexPath: Character] = [:]
+	var people: [IndexPath: Person] = [:]
+	var genres: [IndexPath: Genre] = [:]
+	var themes: [IndexPath: Theme] = [:]
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
@@ -180,91 +194,62 @@ class HomeCollectionViewController: KCollectionViewController {
 		switch segue.identifier {
 		case R.segue.homeCollectionViewController.showDetailsSegue.identifier:
 			// Segue to show details
-			if let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController {
-				guard let show = sender as? Show else { return }
-				showDetailCollectionViewController.showID = show.id
-			}
+			guard let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
+			guard let show = sender as? Show else { return }
+			showDetailCollectionViewController.show = show
 		case R.segue.homeCollectionViewController.showsListSegue.identifier:
 			// Segue to shows list
-			if let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController {
-				guard let indexPath = sender as? IndexPath else { return }
-				let exploreCategory = exploreCategories[indexPath.section]
-				showsListCollectionViewController.title = exploreCategories[indexPath.section].attributes.title
+			guard let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController else { return }
+			guard let indexPath = sender as? IndexPath else { return }
+			let exploreCategory = self.exploreCategories[indexPath.section]
 
-				if exploreCategory.attributes.exploreCategoryType == .upcomingShows {
-					showsListCollectionViewController.showUpcoming = true
-				} else {
-					showsListCollectionViewController.shows =  exploreCategory.relationships.shows?.data ?? []
-				}
+			showsListCollectionViewController.title = self.exploreCategories[indexPath.section].attributes.title
+
+			if exploreCategory.attributes.exploreCategoryType == .upcomingShows {
+				showsListCollectionViewController.showUpcoming = true
+			} else {
+				showsListCollectionViewController.showIdentities =  exploreCategory.relationships.shows?.data ?? []
 			}
 		case R.segue.homeCollectionViewController.showSongsListSegue.identifier:
 			// Segue to show songs list
-			if let showSongsListCollectionViewController = segue.destination as? ShowSongsListCollectionViewController {
-				guard let indexPath = sender as? IndexPath else { return }
-				showSongsListCollectionViewController.title = exploreCategories[indexPath.section].attributes.title
-				showSongsListCollectionViewController.showSongs = exploreCategories[indexPath.section].relationships.showSongs?.data ?? []
-			}
+			guard let showSongsListCollectionViewController = segue.destination as? ShowSongsListCollectionViewController else { return }
+			guard let indexPath = sender as? IndexPath else { return }
+			let exploreCategory = self.exploreCategories[indexPath.section]
+			showSongsListCollectionViewController.title = exploreCategory.attributes.title
+			showSongsListCollectionViewController.showSongs = exploreCategory.relationships.showSongs?.data ?? []
 		case R.segue.homeCollectionViewController.exploreSegue.identifier:
 			// Segue to genre or theme explore
-			if let homeCollectionViewController = segue.destination as? HomeCollectionViewController {
-				if let genre = sender as? Genre {
-					homeCollectionViewController.genre = genre
-				} else if let theme = sender as? Theme {
-					homeCollectionViewController.theme = theme
-				}
+			guard let homeCollectionViewController = segue.destination as? HomeCollectionViewController else { return }
+			if let genre = sender as? Genre {
+				homeCollectionViewController.genre = genre
+			} else if let theme = sender as? Theme {
+				homeCollectionViewController.theme = theme
 			}
 		case R.segue.homeCollectionViewController.characterSegue.identifier:
 			// Segue to character details
-			if let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController {
-				guard let character = sender as? Character else { return }
-				characterDetailsCollectionViewController.characterID = character.id
-			}
+			guard let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController else { return }
+			guard let character = sender as? Character else { return }
+			characterDetailsCollectionViewController.character = character
 		case R.segue.homeCollectionViewController.charactersListSegue.identifier:
 			// Segue to characters list
-			if let charactersListCollectionViewController = segue.destination as? CharactersListCollectionViewController {
-				guard let indexPath = sender as? IndexPath else { return }
-				charactersListCollectionViewController.title = exploreCategories[indexPath.section].attributes.title
-				charactersListCollectionViewController.characters = exploreCategories[indexPath.section].relationships.characters?.data ?? []
-			}
+			guard let charactersListCollectionViewController = segue.destination as? CharactersListCollectionViewController else { return }
+			guard let indexPath = sender as? IndexPath else { return }
+			let exploreCategory = self.exploreCategories[indexPath.section]
+			charactersListCollectionViewController.title = exploreCategory.attributes.title
+			charactersListCollectionViewController.characterIdentities = exploreCategory.relationships.characters?.data ?? []
 		case R.segue.homeCollectionViewController.personSegue.identifier:
 			// Segue to person details
-			if let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController {
-				guard let person = sender as? Person else { return }
-				personDetailsCollectionViewController.personID = person.id
-			}
+			guard let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController else { return }
+			guard let person = sender as? Person else { return }
+			personDetailsCollectionViewController.person = person
 		case R.segue.homeCollectionViewController.peopleListSegue.identifier:
 			// Segue to people list
-			if let peopleListCollectionViewController = segue.destination as? PeopleListCollectionViewController {
-				guard let indexPath = sender as? IndexPath else { return }
-				peopleListCollectionViewController.title = exploreCategories[indexPath.section].attributes.title
-				peopleListCollectionViewController.people = exploreCategories[indexPath.section].relationships.people?.data ?? []
-			}
+			guard let peopleListCollectionViewController = segue.destination as? PeopleListCollectionViewController else { return }
+			guard let indexPath = sender as? IndexPath else { return }
+			let exploreCategory = self.exploreCategories[indexPath.section]
+			peopleListCollectionViewController.title = exploreCategory.attributes.title
+			peopleListCollectionViewController.personIdentities = exploreCategory.relationships.people?.data ?? []
 		default: break
-		}
-	}
-}
-
-// MARK: - Helper functions
-extension HomeCollectionViewController {
-	/// Dequeues and returns collection view cells for the vertical collection view cell style.
-	///
-	/// - Parameters:
-	///    - verticalCollectionCellStyle: The style of the collection view cell to be dequeued.
-	///    - indexPath: The indexPath for which the collection view cell should be dequeued.
-	///
-	/// - Returns: The dequeued collection view cell.
-	func createExploreCell(with verticalCollectionCellStyle: VerticalCollectionCellStyle, for indexPath: IndexPath) -> UICollectionViewCell {
-		switch verticalCollectionCellStyle {
-		case .legal:
-			guard let legalExploreCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: verticalCollectionCellStyle.identifierString, for: indexPath) as? LegalCollectionViewCell else {
-				fatalError("Cannot dequeue reusable cell with identifier \(verticalCollectionCellStyle.identifierString)")
-			}
-			return legalExploreCollectionViewCell
-		default:
-			guard let actionBaseExploreCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: verticalCollectionCellStyle.identifierString, for: indexPath) as? ActionBaseExploreCollectionViewCell else {
-					fatalError("Cannot dequeue reusable cell with identifier \(verticalCollectionCellStyle.identifierString)")
-			}
-			return actionBaseExploreCollectionViewCell
 		}
 	}
 }
@@ -280,14 +265,14 @@ extension HomeCollectionViewController: TitleHeaderCollectionReusableViewDelegat
 extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 	func reminderButtonPressed(on cell: BaseLockupCollectionViewCell) {
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		guard let show = self.exploreCategories[indexPath.section].relationships.shows?.data[indexPath.item] else { return }
+		guard let show = self.shows[indexPath] else { return }
 		show.toggleReminder()
 	}
 
 	func chooseStatusButtonPressed(_ sender: UIButton, on cell: BaseLockupCollectionViewCell) {
 		WorkflowController.shared.isSignedIn {
 			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-			guard let show = self.exploreCategories[indexPath.section].relationships.shows?.data[indexPath.item] else { return }
+			guard let show = self.shows[indexPath] else { return }
 
 			let oldLibraryStatus = cell.libraryStatus
 			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: oldLibraryStatus, action: { title, value  in
@@ -387,26 +372,122 @@ extension HomeCollectionViewController: MusicLockupCollectionViewCellDelegate {
 	}
 }
 
+// MARK: - ActionBaseExploreCollectionViewCellDelegate
+extension HomeCollectionViewController: ActionBaseExploreCollectionViewCellDelegate {
+	func actionButtonPressed(_ sender: UIButton, cell: ActionBaseExploreCollectionViewCell) {
+		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+
+		switch cell.self {
+		case is ActionLinkExploreCollectionViewCell:
+			guard let kNavigationController = R.storyboard.webBrowser.kWebViewKNavigationController() else { return }
+			let quickLink = self.quickLinks[indexPath.item]
+			if let kWebViewController = kNavigationController.viewControllers.first as? KWebViewController {
+				kWebViewController.title = quickLink.title
+				kWebViewController.url = quickLink.url
+
+				kNavigationController.modalPresentationStyle = .custom
+				self.present(kNavigationController, animated: true)
+			}
+		case is ActionButtonExploreCollectionViewCell:
+			let quickAction = self.quickActions[indexPath.item]
+			self.performSegue(withIdentifier: quickAction.segueID, sender: nil)
+		default: break
+		}
+
+	}
+}
+
 // MARK: - SectionLayoutKind
 extension HomeCollectionViewController {
 	/// List of available Section Layout Kind types.
 	enum SectionLayoutKind: Hashable {
 		// MARK: - Cases
-		/// Indicates a header section layout type.
-		case header(id: UUID = UUID())
+		/// Indicates a banner section layout type.
+		case banner(_: ExploreCategory)
+
+		/// Indicates a genre section layout type.
+		case small(_: ExploreCategory)
+
+		/// Indicates a genre section layout type.
+		case medium(_: ExploreCategory)
+
+		/// Indicates a genre section layout type.
+		case large(_: ExploreCategory)
+
+		/// Indicates a genre section layout type.
+		case video(_: ExploreCategory)
+
+		/// Indicates a genre section layout type.
+		case upcoming(_: ExploreCategory)
+
+		/// Indicates a genre section layout type.
+		case profile(_: ExploreCategory)
+
+		/// Indicates a genre section layout type.
+		case music(_: ExploreCategory)
+
+		/// Indicates a quick links section layout type.
+		case quickLinks(id: UUID = UUID())
+
+		/// Indicates a quick actions section layout type.
+		case quickActions(id: UUID = UUID())
+
+		/// Indicates a legal section layout type.
+		case legal(id: UUID = UUID())
 
 		// MARK: - Functions
 		func hash(into hasher: inout Hasher) {
 			switch self {
-			case .header(let id):
+			case .banner(let exploreCategory):
+				hasher.combine(exploreCategory)
+			case .small(let exploreCategory):
+				hasher.combine(exploreCategory)
+			case .medium(let exploreCategory):
+				hasher.combine(exploreCategory)
+			case .large(let exploreCategory):
+				hasher.combine(exploreCategory)
+			case .video(let exploreCategory):
+				hasher.combine(exploreCategory)
+			case .upcoming(let exploreCategory):
+				hasher.combine(exploreCategory)
+			case .profile(let exploreCategory):
+				hasher.combine(exploreCategory)
+			case .music(let exploreCategory):
+				hasher.combine(exploreCategory)
+			case .quickLinks(let id):
+				hasher.combine(id)
+			case .quickActions(let id):
+				hasher.combine(id)
+			case .legal(let id):
 				hasher.combine(id)
 			}
 		}
 
 		static func == (lhs: SectionLayoutKind, rhs: SectionLayoutKind) -> Bool {
 			switch (lhs, rhs) {
-			case (.header(let id1), .header(let id2)):
+			case (.banner(let exploreCategory1), .banner(let exploreCategory2)):
+				return exploreCategory1 == exploreCategory2
+			case (.small(let exploreCategory1), .small(let exploreCategory2)):
+				return exploreCategory1 == exploreCategory2
+			case (.medium(let exploreCategory1), .medium(let exploreCategory2)):
+				return exploreCategory1 == exploreCategory2
+			case (.large(let exploreCategory1), .large(let exploreCategory2)):
+				return exploreCategory1 == exploreCategory2
+			case (.video(let exploreCategory1), .video(let exploreCategory2)):
+				return exploreCategory1 == exploreCategory2
+			case (.upcoming(let exploreCategory1), .upcoming(let exploreCategory2)):
+				return exploreCategory1 == exploreCategory2
+			case (.profile(let exploreCategory1), .profile(let exploreCategory2)):
+				return exploreCategory1 == exploreCategory2
+			case (.music(let exploreCategory1), .music(let exploreCategory2)):
+				return exploreCategory1 == exploreCategory2
+			case (.quickLinks(let id1), .quickLinks(let id2)):
 				return id1 == id2
+			case (.quickActions(let id1), .quickActions(let id2)):
+				return id1 == id2
+			case (.legal(let id1), .legal(let id2)):
+				return id1 == id2
+			default: return false
 			}
 		}
 	}
@@ -417,71 +498,327 @@ extension HomeCollectionViewController {
 	/// List of available Item Kind types.
 	enum ItemKind: Hashable {
 		// MARK: - Cases
-		/// Indicates the item kind contains a `Show` object.
-		case show(_: Show, id: UUID = UUID())
+		/// Indicates the item kind contains a `ShowIdentity` object.
+		case showIdentity(_: ShowIdentity, id: UUID = UUID())
 
 		/// Indicates the item kind contains a `ShowSong` object.
 		case showSong(_: ShowSong, id: UUID = UUID())
 
-		/// Indicates the item kind contains a `Genre` object.
-		case genre(_: Genre, id: UUID = UUID())
+		/// Indicates the item kind contains a `GenreIdentity` object.
+		case genreIdentity(_: GenreIdentity, id: UUID = UUID())
 
-		/// Indicates the item kind contains a `Theme` object.
-		case theme(_: Theme, id: UUID = UUID())
+		/// Indicates the item kind contains a `ThemeIdentity` object.
+		case themeIdentity(_: ThemeIdentity, id: UUID = UUID())
 
-		/// Indicates the item kind contains a `Character` object.
-		case character(_: Character, id: UUID = UUID())
+		/// Indicates the item kind contains a `CharacterIdentity` object.
+		case characterIdentity(_: CharacterIdentity, id: UUID = UUID())
 
-		/// Indicates the item kind contains a `Person` object.
-		case person(_: Person, id: UUID = UUID())
+		/// Indicates the item kind contains a `PersonIdentity` object.
+		case personIdentity(_: PersonIdentity, id: UUID = UUID())
 
-		/// Indicates the item kind contains an other type object.
-		case other(_: Int)
+		/// Indicates the item kind contains a `QuickLink` object.
+		case quickLink(_: QuickLink, id: UUID = UUID())
+
+		/// Indicates the item kind contains a `QuickAction` object.
+		case quickAction(_: QuickAction, id: UUID = UUID())
+
+		/// Indicates a legal section layout type.
+		case legal(id: UUID = UUID())
 
 		// MARK: - Functions
 		func hash(into hasher: inout Hasher) {
 			switch self {
-			case .show(let show, let id):
-				hasher.combine(show)
+			case .showIdentity(let showIdentity, let id):
+				hasher.combine(showIdentity)
 				hasher.combine(id)
 			case .showSong(let showSong, let id):
 				hasher.combine(showSong)
 				hasher.combine(id)
-			case .genre(let genre, let id):
-				hasher.combine(genre)
+			case .genreIdentity(let genreIdentity, let id):
+				hasher.combine(genreIdentity)
 				hasher.combine(id)
-			case .theme(let theme, let id):
-				hasher.combine(theme)
+			case .themeIdentity(let themeIdentity, let id):
+				hasher.combine(themeIdentity)
 				hasher.combine(id)
-			case .character(let character, let id):
-				hasher.combine(character)
+			case .characterIdentity(let characterIdentity, let id):
+				hasher.combine(characterIdentity)
 				hasher.combine(id)
-			case .person(let person, let id):
-				hasher.combine(person)
+			case .personIdentity(let personIdentity, let id):
+				hasher.combine(personIdentity)
 				hasher.combine(id)
-			case .other(let int):
-				hasher.combine(int)
+			case .quickLink(let quickLink, let id):
+				hasher.combine(quickLink)
+				hasher.combine(id)
+			case .quickAction(let quickAction, let id):
+				hasher.combine(quickAction)
+				hasher.combine(id)
+			case .legal(let id):
+				hasher.combine(id)
 			}
 		}
 
 		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
 			switch (lhs, rhs) {
-			case (.show(let show1, let id1), .show(let show2, let id2)):
-				return show1.id == show2.id && id1 == id2
+			case (.showIdentity(let showIdentity1, let id1), .showIdentity(let showIdentity2, let id2)):
+				return showIdentity1.id == showIdentity2.id && id1 == id2
 			case (.showSong(let showSong1, let id1), .showSong(let showSong2, let id2)):
 				return showSong1.id == showSong2.id && id1 == id2
-			case (.genre(let genre1, let id1), .genre(let genre2, let id2)):
-				return genre1.id == genre2.id && id1 == id2
-			case (.theme(let theme1, let id1), .theme(let theme2, let id2)):
-				return theme1.id == theme2.id && id1 == id2
-			case (.character(let character1, let id1), .character(let character2, let id2)):
-				return character1.id == character2.id && id1 == id2
-			case (.person(let person1, let id1), .person(let person2, let id2)):
-				return person1.id == person2.id && id1 == id2
-			case (.other(let int1), .other(let int2)):
-				return int1 == int2
+			case (.genreIdentity(let genreIdentity1, let id1), .genreIdentity(let genreIdentity2, let id2)):
+				return genreIdentity1.id == genreIdentity2.id && id1 == id2
+			case (.themeIdentity(let themeIdentity1, let id1), .themeIdentity(let themeIdentity2, let id2)):
+				return themeIdentity1.id == themeIdentity2.id && id1 == id2
+			case (.characterIdentity(let characterIdentity1, let id1), .characterIdentity(let characterIdentity2, let id2)):
+				return characterIdentity1.id == characterIdentity2.id && id1 == id2
+			case (.personIdentity(let personIdentity1, let id1), .personIdentity(let personIdentity2, let id2)):
+				return personIdentity1.id == personIdentity2.id && id1 == id2
+			case (.quickLink(let quickLink1, let id1), .quickLink(let quickLink2, let id2)):
+				return quickLink1 == quickLink2 && id1 == id2
+			case (.quickAction(let quickAction1, let id1), .quickAction(let quickAction2, let id2)):
+				return quickAction1 == quickAction2 && id1 == id2
+			case (.legal(let id1), .legal(let id2)):
+				return id1 == id2
 			default:
 				return false
+			}
+		}
+	}
+}
+
+extension HomeCollectionViewController {
+	func getConfiguredBannerCell() -> UICollectionView.CellRegistration<BannerLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<BannerLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.bannerLockupCollectionViewCell)) { [weak self] bannerLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .showIdentity(let showIdentity, _):
+				let show = self.fetchShow(at: indexPath)
+				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? bannerLockupCollectionViewCell.dataRequest
+
+				if dataRequest == nil && show == nil {
+					dataRequest = KService.getDetails(forShow: showIdentity) { [weak self] result in
+						switch result {
+						case .success(let shows):
+							self?.shows[indexPath] = shows.first
+							self?.setItemKindNeedsUpdate(itemKind)
+						case .failure: break
+						}
+					}
+				}
+
+				bannerLockupCollectionViewCell.delegate = self
+				bannerLockupCollectionViewCell.dataRequest = dataRequest
+				bannerLockupCollectionViewCell.configure(using: show)
+			default: break
+			}
+		}
+	}
+
+	func getConfiguredSmallCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.smallLockupCollectionViewCell)) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .showIdentity(let showIdentity, _):
+				let show = self.fetchShow(at: indexPath)
+				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? smallLockupCollectionViewCell.dataRequest
+
+				if dataRequest == nil && show == nil {
+					dataRequest = KService.getDetails(forShow: showIdentity) { [weak self] result in
+						switch result {
+						case .success(let shows):
+							self?.shows[indexPath] = shows.first
+							self?.setItemKindNeedsUpdate(itemKind)
+						case .failure: break
+						}
+					}
+				}
+
+				smallLockupCollectionViewCell.delegate = self
+				smallLockupCollectionViewCell.dataRequest = dataRequest
+				smallLockupCollectionViewCell.configure(using: show)
+			default: break
+			}
+		}
+	}
+
+	func getConfiguredMediumCell() -> UICollectionView.CellRegistration<MediumLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<MediumLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.mediumLockupCollectionViewCell)) { [weak self] mediumLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .genreIdentity(let genreIdentity, _):
+				let genre = self.fetchGenre(at: indexPath)
+				var genreDataRequest = self.prefetchingIndexPathOperations[indexPath] ?? mediumLockupCollectionViewCell.dataRequest
+
+				if genreDataRequest == nil && genre == nil {
+					genreDataRequest = KService.getDetails(forGenre: genreIdentity) { [weak self] result in
+						switch result {
+						case .success(let genres):
+							self?.genres[indexPath] = genres.first
+							self?.setItemKindNeedsUpdate(itemKind)
+						case .failure: break
+						}
+					}
+				}
+
+				mediumLockupCollectionViewCell.dataRequest = genreDataRequest
+				mediumLockupCollectionViewCell.configure(using: genre)
+			case .themeIdentity(let themeIdentity, _):
+				let theme = self.fetchTheme(at: indexPath)
+				var themeDataRequest = self.prefetchingIndexPathOperations[indexPath] ?? mediumLockupCollectionViewCell.dataRequest
+
+				if themeDataRequest == nil && theme == nil {
+					themeDataRequest = KService.getDetails(forTheme: themeIdentity) { [weak self] result in
+						switch result {
+						case .success(let themes):
+							self?.themes[indexPath] = themes.first
+							self?.setItemKindNeedsUpdate(itemKind)
+						case .failure: break
+						}
+					}
+				}
+
+				mediumLockupCollectionViewCell.dataRequest = themeDataRequest
+				mediumLockupCollectionViewCell.configure(using: theme)
+			default: break
+			}
+		}
+	}
+
+	func getConfiguredLargeCell() -> UICollectionView.CellRegistration<LargeLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<LargeLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.largeLockupCollectionViewCell)) { [weak self] largeLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .showIdentity(let showIdentity, _):
+				let show = self.fetchShow(at: indexPath)
+				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? largeLockupCollectionViewCell.dataRequest
+
+				if dataRequest == nil && show == nil {
+					dataRequest = KService.getDetails(forShow: showIdentity) { [weak self] result in
+						switch result {
+						case .success(let shows):
+							self?.shows[indexPath] = shows.first
+							self?.setItemKindNeedsUpdate(itemKind)
+						case .failure: break
+						}
+					}
+				}
+
+				largeLockupCollectionViewCell.delegate = self
+				largeLockupCollectionViewCell.dataRequest = dataRequest
+				largeLockupCollectionViewCell.configure(using: show)
+			default: break
+			}
+		}
+	}
+
+	func getConfiguredUpcomingCell() -> UICollectionView.CellRegistration<UpcomingLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<UpcomingLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.upcomingLockupCollectionViewCell)) { [weak self] upcomingLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .showIdentity(let showIdentity, _):
+				let show = self.fetchShow(at: indexPath)
+				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? upcomingLockupCollectionViewCell.dataRequest
+
+				if dataRequest == nil && show == nil {
+					dataRequest = KService.getDetails(forShow: showIdentity) { [weak self] result in
+						switch result {
+						case .success(let shows):
+							self?.shows[indexPath] = shows.first
+							self?.setItemKindNeedsUpdate(itemKind)
+						case .failure: break
+						}
+					}
+				}
+
+				upcomingLockupCollectionViewCell.delegate = self
+				upcomingLockupCollectionViewCell.dataRequest = dataRequest
+				upcomingLockupCollectionViewCell.configure(using: show)
+			default: break
+			}
+		}
+	}
+
+	func getConfiguredVideoCell() -> UICollectionView.CellRegistration<VideoLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<VideoLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.videoLockupCollectionViewCell)) { [weak self] videoLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .showIdentity(let showIdentity, _):
+				let show = self.fetchShow(at: indexPath)
+				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? videoLockupCollectionViewCell.dataRequest
+
+				if dataRequest == nil && show == nil {
+					dataRequest = KService.getDetails(forShow: showIdentity) { [weak self] result in
+						switch result {
+						case .success(let shows):
+							self?.shows[indexPath] = shows.first
+							self?.setItemKindNeedsUpdate(itemKind)
+						case .failure: break
+						}
+					}
+				}
+
+				videoLockupCollectionViewCell.delegate = self
+				videoLockupCollectionViewCell.dataRequest = dataRequest
+				videoLockupCollectionViewCell.configure(using: show)
+			default: break
+			}
+		}
+	}
+
+	func getConfiguredPersonCell() -> UICollectionView.CellRegistration<PersonLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<PersonLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.personLockupCollectionViewCell)) { [weak self] personLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .personIdentity(let personIdentity, _):
+				let person = self.fetchPerson(at: indexPath)
+				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? personLockupCollectionViewCell.dataRequest
+
+				if dataRequest == nil && person == nil {
+					dataRequest = KService.getDetails(forPerson: personIdentity) { [weak self] result in
+						switch result {
+						case .success(let persons):
+							self?.people[indexPath] = persons.first
+							self?.setItemKindNeedsUpdate(itemKind)
+						case .failure: break
+						}
+					}
+				}
+
+				personLockupCollectionViewCell.dataRequest = dataRequest
+				personLockupCollectionViewCell.configure(using: person)
+			default: return
+			}
+		}
+	}
+
+	func getConfiguredCharacterCell() -> UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.characterLockupCollectionViewCell)) { [weak self] characterLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .characterIdentity(let characterIdentity, _):
+				let character = self.fetchCharacter(at: indexPath)
+				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? characterLockupCollectionViewCell.dataRequest
+
+				if dataRequest == nil && character == nil {
+					dataRequest = KService.getDetails(forCharacter: characterIdentity) { [weak self] result in
+						switch result {
+						case .success(let characters):
+							self?.characters[indexPath] = characters.first
+							self?.setItemKindNeedsUpdate(itemKind)
+						case .failure: break
+						}
+					}
+				}
+
+				characterLockupCollectionViewCell.dataRequest = dataRequest
+				characterLockupCollectionViewCell.configure(using: character)
+			default: return
 			}
 		}
 	}

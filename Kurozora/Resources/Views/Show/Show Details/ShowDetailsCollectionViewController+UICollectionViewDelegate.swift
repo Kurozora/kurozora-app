@@ -10,38 +10,36 @@ import UIKit
 
 extension ShowDetailsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		guard let showDetailSection = ShowDetail.Section(rawValue: indexPath.section) else { return }
-
-		switch showDetailSection {
+		switch self.snapshot.sectionIdentifiers[indexPath.section] {
 		case .badge:
 			guard let showDetailBadge = ShowDetail.Badge(rawValue: indexPath.item) else { return }
 			switch showDetailBadge {
 			case .rating:
-				collectionView.safeScrollToItem(at: IndexPath(row: 0, section: ShowDetail.Section.rating.rawValue), at: .centeredVertically, animated: true)
+				collectionView.safeScrollToItem(at: IndexPath(row: 0, section: SectionLayoutKind.rating.rawValue), at: .centeredVertically, animated: true)
 				return
 			case .season:
-				collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.airDates.rawValue, section: ShowDetail.Section.information.rawValue), at: .centeredVertically, animated: true)
+				collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.airDates.rawValue, section: SectionLayoutKind.information.rawValue), at: .centeredVertically, animated: true)
 				return
 			case .rank:
-				collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.genres.rawValue, section: ShowDetail.Section.information.rawValue), at: .centeredVertically, animated: true)
+				collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.genres.rawValue, section: SectionLayoutKind.information.rawValue), at: .centeredVertically, animated: true)
 				return
 			case .tvRating:
-				collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.rating.rawValue, section: ShowDetail.Section.information.rawValue), at: .centeredVertically, animated: true)
+				collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.rating.rawValue, section: SectionLayoutKind.information.rawValue), at: .centeredVertically, animated: true)
 				return
 			case .studio:
 				self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.studioSegue.identifier, sender: nil)
 			case .language:
-				collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.languages.rawValue, section: ShowDetail.Section.information.rawValue), at: .centeredVertically, animated: true)
+				collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.languages.rawValue, section: SectionLayoutKind.information.rawValue), at: .centeredVertically, animated: true)
 				return
 			}
 		case .seasons:
-			let season = self.dataSource.seasons[indexPath.item]
+			let season = self.seasons[indexPath]
 			self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.episodeSegue.identifier, sender: season)
 		case .moreByStudio:
-			let show = self.dataSource.studioShows[indexPath.item]
+			let show = self.studioShows[indexPath]
 			self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.showDetailsSegue.identifier, sender: show)
 		case .relatedShows:
-			let show = self.dataSource.relatedShows[indexPath.item].show
+			let show = self.relatedShows[indexPath.item].show
 			self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.showDetailsSegue.identifier, sender: show)
 		default: return
 		}
@@ -49,21 +47,15 @@ extension ShowDetailsCollectionViewController {
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		guard let showDetailSection = ShowDetail.Section(rawValue: indexPath.section) else { return nil }
-
-		switch showDetailSection {
+		switch self.snapshot.sectionIdentifiers[indexPath.section] {
 		case .seasons:
-			let season = self.dataSource.seasons[indexPath.item]
-			return season.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			return self.seasons[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .cast:
-			let cast = self.dataSource.cast[indexPath.item]
-			return cast.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			return self.cast[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .moreByStudio:
-			let show = self.dataSource.studioShows[indexPath.item]
-			return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			return self.studioShows[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .relatedShows:
-			let show = self.dataSource.relatedShows[indexPath.item].show
-			return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			return self.relatedShows[indexPath.item].show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		default: break
 		}
 

@@ -8,35 +8,31 @@
 
 import UIKit
 import KurozoraKit
+import Alamofire
 
 class StudioDetailsCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var studioID: Int = 0
+	var studioIdentity: StudioIdentity? = nil
 	var studio: Studio! {
 		didSet {
-			self.title = studio.attributes.name
+			self.title = self.studio.attributes.name
+			self.studioIdentity = StudioIdentity(id: self.studio.id)
 
-			studio.relationships?.shows?.data.forEachInParallel { [weak self] show in
-				guard let self = self else { return }
-				self.fetchDetails(for: show.id)
-			}
+			self._prefersActivityIndicatorHidden = true
+
+			#if DEBUG
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.endRefreshing()
+			#endif
+			#endif
 		}
 	}
-	var shows: [Show] = [] {
-		didSet {
-			if self.shows.count == self.studio.relationships?.shows?.data.count {
-				_prefersActivityIndicatorHidden = true
+	var shows: [IndexPath: Show] = [:]
+	var showIdentities: [ShowIdentity] = []
 
-				self.collectionView.reloadData()
-
-				#if DEBUG
-				#if !targetEnvironment(macCatalyst)
-				self.refreshControl?.endRefreshing()
-				#endif
-				#endif
-			}
-		}
-	}
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
+	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
@@ -59,6 +55,12 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - View
+	override func viewWillReload() {
+		super.viewWillReload()
+
+		self.handleRefreshControl()
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
@@ -68,39 +70,62 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 		self._prefersRefreshControlDisabled = true
 		#endif
 
-		// Fetch studio details
+		self.configureDataSource()
+
 		DispatchQueue.global(qos: .userInteractive).async {
-			self.fetchStudioDetails()
+			self.fetchDetails()
 		}
 	}
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		self.fetchStudioDetails()
+		self.fetchDetails()
 	}
 
-	/// Fetches the currently viewed studio's details.
-	func fetchStudioDetails() {
-		KService.getDetails(forStudioID: studioID, including: ["shows"]) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let studios):
-				self.studio = studios.first
-			case .failure: break
-			}
+	override func configureEmptyDataView() {
+		emptyBackgroundView.configureImageView(image: R.image.empty.cast()!)
+		emptyBackgroundView.configureLabels(title: "No Details", detail: "This studio doesn't have details yet. Please check back again later.")
+
+		collectionView.backgroundView?.alpha = 0
+	}
+
+	/// Fades in and out the empty data view according to the number of rows.
+	func toggleEmptyDataView() {
+		if self.collectionView.numberOfItems() == 0 {
+			self.collectionView.backgroundView?.animateFadeIn()
+		} else {
+			self.collectionView.backgroundView?.animateFadeOut()
 		}
 	}
 
-	/// Fetches details for the given show id.
-	///
-	/// - Parameter showID: The id used to fetch the show's details.
-	func fetchDetails(for showID: Int) {
-		KService.getDetails(forShowID: showID) { [weak self] result in
+	/// Fetches the currently viewed studio's details.
+	func fetchDetails() {
+		guard let studioIdentity = self.studioIdentity else { return }
+
+		if self.studio == nil {
+			KService.getDetails(forStudio: studioIdentity) { [weak self] result in
+				guard let self = self else { return }
+				switch result {
+				case .success(let studios):
+					self.studio = studios.first
+				case .failure: break
+				}
+			}
+		} else {
+			DispatchQueue.main.async { [weak self] in
+				guard let self = self else { return }
+				self.updateDataSource()
+			}
+		}
+
+		KService.getShows(forStudio: studioIdentity, limit: 10) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
-			case .success(let shows):
-				if let show = shows.first {
-					self.shows.append(show)
+			case .success(let showIdentityResponse):
+				self.showIdentities = showIdentityResponse.data
+
+				DispatchQueue.main.async {
+					self.updateDataSource()
 				}
 			case .failure: break
 			}
@@ -113,11 +138,10 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 		case R.segue.studioDetailsCollectionViewController.showDetailsSegue.identifier:
 			guard let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
-			showDetailCollectionViewController.showID = show.id
+			showDetailCollectionViewController.show = show
 		case R.segue.studioDetailsCollectionViewController.showsListSegue.identifier:
-			if let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController {
-				showsListCollectionViewController.studioID = self.studio.id
-			}
+			guard let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController else { return }
+			showsListCollectionViewController.studioIdentity = self.studioIdentity
 		default: break
 		}
 	}
@@ -125,59 +149,8 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 
 // MARK: - UICollectionViewDataSource
 extension StudioDetailsCollectionViewController {
-	override func numberOfSections(in collectionView: UICollectionView) -> Int {
-		return self.studio != nil ? StudioDetail.Section.allCases.count : 0
-	}
-
-	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		let studioDetailSection = StudioDetail.Section(rawValue: section) ?? .header
-		var itemsPerSection = self.studio != nil ? studioDetailSection.rowCount : 0
-
-		switch studioDetailSection {
-		case .about:
-			if self.studio.attributes.about?.isEmpty ?? true {
-				itemsPerSection = 0
-			}
-		case .shows:
-			if let studioShowsCount = self.studio.relationships?.shows?.data.count {
-				itemsPerSection = studioShowsCount
-			}
-		default: break
-		}
-
-		return itemsPerSection
-	}
-
-	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let studioDetailSection = StudioDetail.Section(rawValue: indexPath.section) ?? .header
-		let reuseIdentifier = studioDetailSection.identifierString(for: indexPath.item)
-		let studioCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-
-		switch studioDetailSection {
-		case .header:
-			(studioCollectionViewCell as? StudioHeaderCollectionViewCell)?.studio = self.studio
-		case .about:
-			let textViewCollectionViewCell = studioCollectionViewCell as? TextViewCollectionViewCell
-			textViewCollectionViewCell?.delegate = self
-			textViewCollectionViewCell?.textViewCollectionViewCellType = .about
-			textViewCollectionViewCell?.textViewContent = self.studio.attributes.about
-		case .information:
-			if let informationCollectionViewCell = studioCollectionViewCell as? InformationCollectionViewCell {
-				informationCollectionViewCell.studioDetailInformation = StudioDetail.Information(rawValue: indexPath.item) ?? .founded
-				informationCollectionViewCell.studio = self.studio
-			}
-		case .shows:
-			if self.shows.count != 0 {
-				(studioCollectionViewCell as? SmallLockupCollectionViewCell)?.configure(using: self.shows[indexPath.item])
-				(studioCollectionViewCell as? SmallLockupCollectionViewCell)?.delegate = self
-			}
-		}
-
-		return studioCollectionViewCell
-	}
-
 	override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-		let studioDetailSection = StudioDetail.Section(rawValue: indexPath.section) ?? .header
+		let studioDetailSection = self.snapshot.sectionIdentifiers[indexPath.section]
 		let titleHeaderCollectionReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
 		titleHeaderCollectionReusableView.delegate = self
 		titleHeaderCollectionReusableView.configure(withTitle: studioDetailSection.stringValue, indexPath: indexPath, segueID: studioDetailSection.segueIdentifier)
@@ -188,7 +161,7 @@ extension StudioDetailsCollectionViewController {
 // MARK: - InformationButtonCollectionViewCellDelegate
 extension StudioDetailsCollectionViewController: InformationButtonCollectionViewCellDelegate {
 	func informationButtonCollectionViewCell(_ cell: InformationButtonCollectionViewCell, didPressButton button: UIButton) {
-		guard cell.studioDetailInformation == .website else { return }
+		guard cell.studioInformation == .website else { return }
 		guard let websiteURL = self.studio.attributes.websiteUrl?.url else { return }
 		UIApplication.shared.kOpen(websiteURL)
 	}
@@ -220,7 +193,7 @@ extension StudioDetailsCollectionViewController: BaseLockupCollectionViewCellDel
 	func chooseStatusButtonPressed(_ sender: UIButton, on cell: BaseLockupCollectionViewCell) {
 		WorkflowController.shared.isSignedIn {
 			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-			let show = self.shows[indexPath.item]
+			guard let show = self.shows[indexPath] else { return }
 
 			let oldLibraryStatus = cell.libraryStatus
 			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: oldLibraryStatus, action: { title, value  in
@@ -275,6 +248,85 @@ extension StudioDetailsCollectionViewController: BaseLockupCollectionViewCellDel
 
 	func reminderButtonPressed(on cell: BaseLockupCollectionViewCell) {
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		self.shows[indexPath.item].toggleReminder()
+		self.shows[indexPath]?.toggleReminder()
+	}
+}
+
+extension StudioDetailsCollectionViewController {
+	enum SectionLayoutKind: Int, CaseIterable {
+		// MARK: - Cases
+		/// Indicates a header section layout type.
+		case header = 0
+
+		/// Indicates an about section layout type.
+		case about
+
+		/// Indicates an information section layout type.
+		case information
+
+		/// Indicates shows section layout type.
+		case shows
+
+		// MARK: - Properties
+		/// The string value of a studio section type.
+		var stringValue: String {
+			switch self {
+			case .header:
+				return Trans.header
+			case .about:
+				return Trans.about
+			case .information:
+				return Trans.information
+			case .shows:
+				return Trans.shows
+			}
+		}
+
+		/// The string value of a studio section type segue identifier.
+		var segueIdentifier: String {
+			switch self {
+			case .header:
+				return ""
+			case .about:
+				return ""
+			case .information:
+				return ""
+			case .shows:
+				return R.segue.studioDetailsCollectionViewController.showsListSegue.identifier
+			}
+		}
+	}
+
+	/// List of available Item Kind types.
+	enum ItemKind: Hashable {
+		// MARK: - Cases
+		/// Indicates the item kind contains a `Studio` object.
+		case studio(_: Studio, id: UUID = UUID())
+
+		/// Indicates the item kind contains a `ShowIdentity` object.
+		case showIdentity(_: ShowIdentity, id: UUID = UUID())
+
+		// MARK: - Functions
+		func hash(into hasher: inout Hasher) {
+			switch self {
+			case .studio(let studio, let id):
+				hasher.combine(studio)
+				hasher.combine(id)
+			case .showIdentity(let showIdentity, let id):
+				hasher.combine(showIdentity)
+				hasher.combine(id)
+			}
+		}
+
+		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
+			switch (lhs, rhs) {
+			case (.studio(let studio1, let id1), .studio(let studio2, let id2)):
+				return studio1.id == studio2.id && id1 == id2
+			case (.showIdentity(let showIdentity1, let id1), .showIdentity(let showIdentity2, let id2)):
+				return showIdentity1.id == showIdentity2.id && id1 == id2
+			default:
+				return false
+			}
+		}
 	}
 }

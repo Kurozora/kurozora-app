@@ -10,18 +10,15 @@ import UIKit
 
 extension CastCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		if indexPath.item == self.cast.count - 20 && self.nextPageURL != nil {
+		if indexPath.item == self.castIdentities.count - 20 && self.nextPageURL != nil {
 			self.fetchCast()
 		}
 	}
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		if let castCollectionViewCell = collectionView.cellForItem(at: indexPath) as? CastCollectionViewCell {
-			return castCollectionViewCell.cast?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-		}
-
-		return nil
+		guard self.cast[indexPath] != nil else { return nil }
+		return self.cast[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {

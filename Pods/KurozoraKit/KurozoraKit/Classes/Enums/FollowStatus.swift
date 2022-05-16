@@ -8,15 +8,13 @@
 
 import Foundation
 
-/**
-	The set of available follow status types.
-
-	```
-	case unfollow = -1
-	case disabled = 0
-	case follow = 1
-	```
-*/
+/// The set of available follow status types.
+///
+/// ```
+/// case unfollow = -1
+/// case disabled = 0
+/// case follow = 1
+/// ```
 public enum FollowStatus: Int, Codable {
 	// MARK: - Cases
 	/// Unfollow another user.
@@ -29,13 +27,11 @@ public enum FollowStatus: Int, Codable {
 	case followed = 1
 
 	// MARK: - Initializers
-	/**
-		Initializes an instance of `FollowStatus` with the given bool value.
-
-		If `nil` is given, then an instance of `.disabled` is initialized.
-
-		- Parameter bool: The boolean value used to initialize an instance of `FollowStatus`.
-	*/
+	/// Initializes an instance of `FollowStatus` with the given bool value.
+	///
+	/// If `nil` is given, then an instance of `.disabled` is initialized.
+	///
+	/// - Parameter bool: The boolean value used to initialize an instance of `FollowStatus`.
 	public init(_ bool: Bool?) {
 		if let bool = bool {
 			self = bool ? .followed : .notFollowed

@@ -6,16 +6,17 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
+import Alamofire
 import TRON
 
 extension KurozoraKit {
-	/**
-		Fetch the list of genres.
-
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
-	public func getGenres(completion completionHandler: @escaping (_ result: Result<[Genre], KKAPIError>) -> Void) {
+	/// Fetch the list of genres.
+	///
+	/// - Parameters:
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
+	@discardableResult
+	public func getGenres(completion completionHandler: @escaping (_ result: Result<[Genre], KKAPIError>) -> Void) -> DataRequest {
 		let genresIndex = KKEndpoint.Shows.Genres.index.endpointValue
 		let request: APIRequest<GenreResponse, KKAPIError> = tron.codable.request(genresIndex)
 
@@ -25,7 +26,7 @@ extension KurozoraKit {
 		}
 
 		request.method = .get
-		request.perform(withSuccess: { genreResponse in
+		return request.perform(withSuccess: { genreResponse in
 			completionHandler(.success(genreResponse.data))
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
@@ -40,15 +41,15 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		Fetch the genre details for the given genre id.
-
-		- Parameter genreID: The id of the genre for which the details should be fetched.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
-	public func getDetails(forGenreID genreID: Int, completion completionHandler: @escaping (_ result: Result<[Genre], KKAPIError>) -> Void) {
-		let genresDetails = KKEndpoint.Shows.Genres.details(genreID).endpointValue
+	/// Fetch the genre details for the given genre identity.
+	///
+	/// - Parameters:
+	///    - genreIdentity: The genre identity object of the genre for which the details should be fetched.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
+	@discardableResult
+	public func getDetails(forGenre genreIdentity: GenreIdentity, completion completionHandler: @escaping (_ result: Result<[Genre], KKAPIError>) -> Void) -> DataRequest {
+		let genresDetails = KKEndpoint.Shows.Genres.details(genreIdentity).endpointValue
 		let request: APIRequest<GenreResponse, KKAPIError> = tron.codable.request(genresDetails)
 
 		request.headers = headers
@@ -57,13 +58,9 @@ extension KurozoraKit {
 		}
 
 		request.method = .get
-		request.perform(withSuccess: { genreResponse in
+		return request.perform(withSuccess: { genreResponse in
 			completionHandler(.success(genreResponse.data))
-		}, failure: { [weak self] error in
-			guard let self = self else { return }
-			if self.services.showAlerts {
-				UIApplication.topViewController?.presentAlertController(title: "Can't Get Genre's Details 😔", message: error.message)
-			}
+		}, failure: { error in
 			print("❌ Received get genre details error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
 			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")

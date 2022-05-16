@@ -5,9 +5,7 @@
 //  Created by Khoren Katklian on 11/10/2018.
 //
 
-/**
-	A root object that stores information about a collection of episodes.
-*/
+/// A root object that stores information about a collection of episodes.
 public struct EpisodeResponse: Codable {
 	// MARK: - Properties
 	/// The data included in the repsonse for an episode object request.

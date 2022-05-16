@@ -8,49 +8,23 @@
 
 import UIKit
 import KurozoraKit
+import Alamofire
 
 class ShowsListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var personID: Int! {
-		didSet {
-			self.fetchShows()
-		}
-	}
-	var characterID: Int! {
-		didSet {
-			self.fetchShows()
-		}
-	}
-	var showID: Int! {
-		didSet {
-			self.fetchShows()
-		}
-	}
-	var studioID: Int! {
-		didSet {
-			self.fetchShows()
-		}
-	}
-	var shows: [Show] = [] {
-		didSet {
-			self.configureDataSource()
-			self._prefersActivityIndicatorHidden = true
-			self.toggleEmptyDataView()
-			#if DEBUG
-			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.endRefreshing()
-			#endif
-			#endif
-		}
-	}
+	var personIdentity: PersonIdentity? = nil
+	var characterIdentity: CharacterIdentity? = nil
+	var showIdentity: ShowIdentity? = nil
+	var studioIdentity: StudioIdentity? = nil
+	var shows: [IndexPath: Show] = [:]
+	var showIdentities: [ShowIdentity] = []
 	var relatedShows: [RelatedShow] = []
-	var showUpcoming: Bool = false {
-		didSet {
-			self.fetchShows()
-		}
-	}
-	var nextPageURL: String?
+	var showUpcoming: Bool = false
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
+	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
+
+	/// The next page url of the pagination.
+	var nextPageURL: String?
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
@@ -88,20 +62,28 @@ class ShowsListCollectionViewController: KCollectionViewController {
 		#else
 		self._prefersRefreshControlDisabled = true
 		#endif
+
+		self.configureDataSource()
+
+		if !self.showIdentities.isEmpty || !self.relatedShows.isEmpty {
+			self.endFetch()
+		} else {
+			self.fetchShows()
+		}
 	}
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
 		self.nextPageURL = nil
 
-		if let showID = self.showID {
-			self.showID = showID
-		} else if let personID = self.personID {
-			self.personID = personID
-		} else if let characterID = self.characterID {
-			self.characterID = characterID
-		} else if let studioID = self.studioID {
-			self.studioID = studioID
+		if let showIdentity = self.showIdentity {
+			self.showIdentity = showIdentity
+		} else if let personIdentity = self.personIdentity {
+			self.personIdentity = personIdentity
+		} else if let characterIdentity = self.characterIdentity {
+			self.characterIdentity = characterIdentity
+		} else if let studioIdentity = self.studioIdentity {
+			self.studioIdentity = studioIdentity
 		}
 	}
 
@@ -121,73 +103,97 @@ class ShowsListCollectionViewController: KCollectionViewController {
 		}
 	}
 
+	func endFetch() {
+		self.updateDataSource()
+		self._prefersActivityIndicatorHidden = true
+		self.toggleEmptyDataView()
+		#if DEBUG
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.endRefreshing()
+		#endif
+		#endif
+	}
+
 	/// Fetches the characters.
 	func fetchShows() {
-		if self.showID != nil {
-			KService.getRelatedShows(forShowID: self.showID, next: self.nextPageURL) { [weak self] result in
+		if self.showIdentity != nil {
+			guard let showIdentity = showIdentity else { return }
+
+			KService.getRelatedShows(forShow: showIdentity, next: self.nextPageURL) { [weak self] result in
 				guard let self = self else { return }
 				switch result {
 				case .success(let relatedShowsResponse):
 					// Reset data if necessary
 					if self.nextPageURL == nil {
 						self.relatedShows = []
-						self.shows = []
+						self.showIdentities = []
 					}
 
 					// Save next page url and append new data
 					self.nextPageURL = relatedShowsResponse.next
 					self.relatedShows.append(contentsOf: relatedShowsResponse.data)
-					self.shows.append(contentsOf: relatedShowsResponse.data.compactMap({ relatedShow -> Show? in
-						return relatedShow.show
-					}))
+
+					self.endFetch()
 				case .failure: break
 				}
 			}
-		} else if self.personID != nil {
-			KService.getShows(forPersonID: self.personID, next: self.nextPageURL) { [weak self] result in
+		} else if self.personIdentity != nil {
+			guard let personIdentity = self.personIdentity else { return }
+
+			KService.getShows(forPerson: personIdentity, next: self.nextPageURL) { [weak self] result in
 				guard let self = self else { return }
 				switch result {
-				case .success(let showResponse):
+				case .success(let showIdentityResponse):
 					// Reset data if necessary
 					if self.nextPageURL == nil {
-						self.shows = []
+						self.showIdentities = []
 					}
 
 					// Save next page url and append new data
-					self.nextPageURL = showResponse.next
-					self.shows.append(contentsOf: showResponse.data)
+					self.nextPageURL = showIdentityResponse.next
+					self.showIdentities.append(contentsOf: showIdentityResponse.data)
+
+					self.endFetch()
 				case .failure: break
 				}
 			}
-		} else if self.characterID != nil {
-			KService.getShows(forCharacterID: self.characterID, next: self.nextPageURL) { [weak self] result in
+		} else if self.characterIdentity != nil {
+			guard let characterIdentity = self.characterIdentity else { return }
+
+			KService.getShows(forCharacter: characterIdentity, next: self.nextPageURL) { [weak self] result in
 				guard let self = self else { return }
 				switch result {
-				case .success(let showResponse):
+				case .success(let showIdentityResponse):
 					// Reset data if necessary
 					if self.nextPageURL == nil {
-						self.shows = []
+						self.showIdentities = []
 					}
 
 					// Save next page url and append new data
-					self.nextPageURL = showResponse.next
-					self.shows.append(contentsOf: showResponse.data)
+					self.nextPageURL = showIdentityResponse.next
+					self.showIdentities.append(contentsOf: showIdentityResponse.data)
+
+					self.endFetch()
 				case .failure: break
 				}
 			}
-		} else if self.studioID != nil {
-			KService.getShows(forStudioID: self.studioID, next: self.nextPageURL) { [weak self] result in
+		} else if self.studioIdentity != nil {
+			guard let studioIdentity = self.studioIdentity else { return }
+
+			KService.getShows(forStudio: studioIdentity, next: self.nextPageURL) { [weak self] result in
 				guard let self = self else { return }
 				switch result {
-				case .success(let showResponse):
+				case .success(let showIdentityResponse):
 					// Reset data if necessary
 					if self.nextPageURL == nil {
-						self.shows = []
+						self.showIdentities = []
 					}
 
 					// Save next page url and append new data
-					self.nextPageURL = showResponse.next
-					self.shows.append(contentsOf: showResponse.data)
+					self.nextPageURL = showIdentityResponse.next
+					self.showIdentities.append(contentsOf: showIdentityResponse.data)
+
+					self.endFetch()
 				case .failure: break
 				}
 			}
@@ -195,15 +201,17 @@ class ShowsListCollectionViewController: KCollectionViewController {
 			KService.getUpcomingShows(next: self.nextPageURL) { [weak self] result in
 				guard let self = self else { return }
 				switch result {
-				case .success(let showResponse):
+				case .success(let showIdentityResponse):
 					// Reset data if necessary
 					if self.nextPageURL == nil {
-						self.shows = []
+						self.showIdentities = []
 					}
 
 					// Save next page url and append new data
-					self.nextPageURL = showResponse.next
-					self.shows.append(contentsOf: showResponse.data)
+					self.nextPageURL = showIdentityResponse.next
+					self.showIdentities.append(contentsOf: showIdentityResponse.data)
+
+					self.endFetch()
 				case .failure: break
 				}
 			}
@@ -216,7 +224,7 @@ class ShowsListCollectionViewController: KCollectionViewController {
 		case R.segue.showsListCollectionViewController.showDetailsSegue.identifier:
 			guard let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
-			showDetailCollectionViewController.showID = show.id
+			showDetailCollectionViewController.show = show
 		default: break
 		}
 	}
@@ -232,22 +240,68 @@ extension ShowsListCollectionViewController {
 	}
 
 	override func configureDataSource() {
-		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: ItemKind) -> UICollectionViewCell? in
-			guard let self = self else { return nil }
-			let cellClass = self.showUpcoming ? UpcomingLockupCollectionViewCell.self : SmallLockupCollectionViewCell.self
-			let baseLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: cellClass, for: indexPath)
-			baseLockupCollectionViewCell.delegate = self
+		let smallLockupCellRegistration = UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.smallLockupCollectionViewCell)) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
 
-			// Populate the cell with our item description
-			switch item {
-			case .show(let show, _):
-				baseLockupCollectionViewCell.configure(using: show)
+			switch itemKind {
+			case .showIdentity(let showIdentity, _):
+				let show = self.fetchShow(at: indexPath)
+				var showDataRequest = self.prefetchingIndexPathOperations[indexPath] ?? smallLockupCollectionViewCell.dataRequest
+
+				if showDataRequest == nil && show == nil {
+					showDataRequest = KService.getDetails(forShow: showIdentity) { [weak self] result in
+						switch result {
+						case .success(let shows):
+							self?.shows[indexPath] = shows.first
+							self?.setItemKindNeedsUpdate(itemKind)
+						case .failure: break
+						}
+					}
+				}
+
+				smallLockupCollectionViewCell.dataRequest = showDataRequest
+				smallLockupCollectionViewCell.delegate = self
+				smallLockupCollectionViewCell.configure(using: show)
 			case .relatedShow(let relatedShow, _):
-				(baseLockupCollectionViewCell as? SmallLockupCollectionViewCell)?.configure(using: relatedShow)
+				smallLockupCollectionViewCell.delegate = self
+				smallLockupCollectionViewCell.configure(using: relatedShow)
+			}
+		}
+
+		let upcomingLockupCellRegistration = UICollectionView.CellRegistration<UpcomingLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.upcomingLockupCollectionViewCell)) { [weak self] upcomingLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .showIdentity(let showIdentity, _):
+				let show = self.fetchShow(at: indexPath)
+				var showDataRequest = self.prefetchingIndexPathOperations[indexPath] ?? upcomingLockupCollectionViewCell.dataRequest
+
+				if showDataRequest == nil && show == nil {
+					showDataRequest = KService.getDetails(forShow: showIdentity) { [weak self] result in
+						switch result {
+						case .success(let shows):
+							self?.shows[indexPath] = shows.first
+							self?.setItemKindNeedsUpdate(itemKind)
+						case .failure: break
+						}
+					}
+				}
+
+				upcomingLockupCollectionViewCell.dataRequest = showDataRequest
+				upcomingLockupCollectionViewCell.delegate = self
+				upcomingLockupCollectionViewCell.configure(using: show)
+			default: break
+			}
+		}
+
+		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, itemKind: ItemKind) -> UICollectionViewCell? in
+			guard let self = self else { return nil }
+
+			if self.showUpcoming {
+				return collectionView.dequeueConfiguredReusableCell(using: upcomingLockupCellRegistration, for: indexPath, item: itemKind)
 			}
 
-			// Return the cell
-			return baseLockupCollectionViewCell
+			return collectionView.dequeueConfiguredReusableCell(using: smallLockupCellRegistration, for: indexPath, item: itemKind)
 		}
 
 		self.updateDataSource()
@@ -259,8 +313,8 @@ extension ShowsListCollectionViewController {
 
 		// Append items
 		if self.relatedShows.isEmpty {
-			let showItems: [ItemKind] = self.shows.map { show in
-				return .show(show)
+			let showItems: [ItemKind] = self.showIdentities.map { showIdentity in
+				return .showIdentity(showIdentity)
 			}
 			snapshot.appendItems(showItems)
 		} else {
@@ -271,6 +325,17 @@ extension ShowsListCollectionViewController {
 		}
 
 		self.dataSource.apply(snapshot)
+	}
+
+	func fetchShow(at indexPath: IndexPath) -> Show? {
+		guard let show = self.shows[indexPath] else { return nil }
+		return show
+	}
+
+	func setItemKindNeedsUpdate(_ itemKind: ItemKind) {
+		var snapshot = self.dataSource.snapshot()
+		snapshot.reconfigureItems([itemKind])
+		self.dataSource.apply(snapshot, animatingDifferences: true)
 	}
 }
 
@@ -301,7 +366,7 @@ extension ShowsListCollectionViewController: BaseLockupCollectionViewCellDelegat
 	func chooseStatusButtonPressed(_ sender: UIButton, on cell: BaseLockupCollectionViewCell) {
 		WorkflowController.shared.isSignedIn {
 			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-			let show = self.shows[indexPath.item]
+			let show = self.shows[indexPath] ?? self.relatedShows[indexPath.item].show
 
 			let oldLibraryStatus = cell.libraryStatus
 			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: oldLibraryStatus, action: { title, value  in
@@ -356,7 +421,7 @@ extension ShowsListCollectionViewController: BaseLockupCollectionViewCellDelegat
 
 	func reminderButtonPressed(on cell: BaseLockupCollectionViewCell) {
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		self.shows[indexPath.item].toggleReminder()
+		(self.shows[indexPath] ?? self.relatedShows[indexPath.item].show).toggleReminder()
 	}
 }
 
@@ -380,7 +445,7 @@ extension ShowsListCollectionViewController {
 	enum ItemKind: Hashable {
 		// MARK: - Cases
 		/// Indicates the item kind contains a Show object.
-		case show(_: Show, id: UUID = UUID())
+		case showIdentity(_: ShowIdentity, id: UUID = UUID())
 
 		/// Indicates the item kind contains a RelatedShow object.
 		case relatedShow(_: RelatedShow, id: UUID = UUID())
@@ -388,8 +453,8 @@ extension ShowsListCollectionViewController {
 		// MARK: - Functions
 		func hash(into hasher: inout Hasher) {
 			switch self {
-			case .show(let show, let id):
-				hasher.combine(show)
+			case .showIdentity(let showIdentity, let id):
+				hasher.combine(showIdentity)
 				hasher.combine(id)
 			case .relatedShow(let relatedShow, let id):
 				hasher.combine(relatedShow)
@@ -399,8 +464,8 @@ extension ShowsListCollectionViewController {
 
 		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
 			switch (lhs, rhs) {
-			case (.show(let show1, let id1), .show(let show2, let id2)):
-				return show1.id == show2.id && id1 == id2
+			case (.showIdentity(let showIdentity1, let id1), .showIdentity(let showIdentity2, let id2)):
+				return showIdentity1.id == showIdentity2.id && id1 == id2
 			case (.relatedShow(let relatedShow1, let id1), .relatedShow(let relatedShow2, let id2)):
 				return relatedShow1.id == relatedShow2.id && id1 == id2
 			default:

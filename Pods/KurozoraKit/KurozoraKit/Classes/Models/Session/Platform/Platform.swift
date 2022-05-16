@@ -5,9 +5,7 @@
 //  Created by Khoren Katklian on 27/04/2020.
 //
 
-/**
-	A root object that stores information about a platform resource.
-*/
+/// A root object that stores information about a platform resource.
 public struct Platform: Codable {
 	// MARK: - Properties
 	/// The type of the resource.

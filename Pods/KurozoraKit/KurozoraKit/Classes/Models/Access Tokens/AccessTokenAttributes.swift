@@ -6,9 +6,7 @@
 //
 
 extension AccessToken {
-	/**
-		A root object that stores information about a single access token, such as the token's ip address, and last validated date.
-	*/
+	/// A root object that stores information about a single access token, such as the token's ip address, and last validated date.
 	public struct Attributes: Codable {
 		// MARK: - Properties
 		/// The ip address form where the access token was created.

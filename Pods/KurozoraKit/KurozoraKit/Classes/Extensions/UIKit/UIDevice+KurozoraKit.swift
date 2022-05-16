@@ -130,11 +130,9 @@ internal extension UIDevice {
 		return mapToDevice(identifier: identifier)
 	}()
 
-	/**
-		The device's operating system name in a common form.
-
-		For example, "Mac OS X" becomes "macOS".
-	*/
+	/// The device's operating system name in a common form.
+	///
+	/// For example, "Mac OS X" becomes "macOS".
 	static let commonSystemName: String = {
 		let systemName = UIDevice.current.systemName
 		switch systemName {

@@ -5,9 +5,7 @@
 //  Created by Khoren Katklian on 27/04/2020.
 //
 
-/**
-	A root object that stores information about a location resource.
-*/
+/// A root object that stores information about a location resource.
 public struct Location: Codable {
 	// MARK: - Properties
 	/// The type of the resource.

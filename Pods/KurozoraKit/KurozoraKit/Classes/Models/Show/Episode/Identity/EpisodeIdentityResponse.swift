@@ -5,9 +5,7 @@
 //  Created by Khoren Katklian on 25/02/2022.
 //
 
-/**
-	A root object that stores information about a collection of episode identities.
-*/
+/// A root object that stores information about a collection of episode identities.
 public struct EpisodeIdentityResponse: Codable {
 	// MARK: - Properties
 	/// The data included in the repsonse for a episode identity object request.

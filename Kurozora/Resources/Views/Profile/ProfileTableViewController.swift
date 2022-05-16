@@ -198,7 +198,8 @@ class ProfileTableViewController: KTableViewController {
 	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
 		super.viewWillTransition(to: size, with: coordinator)
 
-		DispatchQueue.main.async {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
 			self.tableView.updateHeaderViewFrame()
 		}
 	}
@@ -287,7 +288,8 @@ class ProfileTableViewController: KTableViewController {
 			}
 		}
 
-		DispatchQueue.main.async {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
 			#if !targetEnvironment(macCatalyst)
 			self.refreshControl?.endRefreshing()
 			#endif
@@ -296,7 +298,8 @@ class ProfileTableViewController: KTableViewController {
 
 	/// Fetches user detail.
 	private func fetchUserDetails() {
-		DispatchQueue.main.async {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
 			#if !targetEnvironment(macCatalyst)
 			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing profile details...")
 			#endif
@@ -940,7 +943,8 @@ extension ProfileTableViewController: UIAdaptivePresentationControllerDelegate {
 extension ProfileTableViewController: UITextViewDelegate {
 	func textViewDidChange(_ textView: UITextView) {
 		self.editedBioText = textView.text
-		DispatchQueue.main.async {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
 			self.tableView.updateHeaderViewFrame()
 		}
 	}

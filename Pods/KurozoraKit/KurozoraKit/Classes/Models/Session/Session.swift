@@ -5,9 +5,7 @@
 //  Created by Khoren Katklian on 04/08/2020.
 //
 
-/**
-	A root object that stores information about a collection of session.
-*/
+/// A root object that stores information about a collection of session.
 public struct Session: Codable, Hashable {
 	// MARK: - Properties
 	/// The id of the resource.

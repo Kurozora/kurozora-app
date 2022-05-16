@@ -5,9 +5,7 @@
 //  Created by Khoren Katklian on 25/02/2022.
 //
 
-/**
-	A root object that stores information about a show song resource.
-*/
+/// A root object that stores information about a show song resource.
 public class ShowSong: IdentityResource, Hashable {
 	// MARK: - Properties
 	public let id: Int

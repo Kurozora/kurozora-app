@@ -7,9 +7,7 @@
 
 import Foundation
 
-/**
-	The set of available OAuth action types.
-*/
+/// The set of available OAuth action types.
 public enum OAuthAction: String, Codable {
 	// MARK: - Cases
 	/// The next action should be to sign in.

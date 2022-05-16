@@ -44,6 +44,7 @@ extension Episode {
 //		let rateAction = UIAction(title: "Rate", image: UIImage(systemName: "star.circle")) { [weak self] _ in
 //			// TODO: - Implement rate episode feature.
 //			guard let self = self else { return }
+//			self.rate(using: 1.0)
 //		}
 //		menuElements.append(rateAction)
 
@@ -62,7 +63,9 @@ extension Episode {
 	///
 	/// - Parameter userInfo: A dictionary that contains information related to the notification.
 	func updateWatchStatus(userInfo: [AnyHashable: Any]?) {
-		KService.updateEpisodeWatchStatus(self.id) { [weak self] result in
+		let episodeIdentity = EpisodeIdentity(id: self.id)
+
+		KService.updateEpisodeWatchStatus(episodeIdentity) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
 			case .success(let watchStatus):
@@ -105,6 +108,29 @@ extension Episode {
 
 		if (viewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
 			viewController?.present(activityViewController, animated: true, completion: nil)
+		}
+	}
+
+	/// Rate the show with the given rating.
+	///
+	/// - Parameter rating: The rating to be saved when the show has been rated by the user.
+	func rate(using rating: Double) {
+		let episodeIdentity = EpisodeIdentity(id: self.id)
+		KService.rateEpisode(episodeIdentity, with: rating, description: nil) { [weak self] result in
+			guard let self = self else { return }
+			switch result {
+			case .success:
+					// Update current rating for the user.
+				self.attributes.givenRating = rating
+
+					// Show a success alert thanking the user for rating.
+				let alertController = UIApplication.topViewController?.presentAlertController(title: "Rating Submitted", message: "Thank you for rating.")
+
+				DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+					alertController?.dismiss(animated: true, completion: nil)
+				}
+			case .failure: break
+			}
 		}
 	}
 }

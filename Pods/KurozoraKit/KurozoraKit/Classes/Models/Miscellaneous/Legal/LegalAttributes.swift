@@ -6,9 +6,7 @@
 //
 
 extension Legal {
-	/**
-		A root object that stores information about a single legal resource, such as the legal text.
-	*/
+	/// A root object that stores information about a single legal resource, such as the legal text.
 	public struct Attributes: Codable {
 		// MARK: - Properties
 		/// The text of the legal resource.

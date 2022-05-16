@@ -7,9 +7,7 @@
 
 import TRON
 
-/**
-	An immutable object that stores information about a single failed request, such as the error message.
-*/
+/// An immutable object that stores information about a single failed request, such as the error message.
 public class KKAPIError: APIError {
 	// MARK: - Properties
 	/// The errors included in the repsonse.
@@ -19,27 +17,25 @@ public class KKAPIError: APIError {
 	var _message: String?
 
 	// MARK: - Initializers
-	/**
-		Initialize an error with the given `request` url, http `response`, `data` and `error`.
-
-		- Parameter request: A URL load request that is independent of protocol or URL scheme.
-		- Parameter response: The metadata associated with the response to an HTTP protocol URL load request.
-		- Parameter data: A byte buffer in memory.
-		- Parameter error: A type representing an error value that can be thrown.
-	*/
+	/// Initialize an error with the given `request` url, http `response`, `data` and `error`.
+	///
+	/// - Parameters:
+	///    - request: A URL load request that is independent of protocol or URL scheme.
+	///    - response: The metadata associated with the response to an HTTP protocol URL load request.
+	///    - data: A byte buffer in memory.
+	///    - error: A type representing an error value that can be thrown.
 	required public init(request: URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?) {
 		super.init(request: request, response: response, data: data, error: error)
 		self.processData()
 	}
 
-	/**
-		Initialize an error with the given `request` url, http `response`, `fileURL` and `error`.
-
-		- Parameter request: A URL load request that is independent of protocol or URL scheme.
-		- Parameter response: The metadata associated with the response to an HTTP protocol URL load request.
-		- Parameter fileURL: A value that identifies the location of a resource, such as an item on a remote server or the path to a local file.
-		- Parameter error: A type representing an error value that can be thrown.
-	*/
+	/// Initialize an error with the given `request` url, http `response`, `fileURL` and `error`.
+	///
+	/// - Parameters:
+	///    - request: A URL load request that is independent of protocol or URL scheme.
+	///    - response: The metadata associated with the response to an HTTP protocol URL load request.
+	///    - fileURL: A value that identifies the location of a resource, such as an item on a remote server or the path to a local file.
+	///    - error: A type representing an error value that can be thrown.
 	required public init(request: URLRequest?, response: HTTPURLResponse?, fileURL: URL?, error: Error?) {
 		super.init(request: request, response: response, fileURL: fileURL, error: error)
 		self.processData()

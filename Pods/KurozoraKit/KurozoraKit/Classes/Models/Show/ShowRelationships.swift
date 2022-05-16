@@ -6,9 +6,7 @@
 //
 
 extension Show {
-	/**
-		A root object that stores information about show relationships, such as the studios, and badges that belong to it.
-	*/
+	/// A root object that stores information about show relationships, such as the studios, and badges that belong to it.
 	public struct Relationships: Codable {
 		// MARK: - Properties
 		/// The cast belonging to the show.

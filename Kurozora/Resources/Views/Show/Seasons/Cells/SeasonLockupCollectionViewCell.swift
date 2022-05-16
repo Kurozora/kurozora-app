@@ -1,5 +1,5 @@
 //
-//  PosterLockupCollectionViewCell.swift
+//  SeasonLockupCollectionViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 10/10/2018.
@@ -9,7 +9,7 @@
 import UIKit
 import KurozoraKit
 
-class PosterLockupCollectionViewCell: UICollectionViewCell {
+class SeasonLockupCollectionViewCell: KCollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var posterImageView: PosterImageView!
 	@IBOutlet weak var countLabel: KSecondaryLabel!
@@ -26,9 +26,13 @@ class PosterLockupCollectionViewCell: UICollectionViewCell {
 	/// Configure the cell with the season's details.
 	///
 	/// - Parameters:
-	/// 	- season: The `Season` object used to configure the cell.
-	func configure(with season: Season?) {
-		guard let season = season else { return }
+	///	   - season: The `Season` object used to configure the cell.
+	func configure(using season: Season?) {
+		guard let season = season else {
+			self.showSkeleton()
+			return
+		}
+		self.hideSkeleton()
 
 		// Configure poster
 		self.posterImageView.setImage(with: season.attributes.poster?.url ?? "", placeholder: R.image.placeholders.showPoster()!)

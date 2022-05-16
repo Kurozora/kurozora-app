@@ -5,9 +5,7 @@
 //  Created by Khoren Katklian on 09/08/2020.
 //
 
-/**
-	A root object that stores information about a studio resource.
-*/
+/// A root object that stores information about a studio resource.
 public struct Studio: IdentityResource, Hashable {
 	// MARK: - Properties
 	public let id: Int

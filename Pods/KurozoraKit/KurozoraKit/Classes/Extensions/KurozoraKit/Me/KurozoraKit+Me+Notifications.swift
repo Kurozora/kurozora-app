@@ -9,12 +9,11 @@
 import TRON
 
 extension KurozoraKit {
-	/**
-		Fetch the list of notifications for the authenticated user.
-
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Fetch the list of notifications for the authenticated user.
+	///
+	/// - Parameters:
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func getNotifications(completion completionHandler: @escaping (_ result: Result<[UserNotification], KKAPIError>) -> Void) {
 		let meNotificationsIndex = KKEndpoint.Me.Notifications.index.endpointValue
 		let request: APIRequest<UserNotificationResponse, KKAPIError> = tron.codable.request(meNotificationsIndex)
@@ -38,13 +37,12 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		Fetch the notification details for the given notification id.
-
-		- Parameter notificationID: The id of the notification for which the details should be fetched.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Fetch the notification details for the given notification id.
+	///
+	/// - Parameters:
+	///    - notificationID: The id of the notification for which the details should be fetched.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func getDetails(forNotificationID notificationID: String, completion completionHandler: @escaping (_ result: Result<[UserNotification], KKAPIError>) -> Void) {
 		let notificationsDetail = KKEndpoint.Me.Notifications.details(notificationID).endpointValue
 		let request: APIRequest<UserNotificationResponse, KKAPIError> = tron.codable.request(notificationsDetail)
@@ -65,14 +63,13 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		Update the read status for the given notification id.
-
-		- Parameter notificationID: The id of the notification to be updated. Accepts array of id's or `all`.
-		- Parameter readStatus: The `ReadStatus` value the specified notification should be updated with.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Update the read status for the given notification id.
+	///
+	/// - Parameters:
+	///    - notificationID: The id of the notification to be updated. Accepts array of id's or `all`.
+	///    - readStatus: The `ReadStatus` value the specified notification should be updated with.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func updateNotification(_ notificationID: String, withReadStatus readStatus: ReadStatus, completion completionHandler: @escaping (_ result: Result<ReadStatus, KKAPIError>) -> Void) {
 		let neNotificationsUpdate = KKEndpoint.Me.Notifications.update.endpointValue
 		let request: APIRequest<UserNotificationUpdateResponse, KKAPIError> = tron.codable.request(neNotificationsUpdate)
@@ -99,13 +96,12 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		Delete the notification for the given notification id.
-
-		- Parameter notificationID: The id of the notification to be deleted.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Delete the notification for the given notification id.
+	///
+	/// - Parameters:
+	///    - notificationID: The id of the notification to be deleted.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func deleteNotification(_ notificationID: String, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) {
 		let meNotificationsDelete = KKEndpoint.Me.Notifications.delete(notificationID).endpointValue
 		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(meNotificationsDelete)

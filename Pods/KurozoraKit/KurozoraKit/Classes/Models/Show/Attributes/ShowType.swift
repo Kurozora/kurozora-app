@@ -7,9 +7,7 @@
 
 import Foundation
 
-/**
-	A root object that stores information about a show type resource.
-*/
+/// A root object that stores information about a show type resource.
 public struct ShowType: Codable, Hashable {
 	// MARK: - Properties
 	/// The name of the show type.

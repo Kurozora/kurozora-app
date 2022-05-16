@@ -6,9 +6,7 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-/**
-	A root object that stores information about an app theme resource.
-*/
+/// A root object that stores information about an app theme resource.
 public struct AppTheme: IdentityResource, Hashable {
 	// MARK: - Properties
 	public let id: Int

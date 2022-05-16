@@ -6,9 +6,7 @@
 //
 
 extension Character {
-	/**
-		A root object that stores information about a single character, such as the character's name, blood type, and hight.
-	*/
+	/// A root object that stores information about a single character, such as the character's name, blood type, and hight.
 	public struct Attributes: Codable {
 		// MARK: - Properties
 		/// The slug of the character.

@@ -16,7 +16,7 @@ protocol MusicLockupCollectionViewCellDelegate: AnyObject {
 	func showButtonPressed(_ sender: UIButton, indexPath: IndexPath)
 }
 
-class MusicLockupCollectionViewCell: UICollectionViewCell {
+class MusicLockupCollectionViewCell: KCollectionViewCell {
 	// MARK: - IBOutlets
 	/// The primary lable of the cell.
 	@IBOutlet weak var primaryLabel: UILabel!
@@ -57,8 +57,11 @@ class MusicLockupCollectionViewCell: UICollectionViewCell {
 	/// - Parameter showEpisodes: Whether to show which episodes this song played in.
 	/// - Parameter showShow: Whether to show which show this song belongs to.
 	func configure(using showSong: ShowSong?, at indexPath: IndexPath, showEpisodes: Bool = true, showShow: Bool = false) {
-		guard let showSong = showSong else { return }
-
+		guard let showSong = showSong else {
+			self.showSkeleton()
+			return
+		}
+		self.hideSkeleton()
 		self.indexPath = indexPath
 
 		// Configure title
@@ -82,37 +85,73 @@ class MusicLockupCollectionViewCell: UICollectionViewCell {
 
 		// Configure play button
 		self.playButton.isHidden = true
-		self.playButton.roundCorners(.allCorners, radius: self.playButton.height / 2)
+		self.playButton.cornerRadius = self.playButton.height / 2
 		self.playButton.addBlurEffect()
 
 		if let appleMusicID = showSong.song.attributes.amID {
-			if var urlRequest = URLRequest(urlString: "https://api.music.apple.com/v1/catalog/jp/songs/\(appleMusicID)") {
-				urlRequest.httpMethod = "GET"
-				urlRequest.addValue("Bearer \(Services.appleMusicDeveloperToken)", forHTTPHeaderField: "Authorization")
-
-				URLSession.shared.dataTask(with: urlRequest) { [weak self] data, _, error in
-					guard let self = self else { return }
-					guard error == nil else { return }
-					var song: MusicKit.Song?
-
-					if let data = data,
-					   let songJson = try? JSON(data: data) {
-						do {
-							let songJsonString = songJson["data"][0]
-							let songJsonData = try songJsonString.rawData()
-							song = MusicKit.Song(from: songJsonData)
-							self.updateArtwork(using: song)
-						} catch {
-							self.resetArtwork()
-						}
-					}
-
-					self.updateArtwork(using: song)
-				}.resume()
+			switch MusicAuthorization.currentStatus {
+			case .authorized:
+				self.authorizedMusicRequest(for: appleMusicID)
+//			case .denied, .restricted, .notDetermined:
+			default:
+				self.unauthorizedMusicrequest(for: appleMusicID)
 			}
 		} else {
 			self.resetArtwork()
 		}
+	}
+
+	/// Sends a request to Apple Music when the user authorized the app to use MusicKit.
+	///
+	/// - Parameters:
+	///    - appleMusicID: The id of the music for which the data should be fetched.
+	func authorizedMusicRequest(for appleMusicID: Int) {
+		Task { [weak self] in
+			guard let self = self else { return }
+			guard let urlRequest = URLRequest(urlString: "https://api.music.apple.com/v1/catalog/us/songs/\(appleMusicID)") else { return }
+			let musicDataRequest = MusicDataRequest(urlRequest: urlRequest)
+			let response = try? await musicDataRequest.response()
+			self.handleMusicResponseData(response?.data)
+		}
+	}
+
+	/// Sends a request to Apple Music when the user hasn't authorized the app to use MusicKit.
+	///
+	/// - Parameters:
+	///    - appleMusicID: The id of the music for which the data should be fetched.
+	func unauthorizedMusicrequest(for appleMusicID: Int) {
+		if var urlRequest = URLRequest(urlString: "https://api.music.apple.com/v1/catalog/us/songs/\(appleMusicID)") {
+			urlRequest.httpMethod = "GET"
+			urlRequest.addValue("Bearer \(Services.appleMusicDeveloperToken)", forHTTPHeaderField: "Authorization")
+
+			URLSession.shared.dataTask(with: urlRequest) { [weak self] data, _, error in
+				guard let self = self else { return }
+				guard error == nil else { return }
+				self.handleMusicResponseData(data)
+			}.resume()
+		}
+	}
+
+	/// Handles the data received from the music request.
+	///
+	/// - Parameters:
+	///    - data: The object containing the data of the music request.
+	func handleMusicResponseData(_ data: Data?) {
+		var song: MusicKit.Song?
+
+		if let data = data,
+		   let songJson = try? JSON(data: data) {
+			do {
+				let songJsonString = songJson["data"][0]
+				let songJsonData = try songJsonString.rawData()
+				song = MusicKit.Song(from: songJsonData)
+				self.updateArtwork(using: song)
+			} catch {
+				self.resetArtwork()
+			}
+		}
+
+		self.updateArtwork(using: song)
 	}
 
 	/// Updates the artwork using the given song.
@@ -126,17 +165,20 @@ class MusicLockupCollectionViewCell: UICollectionViewCell {
 			return
 		}
 		guard let artworkURL = song.artwork?.url(width: 320, height: 320)?.absoluteString else { return }
-		DispatchQueue.main.async {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
 			self.playButton.isHidden = false
 			self.albumImageView?.backgroundColor = song.artwork?.backgroundColor?.uiColor
 			self.albumImageView?.setImage(with: artworkURL, placeholder: #imageLiteral(resourceName: "Placeholders/Music Album"))
 		}
 	}
 
+	/// Resets the music artwork to its initial state.
 	private func resetArtwork() {
 		self.song = nil
 
-		DispatchQueue.main.async {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
 			self.playButton.isHidden = true
 			self.albumImageView?.backgroundColor = .clear
 			self.albumImageView?.image = #imageLiteral(resourceName: "Placeholders/Music Album")

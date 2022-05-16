@@ -6,9 +6,7 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-/**
-	A root object that stores information about a collection of user follow.
-*/
+/// A root object that stores information about a collection of user follow.
 public struct UserFollow: Codable {
 	// MARK: - Properties
 	/// The data included in the repsonse for a user object request.

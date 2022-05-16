@@ -5,9 +5,7 @@
 //  Created by Khoren Katklian on 29/01/2022.
 //
 
-/**
-	List of available explore category type types.
-*/
+/// List of available explore category type types.
 public enum ExploreCategoryType: String, Codable {
 	// MARK: - Cases
 	/// Indicates that the explore category is of the `mostPopularShows` type.

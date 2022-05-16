@@ -6,9 +6,7 @@
 //
 
 extension Language {
-	/**
-		A root object that stores information about a single language, such as the language's name, and code.
-	*/
+	/// A root object that stores information about a single language, such as the language's name, and code.
 	public struct Attributes: Codable {
 		// MARK: - Properties
 		/// The name of the language.

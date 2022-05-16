@@ -6,9 +6,7 @@
 //
 
 extension Song {
-	/**
-		A root object that stores information about a single song, such as the song's title, artist, and video url.
-	*/
+	/// A root object that stores information about a single song, such as the song's title, artist, and video url.
 	public struct Attributes: Codable {
 		// MARK: - Properties
 		/// The Apple Music id of the song.

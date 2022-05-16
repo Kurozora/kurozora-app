@@ -10,26 +10,24 @@ import UIKit
 
 extension PersonDetailsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		guard let personDetailSection = PersonDetail.Section(rawValue: indexPath.section) else { return }
-		switch personDetailSection {
+		switch self.snapshot.sectionIdentifiers[indexPath.section] {
 		case .shows:
-			let show = self.shows[indexPath.item]
-			performSegue(withIdentifier: R.segue.personDetailsCollectionViewController.showDetailsSegue, sender: show)
+			let show = self.shows[indexPath]
+			self.performSegue(withIdentifier: R.segue.personDetailsCollectionViewController.showDetailsSegue, sender: show)
 		case .characters:
-			let character = self.characters[indexPath.item]
-			performSegue(withIdentifier: R.segue.personDetailsCollectionViewController.characterDetailsSegue, sender: character)
+			let character = self.characters[indexPath]
+			self.performSegue(withIdentifier: R.segue.personDetailsCollectionViewController.characterDetailsSegue, sender: character)
 		default: break
 		}
 	}
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		guard let personDetailSection = PersonDetail.Section(rawValue: indexPath.section) else { return nil }
-		switch personDetailSection {
+		switch self.snapshot.sectionIdentifiers[indexPath.section] {
 		case .shows:
-			return self.shows[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			return self.shows[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .characters:
-			return self.characters[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			return self.characters[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		default: break
 		}
 

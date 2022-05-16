@@ -9,12 +9,11 @@ import TRON
 import UIKit
 
 extension KurozoraKit {
-	/**
-		Fetches the authenticated user's profile details.
-
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Fetches the authenticated user's profile details.
+	///
+	/// - Parameters:
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func getProfileDetails(completion completionHandler: @escaping (_ result: Result<[User], KKAPIError>) -> Void) {
 		let meProfile = KKEndpoint.Me.profile.endpointValue
 		let request: APIRequest<UserResponse, KKAPIError> = tron.codable.request(meProfile)
@@ -26,6 +25,7 @@ extension KurozoraKit {
 		request.perform(withSuccess: { userResponse in
 			User.current = userResponse.data.first
 			completionHandler(.success(userResponse.data))
+//			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {
@@ -39,18 +39,16 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		Updates the authenticated user's profile information.
-
-		Send `nil` if an infomration shouldn't be updated, otherwise send an empty instance to unset an information.
-
-		- Parameter biography: The user's new biography.
-		- Parameter profileImage: The user's new profile image.
-		- Parameter bannerImage: The user's new profile image.
-		- Parameter username: The user's new username.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Updates the authenticated user's profile information.
+	///
+	/// Send `nil` if an infomration shouldn't be updated, otherwise send an empty instance to unset an information.
+	/// - Parameters:
+	///    - biography: The user's new biography.
+	///    - profileImage: The user's new profile image.
+	///    - bannerImage: The user's new profile image.
+	///    - username: The user's new username.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func updateInformation(biography: String? = nil, profileImage: UIImage? = nil, bannerImage: UIImage? = nil, username: String? = nil, completion completionHandler: @escaping (_ result: Result<UserUpdate, KKAPIError>) -> Void) {
 		let usersProfile = KKEndpoint.Me.update.endpointValue
 		let request: UploadAPIRequest<UserUpdateResponse, KKAPIError> = tron.codable.uploadMultipart(usersProfile) { formData in
@@ -107,15 +105,14 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		Fetch the followers or following list for the authenticated user.
-
-		- Parameter followList: The follow list value indicating whather to fetch the followers or following list.
-		- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
-		- Parameter limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Fetch the followers or following list for the authenticated user.
+	///
+	/// - Parameters:
+	///    - followList: The follow list value indicating whather to fetch the followers or following list.
+	///    - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func getFollowList(_ followList: FollowList, next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<UserFollow, KKAPIError>) -> Void) {
 		let meFollowersOrFollowing = next ?? (followList == .followers ? KKEndpoint.Me.followers.endpointValue : KKEndpoint.Me.following.endpointValue)
 		let request: APIRequest<UserFollow, KKAPIError> = tron.codable.request(meFollowersOrFollowing).buildURL(.relativeToBaseURL)

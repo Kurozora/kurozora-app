@@ -6,9 +6,7 @@
 //
 
 extension FeedMessage {
-	/**
-		A root object that stores information about a single feed message, such as the message's body, and whether it's a spoiler or NSFW.
-	*/
+	/// A root object that stores information about a single feed message, such as the message's body, and whether it's a spoiler or NSFW.
 	public struct Attributes: Codable {
 		// MARK: - Properties
 		/// The body of the feed message.
@@ -43,11 +41,9 @@ extension FeedMessage {
 // MARK: - Helpers
 extension FeedMessage.Attributes {
 	// MARK: - Functions
-	/**
-		Updates the message's attribute with the given `FeedMessageUpdate` object.
-
-		- Parameter feedMessageUpdate: The object containing the new attribute values.
-	*/
+	/// Updates the message's attribute with the given `FeedMessageUpdate` object.
+	///
+	/// - Parameter feedMessageUpdate: The object containing the new attribute values.
 	public mutating func update(using feedMessageUpdate: FeedMessageUpdate) {
 		self.body = feedMessageUpdate.body ?? self.body
 		self.isNSFW = feedMessageUpdate.isNSFW ?? self.isNSFW

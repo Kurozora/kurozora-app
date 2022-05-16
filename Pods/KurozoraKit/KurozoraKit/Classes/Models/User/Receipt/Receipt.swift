@@ -5,9 +5,7 @@
 //  Created by Khoren Katklian on 04/10/2020.
 //
 
-/**
-	A root object that stores information about a receipt.
-*/
+/// A root object that stores information about a receipt.
 public struct Receipt: Codable {
 	// MARK: - Properties
 	/// The type of the resource.

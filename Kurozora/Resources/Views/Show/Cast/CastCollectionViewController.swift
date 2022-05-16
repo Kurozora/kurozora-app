@@ -8,11 +8,13 @@
 
 import UIKit
 import KurozoraKit
+import Alamofire
 
 class CastCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var showID: Int = 0
-	var cast: [Cast] = [] {
+	var showIdentity: ShowIdentity? = nil
+	var cast: [IndexPath: Cast] = [:]
+	var castIdentities: [CastIdentity] = [] {
 		didSet {
 			self.updateDataSource()
 			self._prefersActivityIndicatorHidden = true
@@ -24,8 +26,12 @@ class CastCollectionViewController: KCollectionViewController {
 			#endif
 		}
 	}
+	var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, CastIdentity>()
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, CastIdentity>! = nil
+	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
+
+	/// The next page url of the pagination.
 	var nextPageURL: String?
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Cast>! = nil
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
@@ -63,6 +69,11 @@ class CastCollectionViewController: KCollectionViewController {
 		self._prefersRefreshControlDisabled = true
 		#endif
 
+		// Add Refresh Control to Collection View
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the cast.")
+		#endif
+
 		self.configureDataSource()
 
 		// Fetch cast
@@ -73,6 +84,8 @@ class CastCollectionViewController: KCollectionViewController {
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
+		self.nextPageURL = nil
+
 		DispatchQueue.global(qos: .userInteractive).async {
 			self.fetchCast()
 		}
@@ -96,18 +109,42 @@ class CastCollectionViewController: KCollectionViewController {
 
 	/// Fetch cast for the current show.
 	func fetchCast() {
-		KService.getCast(forShowID: self.showID, next: self.nextPageURL) { [weak self] result in
+		guard let showIdentity = self.showIdentity else {
+			DispatchQueue.main.async { [weak self] in
+				guard let self = self else { return }
+				#if !targetEnvironment(macCatalyst)
+				self.refreshControl?.endRefreshing()
+				#endif
+			}
+			return
+		}
+
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing cast...")
+			#endif
+		}
+
+		KService.getCast(forShow: showIdentity, next: self.nextPageURL) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
-			case .success(let castResponse):
+			case .success(let castIdentityResponse):
 				// Reset data if necessary
 				if self.nextPageURL == nil {
-					self.cast = []
+					self.castIdentities = []
 				}
 
 				// Save next page url and append new data
-				self.nextPageURL = castResponse.next
-				self.cast.append(contentsOf: castResponse.data)
+				self.nextPageURL = castIdentityResponse.next
+				self.castIdentities.append(contentsOf: castIdentityResponse.data)
+
+				DispatchQueue.main.async {
+					// Reset refresh controller title
+					#if !targetEnvironment(macCatalyst)
+					self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the cast.")
+					#endif
+				}
 			case .failure: break
 			}
 		}
@@ -115,18 +152,16 @@ class CastCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == R.segue.castCollectionViewController.characterDetailsSegue.identifier {
-			if let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController {
-				if let castCollectionViewCell = sender as? CastCollectionViewCell, let character = castCollectionViewCell.cast.relationships.characters.data.first {
-					characterDetailsCollectionViewController.characterID = character.id
-				}
-			}
-		} else if segue.identifier == R.segue.castCollectionViewController.personDetailsSegue.identifier {
-			if let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController {
-				if let castCollectionViewCell = sender as? CastCollectionViewCell, let person = castCollectionViewCell.cast.relationships.people.data.first {
-					personDetailsCollectionViewController.personID = person.id
-				}
-			}
+		switch segue.identifier {
+		case R.segue.castCollectionViewController.characterDetailsSegue.identifier:
+			guard let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController else { return }
+			guard let character = sender as? Character else { return }
+			characterDetailsCollectionViewController.character = character
+		case R.segue.castCollectionViewController.personDetailsSegue.identifier:
+			guard let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController else { return }
+			guard let person = sender as? Person else { return }
+			personDetailsCollectionViewController.person = person
+		default: break
 		}
 	}
 }
@@ -134,11 +169,19 @@ class CastCollectionViewController: KCollectionViewController {
 // MARK: - CastCollectionViewCellDelegate
 extension CastCollectionViewController: CastCollectionViewCellDelegate {
 	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressPersonButton button: UIButton) {
-		self.performSegue(withIdentifier: R.segue.castCollectionViewController.personDetailsSegue.identifier, sender: cell)
+		guard let indexPath = collectionView.indexPath(for: cell) else { return }
+		guard self.cast[indexPath] != nil else { return }
+
+		let person = self.cast[indexPath]?.relationships.people.data.first
+		self.performSegue(withIdentifier: R.segue.castCollectionViewController.personDetailsSegue.identifier, sender: person)
 	}
 
 	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressCharacterButton button: UIButton) {
-		self.performSegue(withIdentifier: R.segue.castCollectionViewController.characterDetailsSegue.identifier, sender: cell)
+		guard let indexPath = collectionView.indexPath(for: cell) else { return }
+		guard self.cast[indexPath] != nil else { return }
+
+		let character = self.cast[indexPath]?.relationships.characters.data.first
+		self.performSegue(withIdentifier: R.segue.castCollectionViewController.characterDetailsSegue.identifier, sender: character)
 	}
 }
 

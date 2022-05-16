@@ -21,20 +21,6 @@ extension UICollectionViewController: KCollectionViewDelegateLayout {
 		return 0
 	}
 
-	/// Tells your KCollectionViewDelegateLayout the height fraction that should be used to determine the group's height in the specified section.
-	///
-	/// One example of calculating the fractional height is by deviding the fractional height for one column with the number of columns inside of a collection view section.
-	///
-	/// - Parameters:
-	///    - section: An index number identifying a section in collectionView. This index value is 0-based.
-	///    - columnsCount: The number of columns inside of a colelction view section.
-	///    - layoutEnvironment: The layout environment of the specified item.
-	///
-	/// - Returns: The group's height fraction value.
-	func groupHeightFraction(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> CGFloat {
-		return .zero
-	}
-
 	/// Tells your KCollectionViewDelegateLayout the margins to apply to the background decoration in the specified section.
 	///
 	/// If you do not implement this method, the layout uses the default value of `NSDirectionalEdgeInsets.zero` instead. Your implementation of this method can return a fixed set of margin sizes or return different margin sizes for each section.
@@ -90,8 +76,7 @@ extension UICollectionViewController: KCollectionViewDelegateLayout {
 			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
 			let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
-			let heightFraction = self.groupHeightFraction(forSection: section, with: columns, layout: layoutEnvironment)
-			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(heightFraction))
+			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
 			let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
 			layoutGroup.interItemSpacing = .fixed(10.0)
 

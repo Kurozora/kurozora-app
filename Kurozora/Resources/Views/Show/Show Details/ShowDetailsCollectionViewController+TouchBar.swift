@@ -23,7 +23,7 @@ extension ShowDetailsCollectionViewController: NSTouchBarDelegate {
 
 	func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItem.Identifier) -> NSTouchBarItem? {
 		let touchBarItem: NSTouchBarItem?
-		guard let show = self.dataSource.show else { return nil }
+		guard let show = self.show else { return nil }
 
 		switch identifier {
 		case .toggleShowIsFavorite:

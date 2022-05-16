@@ -5,9 +5,7 @@
 //  Created by Khoren Katklian on 25/02/2022.
 //
 
-/**
-	A root object that stores information about a collection of song identities.
-*/
+/// A root object that stores information about a collection of song identities.
 public struct SongIdentityResponse: Codable {
 	// MARK: - Properties
 	/// The data included in the repsonse for a song identity object request.

@@ -73,7 +73,8 @@ class ManageActiveSessionsController: KTableViewController {
 		if UIDevice.isLandscape {
 			self.tableView.tableHeaderView?.frame.size.height = self.view.frame.height / 3
 		} else {
-			DispatchQueue.main.async {
+			DispatchQueue.main.async { [weak self] in
+				guard let self = self else { return }
 				self.tableView.tableHeaderView?.frame.size.height = self.view.frame.height / 3
 			}
 		}
@@ -83,7 +84,8 @@ class ManageActiveSessionsController: KTableViewController {
 	/// Fetches sessions for the current user from the server.
 	func fetchSessions() {
 		#if !targetEnvironment(macCatalyst)
-		DispatchQueue.main.async {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
 			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing sessions list...")
 		}
 		#endif

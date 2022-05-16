@@ -5,9 +5,7 @@
 //  Created by Khoren Katklian on 27/04/2020.
 //
 
-/**
-	A root object that stores information about a legal resource.
-*/
+/// A root object that stores information about a legal resource.
 public struct Legal: Codable {
 	// MARK: - Properties
 	/// The type of the legal resource.

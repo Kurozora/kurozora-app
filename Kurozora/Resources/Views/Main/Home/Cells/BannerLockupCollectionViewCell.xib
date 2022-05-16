@@ -10,7 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="BannerLockupCollectionViewCell" id="h2C-39-pyR" customClass="BannerLockupCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
+        <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="h2C-39-pyR" customClass="BannerLockupCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="1922" height="1103"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Fqw-s7-h2w">
@@ -137,7 +137,7 @@
                 <outlet property="separatorView" destination="vyq-ix-c05" id="LxN-d1-Rzd"/>
                 <outlet property="shadowImageView" destination="Vvp-mU-buE" id="q12-Jg-8FR"/>
             </connections>
-            <point key="canvasLocation" x="1259.4202898550725" y="444.30803571428572"/>
+            <point key="canvasLocation" x="1259.25" y="443.5"/>
         </collectionViewCell>
     </objects>
     <resources>

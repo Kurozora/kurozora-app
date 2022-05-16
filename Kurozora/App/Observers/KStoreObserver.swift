@@ -146,7 +146,8 @@ final class KStoreObserver: NSObject {
 
 		// Send notifications of if the user hasn't cancelled the purchase.
 		if (transaction.error as? SKError)?.code != .paymentCancelled {
-			DispatchQueue.main.async {
+			DispatchQueue.main.async { [weak self] in
+				guard let self = self else { return }
 				self.delegate?.storeObserverDidReceiveMessage(message)
 			}
 		}
@@ -161,7 +162,8 @@ final class KStoreObserver: NSObject {
 		restored.append(transaction)
 		print("----- Restore content for \(transaction.payment.productIdentifier).")
 
-		DispatchQueue.main.async {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
 			self.delegate?.storeObserverRestoreDidSucceed()
 		}
 
@@ -214,7 +216,8 @@ extension KStoreObserver: SKPaymentTransactionObserver {
 
 	func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
 		if let error = error as? SKError, error.code != .paymentCancelled {
-			DispatchQueue.main.async {
+			DispatchQueue.main.async { [weak self] in
+				guard let self = self else { return }
 				self.delegate?.storeObserverDidReceiveMessage(error.localizedDescription)
 			}
 		}

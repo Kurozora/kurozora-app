@@ -6,9 +6,7 @@
 //
 
 extension UserNotification {
-	/**
-		A root object that stores information about user notification payload.
-	*/
+	/// A root object that stores information about user notification payload.
 	public struct Payload: Codable {
 		// MARK: - Properties
 		// Session

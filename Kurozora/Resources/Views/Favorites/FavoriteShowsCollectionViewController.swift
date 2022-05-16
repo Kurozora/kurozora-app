@@ -113,7 +113,8 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 
 	/// Fetches the user's favorite list.
 	@objc func fetchFavoritesList() {
-		DispatchQueue.main.async {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
 			#if !targetEnvironment(macCatalyst)
 			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing favorites list...")
 			#endif
@@ -141,10 +142,9 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController {
-			guard let show = sender as? Show else { return }
-			showDetailCollectionViewController.showID = show.id
-		}
+		guard let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
+		guard let show = sender as? Show else { return }
+		showDetailCollectionViewController.show = show
 	}
 }
 

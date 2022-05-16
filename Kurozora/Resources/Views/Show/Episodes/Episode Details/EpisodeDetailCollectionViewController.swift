@@ -210,12 +210,12 @@ extension EpisodeDetailCollectionViewController {
 			return textViewCollectionViewCell
 		case .rating:
 			let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: episodeDetailSection.identifierString, for: indexPath) as! RatingCollectionViewCell
-			ratingCollectionViewCell.episode = self.episode
+			ratingCollectionViewCell.delegate = self
+			ratingCollectionViewCell.configure(using: self.episode)
 			return ratingCollectionViewCell
 		case .information:
 			let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: episodeDetailSection.identifierString, for: indexPath) as! InformationCollectionViewCell
-			informationCollectionViewCell.episodeDetailInformation = EpisodeDetail.Information(rawValue: indexPath.item) ?? .number
-			informationCollectionViewCell.episode = episode
+			informationCollectionViewCell.configure(using: self.episode, for: EpisodeDetail.Information(rawValue: indexPath.item) ?? .number)
 			return informationCollectionViewCell
 		}
 	}
@@ -244,5 +244,14 @@ extension EpisodeDetailCollectionViewController: TextViewCollectionViewCellDeleg
 extension EpisodeDetailCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
 	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPressButton button: UIButton) {
 		self.performSegue(withIdentifier: reusableView.segueID, sender: reusableView.indexPath)
+	}
+}
+
+// MARK: - RatingCollectionViewCellDelegate
+extension EpisodeDetailCollectionViewController: RatingCollectionViewCellDelegate {
+	func rateShow(with rating: Double) { }
+
+	func rateEpisode(with rating: Double) {
+		self.episode.rate(using: rating)
 	}
 }

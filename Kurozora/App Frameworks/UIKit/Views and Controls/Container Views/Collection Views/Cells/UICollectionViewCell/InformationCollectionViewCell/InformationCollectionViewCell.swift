@@ -20,39 +20,6 @@ class InformationCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var footerLabel: KSecondaryLabel!
 	@IBOutlet weak var primaryImageViewHeightConstraint: NSLayoutConstraint?
 
-	// MARK: - Properties
-	var personDetailInformation: PersonDetail.Information = .aliases
-	var characterDetailInformation: CharacterDetail.Information = .debut
-	var episodeDetailInformation: EpisodeDetail.Information = .number
-	var showDetailInformation: ShowDetail.Information = .type
-	var studioDetailInformation: StudioDetail.Information = .founded
-
-	var person: Person! {
-		didSet {
-			configureCellWithPerson()
-		}
-	}
-	var character: Character! {
-		didSet {
-			configureCellWithCharacter()
-		}
-	}
-	var episode: Episode! {
-		didSet {
-			configureCellWithEpisode()
-		}
-	}
-	var show: Show! {
-		didSet {
-			configureCellWithShow()
-		}
-	}
-	var studio: Studio! {
-		didSet {
-			configureCellWithStudio()
-		}
-	}
-
 	// MARK: - Initializers
 	override init(frame: CGRect) {
 		super.init(frame: frame)
@@ -79,85 +46,80 @@ class InformationCollectionViewCell: UICollectionViewCell {
 	}
 
 	/// Configure the cell with the given person details.
-	fileprivate func configureCellWithPerson() {
-		typeImageView.image = self.personDetailInformation.imageValue
-		typeLabel.text = self.personDetailInformation.stringValue
-		headlineLabel.text = self.personDetailInformation.information(from: self.person)
-		primaryLabel.text = self.personDetailInformation.primaryInformation(from: self.person)
-		primaryImageView.image = self.personDetailInformation.primaryImage(from: self.person)
-		secondaryLabel.text = self.personDetailInformation.secondaryInformation(from: self.person)
-		footerLabel.text = self.personDetailInformation.footnote(from: self.person)
+	func configure(using person: Person, for personDetailInformation: PersonInformation) {
+		self.typeImageView.image = personDetailInformation.imageValue
+		self.typeLabel.text = personDetailInformation.stringValue
+		self.headlineLabel.text = personDetailInformation.information(from: person)
+		self.primaryLabel.text = personDetailInformation.primaryInformation(from: person)
+		self.primaryImageView.image = personDetailInformation.primaryImage(from: person)
+		self.secondaryLabel.text = personDetailInformation.secondaryInformation(from: person)
+		self.footerLabel.text = personDetailInformation.footnote(from: person)
 
 		// Configure image view height constraint
-		primaryImageViewHeightConstraint?.isActive = false
-		self.layoutIfNeeded()
+		self.primaryImageViewHeightConstraint?.isActive = false
 	}
 
 	/// Configure the cell with the given character details.
-	fileprivate func configureCellWithCharacter() {
-		typeImageView.image = self.characterDetailInformation.imageValue
-		typeLabel.text = self.characterDetailInformation.stringValue
-		headlineLabel.text = self.characterDetailInformation.information(from: self.character)
-		primaryLabel.text = self.characterDetailInformation.primaryInformation(from: self.character)
-		primaryImageView.image = self.characterDetailInformation.primaryImage(from: self.character)
-		secondaryLabel.text = self.characterDetailInformation.secondaryInformation(from: self.character)
-		footerLabel.text = self.characterDetailInformation.footnote(from: self.character)
+	func configure(using character: Character, for characterDetailInformation: CharacterInformation) {
+		self.typeImageView.image = characterDetailInformation.imageValue
+		self.typeLabel.text = characterDetailInformation.stringValue
+		self.headlineLabel.text = characterDetailInformation.information(from: character)
+		self.primaryLabel.text = characterDetailInformation.primaryInformation(from: character)
+		self.primaryImageView.image = characterDetailInformation.primaryImage(from: character)
+		self.secondaryLabel.text = characterDetailInformation.secondaryInformation(from: character)
+		self.footerLabel.text = characterDetailInformation.footnote(from: character)
 
 		// Configure image view height constraint
-		primaryImageViewHeightConstraint?.isActive = false
-		self.layoutIfNeeded()
+		self.primaryImageViewHeightConstraint?.isActive = false
 	}
 
 	/// Configure the cell with the given episode details.
-	fileprivate func configureCellWithEpisode() {
-		typeImageView.image = self.episodeDetailInformation.imageValue
-		typeLabel.text = self.episodeDetailInformation.stringValue
-		headlineLabel.text = self.episodeDetailInformation.information(from: self.episode)
-		primaryLabel.text = self.episodeDetailInformation.primaryInformation(from: self.episode)
-		primaryImageView.image = self.episodeDetailInformation.primaryImage(from: self.episode)
-		secondaryLabel.text = self.episodeDetailInformation.secondaryInformation(from: self.episode)
-		footerLabel.text = self.episodeDetailInformation.footnote(from: self.episode)
+	func configure(using episode: Episode, for episodeDetailInformation: EpisodeDetail.Information) {
+		self.typeImageView.image = episodeDetailInformation.imageValue
+		self.typeLabel.text = episodeDetailInformation.stringValue
+		self.headlineLabel.text = episodeDetailInformation.information(from: episode)
+		self.primaryLabel.text = episodeDetailInformation.primaryInformation(from: episode)
+		self.primaryImageView.image = episodeDetailInformation.primaryImage(from: episode)
+		self.secondaryLabel.text = episodeDetailInformation.secondaryInformation(from: episode)
+		self.footerLabel.text = episodeDetailInformation.footnote(from: episode)
 
 		// Configure image view height constraint
-		primaryImageViewHeightConstraint?.isActive = false
-		self.layoutIfNeeded()
+		self.primaryImageViewHeightConstraint?.isActive = false
 	}
 
 	/// Configure the cell with the given show details.
-	fileprivate func configureCellWithShow() {
-		typeImageView.image = self.showDetailInformation.imageValue
-		typeLabel.text = self.showDetailInformation.stringValue
-		headlineLabel.text = self.showDetailInformation.information(from: self.show)
-		primaryLabel.text = self.showDetailInformation.primaryInformation(from: self.show)
-		primaryImageView.image = self.showDetailInformation.primaryImage(from: self.show)
-		secondaryLabel.text = self.showDetailInformation.secondaryInformation(from: self.show)
-		footerLabel.text = self.showDetailInformation.footnote(from: self.show)
+	func configure(using show: Show, for showDetailInformation: ShowDetail.Information) {
+		self.typeImageView.image = showDetailInformation.imageValue
+		self.typeLabel.text = showDetailInformation.stringValue
+		self.headlineLabel.text = showDetailInformation.information(from: show)
+		self.primaryLabel.text = showDetailInformation.primaryInformation(from: show)
+		self.primaryImageView.image = showDetailInformation.primaryImage(from: show)
+		self.secondaryLabel.text = showDetailInformation.secondaryInformation(from: show)
+		self.footerLabel.text = showDetailInformation.footnote(from: show)
 
-		switch self.showDetailInformation {
+		switch showDetailInformation {
 		case .airDates:
-			primaryImageViewHeightConstraint?.isActive = primaryImageView.image != nil
-			secondaryLabel.textAlignment = .right
-			secondaryLabel.font = .preferredFont(forTextStyle: .headline)
+			self.primaryImageViewHeightConstraint?.isActive = primaryImageView.image != nil
+			self.secondaryLabel.textAlignment = .right
+			self.secondaryLabel.font = .preferredFont(forTextStyle: .headline)
 		default:
-			primaryImageViewHeightConstraint?.isActive = false
-			secondaryLabel.textAlignment = .natural
-			secondaryLabel.font = .preferredFont(forTextStyle: .body)
+			self.primaryImageViewHeightConstraint?.isActive = false
+			self.secondaryLabel.textAlignment = .natural
+			self.secondaryLabel.font = .preferredFont(forTextStyle: .body)
 		}
-		self.layoutIfNeeded()
 	}
 
 	/// Configure the cell with the given studio details.
-	fileprivate func configureCellWithStudio() {
-		typeImageView.image = self.studioDetailInformation.imageValue
-		typeLabel.text = self.studioDetailInformation.stringValue
-		headlineLabel.text = self.studioDetailInformation.information(from: self.studio)
-		primaryLabel.text = self.studioDetailInformation.primaryInformation(from: self.studio)
-		primaryImageView.image = self.studioDetailInformation.primaryImage(from: self.studio)
-		secondaryLabel.text = self.studioDetailInformation.secondaryInformation(from: self.studio)
-		footerLabel.text = self.studioDetailInformation.footnote(from: self.studio)
+	func configure(using studio: Studio, for studioDetailInformation: StudioInformation) {
+		self.typeImageView.image = studioDetailInformation.imageValue
+		self.typeLabel.text = studioDetailInformation.stringValue
+		self.headlineLabel.text = studioDetailInformation.information(from: studio)
+		self.primaryLabel.text = studioDetailInformation.primaryInformation(from: studio)
+		self.primaryImageView.image = studioDetailInformation.primaryImage(from: studio)
+		self.secondaryLabel.text = studioDetailInformation.secondaryInformation(from: studio)
+		self.footerLabel.text = studioDetailInformation.footnote(from: studio)
 
 		// Configure image view height constraint
-		primaryImageViewHeightConstraint?.isActive = false
-		self.layoutIfNeeded()
+		self.primaryImageViewHeightConstraint?.isActive = false
 	}
 }

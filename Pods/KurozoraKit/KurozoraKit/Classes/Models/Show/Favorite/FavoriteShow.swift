@@ -6,9 +6,7 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
-/**
-	A root object that stores information about a favorite show resource.
-*/
+/// A root object that stores information about a favorite show resource.
 public struct FavoriteShow: Codable {
 	// MARK: - Properties
 	/// Whether the show is favorited.

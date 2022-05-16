@@ -8,13 +8,12 @@
 import TRON
 
 extension KurozoraKit {
-	/**
-		Verify the user's transaction receipt.
-
-		- Parameter receipt: The Base64 encoded receipt data.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Verify the user's transaction receipt.
+	///
+	/// - Parameters:
+	///    - receipt: The Base64 encoded receipt data.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func verifyReceipt(_ receipt: String, completion completionHandler: @escaping (_ result: Result<[Receipt], KKAPIError>) -> Void) {
 		let storeVerify = KKEndpoint.Store.verify.endpointValue
 		let request: APIRequest<ReceiptResponse, KKAPIError> = tron.codable.request(storeVerify)

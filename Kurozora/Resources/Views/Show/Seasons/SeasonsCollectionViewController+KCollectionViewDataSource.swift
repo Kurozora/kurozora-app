@@ -10,24 +10,47 @@ import UIKit
 import KurozoraKit
 
 extension SeasonsCollectionViewController {
-	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
-		return [PosterLockupCollectionViewCell.self]
-	}
-
 	override func configureDataSource() {
-		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Season>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, season: Season) -> UICollectionViewCell? in
-			guard let posterLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.posterLockupCollectionViewCell, for: indexPath) else {
-				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.posterLockupCollectionViewCell.identifier)")
+		let posterCellRegistration = UICollectionView.CellRegistration<SeasonLockupCollectionViewCell, SeasonIdentity>(cellNib: UINib(resource: R.nib.seasonLockupCollectionViewCell)) { [weak self] seasonLockupCollectionViewCell, indexPath, seasonIdentity in
+			guard let self = self else { return }
+			let season = self.fetchSeason(at: indexPath)
+			var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? seasonLockupCollectionViewCell.dataRequest
+
+			if dataRequest == nil && season == nil {
+				dataRequest = KService.getDetails(forSeason: seasonIdentity) { [weak self] result in
+					switch result {
+					case .success(let seasons):
+						self?.seasons[indexPath] = seasons.first
+						self?.setSeasonNeedsUpdate(seasonIdentity)
+					case .failure: break
+					}
+				}
 			}
-			posterLockupCollectionViewCell.configure(with: season)
-			return posterLockupCollectionViewCell
+
+			seasonLockupCollectionViewCell.dataRequest = dataRequest
+			seasonLockupCollectionViewCell.configure(using: season)
+		}
+
+		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, SeasonIdentity>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, seasonIdentity: SeasonIdentity) -> UICollectionViewCell? in
+			return collectionView.dequeueConfiguredReusableCell(using: posterCellRegistration, for: indexPath, item: seasonIdentity)
 		}
 	}
 
 	override func updateDataSource() {
-		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Season>()
+		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, SeasonIdentity>()
 		snapshot.appendSections([.main])
-		snapshot.appendItems(self.seasons)
+		snapshot.appendItems(self.seasonIdentities, toSection: .main)
 		self.dataSource.apply(snapshot)
+	}
+
+	func fetchSeason(at indexPath: IndexPath) -> Season? {
+		guard let season = self.seasons[indexPath] else { return nil }
+		return season
+	}
+
+	func setSeasonNeedsUpdate(_ seasonIdentity: SeasonIdentity) {
+		var snapshot = self.dataSource.snapshot()
+		snapshot.reconfigureItems([seasonIdentity])
+		self.dataSource.apply(snapshot, animatingDifferences: true)
 	}
 }

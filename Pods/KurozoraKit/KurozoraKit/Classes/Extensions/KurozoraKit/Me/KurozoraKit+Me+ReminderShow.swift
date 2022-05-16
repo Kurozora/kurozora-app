@@ -8,14 +8,13 @@
 import TRON
 
 extension KurozoraKit {
-	/**
-		Fetch the list of reminder shows for the authenticated user.
-
-		- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
-		- Parameter limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Fetch the list of reminder shows for the authenticated user.
+	///
+	/// - Parameters:
+	///    - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func getReminderShows(next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<ShowResponse, KKAPIError>) -> Void) {
 		let meReminderShowIndex = next ?? KKEndpoint.Me.ReminderShow.index.endpointValue
 		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(meReminderShowIndex).buildURL(.relativeToBaseURL)
@@ -41,13 +40,12 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		Update the `ReminderStatus` value of a show in the authenticated user's library.
-
-		- Parameter showID: The id of the show whose reminder status should be updated.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Update the `ReminderStatus` value of a show in the authenticated user's library.
+	///
+	/// - Parameters:
+	///    - showID: The id of the show whose reminder status should be updated.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func updateReminderStatus(forShow showID: Int, completion completionHandler: @escaping (_ result: Result<ReminderStatus, KKAPIError>) -> Void) {
 		let meReminderShowUpdate = KKEndpoint.Me.ReminderShow.update.endpointValue
 		let request: APIRequest<ReminderShowResponse, KKAPIError> = tron.codable.request(meReminderShowUpdate)

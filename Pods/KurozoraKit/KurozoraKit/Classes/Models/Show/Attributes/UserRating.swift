@@ -7,9 +7,7 @@
 
 import Foundation
 
-/**
-	A root object that stores information about a show's user rating.
-*/
+/// A root object that stores information about a show's user rating.
 public struct UserRating: Codable {
 	/// The list of ratings per star.
 	public let ratingCountList: [Int]

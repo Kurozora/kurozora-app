@@ -8,27 +8,23 @@
 
 import UIKit
 
-/**
-	The set of available enums for managing the user's library.
-
-	`KKLibrary` offers the [Status](x-source-tag://KKL-Status) enum for managing a show's status as well as populate a library view.
-	It also offers the [SortType](x-source-tag://KKL-SortType) enum for managing the way shows are sorted. Which in turn offers the [Options](x-source-tag://KKL-ST-Options) enum for managing the sorting order.
-*/
+/// The set of available enums for managing the user's library.
+///
+/// `KKLibrary` offers the [Status](x-source-tag://KKL-Status) enum for managing a show's status as well as populate a library view.
+/// It also offers the [SortType](x-source-tag://KKL-SortType) enum for managing the way shows are sorted. Which in turn offers the [Options](x-source-tag://KKL-ST-Options) enum for managing the sorting order.
 public enum KKLibrary {
-	/**
-		The set of available library status types.
-
-		```
-		case none = "None"
-		case watching = "Watching"
-		case planning = "Planning"
-		case completed = "Completed"
-		case onHold = "On-Hold"
-		case dropped = "Dropped"
-		```
-
-		- Tag: KKL-Status
-	*/
+	/// The set of available library status types.
+	///
+	/// ```
+	/// case none = "None"
+	/// case watching = "Watching"
+	/// case planning = "Planning"
+	/// case completed = "Completed"
+	/// case onHold = "On-Hold"
+	/// case dropped = "Dropped"
+	/// ```
+	///
+	/// - Tag: KKL-Status
 	public enum Status: String, Codable {
 		// MARK: - Cases
 		/// The library has no status.
@@ -69,17 +65,15 @@ public enum KKLibrary {
 		}
 	}
 
-	/**
-		The set of available library sorting types.
-
-		```
-		case none = 0
-		case alphabetically = 1
-		...
-		```
-
-		- Tag: KKL-SortType
-	*/
+	/// The set of available library sorting types.
+	///
+	/// ```
+	/// case none = 0
+	/// case alphabetically = 1
+	/// ...
+	/// ```
+	///
+	/// - Tag: KKL-SortType
 	public enum SortType: Int {
 		// MARK: - Cases
 		/// Sorted by no specific type.
@@ -162,18 +156,16 @@ public enum KKLibrary {
 }
 
 extension KKLibrary.SortType {
-	/**
-		The set of available library sort type option types.
-
-		```
-		case none = 0
-		case ascending, descending
-		case newest, oldest
-		case worst, best
-		```
-
-		- Tag: KKL-ST-Options
-	*/
+	/// The set of available library sort type option types.
+	///
+	/// ```
+	/// case none = 0
+	/// case ascending, descending
+	/// case newest, oldest
+	/// case worst, best
+	/// ```
+	///
+	/// - Tag: KKL-ST-Options
 	public enum Options: Int {
 		// MARK: - Cases
 		/// Sorted by no options.

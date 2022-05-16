@@ -5,9 +5,7 @@
 //  Created by Khoren Katklian on 22/12/2018.
 //
 
-/**
-	Information about an error that occurred while processing a request.
-*/
+/// Information about an error that occurred while processing a request.
 public struct KKError: Codable {
 	// MARK: - Properties
 	/// A unique identifier for this occurrence of the error.

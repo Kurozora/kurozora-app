@@ -10,18 +10,21 @@ import UIKit
 
 extension CharactersListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		self.performSegue(withIdentifier: R.segue.charactersListCollectionViewController.characterDetailsSegue, sender: self.characters[indexPath.item])
+		guard self.characters[indexPath] != nil else { return }
+
+		self.performSegue(withIdentifier: R.segue.charactersListCollectionViewController.characterDetailsSegue, sender: self.characters[indexPath])
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		if indexPath.item == self.characters.count - 20 && self.nextPageURL != nil {
+		if indexPath.item == self.characterIdentities.count - 20 && self.nextPageURL != nil {
 			self.fetchCharacters()
 		}
 	}
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		return self.characters[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		guard self.characters[indexPath] != nil else { return nil }
+		return self.characters[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {

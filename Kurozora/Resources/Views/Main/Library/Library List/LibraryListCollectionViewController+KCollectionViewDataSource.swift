@@ -10,10 +10,6 @@ import UIKit
 import KurozoraKit
 
 extension LibraryListCollectionViewController {
-	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
-		return []
-	}
-
 	override func configureDataSource() {
 		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Show>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: Show) -> UICollectionViewCell? in
 			guard let self = self else { return nil }
@@ -21,7 +17,7 @@ extension LibraryListCollectionViewController {
 				libraryBaseCollectionViewCell.show = item
 				return libraryBaseCollectionViewCell
 			} else {
-				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.castCollectionViewCell.identifier)")
+				fatalError("Cannot dequeue reusable cell with identifier \(self.libraryCellStyle.identifierString)")
 			}
 		}
 	}
@@ -29,7 +25,7 @@ extension LibraryListCollectionViewController {
 	override func updateDataSource() {
 		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Show>()
 		snapshot.appendSections([.main])
-		snapshot.appendItems(self.shows)
+		snapshot.appendItems(self.shows, toSection: .main)
 		self.dataSource.apply(snapshot, animatingDifferences: true)
 	}
 }

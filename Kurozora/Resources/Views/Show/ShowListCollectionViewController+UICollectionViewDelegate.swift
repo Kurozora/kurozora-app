@@ -10,18 +10,23 @@ import UIKit
 
 extension ShowsListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		self.performSegue(withIdentifier: R.segue.showsListCollectionViewController.showDetailsSegue, sender: self.shows[indexPath.item])
+		guard self.shows[indexPath] != nil || self.relatedShows.indices.contains(indexPath.item) else { return }
+		let segueIdentifier = R.segue.showsListCollectionViewController.showDetailsSegue
+		self.performSegue(withIdentifier: segueIdentifier, sender: self.shows[indexPath] ?? self.relatedShows[indexPath.item].show)
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		if indexPath.item == self.shows.count - 20 && self.nextPageURL != nil {
+		if (indexPath.item == self.showIdentities.count - 20 ||
+			indexPath.item == self.relatedShows.count - 20) &&
+			self.nextPageURL != nil {
 			self.fetchShows()
 		}
 	}
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		return self.shows[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		guard self.shows[indexPath] != nil else { return nil }
+		return self.shows[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {

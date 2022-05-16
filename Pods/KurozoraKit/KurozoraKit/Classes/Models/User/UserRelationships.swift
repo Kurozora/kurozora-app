@@ -6,9 +6,7 @@
 //
 
 extension User {
-	/**
-		A root object that stores information about user relationships, such as the sessions, and badges that belong to it.
-	*/
+	/// A root object that stores information about user relationships, such as the sessions, and badges that belong to it.
 	public struct Relationships: Codable {
 		// MARK: - Properties
 		/// The access tokens belonging to the user.

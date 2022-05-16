@@ -7,9 +7,7 @@
 
 import Foundation
 
-/**
-	A root object that stores information about an airing status resource.
-*/
+/// A root object that stores information about an airing status resource.
 public struct AiringStatus: Codable, Hashable {
 	// MARK: - Properties
 	/// The name of the airing status.

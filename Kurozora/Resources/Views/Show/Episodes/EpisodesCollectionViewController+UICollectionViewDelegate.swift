@@ -11,7 +11,7 @@ import UIKit
 extension EpisodesCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let collectionViewCell = collectionView.cellForItem(at: indexPath)
-		let segueIdentifier = R.segue.episodesCollectionViewController.episodeDetailSegue.identifier
+		let segueIdentifier = R.segue.episodesCollectionViewController.episodeDetailSegue
 
 		self.performSegue(withIdentifier: segueIdentifier, sender: collectionViewCell)
 	}
@@ -24,6 +24,7 @@ extension EpisodesCollectionViewController {
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+		guard (collectionView.cellForItem(at: indexPath) as? EpisodeLockupCollectionViewCell) != nil else { return nil }
 		return self.episodes[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 	}
 

@@ -12,7 +12,7 @@ extension CharacterDetailsCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
 
-		switch CharacterDetail.Section(rawValue: section) {
+		switch self.snapshot.sectionIdentifiers[section] {
 		case .header, .about:
 			return 1
 		case .shows:
@@ -28,7 +28,7 @@ extension CharacterDetailsCollectionViewController {
 	}
 
 	func heightDimension(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutDimension {
-		switch CharacterDetail.Section(rawValue: section) {
+		switch self.snapshot.sectionIdentifiers[section] {
 		case .header:
 			return .estimated(230)
 		case .about:
@@ -36,13 +36,12 @@ extension CharacterDetailsCollectionViewController {
 		case .information:
 			return .estimated(55)
 		default:
-			let heightFraction = self.groupHeightFraction(forSection: section, with: columnsCount, layout: layoutEnvironment)
-			return .fractionalWidth(heightFraction)
+			return .fractionalWidth(.zero)
 		}
 	}
 
 	override func contentInset(forSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		switch CharacterDetail.Section(rawValue: section) {
+		switch self.snapshot.sectionIdentifiers[section] {
 		case .header:
 			return NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0)
 		case .information:
@@ -56,7 +55,7 @@ extension CharacterDetailsCollectionViewController {
 		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
 			guard self.character != nil else { return nil }
-			guard let characterDetailSection = CharacterDetail.Section(rawValue: section) else { fatalError("character section not supported") }
+			let characterDetailSection = self.snapshot.sectionIdentifiers[section]
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 			var sectionLayout: NSCollectionLayoutSection? = nil
 			var hasSectionHeader = false
@@ -75,16 +74,14 @@ extension CharacterDetailsCollectionViewController {
 				let gridSection = self.gridSection(for: section, layoutEnvironment: layoutEnvironment)
 				sectionLayout = gridSection
 				hasSectionHeader = true
-			case .shows:
-				if self.shows.count != 0 {
-					let smallSectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
-					sectionLayout = smallSectionLayout
+			case .people:
+				if self.personIdentities.count != 0 {
+					sectionLayout = Layouts.peopleSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 					hasSectionHeader = true
 				}
-			case .people:
-				if self.people.count != 0 {
-					let peopleSectionLayout = Layouts.peopleSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
-					sectionLayout = peopleSectionLayout
+			case .shows:
+				if self.showIdentities.count != 0 {
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 					hasSectionHeader = true
 				}
 			}

@@ -8,11 +8,13 @@
 
 import UIKit
 import KurozoraKit
+import Alamofire
 
 class SeasonsCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var showID: Int = 0
-	var seasons: [Season] = [] {
+	var showIdentity: ShowIdentity? = nil
+	var seasons: [IndexPath: Season] = [:]
+	var seasonIdentities: [SeasonIdentity] = [] {
 		didSet {
 			self.updateDataSource()
 			self._prefersActivityIndicatorHidden = true
@@ -24,8 +26,11 @@ class SeasonsCollectionViewController: KCollectionViewController {
 			#endif
 		}
 	}
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, SeasonIdentity>! = nil
+	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
+
+	/// The next page url of the pagination.
 	var nextPageURL: String?
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Season>! = nil
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
@@ -57,8 +62,14 @@ class SeasonsCollectionViewController: KCollectionViewController {
 		self._prefersRefreshControlDisabled = true
 		#endif
 
+		// Add Refresh Control to Collection View
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the seasons.")
+		#endif
+
 		self.configureDataSource()
 
+		// Fetch seasons
 		DispatchQueue.global(qos: .userInteractive).async {
 			self.fetchSeasons()
 		}
@@ -91,20 +102,40 @@ class SeasonsCollectionViewController: KCollectionViewController {
 
 	/// Fetch seasons for the current show.
 	func fetchSeasons() {
-		KService.getSeasons(forShowID: self.showID, next: self.nextPageURL) { [weak self] result in
+		guard let showIdentity = showIdentity else {
+			DispatchQueue.main.async { [weak self] in
+				guard let self = self else { return }
+			#if !targetEnvironment(macCatalyst)
+				self.refreshControl?.endRefreshing()
+			#endif
+			}
+			return
+		}
+
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing seasons...")
+			#endif
+		}
+
+		KService.getSeasons(forShow: showIdentity, next: self.nextPageURL) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
-			case .success(let seasonsResponse):
+			case .success(let seasonIdentityResponse):
 				// Reset data if necessary
 				if self.nextPageURL == nil {
-					self.seasons = []
+					self.seasonIdentities = []
 				}
 
 				// Save next page url and append new data
-				DispatchQueue.main.async {
-					self.nextPageURL = seasonsResponse.next
-					self.seasons.append(contentsOf: seasonsResponse.data)
-				}
+				self.nextPageURL = seasonIdentityResponse.next
+				self.seasonIdentities.append(contentsOf: seasonIdentityResponse.data)
+
+				// Reset refresh controller title
+				#if !targetEnvironment(macCatalyst)
+				self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the seasons.")
+				#endif
 			case .failure: break
 			}
         }
@@ -112,10 +143,13 @@ class SeasonsCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == R.segue.seasonsCollectionViewController.episodeSegue.identifier, let lockupCollectionViewCell = sender as? PosterLockupCollectionViewCell {
-			if let episodesCollectionViewController = segue.destination as? EpisodesCollectionViewController, let indexPath = collectionView.indexPath(for: lockupCollectionViewCell) {
-				episodesCollectionViewController.seasonID = seasons[indexPath.item].id
-			}
+		switch segue.identifier {
+		case R.segue.seasonsCollectionViewController.episodeSegue.identifier:
+			guard let episodesCollectionViewController = segue.destination as? EpisodesCollectionViewController else { return }
+			guard let lockupCollectionViewCell = sender as? SeasonLockupCollectionViewCell else { return }
+			guard let indexPath = collectionView.indexPath(for: lockupCollectionViewCell) else { return }
+			episodesCollectionViewController.seasonID = self.seasonIdentities[indexPath.item].id
+		default: break
 		}
 	}
 }

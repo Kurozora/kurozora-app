@@ -7,15 +7,13 @@
 
 import Foundation
 
-/**
-	The set of available activity status types.
-
-	```
-	case online
-	case seenRecently
-	case offline
-	```
-*/
+/// The set of available activity status types.
+///
+/// ```
+/// case online
+/// case seenRecently
+/// case offline
+/// ```
 public enum ActivityStatus: String, Codable {
 	// MARK: - Cases
 	/// The user is currently online.

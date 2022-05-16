@@ -5,9 +5,7 @@
 //  Created by Khoren Katklian on 28/11/2021.
 //
 
-/**
-	A root object that stores information about a collection of access tokens.
-*/
+/// A root object that stores information about a collection of access tokens.
 public struct AccessToken: IdentityResource, Hashable {
 	// MARK: - Properties
 	public let id: Int

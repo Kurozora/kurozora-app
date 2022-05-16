@@ -20,12 +20,8 @@ extension EpisodesCollectionViewController {
 		return columnCount
 	}
 
-	override func groupHeightFraction(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> CGFloat {
+	func groupHeightFraction(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> CGFloat {
 		return (0.60 / columnsCount.double).cgFloat
-	}
-
-	override func contentInset(forItemInSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
 	}
 
 	override func contentInset(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
@@ -35,8 +31,7 @@ extension EpisodesCollectionViewController {
 	override func createLayout() -> UICollectionViewLayout? {
 		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
-			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-												  heightDimension: .fractionalHeight(1.0))
+			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
 			let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)

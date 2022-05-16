@@ -6,15 +6,13 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
-/**
-	The set of available watch status types.
-
-	```
-	case notWatched = -1
-	case disabled = 0
-	case watched = 1
-	```
-*/
+/// The set of available watch status types.
+///
+/// ```
+/// case notWatched = -1
+/// case disabled = 0
+/// case watched = 1
+/// ```
 public enum WatchStatus: Int, Codable {
 	// MARK: - Cases
 	/// The episode is not watched.
@@ -40,13 +38,11 @@ public enum WatchStatus: Int, Codable {
 	}
 
 	// MARK: - Functions
-	/**
-		Initializes an instance of `WatchStatus` with the given bool value.
-
-		If `nil` is given, then an instance of `.disabled` is initialized.
-
-		- Parameter bool: The boolean value used to initialize an instance of `WatchStatus`.
-	*/
+	/// Initializes an instance of `WatchStatus` with the given bool value.
+	///
+	/// If `nil` is given, then an instance of `.disabled` is initialized.
+	///
+	/// - Parameter bool: The boolean value used to initialize an instance of `WatchStatus`.
 	public init(_ bool: Bool?) {
 		if let bool = bool {
 			self = bool ? .watched : .notWatched

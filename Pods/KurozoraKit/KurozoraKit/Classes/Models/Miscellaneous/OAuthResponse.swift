@@ -5,9 +5,7 @@
 //  Created by Khoren Katklian on 22/08/2020.
 //
 
-/**
-	A root object that stores information about an OAuth sign in object request.
-*/
+/// A root object that stores information about an OAuth sign in object request.
 public struct OAuthResponse: Codable {
 	// MARK: - Properties
 	/// The data included in the repsonse for a sign in object request.

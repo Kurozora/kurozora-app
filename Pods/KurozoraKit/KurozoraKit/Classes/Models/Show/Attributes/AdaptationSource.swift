@@ -7,9 +7,7 @@
 
 import Foundation
 
-/**
-	A root object that stores information about an adaptation source resource.
-*/
+/// A root object that stores information about an adaptation source resource.
 public struct AdaptationSource: Codable, Hashable {
 	// MARK: - Properties
 	/// The name of the adaptation source.

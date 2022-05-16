@@ -140,7 +140,8 @@ class FeedTableViewController: KTableViewController {
 
 	/// Fetch feed posts for the current section.
 	func fetchFeedMessages() {
-		DispatchQueue.main.async {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
 			#if !targetEnvironment(macCatalyst)
 			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing your explore feed...")
 			#endif
@@ -162,7 +163,8 @@ class FeedTableViewController: KTableViewController {
 			}
 		}
 
-		DispatchQueue.main.async {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
 			#if !targetEnvironment(macCatalyst)
 			self.refreshControl?.endRefreshing()
 			#endif
@@ -171,7 +173,8 @@ class FeedTableViewController: KTableViewController {
 
 	/// Enables and disables actions such as buttons and the refresh control according to the user sign in state.
 	private func enableActions() {
-		DispatchQueue.main.async {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
 			if !User.isSignedIn {
 				if let barButtonItem = self.navigationItem.rightBarButtonItems?[1] {
 					self.rightBarButtonItems = [barButtonItem]

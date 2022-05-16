@@ -6,9 +6,7 @@
 //
 
 extension Season {
-	/**
-		A root object that stores information about a single season, such as the season's title, number, and episodes count.
-	*/
+	/// A root object that stores information about a single season, such as the season's title, number, and episodes count.
 	public struct Attributes: Codable {
 		// MARK: - Properties
 		/// The link to a poster of the season.

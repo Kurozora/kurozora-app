@@ -159,4 +159,29 @@ extension Show {
 			}
 		}
 	}
+
+	/// Rate the show with the given rating.
+	///
+	/// - Parameter rating: The rating to be saved when the show has been rated by the user.
+	func rate(using rating: Double) {
+		let showIdentity = ShowIdentity(id: self.id)
+
+		KService.rateShow(showIdentity, with: rating, description: nil) { [weak self] result in
+			guard let self = self else { return }
+
+			switch result {
+			case .success:
+				// Update current rating for the user.
+				self.attributes.givenRating = rating
+
+				// Show a success alert thanking the user for rating.
+				let alertController = UIApplication.topViewController?.presentAlertController(title: "Rating Submitted", message: "Thank you for rating.")
+
+				DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+					alertController?.dismiss(animated: true, completion: nil)
+				}
+			case .failure: break
+			}
+		}
+	}
 }

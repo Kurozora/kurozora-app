@@ -6,9 +6,7 @@
 //
 
 extension UserNotification {
-	/**
-		A root object that stores information about a single user notification, such as the notification's type, read status, and payload.
-	*/
+	/// A root object that stores information about a single user notification, such as the notification's type, read status, and payload.
 	public struct Attributes: Codable {
 		// MARK: - Properties
 		/// The type of the user notification.

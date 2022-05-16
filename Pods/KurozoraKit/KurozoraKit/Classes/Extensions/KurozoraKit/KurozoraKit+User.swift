@@ -9,16 +9,15 @@
 import TRON
 
 extension KurozoraKit {
-	/**
-		Sign up a new account with the given details.
-
-		- Parameter username: The new user's username.
-		- Parameter password: The new user's password.
-		- Parameter emailAddress: The new user's email address.
-		- Parameter profileImage: The new user's profile image.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Sign up a new account with the given details.
+	///
+	/// - Parameters:
+	///    - username: The new user's username.
+	///    - password: The new user's password.
+	///    - emailAddress: The new user's email address.
+	///    - profileImage: The new user's profile image.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func signUp(withUsername username: String, emailAddress: String, password: String, profileImage: UIImage?, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) {
 		let usersSignUp = KKEndpoint.Users.signUp.endpointValue
 		let request: UploadAPIRequest<KKSuccess, KKAPIError> = tron.codable.uploadMultipart(usersSignUp) { (formData) in
@@ -50,16 +49,15 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		Sign in with the given `kurozoraID` and `password`.
-
-		This endpoint is used for signing in a user to their account. If the sign in was successful then a Kurozora authentication token is returned in the success closure.
-
-		- Parameter kurozoraID: The Kurozora id of the user to be signed in.
-		- Parameter password: The password of the user to be signed in.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Sign in with the given `kurozoraID` and `password`.
+	///
+	/// This endpoint is used for signing in a user to their account. If the sign in was successful then a Kurozora authentication token is returned in the success closure.
+	///
+	/// - Parameters:
+	///    - kurozoraID: The Kurozora id of the user to be signed in.
+	///    - password: The password of the user to be signed in.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func signIn(_ kurozoraID: String, _ password: String, completion completionHandler: @escaping (_ result: Result<String, KKAPIError>) -> Void) {
 		let usersSignIn = KKEndpoint.Users.signIn.endpointValue
 		let request: APIRequest<SignInResponse, KKAPIError> = tron.codable.request(usersSignIn)
@@ -93,18 +91,17 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		Sign in or up an account using the details from Sign in with Apple.
-
-		If a new account is created, the response will ask for the user to provide a username.
-
-		If an account exists, the user is signed in and a notification with the `KUserIsSignedInDidChange` name is posted.
-		This notification can be observed to perform UI changes regarding the user's sign in status. For example you can remove buttons the user should not have access to if not signed in.
-
-		- Parameter token: A JSON Web Token (JWT) that securely communicates information about the user to the server.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Sign in or up an account using the details from Sign in with Apple.
+	///
+	/// If a new account is created, the response will ask for the user to provide a username.
+	///
+	/// If an account exists, the user is signed in and a notification with the `KUserIsSignedInDidChange` name is posted.
+	/// This notification can be observed to perform UI changes regarding the user's sign in status. For example you can remove buttons the user should not have access to if not signed in.
+	///
+	/// - Parameters:
+	///    - token: A JSON Web Token (JWT) that securely communicates information about the user to the server.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func signIn(withAppleID token: String, completion completionHandler: @escaping (_ result: Result<OAuthResponse, KKAPIError>) -> Void) {
 		let siwaSignIn = KKEndpoint.Users.siwaSignIn.endpointValue
 		let request: APIRequest<OAuthResponse, KKAPIError> = tron.codable.request(siwaSignIn)
@@ -141,13 +138,12 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		Request a password reset link for the given email address.
-
-		- Parameter emailAddress: The email address to which the reset link should be sent.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Request a password reset link for the given email address.
+	///
+	/// - Parameters:
+	///    - emailAddress: The email address to which the reset link should be sent.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func resetPassword(withEmailAddress emailAddress: String, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) {
 		let usersResetPassword = KKEndpoint.Users.resetPassword.endpointValue
 		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(usersResetPassword)
@@ -172,16 +168,15 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		Fetch the followers or following list for the current user.
-
-		- Parameter userID: The id of the user whose follower or following list should be fetched.
-		- Parameter followList: The follow list value indicating whather to fetch the followers or following list.
-		- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
-		- Parameter limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Fetch the followers or following list for the current user.
+	///
+	/// - Parameters:
+	///    - userID: The id of the user whose follower or following list should be fetched.
+	///    - followList: The follow list value indicating whather to fetch the followers or following list.
+	///    - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func getFollowList(forUserID userID: Int, _ followList: FollowList, next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<UserFollow, KKAPIError>) -> Void) {
 		let usersFollowerOrFollowing = next ?? (followList == .following ? KKEndpoint.Users.following(userID).endpointValue : KKEndpoint.Users.followers(userID).endpointValue)
 		let request: APIRequest<UserFollow, KKAPIError> = tron.codable.request(usersFollowerOrFollowing).buildURL(.relativeToBaseURL)
@@ -209,13 +204,12 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		Follow or unfollow a user with the given user id.
-
-		- Parameter userID: The id of the user to follow/unfollow.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Follow or unfollow a user with the given user id.
+	///
+	/// - Parameters:
+	///    - userID: The id of the user to follow/unfollow.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func updateFollowStatus(forUserID userID: Int, completion completionHandler: @escaping (_ result: Result<FollowUpdate, KKAPIError>) -> Void) {
 		let usersFollow = KKEndpoint.Users.follow(userID).endpointValue
 		let request: APIRequest<FollowUpdateResponse, KKAPIError> = tron.codable.request(usersFollow)
@@ -241,15 +235,14 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		Fetch the favorite shows list for the given user.
-
-		- Parameter userID: The id of the user whose favorite list will be fetched.
-		- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
-		- Parameter limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Fetch the favorite shows list for the given user.
+	///
+	/// - Parameters:
+	///    - userID: The id of the user whose favorite list will be fetched.
+	///    - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func getFavoriteShows(forUserID userID: Int, next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<ShowResponse, KKAPIError>) -> Void) {
 		let usersFavoriteShow = next ?? KKEndpoint.Users.favoriteShow(userID).endpointValue
 		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(usersFavoriteShow).buildURL(.relativeToBaseURL)
@@ -277,13 +270,12 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		Fetch the profile details of the given user id.
-
-		- Parameter userID: The id of the user whose profile details should be fetched.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Fetch the profile details of the given user id.
+	///
+	/// - Parameters:
+	///    - userID: The id of the user whose profile details should be fetched.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func getProfile(forUserID userID: Int, completion completionHandler: @escaping (_ result: Result<[User], KKAPIError>) -> Void) {
 		let usersProfile = KKEndpoint.Users.profile(userID).endpointValue
 		let request: APIRequest<UserResponse, KKAPIError> = tron.codable.request(usersProfile)
@@ -309,14 +301,13 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		Fetch a list of users matching the search query.
-
-		- Parameter username: The search query by which the search list should be fetched.
-		- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
-		- Parameter successHandler: A closure returning a SearchElement array.
-		- Parameter search: The returned SearchElement array.
-	*/
+	/// Fetch a list of users matching the search query.
+	///
+	/// - Parameters:
+	///    - username: The search query by which the search list should be fetched.
+	///    - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+	///    - successHandler: A closure returning a SearchElement array.
+	///    - search: The returned SearchElement array.
 	public func search(forUsername username: String,  next: String?, completion completionHandler: @escaping (_ result: Result<UserResponse, KKAPIError>) -> Void) {
 		let usersSearch = next ?? KKEndpoint.Users.search.endpointValue
 		let request: APIRequest<UserResponse, KKAPIError> = tron.codable.request(usersSearch).buildURL(.relativeToBaseURL)
@@ -343,13 +334,12 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		 Deletes the authenticated user's account.
-
-		 - Parameter password: The authenticated user's password.
-		 - Parameter successHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		 - Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Deletes the authenticated user's account.
+	///
+	/// - Parameters:
+	///    - password: The authenticated user's password.
+	///    - successHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func deleteUser(password: String, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) {
 		let usersSearch = KKEndpoint.Users.delete.endpointValue
 		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(usersSearch)

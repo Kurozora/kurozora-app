@@ -15,7 +15,7 @@ class TextViewCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var moreSynopsisButton: KButton?
 	@IBOutlet weak var moreSynopsisImageView: UIImageView? {
 		didSet {
-			moreSynopsisImageView?.theme_tintColor = KThemePicker.backgroundColor.rawValue
+			self.moreSynopsisImageView?.theme_tintColor = KThemePicker.backgroundColor.rawValue
 		}
 	}
 	@IBOutlet weak var moreButtonView: UIView?
@@ -25,18 +25,18 @@ class TextViewCollectionViewCell: UICollectionViewCell {
 	var textViewCollectionViewCellType: TextViewCollectionViewCellType = .synopsis
 	var textViewContent: String? {
 		didSet {
-			configureCell()
+			self.configureCell()
 		}
 	}
 
 	// MARK: - Functions
 	fileprivate func configureCell() {
 		// Synopsis text
-		textView.textContainer.maximumNumberOfLines = textViewCollectionViewCellType.maximumNumberOfLinesValue
-		textView.textContainer.lineBreakMode = .byWordWrapping
-		textView.text = textViewContent
+		self.textView.textContainer.maximumNumberOfLines = self.textViewCollectionViewCellType.maximumNumberOfLinesValue
+		self.textView.textContainer.lineBreakMode = .byWordWrapping
+		self.textView.text = textViewContent
 
-		textView.layoutManager.delegate = self
+		self.textView.layoutManager.delegate = self
 	}
 
 	// MARK: - IBActions
@@ -49,6 +49,6 @@ class TextViewCollectionViewCell: UICollectionViewCell {
 extension TextViewCollectionViewCell: NSLayoutManagerDelegate {
 	func layoutManager(_ layoutManager: NSLayoutManager, textContainer: NSTextContainer, didChangeGeometryFrom oldSize: CGSize) {
 		// Synopsis background
-		self.moreButtonView?.isHidden = !(textView.layoutManager.numberOfLines > textViewCollectionViewCellType.maximumNumberOfLinesValue)
+		self.moreButtonView?.isHidden = !(self.textView.layoutManager.numberOfLines > self.textViewCollectionViewCellType.maximumNumberOfLinesValue)
 	}
 }

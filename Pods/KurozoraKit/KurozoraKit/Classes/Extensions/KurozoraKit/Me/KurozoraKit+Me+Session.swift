@@ -9,14 +9,13 @@
 import TRON
 
 extension KurozoraKit {
-	/**
-		Fetch the list of sessions for the authenticated user.
-
-		- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
-		- Parameter limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Fetch the list of sessions for the authenticated user.
+	///
+	/// - Parameters:
+	///    - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func getSessions(next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<SessionResponse, KKAPIError>) -> Void) {
 		let meSessionsIndex = next ?? KKEndpoint.Me.Sessions.index.endpointValue
 		let request: APIRequest<SessionResponse, KKAPIError> = tron.codable.request(meSessionsIndex).buildURL(.relativeToBaseURL)
@@ -39,13 +38,12 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		Fetch the session details for the given session id.
-
-		- Parameter sessionID: The id of the session for which the details should be fetched.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Fetch the session details for the given session id.
+	///
+	/// - Parameters:
+	///    - sessionID: The id of the session for which the details should be fetched.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func getDetails(forSessionID sessionID: String, completion completionHandler: @escaping (_ result: Result<[Session], KKAPIError>) -> Void) {
 		let meSessionsDetail = KKEndpoint.Me.Sessions.details(sessionID).endpointValue
 		let request: APIRequest<SessionResponse, KKAPIError> = tron.codable.request(meSessionsDetail)
@@ -66,13 +64,12 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		Delete the specified session ID from the user's active sessions.
-
-		- Parameter sessionID: The session ID to be deleted.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Delete the specified session ID from the user's active sessions.
+	///
+	/// - Parameters:
+	///    - sessionID: The session ID to be deleted.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func deleteSession(_ sessionID: String, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) {
 		let meSessionsDelete = KKEndpoint.Me.Sessions.delete(sessionID).endpointValue
 		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(meSessionsDelete)

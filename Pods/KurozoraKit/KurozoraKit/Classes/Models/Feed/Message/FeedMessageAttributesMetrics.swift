@@ -6,9 +6,7 @@
 //
 
 extension FeedMessage.Attributes {
-	/**
-		A root object that stores information about a single feed message metrics, such as the message's total hearts count, and replies count.
-	*/
+	/// A root object that stores information about a single feed message metrics, such as the message's total hearts count, and replies count.
 	public struct Metrics: Codable {
 		// MARK: - Properties
 		/// The total number of hearts.
