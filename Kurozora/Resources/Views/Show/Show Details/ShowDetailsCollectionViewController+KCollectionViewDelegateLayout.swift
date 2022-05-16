@@ -13,7 +13,7 @@ extension ShowDetailsCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
 
-		switch ShowDetail.Section(rawValue: section) {
+		switch self.snapshot.sectionIdentifiers[section] {
 		case .header, .synopsis, .sosumi:
 			return 1
 		case .badge:
@@ -43,14 +43,11 @@ extension ShowDetailsCollectionViewController {
 		case .moreByStudio, .relatedShows:
 			let columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
 			return columnCount > 0 ? columnCount : 1
-		default:
-			let columnCount = (width / 374).rounded().int
-			return columnCount > 0 ? columnCount : 1
 		}
 	}
 
 	func heightDimension(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutDimension {
-		switch ShowDetail.Section(rawValue: section) {
+		switch self.snapshot.sectionIdentifiers[section] {
 		case .header:
 			return .fractionalHeight(1.0)
 		case .badge:
@@ -64,13 +61,12 @@ extension ShowDetailsCollectionViewController {
 		case .sosumi:
 			return .estimated(50)
 		default:
-			let heightFraction = self.groupHeightFraction(forSection: section, with: columnsCount, layout: layoutEnvironment)
-			return .fractionalWidth(heightFraction)
+			return .fractionalWidth(.zero)
 		}
 	}
 
 	override func contentInset(forSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		switch ShowDetail.Section(rawValue: section) {
+		switch self.snapshot.sectionIdentifiers[section] {
 		case .header:
 			return NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0)
 		case .information:
@@ -85,14 +81,13 @@ extension ShowDetailsCollectionViewController {
 	override func createLayout() -> UICollectionViewLayout? {
 		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
-			guard self.dataSource.show != nil else { return nil }
-			guard let showDetailSection = ShowDetail.Section(rawValue: section) else { fatalError("ShowDetail section not supported") }
+			guard self.show != nil else { return nil }
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 			var sectionLayout: NSCollectionLayoutSection? = nil
 			var hasSectionHeader = false
 			var hasBackgroundDecoration = false
 
-			switch showDetailSection {
+			switch self.snapshot.sectionIdentifiers[section] {
 			case .header:
 				let headerSection = self.headerSection(for: section, layoutEnvironment: layoutEnvironment)
 				sectionLayout = headerSection
@@ -100,7 +95,7 @@ extension ShowDetailsCollectionViewController {
 				let badgeSection = self.badgeSection(for: section, layoutEnvironment: layoutEnvironment)
 				sectionLayout = badgeSection
 			case .synopsis:
-				if let synopsis = self.dataSource.show.attributes.synopsis, !synopsis.isEmpty {
+				if let synopsis = self.show.attributes.synopsis, !synopsis.isEmpty {
 					let fullSection = self.fullSection(for: section, layoutEnvironment: layoutEnvironment)
 					sectionLayout = fullSection
 					hasSectionHeader = true
@@ -114,45 +109,39 @@ extension ShowDetailsCollectionViewController {
 				sectionLayout = gridSection
 				hasSectionHeader = true
 			case .seasons:
-				let seasonsCount = self.dataSource.seasonIdentities.count
-				if seasonsCount != 0 {
+				if !self.seasonIdentities.isEmpty {
 					let seasonsSectionLayout = self.seasonsSection(section, layoutEnvironment: layoutEnvironment)
 					sectionLayout = seasonsSectionLayout
 					hasSectionHeader = true
 				}
 			case .cast:
-				let castCount = self.dataSource.castIdentities.count
-				if castCount != 0 {
+				if !self.castIdentities.isEmpty {
 					let castSectionLayout = self.castSection(section, layoutEnvironment: layoutEnvironment)
 					sectionLayout = castSectionLayout
 					hasSectionHeader = true
 				}
 			case .songs:
-				let showSongsCount = self.dataSource.showSongs.count
-				if showSongsCount != 0 {
+				if !self.showSongs.isEmpty {
 					let musicSectionLayout = Layouts.musicSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 					sectionLayout = musicSectionLayout
 					hasSectionHeader = true
 				}
 			case .moreByStudio:
-				if let studioShowsCount = self.dataSource.studio?.relationships?.shows?.data.count {
-					if studioShowsCount != 0 {
-						let smallSectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
-						sectionLayout = smallSectionLayout
-						hasSectionHeader = true
-						hasBackgroundDecoration = true
-					}
+				if !self.studioShowIdentities.isEmpty {
+					let smallSectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					sectionLayout = smallSectionLayout
+					hasSectionHeader = true
+					hasBackgroundDecoration = true
 				}
 			case .relatedShows:
-				let relatedShowsCount = self.dataSource.relatedShows.count
-				if relatedShowsCount != 0 {
+				if !self.relatedShows.isEmpty {
 					let smallSectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 					sectionLayout = smallSectionLayout
 					hasSectionHeader = true
 					hasBackgroundDecoration = true
 				}
 			case .sosumi:
-				if let copyrightIsEmpty = self.dataSource.show.attributes.copyright?.isEmpty, !copyrightIsEmpty {
+				if let copyrightIsEmpty = self.show.attributes.copyright?.isEmpty, !copyrightIsEmpty {
 					let fullSection = self.fullSection(for: section, layoutEnvironment: layoutEnvironment)
 					sectionLayout = fullSection
 					hasBackgroundDecoration = true

@@ -6,9 +6,7 @@
 //
 
 extension Person {
-	/**
-		A root object that stores information about a single person, such as the person's name, role, and image.
-	*/
+	/// A root object that stores information about a single person, such as the person's name, role, and image.
 	public struct Attributes: Codable {
 		// MARK: - Properties
 		/// The slug of the person.

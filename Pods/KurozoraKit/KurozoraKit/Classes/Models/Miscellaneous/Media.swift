@@ -5,9 +5,7 @@
 //  Created by Khoren Katklian on 10/08/2020.
 //
 
-/**
-	A root object that stores information about a media resource.
-*/
+/// A root object that stores information about a media resource.
 public struct Media: Codable {
 	// MARK: - Properties
 	/// The url of the media.

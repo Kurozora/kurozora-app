@@ -6,9 +6,7 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
-/**
-	An immutable object that stores information about a single successful request, such as the success message.
-*/
+/// An immutable object that stores information about a single successful request, such as the success message.
 public struct KKSuccess: Codable {
 	// MARK: - Properties
 	/// The message of a successful request.

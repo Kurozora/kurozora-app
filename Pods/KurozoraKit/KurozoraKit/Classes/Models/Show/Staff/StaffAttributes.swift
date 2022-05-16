@@ -6,9 +6,7 @@
 //
 
 extension Staff {
-	/**
-		A root object that stores information about a single staff, such as the staff's role.
-	*/
+	/// A root object that stores information about a single staff, such as the staff's role.
 	public struct Attributes: Codable {
 		// MARK: - Properties
 		/// The role of the staff.

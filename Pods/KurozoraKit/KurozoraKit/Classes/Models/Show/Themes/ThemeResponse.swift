@@ -5,9 +5,7 @@
 //  Created by Khoren Katklian on 09/08/2020.
 //
 
-/**
-	A root object that stores information about a collection of themes.
-*/
+/// A root object that stores information about a collection of themes.
 public struct ThemeResponse: Codable {
 	// MARK: - Properties
 	/// The data included in the repsonse for a theme object request.

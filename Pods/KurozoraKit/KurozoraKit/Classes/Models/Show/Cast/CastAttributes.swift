@@ -7,9 +7,7 @@
 
 
 extension Cast {
-	/**
-		A root object that stores information about a single cast, such as the role.
-	*/
+	/// A root object that stores information about a single cast, such as the role.
 	public class Attributes: Codable {
 		// MARK: - Properties
 		/// The object containing the cast role information.

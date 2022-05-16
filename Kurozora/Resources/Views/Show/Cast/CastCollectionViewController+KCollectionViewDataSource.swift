@@ -10,26 +10,48 @@ import UIKit
 import KurozoraKit
 
 extension CastCollectionViewController {
-	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
-		return [CastCollectionViewCell.self]
-	}
-
 	override func configureDataSource() {
-		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Cast>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: Cast) -> UICollectionViewCell? in
-			guard let self = self else { return nil }
-			guard let castCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.castCollectionViewCell, for: indexPath) else {
-				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.castCollectionViewCell.identifier)")
+		let castCellRegistration = UICollectionView.CellRegistration<CastCollectionViewCell, CastIdentity>(cellNib: UINib(resource: R.nib.castCollectionViewCell)) { [weak self] castCollectionViewCell, indexPath, castIdentity in
+			guard let self = self else { return }
+			let cast = self.fetchCast(at: indexPath)
+			var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? castCollectionViewCell.dataRequest
+
+			if dataRequest == nil && cast == nil {
+				dataRequest = KService.getDetails(forCast: castIdentity) { [weak self] result in
+					switch result {
+					case .success(let cast):
+						self?.cast[indexPath] = cast.first
+						self?.setCastNeedsUpdate(castIdentity)
+					case .failure: break
+					}
+				}
 			}
+
+			castCollectionViewCell.dataRequest = dataRequest
 			castCollectionViewCell.delegate = self
-			castCollectionViewCell.cast = item
-			return castCollectionViewCell
+			castCollectionViewCell.configure(using: cast)
+		}
+
+		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, CastIdentity>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, castIdentity: CastIdentity) -> UICollectionViewCell? in
+			return collectionView.dequeueConfiguredReusableCell(using: castCellRegistration, for: indexPath, item: castIdentity)
 		}
 	}
 
 	override func updateDataSource() {
-		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Cast>()
-		snapshot.appendSections([.main])
-		snapshot.appendItems(self.cast)
-		self.dataSource.apply(snapshot)
+		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, CastIdentity>()
+		self.snapshot.appendSections([.main])
+		self.snapshot.appendItems(self.castIdentities, toSection: .main)
+		self.dataSource.apply(self.snapshot)
+	}
+
+	func fetchCast(at indexPath: IndexPath) -> Cast? {
+		guard let cast = self.cast[indexPath] else { return nil }
+		return cast
+	}
+
+	func setCastNeedsUpdate(_ castIdentity: CastIdentity) {
+		var snapshot = self.dataSource.snapshot()
+		snapshot.reconfigureItems([castIdentity])
+		self.dataSource.apply(snapshot, animatingDifferences: true)
 	}
 }

@@ -6,16 +6,17 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
+import Alamofire
 import TRON
 
 extension KurozoraKit {
-	/**
-		Fetch the list of themes.
-
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
-	public func getThemes(completion completionHandler: @escaping (_ result: Result<[Theme], KKAPIError>) -> Void) {
+	/// Fetch the list of themes.
+	///
+	/// - Parameters:
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
+	@discardableResult
+	public func getThemes(completion completionHandler: @escaping (_ result: Result<[Theme], KKAPIError>) -> Void) -> DataRequest {
 		let themesIndex = KKEndpoint.Shows.Themes.index.endpointValue
 		let request: APIRequest<ThemeResponse, KKAPIError> = tron.codable.request(themesIndex)
 
@@ -25,7 +26,7 @@ extension KurozoraKit {
 		}
 
 		request.method = .get
-		request.perform(withSuccess: { themeResponse in
+		return request.perform(withSuccess: { themeResponse in
 			completionHandler(.success(themeResponse.data))
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
@@ -40,15 +41,15 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		Fetch the theme details for the given theme id.
-
-		- Parameter themeID: The id of the theme for which the details should be fetched.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
-	public func getDetails(forThemeID themeID: Int, completion completionHandler: @escaping (_ result: Result<[Theme], KKAPIError>) -> Void) {
-		let themesDetails = KKEndpoint.Shows.Themes.details(themeID).endpointValue
+	/// Fetch the theme details for the given theme identity.
+	///
+	/// - Parameters:
+	///    - themeIdentity: The theme identity object of the theme for which the details should be fetched.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
+	@discardableResult
+	public func getDetails(forTheme themeIdentity: ThemeIdentity, completion completionHandler: @escaping (_ result: Result<[Theme], KKAPIError>) -> Void) -> DataRequest {
+		let themesDetails = KKEndpoint.Shows.Themes.details(themeIdentity).endpointValue
 		let request: APIRequest<ThemeResponse, KKAPIError> = tron.codable.request(themesDetails)
 
 		request.headers = headers
@@ -57,13 +58,9 @@ extension KurozoraKit {
 		}
 
 		request.method = .get
-		request.perform(withSuccess: { themeResponse in
+		return request.perform(withSuccess: { themeResponse in
 			completionHandler(.success(themeResponse.data))
-		}, failure: { [weak self] error in
-			guard let self = self else { return }
-			if self.services.showAlerts {
-				UIApplication.topViewController?.presentAlertController(title: "Can't Get Theme's Details 😔", message: error.message)
-			}
+		}, failure: { error in
 			print("❌ Received get theme details error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
 			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")

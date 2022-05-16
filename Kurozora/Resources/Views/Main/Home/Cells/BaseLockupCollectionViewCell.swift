@@ -14,7 +14,7 @@ protocol BaseLockupCollectionViewCellDelegate: AnyObject {
 	func reminderButtonPressed(on cell: BaseLockupCollectionViewCell)
 }
 
-class BaseLockupCollectionViewCell: UICollectionViewCell {
+class BaseLockupCollectionViewCell: KCollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var primaryLabel: UILabel?
 	@IBOutlet weak var secondaryLabel: UILabel?
@@ -34,7 +34,11 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 	///
 	/// - Parameter show: The `Show` object used to configure the cell.
 	func configure(using show: Show?) {
-		guard let show = show else { return }
+		guard let show = show else {
+			self.showSkeleton()
+			return
+		}
+		self.hideSkeleton()
 		// Configure title
 		self.primaryLabel?.text = show.attributes.title
 

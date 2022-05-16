@@ -131,13 +131,15 @@ class EpisodesCollectionViewController: KCollectionViewController {
 
 	/// Fetches the episodes from the server.
 	func fetchEpisodes() {
-		DispatchQueue.main.async {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
 			#if !targetEnvironment(macCatalyst)
 			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing episodes...")
 			#endif
 		}
 
-		KService.getEpisodes(forSeasonID: self.seasonID, next: self.nextPageURL) { [weak self] result in
+		let seasonIdentity = SeasonIdentity(id: self.seasonID)
+		KService.getEpisodes(forSeasonID: seasonIdentity, next: self.nextPageURL) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
 			case .success(let episodeIdentityResponse):

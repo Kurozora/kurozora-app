@@ -8,14 +8,12 @@
 
 import Foundation
 
-/**
-	The set of available follow list types.
-
-	```
-	case followers = "followers"
-	case following = "following"
-	```
-*/
+/// The set of available follow list types.
+///
+/// ```
+/// case followers = "followers"
+/// case following = "following"
+/// ```
 public enum FollowList: String {
 	// MARK: - Cases
 	/// The user's followers list.

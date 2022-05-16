@@ -6,9 +6,7 @@
 //
 
 extension Cast {
-	/**
-		A root object that stores information about cast relationships, such as the people, and characters that belong to it.
-	*/
+	/// A root object that stores information about cast relationships, such as the people, and characters that belong to it.
 	public struct Relationships: Codable {
 		// MARK: - Properties
 		/// The people belonging to the cast.

@@ -85,7 +85,7 @@
                                     <outlet property="actionButton" destination="hQi-Li-0s1" id="ee8-2e-8as"/>
                                 </connections>
                             </collectionViewCell>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="ActionListExploreCollectionViewCell" id="cs5-kK-m9g" customClass="ActionListExploreCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="ActionLinkExploreCollectionViewCell" id="cs5-kK-m9g" customClass="ActionLinkExploreCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="20" y="54" width="374" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Lxa-tq-PyS">

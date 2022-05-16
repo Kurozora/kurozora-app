@@ -9,12 +9,11 @@
 import TRON
 
 extension KurozoraKit {
-	/**
-		Fetch the list of app themes from AppTheme Store.
-
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Fetch the list of app themes from AppTheme Store.
+	///
+	/// - Parameters:
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func getThemeStore(completion completionHandler: @escaping (_ result: Result<[AppTheme], KKAPIError>) -> Void) {
 		let themeStoreIndex = KKEndpoint.ThemeStore.index.endpointValue
 		let request: APIRequest<AppThemeResponse, KKAPIError> = tron.codable.request(themeStoreIndex)
@@ -40,13 +39,12 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		Fetch the app theme details for the given app theme id.
-
-		- Parameter themeID: The id of the theme for which the details should be fetched.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Fetch the app theme details for the given app theme id.
+	///
+	/// - Parameters:
+	///    - themeID: The id of the theme for which the details should be fetched.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func getDetails(forAppThemeID appThemeID: Int, completion completionHandler: @escaping (_ result: Result<[AppTheme], KKAPIError>) -> Void) {
 		let themeStoreDetails = KKEndpoint.ThemeStore.details(appThemeID).endpointValue
 		let request: APIRequest<AppThemeResponse, KKAPIError> = tron.codable.request(themeStoreDetails)

@@ -6,9 +6,7 @@
 //
 
 extension Show {
-	/**
-		A root object that stores information about a single show, such as the show's title, episode count, and air date.
-	*/
+	/// A root object that stores information about a single show, such as the show's title, episode count, and air date.
 	public struct Attributes: LibraryAttributes {
 		// MARK: - Properties
 		// General

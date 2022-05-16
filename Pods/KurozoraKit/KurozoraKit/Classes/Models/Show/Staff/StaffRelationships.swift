@@ -6,9 +6,7 @@
 //
 
 extension Staff {
-	/**
-		A root object that stores information about staff relationships, such as the people that belong to it.
-	*/
+	/// A root object that stores information about staff relationships, such as the people that belong to it.
 	public struct Relationships: Codable {
 		// MARK: - Properties
 		/// The person who is a part of the staff.

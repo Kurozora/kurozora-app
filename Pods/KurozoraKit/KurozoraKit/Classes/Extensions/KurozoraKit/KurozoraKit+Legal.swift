@@ -9,12 +9,11 @@
 import TRON
 
 extension KurozoraKit {
-	/**
-		Fetch the latest Privacy Policy.
-
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Fetch the latest Privacy Policy.
+	///
+	/// - Parameters:
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func getPrivacyPolicy(completion completionHandler: @escaping (_ result: Result<Legal, KKAPIError>) -> Void) {
 		let legalPrivacyPolicy = KKEndpoint.Legal.privacyPolicy.endpointValue
 		let request: APIRequest<LegalResponse, KKAPIError> = tron.codable.request(legalPrivacyPolicy)
@@ -35,12 +34,11 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		 Fetch the latest Terms of Use.
-
-		 - Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		 - Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	 */
+	///  Fetch the latest Terms of Use.
+	///
+	/// - Parameters:
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func getTermsOfUse(completion completionHandler: @escaping (_ result: Result<Legal, KKAPIError>) -> Void) {
 		let legalTermsOfUse = KKEndpoint.Legal.termsOfUse.endpointValue
 		let request: APIRequest<LegalResponse, KKAPIError> = tron.codable.request(legalTermsOfUse)

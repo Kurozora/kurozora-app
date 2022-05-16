@@ -9,7 +9,7 @@
 import UIKit
 import KurozoraKit
 
-class MediumLockupCollectionViewCell: UICollectionViewCell {
+class MediumLockupCollectionViewCell: KCollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var primaryLabel: KLabel!
 	@IBOutlet weak var backgroundColorView: UIView!
@@ -20,7 +20,11 @@ class MediumLockupCollectionViewCell: UICollectionViewCell {
 	///
 	/// - Parameter genre: The `Genre` object used to configure the cell.
 	func configure(using genre: Genre?) {
-		guard let genre = genre else { return }
+		guard let genre = genre else {
+			self.showSkeleton()
+			return
+		}
+		self.hideSkeleton()
 
 		self.primaryLabel.text = genre.attributes.name
 		self.backgroundColorView.backgroundColor = UIColor(hexString: genre.attributes.color)
@@ -31,7 +35,11 @@ class MediumLockupCollectionViewCell: UICollectionViewCell {
 	///
 	/// - Parameter theme: The `Theme` object used to configure the cell.
 	func configure(using theme: Theme?) {
-		guard let theme = theme else { return }
+		guard let theme = theme else {
+			self.showSkeleton()
+			return
+		}
+		self.hideSkeleton()
 
 		self.primaryLabel.text = theme.attributes.name
 		self.backgroundColorView.backgroundColor = UIColor(hexString: theme.attributes.color)

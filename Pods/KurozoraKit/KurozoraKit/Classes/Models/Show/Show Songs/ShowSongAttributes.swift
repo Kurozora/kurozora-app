@@ -6,9 +6,7 @@
 //
 
 extension ShowSong {
-	/**
-		A root object that stores information about a single show, such as the show song's type, position, and episode debute.
-	*/
+	/// A root object that stores information about a single show, such as the show song's type, position, and episode debute.
 	public struct Attributes: Codable {
 		// MARK: - Properties
 		/// The type of the show.

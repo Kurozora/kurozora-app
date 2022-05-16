@@ -8,15 +8,13 @@
 
 import Foundation
 
-/**
-	The set of available favorite status types.
-
-	```
-	case unfavorite = -1
-	case disabled = 0
-	case favorite = 1
-	```
-*/
+/// The set of available favorite status types.
+///
+/// ```
+/// case unfavorite = -1
+/// case disabled = 0
+/// case favorite = 1
+/// ```
 public enum FavoriteStatus: Int, Codable {
 	// MARK: - Cases
 	/// The show is not favorited.
@@ -29,13 +27,11 @@ public enum FavoriteStatus: Int, Codable {
 	case favorited = 1
 
 	// MARK: - Initializers
-	/**
-		Initializes an instance of `FavoriteStatus` with the given bool value.
-
-		If `nil` is given, then an instance of `.disabled` is initialized.
-
-		- Parameter bool: The boolean value used to initialize an instance of `FavoriteStatus`.
-	*/
+	/// Initializes an instance of `FavoriteStatus` with the given bool value.
+	///
+	/// If `nil` is given, then an instance of `.disabled` is initialized.
+	///
+	/// - Parameter bool: The boolean value used to initialize an instance of `FavoriteStatus`.
 	public init(_ bool: Bool?) {
 		if let bool = bool {
 			self = bool ? .favorited : .notFavorited

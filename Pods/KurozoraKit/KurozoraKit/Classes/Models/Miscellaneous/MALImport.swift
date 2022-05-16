@@ -6,9 +6,7 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
-/**
-	A root object that stores information about a single import request, such as the import's message status.
-*/
+/// A root object that stores information about a single import request, such as the import's message status.
 public struct MALImport: Codable {
 	// MARK: - Properties
 	/// The status message of an import request.
@@ -17,9 +15,7 @@ public struct MALImport: Codable {
 
 // MARK: - Behavior
 extension MALImport {
-	/**
-		The set of available MAL import behavior types.
-	*/
+	/// The set of available MAL import behavior types.
 	public enum Behavior: Int {
 		/// The import will overwrite any existing shows in the library.
 		case overwrite = 0

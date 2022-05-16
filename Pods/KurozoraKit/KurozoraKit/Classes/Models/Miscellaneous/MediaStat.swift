@@ -5,9 +5,7 @@
 //  Created by Khoren Katklian on 20/11/2021.
 //
 
-/**
-	A root object that stores information about a media stat resource.
-*/
+/// A root object that stores information about a media stat resource.
 public struct MediaStat: Codable {
 	// MARK: - Properties
 	/// The count of ratings sorted from `0.5` to `5.0`.

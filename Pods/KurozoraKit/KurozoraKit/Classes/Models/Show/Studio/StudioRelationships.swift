@@ -6,9 +6,7 @@
 //
 
 extension Studio {
-	/**
-		A root object that stores information about studio relationships, such as the shows that belong to it.
-	*/
+	/// A root object that stores information about studio relationships, such as the shows that belong to it.
 	public struct Relationships: Codable {
 		// MARK: - Properties
 		/// The shows created by the studio.

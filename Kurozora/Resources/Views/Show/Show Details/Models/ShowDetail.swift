@@ -9,141 +9,7 @@
 import UIKit
 import KurozoraKit
 
-struct ShowDetail {
-	/// List of available show section types.
-	enum Section: Int, CaseIterable {
-		// MARK: - Cases
-		case header = 0
-		case badge
-		case synopsis
-		case rating
-		case information
-		case seasons
-		case cast
-		case songs
-		case moreByStudio
-		case relatedShows
-		case sosumi
-
-		// MARK: - Properties
-		/// The string value of a show section type.
-		var stringValue: String {
-			switch self {
-			case .header:
-				return "Header"
-			case .badge:
-				return "Badges"
-			case .synopsis:
-				return "Synopsis"
-			case .rating:
-				return "Ratings"
-			case .information:
-				return "Information"
-			case .seasons:
-				return "Seasons"
-			case .cast:
-				return "Cast"
-			case .songs:
-				return "Songs"
-			case .moreByStudio:
-				return "More by "
-			case .relatedShows:
-				return "Related"
-			case .sosumi:
-				return "Copyright"
-			}
-		}
-
-		/// The row count of a  show section type.
-		var rowCount: Int {
-			switch self {
-			case .header:
-				return 1
-			case .badge:
-				return ShowDetail.Badge.allCases.count
-			case .synopsis:
-				return 1
-			case .rating:
-				return 1
-			case .information:
-				return ShowDetail.Information.allCases.count
-			case .seasons:
-				return 0
-			case .cast:
-				return 0
-			case .songs:
-				return 0
-			case .moreByStudio:
-				return 0
-			case .relatedShows:
-				return 0
-			case .sosumi:
-				return 1
-			}
-		}
-
-		/// The string value of a show section type segue identifier.
-		var segueIdentifier: String {
-			switch self {
-			case .header:
-				return ""
-			case .badge:
-				return ""
-			case .synopsis:
-				return ""
-			case .rating:
-				return ""
-			case .information:
-				return ""
-			case .seasons:
-				return R.segue.showDetailsCollectionViewController.seasonSegue.identifier
-			case .cast:
-				return R.segue.showDetailsCollectionViewController.castSegue.identifier
-			case .songs:
-				return R.segue.showDetailsCollectionViewController.showSongsListSegue.identifier
-			case .moreByStudio:
-				return R.segue.showDetailsCollectionViewController.studioSegue.identifier
-			case .relatedShows:
-				return R.segue.showDetailsCollectionViewController.showsListSegue.identifier
-			case .sosumi:
-				return ""
-			}
-		}
-
-		// MARK: - Functions
-		/// The cell identifier string of a show section.
-		///
-		/// - Parameter row: The row integer used to determine the cell reuse identifier.
-		///
-		/// - Returns: The cell identifier string of a show section.
-		func identifierString(for row: Int = 0) -> String {
-			switch self {
-			case .header:
-				return R.reuseIdentifier.showDetailHeaderCollectionViewCell.identifier
-			case .badge:
-				return ShowDetail.Badge(rawValue: row)?.identifierString ?? ShowDetail.Badge.season.identifierString
-			case .synopsis:
-				return R.reuseIdentifier.textViewCollectionViewCell.identifier
-			case .rating:
-				return R.reuseIdentifier.ratingCollectionViewCell.identifier
-			case .information:
-				return ShowDetail.Information(rawValue: row)?.identifierString ?? ShowDetail.Information.type.identifierString
-			case .seasons:
-				return R.reuseIdentifier.posterLockupCollectionViewCell.identifier
-			case .cast:
-				return R.reuseIdentifier.castCollectionViewCell.identifier
-			case .songs:
-				return R.reuseIdentifier.musicLockupCollectionViewCell.identifier
-			case .moreByStudio:
-				return R.reuseIdentifier.smallLockupCollectionViewCell.identifier
-			case .relatedShows:
-				return R.reuseIdentifier.smallLockupCollectionViewCell.identifier
-			case .sosumi:
-				return R.reuseIdentifier.sosumiShowCollectionViewCell.identifier
-			}
-		}
-	}
-}
+struct ShowDetail { }
 
 // MARK: - Badge
 extension ShowDetail {
@@ -281,8 +147,6 @@ extension ShowDetail {
 extension ShowDetail {
 	/// List of available show information types.
 	enum Information: Int, CaseIterable {
-//		case studio = 0
-//		case network
 		case type = 0
 		case source
 		case genres
@@ -293,15 +157,13 @@ extension ShowDetail {
 		case airDates
 		case rating
 		case languages
+//		case studio
+//		case network
 
 		// MARK: - Properties
 		/// The string value of an information type.
 		var stringValue: String {
 			switch self {
-//			case .studio:
-//				return "Studio"
-//			case .network:
-//				return "Network"
 			case .type:
 				return "Type"
 			case .source:
@@ -322,16 +184,16 @@ extension ShowDetail {
 				return "Rating"
 			case .languages:
 				return "Languages"
+//			case .studio:
+//				return "Studio"
+//			case .network:
+//				return "Network"
 			}
 		}
 
 		/// The image value of an information type.
 		var imageValue: UIImage? {
 			switch self {
-//			case .studio:
-//				return UIImage(systemName: "building.2")
-//			case .network:
-//				return UIImage(systemName: "dot.radiowaves.left.and.right")
 			case .type:
 				return UIImage(systemName: "tv.and.mediabox")
 			case .source:
@@ -352,16 +214,16 @@ extension ShowDetail {
 				return R.image.symbols.pgTv()
 			case .languages:
 				return UIImage(systemName: "globe")
+//			case .studio:
+//				return UIImage(systemName: "building.2")
+//			case .network:
+//				return UIImage(systemName: "dot.radiowaves.left.and.right")
 			}
 		}
 
 		/// The cell identifier string of a character information section.
 		var identifierString: String {
 			switch self {
-//			case .studio:
-//				return R.reuseIdentifier.informationCollectionViewCell.identifier
-//			case .network:
-//				return R.reuseIdentifier.informationCollectionViewCell.identifier
 			case .type:
 				return R.reuseIdentifier.informationCollectionViewCell.identifier
 			case .source:
@@ -382,6 +244,10 @@ extension ShowDetail {
 				return R.reuseIdentifier.informationCollectionViewCell.identifier
 			case .languages:
 				return R.reuseIdentifier.informationCollectionViewCell.identifier
+//			case .studio:
+//				return R.reuseIdentifier.informationCollectionViewCell.identifier
+//			case .network:
+//				return R.reuseIdentifier.informationCollectionViewCell.identifier
 			}
 		}
 
@@ -393,23 +259,6 @@ extension ShowDetail {
 		/// - Returns: the required information from the given object.
 		func information(from show: Show) -> String? {
 			switch self {
-//			case .studio:
-//				if let studios = show.relationships?.studios?.data, studios.count != 0 {
-//					var studioNames = ""
-//					for (index, studio) in studios.enumerated() {
-//						let studioName = studio.attributes.name
-//						if index == studios.count - 1 {
-//							studioNames += "\(studioName)"
-//							continue
-//						}
-//						studioNames += "\(studioName), "
-//					}
-//					return studioNames
-//				}
-//			case .network:
-//				if let network = show.attributes.network {
-//					return network
-//				}
 			case .type:
 				return show.attributes.type.name
 			case .source:
@@ -438,6 +287,23 @@ extension ShowDetail {
 					$0.attributes.name
 				}
 				return languages.localizedJoined()
+//			case .studio:
+//				if let studios = show.relationships?.studios?.data, studios.count != 0 {
+//					var studioNames = ""
+//					for (index, studio) in studios.enumerated() {
+//						let studioName = studio.attributes.name
+//						if index == studios.count - 1 {
+//							studioNames += "\(studioName)"
+//							continue
+//						}
+//						studioNames += "\(studioName), "
+//					}
+//					return studioNames
+//				}
+//			case .network:
+//				if let network = show.attributes.network {
+//					return network
+//				}
 			}
 		}
 
@@ -494,23 +360,6 @@ extension ShowDetail {
 		/// - Returns: the footnote from the given object.
 		func footnote(from show: Show) -> String? {
 			switch self {
-//			case .studio:
-//				if let studios = show.relationships?.studios?.data, studios.count != 0 {
-//					var studioNames = ""
-//					for (index, studio) in studios.enumerated() {
-//						let studioName = studio.attributes.name
-//						if index == studios.count - 1 {
-//							studioNames += "\(studioName)"
-//							continue
-//						}
-//						studioNames += "\(studioName), "
-//					}
-//					return studioNames
-//				}
-//			case .network:
-//				if let network = show.attributes.network {
-//					return network
-//				}
 			case .type:
 				return show.attributes.type.description
 			case .source:
@@ -536,6 +385,23 @@ extension ShowDetail {
 				return show.attributes.tvRating.description
 			case .languages:
 				return nil
+//			case .studio:
+//				if let studios = show.relationships?.studios?.data, studios.count != 0 {
+//					var studioNames = ""
+//					for (index, studio) in studios.enumerated() {
+//						let studioName = studio.attributes.name
+//						if index == studios.count - 1 {
+//							studioNames += "\(studioName)"
+//							continue
+//						}
+//						studioNames += "\(studioName), "
+//					}
+//					return studioNames
+//				}
+//			case .network:
+//				if let network = show.attributes.network {
+//					return network
+//				}
 			}
 		}
 	}

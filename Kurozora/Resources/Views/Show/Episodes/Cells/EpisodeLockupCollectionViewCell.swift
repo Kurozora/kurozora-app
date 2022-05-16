@@ -10,9 +10,14 @@ import UIKit
 import KurozoraKit
 import Alamofire
 
-class EpisodeLockupCollectionViewCell: UICollectionViewCell {
+protocol EpisodeLockupCollectionViewCellDelegate: AnyObject {
+	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressWatchButton button: UIButton)
+	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressMoreButton button: UIButton)
+}
+
+class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var episodeImageView: UIImageView!
+	@IBOutlet weak var episodeImageView: BannerImageView!
 	@IBOutlet weak var shadowImageview: UIImageView!
 	@IBOutlet weak var shadowView: UIView!
 	@IBOutlet weak var cornerView: UIView!
@@ -26,32 +31,11 @@ class EpisodeLockupCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - Properties
 	weak var delegate: EpisodeLockupCollectionViewCellDelegate?
-	var episodeDataRequest: DataRequest?
-
-	// MARK: - Initializers
-	deinit {
-		self.episodeDataRequest?.cancel()
-		self.episodeDataRequest = nil
-	}
-
-	// MARK: - View
-	override func prepareForReuse() {
-		super.prepareForReuse()
-
-		self.episodeDataRequest?.cancel()
-		self.episodeDataRequest = nil
-		self.prepareSkeleton()
-	}
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
-	func configureCell(using episode: Episode?) {
-		guard let episode = episode else {
-			self.prepareSkeleton()
-			return
-		}
-		self.backgroundColor = nil
-		self.contentView.isHidden = false
+	func configure(using episode: Episode?) {
+		guard let episode = episode else { return }
 
 		self.episodeImageView.setImage(with: episode.attributes.banner?.url ?? "", placeholder: R.image.placeholders.episodeBanner()!)
 
@@ -75,12 +59,6 @@ class EpisodeLockupCollectionViewCell: UICollectionViewCell {
 
 		// Apply shadow
 		self.shadowView.applyShadow()
-	}
-
-	fileprivate func prepareSkeleton() {
-		self.roundCorners(.allCorners, radius: 10.0)
-		self.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-		self.contentView.isHidden = true
 	}
 
 	/// Configures the watch button of the episode.

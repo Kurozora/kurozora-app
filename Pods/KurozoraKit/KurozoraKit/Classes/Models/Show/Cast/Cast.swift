@@ -5,9 +5,7 @@
 //  Created by Khoren Katklian on 28/06/2020.
 //
 
-/**
-	A root object that stores information about a cast resource.
-*/
+/// A root object that stores information about a cast resource.
 public struct Cast: IdentityResource, Hashable {
 	// MARK: - Properties
 	public let id: Int

@@ -6,9 +6,7 @@
 //
 
 extension Badge {
-	/**
-		A root object that stores information about a single badge, such as the badge's name, description, and color.
-	*/
+	/// A root object that stores information about a single badge, such as the badge's name, description, and color.
 	public struct Attributes: Codable {
 		// MARK: - Properties
 		/// The name of the badge.

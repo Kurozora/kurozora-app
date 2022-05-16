@@ -8,14 +8,12 @@
 import Alamofire
 import TRON
 
-/**
-	`KurozoraKit` is a root object that serves as a provider for single API endpoint. It is used to send and get data from [Kurozora](https://kurozora.app).
-
-	For more flexibility when using `KurozoraKit` you can provide your own [KKServices](x-source-tag://KKServices). This enables you to provide extra functionality such as storing sensetive information in `Keychain` and showing success/error alerts.
-	For further control over the information saved in `Keychain`, you can provide your own `Keychain` object with your specified properties.
-
-	- Tag: KurozoraKit
-*/
+/// KurozoraKit` is a root object that serves as a provider for single API endpoint. It is used to send and get data from [Kurozora](https://kurozora.app).
+///
+/// For more flexibility when using `KurozoraKit` you can provide your own [KKServices](x-source-tag://KKServices). This enables you to provide extra functionality such as storing sensetive information in `Keychain` and showing success/error alerts.
+/// For further control over the information saved in `Keychain`, you can provide your own `Keychain` object with your specified properties.
+///
+/// - Tag: KurozoraKit
 public class KurozoraKit {
 	// MARK: - Properties
 	/// Storage to the current user's authentication key.
@@ -30,15 +28,13 @@ public class KurozoraKit {
 		}
 	}
 
-	/**
-		Most common HTTP headers for the Kurozora API.
-
-		Current headers are:
-		```
-		"Content-Type": "application/x-www-form-urlencoded",
-		"Accept": "application/json"
-		```
-	*/
+	/// Most common HTTP headers for the Kurozora API.
+	///
+	/// Current headers are:
+	/// ```
+	/// "Content-Type": "application/x-www-form-urlencoded",
+	/// "Accept": "application/json"
+	/// ```
 	internal let headers: HTTPHeaders = [
 		.contentType("application/x-www-form-urlencoded"),
 		.accept("application/json")
@@ -51,13 +47,12 @@ public class KurozoraKit {
 	public var services: KKServices!
 
 	// MARK: - Initializers
-	/**
-		Initializes `KurozoraKit` with the given user authentication key and services.
-
-		- Parameter debugURL: The backend API URL used for debugging.
-		- Parameter authenticationKey: The current signed in user's authentication key.
-		- Parameter services: The desired [KKServices](x-source-tag://KKServices) to be used.
-	*/
+	/// Initializes `KurozoraKit` with the given user authentication key and services.
+	///
+	/// - Parameters:
+	///    - debugURL: The backend API URL used for debugging.
+	///    - authenticationKey: The current signed in user's authentication key.
+	///    - services: The desired [KKServices](x-source-tag://KKServices) to be used.
 	public init(debugURL: String? = nil, authenticationKey: String = "", services: KKServices = KKServices()) {
 		let plugins: [Plugin] = debugURL != nil ? [NetworkLoggerPlugin()] : []
 
@@ -68,25 +63,21 @@ public class KurozoraKit {
 	}
 
 	// MARK: - Functions
-	/**
-		Sets the `authenticationKey` property with the given auth key.
-
-		- Parameter authenticationKey: The current user's authentication key.
-
-		- Returns: Reference to `self`.
-	*/
+	/// Sets the `authenticationKey` property with the given auth key.
+	///
+	/// - Parameter authenticationKey: The current user's authentication key.
+	///
+	/// - Returns: Reference to `self`.
 	public func authenticationKey(_ authenticationKey: String) -> Self {
 		self.authenticationKey = authenticationKey
 		return self
 	}
 
-	/**
-		Sets the `services` property with the given [KKServices](x-source-tag://KKServices) object.
-
-		- Parameter services: The [KKServices](x-source-tag://KKServices) object to be used when performin API requests.
-
-		- Returns: Reference to `self`.
-	*/
+	/// Sets the `services` property with the given [KKServices](x-source-tag://KKServices) object.
+	///
+	/// - Parameter services: The [KKServices](x-source-tag://KKServices) object to be used when performin API requests.
+	///
+	/// - Returns: Reference to `self`.
 	public func services(_ services: KKServices) -> Self {
 		self.services = services
 		return self

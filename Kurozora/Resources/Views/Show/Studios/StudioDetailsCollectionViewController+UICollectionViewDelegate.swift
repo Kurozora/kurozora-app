@@ -10,23 +10,19 @@ import UIKit
 
 extension StudioDetailsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		let studioDetailSection = StudioDetail.Section(rawValue: indexPath.section) ?? .header
-
-		switch studioDetailSection {
+		switch self.snapshot.sectionIdentifiers[indexPath.section] {
 		case .shows:
-			let show = self.shows[indexPath.item]
-			performSegue(withIdentifier: R.segue.studioDetailsCollectionViewController.showDetailsSegue, sender: show)
+			let show = self.shows[indexPath]
+			self.performSegue(withIdentifier: R.segue.studioDetailsCollectionViewController.showDetailsSegue, sender: show)
 		default: break
 		}
 	}
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		let studioDetailSection = StudioDetail.Section(rawValue: indexPath.section) ?? .header
-
-		switch studioDetailSection {
+		switch self.snapshot.sectionIdentifiers[indexPath.section] {
 		case .shows:
-			return self.shows[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			return self.shows[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		default: break
 		}
 

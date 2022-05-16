@@ -6,9 +6,7 @@
 //
 
 extension AppTheme {
-	/**
-		A root object that stores information about a single app theme, such as the app theme's name, download count, and download link.
-	*/
+	/// A root object that stores information about a single app theme, such as the app theme's name, download count, and download link.
 	public struct Attributes: Codable {
 		// MARK: - Properties
 		/// The link to a screenshot of the app theme.

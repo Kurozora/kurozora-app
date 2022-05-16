@@ -5,9 +5,7 @@
 //  Created by Khoren Katklian on 09/08/2020.
 //
 
-/**
-	A root object that stores information about a show resource.
-*/
+/// A root object that stores information about a show resource.
 public class Show: IdentityResource, Hashable {
 	// MARK: - Properties
 	public let id: Int

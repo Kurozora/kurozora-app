@@ -8,17 +8,16 @@
 import TRON
 
 extension KurozoraKit {
-	/**
-		Fetch the list of shows with the given show status in the authenticated user's library.
-
-		- Parameter libraryStatus: The library status to retrieve the library items for.
-		- Parameter sortType: The sort value by which the retrived items should be sorted.
-		- Parameter sortOption: The sort option value by which the retrived items should be sorted.
-		- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
-		- Parameter limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Fetch the list of shows with the given show status in the authenticated user's library.
+	///
+	/// - Parameters:
+	///    - libraryStatus: The library status to retrieve the library items for.
+	///    - sortType: The sort value by which the retrived items should be sorted.
+	///    - sortOption: The sort option value by which the retrived items should be sorted.
+	///    - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func getLibrary(withLibraryStatus libraryStatus: KKLibrary.Status, withSortType sortType: KKLibrary.SortType, withSortOption sortOption: KKLibrary.SortType.Options, next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<ShowResponse, KKAPIError>) -> Void) {
 		let meLibraryIndex = next ?? KKEndpoint.Me.Library.index.endpointValue
 		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(meLibraryIndex).buildURL(.relativeToBaseURL)
@@ -49,14 +48,13 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		Add a show with the given show id to the authenticated user's library.
-
-		- Parameter libraryStatus: The watch status to assign to the Anime.
-		- Parameter showID: The id of the show to add.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Add a show with the given show id to the authenticated user's library.
+	///
+	/// - Parameters:
+	///    - libraryStatus: The watch status to assign to the Anime.
+	///    - showID: The id of the show to add.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func addToLibrary(withLibraryStatus libraryStatus: KKLibrary.Status, showID: Int, completion completionHandler: @escaping (_ result: Result<LibraryUpdate, KKAPIError>) -> Void) {
 		let meLibraryIndex = KKEndpoint.Me.Library.index.endpointValue
 		let request: APIRequest<LibraryUpdateResponse, KKAPIError> = tron.codable.request(meLibraryIndex)
@@ -84,13 +82,12 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		Remove a show with the given show id from the authenticated user's library.
-
-		- Parameter showID: The id of the show to be deleted.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Remove a show with the given show id from the authenticated user's library.
+	///
+	/// - Parameters:
+	///    - showID: The id of the show to be deleted.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func removeFromLibrary(showID: Int, completion completionHandler: @escaping (_ result: Result<LibraryUpdate, KKAPIError>) -> Void) {
 		let meLibraryDelete = KKEndpoint.Me.Library.delete.endpointValue
 		let request: APIRequest<LibraryUpdateResponse, KKAPIError> = tron.codable.request(meLibraryDelete)
@@ -117,14 +114,13 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		Import a MAL export file into the authenticated user's library.
-
-		- Parameter filePath: The path to the file to be imported.
-		- Parameter behavior: The preferred behavior of importing the file.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Import a MAL export file into the authenticated user's library.
+	///
+	/// - Parameters:
+	///    - filePath: The path to the file to be imported.
+	///    - behavior: The preferred behavior of importing the file.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func importMALLibrary(filePath: URL, importBehavior behavior: MALImport.Behavior, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) {
 		let meLibraryMALImport = KKEndpoint.Me.Library.malImport.endpointValue
 		let request: UploadAPIRequest<KKSuccess, KKAPIError> = tron.codable.uploadMultipart(meLibraryMALImport) { formData in
@@ -160,14 +156,13 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		Fetch a list of shows matching the search query in the authenticated user's library.
-
-		- Parameter show: The search query by which the search list should be fetched.
-		- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Fetch a list of shows matching the search query in the authenticated user's library.
+	///
+	/// - Parameters:
+	///    - show: The search query by which the search list should be fetched.
+	///    - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func searchLibrary(forShow show: String, next: String?, completion completionHandler: @escaping (_ result: Result<ShowResponse, KKAPIError>) -> Void) {
 		let meLibrarySearch = next ?? KKEndpoint.Me.Library.search.endpointValue
 		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(meLibrarySearch).buildURL(.relativeToBaseURL)

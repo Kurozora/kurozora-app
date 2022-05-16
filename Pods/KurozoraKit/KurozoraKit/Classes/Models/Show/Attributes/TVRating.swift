@@ -7,9 +7,7 @@
 
 import Foundation
 
-/**
-	A root object that stores information about a TV rating resource.
-*/
+/// A root object that stores information about a TV rating resource.
 public struct TVRating: Codable, Hashable {
 	// MARK: - Properties
 	/// The name of the TV rating.

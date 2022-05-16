@@ -6,9 +6,7 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-/**
-	A root object that stores information about a badge resource.
-*/
+/// A root object that stores information about a badge resource.
 public struct Badge: Codable {
 	// MARK: - Properties
 	/// The id of the resource.

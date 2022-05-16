@@ -6,9 +6,7 @@
 //
 
 extension Theme {
-	/**
-		A root object that stores information about a single theme, such as the theme's name, color, and symbol.
-	*/
+	/// A root object that stores information about a single theme, such as the theme's name, color, and symbol.
 	public struct Attributes: Codable {
 		// MARK: - Properties
 		/// The slug of the resource.

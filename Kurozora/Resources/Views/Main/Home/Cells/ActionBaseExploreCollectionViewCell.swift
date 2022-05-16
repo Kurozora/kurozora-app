@@ -8,24 +8,30 @@
 
 import UIKit
 
+protocol ActionBaseExploreCollectionViewCellDelegate: AnyObject {
+	func actionButtonPressed(_ sender: UIButton, cell: ActionBaseExploreCollectionViewCell)
+}
+
 class ActionBaseExploreCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var actionButton: KButton?
 
 	// MARK: - Properties
-	var actionItem: [String: String]? {
-		didSet {
-			configureCell()
-		}
-	}
+	weak var delegate: ActionBaseExploreCollectionViewCellDelegate?
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
-	func configureCell() {
-		guard let actionItem = actionItem else { return }
-		actionButton?.setTitle(actionItem["title"], for: .normal)
+	func configure(using quickAction: QuickAction) {
+		self.actionButton?.setTitle(quickAction.title, for: .normal)
+	}
+
+	/// Configure the cell with the given details.
+	func configure(using quickLink: QuickLink) {
+		self.actionButton?.setTitle(quickLink.title, for: .normal)
 	}
 
 	// MARK: - IBActions
-	@IBAction func actionButtonPressed(_ sender: UIButton) { }
+	@IBAction func actionButtonPressed(_ sender: UIButton) {
+		self.delegate?.actionButtonPressed(sender, cell: self)
+	}
 }

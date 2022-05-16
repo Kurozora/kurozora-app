@@ -7,9 +7,7 @@
 
 import Foundation
 
-/**
-	A root object that stores information about a media relation.
-*/
+/// A root object that stores information about a media relation.
 public struct MediaRelation: Codable, Hashable {
 	// MARK: - Properties
 	/// The name of the relation with the parent show.

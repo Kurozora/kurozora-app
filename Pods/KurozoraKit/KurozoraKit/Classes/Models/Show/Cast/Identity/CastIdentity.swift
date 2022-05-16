@@ -5,9 +5,7 @@
 //  Created by Khoren Katklian on 12/02/2022.
 //
 
-/**
-	A root object that stores information about a season identity resource.
-*/
+/// A root object that stores information about a season identity resource.
 public class CastIdentity: IdentityResource, Hashable {
 	public let id: Int
 

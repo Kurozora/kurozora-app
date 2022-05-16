@@ -11,31 +11,29 @@ import KurozoraKit
 
 extension HomeCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		if indexPath.section <= self.exploreCategories.count {
-			let exploreCategory = self.exploreCategories[indexPath.section]
-
+		switch self.dataSource.sectionIdentifier(for: indexPath.section) {
+		case .banner(let exploreCategory), .small(let exploreCategory), .medium(let exploreCategory), .large(let exploreCategory), .upcoming(let exploreCategory), .video(let exploreCategory), .profile(let exploreCategory):
 			switch exploreCategory.attributes.exploreCategoryType {
-			case .shows, .upcomingShows, .mostPopularShows:
-				let show = exploreCategory.relationships.shows?.data[indexPath.item]
-				performSegue(withIdentifier: R.segue.homeCollectionViewController.showDetailsSegue, sender: show)
-			case .songs: break
+			case .mostPopularShows, .upcomingShows, .shows:
+				let show = self.shows[indexPath]
+				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.showDetailsSegue, sender: show)
 			case .genres:
-				let genre = exploreCategory.relationships.genres?.data[indexPath.item]
-				performSegue(withIdentifier: R.segue.homeCollectionViewController.exploreSegue, sender: genre)
+				let genre = self.genres[indexPath]
+				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.exploreSegue, sender: genre)
 			case .themes:
-				let theme = exploreCategory.relationships.themes?.data[indexPath.item]
-				performSegue(withIdentifier: R.segue.homeCollectionViewController.exploreSegue, sender: theme)
+				let theme = self.themes[indexPath]
+				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.exploreSegue, sender: theme)
 			case .characters:
-				let character = exploreCategory.relationships.characters?.data[indexPath.item]
-				performSegue(withIdentifier: R.segue.homeCollectionViewController.characterSegue, sender: character)
+				let character = self.characters[indexPath]
+				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.characterSegue, sender: character)
 			case .people:
-				let person = exploreCategory.relationships.people?.data[indexPath.item]
-				performSegue(withIdentifier: R.segue.homeCollectionViewController.personSegue, sender: person)
+				let person = self.people[indexPath]
+				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.personSegue, sender: person)
+			default: return
 			}
-		}
-
-		if let legalCollectionViewCell = collectionView.cellForItem(at: indexPath) as? LegalCollectionViewCell {
-			performSegue(withIdentifier: R.segue.homeCollectionViewController.legalSegue, sender: legalCollectionViewCell)
+		case .legal:
+			self.performSegue(withIdentifier: R.segue.homeCollectionViewController.legalSegue, sender: nil)
+		default: break
 		}
 	}
 
@@ -46,21 +44,16 @@ extension HomeCollectionViewController {
 
 			switch exploreCategory.attributes.exploreCategoryType {
 			case .shows, .upcomingShows, .mostPopularShows:
-				let show = exploreCategory.relationships.shows?.data[indexPath.item]
-				return show?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+				return self.shows[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 			case .songs: break
 			case .genres:
-				let genre = exploreCategory.relationships.genres?.data[indexPath.item]
-				return genre?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+				return self.genres[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 			case .themes:
-				let theme = exploreCategory.relationships.themes?.data[indexPath.item]
-				return theme?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+				return self.themes[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 			case .characters:
-				let character = exploreCategory.relationships.characters?.data[indexPath.item]
-				return character?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+				return self.characters[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 			case .people:
-				let person = exploreCategory.relationships.people?.data[indexPath.item]
-				return person?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+				return self.people[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 			}
 		}
 		return nil

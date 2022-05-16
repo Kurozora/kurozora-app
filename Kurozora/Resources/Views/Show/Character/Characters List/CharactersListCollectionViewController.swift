@@ -8,25 +8,19 @@
 
 import UIKit
 import KurozoraKit
+import Alamofire
 
 class CharactersListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var personID: Int = 0
-	var characters: [Character] = [] {
-		didSet {
-			self.configureDataSource()
-			self._prefersActivityIndicatorHidden = true
-			self.toggleEmptyDataView()
-			#if DEBUG
-			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.endRefreshing()
-			#endif
-			#endif
+	var personIdentity: PersonIdentity? = nil
+	var characters: [IndexPath: Character] = [:]
+	var characterIdentities: [CharacterIdentity] = []
+	var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, CharacterIdentity>()
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, CharacterIdentity>! = nil
+	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
 
-		}
-	}
+	/// The next page url of the pagination.
 	var nextPageURL: String?
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>! = nil
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
@@ -64,7 +58,16 @@ class CharactersListCollectionViewController: KCollectionViewController {
 		self._prefersRefreshControlDisabled = true
 		#endif
 
-		if self.personID != 0 {
+		// Add Refresh Control to Collection View
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the characters.")
+		#endif
+
+		self.configureDataSource()
+
+		if !self.characterIdentities.isEmpty {
+			self.endFetch()
+		} else if self.personIdentity != nil {
 			DispatchQueue.global(qos: .userInteractive).async {
 				self.fetchCharacters()
 			}
@@ -73,9 +76,11 @@ class CharactersListCollectionViewController: KCollectionViewController {
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		if self.personID != 0 {
+		if self.personIdentity != nil {
 			self.nextPageURL = nil
-			self.fetchCharacters()
+			DispatchQueue.global(qos: .userInteractive).async {
+				self.fetchCharacters()
+			}
 		}
 	}
 
@@ -95,19 +100,56 @@ class CharactersListCollectionViewController: KCollectionViewController {
 		}
 	}
 
+	func endFetch() {
+		self.updateDataSource()
+		self._prefersActivityIndicatorHidden = true
+		self.toggleEmptyDataView()
+		#if DEBUG
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.endRefreshing()
+		#endif
+		#endif
+	}
+
 	func fetchCharacters() {
-		KService.getCharacters(forPersonID: self.personID, next: self.nextPageURL) { [weak self] result in
+		guard let personIdentity = self.personIdentity else {
+			DispatchQueue.main.async { [weak self] in
+				guard let self = self else { return }
+				#if !targetEnvironment(macCatalyst)
+				self.refreshControl?.endRefreshing()
+				#endif
+			}
+			return
+		}
+
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing characters...")
+			#endif
+		}
+
+		KService.getCharacters(forPerson: personIdentity, next: self.nextPageURL) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
-			case .success(let characterResponse):
+			case .success(let characterIdentityResponse):
 				// Reset data if necessary
 				if self.nextPageURL == nil {
-					self.characters = []
+					self.characterIdentities = []
 				}
 
 				// Save next page url and append new data
-				self.nextPageURL = characterResponse.next
-				self.characters.append(contentsOf: characterResponse.data)
+				self.nextPageURL = characterIdentityResponse.next
+				self.characterIdentities.append(contentsOf: characterIdentityResponse.data)
+
+				DispatchQueue.main.async {
+					self.endFetch()
+
+					// Reset refresh controller title
+					#if !targetEnvironment(macCatalyst)
+					self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the characters.")
+					#endif
+				}
 			case .failure: break
 			}
 		}
@@ -117,53 +159,11 @@ class CharactersListCollectionViewController: KCollectionViewController {
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
 		case R.segue.charactersListCollectionViewController.characterDetailsSegue.identifier:
-		guard let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController else { return }
-			if let character = sender as? Character {
-				characterDetailsCollectionViewController.characterID = character.id
-			}
+			guard let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController else { return }
+			guard let character = sender as? Character else { return }
+			characterDetailsCollectionViewController.character = character
 		default: break
 		}
-	}
-}
-
-// MARK: - KCollectionViewDataSource
-extension CharactersListCollectionViewController {
-	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
-		return [CharacterLockupCollectionViewCell.self]
-	}
-
-	override func configureDataSource() {
-		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, _) -> UICollectionViewCell? in
-			guard let self = self else { return nil }
-			let characterLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: CharacterLockupCollectionViewCell.self, for: indexPath)
-			characterLockupCollectionViewCell.configure(using: self.characters[indexPath.item])
-			return characterLockupCollectionViewCell
-		}
-
-		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
-		SectionLayoutKind.allCases.forEach {
-			snapshot.appendSections([$0])
-			snapshot.appendItems(Array(0..<self.characters.count), toSection: $0)
-		}
-		self.dataSource.apply(snapshot)
-	}
-}
-
-// MARK: - KCollectionViewDelegateLayout
-extension CharactersListCollectionViewController {
-	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
-		let width = layoutEnvironment.container.effectiveContentSize.width
-		let columnCount = (width / 200).rounded().int
-		return columnCount > 0 ? columnCount : 1
-	}
-
-	override func createLayout() -> UICollectionViewLayout? {
-		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-			guard let self = self else { return nil }
-			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-			return Layouts.charactersSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
-		}
-		return layout
 	}
 }
 

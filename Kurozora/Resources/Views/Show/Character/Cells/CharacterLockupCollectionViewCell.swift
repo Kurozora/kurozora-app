@@ -9,7 +9,7 @@
 import UIKit
 import KurozoraKit
 
-class CharacterLockupCollectionViewCell: UICollectionViewCell {
+class CharacterLockupCollectionViewCell: KCollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var characterImageView: CharacterImageView!
 	@IBOutlet weak var nameLabel: KLabel!
@@ -19,7 +19,11 @@ class CharacterLockupCollectionViewCell: UICollectionViewCell {
 	///
 	/// - Parameter character: The character object used to configure the cell.
 	func configure(using character: Character?) {
-		guard let character = character else { return }
+		guard let character = character else {
+			self.showSkeleton()
+			return
+		}
+		self.self.hideSkeleton()
 
 		self.nameLabel.text = character.attributes.name
 		self.characterImageView.setImage(with: character.attributes.profile?.url ?? "", placeholder: character.attributes.placeholderImage)

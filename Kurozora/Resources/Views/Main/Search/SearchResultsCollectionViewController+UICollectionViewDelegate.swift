@@ -12,32 +12,29 @@ import UIKit
 extension SearchResultsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let searchBaseResultsCell = collectionView.cellForItem(at: indexPath)
-		if searchResults != nil {
-			switch currentScope {
+		if self.searchResults != nil {
+			switch self.currentScope {
 			case .show, .library:
 				if let show = (searchBaseResultsCell as? SearchShowResultsCell)?.show {
-					let showDetailsCollectionViewController = ShowDetailsCollectionViewController.`init`(with: show.id)
 					SearchHistory.saveContentsOf(show)
-					self.show(showDetailsCollectionViewController, sender: nil)
+					self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.showDetailsSegue, sender: show)
 				}
 			case .user:
 				if let user = (searchBaseResultsCell as? SearchUserResultsCell)?.user {
-					let profileTableViewController = ProfileTableViewController.`init`(with: user.id)
-					self.show(profileTableViewController, sender: nil)
+					self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.profileSegue, sender: user)
 				}
 			}
 		} else {
 			if let show = (searchBaseResultsCell as? SearchSuggestionResultCell)?.show {
-				let showDetailsCollectionViewController = ShowDetailsCollectionViewController.`init`(with: show.id)
-				self.show(showDetailsCollectionViewController, sender: nil)
+				self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.showDetailsSegue, sender: show)
 			}
 		}
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 		if indexPath.item == self.searchResults?.count ?? 0 - 10 && self.nextPageURL != nil {
-			guard let text = kSearchController.searchBar.textField?.text else { return }
-			guard let searchScope = SearchScope(rawValue: kSearchController.searchBar.selectedScopeButtonIndex) else { return }
+			guard let text = self.kSearchController.searchBar.textField?.text else { return }
+			guard let searchScope = SearchScope(rawValue: self.kSearchController.searchBar.selectedScopeButtonIndex) else { return }
 			self.performSearch(withText: text, in: searchScope)
 		}
 	}
@@ -45,8 +42,8 @@ extension SearchResultsCollectionViewController {
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
 		let searchBaseResultsCell = collectionView.cellForItem(at: indexPath)
-		if searchResults != nil {
-			switch currentScope {
+		if self.searchResults != nil {
+			switch self.currentScope {
 			case .show, .library:
 				if let searchShowResultsCell = searchBaseResultsCell as? SearchShowResultsCell {
 					SearchHistory.saveContentsOf(searchShowResultsCell.show)

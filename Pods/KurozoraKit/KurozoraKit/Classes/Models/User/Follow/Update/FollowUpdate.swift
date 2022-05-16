@@ -5,9 +5,7 @@
 //  Created by Khoren Katklian on 14/08/2020.
 //
 
-/**
-	A root object that stores information about a user follow update resource.
-*/
+/// A root object that stores information about a user follow update resource.
 public struct FollowUpdate: Codable {
 	// MARK: - Properties
 	/// Whether the user is followed or not.

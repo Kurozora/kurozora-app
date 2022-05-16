@@ -10,14 +10,13 @@ import TRON
 import Alamofire
 
 extension KurozoraKit {
-	/**
-		Fetch the song details for the given song id.
-
-		- Parameter songID: The id of the song for which the details should be fetched.
-		- Parameter relationships: The relationships to include in the response.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Fetch the song details for the given song id.
+	///
+	/// - Parameters:
+	///    - song: The id of the song for which the details should be fetched.
+	///    - relationships: The relationships to include in the response.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	@discardableResult
 	public func getDetails(forSong songID: Int, including relationships: [String] = [], completion completionHandler: @escaping (_ result: Result<[Song], KKAPIError>) -> Void) -> DataRequest {
 		let songsDetails = KKEndpoint.Songs.details(songID).endpointValue

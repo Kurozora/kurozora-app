@@ -160,7 +160,8 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	/// Fetch the library items for the current user.
 	func fetchLibrary() {
 		if User.isSignedIn {
-			DispatchQueue.main.async {
+			DispatchQueue.main.async { [weak self] in
+				guard let self = self else { return }
 				#if !targetEnvironment(macCatalyst)
 				self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing your \(self.libraryStatus.stringValue.lowercased()) list...")
 				#endif
@@ -187,7 +188,8 @@ class LibraryListCollectionViewController: KCollectionViewController {
 				}
 			}
 		} else {
-			DispatchQueue.main.async {
+			DispatchQueue.main.async { [weak self] in
+				guard let self = self else { return }
 				self.shows.removeAll()
 				self.collectionView.reloadData {
 					self.toggleEmptyDataView()
@@ -217,7 +219,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if let currentCell = sender as? LibraryBaseCollectionViewCell, let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController {
-			showDetailCollectionViewController.showID = currentCell.show.id
+			showDetailCollectionViewController.show = currentCell.show
 		}
 	}
 }

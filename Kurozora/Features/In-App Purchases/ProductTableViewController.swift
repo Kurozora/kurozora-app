@@ -131,12 +131,14 @@ extension ProductTableViewController: PurchaseButtonTableViewCellDelegate {
 //					}
 //				}
 				await self.productTableViewControllerDelegate?.updateSubscriptionStatus()
-				DispatchQueue.main.async {
+				DispatchQueue.main.async { [weak self] in
+					guard let self = self else { return }
 					self.tableView.reloadData()
 				}
 			}
 		} catch StoreError.failedVerification {
-			DispatchQueue.main.async {
+			DispatchQueue.main.async { [weak self] in
+				guard let self = self else { return }
 				self.presentAlertController(title: "Faild purchase", message: "Your purchase could not be verified by the App Store.")
 			}
 		} catch {

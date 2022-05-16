@@ -5,9 +5,7 @@
 //  Created by Khoren Katklian on 17/05/2018.
 //
 
-/**
-	A root object that stores information about a user resource.
-*/
+/// A root object that stores information about a user resource.
 public struct User: IdentityResource, Hashable {
 	// MARK: - Properties
 	public let id: Int
@@ -50,11 +48,9 @@ extension User {
 	}
 
 	// MARK: - Functions
-	/**
-		Updates the user with the given details.
-
-		- Parameter userDetails: The details used to update the current user's details.
-	*/
+	/// Updates the user with the given details.
+	///
+	/// - Parameter userDetails: The details used to update the current user's details.
 	internal mutating func updateDetails(with userDetails: User) {
 		self.attributes.profile = userDetails.attributes.profile
 		self.attributes.banner = userDetails.attributes.banner

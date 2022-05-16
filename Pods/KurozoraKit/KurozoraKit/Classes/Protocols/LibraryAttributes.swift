@@ -5,11 +5,9 @@
 //  Created by Khoren Katklian on 14/08/2020.
 //
 
-/**
-	A type that holds the value of library attributes.
-
-	Use the `LibraryAttributes` protocol to provide a library attributes to a class or value type. For example, you could define a Show type with a library status property that is stable across your app and your app’s database storage. You could use the library status property to identify a particular show's library status even if other data fields change, such as the show's title.
-*/
+/// A type that holds the value of library attributes.
+///
+/// Use the `LibraryAttributes` protocol to provide a library attributes to a class or value type. For example, you could define a Show type with a library status property that is stable across your app and your app’s database storage. You could use the library status property to identify a particular show's library status even if other data fields change, such as the show's title.
 public protocol LibraryAttributes: Codable {
 	/// The rating given to the show.
 	var givenRating: Double? { get set }
@@ -54,24 +52,20 @@ extension LibraryAttributes {
 	}
 
 	// MARK: - Functions
-	/**
-		Updates the attributes with the given `LibraryUpdate` object.
-
-		- Parameter libraryUpdate: The `LibraryUpdate` object used to update the attributes.
-	*/
+	/// Updates the attributes with the given `LibraryUpdate` object.
+	///
+	/// - Parameter libraryUpdate: The `LibraryUpdate` object used to update the attributes.
 	public mutating func update(using libraryUpdate: LibraryUpdate) {
 		self.favoriteStatus = libraryUpdate.favoriteStatus
 		self.reminderStatus = libraryUpdate.reminderStatus
 		self.libraryStatus = libraryUpdate.libraryStatus
 	}
 
-	/**
-		Returns a copy of the object with the updated attributes from the given `LibraryUpdate` object.
-
-		- Parameter libraryUpdate: The `LibraryUpdate` object used to update the attributes.
-
-		- Returns: a copy of the object with the updated attributes from the given `LibraryUpdate` object.
-	*/
+	/// Returns a copy of the object with the updated attributes from the given `LibraryUpdate` object.
+	///
+	/// - Parameter libraryUpdate: The `LibraryUpdate` object used to update the attributes.
+	///
+	/// - Returns: a copy of the object with the updated attributes from the given `LibraryUpdate` object.
 	public mutating func updated(using libraryUpdate: LibraryUpdate) -> Self {
 		var libraryAttributes = self
 		libraryAttributes.favoriteStatus = libraryUpdate.favoriteStatus

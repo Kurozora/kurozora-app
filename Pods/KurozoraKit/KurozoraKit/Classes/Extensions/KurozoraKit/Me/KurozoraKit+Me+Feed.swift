@@ -8,14 +8,13 @@
 import TRON
 
 extension KurozoraKit {
-	/**
-		Fetch a list of authenticated user's feed messages.
-
-		- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
-		- Parameter limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Fetch a list of authenticated user's feed messages.
+	///
+	/// - Parameters:
+	///    - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func getFeedMessages(next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<FeedMessageResponse, KKAPIError>) -> Void) {
 		let meFeedMessages = next ?? KKEndpoint.Me.Feed.messages.endpointValue
 		let request: APIRequest<FeedMessageResponse, KKAPIError> = tron.codable.request(meFeedMessages).buildURL(.relativeToBaseURL)

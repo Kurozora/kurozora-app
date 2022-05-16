@@ -7,9 +7,7 @@
 
 import Foundation
 
-/**
-	A root object that stores information about a staff role resource.
-*/
+/// A root object that stores information about a staff role resource.
 public struct StaffRole: Codable, Hashable {
 	// MARK: - Properties
 	/// The name of the staff role.

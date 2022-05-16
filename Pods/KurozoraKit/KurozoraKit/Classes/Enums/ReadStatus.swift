@@ -8,14 +8,12 @@
 
 import Foundation
 
-/**
-	The set of available read status types.
-
-	```
-	case unread = 0
-	case read = 1
-	```
-*/
+/// The set of available read status types.
+///
+/// ```
+/// case unread = 0
+/// case read = 1
+/// ```
 public enum ReadStatus: Int, Codable {
 	// MARK: - Cases
 	/// The notification is unread.
@@ -25,11 +23,9 @@ public enum ReadStatus: Int, Codable {
 	case read = 1
 
 	// MARK: - Initializers
-	/**
-		Initializes an instance of `ReadStatus` with the given bool value.
-
-		- Parameter bool: The boolean value used to initialize an instance of `ReadStatus`.
-	*/
+	/// Initializes an instance of `ReadStatus` with the given bool value.
+	///
+	/// - Parameter bool: The boolean value used to initialize an instance of `ReadStatus`.
 	public init(from bool: Bool) {
 		self = bool ? .read : .unread
 	}

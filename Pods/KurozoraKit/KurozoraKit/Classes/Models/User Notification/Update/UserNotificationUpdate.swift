@@ -5,9 +5,7 @@
 //  Created by Khoren Katklian on 06/08/2020.
 //
 
-/**
-	A root object that stores information about a user notification update resource.
-*/
+/// A root object that stores information about a user notification update resource.
 public struct UserNotificationUpdate: Codable {
 	// MARK: - Properties
 	/// Whether the user notification is read or not.

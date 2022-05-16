@@ -5,9 +5,7 @@
 //  Created by Khoren Katklian on 14/08/2020.
 //
 
-/**
-	A root object that stores information about a library update resource.
-*/
+/// A root object that stores information about a library update resource.
 public struct LibraryUpdate: LibraryAttributes {
 	// MARK: - Properties
 	public var givenRating: Double?

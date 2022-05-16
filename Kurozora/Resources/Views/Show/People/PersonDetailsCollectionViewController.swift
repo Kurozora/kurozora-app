@@ -8,22 +8,21 @@
 
 import UIKit
 import KurozoraKit
+import Alamofire
 
 class PersonDetailsCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var personID: Int = 0
+	var personIdentity: PersonIdentity? = nil
 	var person: Person! {
 		didSet {
-			self.title = person.attributes.fullName
-		}
-	}
-	var characters: [Character] = []
-	var shows: [Show] = [] {
-		didSet {
+			self.title = self.person.attributes.fullName
+			self.personIdentity = PersonIdentity(id: self.person.id)
+
 			self._prefersActivityIndicatorHidden = true
-			self.collectionView.reloadData {
-				self.toggleEmptyDataView()
-			}
+			#if targetEnvironment(macCatalyst)
+			self.touchBar = nil
+			#endif
+
 			#if DEBUG
 			#if !targetEnvironment(macCatalyst)
 			self.refreshControl?.endRefreshing()
@@ -31,6 +30,15 @@ class PersonDetailsCollectionViewController: KCollectionViewController {
 			#endif
 		}
 	}
+	var characters: [IndexPath: Character] = [:]
+	var characterIdentities: [CharacterIdentity] = []
+
+	var shows: [IndexPath: Show] = [:]
+	var showIdentities: [ShowIdentity] = []
+
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
+	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
@@ -60,7 +68,7 @@ class PersonDetailsCollectionViewController: KCollectionViewController {
 	/// - Returns: an initialized instance of PersonDetailsCollectionViewController.
 	static func `init`(with personID: Int) -> PersonDetailsCollectionViewController {
 		if let personDetailsCollectionViewController = R.storyboard.people.personDetailsCollectionViewController() {
-			personDetailsCollectionViewController.personID = personID
+			personDetailsCollectionViewController.personIdentity = PersonIdentity(id: personID)
 			return personDetailsCollectionViewController
 		}
 
@@ -97,15 +105,17 @@ class PersonDetailsCollectionViewController: KCollectionViewController {
 		self._prefersRefreshControlDisabled = true
 		#endif
 
+		self.configureDataSource()
+
 		// Fetch person details
 		DispatchQueue.global(qos: .userInteractive).async {
-			self.fetchPersonDetails()
+			self.fetchDetails()
 		}
 	}
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		self.fetchPersonDetails()
+		self.fetchDetails()
 	}
 
 	override func configureEmptyDataView() {
@@ -124,15 +134,41 @@ class PersonDetailsCollectionViewController: KCollectionViewController {
 		}
 	}
 
-	func fetchPersonDetails() {
-		KService.getDetails(forPersonID: personID, including: ["shows", "characters"]) { [weak self] result in
+	func fetchDetails() {
+		guard let personIdentity = self.personIdentity else { return }
+
+		if self.person == nil {
+			KService.getDetails(forPerson: personIdentity) { [weak self] result in
+				guard let self = self else { return }
+				switch result {
+				case .success(let people):
+					self.person = people.first
+				case .failure: break
+				}
+			}
+		} else {
+			DispatchQueue.main.async { [weak self] in
+				guard let self = self else { return }
+				self.updateDataSource()
+			}
+		}
+
+		KService.getCharacters(forPerson: personIdentity, limit: 10) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
-			case .success(let people):
+			case .success(let characterIdentityResponse):
+				self.characterIdentities = characterIdentityResponse.data
+			case .failure: break
+			}
+		}
+		KService.getShows(forPerson: personIdentity, limit: 10) { [weak self] result in
+			guard let self = self else { return }
+			switch result {
+			case .success(let showIdentityResponse):
+				self.showIdentities = showIdentityResponse.data
+
 				DispatchQueue.main.async {
-					self.person = people.first
-					self.characters = people.first?.relationships?.characters?.data ?? []
-					self.shows = people.first?.relationships?.shows?.data ?? []
+					self.updateDataSource()
 				}
 			case .failure: break
 			}
@@ -143,112 +179,21 @@ class PersonDetailsCollectionViewController: KCollectionViewController {
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
 		case R.segue.personDetailsCollectionViewController.showsListSegue.identifier:
-			if let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController {
-				showsListCollectionViewController.personID = self.person.id
-			}
+			guard let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController else { return }
+			showsListCollectionViewController.personIdentity = self.personIdentity
 		case R.segue.personDetailsCollectionViewController.showDetailsSegue.identifier:
-			if let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController {
-				guard let show = sender as? Show else { return }
-				showDetailCollectionViewController.showID = show.id
-			}
+			guard let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
+			guard let show = sender as? Show else { return }
+			showDetailCollectionViewController.show = show
 		case R.segue.personDetailsCollectionViewController.charactersListSegue.identifier:
-			if let charactersListCollectionViewController = segue.destination as? CharactersListCollectionViewController {
-				charactersListCollectionViewController.personID = self.person.id
-			}
+			guard let charactersListCollectionViewController = segue.destination as? CharactersListCollectionViewController else { return }
+			charactersListCollectionViewController.personIdentity = self.personIdentity
 		case R.segue.personDetailsCollectionViewController.characterDetailsSegue.identifier:
-			if let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController {
-				guard let character = sender as? Character else { return }
-				characterDetailsCollectionViewController.characterID = character.id
-			}
+			guard let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController else { return }
+			guard let character = sender as? Character else { return }
+			characterDetailsCollectionViewController.character = character
 		default: break
 		}
-	}
-}
-
-// MARK: - UICollectionViewDataSource
-extension PersonDetailsCollectionViewController {
-	override func numberOfSections(in collectionView: UICollectionView) -> Int {
-		return self.person != nil ? PersonDetail.Section.allCases.count : 0
-	}
-
-	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		let characterSection = PersonDetail.Section(rawValue: section) ?? .header
-		var itemsPerSection = self.person != nil ? characterSection.rowCount : 0
-
-		switch characterSection {
-		case .about:
-			if self.person.attributes.about?.isEmpty ?? true {
-				itemsPerSection = 0
-			}
-		case .shows:
-			itemsPerSection = self.shows.count
-		case .characters:
-			itemsPerSection = self.characters.count
-		default: break
-		}
-
-		return itemsPerSection
-	}
-
-	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let personDetailSection = PersonDetail.Section(rawValue: indexPath.section) ?? .header
-		let reuseIdentifier = personDetailSection.identifierString(for: indexPath.item)
-		let personCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-
-		switch personDetailSection {
-		case .header:
-			(personCollectionViewCell as? PersonHeaderCollectionViewCell)?.person = self.person
-		case .about:
-			let textViewCollectionViewCell = personCollectionViewCell as? TextViewCollectionViewCell
-			textViewCollectionViewCell?.delegate = self
-			textViewCollectionViewCell?.textViewCollectionViewCellType = .about
-			textViewCollectionViewCell?.textViewContent = self.person.attributes.about
-		case .information:
-			if let informationCollectionViewCell = personCollectionViewCell as? InformationCollectionViewCell {
-				informationCollectionViewCell.personDetailInformation = PersonDetail.Information(rawValue: indexPath.item) ?? .aliases
-				informationCollectionViewCell.person = self.person
-			}
-		case .shows:
-			if self.shows.count != 0 {
-				(personCollectionViewCell as? SmallLockupCollectionViewCell)?.configure(using: self.shows[indexPath.item])
-				(personCollectionViewCell as? SmallLockupCollectionViewCell)?.delegate = self
-			}
-		case .characters:
-			if self.characters.count != 0 {
-				(personCollectionViewCell as? CharacterLockupCollectionViewCell)?.configure(using: self.characters[indexPath.item])
-			}
-		}
-
-		return personCollectionViewCell
-	}
-
-	override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-		let personDetailSection = PersonDetail.Section(rawValue: indexPath.section) ?? .header
-		let titleHeaderCollectionReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
-		titleHeaderCollectionReusableView.delegate = self
-		titleHeaderCollectionReusableView.configure(withTitle: personDetailSection.stringValue, indexPath: indexPath, segueID: personDetailSection.segueIdentifier)
-		return titleHeaderCollectionReusableView
-	}
-}
-
-// MARK: - TextViewCollectionViewCellDelegate
-extension PersonDetailsCollectionViewController: TextViewCollectionViewCellDelegate {
-	func textViewCollectionViewCell(_ cell: TextViewCollectionViewCell, didPressButton button: UIButton) {
-		if let synopsisKNavigationController = R.storyboard.synopsis.instantiateInitialViewController() {
-			if let synopsisViewController = synopsisKNavigationController.viewControllers.first as? SynopsisViewController {
-				synopsisViewController.title = cell.textViewCollectionViewCellType.stringValue
-				synopsisViewController.synopsis = self.person.attributes.about
-			}
-			synopsisKNavigationController.modalPresentationStyle = .fullScreen
-			self.present(synopsisKNavigationController, animated: true)
-		}
-	}
-}
-
-// MARK: - TitleHeaderCollectionReusableViewDelegate
-extension PersonDetailsCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
-	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPressButton button: UIButton) {
-		self.performSegue(withIdentifier: reusableView.segueID, sender: reusableView.indexPath)
 	}
 }
 
@@ -257,10 +202,10 @@ extension PersonDetailsCollectionViewController: BaseLockupCollectionViewCellDel
 	func chooseStatusButtonPressed(_ sender: UIButton, on cell: BaseLockupCollectionViewCell) {
 		WorkflowController.shared.isSignedIn {
 			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-			let show = self.shows[indexPath.item]
+			guard let show = self.shows[indexPath] else { return }
 
 			let oldLibraryStatus = cell.libraryStatus
-			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: oldLibraryStatus, action: { title, value  in
+			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: oldLibraryStatus, action: { title, value in
 				KService.addToLibrary(withLibraryStatus: value, showID: show.id) { result in
 					switch result {
 					case .success(let libraryUpdate):
@@ -312,6 +257,123 @@ extension PersonDetailsCollectionViewController: BaseLockupCollectionViewCellDel
 
 	func reminderButtonPressed(on cell: BaseLockupCollectionViewCell) {
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		self.shows[indexPath.item].toggleReminder()
+		self.shows[indexPath]?.toggleReminder()
+	}
+}
+
+// MARK: - TextViewCollectionViewCellDelegate
+extension PersonDetailsCollectionViewController: TextViewCollectionViewCellDelegate {
+	func textViewCollectionViewCell(_ cell: TextViewCollectionViewCell, didPressButton button: UIButton) {
+		if let synopsisKNavigationController = R.storyboard.synopsis.instantiateInitialViewController() {
+			if let synopsisViewController = synopsisKNavigationController.viewControllers.first as? SynopsisViewController {
+				synopsisViewController.title = cell.textViewCollectionViewCellType.stringValue
+				synopsisViewController.synopsis = self.person.attributes.about
+			}
+			synopsisKNavigationController.modalPresentationStyle = .fullScreen
+			self.present(synopsisKNavigationController, animated: true)
+		}
+	}
+}
+
+// MARK: - TitleHeaderCollectionReusableViewDelegate
+extension PersonDetailsCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
+	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPressButton button: UIButton) {
+		self.performSegue(withIdentifier: reusableView.segueID, sender: reusableView.indexPath)
+	}
+}
+
+// MARK: - Enums
+extension PersonDetailsCollectionViewController {
+	/// List of person section layout kind.
+	enum SectionLayoutKind: Int, CaseIterable {
+		// MARK: - Cases
+		/// Indicates a header section layout type.
+		case header = 0
+
+		/// Indicates an about section layout type.
+		case about
+
+		/// Indicates an information section layout type.
+		case information
+
+		/// Indicates characters section layout type.
+		case characters
+
+		/// Indicates shows section layout type.
+		case shows
+
+		// MARK: - Properties
+		/// The string value of a character section type.
+		var stringValue: String {
+			switch self {
+			case .header:
+				return Trans.header
+			case .about:
+				return Trans.about
+			case .information:
+				return Trans.information
+			case .characters:
+				return Trans.characters
+			case .shows:
+				return Trans.shows
+			}
+		}
+
+		/// The string value of a character section type segue identifier.
+		var segueIdentifier: String {
+			switch self {
+			case .header:
+				return ""
+			case .about:
+				return ""
+			case .information:
+				return ""
+			case .characters:
+				return R.segue.personDetailsCollectionViewController.charactersListSegue.identifier
+			case .shows:
+				return R.segue.personDetailsCollectionViewController.showsListSegue.identifier
+			}
+		}
+	}
+
+	/// List of available Item Kind types.
+	enum ItemKind: Hashable {
+		// MARK: - Cases
+		/// Indicates the item kind contains a `Person` object.
+		case person(_: Person, id: UUID = UUID())
+
+		/// Indicates the item kind contains a `CharacterIdentity` object.
+		case characterIdentity(_: CharacterIdentity, id: UUID = UUID())
+
+		/// Indicates the item kind contains a `ShowIdentity` object.
+		case showIdentity(_: ShowIdentity, id: UUID = UUID())
+
+		// MARK: - Functions
+		func hash(into hasher: inout Hasher) {
+			switch self {
+			case .person(let person, let id):
+				hasher.combine(person)
+				hasher.combine(id)
+			case .characterIdentity(let characterIdentity, let id):
+				hasher.combine(characterIdentity)
+				hasher.combine(id)
+			case .showIdentity(let showIdentity, let id):
+				hasher.combine(showIdentity)
+				hasher.combine(id)
+			}
+		}
+
+		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
+			switch (lhs, rhs) {
+			case (.person(let person1, let id1), .person(let person2, let id2)):
+				return person1.id == person2.id && id1 == id2
+			case (.characterIdentity(let characterIdentity1, let id1), .characterIdentity(let characterIdentity2, let id2)):
+				return characterIdentity1.id == characterIdentity2.id && id1 == id2
+			case (.showIdentity(let showIdentity1, let id1), .showIdentity(let showIdentity2, let id2)):
+				return showIdentity1.id == showIdentity2.id && id1 == id2
+			default:
+				return false
+			}
+		}
 	}
 }

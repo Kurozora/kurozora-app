@@ -129,7 +129,8 @@ class FollowTableViewController: KTableViewController {
     func fetchFollowList() {
 		guard let userID = user?.id else { return }
 
-		DispatchQueue.main.async {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
 			#if !targetEnvironment(macCatalyst)
 			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing \(self.followList.stringValue) list...")
 			#endif

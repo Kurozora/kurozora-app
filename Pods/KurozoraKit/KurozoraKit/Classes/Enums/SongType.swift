@@ -5,11 +5,9 @@
 //  Created by Khoren Katklian on 29/01/2022.
 //
 
-/**
-	List of available song types.
-
-	- Tag: SongType
-*/
+///  List of available song types.
+///
+/// - Tag: SongType
 public enum SongType: Int, CaseIterable, Codable {
 	// MARK: - Cases
 	/// Indicates that the song is of the `opening` type.

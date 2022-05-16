@@ -6,9 +6,7 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-/**
-	A root object that stores information about a genre resource.
-*/
+/// A root object that stores information about a genre resource.
 public struct Genre: IdentityResource, Hashable {
 	// MARK: - Properties
 	public let id: Int

@@ -5,9 +5,7 @@
 //  Created by Khoren Katklian on 22/06/2020.
 //
 
-/**
-	A root object that stores information about a collection of studios.
-*/
+/// A root object that stores information about a collection of studios.
 public struct StudioResponse: Codable {
 	// MARK: - Properties
 	/// The data included in the repsonse for a studio object request.

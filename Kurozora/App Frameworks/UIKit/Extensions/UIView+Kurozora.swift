@@ -81,27 +81,25 @@ extension UIView {
 	///
 	/// - Parameters:
 	///    - withView: The view used to set the bounds of the shadow (default is `self`).
-	///    - shadowColor: The color of the shadow (default is `.black`).
-	///    - shadowOpacity: The opacity of the shadow (default is `0.2`).
-	///    - shadowRadius: The radius of the shadow (default is `8`).
-	///    - shadowOffset: The offset of the shadow (default is `.zero`).
-	///    - shadowPathSize: The path size of the shadow (default is `nil`).
+	///    - color: The color of the shadow (default is `.black`).
+	///    - opacity: The opacity of the shadow (default is `0.2`).
+	///    - radius: The radius of the shadow (default is `8`).
+	///    - offset: The offset of the shadow (default is `.zero`).
+	///    - pathSize: The path size of the shadow (default is `nil`).
 	///    - shouldRasterize: Whether the shadow should be rasterized for better performance (default is `true`).
 	///    - cornerRadius: The corner radius of the path size (default is `10`).
-	func applyShadow(withView view: UIView? = nil, shadowColor: UIColor = .black, shadowOpacity: Float = 0.5, shadowRadius: CGFloat = 8, shadowOffset: CGSize = .zero, shadowPathSize: CGSize? = nil, shouldRasterize: Bool = true, cornerRadius: CGFloat = 10) {
+	func applyShadow(withView view: UIView? = nil, color: UIColor = .black, opacity: Float = 0.5, radius: CGFloat = 8, offset: CGSize = .zero, pathSize: CGSize? = nil, shouldRasterize: Bool = true, cornerRadius: CGFloat = 10) {
 //		let roundedRect = (view ?? self).bounds.offsetBy(dx: 0, dy: 10)
 //		let shadowPath = UIBezierPath(roundedRect: roundedRect, cornerRadius: cornerRadius)
 
-		self.layer.shadowColor = shadowColor.cgColor
-		self.layer.shadowOpacity = shadowOpacity
-		self.layer.shadowRadius = shadowRadius
-		self.layer.shadowOffset = shadowOffset
+		self.layer.shadowColor = color.cgColor
+		self.layer.shadowOpacity = opacity
+		self.layer.shadowRadius = radius
+		self.layer.shadowOffset = offset
 		self.layer.masksToBounds = false
 //		self.layer.shadowPath = shadowPath.cgPath
 
-		if shouldRasterize {
-			self.layer.shouldRasterize = true
-			self.layer.rasterizationScale = UIScreen.main.scale
-		}
+		self.layer.shouldRasterize = shouldRasterize
+		self.layer.rasterizationScale = shouldRasterize ? UIScreen.main.scale : 1.0
 	}
 }

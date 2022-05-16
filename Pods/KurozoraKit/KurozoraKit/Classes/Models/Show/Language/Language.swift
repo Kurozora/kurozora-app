@@ -5,9 +5,7 @@
 //  Created by Khoren Katklian on 13/07/2021.
 //
 
-/**
-	A root object that stores information about a language resource.
-*/
+/// A root object that stores information about a language resource.
 public struct Language: IdentityResource, Hashable {
 	// MARK: - Properties
 	public let id: Int

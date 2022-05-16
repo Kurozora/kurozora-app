@@ -8,16 +8,15 @@
 import TRON
 
 extension KurozoraKit {
-	/**
-		Fetch the explore page content. Explore page can be filtered by a specific genre by passing the genre id.
-
-		Leaving the `genreID` and `themeID` empty or passing `nil` will return the global explore page which contains hand picked and staff curated shows.
-
-		- Parameter genreID: The id of a genre by which the explore page should be filtered.
-		- Parameter themeID: The id of a theme by which the explore page should be filtered.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Fetch the explore page content. Explore page can be filtered by a specific genre by passing the genre id.
+	///
+	/// Leaving the `genreID` and `themeID` empty or passing `nil` will return the global explore page which contains hand picked and staff curated shows.
+	///
+	///- Parameters:
+	///   - genreID: The id of a genre by which the explore page should be filtered.
+	///   - themeID: The id of a theme by which the explore page should be filtered.
+	///   - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///   - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func getExplore(genreID: Int? = nil, themeID: Int?, completion completionHandler: @escaping (_ result: Result<[ExploreCategory], KKAPIError>) -> Void) {
 		let exploreIndex = KKEndpoint.Explore.index.endpointValue
 		let request: APIRequest<ExploreCategoryResponse, KKAPIError> = tron.codable.request(exploreIndex)

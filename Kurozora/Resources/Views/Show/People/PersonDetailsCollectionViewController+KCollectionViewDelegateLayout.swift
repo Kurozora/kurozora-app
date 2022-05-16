@@ -12,7 +12,7 @@ extension PersonDetailsCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
 
-		switch PersonDetail.Section(rawValue: section) {
+		switch self.snapshot.sectionIdentifiers[section] {
 		case .header, .about:
 			return 1
 		case .shows:
@@ -28,7 +28,7 @@ extension PersonDetailsCollectionViewController {
 	}
 
 	func heightDimension(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutDimension {
-		switch PersonDetail.Section(rawValue: section) {
+		switch self.snapshot.sectionIdentifiers[section] {
 		case .header:
 			return .estimated(230)
 		case .about:
@@ -36,13 +36,12 @@ extension PersonDetailsCollectionViewController {
 		case .information:
 			return .estimated(55)
 		default:
-			let heightFraction = self.groupHeightFraction(forSection: section, with: columnsCount, layout: layoutEnvironment)
-			return .fractionalWidth(heightFraction)
+			return .fractionalWidth(.zero)
 		}
 	}
 
 	override func contentInset(forSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		switch PersonDetail.Section(rawValue: section) {
+		switch self.snapshot.sectionIdentifiers[section] {
 		case .header:
 			return NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0)
 		case .information:
@@ -56,7 +55,7 @@ extension PersonDetailsCollectionViewController {
 		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
 			guard self.person != nil else { return nil }
-			guard let personDetailSection = PersonDetail.Section(rawValue: section) else { fatalError("Person details section not supported") }
+			let personDetailSection = self.snapshot.sectionIdentifiers[section]
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 			var sectionLayout: NSCollectionLayoutSection? = nil
 			var hasSectionHeader = false
@@ -75,16 +74,14 @@ extension PersonDetailsCollectionViewController {
 				let gridSection = self.gridSection(for: section, layoutEnvironment: layoutEnvironment)
 				sectionLayout = gridSection
 				hasSectionHeader = true
-			case .shows:
-				if self.shows.count != 0 {
-					let smallSectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
-					sectionLayout = smallSectionLayout
+			case .characters:
+				if !self.characterIdentities.isEmpty {
+					sectionLayout = Layouts.charactersSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 					hasSectionHeader = true
 				}
-			case .characters:
-				if self.characters.count != 0 {
-					let charactersSectionLayout = Layouts.charactersSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
-					sectionLayout = charactersSectionLayout
+			case .shows:
+				if !self.showIdentities.isEmpty {
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 					hasSectionHeader = true
 				}
 			}

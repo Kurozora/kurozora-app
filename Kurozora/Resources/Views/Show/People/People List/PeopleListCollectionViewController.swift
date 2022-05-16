@@ -8,24 +8,19 @@
 
 import UIKit
 import KurozoraKit
+import Alamofire
 
 class PeopleListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var characterID = 0
-	var people: [Person] = [] {
-		didSet {
-			self.configureDataSource()
-			self._prefersActivityIndicatorHidden = true
-			self.toggleEmptyDataView()
-			#if DEBUG
-			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.endRefreshing()
-			#endif
-			#endif
-		}
-	}
+	var characterIdentity: CharacterIdentity? = nil
+	var people: [IndexPath: Person] = [:]
+	var personIdentities: [PersonIdentity] = []
+	var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, PersonIdentity>()
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, PersonIdentity>! = nil
+	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
+
+	/// The next page url of the pagination.
 	var nextPageURL: String?
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>! = nil
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
@@ -63,7 +58,16 @@ class PeopleListCollectionViewController: KCollectionViewController {
 		self._prefersRefreshControlDisabled = true
 		#endif
 
-		if characterID != 0 {
+		// Add Refresh Control to Collection View
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the people.")
+		#endif
+
+		self.configureDataSource()
+
+		if !self.personIdentities.isEmpty {
+			self.endFetch()
+		} else if self.characterIdentity != nil {
 			DispatchQueue.global(qos: .userInteractive).async {
 				self.fetchPeople()
 			}
@@ -72,9 +76,11 @@ class PeopleListCollectionViewController: KCollectionViewController {
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		if characterID != 0 {
+		if self.characterIdentity != nil {
 			self.nextPageURL = nil
-			self.fetchPeople()
+			DispatchQueue.global(qos: .userInteractive).async {
+				self.fetchPeople()
+			}
 		}
 	}
 
@@ -94,19 +100,56 @@ class PeopleListCollectionViewController: KCollectionViewController {
 		}
 	}
 
+	func endFetch() {
+		self.updateDataSource()
+		self._prefersActivityIndicatorHidden = true
+		self.toggleEmptyDataView()
+		#if DEBUG
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.endRefreshing()
+		#endif
+		#endif
+	}
+
 	func fetchPeople() {
-		KService.getPeople(forCharacterID: self.characterID, next: self.nextPageURL) { [weak self] result in
+		guard let characterIdentity = self.characterIdentity else {
+			DispatchQueue.main.async { [weak self] in
+				guard let self = self else { return }
+				#if !targetEnvironment(macCatalyst)
+				self.refreshControl?.endRefreshing()
+				#endif
+			}
+			return
+		}
+
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing people...")
+			#endif
+		}
+
+		KService.getPeople(forCharacter: characterIdentity, next: self.nextPageURL) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
-			case .success(let peopleResponse):
+			case .success(let personIdentityResponse):
 				// Reset data if necessary
 				if self.nextPageURL == nil {
-					self.people = []
+					self.personIdentities = []
 				}
 
 				// Save next page url and append new data
-				self.nextPageURL = peopleResponse.next
-				self.people.append(contentsOf: peopleResponse.data)
+				self.nextPageURL = personIdentityResponse.next
+				self.personIdentities.append(contentsOf: personIdentityResponse.data)
+
+				DispatchQueue.main.async {
+					self.endFetch()
+
+					// Reset refresh controller title
+					#if !targetEnvironment(macCatalyst)
+					self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the people.")
+					#endif
+				}
 			case .failure: break
 			}
 		}
@@ -118,50 +161,9 @@ class PeopleListCollectionViewController: KCollectionViewController {
 		case R.segue.peopleListCollectionViewController.personDetailsSegue.identifier:
 			guard let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController else { return }
 			guard let person = sender as? Person else { return }
-			personDetailsCollectionViewController.personID = person.id
+			personDetailsCollectionViewController.person = person
 		default: break
 		}
-	}
-}
-
-// MARK: - KCollectionViewDataSource
-extension PeopleListCollectionViewController {
-	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
-		return [PersonLockupCollectionViewCell.self]
-	}
-
-	override func configureDataSource() {
-		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, _) -> UICollectionViewCell? in
-			guard let self = self else { return nil }
-			let personLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: PersonLockupCollectionViewCell.self, for: indexPath)
-			personLockupCollectionViewCell.configure(using: self.people[indexPath.item])
-			return personLockupCollectionViewCell
-		}
-
-		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
-		SectionLayoutKind.allCases.forEach {
-			snapshot.appendSections([$0])
-			snapshot.appendItems(Array(0..<people.count), toSection: $0)
-		}
-		self.dataSource.apply(snapshot)
-	}
-}
-
-// MARK: - KCollectionViewDelegateLayout
-extension PeopleListCollectionViewController {
-	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
-		let width = layoutEnvironment.container.effectiveContentSize.width
-		let columnCount = (width / 200).rounded().int
-		return columnCount > 0 ? columnCount : 1
-	}
-
-	override func createLayout() -> UICollectionViewLayout? {
-		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-			guard let self = self else { return nil }
-			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-			return Layouts.peopleSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
-		}
-		return layout
 	}
 }
 

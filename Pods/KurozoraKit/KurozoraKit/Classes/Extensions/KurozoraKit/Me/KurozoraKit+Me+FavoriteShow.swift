@@ -8,14 +8,13 @@
 import TRON
 
 extension KurozoraKit {
-	/**
-		Fetch the favorite shows list for the authenticated user.
-
-		- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
-		- Parameter limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Fetch the favorite shows list for the authenticated user.
+	///
+	/// - Parameters:
+	///    - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func getFavoriteShows(next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<ShowResponse, KKAPIError>) -> Void) {
 		let meFavoriteShowIndex = next ?? KKEndpoint.Me.FavoriteShow.index.endpointValue
 		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(meFavoriteShowIndex).buildURL(.relativeToBaseURL)
@@ -41,13 +40,12 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		Update the `FavoriteStatus` value of a show in the authenticated user's library.
-
-		- Parameter showID: The id of the show whose favorite status should be updated.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Update the `FavoriteStatus` value of a show in the authenticated user's library.
+	///
+	/// - Parameters:
+	///    - showID: The id of the show whose favorite status should be updated.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func updateFavoriteShowStatus(_ showID: Int, completion completionHandler: @escaping (_ result: Result<FavoriteStatus, KKAPIError>) -> Void) {
 		let meFavoriteShowUpdate = KKEndpoint.Me.FavoriteShow.update.endpointValue
 		let request: APIRequest<FavoriteShowResponse, KKAPIError> = tron.codable.request(meFavoriteShowUpdate)

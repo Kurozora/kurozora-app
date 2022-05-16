@@ -10,17 +10,16 @@ import TRON
 import Alamofire
 
 extension KurozoraKit {
-	/**
-		Fetch the season details for the given season id.
-
-		- Parameter seasonID: The id of the season for which the details should be fetched.
-		- Parameter relationships: The relationships to include in the response.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Fetch the season details for the given season identity.
+	///
+	/// - Parameters:
+	///    - seasonIdentity: The season identity object for which the details should be fetched.
+	///    - relationships: The relationships to include in the response.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	@discardableResult
-	public func getDetails(forSeasonID seasonID: Int, including relationships: [String] = [], completion completionHandler: @escaping (_ result: Result<[Season], KKAPIError>) -> Void) -> DataRequest {
-		let seasonsDetails = KKEndpoint.Shows.Seasons.details(seasonID).endpointValue
+	public func getDetails(forSeason seasonIdentity: SeasonIdentity, including relationships: [String] = [], completion completionHandler: @escaping (_ result: Result<[Season], KKAPIError>) -> Void) -> DataRequest {
+		let seasonsDetails = KKEndpoint.Shows.Seasons.details(seasonIdentity).endpointValue
 		let request: APIRequest<SeasonResponse, KKAPIError> = tron.codable.request(seasonsDetails)
 
 		request.headers = headers
@@ -32,11 +31,7 @@ extension KurozoraKit {
 		request.method = .get
 		return request.perform(withSuccess: { seasonResponse in
 			completionHandler(.success(seasonResponse.data))
-		}, failure: { [weak self] error in
-			guard let self = self else { return }
-			if self.services.showAlerts {
-				UIApplication.topViewController?.presentAlertController(title: "Can't Get Season's Details 😔", message: error.message)
-			}
+		}, failure: { error in
 			print("❌ Received get season details error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
 			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
@@ -45,19 +40,18 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		Fetch the episodes for the given season id.
-
-		- Parameter seasonID: The id of the season for which the episodes should be fetched.
-		- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
-		- Parameter limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
-		- Parameter hideFillers: A boolean indicating whether fillers should be included in the request.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Fetch the episodes for the given season identity.
+	///
+	/// - Parameters:
+	///    - seasonIdentity: The season identity  object of the season for which the episodes should be fetched.
+	///    - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
+	///    - hideFillers: A boolean indicating whether fillers should be included in the request.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	@discardableResult
-	public func getEpisodes(forSeasonID seasonID: Int, next: String? = nil, limit: Int = 25, hideFillers: Bool = false, completion completionHandler: @escaping (_ result: Result<EpisodeIdentityResponse, KKAPIError>) -> Void) -> DataRequest {
-		let seasonsEpisodes = next ?? KKEndpoint.Shows.Seasons.episodes(seasonID).endpointValue
+	public func getEpisodes(forSeasonID seasonIdentity: SeasonIdentity, next: String? = nil, limit: Int = 25, hideFillers: Bool = false, completion completionHandler: @escaping (_ result: Result<EpisodeIdentityResponse, KKAPIError>) -> Void) -> DataRequest {
+		let seasonsEpisodes = next ?? KKEndpoint.Shows.Seasons.episodes(seasonIdentity).endpointValue
 		let request: APIRequest<EpisodeIdentityResponse, KKAPIError> = tron.codable.request(seasonsEpisodes).buildURL(.relativeToBaseURL)
 
 		request.headers = headers

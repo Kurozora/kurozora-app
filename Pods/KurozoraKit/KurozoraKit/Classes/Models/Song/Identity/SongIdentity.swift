@@ -5,9 +5,7 @@
 //  Created by Khoren Katklian on 25/02/2022.
 //
 
-/**
-	A root object that stores information about a song identity resource.
-*/
+/// A root object that stores information about a song identity resource.
 public class SongIdentity: IdentityResource, Hashable {
 	public let id: Int
 

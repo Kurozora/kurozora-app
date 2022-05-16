@@ -6,9 +6,7 @@
 //
 
 extension User {
-	/**
-		A root object that stores information about a single user, such as the user's username, bio, and profile image.
-	*/
+	/// A root object that stores information about a single user, such as the user's username, bio, and profile image.
 	public struct Attributes: Codable {
 		// MARK: - Properties
 //		/// The role of the user.
@@ -82,46 +80,38 @@ extension User.Attributes {
 	}
 
 	// MARK: - Functions
-	/**
-		Updates the attributes with the given `FollowUpdate` object.
-
-		- Parameter followUpdate: The `FollowUpdate` object used to update the attributes.
-	*/
+	/// Updates the attributes with the given `FollowUpdate` object.
+	///
+	/// - Parameter followUpdate: The `FollowUpdate` object used to update the attributes.
 	public mutating func update(using followUpdate: FollowUpdate) {
 		self.followStatus = followUpdate.followStatus
 	}
 
-	/**
-		Returns a copy of the object with the updated attributes from the given `FollowUpdate` object.
-
-		- Parameter followUpdate: The `FollowUpdate` object used to update the attributes.
-
-		- Returns: a copy of the object with the updated attributes from the given `followUpdate` object.
-	*/
+	/// Returns a copy of the object with the updated attributes from the given `FollowUpdate` object.
+	///
+	/// - Parameter followUpdate: The `FollowUpdate` object used to update the attributes.
+	///
+	/// - Returns: a copy of the object with the updated attributes from the given `followUpdate` object.
 	public mutating func updated(using followUpdate: FollowUpdate) -> Self {
 		var userAttributes = self
 		userAttributes.followStatus = followUpdate.followStatus
 		return userAttributes
 	}
 
-	/**
-		Updates the attributes with the given `UserUpdate` object.
-
-		- Parameter userUpdate: The `UserUpdate` object used to update the attributes.
-	*/
+	/// Updates the attributes with the given `UserUpdate` object.
+	///
+	/// - Parameter userUpdate: The `UserUpdate` object used to update the attributes.
 	public mutating func update(using userUpdate: UserUpdate) {
 		self.biography = userUpdate.biography
 		self.profile = userUpdate.profile
 		self.banner = userUpdate.banner
 	}
 
-	/**
-		Returns a copy of the object with the updated attributes from the given `UserUpdate` object.
-
-		- Parameter userUpdate: The `UserUpdate` object used to update the attributes.
-
-		- Returns: a copy of the object with the updated attributes from the given `userUpdate` object.
-	*/
+	/// Returns a copy of the object with the updated attributes from the given `UserUpdate` object.
+	///
+	/// - Parameter userUpdate: The `UserUpdate` object used to update the attributes.
+	///
+	/// - Returns: a copy of the object with the updated attributes from the given `userUpdate` object.
 	public mutating func updated(using userUpdate: UserUpdate) -> Self {
 		var userAttributes = self
 		userAttributes.biography = userUpdate.biography
@@ -130,11 +120,9 @@ extension User.Attributes {
 		return userAttributes
 	}
 
-	/**
-		Updates the subscription status of the user.
-
-		- Parameter receipt: The `Receipt` object used to update the subscription status.
-	*/
+	/// Updates the subscription status of the user.
+	///
+	/// - Parameter receipt: The `Receipt` object used to update the subscription status.
 	public mutating func updateSubscription(from receipt: Receipt) {
 		self.isPro = receipt.attributes.isValid
 	}

@@ -12,25 +12,19 @@ import AVFoundation
 
 class ShowSongsListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var showID: Int = 0
+	var showIdentity: ShowIdentity? = nil
 	var showSongs: [ShowSong] = [] {
 		didSet {
-			if self.showID != 0 {
-				self.groupShowSongs()
-			}
-
-			self.configureDataSource()
 			self._prefersActivityIndicatorHidden = true
-			self.toggleEmptyDataView()
 			#if DEBUG
 			#if !targetEnvironment(macCatalyst)
 			self.refreshControl?.endRefreshing()
 			#endif
 			#endif
-
 		}
 	}
 	lazy var showSongCategories: [SongType: [ShowSong]] = [:]
+	var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 
 	/// The object that provides the interface to control the player’s transport behavior.
@@ -75,10 +69,15 @@ class ShowSongsListCollectionViewController: KCollectionViewController {
 		self._prefersRefreshControlDisabled = true
 		#endif
 
-		if self.showID != 0 {
+		self.configureDataSource()
+
+		if self.showIdentity != nil {
 			DispatchQueue.global(qos: .userInteractive).async {
 				self.fetchShowSongs()
 			}
+		} else {
+			self.updateDataSource()
+			self.toggleEmptyDataView()
 		}
 	}
 
@@ -90,7 +89,7 @@ class ShowSongsListCollectionViewController: KCollectionViewController {
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		if self.showID != 0 {
+		if self.showIdentity != nil {
 			self.fetchShowSongs()
 		}
 	}
@@ -112,11 +111,16 @@ class ShowSongsListCollectionViewController: KCollectionViewController {
 	}
 
 	func fetchShowSongs() {
-		KService.getSongs(forShowID: self.showID) { [weak self] result in
+		guard let showIdentity = self.showIdentity else { return }
+
+		KService.getSongs(forShow: showIdentity, limit: -1) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
 			case .success(let showSongResponse):
 				self.showSongs = showSongResponse.data
+				self.groupShowSongs()
+				self.updateDataSource()
+				self.toggleEmptyDataView()
 			case .failure: break
 			}
 		}
@@ -140,109 +144,11 @@ class ShowSongsListCollectionViewController: KCollectionViewController {
 		switch segue.identifier {
 		case R.segue.showSongsListCollectionViewController.showDetailsSegue.identifier:
 			// Segue to show details
-			if let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController {
-				guard let show = sender as? Show else { return }
-				showDetailCollectionViewController.showID = show.id
-			}
+			guard let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
+			guard let show = sender as? Show else { return }
+			showDetailCollectionViewController.show = show
 		default: break
 		}
-	}
-}
-
-// MARK: - KCollectionViewDataSource
-extension ShowSongsListCollectionViewController {
-	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
-		return [MusicLockupCollectionViewCell.self]
-	}
-
-	override func registerNibs(for collectionView: UICollectionView) -> [UICollectionReusableView.Type] {
-		return [TitleHeaderCollectionReusableView.self]
-	}
-
-	override func configureDataSource() {
-		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: ItemKind) -> UICollectionViewCell? in
-			guard let self = self else { return nil }
-			let showIDExists = self.showID != 0
-
-			switch item {
-			case .showSong(let showSong, _):
-				let musicLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: MusicLockupCollectionViewCell.self, for: indexPath)
-				musicLockupCollectionViewCell.delegate = self
-				musicLockupCollectionViewCell.configure(using: showSong, at: indexPath, showEpisodes: showIDExists, showShow: !showIDExists)
-				return musicLockupCollectionViewCell
-			}
-		}
-
-		if self.showID != 0 {
-			dataSource.supplementaryViewProvider = { [weak self] (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
-				guard let self = self else { return nil }
-				guard let songType = SongType(rawValue: indexPath.section) else { return nil }
-
-				// Get a supplementary view of the desired kind.
-				let exploreSectionTitleCell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
-				exploreSectionTitleCell.delegate = self
-				exploreSectionTitleCell.configure(withTitle: "\(songType.stringValue) (\(self.showSongCategories[songType]?.count ?? 0))")
-				return exploreSectionTitleCell
-			}
-		}
-
-		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
-
-		if self.showID != 0 {
-			SongType.allCases.forEach { [weak self] songType in
-				guard let self = self else { return }
-				if self.showSongCategories.has(key: songType) {
-					let sectionHeader = SectionLayoutKind.header()
-					snapshot.appendSections([sectionHeader])
-
-					if let showSongCategory = self.showSongCategories[songType] {
-						let showSongItems: [ItemKind] = showSongCategory.map { showSong in
-							return .showSong(showSong)
-						}
-						snapshot.appendItems(showSongItems, toSection: sectionHeader)
-					}
-				}
-			}
-		} else {
-			let sectionHeader = SectionLayoutKind.header()
-			snapshot.appendSections([sectionHeader])
-
-			let showSongItems: [ItemKind] = self.showSongs.map { showSong in
-				return .showSong(showSong)
-			}
-			snapshot.appendItems(showSongItems, toSection: sectionHeader)
-		}
-
-		self.dataSource.apply(snapshot)
-	}
-}
-
-// MARK: - KCollectionViewDelegateLayout
-extension ShowSongsListCollectionViewController {
-	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
-		let width = layoutEnvironment.container.effectiveContentSize.width
-		var columnCount = (width / 254).rounded().int
-		columnCount = columnCount > 8 ? 8 : columnCount
-		return columnCount > 0 ? columnCount : 1
-	}
-
-	override func createLayout() -> UICollectionViewLayout? {
-		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-			guard let self = self else { return nil }
-			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-			let layoutSection = Layouts.musicSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
-
-			if self.showID != 0 {
-				// Add header supplementary view.
-				let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(100))
-				let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
-					layoutSize: headerFooterSize,
-					elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
-				layoutSection.boundarySupplementaryItems = [sectionHeader]
-			}
-			return layoutSection
-		}
-		return layout
 	}
 }
 

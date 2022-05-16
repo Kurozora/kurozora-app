@@ -156,7 +156,8 @@ class NotificationsTableViewController: KTableViewController {
 
 	/// Fetch the notifications for the current user.
 	func fetchNotifications() {
-		DispatchQueue.main.async {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
 			#if !targetEnvironment(macCatalyst)
 			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing notifications list...")
 			#endif

@@ -9,7 +9,7 @@
 import UIKit
 import KurozoraKit
 
-class PersonLockupCollectionViewCell: UICollectionViewCell {
+class PersonLockupCollectionViewCell: KCollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var personImageView: PersonImageView!
 	@IBOutlet weak var nameLabel: KLabel!
@@ -19,7 +19,11 @@ class PersonLockupCollectionViewCell: UICollectionViewCell {
 	///
 	/// - Parameter person: The person object used to configure the cell.
 	func configure(using person: Person?) {
-		guard let person = person else { return }
+		guard let person = person else {
+			self.showSkeleton()
+			return
+		}
+		self.hideSkeleton()
 
 		self.personImageView.setImage(with: person.attributes.profile?.url ?? "", placeholder: person.attributes.placeholderImage)
 		self.nameLabel.text = person.attributes.fullName

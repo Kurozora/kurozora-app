@@ -347,10 +347,24 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="Search" id="Kpv-Pe-ep6"/>
+                    <connections>
+                        <segue destination="uMA-Uj-cNY" kind="show" identifier="ShowDetailsSegue" id="lUW-RX-SXL"/>
+                        <segue destination="lXe-6H-qNU" kind="show" identifier="ProfileSegue" id="70s-BL-LEo"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bIZ-Ff-stf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2711.594202898551" y="150.66964285714286"/>
+        </scene>
+        <!--ShowDetailsCollectionViewController-->
+        <scene sceneID="NQ3-Kx-lCs">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Shows" referencedIdentifier="ShowDetailsCollectionViewController" id="uMA-Uj-cNY" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="NZV-AZ-Z5V"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="A8d-UM-XXu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3407" y="119"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="pLp-US-z77">
@@ -376,6 +390,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wpw-As-taw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1903" y="151"/>
+        </scene>
+        <!--ProfileTableViewController-->
+        <scene sceneID="ls8-Pf-IOq">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Profile" referencedIdentifier="ProfileTableViewController" id="lXe-6H-qNU" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="2zQ-U0-kHB"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pJH-Qk-BA8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3360" y="188"/>
         </scene>
     </scenes>
     <designables>

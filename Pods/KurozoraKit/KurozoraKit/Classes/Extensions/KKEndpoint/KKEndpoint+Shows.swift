@@ -13,24 +13,24 @@ extension KKEndpoint.Shows {
 	internal enum People {
 		// MARK: - Cases
 		/// The endpoint to the details of a person.
-		case details(_ personID: Int)
+		case details(_ personIdentity: PersonIdentity)
 
 		/// The endpoint to the characters belonging to a person.
-		case characters(_ personID: Int)
+		case characters(_ personIdentity: PersonIdentity)
 
 		/// The endpoint to the shows belonging to a person.
-		case shows(_ personID: Int)
+		case shows(_ personIdentity: PersonIdentity)
 
 		// MARK: - Properties
 		/// The endpoint value of the People API type.
 		var endpointValue: String {
 			switch self {
-			case .details(let personID):
-				return "people/\(personID)"
-			case .characters(let personID):
-				return "people/\(personID)/characters"
-			case .shows(let personID):
-				return "people/\(personID)/anime"
+			case .details(let personIdentity):
+				return "people/\(personIdentity.id)"
+			case .characters(let personIdentity):
+				return "people/\(personIdentity.id)/characters"
+			case .shows(let personIdentity):
+				return "people/\(personIdentity.id)/anime"
 			}
 		}
 	}
@@ -42,14 +42,14 @@ extension KKEndpoint.Shows {
 	internal enum Cast {
 		// MARK: - Cases
 		/// The endpoint to the details of a cast.
-		case details(_ castID: Int)
+		case details(_ castIdentity: CastIdentity)
 
 		// MARK: - Properties
 		/// The endpoint value of the Cast API type.
 		var endpointValue: String {
 			switch self {
-			case .details(let castID):
-				return "cast/\(castID)"
+			case .details(let castIdentity):
+				return "cast/\(castIdentity.id)"
 			}
 		}
 	}
@@ -61,24 +61,24 @@ extension KKEndpoint.Shows {
 	internal enum Characters {
 		// MARK: - Cases
 		/// The endpoint to the details of a character.
-		case details(_ characterID: Int)
+		case details(_ characterIdentity: CharacterIdentity)
 
 		/// The endpoint to the people belonging to a character.
-		case people(_ characterID: Int)
+		case people(_ characterIdentity: CharacterIdentity)
 
 		/// The endpoint to the shows belonging to a character.
-		case shows(_ characterID: Int)
+		case shows(_ characterIdentity: CharacterIdentity)
 
 		// MARK: - Properties
 		/// The endpoint value of the Charactes API type.
 		var endpointValue: String {
 			switch self {
-			case .details(let characterID):
-				return "characters/\(characterID)"
-			case .people(let characterID):
-				return "characters/\(characterID)/people"
-			case .shows(let characterID):
-				return "characters/\(characterID)/anime"
+			case .details(let characterIdentity):
+				return "characters/\(characterIdentity.id)"
+			case .people(let characterIdentity):
+				return "characters/\(characterIdentity.id)/people"
+			case .shows(let characterIdentity):
+				return "characters/\(characterIdentity.id)/anime"
 			}
 		}
 	}
@@ -90,24 +90,24 @@ extension KKEndpoint.Shows {
 	internal enum Episodes {
 		// MARK: - Cases
 		/// The enpoint to the details of an episode.
-		case details(_ episodeID: Int)
+		case details(_ episodeIdentity: EpisodeIdentity)
 
 		/// The endpoint to update the watch status of an episode.
-		case watched(_ episodeID: Int)
+		case watched(_ episodeIdentity: EpisodeIdentity)
 
 		/// The endpoint to leave a rating on an episode.
-		case rate(_ episodeID: Int)
+		case rate(_ episodeIdentity: EpisodeIdentity)
 
 		// MARK: - Properties
 		/// The endpoint value of the Episodes API type.
 		var endpointValue: String {
 			switch self {
-			case .details(let episodeID):
-				return "episodes/\(episodeID)"
-			case .watched(let episodeID):
-				return "episodes/\(episodeID)/watched"
-			case .rate(let episodeID):
-				return "episodes/\(episodeID)/rate"
+			case .details(let episodeIdentity):
+				return "episodes/\(episodeIdentity.id)"
+			case .watched(let episodeIdentity):
+				return "episodes/\(episodeIdentity.id)/watched"
+			case .rate(let episodeIdentity):
+				return "episodes/\(episodeIdentity.id)/rate"
 			}
 		}
 	}
@@ -122,7 +122,7 @@ extension KKEndpoint.Shows {
 		case index
 
 		/// The endpoint to the details of a genre.
-		case details(_ genreID: Int)
+		case details(_ genreIdentity: GenreIdentity)
 
 		// MARK: - Properties
 		/// The endpoint value of the Genres API type.
@@ -130,8 +130,8 @@ extension KKEndpoint.Shows {
 			switch self {
 			case .index:
 				return "genres"
-			case .details(let genreID):
-				return "genres/\(genreID)"
+			case .details(let genreIdentity):
+				return "genres/\(genreIdentity.id)"
 			}
 		}
 	}
@@ -143,19 +143,19 @@ extension KKEndpoint.Shows {
 	internal enum Seasons {
 		// MARK: - Cases
 		/// The endpoint to the details of a season.
-		case details(_ seasonID: Int)
+		case details(_ seasonIdentity: SeasonIdentity)
 
 		/// The endpoint to the episodes related to a season.
-		case episodes(_ seasonID: Int)
+		case episodes(_ seasonIdentity: SeasonIdentity)
 
 		// MARK: - Properties
 		/// The endpoint value of the Seasons API type.
 		var endpointValue: String {
 			switch self {
-			case .details(let seasonID):
-				return "seasons/\(seasonID)"
-			case .episodes(let seasonID):
-				return "seasons/\(seasonID)/episodes"
+			case .details(let seasonIdentity):
+				return "seasons/\(seasonIdentity.id)"
+			case .episodes(let seasonIdentity):
+				return "seasons/\(seasonIdentity.id)/episodes"
 			}
 		}
 	}
@@ -167,19 +167,19 @@ extension KKEndpoint.Shows {
 	internal enum Studios {
 		// MARK: - Cases
 		/// The endpoint to the details of a studio.
-		case details(_ studioID: Int)
+		case details(_ studioIdentity: StudioIdentity)
 
 		/// The enpoint to the shows belonging to a studio.
-		case shows(_ studioID: Int)
+		case shows(_ studioIdentity: StudioIdentity)
 
 		// MARK: - Properties
 		/// The endpoint value of the Studios API type.
 		var endpointValue: String {
 			switch self {
-			case .details(let studioID):
-				return "studios/\(studioID)"
-			case .shows(let studioID):
-				return "studios/\(studioID)/anime"
+			case .details(let studioIdentity):
+				return "studios/\(studioIdentity.id)"
+			case .shows(let studioIdentity):
+				return "studios/\(studioIdentity.id)/anime"
 			}
 		}
 	}
@@ -194,7 +194,7 @@ extension KKEndpoint.Shows {
 		case index
 
 		/// The endpoint to the details of a theme.
-		case details(_ themeID: Int)
+		case details(_ themeIdentity: ThemeIdentity)
 
 		// MARK: - Properties
 		/// The endpoint value of the Themes API type.
@@ -202,8 +202,8 @@ extension KKEndpoint.Shows {
 			switch self {
 			case .index:
 				return "themes"
-			case .details(let themeID):
-				return "themes/\(themeID)"
+			case .details(let themeIdentity):
+				return "themes/\(themeIdentity.id)"
 			}
 		}
 	}

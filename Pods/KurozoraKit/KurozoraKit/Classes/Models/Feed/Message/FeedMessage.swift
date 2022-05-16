@@ -5,9 +5,7 @@
 //  Created by Khoren Katklian on 27/08/2020.
 //
 
-/**
-	A root object that stores information about a feed message resource.
-*/
+/// A root object that stores information about a feed message resource.
 public class FeedMessage: IdentityResource, Hashable {
 	// MARK: - Properties
 	public let id: Int

@@ -5,19 +5,20 @@
 //  Created by Khoren Katklian on 28/06/2020.
 //
 
+import Alamofire
 import TRON
 
 extension KurozoraKit {
-	/**
-		Fetch the person details for the given person id.
-
-		- Parameter personID: The id of the person for which the details should be fetched.
-		- Parameter relationships: The relationships to include in the response.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
-	public func getDetails(forPersonID personID: Int, including relationships: [String] = [], completion completionHandler: @escaping (_ result: Result<[Person], KKAPIError>) -> Void) {
-		let peopleDetails = KKEndpoint.Shows.People.details(personID).endpointValue
+	/// Fetch the person details for the given person identity.
+	///
+	/// - Parameters:
+	///    - personIdentity: The persion identity object of the person for which the details should be fetched.
+	///    - relationships: The relationships to include in the response.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
+	@discardableResult
+	public func getDetails(forPerson personIdentity: PersonIdentity, including relationships: [String] = [], completion completionHandler: @escaping (_ result: Result<[Person], KKAPIError>) -> Void) -> DataRequest {
+		let peopleDetails = KKEndpoint.Shows.People.details(personIdentity).endpointValue
 		let request: APIRequest<PersonResponse, KKAPIError> = tron.codable.request(peopleDetails)
 
 		request.headers = headers
@@ -30,13 +31,9 @@ extension KurozoraKit {
 		}
 
 		request.method = .get
-		request.perform(withSuccess: { personResponse in
+		return request.perform(withSuccess: { personResponse in
 			completionHandler(.success(personResponse.data))
-		}, failure: { [weak self] error in
-			guard let self = self else { return }
-			if self.services.showAlerts {
-				UIApplication.topViewController?.presentAlertController(title: "Can't Get Person's Details 😔", message: error.message)
-			}
+		}, failure: { error in
 			print("❌ Received get person details error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
 			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
@@ -45,30 +42,26 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		Fetch the characters for the given person id.
-
-		- Parameter personID: The person id for which the characters should be fetched.
-		- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
-		- Parameter limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
-	public func getCharacters(forPersonID personID: Int, next: String?, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<CharacterResponse, KKAPIError>) -> Void) {
-		let charactersPeople = next ?? KKEndpoint.Shows.People.characters(personID).endpointValue
-		let request: APIRequest<CharacterResponse, KKAPIError> = tron.codable.request(charactersPeople).buildURL(.relativeToBaseURL)
+	/// Fetch the characters for the given person identity.
+	///
+	/// - Parameters:
+	///    - personIdentity: The person identity object for which the characters should be fetched.
+	///    - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
+	@discardableResult
+	public func getCharacters(forPerson personIdentity: PersonIdentity, next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<CharacterIdentityResponse, KKAPIError>) -> Void) -> DataRequest {
+		let charactersPeople = next ?? KKEndpoint.Shows.People.characters(personIdentity).endpointValue
+		let request: APIRequest<CharacterIdentityResponse, KKAPIError> = tron.codable.request(charactersPeople).buildURL(.relativeToBaseURL)
 		request.headers = headers
 
 		request.parameters["limit"] = limit
 
 		request.method = .get
-		request.perform(withSuccess: { characterResponse in
-			completionHandler(.success(characterResponse))
-		}, failure: { [weak self] error in
-			guard let self = self else { return }
-			if self.services.showAlerts {
-				UIApplication.topViewController?.presentAlertController(title: "Can't Get Person's Characters 😔", message: error.message)
-			}
+		return request.perform(withSuccess: { characterIdentityResponse in
+			completionHandler(.success(characterIdentityResponse))
+		}, failure: { error in
 			print("❌ Received get person characters error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
 			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
@@ -77,30 +70,26 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		Fetch the shows for the given person id.
-
-		- Parameter personID: The person id for which the shows should be fetched.
-		- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
-		- Parameter limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
-	public func getShows(forPersonID personID: Int, next: String?, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<ShowResponse, KKAPIError>) -> Void) {
-		let charactersShows = next ?? KKEndpoint.Shows.People.shows(personID).endpointValue
-		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(charactersShows).buildURL(.relativeToBaseURL)
+	/// Fetch the shows for the given person identity.
+	///
+	/// - Parameters:
+	///    - personIdentity: The person identity object for which the shows should be fetched.
+	///    - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
+	@discardableResult
+	public func getShows(forPerson personIdentity: PersonIdentity, next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<ShowIdentityResponse, KKAPIError>) -> Void) -> DataRequest {
+		let charactersShows = next ?? KKEndpoint.Shows.People.shows(personIdentity).endpointValue
+		let request: APIRequest<ShowIdentityResponse, KKAPIError> = tron.codable.request(charactersShows).buildURL(.relativeToBaseURL)
 		request.headers = headers
 
 		request.parameters["limit"] = limit
 
 		request.method = .get
-		request.perform(withSuccess: { showResponse in
-			completionHandler(.success(showResponse))
-		}, failure: { [weak self] error in
-			guard let self = self else { return }
-			if self.services.showAlerts {
-				UIApplication.topViewController?.presentAlertController(title: "Can't Get Person's Shows 😔", message: error.message)
-			}
+		return request.perform(withSuccess: { showIdentityResponse in
+			completionHandler(.success(showIdentityResponse))
+		}, failure: { error in
 			print("❌ Received get person shows error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message ?? "No message")
 			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")

@@ -8,8 +8,9 @@
 
 import UIKit
 import KurozoraKit
+import Alamofire
 
-class CastCollectionViewCell: UICollectionViewCell {
+class CastCollectionViewCell: KCollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var personImageView: PosterImageView!
 	@IBOutlet weak var personNameLabel: KCopyableTintedLabel!
@@ -22,17 +23,21 @@ class CastCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - Properties
 	weak var delegate: CastCollectionViewCellDelegate?
-	var cast: Cast! {
-		didSet {
-			configureCell()
-		}
-	}
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
-	fileprivate func configureCell() {
+	///
+	/// - Parameters:
+	///    - cast: The `Cast` object used to configure the cell.
+	func configure(using cast: Cast?) {
+		guard let cast = cast else {
+			self.showSkeleton()
+			return
+		}
+		self.hideSkeleton()
+
 		// Configure person
-		if let person = self.cast.relationships.people.data.first {
+		if let person = cast.relationships.people.data.first {
 			self.personNameLabel.text = person.attributes.fullName
 			self.personImageView.setImage(with: person.attributes.profile?.url ?? "", placeholder: person.attributes.placeholderImage)
 		}

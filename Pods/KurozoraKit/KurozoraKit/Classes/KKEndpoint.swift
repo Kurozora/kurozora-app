@@ -9,8 +9,7 @@
 import Foundation
 
 /// The namespace that contains the Kurozora API endpoints.
-internal enum KKEndpoint {
-}
+internal enum KKEndpoint { }
 
 // MARK: - Explore
 extension KKEndpoint {
@@ -37,28 +36,31 @@ extension KKEndpoint {
 	internal enum Shows {
 		// MARK: - Cases
 		/// The endpoint to the details of a show.
-		case details(_ showID: Int)
+		case details(_ showIdentity: ShowIdentity)
 
 		/// The endpoint to the cast belonging to a show.
-		case cast(_ showID: Int)
+		case cast(_ showIdentity: ShowIdentity)
 
 		/// The endpoint to the characters belonging to a show.
-		case characters(_ showID: Int)
+		case characters(_ showIdentity: ShowIdentity)
 
 		/// The endpoint to the people belonging to a show.
-		case people(_ showID: Int)
+		case people(_ showIdentity: ShowIdentity)
 
 		/// The endpoint to leave a rating on a show.
-		case rate(_ showID: Int)
+		case rate(_ showIdentity: ShowIdentity)
 
 		/// The endpoint to the related shows belonging to a show.
-		case relatedShows(_ showID: Int)
+		case relatedShows(_ showIdentity: ShowIdentity)
 
 		/// The endpoint to the seasons belonging to a show.
-		case seasons(_ showID: Int)
+		case seasons(_ showIdentity: ShowIdentity)
 
 		/// The endpoint to the songs belonging to a show.
-		case songs(_ showID: Int)
+		case songs(_ showIdentity: ShowIdentity)
+
+		/// The endpoint to the studios belonging to a show.
+		case studios(_ showIdentity: ShowIdentity)
 
 		/// The endpoint to upcoming for shows.
 		case upcoming
@@ -70,22 +72,24 @@ extension KKEndpoint {
 		/// The endpoint value of the Shows API type.
 		var endpointValue: String {
 			switch self {
-			case .details(let showID):
-				return "anime/\(showID)"
-			case .cast(let showID):
-				return "anime/\(showID)/cast"
-			case .characters(let showID):
-				return "anime/\(showID)/characters"
-			case .people(let showID):
-				return "anime/\(showID)/people"
-			case .rate(let showID):
-				return "anime/\(showID)/rate"
-			case .relatedShows(let showID):
-				return "anime/\(showID)/related-shows"
-			case .seasons(let showID):
-				return "anime/\(showID)/seasons"
-			case .songs(let showID):
-				return "anime/\(showID)/songs"
+			case .details(let showIdentity):
+				return "anime/\(showIdentity.id)"
+			case .cast(let showIdentity):
+				return "anime/\(showIdentity.id)/cast"
+			case .characters(let showIdentity):
+				return "anime/\(showIdentity.id)/characters"
+			case .people(let showIdentity):
+				return "anime/\(showIdentity.id)/people"
+			case .rate(let showIdentity):
+				return "anime/\(showIdentity.id)/rate"
+			case .relatedShows(let showIdentity):
+				return "anime/\(showIdentity.id)/related-shows"
+			case .seasons(let showIdentity):
+				return "anime/\(showIdentity.id)/seasons"
+			case .songs(let showIdentity):
+				return "anime/\(showIdentity.id)/songs"
+			case .studios(let showIdentity):
+				return "anime/\(showIdentity.id)/studios"
 			case .upcoming:
 				return "anime/upcoming"
 			case .search:

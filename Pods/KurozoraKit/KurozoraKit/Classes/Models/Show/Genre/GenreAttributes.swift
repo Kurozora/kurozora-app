@@ -6,9 +6,7 @@
 //
 
 extension Genre {
-	/**
-		A root object that stores information about a single genre, such as the genre's name, color, and symbol.
-	*/
+	/// A root object that stores information about a single genre, such as the genre's name, color, and symbol.
 	public struct Attributes: Codable {
 		// MARK: - Properties
 		/// The slug of the resource.

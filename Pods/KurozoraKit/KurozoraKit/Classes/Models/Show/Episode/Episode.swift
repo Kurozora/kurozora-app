@@ -5,9 +5,7 @@
 //  Created by Khoren Katklian on 09/08/2020.
 //
 
-/**
-	A root object that stores information about an episode resource.
-*/
+/// A root object that stores information about an episode resource.
 public class Episode: IdentityResource, Hashable {
 	// MARK: - Properties
 	public let id: Int

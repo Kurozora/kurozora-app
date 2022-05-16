@@ -5,9 +5,7 @@
 //  Created by Khoren Katklian on 12/02/2022.
 //
 
-/**
-	A root object that stores information about a collection of season identities.
-*/
+/// A root object that stores information about a collection of season identities.
 public struct SeasonIdentityResponse: Codable {
 	// MARK: - Properties
 	/// The data included in the repsonse for a season identity object request.

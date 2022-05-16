@@ -11,18 +11,22 @@ import UIKit
 // MARK: - UICollectionViewDelegate
 extension PeopleListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		self.performSegue(withIdentifier: R.segue.peopleListCollectionViewController.personDetailsSegue, sender: self.people[indexPath.item])
+		guard self.people[indexPath] != nil else { return }
+		let segueIdentifier = R.segue.peopleListCollectionViewController.personDetailsSegue
+
+		self.performSegue(withIdentifier: segueIdentifier, sender: self.people[indexPath])
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		if indexPath.item == self.people.count - 20 && self.nextPageURL != nil {
+		if indexPath.item == self.personIdentities.count - 20 && self.nextPageURL != nil {
 			self.fetchPeople()
 		}
 	}
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		return self.people[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		guard self.people[indexPath] != nil else { return nil }
+		return self.people[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {

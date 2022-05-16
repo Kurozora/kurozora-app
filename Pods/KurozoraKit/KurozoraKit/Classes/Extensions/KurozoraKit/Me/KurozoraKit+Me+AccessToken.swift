@@ -9,14 +9,13 @@
 import TRON
 
 extension KurozoraKit {
-	/**
-		Fetch the list of access tokens for the authenticated user.
-
-		- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
-		- Parameter limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Fetch the list of access tokens for the authenticated user.
+	///
+	/// - Parameters:
+	///    - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func getTokens(next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<AccessTokenResponse, KKAPIError>) -> Void) {
 		let meAccessTokensIndex = next ?? KKEndpoint.Me.AccessTokens.index.endpointValue
 		let request: APIRequest<AccessTokenResponse, KKAPIError> = tron.codable.request(meAccessTokensIndex).buildURL(.relativeToBaseURL)
@@ -39,13 +38,12 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		Fetch the access token details for the given access token.
-
-		- Parameter accessToken: The access token for which the details should be fetched.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Fetch the access token details for the given access token.
+	///
+	/// - Parameters:
+	///    - accessToken: The access token for which the details should be fetched.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func getDetails(forAccessToken accessToken: String, completion completionHandler: @escaping (_ result: Result<[AccessToken], KKAPIError>) -> Void) {
 		let tokenID = accessToken.components(separatedBy: "|")[0]
 		let meAccessTokensDetail = KKEndpoint.Me.AccessTokens.details(tokenID).endpointValue
@@ -67,13 +65,12 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		Update a access token with the specified data.
-
-		- Parameter apnDeviceToken: The updated APN Device Token.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Update a access token with the specified data.
+	///
+	/// - Parameters:
+	///    - apnDeviceToken: The updated APN Device Token.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func updateAccessToken(withAPNToken apnDeviceToken: String, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) {
 		let tokenID = self.authenticationKey.components(separatedBy: "|")[0]
 		let meAccessTokensUpdate = KKEndpoint.Me.AccessTokens.update(tokenID).endpointValue
@@ -97,13 +94,12 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		Delete the specified access token from the user's active access tokens.
-
-		- Parameter accessToken: The access token to be deleted.
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Delete the specified access token from the user's active access tokens.
+	///
+	/// - Parameters:
+	///    - accessToken: The access token to be deleted.
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func deleteAccessToken(_ accessToken: String, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) {
 		let tokenID = accessToken.components(separatedBy: "|")[0]
 		let meAccessTokensDelete = KKEndpoint.Me.AccessTokens.delete(tokenID).endpointValue
@@ -128,15 +124,14 @@ extension KurozoraKit {
 		})
 	}
 
-	/**
-		Sign out the given user access token.
-
-		After the user has been signed out successfully, a notification with the `KUserIsSignedInDidChange` name is posted.
-		This notification can be observed to perform UI changes regarding the user's sign in status. For example you can remove buttons the user should not have access to if not signed in.
-
-		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	*/
+	/// Sign out the given user access token.
+	///
+	///After the user has been signed out successfully, a notification with the `KUserIsSignedInDidChange` name is posted.
+	///This notification can be observed to perform UI changes regarding the user's sign in status. For example you can remove buttons the user should not have access to if not signed in.
+	///
+	/// - Parameters:
+	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	public func signOut(completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) {
 		let meAccessTokensDelete = KKEndpoint.Me.AccessTokens.delete(self.authenticationKey).endpointValue
 		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(meAccessTokensDelete)

@@ -8,6 +8,8 @@
 
 import UIKit
 import KurozoraKit
+import Alamofire
+import AVFoundation
 import Intents
 import IntentsUI
 
@@ -21,8 +23,65 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - Properties
-	var dataSource: ShowDetailsDataSource = ShowDetailsDataSource()
-	var showID: Int = 0
+	var showIdentity: ShowIdentity? = nil
+	var show: Show! {
+		didSet {
+			self.navigationTitleLabel.text = self.show.attributes.title
+			self.showIdentity = ShowIdentity(id: self.show.id)
+
+			self._prefersActivityIndicatorHidden = true
+			#if targetEnvironment(macCatalyst)
+			self.touchBar = nil
+			#endif
+
+			#if DEBUG
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.endRefreshing()
+			#endif
+			#endif
+		}
+	}
+	var responseCount: Int = 0 {
+		didSet {
+			if self.responseCount == 4 {
+				self.updateDataSource()
+			}
+		}
+	}
+
+	/// Season properties.
+	var seasons: [IndexPath: Season] = [:]
+	var seasonIdentities: [SeasonIdentity] = []
+
+	/// Related Show properties.
+	var relatedShows: [RelatedShow] = []
+
+	/// Cast properties.
+	var cast: [IndexPath: Cast] = [:]
+	var castIdentities: [CastIdentity] = []
+
+	/// Studio properties.
+	var studioIdentities: [StudioIdentity] = []
+	var studio: Studio! {
+		didSet {
+			self.studioShowIdentities = self.studio?.relationships?.shows?.data ?? []
+		}
+	}
+	var studioShows: [IndexPath: Show] = [:]
+	var studioShowIdentities: [ShowIdentity] = []
+
+	/// Show Song properties.
+	var showSongs: [ShowSong] = []
+
+	/// The object that provides the interface to control the player’s transport behavior.
+	var player: AVPlayer?
+
+	/// The index path of the song that's currently playing.
+	var currentPlayerIndexPath: IndexPath?
+
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
+	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
 
 	// Touch Bar
 	#if targetEnvironment(macCatalyst)
@@ -58,7 +117,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 	/// - Returns: an initialized instance of ShowDetailsCollectionViewController.
 	static func `init`(with showID: Int) -> ShowDetailsCollectionViewController {
 		if let showDetailsCollectionViewController = R.storyboard.shows.showDetailsCollectionViewController() {
-			showDetailsCollectionViewController.showID = showID
+			showDetailsCollectionViewController.showIdentity = ShowIdentity(id: showID)
 			return showDetailsCollectionViewController
 		}
 
@@ -72,7 +131,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 	/// - Returns: an initialized instance of ShowDetailsCollectionViewController.
 	static func `init`(with show: Show) -> ShowDetailsCollectionViewController {
 		if let showDetailsCollectionViewController = R.storyboard.shows.showDetailsCollectionViewController() {
-			showDetailsCollectionViewController.dataSource.show = show
+			showDetailsCollectionViewController.show = show
 			return showDetailsCollectionViewController
 		}
 
@@ -103,16 +162,11 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		self._prefersRefreshControlDisabled = true
 		#endif
 
-		// Configure data sources
-		self.dataSource.viewController = self
-		self.collectionView.dataSource = self.dataSource
-		self.collectionView.prefetchDataSource = self.dataSource
+		self.configureDataSource()
 
 		// Fetch show details.
-		if self.dataSource.show == nil {
-			DispatchQueue.global(qos: .background).async {
-				self.fetchDetails()
-			}
+		DispatchQueue.global(qos: .background).async {
+			self.fetchDetails()
 		}
 	}
 
@@ -145,65 +199,110 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		}
 	}
 
-	/// Fetches details for the given show id. If none given then the currently viewed show's details are fetched.
-	///
-	/// - Parameter showID: The id used to fetch the show's details.
-	func fetchDetails(for showID: Int? = nil) {
-		var including: [String] = []
+	/// Fetches details for the given show identity. If none given then the currently viewed show's details are fetched.
+	func fetchDetails() {
+		guard let showIdentity = self.showIdentity else { return }
 
-		if showID == nil {
-			including = ["cast", "seasons", "songs", "studios", "related-shows"]
+		if self.show == nil {
+			KService.getDetails(forShow: showIdentity) { [weak self] result in
+				guard let self = self else { return }
+				switch result {
+				case .success(let shows):
+					self.show = shows.first
+
+					// Donate suggestion to Siri
+					self.userActivity = self.show.openDetailUserActivity
+				case .failure: break
+				}
+			}
+		} else {
+			DispatchQueue.main.async { [weak self] in
+				guard let self = self else { return }
+				// Donate suggestion to Siri
+				self.userActivity = self.show.openDetailUserActivity
+
+				self.updateDataSource()
+			}
 		}
-
-		KService.getDetails(forShowID: showID ?? self.showID, including: including) { [weak self] result in
+		KService.getSeasons(forShow: showIdentity, next: nil, limit: 10) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
-			case .success(let shows):
-				self.dataSource.show = shows.first
-				self.dataSource.seasonIdentities = shows.first?.relationships?.seasons?.data ?? []
-				self.dataSource.castIdentities = shows.first?.relationships?.cast?.data ?? []
-				self.dataSource.showSongs = shows.first?.relationships?.showSongs?.data ?? []
-				self.dataSource.studio = shows.first?.relationships?.studios?.data.first { studio in
-					studio.attributes.isStudio ?? false
-				} ?? shows.first?.relationships?.studios?.data.first
-				self.dataSource.relatedShows = shows.first?.relationships?.relatedShows?.data ?? []
-
-				// Donate suggestion to Siri
-				self.userActivity = self.dataSource.show.openDetailUserActivity
+			case .success(let seasonIdentityResponse):
+				self.seasonIdentities = seasonIdentityResponse.data
+				self.responseCount += 1
+			case .failure: break
+			}
+		}
+		KService.getCast(forShow: showIdentity, limit: 10) { [weak self] result in
+			guard let self = self else { return }
+			switch result {
+			case .success(let castIdentityResponse):
+				self.castIdentities = castIdentityResponse.data
+				self.responseCount += 1
+			case .failure: break
+			}
+		}
+		KService.getSongs(forShow: showIdentity, limit: 10) { [weak self] result in
+			guard let self = self else { return }
+			switch result {
+			case .success(let showSongResponse):
+				self.showSongs = showSongResponse.data
+				self.responseCount += 1
+			case .failure: break
+			}
+		}
+		KService.getStudios(forShow: showIdentity, limit: 10) { [weak self] result in
+			guard let self = self else { return }
+			switch result {
+			case .success(let studioIdentityResponse):
+				self.studioIdentities = studioIdentityResponse.data
+//				studioIdentityResponse.data.first { studio in
+//					studio.attributes.isStudio ?? false
+//				} ?? studioIdentityResponse.data.first
+				self.responseCount += 1
+			case .failure: break
+			}
+		}
+		KService.getRelatedShows(forShow: showIdentity, limit: 10) { [weak self] result in
+			guard let self = self else { return }
+			switch result {
+			case .success(let relatedShowResponse):
+				self.relatedShows = relatedShowResponse.data
+				self.responseCount += 1
 			case .failure: break
 			}
 		}
 	}
 
 	@objc func toggleFavorite() {
-		self.dataSource.show?.toggleFavorite()
+		self.show?.toggleFavorite()
 	}
 
 	@objc func toggleReminder() {
-		self.dataSource.show?.toggleReminder()
+		self.show?.toggleReminder()
 	}
 
 	@objc func shareShow() {
-		self.dataSource.show?.openShareSheet(on: self)
+		self.show?.openShareSheet(on: self)
 	}
 
 	@objc func handleFavoriteToggle(_ notification: NSNotification) {
 		#if targetEnvironment(macCatalyst)
-		let name = self.dataSource.show.attributes.favoriteStatus == .favorited ? "heart.fill" : "heart"
+		let name = self.show.attributes.favoriteStatus == .favorited ? "heart.fill" : "heart"
 		self.toggleShowIsFavoriteTouchBarItem?.image = UIImage(systemName: name)
 		#endif
 	}
 
 	@objc func handleReminderToggle(_ notification: NSNotification) {
 		#if targetEnvironment(macCatalyst)
-		let name = self.dataSource.show.attributes.reminderStatus == .reminded ? "bell.fill" : "bell"
+		let name = self.show.attributes.reminderStatus == .reminded ? "bell.fill" : "bell"
 		self.toggleShowIsRemindedTouchBarItem?.image = UIImage(systemName: name)
 		#endif
 	}
 
 	// MARK: - IBActions
 	@IBAction func moreButtonPressed(_ sender: UIBarButtonItem) {
-		self.dataSource.show?.openShareSheet(on: self, barButtonItem: sender)
+		self.show?.openShareSheet(on: self, barButtonItem: sender)
 	}
 
 	// MARK: - Segue
@@ -211,13 +310,13 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		switch segue.identifier {
 		case R.segue.showDetailsCollectionViewController.seasonSegue.identifier:
 			guard let seasonsCollectionViewController = segue.destination as? SeasonsCollectionViewController else { return }
-			seasonsCollectionViewController.showID = self.dataSource.show.id
+			seasonsCollectionViewController.showIdentity = self.showIdentity
 		case R.segue.showDetailsCollectionViewController.castSegue.identifier:
 			guard let castCollectionViewController = segue.destination as? CastCollectionViewController else { return }
-			castCollectionViewController.showID = self.dataSource.show.id
+			castCollectionViewController.showIdentity = self.showIdentity
 		case R.segue.showDetailsCollectionViewController.showSongsListSegue.identifier:
 			guard let showSongsListCollectionViewController = segue.destination as? ShowSongsListCollectionViewController else { return }
-			showSongsListCollectionViewController.showID = self.dataSource.show.id
+			showSongsListCollectionViewController.showIdentity = self.showIdentity
 		case R.segue.showDetailsCollectionViewController.episodeSegue.identifier:
 			guard let episodesCollectionViewController = segue.destination as? EpisodesCollectionViewController else { return }
 			guard let season = sender as? Season else { return }
@@ -225,27 +324,27 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		case R.segue.showDetailsCollectionViewController.showDetailsSegue.identifier:
 			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
-			showDetailsCollectionViewController.showID = show.id
+			showDetailsCollectionViewController.show = show
 		case R.segue.showDetailsCollectionViewController.studioSegue.identifier:
 			guard let studioDetailsCollectionViewController = segue.destination as? StudioDetailsCollectionViewController else { return }
-			guard let studio = self.dataSource.studio else { return }
-			studioDetailsCollectionViewController.studioID = studio.id
+			guard let studio = self.studio else { return }
+			studioDetailsCollectionViewController.studio = studio
 		case R.segue.showDetailsCollectionViewController.showsListSegue.identifier:
 			guard let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController else { return }
 			showsListCollectionViewController.title = "Related"
-			showsListCollectionViewController.showID = self.dataSource.show.id
+			showsListCollectionViewController.showIdentity = self.showIdentity
 		case R.segue.showDetailsCollectionViewController.characterDetailsSegue.identifier:
 			guard let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController else { return }
 			guard let cell = sender as? CastCollectionViewCell else { return }
 			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-			guard let character = self.dataSource.cast[indexPath.item].relationships.characters.data.first else { return }
-			characterDetailsCollectionViewController.characterID = character.id
+			guard let character = self.cast[indexPath]?.relationships.characters.data.first else { return }
+			characterDetailsCollectionViewController.character = character
 		case R.segue.showDetailsCollectionViewController.personDetailsSegue.identifier:
 			guard let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController else { return }
 			guard let cell = sender as? CastCollectionViewCell else { return }
 			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-			guard let person = self.dataSource.cast[indexPath.item].relationships.people.data.first else { return }
-			personDetailsCollectionViewController.personID = person.id
+			guard let person = self.cast[indexPath]?.relationships.people.data.first else { return }
+			personDetailsCollectionViewController.person = person
 		default: break
 		}
 	}
@@ -268,7 +367,7 @@ extension ShowDetailsCollectionViewController: TextViewCollectionViewCellDelegat
 		if let synopsisKNavigationController = R.storyboard.synopsis.instantiateInitialViewController() {
 			if let synopsisViewController = synopsisKNavigationController.viewControllers.first as? SynopsisViewController {
 				synopsisViewController.title = cell.textViewCollectionViewCellType.stringValue
-				synopsisViewController.synopsis = self.dataSource.show.attributes.synopsis
+				synopsisViewController.synopsis = self.show.attributes.synopsis
 			}
 			synopsisKNavigationController.modalPresentationStyle = .fullScreen
 			self.present(synopsisKNavigationController, animated: true)
@@ -297,6 +396,213 @@ extension ShowDetailsCollectionViewController {
 
 		if percentage.isFinite, percentage >= 0 {
 			self.navigationTitleLabel.alpha = percentage
+		}
+	}
+}
+
+// MARK: - RatingCollectionViewCellDelegate
+extension ShowDetailsCollectionViewController: RatingCollectionViewCellDelegate {
+	func rateShow(with rating: Double) {
+		self.show.rate(using: rating)
+	}
+
+	func rateEpisode(with rating: Double) { }
+}
+
+// MARK: - MusicLockupCollectionViewCellDelegate
+extension ShowDetailsCollectionViewController: MusicLockupCollectionViewCellDelegate {
+	func playButtonPressed(_ sender: UIButton, cell: MusicLockupCollectionViewCell) {
+		guard let song = cell.song else { return }
+
+		if let songURL = song.previewAssets?.first?.url {
+			let playerItem = AVPlayerItem(url: songURL)
+
+			if (self.player?.currentItem?.asset as? AVURLAsset)?.url == (playerItem.asset as? AVURLAsset)?.url {
+				switch self.player?.timeControlStatus {
+				case .playing:
+					cell.playButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
+					self.player?.pause()
+				case .paused:
+					cell.playButton.setImage(UIImage(systemName: "pause.circle.fill"), for: .normal)
+					self.player?.play()
+				default: break
+				}
+			} else {
+				if let indexPath = self.currentPlayerIndexPath {
+					if let cell = self.collectionView.cellForItem(at: indexPath) as? MusicLockupCollectionViewCell {
+						cell.playButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
+					}
+				}
+
+				self.currentPlayerIndexPath = cell.indexPath
+				self.player = AVPlayer(playerItem: playerItem)
+				self.player?.actionAtItemEnd = .none
+				self.player?.play()
+				cell.playButton.setImage(UIImage(systemName: "pause.circle.fill"), for: .normal)
+
+				NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: nil, queue: .current, using: { [weak self] _ in
+					self?.player = nil
+					cell.playButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
+				})
+			}
+		}
+	}
+
+	func showButtonPressed(_ sender: UIButton, indexPath: IndexPath) {}
+}
+
+extension ShowDetailsCollectionViewController {
+	enum SectionLayoutKind: Int, CaseIterable {
+		// MARK: - Cases
+		/// Indicates a header section layout type.
+		case header = 0
+		case badge
+		case synopsis
+		case rating
+		case information
+		case seasons
+		case cast
+		case songs
+		case moreByStudio
+		case relatedShows
+		case sosumi
+
+		// MARK: - Properties
+		/// The string value of a show section type.
+		var stringValue: String {
+			switch self {
+			case .header:
+				return Trans.header
+			case .badge:
+				return Trans.badges
+			case .synopsis:
+				return Trans.synopsis
+			case .rating:
+				return Trans.ratings
+			case .information:
+				return Trans.information
+			case .seasons:
+				return Trans.seasons
+			case .cast:
+				return Trans.cast
+			case .songs:
+				return Trans.songs
+			case .moreByStudio:
+				return Trans.moreBy
+			case .relatedShows:
+				return Trans.related
+			case .sosumi:
+				return Trans.copyright
+			}
+		}
+
+		/// The string value of a show section type segue identifier.
+		var segueIdentifier: String {
+			switch self {
+			case .header:
+				return ""
+			case .badge:
+				return ""
+			case .synopsis:
+				return ""
+			case .rating:
+				return ""
+			case .information:
+				return ""
+			case .seasons:
+				return R.segue.showDetailsCollectionViewController.seasonSegue.identifier
+			case .cast:
+				return R.segue.showDetailsCollectionViewController.castSegue.identifier
+			case .songs:
+				return R.segue.showDetailsCollectionViewController.showSongsListSegue.identifier
+			case .moreByStudio:
+				return R.segue.showDetailsCollectionViewController.studioSegue.identifier
+			case .relatedShows:
+				return R.segue.showDetailsCollectionViewController.showsListSegue.identifier
+			case .sosumi:
+				return ""
+			}
+		}
+	}
+
+	/// List of available Item Kind types.
+	enum ItemKind: Hashable {
+		// MARK: - Cases
+		/// Indicates the item kind contains a `Show` object.
+		case show(_: Show, id: UUID = UUID())
+
+		/// Indicates the item kind contains a `SeasonIdentity` object.
+		case seasonIdentity(_: SeasonIdentity, id: UUID = UUID())
+
+		/// Indicates the item kind contains a `ShowIdentity` object.
+		case showIdentity(_: ShowIdentity, id: UUID = UUID())
+
+		/// Indicates the item kind contains a `RelatedShow` object.
+		case relatedShow(_: RelatedShow, id: UUID = UUID())
+
+		/// Indicates the item kind contains a `ShowSong` object.
+		case showSong(_: ShowSong, id: UUID = UUID())
+
+		/// Indicates the item kind contains a `CharacterIdentity` object.
+		case characterIdentity(_: CharacterIdentity, id: UUID = UUID())
+
+		/// Indicates the item kind contains a `PersonIdentity` object.
+		case personIdentity(_: PersonIdentity, id: UUID = UUID())
+
+		/// Indicates the item kind contains a `CastIdentity` object.
+		case castIdentity(_: CastIdentity, id: UUID = UUID())
+
+		// MARK: - Functions
+		func hash(into hasher: inout Hasher) {
+			switch self {
+			case .show(let show, let id):
+				hasher.combine(show)
+				hasher.combine(id)
+			case .seasonIdentity(let seasonIdentity, let id):
+				hasher.combine(seasonIdentity)
+				hasher.combine(id)
+			case .showIdentity(let showIdentity, let id):
+				hasher.combine(showIdentity)
+				hasher.combine(id)
+			case .relatedShow(let relatedShow, let id):
+				hasher.combine(relatedShow)
+				hasher.combine(id)
+			case .showSong(let showSong, let id):
+				hasher.combine(showSong)
+				hasher.combine(id)
+			case .characterIdentity(let characterIdentity, let id):
+				hasher.combine(characterIdentity)
+				hasher.combine(id)
+			case .personIdentity(let personIdentity, let id):
+				hasher.combine(personIdentity)
+				hasher.combine(id)
+			case .castIdentity(let castIdentity, let id):
+				hasher.combine(castIdentity)
+				hasher.combine(id)
+			}
+		}
+
+		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
+			switch (lhs, rhs) {
+			case (.show(let show1, let id1), .show(let show2, let id2)):
+				return show1.id == show2.id && id1 == id2
+			case (.seasonIdentity(let seasonIdentity1, let id1), .seasonIdentity(let seasonIdentity2, let id2)):
+				return seasonIdentity1.id == seasonIdentity2.id && id1 == id2
+			case (.showIdentity(let showIdentity1, let id1), .showIdentity(let showIdentity2, let id2)):
+				return showIdentity1.id == showIdentity2.id && id1 == id2
+			case (.relatedShow(let relatedShow1, let id1), .relatedShow(let relatedShow2, let id2)):
+				return relatedShow1.id == relatedShow2.id && id1 == id2
+			case (.showSong(let showSong1, let id1), .showSong(let showSong2, let id2)):
+				return showSong1.id == showSong2.id && id1 == id2
+			case (.characterIdentity(let characterIdentity1, let id1), .characterIdentity(let characterIdentity2, let id2)):
+				return characterIdentity1.id == characterIdentity2.id && id1 == id2
+			case (.personIdentity(let personIdentity1, let id1), .personIdentity(let personIdentity2, let id2)):
+				return personIdentity1.id == personIdentity2.id && id1 == id2
+			case (.castIdentity(let castIdentity1, let id1), .castIdentity(let castIdentity2, let id2)):
+				return castIdentity1.id == castIdentity2.id && id1 == id2
+			default:
+				return false
+			}
 		}
 	}
 }

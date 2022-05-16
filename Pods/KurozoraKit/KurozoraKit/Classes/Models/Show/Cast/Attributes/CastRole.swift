@@ -7,9 +7,7 @@
 
 import Foundation
 
-/**
-	A root object that stores information about a cast role resource.
-*/
+/// A root object that stores information about a cast role resource.
 public struct CastRole: Codable, Hashable {
 	// MARK: - Properties
 	/// The name of the cast role.
