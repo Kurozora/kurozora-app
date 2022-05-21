@@ -560,17 +560,17 @@ extension HomeCollectionViewController {
 		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
 			switch (lhs, rhs) {
 			case (.showIdentity(let showIdentity1, let id1), .showIdentity(let showIdentity2, let id2)):
-				return showIdentity1.id == showIdentity2.id && id1 == id2
+				return showIdentity1 == showIdentity2 && id1 == id2
 			case (.showSong(let showSong1, let id1), .showSong(let showSong2, let id2)):
-				return showSong1.id == showSong2.id && id1 == id2
+				return showSong1 == showSong2 && id1 == id2
 			case (.genreIdentity(let genreIdentity1, let id1), .genreIdentity(let genreIdentity2, let id2)):
-				return genreIdentity1.id == genreIdentity2.id && id1 == id2
+				return genreIdentity1 == genreIdentity2 && id1 == id2
 			case (.themeIdentity(let themeIdentity1, let id1), .themeIdentity(let themeIdentity2, let id2)):
-				return themeIdentity1.id == themeIdentity2.id && id1 == id2
+				return themeIdentity1 == themeIdentity2 && id1 == id2
 			case (.characterIdentity(let characterIdentity1, let id1), .characterIdentity(let characterIdentity2, let id2)):
-				return characterIdentity1.id == characterIdentity2.id && id1 == id2
+				return characterIdentity1 == characterIdentity2 && id1 == id2
 			case (.personIdentity(let personIdentity1, let id1), .personIdentity(let personIdentity2, let id2)):
-				return personIdentity1.id == personIdentity2.id && id1 == id2
+				return personIdentity1 == personIdentity2 && id1 == id2
 			case (.quickLink(let quickLink1, let id1), .quickLink(let quickLink2, let id2)):
 				return quickLink1 == quickLink2 && id1 == id2
 			case (.quickAction(let quickAction1, let id1), .quickAction(let quickAction2, let id2)):

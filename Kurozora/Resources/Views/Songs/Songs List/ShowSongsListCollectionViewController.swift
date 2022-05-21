@@ -249,7 +249,7 @@ extension ShowSongsListCollectionViewController {
 		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
 			switch (lhs, rhs) {
 			case (.showSong(let showSong1, let id1), .showSong(let showSong2, let id2)):
-				return showSong1.id == showSong2.id && id1 == id2
+				return showSong1 == showSong2 && id1 == id2
 			}
 		}
 	}

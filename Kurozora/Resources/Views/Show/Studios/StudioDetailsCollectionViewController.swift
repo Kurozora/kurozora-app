@@ -321,9 +321,9 @@ extension StudioDetailsCollectionViewController {
 		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
 			switch (lhs, rhs) {
 			case (.studio(let studio1, let id1), .studio(let studio2, let id2)):
-				return studio1.id == studio2.id && id1 == id2
+				return studio1 == studio2 && id1 == id2
 			case (.showIdentity(let showIdentity1, let id1), .showIdentity(let showIdentity2, let id2)):
-				return showIdentity1.id == showIdentity2.id && id1 == id2
+				return showIdentity1 == showIdentity2 && id1 == id2
 			default:
 				return false
 			}

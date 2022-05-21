@@ -465,9 +465,9 @@ extension ShowsListCollectionViewController {
 		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
 			switch (lhs, rhs) {
 			case (.showIdentity(let showIdentity1, let id1), .showIdentity(let showIdentity2, let id2)):
-				return showIdentity1.id == showIdentity2.id && id1 == id2
+				return showIdentity1 == showIdentity2 && id1 == id2
 			case (.relatedShow(let relatedShow1, let id1), .relatedShow(let relatedShow2, let id2)):
-				return relatedShow1.id == relatedShow2.id && id1 == id2
+				return relatedShow1 == relatedShow2 && id1 == id2
 			default:
 				return false
 			}

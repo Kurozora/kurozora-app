@@ -585,21 +585,21 @@ extension ShowDetailsCollectionViewController {
 		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
 			switch (lhs, rhs) {
 			case (.show(let show1, let id1), .show(let show2, let id2)):
-				return show1.id == show2.id && id1 == id2
+				return show1 == show2 && id1 == id2
 			case (.seasonIdentity(let seasonIdentity1, let id1), .seasonIdentity(let seasonIdentity2, let id2)):
-				return seasonIdentity1.id == seasonIdentity2.id && id1 == id2
+				return seasonIdentity1 == seasonIdentity2 && id1 == id2
 			case (.showIdentity(let showIdentity1, let id1), .showIdentity(let showIdentity2, let id2)):
-				return showIdentity1.id == showIdentity2.id && id1 == id2
+				return showIdentity1 == showIdentity2 && id1 == id2
 			case (.relatedShow(let relatedShow1, let id1), .relatedShow(let relatedShow2, let id2)):
-				return relatedShow1.id == relatedShow2.id && id1 == id2
+				return relatedShow1 == relatedShow2 && id1 == id2
 			case (.showSong(let showSong1, let id1), .showSong(let showSong2, let id2)):
-				return showSong1.id == showSong2.id && id1 == id2
+				return showSong1 == showSong2 && id1 == id2
 			case (.characterIdentity(let characterIdentity1, let id1), .characterIdentity(let characterIdentity2, let id2)):
-				return characterIdentity1.id == characterIdentity2.id && id1 == id2
+				return characterIdentity1 == characterIdentity2 && id1 == id2
 			case (.personIdentity(let personIdentity1, let id1), .personIdentity(let personIdentity2, let id2)):
-				return personIdentity1.id == personIdentity2.id && id1 == id2
+				return personIdentity1 == personIdentity2 && id1 == id2
 			case (.castIdentity(let castIdentity1, let id1), .castIdentity(let castIdentity2, let id2)):
-				return castIdentity1.id == castIdentity2.id && id1 == id2
+				return castIdentity1 == castIdentity2 && id1 == id2
 			default:
 				return false
 			}

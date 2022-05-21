@@ -376,11 +376,11 @@ extension CharacterDetailsCollectionViewController {
 		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
 			switch (lhs, rhs) {
 			case (.character(let character1, let id1), .character(let character2, let id2)):
-				return character1.id == character2.id && id1 == id2
+				return character1 == character2 && id1 == id2
 			case (.personIdentity(let personIdentity1, let id1), .personIdentity(let personIdentity2, let id2)):
-				return personIdentity1.id == personIdentity2.id && id1 == id2
+				return personIdentity1 == personIdentity2 && id1 == id2
 			case (.showIdentity(let showIdentity1, let id1), .showIdentity(let showIdentity2, let id2)):
-				return showIdentity1.id == showIdentity2.id && id1 == id2
+				return showIdentity1 == showIdentity2 && id1 == id2
 			default:
 				return false
 			}
