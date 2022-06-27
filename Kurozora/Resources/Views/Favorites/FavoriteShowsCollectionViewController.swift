@@ -121,7 +121,8 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 		}
 
 		guard let userID = self.user?.id else { return }
-		KService.getFavoriteShows(forUserID: userID, next: self.nextPageURL) { [weak self] result in
+		let userIdentity = UserIdentity(id: userID)
+		KService.getFavoriteShows(forUser: userIdentity, next: self.nextPageURL) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
 			case .success(let showResponse):
