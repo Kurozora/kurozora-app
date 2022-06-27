@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19115.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="UE9-Fw-9dy">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="UE9-Fw-9dy">
     <device id="retina6_5" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19107.5"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -85,7 +85,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wgn-nr-wwb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2936.2318840579715" y="-866.51785714285711"/>
+            <point key="canvasLocation" x="3736" y="-867"/>
         </scene>
         <!--ShowDetailsCollectionViewController-->
         <scene sceneID="TWd-dP-lZ7">
@@ -95,7 +95,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uLU-fd-mQi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3604" y="-899"/>
+            <point key="canvasLocation" x="4403" y="-899"/>
         </scene>
         <!--ShowsListCollectionViewController-->
         <scene sceneID="wfI-X8-Gj6">
@@ -105,7 +105,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8aq-T2-9os" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3595" y="-834"/>
+            <point key="canvasLocation" x="4395" y="-834"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="fC4-lB-ohq">
@@ -118,12 +118,42 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="LEY-8f-r49" kind="relationship" relationship="rootViewController" id="aDD-dA-kM3"/>
+                        <segue destination="L5f-f9-2Js" kind="relationship" relationship="rootViewController" id="wiB-NC-Bel"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d6w-2c-lHn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2026.0869565217392" y="-866.51785714285711"/>
+        </scene>
+        <!--Studios List Collection View Controller-->
+        <scene sceneID="y28-ss-ib2">
+            <objects>
+                <collectionViewController storyboardIdentifier="StudiosListCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="L5f-f9-2Js" customClass="StudiosListCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" id="5WJ-mb-zvr">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="dw9-3a-ybJ">
+                            <size key="itemSize" width="50" height="50"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells/>
+                        <connections>
+                            <outlet property="dataSource" destination="L5f-f9-2Js" id="kDl-nz-oDq"/>
+                            <outlet property="delegate" destination="L5f-f9-2Js" id="vFN-sg-LJK"/>
+                            <outlet property="dragDelegate" destination="L5f-f9-2Js" id="Bej-4A-shq"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" id="tmy-jZ-yUy"/>
+                    <connections>
+                        <segue destination="LEY-8f-r49" kind="show" identifier="StudioDetailsSegue" id="Ii4-cE-Vsp"/>
+                    </connections>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RBA-t3-D6P" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2884" y="-867"/>
         </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
