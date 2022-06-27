@@ -10,15 +10,15 @@ import UIKit
 
 enum Layouts {
 	static func charactersSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true) -> NSCollectionLayoutSection {
-		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(0.50) : .fractionalWidth(1.0)
+		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(0.90) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 
 		// Add layout item.
-		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(50.0))
+		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(140.0))
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
 		// Add layout group.
-		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(50.0))
+		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(140.0))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
 		layoutGroup.interItemSpacing = .fixed(20.0)
 
@@ -36,8 +36,35 @@ enum Layouts {
 		return layoutSection
 	}
 
-	static func musicSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true) -> NSCollectionLayoutSection {
-		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(0.50) : .fractionalWidth(1.0)
+	static func peopleSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true) -> NSCollectionLayoutSection {
+		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(0.90) : .fractionalWidth(1.0)
+		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
+
+		// Add layout item.
+		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(140.0))
+		let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+		// Add layout group.
+		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(140.0))
+		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+		layoutGroup.interItemSpacing = .fixed(20.0)
+
+		// Add layout section.
+		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+		layoutSection.interGroupSpacing = 20.0
+		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: bottomInset, trailing: 10)
+		if isHorizontal {
+			#if targetEnvironment(macCatalyst)
+			layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+			#else
+			layoutSection.orthogonalScrollingBehavior = .groupPaging
+			#endif
+		}
+		return layoutSection
+	}
+
+	static func castSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true) -> NSCollectionLayoutSection {
+		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(0.90) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 
 		// Add layout item.
@@ -63,16 +90,16 @@ enum Layouts {
 		return layoutSection
 	}
 
-	static func peopleSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true) -> NSCollectionLayoutSection {
-		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(0.50) : .fractionalWidth(1.0)
+	static func musicSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true) -> NSCollectionLayoutSection {
+		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(0.90) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 
 		// Add layout item.
-		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(50.0))
+		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(100.0))
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
 		// Add layout group.
-		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(50.0))
+		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(100.0))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
 		layoutGroup.interItemSpacing = .fixed(20.0)
 
@@ -95,11 +122,11 @@ enum Layouts {
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 
 		// Add layout item.
-		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .fractionalHeight(1.0))
+		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(100.0))
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
 		// Add layout group.
-		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(150.0))
+		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(100.0))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
 		layoutGroup.interItemSpacing = .fixed(20.0)
 
@@ -122,11 +149,11 @@ enum Layouts {
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 
 		// Add layout item.
-		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .fractionalHeight(1.0))
+		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(200.0))
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
 		// Add layout group.
-		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(460.0))
+		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(200.0))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
 		layoutGroup.interItemSpacing = .fixed(20.0)
 
@@ -149,11 +176,11 @@ enum Layouts {
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 
 		// Add layout item.
-		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(200.0))
+		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(100.0))
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
 		// Add layout group.
-		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(200.0))
+		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(100.0))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
 		layoutGroup.interItemSpacing = .fixed(20.0)
 
@@ -176,11 +203,11 @@ enum Layouts {
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 
 		// Add layout item.
-		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(200.0))
+		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(100.0))
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
 		// Add layout group.
-		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(200.0))
+		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(100.0))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
 		layoutGroup.interItemSpacing = .fixed(20.0)
 
@@ -268,13 +295,121 @@ enum Layouts {
 		return layoutSection
 	}
 
-	static func quickLinkSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+	static func seasonsSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true) -> NSCollectionLayoutSection {
+		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(0.90) : .fractionalWidth(1.0)
+		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
+
 		// Add layout item.
-		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(100.0))
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
 		// Add layout group.
-		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(55))
+		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(100.0))
+		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+		layoutGroup.interItemSpacing = .fixed(20.0)
+
+		// Add layout section.
+		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+		layoutSection.interGroupSpacing = 20.0
+		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: bottomInset, trailing: 10)
+		if isHorizontal {
+			#if targetEnvironment(macCatalyst)
+			layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+			#else
+			layoutSection.orthogonalScrollingBehavior = .groupPaging
+			#endif
+		}
+		return layoutSection
+	}
+
+	static func episodesSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true) -> NSCollectionLayoutSection {
+		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(0.90) : .fractionalWidth(1.0)
+		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
+
+		// Add layout item.
+		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(100.0))
+		let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+		// Add layout group.
+		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(100.0))
+		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+		layoutGroup.interItemSpacing = .fixed(20.0)
+
+		// Add layout section.
+		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+		layoutSection.interGroupSpacing = 20.0
+		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: bottomInset, trailing: 10)
+		if isHorizontal {
+			#if targetEnvironment(macCatalyst)
+			layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+			#else
+			layoutSection.orthogonalScrollingBehavior = .groupPaging
+			#endif
+		}
+		return layoutSection
+	}
+
+	static func studiosSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true) -> NSCollectionLayoutSection {
+		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(0.90) : .fractionalWidth(1.0)
+		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
+
+		// Add layout item.
+		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(200.0))
+		let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+		// Add layout group.
+		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(200.0))
+		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+		layoutGroup.interItemSpacing = .fixed(20.0)
+
+		// Add layout section.
+		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+		layoutSection.interGroupSpacing = 20.0
+		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: bottomInset, trailing: 10)
+		if isHorizontal {
+			#if targetEnvironment(macCatalyst)
+			layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+			#else
+			layoutSection.orthogonalScrollingBehavior = .groupPaging
+			#endif
+		}
+		return layoutSection
+	}
+
+	static func usersSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true) -> NSCollectionLayoutSection {
+		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(0.90) : .fractionalWidth(1.0)
+		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
+
+		// Add layout item.
+		let itemSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(200.0))
+		let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+		// Add layout group.
+		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: .estimated(200.0))
+		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+		layoutGroup.interItemSpacing = .fixed(20.0)
+
+		// Add layout section.
+		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+		layoutSection.interGroupSpacing = 20.0
+		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: bottomInset, trailing: 10)
+		if isHorizontal {
+			#if targetEnvironment(macCatalyst)
+			layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+			#else
+			layoutSection.orthogonalScrollingBehavior = .groupPaging
+			#endif
+		}
+		return layoutSection
+	}
+
+	static func quickLinkSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+		// Add layout item.
+		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(44.0))
+		let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+		// Add layout group.
+		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(44.0))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
 		layoutGroup.interItemSpacing = .fixed(20)
 
@@ -290,11 +425,11 @@ enum Layouts {
 		let trailingInset = collectionView.directionalLayoutMargins.trailing
 
 		// Add layout item.
-		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(44.0))
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
 		// Add layout group.
-		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(44))
+		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(44.0))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
 		layoutGroup.interItemSpacing = .fixed(20)
 
@@ -307,11 +442,11 @@ enum Layouts {
 
 	static func legalSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
 		// Add layout item.
-		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(44.0))
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
 		// Add layout group.
-		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(55))
+		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(44.0))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
 		layoutGroup.interItemSpacing = .fixed(20)
 
