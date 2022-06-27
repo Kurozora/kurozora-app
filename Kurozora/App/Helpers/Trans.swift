@@ -670,21 +670,36 @@ struct Trans {
 	/// - Tag: Trans-message
 	static let message: String = String(localized: "Message",
 										comment: "The string for the word 'message'.")
-	/// The string for the word 'anime'.
+	/// The string for the word 'catalog'.
 	///
-	/// - Tag: Trans-anime
-	static let anime: String = String(localized: "Anime",
-									  comment: "The string for the word 'anime'.")
+	/// - Tag: Trans-catalog
+	static let catalog: String = String(localized: "Catalog",
+										comment: "The string for the word 'catalog'.")
 	/// The string for the word 'library'.
 	///
 	/// - Tag: Trans-library
 	static let library: String = String(localized: "Library",
 										comment: "The string for the word 'library'.")
+	/// The string for the word 'your library'.
+	///
+	/// - Tag: Trans-yourlibrary
+	static let yourlibrary: String = String(localized: "Your Library",
+											comment: "The string for the word 'your library'.")
+	/// The string for the word 'anime'.
+	///
+	/// - Tag: Trans-anime
+	static let anime: String = String(localized: "Anime",
+									  comment: "The string for the word 'anime'.")
 	/// The string for the word 'user'.
 	///
 	/// - Tag: Trans-user
 	static let user: String = String(localized: "User",
 									 comment: "The string for the word 'user'.")
+	/// The string for the word 'users'.
+	///
+	/// - Tag: Trans-users
+	static let users: String = String(localized: "Users",
+									  comment: "The string for the word 'users'.")
 	/// The string for the word 'account'.
 	///
 	/// - Tag: Trans-account
@@ -835,49 +850,46 @@ struct Trans {
 	/// - Tag: Trans-expected
 	static let expected: String = String(localized: "Expected",
 										 comment: "The string for the word 'expected'.")
-
 	/// The string for the word 'badges'.
 	///
 	/// - Tag: Trans-badges
 	static let badges: String = String(localized: "Badges",
 									   comment: "The string for the word 'badges'.")
-
 	/// The string for the word 'ratings'.
 	///
 	/// - Tag: Trans-ratings
 	static let ratings: String = String(localized: "Ratings",
 										comment: "The string for the word 'ratings'.")
-
 	/// The string for the word 'seasons'.
 	///
 	/// - Tag: Trans-seasons
 	static let seasons: String = String(localized: "Seasons",
 										comment: "The string for the word 'seasons'.")
-
+	/// The string for the word 'studios'.
+	///
+	/// - Tag: Trans-studios
+	static let studios: String = String(localized: "Studios",
+										comment: "The string for the word 'studios'.")
 	/// The string for the word 'cast'.
 	///
 	/// - Tag: Trans-cast
 	static let cast: String = String(localized: "Cast",
 									 comment: "The string for the word 'cast'.")
-
 	/// The string for the word 'songs'.
 	///
 	/// - Tag: Trans-songs
 	static let songs: String = String(localized: "Songs",
 									  comment: "The string for the word 'songs'.")
-
 	/// The string for the word 'more by'.
 	///
 	/// - Tag: Trans-moreBy
 	static let moreBy: String = String(localized: "More by",
 									   comment: "The string for the word 'more by'.")
-
 	/// The string for the word 'related'.
 	///
 	/// - Tag: Trans-related
 	static let related: String = String(localized: "Related",
 										comment: "The string for the word 'related'.")
-
 	/// The string for the word 'copyright'.
 	///
 	/// - Tag: Trans-copyright

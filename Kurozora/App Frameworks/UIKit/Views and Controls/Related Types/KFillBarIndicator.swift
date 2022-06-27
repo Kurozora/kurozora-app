@@ -26,7 +26,7 @@ class KFillBarIndicator: TMBarIndicator {
 	/// Corner style for the indicator. Default: `.eliptical`.
 	var cornerStyle: CornerStyle = .eliptical {
 		didSet {
-			setNeedsLayout()
+			self.setNeedsLayout()
 		}
 	}
 
@@ -34,16 +34,16 @@ class KFillBarIndicator: TMBarIndicator {
 	override func layout(in view: UIView) {
 		super.layout(in: view)
 
-		let topConstraint = topAnchor.constraint(equalTo: view.topAnchor, constant: 5)
+		let topConstraint = self.topAnchor.constraint(equalTo: view.topAnchor, constant: 5)
 		topConstraint.isActive = true
 		self.topConstraint = topConstraint
 
-		let bottomConstraint = bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -5)
+		let bottomConstraint = self.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -5)
 		bottomConstraint.isActive = true
 		self.bottomConstraint = bottomConstraint
 
 		self.theme_tintColor = KThemePicker.textColor.rawValue
-		self.backgroundColor = tintColor.withAlphaComponent(0.25)
+		self.backgroundColor = self.tintColor.withAlphaComponent(0.25)
 		self.overscrollBehavior = .bounce
 		self.transitionStyle = .progressive
 	}
@@ -51,7 +51,7 @@ class KFillBarIndicator: TMBarIndicator {
 	override func layoutSubviews() {
 		super.layoutSubviews()
 
-		superview?.layoutIfNeeded()
-		layer.cornerRadius = cornerStyle.cornerRadius(for: bounds)
+		self.superview?.layoutIfNeeded()
+		self.layer.cornerRadius = self.cornerStyle.cornerRadius(for: self.bounds)
 	}
 }

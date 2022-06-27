@@ -94,7 +94,8 @@ final class Store: ObservableObject {
 		// Start a transaction listener as close to app launch as possible so you don't miss any transactions.
 		self.updateListenerTask = listenForTransactions()
 
-		Task {
+		Task { [weak self] in
+			guard let self = self else { return }
 			// Initialize the store by starting a product request.
 			await self.requestProducts()
 		}

@@ -29,7 +29,8 @@ extension WorkflowController {
 			return false
 		case .denied, .notDetermined:
 			if status == nil {
-				Task {
+				Task { [weak self] in
+					guard let self = self else { return }
 					self.isMusicKitAuthorized(await MusicAuthorization.request(), completion)
 				}
 			}

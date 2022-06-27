@@ -30,7 +30,8 @@ class SubscriptionTableViewController: ProductTableViewController {
 		super.viewDidLoad()
 		self.productTableViewControllerDelegate = self
 
-		Task {
+		Task { [weak self] in
+			guard let self = self else { return }
 			if let subscriptionUpdateStatus = await self.productTableViewControllerDelegate?.updateSubscriptionStatus(), subscriptionUpdateStatus {
 				self.tableView.reloadData()
 			}

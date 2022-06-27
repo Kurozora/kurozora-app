@@ -9,11 +9,15 @@
 import UIKit
 
 protocol SkeletonDisplayable: AnyObject {
+	/// Adds and shows the skeleton view.
 	func showSkeleton()
+
+	/// Hides the skeleton view.
 	func hideSkeleton()
 }
 
 extension SkeletonDisplayable where Self: UICollectionViewCell {
+	/// The tag by which the skeleton view is identifie in the view hierarchy.
 	private var skeletonViewTag: Int {
 		return 1000000
 	}
