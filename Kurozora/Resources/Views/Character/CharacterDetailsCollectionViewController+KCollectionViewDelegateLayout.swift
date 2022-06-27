@@ -19,7 +19,7 @@ extension CharacterDetailsCollectionViewController {
 			let columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
 			return columnCount > 0 ? columnCount : 1
 		case .people:
-			let columnCount = UIDevice.isPhone ? (width / 200).rounded().int : (width / 300).rounded().int
+			let columnCount = (width / 140.0).rounded().int
 			return columnCount > 0 ? columnCount : 1
 		default:
 			let columnCount = (width / 374).rounded().int
@@ -87,7 +87,7 @@ extension CharacterDetailsCollectionViewController {
 			}
 
 			if hasSectionHeader {
-				let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50))
+				let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0))
 				let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
 					layoutSize: headerFooterSize,
 					elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)

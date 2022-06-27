@@ -17,11 +17,11 @@ extension CharactersListCollectionViewController {
 			var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? characterLockupCollectionViewCell.dataRequest
 
 			if dataRequest == nil && character == nil {
-				dataRequest = KService.getDetails(forCharacter: characterIdentity) { [weak self] result in
+				dataRequest = KService.getDetails(forCharacter: characterIdentity) { result in
 					switch result {
 					case .success(let characters):
-						self?.characters[indexPath] = characters.first
-						self?.setCharacterNeedsUpdate(characterIdentity)
+						self.characters[indexPath] = characters.first
+						self.setCharacterNeedsUpdate(characterIdentity)
 					case .failure: break
 					}
 				}
@@ -37,10 +37,10 @@ extension CharactersListCollectionViewController {
 	}
 
 	override func updateDataSource() {
-		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, CharacterIdentity>()
-		self.snapshot.appendSections([.main])
-		self.snapshot.appendItems(self.characterIdentities, toSection: .main)
-		self.dataSource.apply(self.snapshot)
+		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, CharacterIdentity>()
+		snapshot.appendSections([.main])
+		snapshot.appendItems(self.characterIdentities, toSection: .main)
+		self.dataSource.apply(snapshot)
 	}
 
 	func fetchCharacter(at indexPath: IndexPath) -> Character? {
@@ -50,6 +50,7 @@ extension CharactersListCollectionViewController {
 
 	func setCharacterNeedsUpdate(_ characterIdentity: CharacterIdentity) {
 		var snapshot = self.dataSource.snapshot()
+		guard snapshot.indexOfItem(characterIdentity) != nil else { return }
 		snapshot.reconfigureItems([characterIdentity])
 		self.dataSource.apply(snapshot, animatingDifferences: true)
 	}
