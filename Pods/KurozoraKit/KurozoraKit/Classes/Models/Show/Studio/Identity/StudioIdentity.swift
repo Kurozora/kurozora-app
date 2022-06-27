@@ -6,7 +6,8 @@
 //
 
 /// A root object that stores information about a studio identity resource.
-public class StudioIdentity: IdentityResource, Hashable {
+public struct StudioIdentity: IdentityResource, Hashable {
+	// MARK: - Properties
 	public let id: Int
 
 	public let type: String

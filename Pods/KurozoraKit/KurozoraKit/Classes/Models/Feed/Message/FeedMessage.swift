@@ -22,7 +22,7 @@ public class FeedMessage: IdentityResource, Hashable {
 
 	// MARK: - Functions
 	public static func == (lhs: FeedMessage, rhs: FeedMessage) -> Bool {
-		lhs.id == rhs.id
+		return lhs.id == rhs.id
 	}
 
 	public func hash(into hasher: inout Hasher) {

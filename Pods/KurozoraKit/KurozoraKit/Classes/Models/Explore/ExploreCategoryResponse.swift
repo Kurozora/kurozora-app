@@ -11,4 +11,3 @@ public struct ExploreCategoryResponse: Codable {
 	/// The data included in the repsonse for an explore category object request.
 	public let data: [ExploreCategory]
 }
-

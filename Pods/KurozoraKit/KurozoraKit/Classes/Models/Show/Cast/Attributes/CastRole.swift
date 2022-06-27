@@ -5,8 +5,6 @@
 //  Created by Khoren Katklian on 18/06/2021.
 //
 
-import Foundation
-
 /// A root object that stores information about a cast role resource.
 public struct CastRole: Codable, Hashable {
 	// MARK: - Properties

@@ -6,12 +6,20 @@
 //
 
 /// A root object that stores information about a song identity resource.
-public class SongIdentity: IdentityResource, Hashable {
+public struct SongIdentity: IdentityResource, Hashable {
+	// MARK: - Properties
 	public let id: Int
 
 	public let type: String
 
 	public let href: String
+
+	// MARK: - Initializers
+	public init(id: Int) {
+		self.id = id
+		self.type = "songs"
+		self.href = ""
+	}
 
 	// MARK: - Functions
 	public static func == (lhs: SongIdentity, rhs: SongIdentity) -> Bool {

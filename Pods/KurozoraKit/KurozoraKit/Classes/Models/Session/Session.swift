@@ -25,7 +25,7 @@ public struct Session: Codable, Hashable {
 
 	// MARK: - Functions
 	public static func == (lhs: Session, rhs: Session) -> Bool {
-		lhs.id == rhs.id
+		return lhs.id == rhs.id
 	}
 
 	public func hash(into hasher: inout Hasher) {

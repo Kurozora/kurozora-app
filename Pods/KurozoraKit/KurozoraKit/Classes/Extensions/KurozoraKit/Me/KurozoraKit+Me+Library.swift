@@ -155,35 +155,4 @@ extension KurozoraKit {
 			completionHandler(.failure(error))
 		})
 	}
-
-	/// Fetch a list of shows matching the search query in the authenticated user's library.
-	///
-	/// - Parameters:
-	///    - show: The search query by which the search list should be fetched.
-	///    - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
-	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-	///    - result: A value that represents either a success or a failure, including an associated value in each case.
-	public func searchLibrary(forShow show: String, next: String?, completion completionHandler: @escaping (_ result: Result<ShowResponse, KKAPIError>) -> Void) {
-		let meLibrarySearch = next ?? KKEndpoint.Me.Library.search.endpointValue
-		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(meLibrarySearch).buildURL(.relativeToBaseURL)
-
-		request.headers = headers
-		request.headers.add(.authorization(bearerToken: self.authenticationKey))
-
-		request.method = .get
-		if next == nil {
-			request.parameters = [
-				"query": show
-			]
-		}
-		request.perform(withSuccess: { showResponse in
-			completionHandler(.success(showResponse))
-		}, failure: { error in
-			print("❌ Received library search error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message ?? "No message")
-			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
-			print("└ Failure reason:", error.failureReason ?? "No reason available")
-			completionHandler(.failure(error))
-		})
-	}
 }

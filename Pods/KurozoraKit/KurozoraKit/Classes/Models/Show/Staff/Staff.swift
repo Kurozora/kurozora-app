@@ -22,7 +22,7 @@ public struct Staff: IdentityResource, Hashable {
 
 	// MARK: - Functions
 	public static func == (lhs: Staff, rhs: Staff) -> Bool {
-		lhs.id == rhs.id
+		return lhs.id == rhs.id
 	}
 
 	public func hash(into hasher: inout Hasher) {

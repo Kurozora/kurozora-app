@@ -3,7 +3,6 @@
 //  KurozoraKit
 //
 //  Created by Khoren Katklian on 28/02/2019.
-//  Copyright © 2019 Kurozora. All rights reserved.
 //
 
 /// A root object that stores information about an app theme resource.
@@ -20,7 +19,7 @@ public struct AppTheme: IdentityResource, Hashable {
 
 	// MARK: - Functions
 	public static func == (lhs: AppTheme, rhs: AppTheme) -> Bool {
-		lhs.id == rhs.id
+		return lhs.id == rhs.id
 	}
 
 	public func hash(into hasher: inout Hasher) {

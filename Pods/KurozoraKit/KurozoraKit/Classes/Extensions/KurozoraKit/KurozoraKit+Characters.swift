@@ -48,26 +48,19 @@ extension KurozoraKit {
 	///    - characterIdentity: The character identity object for which the people should be fetched.
 	///    - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
 	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
-	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-	///    - result: A value that represents either a success or a failure, including an associated value in each case.
-	@discardableResult
-	public func getPeople(forCharacter characterIdentity: CharacterIdentity, next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<PersonIdentityResponse, KKAPIError>) -> Void) -> DataRequest {
+	///
+	/// - Returns: An instance of `DataTask` with the results of the request.
+	public func getPeople(forCharacter characterIdentity: CharacterIdentity, next: String? = nil, limit: Int = 25) -> DataTask<PersonIdentityResponse> {
 		let charactersPeople = next ?? KKEndpoint.Shows.Characters.people(characterIdentity).endpointValue
 		let request: APIRequest<PersonIdentityResponse, KKAPIError> = tron.codable.request(charactersPeople).buildURL(.relativeToBaseURL)
 		request.headers = headers
 
-		request.parameters["limit"] = limit
+		if next == nil {
+			request.parameters["limit"] = limit
+		}
 
 		request.method = .get
-		return request.perform(withSuccess: { personIdentityResponse in
-			completionHandler(.success(personIdentityResponse))
-		}, failure: { error in
-			print("❌ Received get character people error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message ?? "No message")
-			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
-			print("└ Failure reason:", error.failureReason ?? "No reason available")
-			completionHandler(.failure(error))
-		})
+		return request.perform().serializingDecodable(PersonIdentityResponse.self)
 	}
 
 	/// Fetch the shows for the given character identity.

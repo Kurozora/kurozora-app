@@ -8,7 +8,7 @@
 import Alamofire
 import TRON
 
-/// KurozoraKit` is a root object that serves as a provider for single API endpoint. It is used to send and get data from [Kurozora](https://kurozora.app).
+/// `KurozoraKit` is a root object that serves as a provider for single API endpoint. It is used to send and get data from [Kurozora](https://kurozora.app).
 ///
 /// For more flexibility when using `KurozoraKit` you can provide your own [KKServices](x-source-tag://KKServices). This enables you to provide extra functionality such as storing sensetive information in `Keychain` and showing success/error alerts.
 /// For further control over the information saved in `Keychain`, you can provide your own `Keychain` object with your specified properties.

@@ -3,23 +3,22 @@
 //  KurozoraKit
 //
 //  Created by Khoren Katklian on 26/02/2022.
-//  Copyright © 2022 Kurozora. All rights reserved.
 //
 
 import TRON
 import Alamofire
 
 extension KurozoraKit {
-	/// Fetch the song details for the given song id.
+	/// Fetch the song details for the given song identity.
 	///
 	/// - Parameters:
-	///    - song: The id of the song for which the details should be fetched.
+	///    - songIdentity: The identity of the song for which the details should be fetched.
 	///    - relationships: The relationships to include in the response.
 	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	@discardableResult
-	public func getDetails(forSong songID: Int, including relationships: [String] = [], completion completionHandler: @escaping (_ result: Result<[Song], KKAPIError>) -> Void) -> DataRequest {
-		let songsDetails = KKEndpoint.Songs.details(songID).endpointValue
+	public func getDetails(forSong songIdentity: SongIdentity, including relationships: [String] = [], completion completionHandler: @escaping (_ result: Result<[Song], KKAPIError>) -> Void) -> DataRequest {
+		let songsDetails = KKEndpoint.Songs.details(songIdentity).endpointValue
 		let request: APIRequest<SongResponse, KKAPIError> = tron.codable.request(songsDetails)
 
 		request.headers = headers

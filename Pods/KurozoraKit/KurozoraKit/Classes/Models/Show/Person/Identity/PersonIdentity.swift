@@ -6,7 +6,8 @@
 //
 
 /// A root object that stores information about a person identity resource.
-public class PersonIdentity: IdentityResource, Hashable {
+public struct PersonIdentity: IdentityResource, Hashable {
+	// MARK: - Properties
 	public let id: Int
 
 	public let type: String

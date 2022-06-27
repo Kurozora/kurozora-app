@@ -6,7 +6,8 @@
 //
 
 /// A root object that stores information about a theme identity resource.
-public class ThemeIdentity: IdentityResource, Hashable {
+public struct ThemeIdentity: IdentityResource, Hashable {
+	// MARK: - Properties
 	public let id: Int
 
 	public let type: String
