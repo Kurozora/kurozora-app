@@ -12,6 +12,9 @@ import Kingfisher
 import SwifterSwift
 import XCDYouTubeKit
 
+/// A root object that stores information about a song resource.
+typealias KKSong = Song
+
 // MARK: - KurozoraKit
 let KService = KurozoraKit().services(KurozoraDelegate.shared.services)
 var store: Store! = nil

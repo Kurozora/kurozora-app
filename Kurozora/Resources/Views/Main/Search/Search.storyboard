@@ -3,8 +3,6 @@
     <device id="retina6_5" orientation="portrait" appearance="dark"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
-        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,325 +20,7 @@
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SearchShowResultsCell" id="q1N-DV-obK" customClass="SearchShowResultsCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="10" width="426.66666666666669" height="160"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="UBp-TX-PwX">
-                                    <rect key="frame" x="0.0" y="0.0" width="426.66666666666669" height="160"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OlS-ok-hS0">
-                                            <rect key="frame" x="0.0" y="0.0" width="426.66666666666669" height="160"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Show Poster" translatesAutoresizingMaskIntoConstraints="NO" id="MUS-DF-Bcc" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="0.0" width="100" height="150"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="150" id="5Vk-eb-dpG"/>
-                                                        <constraint firstAttribute="width" secondItem="MUS-DF-Bcc" secondAttribute="height" multiplier="2:3" id="nH4-86-BO2"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Re: Zero Kara Hajimeru Isekai Seikatsu" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xqK-rd-pf8" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="116" y="0.0" width="258.66666666666669" height="17"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Psychological" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mDt-m3-Q9Z" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="116" y="17" width="77.666666666666686" height="14.333333333333336"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                    <color key="textColor" systemColor="secondaryLabelColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Ended" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L1X-Gb-qwx" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="382.66666666666669" y="0.0" width="36" height="14.333333333333334"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                    <color key="textColor" systemColor="secondaryLabelColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="CIJ-oq-yg7">
-                                                    <rect key="frame" x="116" y="33.333333333333336" width="69.666666666666686" height="47.000000000000007"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PG-12" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="chn-Uj-occ" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="69.666666666666671" height="14.333333333333334"/>
-                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                            <color key="textColor" systemColor="secondaryLabelColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="25 Episodes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gkj-n8-ymY" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="16.333333333333329" width="69.666666666666671" height="14.333333333333336"/>
-                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                            <color key="textColor" systemColor="secondaryLabelColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MaB-HT-zk9" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="32.666666666666664" width="69.666666666666671" height="14.333333333333336"/>
-                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                            <color key="textColor" systemColor="secondaryLabelColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                </stackView>
-                                                <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4Qy-7z-oAZ" userLabel="Rating View">
-                                                    <rect key="frame" x="116" y="120" width="122" height="30"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c5x-Vn-yvK" customClass="KTintedLabel" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="18" height="30"/>
-                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                            <color key="textColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <view userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YhF-wz-du0" customClass="KCosmosView" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="20" y="4" width="102" height="22"/>
-                                                            <userDefinedRuntimeAttributes>
-                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="updateOnTouch" value="NO"/>
-                                                                <userDefinedRuntimeAttribute type="number" keyPath="textSize">
-                                                                    <real key="value" value="13"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                                <userDefinedRuntimeAttribute type="number" keyPath="starSize">
-                                                                    <real key="value" value="18"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                                <userDefinedRuntimeAttribute type="number" keyPath="fillMode">
-                                                                    <integer key="value" value="2"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                            </userDefinedRuntimeAttributes>
-                                                        </view>
-                                                    </subviews>
-                                                    <constraints>
-                                                        <constraint firstItem="YhF-wz-du0" firstAttribute="top" secondItem="4Qy-7z-oAZ" secondAttribute="top" constant="4" id="0DW-ho-IcY"/>
-                                                        <constraint firstAttribute="trailing" secondItem="YhF-wz-du0" secondAttribute="trailing" id="A7d-w6-QJU"/>
-                                                        <constraint firstItem="c5x-Vn-yvK" firstAttribute="leading" secondItem="4Qy-7z-oAZ" secondAttribute="leading" id="CAT-xk-gEy"/>
-                                                        <constraint firstItem="c5x-Vn-yvK" firstAttribute="top" secondItem="4Qy-7z-oAZ" secondAttribute="top" id="PGj-N3-uqz"/>
-                                                        <constraint firstAttribute="bottom" secondItem="YhF-wz-du0" secondAttribute="bottom" constant="4" id="ZTF-8u-f8A"/>
-                                                        <constraint firstAttribute="bottom" secondItem="c5x-Vn-yvK" secondAttribute="bottom" id="dRs-Dr-g39"/>
-                                                        <constraint firstItem="YhF-wz-du0" firstAttribute="centerY" secondItem="c5x-Vn-yvK" secondAttribute="centerY" id="hQ2-n7-BXJ"/>
-                                                        <constraint firstItem="YhF-wz-du0" firstAttribute="leading" secondItem="c5x-Vn-yvK" secondAttribute="trailing" constant="2" id="nVH-25-brX"/>
-                                                    </constraints>
-                                                </view>
-                                                <button contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1C5-r3-CYT" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="365.66666666666669" y="120" width="53" height="30"/>
-                                                    <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="p9H-uf-ERG"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
-                                                    <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
-                                                    <state key="normal" title="ADD">
-                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </state>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <integer key="value" value="15"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
-                                                    </userDefinedRuntimeAttributes>
-                                                    <connections>
-                                                        <action selector="actionButtonPressed:" destination="q1N-DV-obK" eventType="touchUpInside" id="Kya-ak-UZI"/>
-                                                    </connections>
-                                                </button>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="19f-ld-oo6" customClass="SeparatorView" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="159" width="410.66666666666669" height="1"/>
-                                                    <color key="backgroundColor" systemColor="separatorColor"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="1" id="uCj-2t-GBI"/>
-                                                    </constraints>
-                                                </view>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="CIJ-oq-yg7" secondAttribute="trailing" constant="8" id="09g-tR-AsI"/>
-                                                <constraint firstItem="MUS-DF-Bcc" firstAttribute="top" secondItem="OlS-ok-hS0" secondAttribute="top" id="3sf-hB-CtZ"/>
-                                                <constraint firstItem="4Qy-7z-oAZ" firstAttribute="bottom" secondItem="1C5-r3-CYT" secondAttribute="bottom" id="A1D-bR-jhO"/>
-                                                <constraint firstItem="L1X-Gb-qwx" firstAttribute="top" secondItem="xqK-rd-pf8" secondAttribute="top" id="Acu-Pz-O87"/>
-                                                <constraint firstAttribute="bottom" secondItem="1C5-r3-CYT" secondAttribute="bottom" constant="10" id="CmK-H4-XAq"/>
-                                                <constraint firstItem="MUS-DF-Bcc" firstAttribute="leading" secondItem="OlS-ok-hS0" secondAttribute="leading" constant="8" id="GoC-ow-AcP"/>
-                                                <constraint firstItem="19f-ld-oo6" firstAttribute="leading" secondItem="OlS-ok-hS0" secondAttribute="leading" constant="8" id="LR1-Xg-bfL"/>
-                                                <constraint firstAttribute="bottom" secondItem="MUS-DF-Bcc" secondAttribute="bottom" constant="10" id="MLq-Ue-lWe"/>
-                                                <constraint firstAttribute="bottom" secondItem="19f-ld-oo6" secondAttribute="bottom" id="OW1-tR-KdQ"/>
-                                                <constraint firstItem="CIJ-oq-yg7" firstAttribute="top" secondItem="mDt-m3-Q9Z" secondAttribute="bottom" constant="2" id="Pbv-eV-RVV"/>
-                                                <constraint firstItem="1C5-r3-CYT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="4Qy-7z-oAZ" secondAttribute="trailing" constant="10" id="Sfn-NK-cPK"/>
-                                                <constraint firstItem="xqK-rd-pf8" firstAttribute="leading" secondItem="MUS-DF-Bcc" secondAttribute="trailing" constant="8" symbolic="YES" id="WhR-Oa-tGs"/>
-                                                <constraint firstItem="4Qy-7z-oAZ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="CIJ-oq-yg7" secondAttribute="bottom" constant="8" symbolic="YES" id="cZ2-9I-d0i"/>
-                                                <constraint firstItem="4Qy-7z-oAZ" firstAttribute="leading" secondItem="CIJ-oq-yg7" secondAttribute="leading" id="h2K-L2-blf"/>
-                                                <constraint firstItem="L1X-Gb-qwx" firstAttribute="leading" secondItem="xqK-rd-pf8" secondAttribute="trailing" constant="8" symbolic="YES" id="kQA-lK-lnB"/>
-                                                <constraint firstItem="4Qy-7z-oAZ" firstAttribute="top" secondItem="1C5-r3-CYT" secondAttribute="top" id="kzA-ho-3W0"/>
-                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="mDt-m3-Q9Z" secondAttribute="trailing" constant="8" id="lEZ-vn-pDJ"/>
-                                                <constraint firstAttribute="trailing" secondItem="1C5-r3-CYT" secondAttribute="trailing" constant="8" id="mlc-Dc-iws"/>
-                                                <constraint firstItem="xqK-rd-pf8" firstAttribute="top" secondItem="MUS-DF-Bcc" secondAttribute="top" id="nQJ-dx-8gG"/>
-                                                <constraint firstAttribute="trailing" secondItem="L1X-Gb-qwx" secondAttribute="trailing" constant="8" id="pQL-Ww-ZZT"/>
-                                                <constraint firstItem="mDt-m3-Q9Z" firstAttribute="top" secondItem="xqK-rd-pf8" secondAttribute="bottom" id="vP9-Su-jUi"/>
-                                                <constraint firstAttribute="trailing" secondItem="19f-ld-oo6" secondAttribute="trailing" constant="8" id="vzL-Gk-fOn"/>
-                                                <constraint firstItem="CIJ-oq-yg7" firstAttribute="leading" secondItem="xqK-rd-pf8" secondAttribute="leading" id="y1m-bb-OdE"/>
-                                                <constraint firstItem="mDt-m3-Q9Z" firstAttribute="leading" secondItem="xqK-rd-pf8" secondAttribute="leading" id="yMY-pt-kvn"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="OlS-ok-hS0" secondAttribute="trailing" id="4Ig-hX-2pu"/>
-                                        <constraint firstAttribute="bottom" secondItem="OlS-ok-hS0" secondAttribute="bottom" id="7w3-3j-aKw"/>
-                                        <constraint firstItem="OlS-ok-hS0" firstAttribute="leading" secondItem="UBp-TX-PwX" secondAttribute="leading" id="QJt-3G-yGp"/>
-                                        <constraint firstItem="OlS-ok-hS0" firstAttribute="top" secondItem="UBp-TX-PwX" secondAttribute="top" id="cRP-3J-mBo"/>
-                                    </constraints>
-                                </collectionViewCellContentView>
-                                <connections>
-                                    <outlet property="actionButton" destination="1C5-r3-CYT" id="gOf-64-bwv"/>
-                                    <outlet property="airDateLabel" destination="MaB-HT-zk9" id="dpY-2T-w4H"/>
-                                    <outlet property="cosmosView" destination="YhF-wz-du0" id="NBf-Xd-Wrk"/>
-                                    <outlet property="episodeCountLabel" destination="gkj-n8-ymY" id="Cja-Hd-Afk"/>
-                                    <outlet property="primaryLabel" destination="xqK-rd-pf8" id="Tjf-cf-bV8"/>
-                                    <outlet property="scoreLabel" destination="c5x-Vn-yvK" id="PwD-Jm-G64"/>
-                                    <outlet property="searchImageView" destination="MUS-DF-Bcc" id="jMg-fU-hJx"/>
-                                    <outlet property="secondaryLabel" destination="mDt-m3-Q9Z" id="Z3f-ph-Oju"/>
-                                    <outlet property="separatorView" destination="19f-ld-oo6" id="W3r-vN-NXU"/>
-                                    <outlet property="showRatingLabel" destination="chn-Uj-occ" id="BmT-go-UZh"/>
-                                    <outlet property="statusLabel" destination="L1X-Gb-qwx" id="wiF-SJ-5pR"/>
-                                </connections>
-                            </collectionViewCell>
-                            <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SearchUserResultsCell" id="xu7-2k-1Xl" customClass="SearchUserResultsCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="180" width="374" height="80"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="QiB-km-vLh">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="80"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mtZ-pe-OJF">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="80"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/User Profile" translatesAutoresizingMaskIntoConstraints="NO" id="h3f-B7-Hl0" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="0.0" width="70" height="70"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" secondItem="h3f-B7-Hl0" secondAttribute="height" multiplier="1:1" id="KVX-6M-kMs"/>
-                                                        <constraint firstAttribute="height" constant="70" id="sI6-pF-R7I"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="drt-vQ-zrh" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="86" y="0.0" width="192" height="17"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Be the first to follow!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GY7-lH-gUl" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="86" y="17" width="192" height="14.333333333333336"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                    <color key="textColor" systemColor="secondaryLabelColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <button contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c3B-8L-Hn2" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="286" y="25" width="80" height="30"/>
-                                                    <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="87u-ri-VEr"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
-                                                    <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
-                                                    <state key="normal" title="+ Follow">
-                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </state>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <integer key="value" value="15"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
-                                                    </userDefinedRuntimeAttributes>
-                                                    <connections>
-                                                        <action selector="actionButtonPressed:" destination="xu7-2k-1Xl" eventType="touchUpInside" id="rv3-68-IUs"/>
-                                                    </connections>
-                                                </button>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qhh-Nz-5n1" customClass="SeparatorView" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="79" width="358" height="1"/>
-                                                    <color key="backgroundColor" systemColor="separatorColor"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="1" id="qQ5-9s-TUc"/>
-                                                    </constraints>
-                                                </view>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstItem="GY7-lH-gUl" firstAttribute="leading" secondItem="drt-vQ-zrh" secondAttribute="leading" id="0ji-yh-eMh"/>
-                                                <constraint firstItem="h3f-B7-Hl0" firstAttribute="leading" secondItem="mtZ-pe-OJF" secondAttribute="leadingMargin" id="2DL-F5-Mrj"/>
-                                                <constraint firstItem="c3B-8L-Hn2" firstAttribute="leading" secondItem="drt-vQ-zrh" secondAttribute="trailing" constant="8" symbolic="YES" id="4DW-FW-Sv2"/>
-                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="GY7-lH-gUl" secondAttribute="bottom" constant="10" id="8GS-qI-AEb"/>
-                                                <constraint firstItem="drt-vQ-zrh" firstAttribute="leading" secondItem="h3f-B7-Hl0" secondAttribute="trailing" constant="8" symbolic="YES" id="AiA-nW-g4z"/>
-                                                <constraint firstItem="GY7-lH-gUl" firstAttribute="top" secondItem="drt-vQ-zrh" secondAttribute="bottom" id="Obp-BZ-UR1"/>
-                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="c3B-8L-Hn2" secondAttribute="bottom" constant="10" id="QJR-pS-5pU"/>
-                                                <constraint firstItem="c3B-8L-Hn2" firstAttribute="centerY" secondItem="mtZ-pe-OJF" secondAttribute="centerY" id="WE0-cg-MoV"/>
-                                                <constraint firstAttribute="bottom" secondItem="h3f-B7-Hl0" secondAttribute="bottom" constant="10" id="fNa-Ci-FHm"/>
-                                                <constraint firstAttribute="bottom" secondItem="Qhh-Nz-5n1" secondAttribute="bottom" id="fl7-dc-r15"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="c3B-8L-Hn2" secondAttribute="trailing" id="h4j-TR-JbK"/>
-                                                <constraint firstAttribute="trailing" secondItem="Qhh-Nz-5n1" secondAttribute="trailing" constant="8" id="hdh-hR-wLf"/>
-                                                <constraint firstItem="h3f-B7-Hl0" firstAttribute="top" secondItem="drt-vQ-zrh" secondAttribute="top" id="ht7-V0-54x"/>
-                                                <constraint firstItem="c3B-8L-Hn2" firstAttribute="leading" secondItem="GY7-lH-gUl" secondAttribute="trailing" constant="8" symbolic="YES" id="j9N-Ly-CPl"/>
-                                                <constraint firstItem="Qhh-Nz-5n1" firstAttribute="leading" secondItem="mtZ-pe-OJF" secondAttribute="leading" constant="8" id="oFc-x4-jCG"/>
-                                                <constraint firstItem="h3f-B7-Hl0" firstAttribute="top" secondItem="mtZ-pe-OJF" secondAttribute="top" id="r1T-Q2-JeC"/>
-                                                <constraint firstItem="c3B-8L-Hn2" firstAttribute="top" relation="greaterThanOrEqual" secondItem="mtZ-pe-OJF" secondAttribute="top" constant="10" id="rvl-vq-7ne"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="mtZ-pe-OJF" firstAttribute="leading" secondItem="QiB-km-vLh" secondAttribute="leading" id="FNh-mp-ed4"/>
-                                        <constraint firstAttribute="bottom" secondItem="mtZ-pe-OJF" secondAttribute="bottom" id="IzG-vx-JtU"/>
-                                        <constraint firstAttribute="trailing" secondItem="mtZ-pe-OJF" secondAttribute="trailing" id="JfZ-so-9zv"/>
-                                        <constraint firstItem="mtZ-pe-OJF" firstAttribute="top" secondItem="QiB-km-vLh" secondAttribute="top" id="Tp2-2z-LMP"/>
-                                    </constraints>
-                                </collectionViewCellContentView>
-                                <size key="customSize" width="374" height="80"/>
-                                <connections>
-                                    <outlet property="actionButton" destination="c3B-8L-Hn2" id="0dC-TA-hQC"/>
-                                    <outlet property="primaryLabel" destination="drt-vQ-zrh" id="lEP-vk-ScX"/>
-                                    <outlet property="searchImageView" destination="h3f-B7-Hl0" id="fVz-nI-U4U"/>
-                                    <outlet property="secondaryLabel" destination="GY7-lH-gUl" id="JtH-jH-A3l"/>
-                                    <outlet property="separatorView" destination="Qhh-Nz-5n1" id="8fe-db-z8A"/>
-                                </connections>
-                            </collectionViewCell>
-                            <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SearchSuggestionResultCell" id="b6f-Wh-sCI" customClass="SearchSuggestionResultCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="270" width="133.33333333333331" height="225"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="QnR-vT-xNP">
-                                    <rect key="frame" x="0.0" y="0.0" width="133.33333333333331" height="225"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PV1-iB-RdC">
-                                            <rect key="frame" x="0.0" y="0.0" width="133.33333333333334" height="200"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="Placeholders/Show Poster" translatesAutoresizingMaskIntoConstraints="NO" id="ivd-fa-jIq" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="133.33333333333334" height="200"/>
-                                                    <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </imageView>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="ivd-fa-jIq" firstAttribute="leading" secondItem="PV1-iB-RdC" secondAttribute="leading" id="2G7-gP-ExP"/>
-                                                <constraint firstAttribute="bottom" secondItem="ivd-fa-jIq" secondAttribute="bottom" id="4Ss-Mb-MeE"/>
-                                                <constraint firstItem="ivd-fa-jIq" firstAttribute="top" secondItem="PV1-iB-RdC" secondAttribute="top" id="N3C-CR-UTD"/>
-                                                <constraint firstAttribute="height" constant="200" id="TuY-mV-Urr"/>
-                                                <constraint firstAttribute="trailing" secondItem="ivd-fa-jIq" secondAttribute="trailing" id="aQE-aV-O2D"/>
-                                                <constraint firstAttribute="width" secondItem="PV1-iB-RdC" secondAttribute="height" multiplier="2:3" id="xyB-Ey-Urq"/>
-                                            </constraints>
-                                        </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r55-2U-KMr" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="208" width="133.33333333333334" height="17"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="r55-2U-KMr" secondAttribute="bottom" id="64f-Wk-GNs"/>
-                                        <constraint firstItem="r55-2U-KMr" firstAttribute="top" secondItem="PV1-iB-RdC" secondAttribute="bottom" constant="8" symbolic="YES" id="B3N-kw-eiw"/>
-                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="PV1-iB-RdC" secondAttribute="trailing" id="Iea-rU-xPC"/>
-                                        <constraint firstItem="PV1-iB-RdC" firstAttribute="leading" secondItem="QnR-vT-xNP" secondAttribute="leading" id="Rz8-hU-4Dl"/>
-                                        <constraint firstItem="r55-2U-KMr" firstAttribute="leading" secondItem="QnR-vT-xNP" secondAttribute="leading" id="bws-Na-S9l"/>
-                                        <constraint firstItem="r55-2U-KMr" firstAttribute="trailing" secondItem="PV1-iB-RdC" secondAttribute="trailing" id="jH4-Zu-ltz"/>
-                                        <constraint firstItem="PV1-iB-RdC" firstAttribute="top" secondItem="QnR-vT-xNP" secondAttribute="top" id="p91-vH-F3E"/>
-                                    </constraints>
-                                </collectionViewCellContentView>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <connections>
-                                    <outlet property="posterImageView" destination="ivd-fa-jIq" id="6ey-Ip-M5a"/>
-                                    <outlet property="titleLabel" destination="r55-2U-KMr" id="4px-76-ZSQ"/>
-                                </connections>
-                            </collectionViewCell>
-                        </cells>
+                        <cells/>
                         <connections>
                             <outlet property="dataSource" destination="2ep-aO-hMa" id="1aZ-CB-dyI"/>
                             <outlet property="delegate" destination="2ep-aO-hMa" id="K1n-62-7BL"/>
@@ -349,7 +29,16 @@
                     <navigationItem key="navigationItem" title="Search" id="Kpv-Pe-ep6"/>
                     <connections>
                         <segue destination="uMA-Uj-cNY" kind="show" identifier="ShowDetailsSegue" id="lUW-RX-SXL"/>
-                        <segue destination="lXe-6H-qNU" kind="show" identifier="ProfileSegue" id="70s-BL-LEo"/>
+                        <segue destination="lXe-6H-qNU" kind="show" identifier="UserDetailsSegue" id="70s-BL-LEo"/>
+                        <segue destination="4bL-pK-p4r" kind="show" identifier="CharacterDetailsSegue" id="0Zn-pT-iu8"/>
+                        <segue destination="wO9-2k-ZU5" kind="show" identifier="PersonDetailsSegue" id="MeE-3o-57j"/>
+                        <segue destination="xje-gI-aW9" kind="show" identifier="StudioDetailsSegue" id="MwY-lY-0R6"/>
+                        <segue destination="CJO-zh-L0x" kind="show" identifier="SongsListSegue" id="3XF-oX-Jgv"/>
+                        <segue destination="qYs-4G-DEE" kind="show" identifier="ShowsListSegue" id="MHw-JA-XkQ"/>
+                        <segue destination="hN8-12-HuW" kind="show" identifier="PeopleListSegue" id="cUx-0V-lWL"/>
+                        <segue destination="Xmj-mX-MtD" kind="show" identifier="CharactersListSegue" id="3eo-3M-if8"/>
+                        <segue destination="JNO-Hl-lYH" kind="show" identifier="StudiosListSegue" id="gMX-SU-VU4"/>
+                        <segue destination="FJD-ss-Chi" kind="show" identifier="UsersListSegue" id="gbe-zW-w3O"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bIZ-Ff-stf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -364,7 +53,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A8d-UM-XXu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3407" y="119"/>
+            <point key="canvasLocation" x="3359" y="-141"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="pLp-US-z77">
@@ -399,23 +88,98 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pJH-Qk-BA8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3360" y="188"/>
+            <point key="canvasLocation" x="3312" y="-97"/>
+        </scene>
+        <!--CharacterDetailsCollectionViewController-->
+        <scene sceneID="Ml4-hw-qVW">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Characters" referencedIdentifier="CharacterDetailsCollectionViewController" id="4bL-pK-p4r" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="BeQ-fS-RK6"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iBc-ch-Flx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3382" y="-56"/>
+        </scene>
+        <!--PersonDetailsCollectionViewController-->
+        <scene sceneID="jKX-8t-ZPV">
+            <objects>
+                <viewControllerPlaceholder storyboardName="People" referencedIdentifier="PersonDetailsCollectionViewController" id="wO9-2k-ZU5" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="HEx-sz-7nW"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="45R-1E-PDx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3370" y="-13"/>
+        </scene>
+        <!--StudioDetailsCollectionViewController-->
+        <scene sceneID="4lU-CJ-Dxw">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Studios" referencedIdentifier="StudioDetailsCollectionViewController" id="xje-gI-aW9" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="YA1-P5-uFq"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cwq-fH-i7x" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3370" y="31"/>
+        </scene>
+        <!--SongsListCollectionViewController-->
+        <scene sceneID="nEE-7x-fMg">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Songs" referencedIdentifier="SongsListCollectionViewController" id="CJO-zh-L0x" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="6qn-hk-UQ4"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1h2-oE-Bld" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3347" y="301"/>
+        </scene>
+        <!--ShowsListCollectionViewController-->
+        <scene sceneID="jlq-bR-C8Q">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Shows" referencedIdentifier="ShowsListCollectionViewController" id="qYs-4G-DEE" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="led-Eq-XAK"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PEO-4W-KR7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3354" y="218"/>
+        </scene>
+        <!--PeopleListCollectionViewController-->
+        <scene sceneID="gzx-ne-FLO">
+            <objects>
+                <viewControllerPlaceholder storyboardName="People" referencedIdentifier="PeopleListCollectionViewController" id="hN8-12-HuW" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="xbo-18-7Sl"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZZk-kQ-Noe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3354" y="259"/>
+        </scene>
+        <!--CharactersListCollectionViewController-->
+        <scene sceneID="im2-FO-xFY">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Characters" referencedIdentifier="CharactersListCollectionViewController" id="Xmj-mX-MtD" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="agN-dm-kdK"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hf4-Kn-oGJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3370" y="346"/>
+        </scene>
+        <!--StudiosListCollectionViewController-->
+        <scene sceneID="8ls-f3-9De">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Studios" referencedIdentifier="StudiosListCollectionViewController" id="JNO-Hl-lYH" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="iuf-YH-EGc"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="O5b-cV-Z5q" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3353" y="396"/>
+        </scene>
+        <!--UsersListCollectionViewController-->
+        <scene sceneID="KNx-KH-zKj">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Profile" referencedIdentifier="UsersListCollectionViewController" id="FJD-ss-Chi" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="HS5-cW-DDz"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mIq-0C-Oqv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3345" y="442"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="YhF-wz-du0">
-            <size key="intrinsicContentSize" width="102" height="18"/>
-        </designable>
-    </designables>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-    <resources>
-        <image name="Placeholders/Show Poster" width="680" height="1000"/>
-        <image name="Placeholders/User Profile" width="300" height="300"/>
-        <systemColor name="secondaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="separatorColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-    </resources>
 </document>
