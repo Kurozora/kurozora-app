@@ -17,11 +17,11 @@ extension PeopleListCollectionViewController {
 			var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? personLockupCollectionViewCell.dataRequest
 
 			if dataRequest == nil && person == nil {
-				dataRequest = KService.getDetails(forPerson: personIdentity) { [weak self] result in
+				dataRequest = KService.getDetails(forPerson: personIdentity) { result in
 					switch result {
 					case .success(let people):
-						self?.people[indexPath] = people.first
-						self?.setPersonNeedsUpdate(personIdentity)
+						self.people[indexPath] = people.first
+						self.setPersonNeedsUpdate(personIdentity)
 					case .failure: break
 					}
 				}
@@ -37,10 +37,10 @@ extension PeopleListCollectionViewController {
 	}
 
 	override func updateDataSource() {
-		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, PersonIdentity>()
-		self.snapshot.appendSections([.main])
-		self.snapshot.appendItems(self.personIdentities, toSection: .main)
-		self.dataSource.apply(self.snapshot)
+		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, PersonIdentity>()
+		snapshot.appendSections([.main])
+		snapshot.appendItems(self.personIdentities, toSection: .main)
+		self.dataSource.apply(snapshot)
 	}
 
 	func fetchPerson(at indexPath: IndexPath) -> Person? {
@@ -50,6 +50,7 @@ extension PeopleListCollectionViewController {
 
 	func setPersonNeedsUpdate(_ personIdentity: PersonIdentity) {
 		var snapshot = self.dataSource.snapshot()
+		guard snapshot.indexOfItem(personIdentity) != nil else { return }
 		snapshot.reconfigureItems([personIdentity])
 		self.dataSource.apply(snapshot, animatingDifferences: true)
 	}

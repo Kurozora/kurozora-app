@@ -108,14 +108,18 @@ class PersonDetailsCollectionViewController: KCollectionViewController {
 		self.configureDataSource()
 
 		// Fetch person details
-		DispatchQueue.global(qos: .userInteractive).async {
-			self.fetchDetails()
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchDetails()
 		}
 	}
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		self.fetchDetails()
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchDetails()
+		}
 	}
 
 	override func configureEmptyDataView() {
@@ -134,7 +138,7 @@ class PersonDetailsCollectionViewController: KCollectionViewController {
 		}
 	}
 
-	func fetchDetails() {
+	func fetchDetails() async {
 		guard let personIdentity = self.personIdentity else { return }
 
 		if self.person == nil {
@@ -147,29 +151,23 @@ class PersonDetailsCollectionViewController: KCollectionViewController {
 				}
 			}
 		} else {
-			DispatchQueue.main.async { [weak self] in
-				guard let self = self else { return }
-				self.updateDataSource()
-			}
+			self.updateDataSource()
 		}
 
-		KService.getCharacters(forPerson: personIdentity, limit: 10) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let characterIdentityResponse):
-				self.characterIdentities = characterIdentityResponse.data
-			case .failure: break
-			}
+		do {
+			let characterIdentityResponse = try await KService.getCharacters(forPerson: personIdentity, limit: 10).value
+			self.characterIdentities = characterIdentityResponse.data
+		} catch {
+			print(error.localizedDescription)
 		}
+
 		KService.getShows(forPerson: personIdentity, limit: 10) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
 			case .success(let showIdentityResponse):
 				self.showIdentities = showIdentityResponse.data
 
-				DispatchQueue.main.async {
-					self.updateDataSource()
-				}
+				self.updateDataSource()
 			case .failure: break
 			}
 		}
@@ -181,6 +179,7 @@ class PersonDetailsCollectionViewController: KCollectionViewController {
 		case R.segue.personDetailsCollectionViewController.showsListSegue.identifier:
 			guard let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController else { return }
 			showsListCollectionViewController.personIdentity = self.personIdentity
+			showsListCollectionViewController.showsListFetchType = .person
 		case R.segue.personDetailsCollectionViewController.showDetailsSegue.identifier:
 			guard let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
@@ -188,6 +187,7 @@ class PersonDetailsCollectionViewController: KCollectionViewController {
 		case R.segue.personDetailsCollectionViewController.charactersListSegue.identifier:
 			guard let charactersListCollectionViewController = segue.destination as? CharactersListCollectionViewController else { return }
 			charactersListCollectionViewController.personIdentity = self.personIdentity
+			charactersListCollectionViewController.charactersListFetchType = .person
 		case R.segue.personDetailsCollectionViewController.characterDetailsSegue.identifier:
 			guard let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController else { return }
 			guard let character = sender as? Character else { return }
@@ -199,7 +199,7 @@ class PersonDetailsCollectionViewController: KCollectionViewController {
 
 // MARK: - BaseLockupCollectionViewCellDelegate
 extension PersonDetailsCollectionViewController: BaseLockupCollectionViewCellDelegate {
-	func chooseStatusButtonPressed(_ sender: UIButton, on cell: BaseLockupCollectionViewCell) {
+	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressStatus button: UIButton) {
 		WorkflowController.shared.isSignedIn {
 			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 			guard let show = self.shows[indexPath] else { return }
@@ -213,7 +213,7 @@ extension PersonDetailsCollectionViewController: BaseLockupCollectionViewCellDel
 
 						// Update entry in library
 						cell.libraryStatus = value
-						cell.libraryStatusButton?.setTitle("\(title) ▾", for: .normal)
+						button.setTitle("\(title) ▾", for: .normal)
 
 						let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
 						NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
@@ -232,7 +232,7 @@ extension PersonDetailsCollectionViewController: BaseLockupCollectionViewCellDel
 
 							// Update edntry in library
 							cell.libraryStatus = .none
-							cell.libraryStatusButton?.setTitle("ADD", for: .normal)
+							button.setTitle("ADD", for: .normal)
 
 							let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
 							NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
@@ -245,8 +245,8 @@ extension PersonDetailsCollectionViewController: BaseLockupCollectionViewCellDel
 
 			// Present the controller
 			if let popoverController = actionSheetAlertController.popoverPresentationController {
-				popoverController.sourceView = sender
-				popoverController.sourceRect = sender.bounds
+				popoverController.sourceView = button
+				popoverController.sourceRect = button.bounds
 			}
 
 			if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
@@ -255,9 +255,10 @@ extension PersonDetailsCollectionViewController: BaseLockupCollectionViewCellDel
 		}
 	}
 
-	func reminderButtonPressed(on cell: BaseLockupCollectionViewCell) {
+	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressReminder button: UIButton) {
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		self.shows[indexPath]?.toggleReminder()
+		guard let show = self.shows[indexPath] else { return }
+		show.toggleReminder()
 	}
 }
 

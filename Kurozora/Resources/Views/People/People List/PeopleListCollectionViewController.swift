@@ -10,17 +10,28 @@ import UIKit
 import KurozoraKit
 import Alamofire
 
+enum PeopleListFetchType {
+	case character
+	case explore
+	case search
+}
+
 class PeopleListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var characterIdentity: CharacterIdentity? = nil
 	var people: [IndexPath: Person] = [:]
 	var personIdentities: [PersonIdentity] = []
-	var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, PersonIdentity>()
+	var exploreCategoryIdentity: ExploreCategoryIdentity? = nil
+	var searachQuery: String = ""
+	var peopleListFetchType: PeopleListFetchType = .search
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, PersonIdentity>! = nil
 	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
 
 	/// The next page url of the pagination.
 	var nextPageURL: String?
+
+	/// Whether a fetch request is currently in progress.
+	var isRequestInProgress: Bool = false
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
@@ -67,9 +78,10 @@ class PeopleListCollectionViewController: KCollectionViewController {
 
 		if !self.personIdentities.isEmpty {
 			self.endFetch()
-		} else if self.characterIdentity != nil {
-			DispatchQueue.global(qos: .userInteractive).async {
-				self.fetchPeople()
+		} else {
+			Task { [weak self] in
+				guard let self = self else { return }
+				await self.fetchPeople()
 			}
 		}
 	}
@@ -78,8 +90,9 @@ class PeopleListCollectionViewController: KCollectionViewController {
 	override func handleRefreshControl() {
 		if self.characterIdentity != nil {
 			self.nextPageURL = nil
-			DispatchQueue.global(qos: .userInteractive).async {
-				self.fetchPeople()
+			Task { [weak self] in
+				guard let self = self else { return }
+				await self.fetchPeople()
 			}
 		}
 	}
@@ -101,6 +114,7 @@ class PeopleListCollectionViewController: KCollectionViewController {
 	}
 
 	func endFetch() {
+		self.isRequestInProgress = false
 		self.updateDataSource()
 		self._prefersActivityIndicatorHidden = true
 		self.toggleEmptyDataView()
@@ -111,28 +125,24 @@ class PeopleListCollectionViewController: KCollectionViewController {
 		#endif
 	}
 
-	func fetchPeople() {
-		guard let characterIdentity = self.characterIdentity else {
-			DispatchQueue.main.async { [weak self] in
-				guard let self = self else { return }
-				#if !targetEnvironment(macCatalyst)
-				self.refreshControl?.endRefreshing()
-				#endif
-			}
+	func fetchPeople() async {
+		guard !self.isRequestInProgress else {
 			return
 		}
 
-		DispatchQueue.main.async { [weak self] in
-			guard let self = self else { return }
-			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing people...")
-			#endif
-		}
+		// Set request in progress
+		self.isRequestInProgress = true
 
-		KService.getPeople(forCharacter: characterIdentity, next: self.nextPageURL) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let personIdentityResponse):
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing people...")
+		#endif
+
+		switch self.peopleListFetchType {
+		case .character:
+			do {
+				guard let characterIdentity = self.characterIdentity else { return }
+				let personIdentityResponse = try await KService.getPeople(forCharacter: characterIdentity, next: self.nextPageURL).value
+
 				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.personIdentities = []
@@ -141,18 +151,51 @@ class PeopleListCollectionViewController: KCollectionViewController {
 				// Save next page url and append new data
 				self.nextPageURL = personIdentityResponse.next
 				self.personIdentities.append(contentsOf: personIdentityResponse.data)
+				self.personIdentities.removeDuplicates()
+			} catch {
+				print(error.localizedDescription)
+			}
+		case .explore:
+			do {
+				guard let exploreCategoryIdentity = self.exploreCategoryIdentity else { return }
+				let exploreCategoryResponse = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL, limit: 25).value
 
-				DispatchQueue.main.async {
-					self.endFetch()
-
-					// Reset refresh controller title
-					#if !targetEnvironment(macCatalyst)
-					self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the people.")
-					#endif
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.personIdentities = []
 				}
-			case .failure: break
+
+				// Save next page url and append new data
+				self.nextPageURL = exploreCategoryResponse.data.first?.relationships.people?.next
+				self.personIdentities.append(contentsOf: exploreCategoryResponse.data.first?.relationships.people?.data ?? [])
+				self.personIdentities.removeDuplicates()
+			} catch {
+				print(error.localizedDescription)
+			}
+		case .search:
+			do {
+				let searchResponse = try await KService.search(.kurozora, of: [.people], for: self.searachQuery, next: self.nextPageURL, limit: 25).value
+
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.personIdentities = []
+				}
+
+				// Save next page url and append new data
+				self.nextPageURL = searchResponse.data.people?.next
+				self.personIdentities.append(contentsOf: searchResponse.data.people?.data ?? [])
+				self.personIdentities.removeDuplicates()
+			} catch {
+				print(error.localizedDescription)
 			}
 		}
+
+		self.endFetch()
+
+		// Reset refresh controller title
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the people.")
+		#endif
 	}
 
 	// MARK: - Segue
