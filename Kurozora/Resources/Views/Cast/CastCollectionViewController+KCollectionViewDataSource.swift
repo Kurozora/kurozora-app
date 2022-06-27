@@ -17,11 +17,11 @@ extension CastCollectionViewController {
 			var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? castCollectionViewCell.dataRequest
 
 			if dataRequest == nil && cast == nil {
-				dataRequest = KService.getDetails(forCast: castIdentity) { [weak self] result in
+				dataRequest = KService.getDetails(forCast: castIdentity) { result in
 					switch result {
 					case .success(let cast):
-						self?.cast[indexPath] = cast.first
-						self?.setCastNeedsUpdate(castIdentity)
+						self.cast[indexPath] = cast.first
+						self.setCastNeedsUpdate(castIdentity)
 					case .failure: break
 					}
 				}
