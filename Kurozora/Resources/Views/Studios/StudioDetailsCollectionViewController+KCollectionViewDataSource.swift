@@ -34,7 +34,7 @@ extension StudioDetailsCollectionViewController {
 				let studioHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.studioHeaderCollectionViewCell, for: indexPath)
 				switch itemKind {
 				case .studio(let studio, _):
-					studioHeaderCollectionViewCell?.studio = studio
+					studioHeaderCollectionViewCell?.configure(using: studio)
 				default: break
 				}
 				return studioHeaderCollectionViewCell
@@ -112,6 +112,7 @@ extension StudioDetailsCollectionViewController {
 
 	func setItemKindNeedsUpdate(_ itemKind: ItemKind) {
 		var snapshot = self.dataSource.snapshot()
+		guard snapshot.indexOfItem(itemKind) != nil else { return }
 		snapshot.reconfigureItems([itemKind])
 		self.dataSource.apply(snapshot, animatingDifferences: true)
 	}
@@ -127,11 +128,11 @@ extension StudioDetailsCollectionViewController {
 			if dataRequest == nil && show == nil {
 				switch itemKind {
 				case .showIdentity(let showIdentity, _):
-					dataRequest = KService.getDetails(forShow: showIdentity) { [weak self] result in
+					dataRequest = KService.getDetails(forShow: showIdentity) { result in
 						switch result {
 						case .success(let shows):
-							self?.shows[indexPath] = shows.first
-							self?.setItemKindNeedsUpdate(itemKind)
+							self.shows[indexPath] = shows.first
+							self.setItemKindNeedsUpdate(itemKind)
 						case .failure: break
 						}
 					}

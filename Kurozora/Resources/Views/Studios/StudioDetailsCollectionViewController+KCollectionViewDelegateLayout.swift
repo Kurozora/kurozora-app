@@ -71,7 +71,7 @@ extension StudioDetailsCollectionViewController {
 				sectionLayout = gridSection
 				hasSectionHeader = true
 			case .shows:
-				if self.shows.count != 0 {
+				if !self.showIdentities.isEmpty {
 					let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 					let smallSectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 					sectionLayout = smallSectionLayout
@@ -80,7 +80,7 @@ extension StudioDetailsCollectionViewController {
 			}
 
 			if hasSectionHeader {
-				let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50))
+				let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0))
 				let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
 					layoutSize: headerFooterSize,
 					elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
