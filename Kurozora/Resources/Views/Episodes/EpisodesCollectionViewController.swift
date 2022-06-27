@@ -151,6 +151,7 @@ class EpisodesCollectionViewController: KCollectionViewController {
 				// Save next page url and append new data
 				self.nextPageURL = episodeIdentityResponse.next
 				self.episodeIdentities.append(contentsOf: episodeIdentityResponse.data)
+				self.episodeIdentities.removeDuplicates()
 
 				// Reset refresh controller title
 				#if !targetEnvironment(macCatalyst)

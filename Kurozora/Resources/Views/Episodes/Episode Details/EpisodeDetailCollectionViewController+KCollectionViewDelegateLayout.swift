@@ -88,7 +88,7 @@ extension EpisodeDetailCollectionViewController {
 			}
 
 			if hasSectionHeader {
-				let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50))
+				let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0))
 				let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
 					layoutSize: headerFooterSize,
 					elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
