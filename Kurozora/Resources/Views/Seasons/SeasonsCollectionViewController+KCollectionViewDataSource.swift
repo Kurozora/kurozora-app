@@ -17,11 +17,11 @@ extension SeasonsCollectionViewController {
 			var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? seasonLockupCollectionViewCell.dataRequest
 
 			if dataRequest == nil && season == nil {
-				dataRequest = KService.getDetails(forSeason: seasonIdentity) { [weak self] result in
+				dataRequest = KService.getDetails(forSeason: seasonIdentity) { result in
 					switch result {
 					case .success(let seasons):
-						self?.seasons[indexPath] = seasons.first
-						self?.setSeasonNeedsUpdate(seasonIdentity)
+						self.seasons[indexPath] = seasons.first
+						self.setSeasonNeedsUpdate(seasonIdentity)
 					case .failure: break
 					}
 				}
