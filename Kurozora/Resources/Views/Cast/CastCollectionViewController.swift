@@ -138,6 +138,7 @@ class CastCollectionViewController: KCollectionViewController {
 				// Save next page url and append new data
 				self.nextPageURL = castIdentityResponse.next
 				self.castIdentities.append(contentsOf: castIdentityResponse.data)
+				self.castIdentities.removeDuplicates()
 
 				DispatchQueue.main.async {
 					// Reset refresh controller title
