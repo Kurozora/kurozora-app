@@ -197,20 +197,7 @@ class HomeCollectionViewController: KCollectionViewController {
 			guard let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
 			showDetailCollectionViewController.show = show
-		case R.segue.homeCollectionViewController.showsListSegue.identifier:
-			// Segue to shows list
-			guard let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController else { return }
-			guard let indexPath = sender as? IndexPath else { return }
-			let exploreCategory = self.exploreCategories[indexPath.section]
-
-			showsListCollectionViewController.title = self.exploreCategories[indexPath.section].attributes.title
-
-			if exploreCategory.attributes.exploreCategoryType == .upcomingShows {
-				showsListCollectionViewController.showUpcoming = true
-			} else {
-				showsListCollectionViewController.showIdentities =  exploreCategory.relationships.shows?.data ?? []
-			}
-		case R.segue.homeCollectionViewController.showSongsListSegue.identifier:
+		case R.segue.homeCollectionViewController.songsListSegue.identifier:
 			// Segue to show songs list
 			guard let showSongsListCollectionViewController = segue.destination as? ShowSongsListCollectionViewController else { return }
 			guard let indexPath = sender as? IndexPath else { return }
@@ -230,25 +217,41 @@ class HomeCollectionViewController: KCollectionViewController {
 			guard let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController else { return }
 			guard let character = sender as? Character else { return }
 			characterDetailsCollectionViewController.character = character
+		case R.segue.homeCollectionViewController.personSegue.identifier:
+			// Segue to person details
+			guard let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController else { return }
+			guard let person = sender as? Person else { return }
+			personDetailsCollectionViewController.person = person
+		case R.segue.homeCollectionViewController.showsListSegue.identifier:
+			// Segue to shows list
+			guard let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController else { return }
+			guard let indexPath = sender as? IndexPath else { return }
+			let exploreCategory = self.exploreCategories[indexPath.section]
+
+			showsListCollectionViewController.title = self.exploreCategories[indexPath.section].attributes.title
+
+			if exploreCategory.attributes.exploreCategoryType == .upcomingShows {
+				showsListCollectionViewController.showsListFetchType = .upcoming
+			} else {
+				showsListCollectionViewController.exploreCategoryIdentity = ExploreCategoryIdentity(id: exploreCategory.id)
+				showsListCollectionViewController.showsListFetchType = .explore
+			}
 		case R.segue.homeCollectionViewController.charactersListSegue.identifier:
 			// Segue to characters list
 			guard let charactersListCollectionViewController = segue.destination as? CharactersListCollectionViewController else { return }
 			guard let indexPath = sender as? IndexPath else { return }
 			let exploreCategory = self.exploreCategories[indexPath.section]
 			charactersListCollectionViewController.title = exploreCategory.attributes.title
-			charactersListCollectionViewController.characterIdentities = exploreCategory.relationships.characters?.data ?? []
-		case R.segue.homeCollectionViewController.personSegue.identifier:
-			// Segue to person details
-			guard let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController else { return }
-			guard let person = sender as? Person else { return }
-			personDetailsCollectionViewController.person = person
+			charactersListCollectionViewController.exploreCategoryIdentity = ExploreCategoryIdentity(id: exploreCategory.id)
+			charactersListCollectionViewController.charactersListFetchType = .explore
 		case R.segue.homeCollectionViewController.peopleListSegue.identifier:
 			// Segue to people list
 			guard let peopleListCollectionViewController = segue.destination as? PeopleListCollectionViewController else { return }
 			guard let indexPath = sender as? IndexPath else { return }
 			let exploreCategory = self.exploreCategories[indexPath.section]
 			peopleListCollectionViewController.title = exploreCategory.attributes.title
-			peopleListCollectionViewController.personIdentities = exploreCategory.relationships.people?.data ?? []
+			peopleListCollectionViewController.exploreCategoryIdentity = ExploreCategoryIdentity(id: exploreCategory.id)
+			peopleListCollectionViewController.peopleListFetchType = .explore
 		default: break
 		}
 	}
@@ -263,13 +266,13 @@ extension HomeCollectionViewController: TitleHeaderCollectionReusableViewDelegat
 
 // MARK: - BaseLockupCollectionViewCellDelegate
 extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
-	func reminderButtonPressed(on cell: BaseLockupCollectionViewCell) {
+	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressReminder button: UIButton) {
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 		guard let show = self.shows[indexPath] else { return }
 		show.toggleReminder()
 	}
 
-	func chooseStatusButtonPressed(_ sender: UIButton, on cell: BaseLockupCollectionViewCell) {
+	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressStatus button: UIButton) {
 		WorkflowController.shared.isSignedIn {
 			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 			guard let show = self.shows[indexPath] else { return }
@@ -283,7 +286,7 @@ extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 
 						// Update entry in library
 						cell.libraryStatus = value
-						cell.libraryStatusButton?.setTitle("\(title) ▾", for: .normal)
+						button.setTitle("\(title) ▾", for: .normal)
 
 						let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
 						NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
@@ -302,7 +305,7 @@ extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 
 							// Update edntry in library
 							cell.libraryStatus = .none
-							cell.libraryStatusButton?.setTitle("ADD", for: .normal)
+							button.setTitle("ADD", for: .normal)
 
 							let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
 							NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
@@ -315,8 +318,8 @@ extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 
 			// Present the controller
 			if let popoverController = actionSheetAlertController.popoverPresentationController {
-				popoverController.sourceView = sender
-				popoverController.sourceRect = sender.bounds
+				popoverController.sourceView = button
+				popoverController.sourceRect = button.bounds
 			}
 
 			if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
@@ -595,11 +598,11 @@ extension HomeCollectionViewController {
 				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? bannerLockupCollectionViewCell.dataRequest
 
 				if dataRequest == nil && show == nil {
-					dataRequest = KService.getDetails(forShow: showIdentity) { [weak self] result in
+					dataRequest = KService.getDetails(forShow: showIdentity) { result in
 						switch result {
 						case .success(let shows):
-							self?.shows[indexPath] = shows.first
-							self?.setItemKindNeedsUpdate(itemKind)
+							self.shows[indexPath] = shows.first
+							self.setItemKindNeedsUpdate(itemKind)
 						case .failure: break
 						}
 					}
@@ -623,11 +626,11 @@ extension HomeCollectionViewController {
 				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? smallLockupCollectionViewCell.dataRequest
 
 				if dataRequest == nil && show == nil {
-					dataRequest = KService.getDetails(forShow: showIdentity) { [weak self] result in
+					dataRequest = KService.getDetails(forShow: showIdentity) { result in
 						switch result {
 						case .success(let shows):
-							self?.shows[indexPath] = shows.first
-							self?.setItemKindNeedsUpdate(itemKind)
+							self.shows[indexPath] = shows.first
+							self.setItemKindNeedsUpdate(itemKind)
 						case .failure: break
 						}
 					}
@@ -651,11 +654,11 @@ extension HomeCollectionViewController {
 				var genreDataRequest = self.prefetchingIndexPathOperations[indexPath] ?? mediumLockupCollectionViewCell.dataRequest
 
 				if genreDataRequest == nil && genre == nil {
-					genreDataRequest = KService.getDetails(forGenre: genreIdentity) { [weak self] result in
+					genreDataRequest = KService.getDetails(forGenre: genreIdentity) { result in
 						switch result {
 						case .success(let genres):
-							self?.genres[indexPath] = genres.first
-							self?.setItemKindNeedsUpdate(itemKind)
+							self.genres[indexPath] = genres.first
+							self.setItemKindNeedsUpdate(itemKind)
 						case .failure: break
 						}
 					}
@@ -668,11 +671,11 @@ extension HomeCollectionViewController {
 				var themeDataRequest = self.prefetchingIndexPathOperations[indexPath] ?? mediumLockupCollectionViewCell.dataRequest
 
 				if themeDataRequest == nil && theme == nil {
-					themeDataRequest = KService.getDetails(forTheme: themeIdentity) { [weak self] result in
+					themeDataRequest = KService.getDetails(forTheme: themeIdentity) { result in
 						switch result {
 						case .success(let themes):
-							self?.themes[indexPath] = themes.first
-							self?.setItemKindNeedsUpdate(itemKind)
+							self.themes[indexPath] = themes.first
+							self.setItemKindNeedsUpdate(itemKind)
 						case .failure: break
 						}
 					}
@@ -695,11 +698,11 @@ extension HomeCollectionViewController {
 				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? largeLockupCollectionViewCell.dataRequest
 
 				if dataRequest == nil && show == nil {
-					dataRequest = KService.getDetails(forShow: showIdentity) { [weak self] result in
+					dataRequest = KService.getDetails(forShow: showIdentity) { result in
 						switch result {
 						case .success(let shows):
-							self?.shows[indexPath] = shows.first
-							self?.setItemKindNeedsUpdate(itemKind)
+							self.shows[indexPath] = shows.first
+							self.setItemKindNeedsUpdate(itemKind)
 						case .failure: break
 						}
 					}
@@ -723,11 +726,11 @@ extension HomeCollectionViewController {
 				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? upcomingLockupCollectionViewCell.dataRequest
 
 				if dataRequest == nil && show == nil {
-					dataRequest = KService.getDetails(forShow: showIdentity) { [weak self] result in
+					dataRequest = KService.getDetails(forShow: showIdentity) { result in
 						switch result {
 						case .success(let shows):
-							self?.shows[indexPath] = shows.first
-							self?.setItemKindNeedsUpdate(itemKind)
+							self.shows[indexPath] = shows.first
+							self.setItemKindNeedsUpdate(itemKind)
 						case .failure: break
 						}
 					}
@@ -751,11 +754,11 @@ extension HomeCollectionViewController {
 				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? videoLockupCollectionViewCell.dataRequest
 
 				if dataRequest == nil && show == nil {
-					dataRequest = KService.getDetails(forShow: showIdentity) { [weak self] result in
+					dataRequest = KService.getDetails(forShow: showIdentity) { result in
 						switch result {
 						case .success(let shows):
-							self?.shows[indexPath] = shows.first
-							self?.setItemKindNeedsUpdate(itemKind)
+							self.shows[indexPath] = shows.first
+							self.setItemKindNeedsUpdate(itemKind)
 						case .failure: break
 						}
 					}
@@ -779,11 +782,11 @@ extension HomeCollectionViewController {
 				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? personLockupCollectionViewCell.dataRequest
 
 				if dataRequest == nil && person == nil {
-					dataRequest = KService.getDetails(forPerson: personIdentity) { [weak self] result in
+					dataRequest = KService.getDetails(forPerson: personIdentity) { result in
 						switch result {
 						case .success(let persons):
-							self?.people[indexPath] = persons.first
-							self?.setItemKindNeedsUpdate(itemKind)
+							self.people[indexPath] = persons.first
+							self.setItemKindNeedsUpdate(itemKind)
 						case .failure: break
 						}
 					}
@@ -806,11 +809,11 @@ extension HomeCollectionViewController {
 				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? characterLockupCollectionViewCell.dataRequest
 
 				if dataRequest == nil && character == nil {
-					dataRequest = KService.getDetails(forCharacter: characterIdentity) { [weak self] result in
+					dataRequest = KService.getDetails(forCharacter: characterIdentity) { result in
 						switch result {
 						case .success(let characters):
-							self?.characters[indexPath] = characters.first
-							self?.setItemKindNeedsUpdate(itemKind)
+							self.characters[indexPath] = characters.first
+							self.setItemKindNeedsUpdate(itemKind)
 						case .failure: break
 						}
 					}

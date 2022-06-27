@@ -11,10 +11,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MusicLockupCollectionViewCell" id="a8b-UB-J09" customClass="MusicLockupCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="374" height="485.5"/>
+            <rect key="frame" x="0.0" y="0.0" width="374" height="477.5"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="1pO-cN-qZF">
-                <rect key="frame" x="0.0" y="0.0" width="374" height="485.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="374" height="477.5"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fmf-at-mZU">
@@ -61,7 +61,7 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bcf-Ej-vcv">
-                        <rect key="frame" x="0.0" y="390" width="374" height="95.5"/>
+                        <rect key="frame" x="0.0" y="382" width="374" height="95.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Strike It Out" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gpf-VE-M9t" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="77" height="24"/>
@@ -135,7 +135,7 @@
                     <constraint firstItem="Fmf-at-mZU" firstAttribute="top" secondItem="1pO-cN-qZF" secondAttribute="top" id="BkH-SR-GFN"/>
                     <constraint firstItem="Fmf-at-mZU" firstAttribute="leading" secondItem="1pO-cN-qZF" secondAttribute="leading" id="EmE-Wm-Cmw"/>
                     <constraint firstAttribute="trailing" secondItem="Fmf-at-mZU" secondAttribute="trailing" id="SsT-bf-1gX"/>
-                    <constraint firstItem="Bcf-Ej-vcv" firstAttribute="top" secondItem="Fmf-at-mZU" secondAttribute="bottom" constant="16" id="emg-KP-IFe"/>
+                    <constraint firstItem="Bcf-Ej-vcv" firstAttribute="top" secondItem="Fmf-at-mZU" secondAttribute="bottom" constant="8" symbolic="YES" id="emg-KP-IFe"/>
                     <constraint firstAttribute="trailing" secondItem="Bcf-Ej-vcv" secondAttribute="trailing" id="jRW-kA-ZoQ"/>
                     <constraint firstItem="Bcf-Ej-vcv" firstAttribute="leading" secondItem="1pO-cN-qZF" secondAttribute="leading" id="kAZ-wq-ex6"/>
                     <constraint firstAttribute="bottom" secondItem="Bcf-Ej-vcv" secondAttribute="bottom" id="qzx-FW-Rlf"/>
@@ -161,7 +161,7 @@
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="secondaryLabelColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="0.49803921568627452" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

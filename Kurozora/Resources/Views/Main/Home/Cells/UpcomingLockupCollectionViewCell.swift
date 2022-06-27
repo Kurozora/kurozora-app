@@ -42,6 +42,6 @@ class UpcomingLockupCollectionViewCell: BaseLockupCollectionViewCell {
 
 	// MARK: - IBActions
 	@IBAction func reminderButtonPressed(_ sender: UIButton) {
-		self.delegate?.reminderButtonPressed(on: self)
+		self.delegate?.baseLockupCollectionViewCell(self, didPressReminder: sender)
 	}
 }

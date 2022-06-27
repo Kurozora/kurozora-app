@@ -51,17 +51,29 @@ extension HomeCollectionViewController {
 				columnCount = (width / 360).rounded().int
 			}
 		case .music:
-			columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
+			columnCount = (width / 250.0).rounded().int
 		case .profile:
-			columnCount = UIDevice.isPhone ? (width / 200).rounded().int : (width / 300).rounded().int
+			columnCount = (width / 140.0).rounded().int
 		case .quickLinks:
-			let actionLinksCount = (width / 414).rounded().int
-			columnCount = actionLinksCount > 5 ? 5 : actionLinksCount
+			columnCount = (width / 414).rounded().int
 		case .quickActions:
-			let actionButtonCount = (width / 414).rounded().int
-			columnCount = actionButtonCount > 2 ? 2 : actionButtonCount
+			columnCount = (width / 414).rounded().int
 		case .legal:
 			columnCount = 1
+		}
+
+		switch section {
+		case .banner, .small, .medium, .large, .video, .upcoming, .quickLinks:
+			// Limit columns to 5 or less
+			if columnCount > 5 {
+				columnCount = 5
+			}
+		case .quickActions:
+			// Limit columns to 2 or less
+			if columnCount > 2 {
+				columnCount = 2
+			}
+		default: break
 		}
 
 		return columnCount > 0 ? columnCount : 1
@@ -103,7 +115,7 @@ extension HomeCollectionViewController {
 			}
 
 			// Add header supplementary view.
-			let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50))
+			let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0))
 			let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
 				layoutSize: headerFooterSize,
 				elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
