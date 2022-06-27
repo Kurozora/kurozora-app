@@ -12,6 +12,7 @@ import UIKit
 extension ShowDetailsCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
+		var columnCount = 1
 
 		switch self.snapshot.sectionIdentifiers[section] {
 		case .header, .synopsis, .sosumi:
@@ -20,7 +21,7 @@ extension ShowDetailsCollectionViewController {
 			return width > 414 ? ShowDetail.Badge.allCases.count : (width / 132).rounded().int
 		case .rating:
 			if width > 828 {
-				let columnCount = (width / 374).rounded().int
+				columnCount = (width / 374).rounded().int
 				if columnCount >= 3 {
 					return 3
 				} else if columnCount > 0 {
@@ -29,21 +30,33 @@ extension ShowDetailsCollectionViewController {
 			}
 			return 1
 		case .information:
-			let columnCount = width >= 414 ? (width / 200).rounded().int : (width / 160).rounded().int
+			columnCount = width >= 414 ? (width / 200).rounded().int : (width / 160).rounded().int
 			return columnCount > 0 ? columnCount : 2
 		case .seasons:
-			let columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
-			return columnCount > 0 ? columnCount : 1
+			columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
+			if columnCount > 5 {
+				return 5
+			}
 		case .cast:
-			let columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
-			return columnCount > 0 ? columnCount : 1
+			columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
+			if columnCount > 5 {
+				return 5
+			}
 		case .songs:
-			let columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
-			return columnCount > 0 ? columnCount : 1
+			columnCount = (width / 250).rounded().int
+		case .studios:
+			columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
+			if columnCount > 5 {
+				return 5
+			}
 		case .moreByStudio, .relatedShows:
-			let columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
-			return columnCount > 0 ? columnCount : 1
+			columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
+			if columnCount > 5 {
+				return 5
+			}
 		}
+
+		return columnCount > 0 ? columnCount : 1
 	}
 
 	func heightDimension(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutDimension {
@@ -110,33 +123,33 @@ extension ShowDetailsCollectionViewController {
 				hasSectionHeader = true
 			case .seasons:
 				if !self.seasonIdentities.isEmpty {
-					let seasonsSectionLayout = self.seasonsSection(section, layoutEnvironment: layoutEnvironment)
-					sectionLayout = seasonsSectionLayout
+					sectionLayout = Layouts.seasonsSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 					hasSectionHeader = true
 				}
 			case .cast:
 				if !self.castIdentities.isEmpty {
-					let castSectionLayout = self.castSection(section, layoutEnvironment: layoutEnvironment)
-					sectionLayout = castSectionLayout
+					sectionLayout = Layouts.castSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 					hasSectionHeader = true
 				}
 			case .songs:
 				if !self.showSongs.isEmpty {
-					let musicSectionLayout = Layouts.musicSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
-					sectionLayout = musicSectionLayout
+					sectionLayout = Layouts.musicSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					hasSectionHeader = true
+				}
+			case .studios:
+				if !self.studioIdentities.isEmpty {
+					sectionLayout = Layouts.studiosSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 					hasSectionHeader = true
 				}
 			case .moreByStudio:
 				if !self.studioShowIdentities.isEmpty {
-					let smallSectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
-					sectionLayout = smallSectionLayout
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 					hasSectionHeader = true
 					hasBackgroundDecoration = true
 				}
 			case .relatedShows:
 				if !self.relatedShows.isEmpty {
-					let smallSectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
-					sectionLayout = smallSectionLayout
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 					hasSectionHeader = true
 					hasBackgroundDecoration = true
 				}
@@ -149,7 +162,7 @@ extension ShowDetailsCollectionViewController {
 			}
 
 			if hasSectionHeader {
-				let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50))
+				let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0))
 				let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
 					layoutSize: headerFooterSize,
 					elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
@@ -217,46 +230,6 @@ extension ShowDetailsCollectionViewController {
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
 		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
-		return layoutSection
-	}
-
-	func seasonsSection(_ section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.90), heightDimension: .fractionalHeight(1.0))
-		let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.90), heightDimension: .estimated(150.0))
-		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-		layoutGroup.interItemSpacing = .fixed(10.0)
-
-		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-		layoutSection.interGroupSpacing = 10.0
-		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
-		#if targetEnvironment(macCatalyst)
-		layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
-		#else
-		layoutSection.orthogonalScrollingBehavior = .groupPaging
-		#endif
-		return layoutSection
-	}
-
-	func castSection(_ section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.90), heightDimension: .fractionalHeight(1.0))
-		let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.90), heightDimension: .estimated(150.0))
-		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-		layoutGroup.interItemSpacing = .fixed(10.0)
-
-		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-		layoutSection.interGroupSpacing = 10.0
-		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
-		#if targetEnvironment(macCatalyst)
-		layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
-		#else
-		layoutSection.orthogonalScrollingBehavior = .groupPaging
-		#endif
 		return layoutSection
 	}
 
