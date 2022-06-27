@@ -120,7 +120,7 @@ extension HomeCollectionViewController {
 				}
 				exploreSectionTitleCell.configure(withTitle: exploreCategory.attributes.title, exploreCategory.attributes.description, indexPath: indexPath, segueID: segueID)
 			case .music(let exploreCategory):
-				segueID = R.segue.homeCollectionViewController.showSongsListSegue.identifier
+				segueID = R.segue.homeCollectionViewController.songsListSegue.identifier
 				exploreSectionTitleCell.configure(withTitle: exploreCategory.attributes.title, exploreCategory.attributes.description, indexPath: indexPath, segueID: segueID)
 			case .quickLinks:
 				exploreSectionTitleCell.configure(withTitle: "Quick Links", indexPath: indexPath)
@@ -268,6 +268,7 @@ extension HomeCollectionViewController {
 
 	func setItemKindNeedsUpdate(_ itemKind: ItemKind) {
 		var snapshot = self.dataSource.snapshot()
+		guard snapshot.indexOfItem(itemKind) != nil else { return }
 		snapshot.reconfigureItems([itemKind])
 		self.dataSource.apply(snapshot, animatingDifferences: true)
 	}

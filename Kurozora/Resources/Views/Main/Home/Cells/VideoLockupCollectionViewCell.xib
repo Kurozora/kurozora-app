@@ -11,10 +11,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="1g7-EV-SYR" customClass="VideoLockupCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="326" height="382"/>
+            <rect key="frame" x="0.0" y="0.0" width="326" height="374"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="we1-58-ZqB">
-                <rect key="frame" x="0.0" y="0.0" width="326" height="382"/>
+                <rect key="frame" x="0.0" y="0.0" width="326" height="374"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OXr-yS-u4I">
@@ -67,7 +67,7 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="4pN-1W-t1C">
-                        <rect key="frame" x="0.0" y="199.5" width="100" height="150"/>
+                        <rect key="frame" x="0.0" y="191.5" width="100" height="150"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LdC-RH-wCf" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="100" height="150"/>
@@ -84,25 +84,61 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="One Piece" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4YL-KK-DDQ" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="116" y="199.5" width="78" height="20.5"/>
+                        <rect key="frame" x="108" y="191.5" width="78" height="20.5"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Adventure" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ak8-tP-o1R" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="116" y="222" width="58" height="14.5"/>
+                        <rect key="frame" x="108" y="214" width="58" height="14.5"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                         <color key="textColor" systemColor="secondaryLabelColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qAP-8q-7wM" userLabel="Rating View">
+                        <rect key="frame" x="108" y="236.5" width="218" height="16"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CF9-z7-5Ms" customClass="KTintedLabel" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="18" height="16"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                <color key="textColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BDZ-sF-j6i" customClass="KCosmosView" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="22" y="0.0" width="196" height="16"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="updateOnTouch" value="NO"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="textSize">
+                                        <integer key="value" value="12"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="starSize">
+                                        <integer key="value" value="16"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="fillMode">
+                                        <integer key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="CF9-z7-5Ms" secondAttribute="bottom" id="8Mk-ip-he2"/>
+                            <constraint firstItem="CF9-z7-5Ms" firstAttribute="top" secondItem="qAP-8q-7wM" secondAttribute="top" id="PZ0-xJ-Ham"/>
+                            <constraint firstAttribute="trailing" secondItem="BDZ-sF-j6i" secondAttribute="trailing" id="RHw-ZJ-FHB"/>
+                            <constraint firstItem="CF9-z7-5Ms" firstAttribute="leading" secondItem="qAP-8q-7wM" secondAttribute="leading" id="UQr-IT-9so"/>
+                            <constraint firstItem="BDZ-sF-j6i" firstAttribute="leading" secondItem="CF9-z7-5Ms" secondAttribute="trailing" constant="4" id="X3d-iw-D87"/>
+                            <constraint firstItem="BDZ-sF-j6i" firstAttribute="centerY" secondItem="CF9-z7-5Ms" secondAttribute="centerY" id="m9L-8p-R2N"/>
+                            <constraint firstItem="BDZ-sF-j6i" firstAttribute="top" secondItem="qAP-8q-7wM" secondAttribute="top" id="mb9-72-hkP"/>
+                            <constraint firstAttribute="bottom" secondItem="BDZ-sF-j6i" secondAttribute="bottom" id="qbt-fX-sd7"/>
+                        </constraints>
+                    </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="I'm gonna be the Pirate King!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xSi-o9-X2G" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="365.5" width="175" height="16.5"/>
+                        <rect key="frame" x="0.0" y="357.5" width="175" height="16.5"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                         <color key="textColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DOK-hZ-Wha" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="116" y="319.5" width="52" height="30"/>
+                        <rect key="frame" x="108" y="311.5" width="52" height="30"/>
                         <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="SFf-KN-yjm"/>
@@ -122,10 +158,13 @@
                     </button>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" secondItem="qAP-8q-7wM" secondAttribute="trailing" id="1zD-Uh-QSJ"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Ak8-tP-o1R" secondAttribute="trailing" id="5Ox-fb-88F"/>
+                    <constraint firstItem="qAP-8q-7wM" firstAttribute="leading" secondItem="Ak8-tP-o1R" secondAttribute="leading" id="BSO-sM-qrC"/>
+                    <constraint firstItem="DOK-hZ-Wha" firstAttribute="top" relation="greaterThanOrEqual" secondItem="qAP-8q-7wM" secondAttribute="bottom" constant="8" symbolic="YES" id="Cgm-bo-uS8"/>
                     <constraint firstItem="OXr-yS-u4I" firstAttribute="top" secondItem="we1-58-ZqB" secondAttribute="top" id="INI-LQ-JFN"/>
                     <constraint firstItem="OXr-yS-u4I" firstAttribute="leading" secondItem="we1-58-ZqB" secondAttribute="leading" id="Itc-LG-Kig"/>
-                    <constraint firstItem="4pN-1W-t1C" firstAttribute="top" secondItem="OXr-yS-u4I" secondAttribute="bottom" constant="16" id="UQk-Fq-QgJ"/>
+                    <constraint firstItem="4pN-1W-t1C" firstAttribute="top" secondItem="OXr-yS-u4I" secondAttribute="bottom" constant="8" symbolic="YES" id="UQk-Fq-QgJ"/>
                     <constraint firstItem="4pN-1W-t1C" firstAttribute="top" secondItem="4YL-KK-DDQ" secondAttribute="top" id="V7d-p6-QBy"/>
                     <constraint firstItem="DOK-hZ-Wha" firstAttribute="bottom" secondItem="4pN-1W-t1C" secondAttribute="bottom" id="XJ6-Sl-uwF"/>
                     <constraint firstItem="Ak8-tP-o1R" firstAttribute="leading" secondItem="4YL-KK-DDQ" secondAttribute="leading" id="XO8-Qj-Lid"/>
@@ -134,12 +173,13 @@
                     <constraint firstAttribute="bottom" secondItem="xSi-o9-X2G" secondAttribute="bottom" id="hVu-9l-n2W"/>
                     <constraint firstItem="DOK-hZ-Wha" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Ak8-tP-o1R" secondAttribute="bottom" constant="8" symbolic="YES" id="jAQ-9X-bYO"/>
                     <constraint firstItem="xSi-o9-X2G" firstAttribute="top" secondItem="4pN-1W-t1C" secondAttribute="bottom" constant="16" id="kOm-bA-cAB"/>
-                    <constraint firstItem="DOK-hZ-Wha" firstAttribute="leading" secondItem="4pN-1W-t1C" secondAttribute="trailing" constant="16" id="kvb-Lj-pBy"/>
+                    <constraint firstItem="DOK-hZ-Wha" firstAttribute="leading" secondItem="4pN-1W-t1C" secondAttribute="trailing" constant="8" symbolic="YES" id="kvb-Lj-pBy"/>
                     <constraint firstItem="xSi-o9-X2G" firstAttribute="leading" secondItem="we1-58-ZqB" secondAttribute="leading" id="nEQ-KU-Ecb"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="DOK-hZ-Wha" secondAttribute="trailing" id="o9o-a0-6lj"/>
                     <constraint firstItem="Ak8-tP-o1R" firstAttribute="top" secondItem="4YL-KK-DDQ" secondAttribute="bottom" constant="2" id="pNX-Kt-qbF"/>
                     <constraint firstItem="4pN-1W-t1C" firstAttribute="leading" secondItem="we1-58-ZqB" secondAttribute="leading" id="uCC-Lr-mPD"/>
-                    <constraint firstItem="4YL-KK-DDQ" firstAttribute="leading" secondItem="4pN-1W-t1C" secondAttribute="trailing" constant="16" id="ujA-aD-erX"/>
+                    <constraint firstItem="qAP-8q-7wM" firstAttribute="top" secondItem="Ak8-tP-o1R" secondAttribute="bottom" constant="8" symbolic="YES" id="ugv-Ip-3La"/>
+                    <constraint firstItem="4YL-KK-DDQ" firstAttribute="leading" secondItem="4pN-1W-t1C" secondAttribute="trailing" constant="8" symbolic="YES" id="ujA-aD-erX"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xSi-o9-X2G" secondAttribute="trailing" id="vK7-Xf-W4v"/>
                 </constraints>
             </collectionViewCellContentView>
@@ -149,6 +189,8 @@
                 <outlet property="libraryStatusButton" destination="DOK-hZ-Wha" id="rPV-Zl-H62"/>
                 <outlet property="posterImageView" destination="LdC-RH-wCf" id="O4l-2P-PlB"/>
                 <outlet property="primaryLabel" destination="4YL-KK-DDQ" id="KRm-84-qU0"/>
+                <outlet property="scoreLabel" destination="CF9-z7-5Ms" id="1i4-fo-PHE"/>
+                <outlet property="scoreView" destination="BDZ-sF-j6i" id="cZH-8b-Llk"/>
                 <outlet property="secondaryLabel" destination="Ak8-tP-o1R" id="fgQ-K3-YRQ"/>
                 <outlet property="taglineLabel" destination="xSi-o9-X2G" id="xcb-Dp-jO0"/>
                 <outlet property="videoPlayerContainer" destination="1dl-d0-TOp" id="zxa-GU-fTm"/>
@@ -156,6 +198,11 @@
             <point key="canvasLocation" x="911.59420289855075" y="229.6875"/>
         </collectionViewCell>
     </objects>
+    <designables>
+        <designable name="BDZ-sF-j6i">
+            <size key="intrinsicContentSize" width="92" height="16"/>
+        </designable>
+    </designables>
     <resources>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>

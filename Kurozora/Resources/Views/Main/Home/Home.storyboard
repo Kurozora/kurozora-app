@@ -150,7 +150,7 @@
                         <segue destination="iUi-Ed-iEq" kind="show" identifier="CharactersListSegue" id="5ed-SR-Z6h"/>
                         <segue destination="MLY-mr-JLD" kind="show" identifier="PeopleListSegue" id="Wgj-Ad-SkG"/>
                         <segue destination="9dW-1f-CLB" kind="show" identifier="ThemesSegue" id="MxL-F5-FxR"/>
-                        <segue destination="1ZL-Bt-evP" kind="show" identifier="ShowSongsListSegue" id="fCm-nL-TRo"/>
+                        <segue destination="1ZL-Bt-evP" kind="show" identifier="SongsListSegue" id="fCm-nL-TRo"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XSz-C9-PSE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -270,15 +270,15 @@
             </objects>
             <point key="canvasLocation" x="2070" y="40"/>
         </scene>
-        <!--ShowSongsListCollectionViewController-->
+        <!--SongsListCollectionViewController-->
         <scene sceneID="L08-1Y-q6k">
             <objects>
-                <viewControllerPlaceholder storyboardName="Songs" referencedIdentifier="ShowSongsListCollectionViewController" id="1ZL-Bt-evP" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="Songs" referencedIdentifier="SongsListCollectionViewController" id="1ZL-Bt-evP" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="T2Q-L8-FS7"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Cz-OP-sPl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2107" y="311"/>
+            <point key="canvasLocation" x="2080" y="311"/>
         </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
