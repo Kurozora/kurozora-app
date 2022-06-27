@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="nHe-SA-mTa" customClass="SearchUserResultsCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="374" height="80"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="JNL-pH-Gib">
+                <rect key="frame" x="0.0" y="0.0" width="374" height="80"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aaa-G8-7gH">
+                        <rect key="frame" x="0.0" y="0.0" width="374" height="80"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/User Profile" translatesAutoresizingMaskIntoConstraints="NO" id="VHN-Ob-3oF" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="8" y="0.0" width="70" height="70"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="VHN-Ob-3oF" secondAttribute="height" multiplier="1:1" id="F8J-Pc-GKv"/>
+                                    <constraint firstAttribute="height" constant="70" id="mVI-UW-6pr"/>
+                                </constraints>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="HWK-Y9-rGX">
+                                <rect key="frame" x="86" y="0.0" width="192" height="80"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" ambiguous="YES" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s1r-1I-qwu" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="192" height="57.5"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" ambiguous="YES" text="Be the first to follow!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RlL-Zj-S0u" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="65.5" width="192" height="14.5"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                        <color key="textColor" systemColor="secondaryLabelColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <button contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VGK-fC-LRG" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="286" y="25" width="80" height="30"/>
+                                <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="n9W-G3-nlR"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                                <state key="normal" title="+ Follow">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <integer key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="actionButtonPressed:" destination="nHe-SA-mTa" eventType="touchUpInside" id="LHY-Km-8t8"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vB5-Zp-UUR" customClass="SeparatorView" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="8" y="79" width="358" height="1"/>
+                                <color key="backgroundColor" systemColor="separatorColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="grs-Uw-ox6"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="HWK-Y9-rGX" firstAttribute="top" secondItem="Aaa-G8-7gH" secondAttribute="top" id="0OK-7L-Bfa"/>
+                            <constraint firstItem="VHN-Ob-3oF" firstAttribute="leading" secondItem="Aaa-G8-7gH" secondAttribute="leadingMargin" id="1g2-lL-qrz"/>
+                            <constraint firstItem="VGK-fC-LRG" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Aaa-G8-7gH" secondAttribute="top" constant="10" id="33K-7R-zJg"/>
+                            <constraint firstItem="VGK-fC-LRG" firstAttribute="centerY" secondItem="Aaa-G8-7gH" secondAttribute="centerY" id="6Iq-oY-Z14"/>
+                            <constraint firstItem="VHN-Ob-3oF" firstAttribute="top" secondItem="Aaa-G8-7gH" secondAttribute="top" id="6VR-yC-IOL"/>
+                            <constraint firstAttribute="bottom" secondItem="VHN-Ob-3oF" secondAttribute="bottom" constant="10" id="9uK-p5-Hz3"/>
+                            <constraint firstItem="HWK-Y9-rGX" firstAttribute="leading" secondItem="VHN-Ob-3oF" secondAttribute="trailing" constant="8" symbolic="YES" id="Bw4-ea-GeU"/>
+                            <constraint firstItem="VGK-fC-LRG" firstAttribute="leading" secondItem="HWK-Y9-rGX" secondAttribute="trailing" constant="8" symbolic="YES" id="FC5-Le-3xf"/>
+                            <constraint firstAttribute="bottom" secondItem="vB5-Zp-UUR" secondAttribute="bottom" id="Mg5-LG-rXU"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="VGK-fC-LRG" secondAttribute="trailing" id="NGF-Qo-r3w"/>
+                            <constraint firstItem="HWK-Y9-rGX" firstAttribute="centerY" secondItem="Aaa-G8-7gH" secondAttribute="centerY" id="WkL-Xx-I7m"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="VGK-fC-LRG" secondAttribute="bottom" constant="10" id="XhF-vc-YLx"/>
+                            <constraint firstAttribute="bottom" secondItem="HWK-Y9-rGX" secondAttribute="bottom" id="bJr-BI-PMT"/>
+                            <constraint firstItem="vB5-Zp-UUR" firstAttribute="leading" secondItem="Aaa-G8-7gH" secondAttribute="leading" constant="8" id="eZp-QP-vrl"/>
+                            <constraint firstAttribute="trailing" secondItem="vB5-Zp-UUR" secondAttribute="trailing" constant="8" id="gZF-hu-sgr"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Aaa-G8-7gH" firstAttribute="leading" secondItem="JNL-pH-Gib" secondAttribute="leading" id="Dwc-WA-cX5"/>
+                    <constraint firstAttribute="trailing" secondItem="Aaa-G8-7gH" secondAttribute="trailing" id="LQ9-Qn-Rwb"/>
+                    <constraint firstAttribute="bottom" secondItem="Aaa-G8-7gH" secondAttribute="bottom" id="q78-UG-KWx"/>
+                    <constraint firstItem="Aaa-G8-7gH" firstAttribute="top" secondItem="JNL-pH-Gib" secondAttribute="top" id="yiP-Co-OU7"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <size key="customSize" width="374" height="80"/>
+            <connections>
+                <outlet property="actionButton" destination="VGK-fC-LRG" id="e7R-xX-nUq"/>
+                <outlet property="primaryLabel" destination="s1r-1I-qwu" id="jea-Rq-ptb"/>
+                <outlet property="searchImageView" destination="VHN-Ob-3oF" id="6lG-OD-nwk"/>
+                <outlet property="secondaryLabel" destination="RlL-Zj-S0u" id="P0F-3L-cj9"/>
+                <outlet property="separatorView" destination="vB5-Zp-UUR" id="Rnu-IG-cHl"/>
+            </connections>
+            <point key="canvasLocation" x="131.8840579710145" y="10.714285714285714"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="Placeholders/User Profile" width="300" height="300"/>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="separatorColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

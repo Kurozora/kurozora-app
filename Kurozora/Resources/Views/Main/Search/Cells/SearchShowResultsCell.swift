@@ -9,8 +9,14 @@
 import UIKit
 import KurozoraKit
 
-class SearchShowResultsCell: SearchBaseResultsCell {
+class SearchShowResultsCell: KCollectionViewCell {
 	// MARK: - IBOutlets
+	@IBOutlet weak var primaryLabel: KLabel!
+	@IBOutlet weak var secondaryLabel: KSecondaryLabel!
+	@IBOutlet weak var actionButton: KTintedButton!
+	@IBOutlet weak var posterImageView: PosterImageView!
+	@IBOutlet weak var separatorView: SeparatorView!
+
 	@IBOutlet weak var statusLabel: KSecondaryLabel!
 	@IBOutlet weak var showRatingLabel: KSecondaryLabel!
 	@IBOutlet weak var episodeCountLabel: KSecondaryLabel!
@@ -19,46 +25,44 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 	@IBOutlet weak var cosmosView: KCosmosView!
 
 	// MARK: - Properties
-	var show: Show! {
-		didSet {
-			self.configureCell()
-		}
-	}
 	var libraryStatus: KKLibrary.Status = .none
 
 	// MARK: - Functions
-	override func configureCell() {
-		super.configureCell()
-		guard self.show != nil else { return }
+	func configure(using show: Show?, libraryStatus: KKLibrary.Status = .none) {
+		guard let show = show else {
+			showSkeleton()
+			return
+		}
+		self.hideSkeleton()
 
 		// Configure labels
-		self.primaryLabel.text = self.show.attributes.title
-		self.secondaryLabel.text = (self.show.attributes.tagline ?? "").isEmpty ? self.show.attributes.genres?.localizedJoined() : self.show.attributes.tagline
-		self.statusLabel.text = self.show.attributes.status.name
+		self.primaryLabel.text = show.attributes.title
+		self.secondaryLabel.text = (show.attributes.tagline ?? "").isEmpty ? show.attributes.genres?.localizedJoined() : show.attributes.tagline
+		self.statusLabel.text = show.attributes.status.name
 
 		// Configure poster image
-		if let posterBackroundColor = self.show.attributes.poster?.backgroundColor {
-			self.searchImageView.backgroundColor = UIColor(hexString: posterBackroundColor)
+		if let posterBackroundColor = show.attributes.poster?.backgroundColor {
+			self.posterImageView.backgroundColor = UIColor(hexString: posterBackroundColor)
 		} else {
-			self.searchImageView.backgroundColor = .clear
+			self.posterImageView.backgroundColor = .clear
 		}
-		self.show.attributes.posterImage(imageView: self.searchImageView)
+		show.attributes.posterImage(imageView: self.posterImageView)
 
 		// Configure library status
-		self.libraryStatus = self.show.attributes.libraryStatus ?? .none
+		self.libraryStatus = show.attributes.libraryStatus ?? .none
 		self.actionButton.setTitle(self.libraryStatus != .none ? "\(self.libraryStatus.stringValue.capitalized) ▾" : "ADD", for: .normal)
 
 		// Cinfigure rating
-		self.showRatingLabel.text = self.show.attributes.tvRating.name
+		self.showRatingLabel.text = show.attributes.tvRating.name
 		self.showRatingLabel.isHidden = false
 
 		// Configure episode count
-		let episodeCount = self.show.attributes.episodeCount
+		let episodeCount = show.attributes.episodeCount
 		self.episodeCountLabel.text = "\(episodeCount) \(episodeCount >= 1 ? "Episode" : "Episodes")"
 		self.episodeCountLabel.isHidden = episodeCount == 0
 
 		// Configure air date
-		if let airYear = self.show.attributes.firstAired?.year {
+		if let airYear = show.attributes.firstAired?.year {
 			self.airDateLabel.text = "\(airYear)"
 			self.airDateLabel.isHidden = false
 		} else {
@@ -66,7 +70,7 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 		}
 
 		// Configure score
-		let ratingAverage = self.show.attributes.stats?.ratingAverage ?? 0.0
+		let ratingAverage = show.attributes.stats?.ratingAverage ?? 0.0
 		self.cosmosView.rating = ratingAverage
 		self.scoreLabel.text = "\(ratingAverage)"
 		self.cosmosView.isHidden = ratingAverage == 0.0
@@ -74,62 +78,6 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 	}
 
 	// MARK: - IBActions
-	override func actionButtonPressed(_ sender: UIButton) {
-		super.actionButtonPressed(sender)
-
-		WorkflowController.shared.isSignedIn {
-			let oldLibraryStatus = self.libraryStatus
-			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: oldLibraryStatus, action: { [weak self] title, value  in
-				guard let self = self else { return }
-				if self.libraryStatus != value {
-					KService.addToLibrary(withLibraryStatus: value, showID: self.show.id) { result in
-						switch result {
-						case .success(let libraryUpdate):
-							self.show.attributes.update(using: libraryUpdate)
-
-							// Update entry in library
-							self.libraryStatus = value
-							self.actionButton.setTitle("\(title) ▾", for: .normal)
-
-							let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
-							NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
-						case .failure:
-							break
-						}
-					}
-				}
-			})
-
-			if self.libraryStatus != .none {
-				actionSheetAlertController.addAction(UIAlertAction(title: "Remove from library", style: .destructive, handler: { [weak self] _ in
-					guard let self = self else { return }
-					KService.removeFromLibrary(showID: self.show.id) { result in
-						switch result {
-						case .success(let libraryUpdate):
-							self.show.attributes.update(using: libraryUpdate)
-
-							// Update edntry in library
-							self.libraryStatus = .none
-							self.actionButton.setTitle("ADD", for: .normal)
-
-							let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
-							NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
-						case .failure:
-							break
-						}
-					}
-				}))
-			}
-
-			// Present the controller
-			if let popoverController = actionSheetAlertController.popoverPresentationController {
-				popoverController.sourceView = sender
-				popoverController.sourceRect = sender.bounds
-			}
-
-			if (self.parentViewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
-				self.parentViewController?.present(actionSheetAlertController, animated: true, completion: nil)
-			}
-		}
+	@IBAction func actionButtonPressed(_ sender: UIButton) {
 	}
 }
