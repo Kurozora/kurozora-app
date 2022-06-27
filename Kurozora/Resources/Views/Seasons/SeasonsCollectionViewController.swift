@@ -131,6 +131,7 @@ class SeasonsCollectionViewController: KCollectionViewController {
 				// Save next page url and append new data
 				self.nextPageURL = seasonIdentityResponse.next
 				self.seasonIdentities.append(contentsOf: seasonIdentityResponse.data)
+				self.seasonIdentities.removeDuplicates()
 
 				// Reset refresh controller title
 				#if !targetEnvironment(macCatalyst)
