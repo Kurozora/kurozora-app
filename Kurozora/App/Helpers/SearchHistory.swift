@@ -26,7 +26,7 @@ struct SearchHistory {
 		guard let filePathURL = self.filePathURL else { return }
 
 		if self.fileExists() {
-			DispatchQueue.global(qos: .background).async {
+			DispatchQueue.global(qos: .utility).async {
 				do {
 					let contentsOfFile = try Data(contentsOf: filePathURL)
 
@@ -101,7 +101,7 @@ struct SearchHistory {
 	fileprivate static func save(_ dictionary: [String: Any], _ successHandler: ((_ isSuccess: Bool) -> Void)? = nil) {
 		guard let filePathURL = self.filePathURL else { return }
 
-		DispatchQueue.global(qos: .background).async {
+		DispatchQueue.global(qos: .utility).async {
 			do {
 				try dictionary.jsonData()?.write(to: filePathURL)
 				successHandler?(true)
