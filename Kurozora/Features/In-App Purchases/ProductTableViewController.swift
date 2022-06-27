@@ -115,7 +115,8 @@ extension ProductTableViewController {
 extension ProductTableViewController: PurchaseButtonTableViewCellDelegate {
 	func purchaseButtonTableViewCell(_ cell: PurchaseButtonTableViewCell, didPressButton button: UIButton) {
 		guard WorkflowController.shared.isSignedIn() else { return }
-		Task {
+		Task { [weak self] in
+			guard let self = self else { return }
 			await self.purchase(cell.product)
 		}
 	}

@@ -58,7 +58,8 @@ extension WorkflowController {
 	/// Subscribes user with their reminders.
 	func subscribeToReminders() {
 		UIApplication.topViewController?.presentAlertController(title: "Work in Progress", message: "Reminders have temporarily been disabled. An improved version is being worked on and should be available soon!")
-//		Task {
+//		Task { [weak self] in
+//		guard let self = self else { return }
 //			await WorkflowController.shared.isPro {
 //				let reminderSubscriptionURL = KService.reminderSubscriptionURL
 //				let reminderSubscriptionString = reminderSubscriptionURL.absoluteString.removingPrefix(reminderSubscriptionURL.scheme ?? "")
