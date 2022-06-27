@@ -19,7 +19,7 @@ public class Season: IdentityResource, Hashable {
 
 	// MARK: - Functions
 	public static func == (lhs: Season, rhs: Season) -> Bool {
-		lhs.id == rhs.id
+		return lhs.id == rhs.id
 	}
 
 	public func hash(into hasher: inout Hasher) {

@@ -5,8 +5,6 @@
 //  Created by Khoren Katklian on 14/06/2021.
 //
 
-import Foundation
-
 /// A root object that stores information about an adaptation source resource.
 public struct AdaptationSource: Codable, Hashable {
 	// MARK: - Properties

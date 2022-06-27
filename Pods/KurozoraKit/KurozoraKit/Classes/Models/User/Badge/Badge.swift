@@ -3,11 +3,10 @@
 //  KurozoraKit
 //
 //  Created by Khoren Katklian on 23/08/2019.
-//  Copyright © 2019 Kurozora. All rights reserved.
 //
 
 /// A root object that stores information about a badge resource.
-public struct Badge: Codable {
+public struct Badge: Codable, Hashable {
 	// MARK: - Properties
 	/// The id of the resource.
 	public let id: Int
@@ -17,4 +16,13 @@ public struct Badge: Codable {
 
 	/// The attributes belonging to the badge.
 	public var attributes: Badge.Attributes
+
+	// MARK: - Functions
+	public static func == (lhs: Badge, rhs: Badge) -> Bool {
+		return lhs.id == rhs.id
+	}
+
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(self.id)
+	}
 }

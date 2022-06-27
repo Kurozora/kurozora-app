@@ -6,7 +6,8 @@
 //
 
 /// A root object that stores information about a genre identity resource.
-public class GenreIdentity: IdentityResource, Hashable {
+public struct GenreIdentity: IdentityResource, Hashable {
+	// MARK: - Properties
 	public let id: Int
 
 	public let type: String

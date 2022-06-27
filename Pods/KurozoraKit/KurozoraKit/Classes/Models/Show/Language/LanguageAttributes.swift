@@ -1,6 +1,6 @@
 //
 //  LanguageAttributes.swift
-//  Alamofire
+//  KurozoraKit
 //
 //  Created by Khoren Katklian on 13/07/2021.
 //

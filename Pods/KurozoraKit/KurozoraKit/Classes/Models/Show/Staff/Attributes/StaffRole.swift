@@ -1,11 +1,9 @@
 //
 //  StaffRole.swift
-//  Alamofire
+//  KurozoraKit
 //
 //  Created by Khoren Katklian on 15/06/2021.
 //
-
-import Foundation
 
 /// A root object that stores information about a staff role resource.
 public struct StaffRole: Codable, Hashable {

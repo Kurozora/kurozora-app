@@ -9,6 +9,15 @@ extension Studio {
 	/// A root object that stores information about a single studio, such as the studios's name, logo, and date founded.
 	public struct Attributes: Codable {
 		// MARK: - Properties
+		/// The slug of the studio.
+		public let slug: String
+
+		/// The profile image of the studio.
+		public let profile: Media?
+
+		/// The banner image of the studio.
+		public let banner: Media?
+
 		/// The logo of the studio.
 		public let logo: Media?
 

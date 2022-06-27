@@ -3,7 +3,6 @@
 //  KurozoraKit
 //
 //  Created by Khoren Katklian on 29/09/2019.
-//  Copyright © 2019 Kurozora. All rights reserved.
 //
 
 import Alamofire

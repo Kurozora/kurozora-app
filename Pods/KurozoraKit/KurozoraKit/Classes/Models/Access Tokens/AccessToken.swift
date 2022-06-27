@@ -1,6 +1,6 @@
 //
 //  AccessToken.swift
-//  Alamofire
+//  KurozoraKit
 //
 //  Created by Khoren Katklian on 28/11/2021.
 //
@@ -22,7 +22,7 @@ public struct AccessToken: IdentityResource, Hashable {
 
 	// MARK: - Functions
 	public static func == (lhs: AccessToken, rhs: AccessToken) -> Bool {
-		lhs.id == rhs.id
+		return lhs.id == rhs.id
 	}
 
 	public func hash(into hasher: inout Hasher) {

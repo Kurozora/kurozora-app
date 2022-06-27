@@ -98,9 +98,6 @@ extension KKEndpoint.Me {
 		/// The endpoint to import an exported MAL file into the  authenticated user's library.
 		case malImport
 
-		/// The endpoint to search for shows in the authenticated user's library.
-		case search
-
 		// MARK: - Properties
 		/// The endpoint value of the Library API type.
 		var endpointValue: String {
@@ -111,8 +108,6 @@ extension KKEndpoint.Me {
 				return "me/library/delete"
 			case .malImport:
 				return "me/library/mal-import"
-			case .search:
-				return "me/library/search"
 			}
 		}
 	}

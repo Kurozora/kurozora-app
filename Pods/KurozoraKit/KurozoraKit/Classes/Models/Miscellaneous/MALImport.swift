@@ -3,7 +3,6 @@
 //  KurozoraKit
 //
 //  Created by Khoren Katklian on 17/02/2020.
-//  Copyright © 2020 Kurozora. All rights reserved.
 //
 
 /// A root object that stores information about a single import request, such as the import's message status.

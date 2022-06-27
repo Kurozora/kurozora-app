@@ -6,12 +6,20 @@
 //
 
 /// A root object that stores information about a season identity resource.
-public class CastIdentity: IdentityResource, Hashable {
+public struct CastIdentity: IdentityResource, Hashable {
+	// MARK: - Properties
 	public let id: Int
 
 	public let type: String
 
 	public let href: String
+
+	// MARK: - Initializers
+	public init(id: Int) {
+		self.id = id
+		self.type = "cast"
+		self.href = ""
+	}
 
 	// MARK: - Functions
 	public static func == (lhs: CastIdentity, rhs: CastIdentity) -> Bool {

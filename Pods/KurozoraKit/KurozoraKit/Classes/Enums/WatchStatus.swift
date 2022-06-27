@@ -3,7 +3,6 @@
 //  KurozoraKit
 //
 //  Created by Khoren Katklian on 10/03/2020.
-//  Copyright © 2020 Kurozora. All rights reserved.
 //
 
 /// The set of available watch status types.

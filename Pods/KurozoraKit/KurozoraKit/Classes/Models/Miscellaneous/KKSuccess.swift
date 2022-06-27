@@ -3,7 +3,6 @@
 //  KurozoraKit
 //
 //  Created by Khoren Katklian on 10/04/2020.
-//  Copyright © 2020 Kurozora. All rights reserved.
 //
 
 /// An immutable object that stores information about a single successful request, such as the success message.

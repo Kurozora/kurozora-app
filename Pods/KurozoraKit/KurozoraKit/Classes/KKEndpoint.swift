@@ -3,7 +3,6 @@
 //  KurozoraKit
 //
 //  Created by Khoren Katklian on 10/03/2020.
-//  Copyright © 2020 Kurozora. All rights reserved.
 //
 
 import Foundation
@@ -19,12 +18,17 @@ extension KKEndpoint {
 		/// The endpoint to the explore page.
 		case index
 
+		/// The endpoint to the details of an explore page.
+		case details(_ exploreCategoryIdentity: ExploreCategoryIdentity)
+
 		// MARK: - Properties
 		/// The endpoint value of the Explore API type.
 		var endpointValue: String {
 			switch self {
 			case .index:
 				return "explore"
+			case .details(let exploreCategoryIdentity):
+				return "explore/\(exploreCategoryIdentity.id)"
 			}
 		}
 	}
@@ -65,9 +69,6 @@ extension KKEndpoint {
 		/// The endpoint to upcoming for shows.
 		case upcoming
 
-		/// The endpoint to search for shows.
-		case search
-
 		// MARK: - Properties
 		/// The endpoint value of the Shows API type.
 		var endpointValue: String {
@@ -92,8 +93,6 @@ extension KKEndpoint {
 				return "anime/\(showIdentity.id)/studios"
 			case .upcoming:
 				return "anime/upcoming"
-			case .search:
-				return "anime/search"
 			}
 		}
 	}
@@ -105,19 +104,19 @@ extension KKEndpoint {
 	internal enum Songs {
 		// MARK: - Cases
 		/// The endpoint to the details of a song.
-		case details(_ songID: Int)
+		case details(_ songIdentity: SongIdentity)
 
 		/// The endpoint to the shows of a song.
-		case shows(_ songID: Int)
+		case shows(_ songIdentity: SongIdentity)
 
 		// MARK: - Properties
 		/// The endpoint value of the Songs API type.
 		var endpointValue: String {
 			switch self {
-			case .details(let songID):
-				return "songs/\(songID)"
-			case .shows(let songID):
-				return "songs/\(songID)/anime"
+			case .details(let songIdentity):
+				return "songs/\(songIdentity.id)"
+			case .shows(let songIdentity):
+				return "songs/\(songIdentity.id)/anime"
 			}
 		}
 	}
@@ -152,6 +151,30 @@ extension KKEndpoint {
 	}
 }
 
+// MARK: - Search
+extension KKEndpoint {
+	/// The set of available Search API endpoint types.
+	internal enum Search {
+		// MARK: - Cases
+		/// The endpoint for searching a resource.
+		case index
+
+		/// The endpoint for search suggestions.
+		case suggestions
+
+		// MARK: - Properties
+		/// The endpoint value of the Search API type.
+		var endpointValue: String {
+			switch self {
+			case .index:
+				return "search/"
+			case .suggestions:
+				return "search/suggestions"
+			}
+		}
+	}
+}
+
 // MARK: - Store
 extension KKEndpoint {
 	/// The set of available Store API endpoint types.
@@ -180,7 +203,7 @@ extension KKEndpoint {
 		case index
 
 		/// The endpoint to the details of a theme store item.
-		case details(_ appThemeID: Int)
+		case details(_ appThemeIdentifier: Int)
 
 		// MARK: - Properties
 		/// The endpoint value of the Theme Store API type.
@@ -188,8 +211,8 @@ extension KKEndpoint {
 			switch self {
 			case .index:
 				return "theme-store"
-			case .details(let appThemeID):
-				return "theme-store/\(appThemeID)"
+			case .details(let appThemeIdentifier):
+				return "theme-store/\(appThemeIdentifier)"
 			}
 		}
 	}
@@ -213,25 +236,22 @@ extension KKEndpoint {
 		case resetPassword
 
 		/// The endpoint to the feed messages.
-		case feedMessages(_ userID: Int)
+		case feedMessages(_ userIdentity: UserIdentity)
 
 		/// The endpoint to follow or unfollow a user.
-		case follow(_ userID: Int)
+		case follow(_ userIdentity: UserIdentity)
 
 		/// The endpoint to a user's followers list.
-		case followers(_ userID: Int)
+		case followers(_ userIdentity: UserIdentity)
 
 		/// The endpoint to a user's following list.
-		case following(_ userID: Int)
+		case following(_ userIdentity: UserIdentity)
 
 		/// The endpoint to a user's profile.
-		case profile(_ userID: Int)
+		case profile(_ userIdentity: UserIdentity)
 
 		/// The endpoint to view a user's favorite shows.
-		case favoriteShow(_ userID: Int)
-
-		/// The endpoint to search for users.
-		case search
+		case favoriteShow(_ userIdentity: UserIdentity)
 
 		/// The endpoint to delete a user's account.
 		case delete
@@ -248,20 +268,18 @@ extension KKEndpoint {
 				return "users/siwa/signin"
 			case .resetPassword:
 				return "users/reset-password"
-			case .feedMessages(let userID):
-				return "users/\(userID)/feed-messages"
-			case .follow(let userID):
-				return "users/\(userID)/follow"
-			case .followers(let userID):
-				return "users/\(userID)/followers"
-			case .following(let userID):
-				return "users/\(userID)/following"
-			case .favoriteShow(let userID):
-				return "users/\(userID)/favorite-anime"
-			case .profile(let userID):
-				return "users/\(userID)/profile"
-			case .search:
-				return "users/search"
+			case .feedMessages(let userIdentity):
+				return "users/\(userIdentity.id)/feed-messages"
+			case .follow(let userIdentity):
+				return "users/\(userIdentity.id)/follow"
+			case .followers(let userIdentity):
+				return "users/\(userIdentity.id)/followers"
+			case .following(let userIdentity):
+				return "users/\(userIdentity.id)/following"
+			case .favoriteShow(let userIdentity):
+				return "users/\(userIdentity.id)/favorite-anime"
+			case .profile(let userIdentity):
+				return "users/\(userIdentity.id)/profile"
 			case .delete:
 				return "users/delete"
 			}

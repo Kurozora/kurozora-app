@@ -6,15 +6,12 @@
 //
 
 /// A root object that stores information about an explore category resource.
-public struct ExploreCategory: Codable, Hashable {
+public struct ExploreCategory: IdentityResource, Hashable {
 	// MARK: - Properties
-	/// The id of the resource.
-	private(set) public var id: UUID = UUID()
+	public let id: Int
 
-	/// The type of the resource.
 	public let type: String
 
-	/// The relative link to where the resource is located.
 	public let href: String
 
 	/// The attributes belonging to the explore category.

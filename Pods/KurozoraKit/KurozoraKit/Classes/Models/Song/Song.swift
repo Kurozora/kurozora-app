@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a song resource.
-public class Song: IdentityResource, Hashable {
+public struct Song: IdentityResource, Hashable {
 	// MARK: - Properties
 	public let id: Int
 

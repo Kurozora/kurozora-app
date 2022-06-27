@@ -1,11 +1,9 @@
 //
 //  TVRating.swift
-//  Alamofire
+//  KurozoraKit
 //
 //  Created by Khoren Katklian on 24/04/2021.
 //
-
-import Foundation
 
 /// A root object that stores information about a TV rating resource.
 public struct TVRating: Codable, Hashable {

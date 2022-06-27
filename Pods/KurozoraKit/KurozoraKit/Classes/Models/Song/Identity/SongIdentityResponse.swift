@@ -9,7 +9,7 @@
 public struct SongIdentityResponse: Codable {
 	// MARK: - Properties
 	/// The data included in the repsonse for a song identity object request.
-	public let data: [SongIdentityResponse]
+	public let data: [SongIdentity]
 
 	/// The realtive URL to the next page in the paginated response.
 	public let next: String?

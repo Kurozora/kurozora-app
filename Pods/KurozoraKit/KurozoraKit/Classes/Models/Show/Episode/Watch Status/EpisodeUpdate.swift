@@ -3,7 +3,6 @@
 //  KurozoraKit
 //
 //  Created by Khoren Katklian on 31/01/2020.
-//  Copyright © 2020 Kurozora. All rights reserved.
 //
 
 /// A root object that stores information about an episode update resource.

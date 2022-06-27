@@ -22,7 +22,7 @@ public class UserNotification: Codable, Hashable {
 
 	// MARK: - Functions
 	public static func == (lhs: UserNotification, rhs: UserNotification) -> Bool {
-		lhs.id == rhs.id
+		return lhs.id == rhs.id
 	}
 
 	public func hash(into hasher: inout Hasher) {

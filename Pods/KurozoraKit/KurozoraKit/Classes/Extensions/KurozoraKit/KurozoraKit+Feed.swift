@@ -3,22 +3,21 @@
 //  KurozoraKit
 //
 //  Created by Khoren Katklian on 29/09/2019.
-//  Copyright © 2019 Kurozora. All rights reserved.
 //
 
 import TRON
 
 extension KurozoraKit {
-	/// Fetch a list of given user's feed messages.
+	/// Fetch a list of feed messages for the given user identity.
 	///
 	/// - Parameters:
-	///    - userID: The id of the user whose feed messages to fetch.
+	///    - userIdentity: The identity of the user whose feed messages to fetch.
 	///    - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
 	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
 	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 	///    - result: A value that represents either a success or a failure, including an associated value in each case.
-	public func getFeedMessages(forUserID userID: Int, next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<FeedMessageResponse, KKAPIError>) -> Void) {
-		let usersFeedMessages = next ?? KKEndpoint.Users.feedMessages(userID).endpointValue
+	public func getFeedMessages(forUser userIdentity: UserIdentity, next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<FeedMessageResponse, KKAPIError>) -> Void) {
+		let usersFeedMessages = next ?? KKEndpoint.Users.feedMessages(userIdentity).endpointValue
 		let request: APIRequest<FeedMessageResponse, KKAPIError> = tron.codable.request(usersFeedMessages).buildURL(.relativeToBaseURL)
 
 		request.headers = headers

@@ -113,9 +113,9 @@ extension KurozoraKit {
 	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
 	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 	///    - result: A value that represents either a success or a failure, including an associated value in each case.
-	public func getFollowList(_ followList: FollowList, next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<UserFollow, KKAPIError>) -> Void) {
+	public func getFollowList(_ followList: UsersListType, next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<UserIdentityResponse, KKAPIError>) -> Void) {
 		let meFollowersOrFollowing = next ?? (followList == .followers ? KKEndpoint.Me.followers.endpointValue : KKEndpoint.Me.following.endpointValue)
-		let request: APIRequest<UserFollow, KKAPIError> = tron.codable.request(meFollowersOrFollowing).buildURL(.relativeToBaseURL)
+		let request: APIRequest<UserIdentityResponse, KKAPIError> = tron.codable.request(meFollowersOrFollowing).buildURL(.relativeToBaseURL)
 
 		request.headers = headers
 		request.headers.add(.authorization(bearerToken: self.authenticationKey))
@@ -123,8 +123,8 @@ extension KurozoraKit {
 		request.parameters["limit"] = limit
 
 		request.method = .get
-		request.perform(withSuccess: { userFollow in
-			completionHandler(.success(userFollow))
+		request.perform(withSuccess: { userIdentityResponse in
+			completionHandler(.success(userIdentityResponse))
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {

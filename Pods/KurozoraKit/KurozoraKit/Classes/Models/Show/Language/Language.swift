@@ -1,6 +1,6 @@
 //
 //  Language.swift
-//  Alamofire
+//  KurozoraKit
 //
 //  Created by Khoren Katklian on 13/07/2021.
 //
@@ -19,7 +19,7 @@ public struct Language: IdentityResource, Hashable {
 
 	// MARK: - Functions
 	public static func == (lhs: Language, rhs: Language) -> Bool {
-		lhs.id == rhs.id
+		return lhs.id == rhs.id
 	}
 
 	public func hash(into hasher: inout Hasher) {
