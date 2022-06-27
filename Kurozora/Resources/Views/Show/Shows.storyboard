@@ -485,7 +485,8 @@
                         <segue destination="TlV-BJ-YqV" kind="show" identifier="PersonDetailsSegue" id="Jby-Sd-cNh"/>
                         <segue destination="KF6-eM-yUm" kind="show" identifier="CharacterDetailsSegue" id="arD-Sg-qCx"/>
                         <segue destination="XRk-F5-HRl" kind="show" identifier="EpisodeDetailsSegue" id="qyr-Pr-uji"/>
-                        <segue destination="o2u-Zs-Thd" kind="show" identifier="ShowSongsListSegue" id="JVk-HQ-LJe"/>
+                        <segue destination="o2u-Zs-Thd" kind="show" identifier="SongsListSegue" id="JVk-HQ-LJe"/>
+                        <segue destination="Ezz-hJ-5Fa" kind="show" identifier="StudiosListSegue" id="onh-0z-l5I"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NcP-g6-hAK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -582,15 +583,25 @@
             </objects>
             <point key="canvasLocation" x="3795" y="686"/>
         </scene>
-        <!--ShowSongsListCollectionViewController-->
+        <!--SongsListCollectionViewController-->
         <scene sceneID="PSG-x0-uGv">
             <objects>
-                <viewControllerPlaceholder storyboardName="Songs" referencedIdentifier="ShowSongsListCollectionViewController" id="o2u-Zs-Thd" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="Songs" referencedIdentifier="SongsListCollectionViewController" id="o2u-Zs-Thd" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="7Mh-XS-HM0"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n39-RE-pgG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3814" y="729"/>
+            <point key="canvasLocation" x="3791" y="729"/>
+        </scene>
+        <!--StudiosListCollectionViewController-->
+        <scene sceneID="Rin-BN-TnO">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Studios" referencedIdentifier="StudiosListCollectionViewController" id="Ezz-hJ-5Fa" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Qop-Uv-LLL"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="y1h-bN-ADx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3796" y="772"/>
         </scene>
     </scenes>
     <designables>

@@ -29,6 +29,7 @@ extension ShowDetailsCollectionViewController {
 		let seasonCellConfiguration = self.getConfiguredSeasonCell()
 		let castCellConfiguration = self.getConfiguredCastCell()
 		let studioShowCellConfiguration = self.getConfiguredStudioShowCell()
+		let studioCellConfiguration = self.getConfiguredStudioCell()
 		let relatedShowCellConfiguration = self.getConfiguredRelatedShowCell()
 
 		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, itemKind: ItemKind) -> UICollectionViewCell? in
@@ -91,6 +92,8 @@ extension ShowDetailsCollectionViewController {
 				default: break
 				}
 				return musicLockupCollectionViewCell
+			case .studios:
+				return collectionView.dequeueConfiguredReusableCell(using: studioCellConfiguration, for: indexPath, item: itemKind)
 			case .moreByStudio:
 				return collectionView.dequeueConfiguredReusableCell(using: studioShowCellConfiguration, for: indexPath, item: itemKind)
 			case .relatedShows:
@@ -169,6 +172,14 @@ extension ShowDetailsCollectionViewController {
 					}
 					self.snapshot.appendItems(showSongItems, toSection: showDetailSection)
 				}
+			case .studios:
+				if !self.studioIdentities.isEmpty {
+					self.snapshot.appendSections([showDetailSection])
+					let studioIdentityItems: [ItemKind] = self.studioIdentities.map { studioIdentity in
+						return .studioIdentity(studioIdentity)
+					}
+					self.snapshot.appendItems(studioIdentityItems, toSection: showDetailSection)
+				}
 			case .moreByStudio:
 				if !self.studioShowIdentities.isEmpty {
 					self.snapshot.appendSections([showDetailSection])
@@ -211,8 +222,14 @@ extension ShowDetailsCollectionViewController {
 		return season
 	}
 
+	func fetchStudio(at indexPath: IndexPath) -> Studio? {
+		guard let studio = self.studios[indexPath] else { return nil }
+		return studio
+	}
+
 	func setItemKindNeedsUpdate(_ itemKind: ItemKind) {
 		var snapshot = self.dataSource.snapshot()
+		guard snapshot.indexOfItem(itemKind) != nil else { return }
 		snapshot.reconfigureItems([itemKind])
 		self.dataSource.apply(snapshot, animatingDifferences: true)
 	}
@@ -229,11 +246,11 @@ extension ShowDetailsCollectionViewController {
 				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? castCollectionViewCell.dataRequest
 
 				if dataRequest == nil && cast == nil {
-					dataRequest = KService.getDetails(forCast: castIdentitiy) { [weak self] result in
+					dataRequest = KService.getDetails(forCast: castIdentitiy) { result in
 						switch result {
 						case .success(let cast):
-							self?.cast[indexPath] = cast.first
-							self?.setItemKindNeedsUpdate(itemKind)
+							self.cast[indexPath] = cast.first
+							self.setItemKindNeedsUpdate(itemKind)
 						case .failure: break
 						}
 					}
@@ -257,11 +274,11 @@ extension ShowDetailsCollectionViewController {
 				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? smallLockupCollectionViewCell.dataRequest
 
 				if dataRequest == nil && show == nil {
-					dataRequest = KService.getDetails(forShow: showIdentity) { [weak self] result in
+					dataRequest = KService.getDetails(forShow: showIdentity) { result in
 						switch result {
 						case .success(let shows):
-							self?.studioShows[indexPath] = shows.first
-							self?.setItemKindNeedsUpdate(itemKind)
+							self.studioShows[indexPath] = shows.first
+							self.setItemKindNeedsUpdate(itemKind)
 						case .failure: break
 						}
 					}
@@ -284,11 +301,11 @@ extension ShowDetailsCollectionViewController {
 				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? seasonLockupCollectionViewCell.dataRequest
 
 				if dataRequest == nil && season == nil {
-					dataRequest = KService.getDetails(forSeason: seasonIdentity) { [weak self] result in
+					dataRequest = KService.getDetails(forSeason: seasonIdentity) { result in
 						switch result {
 						case .success(let seasons):
-							self?.seasons[indexPath] = seasons.first
-							self?.setItemKindNeedsUpdate(itemKind)
+							self.seasons[indexPath] = seasons.first
+							self.setItemKindNeedsUpdate(itemKind)
 						case .failure: break
 						}
 					}
@@ -297,6 +314,33 @@ extension ShowDetailsCollectionViewController {
 				seasonLockupCollectionViewCell.dataRequest = dataRequest
 				seasonLockupCollectionViewCell.configure(using: season)
 			default: return
+			}
+		}
+	}
+
+	func getConfiguredStudioCell() -> UICollectionView.CellRegistration<StudioLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<StudioLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.studioLockupCollectionViewCell)) { [weak self] studioLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .studioIdentity(let studioIdentity, _):
+				let studio = self.fetchStudio(at: indexPath)
+				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? studioLockupCollectionViewCell.dataRequest
+
+				if dataRequest == nil && studio == nil {
+					dataRequest = KService.getDetails(forStudio: studioIdentity) { result in
+						switch result {
+						case .success(let studios):
+							self.studios[indexPath] = studios.first
+							self.setItemKindNeedsUpdate(itemKind)
+						case .failure: break
+						}
+					}
+				}
+
+				studioLockupCollectionViewCell.dataRequest = dataRequest
+				studioLockupCollectionViewCell.configure(using: studio)
+			default: break
 			}
 		}
 	}

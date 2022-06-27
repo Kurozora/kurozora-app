@@ -61,6 +61,13 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 	var castIdentities: [CastIdentity] = []
 
 	/// Studio properties.
+	var studios: [IndexPath: Studio] = [:] {
+		didSet {
+			self.studio = self.studios.first { _, studio in
+				studio.attributes.isStudio ?? false
+			}?.value ?? studios.first?.value
+		}
+	}
 	var studioIdentities: [StudioIdentity] = []
 	var studio: Studio! {
 		didSet {
@@ -149,7 +156,6 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
 		NotificationCenter.default.addObserver(self, selector: #selector(handleFavoriteToggle(_:)), name: .KShowFavoriteIsToggled, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(handleReminderToggle(_:)), name: .KShowReminderIsToggled, object: nil)
 
@@ -165,8 +171,9 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		self.configureDataSource()
 
 		// Fetch show details.
-		DispatchQueue.global(qos: .background).async {
-			self.fetchDetails()
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchDetails()
 		}
 	}
 
@@ -180,7 +187,10 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		self.fetchDetails()
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchDetails()
+		}
 	}
 
 	override func configureEmptyDataView() {
@@ -200,7 +210,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 	}
 
 	/// Fetches details for the given show identity. If none given then the currently viewed show's details are fetched.
-	func fetchDetails() {
+	func fetchDetails() async {
 		guard let showIdentity = self.showIdentity else { return }
 
 		if self.show == nil {
@@ -216,13 +226,10 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 				}
 			}
 		} else {
-			DispatchQueue.main.async { [weak self] in
-				guard let self = self else { return }
-				// Donate suggestion to Siri
-				self.userActivity = self.show.openDetailUserActivity
+			// Donate suggestion to Siri
+			self.userActivity = self.show.openDetailUserActivity
 
-				self.updateDataSource()
-			}
+			self.updateDataSource()
 		}
 		KService.getSeasons(forShow: showIdentity, next: nil, limit: 10) { [weak self] result in
 			guard let self = self else { return }
@@ -251,18 +258,15 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 			case .failure: break
 			}
 		}
-		KService.getStudios(forShow: showIdentity, limit: 10) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let studioIdentityResponse):
-				self.studioIdentities = studioIdentityResponse.data
-//				studioIdentityResponse.data.first { studio in
-//					studio.attributes.isStudio ?? false
-//				} ?? studioIdentityResponse.data.first
-				self.responseCount += 1
-			case .failure: break
-			}
+
+		do {
+			let studioIdentityResponse = try await KService.getStudios(forShow: showIdentity, limit: 10).value
+			self.studioIdentities = studioIdentityResponse.data
+			self.responseCount += 1
+		} catch {
+			print(error.localizedDescription)
 		}
+
 		KService.getRelatedShows(forShow: showIdentity, limit: 10) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
@@ -314,7 +318,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		case R.segue.showDetailsCollectionViewController.castSegue.identifier:
 			guard let castCollectionViewController = segue.destination as? CastCollectionViewController else { return }
 			castCollectionViewController.showIdentity = self.showIdentity
-		case R.segue.showDetailsCollectionViewController.showSongsListSegue.identifier:
+		case R.segue.showDetailsCollectionViewController.songsListSegue.identifier:
 			guard let showSongsListCollectionViewController = segue.destination as? ShowSongsListCollectionViewController else { return }
 			showSongsListCollectionViewController.showIdentity = self.showIdentity
 		case R.segue.showDetailsCollectionViewController.episodeSegue.identifier:
@@ -329,10 +333,15 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 			guard let studioDetailsCollectionViewController = segue.destination as? StudioDetailsCollectionViewController else { return }
 			guard let studio = self.studio else { return }
 			studioDetailsCollectionViewController.studio = studio
+		case R.segue.showDetailsCollectionViewController.studiosListSegue.identifier:
+			guard let studiosListCollectionViewController = segue.destination as? StudiosListCollectionViewController else { return }
+			studiosListCollectionViewController.showIdentity = self.showIdentity
+			studiosListCollectionViewController.studiosListFetchType = .show
 		case R.segue.showDetailsCollectionViewController.showsListSegue.identifier:
 			guard let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController else { return }
 			showsListCollectionViewController.title = "Related"
 			showsListCollectionViewController.showIdentity = self.showIdentity
+			showsListCollectionViewController.showsListFetchType = .relatedShow
 		case R.segue.showDetailsCollectionViewController.characterDetailsSegue.identifier:
 			guard let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController else { return }
 			guard let cell = sender as? CastCollectionViewCell else { return }
@@ -463,6 +472,7 @@ extension ShowDetailsCollectionViewController {
 		case seasons
 		case cast
 		case songs
+		case studios
 		case moreByStudio
 		case relatedShows
 		case sosumi
@@ -487,6 +497,8 @@ extension ShowDetailsCollectionViewController {
 				return Trans.cast
 			case .songs:
 				return Trans.songs
+			case .studios:
+				return Trans.studios
 			case .moreByStudio:
 				return Trans.moreBy
 			case .relatedShows:
@@ -514,7 +526,9 @@ extension ShowDetailsCollectionViewController {
 			case .cast:
 				return R.segue.showDetailsCollectionViewController.castSegue.identifier
 			case .songs:
-				return R.segue.showDetailsCollectionViewController.showSongsListSegue.identifier
+				return R.segue.showDetailsCollectionViewController.songsListSegue.identifier
+			case .studios:
+				return R.segue.showDetailsCollectionViewController.studiosListSegue.identifier
 			case .moreByStudio:
 				return R.segue.showDetailsCollectionViewController.studioSegue.identifier
 			case .relatedShows:
@@ -552,6 +566,9 @@ extension ShowDetailsCollectionViewController {
 		/// Indicates the item kind contains a `CastIdentity` object.
 		case castIdentity(_: CastIdentity, id: UUID = UUID())
 
+		/// Indicates the item kind contains a `StudioIdentity` object.
+		case studioIdentity(_: StudioIdentity, id: UUID = UUID())
+
 		// MARK: - Functions
 		func hash(into hasher: inout Hasher) {
 			switch self {
@@ -579,6 +596,9 @@ extension ShowDetailsCollectionViewController {
 			case .castIdentity(let castIdentity, let id):
 				hasher.combine(castIdentity)
 				hasher.combine(id)
+			case .studioIdentity(let studioIdentity, let id):
+				hasher.combine(studioIdentity)
+				hasher.combine(id)
 			}
 		}
 
@@ -600,6 +620,8 @@ extension ShowDetailsCollectionViewController {
 				return personIdentity1 == personIdentity2 && id1 == id2
 			case (.castIdentity(let castIdentity1, let id1), .castIdentity(let castIdentity2, let id2)):
 				return castIdentity1 == castIdentity2 && id1 == id2
+			case (.studioIdentity(let studioIdentity1, let id1), .studioIdentity(let studioIdentity2, let id2)):
+				return studioIdentity1 == studioIdentity2 && id1 == id2
 			default:
 				return false
 			}
