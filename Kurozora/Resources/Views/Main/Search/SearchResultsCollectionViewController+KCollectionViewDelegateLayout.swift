@@ -9,17 +9,47 @@
 import UIKit
 
 extension SearchResultsCollectionViewController {
-	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
-		let width = layoutEnvironment.container.contentSize.width
-		var columnCount = searchResults != nil ? (width / 374).rounded().int : (width / 105).rounded().int
+	func columnCount(forSection section: SectionLayoutKind, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
+		let width = layoutEnvironment.container.effectiveContentSize.width
+		var columnCount = 0
 
-		if columnCount < 0 {
-			columnCount = 1
-		} else if columnCount > 5 {
-			columnCount = 5
+		switch section {
+		case .characters:
+			columnCount = (width / 140.0).rounded().int
+		case .people:
+			columnCount = (width / 140.0).rounded().int
+		case .songs:
+			columnCount = (width / 250.0).rounded().int
+		case .shows:
+			if width >= 414.0 {
+				columnCount = (width / 384.0).rounded().int
+			} else {
+				columnCount = (width / 284.0).rounded().int
+			}
+		case .studios:
+			if width >= 414.0 {
+				columnCount = (width / 384.0).rounded().int
+			} else {
+				columnCount = (width / 284.0).rounded().int
+			}
+		case .users:
+			if width >= 414.0 {
+				columnCount = (width / 384.0).rounded().int
+			} else {
+				columnCount = (width / 284.0).rounded().int
+			}
 		}
 
-		return columnCount
+		switch section {
+		case .shows, .studios:
+			// Limit columns to 5 or less
+			if columnCount > 5 {
+				columnCount = 5
+			}
+		default: break
+		}
+
+		return columnCount > 0 ? columnCount : 1
 	}
 
 	override func contentInset(forSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
@@ -35,21 +65,36 @@ extension SearchResultsCollectionViewController {
 	}
 
 	override func createLayout() -> UICollectionViewLayout? {
-		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+		return UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
-			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(200.0))
-			let item = NSCollectionLayoutItem(layoutSize: itemSize)
+			let searchResultSection = self.dataSource.snapshot().sectionIdentifiers[section]
+			let columns = self.columnCount(forSection: searchResultSection, layout: layoutEnvironment)
+			var sectionLayout: NSCollectionLayoutSection? = nil
 
-			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(200.0))
-			let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-			layoutGroup.interItemSpacing = .fixed(10.0)
+			switch searchResultSection {
+			case .characters:
+				sectionLayout = Layouts.charactersSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+			case .people:
+				sectionLayout = Layouts.peopleSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+			case .shows:
+				sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: self.currentScope == .kurozora)
+			case .songs:
+				sectionLayout = Layouts.musicSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+			case .studios:
+				sectionLayout = Layouts.studiosSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+			case .users:
+				sectionLayout = Layouts.usersSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+			}
 
-			let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-			layoutSection.interGroupSpacing = 10.0
-			layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
-			return layoutSection
+			if self.currentScope == .kurozora {
+				// Add header supplementary view.
+				let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0))
+				let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+					layoutSize: headerFooterSize,
+					elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+				sectionLayout?.boundarySupplementaryItems = [sectionHeader]
+			}
+			return sectionLayout
 		}
-		return layout
 	}
 }

@@ -7,16 +7,12 @@
 //
 
 import UIKit
+import KurozoraKit
 
 class KSearchController: UISearchController {
 	// MARK: - Properties
-	var placeholderTimer: Timer?
-	var viewController: UIViewController?
-	var searchScope: SearchScope = .show {
-		didSet {
-			self.startPlaceholderTimer()
-		}
-	}
+	weak var viewController: SearchResultsCollectionViewController?
+	var searchScope: KKSearchScope = .kurozora
 	var forceShowsCancelButton: Bool = true
 
 	// MARK: - Initializers
@@ -36,39 +32,18 @@ class KSearchController: UISearchController {
 	}
 
 	// MARK: - View
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-		self.searchBar.placeholder = "I'm searching for..."
-	}
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.searchBar.delegate = viewController as? SearchResultsCollectionViewController
-		self.searchBar.scopeButtonTitles = SearchScope.allString
-		self.searchBar.selectedScopeButtonIndex = searchScope.rawValue
-		self.searchBar.textField?.theme_textColor = KThemePicker.textColor.rawValue
-	}
-
-	// MARK: - Functions
-	/// Updates the search placeholder with new placeholder string every second.
-	@objc func updateSearchPlaceholder() {
-		self.searchBar.placeholder = searchScope.placeholderString
-	}
-
-	/// Starts the placeholder timer for the search bar if no timers are already running.
-	private func startPlaceholderTimer() {
-		if self.placeholderTimer == nil {
-			self.placeholderTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.updateSearchPlaceholder), userInfo: nil, repeats: true)
-		}
-	}
-
-	/// Stops the placeholder timer if one is running.
-	private func stopPlacholderTimer() {
-		if self.placeholderTimer != nil {
-			self.placeholderTimer?.invalidate()
-			self.placeholderTimer = nil
-		}
+		self.searchBar.delegate = self.viewController
+		#if targetEnvironment(macCatalyst)
+		self.searchBar.placeholder = Trans.search
+		#else
+		self.searchBar.placeholder = "Anime, Character, Person, and More"
+		#endif
+		self.searchBar.scopeButtonTitles = KKSearchScope.allString
+		self.searchBar.selectedScopeButtonIndex = self.searchScope.rawValue
+		self.searchBar.searchTextField.theme_textColor = KThemePicker.textColor.rawValue
 	}
 }
 
@@ -78,15 +53,11 @@ extension KSearchController: UISearchControllerDelegate {
 		if self.forceShowsCancelButton {
 			self.searchBar.showsCancelButton = true
 		}
-
-		self.stopPlacholderTimer()
 	}
 
 	func willDismissSearchController(_ searchController: UISearchController) {
 		if self.forceShowsCancelButton {
 			self.searchBar.showsCancelButton = false
 		}
-
-		self.startPlaceholderTimer()
 	}
 }
