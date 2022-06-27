@@ -12,8 +12,7 @@ extension Character.Attributes {
 	// MARK: - Properties
 	/// Returns a `UIImage` with the image url of the character.
 	///
-	/// If the character has no image set, then an image with the initials of the character's name is returned.
-	/// If no name is available then a placeholder character image is returned.
+	/// If the character has no personal image set, then a placeholder image is applied.
 	///
 	/// - Returns: a `UIImage` with the image url of the character.
 	var personalImage: UIImageView {
@@ -33,8 +32,7 @@ extension Character.Attributes {
 	// MARK: - Functions
 	/// Set the image of the character.
 	///
-	/// If the character has no image set, then an image with the initials of the character's name is returned.
-	/// If no name is available then a placeholder character image is returned.
+	/// If the character has no personl image set, then a placeholder image is returned.
 	///
 	/// - Parameter imageView: The image view on which to set the personal image.
 	func personalImage(imageView: UIImageView) {

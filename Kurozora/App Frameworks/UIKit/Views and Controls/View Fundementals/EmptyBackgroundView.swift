@@ -110,6 +110,9 @@ class EmptyBackgroundView: UIView {
 	/// The vertical spacing between the image, label and button views.
 	let verticalSpace = 8
 
+	/// The vertical offset of the view.
+	var verticalOffset: CGFloat = 0.0
+
 	/// Whetehr the constraints are configured.
 	var didConfigureConstraints = false
 
@@ -221,7 +224,7 @@ class EmptyBackgroundView: UIView {
 			// First, configure the content view constaints
 			// The content view must alway be centered to its superview
 			let centerXConstraint = NSLayoutConstraint(item: self.contentView, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1.0, constant: 0.0)
-			let centerYConstraint = NSLayoutConstraint(item: self.contentView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1.0, constant: 0.0)
+			let centerYConstraint = NSLayoutConstraint(item: self.contentView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1.0, constant: self.verticalOffset)
 
 			self.addConstraints([centerXConstraint, centerYConstraint])
 			self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[contentView]|", options: [], metrics: nil, views: ["contentView": self.contentView]))
