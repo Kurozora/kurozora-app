@@ -10,23 +10,23 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="SsL-f8-fZ9" customClass="EpisodeLockupCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="374" height="210"/>
+            <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="V2V-DS-t2y">
-                <rect key="frame" x="0.0" y="0.0" width="374" height="210"/>
+                <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4wJ-Gy-1SI" userLabel="Shadow View">
-                        <rect key="frame" x="0.0" y="0.0" width="374" height="210"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Lh-pm-DON" userLabel="Corner View">
-                                <rect key="frame" x="0.0" y="0.0" width="374" height="210"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Episode Banner" translatesAutoresizingMaskIntoConstraints="NO" id="AXj-Cf-vdh" customClass="BannerImageView" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="210"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                                     </imageView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow" translatesAutoresizingMaskIntoConstraints="NO" id="xKJ-Qq-GVn">
-                                        <rect key="frame" x="0.0" y="105" width="374" height="105"/>
+                                        <rect key="frame" x="0.0" y="540" width="1920" height="540"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </imageView>
                                 </subviews>
@@ -44,6 +44,7 @@
                             </view>
                         </subviews>
                         <constraints>
+                            <constraint firstAttribute="width" secondItem="4wJ-Gy-1SI" secondAttribute="height" multiplier="16:9" id="A37-kY-9XF"/>
                             <constraint firstItem="3Lh-pm-DON" firstAttribute="top" secondItem="4wJ-Gy-1SI" secondAttribute="top" id="BPv-WR-2HS"/>
                             <constraint firstAttribute="bottom" secondItem="3Lh-pm-DON" secondAttribute="bottom" id="Sqa-45-d1N"/>
                             <constraint firstItem="3Lh-pm-DON" firstAttribute="leading" secondItem="4wJ-Gy-1SI" secondAttribute="leading" id="apG-To-m6n"/>
@@ -51,7 +52,7 @@
                         </constraints>
                     </view>
                     <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a3S-Nb-CU2" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="16" y="10" width="34" height="34"/>
+                        <rect key="frame" x="20" y="10" width="34" height="34"/>
                         <color key="backgroundColor" red="0.15686274510000001" green="0.15686274510000001" blue="0.15686274510000001" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="34" id="dot-Zy-f7f"/>
@@ -74,7 +75,7 @@
                         </connections>
                     </button>
                     <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GnK-XE-kZ8" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="324" y="10" width="34" height="34"/>
+                        <rect key="frame" x="1866" y="10" width="34" height="34"/>
                         <color key="backgroundColor" red="0.15686274510000001" green="0.15686274510000001" blue="0.15686274510000001" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="34" id="bJ6-6g-h53"/>
@@ -95,25 +96,25 @@
                         </connections>
                     </button>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Episode 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6q4-ct-dOI">
-                        <rect key="frame" x="16" y="124.5" width="54" height="14.5"/>
+                        <rect key="frame" x="20" y="1013.5" width="54" height="14.5"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                         <color key="textColor" red="0.90065288200000004" green="0.89906244960000004" blue="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="displayP3"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The End of the Beginning and the Beginning of the End" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tc6-iN-eK0">
-                        <rect key="frame" x="16" y="139" width="304" height="36"/>
+                        <rect key="frame" x="20" y="1028" width="353.5" height="17"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MY RATING" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WiO-Oq-B5C" userLabel="MY RATING" customClass="KTintedLabel" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="16" y="180" width="60.5" height="20"/>
+                        <rect key="frame" x="20" y="1050" width="60.5" height="20"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                         <color key="textColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2PT-2p-fhW" customClass="KCosmosView" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="84.5" y="180" width="112" height="20"/>
+                        <rect key="frame" x="88.5" y="1050" width="112" height="20"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="fillMode">
@@ -122,7 +123,7 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Apr 2, 2016 5:00 PM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H9h-mK-UU0">
-                        <rect key="frame" x="250" y="180" width="108" height="20"/>
+                        <rect key="frame" x="1792" y="1050" width="108" height="20"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                         <color key="textColor" red="0.90065288200000004" green="0.89906244960000004" blue="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="displayP3"/>
                         <nil key="highlightedColor"/>
@@ -155,6 +156,7 @@
                 </constraints>
             </collectionViewCellContentView>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <size key="customSize" width="774" height="855"/>
             <connections>
                 <outlet property="cornerView" destination="3Lh-pm-DON" id="cpV-zd-XbQ"/>
                 <outlet property="cosmosView" destination="2PT-2p-fhW" id="fa5-DC-0EE"/>
@@ -168,7 +170,7 @@
                 <outlet property="shadowImageview" destination="xKJ-Qq-GVn" id="3AM-UE-cN4"/>
                 <outlet property="shadowView" destination="4wJ-Gy-1SI" id="opV-OY-c1v"/>
             </connections>
-            <point key="canvasLocation" x="137.68115942028987" y="152.67857142857142"/>
+            <point key="canvasLocation" x="427.536231884058" y="368.63839285714283"/>
         </collectionViewCell>
     </objects>
     <designables>

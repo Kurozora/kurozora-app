@@ -17,11 +17,11 @@ extension EpisodesCollectionViewController {
 			var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? episodeLockupCollectionViewCell.dataRequest
 
 			if dataRequest == nil && episode == nil {
-				dataRequest = KService.getDetails(forEpisode: episodeIdentity) { [weak self] result in
+				dataRequest = KService.getDetails(forEpisode: episodeIdentity) { result in
 					switch result {
 					case .success(let episodes):
-						self?.episodes[indexPath] = episodes.first
-						self?.setEpisodeNeedsUpdate(episodeIdentity)
+						self.episodes[indexPath] = episodes.first
+						self.setEpisodeNeedsUpdate(episodeIdentity)
 					case .failure: break
 					}
 				}

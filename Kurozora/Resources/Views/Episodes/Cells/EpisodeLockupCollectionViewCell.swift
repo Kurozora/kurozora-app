@@ -35,7 +35,11 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	func configure(using episode: Episode?) {
-		guard let episode = episode else { return }
+		guard let episode = episode else {
+			self.showSkeleton()
+			return
+		}
+		self.hideSkeleton()
 
 		self.episodeImageView.setImage(with: episode.attributes.banner?.url ?? "", placeholder: R.image.placeholders.episodeBanner()!)
 
