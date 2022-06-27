@@ -10,8 +10,8 @@ import UIKit
 
 class SearchBaseResultsCell: UICollectionViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var primaryLabel: UILabel!
-	@IBOutlet weak var secondaryLabel: UILabel!
+	@IBOutlet weak var primaryLabel: KLabel!
+	@IBOutlet weak var secondaryLabel: KSecondaryLabel!
 	@IBOutlet weak var actionButton: KTintedButton!
 	@IBOutlet weak var searchImageView: UIImageView!
 	@IBOutlet weak var separatorView: SeparatorView!

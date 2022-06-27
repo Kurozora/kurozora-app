@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 
 class SidebarViewController: KCollectionViewController {
 	// MARK: - Properties
@@ -72,7 +73,7 @@ class SidebarViewController: KCollectionViewController {
 
 		// Configure search bar
 		kSearchController.viewController = searchResultsCollectionViewController
-		kSearchController.searchScope = .show
+		kSearchController.searchScope = .kurozora
 		kSearchController.forceShowsCancelButton = false
 		kSearchController.obscuresBackgroundDuringPresentation = false
 		kSearchController.automaticallyShowsCancelButton = false
