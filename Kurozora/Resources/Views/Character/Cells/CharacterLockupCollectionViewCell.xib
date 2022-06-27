@@ -10,24 +10,20 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="jA4-RP-D4X" customClass="CharacterLockupCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="128" height="176.5"/>
+            <rect key="frame" x="0.0" y="0.0" width="128" height="156.5"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="fxe-Hf-WsG">
-                <rect key="frame" x="0.0" y="0.0" width="128" height="176.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="128" height="156.5"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NwE-aG-8uu" customClass="CharacterImageView" customModule="Kurozora" customModuleProvider="target">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Person Poster" translatesAutoresizingMaskIntoConstraints="NO" id="NwE-aG-8uu" customClass="CharacterImageView" customModule="Kurozora" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="128" id="MkC-Ad-YK0"/>
                             <constraint firstAttribute="width" secondItem="NwE-aG-8uu" secondAttribute="height" multiplier="1:1" id="QXa-or-pn9"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kOD-68-UMF" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kOD-68-UMF" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="136" width="128" height="20.5"/>
-                        <constraints>
-                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="BxD-SM-hef"/>
-                        </constraints>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -37,13 +33,12 @@
                     <constraint firstItem="kOD-68-UMF" firstAttribute="top" secondItem="NwE-aG-8uu" secondAttribute="bottom" constant="8" symbolic="YES" id="53S-LS-8pW"/>
                     <constraint firstItem="NwE-aG-8uu" firstAttribute="top" secondItem="fxe-Hf-WsG" secondAttribute="top" id="5Ep-o0-BgW"/>
                     <constraint firstItem="kOD-68-UMF" firstAttribute="centerX" secondItem="NwE-aG-8uu" secondAttribute="centerX" id="5hk-7f-rTq"/>
-                    <constraint firstItem="NwE-aG-8uu" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="fxe-Hf-WsG" secondAttribute="trailing" id="7Ym-1O-sCY"/>
-                    <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="kOD-68-UMF" secondAttribute="trailing" id="D5m-L7-Ksd"/>
-                    <constraint firstAttribute="bottom" secondItem="kOD-68-UMF" secondAttribute="bottom" constant="20" symbolic="YES" id="Phb-hJ-f9q"/>
-                    <constraint firstItem="kOD-68-UMF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fxe-Hf-WsG" secondAttribute="leading" id="VRz-bU-9E4"/>
+                    <constraint firstItem="NwE-aG-8uu" firstAttribute="trailing" secondItem="fxe-Hf-WsG" secondAttribute="trailing" id="7Ym-1O-sCY"/>
+                    <constraint firstAttribute="trailing" secondItem="kOD-68-UMF" secondAttribute="trailing" id="D5m-L7-Ksd"/>
+                    <constraint firstAttribute="bottom" secondItem="kOD-68-UMF" secondAttribute="bottom" id="Phb-hJ-f9q"/>
+                    <constraint firstItem="kOD-68-UMF" firstAttribute="leading" secondItem="fxe-Hf-WsG" secondAttribute="leading" id="VRz-bU-9E4"/>
                     <constraint firstItem="NwE-aG-8uu" firstAttribute="width" secondItem="NwE-aG-8uu" secondAttribute="height" multiplier="1:1" id="cMr-k6-jP4"/>
-                    <constraint firstItem="NwE-aG-8uu" firstAttribute="centerX" secondItem="fxe-Hf-WsG" secondAttribute="centerX" id="lj2-T7-41x"/>
-                    <constraint firstItem="NwE-aG-8uu" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fxe-Hf-WsG" secondAttribute="leading" id="pwo-K1-IvF"/>
+                    <constraint firstItem="NwE-aG-8uu" firstAttribute="leading" secondItem="fxe-Hf-WsG" secondAttribute="leading" id="pwo-K1-IvF"/>
                 </constraints>
             </collectionViewCellContentView>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -54,4 +49,7 @@
             <point key="canvasLocation" x="175" y="156"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="Placeholders/Person Poster" width="680" height="1000"/>
+    </resources>
 </document>

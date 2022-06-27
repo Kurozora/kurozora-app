@@ -127,6 +127,7 @@ extension CharacterDetailsCollectionViewController {
 
 	func setItemKindNeedsUpdate(_ itemKind: ItemKind) {
 		var snapshot = self.dataSource.snapshot()
+		guard snapshot.indexOfItem(itemKind) != nil else { return }
 		snapshot.reconfigureItems([itemKind])
 		self.dataSource.apply(snapshot, animatingDifferences: true)
 	}
@@ -142,11 +143,11 @@ extension CharacterDetailsCollectionViewController {
 			if dataRequest == nil && show == nil {
 				switch itemKind {
 				case .showIdentity(let showIdentity, _):
-					dataRequest = KService.getDetails(forShow: showIdentity) { [weak self] result in
+					dataRequest = KService.getDetails(forShow: showIdentity) { result in
 						switch result {
 						case .success(let shows):
-							self?.shows[indexPath] = shows.first
-							self?.setItemKindNeedsUpdate(itemKind)
+							self.shows[indexPath] = shows.first
+							self.setItemKindNeedsUpdate(itemKind)
 						case .failure: break
 						}
 					}
@@ -169,11 +170,11 @@ extension CharacterDetailsCollectionViewController {
 			if dataRequest == nil && person == nil {
 				switch itemKind {
 				case .personIdentity(let personIdentity, _):
-					dataRequest = KService.getDetails(forPerson: personIdentity) { [weak self] result in
+					dataRequest = KService.getDetails(forPerson: personIdentity) { result in
 						switch result {
 						case .success(let persons):
-							self?.people[indexPath] = persons.first
-							self?.setItemKindNeedsUpdate(itemKind)
+							self.people[indexPath] = persons.first
+							self.setItemKindNeedsUpdate(itemKind)
 						case .failure: break
 						}
 					}

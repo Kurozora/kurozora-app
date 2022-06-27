@@ -11,7 +11,7 @@ import UIKit
 extension CharactersListCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
-		let columnCount = (width / 200).rounded().int
+		let columnCount = (width / 140.0).rounded().int
 		return columnCount > 0 ? columnCount : 1
 	}
 
