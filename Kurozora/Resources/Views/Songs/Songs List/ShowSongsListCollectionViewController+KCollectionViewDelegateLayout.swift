@@ -11,8 +11,7 @@ import UIKit
 extension ShowSongsListCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
-		var columnCount = (width / 254).rounded().int
-		columnCount = columnCount > 8 ? 8 : columnCount
+		let columnCount = (width / 250.0).rounded().int
 		return columnCount > 0 ? columnCount : 1
 	}
 
@@ -24,7 +23,7 @@ extension ShowSongsListCollectionViewController {
 
 			if self.showIdentity != nil {
 				// Add header supplementary view.
-				let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(100))
+				let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0))
 				let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerFooterSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
 				layoutSection.boundarySupplementaryItems = [sectionHeader]
 			}
