@@ -54,6 +54,21 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 		return _prefersActivityIndicatorHidden
 	}
 
+	// MARK: - Initializers
+	/// Initialize a new instance of StudioDetailsCollectionViewController with the given studio id.
+	///
+	/// - Parameter studioID: The studio id to use when initializing the view.
+	///
+	/// - Returns: an initialized instance of StudioDetailsCollectionViewController.
+	static func `init`(with studioID: Int) -> StudioDetailsCollectionViewController {
+		if let studioDetailsCollectionViewController = R.storyboard.studios.studioDetailsCollectionViewController() {
+			studioDetailsCollectionViewController.studioIdentity = StudioIdentity(id: studioID)
+			return studioDetailsCollectionViewController
+		}
+
+		fatalError("Failed to instantiate StudioDetailsCollectionViewController with the given studio id.")
+	}
+
 	// MARK: - View
 	override func viewWillReload() {
 		super.viewWillReload()
@@ -142,6 +157,7 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 		case R.segue.studioDetailsCollectionViewController.showsListSegue.identifier:
 			guard let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController else { return }
 			showsListCollectionViewController.studioIdentity = self.studioIdentity
+			showsListCollectionViewController.showsListFetchType = .studio
 		default: break
 		}
 	}
@@ -190,7 +206,7 @@ extension StudioDetailsCollectionViewController: TitleHeaderCollectionReusableVi
 
 // MARK: - BaseLockupCollectionViewCellDelegate
 extension StudioDetailsCollectionViewController: BaseLockupCollectionViewCellDelegate {
-	func chooseStatusButtonPressed(_ sender: UIButton, on cell: BaseLockupCollectionViewCell) {
+	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressStatus button: UIButton) {
 		WorkflowController.shared.isSignedIn {
 			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 			guard let show = self.shows[indexPath] else { return }
@@ -204,7 +220,7 @@ extension StudioDetailsCollectionViewController: BaseLockupCollectionViewCellDel
 
 						// Update entry in library
 						cell.libraryStatus = value
-						cell.libraryStatusButton?.setTitle("\(title) ▾", for: .normal)
+						button.setTitle("\(title) ▾", for: .normal)
 
 						let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
 						NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
@@ -223,7 +239,7 @@ extension StudioDetailsCollectionViewController: BaseLockupCollectionViewCellDel
 
 							// Update edntry in library
 							cell.libraryStatus = .none
-							cell.libraryStatusButton?.setTitle("ADD", for: .normal)
+							button.setTitle("ADD", for: .normal)
 
 							let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
 							NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
@@ -236,8 +252,8 @@ extension StudioDetailsCollectionViewController: BaseLockupCollectionViewCellDel
 
 			// Present the controller
 			if let popoverController = actionSheetAlertController.popoverPresentationController {
-				popoverController.sourceView = sender
-				popoverController.sourceRect = sender.bounds
+				popoverController.sourceView = button
+				popoverController.sourceRect = button.bounds
 			}
 
 			if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
@@ -246,9 +262,10 @@ extension StudioDetailsCollectionViewController: BaseLockupCollectionViewCellDel
 		}
 	}
 
-	func reminderButtonPressed(on cell: BaseLockupCollectionViewCell) {
+	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressReminder button: UIButton) {
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		self.shows[indexPath]?.toggleReminder()
+		guard let show = self.shows[indexPath] else { return }
+		show.toggleReminder()
 	}
 }
 
