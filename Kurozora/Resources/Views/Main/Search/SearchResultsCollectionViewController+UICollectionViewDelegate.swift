@@ -7,60 +7,70 @@
 //
 
 import UIKit
+import KurozoraKit
 
 // MARK: - UICollectionViewDelegate
 extension SearchResultsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		let searchBaseResultsCell = collectionView.cellForItem(at: indexPath)
-		if self.searchResults != nil {
-			switch self.currentScope {
-			case .show, .library:
-				if let show = (searchBaseResultsCell as? SearchShowResultsCell)?.show {
-					SearchHistory.saveContentsOf(show)
-					self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.showDetailsSegue, sender: show)
-				}
-			case .user:
-				if let user = (searchBaseResultsCell as? SearchUserResultsCell)?.user {
-					self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.profileSegue, sender: user)
-				}
-			}
-		} else {
-			if let show = (searchBaseResultsCell as? SearchSuggestionResultCell)?.show {
-				self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.showDetailsSegue, sender: show)
-			}
+		switch self.dataSource.itemIdentifier(for: indexPath) {
+		case .characterIdentity:
+			let character = self.characters[indexPath]
+			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.characterDetailsSegue, sender: character)
+		case .personIdentity:
+			let person = self.people[indexPath]
+			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.personDetailsSegue, sender: person)
+		case .showIdentity:
+			guard let show = self.shows[indexPath] else { return }
+			SearchHistory.saveContentsOf(show)
+			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.showDetailsSegue, sender: show)
+//		case .songIdentity:
+//			let song = self.songs[indexPath]
+//			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.songDetailsSegue, sender: song)
+		case .studioIdentity:
+			let studio = self.studios[indexPath]
+			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.studioDetailsSegue, sender: studio)
+		case .userIdentity:
+			let user = self.users[indexPath]
+			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.userDetailsSegue, sender: user)
+		default: break
 		}
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		if indexPath.item == self.searchResults?.count ?? 0 - 10 && self.nextPageURL != nil {
-			guard let text = self.kSearchController.searchBar.textField?.text else { return }
-			guard let searchScope = SearchScope(rawValue: self.kSearchController.searchBar.selectedScopeButtonIndex) else { return }
-			self.performSearch(withText: text, in: searchScope)
+		switch self.currentScope {
+		case .kurozora: break
+		case .library:
+			let showIdentitiesCount = self.showIdentities.count - 1
+			var itemsCount = showIdentitiesCount / 4 / 2
+			itemsCount = itemsCount > 15 ? 15 : itemsCount // Make sure count isn't above 15
+			itemsCount = showIdentitiesCount - itemsCount
+			itemsCount = itemsCount < 1 ? 1 : itemsCount // Make sure count isn't below 1
+
+			if indexPath.item >= itemsCount && self.nextPageURL != nil {
+				self.performSearch(with: "", in: .library, resettingResults: false)
+			}
 		}
 	}
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		let searchBaseResultsCell = collectionView.cellForItem(at: indexPath)
-		if self.searchResults != nil {
-			switch self.currentScope {
-			case .show, .library:
-				if let searchShowResultsCell = searchBaseResultsCell as? SearchShowResultsCell {
-					SearchHistory.saveContentsOf(searchShowResultsCell.show)
-					return searchShowResultsCell.show?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-				}
-			case .user:
-				if let searchUserResultsCell = searchBaseResultsCell as? SearchUserResultsCell {
-					return searchUserResultsCell.user?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-				}
-			}
-		} else {
-			if let searchSuggestionResultCell = searchBaseResultsCell as? SearchSuggestionResultCell {
-				return searchSuggestionResultCell.show?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-			}
+		switch self.dataSource.itemIdentifier(for: indexPath) {
+		case .characterIdentity:
+			return self.characters[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		case .personIdentity:
+			return self.people[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		case .showIdentity:
+			guard let show = self.shows[indexPath] else { return nil }
+			SearchHistory.saveContentsOf(show)
+			return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+//		case .songIdentity:
+//			return self.songs[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		case .studioIdentity:
+			return self.studios[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		case .userIdentity:
+			return self.users[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		default: return nil
 		}
-
-		return nil
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {

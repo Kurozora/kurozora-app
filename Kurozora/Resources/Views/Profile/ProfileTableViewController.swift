@@ -8,7 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import UniformTypeIdentifiers
 
 class ProfileTableViewController: KTableViewController {
 	// MARK: - IBOutlets
@@ -38,17 +37,22 @@ class ProfileTableViewController: KTableViewController {
 	@IBOutlet weak var separatorView: SeparatorView!
 
 	// MARK: - Properties
-	var userID = User.current?.id ?? 0
+	var userIdentity: UserIdentity? = nil
 	var user: User! = User.current {
 		didSet {
 			self._prefersActivityIndicatorHidden = true
-			self.userID = self.user.id
+			self.userIdentity = UserIdentity(id: self.user.id)
 
-			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing profile messages...")
+			self._prefersActivityIndicatorHidden = true
+			#if targetEnvironment(macCatalyst)
+			self.touchBar = nil
 			#endif
 
-			self.configureProfile()
+			#if DEBUG
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.endRefreshing()
+			#endif
+			#endif
 		}
 	}
 
@@ -140,7 +144,7 @@ class ProfileTableViewController: KTableViewController {
 	/// - Returns: an initialized instance of ProfileTableViewController.
 	static func `init`(with userID: Int) -> ProfileTableViewController {
 		if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
-			profileTableViewController.userID = userID
+			profileTableViewController.userIdentity = UserIdentity(id: userID)
 			return profileTableViewController
 		}
 
@@ -189,6 +193,10 @@ class ProfileTableViewController: KTableViewController {
 		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh profile details!")
 		#endif
 
+		if self.userIdentity == nil {
+			self.userIdentity = UserIdentity(id: self.user.id)
+		}
+
 		// Fetch user details
 		DispatchQueue.global(qos: .userInteractive).async {
 			self.fetchUserDetails()
@@ -218,11 +226,10 @@ class ProfileTableViewController: KTableViewController {
 
 	override func configureEmptyDataView() {
 		// MARK: - HERE: Look at this
-//		let verticalOffset = (self.tableView.tableHeaderView?.height ?? 0 - self.view.height) / 2
-
+		let verticalOffset = (self.tableView.tableHeaderView?.height ?? 0 - self.view.height) / 2
 		var detailString: String
 
-		if self.userID == User.current?.id {
+		if self.userIdentity?.id == User.current?.id {
 			detailString = "There are no messages on your feed!"
 		} else {
 			detailString = "There are no messages on this feed!"
@@ -230,6 +237,7 @@ class ProfileTableViewController: KTableViewController {
 
 		emptyBackgroundView.configureImageView(image: R.image.empty.comment()!)
 		emptyBackgroundView.configureLabels(title: "No Posts", detail: detailString)
+		emptyBackgroundView.verticalOffset = verticalOffset
 
 		tableView.backgroundView?.alpha = 0
 	}
@@ -268,9 +276,42 @@ class ProfileTableViewController: KTableViewController {
 		}, completion: nil)
 	}
 
+	/// Fetches user detail.
+	private func fetchUserDetails() {
+		guard let userIdentity = self.userIdentity else { return }
+
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing profile details...")
+			#endif
+		}
+
+		if self.user == nil {
+			KService.getDetails(forUser: userIdentity) { [weak self] result in
+				guard let self = self else { return }
+				switch result {
+				case .success(let users):
+					self.user = users.first
+					self.configureProfile()
+				case .failure: break
+				}
+			}
+		} else {
+			DispatchQueue.main.async { [weak self] in
+				guard let self = self else { return }
+				self.configureProfile()
+			}
+		}
+
+		self.fetchFeedMessages()
+	}
+
 	/// Fetches posts for the user whose page is being viewed.
 	func fetchFeedMessages() {
-		KService.getFeedMessages(forUserID: self.userID, next: self.nextPageURL) { [weak self] result in
+		guard let userIdentity = self.userIdentity else { return }
+
+		KService.getFeedMessages(forUser: userIdentity, next: self.nextPageURL) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
 			case .success(let feedMessageResponse):
@@ -294,29 +335,6 @@ class ProfileTableViewController: KTableViewController {
 			self.refreshControl?.endRefreshing()
 			#endif
 		}
-	}
-
-	/// Fetches user detail.
-	private func fetchUserDetails() {
-		DispatchQueue.main.async { [weak self] in
-			guard let self = self else { return }
-			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing profile details...")
-			#endif
-		}
-
-		KService.getProfile(forUserID: self.userID) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let users):
-				DispatchQueue.main.async {
-					self.user = users.first
-				}
-			case .failure: break
-			}
-		}
-
-		self.fetchFeedMessages()
 	}
 
 	/// Configure the profile view with the details of the user whose page is being viewed.
@@ -691,8 +709,10 @@ class ProfileTableViewController: KTableViewController {
 	}
 
 	@IBAction func followButtonPressed(_ sender: UIButton) {
+		let userIdentity = UserIdentity(id: self.user.id)
+
 		WorkflowController.shared.isSignedIn {
-			KService.updateFollowStatus(forUserID: self.user.id) { [weak self] result in
+			KService.updateFollowStatus(forUser: userIdentity) { [weak self] result in
 				guard let self = self else { return }
 				switch result {
 				case .success(let followUpdate):
@@ -710,22 +730,25 @@ class ProfileTableViewController: KTableViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == R.segue.profileTableViewController.badgeSegue.identifier {
-			if let badgesTableViewController = segue.destination as? BadgesTableViewController {
-				badgesTableViewController.user = self.user
-			}
-		} else if let followTableViewController = segue.destination as? FollowTableViewController {
+		switch segue.identifier {
+		case R.segue.profileTableViewController.badgeSegue.identifier:
+			guard let badgesTableViewController = segue.destination as? BadgesTableViewController else { return }
+			badgesTableViewController.user = self.user
+		case R.segue.profileTableViewController.followingSegue.identifier:
+			guard let followTableViewController = segue.destination as? UsersListCollectionViewController else { return }
 			followTableViewController.user = self.user
-
-			if segue.identifier == R.segue.profileTableViewController.followingSegue.identifier {
-				followTableViewController.followList = .following
-			} else if segue.identifier == R.segue.profileTableViewController.followersSegue.identifier {
-				followTableViewController.followList = .followers
-			}
-		} else if let fmDetailsTableViewController = segue.destination as? FMDetailsTableViewController {
-			if let feedMessageID = sender as? Int {
-				fmDetailsTableViewController.feedMessageID = feedMessageID
-			}
+			followTableViewController.usersListType = .following
+			followTableViewController.usersListFetchType = .follow
+		case R.segue.profileTableViewController.followersSegue.identifier:
+			guard let followTableViewController = segue.destination as? UsersListCollectionViewController else { return }
+			followTableViewController.user = self.user
+			followTableViewController.usersListType = .followers
+			followTableViewController.usersListFetchType = .follow
+		case R.segue.profileTableViewController.feedMessageDetailsSegue.identifier:
+			guard let fmDetailsTableViewController = segue.destination as? FMDetailsTableViewController else { return }
+			guard let feedMessageID = sender as? Int else { return }
+			fmDetailsTableViewController.feedMessageID = feedMessageID
+		default: break
 		}
 	}
 }
@@ -750,8 +773,8 @@ extension ProfileTableViewController {
 		}
 
 		feedMessageCell.delegate = self
-		feedMessageCell.liveReplyEnabled = User.current?.id == self.userID
-		feedMessageCell.liveReShareEnabled = User.current?.id == self.userID
+		feedMessageCell.liveReplyEnabled = User.current?.id == self.userIdentity?.id
+		feedMessageCell.liveReShareEnabled = User.current?.id == self.userIdentity?.id
 		feedMessageCell.feedMessage = self.feedMessages[indexPath.section]
 		return feedMessageCell
 	}

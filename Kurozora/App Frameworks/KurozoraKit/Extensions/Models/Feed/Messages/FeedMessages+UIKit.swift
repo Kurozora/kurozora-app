@@ -319,7 +319,7 @@ extension FeedMessage {
 	func visitOriginalPosterProfile(from viewController: UIViewController? = UIApplication.topViewController) {
 		guard let user = self.relationships.users.data.first else { return }
 
-		let profileTableViewController = ProfileTableViewController.`init`(with: user.id)
+		let profileTableViewController = ProfileTableViewController.`init`(with: user)
 		profileTableViewController.dismissButtonIsEnabled = true
 
 		let kurozoraNavigationController = KNavigationController(rootViewController: profileTableViewController)
