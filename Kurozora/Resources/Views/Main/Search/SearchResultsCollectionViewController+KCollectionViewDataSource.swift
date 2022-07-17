@@ -16,6 +16,7 @@ extension SearchResultsCollectionViewController {
 
 	override func configureDataSource() {
 		let characterCellConfiguration = self.getConfiguredCharacterCell()
+		let episodeCellConfiguration = self.getConfiguredEpisodeCell()
 		let personCellConfiguration = self.getConfiguredPersonCell()
 		let songCellConfiguration = self.getConfiguredSongCell()
 		let showCellConfiguration = self.getConfiguredShowCell()
@@ -26,6 +27,8 @@ extension SearchResultsCollectionViewController {
 			switch itemKind {
 			case .characterIdentity:
 				return collectionView.dequeueConfiguredReusableCell(using: characterCellConfiguration, for: indexPath, item: itemKind)
+			case .episodeIdentity:
+				return collectionView.dequeueConfiguredReusableCell(using: episodeCellConfiguration, for: indexPath, item: itemKind)
 			case .personIdentity:
 				return collectionView.dequeueConfiguredReusableCell(using: personCellConfiguration, for: indexPath, item: itemKind)
 			case .songIdentity:
@@ -51,6 +54,9 @@ extension SearchResultsCollectionViewController {
 			case .characters:
 				segueID = R.segue.searchResultsCollectionViewController.charactersListSegue.identifier
 				exploreSectionTitleCell.configure(withTitle: Trans.characters, indexPath: indexPath, segueID: segueID)
+			case .episodes:
+				segueID = R.segue.searchResultsCollectionViewController.episodesListSegue.identifier
+				exploreSectionTitleCell.configure(withTitle: Trans.episodes, indexPath: indexPath, segueID: segueID)
 			case .people:
 				segueID = R.segue.searchResultsCollectionViewController.peopleListSegue.identifier
 				exploreSectionTitleCell.configure(withTitle: Trans.people, indexPath: indexPath, segueID: segueID)
@@ -73,14 +79,19 @@ extension SearchResultsCollectionViewController {
 		}
 	}
 
-	func fetchPerson(at indexPath: IndexPath) -> Person? {
-		guard let person = self.people[indexPath] else { return nil }
-		return person
-	}
-
 	func fetchCharacter(at indexPath: IndexPath) -> Character? {
 		guard let character = self.characters[indexPath] else { return nil }
 		return character
+	}
+
+	func fetchEpisode(at indexPath: IndexPath) -> Episode? {
+		guard let episode = self.episodes[indexPath] else { return nil }
+		return episode
+	}
+
+	func fetchPerson(at indexPath: IndexPath) -> Person? {
+		guard let person = self.people[indexPath] else { return nil }
+		return person
 	}
 
 	func fetchShow(at indexPath: IndexPath) -> Show? {
@@ -115,6 +126,24 @@ extension SearchResultsCollectionViewController {
 
 		switch self.currentScope {
 		case .kurozora:
+			if let showSearchResults = self.searchResults?.shows?.data, !showSearchResults.isEmpty {
+				let showItems: [ItemKind] = showSearchResults.map { showIdentity in
+					return .showIdentity(showIdentity)
+				}
+
+				snapshot.appendSections([.shows])
+				snapshot.appendItems(showItems, toSection: .shows)
+			}
+
+			if let episodeSearchResults = self.searchResults?.episodes?.data, !episodeSearchResults.isEmpty {
+				let episodeItems: [ItemKind] = episodeSearchResults.map { episodeIdentity in
+					return .episodeIdentity(episodeIdentity)
+				}
+
+				snapshot.appendSections([.episodes])
+				snapshot.appendItems(episodeItems, toSection: .episodes)
+			}
+
 			if let characterSearchResults = self.searchResults?.characters?.data, !characterSearchResults.isEmpty {
 				let characterItems: [ItemKind] = characterSearchResults.map { characterIdentity in
 					return .characterIdentity(characterIdentity)
@@ -131,15 +160,6 @@ extension SearchResultsCollectionViewController {
 
 				snapshot.appendSections([.people])
 				snapshot.appendItems(peopleItems, toSection: .people)
-			}
-
-			if let showSearchResults = self.searchResults?.shows?.data, !showSearchResults.isEmpty {
-				let showItems: [ItemKind] = showSearchResults.map { showIdentity in
-					return .showIdentity(showIdentity)
-				}
-
-				snapshot.appendSections([.shows])
-				snapshot.appendItems(showItems, toSection: .shows)
 			}
 
 			if let songSearchResults = self.searchResults?.songs?.data, !songSearchResults.isEmpty {
@@ -203,6 +223,33 @@ extension SearchResultsCollectionViewController {
 
 				characterLockupCollectionViewCell.dataRequest = dataRequest
 				characterLockupCollectionViewCell.configure(using: character)
+			default: return
+			}
+		}
+	}
+
+	func getConfiguredEpisodeCell() -> UICollectionView.CellRegistration<EpisodeLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<EpisodeLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.episodeLockupCollectionViewCell)) { [weak self] episodeLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .episodeIdentity(let episodeIdentity):
+				let episode = self.fetchEpisode(at: indexPath)
+
+				if episode == nil {
+					Task {
+						do {
+							let episodeResponse = try await KService.getDetails(forEpisode: episodeIdentity).value
+							self.episodes[indexPath] = episodeResponse.data.first
+							self.setItemKindNeedsUpdate(itemKind)
+						} catch {
+							print(error.localizedDescription)
+						}
+					}
+				}
+
+				episodeLockupCollectionViewCell.delegate = self
+				episodeLockupCollectionViewCell.configure(using: episode)
 			default: return
 			}
 		}

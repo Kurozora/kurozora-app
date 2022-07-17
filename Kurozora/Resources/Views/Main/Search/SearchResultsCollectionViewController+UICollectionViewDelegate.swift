@@ -16,6 +16,9 @@ extension SearchResultsCollectionViewController {
 		case .characterIdentity:
 			let character = self.characters[indexPath]
 			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.characterDetailsSegue, sender: character)
+		case .episodeIdentity:
+			let episode = self.episodes[indexPath]
+			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.episodeDetailsSegue, sender: episode)
 		case .personIdentity:
 			let person = self.people[indexPath]
 			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.personDetailsSegue, sender: person)
@@ -57,6 +60,8 @@ extension SearchResultsCollectionViewController {
 		switch self.dataSource.itemIdentifier(for: indexPath) {
 		case .characterIdentity:
 			return self.characters[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		case .episodeIdentity:
+			return self.episodes[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .personIdentity:
 			return self.people[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .showIdentity:

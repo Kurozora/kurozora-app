@@ -14,20 +14,19 @@ extension CastCollectionViewController {
 		let castCellRegistration = UICollectionView.CellRegistration<CastCollectionViewCell, CastIdentity>(cellNib: UINib(resource: R.nib.castCollectionViewCell)) { [weak self] castCollectionViewCell, indexPath, castIdentity in
 			guard let self = self else { return }
 			let cast = self.fetchCast(at: indexPath)
-			var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? castCollectionViewCell.dataRequest
 
-			if dataRequest == nil && cast == nil {
-				dataRequest = KService.getDetails(forCast: castIdentity) { result in
-					switch result {
-					case .success(let cast):
-						self.cast[indexPath] = cast.first
+			if cast == nil {
+				Task {
+					do {
+						let castResponse = try await KService.getDetails(forCast: castIdentity).value
+						self.cast[indexPath] = castResponse.data.first
 						self.setCastNeedsUpdate(castIdentity)
-					case .failure: break
+					} catch {
+						print(error.localizedDescription)
 					}
 				}
 			}
 
-			castCollectionViewCell.dataRequest = dataRequest
 			castCollectionViewCell.delegate = self
 			castCollectionViewCell.configure(using: cast)
 		}

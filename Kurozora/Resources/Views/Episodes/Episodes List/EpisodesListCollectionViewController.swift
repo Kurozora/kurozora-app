@@ -1,5 +1,5 @@
 //
-//  EpisodesCollectionViewController.swift
+//  EpisodesListCollectionViewController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 11/10/2018.
@@ -10,31 +10,30 @@ import UIKit
 import KurozoraKit
 import Alamofire
 
-class EpisodesCollectionViewController: KCollectionViewController {
+enum EpisodesListFetchType {
+	case season
+	case search
+}
+
+class EpisodesListCollectionViewController: KCollectionViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var goToButton: UIBarButtonItem!
 	@IBOutlet weak var filterButton: UIBarButtonItem!
 
 	// MARK: - Properties
-	var seasonID: Int = 0
+	var seasonIdentity: SeasonIdentity? = nil
 	var episodes: [IndexPath: Episode] = [:]
-	var episodeIdentities: [EpisodeIdentity] = [] {
-		didSet {
-			self.updateDataSource()
-			self._prefersActivityIndicatorHidden = true
-			self.toggleEmptyDataView()
-			#if DEBUG
-			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.endRefreshing()
-			#endif
-			#endif
-		}
-	}
+	var episodeIdentities: [EpisodeIdentity] = []
+	var searachQuery: String = ""
+	var episodesListFetchType: EpisodesListFetchType = .search
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, EpisodeIdentity>! = nil
 	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
 
 	/// The next page url of the pagination.
 	var nextPageURL: String?
+
+	/// Whether a fetch request is currently in progress.
+	var isRequestInProgress: Bool = false
 
 	/// Indicates whether fillers should be hidden from the user.
 	var shouldHideFillers: Bool = false
@@ -60,18 +59,19 @@ class EpisodesCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - Initializers
-	/// Initialize a new instance of EpisodesCollectionViewController with the given season id.
+	/// Initialize a new instance of EpisodesListCollectionViewController with the given season id.
 	///
 	/// - Parameter seasonID: The season id to use when initializing the view.
 	///
-	/// - Returns: an initialized instance of EpisodesCollectionViewController.
-	static func `init`(with seasonID: Int) -> EpisodesCollectionViewController {
-		if let episodesCollectionViewController = R.storyboard.episodes.episodesCollectionViewController() {
-			episodesCollectionViewController.seasonID = seasonID
-			return episodesCollectionViewController
+	/// - Returns: an initialized instance of EpisodesListCollectionViewController.
+	static func `init`(with seasonID: Int) -> EpisodesListCollectionViewController {
+		if let episodesListCollectionViewController = R.storyboard.episodes.episodesListCollectionViewController() {
+			episodesListCollectionViewController.seasonIdentity = SeasonIdentity(id: seasonID)
+			episodesListCollectionViewController.episodesListFetchType = .season
+			return episodesListCollectionViewController
 		}
 
-		fatalError("Failed to instantiate EpisodesCollectionViewController with the given season id.")
+		fatalError("Failed to instantiate EpisodesListCollectionViewController with the given season id.")
 	}
 
 	// MARK: - View
@@ -99,17 +99,24 @@ class EpisodesCollectionViewController: KCollectionViewController {
 
 		self.configureDataSource()
 
-		// Fetch episodes
-		DispatchQueue.global(qos: .userInteractive).async {
-			self.fetchEpisodes()
+		if !self.episodeIdentities.isEmpty {
+			self.endFetch()
+		} else {
+			Task { [weak self] in
+				guard let self = self else { return }
+				await self.fetchEpisodes()
+			}
 		}
 	}
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		self.nextPageURL = nil
-		DispatchQueue.global(qos: .userInteractive).async {
-			self.fetchEpisodes()
+		if self.seasonIdentity != nil {
+			self.nextPageURL = nil
+			Task { [weak self] in
+				guard let self = self else { return }
+				await self.fetchEpisodes()
+			}
 		}
 	}
 
@@ -129,20 +136,37 @@ class EpisodesCollectionViewController: KCollectionViewController {
 		}
 	}
 
+	func endFetch() {
+		self.isRequestInProgress = false
+		self.updateDataSource()
+		self._prefersActivityIndicatorHidden = true
+		self.toggleEmptyDataView()
+		#if DEBUG
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.endRefreshing()
+		#endif
+		#endif
+	}
+
 	/// Fetches the episodes from the server.
-	func fetchEpisodes() {
-		DispatchQueue.main.async { [weak self] in
-			guard let self = self else { return }
-			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing episodes...")
-			#endif
+	func fetchEpisodes() async {
+		guard !self.isRequestInProgress else {
+			return
 		}
 
-		let seasonIdentity = SeasonIdentity(id: self.seasonID)
-		KService.getEpisodes(forSeasonID: seasonIdentity, next: self.nextPageURL) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let episodeIdentityResponse):
+		// Set request in progress
+		self.isRequestInProgress = true
+
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing episodes...")
+		#endif
+
+		switch self.episodesListFetchType {
+		case .season:
+			do {
+				guard let seasonIdentity = self.seasonIdentity else { return }
+				let episodeIdentityResponse = try await KService.getEpisodes(forSeason: seasonIdentity, next: self.nextPageURL).value
+
 				// Reset data if necessary
 				if self.nextPageURL == nil {
 					self.episodeIdentities = []
@@ -152,14 +176,33 @@ class EpisodesCollectionViewController: KCollectionViewController {
 				self.nextPageURL = episodeIdentityResponse.next
 				self.episodeIdentities.append(contentsOf: episodeIdentityResponse.data)
 				self.episodeIdentities.removeDuplicates()
+			} catch {
+				print(error.localizedDescription)
+			}
+		case .search:
+			do {
+				let searchResponse = try await KService.search(.kurozora, of: [.episodes], for: self.searachQuery, next: self.nextPageURL, limit: 25).value
 
-				// Reset refresh controller title
-				#if !targetEnvironment(macCatalyst)
-				self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the episodes.")
-				#endif
-			case .failure: break
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.episodeIdentities = []
+				}
+
+				// Save next page url and append new data
+				self.nextPageURL = searchResponse.data.episodes?.next
+				self.episodeIdentities.append(contentsOf: searchResponse.data.episodes?.data ?? [])
+				self.episodeIdentities.removeDuplicates()
+			} catch {
+				print(error.localizedDescription)
 			}
 		}
+
+		self.endFetch()
+
+		// Reset refresh controller title
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the episodes.")
+		#endif
 	}
 
 	/// Update the episodes list.
@@ -267,35 +310,44 @@ class EpisodesCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == R.segue.episodesCollectionViewController.episodeDetailSegue.identifier, let episodeCell = sender as? EpisodeLockupCollectionViewCell {
-			if let episodeDetailViewController = segue.destination as? EpisodeDetailCollectionViewController, let indexPath = self.collectionView.indexPath(for: episodeCell) {
-				episodeDetailViewController.indexPath = indexPath
-				episodeDetailViewController.episode = self.episodes[indexPath]
+		if segue.identifier == R.segue.episodesListCollectionViewController.episodeDetailSegue.identifier, let episodeCell = sender as? EpisodeLockupCollectionViewCell {
+			if let episodeDetailsCollectionViewController = segue.destination as? EpisodeDetailsCollectionViewController, let indexPath = self.collectionView.indexPath(for: episodeCell) {
+				episodeDetailsCollectionViewController.indexPath = indexPath
+				episodeDetailsCollectionViewController.episode = self.episodes[indexPath]
 			}
 		}
 	}
 }
 
 // MARK: - EpisodeLockupCollectionViewCellDelegate
-extension EpisodesCollectionViewController: EpisodeLockupCollectionViewCellDelegate {
+extension EpisodesListCollectionViewController: EpisodeLockupCollectionViewCellDelegate {
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressWatchButton button: UIButton) {
 		guard let indexPath = collectionView.indexPath(for: cell) else { return }
-		self.episodes[indexPath]?.updateWatchStatus(userInfo: ["indexPath": indexPath])
+		Task {
+			await self.episodes[indexPath]?.updateWatchStatus(userInfo: ["indexPath": indexPath])
+		}
 	}
 
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressMoreButton button: UIButton) {
+		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+		let episode = self.episodes[indexPath]
+
 		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
 			guard let self = self else { return }
-			let actionTitle = button.tag == 0 ? "Mark as Watched" : "Mark as Un-watched"
+			let watchStatus = episode?.attributes.watchStatus
 
-			actionSheetAlertController.addAction(UIAlertAction(title: actionTitle, style: .default, handler: { _ in
-				guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-				self.episodes[indexPath]?.updateWatchStatus(userInfo: ["indexPath": indexPath])
-			}))
+			if watchStatus != .disabled {
+				let actionTitle = watchStatus == .notWatched ? "Mark as Watched" : "Mark as Un-watched"
+
+				actionSheetAlertController.addAction(UIAlertAction(title: actionTitle, style: .default, handler: { _ in
+					Task {
+						await episode?.updateWatchStatus(userInfo: ["indexPath": indexPath])
+					}
+				}))
+			}
 //			actionSheetAlertController.addAction(UIAlertAction(title: "Rate", style: .default, handler: nil))
 			actionSheetAlertController.addAction(UIAlertAction(title: Trans.share, style: .default, handler: { _ in
-				guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-				self.episodes[indexPath]?.openShareSheet(on: self, button)
+				episode?.openShareSheet(on: self, button)
 			}))
 		}
 
@@ -312,7 +364,7 @@ extension EpisodesCollectionViewController: EpisodeLockupCollectionViewCellDeleg
 }
 
 // MARK: - SectionLayoutKind
-extension EpisodesCollectionViewController {
+extension EpisodesListCollectionViewController {
 	/// List of episode section layout kind.
 	///
 	/// ```

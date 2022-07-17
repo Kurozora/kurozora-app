@@ -1,5 +1,5 @@
 //
-//  EpisodeDetailCollectionViewController+KCollectionViewDelegateLayout.swift
+//  EpisodeDetailsCollectionViewController+KCollectionViewDelegateLayout.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 18/01/2021.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension EpisodeDetailCollectionViewController {
+extension EpisodeDetailsCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
 

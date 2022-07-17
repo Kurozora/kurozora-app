@@ -15,6 +15,8 @@ extension KKSearchType {
 		switch self {
 		case .characters:
 			return Trans.characters
+		case .episodes:
+			return Trans.episodes
 //		case .games:
 //			return Trans.games
 //		case .literature:
@@ -36,19 +38,21 @@ extension KKSearchType {
 	var suggestionsValue: [String] {
 		switch self {
 		case .characters:
-			return ["Kirito", "Luffy", "Monokuma", ""]
+			return ["Kirito", "Luffy", "Monokuma", "Izuku Midoriya", "Koro-sensei"]
+		case .episodes:
+			return ["Zombie", "Red Hat", "Witch", "Subaru", "Cream Puff"]
 //		case .games:
 //			return [""]
 		case .shows:
-			return ["One Piece", "Shaman Asakaura", "a young girl with big ambitions", "massively multiplayer online role-playing game", "vampires"]
+			return ["One Piece", "Shaman Asakaura", "young girl with a head full of air", "massive online role-playing game", "vampires"]
 //		case .literature:
 //			return ["Sword Art Online", "One Piece", "BLAME", "Bungo Stray Dogs"]
 		case .people:
-			return ["Konomi Suzuki", "Reiki Kawahara"]
+			return ["Konomi Suzuki", "Reiki Kawahara", "Hayao Miyazaki", "Mayumi Tanaka", "Gosho Aoyama"]
 		case .songs:
 			return ["Blue Bird", "Amadeus", "Strike It Out", "Shadow and Truth", "Trash Candy", "Redo"]
 		case .studios:
-			return ["Rooster Teeth", "White Fox", "MAPPA", "A-1 Pictures"]
+			return ["Rooster Teeth", "White Fox", "MAPPA", "A-1 Pictures", "OLM"]
 		case .users:
 			return ["Kirito", "Usopp"]
 		}

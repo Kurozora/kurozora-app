@@ -599,7 +599,12 @@ struct Trans {
 	///
 	/// - Tag: Trans-characters
 	static let characters: String = String(localized: "Characters",
-									  comment: "The string for the word 'characters'.")
+										   comment: "The string for the word 'characters'.")
+	/// The string for the word 'episodes'.
+	///
+	/// - Tag: Trans-episodes
+	static let episodes: String = String(localized: "Episodes",
+										 comment: "The string for the word 'episodes'.")
 	/// The string for the word 'people'.
 	///
 	/// - Tag: Trans-people

@@ -6,7 +6,7 @@
 //  Copyright © 2022 Kurozora. All rights reserved.
 //
 
-import Foundation
+import CoreGraphics
 
 extension KFillBarIndicator {
 	// MARK: - Types

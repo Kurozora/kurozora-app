@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19115.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="uW7-To-tBj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="uW7-To-tBj">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19107.5"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -35,10 +35,10 @@
             </objects>
             <point key="canvasLocation" x="1588" y="-601"/>
         </scene>
-        <!--EpisodesCollectionViewController-->
+        <!--EpisodesListCollectionViewController-->
         <scene sceneID="Dou-93-a7w">
             <objects>
-                <viewControllerPlaceholder storyboardName="Episodes" referencedIdentifier="EpisodesCollectionViewController" id="JI4-ia-Xsp" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="Episodes" referencedIdentifier="EpisodesListCollectionViewController" id="JI4-ia-Xsp" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="t8Q-cU-vka"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A5M-Yf-1ul" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -16,6 +16,12 @@ extension SearchResultsCollectionViewController {
 		switch section {
 		case .characters:
 			columnCount = (width / 140.0).rounded().int
+		case .episodes:
+			if width >= 414.0 {
+				columnCount = (width / 384.0).rounded().int
+			} else {
+				columnCount = (width / 284.0).rounded().int
+			}
 		case .people:
 			columnCount = (width / 140.0).rounded().int
 		case .songs:
@@ -74,6 +80,8 @@ extension SearchResultsCollectionViewController {
 			switch searchResultSection {
 			case .characters:
 				sectionLayout = Layouts.charactersSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+			case .episodes:
+				sectionLayout = Layouts.episodesSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 			case .people:
 				sectionLayout = Layouts.peopleSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 			case .shows:

@@ -8,6 +8,7 @@
 /// The list of available search types.
 ///
 /// - `characters`: the fetched resource should be of the `characters` type.
+/// - `episodes`: the fetched resource should be of the `episodes` type.
 /// - `games`: the fetched resource should be of the `games` type.
 /// - `literature`: the fetched resource should be of the `literature` type.
 /// - `people`: the fetched resource should be of the `people` type.
@@ -22,6 +23,11 @@ public enum KKSearchType: String {
 	///
 	/// - Tag: KKSearchType-characters
 	case characters
+
+	/// Indicates the fetched resource should be of the `episodes` type.
+	///
+	/// - Tag: KKSearchType-episodes
+	case episodes
 
 //	/// Indicates the fetched resource should be of the `games` type.
 //	///
