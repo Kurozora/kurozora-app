@@ -193,26 +193,22 @@ class ShowsListCollectionViewController: KCollectionViewController {
 				print(error.localizedDescription)
 			}
 		case .relatedShow:
-			guard let showIdentity = showIdentity else { return }
+			do {
+				guard let showIdentity = showIdentity else { return }
+				let relatedShowsResponse = try await KService.getRelatedShows(forShow: showIdentity, next: self.nextPageURL).value
 
-			KService.getRelatedShows(forShow: showIdentity, next: self.nextPageURL) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let relatedShowsResponse):
-					// Reset data if necessary
-					if self.nextPageURL == nil {
-						self.relatedShows = []
-						self.showIdentities = []
-					}
-
-					// Save next page url and append new data
-					self.nextPageURL = relatedShowsResponse.next
-					self.relatedShows.append(contentsOf: relatedShowsResponse.data)
-					self.showIdentities.removeDuplicates()
-
-					self.endFetch()
-				case .failure: break
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.relatedShows = []
+					self.showIdentities = []
 				}
+
+				// Save next page url and append new data
+				self.nextPageURL = relatedShowsResponse.next
+				self.relatedShows.append(contentsOf: relatedShowsResponse.data)
+				self.showIdentities.removeDuplicates()
+			} catch {
+				print(error.localizedDescription)
 			}
 		case .studio:
 			guard let studioIdentity = self.studioIdentity else { return }
