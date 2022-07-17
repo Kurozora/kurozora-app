@@ -9,7 +9,7 @@
         <!--Seasons-->
         <scene sceneID="EeV-KJ-MYm">
             <objects>
-                <collectionViewController storyboardIdentifier="SeasonsCollectionViewController" title="Seasons" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ckh-tZ-5T3" customClass="SeasonsCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="SeasonsListCollectionViewController" title="Seasons" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ckh-tZ-5T3" customClass="SeasonsListCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" delaysContentTouches="NO" bouncesZoom="NO" dataMode="prototypes" id="3lG-Zb-Vv4">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -48,7 +48,7 @@
         <!--Navigation Controller-->
         <scene sceneID="wj4-WE-m5x">
             <objects>
-                <navigationController storyboardIdentifier="SeasonsKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="uW7-To-tBj" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="SeasonsListKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="uW7-To-tBj" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="iQ0-Bz-bE6"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" largeTitles="YES" id="fXf-Rn-JGf">

@@ -1,5 +1,5 @@
 //
-//  SeasonsCollectionViewController.swift
+//  SeasonsListCollectionViewController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 10/10/2018.
@@ -10,7 +10,7 @@ import UIKit
 import KurozoraKit
 import Alamofire
 
-class SeasonsCollectionViewController: KCollectionViewController {
+class SeasonsListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var showIdentity: ShowIdentity? = nil
 	var seasons: [IndexPath: Season] = [:]
@@ -31,6 +31,9 @@ class SeasonsCollectionViewController: KCollectionViewController {
 
 	/// The next page url of the pagination.
 	var nextPageURL: String?
+
+	/// Whether a fetch request is currently in progress.
+	var isRequestInProgress: Bool = false
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
@@ -70,17 +73,24 @@ class SeasonsCollectionViewController: KCollectionViewController {
 		self.configureDataSource()
 
 		// Fetch seasons
-		DispatchQueue.global(qos: .userInteractive).async {
-			self.fetchSeasons()
+		if !self.seasonIdentities.isEmpty {
+			self.endFetch()
+		} else {
+			Task { [weak self] in
+				guard let self = self else { return }
+				await self.fetchSeasons()
+			}
 		}
     }
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		self.nextPageURL = nil
-
-		DispatchQueue.global(qos: .userInteractive).async {
-			self.fetchSeasons()
+		if self.showIdentity != nil {
+			self.nextPageURL = nil
+			Task { [weak self] in
+				guard let self = self else { return }
+				await self.fetchSeasons()
+			}
 		}
 	}
 
@@ -100,52 +110,56 @@ class SeasonsCollectionViewController: KCollectionViewController {
 		}
 	}
 
+	func endFetch() {
+		self.isRequestInProgress = false
+		self.updateDataSource()
+		self._prefersActivityIndicatorHidden = true
+		self.toggleEmptyDataView()
+		#if DEBUG
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.endRefreshing()
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the seasons.")
+		#endif
+		#endif
+	}
+
 	/// Fetch seasons for the current show.
-	func fetchSeasons() {
-		guard let showIdentity = showIdentity else {
-			DispatchQueue.main.async { [weak self] in
-				guard let self = self else { return }
-			#if !targetEnvironment(macCatalyst)
-				self.refreshControl?.endRefreshing()
-			#endif
-			}
+	func fetchSeasons() async {
+		guard !self.isRequestInProgress else {
 			return
 		}
 
-		DispatchQueue.main.async { [weak self] in
-			guard let self = self else { return }
-			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing seasons...")
-			#endif
+		// Set request in progress
+		self.isRequestInProgress = true
+
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing seasons...")
+		#endif
+
+		do {
+			guard let showIdentity = showIdentity else { return }
+			let seasonIdentityResponse = try await KService.getSeasons(forShow: showIdentity, next: self.nextPageURL).value
+
+			// Reset data if necessary
+			if self.nextPageURL == nil {
+				self.seasonIdentities = []
+			}
+
+			// Save next page url and append new data
+			self.nextPageURL = seasonIdentityResponse.next
+			self.seasonIdentities.append(contentsOf: seasonIdentityResponse.data)
+			self.seasonIdentities.removeDuplicates()
+		} catch {
+			print(error.localizedDescription)
 		}
 
-		KService.getSeasons(forShow: showIdentity, next: self.nextPageURL) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let seasonIdentityResponse):
-				// Reset data if necessary
-				if self.nextPageURL == nil {
-					self.seasonIdentities = []
-				}
-
-				// Save next page url and append new data
-				self.nextPageURL = seasonIdentityResponse.next
-				self.seasonIdentities.append(contentsOf: seasonIdentityResponse.data)
-				self.seasonIdentities.removeDuplicates()
-
-				// Reset refresh controller title
-				#if !targetEnvironment(macCatalyst)
-				self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the seasons.")
-				#endif
-			case .failure: break
-			}
-        }
+		self.endFetch()
     }
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
-		case R.segue.seasonsCollectionViewController.episodeSegue.identifier:
+		case R.segue.seasonsListCollectionViewController.episodeSegue.identifier:
 			guard let episodesListCollectionViewController = segue.destination as? EpisodesListCollectionViewController else { return }
 			guard let lockupCollectionViewCell = sender as? SeasonLockupCollectionViewCell else { return }
 			guard let indexPath = collectionView.indexPath(for: lockupCollectionViewCell) else { return }
@@ -157,7 +171,7 @@ class SeasonsCollectionViewController: KCollectionViewController {
 }
 
 // MARK: - SectionLayoutKind
-extension SeasonsCollectionViewController {
+extension SeasonsListCollectionViewController {
 	/// List of season section layout kind.
 	///
 	/// ```
