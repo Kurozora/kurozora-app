@@ -43,13 +43,13 @@ extension KurozoraKit {
 
 	///	Fetch the person details for the given show identity.
 	///
-	///	- Parameter showIdentity: The show identity object for which the person details should be fetched.
-	///	- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
-	///	- Parameter limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
-	///	- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-	///	- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	@discardableResult
-	public func getPeople(forShow showIdentity: ShowIdentity, next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<PersonIdentityResponse, KKAPIError>) -> Void) -> DataRequest {
+	///	- Parameters:
+	///	   - showIdentity: The show identity object for which the person details should be fetched.
+	///	   - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+	///	   - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
+	///
+	/// - Returns: An instance of `DataTask` with the results of the request.
+	public func getPeople(forShow showIdentity: ShowIdentity, next: String? = nil, limit: Int = 25) -> DataTask<PersonIdentityResponse> {
 		let showsPeople = next ?? KKEndpoint.Shows.people(showIdentity).endpointValue
 		let request: APIRequest<PersonIdentityResponse, KKAPIError> = tron.codable.request(showsPeople).buildURL(.relativeToBaseURL)
 		request.headers = headers
@@ -57,26 +57,18 @@ extension KurozoraKit {
 		request.parameters["limit"] = limit
 
 		request.method = .get
-		return request.perform(withSuccess: { personIdentityResponse in
-			completionHandler(.success(personIdentityResponse))
-		}, failure: { error in
-			print("❌ Received get show people error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message ?? "No message")
-			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
-			print("└ Failure reason:", error.failureReason ?? "No reason available")
-			completionHandler(.failure(error))
-		})
+		return request.perform().serializingDecodable(PersonIdentityResponse.self)
 	}
 
 	///	Fetch the cast details for the given show identity.
 	///
-	///	- Parameter showIdentity: The show identity object for which the cast details should be fetched.
-	///	- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
-	///	- Parameter limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
-	///	- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-	///	- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	@discardableResult
-	public func getCast(forShow showIdentity: ShowIdentity, next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<CastIdentityResponse, KKAPIError>) -> Void) -> DataRequest {
+	///	- Parameters:
+	///	   - showIdentity: The show identity object for which the cast details should be fetched.
+	///	   - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+	///	   - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
+	///
+	/// - Returns: An instance of `DataTask` with the results of the request.
+	public func getCast(forShow showIdentity: ShowIdentity, next: String? = nil, limit: Int = 25) -> DataTask<CastIdentityResponse> {
 		let showsCast = next ?? KKEndpoint.Shows.cast(showIdentity).endpointValue
 		let request: APIRequest<CastIdentityResponse, KKAPIError> = tron.codable.request(showsCast).buildURL(.relativeToBaseURL)
 		request.headers = headers
@@ -84,26 +76,18 @@ extension KurozoraKit {
 		request.parameters["limit"] = limit
 
 		request.method = .get
-		return request.perform(withSuccess: { castIdentityResponse in
-			completionHandler(.success(castIdentityResponse))
-		}, failure: { error in
-			print("❌ Received get show cast error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message ?? "No message")
-			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
-			print("└ Failure reason:", error.failureReason ?? "No reason available")
-			completionHandler(.failure(error))
-		})
+		return request.perform().serializingDecodable(CastIdentityResponse.self)
 	}
 
 	///	Fetch the character details for the given show identity.
 	///
-	///	- Parameter showIdentity: The show identity object for which the character details should be fetched.
-	///	- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
-	///	- Parameter limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
-	///	- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-	///	- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	@discardableResult
-	public func getCharacters(forShow showIdentity: ShowIdentity, next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<CharacterIdentityResponse, KKAPIError>) -> Void) -> DataRequest {
+	///	- Parameters:
+	///	   - showIdentity: The show identity object for which the character details should be fetched.
+	///	   - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+	///	   - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
+	///
+	/// - Returns: An instance of `DataTask` with the results of the request.
+	public func getCharacters(forShow showIdentity: ShowIdentity, next: String? = nil, limit: Int = 25) -> DataTask<CharacterIdentityResponse> {
 		let showsCharacters = next ?? KKEndpoint.Shows.characters(showIdentity).endpointValue
 		let request: APIRequest<CharacterIdentityResponse, KKAPIError> = tron.codable.request(showsCharacters).buildURL(.relativeToBaseURL)
 		request.headers = headers
@@ -111,26 +95,18 @@ extension KurozoraKit {
 		request.parameters["limit"] = limit
 
 		request.method = .get
-		return request.perform(withSuccess: { characterIdentityResponse in
-			completionHandler(.success(characterIdentityResponse))
-		}, failure: { error in
-			print("❌ Received get show characters error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message ?? "No message")
-			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
-			print("└ Failure reason:", error.failureReason ?? "No reason available")
-			completionHandler(.failure(error))
-		})
+		return request.perform().serializingDecodable(CharacterIdentityResponse.self)
 	}
 
 	///	Fetch the related shows for a the given show identity.
 	///
-	///	- Parameter showIdentity: The show identity object for which the related shows should be fetched.
-	///	- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
-	///	- Parameter limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
-	///	- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-	///	- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	@discardableResult
-	public func getRelatedShows(forShow showIdentity: ShowIdentity, next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<RelatedShowResponse, KKAPIError>) -> Void) -> DataRequest {
+	///	- Parameters:
+	///	   - showIdentity: The show identity object for which the related shows should be fetched.
+	///	   - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+	///	   - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
+	///
+	/// - Returns: An instance of `DataTask` with the results of the request.
+	public func getRelatedShows(forShow showIdentity: ShowIdentity, next: String? = nil, limit: Int = 25) -> DataTask<RelatedShowResponse> {
 		let showsRelatedShows = next ?? KKEndpoint.Shows.relatedShows(showIdentity).endpointValue
 		let request: APIRequest<RelatedShowResponse, KKAPIError> = tron.codable.request(showsRelatedShows).buildURL(.relativeToBaseURL)
 
@@ -142,56 +118,38 @@ extension KurozoraKit {
 		request.parameters["limit"] = limit
 
 		request.method = .get
-		return request.perform(withSuccess: { relatedShowResponse in
-			completionHandler(.success(relatedShowResponse))
-		}, failure: { [weak self] error in
-			guard let self = self else { return }
-			if self.services.showAlerts {
-				UIApplication.topViewController?.presentAlertController(title: "Can't Get Related Shows 😔", message: error.message)
-			}
-			print("❌ Received get related shows error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message ?? "No message")
-			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
-			print("└ Failure reason:", error.failureReason ?? "No reason available")
-			completionHandler(.failure(error))
-		})
+		return request.perform().serializingDecodable(RelatedShowResponse.self)
 	}
 
 	///	Fetch the seasons for a the given show identity.
 	///
-	///	- Parameter showIdentity: The show identity object for which the seasons should be fetched.
-	///	- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
-	/// - Parameter limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
-	///	- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-	///	- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	@discardableResult
-	public func getSeasons(forShow showIdentity: ShowIdentity, next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<SeasonIdentityResponse, KKAPIError>) -> Void) -> DataRequest {
+	///	- Parameters:
+	///	   - showIdentity: The show identity object for which the seasons should be fetched.
+	///	   - reversed: Whethert the list is reversed in order. Default is `false`.
+	///	   - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
+	///
+	/// - Returns: An instance of `DataTask` with the results of the request.
+	public func getSeasons(forShow showIdentity: ShowIdentity, reversed: Bool = false, next: String? = nil, limit: Int = 25) -> DataTask<SeasonIdentityResponse> {
 		let showsSeasons = next ?? KKEndpoint.Shows.seasons(showIdentity).endpointValue
 		let request: APIRequest<SeasonIdentityResponse, KKAPIError> = tron.codable.request(showsSeasons).buildURL(.relativeToBaseURL)
 		request.headers = headers
 
 		request.parameters["limit"] = limit
+		request.parameters["reversed"] = reversed
 
 		request.method = .get
-		return request.perform(withSuccess: { seasonIdentityResponse in
-			completionHandler(.success(seasonIdentityResponse))
-		}, failure: { error in
-			print("❌ Received get show seasons error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message ?? "No message")
-			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
-			print("└ Failure reason:", error.failureReason ?? "No reason available")
-			completionHandler(.failure(error))
-		})
+		return request.perform().serializingDecodable(SeasonIdentityResponse.self)
 	}
 
 	/// Fetch the songs for a the given show identity.
 	///
-	///	- Parameter showIdentity: The show identity object for which the songs should be fetched.
-	///	- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
-	///	- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-	///	- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
-	@discardableResult
-	public func getSongs(forShow showIdentity: ShowIdentity, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<ShowSongResponse, KKAPIError>) -> Void) -> DataRequest {
+	///	- Parameters:
+	///	   - showIdentity: The show identity object for which the songs should be fetched.
+	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
+	///
+	/// - Returns: An instance of `DataTask` with the results of the request.
+	public func getSongs(forShow showIdentity: ShowIdentity, limit: Int = 25) -> DataTask<ShowSongResponse> {
 		let showsSongs = KKEndpoint.Shows.songs(showIdentity).endpointValue
 		let request: APIRequest<ShowSongResponse, KKAPIError> = tron.codable.request(showsSongs).buildURL(.relativeToBaseURL)
 		request.headers = headers
@@ -199,15 +157,7 @@ extension KurozoraKit {
 		request.parameters["limit"] = limit
 
 		request.method = .get
-		return request.perform(withSuccess: { showSongResponse in
-			completionHandler(.success(showSongResponse))
-		}, failure: { error in
-			print("❌ Received get show songs error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message ?? "No message")
-			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
-			print("└ Failure reason:", error.failureReason ?? "No reason available")
-			completionHandler(.failure(error))
-		})
+		return request.perform().serializingDecodable(ShowSongResponse.self)
 	}
 
 	///	Fetch the studios for a the given show identity.

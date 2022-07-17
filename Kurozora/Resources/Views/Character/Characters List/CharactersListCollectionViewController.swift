@@ -121,6 +121,7 @@ class CharactersListCollectionViewController: KCollectionViewController {
 		#if DEBUG
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.endRefreshing()
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the characters.")
 		#endif
 		#endif
 	}
@@ -191,11 +192,6 @@ class CharactersListCollectionViewController: KCollectionViewController {
 		}
 
 		self.endFetch()
-
-		// Reset refresh controller title
-		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the characters.")
-		#endif
 	}
 
 	// MARK: - Segue

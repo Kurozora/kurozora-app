@@ -231,32 +231,29 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 
 			self.updateDataSource()
 		}
-		KService.getSeasons(forShow: showIdentity, next: nil, limit: 10) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let seasonIdentityResponse):
-				self.seasonIdentities = seasonIdentityResponse.data
-				self.responseCount += 1
-			case .failure: break
-			}
+
+		do {
+			let seasonIdentityResponse = try await KService.getSeasons(forShow: showIdentity, reversed: true, next: nil, limit: 10).value
+			self.seasonIdentities = seasonIdentityResponse.data
+			self.responseCount += 1
+		} catch {
+			print(error.localizedDescription)
 		}
-		KService.getCast(forShow: showIdentity, limit: 10) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let castIdentityResponse):
-				self.castIdentities = castIdentityResponse.data
-				self.responseCount += 1
-			case .failure: break
-			}
+
+		do {
+			let castIdentityResponse = try await KService.getCast(forShow: showIdentity, limit: 10).value
+			self.castIdentities = castIdentityResponse.data
+			self.responseCount += 1
+		} catch {
+			print(error.localizedDescription)
 		}
-		KService.getSongs(forShow: showIdentity, limit: 10) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let showSongResponse):
-				self.showSongs = showSongResponse.data
-				self.responseCount += 1
-			case .failure: break
-			}
+
+		do {
+			let showSongResponse = try await KService.getSongs(forShow: showIdentity, limit: 10).value
+			self.showSongs = showSongResponse.data
+			self.responseCount += 1
+		} catch {
+			print(error.localizedDescription)
 		}
 
 		do {
@@ -267,14 +264,12 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 			print(error.localizedDescription)
 		}
 
-		KService.getRelatedShows(forShow: showIdentity, limit: 10) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let relatedShowResponse):
-				self.relatedShows = relatedShowResponse.data
-				self.responseCount += 1
-			case .failure: break
-			}
+		do {
+			let relatedShowResponse = try await KService.getRelatedShows(forShow: showIdentity, limit: 10).value
+			self.relatedShows = relatedShowResponse.data
+			self.responseCount += 1
+		} catch {
+			print(error.localizedDescription)
 		}
 	}
 
@@ -315,9 +310,9 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		case R.segue.showDetailsCollectionViewController.seasonSegue.identifier:
 			guard let seasonsCollectionViewController = segue.destination as? SeasonsCollectionViewController else { return }
 			seasonsCollectionViewController.showIdentity = self.showIdentity
-		case R.segue.showDetailsCollectionViewController.castSegue.identifier:
-			guard let castCollectionViewController = segue.destination as? CastCollectionViewController else { return }
-			castCollectionViewController.showIdentity = self.showIdentity
+		case R.segue.showDetailsCollectionViewController.castListSegue.identifier:
+			guard let castListCollectionViewController = segue.destination as? CastListCollectionViewController else { return }
+			castListCollectionViewController.showIdentity = self.showIdentity
 		case R.segue.showDetailsCollectionViewController.songsListSegue.identifier:
 			guard let showSongsListCollectionViewController = segue.destination as? ShowSongsListCollectionViewController else { return }
 			showSongsListCollectionViewController.showIdentity = self.showIdentity
@@ -525,7 +520,7 @@ extension ShowDetailsCollectionViewController {
 			case .seasons:
 				return R.segue.showDetailsCollectionViewController.seasonSegue.identifier
 			case .cast:
-				return R.segue.showDetailsCollectionViewController.castSegue.identifier
+				return R.segue.showDetailsCollectionViewController.castListSegue.identifier
 			case .songs:
 				return R.segue.showDetailsCollectionViewController.songsListSegue.identifier
 			case .studios:

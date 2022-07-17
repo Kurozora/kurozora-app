@@ -110,19 +110,16 @@ class ShowSongsListCollectionViewController: KCollectionViewController {
 		}
 	}
 
-	func fetchShowSongs() {
-		guard let showIdentity = self.showIdentity else { return }
-
-		KService.getSongs(forShow: showIdentity, limit: -1) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let showSongResponse):
-				self.showSongs = showSongResponse.data
-				self.groupShowSongs()
-				self.updateDataSource()
-				self.toggleEmptyDataView()
-			case .failure: break
-			}
+	func fetchShowSongs() async {
+		do {
+			guard let showIdentity = self.showIdentity else { return }
+			let showSongResponse = try await KService.getSongs(forShow: showIdentity, limit: -1).value
+			self.showSongs = showSongResponse.data
+			self.groupShowSongs()
+			self.updateDataSource()
+			self.toggleEmptyDataView()
+		} catch {
+			print(error.localizedDescription)
 		}
 	}
 

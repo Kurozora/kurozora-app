@@ -1,5 +1,5 @@
 //
-//  CastCollectionViewController+KCollectionViewDataSource.swift
+//  CastListCollectionViewController+KCollectionViewDataSource.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 18/01/2021.
@@ -9,7 +9,7 @@
 import UIKit
 import KurozoraKit
 
-extension CastCollectionViewController {
+extension CastListCollectionViewController {
 	override func configureDataSource() {
 		let castCellRegistration = UICollectionView.CellRegistration<CastCollectionViewCell, CastIdentity>(cellNib: UINib(resource: R.nib.castCollectionViewCell)) { [weak self] castCollectionViewCell, indexPath, castIdentity in
 			guard let self = self else { return }

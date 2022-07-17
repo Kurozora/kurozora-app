@@ -10,6 +10,11 @@ import UIKit
 import KurozoraKit
 import Alamofire
 
+protocol CastCollectionViewCellDelegate: AnyObject {
+	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressPersonButton button: UIButton)
+	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressCharacterButton button: UIButton)
+}
+
 class CastCollectionViewCell: KCollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var personImageView: PosterImageView!
