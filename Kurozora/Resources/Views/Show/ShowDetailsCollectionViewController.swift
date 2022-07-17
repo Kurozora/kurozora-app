@@ -322,9 +322,10 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 			guard let showSongsListCollectionViewController = segue.destination as? ShowSongsListCollectionViewController else { return }
 			showSongsListCollectionViewController.showIdentity = self.showIdentity
 		case R.segue.showDetailsCollectionViewController.episodeSegue.identifier:
-			guard let episodesCollectionViewController = segue.destination as? EpisodesCollectionViewController else { return }
+			guard let episodesListCollectionViewController = segue.destination as? EpisodesListCollectionViewController else { return }
 			guard let season = sender as? Season else { return }
-			episodesCollectionViewController.seasonID = season.id
+			episodesListCollectionViewController.seasonIdentity = SeasonIdentity(id: season.id)
+			episodesListCollectionViewController.episodesListFetchType = .season
 		case R.segue.showDetailsCollectionViewController.showDetailsSegue.identifier:
 			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }

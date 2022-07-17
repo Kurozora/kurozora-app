@@ -146,10 +146,11 @@ class SeasonsCollectionViewController: KCollectionViewController {
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
 		case R.segue.seasonsCollectionViewController.episodeSegue.identifier:
-			guard let episodesCollectionViewController = segue.destination as? EpisodesCollectionViewController else { return }
+			guard let episodesListCollectionViewController = segue.destination as? EpisodesListCollectionViewController else { return }
 			guard let lockupCollectionViewCell = sender as? SeasonLockupCollectionViewCell else { return }
 			guard let indexPath = collectionView.indexPath(for: lockupCollectionViewCell) else { return }
-			episodesCollectionViewController.seasonID = self.seasonIdentities[indexPath.item].id
+			episodesListCollectionViewController.seasonIdentity = self.seasonIdentities[indexPath.item]
+			episodesListCollectionViewController.episodesListFetchType = .season
 		default: break
 		}
 	}

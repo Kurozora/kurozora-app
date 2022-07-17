@@ -1,5 +1,5 @@
 //
-//  EpisodesCollectionViewController+KCollectionViewDataSource.swift
+//  EpisodesListCollectionViewController+KCollectionViewDataSource.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 18/01/2021.
@@ -9,25 +9,24 @@
 import UIKit
 import KurozoraKit
 
-extension EpisodesCollectionViewController {
+extension EpisodesListCollectionViewController {
 	override func configureDataSource() {
 		let episodeCellRegistration = UICollectionView.CellRegistration<EpisodeLockupCollectionViewCell, EpisodeIdentity>(cellNib: UINib(resource: R.nib.episodeLockupCollectionViewCell)) { [weak self] episodeLockupCollectionViewCell, indexPath, episodeIdentity in
 			guard let self = self else { return }
 			let episode = self.fetchEpisode(at: indexPath)
-			var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? episodeLockupCollectionViewCell.dataRequest
 
-			if dataRequest == nil && episode == nil {
-				dataRequest = KService.getDetails(forEpisode: episodeIdentity) { result in
-					switch result {
-					case .success(let episodes):
-						self.episodes[indexPath] = episodes.first
+			if episode == nil {
+				Task {
+					do {
+						let episodeResponse = try await KService.getDetails(forEpisode: episodeIdentity).value
+						self.episodes[indexPath] = episodeResponse.data.first
 						self.setEpisodeNeedsUpdate(episodeIdentity)
-					case .failure: break
+					} catch {
+						print(error.localizedDescription)
 					}
 				}
 			}
 
-			episodeLockupCollectionViewCell.dataRequest = dataRequest
 			episodeLockupCollectionViewCell.delegate = self
 			episodeLockupCollectionViewCell.configure(using: episode)
 		}

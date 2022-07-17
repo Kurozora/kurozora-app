@@ -327,10 +327,10 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" reuseIdentifier="RatingBadgeCollectionViewCell" id="HZ5-T0-cWg" customClass="RatingBadgeCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="387" width="117" height="57.5"/>
+                                <rect key="frame" x="0.0" y="387" width="117" height="387"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" id="QHt-Tj-vdt">
-                                    <rect key="frame" x="0.0" y="0.0" width="117" height="57.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="117" height="387"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="771-Bz-wj4" customClass="KTintedLabel" customModule="Kurozora" customModuleProvider="target">
@@ -339,8 +339,8 @@
                                             <color key="textColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fX4-qF-SfM" customClass="KCosmosView" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="3.5" y="21" width="102" height="18"/>
+                                        <view contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fX4-qF-SfM" customClass="KCosmosView" customModule="Kurozora" customModuleProvider="target">
+                                            <rect key="frame" x="3.5" y="21" width="102" height="347.5"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="updateOnTouch" value="NO"/>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="starSize">
@@ -352,7 +352,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not enough ratings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="75x-YE-Dah" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="43" width="109" height="14.5"/>
+                                            <rect key="frame" x="0.0" y="372.5" width="109" height="14.5"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
@@ -380,7 +380,7 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" reuseIdentifier="BadgeCollectionViewCell" id="sL1-MI-JS9" customClass="BadgeCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="117" y="387" width="118" height="57.5"/>
+                                <rect key="frame" x="117" y="552" width="118" height="57.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" id="cwa-h7-MhR">
                                     <rect key="frame" x="0.0" y="0.0" width="118" height="57.5"/>
@@ -533,20 +533,20 @@
             </objects>
             <point key="canvasLocation" x="3784" y="473"/>
         </scene>
-        <!--EpisodesCollectionViewController-->
+        <!--EpisodesListCollectionViewController-->
         <scene sceneID="EfE-cD-iKO">
             <objects>
-                <viewControllerPlaceholder storyboardName="Episodes" referencedIdentifier="EpisodesCollectionViewController" id="hBE-dn-oqP" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="Episodes" referencedIdentifier="EpisodesListCollectionViewController" id="hBE-dn-oqP" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="LZ8-rj-XYW"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aLq-Ri-YMw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3787" y="520"/>
+            <point key="canvasLocation" x="3803" y="523"/>
         </scene>
-        <!--EpisodeDetailCollectionViewController-->
+        <!--EpisodeDetailsCollectionViewController-->
         <scene sceneID="okI-f5-58Z">
             <objects>
-                <viewControllerPlaceholder storyboardName="Episodes" referencedIdentifier="EpisodeDetailCollectionViewController" id="XRk-F5-HRl" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="Episodes" referencedIdentifier="EpisodeDetailsCollectionViewController" id="XRk-F5-HRl" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="iYF-0a-00A"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hvz-T3-rnn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -604,11 +604,6 @@
             <point key="canvasLocation" x="3796" y="772"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="fX4-qF-SfM">
-            <size key="intrinsicContentSize" width="102" height="18"/>
-        </designable>
-    </designables>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
         <image name="bell" catalog="system" width="128" height="124"/>

@@ -14,20 +14,19 @@ extension SeasonsCollectionViewController {
 		let posterCellRegistration = UICollectionView.CellRegistration<SeasonLockupCollectionViewCell, SeasonIdentity>(cellNib: UINib(resource: R.nib.seasonLockupCollectionViewCell)) { [weak self] seasonLockupCollectionViewCell, indexPath, seasonIdentity in
 			guard let self = self else { return }
 			let season = self.fetchSeason(at: indexPath)
-			var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? seasonLockupCollectionViewCell.dataRequest
 
-			if dataRequest == nil && season == nil {
-				dataRequest = KService.getDetails(forSeason: seasonIdentity) { result in
-					switch result {
-					case .success(let seasons):
-						self.seasons[indexPath] = seasons.first
+			if season == nil {
+				Task {
+					do {
+						let seasonResponse = try await KService.getDetails(forSeason: seasonIdentity).value
+						self.seasons[indexPath] = seasonResponse.data.first
 						self.setSeasonNeedsUpdate(seasonIdentity)
-					case .failure: break
+					} catch {
+						print(error.localizedDescription)
 					}
 				}
 			}
 
-			seasonLockupCollectionViewCell.dataRequest = dataRequest
 			seasonLockupCollectionViewCell.configure(using: season)
 		}
 

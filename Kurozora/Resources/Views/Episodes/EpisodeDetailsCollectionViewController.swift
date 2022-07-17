@@ -1,5 +1,5 @@
 //
-//  EpisodeDetailCollectionViewController.swift
+//  EpisodeDetailsCollectionViewController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 26/04/2019.
@@ -9,7 +9,7 @@
 import UIKit
 import KurozoraKit
 
-class EpisodeDetailCollectionViewController: KCollectionViewController {
+class EpisodeDetailsCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var episodeID = 0
 	var episode: Episode! {
@@ -49,32 +49,32 @@ class EpisodeDetailCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - Initializers
-	/// Initialize a new instance of EpisodeDetailCollectionViewController with the given episode id.
+	/// Initialize a new instance of EpisodeDetailsCollectionViewController with the given episode id.
 	///
 	/// - Parameter episodeID: The episode id to use when initializing the view.
 	///
-	/// - Returns: an initialized instance of EpisodeDetailCollectionViewController.
-	static func `init`(with episodeID: Int) -> EpisodeDetailCollectionViewController {
-		if let episodeDetailCollectionViewController = R.storyboard.episodes.episodeDetailCollectionViewController() {
-			episodeDetailCollectionViewController.episodeID = episodeID
-			return episodeDetailCollectionViewController
+	/// - Returns: an initialized instance of EpisodeDetailsCollectionViewController.
+	static func `init`(with episodeID: Int) -> EpisodeDetailsCollectionViewController {
+		if let episodeDetailsCollectionViewController = R.storyboard.episodes.episodeDetailsCollectionViewController() {
+			episodeDetailsCollectionViewController.episodeID = episodeID
+			return episodeDetailsCollectionViewController
 		}
 
-		fatalError("Failed to instantiate EpisodeDetailCollectionViewController with the given show id.")
+		fatalError("Failed to instantiate EpisodeDetailsCollectionViewController with the given show id.")
 	}
 
-	/// Initialize a new instance of EpisodeDetailCollectionViewController with the given episode object.
+	/// Initialize a new instance of EpisodeDetailsCollectionViewController with the given episode object.
 	///
 	/// - Parameter episode: The `Episode` object to use when initializing the view controller.
 	///
-	/// - Returns: an initialized instance of EpisodeDetailCollectionViewController.
-	static func `init`(with episode: Episode) -> EpisodeDetailCollectionViewController {
-		if let episodeDetailCollectionViewController = R.storyboard.episodes.episodeDetailCollectionViewController() {
-			episodeDetailCollectionViewController.episode = episode
-			return episodeDetailCollectionViewController
+	/// - Returns: an initialized instance of EpisodeDetailsCollectionViewController.
+	static func `init`(with episode: Episode) -> EpisodeDetailsCollectionViewController {
+		if let episodeDetailsCollectionViewController = R.storyboard.episodes.episodeDetailsCollectionViewController() {
+			episodeDetailsCollectionViewController.episode = episode
+			return episodeDetailsCollectionViewController
 		}
 
-		fatalError("Failed to instantiate EpisodeDetailCollectionViewController with the given Show object.")
+		fatalError("Failed to instantiate EpisodeDetailsCollectionViewController with the given Show object.")
 	}
 
 	// MARK: - View
@@ -168,7 +168,7 @@ class EpisodeDetailCollectionViewController: KCollectionViewController {
 }
 
 // MARK: - UICollectionViewDataSource
-extension EpisodeDetailCollectionViewController {
+extension EpisodeDetailsCollectionViewController {
 	override func numberOfSections(in collectionView: UICollectionView) -> Int {
 		return self.episode != nil ? EpisodeDetail.Section.allCases.count : 0
 	}
@@ -227,7 +227,7 @@ extension EpisodeDetailCollectionViewController {
 }
 
 // MARK: - TextViewCollectionViewCellDelegate
-extension EpisodeDetailCollectionViewController: TextViewCollectionViewCellDelegate {
+extension EpisodeDetailsCollectionViewController: TextViewCollectionViewCellDelegate {
 	func textViewCollectionViewCell(_ cell: TextViewCollectionViewCell, didPressButton button: UIButton) {
 		if let synopsisKNavigationController = R.storyboard.synopsis.instantiateInitialViewController() {
 			if let synopsisViewController = synopsisKNavigationController.viewControllers.first as? SynopsisViewController {
@@ -241,17 +241,19 @@ extension EpisodeDetailCollectionViewController: TextViewCollectionViewCellDeleg
 }
 
 // MARK: - TitleHeaderCollectionReusableViewDelegate
-extension EpisodeDetailCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
+extension EpisodeDetailsCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
 	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPressButton button: UIButton) {
 		self.performSegue(withIdentifier: reusableView.segueID, sender: reusableView.indexPath)
 	}
 }
 
 // MARK: - RatingCollectionViewCellDelegate
-extension EpisodeDetailCollectionViewController: RatingCollectionViewCellDelegate {
+extension EpisodeDetailsCollectionViewController: RatingCollectionViewCellDelegate {
 	func rateShow(with rating: Double) { }
 
 	func rateEpisode(with rating: Double) {
-		self.episode.rate(using: rating)
+		Task {
+			await self.episode.rate(using: rating)
+		}
 	}
 }

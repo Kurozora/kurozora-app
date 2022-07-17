@@ -243,20 +243,19 @@ extension ShowDetailsCollectionViewController {
 			switch itemKind {
 			case .castIdentity(let castIdentitiy, _):
 				let cast = self.fetchCast(at: indexPath)
-				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? castCollectionViewCell.dataRequest
 
-				if dataRequest == nil && cast == nil {
-					dataRequest = KService.getDetails(forCast: castIdentitiy) { result in
-						switch result {
-						case .success(let cast):
-							self.cast[indexPath] = cast.first
+				if cast == nil {
+					Task {
+						do {
+							let castResponse = try await KService.getDetails(forCast: castIdentitiy).value
+							self.cast[indexPath] = castResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
-						case .failure: break
+						} catch {
+							print(error.localizedDescription)
 						}
 					}
 				}
 
-				castCollectionViewCell.dataRequest = dataRequest
 				castCollectionViewCell.delegate = self
 				castCollectionViewCell.configure(using: cast)
 			default: return
@@ -298,20 +297,20 @@ extension ShowDetailsCollectionViewController {
 			switch itemKind {
 			case .seasonIdentity(let seasonIdentity, _):
 				let season = self.fetchSeason(at: indexPath)
-				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? seasonLockupCollectionViewCell.dataRequest
 
-				if dataRequest == nil && season == nil {
-					dataRequest = KService.getDetails(forSeason: seasonIdentity) { result in
-						switch result {
-						case .success(let seasons):
-							self.seasons[indexPath] = seasons.first
+				if season == nil {
+					Task {
+						do {
+							let seasonResponse = try await KService.getDetails(forSeason: seasonIdentity).value
+
+							self.seasons[indexPath] = seasonResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
-						case .failure: break
+						} catch {
+							print(error.localizedDescription)
 						}
 					}
 				}
 
-				seasonLockupCollectionViewCell.dataRequest = dataRequest
 				seasonLockupCollectionViewCell.configure(using: season)
 			default: return
 			}

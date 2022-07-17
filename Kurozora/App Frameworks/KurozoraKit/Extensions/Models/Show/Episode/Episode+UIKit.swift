@@ -16,7 +16,7 @@ extension Episode {
 
 		return UIContextMenuConfiguration(identifier: identifier, previewProvider: { [weak self] in
 			guard let self = self else { return nil }
-			return EpisodeDetailCollectionViewController.`init`(with: self.id)
+			return EpisodeDetailsCollectionViewController.`init`(with: self.id)
 		}, actionProvider: { [weak self] _ in
 			guard let self = self else { return nil }
 			return self.makeContextMenu(in: viewController, userInfo: userInfo)
@@ -28,16 +28,21 @@ extension Episode {
 
 		if User.isSignedIn {
 			// Create "update watch status" element
-			let watchStatus = self.attributes.watchStatus ?? .notWatched
-			let updateWatchStatusTitle = watchStatus == .notWatched ? "Mark as Watched" : "Mark as Un-watched"
-			let updateWatchStatusImage = watchStatus == .notWatched ? UIImage(systemName: "plus.circle") : UIImage(systemName: "minus.circle")
-			let attributes: UIAction.Attributes = watchStatus == .notWatched ? [] : .destructive
+			let watchStatus = self.attributes.watchStatus
 
-			let watchAction = UIAction(title: updateWatchStatusTitle, image: updateWatchStatusImage, attributes: attributes) { [weak self] _ in
-				guard let self = self else { return }
-				self.updateWatchStatus(userInfo: userInfo)
+			if watchStatus != .disabled {
+				let updateWatchStatusTitle = watchStatus == .notWatched ? "Mark as Watched" : "Mark as Un-watched"
+				let updateWatchStatusImage = watchStatus == .notWatched ? UIImage(systemName: "plus.circle") : UIImage(systemName: "minus.circle")
+				let attributes: UIAction.Attributes = watchStatus == .notWatched ? [] : .destructive
+
+				let watchAction = UIAction(title: updateWatchStatusTitle, image: updateWatchStatusImage, attributes: attributes) { [weak self] _ in
+					guard let self = self else { return }
+					Task {
+						await self.updateWatchStatus(userInfo: userInfo)
+					}
+				}
+				menuElements.append(watchAction)
 			}
-			menuElements.append(watchAction)
 		}
 
 //		// Create "rate" element
@@ -62,19 +67,17 @@ extension Episode {
 	/// Updates the watch status of the episode.
 	///
 	/// - Parameter userInfo: A dictionary that contains information related to the notification.
-	func updateWatchStatus(userInfo: [AnyHashable: Any]?) {
-		let episodeIdentity = EpisodeIdentity(id: self.id)
+	func updateWatchStatus(userInfo: [AnyHashable: Any]?) async {
+		do {
+			let episodeIdentity = EpisodeIdentity(id: self.id)
+			let watchStatus = try await KService.updateEpisodeWatchStatus(episodeIdentity).value
 
-		KService.updateEpisodeWatchStatus(episodeIdentity) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let watchStatus):
-				// Update watch status
-				self.attributes = self.attributes.updated(using: watchStatus)
+			// Update watch status
+			self.attributes = self.attributes.updated(using: watchStatus)
 
-				NotificationCenter.default.post(name: .KEpisodeWatchStatusDidUpdate, object: nil, userInfo: userInfo)
-			case .failure: break
-			}
+			NotificationCenter.default.post(name: .KEpisodeWatchStatusDidUpdate, object: nil, userInfo: userInfo)
+		} catch {
+			print(error.localizedDescription)
 		}
 	}
 
@@ -114,23 +117,22 @@ extension Episode {
 	/// Rate the show with the given rating.
 	///
 	/// - Parameter rating: The rating to be saved when the show has been rated by the user.
-	func rate(using rating: Double) {
-		let episodeIdentity = EpisodeIdentity(id: self.id)
-		KService.rateEpisode(episodeIdentity, with: rating, description: nil) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success:
-					// Update current rating for the user.
-				self.attributes.givenRating = rating
+	func rate(using rating: Double) async {
+		do {
+			let episodeIdentity = EpisodeIdentity(id: self.id)
+			_ = try await KService.rateEpisode(episodeIdentity, with: rating, description: nil).value
 
-					// Show a success alert thanking the user for rating.
-				let alertController = UIApplication.topViewController?.presentAlertController(title: "Rating Submitted", message: "Thank you for rating.")
+			// Update current rating for the user.
+			self.attributes.givenRating = rating
 
-				DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
-					alertController?.dismiss(animated: true, completion: nil)
-				}
-			case .failure: break
+			// Show a success alert thanking the user for rating.
+			let alertController = await UIApplication.topViewController?.presentAlertController(title: "Rating Submitted", message: "Thank you for rating.")
+
+			DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+				alertController?.dismiss(animated: true, completion: nil)
 			}
+		} catch {
+			print(error.localizedDescription)
 		}
 	}
 }

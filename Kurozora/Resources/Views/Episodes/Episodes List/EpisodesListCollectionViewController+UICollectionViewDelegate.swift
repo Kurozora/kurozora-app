@@ -1,5 +1,5 @@
 //
-//  EpisodesCollectionViewController+UICollectionViewDelegate.swift
+//  EpisodesListCollectionViewController+UICollectionViewDelegate.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 22/02/2021.
@@ -8,17 +8,26 @@
 
 import UIKit
 
-extension EpisodesCollectionViewController {
+extension EpisodesListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let collectionViewCell = collectionView.cellForItem(at: indexPath)
-		let segueIdentifier = R.segue.episodesCollectionViewController.episodeDetailSegue
+		let segueIdentifier = R.segue.episodesListCollectionViewController.episodeDetailSegue
 
 		self.performSegue(withIdentifier: segueIdentifier, sender: collectionViewCell)
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		if indexPath.item == self.episodeIdentities.count - 20 && self.nextPageURL != nil {
-			self.fetchEpisodes()
+		let episodeIdentitiesCount = self.episodeIdentities.count - 1
+		var itemsCount = episodeIdentitiesCount / 4 / 2
+		itemsCount = itemsCount > 15 ? 15 : itemsCount // Make sure count isn't above 15
+		itemsCount = episodeIdentitiesCount - itemsCount
+		itemsCount = itemsCount < 1 ? 1 : itemsCount // Make sure count isn't below 1
+
+		if indexPath.item >= itemsCount && self.nextPageURL != nil {
+			Task { [weak self] in
+				guard let self = self else { return }
+				await self.fetchEpisodes()
+			}
 		}
 	}
 

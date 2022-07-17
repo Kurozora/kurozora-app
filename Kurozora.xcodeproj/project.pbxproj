@@ -30,7 +30,7 @@
 		660E39DF25E4644500A46EB0 /* FMDetailsTableViewController+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660E39DE25E4644500A46EB0 /* FMDetailsTableViewController+UITableViewDelegate.swift */; };
 		660E39E225E4664200A46EB0 /* ProfileTableViewController+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660E39E125E4664200A46EB0 /* ProfileTableViewController+UITableViewDelegate.swift */; };
 		660E39E425E466C300A46EB0 /* ManageActiveSessionsController+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660E39E325E466C300A46EB0 /* ManageActiveSessionsController+UITableViewDelegate.swift */; };
-		660E39E625E467F200A46EB0 /* EpisodesCollectionViewController+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660E39E525E467F200A46EB0 /* EpisodesCollectionViewController+UICollectionViewDelegate.swift */; };
+		660E39E625E467F200A46EB0 /* EpisodesListCollectionViewController+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660E39E525E467F200A46EB0 /* EpisodesListCollectionViewController+UICollectionViewDelegate.swift */; };
 		660E39E825E5BAC700A46EB0 /* ShowDetailsCollectionViewController+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660E39E725E5BAC700A46EB0 /* ShowDetailsCollectionViewController+UICollectionViewDelegate.swift */; };
 		660E39ED25E5BC7500A46EB0 /* Season+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660E39EC25E5BC7500A46EB0 /* Season+UIKit.swift */; };
 		660E39F325E5BE3400A46EB0 /* Cast+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660E39F225E5BE3400A46EB0 /* Cast+UIKit.swift */; };
@@ -102,7 +102,7 @@
 		66349D07256C74EF000B8523 /* FeedMessages+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66349D06256C74EF000B8523 /* FeedMessages+UIKit.swift */; };
 		6638CE6126BF42CE00A1A6A9 /* GenresCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6638CE6026BF42CE00A1A6A9 /* GenresCollectionViewController+KCollectionViewDelegateLayout.swift */; };
 		6638CE6326BF42FE00A1A6A9 /* GenresCollectionViewController+KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6638CE6226BF42FE00A1A6A9 /* GenresCollectionViewController+KCollectionViewDataSource.swift */; };
-		663C65D9226AA60100825F89 /* EpisodesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663C65D8226AA60100825F89 /* EpisodesCollectionViewController.swift */; };
+		663C65D9226AA60100825F89 /* EpisodesListCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663C65D8226AA60100825F89 /* EpisodesListCollectionViewController.swift */; };
 		663C95B923084FAC003720A4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663C95B823084FAC003720A4 /* SceneDelegate.swift */; };
 		663E341A235F7CCC003386D1 /* ActionBaseExploreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663E3419235F7CCC003386D1 /* ActionBaseExploreCollectionViewCell.swift */; };
 		663E34202360BB06003386D1 /* UITableViewCell+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663E341F2360BB06003386D1 /* UITableViewCell+Kurozora.swift */; };
@@ -169,7 +169,7 @@
 		664B6D78230F45F400F9C726 /* DarkThemeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664B6D77230F45F400F9C726 /* DarkThemeOption.swift */; };
 		664B6D7A230F469900F9C726 /* AppAppearanceOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664B6D79230F469900F9C726 /* AppAppearanceOption.swift */; };
 		664B6D7E230F5AA300F9C726 /* UITableView+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664B6D7D230F5AA300F9C726 /* UITableView+Kurozora.swift */; };
-		664D09BD25EAEF1300BA8640 /* EpisodeDetailCollectionViewController+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664D09BC25EAEF1300BA8640 /* EpisodeDetailCollectionViewController+UICollectionViewDelegate.swift */; };
+		664D09BD25EAEF1300BA8640 /* EpisodeDetailsCollectionViewController+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664D09BC25EAEF1300BA8640 /* EpisodeDetailsCollectionViewController+UICollectionViewDelegate.swift */; };
 		665099D522FC2B6A0053C2FD /* SearchSuggestionResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665099D422FC2B6A0053C2FD /* SearchSuggestionResultCell.swift */; };
 		66513E37276FCA3B000FBC42 /* EpisodeDetailHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66513E36276FCA3B000FBC42 /* EpisodeDetailHeaderCollectionViewCell.swift */; };
 		66513E39276FD028000FBC42 /* EpisodeAttributes+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66513E38276FD028000FBC42 /* EpisodeAttributes+UIKit.swift */; };
@@ -232,7 +232,7 @@
 		6676B3C4216FF70B00877AFC /* EpisodeLockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6676B3C3216FF70B00877AFC /* EpisodeLockupCollectionViewCell.swift */; };
 		66785E2A2363C714003EF24C /* CastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66785E292363C714003EF24C /* CastCollectionViewCell.swift */; };
 		667943632273933400E2D0D0 /* TextViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667943622273933400E2D0D0 /* TextViewCollectionViewCell.swift */; };
-		667943652273A33D00E2D0D0 /* EpisodeDetailCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667943642273A33D00E2D0D0 /* EpisodeDetailCollectionViewController.swift */; };
+		667943652273A33D00E2D0D0 /* EpisodeDetailsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667943642273A33D00E2D0D0 /* EpisodeDetailsCollectionViewController.swift */; };
 		667B38432361CE6500786EF6 /* KWhatsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667B38422361CE6500786EF6 /* KWhatsNew.swift */; };
 		667F9AD421B47E6D003F6629 /* BadgeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9AD321B47E6D003F6629 /* BadgeTableViewCell.swift */; };
 		667F9AD921B47FA4003F6629 /* BadgesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9AD821B47FA4003F6629 /* BadgesTableViewController.swift */; };
@@ -453,10 +453,10 @@
 		66EA1DD825B5BB7700FCD07A /* CastCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DD725B5BB7700FCD07A /* CastCollectionViewController+KCollectionViewDelegateLayout.swift */; };
 		66EA1DDB25B5BBAB00FCD07A /* CastCollectionViewController+KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DDA25B5BBAB00FCD07A /* CastCollectionViewController+KCollectionViewDataSource.swift */; };
 		66EA1DDD25B5BBF600FCD07A /* CharacterDetailsCollectionViewController+KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DDC25B5BBF600FCD07A /* CharacterDetailsCollectionViewController+KCollectionViewDataSource.swift */; };
-		66EA1DDF25B5BC2F00FCD07A /* EpisodesCollectionViewController+KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DDE25B5BC2F00FCD07A /* EpisodesCollectionViewController+KCollectionViewDataSource.swift */; };
-		66EA1DE125B5BC5900FCD07A /* EpisodesCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DE025B5BC5900FCD07A /* EpisodesCollectionViewController+KCollectionViewDelegateLayout.swift */; };
-		66EA1DE425B5BCF400FCD07A /* EpisodeDetailCollectionViewController+KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DE325B5BCF400FCD07A /* EpisodeDetailCollectionViewController+KCollectionViewDataSource.swift */; };
-		66EA1DE625B5BD1C00FCD07A /* EpisodeDetailCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DE525B5BD1C00FCD07A /* EpisodeDetailCollectionViewController+KCollectionViewDelegateLayout.swift */; };
+		66EA1DDF25B5BC2F00FCD07A /* EpisodesListCollectionViewController+KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DDE25B5BC2F00FCD07A /* EpisodesListCollectionViewController+KCollectionViewDataSource.swift */; };
+		66EA1DE125B5BC5900FCD07A /* EpisodesListCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DE025B5BC5900FCD07A /* EpisodesListCollectionViewController+KCollectionViewDelegateLayout.swift */; };
+		66EA1DE425B5BCF400FCD07A /* EpisodeDetailsCollectionViewController+KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DE325B5BCF400FCD07A /* EpisodeDetailsCollectionViewController+KCollectionViewDataSource.swift */; };
+		66EA1DE625B5BD1C00FCD07A /* EpisodeDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DE525B5BD1C00FCD07A /* EpisodeDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */; };
 		66EA1DE825B5BD7000FCD07A /* SeasonsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DE725B5BD7000FCD07A /* SeasonsCollectionViewController+KCollectionViewDelegateLayout.swift */; };
 		66EA1DEA25B5BD9000FCD07A /* SeasonsCollectionViewController+KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DE925B5BD9000FCD07A /* SeasonsCollectionViewController+KCollectionViewDataSource.swift */; };
 		66EA1DEC25B5BDD400FCD07A /* StudioDetailsCollectionViewController+KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DEB25B5BDD400FCD07A /* StudioDetailsCollectionViewController+KCollectionViewDataSource.swift */; };
@@ -562,7 +562,7 @@
 		660E39DE25E4644500A46EB0 /* FMDetailsTableViewController+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FMDetailsTableViewController+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 		660E39E125E4664200A46EB0 /* ProfileTableViewController+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileTableViewController+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 		660E39E325E466C300A46EB0 /* ManageActiveSessionsController+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManageActiveSessionsController+UITableViewDelegate.swift"; sourceTree = "<group>"; };
-		660E39E525E467F200A46EB0 /* EpisodesCollectionViewController+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EpisodesCollectionViewController+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
+		660E39E525E467F200A46EB0 /* EpisodesListCollectionViewController+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EpisodesListCollectionViewController+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
 		660E39E725E5BAC700A46EB0 /* ShowDetailsCollectionViewController+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShowDetailsCollectionViewController+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
 		660E39EC25E5BC7500A46EB0 /* Season+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Season+UIKit.swift"; sourceTree = "<group>"; };
 		660E39F225E5BE3400A46EB0 /* Cast+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cast+UIKit.swift"; sourceTree = "<group>"; };
@@ -636,7 +636,7 @@
 		66349D06256C74EF000B8523 /* FeedMessages+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedMessages+UIKit.swift"; sourceTree = "<group>"; };
 		6638CE6026BF42CE00A1A6A9 /* GenresCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GenresCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
 		6638CE6226BF42FE00A1A6A9 /* GenresCollectionViewController+KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GenresCollectionViewController+KCollectionViewDataSource.swift"; sourceTree = "<group>"; };
-		663C65D8226AA60100825F89 /* EpisodesCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodesCollectionViewController.swift; sourceTree = "<group>"; };
+		663C65D8226AA60100825F89 /* EpisodesListCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodesListCollectionViewController.swift; sourceTree = "<group>"; };
 		663C95B823084FAC003720A4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		663E3419235F7CCC003386D1 /* ActionBaseExploreCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionBaseExploreCollectionViewCell.swift; sourceTree = "<group>"; };
 		663E341F2360BB06003386D1 /* UITableViewCell+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Kurozora.swift"; sourceTree = "<group>"; };
@@ -704,7 +704,7 @@
 		664B6D77230F45F400F9C726 /* DarkThemeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkThemeOption.swift; sourceTree = "<group>"; };
 		664B6D79230F469900F9C726 /* AppAppearanceOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAppearanceOption.swift; sourceTree = "<group>"; };
 		664B6D7D230F5AA300F9C726 /* UITableView+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Kurozora.swift"; sourceTree = "<group>"; };
-		664D09BC25EAEF1300BA8640 /* EpisodeDetailCollectionViewController+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EpisodeDetailCollectionViewController+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
+		664D09BC25EAEF1300BA8640 /* EpisodeDetailsCollectionViewController+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EpisodeDetailsCollectionViewController+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
 		665099D422FC2B6A0053C2FD /* SearchSuggestionResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSuggestionResultCell.swift; sourceTree = "<group>"; };
 		66513E36276FCA3B000FBC42 /* EpisodeDetailHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDetailHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
 		66513E38276FD028000FBC42 /* EpisodeAttributes+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EpisodeAttributes+UIKit.swift"; sourceTree = "<group>"; };
@@ -760,7 +760,7 @@
 		6676B3C3216FF70B00877AFC /* EpisodeLockupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeLockupCollectionViewCell.swift; sourceTree = "<group>"; };
 		66785E292363C714003EF24C /* CastCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastCollectionViewCell.swift; sourceTree = "<group>"; };
 		667943622273933400E2D0D0 /* TextViewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewCollectionViewCell.swift; sourceTree = "<group>"; };
-		667943642273A33D00E2D0D0 /* EpisodeDetailCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDetailCollectionViewController.swift; sourceTree = "<group>"; };
+		667943642273A33D00E2D0D0 /* EpisodeDetailsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDetailsCollectionViewController.swift; sourceTree = "<group>"; };
 		667B38422361CE6500786EF6 /* KWhatsNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KWhatsNew.swift; sourceTree = "<group>"; };
 		667F9AD321B47E6D003F6629 /* BadgeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeTableViewCell.swift; sourceTree = "<group>"; };
 		667F9AD821B47FA4003F6629 /* BadgesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgesTableViewController.swift; sourceTree = "<group>"; };
@@ -990,10 +990,10 @@
 		66EA1DD725B5BB7700FCD07A /* CastCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CastCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
 		66EA1DDA25B5BBAB00FCD07A /* CastCollectionViewController+KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CastCollectionViewController+KCollectionViewDataSource.swift"; sourceTree = "<group>"; };
 		66EA1DDC25B5BBF600FCD07A /* CharacterDetailsCollectionViewController+KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CharacterDetailsCollectionViewController+KCollectionViewDataSource.swift"; sourceTree = "<group>"; };
-		66EA1DDE25B5BC2F00FCD07A /* EpisodesCollectionViewController+KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EpisodesCollectionViewController+KCollectionViewDataSource.swift"; sourceTree = "<group>"; };
-		66EA1DE025B5BC5900FCD07A /* EpisodesCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EpisodesCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
-		66EA1DE325B5BCF400FCD07A /* EpisodeDetailCollectionViewController+KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EpisodeDetailCollectionViewController+KCollectionViewDataSource.swift"; sourceTree = "<group>"; };
-		66EA1DE525B5BD1C00FCD07A /* EpisodeDetailCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EpisodeDetailCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
+		66EA1DDE25B5BC2F00FCD07A /* EpisodesListCollectionViewController+KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EpisodesListCollectionViewController+KCollectionViewDataSource.swift"; sourceTree = "<group>"; };
+		66EA1DE025B5BC5900FCD07A /* EpisodesListCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EpisodesListCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
+		66EA1DE325B5BCF400FCD07A /* EpisodeDetailsCollectionViewController+KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EpisodeDetailsCollectionViewController+KCollectionViewDataSource.swift"; sourceTree = "<group>"; };
+		66EA1DE525B5BD1C00FCD07A /* EpisodeDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EpisodeDetailsCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
 		66EA1DE725B5BD7000FCD07A /* SeasonsCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SeasonsCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
 		66EA1DE925B5BD9000FCD07A /* SeasonsCollectionViewController+KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SeasonsCollectionViewController+KCollectionViewDataSource.swift"; sourceTree = "<group>"; };
 		66EA1DEB25B5BDD400FCD07A /* StudioDetailsCollectionViewController+KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StudioDetailsCollectionViewController+KCollectionViewDataSource.swift"; sourceTree = "<group>"; };
@@ -1125,11 +1125,11 @@
 			isa = PBXGroup;
 			children = (
 				66AA35BF24030FA60006EC5B /* Episodes.storyboard */,
-				663C65D8226AA60100825F89 /* EpisodesCollectionViewController.swift */,
-				66EA1DDE25B5BC2F00FCD07A /* EpisodesCollectionViewController+KCollectionViewDataSource.swift */,
-				66EA1DE025B5BC5900FCD07A /* EpisodesCollectionViewController+KCollectionViewDelegateLayout.swift */,
-				660E39E525E467F200A46EB0 /* EpisodesCollectionViewController+UICollectionViewDelegate.swift */,
-				66EA1DE225B5BC8900FCD07A /* Episode Details */,
+				667943642273A33D00E2D0D0 /* EpisodeDetailsCollectionViewController.swift */,
+				66EA1DE325B5BCF400FCD07A /* EpisodeDetailsCollectionViewController+KCollectionViewDataSource.swift */,
+				66EA1DE525B5BD1C00FCD07A /* EpisodeDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */,
+				664D09BC25EAEF1300BA8640 /* EpisodeDetailsCollectionViewController+UICollectionViewDelegate.swift */,
+				669926DC288308F000EAC783 /* Episodes List */,
 				66FDDB7523B97F8B00364886 /* Cells */,
 				66FDDB7623B97F9F00364886 /* Models */,
 			);
@@ -2099,6 +2099,17 @@
 			path = "Supporting Files Dev";
 			sourceTree = "<group>";
 		};
+		669926DC288308F000EAC783 /* Episodes List */ = {
+			isa = PBXGroup;
+			children = (
+				663C65D8226AA60100825F89 /* EpisodesListCollectionViewController.swift */,
+				66EA1DDE25B5BC2F00FCD07A /* EpisodesListCollectionViewController+KCollectionViewDataSource.swift */,
+				66EA1DE025B5BC5900FCD07A /* EpisodesListCollectionViewController+KCollectionViewDelegateLayout.swift */,
+				660E39E525E467F200A46EB0 /* EpisodesListCollectionViewController+UICollectionViewDelegate.swift */,
+			);
+			path = "Episodes List";
+			sourceTree = "<group>";
+		};
 		669C8D542107B7AD0014EB7A /* Tab Bar */ = {
 			isa = PBXGroup;
 			children = (
@@ -2881,17 +2892,6 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		66EA1DE225B5BC8900FCD07A /* Episode Details */ = {
-			isa = PBXGroup;
-			children = (
-				667943642273A33D00E2D0D0 /* EpisodeDetailCollectionViewController.swift */,
-				66EA1DE325B5BCF400FCD07A /* EpisodeDetailCollectionViewController+KCollectionViewDataSource.swift */,
-				66EA1DE525B5BD1C00FCD07A /* EpisodeDetailCollectionViewController+KCollectionViewDelegateLayout.swift */,
-				664D09BC25EAEF1300BA8640 /* EpisodeDetailCollectionViewController+UICollectionViewDelegate.swift */,
-			);
-			path = "Episode Details";
-			sourceTree = "<group>";
-		};
 		66EA1E0B25B6285F00FCD07A /* Episode */ = {
 			isa = PBXGroup;
 			children = (
@@ -3410,7 +3410,7 @@
 				662CAD68257594E00045236C /* EmptyBackgroundView.swift in Sources */,
 				66CF6D6920A98CAA00F98375 /* UsersListCollectionViewController.swift in Sources */,
 				666938B421B1D4E500BA9620 /* PostLinkCell.swift in Sources */,
-				663C65D9226AA60100825F89 /* EpisodesCollectionViewController.swift in Sources */,
+				663C65D9226AA60100825F89 /* EpisodesListCollectionViewController.swift in Sources */,
 				665A4584246702F100154F41 /* KVibrantVisualEffectView.swift in Sources */,
 				66B13A5D2405AA1000CD732B /* WorkflowController+PushNotifications.swift in Sources */,
 				664AAF8824EE903700FF4AA5 /* PersonImageView.swift in Sources */,
@@ -3572,7 +3572,7 @@
 				66472374245E164B008E5111 /* ProfileImageButton.swift in Sources */,
 				6676B3C4216FF70B00877AFC /* EpisodeLockupCollectionViewCell.swift in Sources */,
 				66D4735221AB5FE600A894B7 /* UIAlertController+Extension.swift in Sources */,
-				664D09BD25EAEF1300BA8640 /* EpisodeDetailCollectionViewController+UICollectionViewDelegate.swift in Sources */,
+				664D09BD25EAEF1300BA8640 /* EpisodeDetailsCollectionViewController+UICollectionViewDelegate.swift in Sources */,
 				66AF50DD21D9B67900FC622E /* NotificationsSettingsViewController.swift in Sources */,
 				66C4DADF243BE4CF00C4B90A /* KKLibrarySortType+Kurozora.swift in Sources */,
 				66D8B14B24F8559E00F0DE7B /* KFeedMessageEditorViewController.swift in Sources */,
@@ -3596,7 +3596,7 @@
 				66E08369211324D400B39A75 /* OtherSessionsCell.swift in Sources */,
 				66CE81002460361800DB0C49 /* KCollectionViewDataSource.swift in Sources */,
 				66FA97BB281A0C4B0054FC2E /* AlertType.swift in Sources */,
-				66EA1DE125B5BC5900FCD07A /* EpisodesCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
+				66EA1DE125B5BC5900FCD07A /* EpisodesListCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				66C4DAE6243E133F00C4B90A /* KTabbedViewController.swift in Sources */,
 				66CF6D6720A987D100F98375 /* ProfileTableViewController.swift in Sources */,
 				66112350208F70D200E6033A /* UIApplication+Navigation.swift in Sources */,
@@ -3610,7 +3610,7 @@
 				66E46E0125056535009938E1 /* CellActionButton.swift in Sources */,
 				66FA97E1281BD37A0054FC2E /* Trans.swift in Sources */,
 				66AEABE92298AA8D00949FD8 /* NotificationGroupStyle.swift in Sources */,
-				660E39E625E467F200A46EB0 /* EpisodesCollectionViewController+UICollectionViewDelegate.swift in Sources */,
+				660E39E625E467F200A46EB0 /* EpisodesListCollectionViewController+UICollectionViewDelegate.swift in Sources */,
 				660E3A0725E5D91500A46EB0 /* ShowListCollectionViewController+UICollectionViewDelegate.swift in Sources */,
 				664AAF8524EE8FDD00FF4AA5 /* CharacterImageView.swift in Sources */,
 				66EA1DF025B5F43B00FCD07A /* ProductActionTableViewCellDelegate.swift in Sources */,
@@ -3728,11 +3728,11 @@
 				66B4F1DD223D334D007C5048 /* KKSearchScope+Kurozora.swift in Sources */,
 				66CDC08F234A95B8009E799C /* RedeemTableViewController.swift in Sources */,
 				66E54EC3244E1698007248EE /* Array+String.swift in Sources */,
-				66EA1DE425B5BCF400FCD07A /* EpisodeDetailCollectionViewController+KCollectionViewDataSource.swift in Sources */,
+				66EA1DE425B5BCF400FCD07A /* EpisodeDetailsCollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				663266CA2444960100295CE7 /* ProductTableViewController.swift in Sources */,
 				660E3A0125E5D38800A46EB0 /* CharactersListCollectionViewController+UICollectionViewDelegate.swift in Sources */,
 				660E39FB25E5D28800A46EB0 /* PersonDetailsCollectionViewController+UICollectionViewDelegate.swift in Sources */,
-				667943652273A33D00E2D0D0 /* EpisodeDetailCollectionViewController.swift in Sources */,
+				667943652273A33D00E2D0D0 /* EpisodeDetailsCollectionViewController.swift in Sources */,
 				6645407B2821EE2B0001E5B2 /* BannerImageView.swift in Sources */,
 				66647B542084995500CF624F /* AppDelegate.swift in Sources */,
 				662F117B24E5EEB40000375A /* StudioLogoImageView.swift in Sources */,
@@ -3741,7 +3741,7 @@
 				669C8D582107B8170014EB7A /* BasicTabBarItemContentView.swift in Sources */,
 				66CE8107246088DA00DB0C49 /* ServiceTableViewController.swift in Sources */,
 				66EA1DB225B3630D00FCD07A /* LibraryViewController+TouchBar.swift in Sources */,
-				66EA1DE625B5BD1C00FCD07A /* EpisodeDetailCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
+				66EA1DE625B5BD1C00FCD07A /* EpisodeDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				669A36BB24F1AD500045D04A /* OnboardingFooterTableViewCell.swift in Sources */,
 				66EA1DD825B5BB7700FCD07A /* CastCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				66EA1DD425B5B75200FCD07A /* TitleHeaderCollectionReusableViewDelegate.swift in Sources */,
@@ -3782,7 +3782,7 @@
 				664133E521DA8E5F00CE823A /* NotificationsGroupingCell.swift in Sources */,
 				66973DFA2311E4400097A9F8 /* Notification+Kurozora.swift in Sources */,
 				66CF5D8021E798C800969BBB /* UIScrollView+Kurozora.swift in Sources */,
-				66EA1DDF25B5BC2F00FCD07A /* EpisodesCollectionViewController+KCollectionViewDataSource.swift in Sources */,
+				66EA1DDF25B5BC2F00FCD07A /* EpisodesListCollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				6648ED7022A4636E00E1BE18 /* GroupedNotifications.swift in Sources */,
 				660E39F925E5CF3900A46EB0 /* CharacterDetailsCollectionViewController+UICollectionViewDelegate.swift in Sources */,
 				6638CE6326BF42FE00A1A6A9 /* GenresCollectionViewController+KCollectionViewDataSource.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  EpisodeDetailCollectionViewController+KCollectionViewDataSource.swift
+//  EpisodeDetailsCollectionViewController+KCollectionViewDataSource.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 18/01/2021.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension EpisodeDetailCollectionViewController {
+extension EpisodeDetailsCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
 		return [
 			TextViewCollectionViewCell.self,
