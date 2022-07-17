@@ -1,5 +1,5 @@
 //
-//  SeasonsCollectionViewController+KCollectionViewDelegateLayout.swift
+//  SeasonsListCollectionViewController+KCollectionViewDelegateLayout.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 18/01/2021.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension SeasonsCollectionViewController {
+extension SeasonsListCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
 		let columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int

@@ -307,8 +307,8 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
-		case R.segue.showDetailsCollectionViewController.seasonSegue.identifier:
-			guard let seasonsCollectionViewController = segue.destination as? SeasonsCollectionViewController else { return }
+		case R.segue.showDetailsCollectionViewController.seasonsListSegue.identifier:
+			guard let seasonsCollectionViewController = segue.destination as? SeasonsListCollectionViewController else { return }
 			seasonsCollectionViewController.showIdentity = self.showIdentity
 		case R.segue.showDetailsCollectionViewController.castListSegue.identifier:
 			guard let castListCollectionViewController = segue.destination as? CastListCollectionViewController else { return }
@@ -518,7 +518,7 @@ extension ShowDetailsCollectionViewController {
 			case .information:
 				return ""
 			case .seasons:
-				return R.segue.showDetailsCollectionViewController.seasonSegue.identifier
+				return R.segue.showDetailsCollectionViewController.seasonsListSegue.identifier
 			case .cast:
 				return R.segue.showDetailsCollectionViewController.castListSegue.identifier
 			case .songs:

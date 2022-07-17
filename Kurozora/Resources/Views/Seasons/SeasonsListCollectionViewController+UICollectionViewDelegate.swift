@@ -1,5 +1,5 @@
 //
-//  SeasonsCollectionViewController+UICollectionViewDelegate.swift
+//  SeasonsListCollectionViewController+UICollectionViewDelegate.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 24/02/2021.
@@ -8,15 +8,24 @@
 
 import UIKit
 
-extension SeasonsCollectionViewController {
+extension SeasonsListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let collectionViewCell = collectionView.cellForItem(at: indexPath)
-		self.performSegue(withIdentifier: R.segue.seasonsCollectionViewController.episodeSegue, sender: collectionViewCell)
+		self.performSegue(withIdentifier: R.segue.seasonsListCollectionViewController.episodeSegue, sender: collectionViewCell)
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		if indexPath.item == self.seasonIdentities.count - 20 && self.nextPageURL != nil {
-			self.fetchSeasons()
+		let seasonIdentities = self.seasonIdentities.count - 1
+		var itemsCount = seasonIdentities / 4 / 2
+		itemsCount = itemsCount > 15 ? 15 : itemsCount // Make sure count isn't above 15
+		itemsCount = seasonIdentities - itemsCount
+		itemsCount = itemsCount < 1 ? 1 : itemsCount // Make sure count isn't below 1
+
+		if indexPath.item >= itemsCount && self.nextPageURL != nil {
+			Task { [weak self] in
+				guard let self = self else { return }
+				await self.fetchSeasons()
+			}
 		}
 	}
 

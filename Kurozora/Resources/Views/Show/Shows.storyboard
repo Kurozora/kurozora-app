@@ -478,7 +478,7 @@
                         <outlet property="navigationTitleView" destination="2Od-B7-0Nf" id="R7u-fJ-Lnu"/>
                         <segue destination="Nem-gQ-vzJ" kind="show" identifier="CastListSegue" id="xyZ-T3-j6h"/>
                         <segue destination="hBE-dn-oqP" kind="show" identifier="EpisodeSegue" id="m5c-UF-zyP"/>
-                        <segue destination="WgT-YJ-daL" kind="show" identifier="SeasonSegue" id="CoC-Lm-cl4"/>
+                        <segue destination="WgT-YJ-daL" kind="show" identifier="SeasonsListSegue" id="CoC-Lm-cl4"/>
                         <segue destination="urV-HF-poe" kind="show" identifier="StudioSegue" id="YkB-FM-SBI"/>
                         <segue destination="0CH-ol-MCV" kind="show" identifier="ShowDetailsSegue" id="8X9-Ml-Zaa"/>
                         <segue destination="xgN-Jn-ydw" kind="show" identifier="ShowsListSegue" id="diw-vY-oOt"/>
@@ -523,15 +523,15 @@
             </objects>
             <point key="canvasLocation" x="3785" y="772"/>
         </scene>
-        <!--SeasonsCollectionViewController-->
+        <!--SeasonsListCollectionViewController-->
         <scene sceneID="x0o-Ky-mNZ">
             <objects>
-                <viewControllerPlaceholder storyboardName="Seasons" referencedIdentifier="SeasonsCollectionViewController" id="WgT-YJ-daL" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="Seasons" referencedIdentifier="SeasonsListCollectionViewController" id="WgT-YJ-daL" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="MsA-PJ-ZtS"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qTw-ur-egL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3787" y="566"/>
+            <point key="canvasLocation" x="3801" y="567"/>
         </scene>
         <!--EpisodesListCollectionViewController-->
         <scene sceneID="EfE-cD-iKO">

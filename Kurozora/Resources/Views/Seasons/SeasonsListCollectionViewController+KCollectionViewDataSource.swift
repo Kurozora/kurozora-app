@@ -1,5 +1,5 @@
 //
-//  SeasonsCollectionViewController+KCollectionViewDataSource.swift
+//  SeasonsListCollectionViewController+KCollectionViewDataSource.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 18/01/2021.
@@ -9,7 +9,7 @@
 import UIKit
 import KurozoraKit
 
-extension SeasonsCollectionViewController {
+extension SeasonsListCollectionViewController {
 	override func configureDataSource() {
 		let posterCellRegistration = UICollectionView.CellRegistration<SeasonLockupCollectionViewCell, SeasonIdentity>(cellNib: UINib(resource: R.nib.seasonLockupCollectionViewCell)) { [weak self] seasonLockupCollectionViewCell, indexPath, seasonIdentity in
 			guard let self = self else { return }
