@@ -71,13 +71,14 @@ class ShowSongsListCollectionViewController: KCollectionViewController {
 
 		self.configureDataSource()
 
-		if self.showIdentity != nil {
-			DispatchQueue.global(qos: .userInteractive).async {
-				self.fetchShowSongs()
-			}
-		} else {
+		if !self.showSongs.isEmpty {
 			self.updateDataSource()
 			self.toggleEmptyDataView()
+		} else {
+			Task { [weak self] in
+				guard let self = self else { return }
+				await self.fetchShowSongs()
+			}
 		}
 	}
 
@@ -90,7 +91,10 @@ class ShowSongsListCollectionViewController: KCollectionViewController {
 	// MARK: - Functions
 	override func handleRefreshControl() {
 		if self.showIdentity != nil {
-			self.fetchShowSongs()
+			Task { [weak self] in
+				guard let self = self else { return }
+				await self.fetchShowSongs()
+			}
 		}
 	}
 
