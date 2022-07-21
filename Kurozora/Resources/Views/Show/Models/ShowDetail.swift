@@ -27,17 +27,17 @@ extension ShowDetail {
 		var stringValue: String {
 			switch self {
 			case .rating:
-				return "Rating"
+				return Trans.rating
 			case .season:
-				return "Season"
+				return Trans.season
 			case .rank:
-				return "Rank"
+				return Trans.rank
 			case .tvRating:
-				return "TV Rating"
+				return Trans.tvRating
 			case .studio:
-				return "Studio"
+				return Trans.studio
 			case .language:
-				return "Language"
+				return Trans.language
 			}
 		}
 
@@ -62,15 +62,13 @@ extension ShowDetail {
 			case .rating:
 				return nil
 			case .season:
-				return show.attributes.airSeason ?? "Winter"
+				return show.attributes.airSeason ?? "-"
 			case .rank:
 				return "-" // e.g #13 — show.attributes.popularity.rank
 			case .tvRating:
 				return show.attributes.tvRating.name
 			case .studio:
-				return show.relationships?.studios?.data.first { studio in
-					studio.attributes.isStudio ?? false
-				}?.attributes.name ?? show.relationships?.studios?.data.first?.attributes.name ?? "-"
+				return show.attributes.studio ?? "-"
 			case .language:
 				return show.attributes.languages.first?.attributes.code.uppercased()
 			}
@@ -81,10 +79,10 @@ extension ShowDetail {
 		/// - Parameter show: The object used to extract the infromation from.
 		///
 		/// - Returns: the required secondary information from the given object.
-		func secondaryInformation(from show: Show) -> String? {
+		func secondaryInformation(from show: Show? = nil) -> String? {
 			switch self {
 			case .rating:
-				let ratingCount = show.attributes.stats?.ratingCount ?? 0
+				let ratingCount = show?.attributes.stats?.ratingCount ?? 0
 				return ratingCount != 0 ? "\(ratingCount.kkFormatted) Ratings" : "Not enough ratings"
 			case .season:
 				return "Season"
@@ -95,7 +93,7 @@ extension ShowDetail {
 			case .studio:
 				return "Studio"
 			case .language:
-				let languages = show.attributes.languages
+				let languages = show?.attributes.languages ?? []
 				switch languages.count - 1 {
 				case 0:
 					return "Language"
@@ -112,12 +110,12 @@ extension ShowDetail {
 		/// - Parameter show: The object used to extract the infromation from.
 		///
 		/// - Returns: the required primary image from the given object.
-		func primaryImage(from show: Show) -> UIImage? {
+		func primaryImage(from show: Show? = nil) -> UIImage? {
 			switch self {
 			case .rating:
 				return nil
 			case .season:
-				switch show.attributes.airSeason?.lowercased() {
+				switch show?.attributes.airSeason?.lowercased() {
 				case "spring":
 					return UIImage(systemName: "leaf.fill")
 				case "summer":
@@ -130,7 +128,7 @@ extension ShowDetail {
 			case .rank:
 				return UIImage(systemName: "chart.bar.fill")
 			case .tvRating:
-				switch show.attributes.tvRating.name.lowercased() {
+				switch show?.attributes.tvRating.name.lowercased() {
 				default:
 					return UIImage(systemName: "tv.fill")
 				}

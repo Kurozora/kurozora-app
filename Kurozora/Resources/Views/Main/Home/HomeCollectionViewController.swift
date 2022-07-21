@@ -111,11 +111,6 @@ class HomeCollectionViewController: KCollectionViewController {
 		self.handleRefreshControl()
 	}
 
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-		self.title = self.genre?.attributes.name ?? self.theme?.attributes.name ?? "Explore"
-	}
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Add Refresh Control to Collection View
@@ -131,6 +126,11 @@ class HomeCollectionViewController: KCollectionViewController {
 		DispatchQueue.global(qos: .userInteractive).async {
 			self.fetchExplore()
 		}
+	}
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		self.title = self.genre?.attributes.name ?? self.theme?.attributes.name ?? "Explore"
 	}
 
 	override func viewDidAppear(_ animated: Bool) {

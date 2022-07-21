@@ -14,20 +14,19 @@ extension StudiosListCollectionViewController {
 		let studioCellRegistration = UICollectionView.CellRegistration<StudioLockupCollectionViewCell, StudioIdentity>(cellNib: UINib(resource: R.nib.studioLockupCollectionViewCell)) { [weak self] studioLockupCollectionViewCell, indexPath, studioIdentity in
 			guard let self = self else { return }
 			let studio = self.fetchStudio(at: indexPath)
-			var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? studioLockupCollectionViewCell.dataRequest
 
-			if dataRequest == nil && studio == nil {
-				dataRequest = KService.getDetails(forStudio: studioIdentity) { result in
-					switch result {
-					case .success(let studios):
-						self.studios[indexPath] = studios.first
+			if studio == nil {
+				Task {
+					do {
+						let studioResponse = try await KService.getDetails(forStudio: studioIdentity).value
+						self.studios[indexPath] = studioResponse.data.first
 						self.setStudioNeedsUpdate(studioIdentity)
-					case .failure: break
+					} catch {
+						print(error.localizedDescription)
 					}
 				}
 			}
 
-			studioLockupCollectionViewCell.dataRequest = dataRequest
 			studioLockupCollectionViewCell.configure(using: studio)
 		}
 

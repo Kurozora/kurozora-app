@@ -178,6 +178,24 @@ extension KurozoraKit {
 		return request.perform().serializingDecodable(StudioIdentityResponse.self)
 	}
 
+	///	Fetch the more by studio section for a the given show identity.
+	///
+	///	- Parameter showIdentity: The show identity object for which the studio shows should be fetched.
+	///	- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+	/// - Parameter limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
+	///
+	/// - Returns: An instance of `DataTask` with the results of the request.
+	public func getMoreByStudio(forShow showIdentity: ShowIdentity, next: String? = nil, limit: Int = 25) -> DataTask<ShowIdentityResponse> {
+		let showsSeasons = next ?? KKEndpoint.Shows.moreByStudio(showIdentity).endpointValue
+		let request: APIRequest<ShowIdentityResponse, KKAPIError> = tron.codable.request(showsSeasons).buildURL(.relativeToBaseURL)
+		request.headers = headers
+
+		request.parameters["limit"] = limit
+
+		request.method = .get
+		return request.perform().serializingDecodable(ShowIdentityResponse.self)
+	}
+
 	/// Rate the show with the given show identity.
 	///
 	/// - Parameter showID: The id of the show which should be rated.

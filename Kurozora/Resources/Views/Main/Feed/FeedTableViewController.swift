@@ -50,12 +50,6 @@ class FeedTableViewController: KTableViewController {
 		self.handleRefreshControl()
 	}
 
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-		NotificationCenter.default.addObserver(self, selector: #selector(updateFeedMessage(_:)), name: .KFMDidUpdate, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(deleteFeedMessage(_:)), name: .KFMDidDelete, object: nil)
-	}
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Setup refresh control
@@ -71,6 +65,12 @@ class FeedTableViewController: KTableViewController {
 		DispatchQueue.global(qos: .userInteractive).async {
 			self.fetchFeedMessages()
 		}
+	}
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		NotificationCenter.default.addObserver(self, selector: #selector(updateFeedMessage(_:)), name: .KFMDidUpdate, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(deleteFeedMessage(_:)), name: .KFMDidDelete, object: nil)
 	}
 
 	override func viewDidDisappear(_ animated: Bool) {

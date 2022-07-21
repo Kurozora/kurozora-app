@@ -66,6 +66,9 @@ extension KKEndpoint {
 		/// The endpoint to the studios belonging to a show.
 		case studios(_ showIdentity: ShowIdentity)
 
+		/// The endpoint to the studio shows related to a show.
+		case moreByStudio(_ showIdentity: ShowIdentity)
+
 		/// The endpoint to upcoming for shows.
 		case upcoming
 
@@ -91,6 +94,8 @@ extension KKEndpoint {
 				return "anime/\(showIdentity.id)/songs"
 			case .studios(let showIdentity):
 				return "anime/\(showIdentity.id)/studios"
+			case .moreByStudio(let showIdentity):
+				return "anime/\(showIdentity.id)/more-by-studio"
 			case .upcoming:
 				return "anime/upcoming"
 			}

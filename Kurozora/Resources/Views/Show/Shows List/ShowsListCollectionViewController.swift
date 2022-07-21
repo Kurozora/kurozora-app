@@ -14,6 +14,7 @@ enum ShowsListFetchType {
 	case charcter
 	case explore
 	case person
+	case moreByStudio
 	case relatedShow
 	case search
 	case studio
@@ -132,51 +133,51 @@ class ShowsListCollectionViewController: KCollectionViewController {
 		// Set request in progress
 		self.isRequestInProgress = true
 
-		switch self.showsListFetchType {
-		case .charcter:
-			guard let characterIdentity = self.characterIdentity else { return }
+		do {
+			switch self.showsListFetchType {
+			case .charcter:
+				guard let characterIdentity = self.characterIdentity else { return }
 
-			KService.getShows(forCharacter: characterIdentity, next: self.nextPageURL) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let showIdentityResponse):
-					// Reset data if necessary
-					if self.nextPageURL == nil {
-						self.showIdentities = []
+				KService.getShows(forCharacter: characterIdentity, next: self.nextPageURL) { [weak self] result in
+					guard let self = self else { return }
+					switch result {
+					case .success(let showIdentityResponse):
+						// Reset data if necessary
+						if self.nextPageURL == nil {
+							self.showIdentities = []
+						}
+
+						// Save next page url and append new data
+						self.nextPageURL = showIdentityResponse.next
+						self.showIdentities.append(contentsOf: showIdentityResponse.data)
+						self.showIdentities.removeDuplicates()
+
+						self.endFetch()
+					case .failure: break
 					}
-
-					// Save next page url and append new data
-					self.nextPageURL = showIdentityResponse.next
-					self.showIdentities.append(contentsOf: showIdentityResponse.data)
-					self.showIdentities.removeDuplicates()
-
-					self.endFetch()
-				case .failure: break
 				}
-			}
-		case .person:
-			guard let personIdentity = self.personIdentity else { return }
+			case .person:
+				guard let personIdentity = self.personIdentity else { return }
 
-			KService.getShows(forPerson: personIdentity, next: self.nextPageURL) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let showIdentityResponse):
-					// Reset data if necessary
-					if self.nextPageURL == nil {
-						self.showIdentities = []
+				KService.getShows(forPerson: personIdentity, next: self.nextPageURL) { [weak self] result in
+					guard let self = self else { return }
+					switch result {
+					case .success(let showIdentityResponse):
+						// Reset data if necessary
+						if self.nextPageURL == nil {
+							self.showIdentities = []
+						}
+
+						// Save next page url and append new data
+						self.nextPageURL = showIdentityResponse.next
+						self.showIdentities.append(contentsOf: showIdentityResponse.data)
+						self.showIdentities.removeDuplicates()
+
+						self.endFetch()
+					case .failure: break
 					}
-
-					// Save next page url and append new data
-					self.nextPageURL = showIdentityResponse.next
-					self.showIdentities.append(contentsOf: showIdentityResponse.data)
-					self.showIdentities.removeDuplicates()
-
-					self.endFetch()
-				case .failure: break
 				}
-			}
-		case .search:
-			do {
+			case .search:
 				let searchResponse = try await KService.search(.kurozora, of: [.shows], for: self.searachQuery, next: self.nextPageURL, limit: 25).value
 
 				// Reset data if necessary
@@ -189,12 +190,21 @@ class ShowsListCollectionViewController: KCollectionViewController {
 				self.nextPageURL = searchResponse.data.shows?.next
 				self.showIdentities.append(contentsOf: searchResponse.data.shows?.data ?? [])
 				self.showIdentities.removeDuplicates()
-			} catch {
-				print(error.localizedDescription)
-			}
-		case .relatedShow:
-			do {
-				guard let showIdentity = showIdentity else { return }
+			case .moreByStudio:
+				guard let showIdentity = self.showIdentity else { return }
+				let showIdentityResponse = try await KService.getMoreByStudio(forShow: showIdentity, next: self.nextPageURL).value
+
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.showIdentities = []
+				}
+
+				// Save next page url and append new data
+				self.nextPageURL = showIdentityResponse.next
+				self.showIdentities.append(contentsOf: showIdentityResponse.data)
+				self.showIdentities.removeDuplicates()
+			case .relatedShow:
+				guard let showIdentity = self.showIdentity else { return }
 				let relatedShowsResponse = try await KService.getRelatedShows(forShow: showIdentity, next: self.nextPageURL).value
 
 				// Reset data if necessary
@@ -206,52 +216,40 @@ class ShowsListCollectionViewController: KCollectionViewController {
 				// Save next page url and append new data
 				self.nextPageURL = relatedShowsResponse.next
 				self.relatedShows.append(contentsOf: relatedShowsResponse.data)
+				self.relatedShows.removeDuplicates()
+			case .studio:
+				guard let studioIdentity = self.studioIdentity else { return }
+				let showIdentityResponse = try await KService.getShows(forStudio: studioIdentity, next: self.nextPageURL).value
+
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.showIdentities = []
+				}
+
+				// Save next page url and append new data
+				self.nextPageURL = showIdentityResponse.next
+				self.showIdentities.append(contentsOf: showIdentityResponse.data)
 				self.showIdentities.removeDuplicates()
-			} catch {
-				print(error.localizedDescription)
-			}
-		case .studio:
-			guard let studioIdentity = self.studioIdentity else { return }
+			case .upcoming:
+				KService.getUpcomingShows(next: self.nextPageURL) { [weak self] result in
+					guard let self = self else { return }
+					switch result {
+					case .success(let showIdentityResponse):
+						// Reset data if necessary
+						if self.nextPageURL == nil {
+							self.showIdentities = []
+						}
 
-			KService.getShows(forStudio: studioIdentity, next: self.nextPageURL) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let showIdentityResponse):
-					// Reset data if necessary
-					if self.nextPageURL == nil {
-						self.showIdentities = []
+						// Save next page url and append new data
+						self.nextPageURL = showIdentityResponse.next
+						self.showIdentities.append(contentsOf: showIdentityResponse.data)
+						self.showIdentities.removeDuplicates()
+
+						self.endFetch()
+					case .failure: break
 					}
-
-					// Save next page url and append new data
-					self.nextPageURL = showIdentityResponse.next
-					self.showIdentities.append(contentsOf: showIdentityResponse.data)
-					self.showIdentities.removeDuplicates()
-
-					self.endFetch()
-				case .failure: break
 				}
-			}
-		case .upcoming:
-			KService.getUpcomingShows(next: self.nextPageURL) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let showIdentityResponse):
-					// Reset data if necessary
-					if self.nextPageURL == nil {
-						self.showIdentities = []
-					}
-
-					// Save next page url and append new data
-					self.nextPageURL = showIdentityResponse.next
-					self.showIdentities.append(contentsOf: showIdentityResponse.data)
-					self.showIdentities.removeDuplicates()
-
-					self.endFetch()
-				case .failure: break
-				}
-			}
-		case .explore:
-			do {
+			case .explore:
 				guard let exploreCategoryIdentity = self.exploreCategoryIdentity else { return }
 				let exploreCategoryResponse = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL, limit: 25).value
 
@@ -265,12 +263,12 @@ class ShowsListCollectionViewController: KCollectionViewController {
 				self.nextPageURL = exploreCategoryResponse.data.first?.relationships.shows?.next
 				self.showIdentities.append(contentsOf: exploreCategoryResponse.data.first?.relationships.shows?.data ?? [])
 				self.showIdentities.removeDuplicates()
-			} catch {
-				print(error.localizedDescription)
 			}
-		}
 
-		self.endFetch()
+			self.endFetch()
+		} catch {
+			print(error.localizedDescription)
+		}
 	}
 
 	// MARK: - Segue

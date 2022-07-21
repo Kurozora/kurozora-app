@@ -13,6 +13,6 @@ extension Session {
 		public let ipAddress: String
 
 		/// The last time the session has been validated.
-		public let lastValidatedAt: String
+		public let lastValidatedAt: Date
 	}
 }

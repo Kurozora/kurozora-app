@@ -14,13 +14,6 @@ class NotificationsOptionsViewController: SubSettingsViewController {
 	var segueIdentifier: String?
 
 	// MARK: - View
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-
-		let notificationSegueIdentifier = KNotification.Settings(stringValue: segueIdentifier)
-		self.notificationSegueIdentifier = notificationSegueIdentifier
-	}
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
@@ -28,6 +21,13 @@ class NotificationsOptionsViewController: SubSettingsViewController {
 		case .notificationsGrouping:
 			title = "Notification Grouping"
 		}
+	}
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+
+		let notificationSegueIdentifier = KNotification.Settings(stringValue: segueIdentifier)
+		self.notificationSegueIdentifier = notificationSegueIdentifier
 	}
 }
 

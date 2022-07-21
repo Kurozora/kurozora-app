@@ -43,7 +43,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 	}
 	var responseCount: Int = 0 {
 		didSet {
-			if self.responseCount == 4 {
+			if self.responseCount == 6 {
 				self.updateDataSource()
 			}
 		}
@@ -61,19 +61,9 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 	var castIdentities: [CastIdentity] = []
 
 	/// Studio properties.
-	var studios: [IndexPath: Studio] = [:] {
-		didSet {
-			self.studio = self.studios.first { _, studio in
-				studio.attributes.isStudio ?? false
-			}?.value ?? studios.first?.value
-		}
-	}
+	var studios: [IndexPath: Studio] = [:]
 	var studioIdentities: [StudioIdentity] = []
-	var studio: Studio! {
-		didSet {
-			self.studioShowIdentities = self.studio?.relationships?.shows?.data ?? []
-		}
-	}
+//	var studio: Studio!
 	var studioShows: [IndexPath: Show] = [:]
 	var studioShowIdentities: [ShowIdentity] = []
 
@@ -146,14 +136,6 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - View
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-
-		// Make the navigation bar background clear
-		self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-		self.navigationController?.navigationBar.shadowImage = UIImage()
-	}
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		NotificationCenter.default.addObserver(self, selector: #selector(handleFavoriteToggle(_:)), name: .KShowFavoriteIsToggled, object: nil)
@@ -175,6 +157,14 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 			guard let self = self else { return }
 			await self.fetchDetails()
 		}
+	}
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+
+		// Make the navigation bar background clear
+		self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+		self.navigationController?.navigationBar.shadowImage = UIImage()
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
@@ -259,6 +249,16 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		do {
 			let studioIdentityResponse = try await KService.getStudios(forShow: showIdentity, limit: 10).value
 			self.studioIdentities = studioIdentityResponse.data
+
+			self.responseCount += 1
+		} catch {
+			print(error.localizedDescription)
+		}
+
+		do {
+			let showIdentityResponse = try await KService.getMoreByStudio(forShow: showIdentity, limit: 10).value
+			self.studioShowIdentities = showIdentityResponse.data
+
 			self.responseCount += 1
 		} catch {
 			print(error.localizedDescription)
@@ -316,28 +316,36 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		case R.segue.showDetailsCollectionViewController.songsListSegue.identifier:
 			guard let showSongsListCollectionViewController = segue.destination as? ShowSongsListCollectionViewController else { return }
 			showSongsListCollectionViewController.showIdentity = self.showIdentity
-		case R.segue.showDetailsCollectionViewController.episodeSegue.identifier:
+		case R.segue.showDetailsCollectionViewController.episodesListSegue.identifier:
 			guard let episodesListCollectionViewController = segue.destination as? EpisodesListCollectionViewController else { return }
 			guard let season = sender as? Season else { return }
 			episodesListCollectionViewController.seasonIdentity = SeasonIdentity(id: season.id)
 			episodesListCollectionViewController.episodesListFetchType = .season
-		case R.segue.showDetailsCollectionViewController.showDetailsSegue.identifier:
-			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
-			guard let show = sender as? Show else { return }
-			showDetailsCollectionViewController.show = show
-		case R.segue.showDetailsCollectionViewController.studioSegue.identifier:
-			guard let studioDetailsCollectionViewController = segue.destination as? StudioDetailsCollectionViewController else { return }
-			guard let studio = self.studio else { return }
-			studioDetailsCollectionViewController.studio = studio
+		case R.segue.showDetailsCollectionViewController.showsListSegue.identifier:
+			guard let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController else { return }
+			guard let indexPath = sender as? IndexPath else { return }
+
+			if indexPath.section == SectionLayoutKind.moreByStudio.rawValue {
+				showsListCollectionViewController.title = "\(Trans.moreBy) \(self.show.attributes.studio ?? Trans.studio)"
+				showsListCollectionViewController.showIdentity = self.showIdentity
+				showsListCollectionViewController.showsListFetchType = .moreByStudio
+			} else {
+				showsListCollectionViewController.title = "Related"
+				showsListCollectionViewController.showIdentity = self.showIdentity
+				showsListCollectionViewController.showsListFetchType = .relatedShow
+			}
 		case R.segue.showDetailsCollectionViewController.studiosListSegue.identifier:
 			guard let studiosListCollectionViewController = segue.destination as? StudiosListCollectionViewController else { return }
 			studiosListCollectionViewController.showIdentity = self.showIdentity
 			studiosListCollectionViewController.studiosListFetchType = .show
-		case R.segue.showDetailsCollectionViewController.showsListSegue.identifier:
-			guard let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController else { return }
-			showsListCollectionViewController.title = "Related"
-			showsListCollectionViewController.showIdentity = self.showIdentity
-			showsListCollectionViewController.showsListFetchType = .relatedShow
+		case R.segue.showDetailsCollectionViewController.showDetailsSegue.identifier:
+			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
+			guard let show = sender as? Show else { return }
+			showDetailsCollectionViewController.show = show
+		case R.segue.showDetailsCollectionViewController.studioDetailsSegue.identifier:
+			guard let studioDetailsCollectionViewController = segue.destination as? StudioDetailsCollectionViewController else { return }
+			guard let studio = sender as? Studio else { return }
+			studioDetailsCollectionViewController.studio = studio
 		case R.segue.showDetailsCollectionViewController.characterDetailsSegue.identifier:
 			guard let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController else { return }
 			guard let cell = sender as? CastCollectionViewCell else { return }
@@ -526,7 +534,7 @@ extension ShowDetailsCollectionViewController {
 			case .studios:
 				return R.segue.showDetailsCollectionViewController.studiosListSegue.identifier
 			case .moreByStudio:
-				return R.segue.showDetailsCollectionViewController.studioSegue.identifier
+				return R.segue.showDetailsCollectionViewController.showsListSegue.identifier
 			case .relatedShows:
 				return R.segue.showDetailsCollectionViewController.showsListSegue.identifier
 			case .sosumi:
