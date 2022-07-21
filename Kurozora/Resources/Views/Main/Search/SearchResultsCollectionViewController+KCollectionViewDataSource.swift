@@ -345,20 +345,19 @@ extension SearchResultsCollectionViewController {
 			switch itemKind {
 			case .studioIdentity(let studioIdentity):
 				let studio = self.fetchStudio(at: indexPath)
-				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? studioLockupCollectionViewCell.dataRequest
 
-				if dataRequest == nil && studio == nil {
-					dataRequest = KService.getDetails(forStudio: studioIdentity) { result in
-						switch result {
-						case .success(let studios):
-							self.studios[indexPath] = studios.first
+				if studio == nil {
+					Task {
+						do {
+							let studioResponse = try await KService.getDetails(forStudio: studioIdentity).value
+							self.studios[indexPath] = studioResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
-						case .failure: break
+						} catch {
+							print(error.localizedDescription)
 						}
 					}
 				}
 
-				studioLockupCollectionViewCell.dataRequest = dataRequest
 				studioLockupCollectionViewCell.configure(using: studio)
 			default: break
 			}

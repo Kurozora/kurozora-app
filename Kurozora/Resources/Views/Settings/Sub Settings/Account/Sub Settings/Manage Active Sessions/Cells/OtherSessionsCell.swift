@@ -18,17 +18,11 @@ class OtherSessionsCell: KTableViewCell {
 	@IBOutlet weak var dateValueLabel: KLabel!
 	@IBOutlet var separatorView: [SecondarySeparatorView]!
 
-	// MARK: - Properties
-	var session: Session! {
-		didSet {
-			configureCell()
-		}
-	}
-
 	// MARK: - Functions
-	override func configureCell() {
+	func configureCell(with session: Session?) {
+		guard let session = session else { return }
 		self.ipAddressValueLabel.text = session.attributes.ipAddress
 		self.deviceTypeValueLabel.text = session.relationships.platform.data.first?.attributes.deviceModel
-		self.dateValueLabel?.text = session.attributes.lastValidatedAt
+		self.dateValueLabel?.text = session.attributes.lastValidatedAt.formatted(date: .abbreviated, time: .standard)
 	}
 }
