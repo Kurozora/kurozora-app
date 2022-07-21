@@ -24,17 +24,14 @@ class BadgeCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - Properties
 	var showDetailBage: ShowDetail.Badge = .rating
-	var show: Show! {
-		didSet {
-			configureCell()
-		}
-	}
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
-	func configureCell() {
-		self.primaryLabel?.text = showDetailBage.primaryInformation(from: self.show)
-		self.primaryImageView?.image = showDetailBage.primaryImage(from: self.show)
-		self.secondaryLabel.text = showDetailBage.secondaryInformation(from: self.show)
+	func configureCell(with show: Show?) {
+		guard let show = show else { return }
+
+		self.primaryLabel?.text = showDetailBage.primaryInformation(from: show)
+		self.primaryImageView?.image = showDetailBage.primaryImage(from: show)
+		self.secondaryLabel.text = showDetailBage.secondaryInformation(from: show)
 	}
 }

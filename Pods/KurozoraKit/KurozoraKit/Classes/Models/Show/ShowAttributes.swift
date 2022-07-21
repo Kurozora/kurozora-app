@@ -70,6 +70,9 @@ extension Show {
 		/// The themes of the show.
 		public let themes: [String]?
 
+		/// The studio of the show.
+		public let studio: String?
+
 		/// The languages of the show.
 		public let languages: [Language]
 

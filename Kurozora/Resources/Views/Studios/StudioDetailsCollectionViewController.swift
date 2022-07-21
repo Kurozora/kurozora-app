@@ -29,6 +29,13 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 	}
 	var shows: [IndexPath: Show] = [:]
 	var showIdentities: [ShowIdentity] = []
+	var responseCount: Int = 0 {
+		didSet {
+			if self.responseCount == 2 {
+				self.updateDataSource()
+			}
+		}
+	}
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
@@ -87,14 +94,18 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 
 		self.configureDataSource()
 
-		DispatchQueue.global(qos: .userInteractive).async {
-			self.fetchDetails()
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchDetails()
 		}
 	}
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		self.fetchDetails()
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchDetails()
+		}
 	}
 
 	override func configureEmptyDataView() {
@@ -114,36 +125,23 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 	}
 
 	/// Fetches the currently viewed studio's details.
-	func fetchDetails() {
+	func fetchDetails() async {
 		guard let studioIdentity = self.studioIdentity else { return }
 
-		if self.studio == nil {
-			KService.getDetails(forStudio: studioIdentity) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let studios):
-					self.studio = studios.first
-				case .failure: break
-				}
-			}
-		} else {
-			DispatchQueue.main.async { [weak self] in
-				guard let self = self else { return }
-				self.updateDataSource()
-			}
+		do {
+			let studioResponse = try await KService.getDetails(forStudio: studioIdentity).value
+			self.studio = studioResponse.data.first
+			self.responseCount += 1
+		} catch {
+			print(error.localizedDescription)
 		}
 
-		KService.getShows(forStudio: studioIdentity, limit: 10) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let showIdentityResponse):
-				self.showIdentities = showIdentityResponse.data
-
-				DispatchQueue.main.async {
-					self.updateDataSource()
-				}
-			case .failure: break
-			}
+		do {
+			let showIdentityResponse = try await KService.getShows(forStudio: studioIdentity, limit: 10).value
+			self.showIdentities = showIdentityResponse.data
+			self.responseCount += 1
+		} catch {
+			print(error.localizedDescription)
 		}
 	}
 

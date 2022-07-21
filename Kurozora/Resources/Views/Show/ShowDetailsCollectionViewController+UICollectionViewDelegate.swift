@@ -15,26 +15,37 @@ extension ShowDetailsCollectionViewController {
 			guard let showDetailBadge = ShowDetail.Badge(rawValue: indexPath.item) else { return }
 			switch showDetailBadge {
 			case .rating:
-				collectionView.safeScrollToItem(at: IndexPath(row: 0, section: SectionLayoutKind.rating.rawValue), at: .centeredVertically, animated: true)
+				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.rating) else { return }
+				collectionView.safeScrollToItem(at: IndexPath(row: 0, section: sectionIndex), at: .centeredVertically, animated: true)
 				return
 			case .season:
-				collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.airDates.rawValue, section: SectionLayoutKind.information.rawValue), at: .centeredVertically, animated: true)
+				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }
+				collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.airDates.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
 				return
 			case .rank:
-				collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.genres.rawValue, section: SectionLayoutKind.information.rawValue), at: .centeredVertically, animated: true)
+				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }
+				collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.genres.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
 				return
 			case .tvRating:
-				collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.rating.rawValue, section: SectionLayoutKind.information.rawValue), at: .centeredVertically, animated: true)
+				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }
+				collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.rating.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
 				return
 			case .studio:
-				self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.studioSegue.identifier, sender: nil)
+				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.moreByStudio) else { return }
+				let indexPath = IndexPath(row: 0, section: sectionIndex)
+				self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.showsListSegue.identifier, sender: indexPath)
+				return
 			case .language:
-				collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.languages.rawValue, section: SectionLayoutKind.information.rawValue), at: .centeredVertically, animated: true)
+				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }
+				collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.languages.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
 				return
 			}
 		case .seasons:
 			let season = self.seasons[indexPath]
-			self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.episodeSegue.identifier, sender: season)
+			self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.episodesListSegue.identifier, sender: season)
+		case .studios:
+			let studio = self.studios[indexPath]
+			self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.studioDetailsSegue.identifier, sender: studio)
 		case .moreByStudio:
 			let show = self.studioShows[indexPath]
 			self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.showDetailsSegue.identifier, sender: show)
@@ -52,6 +63,8 @@ extension ShowDetailsCollectionViewController {
 			return self.seasons[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .cast:
 			return self.cast[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		case .studios:
+			return self.studios[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .moreByStudio:
 			return self.studioShows[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .relatedShows:

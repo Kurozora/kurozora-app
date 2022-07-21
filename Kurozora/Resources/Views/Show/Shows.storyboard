@@ -477,9 +477,9 @@
                         <outlet property="navigationTitleLabel" destination="nSg-hj-AjS" id="Br8-BR-C87"/>
                         <outlet property="navigationTitleView" destination="2Od-B7-0Nf" id="R7u-fJ-Lnu"/>
                         <segue destination="Nem-gQ-vzJ" kind="show" identifier="CastListSegue" id="xyZ-T3-j6h"/>
-                        <segue destination="hBE-dn-oqP" kind="show" identifier="EpisodeSegue" id="m5c-UF-zyP"/>
+                        <segue destination="hBE-dn-oqP" kind="show" identifier="EpisodesListSegue" id="m5c-UF-zyP"/>
                         <segue destination="WgT-YJ-daL" kind="show" identifier="SeasonsListSegue" id="CoC-Lm-cl4"/>
-                        <segue destination="urV-HF-poe" kind="show" identifier="StudioSegue" id="YkB-FM-SBI"/>
+                        <segue destination="urV-HF-poe" kind="show" identifier="StudioDetailsSegue" id="YkB-FM-SBI"/>
                         <segue destination="0CH-ol-MCV" kind="show" identifier="ShowDetailsSegue" id="8X9-Ml-Zaa"/>
                         <segue destination="xgN-Jn-ydw" kind="show" identifier="ShowsListSegue" id="diw-vY-oOt"/>
                         <segue destination="TlV-BJ-YqV" kind="show" identifier="PersonDetailsSegue" id="Jby-Sd-cNh"/>

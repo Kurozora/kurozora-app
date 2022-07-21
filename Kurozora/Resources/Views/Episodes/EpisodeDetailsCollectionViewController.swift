@@ -84,12 +84,6 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController {
 		self.handleRefreshControl()
 	}
 
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-
-		NotificationCenter.default.addObserver(self, selector: #selector(updateEpisodes(_:)), name: .KEpisodeWatchStatusDidUpdate, object: nil)
-	}
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
@@ -105,6 +99,12 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController {
 				self.fetchEpisodeDetails()
 			}
 		}
+	}
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+
+		NotificationCenter.default.addObserver(self, selector: #selector(updateEpisodes(_:)), name: .KEpisodeWatchStatusDidUpdate, object: nil)
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {

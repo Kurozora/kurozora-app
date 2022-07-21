@@ -53,18 +53,6 @@ class NotificationsTableViewController: KTableViewController {
 	}
 
 	// MARK: - View
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-		if oldGrouping == nil || oldGrouping != UserSettings.notificationsGrouping, User.isSignedIn {
-			let notificationsGrouping = UserSettings.notificationsGrouping
-			grouping = KNotification.GroupStyle(rawValue: notificationsGrouping)!
-
-			DispatchQueue.global(qos: .userInteractive).async {
-				self.fetchNotifications()
-			}
-		}
-	}
-
 	override func viewWillReload() {
 		super.viewWillReload()
 
@@ -92,6 +80,18 @@ class NotificationsTableViewController: KTableViewController {
 
 		self.enableRefreshControl()
 		self.enableActions()
+	}
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		if oldGrouping == nil || oldGrouping != UserSettings.notificationsGrouping, User.isSignedIn {
+			let notificationsGrouping = UserSettings.notificationsGrouping
+			grouping = KNotification.GroupStyle(rawValue: notificationsGrouping)!
+
+			DispatchQueue.global(qos: .userInteractive).async {
+				self.fetchNotifications()
+			}
+		}
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {

@@ -865,16 +865,46 @@ struct Trans {
 	/// - Tag: Trans-ratings
 	static let ratings: String = String(localized: "Ratings",
 										comment: "The string for the word 'ratings'.")
+	/// The string for the word 'rating'.
+	///
+	/// - Tag: Trans-rating
+	static let rating: String = String(localized: "Rating",
+									   comment: "The string for the word 'rating'.")
+	/// The string for the word 'rank'.
+	///
+	/// - Tag: Trans-rank
+	static let rank: String = String(localized: "Rank",
+									 comment: "The string for the word 'rank'.")
+	/// The string for the word 'language'.
+	///
+	/// - Tag: Trans-language
+	static let language: String = String(localized: "Languages",
+										 comment: "The string for the word 'language'.")
+	/// The string for the word 'tv rating'.
+	///
+	/// - Tag: Trans-tvRating
+	static let tvRating: String = String(localized: "TV Rating",
+										 comment: "The string for the word 'TV rating'.")
 	/// The string for the word 'seasons'.
 	///
 	/// - Tag: Trans-seasons
 	static let seasons: String = String(localized: "Seasons",
 										comment: "The string for the word 'seasons'.")
+	/// The string for the word 'season'.
+	///
+	/// - Tag: Trans-season
+	static let season: String = String(localized: "Season",
+									   comment: "The string for the word 'season'.")
 	/// The string for the word 'studios'.
 	///
 	/// - Tag: Trans-studios
 	static let studios: String = String(localized: "Studios",
 										comment: "The string for the word 'studios'.")
+	/// The string for the word 'studio'.
+	///
+	/// - Tag: Trans-studio
+	static let studio: String = String(localized: "Studio",
+									   comment: "The string for the word 'studio'.")
 	/// The string for the word 'cast'.
 	///
 	/// - Tag: Trans-cast

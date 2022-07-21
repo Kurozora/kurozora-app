@@ -17,13 +17,6 @@ class CurrentSessionCell: KTableViewCell {
 	@IBOutlet weak var deviceValueLabel: KLabel!
 	@IBOutlet weak var separatorView: SeparatorView!
 
-	// MARK: - Properties
-	var accessToken: AccessToken! {
-		didSet {
-			configureCell()
-		}
-	}
-
 	// MARK: - Functions
 	override func sharedInit() {
 		super.sharedInit()
@@ -31,7 +24,8 @@ class CurrentSessionCell: KTableViewCell {
 	}
 
 	// MARK: - Functions
-	override func configureCell() {
+	func configureCell(with accessToken: AccessToken?) {
+		guard let accessToken = accessToken else { return }
 		self.ipAddressValueLabel.text = accessToken.attributes.ipAddress
 		self.deviceValueLabel.text = accessToken.relationships.platform.data.first?.attributes.deviceModel
 	}

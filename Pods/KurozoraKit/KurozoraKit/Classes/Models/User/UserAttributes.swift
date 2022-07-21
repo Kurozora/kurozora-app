@@ -44,7 +44,7 @@ extension User {
 		public var isPro: Bool
 
 		/// The join date of the user.
-		public let joinDate: String
+		public let joinDate: Date
 
 		/// The follower count of the user.
 		public var followerCount: Int
