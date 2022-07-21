@@ -57,21 +57,6 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - View
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-		// Save current page index
-		UserSettings.set(sectionIndex, forKey: .libraryPage)
-
-		// Setup library view controller delegate
-		(tabmanParent as? LibraryViewController)?.libraryViewControllerDelegate = self
-
-		// Update change layout button to reflect user settings
-		delegate?.libraryListViewController(updateLayoutWith: libraryCellStyle)
-
-		// Update sort type button to reflect user settings
-		delegate?.libraryListViewController(updateSortWith: librarySortType)
-	}
-
 	override func viewWillReload() {
 		super.viewWillReload()
 
@@ -109,6 +94,21 @@ class LibraryListCollectionViewController: KCollectionViewController {
 			}
 		}
     }
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		// Save current page index
+		UserSettings.set(sectionIndex, forKey: .libraryPage)
+
+		// Setup library view controller delegate
+		(tabmanParent as? LibraryViewController)?.libraryViewControllerDelegate = self
+
+		// Update change layout button to reflect user settings
+		delegate?.libraryListViewController(updateLayoutWith: libraryCellStyle)
+
+		// Update sort type button to reflect user settings
+		delegate?.libraryListViewController(updateSortWith: librarySortType)
+	}
 
 	// MARK: - Functions
 	/// Fades in and out the empty data view according to the number of rows.

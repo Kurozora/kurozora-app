@@ -52,7 +52,7 @@ extension ShowDetailsCollectionViewController {
 				badgeCollectionViewCell?.showDetailBage = showDetailBadge
 				switch itemKind {
 				case .show(let show, _):
-					badgeCollectionViewCell?.show = show
+					badgeCollectionViewCell?.configureCell(with: show)
 				default: break
 				}
 				return badgeCollectionViewCell
@@ -112,7 +112,7 @@ extension ShowDetailsCollectionViewController {
 		self.dataSource.supplementaryViewProvider = { [weak self] (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
 			guard let self = self else { return nil }
 			let showDetailSection = self.snapshot.sectionIdentifiers[indexPath.section]
-			let sectionTitle = showDetailSection != .moreByStudio ? showDetailSection.stringValue : "\(showDetailSection.stringValue) \(self.studio.attributes.name)"
+			let sectionTitle = showDetailSection != .moreByStudio ? showDetailSection.stringValue : "\(showDetailSection.stringValue) \(self.show.attributes.studio ?? Trans.studio)"
 
 			let titleHeaderCollectionReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
 			titleHeaderCollectionReusableView.delegate = self
@@ -132,8 +132,13 @@ extension ShowDetailsCollectionViewController {
 				self.snapshot.appendItems([.show(self.show)], toSection: showDetailSection)
 			case .badge:
 				self.snapshot.appendSections([showDetailSection])
-				ShowDetail.Badge.allCases.forEach { _ in
-					self.snapshot.appendItems([.show(self.show)], toSection: showDetailSection)
+				ShowDetail.Badge.allCases.forEach { showDetailBadge in
+					switch showDetailBadge {
+//					case .rating:
+//						return
+					default:
+						self.snapshot.appendItems([.show(self.show)], toSection: showDetailSection)
+					}
 				}
 			case .synopsis:
 				if let synopsis = self.show.attributes.synopsis, !synopsis.isEmpty {
@@ -324,20 +329,19 @@ extension ShowDetailsCollectionViewController {
 			switch itemKind {
 			case .studioIdentity(let studioIdentity, _):
 				let studio = self.fetchStudio(at: indexPath)
-				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? studioLockupCollectionViewCell.dataRequest
 
-				if dataRequest == nil && studio == nil {
-					dataRequest = KService.getDetails(forStudio: studioIdentity) { result in
-						switch result {
-						case .success(let studios):
-							self.studios[indexPath] = studios.first
+				if studio == nil {
+					Task {
+						do {
+							let studioReponse = try await KService.getDetails(forStudio: studioIdentity).value
+							self.studios[indexPath] = studioReponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
-						case .failure: break
+						} catch {
+							print(error.localizedDescription)
 						}
 					}
 				}
 
-				studioLockupCollectionViewCell.dataRequest = dataRequest
 				studioLockupCollectionViewCell.configure(using: studio)
 			default: break
 			}

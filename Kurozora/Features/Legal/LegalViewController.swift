@@ -37,12 +37,6 @@ class LegalViewController: KViewController {
 	}
 
 	// MARK: - View
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-
-		self.navigationController?.navigationBar.prefersLargeTitles = false
-	}
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		NotificationCenter.default.addObserver(self, selector: #selector(updatePrivacyPolicyTheme), name: .ThemeUpdateNotification, object: nil)
@@ -54,6 +48,12 @@ class LegalViewController: KViewController {
 		self.navigationTitleView.alpha = 0
 
 		scrollView.delegate = self
+	}
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+
+		self.navigationController?.navigationBar.prefersLargeTitles = false
 	}
 
 	// MARK: - Functions

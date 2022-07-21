@@ -25,13 +25,6 @@ class KurozoraReachabilityViewController: UIViewController {
 	let networkManager = KNetworkManager.shared
 
 	// MARK: - View
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-
-		// Hide the navigation bar
-		navigationController?.setNavigationBarHidden(true, animated: animated)
-	}
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
@@ -40,6 +33,13 @@ class KurozoraReachabilityViewController: UIViewController {
 			guard let self = self else { return }
 			KurozoraDelegate.shared.showMainPage(for: self.window, viewController: self)
 		}
+	}
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+
+		// Hide the navigation bar
+		navigationController?.setNavigationBarHidden(true, animated: animated)
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {

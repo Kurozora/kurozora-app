@@ -84,12 +84,6 @@ class FMDetailsTableViewController: KTableViewController {
 	}
 
 	// MARK: - View
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-		NotificationCenter.default.addObserver(self, selector: #selector(updateFeedMessage(_:)), name: .KFMDidUpdate, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(deleteFeedMessage(_:)), name: .KFMDidDelete, object: nil)
-	}
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Setup refresh control
@@ -104,6 +98,12 @@ class FMDetailsTableViewController: KTableViewController {
 				self.fetchFeedReplies()
 			}
 		}
+	}
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		NotificationCenter.default.addObserver(self, selector: #selector(updateFeedMessage(_:)), name: .KFMDidUpdate, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(deleteFeedMessage(_:)), name: .KFMDidDelete, object: nil)
 	}
 
 	override func viewDidDisappear(_ animated: Bool) {
