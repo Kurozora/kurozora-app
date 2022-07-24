@@ -22,7 +22,7 @@ class KNavigationController: UINavigationController {
 
 	// MARK: - Functions
 	/// The shared settings used to initialize tab bar view.
-	private func sharedInit () {
+	private func sharedInit() {
 		// Configure theme
 		self.configureNavigationBarStyle()
 		self.setupToolbarStyle()

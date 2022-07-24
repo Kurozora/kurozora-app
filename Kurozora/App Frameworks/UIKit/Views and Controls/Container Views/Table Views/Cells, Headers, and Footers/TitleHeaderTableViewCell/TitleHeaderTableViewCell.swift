@@ -13,4 +13,11 @@ class TitleHeaderTableViewCell: UITableViewCell {
 	@IBOutlet weak var titleLabel: KLabel!
 	@IBOutlet weak var subTitleLabel: KSecondaryLabel!
 	@IBOutlet weak var headerButton: HeaderButton!
+
+	// MARK: - Functions
+	func configureCell(withTitle title: String?, subtitle: String?, buttonTitle: String?) {
+		self.titleLabel.text = title
+		self.subTitleLabel.text = subtitle
+		self.headerButton.setTitle(buttonTitle, for: .normal)
+	}
 }

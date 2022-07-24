@@ -78,8 +78,10 @@
 		6623CB1E2724C7F800050EAA /* SelectableSettingsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6623CB1D2724C7F800050EAA /* SelectableSettingsCell.xib */; };
 		6623CB202724D27600050EAA /* IconTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6623CB1F2724D27600050EAA /* IconTableViewCell.xib */; };
 		66244D91230B774200EC33E0 /* LibraryDetailedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66244D90230B774200EC33E0 /* LibraryDetailedCollectionViewCell.swift */; };
+		662A17F7288A1F5D009D4A0D /* SessionLockupCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 662A17F6288A1F5D009D4A0D /* SessionLockupCell.xib */; };
+		662A1800288C57AC009D4A0D /* PlatformAttributes+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662A17FF288C57AC009D4A0D /* PlatformAttributes+UIKit.swift */; };
+		662A1802288C737F009D4A0D /* ManageActiveSessionsController+KTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662A1801288C737E009D4A0D /* ManageActiveSessionsController+KTableViewDataSource.swift */; };
 		662B925F233E50FA001D49B7 /* SearchShowResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662B925E233E50FA001D49B7 /* SearchShowResultsCell.swift */; };
-		662C307F22A06A5E00AAD69B /* CurrentSessionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662C307E22A06A5E00AAD69B /* CurrentSessionCell.swift */; };
 		662CAD68257594E00045236C /* EmptyBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662CAD67257594E00045236C /* EmptyBackgroundView.swift */; };
 		662DB4DB237EF3CC00B7FE7E /* KFillBarIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662DB4DA237EF3CC00B7FE7E /* KFillBarIndicator.swift */; };
 		662DB4DD237EF40800B7FE7E /* Tabman+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662DB4DC237EF40800B7FE7E /* Tabman+Kurozora.swift */; };
@@ -430,7 +432,7 @@
 		66DF090E26C673D0005AED93 /* NotificationKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF090D26C673CF005AED93 /* NotificationKind.swift */; };
 		66DF091326C7C1FB005AED93 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF091226C7C1FA005AED93 /* Store.swift */; };
 		66DF091826C94A47005AED93 /* StoreKit+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF091726C94A47005AED93 /* StoreKit+Kurozora.swift */; };
-		66E08369211324D400B39A75 /* OtherSessionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E08368211324D300B39A75 /* OtherSessionsCell.swift */; };
+		66E08369211324D400B39A75 /* SessionLockupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E08368211324D300B39A75 /* SessionLockupCell.swift */; };
 		66E1517A2711C478007966A9 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E151792711C478007966A9 /* R.generated.swift */; };
 		66E201FF273760820081C84C /* FMDetailsTableViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E201FE273760820081C84C /* FMDetailsTableViewControllerDelegate.swift */; };
 		66E46DFD24FDAF7B009938E1 /* FMDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E46DFC24FDAF7B009938E1 /* FMDetailsTableViewController.swift */; };
@@ -611,8 +613,10 @@
 		6623CB1D2724C7F800050EAA /* SelectableSettingsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectableSettingsCell.xib; sourceTree = "<group>"; };
 		6623CB1F2724D27600050EAA /* IconTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IconTableViewCell.xib; sourceTree = "<group>"; };
 		66244D90230B774200EC33E0 /* LibraryDetailedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryDetailedCollectionViewCell.swift; sourceTree = "<group>"; };
+		662A17F6288A1F5D009D4A0D /* SessionLockupCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SessionLockupCell.xib; sourceTree = "<group>"; };
+		662A17FF288C57AC009D4A0D /* PlatformAttributes+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlatformAttributes+UIKit.swift"; sourceTree = "<group>"; };
+		662A1801288C737E009D4A0D /* ManageActiveSessionsController+KTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManageActiveSessionsController+KTableViewDataSource.swift"; sourceTree = "<group>"; };
 		662B925E233E50FA001D49B7 /* SearchShowResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchShowResultsCell.swift; sourceTree = "<group>"; };
-		662C307E22A06A5E00AAD69B /* CurrentSessionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentSessionCell.swift; sourceTree = "<group>"; };
 		662CAD67257594E00045236C /* EmptyBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyBackgroundView.swift; sourceTree = "<group>"; };
 		662DB4DA237EF3CC00B7FE7E /* KFillBarIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KFillBarIndicator.swift; sourceTree = "<group>"; };
 		662DB4DC237EF40800B7FE7E /* Tabman+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tabman+Kurozora.swift"; sourceTree = "<group>"; };
@@ -966,7 +970,7 @@
 		66DF090D26C673CF005AED93 /* NotificationKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationKind.swift; sourceTree = "<group>"; };
 		66DF091226C7C1FA005AED93 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		66DF091726C94A47005AED93 /* StoreKit+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StoreKit+Kurozora.swift"; sourceTree = "<group>"; };
-		66E08368211324D300B39A75 /* OtherSessionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherSessionsCell.swift; sourceTree = "<group>"; };
+		66E08368211324D300B39A75 /* SessionLockupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionLockupCell.swift; sourceTree = "<group>"; };
 		66E151792711C478007966A9 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = "<group>"; };
 		66E201FE273760820081C84C /* FMDetailsTableViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDetailsTableViewControllerDelegate.swift; sourceTree = "<group>"; };
 		66E46DFC24FDAF7B009938E1 /* FMDetailsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDetailsTableViewController.swift; sourceTree = "<group>"; };
@@ -1323,8 +1327,8 @@
 		6614409521DA417300E54915 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				662C307E22A06A5E00AAD69B /* CurrentSessionCell.swift */,
-				66E08368211324D300B39A75 /* OtherSessionsCell.swift */,
+				66E08368211324D300B39A75 /* SessionLockupCell.swift */,
+				662A17F6288A1F5D009D4A0D /* SessionLockupCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1382,6 +1386,14 @@
 				66EAB5B928591C0100D81C06 /* UserLockupCollectionViewCell.xib */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		662A17FE288C5787009D4A0D /* Platform */ = {
+			isa = PBXGroup;
+			children = (
+				662A17FF288C57AC009D4A0D /* PlatformAttributes+UIKit.swift */,
+			);
+			path = Platform;
 			sourceTree = "<group>";
 		};
 		662EDB47257C3787005AA29E /* Table Views */ = {
@@ -2122,6 +2134,7 @@
 			isa = PBXGroup;
 			children = (
 				669E0358256B218900CEB794 /* Session+UIKit.swift */,
+				662A17FE288C5787009D4A0D /* Platform */,
 			);
 			path = Session;
 			sourceTree = "<group>";
@@ -2325,6 +2338,7 @@
 			isa = PBXGroup;
 			children = (
 				665A0B7520CC72F20024E2E2 /* ManageActiveSessionsController.swift */,
+				662A1801288C737E009D4A0D /* ManageActiveSessionsController+KTableViewDataSource.swift */,
 				660E39E325E466C300A46EB0 /* ManageActiveSessionsController+UITableViewDelegate.swift */,
 				6614409521DA417300E54915 /* Cells */,
 				66B4DBF52450EF5A0097135A /* Views */,
@@ -3219,6 +3233,7 @@
 				66B13A672405DBE000CD732B /* Onboarding.storyboard in Resources */,
 				66CB8D5224F83FE00047A2CF /* FeedMessageCell.xib in Resources */,
 				666C825A2168031B00C93A70 /* Home.storyboard in Resources */,
+				662A17F7288A1F5D009D4A0D /* SessionLockupCell.xib in Resources */,
 				666FBD9022C4E170007DB5D8 /* Black.plist in Resources */,
 				66A08C6A23E3A2D5007B6418 /* PrivacySettings.storyboard in Resources */,
 				66C5797922A83726001B8F51 /* ThemeStore.storyboard in Resources */,
@@ -3446,6 +3461,7 @@
 				66A4FD14270F62D300E7C702 /* Intents.intentdefinition in Sources */,
 				661F9F822087282500CF4153 /* SignInTableViewController.swift in Sources */,
 				66E54EBE244E1579007248EE /* String+UIImage.swift in Sources */,
+				662A1800288C57AC009D4A0D /* PlatformAttributes+UIKit.swift in Sources */,
 				66DF091826C94A47005AED93 /* StoreKit+Kurozora.swift in Sources */,
 				66C86402216DF9270054EE16 /* SeasonsListCollectionViewController.swift in Sources */,
 				665A45822466EFFA00154F41 /* KVisualEffectView.swift in Sources */,
@@ -3590,7 +3606,7 @@
 				66CBDD96246352E900CA5F83 /* SeparatorView.swift in Sources */,
 				66B4DC3E245797770097135A /* SwitchAccountsTableViewController.swift in Sources */,
 				66EA1E1125B634A200FCD07A /* BaseFeedMessageCellDelegate.swift in Sources */,
-				66E08369211324D400B39A75 /* OtherSessionsCell.swift in Sources */,
+				66E08369211324D400B39A75 /* SessionLockupCell.swift in Sources */,
 				66CE81002460361800DB0C49 /* KCollectionViewDataSource.swift in Sources */,
 				66FA97BB281A0C4B0054FC2E /* AlertType.swift in Sources */,
 				66EA1DE125B5BC5900FCD07A /* EpisodesListCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
@@ -3614,6 +3630,7 @@
 				664AAF8C24EE986700FF4AA5 /* CharacterInformation.swift in Sources */,
 				66CBDD9424634DBA00CA5F83 /* HeaderButton.swift in Sources */,
 				666938AF21B1D4D200BA9620 /* FeedMessageCell.swift in Sources */,
+				662A1802288C737F009D4A0D /* ManageActiveSessionsController+KTableViewDataSource.swift in Sources */,
 				6691B83225869A9C005341F9 /* KCosmosView.swift in Sources */,
 				663E34272360D333003386D1 /* MediumLockupCollectionViewCell.swift in Sources */,
 				66DEB4B221D419420093725F /* KSearchController.swift in Sources */,
@@ -3645,7 +3662,6 @@
 				66BA740A223DB20800AEB8ED /* CellStyle.swift in Sources */,
 				66B69BD6214544DB007154BD /* LegalViewController.swift in Sources */,
 				66B4DBEF2450E5780097135A /* SignInWithAppleTableViewController.swift in Sources */,
-				662C307F22A06A5E00AAD69B /* CurrentSessionCell.swift in Sources */,
 				6640E18B22AD634600D0F575 /* AuthenticationViewController.swift in Sources */,
 				660E3A1025E5E09C00A46EB0 /* SearchResultsCollectionViewController+UICollectionViewDelegate.swift in Sources */,
 				663E34232360D2BE003386D1 /* VideoLockupCollectionViewCell.swift in Sources */,

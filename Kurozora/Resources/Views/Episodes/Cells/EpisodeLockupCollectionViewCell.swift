@@ -41,6 +41,9 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 		}
 		self.hideSkeleton()
 
+		// Round corners
+		self.cornerView.cornerRadius = 10
+
 		self.episodeImageView.setImage(with: episode.attributes.banner?.url ?? "", placeholder: R.image.placeholders.episodeBanner()!)
 
 		// Configure watch status
@@ -57,12 +60,6 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 		// Configure episode title label
 		self.episodeTitleLabel.text = episode.attributes.title
 		self.episodeFirstAiredLabel.text = episode.attributes.firstAired?.formatted(date: .abbreviated, time: .omitted) ?? "TBA"
-
-		// Round corners
-		self.cornerView.cornerRadius = 10
-
-		// Apply shadow
-		self.shadowView.applyShadow()
 	}
 
 	/// Configures the watch button of the episode.
