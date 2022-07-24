@@ -60,7 +60,7 @@ extension KurozoraKit {
 		}
 
 		request.method = .get
-		return request.perform().serializingDecodable(PersonIdentityResponse.self)
+		return request.perform().serializingDecodable(PersonIdentityResponse.self, decoder: self.tron.codable.modelDecoder)
 	}
 
 	/// Fetch the shows for the given character identity.

@@ -25,7 +25,9 @@ extension Session {
 		// Sign out of session action
 		let signOutOfSessionAction = UIAction(title: "Sign Out of Session", image: UIImage(systemName: "minus.circle"), attributes: .destructive) { _ in
 			if let indexPath = userInfo?["indexPath"] as? IndexPath {
-				self.signOutOfSession(at: indexPath)
+				Task {
+					await self.signOutOfSession(at: indexPath)
+				}
 			}
 		}
 		menuElements.append(signOutOfSessionAction)
@@ -35,13 +37,13 @@ extension Session {
 	}
 
 	/// Sends a request to remove the session from the user's session list.
-	func signOutOfSession(at indexPath: IndexPath) {
-		KService.deleteSession(self.id) { result in
-			switch result {
-			case .success:
-				NotificationCenter.default.post(name: .KSSessionIsDeleted, object: nil, userInfo: ["indexPath": indexPath])
-			case .failure: break
-			}
+	func signOutOfSession(at indexPath: IndexPath) async {
+		do {
+			let sessionIdentity = SessionIdentity(id: self.id)
+			_ = try await KService.deleteSession(sessionIdentity).value
+			NotificationCenter.default.post(name: .KSSessionIsDeleted, object: nil, userInfo: ["indexPath": indexPath])
+		} catch {
+			print(error.localizedDescription)
 		}
 	}
 }

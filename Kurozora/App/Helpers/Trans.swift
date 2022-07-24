@@ -469,6 +469,26 @@ struct Trans {
 											  table: "Notification",
 											  comment: "The string for the 'library import' notification type")
 
+	// MARK: - Sessions
+	/// The string for the 'current session' section.
+	///
+	/// - Tag: Trans-currentSession
+	static let currentSession: String = String(localized: "Current Session",
+											   table: "Sessions",
+											   comment: "The string for the 'current session' section.")
+	/// The string for the 'other session' section.
+	///
+	/// - Tag: Trans-otherSessions
+	static let otherSessions: String = String(localized: "Other Sessions",
+											  table: "Sessions",
+											  comment: "The string for the 'other sessions' section.")
+	/// The string for 'this device'.
+	///
+	/// - Tag: Trans-thisDevice
+	static let thisDevice: String = String(localized: "This device",
+										   table: "Sessions",
+										   comment: "The string for 'this device'.")
+
 	// MARK: - Settings
 	/// The headline string for the account settings option.
 	///

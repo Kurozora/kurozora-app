@@ -30,7 +30,7 @@ extension KurozoraKit {
 		}
 
 		request.method = .get
-		return request.perform().serializingDecodable(StudioResponse.self)
+		return request.perform().serializingDecodable(StudioResponse.self, decoder: self.tron.codable.modelDecoder)
 	}
 
 	///	Fetch the shows for the given studio identity.
@@ -53,6 +53,6 @@ extension KurozoraKit {
 		request.parameters["limit"] = limit
 
 		request.method = .get
-		return request.perform().serializingDecodable(ShowIdentityResponse.self)
+		return request.perform().serializingDecodable(ShowIdentityResponse.self, decoder: self.tron.codable.modelDecoder)
 	}
 }

@@ -42,6 +42,6 @@ extension KurozoraKit {
 		}
 
 		request.method = .get
-		return request.perform().serializingDecodable(SearchResponse.self)
+		return request.perform().serializingDecodable(SearchResponse.self, decoder: self.tron.codable.modelDecoder)
 	}
 }

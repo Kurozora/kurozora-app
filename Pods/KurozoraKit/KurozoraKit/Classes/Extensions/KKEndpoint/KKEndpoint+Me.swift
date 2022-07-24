@@ -185,10 +185,10 @@ extension KKEndpoint.Me {
 		case index
 
 		/// The endpoint to the details of a session.
-		case details(_ sessionID: String)
+		case details(_ sessionIdentity: SessionIdentity)
 
 		/// The endpoint to delete a session.
-		case delete(_ sessionID: String)
+		case delete(_ sessionIdentity: SessionIdentity)
 
 		// MARK: - Properties
 		/// The endpoint value of the Sessions API type.
@@ -196,10 +196,10 @@ extension KKEndpoint.Me {
 			switch self {
 			case .index:
 				return "me/sessions"
-			case .details(let sessionID):
-				return "me/sessions/\(sessionID)"
-			case .delete(let sessionID):
-				return "me/sessions/\(sessionID)/delete"
+			case .details(let sessionIdentity):
+				return "me/sessions/\(sessionIdentity.id)"
+			case .delete(let sessionIdentity):
+				return "me/sessions/\(sessionIdentity.id)/delete"
 			}
 		}
 	}
