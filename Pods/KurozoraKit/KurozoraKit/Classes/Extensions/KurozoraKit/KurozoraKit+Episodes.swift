@@ -29,7 +29,7 @@ extension KurozoraKit {
 		}
 
 		request.method = .get
-		return request.perform().serializingDecodable(EpisodeResponse.self)
+		return request.perform().serializingDecodable(EpisodeResponse.self, decoder: self.tron.codable.modelDecoder)
 	}
 
 	/// Update an episode's watch status.
@@ -47,7 +47,7 @@ extension KurozoraKit {
 		}
 
 		request.method = .post
-		return request.perform().serializingDecodable(WatchStatus.self)
+		return request.perform().serializingDecodable(WatchStatus.self, decoder: self.tron.codable.modelDecoder)
 	}
 
 	/// Rate the episode with the given episode identity.
@@ -74,6 +74,6 @@ extension KurozoraKit {
 		}
 
 		request.method = .post
-		return request.perform().serializingDecodable(KKSuccess.self)
+		return request.perform().serializingDecodable(KKSuccess.self, decoder: self.tron.codable.modelDecoder)
 	}
 }

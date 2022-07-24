@@ -193,7 +193,7 @@ extension KurozoraKit {
 		request.parameters["limit"] = limit
 
 		request.method = .get
-		return request.perform().serializingDecodable(UserIdentityResponse.self)
+		return request.perform().serializingDecodable(UserIdentityResponse.self, decoder: self.tron.codable.modelDecoder)
 	}
 
 	/// Follow or unfollow a user with the given user identity.

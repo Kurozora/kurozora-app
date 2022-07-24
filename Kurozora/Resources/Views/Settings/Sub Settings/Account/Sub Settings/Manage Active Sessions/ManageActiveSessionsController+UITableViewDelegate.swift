@@ -10,37 +10,86 @@ import UIKit
 
 extension ManageActiveSessionsController {
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		if indexPath.section == self.sessions.count - 20 && self.nextPageURL != nil {
-			self.fetchSessions()
+		guard let sectionIdentifier = self.dataSource.sectionIdentifier(for: indexPath.section) else { return }
+
+		switch sectionIdentifier {
+		case .current:
+			return
+		case .other:
+			let sessionIdentities = self.sessionIdentities.count - 1
+			var itemsCount = sessionIdentities / 4 / 2
+			itemsCount = itemsCount > 15 ? 15 : itemsCount // Make sure count isn't above 15
+			itemsCount = sessionIdentities - itemsCount
+			itemsCount = itemsCount < 1 ? 1 : itemsCount // Make sure count isn't below 1
+
+			if indexPath.item >= itemsCount && self.nextPageURL != nil {
+				Task { [weak self] in
+					guard let self = self else { return }
+					await self.fetchSessions()
+				}
+			}
 		}
 	}
 
 	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-		if let otherSessionsCell = tableView.cellForRow(at: indexPath) as? OtherSessionsCell {
-			otherSessionsCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
+		guard let sectionIdentifier = self.dataSource.sectionIdentifier(for: indexPath.section) else { return }
 
-			otherSessionsCell.ipAddressValueLabel.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-			otherSessionsCell.deviceTypeValueLabel.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-			otherSessionsCell.dateValueLabel.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+		switch sectionIdentifier {
+		case .current:
+			return
+		case .other:
+			guard let sessionLockupCell = tableView.cellForRow(at: indexPath) as? SessionLockupCell else { return }
+		sessionLockupCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
+		sessionLockupCell.primaryLabel.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+		sessionLockupCell.secondaryLabel.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
 		}
 	}
 
 	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-		if let otherSessionsCell = tableView.cellForRow(at: indexPath) as? OtherSessionsCell {
-			otherSessionsCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+		guard let sectionIdentifier = self.dataSource.sectionIdentifier(for: indexPath.section) else { return }
 
-			otherSessionsCell.ipAddressValueLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-			otherSessionsCell.deviceTypeValueLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-			otherSessionsCell.dateValueLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+		switch sectionIdentifier {
+		case .current:
+			return
+		case .other:
+			guard let sessionLockupCell = tableView.cellForRow(at: indexPath) as? SessionLockupCell else { return }
+			sessionLockupCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+			sessionLockupCell.primaryLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			sessionLockupCell.secondaryLabel.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
 		}
+	}
+
+	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		guard let sectionIdentifier = self.dataSource.sectionIdentifier(for: section) else { return nil }
+		let titleHeaderTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.titleHeaderTableViewCell.identifier) as? TitleHeaderTableViewCell
+
+		switch sectionIdentifier {
+		case .current:
+			titleHeaderTableViewCell?.configureCell(withTitle: Trans.currentSession, subtitle: nil, buttonTitle: nil)
+		case .other:
+			titleHeaderTableViewCell?.configureCell(withTitle: Trans.otherSessions, subtitle: nil, buttonTitle: nil)
+		}
+
+		titleHeaderTableViewCell?.headerButton.isHidden = true
+		return titleHeaderTableViewCell?.contentView
 	}
 
 	// MARK: - Responding to Row Actions
 	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 		let signOutOfSessionAction = UIContextualAction(style: .destructive, title: "Sign Out") { [weak self] (_, _, completionHandler) in
 			guard let self = self else { return }
-			self.sessions[indexPath.section - 1].signOutOfSession(at: indexPath)
-			completionHandler(true)
+
+			switch self.dataSource.itemIdentifier(for: indexPath) {
+			case .sessionIdentity(let sessionIdentity):
+				Task {
+					let session = self.sessions.first { _, session in
+						session.id == sessionIdentity.id
+					}?.value
+					await session?.signOutOfSession(at: indexPath)
+					completionHandler(true)
+				}
+			default: break
+			}
 		}
 		signOutOfSessionAction.backgroundColor = .kLightRed
 		signOutOfSessionAction.image = UIImage(systemName: "minus.circle")
@@ -52,10 +101,23 @@ extension ManageActiveSessionsController {
 
 	// MARK: - Managing Context Menus
 	override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		if indexPath.section != 0 {
-			return self.sessions[indexPath.section - 1].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		guard let sectionIdentifier = self.dataSource.sectionIdentifier(for: indexPath.section) else { return nil }
+
+		switch sectionIdentifier {
+		case .current:
+			return nil
+		case .other:
+			switch self.dataSource.itemIdentifier(for: indexPath) {
+			case .sessionIdentity(let sessionIdentity):
+				let session = self.sessions.first { _, session in
+					session.id == sessionIdentity.id
+				}?.value
+
+				return session?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			default:
+				return nil
+			}
 		}
-		return nil
 	}
 
 	override func tableView(_ tableView: UITableView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {

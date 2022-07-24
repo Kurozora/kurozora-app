@@ -14,7 +14,7 @@ import UIKit
 /// You use cells primarily to organize and present your app’s custom content, but `KTableViewCell` provides some specific customizations to support reloading behaviors, including:
 /// - A [configureCell()](x-source-tag://KTableViewCell-configureCell) method for configuring the data inside the cell.
 /// - A [reloadCell()](x-source-tag://KTableViewCell-reloadCell) method for reloading the data inside the cell.
-class KTableViewCell: UITableViewCell {
+class KTableViewCell: UITableViewCell, SkeletonDisplayable {
 	// MARK: - Initializers
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -24,6 +24,13 @@ class KTableViewCell: UITableViewCell {
 	required init?(coder: NSCoder) {
 		super.init(coder: coder)
 		self.sharedInit()
+	}
+
+	// MARK: - View
+	override func prepareForReuse() {
+		super.prepareForReuse()
+
+		self.showSkeleton()
 	}
 
 	// MARK: - Functions
