@@ -57,7 +57,7 @@ extension KurozoraKit {
 		request.parameters["limit"] = limit
 
 		request.method = .get
-		return request.perform().serializingDecodable(PersonIdentityResponse.self)
+		return request.perform().serializingDecodable(PersonIdentityResponse.self, decoder: self.tron.codable.modelDecoder)
 	}
 
 	///	Fetch the cast details for the given show identity.
@@ -76,7 +76,7 @@ extension KurozoraKit {
 		request.parameters["limit"] = limit
 
 		request.method = .get
-		return request.perform().serializingDecodable(CastIdentityResponse.self)
+		return request.perform().serializingDecodable(CastIdentityResponse.self, decoder: self.tron.codable.modelDecoder)
 	}
 
 	///	Fetch the character details for the given show identity.
@@ -95,7 +95,7 @@ extension KurozoraKit {
 		request.parameters["limit"] = limit
 
 		request.method = .get
-		return request.perform().serializingDecodable(CharacterIdentityResponse.self)
+		return request.perform().serializingDecodable(CharacterIdentityResponse.self, decoder: self.tron.codable.modelDecoder)
 	}
 
 	///	Fetch the related shows for a the given show identity.
@@ -118,7 +118,7 @@ extension KurozoraKit {
 		request.parameters["limit"] = limit
 
 		request.method = .get
-		return request.perform().serializingDecodable(RelatedShowResponse.self)
+		return request.perform().serializingDecodable(RelatedShowResponse.self, decoder: self.tron.codable.modelDecoder)
 	}
 
 	///	Fetch the seasons for a the given show identity.
@@ -139,7 +139,7 @@ extension KurozoraKit {
 		request.parameters["reversed"] = reversed
 
 		request.method = .get
-		return request.perform().serializingDecodable(SeasonIdentityResponse.self)
+		return request.perform().serializingDecodable(SeasonIdentityResponse.self, decoder: self.tron.codable.modelDecoder)
 	}
 
 	/// Fetch the songs for a the given show identity.
@@ -157,7 +157,7 @@ extension KurozoraKit {
 		request.parameters["limit"] = limit
 
 		request.method = .get
-		return request.perform().serializingDecodable(ShowSongResponse.self)
+		return request.perform().serializingDecodable(ShowSongResponse.self, decoder: self.tron.codable.modelDecoder)
 	}
 
 	///	Fetch the studios for a the given show identity.
@@ -175,7 +175,7 @@ extension KurozoraKit {
 		request.parameters["limit"] = limit
 
 		request.method = .get
-		return request.perform().serializingDecodable(StudioIdentityResponse.self)
+		return request.perform().serializingDecodable(StudioIdentityResponse.self, decoder: self.tron.codable.modelDecoder)
 	}
 
 	///	Fetch the more by studio section for a the given show identity.
@@ -193,7 +193,7 @@ extension KurozoraKit {
 		request.parameters["limit"] = limit
 
 		request.method = .get
-		return request.perform().serializingDecodable(ShowIdentityResponse.self)
+		return request.perform().serializingDecodable(ShowIdentityResponse.self, decoder: self.tron.codable.modelDecoder)
 	}
 
 	/// Rate the show with the given show identity.

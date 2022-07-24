@@ -309,10 +309,12 @@ extension NotificationsTableViewController {
 
 		switch self.grouping {
 		case .automatic, .byType:
-			titleHeaderTableViewCell?.titleLabel.text = groupedNotifications[section].sectionTitle
-			titleHeaderTableViewCell?.subTitleLabel.text = nil
-			let allNotificationsRead = groupedNotifications[section].sectionNotifications.contains(where: { $0.attributes.readStatus == .read })
-			titleHeaderTableViewCell?.headerButton.setTitle(allNotificationsRead ? "Mark as unread" : "Mark as read", for: .normal)
+			let groupNotification = self.groupedNotifications[section]
+			let allNotificationsRead = groupNotification.sectionNotifications.contains(where: { $0.attributes.readStatus == .read })
+			let title = groupNotification.sectionTitle
+			let buttonTitle = allNotificationsRead ? "Mark as unread" : "Mark as read"
+
+			titleHeaderTableViewCell?.configureCell(withTitle: title, subtitle: nil, buttonTitle: buttonTitle)
 			return titleHeaderTableViewCell?.contentView
 		case .off: break
 		}

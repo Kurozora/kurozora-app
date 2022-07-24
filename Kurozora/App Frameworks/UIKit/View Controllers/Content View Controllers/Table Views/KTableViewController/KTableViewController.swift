@@ -62,11 +62,6 @@ class KTableViewController: UITableViewController {
 		return false
 	}
 
-	// MARK: - Initializers
-	deinit {
-		NotificationCenter.default.removeObserver(self)
-	}
-
 	// MARK: - View
 	override func viewWillReload() {
 		super.viewWillReload()
@@ -105,6 +100,8 @@ class KTableViewController: UITableViewController {
 	///
 	/// Cells can also be registered during the configuration by using [registerCells(for tableView: UITableView)](x-source-tag://KTableViewController-registerCellsForTableView).
 	fileprivate func configureTableView() {
+		tableView.prefetchDataSource = self
+		tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 		tableView.backgroundView = emptyBackgroundView
 
 		// Register cells with the table view.
@@ -126,6 +123,11 @@ class KTableViewController: UITableViewController {
 			tableView.register(nib: UINib(nibName: String(describing: nib), bundle: nil), withHeaderFooterViewClass: nib)
 		}
 	}
+}
+
+// MARK: - UICollectionViewDataSourcePrefetching
+extension KTableViewController: UITableViewDataSourcePrefetching {
+	func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) { }
 }
 
 // MARK: - Refresh Control

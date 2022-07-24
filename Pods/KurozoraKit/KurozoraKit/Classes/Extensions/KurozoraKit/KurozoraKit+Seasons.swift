@@ -27,7 +27,7 @@ extension KurozoraKit {
 		}
 
 		request.method = .get
-		return request.perform().serializingDecodable(SeasonResponse.self)
+		return request.perform().serializingDecodable(SeasonResponse.self, decoder: self.tron.codable.modelDecoder)
 	}
 
 	/// Fetch the episodes for the given season identity.
@@ -52,6 +52,6 @@ extension KurozoraKit {
 		request.parameters["hide_fillers"] = hideFillers ? 1 : 0
 
 		request.method = .get
-		return request.perform().serializingDecodable(EpisodeIdentityResponse.self)
+		return request.perform().serializingDecodable(EpisodeIdentityResponse.self, decoder: self.tron.codable.modelDecoder)
 	}
 }

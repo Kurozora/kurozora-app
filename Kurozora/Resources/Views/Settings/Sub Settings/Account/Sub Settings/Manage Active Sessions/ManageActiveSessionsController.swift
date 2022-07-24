@@ -11,24 +11,27 @@ import KurozoraKit
 import CoreLocation
 import MapKit
 
+class SessionDatasource: UITableViewDiffableDataSource<ManageActiveSessionsController.SectionLayoutKind, ManageActiveSessionsController.ItemKind> {
+	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+		guard let sectionIdentifier = self.sectionIdentifier(for: indexPath.section) else { return false }
+		return sectionIdentifier != .current
+	}
+}
+
 class ManageActiveSessionsController: KTableViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var mapView: MKMapView!
 
 	// MARK: - Properties
-	var sessions: [Session] = [] {
-		didSet {
-			createAnnotations()
-			tableView.reloadData {
-				self._prefersActivityIndicatorHidden = true
-				#if !targetEnvironment(macCatalyst)
-				self.refreshControl?.endRefreshing()
-				self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your sessions list!")
-				#endif
-			}
-		}
-	}
+	var sessions: [IndexPath: Session] = [:]
+	var sessionIdentities: [SessionIdentity] = []
+	var dataSource: SessionDatasource! = nil
+
+	/// The next page url of the pagination.
 	var nextPageURL: String?
+
+	/// Whether a fetch request is currently in progress.
+	var isRequestInProgress: Bool = false
 
 	// Map & Location
 	var pointAnnotation: MKPointAnnotation!
@@ -46,6 +49,12 @@ class ManageActiveSessionsController: KTableViewController {
 	}
 
 	// MARK: - View
+	override func viewWillReload() {
+		super.viewWillReload()
+
+		self.handleRefreshControl()
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		NotificationCenter.default.addObserver(self, selector: #selector(removeSession(_:)), name: .KSSessionIsDeleted, object: nil)
@@ -55,16 +64,19 @@ class ManageActiveSessionsController: KTableViewController {
 		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your sessions!")
 		#endif
 
+		self.configureDataSource()
+
 		// Fetch sessions
-		DispatchQueue.global(qos: .userInteractive).async {
-			self.fetchSessions()
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchSessions()
 		}
 
 		// Configure map view
-		mapView.showsUserLocation = true
+		self.mapView.showsUserLocation = true
 
 		// Configure table view height
-		tableView.tableHeaderView?.frame.size.height = self.view.frame.height / 3
+		self.tableView.tableHeaderView?.frame.size.height = self.view.frame.height / 3
 	}
 
 	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -80,51 +92,72 @@ class ManageActiveSessionsController: KTableViewController {
 		}
 	}
 
-	// MARK: - Functions
-	/// Fetches sessions for the current user from the server.
-	func fetchSessions() {
+	func endFetch() {
+		self.isRequestInProgress = false
+		self._prefersActivityIndicatorHidden = true
+
+		self.createAnnotations()
+		self.updateDataSource()
+
+		#if DEBUG
 		#if !targetEnvironment(macCatalyst)
-		DispatchQueue.main.async { [weak self] in
+		self.refreshControl?.endRefreshing()
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your sessions!")
+		#endif
+		#endif
+	}
+
+	// MARK: - Functions
+	override func handleRefreshControl() {
+		self.nextPageURL = nil
+		Task { [weak self] in
 			guard let self = self else { return }
-			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing sessions list...")
+			await self.fetchSessions()
 		}
+	}
+
+	/// Fetches sessions for the current user from the server.
+	func fetchSessions() async {
+		guard !self.isRequestInProgress else {
+			return
+		}
+
+		// Set request in progress
+		self.isRequestInProgress = true
+
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing sessions...")
 		#endif
 
-		KService.getSessions(next: self.nextPageURL) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let sessionResponse):
-				// Reset data if necessary
-				if self.nextPageURL == nil {
-					self.sessions = []
-				}
+		do {
+			let sessionResponse = try await KService.getSessions(next: self.nextPageURL).value
 
-				// Save next page url and append new data
-				self.nextPageURL = sessionResponse.next
-				self.sessions.append(contentsOf: sessionResponse.data)
-			case .failure: break
+			// Reset data if necessary
+			if self.nextPageURL == nil {
+				self.sessionIdentities = []
 			}
+
+			// Save next page url and append new data
+			self.nextPageURL = sessionResponse.next
+			self.sessionIdentities.append(contentsOf: sessionResponse.data)
+			self.sessionIdentities.removeDuplicates()
+
+			// End fetch
+			self.endFetch()
+		} catch {
+			print(error.localizedDescription)
 		}
 	}
 
 	/// Creates annotations and adds them to the map view.
 	private func createAnnotations() {
-		for session in sessions {
+		self.sessions.forEach { [weak self] _, session in
+			guard let self = self else { return }
 			let annotation = ImageAnnotation()
-			if let deviceName = session.relationships.platform.data.first?.attributes.deviceModel {
-				annotation.title = deviceName
 
-				if deviceName.contains("iPhone", caseSensitive: false) {
-					annotation.image = UIImage(systemName: "iphone")
-				} else if deviceName.contains("iPad", caseSensitive: false) {
-					annotation.image = UIImage(systemName: "ipad.landscape")
-				} else if deviceName.contains("TV", caseSensitive: false) {
-					annotation.image = UIImage(systemName: "appletv")
-				} else if deviceName.contains("Mac", caseSensitive: false) {
-					annotation.image = UIImage(systemName: "laptopcomputer")
-				} else {
-					annotation.image = UIImage(systemName: "bolt.horizontal")
-				}
+			if let deviceName = session.relationships.platform.data.first?.attributes {
+				annotation.title = deviceName.deviceModel
+				annotation.image = deviceName.deviceImage
 			}
 
 			if let sessionLocation = session.relationships.location.data.first {
@@ -133,70 +166,32 @@ class ManageActiveSessionsController: KTableViewController {
 				}
 			}
 
-			mapView.addAnnotation(annotation)
+			self.mapView.addAnnotation(annotation)
 		}
 
-		locationManager.desiredAccuracy = kCLLocationAccuracyBest
-		locationManager.requestWhenInUseAuthorization()
-		locationManager.startUpdatingLocation()
+		self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+		self.locationManager.requestWhenInUseAuthorization()
+		self.locationManager.startUpdatingLocation()
 	}
 
 	/// Removes the session specified in the received information.
 	///
 	/// - Parameter notification: An object containing information broadcast to registered observers.
 	@objc func removeSession(_ notification: NSNotification) {
-		// Start delete process
-		self.tableView.beginUpdates()
-		if let indexPath = notification.userInfo?["indexPath"] as? IndexPath, self.sessions.count != 0 {
-			self.sessions.remove(at: indexPath.section - 1)
-			self.tableView.deleteSections([indexPath.section], with: .left)
-		}
-		self.tableView.endUpdates()
-	}
-
-	override func handleRefreshControl() {
-		self.fetchSessions()
-	}
-}
-
-// MARK: - UITableViewDataSource
-extension ManageActiveSessionsController {
-	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		if section == 0 {
-			return "Current Session"
-		} else if section == 1 {
-			return "Other Sessions"
-		}
-		return nil
-	}
-
-	override func numberOfSections(in tableView: UITableView) -> Int {
-		return sessions.isEmpty ? 1 : sessions.count + 1
-	}
-
-	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 1
-	}
-
-	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		if indexPath.section == 0 {
-			guard let currentSessionCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.currentSessionCell, for: indexPath) else {
-				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.currentSessionCell.identifier)")
+		if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
+			DispatchQueue.main.async { [weak self] in
+				guard let self = self else { return }
+				self.removeSession(at: indexPath)
 			}
-			currentSessionCell.configureCell(with: User.current?.relationships?.accessTokens?.data.first)
-			return currentSessionCell
 		}
-
-		// Other sessions found
-		guard let otherSessionsCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.otherSessionsCell, for: indexPath) else {
-				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.otherSessionsCell.identifier)")
-		}
-		otherSessionsCell.configureCell(with: self.sessions[indexPath.section - 1])
-		return otherSessionsCell
 	}
 
-	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-		return indexPath.section != 0
+	/// Removes the session specified by the givne index path.
+	///
+	/// - Parameter indexPath: The index path of the session.
+	func removeSession(at indexPath: IndexPath) {
+		self.sessionIdentities.remove(at: indexPath.item)
+		self.updateDataSource()
 	}
 }
 
@@ -233,19 +228,59 @@ extension ManageActiveSessionsController: MKMapViewDelegate {
 // MARK: - CLLocationManagerDelegate
 extension ManageActiveSessionsController: CLLocationManagerDelegate {
 	func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-		print("Unable to access your current location")
+		print("Unable to access current location", error.localizedDescription)
 	}
 
-	@available(iOS 14.0, macOS 11.0, *)
 	func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
 		switch manager.authorizationStatus {
 		case .restricted, .denied, .notDetermined:
-			locationManager.requestWhenInUseAuthorization()
+			self.locationManager.requestWhenInUseAuthorization()
 		default: break
 		}
 
-		locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
-		locationManager.delegate = self
-		locationManager.startUpdatingLocation()
+		self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+		self.locationManager.delegate = self
+		self.locationManager.startUpdatingLocation()
+	}
+}
+
+// MARK: - SectionLayoutKind
+extension ManageActiveSessionsController {
+	/// List of session section layout kind.
+	///
+	/// - `current`: the section containing the current session.
+	/// - `orther`: the section containing the other sessions.
+	enum SectionLayoutKind: Int, CaseIterable {
+		/// Indicates the section containing the current session.
+		case current = 0
+
+		/// Indicates the section containing the other sessions.
+		case other
+	}
+
+	enum ItemKind: Hashable {
+		case accessToken(_ accessToken: AccessToken)
+		case sessionIdentity(_ sessionIdentity: SessionIdentity)
+
+		// MARK: - Functions
+		func hash(into hasher: inout Hasher) {
+			switch self {
+			case .accessToken(let accessToken):
+				hasher.combine(accessToken)
+			case .sessionIdentity(let sessionIdentity):
+				hasher.combine(sessionIdentity)
+			}
+		}
+
+		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
+			switch (lhs, rhs) {
+			case (.accessToken(let accessToken1), .accessToken(let accessToken2)):
+				return accessToken1 == accessToken2
+			case (.sessionIdentity(let sessionIdentity1), .sessionIdentity(let sessionIdentity2)):
+				return sessionIdentity1 == sessionIdentity2
+			default:
+				return false
+			}
+		}
 	}
 }

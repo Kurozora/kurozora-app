@@ -80,6 +80,6 @@ extension KurozoraKit {
 				"limit": limit
 			]
 		}
-		return request.perform().serializingDecodable(ExploreCategoryResponse.self)
+		return request.perform().serializingDecodable(ExploreCategoryResponse.self, decoder: self.tron.codable.modelDecoder)
 	}
 }
