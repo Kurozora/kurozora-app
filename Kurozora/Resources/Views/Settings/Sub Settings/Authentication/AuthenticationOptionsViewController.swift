@@ -25,7 +25,7 @@ extension AuthenticationOptionsViewController {
 		}
 		let authenticationInterval = authenticationIntervals[indexPath.row]
 		let selectedAuthenticationInterval = UserSettings.authenticationInterval
-		authenticationOptionsCell.authenticationInterval = authenticationInterval
+		authenticationOptionsCell.configureCell(using: authenticationInterval)
 		authenticationOptionsCell.setSelected(authenticationInterval == selectedAuthenticationInterval)
 		return authenticationOptionsCell
 	}

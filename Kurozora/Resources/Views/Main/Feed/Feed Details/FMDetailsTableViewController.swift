@@ -254,7 +254,7 @@ extension FMDetailsTableViewController {
 			feedMessageCell.delegate = self
 			feedMessageCell.liveReplyEnabled = true
 			feedMessageCell.liveReShareEnabled = false
-			feedMessageCell.feedMessage = feedMessage
+			feedMessageCell.configureCell(using: self.feedMessage)
 			return feedMessageCell
 		default:
 			guard let feedMessageCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedMessageCell, for: indexPath) else {
@@ -263,7 +263,7 @@ extension FMDetailsTableViewController {
 			feedMessageCell.delegate = self
 			feedMessageCell.liveReplyEnabled = false
 			feedMessageCell.liveReShareEnabled = false
-			feedMessageCell.feedMessage = feedMessageReplies[indexPath.row]
+			feedMessageCell.configureCell(using: self.feedMessageReplies[indexPath.row])
 			return feedMessageCell
 		}
 	}

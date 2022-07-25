@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 
 class FeedMessageReShareCell: FeedMessageCell {
 	// MARK: - IBOutlets
@@ -17,9 +18,13 @@ class FeedMessageReShareCell: FeedMessageCell {
 	@IBOutlet weak var opView: UIView?
 
 	// MARK: - Functions
-	override func configureCell() {
-		super.configureCell()
-		guard let opMessage = self.feedMessage.relationships.parent?.data.first else { return }
+	override func configureCell(using feedMessage: FeedMessage?) {
+		super.configureCell(using: feedMessage)
+		guard let feedMessage = feedMessage else {
+			return
+		}
+
+		guard let opMessage = feedMessage.relationships.parent?.data.first else { return }
 		self.opDateTimeLabel.text = opMessage.attributes.createdAt.relativeToNow
 		self.opMessageTextView.text = opMessage.attributes.body
 
@@ -53,13 +58,13 @@ class FeedMessageReShareCell: FeedMessageCell {
 
 	/// Segues to message details.
 	@objc func showOPMessage(_ gestureRecognizer: UITapGestureRecognizer) {
-		guard let opMessage = self.feedMessage.relationships.parent?.data.first else { return }
+		guard let opMessage = feedMessage.relationships.parent?.data.first else { return }
 		self.parentViewController?.performSegue(withIdentifier: R.segue.feedTableViewController.feedMessageDetailsSegue.identifier, sender: opMessage.id)
 	}
 
 	/// Presents the profile view for the feed message poster.
 	@objc fileprivate func visitOPProfilePage(_ gestureRecognizer: UITapGestureRecognizer) {
-		guard let opMessage = self.feedMessage.relationships.parent?.data.first else { return }
+		guard let opMessage = feedMessage.relationships.parent?.data.first else { return }
 		if let opUser = opMessage.relationships.users.data.first {
 			let profileTableViewController = ProfileTableViewController.`init`(with: opUser.id)
 			profileTableViewController.dismissButtonIsEnabled = true

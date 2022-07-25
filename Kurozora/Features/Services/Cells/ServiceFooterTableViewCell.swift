@@ -21,6 +21,10 @@ class ServiceFooterTableViewCell: KTableViewCell {
 	@IBOutlet weak var privacyButton: UIButton!
 
 	// MARK: - Properties
+	override var isSkeletonEnabled: Bool {
+		return false
+	}
+
 	weak var delegate: ServiceFooterTableViewCellDelegate?
 
 	/// The service type used to populate the cell.
@@ -42,7 +46,7 @@ class ServiceFooterTableViewCell: KTableViewCell {
 		self.contentView.backgroundColor = .clear
 	}
 
-	override func configureCell() {
+	func configureCell() {
 		self.privacyButton.theme_setAttributedTitle(Trans.visitPrivacyPolicy, forState: .normal)
 	}
 

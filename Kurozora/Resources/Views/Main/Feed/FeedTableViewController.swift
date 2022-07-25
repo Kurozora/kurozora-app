@@ -266,7 +266,7 @@ extension FeedTableViewController {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let feedMessageCell: BaseFeedMessageCell!
 
-		if feedMessages[indexPath.section].attributes.isReShare {
+		if self.feedMessages[indexPath.section].attributes.isReShare {
 			feedMessageCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedMessageReShareCell, for: indexPath)
 		} else {
 			feedMessageCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedMessageCell, for: indexPath)
@@ -275,7 +275,7 @@ extension FeedTableViewController {
 		feedMessageCell.delegate = self
 		feedMessageCell.liveReplyEnabled = false
 		feedMessageCell.liveReShareEnabled = true
-		feedMessageCell.feedMessage = feedMessages[indexPath.section]
+		feedMessageCell.configureCell(using: self.feedMessages[indexPath.section])
 		return feedMessageCell
 	}
 }

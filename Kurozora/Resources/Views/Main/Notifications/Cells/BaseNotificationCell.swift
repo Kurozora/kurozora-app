@@ -17,34 +17,37 @@ class BaseNotificationCell: KTableViewCell {
 	@IBOutlet weak var readStatusImageView: KImageView!
 
 	// MARK: - Properties
-	var notificationType: KNotification.CustomType?
-	var userNotification: UserNotification! {
-		didSet {
-			configureCell()
-		}
+	override var isSkeletonEnabled: Bool {
+		return false
 	}
 
+	var notificationType: KNotification.CustomType?
+	var userNotification: UserNotification!
+
 	// MARK: - Functions
-	override func configureCell() {
+	func configureCell(using userNotification: UserNotification, notificationType: KNotification.CustomType?) {
+		self.userNotification = userNotification
+		self.notificationType = notificationType
+
 		self.dateLabel.text = userNotification.attributes.createdAt.relativeToNow
 		self.contentLabel.text = userNotification.attributes.description
 		self.notificationTypeLabel.text = notificationType?.stringValue.uppercased()
 
 		// Setup read status.
-		updateReadStatus()
+		self.updateReadStatus(for: userNotification)
 	}
 
 	/// Update the read status of the user notification.
 	///
 	/// - Parameter animation: A boolean value indicating whether the update should be animated.
-	func updateReadStatus(with readStatus: ReadStatus? = nil, animated: Bool = false) {
+	func updateReadStatus(for userNotification: UserNotification, with readStatus: ReadStatus? = nil, animated: Bool = false) {
 		if let readStatus = readStatus {
-			self.userNotification.attributes.readStatus = readStatus
+			userNotification.attributes.readStatus = readStatus
 		}
-		readStatusImageView.isHidden = self.userNotification.attributes.readStatus == .read
+		self.readStatusImageView.isHidden = userNotification.attributes.readStatus == .read
 
 		if animated {
-			readStatusImageView.animateBounce()
+			self.readStatusImageView.animateBounce()
 		}
 	}
 }

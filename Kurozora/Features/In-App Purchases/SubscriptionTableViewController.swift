@@ -15,7 +15,7 @@ class SubscriptionTableViewController: ProductTableViewController {
 	var status: Product.SubscriptionInfo.Status?
 
 	override var products: [Product] {
-		return store.subscriptions.filter { $0.id != currentSubscription?.id }
+		return store.subscriptions.filter { $0.id != self.currentSubscription?.id }
 	}
 
 	override var previewImages: [UIImage?] {
@@ -79,16 +79,13 @@ extension SubscriptionTableViewController {
 					fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.purchaseButtonTableViewCell.identifier)")
 				}
 				purchaseButtonTableViewCell.delegate = self
-				purchaseButtonTableViewCell.productNumber = indexPath.row
-				purchaseButtonTableViewCell.purchased = true
-				purchaseButtonTableViewCell.product = currentSubscription
+				purchaseButtonTableViewCell.configureCell(using: self.currentSubscription, isPurchased: true)
 				return purchaseButtonTableViewCell
 			default:
 				guard let purchaseStatusTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.purchaseStatusTableViewCell, for: indexPath) else {
 					fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.purchaseStatusTableViewCell.identifier)")
 				}
-				purchaseStatusTableViewCell.product = self.currentSubscription
-				purchaseStatusTableViewCell.status = self.status
+				purchaseStatusTableViewCell.configureCell(using: self.currentSubscription, status: self.status)
 				return purchaseStatusTableViewCell
 			}
 		case .subscriptions:
@@ -96,9 +93,7 @@ extension SubscriptionTableViewController {
 				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.purchaseButtonTableViewCell.identifier)")
 			}
 			purchaseButtonTableViewCell.delegate = self
-			purchaseButtonTableViewCell.productNumber = indexPath.row
-			purchaseButtonTableViewCell.purchased = false
-			purchaseButtonTableViewCell.product = products[indexPath.row]
+			purchaseButtonTableViewCell.configureCell(using: self.products[indexPath.row])
 			return purchaseButtonTableViewCell
 		default:
 			guard let serviceFooterTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.serviceFooterTableViewCell, for: indexPath) else {

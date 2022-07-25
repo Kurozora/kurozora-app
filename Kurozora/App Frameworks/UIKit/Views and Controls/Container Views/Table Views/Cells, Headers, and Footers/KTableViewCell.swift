@@ -15,6 +15,11 @@ import UIKit
 /// - A [configureCell()](x-source-tag://KTableViewCell-configureCell) method for configuring the data inside the cell.
 /// - A [reloadCell()](x-source-tag://KTableViewCell-reloadCell) method for reloading the data inside the cell.
 class KTableViewCell: UITableViewCell, SkeletonDisplayable {
+	// MARK: - Properties
+	var isSkeletonEnabled: Bool {
+		return true
+	}
+
 	// MARK: - Initializers
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -30,7 +35,9 @@ class KTableViewCell: UITableViewCell, SkeletonDisplayable {
 	override func prepareForReuse() {
 		super.prepareForReuse()
 
-		self.showSkeleton()
+		if self.isSkeletonEnabled {
+			self.showSkeleton()
+		}
 	}
 
 	// MARK: - Functions
@@ -39,14 +46,6 @@ class KTableViewCell: UITableViewCell, SkeletonDisplayable {
 		self.separatorInset = UIEdgeInsets(horizontal: 15, vertical: 0)
 		self.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 	}
-
-	/// Configures the views in the table view cell.
-	///
-	/// The default implementation of this method does nothing. You need to override this method and provide the data that needs to be configured.
-	/// You also need to decide when and how you should configure the view by calling this method somewhere in your table view cell implementation.
-	///
-	/// - Tag: KTableViewCell-configureCell
-	func configureCell() { }
 
 	/// Reloads the views in the table view cell.
 	///

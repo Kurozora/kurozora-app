@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import KurozoraKit
 
 class FeedMessageCell: BaseFeedMessageCell {
 	// MARK: - Functions
-	override func configureCell() {
-		super.configureCell()
+	override func configureCell(using feedMessage: FeedMessage?) {
+		super.configureCell(using: feedMessage)
 	}
 }

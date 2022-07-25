@@ -9,15 +9,15 @@
 import UIKit
 
 class AuthenticationOptionsCell: SelectableSettingsCell {
-	var authenticationInterval: AuthenticationInterval = .immediately {
-		didSet {
-			self.configureCell()
-		}
-	}
+//	var authenticationInterval: AuthenticationInterval = .immediately {
+//		didSet {
+//			self.configureCell()
+//		}
+//	}
 
 	// MARK: - Functions
-	override func configureCell() {
-		primaryLabel?.text = authenticationInterval.stringValue
+	func configureCell(using authenticationInterval: AuthenticationInterval = .immediately) {
+		self.primaryLabel?.text = authenticationInterval.stringValue
 		self.isSelected = authenticationInterval == UserSettings.authenticationInterval
 	}
 }

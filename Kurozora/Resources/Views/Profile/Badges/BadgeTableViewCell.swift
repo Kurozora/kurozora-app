@@ -9,20 +9,20 @@
 import UIKit
 import KurozoraKit
 
-class BadgeTableViewCell: UITableViewCell {
+class BadgeTableViewCell: UITableViewCell, SkeletonDisplayable {
 	@IBOutlet weak var badgeTitleLabel: UILabel!
 	@IBOutlet weak var badgeDescriptionLabel: UILabel!
 	@IBOutlet weak var badgeImageView: ProfileImageView!
 
-	var badge: Badge! {
-		didSet {
-			configureCell()
-		}
-	}
-
 	// MARK: - Functions
 	/// Configure the cell with the given details.
-	fileprivate func configureCell() {
+	func configureCell(using badge: Badge?) {
+		guard let badge = badge else {
+			self.showSkeleton()
+			return
+		}
+		self.hideSkeleton()
+
 		// Set title and text color.
 		self.badgeTitleLabel.text = badge.attributes.name
 		self.badgeTitleLabel.textColor = UIColor(hexString: badge.attributes.textColor)

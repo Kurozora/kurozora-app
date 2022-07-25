@@ -17,38 +17,43 @@ class PurchaseButtonTableViewCell: KTableViewCell {
 	@IBOutlet weak var secondaryLabel: KSecondaryLabel!
 
 	// MARK: - Properties
-	weak var delegate: PurchaseButtonTableViewCellDelegate?
-	var productNumber: Int = 0
-	var purchased: Bool = false
-	var product: Product! {
-		didSet {
-			self.configureCell()
-		}
+	override var isSkeletonEnabled: Bool {
+		return false
 	}
+
+	weak var delegate: PurchaseButtonTableViewCellDelegate?
+	var product: Product!
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
-	override func configureCell() {
+	func configureCell(using product: Product?, isPurchased: Bool = false) {
+		guard let product = product else {
+			self.showSkeleton()
+			return
+		}
+		self.hideSkeleton()
+		self.product = product
+
 		switch product.type {
 		case .consumable, .nonConsumable:
 			self.productImageView.image = store.image(for: product.id)
-			self.primaryLabel.text = self.product.displayName
-			self.secondaryLabel.text = self.product.description
+			self.primaryLabel.text = product.displayName
+			self.secondaryLabel.text = product.description
 			self.purchaseButton.setTitle(product.displayPrice, for: .normal)
 		case .autoRenewable, .nonRenewable:
-			self.primaryLabel.text = self.product.displayName
+			self.primaryLabel.text = product.displayName
 			self.productImageView.image = #imageLiteral(resourceName: "Promotional/In App Purchases/Subscriptions/\(store.title(for: product.id))")
 			self.secondaryLabel.text = store.saving(for: product)
 			if let subscription = product.subscription {
-				self.updateSubscriptionPurchaseButton(withSubscription: subscription)
+				self.updateSubscriptionPurchaseButton(for: product, withSubscription: subscription, isPurchased: isPurchased)
 			}
 		default: break
 		}
 	}
 
 	/// Updates the purchase button with the relevant information.
-	fileprivate func updateSubscriptionPurchaseButton(withSubscription subscription: Product.SubscriptionInfo) {
-		let displayPrice = self.product.displayPrice
+	fileprivate func updateSubscriptionPurchaseButton(for product: Product, withSubscription subscription: Product.SubscriptionInfo, isPurchased: Bool) {
+		let displayPrice = product.displayPrice
 		let displayUnit = subscription.subscriptionPeriod.shortDisplayUnit
 		let paragraphStyle = NSMutableParagraphStyle()
 		paragraphStyle.alignment = .center
@@ -57,7 +62,7 @@ class PurchaseButtonTableViewCell: KTableViewCell {
 		purchaseTitle.append(NSAttributedString(string: displayPrice, attributes: [.font: UIFont.preferredFont(forTextStyle: .headline), .paragraphStyle: paragraphStyle]))
 		purchaseTitle.append(NSAttributedString(string: "/\(displayUnit)", attributes: [.font: UIFont.preferredFont(forTextStyle: .caption1), .paragraphStyle: paragraphStyle]))
 
-		if self.purchased {
+		if isPurchased {
 			self.purchaseButton.isEnabled = false
 			self.purchaseButton.alpha = 0.70
 		} else {
