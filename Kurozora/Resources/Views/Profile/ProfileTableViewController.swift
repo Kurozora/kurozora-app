@@ -775,7 +775,7 @@ extension ProfileTableViewController {
 		feedMessageCell.delegate = self
 		feedMessageCell.liveReplyEnabled = User.current?.id == self.userIdentity?.id
 		feedMessageCell.liveReShareEnabled = User.current?.id == self.userIdentity?.id
-		feedMessageCell.feedMessage = self.feedMessages[indexPath.section]
+		feedMessageCell.configureCell(using: self.feedMessages[indexPath.section])
 		return feedMessageCell
 	}
 }

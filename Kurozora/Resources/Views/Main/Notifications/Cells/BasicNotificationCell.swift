@@ -7,20 +7,18 @@
 //
 
 import UIKit
+import KurozoraKit
 
 class BasicNotificationCell: BaseNotificationCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var notificationIconImageView: UIImageView!
-	@IBOutlet weak var chevronImageView: UIImageView! {
-		didSet {
-			self.chevronImageView.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
-		}
-	}
+	@IBOutlet weak var chevronImageView: UIImageView!
 
 	// MARK: - Functions
-	override func configureCell() {
-		super.configureCell()
+	override func configureCell(using userNotification: UserNotification, notificationType: KNotification.CustomType?) {
+		super.configureCell(using: userNotification, notificationType: notificationType)
+		self.chevronImageView.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
 
-		notificationIconImageView.image = notificationType?.iconValue
+		self.notificationIconImageView.image = notificationType?.iconValue
 	}
 }

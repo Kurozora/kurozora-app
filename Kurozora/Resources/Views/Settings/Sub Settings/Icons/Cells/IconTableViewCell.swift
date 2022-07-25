@@ -11,34 +11,33 @@ import UIKit
 class IconTableViewCell: SelectableSettingsCell {
 	// MARK: - Properties
 	/// The object containing the `AlternativeIconsElement` information.
-	var alternativeIconsElement: AlternativeIconsElement! {
-		didSet {
-			if self.alternativeIconsElement != nil {
-				self.browser = nil
-				self.configureCell()
-			}
-		}
-	}
+	var alternativeIconsElement: AlternativeIconsElement?
 
 	/// The object containing the `KBrowser` type.
-	var browser: KBrowser! {
-		didSet {
-			if self.browser != nil {
-				self.alternativeIconsElement = nil
-				self.configureCell()
-			}
-		}
-	}
+	var browser: KBrowser?
 
 	// MARK: - Functions
-	/// Configure the cell with the given details.
-	override func configureCell() {
-		if self.alternativeIconsElement != nil {
-			self.primaryLabel?.text = self.alternativeIconsElement.name
-			self.iconImageView?.image = UIImage(named: self.alternativeIconsElement.name)
-		} else {
-			primaryLabel?.text = browser.stringValue
-			iconImageView?.image = browser.image
+	func configureCell(using alternativeIconsElement: AlternativeIconsElement?) {
+		self.alternativeIconsElement = alternativeIconsElement
+		guard let alternativeIconsElement = alternativeIconsElement else {
+			self.showSkeleton()
+			return
 		}
+		self.hideSkeleton()
+
+		self.primaryLabel?.text = alternativeIconsElement.name
+		self.iconImageView?.image = UIImage(named: alternativeIconsElement.name)
+	}
+
+	func configureCell(using browser: KBrowser?) {
+		self.browser = browser
+		guard let browser = browser else {
+			self.showSkeleton()
+			return
+		}
+		self.hideSkeleton()
+
+		self.primaryLabel?.text = browser.stringValue
+		self.iconImageView?.image = browser.image
 	}
 }

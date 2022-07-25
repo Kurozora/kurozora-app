@@ -90,7 +90,7 @@ extension BadgesTableViewController {
 		guard let badgeTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath as IndexPath) else {
 			fatalError("Cannot dequeue cell with reuse identifier \(identifier.identifier)")
 		}
-		badgeTableViewCell.badge = self.badges[indexPath.section]
+		badgeTableViewCell.configureCell(using: self.badges[indexPath.section])
 		return badgeTableViewCell
 	}
 }

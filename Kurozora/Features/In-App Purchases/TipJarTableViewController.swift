@@ -49,8 +49,7 @@ extension TipJarTableViewController {
 			guard let purchaseButtonTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.purchaseButtonTableViewCell, for: indexPath) else {
 				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.purchaseButtonTableViewCell.identifier)")
 			}
-			purchaseButtonTableViewCell.productNumber = indexPath.row
-			purchaseButtonTableViewCell.product = products[indexPath.row]
+			purchaseButtonTableViewCell.configureCell(using: products[indexPath.row])
 			purchaseButtonTableViewCell.delegate = self
 			return purchaseButtonTableViewCell
 		default:

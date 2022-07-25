@@ -28,13 +28,7 @@ class BaseFeedMessageCell: KTableViewCell {
 	var warningIsHidden: Bool = false
 	var liveReplyEnabled = false
 	var liveReShareEnabled = false
-	var feedMessage: FeedMessage! {
-		didSet {
-			if !self.warningIsHidden {
-				configureCell()
-			}
-		}
-	}
+	var feedMessage: FeedMessage!
 
 	// MARK: - View
 	override func prepareForReuse() {
@@ -44,12 +38,23 @@ class BaseFeedMessageCell: KTableViewCell {
 	}
 
 	// MARK: - Functions
-	override func configureCell() {
+	func configureCell(using feedMessage: FeedMessage?) {
+		guard !self.warningIsHidden else {
+			self.hideSkeleton()
+			return
+		}
+		guard let feedMessage = feedMessage else {
+			self.showSkeleton()
+			return
+		}
+		self.hideSkeleton()
+		self.feedMessage = feedMessage
+
 		// Configure heart status for feed message.
-		self.updateHeartStatus()
+		self.updateHeartStatus(for: feedMessage)
 
 		// Configure poster details
-		if let user = self.feedMessage.relationships.users.data.first {
+		if let user = feedMessage.relationships.users.data.first {
 			self.usernameLabel.text = user.attributes.username
 			user.attributes.profileImage(imageView: self.profileImageView)
 
@@ -59,31 +64,31 @@ class BaseFeedMessageCell: KTableViewCell {
 		}
 
 		// Configure body
-		postTextView.text = self.feedMessage.attributes.body
+		self.postTextView.text = feedMessage.attributes.body
 
 		// Configure date time
-		dateTimeLabel.text = self.feedMessage.attributes.createdAt.relativeToNow
+		self.dateTimeLabel.text = feedMessage.attributes.createdAt.relativeToNow
 
 		// Configure metrics
-		let heartsCount = self.feedMessage.attributes.metrics.heartCount
-		heartButton.setTitle(heartsCount.kkFormatted, for: .normal)
+		let heartsCount = feedMessage.attributes.metrics.heartCount
+		self.heartButton.setTitle(heartsCount.kkFormatted, for: .normal)
 
-		let replyCount = self.feedMessage.attributes.metrics.replyCount
-		commentButton.setTitle(replyCount.kkFormatted, for: .normal)
+		let replyCount = feedMessage.attributes.metrics.replyCount
+		self.commentButton.setTitle(replyCount.kkFormatted, for: .normal)
 
-		let reShareCount = self.feedMessage.attributes.metrics.reShareCount
-		shareButton.setTitle(reShareCount.kkFormatted, for: .normal)
+		let reShareCount = feedMessage.attributes.metrics.reShareCount
+		self.shareButton.setTitle(reShareCount.kkFormatted, for: .normal)
 
 		/// Configure re-share button
-		self.configureReShareButton()
+		self.configureReShareButton(for: feedMessage)
 
 		// Configure warning messages
-		self.configureWarnings()
+		self.configureWarnings(for: feedMessage)
 	}
 
 	/// Configures the re-share button.
-	fileprivate func configureReShareButton() {
-		if self.feedMessage.attributes.isReShared {
+	fileprivate func configureReShareButton(for feedMessage: FeedMessage) {
+		if feedMessage.attributes.isReShared {
 			shareButton.setTitleColor(.kGreen, for: .normal)
 			shareButton.tintColor = .kGreen
 		} else {
@@ -93,9 +98,9 @@ class BaseFeedMessageCell: KTableViewCell {
 	}
 
 	/// Configures the warning messages.
-	fileprivate func configureWarnings() {
-		let isNSFW = self.feedMessage.attributes.isNSFW
-		let isSpoiler = self.feedMessage.attributes.isSpoiler
+	fileprivate func configureWarnings(for feedMessage: FeedMessage) {
+		let isNSFW = feedMessage.attributes.isNSFW
+		let isSpoiler = feedMessage.attributes.isSpoiler
 
 		// Configure warning visual effect view
 		if isNSFW || isSpoiler {
@@ -142,8 +147,8 @@ class BaseFeedMessageCell: KTableViewCell {
 	}
 
 	/// Update the heart status of the message.
-	fileprivate func updateHeartStatus() {
-		if self.feedMessage.attributes.isHearted ?? false {
+	fileprivate func updateHeartStatus(for feedMessage: FeedMessage) {
+		if feedMessage.attributes.isHearted ?? false {
 			self.heartButton.tintColor = .kLightRed
 			self.heartButton.setTitleColor(.kLightRed, for: .normal)
 		} else {

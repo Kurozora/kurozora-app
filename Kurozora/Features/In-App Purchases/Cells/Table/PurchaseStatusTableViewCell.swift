@@ -14,20 +14,23 @@ class PurchaseStatusTableViewCell: KTableViewCell {
 	@IBOutlet weak var purchaseStatusLabel: KLabel!
 
 	// MARK: - Properties
-	var product: Product!
-	var status: Product.SubscriptionInfo.Status! {
-		didSet {
-			self.configureCell()
-		}
+	override var isSkeletonEnabled: Bool {
+		return false
 	}
 
 	// MARK: - Functions
-	override func configureCell() {
-		self.purchaseStatusLabel.text = self.statusDescription()
+	func configureCell(using product: Product?, status: Product.SubscriptionInfo.Status?) {
+		guard let product = product, let status = status else {
+			self.showSkeleton()
+			return
+		}
+		self.hideSkeleton()
+
+		self.purchaseStatusLabel.text = self.description(for: product, status: status)
 	}
 
 	// Build a string description of the subscription status to display to the user.
-	fileprivate func statusDescription() -> String {
+	fileprivate func description(for product: Product, status: Product.SubscriptionInfo.Status) -> String {
 		guard case .verified(let renewalInfo) = status.renewalInfo,
 			  case .verified(let transaction) = status.transaction else {
 				  return "The App Store could not verify your subscription status."
@@ -37,37 +40,37 @@ class PurchaseStatusTableViewCell: KTableViewCell {
 
 		switch status.state {
 		case .subscribed:
-			description = subscribedDescription()
+			description = self.subscribedDescription(for: product)
 		case .expired:
 			if let expirationDate = transaction.expirationDate,
 			   let expirationReason = renewalInfo.expirationReason {
-				description = expirationDescription(expirationReason, expirationDate: expirationDate)
+				description = self.expirationDescription(for: product, expirationReason: expirationReason, expirationDate: expirationDate)
 			}
 		case .revoked:
 			if let revokedDate = transaction.revocationDate {
 				description = "The App Store refunded your subscription to \(product.displayName) on \(revokedDate.formatted(date: .abbreviated, time: .omitted))."
 			}
 		case .inGracePeriod:
-			description = gracePeriodDescription(renewalInfo)
+			description = self.gracePeriodDescription(for: product, renewalInfo: renewalInfo)
 		case .inBillingRetryPeriod:
-			description = billingRetryDescription()
+			description = self.billingRetryDescription(for: product)
 		default:
 			break
 		}
 
 		if let expirationDate = transaction.expirationDate {
-			description += renewalDescription(renewalInfo, expirationDate)
+			description += self.renewalDescription(renewalInfo, expirationDate)
 		}
 		return description
 	}
 
-	fileprivate func billingRetryDescription() -> String {
+	fileprivate func billingRetryDescription(for product: Product) -> String {
 		var description = "The App Store could not confirm your billing information for \(product.displayName)."
 		description += " Please verify your billing information to resume service."
 		return description
 	}
 
-	fileprivate func gracePeriodDescription(_ renewalInfo: RenewalInfo) -> String {
+	fileprivate func gracePeriodDescription(for product: Product, renewalInfo: RenewalInfo) -> String {
 		var description = "The App Store could not confirm your billing information for \(product.displayName)."
 		if let untilDate = renewalInfo.gracePeriodExpirationDate {
 			description += " Please verify your billing information to continue service after \(untilDate.formatted(date: .abbreviated, time: .omitted))"
@@ -76,7 +79,7 @@ class PurchaseStatusTableViewCell: KTableViewCell {
 		return description
 	}
 
-	fileprivate func subscribedDescription() -> String {
+	fileprivate func subscribedDescription(for product: Product) -> String {
 		return "You are currently subscribed to \(product.displayName)."
 	}
 
@@ -96,7 +99,7 @@ class PurchaseStatusTableViewCell: KTableViewCell {
 	}
 
 	// Build a string description of the `expirationReason` to display to the user.
-	fileprivate func expirationDescription(_ expirationReason: RenewalInfo.ExpirationReason, expirationDate: Date) -> String {
+	fileprivate func expirationDescription(for product: Product, expirationReason: RenewalInfo.ExpirationReason, expirationDate: Date) -> String {
 		var description = ""
 
 		switch expirationReason {

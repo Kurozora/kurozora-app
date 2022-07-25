@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 
 class IconNotificationCell: BasicNotificationCell {
 	// MARK: - IBOutlets
@@ -14,17 +15,15 @@ class IconNotificationCell: BasicNotificationCell {
 	@IBOutlet weak var titleLabel: KLabel!
 
 	// MARK: - Functions
-	override func configureCell() {
-		super.configureCell()
+	override func configureCell(using userNotification: UserNotification, notificationType: KNotification.CustomType?) {
+		super.configureCell(using: userNotification, notificationType: notificationType)
 
-		if let title = userNotification?.attributes.payload.username {
-			titleLabel.text = title
-		}
+		self.titleLabel.text = userNotification.attributes.payload.username
 
-		if let profileImageURL = userNotification?.attributes.payload.profileImageURL {
-			if let usernameInitials = userNotification?.attributes.payload.username?.initials {
+		if let profileImageURL = userNotification.attributes.payload.profileImageURL {
+			if let usernameInitials = userNotification.attributes.payload.username?.initials {
 				let placeholderImage = usernameInitials.toImage(placeholder: R.image.placeholders.userProfile()!)
-				profileImageView.setImage(with: profileImageURL, placeholder: placeholderImage)
+				self.profileImageView.setImage(with: profileImageURL, placeholder: placeholderImage)
 			}
 		}
 	}

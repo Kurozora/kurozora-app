@@ -46,18 +46,16 @@ class SettingsCell: KTableViewCell {
 	}
 
 	// MARK: - Properties
-	var sectionRow: SettingsTableViewController.Row? {
-		didSet {
-			self.configureCell()
-		}
+	override var isSkeletonEnabled: Bool {
+		return false
 	}
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
-	override func configureCell() {
-		iconImageView?.image = sectionRow?.imageValue
-		primaryLabel?.text = sectionRow?.primaryStringValue
-		secondaryLabel?.text = sectionRow?.secondaryStringValue
+	func configureCell(using sectionRow: SettingsTableViewController.Row?) {
+		self.iconImageView?.image = sectionRow?.imageValue
+		self.primaryLabel?.text = sectionRow?.primaryStringValue
+		self.secondaryLabel?.text = sectionRow?.secondaryStringValue
 
 		switch sectionRow {
 		case .icon:

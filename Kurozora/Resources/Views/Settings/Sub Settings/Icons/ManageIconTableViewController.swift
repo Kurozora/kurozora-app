@@ -86,10 +86,8 @@ extension ManageIconTableViewController {
 			alternativeIconsElement = self.alternativeIcons?.limitedIcons[indexPath.row]
 		default: break
 		}
-		iconTableViewCell.alternativeIconsElement = alternativeIconsElement
-		if let alternativeIconsElement = alternativeIconsElement {
-			iconTableViewCell.setSelected(alternativeIconsElement.name == UserSettings.appIcon)
-		}
+		iconTableViewCell.configureCell(using: alternativeIconsElement)
+		iconTableViewCell.setSelected(alternativeIconsElement?.name == UserSettings.appIcon)
 		return iconTableViewCell
 	}
 

@@ -72,11 +72,11 @@ extension SettingsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return settingsSection[section].rowsValue.count
+		return self.settingsSection[section].rowsValue.count
 	}
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		let section = settingsSection[section]
+		let section = self.settingsSection[section]
 		return section == .about ? nil : section.stringValue
 	}
 
@@ -91,12 +91,12 @@ extension SettingsTableViewController {
 		guard let settingsCell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) else {
 			fatalError("Cannot dequeue cell with reuse identifier \(identifier.identifier)")
 		}
-		settingsCell.sectionRow = settingsSection[indexPath.section].rowsValue[indexPath.row]
+		settingsCell.configureCell(using: self.settingsSection[indexPath.section].rowsValue[indexPath.row])
 		return settingsCell
 	}
 
 	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-		switch settingsSection[section] {
+		switch self.settingsSection[section] {
 		case .about:
 			return """
 			Built with lack of 😴, lots of 🍵 and 🌸 allergy by Kirito

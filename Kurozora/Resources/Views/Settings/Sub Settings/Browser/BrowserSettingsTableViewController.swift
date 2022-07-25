@@ -27,7 +27,7 @@ extension BrowserSettingsTableViewController {
 		}
 		let defaultBrowser = KBrowser.allCases[indexPath.row]
 		let selectedDefaultBrowser = UserSettings.defaultBrowser
-		iconTableViewCell.browser = defaultBrowser
+		iconTableViewCell.configureCell(using: defaultBrowser)
 		iconTableViewCell.setSelected(defaultBrowser == selectedDefaultBrowser)
 		return iconTableViewCell
 	}
