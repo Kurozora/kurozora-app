@@ -20,6 +20,10 @@ class ServicePreviewTableViewCell: KTableViewCell {
 	@IBOutlet weak var previewImageView: UIImageView?
 
 	// MARK: - Properties
+	override var isSkeletonEnabled: Bool {
+		return false
+	}
+
 	/// The image that should be displayed in the cell.
 	var previewImage: UIImage? = nil {
 		didSet {

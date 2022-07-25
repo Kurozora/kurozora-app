@@ -12,13 +12,14 @@ import KurozoraKit
 extension WorkflowController {
 	/// Checks whether the current user is signed in. If the user is signed in then a success block is run. Otherwise the user is asked to sign in.
 	///
+	///	- Parameter viewController: The view controller on which the sign in flow is presented if necessary.
 	/// - Parameter completion: Optional completion handler (default is `nil`).
-	@discardableResult func isSignedIn(_ completion: (() -> Void)? = nil) -> Bool {
+	@discardableResult func isSignedIn(on viewController: UIViewController? = nil, _ completion: (() -> Void)? = nil) -> Bool {
 		if User.isSignedIn {
 			completion?()
 			return true
 		} else {
-			self.presentSignInView()
+			self.presentSignInView(on: viewController)
 			return false
 		}
 	}
@@ -96,10 +97,13 @@ extension WorkflowController {
 	}
 
 	/// Presents the user with the sign in view
-	func presentSignInView() {
+	///
+	///	- Parameter viewController: The view controller on which the sign in flow is presented if necessary.
+	func presentSignInView(on viewController: UIViewController? = nil) {
 		if let signInTableViewController = R.storyboard.onboarding.signInTableViewController() {
 			let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
-			UIApplication.topViewController?.present(kNavigationController, animated: true)
+			let viewController = viewController ?? UIApplication.topViewController
+			viewController?.present(kNavigationController, animated: true)
 		}
 	}
 
