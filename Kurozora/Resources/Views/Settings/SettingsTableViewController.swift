@@ -149,7 +149,7 @@ extension SettingsTableViewController {
 
 		switch sectionRows {
 		case .account:
-			shouldPerformSegue = WorkflowController.shared.isSignedIn()
+			shouldPerformSegue = WorkflowController.shared.isSignedIn(on: self)
 		case .reminder:
 			WorkflowController.shared.subscribeToReminders()
 		case .notifications:

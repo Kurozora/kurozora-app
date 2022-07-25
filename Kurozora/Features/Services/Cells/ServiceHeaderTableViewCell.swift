@@ -19,6 +19,10 @@ class ServiceHeaderTableViewCell: KTableViewCell {
 	@IBOutlet weak var subheadLabel: KLabel!
 
 	// MARK: - Properties
+	override var isSkeletonEnabled: Bool {
+		return false
+	}
+
 	/// The service type used to populate the cell.
 	var serviceType: ServiceType? {
 		didSet {
