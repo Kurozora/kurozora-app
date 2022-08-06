@@ -15,9 +15,8 @@ class IconNotificationCell: BasicNotificationCell {
 	@IBOutlet weak var titleLabel: KLabel!
 
 	// MARK: - Functions
-	override func configureCell(using userNotification: UserNotification, notificationType: KNotification.CustomType?) {
-		super.configureCell(using: userNotification, notificationType: notificationType)
-
+	override func configureCell(using userNotification: UserNotification) {
+		super.configureCell(using: userNotification)
 		self.titleLabel.text = userNotification.attributes.payload.username
 
 		if let profileImageURL = userNotification.attributes.payload.profileImageURL {

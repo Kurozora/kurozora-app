@@ -359,7 +359,7 @@ extension SearchResultsCollectionViewController: BaseLockupCollectionViewCellDel
 
 // MARK: - TitleHeaderCollectionReusableViewDelegate
 extension SearchResultsCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
-	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPressButton button: UIButton) {
+	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPress button: UIButton) {
 		self.performSegue(withIdentifier: reusableView.segueID, sender: reusableView.indexPath)
 	}
 }

@@ -10,15 +10,15 @@ import UIKit
 import KurozoraKit
 
 extension ManageActiveSessionsController {
-	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
-		return [TitleHeaderTableViewCell.self]
+	override func registerNibs(for tableView: UITableView) -> [UITableViewHeaderFooterView.Type] {
+		return [TitleHeaderTableReusableView.self]
 	}
 
 	func configureDataSource() {
 		let currentSessionCellRegistration = getConfiguredCurrentSessionCell()
 		let sessionLockupCellRegistration = getConfiguredSessionLockupCell()
 
-		self.dataSource = SessionDatasource(tableView: self.tableView) { (tableView: UITableView, indexPath: IndexPath, itemKind: ItemKind) -> UITableViewCell? in
+		self.dataSource = SessionDataSource(tableView: self.tableView) { (tableView: UITableView, indexPath: IndexPath, itemKind: ItemKind) -> UITableViewCell? in
 			switch itemKind {
 			case .accessToken:
 				return tableView.dequeueConfiguredReusableCell(using: currentSessionCellRegistration, for: indexPath, item: itemKind)
@@ -36,7 +36,7 @@ extension ManageActiveSessionsController {
 			snapshot.appendItems([.accessToken(accessToken)], toSection: .current)
 		}
 
-		if self.sessionIdentities.count != 0 {
+		if !self.sessionIdentities.isEmpty {
 			let sessionIdentityItemKinds: [ItemKind] = self.sessionIdentities.map { sessionIdentity in
 				return .sessionIdentity(sessionIdentity)
 			}

@@ -11,7 +11,7 @@ import KurozoraKit
 import CoreLocation
 import MapKit
 
-class SessionDatasource: UITableViewDiffableDataSource<ManageActiveSessionsController.SectionLayoutKind, ManageActiveSessionsController.ItemKind> {
+class SessionDataSource: UITableViewDiffableDataSource<ManageActiveSessionsController.SectionLayoutKind, ManageActiveSessionsController.ItemKind> {
 	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
 		guard let sectionIdentifier = self.sectionIdentifier(for: indexPath.section) else { return false }
 		return sectionIdentifier != .current
@@ -25,7 +25,7 @@ class ManageActiveSessionsController: KTableViewController {
 	// MARK: - Properties
 	var sessions: [IndexPath: Session] = [:]
 	var sessionIdentities: [SessionIdentity] = []
-	var dataSource: SessionDatasource! = nil
+	var dataSource: SessionDataSource! = nil
 
 	/// The next page url of the pagination.
 	var nextPageURL: String?
@@ -92,6 +92,15 @@ class ManageActiveSessionsController: KTableViewController {
 		}
 	}
 
+	// MARK: - Functions
+	override func handleRefreshControl() {
+		self.nextPageURL = nil
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchSessions()
+		}
+	}
+
 	func endFetch() {
 		self.isRequestInProgress = false
 		self._prefersActivityIndicatorHidden = true
@@ -105,15 +114,6 @@ class ManageActiveSessionsController: KTableViewController {
 		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your sessions!")
 		#endif
 		#endif
-	}
-
-	// MARK: - Functions
-	override func handleRefreshControl() {
-		self.nextPageURL = nil
-		Task { [weak self] in
-			guard let self = self else { return }
-			await self.fetchSessions()
-		}
 	}
 
 	/// Fetches sessions for the current user from the server.
@@ -178,11 +178,10 @@ class ManageActiveSessionsController: KTableViewController {
 	///
 	/// - Parameter notification: An object containing information broadcast to registered observers.
 	@objc func removeSession(_ notification: NSNotification) {
-		if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
-			DispatchQueue.main.async { [weak self] in
-				guard let self = self else { return }
-				self.removeSession(at: indexPath)
-			}
+		guard let indexPath = notification.userInfo?["indexPath"] as? IndexPath else { return }
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			self.removeSession(at: indexPath)
 		}
 	}
 
@@ -248,8 +247,8 @@ extension ManageActiveSessionsController: CLLocationManagerDelegate {
 extension ManageActiveSessionsController {
 	/// List of session section layout kind.
 	///
-	/// - `current`: the section containing the current session.
-	/// - `orther`: the section containing the other sessions.
+	/// - `current`: the section containing the `current` session.
+	/// - `other`: the section containing the `other` sessions.
 	enum SectionLayoutKind: Int, CaseIterable {
 		/// Indicates the section containing the current session.
 		case current = 0
@@ -259,7 +258,11 @@ extension ManageActiveSessionsController {
 	}
 
 	enum ItemKind: Hashable {
+		// MARK: - Cases
+		/// Indicates the item is of the `AccessToken` kind.
 		case accessToken(_ accessToken: AccessToken)
+
+		/// Indicates the item is of the `SessionIdentity` kind.
 		case sessionIdentity(_ sessionIdentity: SessionIdentity)
 
 		// MARK: - Functions

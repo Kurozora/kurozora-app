@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" id="5Fq-Hs-429" customClass="TitleHeaderTableReusableView" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="75"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Earlier Today" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oBJ-Lr-K6B" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                    <rect key="frame" x="20" y="10" width="132.5" height="26.5"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ivS-Aq-0Zd" customClass="HeaderButton" customModule="Kurozora" customModuleProvider="target">
+                    <rect key="frame" x="349" y="10" width="45" height="32"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                    <state key="normal" title="See All">
+                        <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="headerButtonPressed:" destination="5Fq-Hs-429" eventType="touchUpInside" id="ve2-Ke-RTK"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="amr-uA-4L3" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                    <rect key="frame" x="20" y="40.5" width="31" height="24.5"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="ivS-Aq-0Zd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="amr-uA-4L3" secondAttribute="trailing" constant="8" symbolic="YES" id="JCh-SU-2aA"/>
+                <constraint firstItem="oBJ-Lr-K6B" firstAttribute="leading" secondItem="5Fq-Hs-429" secondAttribute="leadingMargin" id="JQj-CO-bae"/>
+                <constraint firstAttribute="bottom" secondItem="amr-uA-4L3" secondAttribute="bottom" constant="10" id="K0y-CB-J0Z"/>
+                <constraint firstItem="ivS-Aq-0Zd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="oBJ-Lr-K6B" secondAttribute="trailing" constant="8" symbolic="YES" id="MZx-wE-gyh"/>
+                <constraint firstItem="amr-uA-4L3" firstAttribute="top" secondItem="oBJ-Lr-K6B" secondAttribute="bottom" constant="4" id="Q1c-U6-ZeA"/>
+                <constraint firstItem="oBJ-Lr-K6B" firstAttribute="top" secondItem="5Fq-Hs-429" secondAttribute="top" constant="10" id="Sll-XS-Niz"/>
+                <constraint firstAttribute="trailingMargin" secondItem="ivS-Aq-0Zd" secondAttribute="trailing" id="nmq-sB-Qgp"/>
+                <constraint firstItem="ivS-Aq-0Zd" firstAttribute="top" secondItem="5Fq-Hs-429" secondAttribute="top" constant="10" id="px1-cK-XzH"/>
+                <constraint firstItem="amr-uA-4L3" firstAttribute="leading" secondItem="5Fq-Hs-429" secondAttribute="leadingMargin" id="rc0-cv-Pv8"/>
+                <constraint firstItem="oBJ-Lr-K6B" firstAttribute="firstBaseline" secondItem="ivS-Aq-0Zd" secondAttribute="firstBaseline" id="vTh-VZ-sd6"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ivS-Aq-0Zd" secondAttribute="bottom" constant="10" id="yH7-lX-Pc7"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="headerButton" destination="ivS-Aq-0Zd" id="OFS-Zm-Dyn"/>
+                <outlet property="primaryLabel" destination="oBJ-Lr-K6B" id="hRB-aK-aUl"/>
+                <outlet property="secondaryLabel" destination="amr-uA-4L3" id="oWY-z1-W3c"/>
+            </connections>
+            <point key="canvasLocation" x="-25" y="75"/>
+        </view>
+    </objects>
+</document>

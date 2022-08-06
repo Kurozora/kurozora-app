@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol TitleHeaderCollectionReusableViewDelegate: AnyObject {
+	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPress button: UIButton)
+}
+
 class TitleHeaderCollectionReusableView: UICollectionReusableView {
 	// MARK: - IBOutlets
 	@IBOutlet weak var titleLabel: KLabel!
@@ -43,6 +47,6 @@ class TitleHeaderCollectionReusableView: UICollectionReusableView {
 
 	// MARK: - IBActions
 	@IBAction func headerButtonPressed(_ sender: UIButton) {
-		self.delegate?.titleHeaderCollectionReusableView(self, didPressButton: sender)
+		self.delegate?.titleHeaderCollectionReusableView(self, didPress: sender)
 	}
 }
