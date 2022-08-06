@@ -155,7 +155,7 @@ class ShowSongsListCollectionViewController: KCollectionViewController {
 
 // MARK: - TitleHeaderCollectionReusableViewDelegate
 extension ShowSongsListCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
-	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPressButton button: UIButton) {}
+	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPress button: UIButton) {}
 }
 
 // MARK: - MusicLockupCollectionViewCellDelegate

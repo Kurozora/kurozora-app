@@ -10,7 +10,7 @@ extension UserNotification {
 	public struct Attributes: Codable {
 		// MARK: - Properties
 		/// The type of the user notification.
-		public let type: String
+		public let type: UserNotificationType
 
 		/// Whether the user notification is read or not.
 		fileprivate let isRead: Bool
@@ -35,10 +35,10 @@ extension UserNotification.Attributes {
 	/// The read status of the user notification.
 	public var readStatus: ReadStatus {
 		get {
-			return _readStatus ?? ReadStatus(from: isRead)
+			return self._readStatus ?? ReadStatus(from: self.isRead)
 		}
 		set {
-			_readStatus = newValue
+			self._readStatus = newValue
 		}
 	}
 }

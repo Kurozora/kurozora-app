@@ -15,10 +15,16 @@ class BasicNotificationCell: BaseNotificationCell {
 	@IBOutlet weak var chevronImageView: UIImageView!
 
 	// MARK: - Functions
-	override func configureCell(using userNotification: UserNotification, notificationType: KNotification.CustomType?) {
-		super.configureCell(using: userNotification, notificationType: notificationType)
+	override func configureCell(using userNotification: UserNotification) {
+		super.configureCell(using: userNotification)
 		self.chevronImageView.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
+		self.notificationIconImageView.image = userNotification.attributes.type.iconValue
 
-		self.notificationIconImageView.image = notificationType?.iconValue
+		switch userNotification.attributes.type {
+		case .animeImportFinished:
+			self.chevronImageView.isHidden = true
+		default:
+			self.chevronImageView.isHidden = false
+		}
 	}
 }

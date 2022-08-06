@@ -4,8 +4,8 @@ PODS:
   - ESTabBarController-swift (2.8.0)
   - FLEX (4.7.0)
   - KeychainAccess (4.2.2)
-  - Kingfisher (7.3.0)
-  - KurozoraKit (0.35.0):
+  - Kingfisher (7.3.1)
+  - KurozoraKit (0.36.0):
     - KeychainAccess
     - TRON
   - Pageboy (3.6.2)
@@ -112,8 +112,8 @@ SPEC CHECKSUMS:
   ESTabBarController-swift: 05593a6ad64700b03c0eb60ff625916370aa4136
   FLEX: bdc9ac7d4a239e3d04c298c01221203257d63a80
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
-  Kingfisher: cdb1189a9223b1bc028816bd47c8b8101a58831c
-  KurozoraKit: 9611d035fc4bf23a023db98a0762aaaeb831e536
+  Kingfisher: f411ab4902e733fc0c40522920fb5a236d7a7334
+  KurozoraKit: 6f9e0b8dc37fccf092771c7abfd18929cbfd0eee
   Pageboy: cf121b9dd48c63f3f281b2a9ec93d02e0f23879b
   R.swift: ec98ff71c4ab2f6fd01dd077e5afd15e63a4834c
   R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962

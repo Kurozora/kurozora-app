@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" id="n5H-Jx-aCB" customClass="IconNotificationCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="374" height="90.5"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" tableViewCell="n5H-Jx-aCB" id="4OU-7B-lf9">
+                <rect key="frame" x="0.0" y="0.0" width="374" height="90.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vLi-2k-523" customClass="KImageView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="6" y="15.5" width="10" height="9"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="vLi-2k-523" secondAttribute="height" multiplier="1:1" id="4qc-WE-Kbz"/>
+                            <constraint firstAttribute="width" constant="10" id="t0b-sc-K8y"/>
+                        </constraints>
+                        <imageReference key="image" image="circle.fill" catalog="system" renderingMode="template"/>
+                    </imageView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icons/Follower" translatesAutoresizingMaskIntoConstraints="NO" id="qDv-a6-HxK">
+                        <rect key="frame" x="20" y="8" width="24" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="qDv-a6-HxK" secondAttribute="height" multiplier="1:1" id="1WU-rr-V7V"/>
+                            <constraint firstAttribute="width" constant="24" id="krf-qy-b4w"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9bk-ks-THM" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="52" y="8" width="29" height="24"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                        <color key="textColor" systemColor="secondaryLabelColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="_test" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hut-bs-9tO" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="325" y="8" width="29" height="24"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                        <color key="textColor" systemColor="secondaryLabelColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="u5m-kr-d7i">
+                        <rect key="frame" x="354" y="15" width="14" height="10.5"/>
+                        <color key="tintColor" systemColor="secondaryLabelColor"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="u5m-kr-d7i" secondAttribute="height" multiplier="1:1" id="J5L-7c-wZh"/>
+                            <constraint firstAttribute="width" constant="14" id="qAW-b9-Ui3"/>
+                        </constraints>
+                    </imageView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f5P-1F-luJ" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="20" y="40" width="44" height="44"/>
+                        <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="f5P-1F-luJ" secondAttribute="height" multiplier="1:1" id="XIH-Lc-Xkx"/>
+                            <constraint firstAttribute="width" constant="44" id="zfb-DN-h4W"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Sf-vh-lRQ" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="72" y="40" width="35" height="17"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YgR-Ir-u2l" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="72" y="65" width="282" height="17.5"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <constraints>
+                    <constraint firstItem="f5P-1F-luJ" firstAttribute="top" secondItem="8Sf-vh-lRQ" secondAttribute="top" id="06x-TS-ZwH"/>
+                    <constraint firstItem="f5P-1F-luJ" firstAttribute="leading" secondItem="qDv-a6-HxK" secondAttribute="leading" id="0wp-bt-71n"/>
+                    <constraint firstItem="qDv-a6-HxK" firstAttribute="top" secondItem="4OU-7B-lf9" secondAttribute="top" constant="8" id="1Tc-zn-A74"/>
+                    <constraint firstAttribute="bottom" secondItem="YgR-Ir-u2l" secondAttribute="bottom" constant="8" id="AhX-aC-QOD"/>
+                    <constraint firstItem="9bk-ks-THM" firstAttribute="bottom" secondItem="qDv-a6-HxK" secondAttribute="bottom" id="Ch8-pf-4VE"/>
+                    <constraint firstItem="vLi-2k-523" firstAttribute="leading" secondItem="4OU-7B-lf9" secondAttribute="leading" constant="6" id="Dwc-Vy-H9A"/>
+                    <constraint firstItem="YgR-Ir-u2l" firstAttribute="trailing" secondItem="hut-bs-9tO" secondAttribute="trailing" id="Fcq-Wz-0co"/>
+                    <constraint firstItem="8Sf-vh-lRQ" firstAttribute="leading" secondItem="f5P-1F-luJ" secondAttribute="trailing" constant="8" symbolic="YES" id="Frc-2G-CFZ"/>
+                    <constraint firstItem="u5m-kr-d7i" firstAttribute="leading" secondItem="hut-bs-9tO" secondAttribute="trailing" id="GXx-rM-45J"/>
+                    <constraint firstAttribute="trailing" secondItem="u5m-kr-d7i" secondAttribute="trailing" constant="6" id="Lyp-M6-x9u"/>
+                    <constraint firstItem="qDv-a6-HxK" firstAttribute="leading" secondItem="vLi-2k-523" secondAttribute="trailing" constant="4" id="NGJ-wo-GFd"/>
+                    <constraint firstItem="hut-bs-9tO" firstAttribute="bottom" secondItem="9bk-ks-THM" secondAttribute="bottom" id="OEI-2v-3fa"/>
+                    <constraint firstItem="9bk-ks-THM" firstAttribute="centerY" secondItem="qDv-a6-HxK" secondAttribute="centerY" id="Pal-sE-nDR"/>
+                    <constraint firstItem="YgR-Ir-u2l" firstAttribute="leading" secondItem="8Sf-vh-lRQ" secondAttribute="leading" id="RtT-BE-gwM"/>
+                    <constraint firstItem="vLi-2k-523" firstAttribute="centerY" secondItem="qDv-a6-HxK" secondAttribute="centerY" id="TiQ-I3-7AL"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="8Sf-vh-lRQ" secondAttribute="trailing" constant="8" id="ZiR-Cf-FoP"/>
+                    <constraint firstItem="hut-bs-9tO" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="9bk-ks-THM" secondAttribute="trailing" constant="8" symbolic="YES" id="ZjT-aJ-6Qe"/>
+                    <constraint firstItem="YgR-Ir-u2l" firstAttribute="top" secondItem="8Sf-vh-lRQ" secondAttribute="bottom" constant="8" symbolic="YES" id="ZkW-LT-DhQ"/>
+                    <constraint firstItem="f5P-1F-luJ" firstAttribute="top" secondItem="qDv-a6-HxK" secondAttribute="bottom" constant="8" symbolic="YES" id="cOH-kv-xxR"/>
+                    <constraint firstItem="u5m-kr-d7i" firstAttribute="centerY" secondItem="hut-bs-9tO" secondAttribute="centerY" id="ctq-LL-hIV"/>
+                    <constraint firstItem="hut-bs-9tO" firstAttribute="top" secondItem="9bk-ks-THM" secondAttribute="top" id="fPO-bd-6MJ"/>
+                    <constraint firstItem="9bk-ks-THM" firstAttribute="top" secondItem="qDv-a6-HxK" secondAttribute="top" id="p7o-Cc-sqf"/>
+                    <constraint firstItem="9bk-ks-THM" firstAttribute="leading" secondItem="qDv-a6-HxK" secondAttribute="trailing" constant="8" symbolic="YES" id="rg7-UX-v4O"/>
+                    <constraint firstItem="9bk-ks-THM" firstAttribute="centerY" secondItem="hut-bs-9tO" secondAttribute="centerY" id="xFp-zf-qpd"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <connections>
+                <outlet property="chevronImageView" destination="u5m-kr-d7i" id="iV8-rm-8TN"/>
+                <outlet property="contentLabel" destination="YgR-Ir-u2l" id="3uG-WS-F7z"/>
+                <outlet property="dateLabel" destination="hut-bs-9tO" id="ZKA-1j-cWr"/>
+                <outlet property="notificationIconImageView" destination="qDv-a6-HxK" id="1gU-7b-vFG"/>
+                <outlet property="notificationTypeLabel" destination="9bk-ks-THM" id="raM-BR-3cc"/>
+                <outlet property="profileImageView" destination="f5P-1F-luJ" id="I97-4l-yS8"/>
+                <outlet property="readStatusImageView" destination="vLi-2k-523" id="jsM-Mn-ffZ"/>
+                <outlet property="titleLabel" destination="8Sf-vh-lRQ" id="d7n-HF-Pv8"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="153"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="Icons/Follower" width="128" height="128"/>
+        <image name="chevron.right" catalog="system" width="32" height="32"/>
+        <image name="circle.fill" catalog="system" width="32" height="32"/>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

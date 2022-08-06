@@ -11,25 +11,24 @@ import KurozoraKit
 
 extension NotificationsTableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let baseNotificationCell = tableView.cellForRow(at: indexPath) as? BaseNotificationCell
+		guard let userNotification = self.dataSource.itemIdentifier(for: indexPath) else { return }
 
-		switch self.grouping {
-		case .automatic, .byType:
-			self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].update(at: indexPath, withReadStatus: .read)
-		case .off:
-			self.userNotifications[indexPath.row].update(at: indexPath, withReadStatus: .read)
+		if userNotification.attributes.readStatus == .unread {
+			Task {
+				await userNotification.update(at: indexPath, withReadStatus: .read)
+			}
 		}
 
-		switch baseNotificationCell?.notificationType ?? .other {
+		switch userNotification.attributes.type {
 		case .session:
 			WorkflowController.shared.openSessionsManager(in: self)
 		case .follower:
-			guard let userID = baseNotificationCell?.userNotification?.attributes.payload.userID else { return }
+			guard let userID = userNotification.attributes.payload.userID else { return }
 			WorkflowController.shared.openUserProfile(for: userID, in: self)
 		case .subscriptionStatus:
 			UIApplication.shared.kOpen(nil, deepLink: .subscriptionManagement)
-		case .newFeedMessageReply, .newFeedMessageReShare:
-			guard let feedMessageID = baseNotificationCell?.userNotification?.attributes.payload.feedMessageID else { return }
+		case .feedMessageReply, .feedMessageReShare:
+			guard let feedMessageID = userNotification.attributes.payload.feedMessageID else { return }
 			WorkflowController.shared.openFeedMessage(for: feedMessageID, in: self)
 		default: break
 		}
@@ -61,33 +60,41 @@ extension NotificationsTableViewController {
 		}
 	}
 
-	// MARK: - Responding to Row Actions
-	override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-		var readStatus: ReadStatus = .unread
+	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		let titleHeaderTableReusableView = tableView.dequeueReusableHeaderFooterView(withIdentifier: TitleHeaderTableReusableView.reuseIdentifier) as? TitleHeaderTableReusableView
+		titleHeaderTableReusableView?.delegate = self
+
 		switch self.grouping {
 		case .automatic, .byType:
-			let notificationReadStatus = self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].attributes.readStatus
-			if notificationReadStatus == .unread {
-				readStatus = .read
-			}
-		case .off:
-			let notificationReadStatus = self.userNotifications[indexPath.row].attributes.readStatus
-			if notificationReadStatus == .unread {
-				readStatus = .read
-			}
+			let groupNotification = self.groupedNotifications[section]
+			let allNotificationsRead = groupNotification.sectionNotifications.contains(where: { $0.attributes.readStatus == .read })
+			let title = groupNotification.sectionTitle
+			let buttonTitle = allNotificationsRead ? "Mark as unread" : "Mark as read"
+
+			titleHeaderTableReusableView?.configure(withTitle: title, buttonTitle: buttonTitle, section: section)
+			return titleHeaderTableReusableView
+		case .off: break
+		}
+
+		return nil
+	}
+
+	// MARK: - Responding to Row Actions
+	override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+		guard let userNotification = self.dataSource.itemIdentifier(for: indexPath) else { return nil }
+		let notificationReadStatus = userNotification.attributes.readStatus
+		var readStatus: ReadStatus = .unread
+
+		if notificationReadStatus == .unread {
+			readStatus = .read
 		}
 
 		let isRead = readStatus == .read
-		let readUnreadAction = UIContextualAction(style: .normal, title: "") { [weak self] _, _, completionHandler in
-			guard let self = self else { return }
-
-			switch self.grouping {
-			case .automatic, .byType:
-				self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].update(at: indexPath, withReadStatus: readStatus)
-			case .off:
-				self.userNotifications[indexPath.row].update(at: indexPath, withReadStatus: readStatus)
+		let readUnreadAction = UIContextualAction(style: .normal, title: "") { _, _, completionHandler in
+			Task {
+				await userNotification.update(at: indexPath, withReadStatus: readStatus)
+				completionHandler(true)
 			}
-			completionHandler(true)
 		}
 		readUnreadAction.backgroundColor = KThemePicker.tintColor.colorValue
 		readUnreadAction.title = isRead ? "Mark as Read" : "Mark as Unread"
@@ -99,16 +106,13 @@ extension NotificationsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-		let deleteAction = UIContextualAction(style: .destructive, title: "Remove") { [weak self] _, _, completionHandler in
-			guard let self = self else { return }
+		guard let userNotification = self.dataSource.itemIdentifier(for: indexPath) else { return nil }
 
-			switch self.grouping {
-			case .automatic, .byType:
-				self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].remove(at: indexPath)
-			case .off:
-				self.userNotifications[indexPath.row].remove(at: indexPath)
+		let deleteAction = UIContextualAction(style: .destructive, title: "Remove") { _, _, completionHandler in
+			Task {
+				await userNotification.remove(at: indexPath)
+				completionHandler(true)
 			}
-			completionHandler(true)
 		}
 		deleteAction.backgroundColor = .kLightRed
 		deleteAction.image = UIImage(systemName: "minus.circle")
@@ -120,12 +124,8 @@ extension NotificationsTableViewController {
 
 	// MARK: - Managing Context Menus
 	override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		switch self.grouping {
-		case .automatic, .byType:
-			return self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-		case .off:
-			return self.userNotifications[indexPath.row].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-		}
+		let userNotification = self.dataSource.itemIdentifier(for: indexPath)
+		return userNotification?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 	}
 
 	override func tableView(_ tableView: UITableView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
@@ -147,14 +147,14 @@ extension NotificationsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
-		if let previewViewController = animator.previewViewController, let indexPath = configuration.identifier as? IndexPath {
-			animator.addCompletion {
-				switch self.grouping {
-				case .automatic, .byType:
-					self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].update(at: indexPath, withReadStatus: .read)
-				case .off:
-					self.userNotifications[indexPath.row].update(at: indexPath, withReadStatus: .read)
-				}
+		guard let previewViewController = animator.previewViewController, let indexPath = configuration.identifier as? IndexPath else { return }
+		let userNotification = self.dataSource.itemIdentifier(for: indexPath)
+
+		animator.addCompletion { [weak self] in
+			guard let self = self else { return }
+
+			Task {
+				await userNotification?.update(at: indexPath, withReadStatus: .read)
 				self.show(previewViewController, sender: self)
 			}
 		}
