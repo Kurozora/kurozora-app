@@ -61,17 +61,17 @@ extension ManageActiveSessionsController {
 
 	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		guard let sectionIdentifier = self.dataSource.sectionIdentifier(for: section) else { return nil }
-		let titleHeaderTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.titleHeaderTableViewCell.identifier) as? TitleHeaderTableViewCell
+		let titleHeaderTableReusableView = self.tableView.dequeueReusableHeaderFooterView(withIdentifier: TitleHeaderTableReusableView.reuseIdentifier) as? TitleHeaderTableReusableView
 
 		switch sectionIdentifier {
 		case .current:
-			titleHeaderTableViewCell?.configureCell(withTitle: Trans.currentSession, subtitle: nil, buttonTitle: nil)
+			titleHeaderTableReusableView?.configure(withTitle: Trans.currentSession)
 		case .other:
-			titleHeaderTableViewCell?.configureCell(withTitle: Trans.otherSessions, subtitle: nil, buttonTitle: nil)
+			titleHeaderTableReusableView?.configure(withTitle: Trans.otherSessions)
 		}
 
-		titleHeaderTableViewCell?.headerButton.isHidden = true
-		return titleHeaderTableViewCell?.contentView
+		titleHeaderTableReusableView?.headerButton.isHidden = true
+		return titleHeaderTableReusableView
 	}
 
 	// MARK: - Responding to Row Actions

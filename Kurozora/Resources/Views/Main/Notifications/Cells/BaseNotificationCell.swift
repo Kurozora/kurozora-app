@@ -21,33 +21,11 @@ class BaseNotificationCell: KTableViewCell {
 		return false
 	}
 
-	var notificationType: KNotification.CustomType?
-	var userNotification: UserNotification!
-
 	// MARK: - Functions
-	func configureCell(using userNotification: UserNotification, notificationType: KNotification.CustomType?) {
-		self.userNotification = userNotification
-		self.notificationType = notificationType
-
+	func configureCell(using userNotification: UserNotification) {
 		self.dateLabel.text = userNotification.attributes.createdAt.relativeToNow
 		self.contentLabel.text = userNotification.attributes.description
-		self.notificationTypeLabel.text = notificationType?.stringValue.uppercased()
-
-		// Setup read status.
-		self.updateReadStatus(for: userNotification)
-	}
-
-	/// Update the read status of the user notification.
-	///
-	/// - Parameter animation: A boolean value indicating whether the update should be animated.
-	func updateReadStatus(for userNotification: UserNotification, with readStatus: ReadStatus? = nil, animated: Bool = false) {
-		if let readStatus = readStatus {
-			userNotification.attributes.readStatus = readStatus
-		}
+		self.notificationTypeLabel.text = userNotification.attributes.type.stringValue.uppercased()
 		self.readStatusImageView.isHidden = userNotification.attributes.readStatus == .read
-
-		if animated {
-			self.readStatusImageView.animateBounce()
-		}
 	}
 }

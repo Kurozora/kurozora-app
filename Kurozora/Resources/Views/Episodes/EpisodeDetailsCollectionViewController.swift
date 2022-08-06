@@ -242,7 +242,7 @@ extension EpisodeDetailsCollectionViewController: TextViewCollectionViewCellDele
 
 // MARK: - TitleHeaderCollectionReusableViewDelegate
 extension EpisodeDetailsCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
-	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPressButton button: UIButton) {
+	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPress button: UIButton) {
 		self.performSegue(withIdentifier: reusableView.segueID, sender: reusableView.indexPath)
 	}
 }
