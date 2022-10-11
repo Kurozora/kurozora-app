@@ -45,7 +45,7 @@ class OnboardingTextFieldTableViewCell: OnboardingBaseTableViewCell {
 			switch textField.textType {
 			case .emailAddress:
 				textField.placeholder = "Your email address to the rescue 💌"
-			default : break
+			default: break
 			}
 		}
 	}

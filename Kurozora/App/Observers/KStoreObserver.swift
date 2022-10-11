@@ -56,7 +56,7 @@ final class KStoreObserver: NSObject {
 	}
 
 	/// Makes the purchase of the selected item.
-	func purchase(product: SKProduct, withComplition complition:@escaping ((AlertType, SKProduct?, SKPaymentTransaction?) -> Void)) {
+	func purchase(product: SKProduct, withComplition complition: @escaping ((AlertType, SKProduct?, SKPaymentTransaction?) -> Void)) {
 		self.purchaseProductComplition = complition
 		self.productToPurchase = product
 

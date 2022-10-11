@@ -107,9 +107,9 @@ class MenuController {
 				let subscribeToReminders =  UICommand(title: "Subscribe to Reminders...", action: #selector(AppDelegate.handleSubscribeToReminders(_:)), discoverabilityTitle: "Subscribe to Reminders...")
 				subscriptionMenuChildren.append(subscribeToReminders)
 			} else {
-				// Add "updgrade to pro" menu item.
-				let upgradeToPro =  UICommand(title: "Upgrade to Pro...", action: #selector(AppDelegate.handleUpgradeToPro(_:)), discoverabilityTitle: "Upgrade to Pro...")
-				subscriptionMenuChildren.append(upgradeToPro)
+				// Add "updgrade to Kurozora+" menu item.
+				let upgradeToKurozoraPlus =  UICommand(title: "Upgrade to Kurozora+...", action: #selector(AppDelegate.handleUpgradeToKurozoraPlus(_:)), discoverabilityTitle: "Upgrade to Kurozora+...")
+				subscriptionMenuChildren.append(upgradeToKurozoraPlus)
 			}
 		}
 

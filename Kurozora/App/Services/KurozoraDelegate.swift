@@ -238,7 +238,7 @@ extension KurozoraDelegate {
 	///    - viewController: The view controller on which the authentication is taking place.
 	///    - successHandler: A closure returning a boolean indicating whether authentication is successful.
 	///    - isSuccess: A boolean value indicating whether authentication is successful.
-	fileprivate func localAuthentication(viewController: AuthenticationViewController, withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void) {
+	fileprivate func localAuthentication(viewController: AuthenticationViewController, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
 		let localAuthenticationContext = LAContext()
 		var authError: NSError?
 

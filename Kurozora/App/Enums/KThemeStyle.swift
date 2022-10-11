@@ -281,7 +281,7 @@ extension KThemeStyle {
 	///    - appTheme: The app theme element which contains the link.
 	///    - successHandler: A closure returning a boolean indicating whether download is successful.
 	///    - isSuccess: A boolean value indicating whether the download is successful.
-	static func downloadThemeTask(for appTheme: AppTheme, _ successHandler:@escaping (_ isSuccess: Bool) -> Void) {
+	static func downloadThemeTask(for appTheme: AppTheme, _ successHandler: @escaping (_ isSuccess: Bool) -> Void) {
 		let urlString = appTheme.attributes.downloadLink
 		guard let libraryDirectoryUrl = self.libraryDirectoryUrl else {
 			DispatchQueue.main.async {
