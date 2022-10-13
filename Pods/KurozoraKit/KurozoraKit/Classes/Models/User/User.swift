@@ -41,10 +41,16 @@ extension User {
 		return User.current != nil
 	}
 
-	/// Returns a boolean indicating if the current user is signed in.
+	/// Returns a boolean indicating if the current signed in user has a pro account.
 	public static var isPro: Bool {
 		guard let currentUser = User.current else { return false }
 		return currentUser.attributes.isPro
+	}
+
+	/// Returns a boolean indicating if the current signed in user has a Kurozra+ subscription.
+	public static var isSubscribed: Bool {
+		guard let currentUser = User.current else { return false }
+		return currentUser.attributes.isSubscribed
 	}
 
 	// MARK: - Functions

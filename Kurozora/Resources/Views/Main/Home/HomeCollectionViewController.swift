@@ -24,7 +24,7 @@ class HomeCollectionViewController: KCollectionViewController {
 	]
 	let quickActions: [QuickAction] = [
 		QuickAction(title: "Redeem", segueID: R.segue.homeCollectionViewController.redeemSegue.identifier),
-		QuickAction(title: "Become a Pro User", segueID: R.segue.homeCollectionViewController.subscriptionSegue.identifier)
+		QuickAction(title: "Become a Subscriber", segueID: R.segue.homeCollectionViewController.subscriptionSegue.identifier)
 	]
 
 	var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()

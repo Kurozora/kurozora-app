@@ -207,8 +207,8 @@ extension AppDelegate {
 		WorkflowController.shared.signOut()
 	}
 
-	/// User chose "Upgrade to Pro..." from the Account menu.
-	@objc func handleUpgradeToPro(_ sender: AnyObject) {
+	/// User chose "Upgrade to Kurozora+..." from the Account menu.
+	@objc func handleUpgradeToKurozoraPlus(_ sender: AnyObject) {
 		if let subscriptionKNavigationController = R.storyboard.purchase.subscriptionKNavigationController() {
 			subscriptionKNavigationController.navigationItem.leftBarButtonItem = nil
 			UIApplication.topViewController?.show(subscriptionKNavigationController, sender: nil)

@@ -16,6 +16,7 @@
 				87BD44C87F8370DEB939D0399D96B432 /* PBXTargetDependency */,
 			);
 			name = R.swift;
+			productName = R.swift;
 		};
 /* End PBXAggregateTarget section */
 
@@ -1723,7 +1724,7 @@
 		696095421D8D7AAD1C74166C500FE6A8 /* ImagePrefetcher.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImagePrefetcher.swift; path = Sources/Networking/ImagePrefetcher.swift; sourceTree = "<group>"; };
 		69CBE576479412FDAE508D1BB00DD81A /* FLEXArgumentInputFontView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FLEXArgumentInputFontView.m; path = Classes/Editing/ArgumentInputViews/FLEXArgumentInputFontView.m; sourceTree = "<group>"; };
 		69E7AED3BC362A0DE01D86F06D69C4AF /* StudioRelationships.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StudioRelationships.swift; path = KurozoraKit/Classes/Models/Show/Studio/StudioRelationships.swift; sourceTree = "<group>"; };
-		6A329D2C08CA69EC15B9AD21AB2BAD25 /* FLEXObjcInternal.mm */ = {isa = PBXFileReference; includeInIndex = 1; name = FLEXObjcInternal.mm; path = Classes/Utility/Runtime/Objc/FLEXObjcInternal.mm; sourceTree = "<group>"; };
+		6A329D2C08CA69EC15B9AD21AB2BAD25 /* FLEXObjcInternal.mm */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.objcpp; name = FLEXObjcInternal.mm; path = Classes/Utility/Runtime/Objc/FLEXObjcInternal.mm; sourceTree = "<group>"; };
 		6AC4471FD50C10C20E7FCCC730A61AA2 /* XCDYouTubeVideoQueryOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = XCDYouTubeVideoQueryOperation.m; path = XCDYouTubeKit/XCDYouTubeVideoQueryOperation.m; sourceTree = "<group>"; };
 		6AD652D4162635591F7A350021AFC8CF /* UISearchBarExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UISearchBarExtensions.swift; path = Sources/SwifterSwift/UIKit/UISearchBarExtensions.swift; sourceTree = "<group>"; };
 		6B2ABBBDE5FC9272AACA14E9E4938695 /* ImageView+Kingfisher.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ImageView+Kingfisher.swift"; path = "Sources/Extensions/ImageView+Kingfisher.swift"; sourceTree = "<group>"; };
@@ -1811,7 +1812,7 @@
 		7B3AE843304EEA2615AF207E64DFEBCF /* ComparableExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ComparableExtensions.swift; path = Sources/SwifterSwift/SwiftStdlib/ComparableExtensions.swift; sourceTree = "<group>"; };
 		7B5AC4AD1C5E69AD9DBAF1EDBA45A525 /* MKPolylineExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MKPolylineExtensions.swift; path = Sources/SwifterSwift/MapKit/MKPolylineExtensions.swift; sourceTree = "<group>"; };
 		7B62C5090CEE5874C51079BC2FAA9507 /* Tabman-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Tabman-Info.plist"; sourceTree = "<group>"; };
-		7B8A40A56DC8BDE60A59AC986EEA7071 /* flex_fishhook.c */ = {isa = PBXFileReference; includeInIndex = 1; name = flex_fishhook.c; path = Classes/Utility/Runtime/flex_fishhook.c; sourceTree = "<group>"; };
+		7B8A40A56DC8BDE60A59AC986EEA7071 /* flex_fishhook.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = flex_fishhook.c; path = Classes/Utility/Runtime/flex_fishhook.c; sourceTree = "<group>"; };
 		7B94518D262F7AE5E90D87D6D7B2CD12 /* UISwitchExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UISwitchExtensions.swift; path = Sources/SwifterSwift/UIKit/UISwitchExtensions.swift; sourceTree = "<group>"; };
 		7C8AA70D996A277683E90533102D4D1B /* DecodableExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DecodableExtensions.swift; path = Sources/SwifterSwift/SwiftStdlib/DecodableExtensions.swift; sourceTree = "<group>"; };
 		7C99C490A890BCEF32A52E12B180FDA9 /* UserUpdate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UserUpdate.swift; path = KurozoraKit/Classes/Models/User/Update/UserUpdate.swift; sourceTree = "<group>"; };
@@ -1965,7 +1966,7 @@
 		9D00CA87F28FD890B2659983E9EFC2EB /* StarLayer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StarLayer.swift; path = Cosmos/StarLayer.swift; sourceTree = "<group>"; };
 		9D19B95A2A7EFF5E32CD1CD28E09AFDA /* FLEXNetworkTransaction.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FLEXNetworkTransaction.h; path = Classes/Network/FLEXNetworkTransaction.h; sourceTree = "<group>"; };
 		9D5D2AAB97C161ACFB9907BD46279929 /* FLEXSQLiteDatabaseManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FLEXSQLiteDatabaseManager.h; path = Classes/GlobalStateExplorers/DatabaseBrowser/FLEXSQLiteDatabaseManager.h; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9D9DFCCAD5C736D9478C1E65815E5869 /* TRON.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TRON.swift; path = Source/TRON/TRON.swift; sourceTree = "<group>"; };
 		9DD91949B6907CF4C88DE2A0BB5F981C /* UINavigationBarExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UINavigationBarExtensions.swift; path = Sources/SwifterSwift/UIKit/UINavigationBarExtensions.swift; sourceTree = "<group>"; };
 		9DDF3F3A68AA5B46FF9FA4F230C22155 /* TypedStoryboardSegueInfo+UIStoryboardSegue.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "TypedStoryboardSegueInfo+UIStoryboardSegue.swift"; path = "Library/UIKit/TypedStoryboardSegueInfo+UIStoryboardSegue.swift"; sourceTree = "<group>"; };
@@ -2051,7 +2052,7 @@
 		ACC5C62A5B9DDCE21D927669DD004A09 /* CharacterRelationships.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CharacterRelationships.swift; path = KurozoraKit/Classes/Models/Show/Character/CharacterRelationships.swift; sourceTree = "<group>"; };
 		ACCCA81F298CA9E6874C06C500FB2BA7 /* FLEXObjectListViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FLEXObjectListViewController.h; path = Classes/GlobalStateExplorers/FLEXObjectListViewController.h; sourceTree = "<group>"; };
 		AD3C8C7D31A066B504FB35F4170AD2F5 /* FLEXNetworkMITMViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FLEXNetworkMITMViewController.m; path = Classes/Network/FLEXNetworkMITMViewController.m; sourceTree = "<group>"; };
-		ADAE7A11641413EE96B075004AE47C40 /* FLEXFirebaseTransaction.mm */ = {isa = PBXFileReference; includeInIndex = 1; name = FLEXFirebaseTransaction.mm; path = Classes/Network/FLEXFirebaseTransaction.mm; sourceTree = "<group>"; };
+		ADAE7A11641413EE96B075004AE47C40 /* FLEXFirebaseTransaction.mm */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.objcpp; name = FLEXFirebaseTransaction.mm; path = Classes/Network/FLEXFirebaseTransaction.mm; sourceTree = "<group>"; };
 		ADDDD5B22386A46D7EB18F84574E945D /* CGFloatExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CGFloatExtensions.swift; path = Sources/SwifterSwift/CoreGraphics/CGFloatExtensions.swift; sourceTree = "<group>"; };
 		AE471DBD5E661F2C248088F4DBEEDB65 /* ShowType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ShowType.swift; path = KurozoraKit/Classes/Models/Show/Attributes/ShowType.swift; sourceTree = "<group>"; };
 		AE6FA51EB771A08EBB65187FB1FFB2E7 /* FLEXWindowManagerController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FLEXWindowManagerController.h; path = Classes/ExplorerInterface/FLEXWindowManagerController.h; sourceTree = "<group>"; };
@@ -2162,7 +2163,7 @@
 		C6C4092CB0C7C173CB0564D5BB5C9AF2 /* Pods-Kurozora-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Kurozora-dummy.m"; sourceTree = "<group>"; };
 		C737B526F7C005968611FA20E6DA4499 /* EventMonitor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EventMonitor.swift; path = Source/EventMonitor.swift; sourceTree = "<group>"; };
 		C73903AB19B74865C9264ADB88C503EF /* UserNotificationAttributes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UserNotificationAttributes.swift; path = "KurozoraKit/Classes/Models/User Notification/UserNotificationAttributes.swift"; sourceTree = "<group>"; };
-		C7824D184C503EFBDA0A15E81274CC4D /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = en.lproj; path = Sources/en.lproj; sourceTree = "<group>"; };
+		C7824D184C503EFBDA0A15E81274CC4D /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = en.lproj; path = Sources/en.lproj; sourceTree = "<group>"; };
 		C7CEDDB6D7456DF30C145411C7C48A5D /* ThemeStringAttributesPicker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ThemeStringAttributesPicker.swift; path = Sources/ThemeStringAttributesPicker.swift; sourceTree = "<group>"; };
 		C813B454DAF78627AF9863025E2949E4 /* DiskStorage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DiskStorage.swift; path = Sources/Cache/DiskStorage.swift; sourceTree = "<group>"; };
 		C840EDC5839619CC6E60BA22A6CAFF59 /* FLEXShortcutsFactory+Defaults.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "FLEXShortcutsFactory+Defaults.h"; path = "Classes/ObjectExplorers/Sections/Shortcuts/FLEXShortcutsFactory+Defaults.h"; sourceTree = "<group>"; };
@@ -2950,7 +2951,6 @@
 				87A4BA2E51DF5725D1163B75679B9D2E /* UIView+FLEX_Layout.m */,
 				FBE53F52D3E06DE54F8AF63B07F65D49 /* Support Files */,
 			);
-			name = FLEX;
 			path = FLEX;
 			sourceTree = "<group>";
 		};
@@ -2961,7 +2961,6 @@
 				2513FECD6CA3FB1AB1C7D6C447804475 /* Support Files */,
 				A16B94B9A3A8C4C39E39DC0E7619454D /* SwiftyJSON */,
 			);
-			name = TRON;
 			path = TRON;
 			sourceTree = "<group>";
 		};
@@ -3020,7 +3019,6 @@
 				1734F89E91740E78575FAD8BD93EF963 /* Validatable.swift */,
 				758A1CF35F0D2117B67C1A75A40AE2C5 /* Support Files */,
 			);
-			name = R.swift.Library;
 			path = R.swift.Library;
 			sourceTree = "<group>";
 		};
@@ -3030,7 +3028,6 @@
 				07D4F89E0AFE938BC7AB9FA216F7DB87 /* SwiftyJSON.swift */,
 				BD8659A657F8984EB1109E1D042EC75A /* Support Files */,
 			);
-			name = SwiftyJSON;
 			path = SwiftyJSON;
 			sourceTree = "<group>";
 		};
@@ -3040,7 +3037,6 @@
 				06BBFAECA616042961B6377E3C04C382 /* Reachability.swift */,
 				9CF93476EBC734EC70509573AA641B72 /* Support Files */,
 			);
-			name = ReachabilitySwift;
 			path = ReachabilitySwift;
 			sourceTree = "<group>";
 		};
@@ -3265,7 +3261,6 @@
 				C467FA1295F574CBEC1721BD2853123C /* WatchStatus.swift */,
 				95A8038DA2D721FBD72C8FF7F7572A89 /* Support Files */,
 			);
-			name = KurozoraKit;
 			path = KurozoraKit;
 			sourceTree = "<group>";
 		};
@@ -3305,7 +3300,6 @@
 				5C5F855D54BEDDC79437BF3A82A141C4 /* UITextField+PlaceholderAttributes.swift */,
 				94A83689666DDC206AB3D98B2E697A7E /* Support Files */,
 			);
-			name = SwiftTheme;
 			path = SwiftTheme;
 			sourceTree = "<group>";
 		};
@@ -3381,7 +3375,6 @@
 				A187506510ABB32A01A17228F008460E /* Solar.swift */,
 				17392ADDAC95B4A092B21B8FA3C259C3 /* Support Files */,
 			);
-			name = Solar;
 			path = Solar;
 			sourceTree = "<group>";
 		};
@@ -3398,7 +3391,6 @@
 				FCFEA42787919D216D63745910FD290A /* Keychain.swift */,
 				28037C2AEF94E023C501AE8B3093C8C3 /* Support Files */,
 			);
-			name = KeychainAccess;
 			path = KeychainAccess;
 			sourceTree = "<group>";
 		};
@@ -3433,7 +3425,6 @@
 				0A4D064F053289109A4055D6A141DBA0 /* WeakContainer.swift */,
 				6939071A5F248AB9D9BEE4CA4CBBB778 /* Support Files */,
 			);
-			name = Pageboy;
 			path = Pageboy;
 			sourceTree = "<group>";
 		};
@@ -3503,7 +3494,6 @@
 				A8A8BAE32D0D3800874A7C6082C51B5D /* WKInterfaceImage+Kingfisher.swift */,
 				2CFCC05BDBD6DB97DBDABDAD8AB8139B /* Support Files */,
 			);
-			name = Kingfisher;
 			path = Kingfisher;
 			sourceTree = "<group>";
 		};
@@ -3612,7 +3602,6 @@
 				6B9C887C615F4BED0563528871CD3B9E /* XCDYouTubeVideoWebpage.m */,
 				6FB61FDA7B430A1403D0867E0FB67E76 /* Support Files */,
 			);
-			name = XCDYouTubeKit;
 			path = XCDYouTubeKit;
 			sourceTree = "<group>";
 		};
@@ -3670,7 +3659,6 @@
 				A26CA310E26B631D98D56940AE249960 /* Resources */,
 				F867738BA8B989242F151F05905477F6 /* Support Files */,
 			);
-			name = WhatsNew;
 			path = WhatsNew;
 			sourceTree = "<group>";
 		};
@@ -3715,7 +3703,6 @@
 				E2AA225F29E551AAAE25A503DE66935C /* Validation.swift */,
 				9F4A9D030E5F586A95DF194E1E33DE5E /* Support Files */,
 			);
-			name = Alamofire;
 			path = Alamofire;
 			sourceTree = "<group>";
 		};
@@ -3885,7 +3872,6 @@
 				A9263414AEDC219EA234337D3F9D067A /* WeakContainer.swift */,
 				EA3A1E0FA02F1283EA9130D0097656D9 /* Support Files */,
 			);
-			name = Tabman;
 			path = Tabman;
 			sourceTree = "<group>";
 		};
@@ -4063,7 +4049,6 @@
 				3154C5C1F7FEDAA1B75F3370AFAF7BAC /* SwiftStdlib */,
 				2B7EDC5CC3904BFD821F1B3006F6F273 /* UIKit */,
 			);
-			name = SwifterSwift;
 			path = SwifterSwift;
 			sourceTree = "<group>";
 		};
@@ -4110,7 +4095,6 @@
 			children = (
 				ED36D708EEBC1151E6EF4163D8E1E9D7 /* Support Files */,
 			);
-			name = R.swift;
 			path = R.swift;
 			sourceTree = "<group>";
 		};
@@ -4156,7 +4140,6 @@
 				9D00CA87F28FD890B2659983E9EFC2EB /* StarLayer.swift */,
 				8578944F82C914B11B7F776A8E5FB5F1 /* Support Files */,
 			);
-			name = Cosmos;
 			path = Cosmos;
 			sourceTree = "<group>";
 		};
@@ -4184,7 +4167,6 @@
 				13AEF1E8413DC38FBA00FECB6D2D2790 /* Resources */,
 				5553F9C8081150F53AFDEB3FA1059432 /* Support Files */,
 			);
-			name = "ESTabBarController-swift";
 			path = "ESTabBarController-swift";
 			sourceTree = "<group>";
 		};
@@ -5010,7 +4992,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1300;
-				LastUpgradeCheck = 1300;
+				LastUpgradeCheck = 1400;
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 12.0";
@@ -6897,6 +6879,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -6963,6 +6946,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

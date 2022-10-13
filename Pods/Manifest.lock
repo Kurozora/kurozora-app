@@ -4,11 +4,11 @@ PODS:
   - ESTabBarController-swift (2.8.0)
   - FLEX (4.7.0)
   - KeychainAccess (4.2.2)
-  - Kingfisher (7.3.1)
-  - KurozoraKit (0.36.0):
+  - Kingfisher (7.4.0)
+  - KurozoraKit (1.1.1):
     - KeychainAccess
     - TRON
-  - Pageboy (3.6.2)
+  - Pageboy (3.7.0)
   - R.swift (6.1.0):
     - R.swift.Library (~> 5.3.0)
   - R.swift.Library (5.3.0)
@@ -41,8 +41,8 @@ PODS:
   - SwifterSwift/UIKit (5.2.0)
   - SwiftTheme (0.6.4)
   - SwiftyJSON (5.0.1)
-  - Tabman (2.12.0):
-    - Pageboy (~> 3.6.0)
+  - Tabman (2.13.0):
+    - Pageboy (~> 3.7.0)
   - TRON (5.4.1):
     - Alamofire (~> 5.0)
     - TRON/Core (= 5.4.1)
@@ -112,9 +112,9 @@ SPEC CHECKSUMS:
   ESTabBarController-swift: 05593a6ad64700b03c0eb60ff625916370aa4136
   FLEX: bdc9ac7d4a239e3d04c298c01221203257d63a80
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
-  Kingfisher: f411ab4902e733fc0c40522920fb5a236d7a7334
-  KurozoraKit: 6f9e0b8dc37fccf092771c7abfd18929cbfd0eee
-  Pageboy: cf121b9dd48c63f3f281b2a9ec93d02e0f23879b
+  Kingfisher: 596b207973051aae5e4c54a1c1cb39837ea10d36
+  KurozoraKit: 49b2211081f6dd5896d27a9e6f130dfebb490a30
+  Pageboy: fe646118f7168960058bea7a96038386aa7c0da8
   R.swift: ec98ff71c4ab2f6fd01dd077e5afd15e63a4834c
   R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
@@ -122,7 +122,7 @@ SPEC CHECKSUMS:
   SwifterSwift: 334181863c416882d97b7a60c05054d9e4d799e2
   SwiftTheme: 007cbaf1f9e171caf6448a4657533e54c682b285
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
-  Tabman: 447a50447ed2869c39ab3b1a779327e43e067c4e
+  Tabman: 66ea44c44488327ec20f3c8dc5554a5d22f5908c
   TRON: 1d635dad9a55c9441cb2bcf0571a14a5ede59440
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
   XCDYouTubeKit: b120aced3d8638ffb570c5450cddb5a1dac448c7

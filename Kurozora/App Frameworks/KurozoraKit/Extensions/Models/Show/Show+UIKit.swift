@@ -145,7 +145,7 @@ extension Show {
 	func toggleReminder() {
 		WorkflowController.shared.isSignedIn {
 			Task {
-				await WorkflowController.shared.isPro {
+				if await WorkflowController.shared.isSubscribed() {
 					KService.updateReminderStatus(forShow: self.id) { [weak self] result in
 						guard let self = self else { return }
 						switch result {

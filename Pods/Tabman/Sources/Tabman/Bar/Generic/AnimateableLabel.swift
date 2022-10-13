@@ -3,7 +3,7 @@
 //  Tabman
 //
 //  Created by Merrick Sapsford on 09/11/2018.
-//  Copyright © 2019 UI At Six. All rights reserved.
+//  Copyright © 2022 UI At Six. All rights reserved.
 //
 
 import UIKit
@@ -34,7 +34,11 @@ internal class AnimateableLabel: UIView {
         }
         set {
             let textColor = newValue ?? .black
-            textLayer.foregroundColor = textColor.cgColor
+            if #available(iOS 13, *) {
+                textLayer.foregroundColor = textColor.resolvedColor(with: traitCollection).cgColor
+            } else {
+                textLayer.foregroundColor = textColor.cgColor
+            }
         }
     }
     var font: UIFont? {

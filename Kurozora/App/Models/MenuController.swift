@@ -102,7 +102,7 @@ class MenuController {
 
 		var subscriptionMenuChildren: [UIMenuElement] = []
 		if User.isSignedIn, let user = User.current {
-			if user.attributes.isPro {
+			if user.attributes.isSubscribed {
 				// Add "subscribe to reminders" menu item.
 				let subscribeToReminders =  UICommand(title: "Subscribe to Reminders...", action: #selector(AppDelegate.handleSubscribeToReminders(_:)), discoverabilityTitle: "Subscribe to Reminders...")
 				subscriptionMenuChildren.append(subscribeToReminders)

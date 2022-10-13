@@ -24,12 +24,9 @@ extension WorkflowController {
 		}
 	}
 
-	/// Checks whether the current user is pro. If the user is pro in then a success block is run. Otherwise pro features are turned off.
-	///
-	/// - Parameter completion: Optional completion handler (default is `nil`).
+	/// Checks whether the current user has a valid subscription. If the user dos then a success block is run. Otherwise subscription features are turned off.
 	@MainActor
-	@discardableResult func isPro(_ completion: (() -> Void)? = nil) async -> Bool {
-//		if User.isPro {
+	func isSubscribed() async -> Bool {
 		// Get entitled subscription ID
 		var entitledProductID = ""
 		for await result in Transaction.currentEntitlements {
@@ -43,32 +40,63 @@ extension WorkflowController {
 
 		// Perform action if everything is ok, otherwise prompt for subscription.
 		if isPurchased ?? false {
-			completion?()
 			return true
-		} else {
-			let subscribeAction = UIAlertAction(title: Trans.subscribe, style: .default) { [weak self] _ in
-				guard let self = self else { return }
-				self.presentSubscribeView()
-			}
-
-			UIApplication.topViewController?.presentAlertController(title: "That's Unfortunate", message: "This feature is only accessible to pro users 🧐", actions: [subscribeAction])
-			return false
 		}
+
+		let subscribeAction = UIAlertAction(title: Trans.subscribe, style: .default) { [weak self] _ in
+			guard let self = self else { return }
+			self.presentSubscribeView()
+		}
+
+		UIApplication.topViewController?.presentAlertController(title: "Kurozora+ Required", message: "This feature is only accessible to Kurozora+ users. Funds from this go to supporting Kurozora's development.", actions: [subscribeAction])
+		return false
+	}
+
+	@MainActor
+	func isProOrSubscribed() async -> Bool {
+		// Get entitled subscription ID
+		var entitledProductID = ""
+		for await result in Transaction.currentEntitlements {
+			if case .verified(let transaction) = result {
+				entitledProductID = transaction.productID
+			}
+		}
+
+		// Check if purchased which also validates with StoreKit.
+		let isPurchased = try? await store.isPurchased(entitledProductID)
+
+		// Perform action if everything is ok, otherwise prompt for subscription.
+		if isPurchased ?? false {
+			return true
+		}
+
+		let subscribeAction = UIAlertAction(title: Trans.subscribe, style: .default) { [weak self] _ in
+			guard let self = self else { return }
+			self.presentSubscribeView()
+		}
+
+		let proAction = UIAlertAction(title: Trans.pro, style: .default) { [weak self] _ in
+			guard let self = self else { return }
+			self.presentTipJarView()
+		}
+
+		UIApplication.topViewController?.presentAlertController(title: "Pro Required", message: "This feature is accessible to Pro users. Funds from this go to supporting Kurozora's development. Alternatively, this feature and all other features are also included with Kurozora+.", actions: [proAction, subscribeAction])
+		return false
 	}
 
 	/// Subscribes user with their reminders.
 	func subscribeToReminders() {
-		UIApplication.topViewController?.presentAlertController(title: "Work in Progress", message: "Reminders have temporarily been disabled. An improved version is being worked on and should be available soon!")
-//		Task { [weak self] in
-//		guard let self = self else { return }
-//			await WorkflowController.shared.isPro {
-//				let reminderSubscriptionURL = KService.reminderSubscriptionURL
-//				let reminderSubscriptionString = reminderSubscriptionURL.absoluteString.removingPrefix(reminderSubscriptionURL.scheme ?? "")
-//				DispatchQueue.main.async {
-//					UIApplication.shared.kOpen(nil, deepLink: URL(string: "webcal\(reminderSubscriptionString)"))
-//				}
-//			}
-//		}
+//		UIApplication.topViewController?.presentAlertController(title: "Work in Progress", message: "Reminders have temporarily been disabled. An improved version is being worked on and should be available soon!")
+		Task {
+//			guard let self = self else { return }
+			if await WorkflowController.shared.isSubscribed() {
+				let reminderSubscriptionURL = KService.reminderSubscriptionURL
+				let reminderSubscriptionString = reminderSubscriptionURL.absoluteString.removingPrefix(reminderSubscriptionURL.scheme ?? "")
+				DispatchQueue.main.async {
+					UIApplication.shared.kOpen(nil, deepLink: URL(string: "webcal\(reminderSubscriptionString)"))
+				}
+			}
+		}
 	}
 
 	/// Repopulates the current user's data.
@@ -111,6 +139,13 @@ extension WorkflowController {
 	func presentSubscribeView() {
 		if let subscriptionKNavigationController = R.storyboard.purchase.subscriptionKNavigationController() {
 			UIApplication.topViewController?.present(subscriptionKNavigationController, animated: true)
+		}
+	}
+
+	/// Presents the user with the tip jar view.
+	func presentTipJarView() {
+		if let tipJarKNavigationController = R.storyboard.purchase.tipJarKNavigationController() {
+			UIApplication.topViewController?.present(tipJarKNavigationController, animated: true)
 		}
 	}
 

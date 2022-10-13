@@ -9,8 +9,8 @@ extension User {
 	/// A root object that stores information about a single user, such as the user's username, bio, and profile image.
 	public struct Attributes: Codable {
 		// MARK: - Properties
-//		/// The role of the user.
-//		public let role: Int?
+		/// The role of the user.
+		public let role: Int?
 
 		/// The slug of the user.
 		public let slug: String
@@ -40,8 +40,11 @@ extension User {
 		/// The banner image of the user.
 		public var banner: Media?
 
-		/// Whether the user has a pro badge.
+		/// Whether the user has a valid pro account.
 		public var isPro: Bool
+
+		/// Whether the user has a valid subscription.
+		public var isSubscribed: Bool
 
 		/// The join date of the user.
 		public let joinDate: Date

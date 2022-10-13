@@ -127,20 +127,21 @@ extension ManageIconTableViewController {
 				KThemeStyle.changeIcon(to: iconTableViewCell.alternativeIconsElement?.name)
 			}
 
-			UserSettings.set(iconTableViewCell.alternativeIconsElement?.name, forKey: .appIcon)
-			NotificationCenter.default.post(name: .KSAppIconDidChange, object: nil)
-			tableView.reloadData()
+			self.changeIcon(tableView: tableView, iconTableViewCell: iconTableViewCell)
 		default:
 			Task {
-				await WorkflowController.shared.isPro {
-					KThemeStyle.changeIcon(to: iconTableViewCell.alternativeIconsElement?.name)
-
-					UserSettings.set(iconTableViewCell.alternativeIconsElement?.name, forKey: .appIcon)
-					NotificationCenter.default.post(name: .KSAppIconDidChange, object: nil)
-					tableView.reloadData()
+				if await WorkflowController.shared.isProOrSubscribed() {
+				    KThemeStyle.changeIcon(to: iconTableViewCell.alternativeIconsElement?.name)
+					self.changeIcon(tableView: tableView, iconTableViewCell: iconTableViewCell)
 				}
 			}
 		}
+	}
+
+	func changeIcon(tableView: UITableView, iconTableViewCell: IconTableViewCell) {
+		UserSettings.set(iconTableViewCell.alternativeIconsElement?.name, forKey: .appIcon)
+		NotificationCenter.default.post(name: .KSAppIconDidChange, object: nil)
+		tableView.reloadData()
 	}
 }
 

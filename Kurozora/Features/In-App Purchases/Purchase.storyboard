@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="kAW-tw-WcP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="kAW-tw-WcP">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Become A Pro User-->
+        <!--Become a Subscriber-->
         <scene sceneID="HdS-uI-ed4">
             <objects>
                 <tableViewController storyboardIdentifier="SubscriptionTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="TcY-0N-W9c" customClass="SubscriptionTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
@@ -19,7 +20,7 @@
                         <viewLayoutGuide key="safeArea" id="qMd-x1-hhp"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ProductPreviewTableViewCell" rowHeight="340" id="f8R-hk-9d8" customClass="ProductPreviewTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="49.5" width="374" height="340"/>
+                                <rect key="frame" x="20" y="55.5" width="374" height="340"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="f8R-hk-9d8" id="h3P-EM-Bwr">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="340"/>
@@ -66,7 +67,7 @@
                                             </connections>
                                         </collectionView>
                                         <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" hidesForSinglePage="YES" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="BqV-0e-fKs">
-                                            <rect key="frame" x="109.5" y="306" width="155.5" height="26"/>
+                                            <rect key="frame" x="129" y="306" width="116.5" height="26"/>
                                             <color key="currentPageIndicatorTintColor" systemColor="systemOrangeColor"/>
                                             <connections>
                                                 <action selector="pageControllerTapped:" destination="f8R-hk-9d8" eventType="valueChanged" id="FOZ-m8-5ED"/>
@@ -91,7 +92,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PurchaseButtonTableViewCell" id="jQ4-Wc-pCy" customClass="PurchaseButtonTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="389.5" width="374" height="66.5"/>
+                                <rect key="frame" x="20" y="395.5" width="374" height="66.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jQ4-Wc-pCy" id="jgV-bt-ZDD">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="66.5"/>
@@ -110,19 +111,19 @@
                                             </userDefinedRuntimeAttributes>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QhB-Qe-NXH" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="66" y="8" width="35" height="17"/>
+                                            <rect key="frame" x="66" y="8" width="41" height="20.5"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xly-gt-k6P" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="66" y="25" width="29" height="14.5"/>
+                                            <rect key="frame" x="66" y="28.5" width="35" height="18"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                             <color key="textColor" systemColor="secondaryLabelColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="dlr-ii-KNV" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="276" y="19" width="90" height="29"/>
+                                            <rect key="frame" x="276" y="17" width="90" height="33"/>
                                             <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="90" id="LNY-By-UFc"/>
@@ -165,14 +166,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PurchaseStatusTableViewCell" id="s5D-JM-Mcs" customClass="PurchaseStatusTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="456" width="374" height="33.5"/>
+                                <rect key="frame" x="20" y="462" width="374" height="37"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="s5D-JM-Mcs" id="9co-zq-yyv">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="33.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="37"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Ve-b6-3da" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="8" y="8" width="358" height="17.5"/>
+                                            <rect key="frame" x="8" y="8" width="358" height="21"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -196,7 +197,7 @@
                             <outlet property="delegate" destination="TcY-0N-W9c" id="3Ec-Kw-X1f"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Become A Pro User" id="VFF-uw-QHB">
+                    <navigationItem key="navigationItem" title="Become a Subscriber" id="VFF-uw-QHB">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Uaq-1j-Qx4">
                             <connections>
                                 <action selector="cancelButtonPressed:" destination="TcY-0N-W9c" id="5bH-tC-EaQ"/>
@@ -217,7 +218,7 @@
                 <navigationController storyboardIdentifier="SubscriptionKNavigationController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="kAW-tw-WcP" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="CHY-06-jkg">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
@@ -246,10 +247,10 @@
                         <viewLayoutGuide key="safeArea" id="ar8-ZO-ryb"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PurchaseHeaderTableViewCell" id="qKP-xb-LrH" customClass="ProductHeaderTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="49.5" width="374" height="177.5"/>
+                                <rect key="frame" x="20" y="55.5" width="374" height="271.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qKP-xb-LrH" id="SwT-sQ-aFG">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="177.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="271.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Kurozora Tip Jar" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SNO-SQ-6IZ" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
@@ -260,7 +261,9 @@
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6lv-DP-NZ5" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                                             <rect key="frame" x="8" y="27.5" width="358" height="150"/>
-                                            <string key="text">Kurozora is made by a small team of 2 students. We rely on your support to develop Kurozora. If you find it to be useful to you, please consider supporting us by leaving a tip in our Kurozora Tip Jar. We would like to keep working on and improving Kurozora, so any amount is incredibly appreciated. Please know that even if you don't tip we are still grateful that you use this app.</string>
+                                            <mutableString key="text">Kurozora is made by a small team consisting of 1 person. I rely on your support to develop Kurozora. If you find it to be useful to you, please consider supporting me by leaving a tip in the Kurozora Tip Jar. I would like to keep working on and improving Kurozora, so any amount is incredibly appreciated. Please know that even if you don't tip I am still grateful that you use this app.
+
+Any amount unlocks Pro 🚀</mutableString>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -283,7 +286,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PurchaseButtonTableViewCell" id="Nkv-1p-7XE" customClass="PurchaseButtonTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="227" width="374" height="66.5"/>
+                                <rect key="frame" x="20" y="327" width="374" height="66.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Nkv-1p-7XE" id="mPN-VW-XNH">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="66.5"/>
@@ -302,19 +305,19 @@
                                             </userDefinedRuntimeAttributes>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1vE-yd-cP7" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="66" y="8" width="212" height="17"/>
+                                            <rect key="frame" x="66" y="8" width="212" height="20.5"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XNr-Rm-oJQ" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="66" y="29" width="212" height="14.5"/>
+                                            <rect key="frame" x="66" y="32.5" width="212" height="18"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                             <color key="textColor" systemColor="secondaryLabelColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="EEm-xc-IlI" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="286" y="19" width="80" height="29"/>
+                                            <rect key="frame" x="286" y="17" width="80" height="33"/>
                                             <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="80" id="jIO-He-KoA"/>
@@ -362,7 +365,16 @@
                             <outlet property="delegate" destination="GcJ-vL-WDl" id="GR3-Eh-8zt"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Tip Jar" id="XU3-6B-58f"/>
+                    <navigationItem key="navigationItem" title="Tip Jar" id="XU3-6B-58f">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="WGn-Tj-4rn">
+                            <connections>
+                                <action selector="cancelButtonPressed:" destination="GcJ-vL-WDl" id="gxL-qS-TVd"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="leftNavigationBarButton" destination="WGn-Tj-4rn" id="gGZ-dJ-AHW"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BKK-sW-NaO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -374,7 +386,7 @@
                 <navigationController storyboardIdentifier="TipJarKNavigationController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="3Je-1X-zCm" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="Z3H-9K-I0M">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">

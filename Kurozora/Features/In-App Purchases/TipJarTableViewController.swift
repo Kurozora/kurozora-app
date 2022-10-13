@@ -18,6 +18,11 @@ class TipJarTableViewController: ProductTableViewController {
 	override var serviceType: ServiceType? {
 		return .tipJar
 	}
+
+	// MARK: - IBActions
+	@IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
+		self.dismiss(animated: true, completion: nil)
+	}
 }
 
 // MARK: - UITableViewDataSource

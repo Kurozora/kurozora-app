@@ -103,7 +103,7 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 		switch self.kTheme {
 		case .other(let theme):
 			if Int(currentThemeID) == theme.id {
-				if User.isPro {
+				if User.isPro || User.isSubscribed {
 					if KThemeStyle.isUpToDate(theme.id, version: theme.attributes.version) {
 						getThemeButton.setTitle("USING", for: .normal)
 					} else {
@@ -113,7 +113,7 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 					getThemeButton.setTitle("USING", for: .normal)
 				}
 			} else if KThemeStyle.themeExist(for: theme) {
-				if User.isPro {
+				if User.isPro || User.isSubscribed {
 					if KThemeStyle.isUpToDate(theme.id, version: theme.attributes.version) {
 						getThemeButton.setTitle("USE", for: .normal)
 					} else {

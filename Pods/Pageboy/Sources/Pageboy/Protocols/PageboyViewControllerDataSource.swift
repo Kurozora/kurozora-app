@@ -3,12 +3,12 @@
 //  Pageboy
 //
 //  Created by Merrick Sapsford on 24/11/2017.
-//  Copyright © 2018 UI At Six. All rights reserved.
+//  Copyright © 2022 UI At Six. All rights reserved.
 //
 
 import UIKit
 
-public protocol PageboyViewControllerDataSource: class {
+public protocol PageboyViewControllerDataSource: AnyObject {
     
     /// The number of view controllers to display.
     ///

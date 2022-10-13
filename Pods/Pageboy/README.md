@@ -18,7 +18,7 @@
 **TL;DR** *UIPageViewController done properly.*
 
 ## ⭐️ Features
-- [x] Simplified data source management & enhanced delgation.
+- [x] Simplified data source management & enhanced delegation.
 - [x] Dynamically insert & remove pages.
 - [x] Infinite scrolling support.
 - [x] Automatic timer-based page transitioning.
@@ -92,7 +92,7 @@ About to embark on a transition to a new page.
 ```swift
 func pageboyViewController(_ pageboyViewController: PageboyViewController,
                            willScrollToPageAt index: Int,
-                           direction: NavigationDirection,
+                           direction: PageboyViewController.NavigationDirection,
                            animated: Bool)
 ```
 
@@ -102,7 +102,7 @@ Scrolled to a relative position along the way transitioning to a new page.
 ```swift
 func pageboyViewController(_ pageboyViewController: PageboyViewController,
                            didScrollTo position: CGPoint,
-                           direction: NavigationDirection,
+                           direction: PageboyViewController.NavigationDirection,
                            animated: Bool)
 ```
 
@@ -112,7 +112,7 @@ Successfully completed a scroll transition to a page.
 ```swift
 func pageboyViewController(_ pageboyViewController: PageboyViewController,
                            didScrollToPageAt index: Int,
-                           direction: NavigationDirection,
+                           direction: PageboyViewController.NavigationDirection,
                            animated: Bool)
 ```
 
@@ -152,7 +152,7 @@ viewControllers.insert(UIViewController(), at: index)
 pageViewController.insertPage(at: index)
 ```
 
-*The default behaviour after inserting or deleting a page is to scroll to the update location, this however can be configured by passing a  `PageUpdateBehavior` value other than `.scrollToUpdate`.*
+*The default behavior after inserting or deleting a page is to scroll to the update location, this however can be configured by passing a  `PageUpdateBehavior` value other than `.scrollToUpdate`.*
 
 ## ⚡️ Other Extras
 
@@ -164,7 +164,7 @@ pageViewController.insertPage(at: index)
 - `.parentPageboy` - Access the immediate parent `PageboyViewController` from any child view controller.
 
 ### Animated Transitions
-Pageboy also provides custom transition support for **animated transitions**. This can be customised via the `.transition` property on `PageboyViewController`.
+Pageboy also provides custom transition support for **animated transitions**. This can be customized via the `.transition` property on `PageboyViewController`.
 
 ```swift
 pageboyViewController.transition = Transition(style: .push, duration: 1.0)

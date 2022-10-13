@@ -58,9 +58,14 @@ class SettingsTableViewController: KTableViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == R.segue.settingsTableViewController.subscriptionSegue.identifier {
+		switch segue.identifier {
+		case R.segue.settingsTableViewController.subscriptionSegue.identifier:
 			let kNavigationController = segue.destination as? KNavigationController
 			(kNavigationController?.viewControllers.first as? SubscriptionTableViewController)?.leftNavigationBarButtonIsHidden = true
+		case R.segue.settingsTableViewController.tipJarSegue.identifier:
+			let kNavigationController = segue.destination as? KNavigationController
+			(kNavigationController?.viewControllers.first as? TipJarTableViewController)?.leftNavigationBarButtonIsHidden = true
+		default: break
 		}
 	}
 }

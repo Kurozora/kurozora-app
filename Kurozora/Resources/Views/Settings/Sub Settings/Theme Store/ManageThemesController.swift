@@ -129,11 +129,11 @@ extension ManageThemesCollectionViewController: ThemesCollectionViewCellDelegate
 		case .sakura:
 			KTheme.sakura.switchToTheme()
 		case .other(let theme):
-			if KThemeStyle.themeExist(for: theme) && !User.isPro {
+			if KThemeStyle.themeExist(for: theme) && (!User.isPro || !User.isSubscribed) {
 				KTheme.other(theme).switchToTheme()
 			} else {
 				Task {
-					await WorkflowController.shared.isPro {
+					if await WorkflowController.shared.isProOrSubscribed() {
 						if KThemeStyle.themeExist(for: theme) && !KThemeStyle.isUpToDate(theme.id, version: theme.attributes.version) {
 							self.handleRedownloadTheme(cell)
 						} else {
@@ -151,7 +151,7 @@ extension ManageThemesCollectionViewController: ThemesCollectionViewCellDelegate
 			let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
 				guard let self = self else { return }
 
-				if User.isPro {
+				if User.isPro || User.isSubscribed {
 					// Add redownload action
 					let redownloadAction = UIAlertAction(title: "Redownload Theme", style: .default) { _ in
 						self.handleRedownloadTheme(cell)
