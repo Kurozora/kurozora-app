@@ -7,7 +7,6 @@
 		<string>Kurozora</string>
 		<string>Day</string>
 		<string>Night</string>
-		<string>Meri-Chri</string>
 	</array>
 	<key>Nature</key>
 	<array>
@@ -15,6 +14,10 @@
 		<string>Spring</string>
 		<string>Summer</string>
 		<string>Fall</string>
+		<string>Sakura</string>
+		<string>Flame</string>
+		<string>Wind</string>
+		<string>Thunder</string>
 	</array>
 	<key>Premium</key>
 	<array>
@@ -30,12 +33,11 @@
 	</array>
 	<key>Limited</key>
 	<array>
-		<string>Eggatha</string>
+		<string>Kur &apos;O Zora</string>
 		<string>Monozora</string>
 		<string>Cookiezora</string>
 		<string>Kurogram</string>
 		<string>Kurolicious</string>
-		<string>Love Bug</string>
 		<string>Product(RED)</string>
 	</array>
 </dict>

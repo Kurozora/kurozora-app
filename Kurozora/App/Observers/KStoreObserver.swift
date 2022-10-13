@@ -80,7 +80,7 @@ final class KStoreObserver: NSObject {
 	}
 
 	/// Fetches available IAP products.
-	func fetchAvailableProducts(withComplition complition:@escaping (([SKProduct]) -> Void)) {
+	func fetchAvailableProducts(withComplition complition: @escaping (([SKProduct]) -> Void)) {
 		self.fetchProductComplition = complition
 
 		if self.productIDs.isEmpty {

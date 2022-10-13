@@ -407,7 +407,7 @@ extension SettingsTableViewController {
 			case .theme:
 				return R.image.icons.theme()
 			case .icon:
-				return #imageLiteral(resourceName: UserSettings.appIcon)
+				return UIImage(named: UserSettings.appIcon)
 			case .browser:
 				return R.image.icons.browser()
 			case .biometrics:

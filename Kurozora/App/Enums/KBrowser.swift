@@ -46,26 +46,26 @@ enum KBrowser: Int, CaseIterable {
 	}
 
 	/// The image value of a KBrowser type.
-	var image: UIImage {
+	var image: UIImage? {
 		switch self {
 		case .kurozora:
-			return #imageLiteral(resourceName: UserSettings.appIcon)
+			return UIImage(named: UserSettings.appIcon)
 		case .safari:
-			return R.image.browsers.safari()!
+			return R.image.browsers.safari()
 		case .brave:
-			return R.image.browsers.brave()!
+			return R.image.browsers.brave()
 		case .dolphin:
-			return R.image.browsers.dolphin()!
+			return R.image.browsers.dolphin()
 		case .duckduckgo:
-			return R.image.browsers.duckDuckGo()!
+			return R.image.browsers.duckDuckGo()
 		case .firefox:
-			return R.image.browsers.fireFox()!
+			return R.image.browsers.fireFox()
 		case .firefoxfocus:
-			return R.image.browsers.fireFoxFocus()!
+			return R.image.browsers.fireFoxFocus()
 		case .googlechrome:
-			return R.image.browsers.googleChrome()!
+			return R.image.browsers.googleChrome()
 		case .opera:
-			return R.image.browsers.opera()!
+			return R.image.browsers.opera()
 		}
 	}
 
