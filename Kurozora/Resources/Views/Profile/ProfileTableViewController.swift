@@ -417,37 +417,39 @@ class ProfileTableViewController: KTableViewController {
 		self.proBadgeButton.isHidden = !user.attributes.isPro || !user.attributes.isSubscribed
 
 		// Configure badge & badge button
+		var badgeCount = 0
 		if let badges = user.relationships?.badges?.data {
 			// Configure user badge (a.k.a tag)
 			if !badges.isEmpty {
 				self.tagBadgeButton.isHidden = false
-				for badge in badges {
+				if let badge = badges.last {
 					self.tagBadgeButton.setTitle(badge.attributes.name, for: .normal)
 					self.tagBadgeButton.setTitleColor(UIColor(hexString: badge.attributes.textColor), for: .normal)
 					self.tagBadgeButton.backgroundColor = UIColor(hexString: badge.attributes.backgroundColor)
 					self.tagBadgeButton.borderColor = UIColor(hexString: badge.attributes.textColor)
 					self.profileImageView.borderColor = UIColor(hexString: badge.attributes.textColor)
-					break
 				}
 			} else {
 				self.tagBadgeButton.isHidden = true
 			}
 
-			// Configure badge button
-			let count = NSAttributedString(string: "\(badges.count)", attributes: [
-				NSAttributedString.Key.foregroundColor: KThemePicker.textColor.colorValue,
-				NSAttributedString.Key.paragraphStyle: centerAlign
-			])
-			let title = NSAttributedString(string: "\nBadges", attributes: [
-				NSAttributedString.Key.foregroundColor: KThemePicker.subTextColor.colorValue,
-				NSAttributedString.Key.paragraphStyle: centerAlign
-			])
-			let badgesButtonTitle = NSMutableAttributedString()
-			badgesButtonTitle.append(count)
-			badgesButtonTitle.append(title)
-
-			self.badgesButton.setAttributedTitle(badgesButtonTitle, for: .normal)
+			badgeCount = badges.count
 		}
+
+		// Configure badge button
+		let badgeCountString = NSAttributedString(string: "\(badgeCount)", attributes: [
+			NSAttributedString.Key.foregroundColor: KThemePicker.textColor.colorValue,
+			NSAttributedString.Key.paragraphStyle: centerAlign
+		])
+		let badgesTitleString = NSAttributedString(string: "\nBadges", attributes: [
+			NSAttributedString.Key.foregroundColor: KThemePicker.subTextColor.colorValue,
+			NSAttributedString.Key.paragraphStyle: centerAlign
+		])
+		let badgesButtonTitle = NSMutableAttributedString()
+		badgesButtonTitle.append(badgeCountString)
+		badgesButtonTitle.append(badgesTitleString)
+
+		self.badgesButton.setAttributedTitle(badgesButtonTitle, for: .normal)
 
 		// Configure AutoLayout
 		self.tableView.setTableHeaderView(headerView: self.tableView.tableHeaderView)
