@@ -69,7 +69,10 @@ extension EpisodeDetailHeaderCollectionViewCell {
 	///
 	/// - Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
 	@objc func handleWatchStatusUpdate(_ notification: NSNotification) {
-		self.configureWatchButton(with: self.episode.attributes.watchStatus)
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			self.configureWatchButton(with: self.episode.attributes.watchStatus)
+		}
 	}
 
 	/// Configures the watch status button of the episode.

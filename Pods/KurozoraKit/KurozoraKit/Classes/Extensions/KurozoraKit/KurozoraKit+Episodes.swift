@@ -37,17 +37,21 @@ extension KurozoraKit {
 	///	- Parameter episodeIdentity: The episode identity object of the episode that should be marked as watched/unwatched.
 	///
 	/// - Returns: An instance of `DataTask` with the results of the request.
-	public func updateEpisodeWatchStatus(_ episodeIdentity: EpisodeIdentity) -> DataTask<WatchStatus> {
-		let episodesWatched = KKEndpoint.Shows.Episodes.watched(episodeIdentity).endpointValue
-		let request: APIRequest<EpisodeUpdateResponse, KKAPIError> = tron.codable.request(episodesWatched)
-
-		request.headers = headers
+	public func updateEpisodeWatchStatus(_ episodeIdentity: EpisodeIdentity) -> RequestSender<EpisodeUpdateResponse, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
 		if !self.authenticationKey.isEmpty {
-			request.headers.add(.authorization(bearerToken: self.authenticationKey))
+			headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
-		request.method = .post
-		return request.perform().serializingDecodable(WatchStatus.self, decoder: self.tron.codable.modelDecoder)
+		// Prepare request
+		let episodesWatched = KKEndpoint.Shows.Episodes.watched(episodeIdentity).endpointValue
+		let request: APIRequest<EpisodeUpdateResponse, KKAPIError> = tron.codable.request(episodesWatched)
+			.method(.post)
+			.headers(headers)
+
+		// Send request
+		return request.sender()
 	}
 
 	/// Rate the episode with the given episode identity.

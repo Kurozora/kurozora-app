@@ -153,7 +153,10 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController {
 	/// - Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
 	@objc func updateEpisodes(_ notification: NSNotification) {
 		guard let indexPath = notification.userInfo?["indexPath"] as? IndexPath else { return }
-		collectionView.reloadItems(at: [indexPath])
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			self.collectionView.reloadItems(at: [indexPath])
+		}
 	}
 
 	/// Opens the share sheet of the episode.
