@@ -27,7 +27,11 @@ enum TabBarItem: Int, CaseIterable {
 	case search
 
 	// MARK: - Properties
+	#if targetEnvironment(macCatalyst)
 	static var sideBarCases: [TabBarItem] = [.home, .library, .feed, .notifications]
+	#else
+	static var sideBarCases: [TabBarItem] = [.home, .library, .feed, .notifications, .search]
+	#endif
 
 	// MARK: - Structs
 	/// List of row identifiers.

@@ -68,6 +68,7 @@ class SidebarViewController: KCollectionViewController {
 
 	/// Configures the search bar.
 	fileprivate func configureSearchBar() {
+		#if targetEnvironment(macCatalyst)
 		// Disable search bar in navigation for the results view
 		searchResultsCollectionViewController.includesSearchBar = false
 
@@ -83,6 +84,9 @@ class SidebarViewController: KCollectionViewController {
 
 		// Add search bar to navigation controller
 		navigationItem.searchController = kSearchController
+		#else
+		searchResultsCollectionViewController.includesSearchBar = true
+		#endif
 	}
 
 	/// Creates and returns a list content configuration for with the given configuration as the basis.
@@ -99,7 +103,6 @@ class SidebarViewController: KCollectionViewController {
 			guard let state = cell?.configurationState else { return KThemePicker.textColor.colorValue }
 			return state.isSelected || state.isHighlighted ? KThemePicker.tintedButtonTextColor.colorValue : KThemePicker.textColor.colorValue
 		}
-		contentConfiguration?.textProperties.font = .systemFont(ofSize: 14.0)
 		contentConfiguration?.imageToTextPadding = 10.0
 		contentConfiguration?.image = { [weak self] in
 			guard let self = self else { return nil }

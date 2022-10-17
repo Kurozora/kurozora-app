@@ -131,9 +131,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		let tabBarController = KTabBarController()
 		let splitViewController = UISplitViewController(style: .doubleColumn)
 		splitViewController.preferredDisplayMode = .oneBesideSecondary
-		splitViewController.displayModeButtonVisibility = .never
+		#if targetEnvironment(macCatalyst)
 		splitViewController.minimumPrimaryColumnWidth = 220.0
 		splitViewController.maximumPrimaryColumnWidth = 220.0
+		#endif
 		splitViewController.setViewController(navigationController, for: .primary)
 		splitViewController.setViewController(tabBarController, for: .compact)
 		return splitViewController

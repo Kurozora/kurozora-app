@@ -106,6 +106,10 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 
 		// Add search bar to navigation controller
 		self.navigationItem.searchController = self.kSearchController
+		if #available(iOS 16.0, *) {
+			self.navigationItem.preferredSearchBarPlacement = .stacked
+		} else {
+		}
 	}
 
 	/// Perform search with the given search text and the search scope.
