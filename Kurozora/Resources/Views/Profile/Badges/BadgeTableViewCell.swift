@@ -35,6 +35,6 @@ class BadgeTableViewCell: UITableViewCell, SkeletonDisplayable {
 		self.contentView.backgroundColor = UIColor(hexString: badge.attributes.backgroundColor)
 
 		// Set badge image and border color
-		self.badgeImageView.image = R.image.placeholders.userProfile()
+		self.badgeImageView.setImage(with: badge.attributes.symbol?.url ?? "", placeholder: R.image.kurozoraIcon()!)
 	}
 }

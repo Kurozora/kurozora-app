@@ -414,7 +414,7 @@ class ProfileTableViewController: KTableViewController {
 		self.updateFollowButton()
 
 		// Configure pro badge
-		self.proBadgeButton.isHidden = !user.attributes.isPro || !user.attributes.isSubscribed
+		self.proBadgeButton.isHidden = !(user.attributes.isPro || user.attributes.isSubscribed)
 
 		// Configure badge & badge button
 		var badgeCount = 0

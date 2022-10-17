@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19115.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ZFv-oo-i2b">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ZFv-oo-i2b">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19107.5"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -43,21 +44,20 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Badge Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QIg-cZ-Az0">
-                                            <rect key="frame" x="80" y="10" width="91" height="18"/>
-                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                            <rect key="frame" x="80" y="10" width="101.5" height="20.5"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is the description of a badge." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RGy-4p-D6Y">
-                                            <rect key="frame" x="80" y="28" width="192.5" height="14.5"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is the description of a badge." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RGy-4p-D6Y">
+                                            <rect key="frame" x="80" y="30.5" width="232.5" height="18"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
-                                        <constraint firstItem="ini-vw-7Yu" firstAttribute="top" secondItem="QIg-cZ-Az0" secondAttribute="top" id="5EP-zI-fZM"/>
                                         <constraint firstItem="QIg-cZ-Az0" firstAttribute="leading" secondItem="ini-vw-7Yu" secondAttribute="trailing" constant="10" id="LUW-vX-dKx"/>
                                         <constraint firstItem="RGy-4p-D6Y" firstAttribute="leading" secondItem="QIg-cZ-Az0" secondAttribute="leading" id="Mfv-br-lJb"/>
                                         <constraint firstItem="RGy-4p-D6Y" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="A6G-gw-Lvl" secondAttribute="trailingMargin" id="Szn-07-keX"/>
@@ -65,6 +65,7 @@
                                         <constraint firstItem="ini-vw-7Yu" firstAttribute="leading" secondItem="A6G-gw-Lvl" secondAttribute="leadingMargin" id="aSi-WZ-hd2"/>
                                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ini-vw-7Yu" secondAttribute="bottom" constant="10" id="c49-DG-sS6"/>
                                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="RGy-4p-D6Y" secondAttribute="bottom" constant="8" id="cmj-8k-zXX"/>
+                                        <constraint firstItem="QIg-cZ-Az0" firstAttribute="top" secondItem="A6G-gw-Lvl" secondAttribute="top" constant="10" id="f9y-2h-Qh9"/>
                                         <constraint firstItem="ini-vw-7Yu" firstAttribute="centerY" secondItem="A6G-gw-Lvl" secondAttribute="centerY" id="ptM-7l-N7B"/>
                                         <constraint firstItem="ini-vw-7Yu" firstAttribute="top" relation="greaterThanOrEqual" secondItem="A6G-gw-Lvl" secondAttribute="top" constant="10" id="rjR-tc-LCR"/>
                                         <constraint firstItem="QIg-cZ-Az0" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="A6G-gw-Lvl" secondAttribute="trailingMargin" id="wCy-zX-yjZ"/>
@@ -84,15 +85,15 @@
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="70"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Badge Name" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mo6-7W-wcP">
-                                            <rect key="frame" x="203" y="10" width="91" height="18"/>
-                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Badge Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mo6-7W-wcP">
+                                            <rect key="frame" x="20" y="10" width="101.5" height="20.5"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is the description of a badge." textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hc6-Ng-wZB">
-                                            <rect key="frame" x="101.5" y="28" width="192.5" height="14.5"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is the description of a badge." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hc6-Ng-wZB">
+                                            <rect key="frame" x="20" y="30.5" width="257.5" height="20.5"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -116,17 +117,17 @@
                                     </subviews>
                                     <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
-                                        <constraint firstAttribute="leadingMargin" relation="lessThanOrEqual" secondItem="Mo6-7W-wcP" secondAttribute="leading" id="2Z5-FP-Tev"/>
+                                        <constraint firstAttribute="leadingMargin" secondItem="Mo6-7W-wcP" secondAttribute="leading" id="2Z5-FP-Tev"/>
                                         <constraint firstItem="Hc6-Ng-wZB" firstAttribute="top" secondItem="Mo6-7W-wcP" secondAttribute="bottom" id="3PF-60-Pi9"/>
-                                        <constraint firstItem="Hc6-Ng-wZB" firstAttribute="trailing" secondItem="Mo6-7W-wcP" secondAttribute="trailing" id="3hK-yU-cnz"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="ERm-zZ-yUv" secondAttribute="trailing" id="IL1-lM-whG"/>
                                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Hc6-Ng-wZB" secondAttribute="bottom" constant="8" id="Pc6-q5-zob"/>
                                         <constraint firstItem="ERm-zZ-yUv" firstAttribute="top" relation="greaterThanOrEqual" secondItem="W5G-bu-pWk" secondAttribute="top" constant="10" id="RSn-xs-uWy"/>
-                                        <constraint firstAttribute="leadingMargin" relation="lessThanOrEqual" secondItem="Hc6-Ng-wZB" secondAttribute="leading" id="RYH-no-FTH"/>
-                                        <constraint firstItem="ERm-zZ-yUv" firstAttribute="top" secondItem="Mo6-7W-wcP" secondAttribute="top" id="WbR-dV-Y4j"/>
+                                        <constraint firstAttribute="leadingMargin" secondItem="Hc6-Ng-wZB" secondAttribute="leading" id="RYH-no-FTH"/>
+                                        <constraint firstItem="Mo6-7W-wcP" firstAttribute="top" secondItem="W5G-bu-pWk" secondAttribute="top" constant="10" id="RkD-QP-qB1"/>
                                         <constraint firstItem="ERm-zZ-yUv" firstAttribute="centerY" secondItem="W5G-bu-pWk" secondAttribute="centerY" id="dYh-qA-kJI"/>
+                                        <constraint firstItem="dMZ-lh-ekU" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Hc6-Ng-wZB" secondAttribute="trailing" constant="10" id="lvW-eO-fIg"/>
                                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ERm-zZ-yUv" secondAttribute="bottom" constant="10" id="n8x-FX-chP"/>
-                                        <constraint firstItem="ERm-zZ-yUv" firstAttribute="leading" secondItem="Mo6-7W-wcP" secondAttribute="trailing" constant="10" id="vni-H3-pdG"/>
+                                        <constraint firstItem="ERm-zZ-yUv" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Mo6-7W-wcP" secondAttribute="trailing" constant="10" id="vni-H3-pdG"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -154,7 +155,7 @@
                 <navigationController storyboardIdentifier="BadgeKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ZFv-oo-i2b" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="Ssb-Oj-cq2">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
