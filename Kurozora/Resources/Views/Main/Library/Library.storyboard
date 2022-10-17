@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19150" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="38B-e3-pz3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="38B-e3-pz3">
     <device id="retina6_5" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19134"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -68,7 +69,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JeV-PO-okM">
                                 <rect key="frame" x="20" y="810" width="374" height="44"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="374" placeholder="YES" id="2oH-91-d7c"/>
                                     <constraint firstAttribute="height" constant="44" placeholder="YES" id="qFh-Wc-p4X"/>
                                 </constraints>
                             </view>
@@ -78,8 +78,9 @@
                         <constraints>
                             <constraint firstItem="tcz-X9-dwb" firstAttribute="leading" secondItem="66t-RL-IQm" secondAttribute="leading" id="0fH-OT-TI9"/>
                             <constraint firstAttribute="top" secondItem="tcz-X9-dwb" secondAttribute="top" id="3vH-iB-Tad"/>
-                            <constraint firstItem="JeV-PO-okM" firstAttribute="leading" secondItem="mUg-UP-NVd" secondAttribute="leadingMargin" id="Uae-7L-uBe"/>
+                            <constraint firstItem="JeV-PO-okM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="mUg-UP-NVd" secondAttribute="leadingMargin" id="Uae-7L-uBe"/>
                             <constraint firstItem="gPc-nI-2L5" firstAttribute="width" secondItem="mUg-UP-NVd" secondAttribute="width" id="Vwp-S1-VXK"/>
+                            <constraint firstItem="JeV-PO-okM" firstAttribute="centerX" secondItem="66t-RL-IQm" secondAttribute="centerX" id="hmW-9H-Q4y"/>
                             <constraint firstItem="gPc-nI-2L5" firstAttribute="height" secondItem="mUg-UP-NVd" secondAttribute="height" id="nzt-3V-8ao"/>
                             <constraint firstItem="66t-RL-IQm" firstAttribute="bottom" secondItem="JeV-PO-okM" secondAttribute="bottom" constant="8" id="pQ5-V8-eO5"/>
                             <constraint firstItem="66t-RL-IQm" firstAttribute="trailing" secondItem="tcz-X9-dwb" secondAttribute="trailing" id="twA-Je-J4S"/>
@@ -122,8 +123,8 @@
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
-        <image name="heart.circle" catalog="system" width="128" height="121"/>
-        <image name="line.3.horizontal.decrease.circle.fill" catalog="system" width="128" height="121"/>
-        <image name="rectangle.fill.on.rectangle.fill" catalog="system" width="128" height="97"/>
+        <image name="heart.circle" catalog="system" width="128" height="123"/>
+        <image name="line.3.horizontal.decrease.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="rectangle.fill.on.rectangle.fill" catalog="system" width="128" height="98"/>
     </resources>
 </document>

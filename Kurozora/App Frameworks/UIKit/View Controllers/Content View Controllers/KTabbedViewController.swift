@@ -125,17 +125,7 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 	/// Configures the tab bar view with the specified style.
 	private func configureTabBarView() {
 		self.styleTabBarView()
-		self.addBar(bar, dataSource: self, at: .custom(view: bottomBarView, layout: { [weak self] bar in
-			guard let self = self else { return }
-			bar.translatesAutoresizingMaskIntoConstraints = false
-			NSLayoutConstraint.activate([
-				bar.topAnchor.constraint(equalTo: self.bottomBarView.topAnchor),
-				bar.bottomAnchor.constraint(equalTo: self.bottomBarView.bottomAnchor),
-				bar.leftAnchor.constraint(lessThanOrEqualTo: self.bottomBarView.leftAnchor),
-				bar.rightAnchor.constraint(lessThanOrEqualTo: self.bottomBarView.rightAnchor),
-				bar.centerXAnchor.constraint(equalTo: self.bottomBarView.centerXAnchor)
-			])
-		}))
+		self.addBar(self.bar, dataSource: self, at: .custom(view: self.bottomBarView, layout: nil))
 
 		// Set corner raduis after the tab bar has been populated with data so it uses the correct height
 		self.bar.cornerRadius = bar.height / 2
@@ -164,6 +154,7 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 		// Layout
 		bar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 5.0, bottom: 0.0, right: 5.0)
 		bar.layout.interButtonSpacing = 0.0
+		bar.layout.contentMode = UIDevice.isPhone ? .intrinsic : .fit
 
 		// Style
 		bar.fadesContentEdges = true
