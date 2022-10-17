@@ -27,19 +27,8 @@ extension WorkflowController {
 	/// Checks whether the current user has a valid subscription. If the user dos then a success block is run. Otherwise subscription features are turned off.
 	@MainActor
 	func isSubscribed() async -> Bool {
-		// Get entitled subscription ID
-		var entitledProductID = ""
-		for await result in Transaction.currentEntitlements {
-			if case .verified(let transaction) = result {
-				entitledProductID = transaction.productID
-			}
-		}
-
-		// Check if purchased which also validates with StoreKit.
-		let isPurchased = try? await store.isPurchased(entitledProductID)
-
 		// Perform action if everything is ok, otherwise prompt for subscription.
-		if isPurchased ?? false {
+		if User.current?.attributes.isSubscribed ?? false {
 			return true
 		}
 
@@ -48,25 +37,14 @@ extension WorkflowController {
 			self.presentSubscribeView()
 		}
 
-		UIApplication.topViewController?.presentAlertController(title: "Kurozora+ Required", message: "This feature is only accessible to Kurozora+ users. Funds from this go to supporting Kurozora's development.", actions: [subscribeAction])
+		_ = UIApplication.topViewController?.presentAlertController(title: "Kurozora+ Required", message: "This feature is only accessible to Kurozora+ users. Funds from this go to supporting Kurozora's development.", actions: [subscribeAction])
 		return false
 	}
 
 	@MainActor
 	func isProOrSubscribed() async -> Bool {
-		// Get entitled subscription ID
-		var entitledProductID = ""
-		for await result in Transaction.currentEntitlements {
-			if case .verified(let transaction) = result {
-				entitledProductID = transaction.productID
-			}
-		}
-
-		// Check if purchased which also validates with StoreKit.
-		let isPurchased = try? await store.isPurchased(entitledProductID)
-
 		// Perform action if everything is ok, otherwise prompt for subscription.
-		if isPurchased ?? false {
+		if User.current?.attributes.isSubscribed ?? false || User.current?.attributes.isPro ?? false {
 			return true
 		}
 
@@ -80,15 +58,13 @@ extension WorkflowController {
 			self.presentTipJarView()
 		}
 
-		UIApplication.topViewController?.presentAlertController(title: "Pro Required", message: "This feature is accessible to Pro users. Funds from this go to supporting Kurozora's development. Alternatively, this feature and all other features are also included with Kurozora+.", actions: [proAction, subscribeAction])
+		_ = UIApplication.topViewController?.presentAlertController(title: "Pro Required", message: "This feature is accessible to Pro users. Funds from this go to supporting Kurozora's development. Alternatively, this feature and all other features are also included with Kurozora+.", actions: [proAction, subscribeAction])
 		return false
 	}
 
 	/// Subscribes user with their reminders.
 	func subscribeToReminders() {
-//		UIApplication.topViewController?.presentAlertController(title: "Work in Progress", message: "Reminders have temporarily been disabled. An improved version is being worked on and should be available soon!")
 		Task {
-//			guard let self = self else { return }
 			if await WorkflowController.shared.isSubscribed() {
 				let reminderSubscriptionURL = KService.reminderSubscriptionURL
 				let reminderSubscriptionString = reminderSubscriptionURL.absoluteString.removingPrefix(reminderSubscriptionURL.scheme ?? "")

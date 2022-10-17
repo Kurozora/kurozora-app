@@ -123,27 +123,21 @@ extension ProductTableViewController: PurchaseButtonTableViewCellDelegate {
 
 	func purchase(_ product: Product) async {
 		do {
-			let transaction = try await store.purchase(product)
-			if transaction != nil {
-//				KService.verifyReceipt() { result in
-//					switch result {
-//					case .success(let receipts)
-//					case .failure: break
-//					}
-//				}
-				await self.productTableViewControllerDelegate?.updateSubscriptionStatus()
-				DispatchQueue.main.async { [weak self] in
-					guard let self = self else { return }
-					self.tableView.reloadData()
-				}
+			guard try await store.purchase(product) != nil else { return }
+
+			await self.productTableViewControllerDelegate?.updateSubscriptionStatus()
+
+			DispatchQueue.main.async { [weak self] in
+				guard let self = self else { return }
+				self.tableView.reloadData()
 			}
 		} catch StoreError.failedVerification {
 			DispatchQueue.main.async { [weak self] in
 				guard let self = self else { return }
-				self.presentAlertController(title: "Faild purchase", message: "Your purchase could not be verified by the App Store.")
+				_ = self.presentAlertController(title: "Purchase Failed", message: "Your purchase could not be verified by App Store. If this continues to happen, please contact the developer.")
 			}
 		} catch {
-			print("Failed purchase: \(error)")
+			print("------ Failed purchase: \(error)")
 		}
 	}
 }

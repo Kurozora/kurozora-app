@@ -56,7 +56,9 @@ class ServiceFooterTableViewCell: KTableViewCell {
 
 	// MARK: - IBActions
 	@IBAction func restorePurchaseButtonPressed(_ sender: UIButton) {
-		KStoreObserver.shared.restorePurchase()
+		Task {
+			await store.restore()
+		}
 	}
 
 	@IBAction func privacyButtonPressed(_ sender: UIButton) {

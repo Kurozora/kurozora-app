@@ -8,6 +8,7 @@
 
 import Foundation
 import StoreKit
+import KurozoraKit
 
 /// Information that represents the customer’s purchase of a product in your app.
 ///
@@ -51,40 +52,24 @@ final class Store: ObservableObject {
 	/// The dictionary containing all `StoreKit` products.
 	private let products: [String: String]
 
-	#if DEBUG
-	/// A dictionary of `StoreKit` subscriptions and their respective `SubscriptionTier` type.
-	private static let subscriptionTier: [String: SubscriptionTier] = [
-		"app.kurozora.temporary.kurozoraPlus1Month": .plus1Month,
-		"app.kurozora.temporary.kurozoraPlus6Months": .plus6Months,
-		"app.kurozora.temporary.kurozoraPlus12Months": .plus12Months
-	]
-	#else
-	/// A dictionary of `StoreKit` subscriptions and their respective `SubscriptionTier` type.
-	private static let subscriptionTier: [String: SubscriptionTier] = [
-		"app.kurozora.autoRenewableSubscription.kPlus1Month": .plus1Month,
-		"app.kurozora.autoRenewableSubscription.kPlus6Months": .plus6Months,
-		"app.kurozora.autoRenewableSubscription.kPlus12Months": .plus12Months
-	]
-	#endif
-
 	// MARK: - Initializers
 	init() {
 		print("------ StoreKit 2 initialized.")
-		#if DEBUG
-		if let path = Bundle.main.path(forResource: "Debug Products", ofType: "plist"),
-		   let plist = FileManager.default.contents(atPath: path) {
-			products = (try? PropertyListSerialization.propertyList(from: plist, format: nil) as? [String: String]) ?? [:]
-		} else {
-			products = [:]
-		}
-		#else
+//		#if DEBUG
+//		if let path = Bundle.main.path(forResource: "Debug Products", ofType: "plist"),
+//		   let plist = FileManager.default.contents(atPath: path) {
+//			products = (try? PropertyListSerialization.propertyList(from: plist, format: nil) as? [String: String]) ?? [:]
+//		} else {
+//			products = [:]
+//		}
+//		#else
 		if let path = Bundle.main.path(forResource: "Products", ofType: "plist"),
 		   let plist = FileManager.default.contents(atPath: path) {
-			products = (try? PropertyListSerialization.propertyList(from: plist, format: nil) as? [String: String]) ?? [:]
+			self.products = (try? PropertyListSerialization.propertyList(from: plist, format: nil) as? [String: String]) ?? [:]
 		} else {
-			products = [:]
+			self.products = [:]
 		}
-		#endif
+//		#endif
 
 		// Initialize empty products then do a product request asynchronously to fill them in.
 		self.tips = []
@@ -165,6 +150,39 @@ final class Store: ObservableObject {
 		}
 	}
 
+	func refreshReceipt() {
+		let request = SKReceiptRefreshRequest(receiptProperties: nil)
+		request.start()
+	}
+
+	/// Handles successful purchase transactions.
+	fileprivate func handleSuccess(_ transaction: Transaction) async {
+		// Deliver content to the user.
+		await self.updatePurchasedIdentifiers(transaction)
+		print("----- Deliver content for \(transaction.productID).")
+
+		self.refreshReceipt()
+		// Get the receipt if it's available
+		if let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
+		   FileManager.default.fileExists(atPath: appStoreReceiptURL.path) {
+			do {
+				let receiptData = try Data(contentsOf: appStoreReceiptURL, options: .alwaysMapped)
+				let receiptString = receiptData.base64EncodedString(options: [])
+				print("----- Receipt string:", receiptString)
+
+				_ = KService.verifyReceipt(receiptString)
+
+				// Finish the successful transaction.
+				print("----- Transaction verified.")
+			} catch {
+				print("----- Transaction NOT verified.")
+				print("----- Couldn't read receipt data with error: " + error.localizedDescription)
+			}
+		} else {
+			print("----- Purchase failed: App Store receipt not found.")
+		}
+	}
+
 	/// Purchase a product.
 	///
 	/// - Parameter product: The product to be purchased.
@@ -172,14 +190,15 @@ final class Store: ObservableObject {
 	/// - Returns: The transaction of the purchase if succeeded, otherwise `nil`.
 	func purchase(_ product: Product) async throws -> Transaction? {
 		// Begin a purchase.
-		let result = try await product.purchase()
+		guard let userID = User.current?.uuid else { return nil }
+		let result = try await product.purchase(options: [.appAccountToken(userID)])
 
 		switch result {
 		case .success(let verification):
-			let transaction = try checkVerified(verification)
+			let transaction = try self.checkVerified(verification)
 
-			// Deliver content to the user.
-			await updatePurchasedIdentifiers(transaction)
+			// Handle success
+			await self.handleSuccess(transaction)
 
 			// Always finish a transaction.
 			await transaction.finish()
@@ -332,18 +351,18 @@ final class Store: ObservableObject {
 	///
 	/// - Returns: a `SubscriptionTier` object.
 	func tier(for productID: String) -> SubscriptionTier {
-		#if DEBUG
-		switch productID {
-		case "app.kurozora.temporary.kurozoraPlus1Month":
-			return .plus1Month
-		case "app.kurozora.temporary.kurozoraPlus6Months":
-			return .plus6Months
-		case "app.kurozora.temporary.kurozoraPlus12Months":
-			return .plus12Months
-		default:
-			return .none
-		}
-		#else
+//		#if DEBUG
+//		switch productID {
+//		case "app.kurozora.temporary.kurozoraPlus1Month":
+//			return .plus1Month
+//		case "app.kurozora.temporary.kurozoraPlus6Months":
+//			return .plus6Months
+//		case "app.kurozora.temporary.kurozoraPlus12Months":
+//			return .plus12Months
+//		default:
+//			return .none
+//		}
+//		#else
 		switch productID {
 		case "app.kurozora.autoRenewableSubscription.kPlus1Month":
 			return .plus1Month
@@ -354,6 +373,6 @@ final class Store: ObservableObject {
 		default:
 			return .none
 		}
-		#endif
+//		#endif
 	}
 }

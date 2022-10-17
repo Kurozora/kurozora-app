@@ -10,6 +10,8 @@ public struct User: IdentityResource, Hashable {
 	// MARK: - Properties
 	public let id: Int
 
+	public let uuid: UUID
+
 	public let type: String
 
 	public let href: String

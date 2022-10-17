@@ -127,6 +127,7 @@ extension User.Attributes {
 	///
 	/// - Parameter receipt: The `Receipt` object used to update the subscription status.
 	public mutating func updateSubscription(from receipt: Receipt) {
+		self.isSubscribed = receipt.attributes.isValid
 		self.isPro = receipt.attributes.isValid
 	}
 }

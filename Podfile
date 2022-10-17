@@ -22,7 +22,7 @@ def kurozora_pods
 	pod 'SwiftTheme'
 	pod 'SwifterSwift'
 	pod 'Tabman'
-	pod 'TRON'
+	pod 'TRON', '5.5.0-beta.1'
 	pod 'TRON/SwiftyJSON'
 	pod 'WhatsNew'
 	pod 'XCDYouTubeKit', :git => 'https://github.com/armendh/XCDYouTubeKit', :branch => 'master', :commit => '651a6a51c695c5819eb51ba2f98d0b64094315b9'

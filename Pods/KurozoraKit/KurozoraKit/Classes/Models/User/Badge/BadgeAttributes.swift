@@ -20,5 +20,8 @@ extension Badge {
 
 		/// The background color of the badge.
 		public let backgroundColor: String
+
+		/// The media object of the symbol of the badge.
+		public let symbol: Media?
 	}
 }

@@ -5,9 +5,9 @@ PODS:
   - FLEX (4.7.0)
   - KeychainAccess (4.2.2)
   - Kingfisher (7.4.0)
-  - KurozoraKit (1.1.1):
+  - KurozoraKit (1.2.1):
     - KeychainAccess
-    - TRON
+    - TRON (= 5.5.0-beta.1)
   - Pageboy (3.7.0)
   - R.swift (6.1.0):
     - R.swift.Library (~> 5.3.0)
@@ -43,12 +43,12 @@ PODS:
   - SwiftyJSON (5.0.1)
   - Tabman (2.13.0):
     - Pageboy (~> 3.7.0)
-  - TRON (5.4.1):
+  - TRON (5.5.0-beta.1):
     - Alamofire (~> 5.0)
-    - TRON/Core (= 5.4.1)
-  - TRON/Core (5.4.1):
+    - TRON/Core (= 5.5.0-beta.1)
+  - TRON/Core (5.5.0-beta.1):
     - Alamofire (~> 5.0)
-  - TRON/SwiftyJSON (5.4.1):
+  - TRON/SwiftyJSON (5.5.0-beta.1):
     - Alamofire (~> 5.0)
     - SwiftyJSON (~> 5.0)
     - TRON/Core
@@ -68,7 +68,7 @@ DEPENDENCIES:
   - SwifterSwift
   - SwiftTheme
   - Tabman
-  - TRON
+  - TRON (= 5.5.0-beta.1)
   - TRON/SwiftyJSON
   - WhatsNew
   - XCDYouTubeKit (from `https://github.com/armendh/XCDYouTubeKit`, commit `651a6a51c695c5819eb51ba2f98d0b64094315b9`, branch `master`)
@@ -113,7 +113,7 @@ SPEC CHECKSUMS:
   FLEX: bdc9ac7d4a239e3d04c298c01221203257d63a80
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   Kingfisher: 596b207973051aae5e4c54a1c1cb39837ea10d36
-  KurozoraKit: 49b2211081f6dd5896d27a9e6f130dfebb490a30
+  KurozoraKit: 43b44a31dcd92ac2bc34699f6b99fec16c7263ac
   Pageboy: fe646118f7168960058bea7a96038386aa7c0da8
   R.swift: ec98ff71c4ab2f6fd01dd077e5afd15e63a4834c
   R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962
@@ -123,10 +123,10 @@ SPEC CHECKSUMS:
   SwiftTheme: 007cbaf1f9e171caf6448a4657533e54c682b285
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
   Tabman: 66ea44c44488327ec20f3c8dc5554a5d22f5908c
-  TRON: 1d635dad9a55c9441cb2bcf0571a14a5ede59440
+  TRON: 722c4dcb33b98722b567153a436ec0db26c50d14
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
   XCDYouTubeKit: b120aced3d8638ffb570c5450cddb5a1dac448c7
 
-PODFILE CHECKSUM: 8828a43abc970fe35f66338c96012b24b6308779
+PODFILE CHECKSUM: 73db137272e5e55589be929cd93fee34327befab
 
 COCOAPODS: 1.11.3
