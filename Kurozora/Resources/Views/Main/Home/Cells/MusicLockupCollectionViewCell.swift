@@ -145,7 +145,6 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 				let songJsonString = songJson["data"][0]
 				let songJsonData = try songJsonString.rawData()
 				song = MusicKit.Song(from: songJsonData)
-				self.updateArtwork(using: song)
 			} catch {
 				self.resetArtwork()
 			}
