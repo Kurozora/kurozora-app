@@ -91,6 +91,8 @@ class UserLockupCollectionViewCell: KCollectionViewCell {
 			}
 
 			self.secondaryLabel.text = secondaryLabelText
+		} else {
+			self.secondaryLabel.text = ""
 		}
 	}
 
