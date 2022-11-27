@@ -92,7 +92,6 @@ extension UITableView {
 			self.handler = handler
 			self.cellNib = nil
 			self.identifier = "\(type(of: Item.self))_\(type(of: Cell.self))"
-			print("---- identifier:", self.identifier)
 		}
 
 		/// Creates a cell registration with the specified registration handler and nib file.
@@ -100,7 +99,6 @@ extension UITableView {
 			self.handler = handler
 			self.cellNib = cellNib
 			self.identifier = "\(type(of: Item.self))_\(type(of: Cell.self))"
-			print("---- identifier:", self.identifier)
 		}
 	}
 

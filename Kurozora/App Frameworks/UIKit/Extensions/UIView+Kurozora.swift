@@ -69,7 +69,7 @@ extension UIView {
 		UIView.animate(withDuration: 0.2, animations: { [weak self] in
 			guard let self = self else { return }
 			self.transform = self.transform.scaledBy(x: growth, y: growth)
-		}) { completion in
+		}) { _ in
 			UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.4, options: [.curveEaseIn, .allowUserInteraction], animations: { [weak self] in
 				guard let self = self else { return }
 				self.transform = .identity

@@ -132,6 +132,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		let splitViewController = UISplitViewController(style: .doubleColumn)
 		splitViewController.preferredDisplayMode = .oneBesideSecondary
 		#if targetEnvironment(macCatalyst)
+		splitViewController.displayModeButtonVisibility = .never
 		splitViewController.minimumPrimaryColumnWidth = 220.0
 		splitViewController.maximumPrimaryColumnWidth = 220.0
 		#endif
