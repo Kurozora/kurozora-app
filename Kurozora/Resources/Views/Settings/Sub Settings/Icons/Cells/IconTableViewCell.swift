@@ -26,7 +26,14 @@ class IconTableViewCell: SelectableSettingsCell {
 		self.hideSkeleton()
 
 		self.primaryLabel?.text = alternativeIconsElement.name
-		self.iconImageView?.image = UIImage(named: alternativeIconsElement.name)
+
+		let image: UIImage?
+		if alternativeIconsElement.name == "Kurozora" {
+			image = UIImage(named: alternativeIconsElement.name)
+		} else {
+			image = UIImage(named: "\(alternativeIconsElement.name) Preview")
+		}
+		self.iconImageView?.image = image
 	}
 
 	func configureCell(using browser: KBrowser?) {
