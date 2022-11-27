@@ -8,6 +8,7 @@
 
 import UIKit
 import KurozoraKit
+import Photos
 
 class ProfileTableViewController: KTableViewController {
 	// MARK: - IBOutlets
@@ -29,6 +30,7 @@ class ProfileTableViewController: KTableViewController {
 
 	@IBOutlet weak var proBadgeButton: UIButton!
 	@IBOutlet weak var tagBadgeButton: UIButton!
+	@IBOutlet weak var verificationImageView: UIImageView!
 
 	@IBOutlet weak var selectBannerImageButton: KButton!
 	@IBOutlet weak var selectProfileImageButton: KButton!
@@ -100,6 +102,7 @@ class ProfileTableViewController: KTableViewController {
 			self.viewIfLoaded?.setNeedsLayout()
 		}
 	}
+	var editedProfileImageURL: URL? = nil
 	var originalBannerImage: UIImage! = UIImage() {
 		didSet {
 			self.editedBannerImage = self.originalBannerImage
@@ -110,6 +113,7 @@ class ProfileTableViewController: KTableViewController {
 			self.viewIfLoaded?.setNeedsLayout()
 		}
 	}
+	var editedBannerImageURL: URL? = nil
 	var hasChanges: Bool {
 		return self.originalBioText != self.editedBioText
 		|| self.profileImageHasChanges
@@ -413,8 +417,9 @@ class ProfileTableViewController: KTableViewController {
 		// Configure follow button
 		self.updateFollowButton()
 
-		// Configure pro badge
-		self.proBadgeButton.isHidden = !(user.attributes.isPro || user.attributes.isSubscribed)
+		// Badges
+		self.verificationImageView.isHidden = !user.attributes.isVerified
+		self.proBadgeButton.isHidden = !user.attributes.isPro || !user.attributes.isSubscribed
 
 		// Configure badge & badge button
 		var badgeCount = 0
@@ -588,6 +593,7 @@ class ProfileTableViewController: KTableViewController {
 	}
 
 	/// Update the user's profile details.
+	///
 	/// Sends `nil` if nothing should be updated.
 	/// Sends an empty instance of the object to delete it.
 	/// Otherwise sends the data that should be updated.
@@ -597,26 +603,29 @@ class ProfileTableViewController: KTableViewController {
 		// If `originalProfileImage` is equal to `editedProfileImage`, then no change has happened: return `nil`
 		// If `originalProfileImage` is not equal to `editedProfileImage`, then something changed: return `editedProfileImage`
 		// If `editedProfileImage` is equal to the user's placeholder, then the user removed the current profile image: return `UIImage()`
-		var profileImage: UIImage? = nil
+		var profileImageURL: URL? = nil
 		if let indefinitiveProfileImage = self.originalProfileImage.isEqual(to: self.editedProfileImage) ? nil : self.editedProfileImage {
-			profileImage = indefinitiveProfileImage.isEqual(to: self.user.attributes.profilePlaceholderImage) ? UIImage() : indefinitiveProfileImage
+			profileImageURL = indefinitiveProfileImage.isEqual(to: self.user.attributes.profilePlaceholderImage) ? nil : self.editedProfileImageURL
 		}
 
 		// If `originalBannerImage` is equal to `editedBannerImage`, then no change has happened: return `nil`
 		// If `originalBannerImage` is not equal to `editedBannerImage`, then something changed: return `editedBannerImage`
 		// If `editedBannerImage` is equal to the user's placeholder, then the user removed the current banner image: return `UIImage()`
-		var bannerImage: UIImage? = nil
+		var bannerImageURL: URL? = nil
 		if let indefinitiveBannerImage = self.originalBannerImage.isEqual(to: self.editedBannerImage) ? nil : self.editedBannerImage {
-			bannerImage = indefinitiveBannerImage.isEqual(to: self.user.attributes.bannerPlaceholderImage) ? UIImage() : indefinitiveBannerImage
+			bannerImageURL = indefinitiveBannerImage.isEqual(to: self.user.attributes.bannerPlaceholderImage) ? nil : self.editedBannerImageURL
 		}
 
-		// Perform update request.
-		KService.updateInformation(biography: biography, profileImage: profileImage, bannerImage: bannerImage) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success:
+		Task {
+			do {
+				let profileUpdateRequest = ProfileUpdateRequest(username: nil, biography: biography, profileImage: profileImageURL, bannerImage: bannerImageURL)
+
+				// Perform update request.
+				let userUpdateResponse = try await KService.updateInformation(profileUpdateRequest).value
+				User.current?.attributes.update(using: userUpdateResponse.data)
 				self.editMode(false)
-			case .failure: break
+			} catch {
+				print(error.localizedDescription)
 			}
 		}
 	}
@@ -713,14 +722,16 @@ class ProfileTableViewController: KTableViewController {
 	@IBAction func followButtonPressed(_ sender: UIButton) {
 		let userIdentity = UserIdentity(id: self.user.id)
 
-		WorkflowController.shared.isSignedIn {
-			KService.updateFollowStatus(forUser: userIdentity) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let followUpdate):
-					self.user?.attributes.update(using: followUpdate)
+		WorkflowController.shared.isSignedIn { [weak self] in
+			guard let self = self else { return }
+
+			Task {
+				do {
+					let followUpdateResponse = try await KService.updateFollowStatus(forUser: userIdentity).value
+					self.user?.attributes.update(using: followUpdateResponse.data)
 					self.updateFollowButton()
-				case .failure: break
+				} catch {
+					print("-----", error.localizedDescription)
 				}
 			}
 		}
@@ -766,19 +777,25 @@ extension ProfileTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let feedMessageCell: BaseFeedMessageCell!
+		let feedMessageCell: BaseFeedMessageCell?
+		let feedMessage = self.feedMessages[indexPath.section]
 
-		if feedMessages[indexPath.section].attributes.isReShare {
+		if feedMessage.attributes.isReShare {
 			feedMessageCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedMessageReShareCell, for: indexPath)
 		} else {
 			feedMessageCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedMessageCell, for: indexPath)
 		}
 
-		feedMessageCell.delegate = self
-		feedMessageCell.liveReplyEnabled = User.current?.id == self.userIdentity?.id
-		feedMessageCell.liveReShareEnabled = User.current?.id == self.userIdentity?.id
-		feedMessageCell.configureCell(using: self.feedMessages[indexPath.section])
-		return feedMessageCell
+		feedMessageCell?.delegate = self
+		feedMessageCell?.liveReplyEnabled = User.current?.id == self.userIdentity?.id
+		feedMessageCell?.liveReShareEnabled = User.current?.id == self.userIdentity?.id
+		feedMessageCell?.configureCell(using: feedMessage)
+		feedMessageCell?.moreButton.menu = feedMessage.makeContextMenu(in: self, userInfo: [
+			"indexPath": indexPath,
+			"liveReplyEnabled": feedMessageCell?.liveReplyEnabled,
+			"liveReShareEnabled": feedMessageCell?.liveReShareEnabled
+		])
+		return feedMessageCell ?? UITableViewCell()
 	}
 }
 
@@ -818,13 +835,15 @@ extension ProfileTableViewController: BaseFeedMessageCellDelegate {
 		}
 	}
 
-	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressMoreButton button: UIButton) {
+	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressUserName sender: AnyObject) {
 		if let indexPath = self.tableView.indexPath(for: cell) {
-			self.feedMessages[indexPath.section].actionList(on: self, button, userInfo: [
-				"indexPath": indexPath,
-				"liveReplyEnabled": cell.liveReplyEnabled,
-				"liveReShareEnabled": cell.liveReShareEnabled
-			])
+			self.feedMessages[indexPath.section].relationships.parent?.data.first?.visitOriginalPosterProfile(from: self)
+		}
+	}
+
+	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressOPMessage sender: AnyObject) {
+		if let indexPath = self.tableView.indexPath(for: cell) {
+			self.performSegue(withIdentifier: R.segue.profileTableViewController.feedMessageDetailsSegue.identifier, sender: self.feedMessages[indexPath.section].relationships.parent?.data.first?.id)
 		}
 	}
 }
@@ -848,14 +867,63 @@ extension ProfileTableViewController: KFeedMessageTextEditorViewDelegate {
 extension ProfileTableViewController: UIImagePickerControllerDelegate {
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
 		if self.currentImageView == "profile" {
-			if let editedImage = info[.editedImage] as? UIImage {
-				self.profileImageView.image = editedImage
-				self.editedProfileImage = editedImage
+			if let originalImage = info[.originalImage] as? UIImage {
+				self.editedProfileImage = originalImage
+
+				if let imageURL = info[.imageURL] as? URL {
+					self.profileImageView.setImage(with: imageURL.absoluteString, placeholder: User.current!.attributes.profilePlaceholderImage)
+					self.editedProfileImageURL = imageURL
+				} else {
+					// Create a temporary image path
+					let imageName = UUID().uuidString
+					let imageURL = FileManager.default.temporaryDirectory.appendingPathComponent(imageName, conformingTo: .image)
+
+					// Save the image into the temporary path
+					let data = originalImage.jpegData(compressionQuality: 0.1)
+					try? data?.write(to: imageURL, options: [.atomic])
+
+					// Save the image path
+					self.profileImageView.setImage(with: imageURL.absoluteString, placeholder: User.current!.attributes.profilePlaceholderImage)
+					self.editedProfileImageURL = imageURL
+
+//					var placeHolder: PHObjectPlaceholder? = nil
+//					PHPhotoLibrary.shared().performChanges {
+//						let changeRequest = PHAssetCreationRequest.creationRequestForAsset(from: originalImage)
+//						placeHolder = changeRequest.placeholderForCreatedAsset
+//					} completionHandler: { success, _ in
+//						guard let localIdentifier = placeHolder?.localIdentifier, success else { return }
+//						let fetchResult = PHAsset.fetchAssets(withLocalIdentifiers: [localIdentifier], options: nil)
+//						guard let phAsset = fetchResult.firstObject else { return }
+//
+//						phAsset.requestContentEditingInput(with: PHContentEditingInputRequestOptions()) { editingInput, _ in
+//							if let input = editingInput, let imageURL = input.fullSizeImageURL {
+//								self.profileImageView.setImage(with: imageURL.absoluteString, placeholder: User.current!.attributes.profilePlaceholderImage)
+//								self.editedProfileImageURL = imageURL
+//							}
+//						}
+//					}
+				}
 			}
 		} else if self.currentImageView == "banner" {
-			if let editedImage = info[.editedImage] as? UIImage {
-				self.bannerImageView.image = editedImage
-				self.editedBannerImage = editedImage
+			if let originalImage = info[.originalImage] as? UIImage {
+				self.editedBannerImage = originalImage
+
+				if let imageURL = info[.imageURL] as? URL {
+					self.bannerImageView.setImage(with: imageURL.absoluteString, placeholder: User.current!.attributes.bannerPlaceholderImage)
+					self.editedBannerImageURL = imageURL
+				} else {
+					// Create a temporary image path
+					let imageName = UUID().uuidString
+					let imageURL = FileManager.default.temporaryDirectory.appendingPathComponent(imageName, conformingTo: .image)
+
+					// Save the image into the temporary path
+					let data = originalImage.jpegData(compressionQuality: 0.1)
+					try? data?.write(to: imageURL, options: [.atomic])
+
+					// Save the image path
+					self.bannerImageView.setImage(with: imageURL.absoluteString, placeholder: User.current!.attributes.bannerPlaceholderImage)
+					self.editedBannerImageURL = imageURL
+				}
 			}
 		}
 
@@ -874,10 +942,9 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate {
 	/// Open the camera if the device has one, otherwise show a warning.
 	func openCamera() {
 		if UIImagePickerController.isSourceTypeAvailable(.camera) {
-			imagePicker.sourceType = .camera
-			imagePicker.allowsEditing = true
-			imagePicker.delegate = self
-			self.present(imagePicker, animated: true, completion: nil)
+			self.imagePicker.sourceType = .camera
+			self.imagePicker.delegate = self
+			self.present(self.imagePicker, animated: true, completion: nil)
 		} else {
 			self.presentAlertController(title: "Well, this is awkward.", message: "You don't seem to have a camera 😓")
 		}
@@ -885,10 +952,9 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate {
 
 	/// Open the Photo Library so the user can choose an image.
 	func openPhotoLibrary() {
-		imagePicker.sourceType = .photoLibrary
-		imagePicker.allowsEditing = true
-		imagePicker.delegate = self
-		self.present(imagePicker, animated: true, completion: nil)
+		self.imagePicker.sourceType = .photoLibrary
+		self.imagePicker.delegate = self
+		self.present(self.imagePicker, animated: true, completion: nil)
 	}
 
 	// MARK: - IBActions

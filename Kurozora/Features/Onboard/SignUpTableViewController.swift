@@ -26,6 +26,7 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 			self.viewIfLoaded?.setNeedsLayout()
 		}
 	}
+	var editedProfileImageURL: URL? = nil
 	var isSIWA = false
 
 	// MARK: - View
@@ -42,7 +43,6 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 	func openCamera() {
 		if UIImagePickerController.isSourceTypeAvailable(.camera) {
 			self.imagePicker.sourceType = .camera
-			self.imagePicker.allowsEditing = true
 			self.imagePicker.delegate = self
 			self.present(self.imagePicker, animated: true, completion: nil)
 		} else {
@@ -53,23 +53,22 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 	/// Open the Photo Library so the user can choose an image.
 	func openPhotoLibrary() {
 		self.imagePicker.sourceType = .photoLibrary
-		self.imagePicker.allowsEditing = true
 		self.imagePicker.delegate = self
 		self.present(self.imagePicker, animated: true, completion: nil)
 	}
 
 	/// Fetches the user's profile details.
-	func getProfileDetails() {
-		KService.getProfileDetails { result in
-			switch result {
-			case .success:
-				// Save user in keychain.
-				if let username = User.current?.attributes.username {
-					try? KurozoraDelegate.shared.keychain.set(KService.authenticationKey, key: username)
-					UserSettings.set(username, forKey: .selectedAccount)
-				}
-			case .failure: break
+	func getProfileDetails() async {
+		do {
+			_ = try await KService.getProfileDetails().value
+
+			// Save user in keychain.
+			if let username = User.current?.attributes.username {
+				try? KurozoraDelegate.shared.keychain.set(KService.authenticationKey, key: username)
+				UserSettings.set(username, forKey: .selectedAccount)
 			}
+		} catch {
+			print("-----", error.localizedDescription)
 		}
 	}
 
@@ -119,30 +118,32 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 
 			// If `originalProfileImage` is equal to `editedProfileImage`, then no change has happened: return `nil`
 			// If `originalProfileImage` is not equal to `editedProfileImage`, then something changed: return `editedProfileImage`
-			let profileImage = self.originalProfileImage.isEqual(to: self.editedProfileImage) ? nil : self.editedProfileImage
+			let profileImageURL = self.originalProfileImage.isEqual(to: self.editedProfileImage) ? nil : self.editedProfileImageURL
 
 			// Disable user interaction.
 			self.disableUserInteraction(true)
 
-			// Perform information update request.
-			KService.updateInformation(profileImage: profileImage, username: username) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success:
-					// Get user details after completing account setup.
-					self.getProfileDetails()
+			Task {
+				do {
+					let profileUpdateRequest = ProfileUpdateRequest(username: username, biography: nil, profileImage: profileImageURL, bannerImage: nil)
 
-					// Re-enable user interaction.
-					self.disableUserInteraction(false)
+					// Perform information update request.
+					let userUpdateResponse = try await KService.updateInformation(profileUpdateRequest).value
+					User.current?.attributes.update(using: userUpdateResponse.data)
+
+					// Get user details after completing account setup.
+					await self.getProfileDetails()
 
 					// Present welcome message.
 					self.presentAlertController(title: "Hooray!", message: "Your account was successfully created!", defaultActionButtonTitle: Trans.done) { _ in
 						self.dismiss(animated: true, completion: nil)
 					}
-				case .failure:
-					// Re-enable user interaction.
-					self.disableUserInteraction(false)
+				} catch {
+					print(error.localizedDescription)
 				}
+
+				// Re-enable user interaction.
+				self.disableUserInteraction(false)
 			}
 		default: break
 		}
@@ -190,9 +191,10 @@ extension SignUpTableViewController {
 // MARK: - UIImagePickerControllerDelegate
 extension SignUpTableViewController: UIImagePickerControllerDelegate {
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-		if let editedImage = info[.editedImage] as? UIImage {
-			self.profileImageView.image = editedImage
-			self.editedProfileImage = editedImage
+		if let imageURL = info[.imageURL] as? URL, let originalImage = info[.originalImage] as? UIImage {
+			self.profileImageView.setImage(with: imageURL.absoluteString, placeholder: R.image.placeholders.userProfile()!)
+			self.editedProfileImage = originalImage
+			self.editedProfileImageURL = imageURL
 		}
 
 		// Dismiss the UIImagePicker after selection

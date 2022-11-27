@@ -50,9 +50,8 @@ class RedeemTableViewController: ServiceTableViewController {
 	func openCamera() {
 		if UIImagePickerController.isSourceTypeAvailable(.camera) {
 			self.imagePicker.sourceType = .camera
-			self.imagePicker.allowsEditing = true
 			self.imagePicker.delegate = self
-			self.present(imagePicker, animated: true, completion: nil)
+			self.present(self.imagePicker, animated: true, completion: nil)
 		} else {
 			self.presentAlertController(title: "Well, this is awkward.", message: "You don't seem to have a camera 😓")
 		}
