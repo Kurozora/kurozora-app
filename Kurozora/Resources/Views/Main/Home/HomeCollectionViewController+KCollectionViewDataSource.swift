@@ -12,7 +12,6 @@ import KurozoraKit
 extension HomeCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
 		return [
-			MusicLockupCollectionViewCell.self,
 			LegalCollectionViewCell.self
 		]
 	}
@@ -28,8 +27,9 @@ extension HomeCollectionViewController {
 		let smallShowCellConfiguration = self.getConfiguredSmallCell()
 		let upcomingCellConfiguration = self.getConfiguredUpcomingCell()
 		let videoCellConfiguration = self.getConfiguredVideoCell()
-		let personCellConfiguration = self.getConfiguredPersonCell()
 		let characterCellConfiguration = self.getConfiguredCharacterCell()
+		let personCellConfiguration = self.getConfiguredPersonCell()
+		let musicCellConfiguration = self.getConfiguredMusicCell()
 
 		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, itemKind: ItemKind) -> UICollectionViewCell? in
 			guard let self = self else { return nil }
@@ -57,14 +57,7 @@ extension HomeCollectionViewController {
 				default: return nil
 				}
 			case .music:
-				switch itemKind {
-				case .showSong(let showSong, _):
-					let musicLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.musicLockupCollectionViewCell, for: indexPath)
-					musicLockupCollectionViewCell?.delegate = self
-					musicLockupCollectionViewCell?.configure(using: showSong, at: indexPath, showEpisodes: false, showShow: true)
-					return musicLockupCollectionViewCell
-				default: return nil
-				}
+				return collectionView.dequeueConfiguredReusableCell(using: musicCellConfiguration, for: indexPath, item: itemKind)
 			case .quickLinks:
 				switch itemKind {
 				case .quickLink(let quickLink, _):

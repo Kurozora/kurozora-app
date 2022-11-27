@@ -12,7 +12,7 @@ import KurozoraKit
 extension HomeCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		switch self.dataSource.sectionIdentifier(for: indexPath.section) {
-		case .banner(let exploreCategory), .small(let exploreCategory), .medium(let exploreCategory), .large(let exploreCategory), .upcoming(let exploreCategory), .video(let exploreCategory), .profile(let exploreCategory):
+		case .banner(let exploreCategory), .small(let exploreCategory), .medium(let exploreCategory), .large(let exploreCategory), .upcoming(let exploreCategory), .video(let exploreCategory), .profile(let exploreCategory), .music(let exploreCategory):
 			switch exploreCategory.attributes.exploreCategoryType {
 			case .mostPopularShows, .upcomingShows, .shows:
 				let show = self.shows[indexPath]
@@ -29,7 +29,9 @@ extension HomeCollectionViewController {
 			case .people:
 				let person = self.people[indexPath]
 				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.personSegue, sender: person)
-			default: return
+			case .songs:
+				let song = self.showSongs[indexPath]?.song
+				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.songDetailsSegue, sender: song)
 			}
 		case .legal:
 			self.performSegue(withIdentifier: R.segue.homeCollectionViewController.legalSegue, sender: nil)
@@ -45,7 +47,8 @@ extension HomeCollectionViewController {
 			switch exploreCategory.attributes.exploreCategoryType {
 			case .shows, .upcomingShows, .mostPopularShows:
 				return self.shows[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-			case .songs: break
+			case .songs:
+				return self.showSongs[indexPath]?.song.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 			case .genres:
 				return self.genres[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 			case .themes:

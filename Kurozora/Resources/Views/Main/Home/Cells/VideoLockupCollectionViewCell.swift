@@ -93,9 +93,9 @@ class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 							let options = [AVURLAssetAllowsCellularAccessKey: false]
 							let avURLAsset = AVURLAsset(url: streamURL, options: options)
 
-							/// Load needed values asynchronously
+							// Load needed values asynchronously
 							avURLAsset.loadValuesAsynchronously(forKeys: ["duration", "playable"]) {
-								/// UI actions should executed on the main thread
+								// UI actions should executed on the main thread
 								DispatchQueue.main.async {
 									let avPlayerItem = AVPlayerItem(asset: avURLAsset)
 									if self.avQueuePlayer.currentItem != avPlayerItem {

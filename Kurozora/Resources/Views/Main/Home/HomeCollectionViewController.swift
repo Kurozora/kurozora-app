@@ -51,8 +51,9 @@ class HomeCollectionViewController: KCollectionViewController {
 	/// Which is used? This or exploreCategories?
 	var shows: [IndexPath: Show] = [:]
 	var characters: [IndexPath: Character] = [:]
-	var people: [IndexPath: Person] = [:]
 	var genres: [IndexPath: Genre] = [:]
+	var people: [IndexPath: Person] = [:]
+	var showSongs: [IndexPath: ShowSong] = [:]
 	var themes: [IndexPath: Theme] = [:]
 
 	// Refresh control
@@ -222,6 +223,11 @@ class HomeCollectionViewController: KCollectionViewController {
 			guard let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController else { return }
 			guard let person = sender as? Person else { return }
 			personDetailsCollectionViewController.person = person
+		case R.segue.homeCollectionViewController.songDetailsSegue.identifier:
+			// Segue to song details
+			guard let songDetailsCollectionViewController = segue.destination as? SongDetailsCollectionViewController else { return }
+			guard let song = sender as? Song else { return }
+			songDetailsCollectionViewController.song = song
 		case R.segue.homeCollectionViewController.showsListSegue.identifier:
 			// Segue to shows list
 			guard let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController else { return }
@@ -767,6 +773,20 @@ extension HomeCollectionViewController {
 				videoLockupCollectionViewCell.delegate = self
 				videoLockupCollectionViewCell.dataRequest = dataRequest
 				videoLockupCollectionViewCell.configure(using: show)
+			default: break
+			}
+		}
+	}
+
+	func getConfiguredMusicCell() -> UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.musicLockupCollectionViewCell)) { [weak self] musicLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .showSong(let showSong, _):
+				self.showSongs[indexPath] = showSong
+				musicLockupCollectionViewCell.delegate = self
+				musicLockupCollectionViewCell.configure(using: showSong, at: indexPath, showEpisodes: false, showShow: true)
 			default: break
 			}
 		}
