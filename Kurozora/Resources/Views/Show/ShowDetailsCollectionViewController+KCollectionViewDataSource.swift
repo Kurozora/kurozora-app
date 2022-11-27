@@ -31,6 +31,7 @@ extension ShowDetailsCollectionViewController {
 		let studioShowCellConfiguration = self.getConfiguredStudioShowCell()
 		let studioCellConfiguration = self.getConfiguredStudioCell()
 		let relatedShowCellConfiguration = self.getConfiguredRelatedShowCell()
+		let musicCellConfiguration = self.getConfiguredMusicCell()
 
 		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, itemKind: ItemKind) -> UICollectionViewCell? in
 			guard let self = self else { return nil }
@@ -84,14 +85,7 @@ extension ShowDetailsCollectionViewController {
 			case .cast:
 				return collectionView.dequeueConfiguredReusableCell(using: castCellConfiguration, for: indexPath, item: itemKind)
 			case .songs:
-				let musicLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.musicLockupCollectionViewCell, for: indexPath)
-				musicLockupCollectionViewCell?.delegate = self
-				switch itemKind {
-				case .showSong(let showSong, _):
-					musicLockupCollectionViewCell?.configure(using: showSong, at: indexPath)
-				default: break
-				}
-				return musicLockupCollectionViewCell
+				return collectionView.dequeueConfiguredReusableCell(using: musicCellConfiguration, for: indexPath, item: itemKind)
 			case .studios:
 				return collectionView.dequeueConfiguredReusableCell(using: studioCellConfiguration, for: indexPath, item: itemKind)
 			case .moreByStudio:
@@ -343,6 +337,17 @@ extension ShowDetailsCollectionViewController {
 				}
 
 				studioLockupCollectionViewCell.configure(using: studio)
+			default: break
+			}
+		}
+	}
+
+	func getConfiguredMusicCell() -> UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.musicLockupCollectionViewCell)) { musicLockupCollectionViewCell, indexPath, itemKind in
+			switch itemKind {
+			case .showSong(let showSong, _):
+				musicLockupCollectionViewCell.delegate = self
+				musicLockupCollectionViewCell.configure(using: showSong, at: indexPath)
 			default: break
 			}
 		}

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ftf-WB-7ul">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ftf-WB-7ul">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -45,7 +46,7 @@
                 <navigationController storyboardIdentifier="ShowsKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ftf-WB-7ul" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" backIndicatorImage="chevron.left.circle" catalog="system" backIndicatorTransitionMaskImage="chevron.left.circle" id="ESa-T6-GCe">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -100,12 +101,12 @@
                                                     </constraints>
                                                 </view>
                                                 <view hidden="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kP9-Yc-DGS">
-                                                    <rect key="frame" x="0.0" y="209.5" width="374" height="167.5"/>
+                                                    <rect key="frame" x="0.0" y="204.5" width="374" height="172.5"/>
                                                     <subviews>
                                                         <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sok-gv-7aN" customClass="KVisualEffectView" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="8" y="0.0" width="358" height="167.5"/>
+                                                            <rect key="frame" x="8" y="0.0" width="358" height="172.5"/>
                                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="lNp-3S-JbC">
-                                                                <rect key="frame" x="0.0" y="0.0" width="358" height="167.5"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="358" height="172.5"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             </view>
                                                             <blurEffect style="regular"/>
@@ -116,10 +117,10 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </visualEffectView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="EUy-FB-pDf">
-                                                            <rect key="frame" x="8" y="8" width="358" height="151.5"/>
+                                                            <rect key="frame" x="8" y="8" width="358" height="156.5"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hog-b8-hc0">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="108" height="151.5"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="108" height="156.5"/>
                                                                     <subviews>
                                                                         <view contentMode="scaleToFill" horizontalCompressionResistancePriority="748" verticalCompressionResistancePriority="748" translatesAutoresizingMaskIntoConstraints="NO" id="fKf-7k-rgZ">
                                                                             <rect key="frame" x="8" y="0.0" width="100" height="150"/>
@@ -150,22 +151,22 @@
                                                                     </constraints>
                                                                 </view>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yga-Gy-V0w">
-                                                                    <rect key="frame" x="116" y="0.0" width="242" height="151.5"/>
+                                                                    <rect key="frame" x="116" y="0.0" width="242" height="156.5"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Re:Zero Kara Hajimeru Isekai Seikatsu " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MLW-nK-QtG" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="234" height="36"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="234" height="42.5"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="TV · PG-12 · 25 episodes · 25 minutes · Spring 2016" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XfO-Gc-p0Z" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="36" width="234" height="30.5"/>
+                                                                            <rect key="frame" x="0.0" y="42.5" width="234" height="38"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <button userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AGH-kj-cmg">
-                                                                            <rect key="frame" x="0.0" y="74.5" width="234" height="30"/>
+                                                                            <rect key="frame" x="0.0" y="88.5" width="234" height="30"/>
                                                                             <color key="backgroundColor" red="0.20000000000000001" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <accessibility key="accessibilityConfiguration">
                                                                                 <accessibilityTraits key="traits" button="YES" notEnabled="YES"/>
@@ -185,7 +186,7 @@
                                                                             </userDefinedRuntimeAttributes>
                                                                         </button>
                                                                         <button contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g7Z-lw-ybF" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="121.5" width="101" height="30"/>
+                                                                            <rect key="frame" x="0.0" y="126.5" width="101" height="30"/>
                                                                             <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="30" id="YND-6L-dKP"/>
@@ -205,7 +206,7 @@
                                                                             </connections>
                                                                         </button>
                                                                         <button contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lo1-qa-GNH" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                                                            <rect key="frame" x="204" y="121.5" width="30" height="30"/>
+                                                                            <rect key="frame" x="204" y="126.5" width="30" height="30"/>
                                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="30" id="1pk-1q-YBU"/>
@@ -226,7 +227,7 @@
                                                                             </connections>
                                                                         </button>
                                                                         <button contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qZj-3p-1ji" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                                                            <rect key="frame" x="166" y="121.5" width="30" height="30"/>
+                                                                            <rect key="frame" x="166" y="126.5" width="30" height="30"/>
                                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="30" id="X1m-nr-oDU"/>
@@ -327,20 +328,20 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" reuseIdentifier="RatingBadgeCollectionViewCell" id="HZ5-T0-cWg" customClass="RatingBadgeCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="387" width="117" height="387"/>
+                                <rect key="frame" x="0.0" y="387" width="124.5" height="62.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" id="QHt-Tj-vdt">
-                                    <rect key="frame" x="0.0" y="0.0" width="117" height="387"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="124.5" height="62.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="771-Bz-wj4" customClass="KTintedLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="109" height="17"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="116.5" height="20.5"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <color key="textColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fX4-qF-SfM" customClass="KCosmosView" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="3.5" y="21" width="102" height="347.5"/>
+                                        <view contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fX4-qF-SfM" customClass="KCosmosView" customModule="Kurozora" customModuleProvider="target">
+                                            <rect key="frame" x="7.5" y="24.5" width="102" height="18"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="updateOnTouch" value="NO"/>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="starSize">
@@ -352,7 +353,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not enough ratings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="75x-YE-Dah" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="372.5" width="109" height="14.5"/>
+                                            <rect key="frame" x="0.0" y="46.5" width="116.5" height="16"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
@@ -380,21 +381,21 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" reuseIdentifier="BadgeCollectionViewCell" id="sL1-MI-JS9" customClass="BadgeCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="117" y="552" width="118" height="57.5"/>
+                                <rect key="frame" x="124.5" y="387" width="118" height="62.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" id="cwa-h7-MhR">
-                                    <rect key="frame" x="0.0" y="0.0" width="118" height="57.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="118" height="62.5"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w4f-hG-fR9">
-                                            <rect key="frame" x="0.0" y="0.0" width="2" height="57.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="2" height="62.5"/>
                                             <color key="backgroundColor" systemColor="separatorColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="2" id="VHC-ly-1TJ"/>
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Fy-ov-HrY" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="10" y="0.0" width="100" height="17"/>
+                                            <rect key="frame" x="10" y="0.0" width="100" height="20.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="jQV-Fg-sTv"/>
                                             </constraints>
@@ -403,13 +404,13 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MVu-bi-min">
-                                            <rect key="frame" x="10" y="21" width="100" height="18"/>
+                                            <rect key="frame" x="10" y="24.5" width="100" height="18"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="18" id="qLh-yT-qvt"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eaa-bl-QjP" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="10" y="43" width="100" height="14.5"/>
+                                            <rect key="frame" x="10" y="46.5" width="100" height="16"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
@@ -604,12 +605,17 @@
             <point key="canvasLocation" x="3798" y="729"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="fX4-qF-SfM">
+            <size key="intrinsicContentSize" width="102" height="18"/>
+        </designable>
+    </designables>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
-        <image name="bell" catalog="system" width="128" height="124"/>
-        <image name="chevron.left.circle" catalog="system" width="128" height="121"/>
-        <image name="ellipsis.circle" catalog="system" width="128" height="121"/>
-        <image name="heart" catalog="system" width="128" height="109"/>
+        <image name="bell" catalog="system" width="125" height="128"/>
+        <image name="chevron.left.circle" catalog="system" width="128" height="123"/>
+        <image name="ellipsis.circle" catalog="system" width="128" height="123"/>
+        <image name="heart" catalog="system" width="128" height="107"/>
         <systemColor name="separatorColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
