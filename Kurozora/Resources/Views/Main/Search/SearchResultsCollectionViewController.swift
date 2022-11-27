@@ -106,10 +106,14 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 
 		// Add search bar to navigation controller
 		self.navigationItem.searchController = self.kSearchController
+
+		#if targetEnvironment(macCatalyst)
+		#else
 		if #available(iOS 16.0, *) {
 			self.navigationItem.preferredSearchBarPlacement = .stacked
 		} else {
 		}
+		#endif
 	}
 
 	/// Perform search with the given search text and the search scope.
@@ -373,14 +377,15 @@ extension SearchResultsCollectionViewController: UserLockupCollectionViewCellDel
 	func userLockupCollectionViewCell(_ cell: UserLockupCollectionViewCell, didPressFollow button: UIButton) {
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 		guard var user = self.users[indexPath] else { return }
-		let userIdentity = UserIdentity(id: user.id)
 
-		KService.updateFollowStatus(forUser: userIdentity) { result in
-			switch result {
-			case .success(let followUpdate):
-				user.attributes.update(using: followUpdate)
-				cell.updateFollowButton(using: followUpdate.followStatus)
-			case .failure: break
+		Task {
+			do {
+				let userIdentity = UserIdentity(id: user.id)
+				let followUpdateResponse = try await KService.updateFollowStatus(forUser: userIdentity).value
+				user.attributes.update(using: followUpdateResponse.data)
+				cell.updateFollowButton(using: followUpdateResponse.data.followStatus)
+			} catch {
+				print("-----", error.localizedDescription)
 			}
 		}
 	}
@@ -390,7 +395,8 @@ extension SearchResultsCollectionViewController: UserLockupCollectionViewCellDel
 extension SearchResultsCollectionViewController: EpisodeLockupCollectionViewCellDelegate {
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressWatchButton button: UIButton) {
 		guard let indexPath = collectionView.indexPath(for: cell) else { return }
-		Task {
+		Task { [weak self] in
+			guard let self = self else { return }
 			await self.episodes[indexPath]?.updateWatchStatus(userInfo: ["indexPath": indexPath])
 		}
 	}
