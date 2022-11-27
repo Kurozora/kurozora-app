@@ -13,9 +13,7 @@ extension FMDetailsTableViewController {
 		switch indexPath.section {
 		case 0: break
 		default:
-			if let baseFeedMessageCell = tableView.cellForRow(at: indexPath) as? BaseFeedMessageCell {
-				self.performSegue(withIdentifier: R.segue.fmDetailsTableViewController.feedMessageDetailsSegue.identifier, sender: baseFeedMessageCell.feedMessage.id)
-			}
+			self.performSegue(withIdentifier: R.segue.fmDetailsTableViewController.feedMessageDetailsSegue.identifier, sender: self.feedMessageReplies[indexPath.row].id)
 		}
 	}
 

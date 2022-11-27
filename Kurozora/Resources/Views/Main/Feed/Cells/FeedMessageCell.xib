@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -23,33 +25,69 @@
                             <constraint firstAttribute="height" constant="44" id="nlB-Yc-RI6"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Kurozora" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="27X-h2-WMd" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="60" y="8" width="60.5" height="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Kurozora" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="27X-h2-WMd" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="60" y="8" width="70.5" height="20"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="iwK-VE-5g4">
+                        <rect key="frame" x="132.5" y="8" width="210.5" height="20"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.seal.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="vU6-rX-RFb">
+                                <rect key="frame" x="0.0" y="-1" width="20" height="21.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="vU6-rX-RFb" secondAttribute="height" multiplier="1:1" id="0Yg-C2-lmd"/>
+                                </constraints>
+                            </imageView>
+                            <button userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L4p-TN-0Sq">
+                                <rect key="frame" x="24" y="0.0" width="40" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="6he-NJ-eGu"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
+                                <state key="normal" title="PRO">
+                                    <color key="titleColor" red="1" green="0.82352941180000006" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" red="1" green="0.82352941180000006" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BBd-qV-7QB">
+                                <rect key="frame" x="68" y="0.0" width="142.5" height="20"/>
+                            </view>
+                        </subviews>
+                    </stackView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2d" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yad-DN-7du" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="352.5" y="8" width="13.5" height="17"/>
+                        <rect key="frame" x="351" y="8" width="15" height="20"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                         <color key="textColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <textView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="_test" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="I35-Go-4sT" customClass="KSelectableTextView" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="60" y="25" width="306" height="44.5"/>
+                        <rect key="frame" x="60" y="28" width="306" height="41.5"/>
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         <dataDetectorType key="dataDetectorTypes" link="YES" calendarEvent="YES" lookupSuggestion="YES"/>
                     </textView>
                     <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cfl-Ds-ElJ" customClass="KVisualEffectView" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="60" y="25" width="306" height="44.5"/>
+                        <rect key="frame" x="60" y="28" width="306" height="41.5"/>
                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="tiF-e9-Zs7">
-                            <rect key="frame" x="0.0" y="0.0" width="306" height="44"/>
+                            <rect key="frame" x="0.0" y="0.0" width="306" height="41.5"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZDW-d9-wqu" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                    <rect key="frame" x="137.5" y="14" width="31" height="16"/>
+                                    <rect key="frame" x="134.5" y="11.5" width="37" height="19.5"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -74,11 +112,36 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U8F-at-A0g">
                         <rect key="frame" x="60" y="77.5" width="306" height="44"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="2r3-Rh-BUE">
-                                <rect key="frame" x="0.0" y="0.0" width="111" height="44"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="2r3-Rh-BUE">
+                                <rect key="frame" x="0.0" y="0.0" width="128.5" height="44"/>
                                 <subviews>
+                                    <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZRS-WP-vqK" customClass="CellActionButton" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="34.5" height="44"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        <color key="tintColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <state key="normal" title="0" image="Symbols/message.left.and.message.right.fill">
+                                            <color key="titleColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="commentButtonPressed:" destination="Q0A-hW-QVj" eventType="touchUpInside" id="N9o-OP-mzw"/>
+                                        </connections>
+                                    </button>
+                                    <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wjh-je-WtR" customClass="CellActionButton" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="42.5" y="0.0" width="40.5" height="44"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        <color key="tintColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <state key="normal" title="0" image="square.and.arrow.up.on.square.fill" catalog="system">
+                                            <color key="titleColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                            </preferredSymbolConfiguration>
+                                        </state>
+                                        <connections>
+                                            <action selector="reShareButtonPressed:" destination="Q0A-hW-QVj" eventType="touchUpInside" id="gty-jP-1Ou"/>
+                                        </connections>
+                                    </button>
                                     <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7eR-Hg-lR6" customClass="CellActionButton" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="32.5" height="44"/>
+                                        <rect key="frame" x="91" y="0.0" width="37.5" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="XNf-jS-xWL"/>
                                         </constraints>
@@ -92,34 +155,6 @@
                                         </state>
                                         <connections>
                                             <action selector="heartButtonPressed:" destination="Q0A-hW-QVj" eventType="touchUpInside" id="AXk-YL-WFW"/>
-                                        </connections>
-                                    </button>
-                                    <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZRS-WP-vqK" customClass="CellActionButton" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="40.5" y="0.0" width="27" height="44"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                        <color key="tintColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <state key="normal" title="0" image="Symbols/message.left.and.message.right.fill">
-                                            <color key="titleColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
-                                            </preferredSymbolConfiguration>
-                                        </state>
-                                        <connections>
-                                            <action selector="commentButtonPressed:" destination="Q0A-hW-QVj" eventType="touchUpInside" id="N9o-OP-mzw"/>
-                                        </connections>
-                                    </button>
-                                    <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wjh-je-WtR" customClass="CellActionButton" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="75.5" y="0.0" width="35.5" height="44"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                        <color key="tintColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <state key="normal" title="0" image="square.and.arrow.up.on.square.fill" catalog="system">
-                                            <color key="titleColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
-                                            </preferredSymbolConfiguration>
-                                        </state>
-                                        <connections>
-                                            <action selector="reShareButtonPressed:" destination="Q0A-hW-QVj" eventType="touchUpInside" id="gty-jP-1Ou"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -137,9 +172,6 @@
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                     </preferredSymbolConfiguration>
                                 </state>
-                                <connections>
-                                    <action selector="moreButtonPressed:" destination="Q0A-hW-QVj" eventType="touchUpInside" id="lyC-fr-xSJ"/>
-                                </connections>
                             </button>
                         </subviews>
                         <constraints>
@@ -167,12 +199,16 @@
                     <constraint firstItem="qEa-CS-cR6" firstAttribute="top" secondItem="792-bS-aOJ" secondAttribute="top" constant="8" id="GF1-Lk-BjX"/>
                     <constraint firstItem="Cfl-Ds-ElJ" firstAttribute="bottom" secondItem="I35-Go-4sT" secondAttribute="bottom" id="Oa5-Re-Sx7"/>
                     <constraint firstItem="I35-Go-4sT" firstAttribute="trailing" secondItem="Yad-DN-7du" secondAttribute="trailing" id="Op4-7a-30J"/>
+                    <constraint firstItem="iwK-VE-5g4" firstAttribute="top" secondItem="27X-h2-WMd" secondAttribute="top" id="S1Q-1z-KSM"/>
                     <constraint firstItem="Yad-DN-7du" firstAttribute="top" secondItem="27X-h2-WMd" secondAttribute="top" id="Z9D-Ud-ebt"/>
+                    <constraint firstItem="iwK-VE-5g4" firstAttribute="bottom" secondItem="27X-h2-WMd" secondAttribute="bottom" id="ZTx-bk-XPW"/>
+                    <constraint firstItem="iwK-VE-5g4" firstAttribute="leading" secondItem="27X-h2-WMd" secondAttribute="trailing" constant="2" id="fGp-jG-1fi"/>
                     <constraint firstItem="U8F-at-A0g" firstAttribute="trailing" secondItem="I35-Go-4sT" secondAttribute="trailing" id="frQ-qT-1pg"/>
                     <constraint firstItem="Cfl-Ds-ElJ" firstAttribute="trailing" secondItem="I35-Go-4sT" secondAttribute="trailing" id="fu1-5z-slR"/>
                     <constraint firstItem="I35-Go-4sT" firstAttribute="leading" secondItem="27X-h2-WMd" secondAttribute="leading" id="ltr-eb-N3g"/>
                     <constraint firstItem="27X-h2-WMd" firstAttribute="top" secondItem="qEa-CS-cR6" secondAttribute="top" id="oGS-UM-qhD"/>
                     <constraint firstItem="U8F-at-A0g" firstAttribute="top" secondItem="I35-Go-4sT" secondAttribute="bottom" constant="8" symbolic="YES" id="oqC-9s-YLs"/>
+                    <constraint firstItem="Yad-DN-7du" firstAttribute="leading" secondItem="iwK-VE-5g4" secondAttribute="trailing" constant="8" symbolic="YES" id="ps6-eB-Opy"/>
                     <constraint firstItem="Cfl-Ds-ElJ" firstAttribute="leading" secondItem="I35-Go-4sT" secondAttribute="leading" id="snR-sY-0IJ"/>
                     <constraint firstItem="U8F-at-A0g" firstAttribute="leading" secondItem="I35-Go-4sT" secondAttribute="leading" id="tUN-Jy-E0L"/>
                     <constraint firstItem="27X-h2-WMd" firstAttribute="leading" secondItem="qEa-CS-cR6" secondAttribute="trailing" constant="8" symbolic="YES" id="uY0-s2-DHX"/>
@@ -187,9 +223,11 @@
                 <outlet property="heartButton" destination="7eR-Hg-lR6" id="5nR-ot-cVo"/>
                 <outlet property="moreButton" destination="jiI-CD-mWg" id="7Z7-Cb-jiE"/>
                 <outlet property="postTextView" destination="I35-Go-4sT" id="2NN-Yo-Rwj"/>
+                <outlet property="proBadgeButton" destination="L4p-TN-0Sq" id="1yl-5f-pp3"/>
                 <outlet property="profileImageView" destination="qEa-CS-cR6" id="y0z-IG-ZnW"/>
                 <outlet property="shareButton" destination="Wjh-je-WtR" id="nPb-tM-GGT"/>
                 <outlet property="usernameLabel" destination="27X-h2-WMd" id="eDx-vg-PZV"/>
+                <outlet property="verificationImageView" destination="vU6-rX-RFb" id="XP3-h5-WMu"/>
                 <outlet property="warningTranscriptLabel" destination="ZDW-d9-wqu" id="Fqt-6z-Asm"/>
                 <outlet property="warningVisualEffectView" destination="Cfl-Ds-ElJ" id="wT1-O7-MAl"/>
             </connections>
@@ -197,9 +235,10 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Symbols/message.left.and.message.right.fill" width="18" height="15"/>
+        <image name="Symbols/message.left.and.message.right.fill" width="24" height="19"/>
+        <image name="checkmark.seal.fill" catalog="system" width="128" height="124"/>
         <image name="ellipsis" catalog="system" width="128" height="37"/>
-        <image name="heart.fill" catalog="system" width="128" height="109"/>
-        <image name="square.and.arrow.up.on.square.fill" catalog="system" width="117" height="128"/>
+        <image name="heart.fill" catalog="system" width="128" height="107"/>
+        <image name="square.and.arrow.up.on.square.fill" catalog="system" width="119" height="128"/>
     </resources>
 </document>

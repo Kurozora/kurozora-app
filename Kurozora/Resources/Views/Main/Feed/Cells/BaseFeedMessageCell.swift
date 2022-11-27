@@ -23,12 +23,14 @@ class BaseFeedMessageCell: KTableViewCell {
 	@IBOutlet weak var shareButton: CellActionButton!
 	@IBOutlet weak var moreButton: CellActionButton!
 
+	@IBOutlet weak var verificationImageView: UIImageView!
+	@IBOutlet weak var proBadgeButton: UIButton!
+
 	// MARK: - Properties
 	weak var delegate: BaseFeedMessageCellDelegate?
 	var warningIsHidden: Bool = false
 	var liveReplyEnabled = false
 	var liveReShareEnabled = false
-	var feedMessage: FeedMessage!
 
 	// MARK: - View
 	override func prepareForReuse() {
@@ -48,7 +50,6 @@ class BaseFeedMessageCell: KTableViewCell {
 			return
 		}
 		self.hideSkeleton()
-		self.feedMessage = feedMessage
 
 		// Configure heart status for feed message.
 		self.updateHeartStatus(for: feedMessage)
@@ -61,10 +62,14 @@ class BaseFeedMessageCell: KTableViewCell {
 			// Attach gestures
 			self.configureProfilePageGesture(for: self.usernameLabel)
 			self.configureProfilePageGesture(for: self.profileImageView)
+
+			// Badges
+			self.verificationImageView.isHidden = !user.attributes.isVerified
+			self.proBadgeButton.isHidden = !user.attributes.isPro || !user.attributes.isSubscribed
 		}
 
 		// Configure body
-		self.postTextView.text = feedMessage.attributes.body
+		self.postTextView.setAttributedText(feedMessage.attributes.contentHTML.htmlAttributedString())
 
 		// Configure date time
 		self.dateTimeLabel.text = feedMessage.attributes.createdAt.relativeToNow
@@ -79,7 +84,10 @@ class BaseFeedMessageCell: KTableViewCell {
 		let reShareCount = feedMessage.attributes.metrics.reShareCount
 		self.shareButton.setTitle(reShareCount.kkFormatted, for: .normal)
 
-		/// Configure re-share button
+		// Configure more button
+		self.moreButton.showsMenuAsPrimaryAction = true
+
+		// Configure re-share button
 		self.configureReShareButton(for: feedMessage)
 
 		// Configure warning messages
@@ -174,11 +182,6 @@ class BaseFeedMessageCell: KTableViewCell {
 
 	@IBAction func reShareButtonPressed(_ sender: UIButton) {
 		self.delegate?.baseFeedMessageCell(self, didPressReShareButton: sender)
-		sender.animateBounce()
-	}
-
-	@IBAction func moreButtonPressed(_ sender: UIButton) {
-		self.delegate?.baseFeedMessageCell(self, didPressMoreButton: sender)
 		sender.animateBounce()
 	}
 }

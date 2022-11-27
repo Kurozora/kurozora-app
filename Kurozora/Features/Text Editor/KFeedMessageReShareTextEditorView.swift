@@ -31,39 +31,40 @@ class KFMReShareTextEditorViewController: KFeedMessageTextEditorViewController {
 			self.opUsernameLabel.text = opUser.attributes.username
 			opUser.attributes.profileImage(imageView: self.opProfileImageView)
 		}
-		self.opMessageTextView.text = self.opFeedMessage.attributes.body
+		self.opMessageTextView.setAttributedText(self.opFeedMessage.attributes.contentHTML.htmlAttributedString())
 		self.dateLabel.text = self.opFeedMessage.attributes.createdAt.relativeToNow
 	}
 
 	// MARK: - IBActions
-	override func performFeedMessageRequest() {
+	override func performFeedMessageRequest() async {
 		if let feedMessage = self.editingFeedMessage {
 			let isNSFW = self.isNSFWSwitch?.isOn ?? feedMessage.attributes.isNSFW
 			let isSpoiler = self.isSpoilerSwitch?.isOn ?? feedMessage.attributes.isSpoiler
 
-			KService.updateMessage(feedMessage.id, withBody: self.editedText, isNSFW: isNSFW, isSpoiler: isSpoiler) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let feedMessageUpdate):
-					self.editingFeedMessage?.attributes.update(using: feedMessageUpdate)
-					NotificationCenter.default.post(name: .KFMDidUpdate, object: nil, userInfo: self.userInfo)
-					self.dismiss(animated: true, completion: nil)
-				case .failure: break
-				}
+			do {
+				let feedMessageUpdateResponse = try await KService.updateMessage(feedMessage.id, withContent: self.editedText, isNSFW: isNSFW, isSpoiler: isSpoiler).value
+				let feedMessageUpdate = feedMessageUpdateResponse.data
+
+				self.editingFeedMessage?.attributes.update(using: feedMessageUpdate)
+				NotificationCenter.default.post(name: .KFMDidUpdate, object: nil, userInfo: self.userInfo)
+				self.dismiss(animated: true, completion: nil)
+			} catch {
+				print("-----", error.localizedDescription)
 			}
 		} else {
-			KService.postFeedMessage(withBody: self.editedText, relatedToParent: self.opFeedMessage.id, isReply: false, isReShare: true, isNSFW: self.opFeedMessage.attributes.isNSFW, isSpoiler: self.opFeedMessage.attributes.isSpoiler) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let feedMessages):
-					if self.segueToOPFeedDetails, let feedMessage = feedMessages.first {
-						self.delegate?.segueToOPFeedDetails(feedMessage)
-					} else {
-						self.delegate?.kFeedMessageTextEditorView(updateMessagesWith: feedMessages)
-					}
-					self.dismiss(animated: true, completion: nil)
-				case .failure: break
+			do {
+				let feedMessagesResponse = try await KService.postFeedMessage(withContent: self.editedText, relatedToParent: self.opFeedMessage.id, isReply: false, isReShare: true, isNSFW: self.opFeedMessage.attributes.isNSFW, isSpoiler: self.opFeedMessage.attributes.isSpoiler).value
+				let feedMessages = feedMessagesResponse.data
+
+				if self.segueToOPFeedDetails, let feedMessage = feedMessages.first {
+					self.delegate?.segueToOPFeedDetails(feedMessage)
+				} else {
+					self.delegate?.kFeedMessageTextEditorView(updateMessagesWith: feedMessages)
 				}
+
+				self.dismiss(animated: true, completion: nil)
+			} catch {
+				print("-----", error.localizedDescription)
 			}
 		}
 	}

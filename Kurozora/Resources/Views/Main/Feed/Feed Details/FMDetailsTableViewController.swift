@@ -255,6 +255,11 @@ extension FMDetailsTableViewController {
 			feedMessageCell.liveReplyEnabled = true
 			feedMessageCell.liveReShareEnabled = false
 			feedMessageCell.configureCell(using: self.feedMessage)
+			feedMessageCell.moreButton.menu = self.feedMessage.makeContextMenu(in: self, userInfo: [
+				"indexPath": indexPath,
+				"liveReplyEnabled": feedMessageCell.liveReplyEnabled,
+				"liveReShareEnabled": feedMessageCell.liveReShareEnabled
+			])
 			return feedMessageCell
 		default:
 			guard let feedMessageCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedMessageCell, for: indexPath) else {
@@ -264,6 +269,11 @@ extension FMDetailsTableViewController {
 			feedMessageCell.liveReplyEnabled = false
 			feedMessageCell.liveReShareEnabled = false
 			feedMessageCell.configureCell(using: self.feedMessageReplies[indexPath.row])
+			feedMessageCell.moreButton.menu = self.feedMessageReplies[indexPath.row].makeContextMenu(in: self, userInfo: [
+				"indexPath": indexPath,
+				"liveReplyEnabled": feedMessageCell.liveReplyEnabled,
+				"liveReShareEnabled": feedMessageCell.liveReShareEnabled
+			])
 			return feedMessageCell
 		}
 	}
@@ -325,23 +335,12 @@ extension FMDetailsTableViewController: BaseFeedMessageCellDelegate {
 		}
 	}
 
-	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressMoreButton button: UIButton) {
-		if let indexPath = self.tableView.indexPath(for: cell) {
-			switch indexPath.section {
-			case 0:
-				self.feedMessage.actionList(on: self, button, userInfo: [
-					"indexPath": indexPath,
-					"liveReplyEnabled": cell.liveReplyEnabled,
-					"liveReShareEnabled": cell.liveReShareEnabled
-				])
-			default:
-				self.feedMessageReplies[indexPath.row].actionList(on: self, button, userInfo: [
-					"indexPath": indexPath,
-					"liveReplyEnabled": cell.liveReplyEnabled,
-					"liveReShareEnabled": cell.liveReShareEnabled
-				])
-			}
-		}
+	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressUserName sender: AnyObject) {
+		self.feedMessage.relationships.parent?.data.first?.visitOriginalPosterProfile(from: self)
+	}
+
+	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressOPMessage sender: AnyObject) {
+		self.performSegue(withIdentifier: R.segue.fmDetailsTableViewController.feedMessageDetailsSegue.identifier, sender: self.feedMessage.relationships.parent?.data.first?.id)
 	}
 }
 

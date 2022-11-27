@@ -16,6 +16,8 @@ class FeedMessageReShareCell: FeedMessageCell {
 	@IBOutlet weak var opMessageTextView: KTextView!
 	@IBOutlet weak var opDateTimeLabel: KSecondaryLabel!
 	@IBOutlet weak var opView: UIView?
+	@IBOutlet weak var opVerificationImageView: UIImageView!
+	@IBOutlet weak var opProBadgeButton: UIButton!
 
 	// MARK: - Functions
 	override func configureCell(using feedMessage: FeedMessage?) {
@@ -26,7 +28,7 @@ class FeedMessageReShareCell: FeedMessageCell {
 
 		guard let opMessage = feedMessage.relationships.parent?.data.first else { return }
 		self.opDateTimeLabel.text = opMessage.attributes.createdAt.relativeToNow
-		self.opMessageTextView.text = opMessage.attributes.body
+		self.opMessageTextView.setAttributedText(opMessage.attributes.contentHTML.htmlAttributedString())
 
 		if let opUser = opMessage.relationships.users.data.first {
 			opUser.attributes.profileImage(imageView: self.opProfileImageView)
@@ -35,6 +37,10 @@ class FeedMessageReShareCell: FeedMessageCell {
 			// Attach gestures
 			self.configureOPProfilePageGesture(for: self.opProfileImageView)
 			self.configureOPProfilePageGesture(for: self.opUsernameLabel)
+
+			// Badges
+			self.opVerificationImageView.isHidden = !opUser.attributes.isVerified
+			self.opProBadgeButton.isHidden = !opUser.attributes.isPro || !opUser.attributes.isSubscribed
 		}
 
 		if let opView = self.opView, opView.gestureRecognizers.isNilOrEmpty {
@@ -48,7 +54,7 @@ class FeedMessageReShareCell: FeedMessageCell {
 	/// - Parameter view: The view to which the tap gesture should be attached.
 	fileprivate func configureOPProfilePageGesture(for view: UIView) {
 		if view.gestureRecognizers.isNilOrEmpty {
-			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(visitOPProfilePage(_:)))
+			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(opUsernameLabelPressed(_:)))
 			gestureRecognizer.numberOfTouchesRequired = 1
 			gestureRecognizer.numberOfTapsRequired = 1
 			view.addGestureRecognizer(gestureRecognizer)
@@ -57,20 +63,12 @@ class FeedMessageReShareCell: FeedMessageCell {
 	}
 
 	/// Segues to message details.
-	@objc func showOPMessage(_ gestureRecognizer: UITapGestureRecognizer) {
-		guard let opMessage = feedMessage.relationships.parent?.data.first else { return }
-		self.parentViewController?.performSegue(withIdentifier: R.segue.feedTableViewController.feedMessageDetailsSegue.identifier, sender: opMessage.id)
+	@objc func showOPMessage(_ sender: AnyObject) {
+		self.delegate?.feedMessageReShareCell(self, didPressOPMessage: sender)
 	}
 
 	/// Presents the profile view for the feed message poster.
-	@objc fileprivate func visitOPProfilePage(_ gestureRecognizer: UITapGestureRecognizer) {
-		guard let opMessage = feedMessage.relationships.parent?.data.first else { return }
-		if let opUser = opMessage.relationships.users.data.first {
-			let profileTableViewController = ProfileTableViewController.`init`(with: opUser.id)
-			profileTableViewController.dismissButtonIsEnabled = true
-
-			let kurozoraNavigationController = KNavigationController(rootViewController: profileTableViewController)
-			self.parentViewController?.present(kurozoraNavigationController, animated: true)
-		}
+	@objc fileprivate func opUsernameLabelPressed(_ sender: AnyObject) {
+		self.delegate?.feedMessageReShareCell(self, didPressUserName: sender)
 	}
 }

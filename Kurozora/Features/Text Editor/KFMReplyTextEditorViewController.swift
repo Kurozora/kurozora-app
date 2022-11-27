@@ -36,36 +36,37 @@ class KFMReplyTextEditorViewController: KFeedMessageTextEditorViewController {
 			self.opUsernameLabel.text = opUser.attributes.username
 			opUser.attributes.profileImage(imageView: self.opProfileImageView)
 		}
-		self.opMessageTextView.text = self.opFeedMessage.attributes.body
+		self.opMessageTextView.setAttributedText(self.opFeedMessage.attributes.contentHTML.htmlAttributedString())
 		self.opDateTimeLabel.text = self.opFeedMessage.attributes.createdAt.relativeToNow
 	}
 
 	// MARK: - Functions
-	override func performFeedMessageRequest() {
+	override func performFeedMessageRequest() async {
 		if let feedMessage = self.editingFeedMessage {
-			KService.updateMessage(feedMessage.id, withBody: self.editedText, isNSFW: self.isNSFWSwitch.isOn, isSpoiler: self.isSpoilerSwitch.isOn) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let feedMessageUpdate):
-					self.editingFeedMessage?.attributes.update(using: feedMessageUpdate)
-					NotificationCenter.default.post(name: .KFMDidUpdate, object: nil, userInfo: self.userInfo)
-					self.dismiss(animated: true, completion: nil)
-				case .failure: break
-				}
+			do {
+				let feedMessageUpdateResponse = try await KService.updateMessage(feedMessage.id, withContent: self.editedText, isNSFW: self.isNSFWSwitch.isOn, isSpoiler: self.isSpoilerSwitch.isOn).value
+				let feedMessageUpdate = feedMessageUpdateResponse.data
+
+				self.editingFeedMessage?.attributes.update(using: feedMessageUpdate)
+				NotificationCenter.default.post(name: .KFMDidUpdate, object: nil, userInfo: self.userInfo)
+				self.dismiss(animated: true, completion: nil)
+			} catch {
+				print("-----", error.localizedDescription)
 			}
 		} else {
-			KService.postFeedMessage(withBody: self.editedText, relatedToParent: self.opFeedMessage.id, isReply: true, isReShare: false, isNSFW: self.isNSFWSwitch.isOn, isSpoiler: self.isSpoilerSwitch.isOn) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let feedMessages):
-					if self.segueToOPFeedDetails {
-						self.delegate?.segueToOPFeedDetails(self.opFeedMessage)
-					} else {
-						self.delegate?.kFeedMessageTextEditorView(updateMessagesWith: feedMessages)
-					}
-					self.dismiss(animated: true, completion: nil)
-				case .failure: break
+			do {
+				let feedMessagesResponse = try await KService.postFeedMessage(withContent: self.editedText, relatedToParent: self.opFeedMessage.id, isReply: true, isReShare: false, isNSFW: self.isNSFWSwitch.isOn, isSpoiler: self.isSpoilerSwitch.isOn).value
+				let feedMessages = feedMessagesResponse.data
+
+				if self.segueToOPFeedDetails {
+					self.delegate?.segueToOPFeedDetails(self.opFeedMessage)
+				} else {
+					self.delegate?.kFeedMessageTextEditorView(updateMessagesWith: feedMessages)
 				}
+
+				self.dismiss(animated: true, completion: nil)
+			} catch {
+				print("-----", error.localizedDescription)
 			}
 		}
 	}

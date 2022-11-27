@@ -66,7 +66,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 		return self.originalText != self.editedText
 	}
 	var editingFeedMessage: FeedMessage?
-	var userInfo: [AnyHashable: Any]?
+	var userInfo: [AnyHashable: Any?] = [:]
 	weak var delegate: KFeedMessageTextEditorViewDelegate?
 
 	// MARK: - View
@@ -99,8 +99,8 @@ class KFeedMessageTextEditorViewController: KViewController {
 
 		if let feedMessage = self.editingFeedMessage {
 			self.commentTextView.text = nil
-			self.commentTextView.insertText(feedMessage.attributes.body)
-			self.originalText = feedMessage.attributes.body
+			self.commentTextView.insertText(feedMessage.attributes.content)
+			self.originalText = feedMessage.attributes.content
 			self.isNSFWSwitch?.isOn = feedMessage.attributes.isNSFW
 			self.originalNSFW = feedMessage.attributes.isNSFW
 			self.isSpoilerSwitch?.isOn = feedMessage.attributes.isSpoiler
@@ -138,7 +138,9 @@ class KFeedMessageTextEditorViewController: KViewController {
 			if showingSend {
 				// Send action.
 				actionSheetAlertController.addAction(UIAlertAction(title: Trans.send, style: .default) { _ in
-					self.sendMessage()
+					Task {
+						await self.sendMessage()
+					}
 				})
 			}
 
@@ -159,14 +161,14 @@ class KFeedMessageTextEditorViewController: KViewController {
 	}
 
 	/// Send the feed message and dismiss this controller.
-	func sendMessage() {
+	func sendMessage() async {
 		// Post is within the allowed character limit.
 		if let characterCount = self.characterCountLabel.text?.int, characterCount >= 0 {
 			// Disable editing to hide the keyboard.
 			self.view.endEditing(true)
 
 			// Perform feed message request.
-			self.performFeedMessageRequest()
+			await self.performFeedMessageRequest()
 		} else {
 			// Character limit reached. Present an alert to the user.
 			self.presentAlertController(title: Trans.characterLimitReachedHeadline, message: Trans.characterLimitReachedSubheadline)
@@ -174,29 +176,29 @@ class KFeedMessageTextEditorViewController: KViewController {
 	}
 
 	/// Performs the request to post the feed message.
-	func performFeedMessageRequest() {
+	func performFeedMessageRequest() async {
 		if let feedMessage = self.editingFeedMessage {
-			KService.updateMessage(feedMessage.id, withBody: self.editedText, isNSFW: self.isNSFWSwitch.isOn, isSpoiler: self.isSpoilerSwitch.isOn) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let feedMessageUpdate):
-					self.editingFeedMessage?.attributes.update(using: feedMessageUpdate)
-					NotificationCenter.default.post(name: .KFMDidUpdate, object: nil, userInfo: self.userInfo)
-					self.dismiss(animated: true, completion: nil)
-				case .failure: break
-				}
+			do {
+				let feedMessageUpdateResponse = try await KService.updateMessage(feedMessage.id, withContent: self.editedText, isNSFW: self.isNSFWSwitch.isOn, isSpoiler: self.isSpoilerSwitch.isOn).value
+				let feedMessageUpdate = feedMessageUpdateResponse.data
+
+				self.editingFeedMessage?.attributes.update(using: feedMessageUpdate)
+				NotificationCenter.default.post(name: .KFMDidUpdate, object: nil, userInfo: self.userInfo)
+			} catch {
+				print("-----", error.localizedDescription)
 			}
 		} else {
-			KService.postFeedMessage(withBody: self.editedText, relatedToParent: nil, isReply: nil, isReShare: nil, isNSFW: self.isNSFWSwitch.isOn, isSpoiler: self.isSpoilerSwitch.isOn) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let feedMessages):
-					self.delegate?.kFeedMessageTextEditorView(updateMessagesWith: feedMessages)
-					self.dismiss(animated: true, completion: nil)
-				case .failure: break
-				}
+			do {
+				let feedMessagesResponse = try await KService.postFeedMessage(withContent: self.editedText, relatedToParent: nil, isReply: nil, isReShare: nil, isNSFW: self.isNSFWSwitch.isOn, isSpoiler: self.isSpoilerSwitch.isOn).value
+				let feedMessages = feedMessagesResponse.data
+
+				self.delegate?.kFeedMessageTextEditorView(updateMessagesWith: feedMessages)
+			} catch {
+				print("-----", error.localizedDescription)
 			}
 		}
+
+		self.dismiss(animated: true, completion: nil)
 	}
 
 	// MARK: - IBActions
@@ -211,8 +213,10 @@ class KFeedMessageTextEditorViewController: KViewController {
 	}
 
 	@IBAction func sendButtonPressed(_ sender: UIBarButtonItem) {
-		// Post the feed message and dismiss the controller.
-		self.sendMessage()
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.sendMessage()
+		}
 	}
 
 	@IBAction func nsfwSwitchChanged(_ sender: UISwitch) {
