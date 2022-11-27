@@ -31,5 +31,23 @@ class KTextView: UITextView {
 
 		self.textContainerInset = .zero
 		self.textContainer.lineFragmentPadding = 0
+
+		NotificationCenter.default.addObserver(self, selector: #selector(updateAttributedText), name: .ThemeUpdateNotification, object: nil)
+	}
+
+	/// Set attributed text with predefined attributes.
+	///
+	/// - Parameters:
+	///    - text: The string to set.
+	func setAttributedText(_ attributedText: NSAttributedString?) {
+		self.attributedText = attributedText?.applying(attributes: [
+			NSAttributedString.Key.foregroundColor: KThemePicker.textColor.colorValue,
+			NSAttributedString.Key.font: self.font ?? UIFont.preferredFont(forTextStyle: .body)
+		], toOccurrencesOf: attributedText?.string ?? "")
+	}
+
+	/// Update the attributed text.
+	@objc private func updateAttributedText() {
+		self.setAttributedText(self.attributedText)
 	}
 }
