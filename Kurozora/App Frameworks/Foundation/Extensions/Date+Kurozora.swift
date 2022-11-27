@@ -20,9 +20,7 @@ extension Date {
 	///
 	/// Use the strings that the formatter produces, such as “1 hour ago”, “in 2 weeks”, “yesterday”, and “tomorrow” as standalone strings. Embedding them in other strings may not be grammatically correct.
 	var relativeToNow: String {
-		let formatter = RelativeDateTimeFormatter()
-		formatter.unitsStyle = .abbreviated
-		return formatter.localizedString(for: self, relativeTo: Date())
+		return self.formatted(.relative(presentation: .numeric, unitsStyle: .narrow))
 	}
 
 	/// Returns a string indicating the group a given date falls in.

@@ -6,7 +6,7 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension String {
 	// MARK: - Properties
@@ -23,7 +23,11 @@ extension String {
 	}
 
 	/// Returns HTML string as `NSAttributedString`.
-	func htmlAttributedString() -> NSAttributedString? {
+	///
+	/// - Parameters:
+	///    - color: The color to apply to the string.
+	///    - font: The font to apply to the string.
+	func htmlAttributedString(color: UIColor? = nil, font: UIFont? = nil) -> NSAttributedString? {
 		let htmlTemplate = """
 		<!doctype html>
 		<html>
@@ -52,6 +56,9 @@ extension String {
 			return nil
 		}
 
-		return attributedString
+		return attributedString.applying(attributes: [
+			.foregroundColor: color ?? KThemePicker.textColor.colorValue,
+			.font: font ?? UIFont.preferredFont(forTextStyle: .body)
+		], toOccurrencesOf: self)
 	}
 }
