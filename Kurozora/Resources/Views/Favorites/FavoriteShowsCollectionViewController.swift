@@ -61,8 +61,9 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 
 		self.configureDataSource()
 
-		DispatchQueue.global(qos: .userInteractive).async {
-			self.fetchFavoritesList()
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchFavoritesList()
 		}
 
 		// Setup refresh control
@@ -84,7 +85,10 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 	}
 
 	override func handleRefreshControl() {
-		self.fetchFavoritesList()
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchFavoritesList()
+		}
 	}
 
 	override func configureEmptyDataView() {
@@ -112,7 +116,7 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 	}
 
 	/// Fetches the user's favorite list.
-	@objc func fetchFavoritesList() {
+	@objc func fetchFavoritesList() async {
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
 			#if !targetEnvironment(macCatalyst)
@@ -122,23 +126,23 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 
 		guard let userID = self.user?.id else { return }
 		let userIdentity = UserIdentity(id: userID)
-		KService.getFavoriteShows(forUser: userIdentity, next: self.nextPageURL) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let showResponse):
-				// Reset data if necessary
-				if self.nextPageURL == nil {
-					self.shows = []
-				}
 
-				// Save next page url and append new data
-				self.nextPageURL = showResponse.next
-				self.shows.append(contentsOf: showResponse.data)
+		do {
+			let showResponse = try await KService.getFavoriteShows(forUser: userIdentity, next: self.nextPageURL).value
 
-				self.updateDataSource()
-			case .failure: break
+			// Reset data if necessary
+			if self.nextPageURL == nil {
+				self.shows = []
 			}
+
+			// Save next page url and append new data
+			self.nextPageURL = showResponse.next
+			self.shows.append(contentsOf: showResponse.data)
+		} catch {
+			print("-----", error.localizedDescription)
 		}
+
+		self.updateDataSource()
 	}
 
 	// MARK: - Segue

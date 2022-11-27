@@ -16,7 +16,10 @@ extension FavoriteShowsCollectionViewController {
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 		if indexPath.item == self.shows.count - 20 && self.nextPageURL != nil {
-			self.fetchFavoritesList()
+			Task { [weak self] in
+				guard let self = self else { return }
+				await self.fetchFavoritesList()
+			}
 		}
 	}
 
