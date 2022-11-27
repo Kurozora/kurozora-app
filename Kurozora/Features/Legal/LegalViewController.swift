@@ -47,7 +47,7 @@ class LegalViewController: KViewController {
 
 		self.navigationTitleView.alpha = 0
 
-		scrollView.delegate = self
+		self.scrollView.delegate = self
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -63,15 +63,19 @@ class LegalViewController: KViewController {
 			guard let self = self else { return }
 			switch result {
 			case .success(let privacyPolicy):
-				self.privacyPolicyTextView.attributedText = privacyPolicy.attributes.text.htmlAttributedString()?.colored(with: KThemePicker.textColor.colorValue)
+				self.setPrivacyPolicy(privacyPolicy.attributes.text.htmlAttributedString())
 			case .failure: break
 			}
 		}
 	}
 
+	func setPrivacyPolicy(_ privacyPolicy: NSAttributedString?) {
+		self.privacyPolicyTextView.setAttributedText(privacyPolicy)
+	}
+
 	/// Updates the privacy policy text theme with the user's selected theme.
 	@objc fileprivate func updatePrivacyPolicyTheme() {
-		self.privacyPolicyTextView.attributedText = self.privacyPolicyTextView.attributedText.colored(with: KThemePicker.textColor.colorValue)
+		self.setPrivacyPolicy(self.privacyPolicyTextView.attributedText)
 	}
 
 	// MARK: - IBActions
