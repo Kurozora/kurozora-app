@@ -855,6 +855,26 @@ struct Trans {
 	/// - Tag: Trans-share
 	static let share: String = String(localized: "Share",
 									  comment: "The string for the word 'share'.")
+	/// The string for the word 'asHeardOn'.
+	///
+	/// - Tag: Trans-asHeardOn
+	static let asHeardOn: String = String(localized: "As Heard On",
+												 comment: "The string for the word 'As Heard On'.")
+	/// The string for the word 'viewOnAppleMusic'.
+	///
+	/// - Tag: Trans-viewOnAppleMusic
+	static let viewOnAppleMusic: String = String(localized: "View on Apple Music",
+												 comment: "The string for the word 'View on Apple Music'.")
+	/// The string for the word 'preview'.
+	///
+	/// - Tag: Trans-preview
+	static let preview: String = String(localized: "Previw",
+									 comment: "The string for the word 'preview'.")
+	/// The string for the word 'stop'.
+	///
+	/// - Tag: Trans-stop
+	static let stop: String = String(localized: "Stop",
+									 comment: "The string for the word 'stop'.")
 	/// The string for the word 'password'.
 	///
 	/// - Tag: Trans-password
