@@ -79,25 +79,22 @@ extension WorkflowController {
 	///
 	/// This method can be used to restore the current user's data after the app has been completely closed.
 	///
-	/// - Parameters:
-	///    - completionHandler: The block to execute with the results. Provide a value for this parameter if you want to be informed of the success or failure of restoring user details. This block is executed asynchronously on your app's main thread. The block has no return value and takes the following parameter:
-	///    - success: A Boolean indicating whether the user's details were restored successfully.
-	func restoreCurrentUserSession(completionHandler completion: ((_ success: Bool) -> Void)? = nil) {
+	/// - Returns: A Boolean indicating whether the user's details were restored successfully.
+	func restoreCurrentUserSession() async -> Bool {
 		let accountKey = UserSettings.selectedAccount
 		if let authenticationKey = KurozoraDelegate.shared.keychain[accountKey] {
 			KService.authenticationKey = authenticationKey
 
-			DispatchQueue.global(qos: .userInteractive).async {
-				KService.getProfileDetails { result in
-					switch result {
-					case .success:
-						completion?(true)
-					case .failure:
-						completion?(false)
-					}
-				}
+			do {
+				_ = try await KService.getProfileDetails().value
+				return true
+			} catch {
+				print("-----", error.localizedDescription)
+				return false
 			}
 		}
+
+		return false
 	}
 
 	/// Presents the user with the sign in view
@@ -145,21 +142,19 @@ extension WorkflowController {
 	///
 	/// - Parameters:
 	///    - password: The password of the user.
-	///    - completionHandler: The block to execute with the results. Provide a value for this parameter if you want to be informed of the success or failure of restoring user details. This block is executed asynchronously on your app's main thread. The block has no return value and takes the following parameter:
-	///    - success: A Boolean indicating whether the user's account was deleted successfully.
-	func deleteUser(password: String, completionHandler completion: ((_ success: Bool) -> Void)? = nil) {
-		if User.isSignedIn {
-			let username = User.current?.attributes.username ?? ""
+	///
+	/// - Returns: a boolean indicating whether the deletion is successful.
+	func deleteUser(password: String) async -> Bool {
+		guard User.isSignedIn else { return false }
+		let username = User.current?.attributes.username ?? ""
 
-			KService.deleteUser(password: password) { result in
-				switch result {
-				case .success:
-					try? KurozoraDelegate.shared.keychain.remove(username)
-					completion?(true)
-				case .failure:
-					completion?(false)
-				}
-			}
+		do {
+			_ = try await KService.deleteUser(password: password).value
+			try? KurozoraDelegate.shared.keychain.remove(username)
+			return true
+		} catch {
+			print("-----", error.localizedDescription)
+			return false
 		}
 	}
 }

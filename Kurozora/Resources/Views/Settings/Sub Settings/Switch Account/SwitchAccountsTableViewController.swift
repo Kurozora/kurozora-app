@@ -68,8 +68,8 @@ extension SwitchAccountsTableViewController {
 			KService.authenticationKey = authenticationKey
 
 			// Restore the user's session.
-			WorkflowController.shared.restoreCurrentUserSession { success in
-				if success {
+			Task {
+				if await WorkflowController.shared.restoreCurrentUserSession() {
 					// Notify views the user has changed.
 					NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
 				}

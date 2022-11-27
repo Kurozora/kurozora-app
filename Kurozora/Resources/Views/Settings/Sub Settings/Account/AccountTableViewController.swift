@@ -80,11 +80,11 @@ extension AccountTableViewController {
 			}
 			alertController.addAction(UIAlertAction(title: "Delete Permanently", style: .destructive) { [weak self] _ in
 				guard let self = self else { return }
-
 				guard let passwordTextField = alertController.textFields?.first else { return }
 				guard let password = passwordTextField.text else { return }
-				WorkflowController.shared.deleteUser(password: password) { success in
-					if success {
+
+				Task {
+					if await WorkflowController.shared.deleteUser(password: password) {
 						self.dismiss(animated: true, completion: nil)
 					}
 				}

@@ -171,16 +171,18 @@ class UsersListCollectionViewController: KCollectionViewController {
 		guard let userID = self.user?.id else { return }
 		let userIdentity = UserIdentity(id: userID)
 
-		WorkflowController.shared.isSignedIn {
-			KService.updateFollowStatus(forUser: userIdentity) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let followUpdate):
+		WorkflowController.shared.isSignedIn { [weak self] in
+			guard let self = self else { return }
+
+			Task {
+				do {
+					let followUpdateResponse = try await KService.updateFollowStatus(forUser: userIdentity).value
 					DispatchQueue.main.async {
-						self.user?.attributes.update(using: followUpdate)
+						self.user?.attributes.update(using: followUpdateResponse.data)
 						self.handleRefreshControl()
 					}
-				case .failure: break
+				} catch {
+					print("-----", error.localizedDescription)
 				}
 			}
 		}
@@ -271,12 +273,13 @@ extension UsersListCollectionViewController: UserLockupCollectionViewCellDelegat
 		guard var user = self.users[indexPath] else { return }
 		let userIdentity = UserIdentity(id: user.id)
 
-		KService.updateFollowStatus(forUser: userIdentity) { result in
-			switch result {
-			case .success(let followUpdate):
-				user.attributes.update(using: followUpdate)
-				cell.updateFollowButton(using: followUpdate.followStatus)
-			case .failure: break
+		Task {
+			do {
+				let followUpdateResponse = try await KService.updateFollowStatus(forUser: userIdentity).value
+				user.attributes.update(using: followUpdateResponse.data)
+				cell.updateFollowButton(using: followUpdateResponse.data.followStatus)
+			} catch {
+				print("-----", error.localizedDescription)
 			}
 		}
 	}
