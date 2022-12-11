@@ -501,6 +501,8 @@
 		66EDBA612944212B00FF1A2E /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EDBA592944212B00FF1A2E /* WarningView.swift */; };
 		66EDBA622944212B00FF1A2E /* WarningView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66EDBA5A2944212B00FF1A2E /* WarningView.xib */; };
 		66EDBA652944A8E300FF1A2E /* WarningType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EDBA642944A8E300FF1A2E /* WarningType.swift */; };
+		66EDBA6C2946943700FF1A2E /* Launch Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 66EDBA6A2946943700FF1A2E /* Launch Icon.png */; };
+		66EDBA6D2946943700FF1A2E /* Launch Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 66EDBA6B2946943700FF1A2E /* Launch Background.png */; };
 		66EF26C6215F960A00FB2B19 /* UIImage+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EF26C5215F960A00FB2B19 /* UIImage+Kurozora.swift */; };
 		66F27EB7283A68F500CC2277 /* StudioLockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F27EB6283A68F500CC2277 /* StudioLockupCollectionViewCell.swift */; };
 		66F27EBC283A7BF900CC2277 /* StudioAttributes+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F27EBB283A7BF900CC2277 /* StudioAttributes+UIImage.swift */; };
@@ -1050,6 +1052,8 @@
 		66EDBA592944212B00FF1A2E /* WarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningView.swift; sourceTree = "<group>"; };
 		66EDBA5A2944212B00FF1A2E /* WarningView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WarningView.xib; sourceTree = "<group>"; };
 		66EDBA642944A8E300FF1A2E /* WarningType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningType.swift; sourceTree = "<group>"; };
+		66EDBA6A2946943700FF1A2E /* Launch Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Launch Icon.png"; sourceTree = "<group>"; };
+		66EDBA6B2946943700FF1A2E /* Launch Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Launch Background.png"; sourceTree = "<group>"; };
 		66EF26C5215F960A00FB2B19 /* UIImage+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Kurozora.swift"; sourceTree = "<group>"; };
 		66F27EB6283A68F500CC2277 /* StudioLockupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioLockupCollectionViewCell.swift; sourceTree = "<group>"; };
 		66F27EBB283A7BF900CC2277 /* StudioAttributes+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StudioAttributes+UIImage.swift"; sourceTree = "<group>"; };
@@ -2897,6 +2901,8 @@
 				66A4FD18270F6CD100E7C702 /* App Icons.plist */,
 				66A4FD10270F62D300E7C702 /* Info.plist */,
 				66A4FD12270F62D300E7C702 /* Products.plist */,
+				66EDBA6B2946943700FF1A2E /* Launch Background.png */,
+				66EDBA6A2946943700FF1A2E /* Launch Icon.png */,
 				66E151792711C478007966A9 /* R.generated.swift */,
 				66A4FCFC270EFDCA00E7C702 /* Assets.xcassets */,
 			);
@@ -3286,12 +3292,14 @@
 				66AA35C024030FA60006EC5B /* Episodes.storyboard in Resources */,
 				660C043223D1500A0040C749 /* MediumLockupCollectionViewCell.xib in Resources */,
 				6640E18922AD633500D0F575 /* Authentication.storyboard in Resources */,
+				66EDBA6D2946943700FF1A2E /* Launch Background.png in Resources */,
 				661F186024AB5C6F00542AFB /* SosumiShowCollectionViewCell.xib in Resources */,
 				665A457F24660D9500154F41 /* RatingCollectionViewCell.xib in Resources */,
 				669A36BF24F1BFD60045D04A /* OnboardingHeaderTableViewCell.xib in Resources */,
 				669A36C324F1C08D0045D04A /* OnboardingFooterTableViewCell.xib in Resources */,
 				664AAFA924EEF3DD00FF4AA5 /* CharacterLockupCollectionViewCell.xib in Resources */,
 				66C5797D22A864CB001B8F51 /* Legal.storyboard in Resources */,
+				66EDBA6C2946943700FF1A2E /* Launch Icon.png in Resources */,
 				66EAB5BA28591C0100D81C06 /* UserLockupCollectionViewCell.xib in Resources */,
 				66A48FE021A411A900F34085 /* Notifications.storyboard in Resources */,
 				669EA9A222C1491600784181 /* Purchase.storyboard in Resources */,
