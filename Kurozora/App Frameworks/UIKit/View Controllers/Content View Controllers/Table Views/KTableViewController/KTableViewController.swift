@@ -66,7 +66,10 @@ class KTableViewController: UITableViewController {
 	override func viewWillReload() {
 		super.viewWillReload()
 
-		self.configureEmptyDataView()
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			self.configureEmptyDataView()
+		}
 	}
 
 	override func viewDidLoad() {
