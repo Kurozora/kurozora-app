@@ -75,11 +75,22 @@ extension WorkflowController {
 		}
 	}
 
+	/// Get the settings used to enable additional functionality in the app.
+	func getSettings() async {
+		do {
+			let settingsResponse = try await KService.getSettings().value
+			KSettings = settingsResponse.data
+		} catch {
+			print("-----", error.localizedDescription)
+		}
+	}
+
 	/// Repopulates the current user's data.
 	///
 	/// This method can be used to restore the current user's data after the app has been completely closed.
 	///
 	/// - Returns: A Boolean indicating whether the user's details were restored successfully.
+	@discardableResult
 	func restoreCurrentUserSession() async -> Bool {
 		let accountKey = UserSettings.selectedAccount
 		if let authenticationKey = KurozoraDelegate.shared.keychain[accountKey] {

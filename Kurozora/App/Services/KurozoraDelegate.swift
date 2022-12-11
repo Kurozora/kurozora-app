@@ -11,6 +11,7 @@ import KurozoraKit
 import ESTabBarController_swift
 import KeychainAccess
 import LocalAuthentication
+import XCDYouTubeKit
 
 /// A set of methods and properties used to manage shared behaviors for the `Kurozora` app.
 ///
@@ -57,6 +58,45 @@ class KurozoraDelegate {
 		self.services = KKServices(keychain: self.keychain, showAlerts: true)
 	}
 
+	func preInitiateApp(window: UIWindow?) async -> Bool {
+		// Check if app is compatible with API
+		if await KurozoraDelegate.shared.showForcedUpdateView(for: window) {
+			return false
+		}
+
+		// Get settings to enable extra functionality
+		await WorkflowController.shared.getSettings()
+
+		// Set YouTube API Key
+		if let youtubeAPIKey = KSettings?.youtubeAPIKey {
+			XCDYouTubeClient.setInnertubeApiKey(youtubeAPIKey)
+		}
+
+		// Restore current user session
+		await WorkflowController.shared.restoreCurrentUserSession()
+
+		// Done pre-init
+		return true
+	}
+
+	func initiateApp(window: UIWindow?) {
+		Task {
+			if await !KurozoraDelegate.shared.preInitiateApp(window: window) {
+				return
+			}
+
+			// Initialize split view controller
+			let splitViewController = await SceneDelegate.createTwoColumnSplitViewController()
+
+			DispatchQueue.main.async {
+				window?.rootViewController = splitViewController
+			}
+
+			// Check if user should authenticate
+			KurozoraDelegate.shared.userHasToAuthenticate()
+		}
+	}
+
 	// MARK: - Functions
 	/// Dismiss the current view controller and show the main view controller.
 	///
@@ -64,10 +104,10 @@ class KurozoraDelegate {
 	///    - window: The window on which the offline view will be shown.
 	///    - viewController: The view controller that should be dismissed.
 	func showMainPage(for window: UIWindow?, viewController: UIViewController) {
-		if window?.rootViewController is KurozoraReachabilityViewController {
-			let customTabBar = KTabBarController()
-			window?.rootViewController = customTabBar
-		} else if viewController is KurozoraReachabilityViewController {
+		if let warningViewController = window?.rootViewController as? WarningViewController, warningViewController.router?.dataStore?.warningType == .noSignal {
+			// Initialize app
+			KurozoraDelegate.shared.initiateApp(window: window)
+		} else if let warningViewController = viewController as? WarningViewController, warningViewController.router?.dataStore?.warningType == .noSignal {
 			viewController.dismiss(animated: true, completion: nil)
 		}
 
@@ -77,21 +117,65 @@ class KurozoraDelegate {
 		}
 	}
 
-	/// Show the offline page when wifi and data is out.
+	/// Show the force update view when current version is lower than minimum specified by the API.
 	///
 	/// - Parameter window: The window on which the offline view will be shown.
-	func showOfflinePage(for window: UIWindow?) {
-		if window != nil {
-			if let reachabilityViewController = R.storyboard.reachability.kurozoraReachabilityViewController() {
-				reachabilityViewController.window = window
-				window?.rootViewController = reachabilityViewController
+	///
+	/// - Returns: a boolean indicating whether forced update warning view was presented.
+	func showForcedUpdateView(for window: UIWindow?) async -> Bool {
+		guard let currentAppVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String else { return false }
+
+		do {
+			let metaResponse = try await KService.getInfo().value
+			let meta = metaResponse.meta
+
+			// If minimum version is bigger than current app version, then force user to update.
+			guard meta.minimumAppVersion.compare(currentAppVersion) == .orderedDescending else { return false }
+
+			// Present view
+			let topViewController = await UIApplication.topViewController
+			let warningViewController = await WarningViewController()
+
+			if let warningDataStore = await warningViewController.router?.dataStore {
+				warningDataStore.window = window
+				warningDataStore.warningType = .forceUpdate
 			}
-		} else {
+
 			DispatchQueue.main.async {
-				if let reachabilityViewController = R.storyboard.reachability.kurozoraReachabilityViewController() {
-					let topViewController = UIApplication.topViewController
-					topViewController?.present(reachabilityViewController, animated: true)
+				if window != nil {
+					window?.rootViewController = warningViewController
+				} else {
+					warningViewController.modalPresentationStyle = .fullScreen
+					topViewController?.present(warningViewController, animated: true)
 				}
+			}
+
+			return true
+		} catch {
+			print("-----", error.localizedDescription)
+		}
+
+		return false
+	}
+
+	/// Show the forced update view when the API version isn't supported.
+	///
+	/// - Parameter window: The window on which the force update view will be shown.
+	func showOfflineView(for window: UIWindow?) {
+		let topViewController = UIApplication.topViewController
+		let warningViewController = WarningViewController()
+
+		if let warningDataStore = warningViewController.router?.dataStore {
+			warningDataStore.window = window
+			warningDataStore.warningType = .noSignal
+		}
+
+		DispatchQueue.main.async {
+			if window != nil {
+				window?.rootViewController = warningViewController
+			} else {
+				warningViewController.modalPresentationStyle = .fullScreen
+				topViewController?.present(warningViewController, animated: true)
 			}
 		}
 	}
@@ -338,11 +422,11 @@ extension KurozoraDelegate {
 	/// - Parameter shortcutItem: The action selected by the user. Your app defines the actions that it supports, and the user chooses from among those actions. For information about how to create and configure shortcut items for your app, see [UIApplicationShortcutItem](apple-reference-documentation://hsTvcCjEDQ).
 	fileprivate func performAction(for shortcutItem: UIApplicationShortcutItem) {
 		switch shortcutItem.type {
-		case R.info.uiApplicationShortcutItems.libraryShortcut._key:
+		case R.info.uiApplicationShortcutItems.libraryShortcut.uiApplicationShortcutItemType:
 			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
 				tabBarController.selectedIndex = 1
 			}
-		case R.info.uiApplicationShortcutItems.profileShortcut._key:
+		case R.info.uiApplicationShortcutItems.profileShortcut.uiApplicationShortcutItemType:
 			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
 				tabBarController.selectedIndex = 2
 				WorkflowController.shared.isSignedIn {
@@ -351,11 +435,11 @@ extension KurozoraDelegate {
 					}
 				}
 			}
-		case R.info.uiApplicationShortcutItems.notificationShortcut._key:
+		case R.info.uiApplicationShortcutItems.notificationShortcut.uiApplicationShortcutItemType:
 			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
 				tabBarController.selectedIndex = 3
 			}
-		case R.info.uiApplicationShortcutItems.searchShortcut._key:
+		case R.info.uiApplicationShortcutItems.searchShortcut.uiApplicationShortcutItemType:
 			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
 				tabBarController.selectedIndex = 4
 			}

@@ -37,6 +37,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		// Global app tint color
 		self.window?.theme_tintColor = KThemePicker.tintColor.rawValue
 
+		// Monitor network availability
+		KNetworkManager.shared.reachability.whenUnreachable = { _ in
+			KurozoraDelegate.shared.showOfflineView(for: nil)
+		}
+
 		// If the network is unreachable show the offline page
 		KNetworkManager.isUnreachable { [weak self] _ in
 			guard let self = self else { return }
@@ -45,16 +50,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 		// Check network availability
 		if self.isUnreachable {
-			KurozoraDelegate.shared.showOfflinePage(for: self.window)
+			KurozoraDelegate.shared.showOfflineView(for: self.window)
 			return
 		}
 
-		// Initialize tab bar controller
-		let splitViewController = self.createTwoColumnSplitViewController()
-		self.window?.rootViewController = splitViewController
-
-		// Check if user should authenticate
-		KurozoraDelegate.shared.userHasToAuthenticate()
+		// Initiate app
+		KurozoraDelegate.shared.initiateApp(window: self.window)
 
 		// Configure window or resotre previous activity.
 		if let userActivity = connectionOptions.userActivities.first ?? session.stateRestorationActivity {
@@ -126,7 +127,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return false
     }
 
-	private func createTwoColumnSplitViewController() -> UISplitViewController {
+	static func createTwoColumnSplitViewController() -> UISplitViewController {
 		let navigationController = KNavigationController(rootViewController: SidebarViewController())
 		let tabBarController = KTabBarController()
 		let splitViewController = UISplitViewController(style: .doubleColumn)

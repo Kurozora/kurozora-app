@@ -8,15 +8,17 @@
 
 import UIKit
 import KurozoraKit
+import IQKeyboardManagerSwift
 import Kingfisher
 import SwifterSwift
-import XCDYouTubeKit
 
 /// A root object that stores information about a song resource.
 typealias KKSong = Song
 
 // MARK: - KurozoraKit
-let KService = KurozoraKit().services(KurozoraDelegate.shared.services)
+let KService = KurozoraKit(debugURL: "https://a0f0-62-166-226-99.eu.ngrok.io/api/v1/").services(KurozoraDelegate.shared.services)
+// let KService = KurozoraKit().services(KurozoraDelegate.shared.services)
+var KSettings: Settings?
 var store: Store! = nil
 
 // MARK: - Kurozora
@@ -32,37 +34,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Override point for customization after application launch.
 		store = Store()
 
-		// If the network is unreachable show the offline page
-		KNetworkManager.isUnreachable { [weak self] _ in
-			guard let self = self else { return }
-			self.isUnreachable = true
-		}
-
-		// Monitor network availability
-		KNetworkManager.shared.reachability.whenUnreachable = { _ in
-			KurozoraDelegate.shared.showOfflinePage(for: nil)
-		}
+		// Configure kyrboard
+		IQKeyboardManager.shared.enable = true
+		IQKeyboardManager.shared.shouldResignOnTouchOutside = true
 
 		// Max disk cache size
 		ImageCache.default.diskStorage.config.sizeLimit = 300 * 1024 * 1024
 
-		// Check network availability
-		if self.isUnreachable {
-			return true
-		}
-
 		// Set UNUserNotificationCenterDelegate
 		UNUserNotificationCenter.current().delegate = WorkflowController.shared
 
-		// Restore current user session
+		// Observer notifications
 		NotificationCenter.default.addObserver(self, selector: #selector(updateMenuBuilder(_:)), name: .KUserIsSignedInDidChange, object: nil)
-
-		Task {
-			await WorkflowController.shared.restoreCurrentUserSession()
-		}
-
-		// Set YouTube API Key
-		XCDYouTubeClient.setInnertubeApiKey("***REMOVED***")
 
 		return true
 	}

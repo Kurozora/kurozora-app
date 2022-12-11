@@ -70,9 +70,9 @@ class SongHeaderCollectionViewCell: UICollectionViewCell {
 	/// - Parameters:
 	///    - appleMusicID: The id of the music for which the data should be fetched.
 	func unauthorizedMusicrequest(for appleMusicID: Int) {
-		if var urlRequest = URLRequest(urlString: "https://api.music.apple.com/v1/catalog/us/songs/\(appleMusicID)") {
+		if var urlRequest = URLRequest(urlString: "https://api.music.apple.com/v1/catalog/us/songs/\(appleMusicID)"), let appleMusicDeveloperToken = KSettings?.appleMusicDeveloperToken {
 			urlRequest.httpMethod = "GET"
-			urlRequest.addValue("Bearer \(Services.appleMusicDeveloperToken)", forHTTPHeaderField: "Authorization")
+			urlRequest.addValue("Bearer \(appleMusicDeveloperToken)", forHTTPHeaderField: "Authorization")
 
 			URLSession.shared.dataTask(with: urlRequest) { [weak self] data, _, error in
 				guard let self = self else { return }
