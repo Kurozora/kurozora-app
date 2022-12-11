@@ -26,7 +26,7 @@ extension Song {
 
 		// Create "Apple Music" element
 		if let appleMusicLink = userInfo["appleMusicLink"] as? URL {
-			let amAction = UIAction(title: Trans.viewOnAppleMusic, image: R.image.symbols.musicNoteCircle()) { _ in
+			let amAction = UIAction(title: Trans.viewOnAppleMusic, image: R.image.symbols.musicNoteCircleFill()) { _ in
 				self.openAMLink(appleMusicLink)
 			}
 			menuElements.append(amAction)
