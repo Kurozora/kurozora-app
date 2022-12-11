@@ -31,7 +31,7 @@ class KFMReShareTextEditorViewController: KFeedMessageTextEditorViewController {
 			self.opUsernameLabel.text = opUser.attributes.username
 			opUser.attributes.profileImage(imageView: self.opProfileImageView)
 		}
-		self.opMessageTextView.setAttributedText(self.opFeedMessage.attributes.contentHTML.htmlAttributedString())
+		self.opMessageTextView.setAttributedText(self.opFeedMessage.attributes.contentMarkdown.markdownAttributedString())
 		self.dateLabel.text = self.opFeedMessage.attributes.createdAt.relativeToNow
 	}
 
@@ -42,7 +42,9 @@ class KFMReShareTextEditorViewController: KFeedMessageTextEditorViewController {
 			let isSpoiler = self.isSpoilerSwitch?.isOn ?? feedMessage.attributes.isSpoiler
 
 			do {
-				let feedMessageUpdateResponse = try await KService.updateMessage(feedMessage.id, withContent: self.editedText, isNSFW: isNSFW, isSpoiler: isSpoiler).value
+				let feedMessageIdentity = FeedMessageIdentity(id: feedMessage.id)
+				let feedMessageUpdateRequest = FeedMessageUpdateRequest(feedMessageIdentity: feedMessageIdentity, content: self.editedText, isNSFW: isNSFW, isSpoiler: isSpoiler)
+				let feedMessageUpdateResponse = try await KService.updateMessage(feedMessageUpdateRequest).value
 				let feedMessageUpdate = feedMessageUpdateResponse.data
 
 				self.editingFeedMessage?.attributes.update(using: feedMessageUpdate)
@@ -53,7 +55,9 @@ class KFMReShareTextEditorViewController: KFeedMessageTextEditorViewController {
 			}
 		} else {
 			do {
-				let feedMessagesResponse = try await KService.postFeedMessage(withContent: self.editedText, relatedToParent: self.opFeedMessage.id, isReply: false, isReShare: true, isNSFW: self.opFeedMessage.attributes.isNSFW, isSpoiler: self.opFeedMessage.attributes.isSpoiler).value
+				let parentFeedMessageIdentity = FeedMessageIdentity(id: self.opFeedMessage.id)
+				let feedMessageRequest = FeedMessageRequest(content: self.editedText, parentIdentity: parentFeedMessageIdentity, isReply: false, isReShare: true, isNSFW: self.opFeedMessage.attributes.isNSFW, isSpoiler: self.opFeedMessage.attributes.isSpoiler)
+				let feedMessagesResponse = try await KService.postFeedMessage(feedMessageRequest).value
 				let feedMessages = feedMessagesResponse.data
 
 				if self.segueToOPFeedDetails, let feedMessage = feedMessages.first {

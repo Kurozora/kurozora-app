@@ -66,7 +66,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 		return self.originalText != self.editedText
 	}
 	var editingFeedMessage: FeedMessage?
-	var userInfo: [AnyHashable: Any?] = [:]
+	var userInfo: [AnyHashable: Any] = [:]
 	weak var delegate: KFeedMessageTextEditorViewDelegate?
 
 	// MARK: - View
@@ -179,7 +179,9 @@ class KFeedMessageTextEditorViewController: KViewController {
 	func performFeedMessageRequest() async {
 		if let feedMessage = self.editingFeedMessage {
 			do {
-				let feedMessageUpdateResponse = try await KService.updateMessage(feedMessage.id, withContent: self.editedText, isNSFW: self.isNSFWSwitch.isOn, isSpoiler: self.isSpoilerSwitch.isOn).value
+				let feedMessageIdentity = FeedMessageIdentity(id: feedMessage.id)
+				let feedMessageUpdateRequest = FeedMessageUpdateRequest(feedMessageIdentity: feedMessageIdentity, content: self.editedText, isNSFW: self.isNSFWSwitch.isOn, isSpoiler: self.isSpoilerSwitch.isOn)
+				let feedMessageUpdateResponse = try await KService.updateMessage(feedMessageUpdateRequest).value
 				let feedMessageUpdate = feedMessageUpdateResponse.data
 
 				self.editingFeedMessage?.attributes.update(using: feedMessageUpdate)
@@ -189,7 +191,8 @@ class KFeedMessageTextEditorViewController: KViewController {
 			}
 		} else {
 			do {
-				let feedMessagesResponse = try await KService.postFeedMessage(withContent: self.editedText, relatedToParent: nil, isReply: nil, isReShare: nil, isNSFW: self.isNSFWSwitch.isOn, isSpoiler: self.isSpoilerSwitch.isOn).value
+				let feedMessageRequest = FeedMessageRequest(content: self.editedText, parentIdentity: nil, isReply: nil, isReShare: nil, isNSFW: self.isNSFWSwitch.isOn, isSpoiler: self.isSpoilerSwitch.isOn)
+				let feedMessagesResponse = try await KService.postFeedMessage(feedMessageRequest).value
 				let feedMessages = feedMessagesResponse.data
 
 				self.delegate?.kFeedMessageTextEditorView(updateMessagesWith: feedMessages)

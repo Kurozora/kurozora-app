@@ -69,7 +69,7 @@ class BaseFeedMessageCell: KTableViewCell {
 		}
 
 		// Configure body
-		self.postTextView.setAttributedText(feedMessage.attributes.contentHTML.htmlAttributedString())
+		self.postTextView.setAttributedText(feedMessage.attributes.contentMarkdown.markdownAttributedString())
 
 		// Configure date time
 		self.dateTimeLabel.text = feedMessage.attributes.createdAt.relativeToNow

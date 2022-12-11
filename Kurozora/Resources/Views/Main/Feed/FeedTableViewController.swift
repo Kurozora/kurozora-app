@@ -45,9 +45,12 @@ class FeedTableViewController: KTableViewController {
 	override func viewWillReload() {
 		super.viewWillReload()
 
-		self.enableActions()
-		self.configureUserDetails()
-		self.handleRefreshControl()
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			self.enableActions()
+			self.configureUserDetails()
+			self.handleRefreshControl()
+		}
 	}
 
 	override func viewDidLoad() {
@@ -357,5 +360,13 @@ extension FeedTableViewController: FMDetailsTableViewControllerDelegate {
 			feedMessage.id == messageID
 		}
 		self.tableView.reloadData()
+	}
+}
+
+extension FeedTableViewController: UITextViewDelegate {
+	func showHashTagAlert(_ tagType: String, payload: String) {
+		let alertView = UIAlertController(title: "\(tagType) tag detected", message: "\(payload)", preferredStyle: .alert)
+		alertView.addAction(title: "OK")
+		self.show(alertView, sender: nil)
 	}
 }

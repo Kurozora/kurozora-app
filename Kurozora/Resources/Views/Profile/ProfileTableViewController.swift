@@ -8,7 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import Photos
 
 class ProfileTableViewController: KTableViewController {
 	// MARK: - IBOutlets
@@ -362,7 +361,7 @@ class ProfileTableViewController: KTableViewController {
 		user.attributes.bannerImage(imageView: self.bannerImageView)
 
 		// Configure user bio
-		self.bioTextView.text = user.attributes.biography
+		self.bioTextView.setAttributedText(user.attributes.biographyMarkdown?.markdownAttributedString())
 
 		// Configure reputation count
 		let reputationCount = user.attributes.reputationCount
@@ -885,23 +884,6 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate {
 					// Save the image path
 					self.profileImageView.setImage(with: imageURL.absoluteString, placeholder: User.current!.attributes.profilePlaceholderImage)
 					self.editedProfileImageURL = imageURL
-
-//					var placeHolder: PHObjectPlaceholder? = nil
-//					PHPhotoLibrary.shared().performChanges {
-//						let changeRequest = PHAssetCreationRequest.creationRequestForAsset(from: originalImage)
-//						placeHolder = changeRequest.placeholderForCreatedAsset
-//					} completionHandler: { success, _ in
-//						guard let localIdentifier = placeHolder?.localIdentifier, success else { return }
-//						let fetchResult = PHAsset.fetchAssets(withLocalIdentifiers: [localIdentifier], options: nil)
-//						guard let phAsset = fetchResult.firstObject else { return }
-//
-//						phAsset.requestContentEditingInput(with: PHContentEditingInputRequestOptions()) { editingInput, _ in
-//							if let input = editingInput, let imageURL = input.fullSizeImageURL {
-//								self.profileImageView.setImage(with: imageURL.absoluteString, placeholder: User.current!.attributes.profilePlaceholderImage)
-//								self.editedProfileImageURL = imageURL
-//							}
-//						}
-//					}
 				}
 			}
 		} else if self.currentImageView == "banner" {

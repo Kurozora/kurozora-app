@@ -28,7 +28,7 @@ class FeedMessageReShareCell: FeedMessageCell {
 
 		guard let opMessage = feedMessage.relationships.parent?.data.first else { return }
 		self.opDateTimeLabel.text = opMessage.attributes.createdAt.relativeToNow
-		self.opMessageTextView.setAttributedText(opMessage.attributes.contentHTML.htmlAttributedString())
+		self.opMessageTextView.setAttributedText(opMessage.attributes.contentMarkdown.markdownAttributedString())
 
 		if let opUser = opMessage.relationships.users.data.first {
 			opUser.attributes.profileImage(imageView: self.opProfileImageView)

@@ -61,4 +61,9 @@ extension String {
 			.font: font ?? UIFont.preferredFont(forTextStyle: .body)
 		], toOccurrencesOf: self)
 	}
+
+	/// Returns Markdown string as `NSAttributedString`.
+	func markdownAttributedString() -> NSAttributedString? {
+		return try? NSAttributedString(markdown: self, options: AttributedString.MarkdownParsingOptions(interpretedSyntax: .inlineOnlyPreservingWhitespace))
+	}
 }
