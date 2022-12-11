@@ -855,6 +855,16 @@ struct Trans {
 	/// - Tag: Trans-share
 	static let share: String = String(localized: "Share",
 									  comment: "The string for the word 'share'.")
+	/// The string for the word 'update'.
+	///
+	/// - Tag: Trans-update
+	static let update: String = String(localized: "Update!",
+									   comment: "The string for the word 'update'.")
+	/// The string for the word 'reconnect'.
+	///
+	/// - Tag: Trans-reconnect
+	static let reconnect: String = String(localized: "Reconnect!",
+										  comment: "The string for the word 'reconnect'.")
 	/// The string for the word 'asHeardOn'.
 	///
 	/// - Tag: Trans-asHeardOn
@@ -970,4 +980,26 @@ struct Trans {
 	/// - Tag: Trans-copyright
 	static let copyright: String = String(localized: "Copyright",
 										  comment: "The string for the word 'copyright'.")
+
+	// MARK: - Warnings
+	/// The string for the no signal warning title.
+	///
+	/// - Tag: Trans-noSignalTitle
+	static let noSignalTitle: String = String(localized: "Cannot connect to a network 😣",
+											  comment: "The string for the no signal warning title.")
+	/// The string for the no signal warning message.
+	///
+	/// - Tag: Trans-noSignalMessage
+	static let noSignalMessage: String = String(localized: "You must connect to a Wi-Fi network or have a cellular data plan to use Kurozora.",
+												comment: "The string for the no signal warning message.")
+	/// The string for the force update warning title.
+	///
+	/// - Tag: Trans-forceUpdateTitle
+	static let forceUpdateTitle: String = String(localized: "New version available 🆕",
+												 comment: "The string for the force update warning title.")
+	/// The string for the force update warning message.
+	///
+	/// - Tag: Trans-forceUpdateMessage
+	static let forceUpdateMessage: String = String(localized: "Kurozora was updated with breaking changes. To avoid the app from crashing, you must update it to continue using it as usual. The update should be available soon on the App Store.",
+												   comment: "The string for the force update warning message.")
 }

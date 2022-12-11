@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WarningViewController" customModule="Kurozora" customModuleProvider="target">
+            <connections>
+                <outlet property="sceneView" destination="i5M-Pr-FkT" id="Ieg-tm-MXE"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT" customClass="WarningView" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icons/No Signal" translatesAutoresizingMaskIntoConstraints="NO" id="lRo-cw-8eD">
+                    <rect key="frame" x="159" y="321.5" width="96" height="96"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="96" id="LbM-r4-DcU"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cannot connect to a network 😣" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sil-sf-pNq" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                    <rect key="frame" x="79" y="437.5" width="256" height="21"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You must connect to a Wi-Fi network or have a cellular data plan to use Kurozora" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e3p-1k-18n" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                    <rect key="frame" x="20" y="466.5" width="374" height="38"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V0t-fq-7BB" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                    <rect key="frame" x="159" y="524.5" width="96" height="34"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                    <state key="normal" title="Reconnect!"/>
+                    <connections>
+                        <action selector="actionButtonPressed:" destination="i5M-Pr-FkT" eventType="touchUpInside" id="bnR-BL-4tI"/>
+                    </connections>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="V0t-fq-7BB" firstAttribute="top" secondItem="e3p-1k-18n" secondAttribute="bottom" constant="20" id="Cor-Qb-4ZI"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="e3p-1k-18n" secondAttribute="trailing" constant="20" id="Khl-C2-ida"/>
+                <constraint firstItem="lRo-cw-8eD" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="Zmh-Eb-eMC"/>
+                <constraint firstItem="e3p-1k-18n" firstAttribute="centerX" secondItem="Sil-sf-pNq" secondAttribute="centerX" id="aRk-35-Jc8"/>
+                <constraint firstItem="Sil-sf-pNq" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="bBR-rx-2G5"/>
+                <constraint firstItem="Sil-sf-pNq" firstAttribute="centerX" secondItem="lRo-cw-8eD" secondAttribute="centerX" id="cGy-w1-0Bl"/>
+                <constraint firstItem="Sil-sf-pNq" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="g94-K9-n2b"/>
+                <constraint firstItem="Sil-sf-pNq" firstAttribute="top" secondItem="lRo-cw-8eD" secondAttribute="bottom" constant="20" id="gQV-1B-vel"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Sil-sf-pNq" secondAttribute="trailing" id="hd2-Cx-MRQ"/>
+                <constraint firstItem="V0t-fq-7BB" firstAttribute="centerX" secondItem="e3p-1k-18n" secondAttribute="centerX" id="rvp-Pj-7NZ"/>
+                <constraint firstItem="e3p-1k-18n" firstAttribute="top" secondItem="Sil-sf-pNq" secondAttribute="bottom" constant="8" symbolic="YES" id="v8o-pW-CT7"/>
+                <constraint firstItem="lRo-cw-8eD" firstAttribute="width" secondItem="lRo-cw-8eD" secondAttribute="height" multiplier="1:1" id="x47-zP-Wic"/>
+                <constraint firstItem="e3p-1k-18n" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="z0h-Ki-Phl"/>
+            </constraints>
+            <connections>
+                <outlet property="actionButton" destination="V0t-fq-7BB" id="MsU-Id-OzW"/>
+                <outlet property="primaryImageView" destination="lRo-cw-8eD" id="51K-yA-PAc"/>
+                <outlet property="primaryLabel" destination="Sil-sf-pNq" id="eO0-p4-4Xl"/>
+                <outlet property="secondaryLabel" destination="e3p-1k-18n" id="A7x-CS-x4y"/>
+            </connections>
+            <point key="canvasLocation" x="140" y="20"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Icons/No Signal" width="128" height="128"/>
+    </resources>
+</document>
