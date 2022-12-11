@@ -51,6 +51,11 @@ extension UserSettings {
 		guard let defaultBrowser = KBrowser(rawValue: shared.integer(forKey: #function)) else { return .kurozora }
 		return defaultBrowser
 	}
+
+	/// Returns a boolean indicating if the app has been launched once.
+	static var launchedOnce: Bool {
+		return shared.bool(forKey: #function)
+	}
 }
 
 // MARK: - Appearence settings

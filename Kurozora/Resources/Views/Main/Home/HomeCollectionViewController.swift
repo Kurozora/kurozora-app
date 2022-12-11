@@ -11,6 +11,7 @@ import KurozoraKit
 import Alamofire
 import AVFoundation
 import MediaPlayer
+import SPConfetti
 import WhatsNew
 
 class HomeCollectionViewController: KCollectionViewController {
@@ -121,6 +122,14 @@ class HomeCollectionViewController: KCollectionViewController {
 		self._prefersRefreshControlDisabled = true
 		#endif
 
+		// Configure ConfettiView
+		if !UserSettings.launchedOnce {
+			UserSettings.set(true, forKey: .launchedOnce)
+			SPConfettiConfiguration.particlesConfig.colors = [.systemCyan, .white, #colorLiteral(red: 0.5869400495, green: 0.7843137255, blue: 0.937254902, alpha: 1), #colorLiteral(red: 0.5, green: 0.7833858153, blue: 0.937254902, alpha: 1)]
+			SPConfetti.startAnimating(.fullWidthToDown, particles: [.custom(UIImage(systemName: "snowflake")!)])
+		}
+
+		// Configure data source
 		self.configureDataSource()
 
 		// Fetch explore details.
@@ -144,6 +153,7 @@ class HomeCollectionViewController: KCollectionViewController {
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 
+		SPConfetti.stopAnimating()
 		self.player?.pause()
 	}
 

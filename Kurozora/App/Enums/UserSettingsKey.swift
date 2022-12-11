@@ -21,6 +21,8 @@ enum UserSettingsKey: String {
 	case appIcon
 	/// The key to the selected browser.
 	case defaultBrowser
+	/// The key indicating the app was launched once.
+	case launchedOnce
 
 	// Appearence settings keys
 	/// The key to the selected appearance option.
