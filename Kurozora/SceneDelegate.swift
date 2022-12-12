@@ -55,6 +55,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		}
 
 		// Initiate app
+		self.window?.rootViewController = KViewController()
 		KurozoraDelegate.shared.initiateApp(window: self.window)
 
 		// Configure window or resotre previous activity.
