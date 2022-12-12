@@ -23,10 +23,7 @@ class HomeCollectionViewController: KCollectionViewController {
 		QuickLink(title: "About Personalisation", url: "https://kurozora.app/kb/personalisation"),
 		QuickLink(title: "Welcome to Kurozora", url: "https://kurozora.app/welcome")
 	]
-	let quickActions: [QuickAction] = [
-		QuickAction(title: "Redeem", segueID: R.segue.homeCollectionViewController.redeemSegue.identifier),
-		QuickAction(title: "Become a Subscriber", segueID: R.segue.homeCollectionViewController.subscriptionSegue.identifier)
-	]
+	var quickActions: [QuickAction] = []
 
 	var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
@@ -110,6 +107,7 @@ class HomeCollectionViewController: KCollectionViewController {
 	override func viewWillReload() {
 		super.viewWillReload()
 
+		self.configureQuickActions()
 		self.handleRefreshControl()
 	}
 
@@ -128,6 +126,9 @@ class HomeCollectionViewController: KCollectionViewController {
 			SPConfettiConfiguration.particlesConfig.colors = [.systemCyan, .white, #colorLiteral(red: 0.5869400495, green: 0.7843137255, blue: 0.937254902, alpha: 1), #colorLiteral(red: 0.5, green: 0.7833858153, blue: 0.937254902, alpha: 1)]
 			SPConfetti.startAnimating(.fullWidthToDown, particles: [.custom(UIImage(systemName: "snowflake")!)])
 		}
+
+		// Configure Quick Actions.
+		self.configureQuickActions()
 
 		// Configure data source
 		self.configureDataSource()
@@ -161,6 +162,20 @@ class HomeCollectionViewController: KCollectionViewController {
 	override func handleRefreshControl() {
 		DispatchQueue.global(qos: .userInteractive).async {
 			self.fetchExplore()
+		}
+	}
+
+	/// Configure the data source of the quick actions shown to the user.
+	fileprivate func configureQuickActions() {
+		if User.current?.attributes.isSubscribed ?? false {
+			self.quickActions = [
+				QuickAction(title: "Redeem", segueID: R.segue.homeCollectionViewController.redeemSegue.identifier)
+			]
+		} else {
+			self.quickActions = [
+				QuickAction(title: "Redeem", segueID: R.segue.homeCollectionViewController.redeemSegue.identifier),
+				QuickAction(title: "Become a Subscriber", segueID: R.segue.homeCollectionViewController.subscriptionSegue.identifier)
+			]
 		}
 	}
 

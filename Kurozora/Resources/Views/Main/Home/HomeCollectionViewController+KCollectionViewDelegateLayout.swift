@@ -70,8 +70,8 @@ extension HomeCollectionViewController {
 			}
 		case .quickActions:
 			// Limit columns to 2 or less
-			if columnCount > 2 {
-				columnCount = 2
+			if columnCount >= 2 {
+				columnCount = self.quickActions.count == 1 ? 1 : 2
 			}
 		default: break
 		}
