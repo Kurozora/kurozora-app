@@ -59,8 +59,8 @@ class KurozoraDelegate {
 	}
 
 	func preInitiateApp(window: UIWindow?) async -> Bool {
-		// Check if app is compatible with API
-		if await KurozoraDelegate.shared.showForcedUpdateView(for: window) {
+		// Show warning view if necessary
+		if await KurozoraDelegate.shared.showWarningView(for: window) {
 			return false
 		}
 
@@ -117,28 +117,30 @@ class KurozoraDelegate {
 		}
 	}
 
-	/// Show the force update view when current version is lower than minimum specified by the API.
+	/// Show a warning view if necessary.
 	///
-	/// - Parameter window: The window on which the offline view will be shown.
+	/// - Parameter window: The window on which the warning view will be shown.
 	///
-	/// - Returns: a boolean indicating whether forced update warning view was presented.
-	func showForcedUpdateView(for window: UIWindow?) async -> Bool {
+	/// - Returns: a boolean indicating whether a warning view was presented.
+	func showWarningView(for window: UIWindow?) async -> Bool {
 		guard let currentAppVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String else { return false }
 
 		do {
 			let metaResponse = try await KService.getInfo().value
 			let meta = metaResponse.meta
-
-			// If minimum version is bigger than current app version, then force user to update.
-			guard meta.minimumAppVersion.compare(currentAppVersion) == .orderedDescending else { return false }
-
-			// Present view
 			let topViewController = await UIApplication.topViewController
 			let warningViewController = await WarningViewController()
 
 			if let warningDataStore = await warningViewController.router?.dataStore {
 				warningDataStore.window = window
-				warningDataStore.warningType = .forceUpdate
+
+				if meta.isMaintenanceModeEnabled {
+					warningDataStore.warningType = .maintenance
+				} else if meta.minimumAppVersion.compare(currentAppVersion) == .orderedDescending {
+					warningDataStore.warningType = .forceUpdate
+				} else {
+					return false
+				}
 			}
 
 			DispatchQueue.main.async {

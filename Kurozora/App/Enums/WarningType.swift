@@ -11,10 +11,13 @@ import UIKit
 /// Set of available warning types.
 enum WarningType {
 	// MARK: - Cases
-	/// Sign up onboarding.
+	/// Indiates the app requires an update to be used.
 	case forceUpdate
 
-	/// Sign up onboarding.
+	/// Indiates the API is in maintenance mode.
+	case maintenance
+
+	/// Indiates the app cannot connect to the internet.
 	case noSignal
 
 	// MARK: - Properties
@@ -23,6 +26,8 @@ enum WarningType {
 		switch self {
 		case .forceUpdate:
 			return Trans.forceUpdateTitle
+		case .maintenance:
+			return Trans.maintenanceModeTitle
 		case .noSignal:
 			return Trans.noSignalTitle
 		}
@@ -33,6 +38,8 @@ enum WarningType {
 		switch self {
 		case .forceUpdate:
 			return Trans.forceUpdateMessage
+		case .maintenance:
+			return Trans.maintenanceModeMessage
 		case .noSignal:
 			return Trans.noSignalMessage
 		}
@@ -43,6 +50,8 @@ enum WarningType {
 		switch self {
 		case .forceUpdate:
 			return Trans.update
+		case .maintenance:
+			return Trans.openTwitter
 		case .noSignal:
 			return Trans.reconnect
 		}
@@ -53,6 +62,8 @@ enum WarningType {
 		switch self {
 		case .forceUpdate:
 			return R.image.icons.appStore()
+		case .maintenance:
+			return R.image.icons.maintenance()
 		case .noSignal:
 			return R.image.icons.noSignal()
 		}

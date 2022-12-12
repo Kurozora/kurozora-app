@@ -105,7 +105,9 @@ extension WarningViewController: WarningDisplayLogic {
 	func displayActionButtonPressed(viewModel: Warning.ActionButtonPressed.ViewModel) {
 		switch viewModel.warningType {
 		case .forceUpdate:
-			UIApplication.shared.kOpen(nil, deepLink: URL.appStoreURL)
+			UIApplication.shared.kOpen(nil, deepLink: .appStoreURL)
+		case .maintenance:
+			UIApplication.shared.kOpen(.twitterPageURL, deepLink: .twitterPageDeepLink)
 		case .noSignal:
 			KNetworkManager.isReachable { [weak self] _ in
 				guard let self = self else { return }

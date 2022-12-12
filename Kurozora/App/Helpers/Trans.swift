@@ -980,12 +980,17 @@ struct Trans {
 	/// - Tag: Trans-copyright
 	static let copyright: String = String(localized: "Copyright",
 										  comment: "The string for the word 'copyright'.")
+	/// The string for the word 'Open Twitter'.
+	///
+	/// - Tag: Trans-openTwitter
+	static let openTwitter: String = String(localized: "Open Twitter",
+											comment: "The string for the word 'Open Twitter'.")
 
 	// MARK: - Warnings
 	/// The string for the no signal warning title.
 	///
 	/// - Tag: Trans-noSignalTitle
-	static let noSignalTitle: String = String(localized: "Cannot connect to a network 😣",
+	static let noSignalTitle: String = String(localized: "Network Unavailable",
 											  comment: "The string for the no signal warning title.")
 	/// The string for the no signal warning message.
 	///
@@ -995,11 +1000,21 @@ struct Trans {
 	/// The string for the force update warning title.
 	///
 	/// - Tag: Trans-forceUpdateTitle
-	static let forceUpdateTitle: String = String(localized: "New version available 🆕",
+	static let forceUpdateTitle: String = String(localized: "Update Available",
 												 comment: "The string for the force update warning title.")
 	/// The string for the force update warning message.
 	///
 	/// - Tag: Trans-forceUpdateMessage
 	static let forceUpdateMessage: String = String(localized: "Kurozora was updated with breaking changes. To avoid the app from crashing, you must update it to continue using it as usual. The update should be available soon on the App Store.",
 												   comment: "The string for the force update warning message.")
+	/// The string for the maintenance warning title.
+	///
+	/// - Tag: Trans-maintenanceModeTitle
+	static let maintenanceModeTitle: String = String(localized: "Scheduled Maintenance",
+													 comment: "The string for the maintenance warning title.")
+	/// The string for the maintenance warning message.
+	///
+	/// - Tag: Trans-maintenanceModeMessage
+	static let maintenanceModeMessage: String = String(localized: "Kurozora is currently under maintenance. All services will be available shortly. If this continues for more than an hour, you can follow the status on Twitter.",
+													   comment: "The string for the maintenance warning message.")
 }
