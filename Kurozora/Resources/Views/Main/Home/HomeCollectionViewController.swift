@@ -167,22 +167,24 @@ class HomeCollectionViewController: KCollectionViewController {
 
 	/// Configure the data source of the quick actions shown to the user.
 	fileprivate func configureQuickActions() {
+		let title: String
+
 		if User.current?.attributes.isSubscribed ?? false {
-			self.quickActions = [
-				QuickAction(title: "Redeem", segueID: R.segue.homeCollectionViewController.redeemSegue.identifier)
-			]
+			title = Trans.viewSubscription
 		} else {
-			self.quickActions = [
-				QuickAction(title: "Redeem", segueID: R.segue.homeCollectionViewController.redeemSegue.identifier),
-				QuickAction(title: "Become a Subscriber", segueID: R.segue.homeCollectionViewController.subscriptionSegue.identifier)
-			]
+			title = Trans.becomeASubscriber
 		}
+
+		self.quickActions = [
+			QuickAction(title: Trans.redeem, segueID: R.segue.homeCollectionViewController.redeemSegue.identifier),
+			QuickAction(title: title, segueID: R.segue.homeCollectionViewController.subscriptionSegue.identifier)
+		]
 	}
 
 	/// Shows what's new in the app if necessary.
 	fileprivate func showWhatsNew() {
 		if WhatsNew.shouldPresent() {
-			let whatsNew = KWhatsNewViewController(titleText: "What's New", buttonText: "Continue", items: KWhatsNew.current)
+			let whatsNew = KWhatsNewViewController(titleText: Trans.whatsNew, buttonText: Trans.continue, items: KWhatsNew.current)
 			self.present(whatsNew, animated: true)
 		}
 	}

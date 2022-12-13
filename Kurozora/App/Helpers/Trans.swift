@@ -985,6 +985,31 @@ struct Trans {
 	/// - Tag: Trans-openTwitter
 	static let openTwitter: String = String(localized: "Open Twitter",
 											comment: "The string for the word 'Open Twitter'.")
+	/// The string for the word 'Redeem'.
+	///
+	/// - Tag: Trans-redeem
+	static let redeem: String = String(localized: "Redeem",
+									   comment: "The string for the word 'Redeem'.")
+	/// The string for the word 'View Subscription'.
+	///
+	/// - Tag: Trans-viewSubscription
+	static let viewSubscription: String = String(localized: "View Subscription",
+												 comment: "The string for the word 'View Subscription'.")
+	/// The string for the word 'Become a Subscriber'.
+	///
+	/// - Tag: Trans-becomeASubscriber
+	static let becomeASubscriber: String = String(localized: "Become a Subscriber",
+												  comment: "The string for the word 'Become a Subscriber'.")
+	/// The string for the word 'Continue'.
+	///
+	/// - Tag: Trans-continue
+	static let `continue`: String = String(localized: "Continue",
+										   comment: "The string for the word 'Continue'.")
+	/// The string for the word 'What’s New'.
+	///
+	/// - Tag: Trans-whatsNew
+	static let whatsNew: String = String(localized: "What’s New",
+										 comment: "The string for the word 'What’s New'.")
 
 	// MARK: - Warnings
 	/// The string for the no signal warning title.
