@@ -51,9 +51,9 @@ class SignInTableViewController: AccountOnboardingTableViewController {
 			switch result {
 			case .success(let authenticationToken):
 				// Save user in keychain.
-				if let username = User.current?.attributes.username {
-					try? KurozoraDelegate.shared.keychain.set(authenticationToken, key: username)
-					UserSettings.set(username, forKey: .selectedAccount)
+				if let slug = User.current?.attributes.slug {
+					try? KurozoraDelegate.shared.keychain.set(authenticationToken, key: slug)
+					UserSettings.set(slug, forKey: .selectedAccount)
 				}
 
 				// Dismiss the view and register user for push notifications.
@@ -126,9 +126,9 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 					switch oAuthResponse.action {
 					case .signIn:
 						// Save user in keychain.
-						if let username = User.current?.attributes.username {
-							try? KurozoraDelegate.shared.keychain.set(oAuthResponse.authenticationToken, key: username)
-							UserSettings.set(username, forKey: .selectedAccount)
+						if let slug = User.current?.attributes.slug {
+							try? KurozoraDelegate.shared.keychain.set(oAuthResponse.authenticationToken, key: slug)
+							UserSettings.set(slug, forKey: .selectedAccount)
 						}
 
 						// Dismiss the view and register user for push notifications.

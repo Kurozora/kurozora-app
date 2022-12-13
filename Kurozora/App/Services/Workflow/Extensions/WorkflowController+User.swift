@@ -135,13 +135,13 @@ extension WorkflowController {
 
 	/// Signs out the user and removes all data from the keychain.
 	func signOut() {
-		let username = User.current?.attributes.username ?? ""
+		let slug = User.current?.attributes.slug ?? ""
 
 		if User.isSignedIn {
 			KService.signOut { result in
 				switch result {
 				case .success:
-					try? KurozoraDelegate.shared.keychain.remove(username)
+					try? KurozoraDelegate.shared.keychain.remove(slug)
 				case .failure:
 					break
 				}
@@ -157,11 +157,11 @@ extension WorkflowController {
 	/// - Returns: a boolean indicating whether the deletion is successful.
 	func deleteUser(password: String) async -> Bool {
 		guard User.isSignedIn else { return false }
-		let username = User.current?.attributes.username ?? ""
+		let slug = User.current?.attributes.slug ?? ""
 
 		do {
 			_ = try await KService.deleteUser(password: password).value
-			try? KurozoraDelegate.shared.keychain.remove(username)
+			try? KurozoraDelegate.shared.keychain.remove(slug)
 			return true
 		} catch {
 			print("-----", error.localizedDescription)

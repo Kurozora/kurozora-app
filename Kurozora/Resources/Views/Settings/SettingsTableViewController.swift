@@ -40,7 +40,10 @@ class SettingsTableViewController: KTableViewController {
 	override func viewWillReload() {
 		super.viewWillReload()
 
-		self.tableView.reloadData()
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			self.tableView.reloadData()
+		}
 	}
 
 	override func viewDidLoad() {
