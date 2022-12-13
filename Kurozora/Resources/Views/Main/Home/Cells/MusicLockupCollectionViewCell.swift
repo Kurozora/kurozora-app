@@ -58,23 +58,18 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 	/// - Parameter showShow: Whether to show which show this song belongs to.
 	func configure(using showSong: ShowSong?, at indexPath: IndexPath, showEpisodes: Bool = true, showShow: Bool = false) {
 		guard let showSong = showSong else {
+			self.resetShowSong()
 			self.showSkeleton()
 			return
 		}
 		self.hideSkeleton()
-		self.indexPath = indexPath
-
-		// Configure title
-		self.primaryLabel.text = showSong.song.attributes.title
-
-		// Configure artist
-		self.secondaryLabel.text = showSong.song.attributes.artist
 
 		// Configure episodes
 		self.tertiaryLable.isHidden = !showEpisodes
 		self.tertiaryLable.text = "Episode: \(showSong.attributes.episodes)"
 
 		// Confgiure type button
+		self.typeButton.isHidden = false
 		self.typeButton.setTitle("\(showSong.attributes.type.abbreviatedStringValue) #\(showSong.attributes.position)", for: .normal)
 		self.typeButton.backgroundColor = showSong.attributes.type.backgroundColorValue
 		self.typeButton.setTitleColor(.white, for: .normal)
@@ -83,12 +78,47 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 		self.showButton.isHidden = !showShow
 		self.showButton.setTitle(showSong.show?.attributes.title, for: .normal)
 
+		// Configure with song
+		self.configure(using: showSong.song, at: indexPath, fromShowSong: true)
+	}
+
+	/// Resets showSong related views.
+	func resetShowSong() {
+		self.tertiaryLable.isHidden = true
+		self.typeButton.isHidden = true
+		self.showButton.isHidden = true
+	}
+
+	/// Configures the cell with the given `Song` object.
+	///
+	/// - Parameter song: The `Song` objet used to confgiure the cell.
+	/// - Parameter indexPath: The index path of the cell within the collection view.
+	/// - Parameter fromShowSong: A boolean indicating if the method was called from `configure(using: ShowSong)` method.
+	func configure(using song: KKSong?, at indexPath: IndexPath, fromShowSong: Bool = false) {
+		if !fromShowSong {
+			// Confgiure showSong views.
+			self.configure(using: nil, at: indexPath, showEpisodes: false, showShow: false)
+		}
+
+		guard let song = song else {
+			self.showSkeleton()
+			return
+		}
+		self.hideSkeleton()
+		self.indexPath = indexPath
+
+		// Configure title
+		self.primaryLabel.text = song.attributes.title
+
+		// Configure artist
+		self.secondaryLabel.text = song.attributes.artist
+
 		// Configure play button
 		self.playButton.isHidden = true
 		self.playButton.cornerRadius = self.playButton.height / 2
 		self.playButton.addBlurEffect()
 
-		if let appleMusicID = showSong.song.attributes.amID {
+		if let appleMusicID = song.attributes.amID {
 			switch MusicAuthorization.currentStatus {
 			case .authorized:
 				self.authorizedMusicRequest(for: appleMusicID)

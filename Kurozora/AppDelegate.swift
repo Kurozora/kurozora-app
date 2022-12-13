@@ -16,8 +16,7 @@ import SwifterSwift
 typealias KKSong = Song
 
 // MARK: - KurozoraKit
-let KService = KurozoraKit(debugURL: "https://a0f0-62-166-226-99.eu.ngrok.io/api/v1/").services(KurozoraDelegate.shared.services)
-// let KService = KurozoraKit().services(KurozoraDelegate.shared.services)
+ let KService = KurozoraKit().services(KurozoraDelegate.shared.services)
 var KSettings: Settings?
 var store: Store! = nil
 
@@ -148,19 +147,19 @@ extension AppDelegate {
 // MARK: - Menu Actions
 extension AppDelegate {
 	/// Used to update your content.
-	@objc func handleRefreshControl() {	}
+	@objc func handleRefreshControl() { }
 
 	/// User chose "Preferences..." from the Application menu.
 	@objc func handlePreferences(_ sender: AnyObject) {
 		if let settingsSplitViewController = R.storyboard.settings.instantiateInitialViewController() {
 			settingsSplitViewController.modalPresentationStyle = .fullScreen
-			UIApplication.topViewController?.present(settingsSplitViewController, animated: true)
+			UIApplication.topViewController?.splitViewController?.present(settingsSplitViewController, animated: true)
 		}
 	}
 
 	/// User chose "Search" from the Application menu.
 	@objc func handleSearch(_ sender: AnyObject) {
-		let splitViewController = UIApplication.topViewController as? UISplitViewController
+		let splitViewController = UIApplication.topViewController?.splitViewController
 		let navigationController = splitViewController?.viewController(for: .primary) as? KNavigationController
 		let sidebarViewController = navigationController?.topViewController as? SidebarViewController
 		sidebarViewController?.kSearchController.searchBar.textField?.becomeFirstResponder()

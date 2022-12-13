@@ -9,6 +9,8 @@
 import UIKit
 import KurozoraKit
 import Alamofire
+import AVFoundation
+import MediaPlayer
 
 /// The collection view controller in charge of providing the necessary functionalities for searching shows, threads and users.
 class SearchResultsCollectionViewController: KCollectionViewController {
@@ -41,6 +43,12 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	var songs: [IndexPath: Song] = [:]
 	var studios: [IndexPath: Studio] = [:]
 	var users: [IndexPath: User] = [:]
+
+	/// The object that provides the interface to control the player’s transport behavior.
+	var player: AVPlayer?
+
+	/// The index path of the song that's currently playing.
+	var currentPlayerIndexPath: IndexPath?
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
@@ -98,6 +106,12 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		}
     }
 
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+
+		self.player?.pause()
+	}
+
 	// MARK: - Functions
 	/// Setup the search controller with the desired settings.
 	func setupSearchController() {
@@ -139,7 +153,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		case .kurozora:
 			Task { [weak self] in
 				guard let self = self else { return }
-				await self.search(scope: searchScope, types: [.shows, .episodes, .characters, .people, .studios, .users], query: query)
+				await self.search(scope: searchScope, types: [.shows, .episodes, .characters, .people, .songs, .studios, .users], query: query)
 			}
 		case .library:
 			WorkflowController.shared.isSignedIn {
@@ -226,6 +240,11 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 			guard let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
 			showDetailCollectionViewController.show = show
+		case R.segue.searchResultsCollectionViewController.songDetailsSegue.identifier:
+			// Segue to studio details
+			guard let songDetailCollectionViewController = segue.destination as? SongDetailsCollectionViewController else { return }
+			guard let song = sender as? Song else { return }
+			songDetailCollectionViewController.song = song
 		case R.segue.searchResultsCollectionViewController.studioDetailsSegue.identifier:
 			// Segue to studio details
 			guard let studioDetailCollectionViewController = segue.destination as? StudioDetailsCollectionViewController else { return }
@@ -254,7 +273,9 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		case R.segue.searchResultsCollectionViewController.songsListSegue.identifier:
 			// Segue to songs list
 			guard let showSongsListCollectionViewController = segue.destination as? ShowSongsListCollectionViewController else { return }
-			showSongsListCollectionViewController.showSongs = []
+			showSongsListCollectionViewController.songs = self.songs.map { _, song in
+				return song
+			}
 		case R.segue.searchResultsCollectionViewController.showsListSegue.identifier:
 			// Segue to shows list
 			guard let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController else { return }
@@ -433,6 +454,51 @@ extension SearchResultsCollectionViewController: EpisodeLockupCollectionViewCell
 		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
 			self.present(actionSheetAlertController, animated: true, completion: nil)
 		}
+	}
+}
+
+// MARK: - MusicLockupCollectionViewCellDelegate
+extension SearchResultsCollectionViewController: MusicLockupCollectionViewCellDelegate {
+	func playButtonPressed(_ sender: UIButton, cell: MusicLockupCollectionViewCell) {
+		guard let song = cell.song else { return }
+
+		if let songURL = song.previewAssets?.first?.url {
+			let playerItem = AVPlayerItem(url: songURL)
+
+			if (self.player?.currentItem?.asset as? AVURLAsset)?.url == (playerItem.asset as? AVURLAsset)?.url {
+				switch self.player?.timeControlStatus {
+				case .playing:
+					cell.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+					self.player?.pause()
+				case .paused:
+					cell.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+					self.player?.play()
+				default: break
+				}
+			} else {
+				if let indexPath = self.currentPlayerIndexPath {
+					if let cell = collectionView.cellForItem(at: indexPath) as? MusicLockupCollectionViewCell {
+						cell.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+					}
+				}
+
+				self.currentPlayerIndexPath = cell.indexPath
+				self.player = AVPlayer(playerItem: playerItem)
+				self.player?.actionAtItemEnd = .none
+				self.player?.play()
+				cell.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+
+				NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: nil, queue: .current, using: { [weak self] _ in
+					guard let self = self else { return }
+					self.player = nil
+					cell.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+				})
+			}
+		}
+	}
+
+	func showButtonPressed(_ sender: UIButton, indexPath: IndexPath) {
+		// No action
 	}
 }
 

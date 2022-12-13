@@ -42,7 +42,6 @@ class SongDetailsCollectionViewController: KCollectionViewController {
 			}
 		}
 	}
-	var appleMusicLink: URL?
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
@@ -108,6 +107,12 @@ class SongDetailsCollectionViewController: KCollectionViewController {
 			guard let self = self else { return }
 			await self.fetchDetails()
 		}
+	}
+
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+
+		self.player?.pause()
 	}
 
 	// MARK: - Functions
@@ -256,7 +261,8 @@ extension SongDetailsCollectionViewController: BaseLockupCollectionViewCellDeleg
 // MARK: - SongHeaderCollectionViewCellDelegate
 extension SongDetailsCollectionViewController: SongHeaderCollectionViewCellDelegate {
 	func saveAppleMusicSong(_ song: MusicKit.Song?) {
-		DispatchQueue.main.async {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
 			self.moreButton.menu = self.song?.makeContextMenu(in: self, userInfo: ["appleMusicLink": song?.url])
 		}
 	}

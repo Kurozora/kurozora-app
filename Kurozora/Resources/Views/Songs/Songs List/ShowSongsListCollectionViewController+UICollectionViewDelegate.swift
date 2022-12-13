@@ -10,7 +10,11 @@ import UIKit
 
 extension ShowSongsListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//		self.performSegue(withIdentifier: R.segue.showSongsListCollectionViewController.showDetailsSegue, sender: self.showSongs[indexPath.item])
+		if !self.showSongs.isEmpty {
+			self.performSegue(withIdentifier: R.segue.showSongsListCollectionViewController.songDetailsSegue, sender: self.showSongs[indexPath.item].song)
+		} else if !self.songs.isEmpty {
+			self.performSegue(withIdentifier: R.segue.showSongsListCollectionViewController.songDetailsSegue, sender: self.songs[indexPath.item])
+		}
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -21,8 +25,13 @@ extension ShowSongsListCollectionViewController {
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+		if !self.showSongs.isEmpty {
+			return self.showSongs[indexPath.item].song.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		} else if !self.songs.isEmpty {
+			return self.songs[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		}
+
 		return nil
-//		return self.showSongs[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {

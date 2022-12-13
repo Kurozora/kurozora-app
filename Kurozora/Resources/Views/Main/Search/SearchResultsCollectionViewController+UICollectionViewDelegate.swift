@@ -26,9 +26,9 @@ extension SearchResultsCollectionViewController {
 			guard let show = self.shows[indexPath] else { return }
 			SearchHistory.saveContentsOf(show)
 			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.showDetailsSegue, sender: show)
-//		case .songIdentity:
-//			let song = self.songs[indexPath]
-//			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.songDetailsSegue, sender: song)
+		case .songIdentity:
+			let song = self.songs[indexPath]
+			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.songDetailsSegue, sender: song)
 		case .studioIdentity:
 			let studio = self.studios[indexPath]
 			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.studioDetailsSegue, sender: studio)
@@ -68,8 +68,8 @@ extension SearchResultsCollectionViewController {
 			guard let show = self.shows[indexPath] else { return nil }
 			SearchHistory.saveContentsOf(show)
 			return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-//		case .songIdentity:
-//			return self.songs[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		case .songIdentity:
+			return self.songs[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .studioIdentity:
 			return self.studios[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .userIdentity:

@@ -18,7 +18,7 @@ extension SearchResultsCollectionViewController {
 		let characterCellConfiguration = self.getConfiguredCharacterCell()
 		let episodeCellConfiguration = self.getConfiguredEpisodeCell()
 		let personCellConfiguration = self.getConfiguredPersonCell()
-		let songCellConfiguration = self.getConfiguredSongCell()
+		let musicCellConfiguration = self.getConfiguredMusicCell()
 		let showCellConfiguration = self.getConfiguredShowCell()
 		let studioCellConfiguration = self.getConfiguredStudioCell()
 		let userCellConfiguration = self.getConfiguredUserCell()
@@ -32,7 +32,7 @@ extension SearchResultsCollectionViewController {
 			case .personIdentity:
 				return collectionView.dequeueConfiguredReusableCell(using: personCellConfiguration, for: indexPath, item: itemKind)
 			case .songIdentity:
-				return collectionView.dequeueConfiguredReusableCell(using: songCellConfiguration, for: indexPath, item: itemKind)
+				return collectionView.dequeueConfiguredReusableCell(using: musicCellConfiguration, for: indexPath, item: itemKind)
 			case .showIdentity:
 				return collectionView.dequeueConfiguredReusableCell(using: showCellConfiguration, for: indexPath, item: itemKind)
 			case .studioIdentity:
@@ -62,7 +62,7 @@ extension SearchResultsCollectionViewController {
 				exploreSectionTitleCell.configure(withTitle: Trans.people, indexPath: indexPath, segueID: segueID)
 			case .songs:
 				segueID = R.segue.searchResultsCollectionViewController.songsListSegue.identifier
-				exploreSectionTitleCell.configure(withTitle: Trans.shows, indexPath: indexPath, segueID: segueID)
+				exploreSectionTitleCell.configure(withTitle: Trans.songs, indexPath: indexPath, segueID: segueID)
 			case .shows:
 				segueID = R.segue.searchResultsCollectionViewController.showsListSegue.identifier
 				exploreSectionTitleCell.configure(withTitle: Trans.shows, indexPath: indexPath, segueID: segueID)
@@ -282,7 +282,7 @@ extension SearchResultsCollectionViewController {
 		}
 	}
 
-	func getConfiguredSongCell() -> UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind> {
+	func getConfiguredMusicCell() -> UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.musicLockupCollectionViewCell)) { [weak self] musicLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 
@@ -295,16 +295,16 @@ extension SearchResultsCollectionViewController {
 					dataRequest = KService.getDetails(forSong: songIdentity) { result in
 						switch result {
 						case .success(let song):
-							self.songs[indexPath] = song.first
+							self.songs[indexPath] = song.data.first
 							self.setItemKindNeedsUpdate(itemKind)
 						case .failure: break
 						}
 					}
 				}
 
-//				musicLockupCollectionViewCell.delegate = self
-//				musicLockupCollectionViewCell.dataRequest = dataRequest
-//				musicLockupCollectionViewCell.configure(using: song, at: indexPath)
+				musicLockupCollectionViewCell.delegate = self
+				musicLockupCollectionViewCell.dataRequest = dataRequest
+				musicLockupCollectionViewCell.configure(using: song, at: indexPath)
 			default: break
 			}
 		}

@@ -10,9 +10,24 @@ import UIKit
 import KurozoraKit
 import AVFoundation
 
+enum SongsListViewType: Int {
+	case songs = 0
+	case showSongs
+}
+
 class ShowSongsListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var showIdentity: ShowIdentity? = nil
+	var songs: [Song] = [] {
+		didSet {
+			self._prefersActivityIndicatorHidden = true
+			#if DEBUG
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.endRefreshing()
+			#endif
+			#endif
+		}
+	}
 	var showSongs: [ShowSong] = [] {
 		didSet {
 			self._prefersActivityIndicatorHidden = true
@@ -71,7 +86,7 @@ class ShowSongsListCollectionViewController: KCollectionViewController {
 
 		self.configureDataSource()
 
-		if !self.showSongs.isEmpty {
+		if !self.showSongs.isEmpty || !self.songs.isEmpty {
 			self.updateDataSource()
 			self.toggleEmptyDataView()
 		} else {
@@ -148,6 +163,11 @@ class ShowSongsListCollectionViewController: KCollectionViewController {
 			guard let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
 			showDetailCollectionViewController.show = show
+		case R.segue.showSongsListCollectionViewController.songDetailsSegue.identifier:
+			// Segue to song details
+			guard let songDetailsCollectionViewController = segue.destination as? SongDetailsCollectionViewController else { return }
+			guard let song = sender as? Song else { return }
+			songDetailsCollectionViewController.song = song
 		default: break
 		}
 	}
@@ -235,12 +255,18 @@ extension ShowSongsListCollectionViewController {
 	/// List of available Item Kind types.
 	enum ItemKind: Hashable {
 		// MARK: - Cases
+		/// Indicates the item kind contains a `Song` object.
+		case song(_: Song, id: UUID = UUID())
+
 		/// Indicates the item kind contains a `ShowSong` object.
 		case showSong(_: ShowSong, id: UUID = UUID())
 
 		// MARK: - Functions
 		func hash(into hasher: inout Hasher) {
 			switch self {
+			case .song(let song, let id):
+				hasher.combine(song)
+				hasher.combine(id)
 			case .showSong(let showSong, let id):
 				hasher.combine(showSong)
 				hasher.combine(id)
@@ -249,8 +275,12 @@ extension ShowSongsListCollectionViewController {
 
 		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
 			switch (lhs, rhs) {
+			case (.song(let song1, let id1), .song(let song2, let id2)):
+				return song1 == song2 && id1 == id2
 			case (.showSong(let showSong1, let id1), .showSong(let showSong2, let id2)):
 				return showSong1 == showSong2 && id1 == id2
+			default:
+				return false
 			}
 		}
 	}

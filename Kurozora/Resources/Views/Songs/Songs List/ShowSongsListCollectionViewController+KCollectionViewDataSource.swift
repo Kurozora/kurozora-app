@@ -10,12 +10,6 @@ import UIKit
 import KurozoraKit
 
 extension ShowSongsListCollectionViewController {
-	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
-		return [
-			MusicLockupCollectionViewCell.self
-		]
-	}
-
 	override func registerNibs(for collectionView: UICollectionView) -> [UICollectionReusableView.Type] {
 		return [
 			TitleHeaderCollectionReusableView.self
@@ -23,17 +17,10 @@ extension ShowSongsListCollectionViewController {
 	}
 
 	override func configureDataSource() {
-		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: ItemKind) -> UICollectionViewCell? in
-			guard let self = self else { return nil }
-			let showIDExists = self.showIdentity != nil
+		let musicCellConfiguration = self.getConfiguredMusicCell()
 
-			switch item {
-			case .showSong(let showSong, _):
-				let musicLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: MusicLockupCollectionViewCell.self, for: indexPath)
-				musicLockupCollectionViewCell.delegate = self
-				musicLockupCollectionViewCell.configure(using: showSong, at: indexPath, showEpisodes: showIDExists, showShow: !showIDExists)
-				return musicLockupCollectionViewCell
-			}
+		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, itemKind: ItemKind) -> UICollectionViewCell? in
+			return collectionView.dequeueConfiguredReusableCell(using: musicCellConfiguration, for: indexPath, item: itemKind)
 		}
 
 		if self.showIdentity != nil {
@@ -67,7 +54,7 @@ extension ShowSongsListCollectionViewController {
 					}
 				}
 			}
-		} else {
+		} else if !self.showSongs.isEmpty {
 			let sectionHeader = SectionLayoutKind.header()
 			self.snapshot.appendSections([sectionHeader])
 
@@ -75,8 +62,33 @@ extension ShowSongsListCollectionViewController {
 				return .showSong(showSong)
 			}
 			self.snapshot.appendItems(showSongItems, toSection: sectionHeader)
+		} else if !self.songs.isEmpty {
+			let sectionHeader = SectionLayoutKind.header()
+			self.snapshot.appendSections([sectionHeader])
+
+			let songItems: [ItemKind] = self.songs.map { song in
+				return .song(song)
+			}
+			self.snapshot.appendItems(songItems, toSection: sectionHeader)
 		}
 
 		self.dataSource.apply(self.snapshot)
+	}
+}
+
+extension ShowSongsListCollectionViewController {
+	func getConfiguredMusicCell() -> UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.musicLockupCollectionViewCell)) { [weak self] musicLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+			musicLockupCollectionViewCell.delegate = self
+
+			switch itemKind {
+			case .showSong(let showSong, _):
+				let showIDExists = self.showIdentity != nil
+				musicLockupCollectionViewCell.configure(using: showSong, at: indexPath, showEpisodes: showIDExists, showShow: !showIDExists)
+			case .song(let song, _):
+				musicLockupCollectionViewCell.configure(using: song, at: indexPath)
+			}
+		}
 	}
 }
