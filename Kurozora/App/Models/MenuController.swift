@@ -15,11 +15,12 @@ class MenuController {
 	///
 	/// - Parameter builder: The [UIMenuBuilder](doc://com.apple.documentation/documentation/uikit/uimenubuilder?language=swift) object used to initialize the menu controller.
 	init(with builder: UIMenuBuilder) {
-		builder.remove(menu: .file)
+		builder.remove(menu: .newScene)
+		builder.remove(menu: .openRecent)
 		builder.remove(menu: .format)
 		builder.remove(menu: .toolbar)
 		builder.insertSibling(MenuController.search(), beforeMenu: .fullscreen)
-		builder.insertSibling(MenuController.refreshPage(), beforeMenu: .fullscreen)
+//		builder.insertSibling(MenuController.refreshPage(), beforeMenu: .fullscreen)
 		builder.insertSibling(MenuController.openPreferences(), afterMenu: .about)
 		builder.insertSibling(MenuController.account(), beforeMenu: .window)
 

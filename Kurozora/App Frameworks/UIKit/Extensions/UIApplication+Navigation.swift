@@ -42,13 +42,13 @@ extension UIApplication {
 	/// - Returns: the top (root) view controller of a given view controller.
 	private class func topViewController(_ base: UIViewController?) -> UIViewController? {
 		if let nav = base as? UINavigationController {
-			let top = topViewController(nav.visibleViewController)
+			let top = self.topViewController(nav.visibleViewController)
 			return top
 		}
 
 		if let tab = base as? UITabBarController {
 			if let selected = tab.selectedViewController {
-				let top = topViewController(selected)
+				let top = self.topViewController(selected)
 				return top
 			}
 		}
@@ -56,13 +56,13 @@ extension UIApplication {
 		if let split = base as? UISplitViewController {
 			let column: UISplitViewController.Column = UIDevice.isPhone ? .primary : .secondary
 			if let firstView = split.viewController(for: column) {
-				let top = topViewController(firstView)
+				let top = self.topViewController(firstView)
 				return top
 			}
 		}
 
 		if let presented = base?.presentedViewController {
-			let top = topViewController(presented)
+			let top = self.topViewController(presented)
 			return top
 		}
 		return base

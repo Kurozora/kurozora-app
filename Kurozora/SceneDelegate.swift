@@ -19,8 +19,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		guard let windowScene = (scene as? UIWindowScene) else { return }
 
 		// Initialize UIWindow
-		window = UIWindow(windowScene: windowScene)
-		window?.makeKeyAndVisible()
+		self.window = UIWindow(windowScene: windowScene)
+		self.window?.makeKeyAndVisible()
 
 		// Initialize theme
 		KThemeStyle.initAppTheme()
