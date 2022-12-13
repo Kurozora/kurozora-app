@@ -25,7 +25,7 @@
 - [x] Support for custom animated page transitions.
 
 ## 📋 Requirements
-Pageboy requires iOS 9 / tvOS 10; and is compatible with Swift 5.
+Pageboy requires iOS 11 / tvOS 11; and is compatible with Swift 5.
 
 ## 📲 Installation
 
@@ -35,13 +35,13 @@ Pageboy is compatible with [Swift Package Manager](https://swift.org/package-man
 ### CocoaPods
 Pageboy is also available through [CocoaPods](https://cocoapods.org):
 ```ruby
-pod 'Pageboy', '~> 3.6'
+pod 'Pageboy', '~> 4.0'
 ```
 
 ### Carthage
 Pageboy is also available through [Carthage](https://github.com/Carthage/Carthage):
 ```ogdl
-github "uias/Pageboy" ~> 3.6
+github "uias/Pageboy" ~> 4.0
 ```
 
 ## 🚀 Usage

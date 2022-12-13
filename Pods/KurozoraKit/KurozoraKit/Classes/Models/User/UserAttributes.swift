@@ -31,6 +31,12 @@ extension User {
 		/// The biography text of the user.
 		public var biography: String?
 
+		/// The biography HTML text of the user.
+		public var biographyHTML: String?
+
+		/// The biography Markdown text of the user.
+		public var biographyMarkdown: String?
+
 		/// The activity status of the user.
 		public let activityStatus: ActivityStatus
 
@@ -45,6 +51,9 @@ extension User {
 
 		/// Whether the user has a valid subscription.
 		public var isSubscribed: Bool
+
+		/// Whether the user is verified.
+		public var isVerified: Bool
 
 		/// The join date of the user.
 		public let joinDate: Date

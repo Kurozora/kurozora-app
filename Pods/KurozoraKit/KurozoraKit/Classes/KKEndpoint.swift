@@ -34,6 +34,30 @@ extension KKEndpoint {
 	}
 }
 
+// MARK: - Misc
+extension KKEndpoint {
+	/// The set of available Misc API endpoints types.
+	internal enum Misc {
+		// MARK: - Cases
+		/// The endpoint to info.
+		case info
+
+		/// The endpoint to settings.
+		case settings
+
+		// MARK: - Properties
+		/// The endpoint value of the Misc API type.
+		var endpointValue: String {
+			switch self {
+			case .info:
+				return "info"
+			case .settings:
+				return "settings"
+			}
+		}
+	}
+}
+
 // MARK: - Shows
 extension KKEndpoint {
 	/// The set of available Shows API endpoints types.

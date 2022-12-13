@@ -5,7 +5,6 @@
 //  Created by Khoren Katklian on 29/09/2019.
 //
 
-import Alamofire
 import TRON
 
 extension KurozoraKit {
@@ -14,29 +13,36 @@ extension KurozoraKit {
 	/// - Parameter episodeIdentity: The episode identity object of the episode for which the details should be fetched.
 	/// - Parameter relationships: The relationships to include in the response.
 	///
-	/// - Returns: An instance of `DataTask` with the results of the request.
-	public func getDetails(forEpisode episodeIdentity: EpisodeIdentity, including relationships: [String] = []) -> DataTask<EpisodeResponse> {
+	/// - Returns: An instance of `RequestSender` with the results of the get episode detail response.
+	public func getDetails(forEpisode episodeIdentity: EpisodeIdentity, including relationships: [String] = []) -> RequestSender<EpisodeResponse, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
+		if !self.authenticationKey.isEmpty {
+			headers.add(.authorization(bearerToken: self.authenticationKey))
+		}
+
+		// Prepare parameters
+		var parameters: [String: Any] = [:]
+		if !relationships.isEmpty {
+			parameters["include"] = relationships.joined(separator: ",")
+		}
+
+		// Prepare request
 		let episodesDetails = KKEndpoint.Shows.Episodes.details(episodeIdentity).endpointValue
 		let request: APIRequest<EpisodeResponse, KKAPIError> = tron.codable.request(episodesDetails)
+			.method(.get)
+			.parameters(parameters)
+			.headers(headers)
 
-		request.headers = headers
-		if !self.authenticationKey.isEmpty {
-			request.headers.add(.authorization(bearerToken: self.authenticationKey))
-		}
-
-		if !relationships.isEmpty {
-			request.parameters["include"] = relationships.joined(separator: ",")
-		}
-
-		request.method = .get
-		return request.perform().serializingDecodable(EpisodeResponse.self, decoder: self.tron.codable.modelDecoder)
+		// Send request
+		return request.sender()
 	}
 
 	/// Update an episode's watch status.
 	///
 	///	- Parameter episodeIdentity: The episode identity object of the episode that should be marked as watched/unwatched.
 	///
-	/// - Returns: An instance of `DataTask` with the results of the request.
+	/// - Returns: An instance of `RequestSender` with the results of the update episode watch status response.
 	public func updateEpisodeWatchStatus(_ episodeIdentity: EpisodeIdentity) -> RequestSender<EpisodeUpdateResponse, KKAPIError> {
 		// Prepare headers
 		var headers = self.headers
@@ -60,24 +66,30 @@ extension KurozoraKit {
 	/// - Parameter score: The rating to leave.
 	///	- Parameter description: The description of the rating.
 	///
-	/// - Returns: An instance of `DataTask` with the results of the request.
-	public func rateEpisode(_ episodeIdentity: EpisodeIdentity, with score: Double, description: String?) -> DataTask<KKSuccess> {
-		let showsEpisodesRate = KKEndpoint.Shows.Episodes.rate(episodeIdentity).endpointValue
-		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(showsEpisodesRate)
-
-		request.headers = headers
+	/// - Returns: An instance of `RequestSender` with the results of the rate episode response.
+	public func rateEpisode(_ episodeIdentity: EpisodeIdentity, with score: Double, description: String?) -> RequestSender<KKSuccess, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
 		if !self.authenticationKey.isEmpty {
-			request.headers.add(.authorization(bearerToken: self.authenticationKey))
+			headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
-		request.parameters = [
+		// Prepare parameters
+		var parameters: [String: Any] = [
 			"rating": score
 		]
 		if let description = description {
-			request.parameters["description"] = description
+			parameters["description"] = description
 		}
+		
+		// Prepare request
+		let showsEpisodesRate = KKEndpoint.Shows.Episodes.rate(episodeIdentity).endpointValue
+		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(showsEpisodesRate)
+			.method(.post)
+			.parameters(parameters)
+			.headers(headers)
 
-		request.method = .post
-		return request.perform().serializingDecodable(KKSuccess.self, decoder: self.tron.codable.modelDecoder)
+		// Send request
+		return request.sender()
 	}
 }

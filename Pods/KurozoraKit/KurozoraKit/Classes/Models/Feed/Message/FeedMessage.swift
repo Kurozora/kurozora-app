@@ -29,4 +29,3 @@ public class FeedMessage: IdentityResource, Hashable {
 		hasher.combine(self.id)
 	}
 }
-

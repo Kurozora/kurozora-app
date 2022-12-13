@@ -116,46 +116,36 @@ extension KurozoraKit {
 	/// If the message is a reply or a re-share, then also supply the parent message's ID.
 	///
 	/// - Parameters:
-	///    - body: The content of the message to be posted in the feed.
-	///    - messageID: The ID of the parent message this message is related to.
-	///    - isReply: Whether the message is a reply to another message.
-	///    - isReShare: Whether the message is a re-share of another message.
-	///    - isNSFW: Whether the message contains NSFW material.
-	///    - isSpoiler: Whether the message contains spoiler material.
-	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-	///    - result: A value that represents either a success or a failure, including an associated value in each case.
-	public func postFeedMessage(withBody body: String, relatedToParent messageID: Int?, isReply: Bool?, isReShare: Bool?, isNSFW: Bool, isSpoiler: Bool, completion completionHandler: @escaping (_ result: Result<[FeedMessage], KKAPIError>) -> Void) {
-		let feedPost = KKEndpoint.Feed.post.endpointValue
-		let request: APIRequest<FeedMessageResponse, KKAPIError> = tron.codable.request(feedPost)
+	///    - feedMessageRequest: An instance of `FeedMessageRequest` containing the new feed message details.
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the post feed message response.
+	public func postFeedMessage(_ feedMessageRequest: FeedMessageRequest) -> RequestSender<FeedMessageResponse, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
+		headers.add(.authorization(bearerToken: self.authenticationKey))
 
-		request.headers = headers
-		request.headers.add(.authorization(bearerToken: self.authenticationKey))
-
-		request.parameters = [
-			"body": body,
-			"is_nsfw": isNSFW,
-			"is_spoiler": isSpoiler
+		// Prepare parameters
+		var parameters: [String: Any] = [:]
+		parameters = [
+			"content": feedMessageRequest.content,
+			"is_nsfw": feedMessageRequest.isNSFW,
+			"is_spoiler": feedMessageRequest.isSpoiler
 		]
-		if let messageID = messageID {
-			request.parameters["parent_id"] = messageID
-			request.parameters["is_reply"] = isReply
-			request.parameters["is_reshare"] = isReShare
+		if let messageID = feedMessageRequest.parentIdentity?.id {
+			parameters["parent_id"] = messageID
+			parameters["is_reply"] = feedMessageRequest.isReply
+			parameters["is_reshare"] = feedMessageRequest.isReShare
 		}
 
-		request.method = .post
-		request.perform(withSuccess: { feedMessageResponse in
-			completionHandler(.success(feedMessageResponse.data))
-		}, failure: { [weak self] error in
-			guard let self = self else { return }
-			if self.services.showAlerts {
-				UIApplication.topViewController?.presentAlertController(title: "Can't Submit Your Message 😔", message: error.message)
-			}
-			print("❌ Received post feed message error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message ?? "No message")
-			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
-			print("└ Failure reason:", error.failureReason ?? "No reason available")
-			completionHandler(.failure(error))
-		})
+		// Prepare request
+		let feedPost = KKEndpoint.Feed.post.endpointValue
+		let request: APIRequest<FeedMessageResponse, KKAPIError> = tron.codable.request(feedPost)
+			.method(.post)
+			.parameters(parameters)
+			.headers(headers)
+
+		// Send request
+		return request.sender()
 	}
 
 	/// Fetch the details of the given feed message id.
@@ -228,37 +218,31 @@ extension KurozoraKit {
 	/// Update the details for the given feed message id.
 	///
 	/// - Parameters:
-	///    - messageID: The id of the feed message to be updated.
-	///    - body: The content of the message to be posted in the feed.
-	///    - isNSFW: Whether the message contains NSFW material.
-	///    - isSpoiler: Whether the message contains spoiler material.
-	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-	///    - result: A value that represents either a success or a failure, including an associated value in each case.
-	public func updateMessage(_ messageID: Int, withBody body: String, isNSFW: Bool, isSpoiler: Bool, completion completionHandler: @escaping (_ result: Result<FeedMessageUpdate, KKAPIError>) -> Void) {
-		let feedMessageUpdate = KKEndpoint.Feed.Messages.update(messageID).endpointValue
-		let request: APIRequest<FeedMessageUpdateResponse, KKAPIError> = tron.codable.request(feedMessageUpdate)
+	///    - feedMessageUpdateRequest: An instance of `FeedMessageUpdateRequest` containing the updated feed message details.
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the update feed message response.
+	public func updateMessage(_ feedMessageUpdateRequest: FeedMessageUpdateRequest) -> RequestSender<FeedMessageUpdateResponse, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
+		headers.add(.authorization(bearerToken: self.authenticationKey))
 
-		request.headers = headers
-		request.headers.add(.authorization(bearerToken: self.authenticationKey))
-
-		request.method = .post
-		request.parameters = [
-			"body": body,
-			"is_nsfw": isNSFW,
-			"is_spoiler": isSpoiler
+		// Prepare parameters
+		var parameters: [String: Any] = [:]
+		parameters = [
+			"content": feedMessageUpdateRequest.content,
+			"is_nsfw": feedMessageUpdateRequest.isNSFW,
+			"is_spoiler": feedMessageUpdateRequest.isSpoiler
 		]
-		request.perform(withSuccess: { feedMessageUpdateResponse in
-			completionHandler(.success(feedMessageUpdateResponse.data))
-		}, failure: { [weak self] error in
-			guard let self = self else { return }
-			if self.services.showAlerts {
-				UIApplication.topViewController?.presentAlertController(title: "Can't Update Message 😔", message: error.message)
-			}
-			print("❌ Received update message error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message ?? "No message")
-			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
-			print("└ Failure reason:", error.failureReason ?? "No reason available")
-		})
+
+		// Prepare request
+		let feedMessageUpdate = KKEndpoint.Feed.Messages.update(feedMessageUpdateRequest.feedMessageIdentity.id).endpointValue
+		let request: APIRequest<FeedMessageUpdateResponse, KKAPIError> = tron.codable.request(feedMessageUpdate)
+			.method(.post)
+			.parameters(parameters)
+			.headers(headers)
+
+		// Send request
+		return request.sender()
 	}
 
 	/// Heart or un-heart a feed message.

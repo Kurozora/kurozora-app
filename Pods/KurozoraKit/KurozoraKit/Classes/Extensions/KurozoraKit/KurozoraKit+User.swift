@@ -1,5 +1,5 @@
 //
-//  KurozoraKit+User.swift
+//  KurozoraKit+Users.swift
 //  KurozoraKit
 //
 //  Created by Khoren Katklian on 29/09/2019.
@@ -180,52 +180,48 @@ extension KurozoraKit {
 	///    - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
 	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
 	///
-	/// - Returns: An instance of `DataTask` with the results of the request.
-	public func getFollowList(forUser userIdentity: UserIdentity, _ followList: UsersListType, next: String? = nil, limit: Int = 25) -> DataTask<UserIdentityResponse> {
-		let usersFollowerOrFollowing = next ?? (followList == .following ? KKEndpoint.Users.following(userIdentity).endpointValue : KKEndpoint.Users.followers(userIdentity).endpointValue)
-		let request: APIRequest<UserIdentityResponse, KKAPIError> = tron.codable.request(usersFollowerOrFollowing).buildURL(.relativeToBaseURL)
-
-		request.headers = headers
+	/// - Returns: An instance of `RequestSender` with the results of the get follow list response.
+	public func getFollowList(forUser userIdentity: UserIdentity, _ followList: UsersListType, next: String? = nil, limit: Int = 25) -> RequestSender<UserIdentityResponse, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
 		if !self.authenticationKey.isEmpty {
-			request.headers.add(.authorization(bearerToken: self.authenticationKey))
+			headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
-		request.parameters["limit"] = limit
+		// Prepare request
+		let usersFollowerOrFollowing = next ?? (followList == .following ? KKEndpoint.Users.following(userIdentity).endpointValue : KKEndpoint.Users.followers(userIdentity).endpointValue)
+		let request: APIRequest<UserIdentityResponse, KKAPIError> = tron.codable.request(usersFollowerOrFollowing).buildURL(.relativeToBaseURL)
+			.method(.get)
+			.parameters([
+				"limit": limit
+			])
+			.headers(headers)
 
-		request.method = .get
-		return request.perform().serializingDecodable(UserIdentityResponse.self, decoder: self.tron.codable.modelDecoder)
+		// Send request
+		return request.sender()
 	}
 
 	/// Follow or unfollow a user with the given user identity.
 	///
 	/// - Parameters:
 	///    - userIdentity: The identity of the user to follow/unfollow.
-	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-	///    - result: A value that represents either a success or a failure, including an associated value in each case.
-	@discardableResult
-	public func updateFollowStatus(forUser userIdentity: UserIdentity, completion completionHandler: @escaping (_ result: Result<FollowUpdate, KKAPIError>) -> Void) -> DataRequest {
-		let usersFollow = KKEndpoint.Users.follow(userIdentity).endpointValue
-		let request: APIRequest<FollowUpdateResponse, KKAPIError> = tron.codable.request(usersFollow)
-
-		request.headers = headers
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the update follow status response.
+	public func updateFollowStatus(forUser userIdentity: UserIdentity) -> RequestSender<FollowUpdateResponse, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
 		if !self.authenticationKey.isEmpty {
-			request.headers.add(.authorization(bearerToken: self.authenticationKey))
+			headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
-		request.method = .post
-		return request.perform(withSuccess: { followUpdateResponse in
-			completionHandler(.success(followUpdateResponse.data))
-		}, failure: { [weak self] error in
-			guard let self = self else { return }
-			if self.services.showAlerts {
-				UIApplication.topViewController?.presentAlertController(title: "Can't Follow User 😔", message: error.message)
-			}
-			print("❌ Received follow user error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message ?? "No message")
-			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
-			print("└ Failure reason:", error.failureReason ?? "No reason available")
-			completionHandler(.failure(error))
-		})
+		// Prepare request
+		let usersFollow = KKEndpoint.Users.follow(userIdentity).endpointValue
+		let request: APIRequest<FollowUpdateResponse, KKAPIError> = tron.codable.request(usersFollow).buildURL(.relativeToBaseURL)
+			.method(.post)
+			.headers(headers)
+
+		// Send request
+		return request.sender()
 	}
 
 	/// Fetch the favorite shows list for the given user identity.
@@ -234,34 +230,26 @@ extension KurozoraKit {
 	///    - userIdentity: The identity of the user whose favorite list will be fetched.
 	///    - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
 	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
-	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-	///    - result: A value that represents either a success or a failure, including an associated value in each case.
-	@discardableResult
-	public func getFavoriteShows(forUser userIdentity: UserIdentity, next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<ShowResponse, KKAPIError>) -> Void) -> DataRequest {
-		let usersFavoriteShow = next ?? KKEndpoint.Users.favoriteShow(userIdentity).endpointValue
-		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(usersFavoriteShow).buildURL(.relativeToBaseURL)
-
-		request.headers = headers
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the get favorite shows response.
+	public func getFavoriteShows(forUser userIdentity: UserIdentity, next: String? = nil, limit: Int = 25) -> RequestSender<ShowResponse, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
 		if !self.authenticationKey.isEmpty {
-			request.headers.add(.authorization(bearerToken: self.authenticationKey))
+			headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
-		request.parameters["limit"] = limit
+		// Prepare request
+		let usersFavoriteShow = next ?? KKEndpoint.Users.favoriteShow(userIdentity).endpointValue
+		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(usersFavoriteShow).buildURL(.relativeToBaseURL)
+			.method(.get)
+			.parameters([
+				"limit": limit
+			])
+			.headers(headers)
 
-		request.method = .get
-		return request.perform(withSuccess: { showResponse in
-			completionHandler(.success(showResponse))
-		}, failure: { [weak self] error in
-			guard let self = self else { return }
-			if self.services.showAlerts {
-				UIApplication.topViewController?.presentAlertController(title: "Can't Get Favorites 😔", message: error.message)
-			}
-			print("❌ Received get favorites error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message ?? "No message")
-			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
-			print("└ Failure reason:", error.failureReason ?? "No reason available")
-			completionHandler(.failure(error))
-		})
+		// Send request
+		return request.sender()
 	}
 
 	/// Fetch the profile details of the given user user identity.
@@ -296,31 +284,23 @@ extension KurozoraKit {
 	///
 	/// - Parameters:
 	///    - password: The authenticated user's password.
-	///    - successHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-	///    - result: A value that represents either a success or a failure, including an associated value in each case.
-	@discardableResult
-	public func deleteUser(password: String, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) -> DataRequest {
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the delete user response.
+	public func deleteUser(password: String) -> RequestSender<KKSuccess, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
+		headers.add(.authorization(bearerToken: self.authenticationKey))
+
+		// Prepare request
 		let usersDelete = KKEndpoint.Users.delete.endpointValue
-		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(usersDelete)
+		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(usersDelete).buildURL(.relativeToBaseURL)
+			.method(.delete)
+			.parameters([
+				"password": password
+			])
+			.headers(headers)
 
-		request.headers = headers
-		request.headers.add(.authorization(bearerToken: self.authenticationKey))
-
-		request.parameters["password"] = password
-
-		request.method = .delete
-		return request.perform(withSuccess: { success in
-			completionHandler(.success(success))
-		}, failure: { [weak self] error in
-			guard let self = self else { return }
-			if self.services.showAlerts {
-				UIApplication.topViewController?.presentAlertController(title: "Can't Delete Account 😔", message: error.message)
-			}
-			print("❌ Received delete user error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message ?? "No message")
-			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
-			print("└ Failure reason:", error.failureReason ?? "No reason available")
-			completionHandler(.failure(error))
-		})
+		// Send request
+		return request.sender()
 	}
 }

@@ -8,8 +8,14 @@
 /// A root object that stores information about a feed message update resource.
 public struct FeedMessageUpdate: Codable {
 	// MARK: - Properties
-	/// The body of the feed message.
-	public let body: String?
+	/// The content of the feed message.
+	public let content: String?
+
+	/// The HTML content of the feed message.
+	public let contentHTML: String?
+
+	/// The Markdown content of the feed message.
+	public let contentMarkdown: String?
 
 	/// Whether the feed message is hearted by the authenticated user.
 	public var isHearted: Bool?
