@@ -15,7 +15,8 @@ class ProfileTableViewController: KTableViewController {
 
 	@IBOutlet weak var profileImageView: ProfileImageView!
 	@IBOutlet weak var usernameLabel: KLabel!
-	@IBOutlet weak var onlineIndicatorLabel: KSecondaryLabel!
+	@IBOutlet weak var onlineIndicatorView: UIView!
+	@IBOutlet weak var onlineIndicatorContainerView: UIView!
 	@IBOutlet weak var bannerImageView: UIImageView!
 	@IBOutlet weak var bioTextView: KTextView!
 
@@ -28,7 +29,6 @@ class ProfileTableViewController: KTableViewController {
 	@IBOutlet weak var followersButton: KButton!
 
 	@IBOutlet weak var proBadgeButton: UIButton!
-	@IBOutlet weak var tagBadgeButton: UIButton!
 	@IBOutlet weak var verificationImageView: UIImageView!
 
 	@IBOutlet weak var selectBannerImageButton: KButton!
@@ -290,7 +290,7 @@ class ProfileTableViewController: KTableViewController {
 			#endif
 		}
 
-		if self.user == nil {
+		if self.user == nil || self.user.id != userIdentity.id {
 			KService.getDetails(forUser: userIdentity) { [weak self] result in
 				guard let self = self else { return }
 				switch result {
@@ -351,8 +351,14 @@ class ProfileTableViewController: KTableViewController {
 		self.usernameLabel.isHidden = false
 
 		// Configure online status
-		self.onlineIndicatorLabel.text = user.attributes.activityStatus.stringValue
-		self.onlineIndicatorLabel.isHidden = false
+		self.onlineIndicatorContainerView.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+		self.onlineIndicatorContainerView.roundCorners(.allCorners, radius: 12.5)
+
+		self.onlineIndicatorView.backgroundColor = user.attributes.activityStatus.colorValue
+		self.onlineIndicatorView.roundCorners(.allCorners, radius: 7.5)
+
+		self.onlineIndicatorContainerView.isHidden = false
+		self.onlineIndicatorView.isHidden = false
 
 		// Configure profile image
 		user.attributes.profileImage(imageView: self.profileImageView)
@@ -420,23 +426,9 @@ class ProfileTableViewController: KTableViewController {
 		self.verificationImageView.isHidden = !user.attributes.isVerified
 		self.proBadgeButton.isHidden = !user.attributes.isPro || !user.attributes.isSubscribed
 
-		// Configure badge & badge button
+		// Determine badge count
 		var badgeCount = 0
 		if let badges = user.relationships?.badges?.data {
-			// Configure user badge (a.k.a tag)
-			if !badges.isEmpty {
-				self.tagBadgeButton.isHidden = false
-				if let badge = badges.last {
-					self.tagBadgeButton.setTitle(badge.attributes.name, for: .normal)
-					self.tagBadgeButton.setTitleColor(UIColor(hexString: badge.attributes.textColor), for: .normal)
-					self.tagBadgeButton.backgroundColor = UIColor(hexString: badge.attributes.backgroundColor)
-					self.tagBadgeButton.borderColor = UIColor(hexString: badge.attributes.textColor)
-					self.profileImageView.borderColor = UIColor(hexString: badge.attributes.textColor)
-				}
-			} else {
-				self.tagBadgeButton.isHidden = true
-			}
-
 			badgeCount = badges.count
 		}
 
