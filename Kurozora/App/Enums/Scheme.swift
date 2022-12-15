@@ -17,6 +17,7 @@ import Foundation
 /// case library, myLibrary, list
 /// case feed, timeline
 /// case notification, notifications
+/// case search
 /// ```
 enum Scheme: String, CaseIterable {
 	case anime, show
@@ -25,4 +26,5 @@ enum Scheme: String, CaseIterable {
 	case library, myLibrary, list
 	case feed, timeline
 	case notification, notifications
+	case search
 }

@@ -280,6 +280,27 @@ extension KurozoraKit {
 		})
 	}
 
+	/// Search for a user using the given username.
+	///
+	/// - Parameters:
+	///    - username: The username to search for.
+	public func searchUsers(for username: String) -> RequestSender<UserIdentityResponse, KKAPIError> {
+		// Prepare headers
+		var headers = headers
+		if !self.authenticationKey.isEmpty {
+			headers.add(.authorization(bearerToken: self.authenticationKey))
+		}
+
+		// Prepare request
+		let usersSearch = KKEndpoint.Users.search(username).endpointValue
+		let request: APIRequest<UserIdentityResponse, KKAPIError> = tron.codable.request(usersSearch)
+			.method(.get)
+			.headers(headers)
+
+		// Send request
+		return request.sender()
+	}
+
 	/// Deletes the authenticated user's account.
 	///
 	/// - Parameters:

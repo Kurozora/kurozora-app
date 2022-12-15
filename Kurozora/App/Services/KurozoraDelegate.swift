@@ -221,28 +221,44 @@ class KurozoraDelegate {
 			}
 		case .profile, .user:
 			guard let userID = url.lastPathComponent.int else { return }
+			let profileTableViewController = ProfileTableViewController.`init`(with: userID)
 
-			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
-				tabBarController.selectedIndex = 4
-
-				let profileTableViewController = ProfileTableViewController.`init`(with: userID)
-				tabBarController.selectedViewController?.show(profileTableViewController, sender: nil)
+			if UIDevice.isPhone {
+				guard let splitViewController = UIApplication.topSplitViewController else { return }
+				let tabBarController = splitViewController.viewController(for: .compact) as? UITabBarController
+				tabBarController?.selectedViewController?.show(profileTableViewController, sender: nil)
+			} else {
+				UIApplication.topViewController?.show(profileTableViewController, sender: nil)
 			}
 		case .explore, .home:
-			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
-				tabBarController.selectedIndex = 0
+			if UIDevice.isPhone {
+				guard let splitViewController = UIApplication.topSplitViewController else { return }
+				let tabBarController = splitViewController.viewController(for: .compact) as? UITabBarController
+				tabBarController?.selectedIndex = 0
 			}
 		case .library, .myLibrary, .list:
-			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
-				tabBarController.selectedIndex = 1
+			if UIDevice.isPhone {
+				guard let splitViewController = UIApplication.topSplitViewController else { return }
+				let tabBarController = splitViewController.viewController(for: .compact) as? UITabBarController
+				tabBarController?.selectedIndex = 1
 			}
 		case .feed, .timeline:
-			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
-				tabBarController.selectedIndex = 4
+			if UIDevice.isPhone {
+				guard let splitViewController = UIApplication.topSplitViewController else { return }
+				let tabBarController = splitViewController.viewController(for: .compact) as? UITabBarController
+				tabBarController?.selectedIndex = 2
 			}
 		case .notification, .notifications:
-			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
-				tabBarController.selectedIndex = 3
+			if UIDevice.isPhone {
+				guard let splitViewController = UIApplication.topSplitViewController else { return }
+				let tabBarController = splitViewController.viewController(for: .compact) as? UITabBarController
+				tabBarController?.selectedIndex = 3
+			}
+		case .search:
+			if UIDevice.isPhone {
+				guard let splitViewController = UIApplication.topSplitViewController else { return }
+				let tabBarController = splitViewController.viewController(for: .compact) as? UITabBarController
+				tabBarController?.selectedIndex = 4
 			}
 		}
 	}

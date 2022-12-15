@@ -68,6 +68,43 @@ extension UIApplication {
 		return base
 	}
 
+	/// Return the top (root) view controller of a given view controller.
+	///
+	/// If no base view controller is specified then this function returms the application root view controller.
+	///
+	/// - Parameter base: The base view controller that a view controller will be presented on top of.
+	///
+	/// - Returns: the top (root) split view controller of a given view controller.
+	private class func topSplitViewController(_ base: UIViewController?) -> UIViewController? {
+		if let nav = base as? UINavigationController {
+			let top = self.topViewController(nav.visibleViewController)
+			return top
+		}
+
+		if let tab = base as? UITabBarController {
+			if let selected = tab.selectedViewController {
+				let top = self.topViewController(selected)
+				return top
+			}
+		}
+
+		if let split = base as? UISplitViewController {
+			return split
+		}
+
+		if let presented = base?.presentedViewController {
+			let top = self.topViewController(presented)
+			return top
+		}
+		return base
+	}
+
+	/// The root split view controller of the application.
+	static var topSplitViewController: UISplitViewController? {
+		let base = UIApplication.sharedKeyWindow?.rootViewController
+		return UIApplication.topSplitViewController(base) as? UISplitViewController
+	}
+
 	/// The root view controller of the application.
 	static var topViewController: UIViewController? {
 		let base = UIApplication.sharedKeyWindow?.rootViewController

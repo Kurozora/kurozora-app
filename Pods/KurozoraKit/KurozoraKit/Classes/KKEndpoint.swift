@@ -276,11 +276,14 @@ extension KKEndpoint {
 		/// The endpoint to a user's following list.
 		case following(_ userIdentity: UserIdentity)
 
+		/// The endpoint to view a user's favorite shows.
+		case favoriteShow(_ userIdentity: UserIdentity)
+
 		/// The endpoint to a user's profile.
 		case profile(_ userIdentity: UserIdentity)
 
-		/// The endpoint to view a user's favorite shows.
-		case favoriteShow(_ userIdentity: UserIdentity)
+		/// The endpoint to search for a user.
+		case search(_ username: String)
 
 		/// The endpoint to delete a user's account.
 		case delete
@@ -309,6 +312,8 @@ extension KKEndpoint {
 				return "users/\(userIdentity.id)/favorite-anime"
 			case .profile(let userIdentity):
 				return "users/\(userIdentity.id)/profile"
+			case .search(let username):
+				return "users/search/\(username)"
 			case .delete:
 				return "users/delete"
 			}
