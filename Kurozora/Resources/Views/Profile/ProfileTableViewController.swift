@@ -562,13 +562,13 @@ class ProfileTableViewController: KTableViewController {
 			// Only ask if the user wants to send if they attempt to pull to dismiss, not if they tap Cancel.
 			if showingUpdate {
 				// Send action.
-				actionSheetAlertController.addAction(UIAlertAction(title: "Update", style: .default) { _ in
+				actionSheetAlertController.addAction(UIAlertAction(title: Trans.update, style: .default) { _ in
 					self.updateProfileDetails()
 				})
 			}
 
 			// Discard action.
-			actionSheetAlertController.addAction(UIAlertAction(title: "Discard", style: .destructive) { _ in
+			actionSheetAlertController.addAction(UIAlertAction(title: Trans.discard, style: .destructive) { _ in
 				self.cancelProfileEdit()
 			})
 		}
@@ -594,7 +594,7 @@ class ProfileTableViewController: KTableViewController {
 		// If `originalProfileImage` is equal to `editedProfileImage`, then no change has happened: return `nil`
 		// If `originalProfileImage` is not equal to `editedProfileImage`, then something changed: return `editedProfileImage`
 		// If `editedProfileImage` is equal to the user's placeholder, then the user removed the current profile image: return `UIImage()`
-		var profileImageURL: URL? = nil
+		var profileImageURL: URL? = URL(string: "kurozora://profileimage")
 		if let indefinitiveProfileImage = self.originalProfileImage.isEqual(to: self.editedProfileImage) ? nil : self.editedProfileImage {
 			profileImageURL = indefinitiveProfileImage.isEqual(to: self.user.attributes.profilePlaceholderImage) ? nil : self.editedProfileImageURL
 		}
@@ -602,7 +602,7 @@ class ProfileTableViewController: KTableViewController {
 		// If `originalBannerImage` is equal to `editedBannerImage`, then no change has happened: return `nil`
 		// If `originalBannerImage` is not equal to `editedBannerImage`, then something changed: return `editedBannerImage`
 		// If `editedBannerImage` is equal to the user's placeholder, then the user removed the current banner image: return `UIImage()`
-		var bannerImageURL: URL? = nil
+		var bannerImageURL: URL? = URL(string: "kurozora://bannerimage")
 		if let indefinitiveBannerImage = self.originalBannerImage.isEqual(to: self.editedBannerImage) ? nil : self.editedBannerImage {
 			bannerImageURL = indefinitiveBannerImage.isEqual(to: self.user.attributes.bannerPlaceholderImage) ? nil : self.editedBannerImageURL
 		}

@@ -16,7 +16,7 @@ import SwifterSwift
 typealias KKSong = Song
 
 // MARK: - KurozoraKit
- let KService = KurozoraKit().services(KurozoraDelegate.shared.services)
+let KService = KurozoraKit().services(KurozoraDelegate.shared.services)
 var KSettings: Settings?
 var store: Store! = nil
 
