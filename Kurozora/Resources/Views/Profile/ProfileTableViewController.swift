@@ -1027,4 +1027,34 @@ extension ProfileTableViewController: UITextViewDelegate {
 			textView.theme_textColor = KThemePicker.textFieldPlaceholderTextColor.rawValue
 		}
 	}
+
+	func getUserIdentity(username: String) async -> UserIdentity? {
+		do {
+			let userIdentityResponse = try await KService.searchUsers(for: username).value
+			return userIdentityResponse.data.first
+		} catch {
+			print("-----", error.localizedDescription)
+			return nil
+		}
+	}
+
+	func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+		if URL.absoluteString.starts(with: "https://kurozora.app/profile") {
+			Task { [weak self] in
+				guard let self = self else { return }
+				let username = URL.lastPathComponent
+				guard let userIdentity = await self.getUserIdentity(username: username) else { return }
+				let deeplink = URL.absoluteString
+					.replacingOccurrences(of: "https://kurozora.app/", with: "kurozora://")
+					.replacingOccurrences(of: username, with: "\(userIdentity.id)")
+					.url
+
+				UIApplication.shared.kOpen(nil, deepLink: deeplink)
+			}
+
+			return false
+		}
+
+		return true
+	}
 }

@@ -166,6 +166,16 @@ class BaseFeedMessageCell: KTableViewCell {
 		}
 	}
 
+	fileprivate func getUserIdentity(username: String) async -> UserIdentity? {
+		do {
+			let userIdentityResponse = try await KService.searchUsers(for: username).value
+			return userIdentityResponse.data.first
+		} catch {
+			print("-----", error.localizedDescription)
+			return nil
+		}
+	}
+
 	// MARK: - IBActions
 	@objc func usernameLabelPressed(_ sender: AnyObject) {
 		self.delegate?.baseFeedMessageCell(self, didPressUserName: sender)
@@ -184,16 +194,6 @@ class BaseFeedMessageCell: KTableViewCell {
 	@IBAction func reShareButtonPressed(_ sender: UIButton) {
 		self.delegate?.baseFeedMessageCell(self, didPressReShareButton: sender)
 		sender.animateBounce()
-	}
-
-	func getUserIdentity(username: String) async -> UserIdentity? {
-		do {
-			let userIdentityResponse = try await KService.searchUsers(for: username).value
-			return userIdentityResponse.data.first
-		} catch {
-			print("-----", error.localizedDescription)
-			return nil
-		}
 	}
 }
 
