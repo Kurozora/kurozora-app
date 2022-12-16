@@ -43,6 +43,9 @@ extension ShowDetailsCollectionViewController {
 		case .seasons:
 			let season = self.seasons[indexPath]
 			self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.episodesListSegue.identifier, sender: season)
+		case .songs:
+			let song = self.showSongs[indexPath.item].song
+			self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.songDetailsSegue.identifier, sender: song)
 		case .studios:
 			let studio = self.studios[indexPath]
 			self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.studioDetailsSegue.identifier, sender: studio)
@@ -63,6 +66,8 @@ extension ShowDetailsCollectionViewController {
 			return self.seasons[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .cast:
 			return self.cast[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		case .songs:
+			return self.showSongs[indexPath.item].song.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .studios:
 			return self.studios[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .moreByStudio:

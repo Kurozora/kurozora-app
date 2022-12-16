@@ -308,20 +308,19 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
 		case R.segue.showDetailsCollectionViewController.seasonsListSegue.identifier:
+			// Segue to seasons list
 			guard let seasonsCollectionViewController = segue.destination as? SeasonsListCollectionViewController else { return }
 			seasonsCollectionViewController.showIdentity = self.showIdentity
 		case R.segue.showDetailsCollectionViewController.castListSegue.identifier:
+			// Segue to cast list
 			guard let castListCollectionViewController = segue.destination as? CastListCollectionViewController else { return }
 			castListCollectionViewController.showIdentity = self.showIdentity
 		case R.segue.showDetailsCollectionViewController.songsListSegue.identifier:
+			// Segue to songs list
 			guard let showSongsListCollectionViewController = segue.destination as? ShowSongsListCollectionViewController else { return }
 			showSongsListCollectionViewController.showIdentity = self.showIdentity
-		case R.segue.showDetailsCollectionViewController.episodesListSegue.identifier:
-			guard let episodesListCollectionViewController = segue.destination as? EpisodesListCollectionViewController else { return }
-			guard let season = sender as? Season else { return }
-			episodesListCollectionViewController.seasonIdentity = SeasonIdentity(id: season.id)
-			episodesListCollectionViewController.episodesListFetchType = .season
 		case R.segue.showDetailsCollectionViewController.showsListSegue.identifier:
+			// Segue to shows list
 			guard let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController else { return }
 			guard let indexPath = sender as? IndexPath else { return }
 
@@ -335,29 +334,45 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 				showsListCollectionViewController.showsListFetchType = .relatedShow
 			}
 		case R.segue.showDetailsCollectionViewController.studiosListSegue.identifier:
+			// Segue to studios list
 			guard let studiosListCollectionViewController = segue.destination as? StudiosListCollectionViewController else { return }
 			studiosListCollectionViewController.showIdentity = self.showIdentity
 			studiosListCollectionViewController.studiosListFetchType = .show
 		case R.segue.showDetailsCollectionViewController.showDetailsSegue.identifier:
+			// Segue to show details
 			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
 			showDetailsCollectionViewController.show = show
 		case R.segue.showDetailsCollectionViewController.studioDetailsSegue.identifier:
+			// Segue to studio details
 			guard let studioDetailsCollectionViewController = segue.destination as? StudioDetailsCollectionViewController else { return }
 			guard let studio = sender as? Studio else { return }
 			studioDetailsCollectionViewController.studio = studio
 		case R.segue.showDetailsCollectionViewController.characterDetailsSegue.identifier:
+			// Segue to character details
 			guard let characterDetailsCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController else { return }
 			guard let cell = sender as? CastCollectionViewCell else { return }
 			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 			guard let character = self.cast[indexPath]?.relationships.characters.data.first else { return }
 			characterDetailsCollectionViewController.character = character
 		case R.segue.showDetailsCollectionViewController.personDetailsSegue.identifier:
+			// Segue to person details
 			guard let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController else { return }
 			guard let cell = sender as? CastCollectionViewCell else { return }
 			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 			guard let person = self.cast[indexPath]?.relationships.people.data.first else { return }
 			personDetailsCollectionViewController.person = person
+		case R.segue.showDetailsCollectionViewController.episodesListSegue.identifier:
+			// Segue to season details
+			guard let episodesListCollectionViewController = segue.destination as? EpisodesListCollectionViewController else { return }
+			guard let season = sender as? Season else { return }
+			episodesListCollectionViewController.seasonIdentity = SeasonIdentity(id: season.id)
+			episodesListCollectionViewController.episodesListFetchType = .season
+		case R.segue.homeCollectionViewController.songDetailsSegue.identifier:
+			// Segue to song details
+			guard let songDetailsCollectionViewController = segue.destination as? SongDetailsCollectionViewController else { return }
+			guard let song = sender as? Song else { return }
+			songDetailsCollectionViewController.song = song
 		default: break
 		}
 	}
