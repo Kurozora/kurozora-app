@@ -21,7 +21,10 @@ class SwitchAccountsTableViewController: SubSettingsViewController {
 	override func viewWillReload() {
 		super.viewWillReload()
 
-		tableView.reloadData()
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			self.tableView.reloadData()
+		}
 	}
 
 	// MARK: - IBActions
