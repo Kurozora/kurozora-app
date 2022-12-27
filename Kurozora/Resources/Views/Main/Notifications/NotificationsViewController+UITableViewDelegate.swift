@@ -108,7 +108,7 @@ extension NotificationsTableViewController {
 	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 		guard let userNotification = self.dataSource.itemIdentifier(for: indexPath) else { return nil }
 
-		let deleteAction = UIContextualAction(style: .destructive, title: "Remove") { _, _, completionHandler in
+		let deleteAction = UIContextualAction(style: .destructive, title: Trans.remove) { _, _, completionHandler in
 			Task {
 				await userNotification.remove(at: indexPath)
 				completionHandler(true)

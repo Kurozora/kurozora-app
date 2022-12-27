@@ -946,7 +946,7 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate {
 			}))
 
 			if !self.editedProfileImage.isEqual(to: self.user.attributes.profilePlaceholderImage) {
-				actionSheetAlertController.addAction(UIAlertAction(title: "Remove", style: .destructive, handler: { _ in
+				actionSheetAlertController.addAction(UIAlertAction(title: Trans.remove, style: .destructive, handler: { _ in
 					self.profileImageView.image = self.user.attributes.profilePlaceholderImage
 					self.editedProfileImage = self.profileImageView.image
 				}))
@@ -977,7 +977,7 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate {
 			}))
 
 			if !self.editedBannerImage.isEqual(to: self.user.attributes.bannerPlaceholderImage) {
-				actionSheetAlertController.addAction(UIAlertAction(title: "Remove", style: .destructive, handler: { _ in
+				actionSheetAlertController.addAction(UIAlertAction(title: Trans.remove, style: .destructive, handler: { _ in
 					self.bannerImageView.image = self.user.attributes.bannerPlaceholderImage
 					self.editedBannerImage = self.bannerImageView.image
 				}))

@@ -35,7 +35,7 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 
 		// Configure properties
 		self.originalProfileImage = #imageLiteral(resourceName: "Placeholders/User Profile")
-		self.accountOnboardingType = isSIWA ? .siwa : .signUp
+		self.accountOnboardingType = self.isSIWA ? .siwa : .signUp
 	}
 
 	// MARK: - Functions
@@ -72,14 +72,23 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 		}
 	}
 
-	/// Disables or enables the user interaction on the current view. Also shows a loading indicator.
-	///
-	/// - Parameter disable: Indicates whether to disable the interaction.
-	func disableUserInteraction(_ disable: Bool) {
-		self.navigationItem.hidesBackButton = disable
-		self.navigationItem.rightBarButtonItem?.isEnabled = !disable
-		self._prefersActivityIndicatorHidden = !disable
-		self.view.isUserInteractionEnabled = !disable
+	func signUp(withUsername username: String, emailAddress: String, password: String, profileImage: UIImage?) async {
+		do {
+			_ = try await KService.signUp(withUsername: username, emailAddress: emailAddress, password: password, profileImage: profileImage).value
+
+			self.presentAlertController(title: Trans.signUpAlertHeadline, message: Trans.signUpAlertSubheadline, defaultActionButtonTitle: Trans.done) { [weak self] _ in
+				guard let self = self else { return }
+				self.dismiss(animated: true, completion: nil)
+			}
+		} catch let error as KKAPIError {
+			self.presentAlertController(title: Trans.signUpErrorAlertHeadline, message: error.message)
+			print(error.message)
+		} catch {
+			print(error.localizedDescription)
+		}
+
+		// Re-enable user interaction.
+		self.disableUserInteraction(false)
 	}
 
 	// MARK: - IBActions
@@ -97,21 +106,9 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 			self.disableUserInteraction(true)
 
 			// Perform sign up request.
-			KService.signUp(withUsername: username, emailAddress: emailAddress, password: password, profileImage: profileImage) { [weak self] result in
+			Task { [weak self] in
 				guard let self = self else { return }
-				switch result {
-				case .success:
-					// Re-enable user interaction.
-					self.disableUserInteraction(false)
-
-					// Present welcome message.
-					self.presentAlertController(title: "Hooray!", message: "Account created successfully! Please check your email for confirmation.", defaultActionButtonTitle: Trans.done) { _ in
-						self.dismiss(animated: true, completion: nil)
-					}
-				case .failure:
-					// Re-enable user interaction.
-					self.disableUserInteraction(false)
-				}
+				await self.signUp(withUsername: username, emailAddress: emailAddress, password: password, profileImage: profileImage)
 			}
 		case .siwa:
 			let username = textFieldArray.first??.trimmedText
@@ -161,7 +158,7 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 			}))
 
 			if !self.editedProfileImage.isEqual(to: #imageLiteral(resourceName: "Placeholders/User Profile")) {
-				actionSheetAlertController.addAction(UIAlertAction(title: "Remove", style: .destructive, handler: { _ in
+				actionSheetAlertController.addAction(UIAlertAction(title: Trans.remove, style: .destructive, handler: { _ in
 					self.profileImageView.image = #imageLiteral(resourceName: "Placeholders/User Profile")
 					self.editedProfileImage = self.profileImageView.image
 				}))
