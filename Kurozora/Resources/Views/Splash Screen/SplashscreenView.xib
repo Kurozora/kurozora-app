@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SplashscreenViewController" customModule="Kurozora" customModuleProvider="target">
+            <connections>
+                <outlet property="sceneView" destination="i5M-Pr-FkT" id="Ieg-tm-MXE"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT" customClass="SplashscreenView" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Launch Icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="KVZ-N2-r3h">
+                    <rect key="frame" x="132.66666666666666" y="374.66666666666669" width="127.99999999999997" height="128"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="KVZ-N2-r3h" secondAttribute="height" multiplier="1:1" id="Iuc-CW-PFB"/>
+                        <constraint firstAttribute="width" constant="128" id="LTy-8A-99A"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="KVZ-N2-r3h" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="G6C-nb-Day"/>
+                <constraint firstItem="KVZ-N2-r3h" firstAttribute="width" secondItem="KVZ-N2-r3h" secondAttribute="height" multiplier="1:1" id="XI4-8D-oAB"/>
+                <constraint firstItem="KVZ-N2-r3h" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="qT4-u3-Pk8"/>
+            </constraints>
+            <connections>
+                <outlet property="logoImageView" destination="KVZ-N2-r3h" id="vpB-1F-N19"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="21"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Launch Icon.png" width="1024" height="1024"/>
+    </resources>
+</document>

@@ -352,6 +352,14 @@
 		66BEC13523191D090039D683 /* NSLayoutManager+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BEC13423191D090039D683 /* NSLayoutManager+Kurozora.swift */; };
 		66BEC13723191E6D0039D683 /* RatingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BEC13623191E6D0039D683 /* RatingCollectionViewCell.swift */; };
 		66BFF4EB25FFF879009EBA30 /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BFF4EA25FFF879009EBA30 /* SidebarViewController.swift */; };
+		66C1E7E6295A16AD00C7C44C /* SplashscreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C1E7DE295A16AD00C7C44C /* SplashscreenPresenter.swift */; };
+		66C1E7E7295A16AD00C7C44C /* SplashscreenWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C1E7DF295A16AD00C7C44C /* SplashscreenWorker.swift */; };
+		66C1E7E8295A16AD00C7C44C /* SplashscreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C1E7E0295A16AD00C7C44C /* SplashscreenRouter.swift */; };
+		66C1E7E9295A16AD00C7C44C /* SplashscreenModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C1E7E1295A16AD00C7C44C /* SplashscreenModels.swift */; };
+		66C1E7EA295A16AD00C7C44C /* SplashscreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C1E7E2295A16AD00C7C44C /* SplashscreenViewController.swift */; };
+		66C1E7EB295A16AD00C7C44C /* SplashscreenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C1E7E3295A16AD00C7C44C /* SplashscreenInteractor.swift */; };
+		66C1E7EC295A16AD00C7C44C /* SplashscreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C1E7E4295A16AD00C7C44C /* SplashscreenView.swift */; };
+		66C1E7ED295A16AD00C7C44C /* SplashscreenView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66C1E7E5295A16AD00C7C44C /* SplashscreenView.xib */; };
 		66C27A7123E243FB00BC09D3 /* LibraryStatisticsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C27A7023E243FB00BC09D3 /* LibraryStatisticsCollectionViewCell.swift */; };
 		66C2C5262107ACA10020E21F /* KTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C2C5252107ACA10020E21F /* KTabBarController.swift */; };
 		66C34FC327DCDBC900298C81 /* UpcomingLockupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66C34FC227DCD9D900298C81 /* UpcomingLockupCollectionViewCell.xib */; };
@@ -898,6 +906,14 @@
 		66BF02B5209CAACD00BDAF41 /* PostLinkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLinkCell.swift; sourceTree = "<group>"; };
 		66BF02B6209CAACD00BDAF41 /* PostLinkCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostLinkCell.xib; sourceTree = "<group>"; };
 		66BFF4EA25FFF879009EBA30 /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
+		66C1E7DE295A16AD00C7C44C /* SplashscreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashscreenPresenter.swift; sourceTree = "<group>"; };
+		66C1E7DF295A16AD00C7C44C /* SplashscreenWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashscreenWorker.swift; sourceTree = "<group>"; };
+		66C1E7E0295A16AD00C7C44C /* SplashscreenRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashscreenRouter.swift; sourceTree = "<group>"; };
+		66C1E7E1295A16AD00C7C44C /* SplashscreenModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashscreenModels.swift; sourceTree = "<group>"; };
+		66C1E7E2295A16AD00C7C44C /* SplashscreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashscreenViewController.swift; sourceTree = "<group>"; };
+		66C1E7E3295A16AD00C7C44C /* SplashscreenInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashscreenInteractor.swift; sourceTree = "<group>"; };
+		66C1E7E4295A16AD00C7C44C /* SplashscreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashscreenView.swift; sourceTree = "<group>"; };
+		66C1E7E5295A16AD00C7C44C /* SplashscreenView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SplashscreenView.xib; sourceTree = "<group>"; };
 		66C27A7023E243FB00BC09D3 /* LibraryStatisticsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryStatisticsCollectionViewCell.swift; sourceTree = "<group>"; };
 		66C2C5252107ACA10020E21F /* KTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KTabBarController.swift; sourceTree = "<group>"; };
 		66C34FC227DCD9D900298C81 /* UpcomingLockupCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpcomingLockupCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -1386,7 +1402,7 @@
 			path = "Player Presentation";
 			sourceTree = "<group>";
 		};
-		661F9F872087383500CF4153 /* Onboard */ = {
+		661F9F872087383500CF4153 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
 				66B13A662405DBE000CD732B /* Onboarding.storyboard */,
@@ -1396,7 +1412,7 @@
 				661F9F7F2087282500CF4153 /* SignUpTableViewController.swift */,
 				66CAE6832337CF9B00991E59 /* Cells */,
 			);
-			path = Onboard;
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		66232CD7231004EE00C45B5A /* Cells */ = {
@@ -2238,6 +2254,8 @@
 			children = (
 				66FA97D4281A174D0054FC2E /* Components */,
 				66AA35C1240312210006EC5B /* Main */,
+				66C1E7DD295A168800C7C44C /* Splash Screen */,
+				661F9F872087383500CF4153 /* Onboarding */,
 				664A066121EA23CA008CF4A6 /* Genres */,
 				6671F28627A5854F005D3A0D /* Themes */,
 				6684225125974DE9000A09F8 /* Favorites */,
@@ -2413,7 +2431,6 @@
 				66EDBA52294420DA00FF1A2E /* Warning */,
 				669EA99E22C148D300784181 /* In-App Purchases */,
 				66A08C6B23E3A2DD007B6418 /* Legal */,
-				661F9F872087383500CF4153 /* Onboard */,
 				66CE8105246088C000DB0C49 /* Services */,
 				66B216A921C166B5006E167D /* Text Editor */,
 				66D8AA7522F0DDFE00456E75 /* Web Browser */,
@@ -2478,6 +2495,21 @@
 				66BEC132231711DD0039D683 /* KWhatsNewViewController.swift */,
 			);
 			path = WhatsNew;
+			sourceTree = "<group>";
+		};
+		66C1E7DD295A168800C7C44C /* Splash Screen */ = {
+			isa = PBXGroup;
+			children = (
+				66C1E7DE295A16AD00C7C44C /* SplashscreenPresenter.swift */,
+				66C1E7DF295A16AD00C7C44C /* SplashscreenWorker.swift */,
+				66C1E7E0295A16AD00C7C44C /* SplashscreenRouter.swift */,
+				66C1E7E1295A16AD00C7C44C /* SplashscreenModels.swift */,
+				66C1E7E2295A16AD00C7C44C /* SplashscreenViewController.swift */,
+				66C1E7E3295A16AD00C7C44C /* SplashscreenInteractor.swift */,
+				66C1E7E4295A16AD00C7C44C /* SplashscreenView.swift */,
+				66C1E7E5295A16AD00C7C44C /* SplashscreenView.xib */,
+			);
+			path = "Splash Screen";
 			sourceTree = "<group>";
 		};
 		66C27A7223E3A09E00BC09D3 /* Privacy */ = {
@@ -3325,6 +3357,7 @@
 				6675263022280ACB007C1617 /* Day.plist in Resources */,
 				66CBDDA124649CB300CA5F83 /* Synopsis.storyboard in Resources */,
 				664E2CE3289B39180002F886 /* BaseNotificationCell.xib in Resources */,
+				66C1E7ED295A16AD00C7C44C /* SplashscreenView.xib in Resources */,
 				66C45841259A88ED00886374 /* Grass.plist in Resources */,
 				66EDBA622944212B00FF1A2E /* WarningView.xib in Resources */,
 				66842253259760F4000A09F8 /* Favorites.storyboard in Resources */,
@@ -3469,6 +3502,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66C1E7E9295A16AD00C7C44C /* SplashscreenModels.swift in Sources */,
 				66C898EA24E17C3E00305C96 /* ShowAttributes+UIKit.swift in Sources */,
 				66AE1E0B24A0C41300FD3FFC /* StudioDetailsCollectionViewController.swift in Sources */,
 				6645408428270B750001E5B2 /* PeopleListCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
@@ -3486,6 +3520,7 @@
 				66EDBA5D2944212B00FF1A2E /* WarningRouter.swift in Sources */,
 				6698D3C924E59427006B7A4C /* ReminderStatus+Kurozora.swift in Sources */,
 				667F9AD921B47FA4003F6629 /* BadgesTableViewController.swift in Sources */,
+				66C1E7E6295A16AD00C7C44C /* SplashscreenPresenter.swift in Sources */,
 				667074D523382756008C1A75 /* AccountOnboardingTableViewController.swift in Sources */,
 				66856E862931AF0B0083160D /* SongDetailsCollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				66FA97CA281A12620054FC2E /* SidebarItem.swift in Sources */,
@@ -3530,6 +3565,7 @@
 				66EAB5BE28591FAC00D81C06 /* UsersListCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				664AAF9F24EEED0000FF4AA5 /* PersonInformation.swift in Sources */,
 				664B6D7E230F5AA300F9C726 /* UITableView+Kurozora.swift in Sources */,
+				66C1E7E8295A16AD00C7C44C /* SplashscreenRouter.swift in Sources */,
 				66AEABDA22987A4D00949FD8 /* KThemePicker.swift in Sources */,
 				6645407F2821EF090001E5B2 /* RoundedRectangleImageView.swift in Sources */,
 				66AEABEF22993E9C00949FD8 /* NotificationsOptionsViewController.swift in Sources */,
@@ -3622,7 +3658,9 @@
 				66B4DBF8245396650097135A /* KeychainAccess+Kurozora.swift in Sources */,
 				66EA1E1525B639D700FCD07A /* KFeedMessageTextEditorViewDelegate.swift in Sources */,
 				66973DFD231202AF0097A9F8 /* UserSettingsKey.swift in Sources */,
+				667904362959A6310006EE01 /* OnboardingSwiftUIView.swift in Sources */,
 				66EF26C6215F960A00FB2B19 /* UIImage+Kurozora.swift in Sources */,
+				66C1E7E7295A16AD00C7C44C /* SplashscreenWorker.swift in Sources */,
 				6601F1AC2118488D0074C1DD /* IconNotificationCell.swift in Sources */,
 				669E0359256B218900CEB794 /* Session+UIKit.swift in Sources */,
 				6609FAD721D8D237008DF5E4 /* KurozoraDelegate.swift in Sources */,
@@ -3723,6 +3761,7 @@
 				66FDDB7323B95AF600364886 /* UICollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				663F8C4B22F1882F00F1EACB /* ProductPreviewTableViewCell.swift in Sources */,
 				66BA740A223DB20800AEB8ED /* CellStyle.swift in Sources */,
+				66C1E7EC295A16AD00C7C44C /* SplashscreenView.swift in Sources */,
 				66B69BD6214544DB007154BD /* LegalViewController.swift in Sources */,
 				66B4DBEF2450E5780097135A /* SignInWithAppleTableViewController.swift in Sources */,
 				6640E18B22AD634600D0F575 /* AuthenticationViewController.swift in Sources */,
@@ -3765,6 +3804,7 @@
 				66593123259CE689006732C8 /* TouchBar+Kurozora.swift in Sources */,
 				660E39DB25E4451300A46EB0 /* NotificationsViewController+UITableViewDelegate.swift in Sources */,
 				66CAE6852337CFB000991E59 /* OnboardingTextFieldTableViewCell.swift in Sources */,
+				66C1E7EB295A16AD00C7C44C /* SplashscreenInteractor.swift in Sources */,
 				661F9F832087282500CF4153 /* SignUpTableViewController.swift in Sources */,
 				66CE8116246093CF00DB0C49 /* ServiceHeaderTableViewCell.swift in Sources */,
 				66192D7327CEA3720041D102 /* WorkflowController+MusicKit.swift in Sources */,
@@ -3862,6 +3902,7 @@
 				6648ED7022A4636E00E1BE18 /* GroupedNotifications.swift in Sources */,
 				660E39F925E5CF3900A46EB0 /* CharacterDetailsCollectionViewController+UICollectionViewDelegate.swift in Sources */,
 				6638CE6326BF42FE00A1A6A9 /* GenresCollectionViewController+KCollectionViewDataSource.swift in Sources */,
+				66C1E7EA295A16AD00C7C44C /* SplashscreenViewController.swift in Sources */,
 				66C86404216DFB850054EE16 /* SeasonLockupCollectionViewCell.swift in Sources */,
 				66CDC090234A9704009E799C /* ProductActionTableViewCell.swift in Sources */,
 				66BEC133231711DD0039D683 /* KWhatsNewViewController.swift in Sources */,
