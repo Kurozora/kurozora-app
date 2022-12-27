@@ -189,7 +189,9 @@ extension AppDelegate {
 
 	/// User chose "Sign Out" from the Account menu.
 	@objc func handleSignOut(_ sender: AnyObject) {
-		WorkflowController.shared.signOut()
+		Task {
+			await WorkflowController.shared.signOut()
+		}
 	}
 
 	/// User chose "Upgrade to Kurozora+..." from the Account menu.

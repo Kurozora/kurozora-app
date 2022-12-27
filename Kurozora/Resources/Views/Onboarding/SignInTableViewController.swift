@@ -20,7 +20,7 @@ class SignInTableViewController: AccountOnboardingTableViewController {
 
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		performExistingAccountSetupFlows()
+		self.performExistingAccountSetupFlows()
 	}
 
 	// MARK: - Functions
@@ -43,8 +43,8 @@ class SignInTableViewController: AccountOnboardingTableViewController {
 	///    - email: The email address of the user.
 	///    - password: The password of the user.
 	func signInWithKurozora(email: String? = nil, password: String? = nil) {
-		guard let kurozoraID = email ?? textFieldArray.first??.trimmedText else { return }
-		guard let password = password ?? textFieldArray.last??.text else { return }
+		guard let kurozoraID = email ?? self.textFieldArray.first??.trimmedText else { return }
+		guard let password = password ?? self.textFieldArray.last??.text else { return }
 
 		KService.signIn(kurozoraID, password) { [weak self] result in
 			guard let self = self else { return }
@@ -61,7 +61,9 @@ class SignInTableViewController: AccountOnboardingTableViewController {
 					UserSettings.shared.removeObject(forKey: UserSettingsKey.lastNotificationRegistrationRequest.rawValue)
 					WorkflowController.shared.registerForPushNotifications()
 				}
-			case .failure: break
+			case .failure:
+				// Re-enable user interaction.
+				self.disableUserInteraction(false)
 			}
 		}
 	}
@@ -141,9 +143,13 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 							signUpTableViewController.isSIWA = true
 							self.show(signUpTableViewController, sender: nil)
 						}
-					default: break
+					default:
+						// Re-enable user interaction.
+						self.disableUserInteraction(false)
 					}
-				case .failure: break
+				case .failure:
+					// Re-enable user interaction.
+					self.disableUserInteraction(false)
 				}
 			}
 		case let passwordCredential as ASPasswordCredential:

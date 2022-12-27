@@ -84,7 +84,7 @@ enum AccountOnboarding: Int, CaseIterable {
 	var textFieldTypes: [AccountOnboarding.TextField] {
 		switch self {
 		case .signUp:
-			return AccountOnboarding.TextField.allCases
+			return AccountOnboarding.TextField.signUpCases
 		case .siwa:
 			return AccountOnboarding.TextField.siwaCases
 		case .signIn:

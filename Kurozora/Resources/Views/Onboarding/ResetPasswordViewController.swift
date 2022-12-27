@@ -21,20 +21,31 @@ class ResetPasswordTableViewController: AccountOnboardingTableViewController {
 		super.rightNavigationBarButtonPressed(sender: sender)
 
 		guard let emailAddress = textFieldArray.first??.trimmedText, emailAddress.isValidEmail else {
-			self.presentAlertController(title: "Errr...", message: "Please type a valid Kurozora ID 😣")
+			self.presentAlertController(title: Trans.forgotPasswordErrorAlertHeadline, message: Trans.forgotPasswordErrorAlertSubheadline)
+
+			self.disableUserInteraction(false)
 			return
 		}
 
-		KService.resetPassword(withEmailAddress: emailAddress) { [weak self] result in
+		Task { [weak self] in
 			guard let self = self else { return }
-			switch result {
-			case .success:
-				self.presentAlertController(title: "Success!", message: "If an account exists with this Kurozora ID, you should receive an email with your reset link shortly.", defaultActionButtonTitle: Trans.done) { _ in
-					self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
-				}
-			case .failure: break
-			}
+			await self.resetPassword(for: emailAddress)
 		}
+	}
+
+	func resetPassword(for email: String) async {
+		do {
+			_ = try await KService.resetPassword(withEmailAddress: email).value
+
+			self.presentAlertController(title: Trans.forgotPasswordAlertHeadline, message: Trans.forgotPasswordAlertSubheadline, defaultActionButtonTitle: Trans.done) { _ in
+				self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+			}
+		} catch {
+			self.presentAlertController(title: Trans.forgotPasswordErrorAlertHeadline, message: error.localizedDescription)
+			print(error.localizedDescription)
+		}
+
+		self.disableUserInteraction(false)
 	}
 }
 

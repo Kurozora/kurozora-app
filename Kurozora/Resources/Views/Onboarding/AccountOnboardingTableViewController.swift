@@ -16,7 +16,7 @@ class AccountOnboardingTableViewController: KTableViewController {
 	var textFieldArray: [UITextField?] = []
 	var accountOnboardingType: AccountOnboarding = .signIn {
 		didSet {
-			rightNavigationBarButton.title = accountOnboardingType.navigationBarButtonTitleValue
+			self.rightNavigationBarButton.title = accountOnboardingType.navigationBarButtonTitleValue
 		}
 	}
 
@@ -27,7 +27,7 @@ class AccountOnboardingTableViewController: KTableViewController {
 		}
 	}
 	override var prefersRefreshControlDisabled: Bool {
-		return _prefersRefreshControlDisabled
+		return self._prefersRefreshControlDisabled
 	}
 
 	// Activity indicator
@@ -37,7 +37,7 @@ class AccountOnboardingTableViewController: KTableViewController {
 		}
 	}
 	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
+		return self._prefersActivityIndicatorHidden
 	}
 
 	// MARK: - View
@@ -51,13 +51,27 @@ class AccountOnboardingTableViewController: KTableViewController {
 		self.rightNavigationBarButton.isEnabled = false
 	}
 
+	// MARK: - Functions
+	/// Disables or enables the user interaction on the current view. Also shows a loading indicator.
+	///
+	/// - Parameter disable: Indicates whether to disable the interaction.
+	func disableUserInteraction(_ disable: Bool) {
+		if disable {
+			self.view.endEditing(true)
+		}
+		self.navigationItem.hidesBackButton = disable
+		self.navigationItem.rightBarButtonItem?.isEnabled = !disable
+		self._prefersActivityIndicatorHidden = !disable
+		self.view.isUserInteractionEnabled = !disable
+	}
+
 	// MARK: - IBActions
 	@IBAction func cancelButtonPressed(sender: UIBarButtonItem) {
 		self.dismiss(animated: true, completion: nil)
 	}
 
 	@IBAction func rightNavigationBarButtonPressed(sender: AnyObject) {
-		view.endEditing(true)
+		self.disableUserInteraction(true)
 	}
 }
 
@@ -77,29 +91,22 @@ extension AccountOnboardingTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let onboardingBaseTableViewCell: OnboardingBaseTableViewCell!
+		let onboardingBaseTableViewCell: OnboardingBaseTableViewCell?
 
 		switch accountOnboardingType.sections[indexPath.section] {
 		case .header:
 			onboardingBaseTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.onboardingHeaderTableViewCell.identifier, for: indexPath) as? OnboardingHeaderTableViewCell
-			onboardingBaseTableViewCell.accountOnboardingType = self.accountOnboardingType
+			onboardingBaseTableViewCell?.accountOnboardingType = self.accountOnboardingType
 		case .textFields:
 			onboardingBaseTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.onboardingTextFieldTableViewCell.identifier, for: indexPath) as? OnboardingBaseTableViewCell
 			onboardingBaseTableViewCell?.accountOnboardingType = self.accountOnboardingType
 
-			switch accountOnboardingType.textFieldTypes[indexPath.row] {
-			case .username:
-				(onboardingBaseTableViewCell as? OnboardingTextFieldTableViewCell)?.textField.textType = .username
-			case .email:
-				(onboardingBaseTableViewCell as? OnboardingTextFieldTableViewCell)?.textField.textType = .emailAddress
-			case .password:
-				(onboardingBaseTableViewCell as? OnboardingTextFieldTableViewCell)?.textField.textType = .password
-			}
-
+			(onboardingBaseTableViewCell as? OnboardingTextFieldTableViewCell)?.textField.textType = accountOnboardingType.textFieldTypes[indexPath.row].textType
+			(onboardingBaseTableViewCell as? OnboardingTextFieldTableViewCell)?.textField.textContentType = accountOnboardingType.textFieldTypes[indexPath.row].textContentType
 			(onboardingBaseTableViewCell as? OnboardingTextFieldTableViewCell)?.textField.tag = indexPath.row
 			(onboardingBaseTableViewCell as? OnboardingTextFieldTableViewCell)?.textField.delegate = self
-			(onboardingBaseTableViewCell as? OnboardingTextFieldTableViewCell)?.textField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
-			textFieldArray.append((onboardingBaseTableViewCell as? OnboardingTextFieldTableViewCell)?.textField)
+			(onboardingBaseTableViewCell as? OnboardingTextFieldTableViewCell)?.textField.addTarget(self, action: #selector(self.editingChanged), for: .editingChanged)
+			self.textFieldArray.append((onboardingBaseTableViewCell as? OnboardingTextFieldTableViewCell)?.textField)
 		case .options:
 			onboardingBaseTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.onboardingOptionsTableViewCell.identifier, for: indexPath) as? OnboardingBaseTableViewCell
 			onboardingBaseTableViewCell?.accountOnboardingType = self.accountOnboardingType
@@ -109,8 +116,8 @@ extension AccountOnboardingTableViewController {
 			onboardingBaseTableViewCell?.accountOnboardingType = self.accountOnboardingType
 		}
 
-		onboardingBaseTableViewCell.configureCell()
-		return onboardingBaseTableViewCell
+		onboardingBaseTableViewCell?.configureCell()
+		return onboardingBaseTableViewCell ?? UITableViewCell()
 	}
 }
 
@@ -123,33 +130,33 @@ extension AccountOnboardingTableViewController: UITextFieldDelegate {
 		}
 
 		var rightNavigationBarButtonIsEnabled = false
-		textFieldArray.forEach({
+		self.textFieldArray.forEach {
 			if let textField = $0?.text, !textField.isEmpty {
 				rightNavigationBarButtonIsEnabled = true
 				return
 			}
 			rightNavigationBarButtonIsEnabled = false
-		})
+		}
 
-		rightNavigationBarButton.isEnabled = rightNavigationBarButtonIsEnabled
+		self.rightNavigationBarButton.isEnabled = rightNavigationBarButtonIsEnabled
 	}
 
 	func textFieldDidBeginEditing(_ textField: UITextField) {
-		switch accountOnboardingType {
+		switch self.accountOnboardingType {
 		case .signUp, .siwa:
-			textField.returnKeyType = textField.tag == textFieldArray.count - 1 ? .join : .next
+			textField.returnKeyType = textField.tag == self.textFieldArray.count - 1 ? .join : .next
 		case .signIn:
-			textField.returnKeyType = textField.tag == textFieldArray.count - 1 ? .go : .next
+			textField.returnKeyType = textField.tag == self.textFieldArray.count - 1 ? .go : .next
 		case .reset:
-			textField.returnKeyType = textField.tag == textFieldArray.count - 1 ? .send : .next
+			textField.returnKeyType = textField.tag == self.textFieldArray.count - 1 ? .send : .next
 		}
 	}
 
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-		if textField.tag == textFieldArray.count - 1 {
-			rightNavigationBarButtonPressed(sender: textField)
+		if textField.tag == self.textFieldArray.count - 1 {
+			self.rightNavigationBarButtonPressed(sender: textField)
 		} else {
-			textFieldArray[textField.tag + 1]?.becomeFirstResponder()
+			self.textFieldArray[textField.tag + 1]?.becomeFirstResponder()
 		}
 
 		return true

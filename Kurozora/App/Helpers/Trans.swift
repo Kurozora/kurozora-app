@@ -30,6 +30,21 @@ struct Trans {
 	static let signUpButton: String = String(localized: "Join 🤗",
 											 table: "Onboarding",
 											 comment: "The button string for signing up.")
+	/// The headline string for sign up alert.
+	///
+	/// - Tag: Trans-signUpAlertHeadline
+	static let signUpAlertHeadline: String = String(localized: "Hooray!",
+													comment: "The headline string for sign up alert.")
+	/// The subheadline string for sign up alert.
+	///
+	/// - Tag: Trans-signUpAlertSubheadline
+	static let signUpAlertSubheadline: String = String(localized: "Account created successfully! Please check your email for confirmation.",
+													   comment: "The subheadline string for sign up alert.")
+	/// The headline string for sign up alert.
+	///
+	/// - Tag: Trans-signUpErrorAlertHeadline
+	static let signUpErrorAlertHeadline: String = String(localized: "Can't Sign Up 😔",
+																 comment: "The headline string for sign up alert.")
 	/// The headline string for signing in.
 	///
 	/// - Tag: Trans-signInHeadline
@@ -84,6 +99,26 @@ struct Trans {
 	static let forgotPasswordButton: String = String(localized: "Send ✨",
 													 table: "Onboarding",
 													 comment: "The button string for resetting password.")
+	/// The headline string for resetting password alert.
+	///
+	/// - Tag: Trans-forgotPasswordAlertHeadline
+	static let forgotPasswordAlertHeadline: String = String(localized: "Success!",
+															comment: "The headline string for resetting password alert.")
+	/// The subheadline string for resetting password alert.
+	///
+	/// - Tag: Trans-forgotPasswordAlertSubheadline
+	static let forgotPasswordAlertSubheadline: String = String(localized: "If an account exists with this Kurozora ID, you should receive an email with your reset link shortly.",
+															   comment: "The subheadline string for resetting password alert.")
+	/// The headline string for resetting password alert.
+	///
+	/// - Tag: Trans-forgotPasswordErrorAlertHeadline
+	static let forgotPasswordErrorAlertHeadline: String = String(localized: "Errr...",
+																 comment: "The headline string for resetting password alert.")
+	/// The subheadline string for resetting password alert.
+	///
+	/// - Tag: Trans-forgotPasswordErrorAlertSubheadline
+	static let forgotPasswordErrorAlertSubheadline: String = String(localized: "Please type a valid Kurozora ID 😣",
+																	comment: "The subheadline string for resetting password alert.")
 
 	// MARK: - MAL
 	/// The headline string for the MAL Improt view.
@@ -850,6 +885,11 @@ struct Trans {
 	/// - Tag: Trans-cancel
 	static let cancel: String = String(localized: "Cancel",
 									   comment: "The string for the word 'cancel'.")
+	/// The string for the word 'remove'.
+	///
+	/// - Tag: Trans-remove
+	static let remove: String = String(localized: "Remove",
+									   comment: "The string for the word 'remove'.")
 	/// The string for the word 'share'.
 	///
 	/// - Tag: Trans-share

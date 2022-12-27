@@ -134,18 +134,21 @@ extension WorkflowController {
 	}
 
 	/// Signs out the user and removes all data from the keychain.
-	func signOut() {
+	func signOut() async {
+		guard User.isSignedIn else { return }
 		let slug = User.current?.attributes.slug ?? ""
 
-		if User.isSignedIn {
-			KService.signOut { result in
-				switch result {
-				case .success:
-					try? KurozoraDelegate.shared.keychain.remove(slug)
-				case .failure:
-					break
-				}
-			}
+		do {
+			_ = try await KService.signOut().value
+			User.current = nil
+			KService.authenticationKey = ""
+			try? KurozoraDelegate.shared.keychain.remove(slug)
+			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
+		} catch let error as KKAPIError {
+			await UIApplication.topViewController?.presentAlertController(title: "Can't Sign Out 😔", message: error.message)
+			print("-----", error.message)
+		} catch {
+			print("-----", error.localizedDescription)
 		}
 	}
 
@@ -161,11 +164,18 @@ extension WorkflowController {
 
 		do {
 			_ = try await KService.deleteUser(password: password).value
+			User.current = nil
+			KService.authenticationKey = ""
 			try? KurozoraDelegate.shared.keychain.remove(slug)
+			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
 			return true
+		} catch let error as KKAPIError {
+			await UIApplication.topViewController?.presentAlertController(title: "Can't Delete Account 😔", message: error.message)
+			print("-----", error.message)
 		} catch {
 			print("-----", error.localizedDescription)
-			return false
 		}
+
+		return false
 	}
 }
