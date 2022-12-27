@@ -33,7 +33,7 @@ extension KurozoraKit {
 				UIApplication.topViewController?.presentAlertController(title: "Can't Get Genres 😔", message: error.message)
 			}
 			print("❌ Received get genres error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message ?? "No message")
+			print("┌ Server message:", error.message)
 			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
 			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
@@ -61,7 +61,7 @@ extension KurozoraKit {
 			completionHandler(.success(genreResponse.data))
 		}, failure: { error in
 			print("❌ Received get genre details error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message ?? "No message")
+			print("┌ Server message:", error.message)
 			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
 			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))

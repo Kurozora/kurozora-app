@@ -35,7 +35,7 @@ extension KurozoraKit {
 			completionHandler(.success(personResponse.data))
 		}, failure: { error in
 			print("❌ Received get person details error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message ?? "No message")
+			print("┌ Server message:", error.message)
 			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
 			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
@@ -84,7 +84,7 @@ extension KurozoraKit {
 			completionHandler(.success(showIdentityResponse))
 		}, failure: { error in
 			print("❌ Received get person shows error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message ?? "No message")
+			print("┌ Server message:", error.message)
 			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
 			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))

@@ -16,38 +16,34 @@ extension KurozoraKit {
 	///    - password: The new user's password.
 	///    - emailAddress: The new user's email address.
 	///    - profileImage: The new user's profile image.
-	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-	///    - result: A value that represents either a success or a failure, including an associated value in each case.
-	@discardableResult
-	public func signUp(withUsername username: String, emailAddress: String, password: String, profileImage: UIImage?, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) -> DataRequest {
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the sign up response.
+	public func signUp(withUsername username: String, emailAddress: String, password: String, profileImage: UIImage?) -> RequestSender<KKSuccess, KKAPIError> {
+		// Prepare headers
+		let headers: HTTPHeaders = [
+			.contentType("multipart/form-data")
+		]
+
+		// Prepare parameters
+		let parameters = [
+			"username": username,
+			"email": emailAddress,
+			"password": password
+		]
+
+		// Prepare request
 		let usersSignUp = KKEndpoint.Users.signUp.endpointValue
 		let request: UploadAPIRequest<KKSuccess, KKAPIError> = tron.codable.uploadMultipart(usersSignUp) { (formData) in
 			if let profileImage = profileImage?.jpegData(compressionQuality: 0.1) {
 				formData.append(profileImage, withName: "profileImage", fileName: "ProfileImage.png", mimeType: "image/png")
 			}
 		}
-		request.headers = [
-			.contentType("multipart/form-data")
-		]
-		request.method = .post
-		request.parameters = [
-			"username": username,
-			"email": emailAddress,
-			"password": password
-		]
-		return request.perform(withSuccess: { kKSuccess in
-			completionHandler(.success(kKSuccess))
-		}, failure: { [weak self] error in
-			guard let self = self else { return }
-			if self.services.showAlerts {
-				UIApplication.topViewController?.presentAlertController(title: "Can't Sign Up 😔", message: error.message)
-			}
-			print("❌ Received sign up account error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message ?? "No message")
-			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
-			print("└ Failure reason:", error.failureReason ?? "No reason available")
-			completionHandler(.failure(error))
-		})
+		.method(.post)
+		.parameters(parameters)
+		.headers(headers)
+
+		// Send request
+		return request.sender()
 	}
 
 	/// Sign in with the given `kurozoraID` and `password`.
@@ -86,7 +82,7 @@ extension KurozoraKit {
 				UIApplication.topViewController?.presentAlertController(title: "Can't Sign In 😔", message: error.message)
 			}
 			print("❌ Received sign in error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message ?? "No message")
+			print("┌ Server message:", error.message)
 			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
 			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
@@ -134,7 +130,7 @@ extension KurozoraKit {
 				UIApplication.topViewController?.presentAlertController(title: "Can't Sign In 😔", message: error.message)
 			}
 			print("❌ Received sign in with SIWA error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message ?? "No message")
+			print("┌ Server message:", error.message)
 			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
 			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
@@ -145,31 +141,26 @@ extension KurozoraKit {
 	///
 	/// - Parameters:
 	///    - emailAddress: The email address to which the reset link should be sent.
-	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-	///    - result: A value that represents either a success or a failure, including an associated value in each case.
-	@discardableResult
-	public func resetPassword(withEmailAddress emailAddress: String, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) -> DataRequest {
-		let usersResetPassword = KKEndpoint.Users.resetPassword.endpointValue
-		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(usersResetPassword)
-		request.headers = headers
-		request.method = .post
-		request.parameters = [
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the reset password response.
+	public func resetPassword(withEmailAddress emailAddress: String) -> RequestSender<KKSuccess, KKAPIError> {
+		// Prepare headers
+		let headers = self.headers
+
+		// Prepare parameters
+		let parameters = [
 			"email": emailAddress
 		]
-		return request.perform(withSuccess: { success in
-			completionHandler(.success(success))
-		}, failure: { [weak self] error in
-			guard let self = self else { return }
-			UIView().endEditing(true)
-			if self.services.showAlerts {
-				UIApplication.topViewController?.presentAlertController(title: "Can't Send Reset Link 😔", message: error.message)
-			}
-			print("❌ Received reset password error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message ?? "No message")
-			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
-			print("└ Failure reason:", error.failureReason ?? "No reason available")
-			completionHandler(.failure(error))
-		})
+
+		// Prepare request
+		let usersResetPassword = KKEndpoint.Users.resetPassword.endpointValue
+		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(usersResetPassword)
+			.method(.post)
+			.parameters(parameters)
+			.headers(headers)
+
+		// Send request
+		return request.sender()
 	}
 
 	/// Fetch the followers or following list for the given user identity.
@@ -273,7 +264,7 @@ extension KurozoraKit {
 			completionHandler(.success(userResponse.data))
 		}, failure: { error in
 			print("❌ Received user profile error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message ?? "No message")
+			print("┌ Server message:", error.message)
 			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
 			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
@@ -312,13 +303,16 @@ extension KurozoraKit {
 		var headers = self.headers
 		headers.add(.authorization(bearerToken: self.authenticationKey))
 
+		// Prepare parameters
+		let parameters = [
+			"password": password
+		]
+
 		// Prepare request
 		let usersDelete = KKEndpoint.Users.delete.endpointValue
 		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(usersDelete).buildURL(.relativeToBaseURL)
 			.method(.delete)
-			.parameters([
-				"password": password
-			])
+			.parameters(parameters)
 			.headers(headers)
 
 		// Send request

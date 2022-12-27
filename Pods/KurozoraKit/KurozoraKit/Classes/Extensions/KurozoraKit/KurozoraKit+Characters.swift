@@ -35,7 +35,7 @@ extension KurozoraKit {
 			completionHandler(.success(characterResponse.data))
 		}, failure: { error in
 			print("❌ Received get character details error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message ?? "No message")
+			print("┌ Server message:", error.message)
 			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
 			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
@@ -92,7 +92,7 @@ extension KurozoraKit {
 				UIApplication.topViewController?.presentAlertController(title: "Can't Get Character's Shows 😔", message: error.message)
 			}
 			print("❌ Received get character shows error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message ?? "No message")
+			print("┌ Server message:", error.message)
 			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
 			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))

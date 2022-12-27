@@ -31,7 +31,7 @@ extension KurozoraKit {
 				UIApplication.topViewController?.presentAlertController(title: "Can't Get Theme Store 😔", message: error.message)
 			}
 			print("❌ Received get themes error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message ?? "No message")
+			print("┌ Server message:", error.message)
 			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
 			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))
@@ -62,7 +62,7 @@ extension KurozoraKit {
 				UIApplication.topViewController?.presentAlertController(title: "Can't Get Theme Store Details 😔", message: error.message)
 			}
 			print("❌ Received get theme store details error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message ?? "No message")
+			print("┌ Server message:", error.message)
 			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
 			print("└ Failure reason:", error.failureReason ?? "No reason available")
 			completionHandler(.failure(error))

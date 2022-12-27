@@ -14,7 +14,7 @@ public class KKAPIError: APIError {
 	fileprivate var kkErrors: [KKError] = []
 
 	/// The message of a failed request.
-	var _message: String?
+	fileprivate var _message: String?
 
 	// MARK: - Initializers
 	/// Initialize an error with the given `request` url, http `response`, `data` and `error`.
@@ -54,11 +54,12 @@ public class KKAPIError: APIError {
 			}
 		}
 
-		guard self.message == nil else { return }
-		if let responseCode = error?.asAFError?.responseCode {
+		if let responseCode = self.error?.asAFError?.responseCode {
 			switch responseCode {
-			default:
+			case 500:
 				self._message = "There was an error while connecting to the server. If this error persists, check out our Twitter account @KurozoraApp for more information!"
+			default:
+				return
 			}
 		}
 	}
@@ -68,7 +69,7 @@ public class KKAPIError: APIError {
 extension KKAPIError {
 	// MARK: - Properties
 	/// The message of a failed request.
-	var message: String? {
-		return self._message ?? kkErrors.first?.detail
+	public var message: String {
+		return self._message ?? self.kkErrors.first?.detail ?? self.localizedDescription
 	}
 }

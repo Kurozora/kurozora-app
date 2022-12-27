@@ -18,8 +18,8 @@ public struct Meta: Codable {
 	public var isMaintenanceModeEnabled: Bool
 
 	/// Whether the user sending the request is authenticated.
-	public var isUserAuthenticated: Bool
+	public var isUserAuthenticated: Bool?
 
 	/// The authenticated user ID.
-	public var authenticatedUserID: Int
+	public var authenticatedUserID: Int?
 }
