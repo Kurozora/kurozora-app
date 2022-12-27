@@ -121,10 +121,8 @@ class HomeCollectionViewController: KCollectionViewController {
 		#endif
 
 		// Configure ConfettiView
-		if !UserSettings.launchedOnce {
-			UserSettings.set(true, forKey: .launchedOnce)
-			SPConfettiConfiguration.particlesConfig.colors = [.systemCyan, .white, #colorLiteral(red: 0.5869400495, green: 0.7843137255, blue: 0.937254902, alpha: 1), #colorLiteral(red: 0.5, green: 0.7833858153, blue: 0.937254902, alpha: 1)]
-			SPConfetti.startAnimating(.fullWidthToDown, particles: [.custom(UIImage(systemName: "snowflake")!)])
+		if WhatsNew.shouldPresent() {
+			SPConfetti.startAnimating(.fullWidthToDown, particles: [.star, .arc])
 		}
 
 		// Configure Quick Actions.
