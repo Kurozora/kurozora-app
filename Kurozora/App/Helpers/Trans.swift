@@ -775,6 +775,11 @@ struct Trans {
 	/// - Tag: Trans-pro
 	static let pro: String = String(localized: "Pro",
 									comment: "The string for the word 'pro'.")
+	/// The string for the word 'pro+'.
+	///
+	/// - Tag: Trans-proPlus
+	static let proPlus: String = String(localized: "Pro+",
+										comment: "The string for the word 'pro+'.")
 	/// The string for the word 'alerts'.
 	///
 	/// - Tag: Trans-alerts

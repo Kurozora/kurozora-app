@@ -65,6 +65,8 @@ class BaseFeedMessageCell: KTableViewCell {
 
 			// Badges
 			self.verificationImageView.isHidden = !user.attributes.isVerified
+			let proTitle = user.attributes.isSubscribed ? Trans.proPlus : Trans.pro
+			self.proBadgeButton.setTitle(proTitle.uppercased(), for: .normal)
 			self.proBadgeButton.isHidden = !user.attributes.isPro || !user.attributes.isSubscribed
 		}
 

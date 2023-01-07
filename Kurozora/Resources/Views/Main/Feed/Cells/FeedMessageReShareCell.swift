@@ -40,6 +40,8 @@ class FeedMessageReShareCell: FeedMessageCell {
 
 			// Badges
 			self.opVerificationImageView.isHidden = !opUser.attributes.isVerified
+			let proTitle = opUser.attributes.isSubscribed ? Trans.proPlus : Trans.pro
+			self.opProBadgeButton.setTitle(proTitle.uppercased(), for: .normal)
 			self.opProBadgeButton.isHidden = !opUser.attributes.isPro || !opUser.attributes.isSubscribed
 		}
 
