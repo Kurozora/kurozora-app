@@ -80,13 +80,13 @@ class UserLockupCollectionViewCell: KCollectionViewCell {
 				if user.id == userID {
 					secondaryLabelText = "Followed by you and \(followerCount) fans."
 				} else {
-					secondaryLabelText = user.attributes.followStatus == .followed ? "Followed by you and (\(followerCount) users." :  "Followed by \(followerCount) users."
+					secondaryLabelText = user.attributes.followStatus == .followed ? "Followed by you and \(followerCount) users." :  "Followed by \(followerCount) users."
 				}
 			default:
 				if user.id == userID {
 					secondaryLabelText = "Followed by \(followerCount.kkFormatted) fans."
 				} else {
-					secondaryLabelText = user.attributes.followStatus == .followed ? "Followed by you and (\((followerCount - 1).kkFormatted)) users." : "Followed by \(followerCount.kkFormatted) users."
+					secondaryLabelText = user.attributes.followStatus == .followed ? "Followed by you and \((followerCount - 1).kkFormatted) users." : "Followed by \(followerCount.kkFormatted) users."
 				}
 			}
 
