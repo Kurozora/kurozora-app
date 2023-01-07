@@ -48,6 +48,9 @@ class KNavigationController: UINavigationController {
 		self.navigationBar.backgroundColor = .clear
 		self.navigationBar.barStyle = .default
 		self.navigationBar.theme_tintColor = KThemePicker.tintColor.rawValue
+		if #available(macCatalyst 16.0, *) {
+			self.navigationBar.preferredBehavioralStyle = .pad
+		}
 
 		let appearance = UINavigationBarAppearance()
 		appearance.theme_backgroundColor = KThemePicker.barTintColor.rawValue
