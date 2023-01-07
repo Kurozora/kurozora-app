@@ -121,7 +121,11 @@ class HomeCollectionViewController: KCollectionViewController {
 		#endif
 
 		// Configure ConfettiView
-		if WhatsNew.shouldPresent() {
+		let date = Date()
+
+		if date >= Date(unixTimestamp: 1672527600)
+			&& date <= Date(unixTimestamp: 1673737200)
+			&& WhatsNew.shouldPresent(with: .always) {
 			SPConfetti.startAnimating(.fullWidthToDown, particles: [.star, .arc])
 		}
 
