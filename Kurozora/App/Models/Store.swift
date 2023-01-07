@@ -109,7 +109,7 @@ final class Store: ObservableObject {
 					await transaction.finish()
 				} catch {
 					// StoreKit has a receipt it can read but it failed verification. Don't deliver content to the user.
-					print("Transaction failed verification")
+					print("----- Transaction failed verification")
 				}
 			}
 		}
@@ -137,7 +137,7 @@ final class Store: ObservableObject {
 					newNonConsumables.append(product)
 				default:
 					// Ignore this product.
-					print("Unknown product", product)
+					print("----- Unknown product", product)
 				}
 			}
 
@@ -146,7 +146,7 @@ final class Store: ObservableObject {
 			self.subscriptions = sortByPrice(newSubscriptions)
 			self.nonConsumables = sortByPrice(newNonConsumables)
 		} catch {
-			print("Failed product request: \(error)")
+			print("----- Failed product request: \(error)")
 		}
 	}
 
@@ -161,7 +161,13 @@ final class Store: ObservableObject {
 		await self.updatePurchasedIdentifiers(transaction)
 		print("----- Deliver content for \(transaction.productID).")
 
+		self.verifyReceipt()
+	}
+
+	/// Verifies the receipt using Kurozora API.
+	func verifyReceipt() {
 		self.refreshReceipt()
+
 		// Get the receipt if it's available
 		if let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
 		   FileManager.default.fileExists(atPath: appStoreReceiptURL.path) {
@@ -179,7 +185,7 @@ final class Store: ObservableObject {
 				print("----- Couldn't read receipt data with error: " + error.localizedDescription)
 			}
 		} else {
-			print("----- Purchase failed: App Store receipt not found.")
+			print("----- Receipt verification failed: App Store receipt not found.")
 		}
 	}
 
@@ -217,7 +223,15 @@ final class Store: ObservableObject {
 	///
 	/// Call this function only in response to an explicit user action, such as tapping a button.
 	func restore() async {
-		try? await AppStore.sync()
+		do {
+			try await AppStore.sync()
+
+			self.verifyReceipt()
+		} catch let error as KKAPIError {
+			print("----- Restore failed", error.message)
+		} catch {
+			print("----- Restore failed", error.localizedDescription)
+		}
 	}
 
 	#if !targetEnvironment(macCatalyst)

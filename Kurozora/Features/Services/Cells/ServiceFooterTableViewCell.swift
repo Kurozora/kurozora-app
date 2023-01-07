@@ -9,6 +9,10 @@
 import UIKit
 import SwiftTheme
 
+protocol ServiceFooterTableViewCellDelegate: AnyObject {
+	func serviceFooterTableViewCell(_ cell: ServiceFooterTableViewCell, didPressButton button: UIButton)
+}
+
 /// The visual representation of a single promotional footer row in a table view.
 ///
 /// A `ServiceFooterTableViewCell` object is a specialized type of view that displays footer information about the content of a table view.
@@ -16,7 +20,6 @@ import SwiftTheme
 /// - Tag: ServiceFooterTableViewCell
 class ServiceFooterTableViewCell: KTableViewCell {
 	// MARK: - IBOutlet
-	@IBOutlet weak var restorePurchaseButton: KButton?
 	@IBOutlet weak var descriptionLabel: KLabel!
 	@IBOutlet weak var privacyButton: UIButton!
 
@@ -55,12 +58,6 @@ class ServiceFooterTableViewCell: KTableViewCell {
 	}
 
 	// MARK: - IBActions
-	@IBAction func restorePurchaseButtonPressed(_ sender: UIButton) {
-		Task {
-			await store.restore()
-		}
-	}
-
 	@IBAction func privacyButtonPressed(_ sender: UIButton) {
 		self.delegate?.serviceFooterTableViewCell(self, didPressButton: sender)
 	}

@@ -479,7 +479,6 @@
 		66EA1DF225B5F58400FCD07A /* PurchaseButtonTableViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DF125B5F58400FCD07A /* PurchaseButtonTableViewCellDelegate.swift */; };
 		66EA1DF425B5F68800FCD07A /* TextViewCollectionViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DF325B5F68800FCD07A /* TextViewCollectionViewCellDelegate.swift */; };
 		66EA1DF625B5F6EA00FCD07A /* ShowDetailsCollectionViewController+KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DF525B5F6EA00FCD07A /* ShowDetailsCollectionViewController+KCollectionViewDataSource.swift */; };
-		66EA1DFA25B6019B00FCD07A /* ServiceFooterTableViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DF925B6019B00FCD07A /* ServiceFooterTableViewCellDelegate.swift */; };
 		66EA1DFC25B6199B00FCD07A /* ManageThemesController+KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DFB25B6199B00FCD07A /* ManageThemesController+KCollectionViewDataSource.swift */; };
 		66EA1DFE25B619DA00FCD07A /* ManageThemesController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DFD25B619DA00FCD07A /* ManageThemesController+KCollectionViewDelegateLayout.swift */; };
 		66EA1E0025B61BB500FCD07A /* ThemesCollectionViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DFF25B61BB500FCD07A /* ThemesCollectionViewCellDelegate.swift */; };
@@ -1040,7 +1039,6 @@
 		66EA1DF125B5F58400FCD07A /* PurchaseButtonTableViewCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseButtonTableViewCellDelegate.swift; sourceTree = "<group>"; };
 		66EA1DF325B5F68800FCD07A /* TextViewCollectionViewCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewCollectionViewCellDelegate.swift; sourceTree = "<group>"; };
 		66EA1DF525B5F6EA00FCD07A /* ShowDetailsCollectionViewController+KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShowDetailsCollectionViewController+KCollectionViewDataSource.swift"; sourceTree = "<group>"; };
-		66EA1DF925B6019B00FCD07A /* ServiceFooterTableViewCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceFooterTableViewCellDelegate.swift; sourceTree = "<group>"; };
 		66EA1DFB25B6199B00FCD07A /* ManageThemesController+KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManageThemesController+KCollectionViewDataSource.swift"; sourceTree = "<group>"; };
 		66EA1DFD25B619DA00FCD07A /* ManageThemesController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManageThemesController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
 		66EA1DFF25B61BB500FCD07A /* ThemesCollectionViewCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesCollectionViewCellDelegate.swift; sourceTree = "<group>"; };
@@ -2720,7 +2718,6 @@
 			isa = PBXGroup;
 			children = (
 				66CE810924608D9D00DB0C49 /* ServiceFooterTableViewCell.swift */,
-				66EA1DF925B6019B00FCD07A /* ServiceFooterTableViewCellDelegate.swift */,
 				66CE8115246093CF00DB0C49 /* ServiceHeaderTableViewCell.swift */,
 				66CE81112460908A00DB0C49 /* ServicePreviewTableViewCell.swift */,
 				6647237724601707008E5111 /* ServiceFooterTableViewCell.xib */,
@@ -3656,7 +3653,6 @@
 				6697DB2325744B9A0054FEFD /* Global+Kurozora.swift in Sources */,
 				6614AD412580033500039BFB /* ShowDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				66B9BB9724FB1AC7004953C9 /* KFeedMessageReShareTextEditorView.swift in Sources */,
-				66EA1DFA25B6019B00FCD07A /* ServiceFooterTableViewCellDelegate.swift in Sources */,
 				66FE5D01215B739D00E2844A /* KDefaultsCell.swift in Sources */,
 				661ACC9B25ADA41B002407A7 /* ShowDetailsCollectionViewController+TouchBar.swift in Sources */,
 				66CE80FA2460348100DB0C49 /* KTableViewController+KTableViewDataSource.swift in Sources */,
