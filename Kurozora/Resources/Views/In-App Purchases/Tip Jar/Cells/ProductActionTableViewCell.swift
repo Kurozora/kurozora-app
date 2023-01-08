@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ProductActionTableViewCellDelegate: AnyObject {
+	func productActionTableViewCell(_ cell: ProductActionTableViewCell, didPressButton button: UIButton)
+}
+
 class ProductActionTableViewCell: UITableViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var actionButton: KButton!

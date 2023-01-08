@@ -44,12 +44,13 @@ extension SongDetailsCollectionViewController {
 			guard let self = self else { return nil }
 			guard self.song != nil else { return nil }
 			let songDetailSection = self.snapshot.sectionIdentifiers[section]
+			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 			var sectionLayout: NSCollectionLayoutSection? = nil
 			var hasSectionHeader = false
 
 			switch songDetailSection {
 			case .header:
-				let fullSection = self.fullSection(for: section, layoutEnvironment: layoutEnvironment)
+				let fullSection = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				sectionLayout = fullSection
 			case .shows:
 				if !self.showIdentities.isEmpty {
@@ -73,17 +74,17 @@ extension SongDetailsCollectionViewController {
 		return layout
 	}
 
-	func fullSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-		let heightDimension = self.heightDimension(forSection: section, with: columns, layout: layoutEnvironment)
-		let layoutSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: heightDimension)
-
-		let item = NSCollectionLayoutItem(layoutSize: layoutSize)
-
-		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitem: item, count: columns)
-
-		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
-		return layoutSection
-	}
+//	func fullSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+//		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
+//		let heightDimension = self.heightDimension(forSection: section, with: columns, layout: layoutEnvironment)
+//		let layoutSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: heightDimension)
+//
+//		let item = NSCollectionLayoutItem(layoutSize: layoutSize)
+//
+//		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitem: item, count: columns)
+//
+//		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+//		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
+//		return layoutSection
+//	}
 }

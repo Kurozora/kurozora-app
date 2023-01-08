@@ -178,6 +178,8 @@ final class Store: ObservableObject {
 
 				_ = KService.verifyReceipt(receiptString)
 
+				NotificationCenter.default.post(name: .KSubscriptionStatusDidUpdate, object: nil)
+
 				// Finish the successful transaction.
 				print("----- Transaction verified.")
 			} catch {

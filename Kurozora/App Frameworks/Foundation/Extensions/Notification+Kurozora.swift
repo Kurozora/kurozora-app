@@ -8,6 +8,14 @@
 
 import Foundation
 
+// MARK: - Subscription
+extension Notification.Name {
+	/// A notification posted when the user's subscription status changes.
+	static var KSubscriptionStatusDidUpdate: NSNotification.Name {
+		return Notification.Name(#function)
+	}
+}
+
 // MARK: - Episodes
 extension Notification.Name {
 	/// A notification posted when the watch status of an episode changes.

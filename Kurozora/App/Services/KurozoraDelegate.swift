@@ -56,6 +56,15 @@ class KurozoraDelegate {
 		#endif
 		self.keychain = Keychain(service: "Kurozora", accessGroup: "\(accessGroup)").synchronizable(true).accessibility(.afterFirstUnlock)
 		self.services = KKServices(keychain: self.keychain, showAlerts: true)
+
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleSubscriptionStatusDidUpdate(_:)), name: .KSubscriptionStatusDidUpdate, object: nil)
+	}
+
+	@objc func handleSubscriptionStatusDidUpdate(_ notification: NSNotification) {
+		Task {
+			// Restore current user session
+			await WorkflowController.shared.restoreCurrentUserSession()
+		}
 	}
 
 	func preInitiateApp(window: UIWindow?) async -> Bool {

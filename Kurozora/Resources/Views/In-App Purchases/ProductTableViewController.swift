@@ -145,8 +145,7 @@ extension ProductTableViewController: PurchaseButtonTableViewCellDelegate {
 // MAKR: - ServiceFooterTableViewCellDelegate
 extension ProductTableViewController: ServiceFooterTableViewCellDelegate {
 	func serviceFooterTableViewCell(_ cell: ServiceFooterTableViewCell, didPressButton button: UIButton) {
-		if let legalKNavigationViewController = R.storyboard.legal.instantiateInitialViewController() {
-			self.present(legalKNavigationViewController, animated: true)
-		}
+		guard let legalKNavigationViewController = R.storyboard.legal.instantiateInitialViewController() else { return }
+		self.present(legalKNavigationViewController, animated: true)
 	}
 }

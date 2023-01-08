@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="kAW-tw-WcP">
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Become a Subscriber-->
+        <scene sceneID="UEK-DM-fTQ">
+            <objects>
+                <collectionViewController storyboardIdentifier="SubscriptionCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="aHT-RW-z2B" customClass="SubscriptionCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="fiB-Mg-Ysf">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="GfL-dl-ImV">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells/>
+                        <connections>
+                            <outlet property="dataSource" destination="aHT-RW-z2B" id="Ddw-yL-8eB"/>
+                            <outlet property="delegate" destination="aHT-RW-z2B" id="zTT-6g-V2G"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="Become a Subscriber" id="VFF-uw-QHB">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Uaq-1j-Qx4">
+                            <connections>
+                                <action selector="cancelButtonPressed:" destination="aHT-RW-z2B" id="NOW-MJ-rZR"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="leftNavigationBarButton" destination="Uaq-1j-Qx4" id="QRD-wW-Q7l"/>
+                    </connections>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BdQ-Z5-1GX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1177" y="163"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="OBJ-Ii-s09">
+            <objects>
+                <navigationController storyboardIdentifier="SubscriptionKNavigationController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="kAW-tw-WcP" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="CHY-06-jkg">
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="aHT-RW-z2B" kind="relationship" relationship="rootViewController" id="brU-1V-btI"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OHR-S7-t8u" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="396" y="163"/>
+        </scene>
+        <!--Tip Jar-->
+        <scene sceneID="jhX-x0-PCR">
+            <objects>
+                <tableViewController storyboardIdentifier="TipJarTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="GcJ-vL-WDl" customClass="TipJarTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="SLF-ZW-byi">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="ar8-ZO-ryb"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PurchaseHeaderTableViewCell" id="qKP-xb-LrH" customClass="ProductHeaderTableViewCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="20" y="55.5" width="374" height="271.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qKP-xb-LrH" id="SwT-sQ-aFG">
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="271.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Kurozora Tip Jar" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SNO-SQ-6IZ" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                            <rect key="frame" x="8" y="0.0" width="358" height="17.5"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6lv-DP-NZ5" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                            <rect key="frame" x="8" y="27.5" width="358" height="150"/>
+                                            <string key="text">Kurozora is made by a small team consisting of 1 person. I rely on your support to develop Kurozora. If you find it to be useful to you, please consider supporting me by leaving a tip in the Kurozora Tip Jar. I would like to keep working on and improving Kurozora, so any amount is incredibly appreciated. Please know that even if you don't tip I am still grateful that you use this app.
+
+Any amount unlocks Pro 🚀</string>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="6lv-DP-NZ5" firstAttribute="leading" secondItem="SwT-sQ-aFG" secondAttribute="leading" constant="8" id="0ZA-xX-gE3"/>
+                                        <constraint firstAttribute="trailing" secondItem="SNO-SQ-6IZ" secondAttribute="trailing" constant="8" id="MMo-ib-YcE"/>
+                                        <constraint firstAttribute="bottom" secondItem="6lv-DP-NZ5" secondAttribute="bottom" id="N8r-U6-PTu"/>
+                                        <constraint firstItem="SNO-SQ-6IZ" firstAttribute="top" secondItem="SwT-sQ-aFG" secondAttribute="top" id="NC0-l6-4Ru"/>
+                                        <constraint firstItem="6lv-DP-NZ5" firstAttribute="top" secondItem="SNO-SQ-6IZ" secondAttribute="bottom" constant="10" id="Y2b-Ra-uOJ"/>
+                                        <constraint firstItem="SNO-SQ-6IZ" firstAttribute="leading" secondItem="SwT-sQ-aFG" secondAttribute="leading" constant="8" id="hxz-jD-r2Z"/>
+                                        <constraint firstAttribute="trailing" secondItem="6lv-DP-NZ5" secondAttribute="trailing" constant="8" id="v9b-Iu-5gj"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="primaryLabel" destination="SNO-SQ-6IZ" id="6kn-XV-2yH"/>
+                                    <outlet property="secondaryLabel" destination="6lv-DP-NZ5" id="lHs-Zd-75L"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PurchaseButtonTableViewCell" id="Nkv-1p-7XE" customClass="PurchaseButtonTableViewCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="20" y="327" width="374" height="66.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Nkv-1p-7XE" id="mPN-VW-XNH">
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="66.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ukL-0O-sRv">
+                                            <rect key="frame" x="8" y="8" width="50" height="50"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="ukL-0O-sRv" secondAttribute="height" multiplier="1:1" id="by2-sX-bij"/>
+                                                <constraint firstAttribute="height" constant="50" id="lpg-WO-Wey"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="12"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1vE-yd-cP7" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                            <rect key="frame" x="66" y="8" width="212" height="20.5"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XNr-Rm-oJQ" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                                            <rect key="frame" x="66" y="32.5" width="212" height="18"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                            <color key="textColor" systemColor="secondaryLabelColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="EEm-xc-IlI" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
+                                            <rect key="frame" x="286" y="17" width="80" height="33"/>
+                                            <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="80" id="jIO-He-KoA"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                            <state key="normal" title="_test">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </state>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
+                                            </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="purchaseButtonPressed:" destination="Nkv-1p-7XE" eventType="touchUpInside" id="tGs-2c-WRC"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="ukL-0O-sRv" firstAttribute="leading" secondItem="mPN-VW-XNH" secondAttribute="leading" constant="8" id="06z-St-kM8"/>
+                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="XNr-Rm-oJQ" secondAttribute="bottom" constant="8" id="8CL-s7-NW8"/>
+                                        <constraint firstItem="EEm-xc-IlI" firstAttribute="centerY" secondItem="mPN-VW-XNH" secondAttribute="centerY" id="ERn-gF-fGk"/>
+                                        <constraint firstItem="EEm-xc-IlI" firstAttribute="leading" secondItem="1vE-yd-cP7" secondAttribute="trailing" constant="8" symbolic="YES" id="ORj-XD-BMo"/>
+                                        <constraint firstAttribute="trailing" secondItem="EEm-xc-IlI" secondAttribute="trailing" constant="8" id="S7Q-a5-Xvf"/>
+                                        <constraint firstItem="XNr-Rm-oJQ" firstAttribute="leading" secondItem="1vE-yd-cP7" secondAttribute="leading" id="Th5-c6-nL4"/>
+                                        <constraint firstItem="EEm-xc-IlI" firstAttribute="leading" secondItem="XNr-Rm-oJQ" secondAttribute="trailing" constant="8" symbolic="YES" id="ZkT-Xy-hMr"/>
+                                        <constraint firstItem="XNr-Rm-oJQ" firstAttribute="top" secondItem="1vE-yd-cP7" secondAttribute="bottom" constant="4" id="b2z-RH-Qce"/>
+                                        <constraint firstItem="1vE-yd-cP7" firstAttribute="top" secondItem="mPN-VW-XNH" secondAttribute="top" constant="8" id="gCp-FV-nlR"/>
+                                        <constraint firstItem="EEm-xc-IlI" firstAttribute="top" relation="greaterThanOrEqual" secondItem="mPN-VW-XNH" secondAttribute="top" constant="8" id="mYi-Ao-ZnK"/>
+                                        <constraint firstItem="ukL-0O-sRv" firstAttribute="top" secondItem="mPN-VW-XNH" secondAttribute="top" constant="8" id="oRI-SX-a3R"/>
+                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ukL-0O-sRv" secondAttribute="bottom" constant="8" id="rk8-VO-2f1"/>
+                                        <constraint firstItem="1vE-yd-cP7" firstAttribute="leading" secondItem="ukL-0O-sRv" secondAttribute="trailing" constant="8" symbolic="YES" id="uCm-U0-mpU"/>
+                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="EEm-xc-IlI" secondAttribute="bottom" constant="8" id="vy3-JK-F25"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="primaryLabel" destination="1vE-yd-cP7" id="BIp-2A-jPk"/>
+                                    <outlet property="productImageView" destination="ukL-0O-sRv" id="2g8-Rl-YSt"/>
+                                    <outlet property="purchaseButton" destination="EEm-xc-IlI" id="FPm-Xq-A8i"/>
+                                    <outlet property="secondaryLabel" destination="XNr-Rm-oJQ" id="Q8u-qW-11y"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="GcJ-vL-WDl" id="TCL-4w-O6G"/>
+                            <outlet property="delegate" destination="GcJ-vL-WDl" id="GR3-Eh-8zt"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Tip Jar" id="XU3-6B-58f">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="WGn-Tj-4rn">
+                            <connections>
+                                <action selector="cancelButtonPressed:" destination="GcJ-vL-WDl" id="gxL-qS-TVd"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="leftNavigationBarButton" destination="WGn-Tj-4rn" id="gGZ-dJ-AHW"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BKK-sW-NaO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1176.8115942028987" y="814.95535714285711"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="2RZ-lP-i5r">
+            <objects>
+                <navigationController storyboardIdentifier="TipJarKNavigationController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="3Je-1X-zCm" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="Z3H-9K-I0M">
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="GcJ-vL-WDl" kind="relationship" relationship="rootViewController" id="Xm2-0u-6QO"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XvB-nv-qNc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="396" y="815"/>
+        </scene>
+    </scenes>
+    <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+    <resources>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

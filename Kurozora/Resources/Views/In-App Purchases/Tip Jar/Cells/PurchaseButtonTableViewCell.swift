@@ -9,6 +9,10 @@
 import UIKit
 import StoreKit
 
+protocol PurchaseButtonTableViewCellDelegate: AnyObject {
+	func purchaseButtonTableViewCell(_ cell: PurchaseButtonTableViewCell, didPressButton button: UIButton)
+}
+
 class PurchaseButtonTableViewCell: KTableViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var purchaseButton: KTintedButton!

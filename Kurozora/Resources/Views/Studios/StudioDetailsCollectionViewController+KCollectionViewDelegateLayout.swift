@@ -53,21 +53,22 @@ extension StudioDetailsCollectionViewController {
 			guard let self = self else { return nil }
 			guard self.studio != nil else { return nil }
 			let studioDetailSection = self.snapshot.sectionIdentifiers[section]
+			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 			var sectionLayout: NSCollectionLayoutSection? = nil
 			var hasSectionHeader = false
 
 			switch studioDetailSection {
 			case .header:
-				let fullSection = self.fullSection(for: section, layoutEnvironment: layoutEnvironment)
+				let fullSection = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				sectionLayout = fullSection
 			case .about:
 				if let about = self.studio.attributes.about, !about.isEmpty {
-					let fullSection = self.fullSection(for: section, layoutEnvironment: layoutEnvironment)
+					let fullSection = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 					sectionLayout = fullSection
 					hasSectionHeader = true
 				}
 			case .information:
-				let gridSection = self.gridSection(for: section, layoutEnvironment: layoutEnvironment)
+				let gridSection = Layouts.gridSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				sectionLayout = gridSection
 				hasSectionHeader = true
 			case .shows:

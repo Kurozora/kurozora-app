@@ -124,7 +124,7 @@ class HomeCollectionViewController: KCollectionViewController {
 		let date = Date()
 
 		if date >= Date(unixTimestamp: 1672527600)
-			&& date <= Date(unixTimestamp: 1673737200)
+			&& date <= Date(unixTimestamp: 1674169200)
 			&& WhatsNew.shouldPresent(with: .always) {
 			SPConfetti.startAnimating(.fullWidthToDown, particles: [.star, .arc])
 		}
