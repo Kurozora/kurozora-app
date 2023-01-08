@@ -5,7 +5,7 @@ PODS:
   - FLEX (5.22.10)
   - IQKeyboardManagerSwift (6.5.10)
   - KeychainAccess (4.2.2)
-  - Kingfisher (7.4.1)
+  - Kingfisher (7.5.0)
   - KurozoraKit (1.3.8):
     - KeychainAccess
     - TRON (= 5.5.0-beta.1)
@@ -116,7 +116,7 @@ SPEC CHECKSUMS:
   FLEX: f21ee4f498eed3f8a1eded66b21939fd3b7a22ce
   IQKeyboardManagerSwift: 52962c76ab33532f15ad9f3ff4e5715eda5335bb
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
-  Kingfisher: cd762a593a61b2fbecf7645c00f9a801a3ebfc9c
+  Kingfisher: b9c2a4a4af2990a768445c277359b27bde287d71
   KurozoraKit: ee48e791011266d89e4937158caa1106e6577644
   Pageboy: 34ff11e8d1041b81769d5bcde9b19a0cb7218bd9
   R.swift: 681bb9135f482e7a81d9d27445b837fef5467e11
@@ -131,6 +131,6 @@ SPEC CHECKSUMS:
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
   XCDYouTubeKit: b120aced3d8638ffb570c5450cddb5a1dac448c7
 
-PODFILE CHECKSUM: c9e19ae2f70fce5efd9d4abd9a483d17bd7b85fe
+PODFILE CHECKSUM: 68dbb4a60b63a90638d407d51637e512840ec8bc
 
 COCOAPODS: 1.11.3

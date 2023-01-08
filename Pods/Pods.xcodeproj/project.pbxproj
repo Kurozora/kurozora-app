@@ -121,7 +121,7 @@
 		178C5BD392D3C7A4C84FF4049F6C06FC /* Concurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005812C7C8480E3DC4A37F1D8FAB410B /* Concurrency.swift */; };
 		17DE87344CAD319DE6AA0F7BE1BA10C7 /* ReachabilitySwift-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 6504A8D5D840B1EBEC79DC459600288E /* ReachabilitySwift-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		17EEA3D70AB324680FC0CF28FFB4B5B5 /* KurozoraKit+Cast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0266C4D82C6D567392ADA85B76F39B /* KurozoraKit+Cast.swift */; };
-		184BE0DA51FB7A572B2259A32718D3B7 /* SPConfetti.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 99A3A2574E317C8728D0DF37846F762E /* SPConfetti.bundle */; };
+		184BE0DA51FB7A572B2259A32718D3B7 /* SPConfetti-SPConfetti in Resources */ = {isa = PBXBuildFile; fileRef = 99A3A2574E317C8728D0DF37846F762E /* SPConfetti-SPConfetti */; };
 		187716BED8574FDCDF81C1942FB6680E /* Unifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0ADD5B4443A865762C60999EB877E76 /* Unifiable.swift */; };
 		19253F07C01DD7F8D15899538D08AFAD /* FLEXTableColumnHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 862E2CBD9D1A171A6DD45DFBAE6FA8ED /* FLEXTableColumnHeader.m */; settings = {COMPILER_FLAGS = "-Wno-unsupported-availability-guard -Wno-deprecated-declarations -w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		1952485AFF7A1BCCA4D4B142E82FE627 /* AnimatedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D86B1CC7C30AFE881E08CECAE5C105D /* AnimatedImageView.swift */; };
@@ -2063,7 +2063,7 @@
 		98F6002AFA240383A55470816433774E /* FLEXHierarchyTableViewCell.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FLEXHierarchyTableViewCell.m; path = Classes/ViewHierarchy/TreeExplorer/FLEXHierarchyTableViewCell.m; sourceTree = "<group>"; };
 		98F9D5FC33C6B8E11426A8B5919AEF64 /* Bundle+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Bundle+Extensions.swift"; path = "Sources/RswiftResources/Integrations/Bundle+Extensions.swift"; sourceTree = "<group>"; };
 		9900D085F1D6E310F7F05D9744C566AF /* FeedMessage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FeedMessage.swift; path = KurozoraKit/Classes/Models/Feed/Message/FeedMessage.swift; sourceTree = "<group>"; };
-		99A3A2574E317C8728D0DF37846F762E /* SPConfetti.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SPConfetti.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		99A3A2574E317C8728D0DF37846F762E /* SPConfetti-SPConfetti */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "SPConfetti-SPConfetti"; path = SPConfetti.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		99C04DF48418C3853526B0CC72C52CEE /* FLEXShortcutsSection.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FLEXShortcutsSection.h; path = Classes/ObjectExplorers/Sections/Shortcuts/FLEXShortcutsSection.h; sourceTree = "<group>"; };
 		99E1AC11CBDE97200C2E9B4AD216C963 /* FLEXAddressExplorerCoordinator.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FLEXAddressExplorerCoordinator.h; path = Classes/GlobalStateExplorers/FLEXAddressExplorerCoordinator.h; sourceTree = "<group>"; };
 		99FA543E8EA3D2BA6A7643E09C97894E /* TRON.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TRON.swift; path = Source/TRON/TRON.swift; sourceTree = "<group>"; };
@@ -2850,7 +2850,7 @@
 				21B03CA622E690725A6626C088E1D09F /* ReachabilitySwift */,
 				BB66B1065F4F35C19BCBBFB5D408FDAD /* Solar */,
 				C1E2574DF124F1F78DBB2A6925ECD04C /* SPConfetti */,
-				99A3A2574E317C8728D0DF37846F762E /* SPConfetti.bundle */,
+				99A3A2574E317C8728D0DF37846F762E /* SPConfetti-SPConfetti */,
 				8C81A3F6D6E88BB13C101D6462262715 /* SwifterSwift */,
 				482801E4801314B39BE88FEA9024B833 /* SwiftTheme */,
 				E23C076BA70925415F490FEDB215DA92 /* SwiftyJSON */,
@@ -5187,7 +5187,7 @@
 			);
 			name = "SPConfetti-SPConfetti";
 			productName = SPConfetti;
-			productReference = 99A3A2574E317C8728D0DF37846F762E /* SPConfetti.bundle */;
+			productReference = 99A3A2574E317C8728D0DF37846F762E /* SPConfetti-SPConfetti */;
 			productType = "com.apple.product-type.bundle";
 		};
 		8E4CD662FA889CB234D168D1979A2626 /* KurozoraKit */ = {
@@ -5448,7 +5448,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				184BE0DA51FB7A572B2259A32718D3B7 /* SPConfetti.bundle in Resources */,
+				184BE0DA51FB7A572B2259A32718D3B7 /* SPConfetti-SPConfetti in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7013,8 +7013,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E3802A078115451D1034AF9890163668 /* SPConfetti.debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/SPConfetti";
-				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				IBSC_MODULE = SPConfetti;
 				INFOPLIST_FILE = "Target Support Files/SPConfetti/ResourceBundle-SPConfetti-SPConfetti-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -7240,8 +7240,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F755E57EA686A8712A790572AFF0CD6F /* SPConfetti.release.xcconfig */;
 			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/SPConfetti";
-				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				IBSC_MODULE = SPConfetti;
 				INFOPLIST_FILE = "Target Support Files/SPConfetti/ResourceBundle-SPConfetti-SPConfetti-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
