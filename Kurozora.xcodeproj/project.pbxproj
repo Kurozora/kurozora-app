@@ -4148,7 +4148,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon Staging";
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Kurozora/Kurozora.entitlements;
-				CURRENT_PROJECT_VERSION = 1204;
+				CURRENT_PROJECT_VERSION = 1205;
 				DEVELOPMENT_ASSET_PATHS = "Kurozora/Supporting\\ Files\\ Dev";
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				INFOPLIST_FILE = "Kurozora/Supporting Files/Info.plist";
@@ -4158,7 +4158,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.tracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -4176,7 +4176,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Kurozora/Kurozora.entitlements;
-				CURRENT_PROJECT_VERSION = 1204;
+				CURRENT_PROJECT_VERSION = 1205;
 				DEVELOPMENT_ASSET_PATHS = "Kurozora/Supporting\\ Files\\ Dev";
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				INFOPLIST_FILE = "Kurozora/Supporting Files/Info.plist";
@@ -4186,7 +4186,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.tracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
