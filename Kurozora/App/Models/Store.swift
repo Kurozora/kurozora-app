@@ -32,16 +32,16 @@ typealias RenewalInfo = StoreKit.Product.SubscriptionInfo.RenewalInfo
 typealias RenewalState = StoreKit.Product.SubscriptionInfo.RenewalState
 
 /// The object responsible for managing in-app purchases with StoreKit.
-final class Store: ObservableObject {
+final class Store: NSObject, ObservableObject {
 	// MARK: - Properties
 	/// An array containing all `Tips` products.
-	@Published private(set) var tips: [Product]
+	@Published private(set) var tips: [Product] = []
 
 	/// An array containing all `Subscription` products.
-	@Published private(set) var subscriptions: [Product]
+	@Published private(set) var subscriptions: [Product] = []
 
 	/// An array containing all `Non-Consumable` products.
-	@Published private(set) var nonConsumables: [Product]
+	@Published private(set) var nonConsumables: [Product] = []
 
 	/// The set of pruchased product identifiers.
 	@Published private(set) var purchasedIdentifiers = Set<String>()
@@ -50,11 +50,16 @@ final class Store: ObservableObject {
 	var updateListenerTask: Task<Void, Error>? = nil
 
 	/// The dictionary containing all `StoreKit` products.
-	private let products: [String: String]
+	private var products: [String: String] = [:]
 
 	// MARK: - Initializers
-	init() {
+	override init() {
+		super.init()
 		print("------ StoreKit 2 initialized.")
+		print("------ Add SKPaymentQueue observer.")
+
+		SKPaymentQueue.default().add(self)
+
 //		#if DEBUG
 //		if let path = Bundle.main.path(forResource: "Debug Products", ofType: "plist"),
 //		   let plist = FileManager.default.contents(atPath: path) {
@@ -77,7 +82,7 @@ final class Store: ObservableObject {
 		self.nonConsumables = []
 
 		// Start a transaction listener as close to app launch as possible so you don't miss any transactions.
-		self.updateListenerTask = listenForTransactions()
+		self.updateListenerTask = self.listenForTransactions()
 
 		Task { [weak self] in
 			guard let self = self else { return }
@@ -390,5 +395,45 @@ final class Store: ObservableObject {
 			return .none
 		}
 //		#endif
+	}
+}
+
+// MARK: - SKPaymentTransactionObserver
+extension Store: SKPaymentTransactionObserver {
+	func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+		for transaction in transactions {
+			switch transaction.transactionState {
+			case .purchasing:
+				// Do not block your UI. Allow the user to continue using your app.
+				print("----- Transaction in progress: \(transaction)")
+			case .deferred:
+				// Do not block your UI. Allow the user to continue using your app.
+				print("----- Transaction deferred: \(transaction)")
+			case .purchased:
+				// The purchase was successful.
+				print("----- Transaction purchased: \(transaction)")
+				self.verifyReceipt()
+				queue.finishTransaction(transaction)
+			case .restored:
+				print("----- Transaction restore: \(transaction)")
+				self.verifyReceipt()
+				queue.finishTransaction(transaction)
+			case .failed:
+				print("----- Transaction failed: \(transaction)")
+				queue.finishTransaction(transaction)
+			@unknown default:
+				queue.finishTransaction(transaction)
+			}
+		}
+	}
+
+	func paymentQueue(_ queue: SKPaymentQueue, removedTransactions transactions: [SKPaymentTransaction]) {
+		for transaction in transactions {
+			print("----- \(transaction.payment.productIdentifier) was removed from the payment queue.")
+		}
+	}
+
+	func paymentQueue(_ queue: SKPaymentQueue, shouldAddStorePayment payment: SKPayment, for product: SKProduct) -> Bool {
+		return AppStore.canMakePayments
 	}
 }
