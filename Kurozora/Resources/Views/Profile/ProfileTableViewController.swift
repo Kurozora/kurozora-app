@@ -125,7 +125,6 @@ class ProfileTableViewController: KTableViewController {
 		return !self.originalBannerImage.isEqual(to: self.editedBannerImage)
 	}
 
-	var imagePicker = UIImagePickerController()
 	var oldLeftBarItems: [UIBarButtonItem]?
 	var oldRightBarItems: [UIBarButtonItem]?
 
@@ -918,9 +917,10 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate {
 	/// Open the camera if the device has one, otherwise show a warning.
 	func openCamera() {
 		if UIImagePickerController.isSourceTypeAvailable(.camera) {
-			self.imagePicker.sourceType = .camera
-			self.imagePicker.delegate = self
-			self.present(self.imagePicker, animated: true, completion: nil)
+			let imagePicker = UIImagePickerController()
+			imagePicker.sourceType = .camera
+			imagePicker.delegate = self
+			self.present(imagePicker, animated: true, completion: nil)
 		} else {
 			self.presentAlertController(title: "Well, this is awkward.", message: "You don't seem to have a camera 😓")
 		}
@@ -928,9 +928,10 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate {
 
 	/// Open the Photo Library so the user can choose an image.
 	func openPhotoLibrary() {
-		self.imagePicker.sourceType = .photoLibrary
-		self.imagePicker.delegate = self
-		self.present(self.imagePicker, animated: true, completion: nil)
+		let imagePicker = UIImagePickerController()
+		imagePicker.sourceType = .photoLibrary
+		imagePicker.delegate = self
+		self.present(imagePicker, animated: true, completion: nil)
 	}
 
 	// MARK: - IBActions
