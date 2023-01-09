@@ -50,8 +50,11 @@ class NotificationsTableViewController: KTableViewController {
 	override func viewWillReload() {
 		super.viewWillReload()
 
-		self.enableRefreshControl()
-		self.enableActions()
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			self.enableRefreshControl()
+			self.enableActions()
+		}
 		self.handleRefreshControl()
 	}
 

@@ -60,7 +60,10 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	override func viewWillReload() {
 		super.viewWillReload()
 
-		self.enableRefreshControl()
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			self.enableRefreshControl()
+		}
 		self.handleRefreshControl()
 	}
 
