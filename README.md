@@ -21,17 +21,10 @@
 * **🧩 Essence:** All brought together with [KurozoraKit](https://github.com/kurozora/KurozoraKit), creating a perfect harmony. It’s the piece of the puzzle you don’t want to be missing.
 
 # Screenshots
-![The explore page containing multiple sections of shows, used to discover new shows.](.github/Assets/Screenshots/1.jpg)
 
-![The library page showing the user’s watching list.](.github/Assets/Screenshots/2.jpg)
-
-![The forums page with multiple sections containing threads.](.github/Assets/Screenshots/3.jpg)
-
-![The search page showing multiple search results for JoJo’s Bizarre Adventure.](.github/Assets/Screenshots/4.jpg)
-
-![The details page of Re:Zero Kara Hajimeru Isekai Seikatsu.](.github/Assets/Screenshots/5.jpg)
-
-![The explore page in multiple themes overlaid on top of each other.](.github/Assets/Screenshots/6.jpg)
+| Explore | Library | Search | Details | Themes |
+| ------- | ------- | ------ | ------- | ------ |
+|![The explore page containing multiple sections of shows, used to discover new shows.](.github/Assets/Screenshots/1.jpg) | ![The library page showing the user’s watching list.](.github/Assets/Screenshots/2.jpg) | ![The search page showing multiple search results for JoJo’s Bizarre Adventure.](.github/Assets/Screenshots/4.jpg) | ![The details page of Re:Zero Kara Hajimeru Isekai Seikatsu.](.github/Assets/Screenshots/5.jpg) | ![The explore page in multiple themes overlaid on top of each other.](.github/Assets/Screenshots/6.jpg) |
 
 # Requirements
 
@@ -71,4 +64,4 @@ If you have any questions or just want to say hi, join the Kurozora [Discord](ht
 
 # License
 
-All rights reserved.
+Kurozora app is an Open Source project covered by the [GNU General Public License v3.0](LICENSE).
