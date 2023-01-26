@@ -24,6 +24,7 @@ class SubscriptionCollectionViewController: KCollectionViewController {
 	var currentSubscription: Product?
 	var status: Product.SubscriptionInfo.Status?
 	var subscriptionFeatures: [SubscriptionFeature] = [
+		SubscriptionFeature(title: "Unified Anime Linking", description: "Seamlessly transition from other services to Kurozora. Add 'kurozora.app' to any URL and let us bring all your anime data in one place.", image: R.image.promotional.inAppPurchases.unifiedAnimeLinking()),
 		SubscriptionFeature(title: "Calendar Integration", description: "Integrate your anime schedule into your calendar. Never miss an episode again with reminders for new airings.", image: R.image.promotional.inAppPurchases.reminders()),
 		SubscriptionFeature(title: "Dynamic Themes", description: "Choose from a range of themes to create a look that reflects your personality and style.", image: R.image.promotional.inAppPurchases.themes()),
 		SubscriptionFeature(title: "Stylish App Icons", description: "Make your home screen stand out with premium and limited time app icons.", image: R.image.promotional.inAppPurchases.icons()),
