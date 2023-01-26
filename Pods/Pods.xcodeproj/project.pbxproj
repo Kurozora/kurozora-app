@@ -1613,7 +1613,7 @@
 		3F0E905556A526F3BEB51C4959D4D713 /* UIViewController+KurozoraKit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIViewController+KurozoraKit.swift"; path = "KurozoraKit/Classes/Extensions/UIKit/UIViewController+KurozoraKit.swift"; sourceTree = "<group>"; };
 		3F274495FF9EA8C3F8602081C019E1D6 /* SPConfettiDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SPConfettiDelegate.swift; path = Sources/SPConfetti/SPConfettiDelegate.swift; sourceTree = "<group>"; };
 		3FA0C3E74C0BE8535173432359CC6911 /* FLEXNetworkRecorder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FLEXNetworkRecorder.m; path = Classes/Network/FLEXNetworkRecorder.m; sourceTree = "<group>"; };
-		3FA8D2A5E016F8C02F73315FDAC533FD /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = en.lproj; path = Sources/en.lproj; sourceTree = "<group>"; };
+		3FA8D2A5E016F8C02F73315FDAC533FD /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = en.lproj; path = Sources/en.lproj; sourceTree = "<group>"; };
 		4045EC51C465516A3AA7307DB8053174 /* IQKeyboardReturnKeyHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQKeyboardReturnKeyHandler.swift; path = IQKeyboardManagerSwift/IQKeyboardReturnKeyHandler.swift; sourceTree = "<group>"; };
 		40ED1C966F42C344C92004D466BBCE73 /* SCNShapeExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SCNShapeExtensions.swift; path = Sources/SwifterSwift/SceneKit/SCNShapeExtensions.swift; sourceTree = "<group>"; };
 		40F24D6542008DFF8D82B0BCEECCA45C /* TabmanViewController+Insets.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "TabmanViewController+Insets.swift"; path = "Sources/Tabman/TabmanViewController+Insets.swift"; sourceTree = "<group>"; };
@@ -1680,7 +1680,7 @@
 		4E11C93EDD4115E5E6A1FECDE27F8BB5 /* KeyedDecodingContainerExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KeyedDecodingContainerExtensions.swift; path = Sources/SwifterSwift/SwiftStdlib/KeyedDecodingContainerExtensions.swift; sourceTree = "<group>"; };
 		4E14DAABC622D569E412D6FDCF0FEC2C /* SwiftTheme-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftTheme-prefix.pch"; sourceTree = "<group>"; };
 		4E605927D0226A5ADC8F91A123ACAB2A /* ESTabBarController-swift-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ESTabBarController-swift-Info.plist"; sourceTree = "<group>"; };
-		4E8D84BC763B08281ACFFABA523876F7 /* flex_fishhook.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = flex_fishhook.c; path = Classes/Utility/Runtime/flex_fishhook.c; sourceTree = "<group>"; };
+		4E8D84BC763B08281ACFFABA523876F7 /* flex_fishhook.c */ = {isa = PBXFileReference; includeInIndex = 1; name = flex_fishhook.c; path = Classes/Utility/Runtime/flex_fishhook.c; sourceTree = "<group>"; };
 		4E904D4A9227429C4829F9A94B7B5DCA /* FLEXASLLogController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FLEXASLLogController.m; path = Classes/GlobalStateExplorers/SystemLog/FLEXASLLogController.m; sourceTree = "<group>"; };
 		4EA3951171D47053300E0A77BA04787D /* IQUITextFieldView+Additions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "IQUITextFieldView+Additions.swift"; path = "IQKeyboardManagerSwift/Categories/IQUITextFieldView+Additions.swift"; sourceTree = "<group>"; };
 		4ECC228590805BE0533BC83647BAAA15 /* InsetCalculator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InsetCalculator.swift; path = Sources/Tabman/AutoInsetter/InsetCalculator/InsetCalculator.swift; sourceTree = "<group>"; };
@@ -1902,7 +1902,7 @@
 		77A2538DEFFAF9EAB9906BED6946B97E /* SwiftyJSONDecodable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftyJSONDecodable.swift; path = Source/TRONSwiftyJSON/SwiftyJSONDecodable.swift; sourceTree = "<group>"; };
 		77CC09C7B3E7118008401C99F3FF3250 /* Alamofire.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Alamofire.release.xcconfig; sourceTree = "<group>"; };
 		7830E8D8A59156B3385814AE17FED8C4 /* Legal.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Legal.swift; path = KurozoraKit/Classes/Models/Legal/Legal.swift; sourceTree = "<group>"; };
-		7836607888FBD5416202593C986E44AB /* FLEXFirebaseTransaction.mm */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.objcpp; name = FLEXFirebaseTransaction.mm; path = Classes/Network/FLEXFirebaseTransaction.mm; sourceTree = "<group>"; };
+		7836607888FBD5416202593C986E44AB /* FLEXFirebaseTransaction.mm */ = {isa = PBXFileReference; includeInIndex = 1; name = FLEXFirebaseTransaction.mm; path = Classes/Network/FLEXFirebaseTransaction.mm; sourceTree = "<group>"; };
 		7881E7735751C6D3D0285F45EB0510C5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		7892416D67B3AA6DD940F0642039239D /* TVRating.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TVRating.swift; path = KurozoraKit/Classes/Models/Show/Attributes/TVRating.swift; sourceTree = "<group>"; };
 		78D7513F6C4DD2893FEE70280CFC66D4 /* KurozoraKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = KurozoraKit.debug.xcconfig; sourceTree = "<group>"; };
@@ -2079,7 +2079,7 @@
 		9D4051C56C7778D260C5EBDB51EE5883 /* SCNPlaneExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SCNPlaneExtensions.swift; path = Sources/SwifterSwift/SceneKit/SCNPlaneExtensions.swift; sourceTree = "<group>"; };
 		9D6EEF167B443A613B202AC21DA8C489 /* FLEXNetworkSettingsController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FLEXNetworkSettingsController.h; path = Classes/Network/FLEXNetworkSettingsController.h; sourceTree = "<group>"; };
 		9D92D6B83490B3DD262315A82F86CD7C /* FLEXImagePreviewViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FLEXImagePreviewViewController.m; path = Classes/ViewHierarchy/FLEXImagePreviewViewController.m; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9DBD74211232B34D73E389911309B0FC /* FLEXSystemLogMessage.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FLEXSystemLogMessage.m; path = Classes/GlobalStateExplorers/SystemLog/FLEXSystemLogMessage.m; sourceTree = "<group>"; };
 		9E14F515065F1160664274A6397A272C /* FLEXDBQueryRowCell.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FLEXDBQueryRowCell.m; path = Classes/GlobalStateExplorers/DatabaseBrowser/FLEXDBQueryRowCell.m; sourceTree = "<group>"; };
 		9E33E7DE713E5ECC8B77FBC147B2C776 /* CosmosSettings.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CosmosSettings.swift; path = Cosmos/CosmosSettings.swift; sourceTree = "<group>"; };
@@ -2166,7 +2166,7 @@
 		B09F247283EC289A3CF525630093853A /* FLEXLiveObjectsController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FLEXLiveObjectsController.h; path = Classes/GlobalStateExplorers/FLEXLiveObjectsController.h; sourceTree = "<group>"; };
 		B0DBD7A2DD713C76441D99B09F6780A6 /* UIMenu+FLEX.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIMenu+FLEX.m"; path = "Classes/Utility/Categories/UIMenu+FLEX.m"; sourceTree = "<group>"; };
 		B0F2142CDB2DA1C923D049A7659A1A6B /* FLEXRuntime+UIKitHelpers.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "FLEXRuntime+UIKitHelpers.h"; path = "Classes/Utility/Categories/FLEXRuntime+UIKitHelpers.h"; sourceTree = "<group>"; };
-		B10ACC82206D168DECE417A0140396C6 /* FLEXSwiftInternal.mm */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.objcpp; name = FLEXSwiftInternal.mm; path = Classes/Utility/Runtime/Objc/FLEXSwiftInternal.mm; sourceTree = "<group>"; };
+		B10ACC82206D168DECE417A0140396C6 /* FLEXSwiftInternal.mm */ = {isa = PBXFileReference; includeInIndex = 1; name = FLEXSwiftInternal.mm; path = Classes/Utility/Runtime/Objc/FLEXSwiftInternal.mm; sourceTree = "<group>"; };
 		B12D3B5C56C7AD2B229A0C5EE7DEC3FD /* GestureScrollView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GestureScrollView.swift; path = Sources/Tabman/Bar/Generic/GestureScrollView.swift; sourceTree = "<group>"; };
 		B140EE30A2D7F06F180C205F9830BD9C /* ESTabBarController-swift-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ESTabBarController-swift-prefix.pch"; sourceTree = "<group>"; };
 		B144F1C80406A657B74D464B634477C9 /* IndexedObjectMap.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IndexedObjectMap.swift; path = Sources/Pageboy/Utilities/IndexedObjectMap.swift; sourceTree = "<group>"; };
@@ -2488,7 +2488,7 @@
 		F08FEA9C5E4F6BD5CFED34851BCDA7D9 /* Exports.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Exports.swift; path = Source/TRON/Exports.swift; sourceTree = "<group>"; };
 		F0DEA1AE38C628C84643BE9F646DD363 /* FLEXSubtitleTableViewCell.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FLEXSubtitleTableViewCell.m; path = Classes/Core/Views/Cells/FLEXSubtitleTableViewCell.m; sourceTree = "<group>"; };
 		F16F23D3F27621EB71A94BDA8A1787E0 /* FLEXArgumentInputNotSupportedView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FLEXArgumentInputNotSupportedView.m; path = Classes/Editing/ArgumentInputViews/FLEXArgumentInputNotSupportedView.m; sourceTree = "<group>"; };
-		F205CD35F050183B05F724D395D22859 /* FLEXObjcInternal.mm */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.objcpp; name = FLEXObjcInternal.mm; path = Classes/Utility/Runtime/Objc/FLEXObjcInternal.mm; sourceTree = "<group>"; };
+		F205CD35F050183B05F724D395D22859 /* FLEXObjcInternal.mm */ = {isa = PBXFileReference; includeInIndex = 1; name = FLEXObjcInternal.mm; path = Classes/Utility/Runtime/Objc/FLEXObjcInternal.mm; sourceTree = "<group>"; };
 		F20A837360D2FC08091D2479BB7F2316 /* FLEXFieldEditorView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FLEXFieldEditorView.h; path = Classes/Editing/FLEXFieldEditorView.h; sourceTree = "<group>"; };
 		F20FC438AC5C377A22AFF8AD4E67009C /* FLEXASLLogController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FLEXASLLogController.h; path = Classes/GlobalStateExplorers/SystemLog/FLEXASLLogController.h; sourceTree = "<group>"; };
 		F251997E49E439880224DBCE8FE9F6F6 /* NSUserDefaults+FLEX.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSUserDefaults+FLEX.m"; path = "Classes/Utility/Categories/NSUserDefaults+FLEX.m"; sourceTree = "<group>"; };
@@ -2789,6 +2789,7 @@
 				102B60CB7C2CF1A6892E9BBDFC81E32C /* SwiftyJSON.swift */,
 				591069ECA8A5C16ECDA3F5AF396FE66B /* Support Files */,
 			);
+			name = SwiftyJSON;
 			path = SwiftyJSON;
 			sourceTree = "<group>";
 		};
@@ -2798,6 +2799,7 @@
 				D66CEF2938AF5F7014DEECE076C58A14 /* Solar.swift */,
 				F4DA35B2BF8B2915726547247E55F740 /* Support Files */,
 			);
+			name = Solar;
 			path = Solar;
 			sourceTree = "<group>";
 		};
@@ -2923,6 +2925,7 @@
 				CEB8069375EBE48204EA4522C0A71B81 /* WeakContainer.swift */,
 				1980A4515824D8FDA5CB2031EC24C406 /* Support Files */,
 			);
+			name = Pageboy;
 			path = Pageboy;
 			sourceTree = "<group>";
 		};
@@ -2947,6 +2950,7 @@
 				8EAF10C313EED78AF2B38DFF0AFAE695 /* Reachability.swift */,
 				4FC421927F5A0EA027CEE35B03422EF5 /* Support Files */,
 			);
+			name = ReachabilitySwift;
 			path = ReachabilitySwift;
 			sourceTree = "<group>";
 		};
@@ -2956,6 +2960,7 @@
 				FE0D03F52C60727AF559B24BA56C14C8 /* Keychain.swift */,
 				EF92C40861F04E20540F218E07F3865F /* Support Files */,
 			);
+			name = KeychainAccess;
 			path = KeychainAccess;
 			sourceTree = "<group>";
 		};
@@ -2995,6 +3000,7 @@
 				8F3C96AF55D0A014B07DC18EF4CC65AA /* UITextField+PlaceholderAttributes.swift */,
 				CF8593D95411F695C47E29E61CD5D09B /* Support Files */,
 			);
+			name = SwiftTheme;
 			path = SwiftTheme;
 			sourceTree = "<group>";
 		};
@@ -3076,6 +3082,7 @@
 				1A459C9480366103B0784A58C2B0560A /* Validation.swift */,
 				15778E990B188BD303F066C31AEB1EF2 /* Support Files */,
 			);
+			name = Alamofire;
 			path = Alamofire;
 			sourceTree = "<group>";
 		};
@@ -3151,6 +3158,7 @@
 				FD7F91D67F4740E33AE047B0C5782130 /* Resources */,
 				8AD0966F1B3921C3BBA1213E8E0C2240 /* Support Files */,
 			);
+			name = "ESTabBarController-swift";
 			path = "ESTabBarController-swift";
 			sourceTree = "<group>";
 		};
@@ -3227,6 +3235,7 @@
 				20D627036E600ED5A92F7332EDCB606B /* WeakContainer.swift */,
 				792F199A981666D1DA716AACDDCBF679 /* Support Files */,
 			);
+			name = Tabman;
 			path = Tabman;
 			sourceTree = "<group>";
 		};
@@ -3502,6 +3511,7 @@
 				F5F6C2A40F5CF77512F8720187629CF7 /* WatchStatus.swift */,
 				4220C06B81C7C5DA6D5B0E9B4CA40C65 /* Support Files */,
 			);
+			name = KurozoraKit;
 			path = KurozoraKit;
 			sourceTree = "<group>";
 		};
@@ -3548,6 +3558,7 @@
 				07A4F8D4EF73615F493A63369C56D357 /* IQUIViewController+Additions.swift */,
 				9DF1D85748CD3BC72E55AA39CF96C5F9 /* Support Files */,
 			);
+			name = IQKeyboardManagerSwift;
 			path = IQKeyboardManagerSwift;
 			sourceTree = "<group>";
 		};
@@ -3636,6 +3647,7 @@
 				BFD5D63B61ABDC327652D7DE39C24DC7 /* Resources */,
 				0549BC5D807C224CD4F6FFC2490C3078 /* Support Files */,
 			);
+			name = SPConfetti;
 			path = SPConfetti;
 			sourceTree = "<group>";
 		};
@@ -3689,6 +3701,7 @@
 				9F873F78F03130CCC7061C94D92DF5F3 /* StarLayer.swift */,
 				D3804E4A10D779FD868060BF11F08BFE /* Support Files */,
 			);
+			name = Cosmos;
 			path = Cosmos;
 			sourceTree = "<group>";
 		};
@@ -3719,6 +3732,7 @@
 				0EA5CE5DD69DC3E9DEF4F64421D155B5 /* Resources */,
 				1DDC47DC67BF160C53BF49D53E3EFECC /* Support Files */,
 			);
+			name = WhatsNew;
 			path = WhatsNew;
 			sourceTree = "<group>";
 		};
@@ -3894,6 +3908,7 @@
 				6699404D5D105F6A6BE4B82BEA9CAFBF /* SwiftStdlib */,
 				A15D13DFB491B3A19FAD594922149581 /* UIKit */,
 			);
+			name = SwifterSwift;
 			path = SwifterSwift;
 			sourceTree = "<group>";
 		};
@@ -3989,6 +4004,7 @@
 				42D60EA99BC2633714EE5794C5D74675 /* WKInterfaceImage+Kingfisher.swift */,
 				7226733F86146FE7EF6E83D8FE93E47A /* Support Files */,
 			);
+			name = Kingfisher;
 			path = Kingfisher;
 			sourceTree = "<group>";
 		};
@@ -4036,6 +4052,7 @@
 				0E847933E1910802E7B6BBDBA6EDB93B /* Support Files */,
 				C12ABD4DE8B9E57DB424D249D47C6F8F /* SwiftyJSON */,
 			);
+			name = TRON;
 			path = TRON;
 			sourceTree = "<group>";
 		};
@@ -4077,6 +4094,7 @@
 				EC44A17D27931D58734D534578A2C12B /* ValidationError.swift */,
 				400BD8CA02546BC9B39E62094D292E2E /* Support Files */,
 			);
+			name = R.swift;
 			path = R.swift;
 			sourceTree = "<group>";
 		};
@@ -4134,6 +4152,7 @@
 				B088BD7E812DC2C41FF70B9B8081F4AE /* XCDYouTubeVideoWebpage.m */,
 				4B0E110CAC92B20D1C59DA19047DEFD6 /* Support Files */,
 			);
+			name = XCDYouTubeKit;
 			path = XCDYouTubeKit;
 			sourceTree = "<group>";
 		};
@@ -4534,6 +4553,7 @@
 				AD3BFBA346E3DF369A8D4764A96816C2 /* UIView+FLEX_Layout.m */,
 				9067D8AF6627E21D3267EDD19791F45F /* Support Files */,
 			);
+			name = FLEX;
 			path = FLEX;
 			sourceTree = "<group>";
 		};
@@ -5344,7 +5364,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1300;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1300;
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 12.0";
@@ -7463,7 +7483,6 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -7569,7 +7588,6 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

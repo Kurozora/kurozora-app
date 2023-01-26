@@ -27,37 +27,30 @@ import UIKit
 @available(iOSApplicationExtension, unavailable)
 @objc open class IQBarButtonItem: UIBarButtonItem {
 
-    private static var _classInitialize: Void = classInitialize()
-
     @objc public override init() {
-        _ = IQBarButtonItem._classInitialize
-          super.init()
-      }
+        super.init()
+        initialize()
+    }
 
     @objc public required init?(coder aDecoder: NSCoder) {
-        _ = IQBarButtonItem._classInitialize
-           super.init(coder: aDecoder)
-       }
+        super.init(coder: aDecoder)
+        initialize()
+    }
 
-    private class func classInitialize() {
+    private func initialize() {
 
-        let  appearanceProxy = self.appearance()
-
-        let states: [UIControl.State]
-
-        states = [.normal, .highlighted, .disabled, .selected, .application, .reserved]
+        let states: [UIControl.State] = [.normal, .highlighted, .disabled, .focused]
 
         for state in states {
 
-            appearanceProxy.setBackgroundImage(nil, for: state, barMetrics: .default)
-            appearanceProxy.setBackgroundImage(nil, for: state, style: .done, barMetrics: .default)
-            appearanceProxy.setBackgroundImage(nil, for: state, style: .plain, barMetrics: .default)
-            appearanceProxy.setBackButtonBackgroundImage(nil, for: state, barMetrics: .default)
+            setBackgroundImage(nil, for: state, barMetrics: .default)
+            setBackgroundImage(nil, for: state, style: .plain, barMetrics: .default)
+            setBackButtonBackgroundImage(nil, for: state, barMetrics: .default)
         }
 
-        appearanceProxy.setTitlePositionAdjustment(UIOffset(), for: .default)
-        appearanceProxy.setBackgroundVerticalPositionAdjustment(0, for: .default)
-        appearanceProxy.setBackButtonBackgroundVerticalPositionAdjustment(0, for: .default)
+        setTitlePositionAdjustment(UIOffset(), for: .default)
+        setBackgroundVerticalPositionAdjustment(0, for: .default)
+        setBackButtonBackgroundVerticalPositionAdjustment(0, for: .default)
     }
 
     @objc override open var tintColor: UIColor? {
@@ -83,7 +76,7 @@ import UIKit
 
     /**
      Additional target & action to do get callback action. Note that setting custom target & selector doesn't affect native functionality, this is just an additional target to get a callback.
-     
+
      @param target Target object.
      @param action Target Selector.
      */
@@ -102,6 +95,5 @@ import UIKit
 
     deinit {
         target = nil
-        invocation = nil
     }
 }
