@@ -10,8 +10,9 @@ import TRON
 extension KurozoraKit {
 	/// Fetch the episode details for the given episode identity.
 	///
-	/// - Parameter episodeIdentity: The episode identity object of the episode for which the details should be fetched.
-	/// - Parameter relationships: The relationships to include in the response.
+	/// - Parameters:
+	///    - episodeIdentity: The episode identity object of the episode for which the details should be fetched.
+	///    - relationships: The relationships to include in the response.
 	///
 	/// - Returns: An instance of `RequestSender` with the results of the get episode detail response.
 	public func getDetails(forEpisode episodeIdentity: EpisodeIdentity, including relationships: [String] = []) -> RequestSender<EpisodeResponse, KKAPIError> {
@@ -62,9 +63,10 @@ extension KurozoraKit {
 
 	/// Rate the episode with the given episode identity.
 	///
-	/// - Parameter episodeIdentity: The episode identity object of the episode which should be rated.
-	/// - Parameter score: The rating to leave.
-	///	- Parameter description: The description of the rating.
+	/// - Parameters:
+	///    - episodeIdentity: The episode identity object of the episode which should be rated.
+	///    - score: The rating to leave.
+	///	   - description: The description of the rating.
 	///
 	/// - Returns: An instance of `RequestSender` with the results of the rate episode response.
 	public func rateEpisode(_ episodeIdentity: EpisodeIdentity, with score: Double, description: String?) -> RequestSender<KKSuccess, KKAPIError> {

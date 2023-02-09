@@ -11,4 +11,3 @@ public struct LibraryUpdateResponse: Codable {
 	/// The data included in the repsonse for a library update object request.
 	public let data: LibraryUpdate
 }
-

@@ -5,154 +5,141 @@
 //  Created by Khoren Katklian on 18/08/2020.
 //
 
+import Alamofire
 import TRON
 
 extension KurozoraKit {
 	/// Fetch the list of shows with the given show status in the authenticated user's library.
 	///
 	/// - Parameters:
+	///    - libraryKind: In which library the item should be added.
 	///    - libraryStatus: The library status to retrieve the library items for.
 	///    - sortType: The sort value by which the retrived items should be sorted.
 	///    - sortOption: The sort option value by which the retrived items should be sorted.
 	///    - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
 	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
-	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-	///    - result: A value that represents either a success or a failure, including an associated value in each case.
-	public func getLibrary(withLibraryStatus libraryStatus: KKLibrary.Status, withSortType sortType: KKLibrary.SortType, withSortOption sortOption: KKLibrary.SortType.Options, next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<ShowResponse, KKAPIError>) -> Void) {
-		let meLibraryIndex = next ?? KKEndpoint.Me.Library.index.endpointValue
-		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(meLibraryIndex).buildURL(.relativeToBaseURL)
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the get episode detail response.
+	public func getLibrary(_ libraryKind: KKLibrary.Kind, withLibraryStatus libraryStatus: KKLibrary.Status, withSortType sortType: KKLibrary.SortType, withSortOption sortOption: KKLibrary.SortType.Options, next: String? = nil, limit: Int = 25) -> RequestSender<LibraryResponse, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
+		headers.add(.authorization(bearerToken: self.authenticationKey))
 
-		request.headers = headers
-		request.headers.add(.authorization(bearerToken: self.authenticationKey))
-
-		request.method = .get
-		request.parameters = [
+		// Prepare parameters
+		var parameters: [String: Any] = [
+			"library": libraryKind.rawValue,
 			"status": libraryStatus.sectionValue,
 			"limit": limit
 		]
 		if sortType != .none {
-			request.parameters["sort"] = "\(sortType.parameterValue)\(sortOption.parameterValue)"
+			parameters["sort"] = "\(sortType.parameterValue)\(sortOption.parameterValue)"
 		}
-		request.perform(withSuccess: { showResponse in
-			completionHandler(.success(showResponse))
-		}, failure: { [weak self] error in
-			guard let self = self else { return }
-			if self.services.showAlerts {
-				UIApplication.topViewController?.presentAlertController(title: "Can't Get Library 😔", message: error.message)
-			}
-			print("❌ Received get library error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message)
-			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
-			print("└ Failure reason:", error.failureReason ?? "No reason available")
-			completionHandler(.failure(error))
-		})
+
+		// Prepare request
+		let meLibraryIndex = next ?? KKEndpoint.Me.Library.index.endpointValue
+		let request: APIRequest<LibraryResponse, KKAPIError> = tron.codable.request(meLibraryIndex).buildURL(.relativeToBaseURL)
+			.method(.get)
+			.headers(headers)
+			.parameters(parameters)
+
+		// Send request
+		return request.sender()
 	}
 
-	/// Add a show with the given show id to the authenticated user's library.
+	/// Add an item with the given show id to the authenticated user's library.
 	///
 	/// - Parameters:
-	///    - libraryStatus: The watch status to assign to the Anime.
-	///    - showID: The id of the show to add.
-	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-	///    - result: A value that represents either a success or a failure, including an associated value in each case.
-	public func addToLibrary(withLibraryStatus libraryStatus: KKLibrary.Status, showID: Int, completion completionHandler: @escaping (_ result: Result<LibraryUpdate, KKAPIError>) -> Void) {
+	///    - libraryKind: In which library the item should be added.
+	///    - libraryStatus: The library status to assign to the item.
+	///    - modelID: The id of the model to add.
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the get episode detail response.
+	public func addToLibrary(_ libraryKind: KKLibrary.Kind, withLibraryStatus libraryStatus: KKLibrary.Status, modelID: String) -> RequestSender<LibraryUpdateResponse, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
+		headers.add(.authorization(bearerToken: self.authenticationKey))
+
+		// Prepare parameters
+		let parameters: [String: Any] = [
+			"library": libraryKind.rawValue,
+			"model_id": modelID,
+			"status": libraryStatus.rawValue
+		]
+
+		// Prepare request
 		let meLibraryIndex = KKEndpoint.Me.Library.index.endpointValue
 		let request: APIRequest<LibraryUpdateResponse, KKAPIError> = tron.codable.request(meLibraryIndex)
+			.method(.post)
+			.headers(headers)
+			.parameters(parameters)
 
-		request.headers = headers
-		request.headers.add(.authorization(bearerToken: self.authenticationKey))
-
-		request.method = .post
-		request.parameters = [
-			"status": libraryStatus.sectionValue,
-			"anime_id": showID
-		]
-		request.perform(withSuccess: { libraryUpdateResponse in
-			completionHandler(.success(libraryUpdateResponse.data))
-		}, failure: { [weak self] error in
-			guard let self = self else { return }
-			if self.services.showAlerts {
-				UIApplication.topViewController?.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
-			}
-			print("❌ Received add library error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message)
-			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
-			print("└ Failure reason:", error.failureReason ?? "No reason available")
-			completionHandler(.failure(error))
-		})
+		// Send request
+		return request.sender()
 	}
 
-	/// Remove a show with the given show id from the authenticated user's library.
+	/// Remove an item with the given item id from the authenticated user's library.
 	///
 	/// - Parameters:
-	///    - showID: The id of the show to be deleted.
-	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-	///    - result: A value that represents either a success or a failure, including an associated value in each case.
-	public func removeFromLibrary(showID: Int, completion completionHandler: @escaping (_ result: Result<LibraryUpdate, KKAPIError>) -> Void) {
+	///    - libraryKind: From which library to delete the item.
+	///    - modelID: The id of the model to be deleted.
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the get episode detail response.
+	public func removeFromLibrary(_ libraryKind: KKLibrary.Kind, modelID: String) -> RequestSender<LibraryUpdateResponse, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
+		headers.add(.authorization(bearerToken: self.authenticationKey))
+
+		// Prepare parameters
+		let parameters: [String: Any] = [
+			"library": libraryKind.rawValue,
+			"model_id": modelID
+		]
+
+		// Prepare request
 		let meLibraryDelete = KKEndpoint.Me.Library.delete.endpointValue
 		let request: APIRequest<LibraryUpdateResponse, KKAPIError> = tron.codable.request(meLibraryDelete)
+			.method(.post)
+			.headers(headers)
+			.parameters(parameters)
 
-		request.headers = headers
-		request.headers.add(.authorization(bearerToken: self.authenticationKey))
-
-		request.method = .post
-		request.parameters = [
-			"anime_id": showID
-		]
-		request.perform(withSuccess: { libraryUpdateResponse in
-			completionHandler(.success(libraryUpdateResponse.data))
-		}, failure: { [weak self] error in
-			guard let self = self else { return }
-			if self.services.showAlerts {
-				UIApplication.topViewController?.presentAlertController(title: "Can't Remove From Your Library 😔", message: error.message)
-			}
-			print("❌ Received remove library error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message)
-			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
-			print("└ Failure reason:", error.failureReason ?? "No reason available")
-			completionHandler(.failure(error))
-		})
+		// Send request
+		return request.sender()
 	}
 
-	/// Import a MAL export file into the authenticated user's library.
+	/// Import an exported library file into the authenticated user's library.
 	///
 	/// - Parameters:
-	///    - filePath: The path to the file to be imported.
+	///    - libraryKind: To which library to import the file.
+	///    - service: The preferred service for importing the file.
 	///    - behavior: The preferred behavior of importing the file.
-	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-	///    - result: A value that represents either a success or a failure, including an associated value in each case.
-	public func importMALLibrary(filePath: URL, importBehavior behavior: MALImport.Behavior, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) {
-		let meLibraryMALImport = KKEndpoint.Me.Library.malImport.endpointValue
-		let request: UploadAPIRequest<KKSuccess, KKAPIError> = tron.codable.uploadMultipart(meLibraryMALImport) { formData in
-			formData.append(filePath, withName: "file", fileName: "MALAnimeImport.xml", mimeType: "text/xml")
-		}
-
-		request.headers = [
+	///    - filePath: The path to the file to be imported.
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the get episode detail response.
+	public func importToLibrary(_ libraryKind: KKLibrary.Kind, importService service: LibraryImport.Service, importBehavior behavior: LibraryImport.Behavior, filePath: URL) -> RequestSender<KKSuccess, KKAPIError> {
+		// Prepare headers
+		var headers: HTTPHeaders = [
 			.contentType("multipart/form-data"),
 			.accept("application/json")
 		]
-		request.headers.add(.authorization(bearerToken: self.authenticationKey))
+		headers.add(.authorization(bearerToken: self.authenticationKey))
 
-		request.method = .post
-		request.parameters = [
+		// Prepare parameters
+		let parameters: [String: Any] = [
+			"library": libraryKind.rawValue,
+			"service": service.rawValue,
 			"behavior": behavior.rawValue
 		]
-		request.perform(withSuccess: { [weak self] success in
-			guard let self = self else { return }
-			if self.services.showAlerts {
-				UIApplication.topViewController?.presentAlertController(title: "Processing Request", message: success.message)
-			}
-			completionHandler(.success(success))
-		}, failure: { [weak self] error in
-			guard let self = self else { return }
-			if self.services.showAlerts {
-				UIApplication.topViewController?.presentAlertController(title: "Can't Import MAL Library 😔", message: error.message)
-			}
-			print("❌ Received library MAL import error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message)
-			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
-			print("└ Failure reason:", error.failureReason ?? "No reason available")
-			completionHandler(.failure(error))
-		})
+
+		// Prepare request
+		let meLibraryImport = KKEndpoint.Me.Library.import.endpointValue
+		let request: UploadAPIRequest<KKSuccess, KKAPIError> = tron.codable.uploadMultipart(meLibraryImport) { formData in
+			formData.append(filePath, withName: "file", fileName: "LibraryImport.xml", mimeType: "text/xml")
+		}
+			.method(.post)
+			.headers(headers)
+			.parameters(parameters)
+
+		// Send request
+		return request.sender()
 	}
 }

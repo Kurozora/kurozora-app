@@ -10,7 +10,7 @@
 /// - `characters`: the fetched resource should be of the `characters` type.
 /// - `episodes`: the fetched resource should be of the `episodes` type.
 /// - `games`: the fetched resource should be of the `games` type.
-/// - `literature`: the fetched resource should be of the `literature` type.
+/// - `literatures`: the fetched resource should be of the `literatures` type.
 /// - `people`: the fetched resource should be of the `people` type.
 /// - `shows`: the fetched resource should be of the `shows` type.
 /// - `songs`: the fetched resource should be of the `songs` type.
@@ -34,10 +34,10 @@ public enum KKSearchType: String {
 //	/// - Tag: KKSearchType-games
 //	case games
 
-//	/// Indicates the fetched resource should be of the `literature` type.
-//	///
-//	/// - Tag: KKSearchType-literature
-//	case literature
+	/// Indicates the fetched resource should be of the `literatures` type.
+	///
+	/// - Tag: KKSearchType-literatures
+	case literatures
 
 	/// Indicates the fetched resource should be of the `people` type.
 	///

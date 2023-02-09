@@ -7,15 +7,20 @@
 
 /// A root object that stores information about a song identity resource.
 public struct SongIdentity: IdentityResource, Hashable {
+	// MARK: - Enums
+	public enum CodingKeys : String, CodingKey {
+		case id = "uuid", type, href
+	}
+
 	// MARK: - Properties
-	public let id: Int
+	public let id: String
 
 	public let type: String
 
 	public let href: String
 
 	// MARK: - Initializers
-	public init(id: Int) {
+	public init(id: String) {
 		self.id = id
 		self.type = "songs"
 		self.href = ""

@@ -44,7 +44,7 @@ extension KurozoraKit {
 	///    - themeID: The id of the theme for which the details should be fetched.
 	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 	///    - result: A value that represents either a success or a failure, including an associated value in each case.
-	public func getDetails(forAppThemeID appThemeID: Int, completion completionHandler: @escaping (_ result: Result<[AppTheme], KKAPIError>) -> Void) {
+	public func getDetails(forAppThemeID appThemeID: String, completion completionHandler: @escaping (_ result: Result<[AppTheme], KKAPIError>) -> Void) {
 		let themeStoreDetails = KKEndpoint.ThemeStore.details(appThemeID).endpointValue
 		let request: APIRequest<AppThemeResponse, KKAPIError> = tron.codable.request(themeStoreDetails)
 

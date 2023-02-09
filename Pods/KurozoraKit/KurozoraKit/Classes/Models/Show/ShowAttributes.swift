@@ -6,23 +6,29 @@
 //
 
 extension Show {
-	/// A root object that stores information about a single show, such as the show's title, episode count, and air date.
+	/// A root object that stores information about a single show, such as the show"s title, episode count, and air date.
 	public struct Attributes: LibraryAttributes {
 		// MARK: - Properties
 		// General
-		/// The AniDB if of the show.
+		/// The AniDB id of the show.
 		public let anidbID: Int?
 
-		/// The AniList if of the show.
+		/// The AniList id of the show.
 		public let anilistID: Int?
+
+		/// The Anime-Planet id of the show.
+		public let animePlanetID: String?
+
+		/// The AniSearch id of the show.
+		public let anisearchID: Int?
 
 		/// The IMDB id of the show.
 		public let imdbID: String?
 
-		/// The Kitsu if of the show.
+		/// The Kitsu id of the show.
 		public let kitsuID: Int?
 
-		/// The MAL id of the show.
+		/// The MyAnimeList id of the show.
 		public let malID: Int?
 
 		/// The Notify id of the show.
@@ -48,6 +54,9 @@ extension Show {
 
 		/// The media object of the banner of the show.
 		public let banner: Media?
+
+		/// The media object of the logo of the show.
+		public let logo: Media?
 
 		/// The original title in the original language of the show.
 		public let originalTitle: String?
@@ -80,7 +89,7 @@ extension Show {
 		public let tvRating: TVRating
 
 		/// The type of the show.
-		public let type: ShowType
+		public let type: MediaType
 
 		/// The adaptation source of the show.
 		public let source: AdaptationSource
@@ -98,10 +107,10 @@ extension Show {
 		public let stats: MediaStat?
 
 		/// The first air date of the show.
-		public let firstAired: Date?
+		public let startedAt: Date?
 
 		/// The last air date of the show.
-		public let lastAired: Date?
+		public let endedAt: Date?
 
 		/// The duration of the show.
 		public let duration: String
@@ -109,14 +118,14 @@ extension Show {
 		/// The calculated total duration of the show.
 		public let durationTotal: String
 
+		/// The season the show has aired in.
+		public let airSeason: String?
+
 		/// The time the show has aired at in UTC.
 		public let airTime: String?
 
 		/// The day the show has aired on.
 		public let airDay: String?
-
-		/// The season the show has aired in.
-		public let airSeason: String?
 
 		/// Whether the show is Not Safe For Work.
 		public let isNSFW: Bool

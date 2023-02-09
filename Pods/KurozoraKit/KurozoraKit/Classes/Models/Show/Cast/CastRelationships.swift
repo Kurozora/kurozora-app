@@ -10,7 +10,7 @@ extension Cast {
 	public struct Relationships: Codable {
 		// MARK: - Properties
 		/// The people belonging to the cast.
-		public let people: PersonResponse
+		public let people: PersonResponse?
 
 		/// The characters belonging to the cast.
 		public let characters: CharacterResponse

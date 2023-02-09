@@ -6,15 +6,21 @@
 //
 
 /// A root object that stores information about a character identity resource.
-public class CharacterIdentity: IdentityResource, Hashable {
-	public let id: Int
+public struct CharacterIdentity: IdentityResource, Hashable {
+	// MARK: - Enums
+	public enum CodingKeys : String, CodingKey {
+		case id = "uuid", type, href
+	}
+
+	// MARK: - Properties
+	public let id: String
 
 	public let type: String
 
 	public let href: String
 
 	// MARK: - Initializers
-	public init(id: Int) {
+	public init(id: String) {
 		self.id = id
 		self.type = "characters"
 		self.href = ""

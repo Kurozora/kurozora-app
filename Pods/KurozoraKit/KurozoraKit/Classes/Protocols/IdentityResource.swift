@@ -11,7 +11,7 @@
 internal protocol IdentityResource: Codable, Identifiable {
 	// MARK: - Properties
 	/// The id of the resource.
-	var id: Int { get }
+	var id: String { get }
 
 	/// The type of the resource.
 	var type: String { get }

@@ -46,7 +46,7 @@ extension KurozoraKit {
 	///    - showID: The id of the show whose reminder status should be updated.
 	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 	///    - result: A value that represents either a success or a failure, including an associated value in each case.
-	public func updateReminderStatus(forShow showID: Int, completion completionHandler: @escaping (_ result: Result<ReminderStatus, KKAPIError>) -> Void) {
+	public func updateReminderStatus(forShow showID: String, completion completionHandler: @escaping (_ result: Result<ReminderStatus, KKAPIError>) -> Void) {
 		let meReminderShowUpdate = KKEndpoint.Me.ReminderShow.update.endpointValue
 		let request: APIRequest<ReminderShowResponse, KKAPIError> = tron.codable.request(meReminderShowUpdate)
 

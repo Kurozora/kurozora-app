@@ -11,7 +11,7 @@
 /// - `follower`: the notification has a `follower` type and thus has the follower style.
 /// - `feedMessageReply`: the notification has a `feedMessageReply` type and thus has the message style.
 /// - `feedMessageReShare`: the notification has a `feedMessageReShare` type and thus has the message style.
-/// - `animeImportFinished`: the notification has a `animeImportFinished` type and thus thas the import style.
+/// - `libraryImportFinished`: the notification has a `libraryImportFinished` type and thus thas the import style.
 /// - `subscriptionStatus`: the notification has a `subscriptionStatus` type and thus the subscription style.
 /// - `other`: the notification has no specific type and thus has the default style.
 ///
@@ -30,8 +30,8 @@ public enum UserNotificationType: String, Codable {
 	/// Indicates that the notification has a `feedMessageReShare` type and thus has the message style.
 	case feedMessageReShare = "NewFeedMessageReShare"
 
-	/// Indicates that the notification has a `animeImportFinished` type and thus thas the import style.
-	case animeImportFinished = "AnimeImportFinished"
+	/// Indicates that the notification has a `libraryImportFinished` type and thus thas the import style.
+	case libraryImportFinished = "LibraryImportFinished"
 
 	/// Indicates that the notification has a `subscriptionStatus` type and thus the subscription style.
 	case subscriptionStatus = "SubscriptionStatus"

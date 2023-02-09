@@ -41,25 +41,25 @@ extension KKEndpoint.Me {
 	}
 }
 
-// MARK: - Favorite Show
+// MARK: - Favorites
 extension KKEndpoint.Me {
-	/// The set of available Favorite Show API endpoint types.
-	internal enum FavoriteShow {
+	/// The set of available Favorites API endpoint types.
+	internal enum Favorites {
 		// MARK: - Cases
-		/// The endpoint to the authenticated user's favorite shows list.
+		/// The endpoint to the authenticated user's favorites list.
 		case index
 
-		/// The endpoint to get, add or remove shows from the authenticated user's favorite shows list.
+		/// The endpoint to get, add or remove shows from the authenticated user's favorites list.
 		case update
 
 		// MARK: - Properties
-		/// The endpoint value of the Favorite Show API type.
+		/// The endpoint value of the Favorites API type.
 		var endpointValue: String {
 			switch self {
 			case .index:
-				return "me/favorite-anime"
+				return "me/favorites"
 			case .update:
-				return "me/favorite-anime"
+				return "me/favorites"
 			}
 		}
 	}
@@ -95,8 +95,11 @@ extension KKEndpoint.Me {
 		/// The endpoint to the delete a show from the authenticated user's library.
 		case delete
 
-		/// The endpoint to import an exported MAL file into the  authenticated user's library.
+		/// The endpoint to import an exported MyAnimeList file into the  authenticated user's library.
 		case malImport
+
+		/// The endpoint to import an exported library file into the  authenticated user's library.
+		case `import`
 
 		// MARK: - Properties
 		/// The endpoint value of the Library API type.
@@ -108,6 +111,8 @@ extension KKEndpoint.Me {
 				return "me/library/delete"
 			case .malImport:
 				return "me/library/mal-import"
+			case .`import`:
+				return "me/library/import"
 			}
 		}
 	}

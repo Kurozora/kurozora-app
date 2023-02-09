@@ -58,6 +58,108 @@ extension KKEndpoint {
 	}
 }
 
+// MARK: - Cast
+extension KKEndpoint {
+	/// The set of available Cast API endpoints.
+	internal enum Cast {
+		// MARK: - Cases
+		/// The endpoint to the details of a show cast.
+		case showCast(_ castIdentity: CastIdentity)
+
+		/// The endpoint to the details of a literature cast.
+		case literatureCast(_ castIdentity: CastIdentity)
+
+		// MARK: - Properties
+		/// The endpoint value of the Cast API type.
+		var endpointValue: String {
+			switch self {
+			case .showCast(let castIdentity):
+				return "show-cast/\(castIdentity.id)"
+			case .literatureCast(let castIdentity):
+				return "literature-cast/\(castIdentity.id)"
+			}
+		}
+	}
+}
+
+// MARK: - Characters
+extension KKEndpoint {
+	/// The set of available Charactes API endpoints.
+	internal enum Characters {
+		// MARK: - Cases
+		/// The endpoint to the details of a character.
+		case details(_ characterIdentity: CharacterIdentity)
+
+		/// The endpoint to the people belonging to a character.
+		case people(_ characterIdentity: CharacterIdentity)
+
+		/// The endpoint to the games belonging to a character.
+		case games(_ characterIdentity: CharacterIdentity)
+
+		/// The endpoint to the literatures belonging to a character.
+		case literatures(_ characterIdentity: CharacterIdentity)
+
+		/// The endpoint to the shows belonging to a character.
+		case shows(_ characterIdentity: CharacterIdentity)
+
+		// MARK: - Properties
+		/// The endpoint value of the Charactes API type.
+		var endpointValue: String {
+			switch self {
+			case .details(let characterIdentity):
+				return "characters/\(characterIdentity.id)"
+			case .people(let characterIdentity):
+				return "characters/\(characterIdentity.id)/people"
+			case .games(let characterIdentity):
+				return "characters/\(characterIdentity.id)/games"
+			case .literatures(let characterIdentity):
+				return "characters/\(characterIdentity.id)/literatures"
+			case .shows(let characterIdentity):
+				return "characters/\(characterIdentity.id)/anime"
+			}
+		}
+	}
+}
+
+// MARK: - People
+extension KKEndpoint {
+	/// The set of available People API endpoints.
+	internal enum People {
+		// MARK: - Cases
+		/// The endpoint to the details of a person.
+		case details(_ personIdentity: PersonIdentity)
+
+		/// The endpoint to the characters belonging to a person.
+		case characters(_ personIdentity: PersonIdentity)
+
+		/// The endpoint to the games belonging to a person.
+		case games(_ personIdentity: PersonIdentity)
+
+		/// The endpoint to the literatures belonging to a person.
+		case literatures(_ personIdentity: PersonIdentity)
+
+		/// The endpoint to the shows belonging to a person.
+		case shows(_ personIdentity: PersonIdentity)
+
+		// MARK: - Properties
+		/// The endpoint value of the People API type.
+		var endpointValue: String {
+			switch self {
+			case .details(let personIdentity):
+				return "people/\(personIdentity.id)"
+			case .characters(let personIdentity):
+				return "people/\(personIdentity.id)/characters"
+			case .games(let personIdentity):
+				return "people/\(personIdentity.id)/games"
+			case .literatures(let personIdentity):
+				return "people/\(personIdentity.id)/literatures"
+			case .shows(let personIdentity):
+				return "people/\(personIdentity.id)/anime"
+			}
+		}
+	}
+}
+
 // MARK: - Shows
 extension KKEndpoint {
 	/// The set of available Shows API endpoints types.
@@ -80,6 +182,9 @@ extension KKEndpoint {
 
 		/// The endpoint to the related shows belonging to a show.
 		case relatedShows(_ showIdentity: ShowIdentity)
+
+		/// The endpoint to the related literatures belonging to a show.
+		case relatedLiteratures(_ literatureIdentity: ShowIdentity)
 
 		/// The endpoint to the seasons belonging to a show.
 		case seasons(_ showIdentity: ShowIdentity)
@@ -112,6 +217,8 @@ extension KKEndpoint {
 				return "anime/\(showIdentity.id)/rate"
 			case .relatedShows(let showIdentity):
 				return "anime/\(showIdentity.id)/related-shows"
+			case .relatedLiteratures(let showIdentity):
+				return "anime/\(showIdentity.id)/related-literatures"
 			case .seasons(let showIdentity):
 				return "anime/\(showIdentity.id)/seasons"
 			case .songs(let showIdentity):
@@ -122,6 +229,70 @@ extension KKEndpoint {
 				return "anime/\(showIdentity.id)/more-by-studio"
 			case .upcoming:
 				return "anime/upcoming"
+			}
+		}
+	}
+}
+
+// MARK: - Literatures
+extension KKEndpoint {
+	/// The set of available Literature API endpoints types.
+	internal enum Literatures {
+		// MARK: - Cases
+		/// The endpoint to the details of a literature.
+		case details(_ literatureIdentity: LiteratureIdentity)
+
+		/// The endpoint to the cast belonging to a literature.
+		case cast(_ literatureIdentity: LiteratureIdentity)
+
+		/// The endpoint to the characters belonging to a literature.
+		case characters(_ literatureIdentity: LiteratureIdentity)
+
+		/// The endpoint to the people belonging to a literature.
+		case people(_ literatureIdentity: LiteratureIdentity)
+
+		/// The endpoint to leave a rating on a literature.
+		case rate(_ literatureIdentity: LiteratureIdentity)
+
+		/// The endpoint to the related shows belonging to a literature.
+		case relatedShows(_ literatureIdentity: LiteratureIdentity)
+
+		/// The endpoint to the related literature belonging to a literature.
+		case relatedLiteratures(_ literatureIdentity: LiteratureIdentity)
+
+		/// The endpoint to the studios belonging to a literature.
+		case studios(_ literatureIdentity: LiteratureIdentity)
+
+		/// The endpoint to the studio shows related to a literature.
+		case moreByStudio(_ literatureIdentity: LiteratureIdentity)
+
+		/// The endpoint to upcoming for shows.
+		case upcoming
+
+		// MARK: - Properties
+		/// The endpoint value of the Shows API type.
+		var endpointValue: String {
+			switch self {
+			case .details(let literatureIdentity):
+				return "manga/\(literatureIdentity.id)"
+			case .cast(let literatureIdentity):
+				return "manga/\(literatureIdentity.id)/cast"
+			case .characters(let literatureIdentity):
+				return "manga/\(literatureIdentity.id)/characters"
+			case .people(let literatureIdentity):
+				return "manga/\(literatureIdentity.id)/people"
+			case .rate(let literatureIdentity):
+				return "manga/\(literatureIdentity.id)/rate"
+			case .relatedShows(let literatureIdentity):
+				return "manga/\(literatureIdentity.id)/related-shows"
+			case .relatedLiteratures(let literatureIdentity):
+				return "manga/\(literatureIdentity.id)/related-literatures"
+			case .studios(let literatureIdentity):
+				return "manga/\(literatureIdentity.id)/studios"
+			case .moreByStudio(let literatureIdentity):
+				return "manga/\(literatureIdentity.id)/more-by-studio"
+			case .upcoming:
+				return "manga/upcoming"
 			}
 		}
 	}
@@ -223,6 +394,40 @@ extension KKEndpoint {
 	}
 }
 
+// MARK: - Studios
+extension KKEndpoint {
+	/// The set of available Studios API endpoints.
+	internal enum Studios {
+		// MARK: - Cases
+		/// The endpoint to the details of a studio.
+		case details(_ studioIdentity: StudioIdentity)
+
+		/// The enpoint to the shows belonging to a studio.
+		case games(_ studioIdentity: StudioIdentity)
+
+		/// The enpoint to the shows belonging to a studio.
+		case literatures(_ studioIdentity: StudioIdentity)
+
+		/// The enpoint to the shows belonging to a studio.
+		case shows(_ studioIdentity: StudioIdentity)
+
+		// MARK: - Properties
+		/// The endpoint value of the Studios API type.
+		var endpointValue: String {
+			switch self {
+			case .details(let studioIdentity):
+				return "studios/\(studioIdentity.id)"
+			case .games(let studioIdentity):
+				return "studios/\(studioIdentity.id)/games"
+			case .literatures(let studioIdentity):
+				return "studios/\(studioIdentity.id)/literatures"
+			case .shows(let studioIdentity):
+				return "studios/\(studioIdentity.id)/anime"
+			}
+		}
+	}
+}
+
 // MARK: - Theme Store
 extension KKEndpoint {
 	/// The set of available Theme Store API endpoint types.
@@ -232,7 +437,7 @@ extension KKEndpoint {
 		case index
 
 		/// The endpoint to the details of a theme store item.
-		case details(_ appThemeIdentifier: Int)
+		case details(_ appThemeID: String)
 
 		// MARK: - Properties
 		/// The endpoint value of the Theme Store API type.
@@ -240,8 +445,8 @@ extension KKEndpoint {
 			switch self {
 			case .index:
 				return "theme-store"
-			case .details(let appThemeIdentifier):
-				return "theme-store/\(appThemeIdentifier)"
+			case .details(let appThemeID):
+				return "theme-store/\(appThemeID)"
 			}
 		}
 	}
@@ -276,8 +481,8 @@ extension KKEndpoint {
 		/// The endpoint to a user's following list.
 		case following(_ userIdentity: UserIdentity)
 
-		/// The endpoint to view a user's favorite shows.
-		case favoriteShow(_ userIdentity: UserIdentity)
+		/// The endpoint to view a user's favorites.
+		case favorites(_ userIdentity: UserIdentity)
 
 		/// The endpoint to a user's profile.
 		case profile(_ userIdentity: UserIdentity)
@@ -308,8 +513,8 @@ extension KKEndpoint {
 				return "users/\(userIdentity.id)/followers"
 			case .following(let userIdentity):
 				return "users/\(userIdentity.id)/following"
-			case .favoriteShow(let userIdentity):
-				return "users/\(userIdentity.id)/favorite-anime"
+			case .favorites(let userIdentity):
+				return "users/\(userIdentity.id)/favorites"
 			case .profile(let userIdentity):
 				return "users/\(userIdentity.id)/profile"
 			case .search(let username):

@@ -7,83 +7,6 @@
 
 import Foundation
 
-// MARK: - People
-extension KKEndpoint.Shows {
-	/// The set of available People API endpoints.
-	internal enum People {
-		// MARK: - Cases
-		/// The endpoint to the details of a person.
-		case details(_ personIdentity: PersonIdentity)
-
-		/// The endpoint to the characters belonging to a person.
-		case characters(_ personIdentity: PersonIdentity)
-
-		/// The endpoint to the shows belonging to a person.
-		case shows(_ personIdentity: PersonIdentity)
-
-		// MARK: - Properties
-		/// The endpoint value of the People API type.
-		var endpointValue: String {
-			switch self {
-			case .details(let personIdentity):
-				return "people/\(personIdentity.id)"
-			case .characters(let personIdentity):
-				return "people/\(personIdentity.id)/characters"
-			case .shows(let personIdentity):
-				return "people/\(personIdentity.id)/anime"
-			}
-		}
-	}
-}
-
-// MARK: - Cast
-extension KKEndpoint.Shows {
-	/// The set of available Cast API endpoints.
-	internal enum Cast {
-		// MARK: - Cases
-		/// The endpoint to the details of a cast.
-		case details(_ castIdentity: CastIdentity)
-
-		// MARK: - Properties
-		/// The endpoint value of the Cast API type.
-		var endpointValue: String {
-			switch self {
-			case .details(let castIdentity):
-				return "cast/\(castIdentity.id)"
-			}
-		}
-	}
-}
-
-// MARK: - Characters
-extension KKEndpoint.Shows {
-	/// The set of available Charactes API endpoints.
-	internal enum Characters {
-		// MARK: - Cases
-		/// The endpoint to the details of a character.
-		case details(_ characterIdentity: CharacterIdentity)
-
-		/// The endpoint to the people belonging to a character.
-		case people(_ characterIdentity: CharacterIdentity)
-
-		/// The endpoint to the shows belonging to a character.
-		case shows(_ characterIdentity: CharacterIdentity)
-
-		// MARK: - Properties
-		/// The endpoint value of the Charactes API type.
-		var endpointValue: String {
-			switch self {
-			case .details(let characterIdentity):
-				return "characters/\(characterIdentity.id)"
-			case .people(let characterIdentity):
-				return "characters/\(characterIdentity.id)/people"
-			case .shows(let characterIdentity):
-				return "characters/\(characterIdentity.id)/anime"
-			}
-		}
-	}
-}
-
 // MARK: - Episodes
 extension KKEndpoint.Shows {
 	/// The set of available Episodes API endpoints.
@@ -156,30 +79,6 @@ extension KKEndpoint.Shows {
 				return "seasons/\(seasonIdentity.id)"
 			case .episodes(let seasonIdentity):
 				return "seasons/\(seasonIdentity.id)/episodes"
-			}
-		}
-	}
-}
-
-// MARK: - Studios
-extension KKEndpoint.Shows {
-	/// The set of available Studios API endpoints.
-	internal enum Studios {
-		// MARK: - Cases
-		/// The endpoint to the details of a studio.
-		case details(_ studioIdentity: StudioIdentity)
-
-		/// The enpoint to the shows belonging to a studio.
-		case shows(_ studioIdentity: StudioIdentity)
-
-		// MARK: - Properties
-		/// The endpoint value of the Studios API type.
-		var endpointValue: String {
-			switch self {
-			case .details(let studioIdentity):
-				return "studios/\(studioIdentity.id)"
-			case .shows(let studioIdentity):
-				return "studios/\(studioIdentity.id)/anime"
 			}
 		}
 	}

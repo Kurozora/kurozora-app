@@ -215,15 +215,16 @@ extension KurozoraKit {
 		return request.sender()
 	}
 
-	/// Fetch the favorite shows list for the given user identity.
+	/// Fetch the favorites list for the given user identity.
 	///
 	/// - Parameters:
-	///    - userIdentity: The identity of the user whose favorite list will be fetched.
+	///    - userIdentity: The identity of the user whose favorites list will be fetched.
+	///    - libraryKind: From which library to get the favorites
 	///    - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
 	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
 	///
-	/// - Returns: An instance of `RequestSender` with the results of the get favorite shows response.
-	public func getFavoriteShows(forUser userIdentity: UserIdentity, next: String? = nil, limit: Int = 25) -> RequestSender<ShowResponse, KKAPIError> {
+	/// - Returns: An instance of `RequestSender` with the results of the get favorites response.
+	public func getFavorites(forUser userIdentity: UserIdentity, libraryKind: KKLibrary.Kind, next: String? = nil, limit: Int = 25) -> RequestSender<ShowResponse, KKAPIError> {
 		// Prepare headers
 		var headers = self.headers
 		if !self.authenticationKey.isEmpty {
@@ -231,10 +232,11 @@ extension KurozoraKit {
 		}
 
 		// Prepare request
-		let usersFavoriteShow = next ?? KKEndpoint.Users.favoriteShow(userIdentity).endpointValue
-		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(usersFavoriteShow).buildURL(.relativeToBaseURL)
+		let usersFavorites = next ?? KKEndpoint.Users.favorites(userIdentity).endpointValue
+		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(usersFavorites).buildURL(.relativeToBaseURL)
 			.method(.get)
 			.parameters([
+				"library": libraryKind.rawValue,
 				"limit": limit
 			])
 			.headers(headers)

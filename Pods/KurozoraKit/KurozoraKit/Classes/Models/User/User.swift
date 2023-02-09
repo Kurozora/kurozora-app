@@ -7,8 +7,13 @@
 
 /// A root object that stores information about a user resource.
 public struct User: IdentityResource, Hashable {
+	// MARK: - Enums
+	public enum CodingKeys: String, CodingKey {
+		case id = "idString", uuid, type, href, attributes, relationships
+	}
+
 	// MARK: - Properties
-	public let id: Int
+	public let id: String
 
 	public let uuid: UUID
 

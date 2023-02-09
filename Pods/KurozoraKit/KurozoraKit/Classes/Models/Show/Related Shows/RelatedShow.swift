@@ -17,18 +17,6 @@ public struct RelatedShow: Codable, Hashable {
 	/// The attributes belonging to the related show.
 	public var attributes: RelatedShow.Attributes
 
-	// MARK: - Enums
-	/// The keys to encode and decode.
-	///
-	/// Necessary since UUID shouldn't be a codable property.
-	enum CodingKeys: String, CodingKey {
-		/// The key of the `show` property.
-		case show
-
-		/// The key of the `attributes` property.
-		case attributes
-	}
-
 	// MARK: - Functions
 	public static func == (lhs: RelatedShow, rhs: RelatedShow) -> Bool {
 		return lhs.id == rhs.id

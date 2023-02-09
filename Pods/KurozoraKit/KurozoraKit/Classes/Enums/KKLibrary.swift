@@ -9,53 +9,105 @@ import UIKit
 
 /// The set of available enums for managing the user's library.
 ///
-/// `KKLibrary` offers the [Status](x-source-tag://KKL-Status) enum for managing a show's status as well as populate a library view.
-/// It also offers the [SortType](x-source-tag://KKL-SortType) enum for managing the way shows are sorted. Which in turn offers the [Options](x-source-tag://KKL-ST-Options) enum for managing the sorting order.
+/// `KKLibrary` offers:
+/// - [Kind](x-source-tag://KKL-Kind) enum for managing a specific user library.
+/// - [Status](x-source-tag://KKL-Status) enum for managing an item's status as well as populate a library view.
+/// - [SortType](x-source-tag://KKL-SortType) enum for managing the way items are sorted.
+///     - This in turn offers the [Options](x-source-tag://KKL-ST-Options) enum for managing the sorting order.
 public enum KKLibrary {
+	/// The set of available library types.
+	///
+	/// ```
+	/// case anime = 0
+	/// case literature = 1
+	/// case game = 3
+	/// ```
+	///
+	/// - Tag: KKL-Kind
+	public enum Kind: Int, CaseIterable {
+		// MARK: - Cases
+		/// The shows library of the user.
+		case shows = 0
+
+		/// The literature library of the user.
+		case literatures = 1
+
+//		/// The games library of the user.
+//		case games = 3
+
+		// MARK: - Properties
+		/// The string value of a library type.
+		public var stringValue: String {
+			switch self {
+			case .shows:
+				return "Shows"
+			case .literatures:
+				return "Literatures"
+//			case .gamse:
+//				return "Games"
+			}
+		}
+	}
+
 	/// The set of available library status types.
 	///
 	/// ```
-	/// case none = "None"
-	/// case watching = "Watching"
-	/// case planning = "Planning"
-	/// case completed = "Completed"
-	/// case onHold = "On-Hold"
-	/// case dropped = "Dropped"
+	/// case none = -1
+	/// case inProgress = 0
+	/// case planning = 2
+	/// case completed = 3
+	/// case onHold = 4
+	/// case dropped = 1
 	/// ```
 	///
 	/// - Tag: KKL-Status
-	public enum Status: String, Codable {
+	public enum Status: Int, Codable {
 		// MARK: - Cases
 		/// The library has no status.
-		case none = "None"
+		case none = -1
 
 		/// The library's watching list.
-		case watching = "Watching"
+		case inProgress = 0
 
 		/// The library's planning list.
-		case planning = "Planning"
+		case planning = 2
 
 		/// The library's completed list.
-		case completed = "Completed"
+		case completed = 3
 
 		/// The library's on-hold list.
-		case onHold = "On-Hold"
+		case onHold = 4
 
 		/// The library's dropped list.
-		case dropped = "Dropped"
+		case dropped = 1
 
 		// MARK: - Properties
 		/// An array containing all library status types.
-		public static let all: [Status] = [.watching, .planning, .completed, .onHold, .dropped]
+		public static let all: [Status] = [.inProgress, .planning, .completed, .onHold, .dropped]
 
 		/// The string value of a library status type.
 		public var stringValue: String {
-			return self.rawValue
+			switch self {
+			case .none:
+				return "None"
+			case .inProgress:
+				return "In Progress"
+			case .planning:
+				return "Planning"
+			case .completed:
+				return "Completed"
+			case .onHold:
+				return "On-Hold"
+			case .dropped:
+				return "Dropped"
+			}
 		}
 
 		/// The section value string of a library status type.
 		public var sectionValue: String {
 			switch self {
+			case .inProgress:
+				return "InProgress"
 			case .onHold:
 				return "OnHold"
 			default:

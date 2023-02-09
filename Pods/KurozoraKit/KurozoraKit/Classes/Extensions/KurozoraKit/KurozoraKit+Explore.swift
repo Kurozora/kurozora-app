@@ -18,7 +18,7 @@ extension KurozoraKit {
 	///    - themeID: The id of a theme by which the explore page should be filtered.
 	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 	///    - result: A value that represents either a success or a failure, including an associated value in each case.
-	public func getExplore(genreID: Int? = nil, themeID: Int?, completion completionHandler: @escaping (_ result: Result<[ExploreCategory], KKAPIError>) -> Void) {
+	public func getExplore(genreID: String? = nil, themeID: String?, completion completionHandler: @escaping (_ result: Result<[ExploreCategory], KKAPIError>) -> Void) {
 		let exploreIndex = KKEndpoint.Explore.index.endpointValue
 		let request: APIRequest<ExploreCategoryResponse, KKAPIError> = tron.codable.request(exploreIndex)
 
@@ -28,16 +28,16 @@ extension KurozoraKit {
 		}
 
 		// Check if genre was passed
-		if genreID != nil || genreID != 0 {
+		if !(genreID?.isEmpty ?? true) {
 			if let genreID = genreID {
-				request.parameters["genre_id"] = String(genreID)
+				request.parameters["genre_id"] = genreID
 			}
 		}
 
 		// Check if theme was passed
-		if themeID != nil || themeID != 0 {
+		if !(themeID?.isEmpty ?? true) {
 			if let themeID = themeID {
-				request.parameters["theme_id"] = String(themeID)
+				request.parameters["theme_id"] = themeID
 			}
 		}
 

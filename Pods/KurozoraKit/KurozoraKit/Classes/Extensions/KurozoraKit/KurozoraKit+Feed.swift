@@ -154,7 +154,7 @@ extension KurozoraKit {
 	///    - messageID: The id of the message for which the details should be fetched.
 	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 	///    - result: A value that represents either a success or a failure, including an associated value in each case.
-	public func getDetails(forFeedMessage messageID: Int, completion completionHandler: @escaping (_ result: Result<[FeedMessage], KKAPIError>) -> Void) {
+	public func getDetails(forFeedMessage messageID: String, completion completionHandler: @escaping (_ result: Result<[FeedMessage], KKAPIError>) -> Void) {
 		let feedMessagesDetails = KKEndpoint.Feed.Messages.details(messageID).endpointValue
 		let request: APIRequest<FeedMessageResponse, KKAPIError> = tron.codable.request(feedMessagesDetails)
 
@@ -187,7 +187,7 @@ extension KurozoraKit {
 	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
 	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 	///    - result: A value that represents either a success or a failure, including an associated value in each case.
-	public func getReplies(forFeedMessage feedMessageID: Int, next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<FeedMessageResponse, KKAPIError>) -> Void) {
+	public func getReplies(forFeedMessage feedMessageID: String, next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<FeedMessageResponse, KKAPIError>) -> Void) {
 		let feedMessagesResplies = next ?? KKEndpoint.Feed.Messages.replies(feedMessageID).endpointValue
 		let request: APIRequest<FeedMessageResponse, KKAPIError> = tron.codable.request(feedMessagesResplies).buildURL(.relativeToBaseURL)
 
@@ -251,7 +251,7 @@ extension KurozoraKit {
 	///    - messageID: The id of the message to heart or un-heart.
 	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 	///    - result: A value that represents either a success or a failure, including an associated value in each case.
-	public func heartMessage(_ messageID: Int, completion completionHandler: @escaping (_ result: Result<FeedMessageUpdate, KKAPIError>) -> Void) {
+	public func heartMessage(_ messageID: String, completion completionHandler: @escaping (_ result: Result<FeedMessageUpdate, KKAPIError>) -> Void) {
 		let feedPost = KKEndpoint.Feed.Messages.heart(messageID).endpointValue
 		let request: APIRequest<FeedMessageUpdateResponse, KKAPIError> = tron.codable.request(feedPost)
 
@@ -280,7 +280,7 @@ extension KurozoraKit {
 	///    - messageID: The message ID to be deleted.
 	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 	///    - result: A value that represents either a success or a failure, including an associated value in each case.
-	public func deleteMessage(_ messageID: Int, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) {
+	public func deleteMessage(_ messageID: String, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKAPIError>) -> Void) {
 		let feedMessagesDelete = KKEndpoint.Feed.Messages.delete(messageID).endpointValue
 		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(feedMessagesDelete)
 

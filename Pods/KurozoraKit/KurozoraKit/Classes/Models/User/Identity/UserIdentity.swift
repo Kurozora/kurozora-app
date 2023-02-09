@@ -7,15 +7,20 @@
 
 /// A root object that stores information about a user identity resource.
 public struct UserIdentity: IdentityResource, Hashable {
+	// MARK: - Enums
+	public enum CodingKeys: String, CodingKey {
+		case id = "idString", type, href
+	}
+
 	// MARK: - Properties
-	public var id: Int
+	public var id: String
 
 	public var type: String
 
 	public var href: String
 
 	// MARK: - Initializers
-	public init(id: Int) {
+	public init(id: String) {
 		self.id = id
 		self.type = "users"
 		self.href = ""

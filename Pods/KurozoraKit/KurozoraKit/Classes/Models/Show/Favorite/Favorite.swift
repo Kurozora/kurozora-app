@@ -1,21 +1,21 @@
 //
-//  FavoriteShow.swift
+//  Favorite.swift
 //  KurozoraKit
 //
 //  Created by Khoren Katklian on 31/01/2020.
 //
 
-/// A root object that stores information about a favorite show resource.
-public struct FavoriteShow: Codable {
+/// A root object that stores information about a favorite model resource.
+public struct Favorite: Codable {
 	// MARK: - Properties
-	/// Whether the show is favorited.
+	/// Whether the model is favorited.
 	public let isFavorited: Bool
 }
 
 // MARK: - Helpers
-extension FavoriteShow {
+extension Favorite {
 	// MARK: - Properties
-	/// The favorite status of the show.
+	/// The favorite status of the model.
 	public var favoriteStatus: FavoriteStatus {
 		return FavoriteStatus(self.isFavorited)
 	}

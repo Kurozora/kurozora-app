@@ -121,6 +121,29 @@ extension KurozoraKit {
 		return request.perform().serializingDecodable(RelatedShowResponse.self, decoder: self.tron.codable.modelDecoder)
 	}
 
+	///	Fetch the related literatures for a the given show identity.
+	///
+	///	- Parameters:
+	///	   - showIdentity: The show identity object for which the related literatures should be fetched.
+	///	   - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+	///	   - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
+	///
+	/// - Returns: An instance of `DataTask` with the results of the request.
+	public func getRelatedLiteratures(forShow showIdentity: ShowIdentity, next: String? = nil, limit: Int = 25) -> DataTask<RelatedLiteratureResponse> {
+		let literaturesRelatedLiteratures = next ?? KKEndpoint.Shows.relatedLiteratures(showIdentity).endpointValue
+		let request: APIRequest<RelatedLiteratureResponse, KKAPIError> = tron.codable.request(literaturesRelatedLiteratures).buildURL(.relativeToBaseURL)
+
+		request.headers = headers
+		if !self.authenticationKey.isEmpty {
+			request.headers.add(.authorization(bearerToken: self.authenticationKey))
+		}
+
+		request.parameters["limit"] = limit
+
+		request.method = .get
+		return request.perform().serializingDecodable(RelatedLiteratureResponse.self, decoder: self.tron.codable.modelDecoder)
+	}
+
 	///	Fetch the seasons for a the given show identity.
 	///
 	///	- Parameters:

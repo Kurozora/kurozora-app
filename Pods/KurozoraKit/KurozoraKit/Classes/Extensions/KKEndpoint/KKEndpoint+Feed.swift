@@ -11,19 +11,19 @@ extension KKEndpoint.Feed {
 	internal enum Messages {
 		// MARK: - Cases
 		/// The endpoint to the message details.
-		case details(_ messageID: Int)
+		case details(_ messageID: String)
 
 		/// The endpoint to update the message details.
-		case update(_ messageID: Int)
+		case update(_ messageID: String)
 
 		/// The endpoint to heart or unheart a feed message.
-		case heart(_ messageID: Int)
+		case heart(_ messageID: String)
 
 		/// The endpoint to the replies of a feed message.
-		case replies(_ messageID: Int)
+		case replies(_ messageID: String)
 
 		/// The endpoint to delete the message details.
-		case delete(_ messageID: Int)
+		case delete(_ messageID: String)
 
 		// MARK: - Properties
 		/// The endpoint value of the Messages API type.

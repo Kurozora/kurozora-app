@@ -25,6 +25,6 @@ extension Season {
 		public let episodeCount: Int
 
 		/// The premiere date of the season.
-		public let firstAired: Date?
+		public let startedAt: Date?
 	}
 }

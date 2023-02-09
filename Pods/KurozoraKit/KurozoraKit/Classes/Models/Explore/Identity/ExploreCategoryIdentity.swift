@@ -8,14 +8,14 @@
 /// A root object that stores information about an explore category identity resource.
 public struct ExploreCategoryIdentity: IdentityResource, Hashable {
 	// MARK: - Properties
-	public var id: Int
+	public var id: String
 
 	public var type: String
 
 	public var href: String
 
 	// MARK: - Initializers
-	public init(id: Int) {
+	public init(id: String) {
 		self.id = id
 		self.type = "explore"
 		self.href = ""

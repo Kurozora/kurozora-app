@@ -31,7 +31,7 @@ extension Episode {
 		public let stats: MediaStat?
 
 		/// The air date of the episode.
-		public let firstAired: Date?
+		public let startedAt: Date?
 
 		/// The synopsis text of the episode.
 		public let synopsis: String?

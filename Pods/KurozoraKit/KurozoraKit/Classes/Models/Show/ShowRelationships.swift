@@ -15,6 +15,9 @@ extension Show {
 		/// The characters belonging to the show.
 		public let characters: CharacterResponse?
 
+		/// The people belonging to the show.
+		public let people: PersonResponse?
+
 		/// The relationships belonging to the show.
 		public let relatedShows: RelatedShowResponse?
 

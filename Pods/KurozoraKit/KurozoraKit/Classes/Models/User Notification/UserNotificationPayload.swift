@@ -14,11 +14,11 @@ extension UserNotification {
 		public let ip: String?
 
 		/// [Session] The id of a session.
-		public let sessionID: Int?
+		public let sessionID: String?
 
 		// Follower
 		/// [Follower] The id of a follower.
-		public let userID: Int?
+		public let userID: String?
 
 		/// [Follower] The username of a follower.
 		public let username: String?
@@ -28,6 +28,6 @@ extension UserNotification {
 
 		// Feed Message
 		/// [FeedMessage] The id of a feed message.
-		public let feedMessageID: Int?
+		public let feedMessageID: String?
 	}
 }

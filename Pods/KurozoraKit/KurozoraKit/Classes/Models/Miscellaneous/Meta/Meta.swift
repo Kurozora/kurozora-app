@@ -21,5 +21,5 @@ public struct Meta: Codable {
 	public var isUserAuthenticated: Bool?
 
 	/// The authenticated user ID.
-	public var authenticatedUserID: Int?
+	public var authenticatedUserID: String?
 }

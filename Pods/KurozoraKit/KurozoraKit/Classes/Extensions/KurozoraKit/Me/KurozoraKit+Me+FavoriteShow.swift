@@ -1,5 +1,5 @@
 //
-//  KurozoraKit+FavoriteShow.swift
+//  KurozoraKit+Favorite.swift
 //  KurozoraKit
 //
 //  Created by Khoren Katklian on 18/08/2020.
@@ -8,21 +8,25 @@
 import TRON
 
 extension KurozoraKit {
-	/// Fetch the favorite shows list for the authenticated user.
+	/// Fetch the favorites list for the authenticated user.
 	///
 	/// - Parameters:
+	///    - libraryKind: From which library to get the favorites.
 	///    - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
 	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
 	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 	///    - result: A value that represents either a success or a failure, including an associated value in each case.
-	public func getFavoriteShows(next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<ShowResponse, KKAPIError>) -> Void) {
-		let meFavoriteShowIndex = next ?? KKEndpoint.Me.FavoriteShow.index.endpointValue
-		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(meFavoriteShowIndex).buildURL(.relativeToBaseURL)
+	public func getFavorites(from libraryKind: KKLibrary.Kind, next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<ShowResponse, KKAPIError>) -> Void) {
+		let meFavoritesIndex = next ?? KKEndpoint.Me.Favorites.index.endpointValue
+		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(meFavoritesIndex).buildURL(.relativeToBaseURL)
 
 		request.headers = headers
 		request.headers.add(.authorization(bearerToken: self.authenticationKey))
 
-		request.parameters["limit"] = limit
+		request.parameters = [
+			"library": libraryKind.rawValue,
+			"limit": limit
+		]
 
 		request.method = .get
 		request.perform(withSuccess: { showResponse in
@@ -40,25 +44,27 @@ extension KurozoraKit {
 		})
 	}
 
-	/// Update the `FavoriteStatus` value of a show in the authenticated user's library.
+	/// Update the `FavoriteStatus` value of a model in the authenticated user's library.
 	///
 	/// - Parameters:
-	///    - showID: The id of the show whose favorite status should be updated.
+	///    - libraryKind: From which library to get the favorites.
+	///    - modelID: The id of the model whose favorite status should be updated.
 	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 	///    - result: A value that represents either a success or a failure, including an associated value in each case.
-	public func updateFavoriteShowStatus(_ showID: Int, completion completionHandler: @escaping (_ result: Result<FavoriteStatus, KKAPIError>) -> Void) {
-		let meFavoriteShowUpdate = KKEndpoint.Me.FavoriteShow.update.endpointValue
-		let request: APIRequest<FavoriteShowResponse, KKAPIError> = tron.codable.request(meFavoriteShowUpdate)
+	public func updateFavoriteStatus(inLibrary libraryKind: KKLibrary.Kind, modelID: String, completion completionHandler: @escaping (_ result: Result<FavoriteStatus, KKAPIError>) -> Void) {
+		let meFavoritesUpdate = KKEndpoint.Me.Favorites.update.endpointValue
+		let request: APIRequest<FavoriteResponse, KKAPIError> = tron.codable.request(meFavoritesUpdate)
 
 		request.headers = headers
 		request.headers.add(.authorization(bearerToken: self.authenticationKey))
 
 		request.method = .post
 		request.parameters = [
-			"anime_id": showID,
+			"library": libraryKind.rawValue,
+			"model_id": modelID,
 		]
-		request.perform(withSuccess: { favoriteShowResponse in
-			completionHandler(.success(favoriteShowResponse.data.favoriteStatus))
+		request.perform(withSuccess: { favoriteResponse in
+			completionHandler(.success(favoriteResponse.data.favoriteStatus))
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			if self.services.showAlerts {

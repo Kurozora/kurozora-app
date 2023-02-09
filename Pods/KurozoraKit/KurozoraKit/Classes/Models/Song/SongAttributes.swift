@@ -12,7 +12,7 @@ extension Song {
 		/// The Apple Music id of the song.
 		public let amID: Int?
 
-		/// The MAL id of the song.
+		/// The MyAnimeList id of the song.
 		public let malID: Int?
 
 		/// The video url of the song.
