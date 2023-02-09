@@ -130,12 +130,20 @@
                                                                                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                     <gestureRecognizers/>
                                                                                 </imageView>
+                                                                                <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book_texture_overlay" translatesAutoresizingMaskIntoConstraints="NO" id="ovm-5l-Hn3">
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="150"/>
+                                                                                    <gestureRecognizers/>
+                                                                                </imageView>
                                                                             </subviews>
                                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="95Y-I2-A4o"/>
+                                                                                <constraint firstItem="ovm-5l-Hn3" firstAttribute="leading" secondItem="lVv-bj-3os" secondAttribute="leading" id="Gz6-fT-Ni9"/>
+                                                                                <constraint firstItem="ovm-5l-Hn3" firstAttribute="top" secondItem="lVv-bj-3os" secondAttribute="top" id="JPf-ut-9gU"/>
                                                                                 <constraint firstAttribute="width" secondItem="fKf-7k-rgZ" secondAttribute="height" multiplier="2:3" id="POe-7U-xOA"/>
                                                                                 <constraint firstAttribute="width" relation="lessThanOrEqual" constant="100" id="Qb1-km-c1s"/>
+                                                                                <constraint firstItem="ovm-5l-Hn3" firstAttribute="bottom" secondItem="lVv-bj-3os" secondAttribute="bottom" id="a7j-pO-w0e"/>
+                                                                                <constraint firstItem="ovm-5l-Hn3" firstAttribute="trailing" secondItem="lVv-bj-3os" secondAttribute="trailing" id="alT-Y3-Zfn"/>
                                                                                 <constraint firstItem="lVv-bj-3os" firstAttribute="top" secondItem="fKf-7k-rgZ" secondAttribute="top" id="kVT-Lz-et8"/>
                                                                                 <constraint firstItem="lVv-bj-3os" firstAttribute="leading" secondItem="fKf-7k-rgZ" secondAttribute="leading" id="kpt-AE-kgt"/>
                                                                                 <constraint firstAttribute="trailing" secondItem="lVv-bj-3os" secondAttribute="trailing" id="utv-np-KhM"/>
@@ -317,6 +325,7 @@
                                     <outlet property="bannerImageView" destination="rj9-Ez-leE" id="ivi-92-PV4"/>
                                     <outlet property="favoriteButton" destination="lo1-qa-GNH" id="aBG-wl-dWc"/>
                                     <outlet property="libraryStatusButton" destination="g7Z-lw-ybF" id="fQu-V4-fOv"/>
+                                    <outlet property="posterImageOverlayView" destination="ovm-5l-Hn3" id="0LO-fx-B0m"/>
                                     <outlet property="posterImageView" destination="lVv-bj-3os" id="J4T-Hh-dFJ"/>
                                     <outlet property="primaryLabel" destination="MLW-nK-QtG" id="cVa-OH-8Sn"/>
                                     <outlet property="quickDetailsView" destination="kP9-Yc-DGS" id="ixM-pY-b1F"/>
@@ -489,6 +498,8 @@
                         <segue destination="o2u-Zs-Thd" kind="show" identifier="SongsListSegue" id="JVk-HQ-LJe"/>
                         <segue destination="Ezz-hJ-5Fa" kind="show" identifier="StudiosListSegue" id="onh-0z-l5I"/>
                         <segue destination="vUa-J9-eXs" kind="show" identifier="SongDetailsSegue" id="KIW-Zs-vPb"/>
+                        <segue destination="ndD-jI-dc3" kind="show" identifier="LiteratureDetailsSegue" id="RvY-hD-OBh"/>
+                        <segue destination="bE1-bd-5X6" kind="show" identifier="LiteraturesListSegue" id="ozi-Lu-uSw"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NcP-g6-hAK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -503,7 +514,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DOQ-Cz-0BO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3808" y="292"/>
+            <point key="canvasLocation" x="3808" y="232"/>
         </scene>
         <!--CharacterDetailsCollectionViewController-->
         <scene sceneID="Rp6-5I-zjX">
@@ -513,7 +524,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SPA-Gl-nSd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3821" y="332"/>
+            <point key="canvasLocation" x="3821" y="250"/>
         </scene>
         <!--CastListCollectionViewController-->
         <scene sceneID="5vJ-EO-I3P">
@@ -523,7 +534,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="esB-qL-uHH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3785" y="785"/>
+            <point key="canvasLocation" x="3783" y="265"/>
         </scene>
         <!--SeasonsListCollectionViewController-->
         <scene sceneID="x0o-Ky-mNZ">
@@ -533,7 +544,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qTw-ur-egL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3800" y="581"/>
+            <point key="canvasLocation" x="3800" y="523"/>
         </scene>
         <!--EpisodesListCollectionViewController-->
         <scene sceneID="EfE-cD-iKO">
@@ -543,7 +554,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aLq-Ri-YMw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3806" y="623"/>
+            <point key="canvasLocation" x="3803" y="428"/>
         </scene>
         <!--EpisodeDetailsCollectionViewController-->
         <scene sceneID="okI-f5-58Z">
@@ -553,7 +564,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hvz-T3-rnn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3814" y="372"/>
+            <point key="canvasLocation" x="3812" y="408"/>
         </scene>
         <!--ShowDetailsCollectionViewController-->
         <scene sceneID="3DI-hf-2bg">
@@ -563,7 +574,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6if-A0-VsM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3803" y="411"/>
+            <point key="canvasLocation" x="3801" y="299"/>
         </scene>
         <!--StudioDetailsCollectionViewController-->
         <scene sceneID="ZBI-4a-YPc">
@@ -573,7 +584,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SSH-Z7-7iU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3809" y="454"/>
+            <point key="canvasLocation" x="3806" y="796"/>
         </scene>
         <!--SongDetailsCollectionViewController-->
         <scene sceneID="oiG-eh-8V5">
@@ -583,7 +594,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ne9-zY-2Bq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3800" y="498"/>
+            <point key="canvasLocation" x="3800" y="727"/>
         </scene>
         <!--ShowsListCollectionViewController-->
         <scene sceneID="bSN-Bg-9nK">
@@ -593,7 +604,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ixY-rj-DGk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3798" y="658"/>
+            <point key="canvasLocation" x="3792" y="319"/>
         </scene>
         <!--SongsListCollectionViewController-->
         <scene sceneID="PSG-x0-uGv">
@@ -603,7 +614,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n39-RE-pgG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3792" y="700"/>
+            <point key="canvasLocation" x="3791" y="745"/>
         </scene>
         <!--StudiosListCollectionViewController-->
         <scene sceneID="Rin-BN-TnO">
@@ -613,7 +624,27 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y1h-bN-ADx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3798" y="743"/>
+            <point key="canvasLocation" x="3796" y="814"/>
+        </scene>
+        <!--LiteraturesListCollectionViewController-->
+        <scene sceneID="EQQ-z0-0bW">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Literatures" referencedIdentifier="LiteraturesListCollectionViewController" id="bE1-bd-5X6" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="kWc-P2-bwm"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Aqf-ht-a6L" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3812" y="373"/>
+        </scene>
+        <!--LiteratureDetailsCollectionViewController-->
+        <scene sceneID="Sjc-Kr-Clh">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Literatures" referencedIdentifier="LiteratureDetailsCollectionViewController" id="ndD-jI-dc3" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="8PH-gK-DaC"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="37J-IH-aEC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3821" y="354"/>
         </scene>
     </scenes>
     <designables>
@@ -624,6 +655,7 @@
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
         <image name="bell" catalog="system" width="125" height="128"/>
+        <image name="book_texture_overlay" width="160" height="240"/>
         <image name="chevron.left.circle" catalog="system" width="128" height="123"/>
         <image name="ellipsis.circle" catalog="system" width="128" height="123"/>
         <image name="heart" catalog="system" width="128" height="107"/>

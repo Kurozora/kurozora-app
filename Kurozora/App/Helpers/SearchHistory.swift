@@ -22,23 +22,21 @@ struct SearchHistory {
 	/// - Parameters:
 	///    - successHandler: A closure returning a `Show` array.
 	///    - shows: The returned  `Show` array.
-	static func getContent(_ successHandler: @escaping (_ shows: [Show]) -> Void) {
-		guard let filePathURL = self.filePathURL else { return }
+	static func getContent() -> [Show] {
+		guard let filePathURL = self.filePathURL else { return [] }
 
 		if self.fileExists() {
-			DispatchQueue.global(qos: .utility).async {
-				do {
-					let contentsOfFile = try Data(contentsOf: filePathURL)
-
-					DispatchQueue.main.async {
-						if let showResponse = ShowResponse(from: contentsOfFile) {
-							successHandler(showResponse.data)
-						}
-					}
-				} catch {
+			do {
+				let contentsOfFile = try Data(contentsOf: filePathURL)
+				if let showResponse = ShowResponse(from: contentsOfFile) {
+					return showResponse.data
 				}
+			} catch {
+				print("----- file getContent", error.localizedDescription)
 			}
 		}
+
+		return []
 	}
 
 	/// Writes the specified `Show` to the search history file.
@@ -46,12 +44,11 @@ struct SearchHistory {
 	/// - Parameter show: The specified `Show` to be saved.
 	static func saveContentsOf(_ show: Show) {
 		if self.fileExists() {
-			self.getContent { shows in
-				var fileShows = shows
-				fileShows.removeFirst(where: { $0.id == show.id })
-				fileShows.prepend(show)
-				self.save(getDictionary(from: fileShows)) { _ in }
-			}
+			let shows = self.getContent()
+			var fileShows = shows
+			fileShows.removeFirst(where: { $0.id == show.id })
+			fileShows.prepend(show)
+			self.save(getDictionary(from: fileShows)) { _ in }
 		}
 	}
 
@@ -65,6 +62,7 @@ struct SearchHistory {
 			return try filePathURL.checkResourceIsReachable()
 		} catch {
 			self.save(["data": []]) { _ in }
+			print("----- file fileExsits", error.localizedDescription)
 			return false
 		}
 	}
@@ -87,6 +85,7 @@ struct SearchHistory {
 
 			showDictionary["data"] = dictionary as? [Any]
 		} catch {
+			print("----- file getDictionary", error.localizedDescription)
 		}
 
 		return showDictionary
@@ -106,6 +105,7 @@ struct SearchHistory {
 				try dictionary.jsonData()?.write(to: filePathURL)
 				successHandler?(true)
 			} catch {
+				print("----- file save", error.localizedDescription)
 				successHandler?(false)
 			}
 		}

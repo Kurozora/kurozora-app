@@ -22,6 +22,17 @@ class LibraryListCollectionViewController: KCollectionViewController {
 			#endif
 		}
 	}
+	var literatures: [Literature] = [] {
+		didSet {
+			self.updateDataSource()
+			self._prefersActivityIndicatorHidden = true
+			self.toggleEmptyDataView()
+
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.endRefreshing()
+			#endif
+		}
+	}
 	var nextPageURL: String?
 	var libraryStatus: KKLibrary.Status = .planning
 	var sectionIndex: Int?
@@ -34,7 +45,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	}
 	var libraryCellStyle: KKLibrary.CellStyle = .detailed
 	weak var delegate: LibraryListViewControllerDelegate?
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Show>! = nil
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
@@ -83,17 +94,29 @@ class LibraryListCollectionViewController: KCollectionViewController {
 		}
 
 		// Add Refresh Control to Collection View
-		enableRefreshControl()
+		self.enableRefreshControl()
 		#if !targetEnvironment(macCatalyst)
-		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your \(libraryStatus.stringValue.lowercased()) list.")
+		let libraryStatus: String
+
+		switch UserSettings.libraryKind {
+		case .shows:
+			libraryStatus = self.libraryStatus.showStringValue
+		case .literatures:
+			libraryStatus = self.libraryStatus.literatureStringValue
+		}
+
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your \(libraryStatus.lowercased()) list.")
 		#endif
 
 		self.configureDataSource()
 
 		// Fetch library if user is signed in
 		if User.isSignedIn {
-			DispatchQueue.global(qos: .userInteractive).async {
-				self.fetchLibrary()
+			DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+				guard let self = self else { return }
+				Task {
+					await self.fetchLibrary()
+				}
 			}
 		}
     }
@@ -101,16 +124,17 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		// Save current page index
-		UserSettings.set(sectionIndex, forKey: .libraryPage)
+		UserSettings.set(self.sectionIndex, forKey: .libraryPage)
 
 		// Setup library view controller delegate
 		(tabmanParent as? LibraryViewController)?.libraryViewControllerDelegate = self
+		(tabmanParent as? LibraryViewController)?.libraryViewControllerDataSource = self
 
 		// Update change layout button to reflect user settings
-		delegate?.libraryListViewController(updateLayoutWith: libraryCellStyle)
+		self.delegate?.libraryListViewController(updateLayoutWith: self.libraryCellStyle)
 
 		// Update sort type button to reflect user settings
-		delegate?.libraryListViewController(updateSortWith: librarySortType)
+		self.delegate?.libraryListViewController(updateSortWith: self.librarySortType)
 	}
 
 	// MARK: - Functions
@@ -125,20 +149,45 @@ class LibraryListCollectionViewController: KCollectionViewController {
 
 	override func handleRefreshControl() {
 		self.nextPageURL = nil
-		DispatchQueue.global(qos: .userInteractive).async {
-			self.fetchLibrary()
+		DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+			guard let self = self else { return }
+			Task {
+				await self.fetchLibrary()
+			}
 		}
 	}
 
 	override func configureEmptyDataView() {
-		var detailString: String
-		var buttonTitle: String = ""
-		var buttonAction: (() -> Void)? = nil
+		let titleString: String
+		var subtitleString: String
+		let image: UIImage
+		let buttonTitle: String
+		let buttonAction: (() -> Void)?
+		let libraryStatus: String
+
+		switch UserSettings.libraryKind {
+		case .shows:
+			libraryStatus = self.libraryStatus.showStringValue
+			titleString = "No Shows"
+			subtitleString = "Add a show to your \(libraryStatus.lowercased()) list and it will show up here."
+			image = R.image.empty.animeLibrary()!
+		case .literatures:
+			libraryStatus = self.libraryStatus.literatureStringValue
+			titleString = "No Literatures"
+			subtitleString = "Add a literature to your \(libraryStatus.lowercased()) list and it will show up here."
+			image = R.image.empty.mangaLibrary()!
+//		case .games:
+//			libraryStatus = self.libraryStatus.gameStringValue
+//			titleString = "No Games"
+//			subtitleString = "Add a game to your \(libraryStatus.lowercased()) list and it will show up here."
+//			image = R.image.empty.gameLibrary()!
+		}
 
 		if User.isSignedIn {
-			detailString = "Add a show to your \(self.libraryStatus.stringValue.lowercased()) list and it will show up here."
+			buttonTitle = ""
+			buttonAction = nil
 		} else {
-			detailString = "Library is currently available to registered Kurozora users only."
+			subtitleString = "Library is currently available to registered Kurozora users only."
 			buttonTitle = "Sign In"
 			buttonAction = {
 				if let signInTableViewController = R.storyboard.onboarding.signInTableViewController() {
@@ -148,11 +197,11 @@ class LibraryListCollectionViewController: KCollectionViewController {
 			}
 		}
 
-		emptyBackgroundView.configureImageView(image: R.image.empty.library()!)
-		emptyBackgroundView.configureLabels(title: "No Shows", detail: detailString)
-		emptyBackgroundView.configureButton(title: buttonTitle, handler: buttonAction)
+		self.emptyBackgroundView.configureImageView(image: image)
+		self.emptyBackgroundView.configureLabels(title: titleString, detail: subtitleString)
+		self.emptyBackgroundView.configureButton(title: buttonTitle, handler: buttonAction)
 
-		collectionView.backgroundView?.alpha = 0
+		self.collectionView.backgroundView?.alpha = 0
 	}
 
 	/// Enables and disables the refresh control according to the user sign in state.
@@ -161,35 +210,49 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	}
 
 	/// Fetch the library items for the current user.
-	func fetchLibrary() {
+	func fetchLibrary() async {
 		if User.isSignedIn {
+			let libraryStatus: String
+
+			switch UserSettings.libraryKind {
+			case .shows:
+				libraryStatus = self.libraryStatus.showStringValue
+			case .literatures:
+				libraryStatus = self.libraryStatus.literatureStringValue
+			}
+
 			DispatchQueue.main.async { [weak self] in
 				guard let self = self else { return }
 				#if !targetEnvironment(macCatalyst)
-				self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing your \(self.libraryStatus.stringValue.lowercased()) list...")
+				self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing your \(libraryStatus.lowercased()) list...")
 				#endif
 			}
 
-			KService.getLibrary(withLibraryStatus: self.libraryStatus, withSortType: self.librarySortType, withSortOption: librarySortTypeOption, next: self.nextPageURL) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let showResponse):
-					// Reset data if necessary
-					if self.nextPageURL == nil {
-						self.shows = []
-					}
+			do {
+				let libraryResponse = try await KService.getLibrary(UserSettings.libraryKind, withLibraryStatus: self.libraryStatus, withSortType: self.librarySortType, withSortOption: librarySortTypeOption, next: self.nextPageURL).value
 
-					// Save next page url and append new data
-					self.nextPageURL = showResponse.next
-					self.shows.append(contentsOf: showResponse.data)
-
-					// Reset refresh controller title
-					#if !targetEnvironment(macCatalyst)
-					self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your \(self.libraryStatus.stringValue.lowercased()) list.")
-					#endif
-				case .failure: break
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.shows = []
+					self.literatures = []
 				}
+
+				// Save next page url and append new data
+				self.nextPageURL = libraryResponse.next
+				if let shows = libraryResponse.data.shows {
+					self.shows.append(contentsOf: shows)
+				}
+				if let literatures = libraryResponse.data.literatures {
+					self.literatures.append(contentsOf: literatures)
+				}
+			} catch {
+				print(error.localizedDescription)
 			}
+
+			// Reset refresh controller title
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your \(libraryStatus.lowercased()) list.")
+			#endif
 		} else {
 			DispatchQueue.main.async { [weak self] in
 				guard let self = self else { return }
@@ -205,8 +268,11 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	///
 	/// - Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
 	@objc func addToLibrary(_ notification: NSNotification) {
-		DispatchQueue.global(qos: .userInteractive).async {
-			self.fetchLibrary()
+		DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+			guard let self = self else { return }
+			Task {
+				await self.fetchLibrary()
+			}
 		}
 	}
 
@@ -214,15 +280,26 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	///
 	/// - Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
 	@objc func removeFromLibrary(_ notification: NSNotification) {
-		DispatchQueue.global(qos: .userInteractive).async {
-			self.fetchLibrary()
+		DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+			guard let self = self else { return }
+			Task {
+				await self.fetchLibrary()
+			}
 		}
 	}
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if let currentCell = sender as? LibraryBaseCollectionViewCell, let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController {
-			showDetailCollectionViewController.show = currentCell.show
+		switch segue.identifier {
+		case R.segue.libraryListCollectionViewController.showDetailsSegue.identifier:
+			guard let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
+			guard let show = sender as? Show else { return }
+			showDetailCollectionViewController.show = show
+		case R.segue.libraryListCollectionViewController.literatureDetailsSegue.identifier:
+			guard let literatureDetailCollectionViewController = segue.destination as? LiteratureDetailsCollectionViewController else { return }
+			guard let literature = sender as? Literature else { return }
+			literatureDetailCollectionViewController.literature = literature
+		default: break
 		}
 	}
 }
@@ -244,13 +321,37 @@ extension LibraryListCollectionViewController: UICollectionViewDragDelegate {
     }
 }
 
+// MARK: - LibraryViewControllerDataSource
+extension LibraryListCollectionViewController: LibraryViewControllerDataSource {
+	func sortValue() -> KKLibrary.SortType {
+		return self.librarySortType
+	}
+
+	func sortOptionValue() -> KKLibrary.SortType.Options {
+		return self.librarySortTypeOption
+	}
+}
+
 // MARK: - LibraryViewControllerDelegate
 extension LibraryListCollectionViewController: LibraryViewControllerDelegate {
-	func sortLibrary(by sortType: KKLibrary.SortType, option: KKLibrary.SortType.Options) {
-		librarySortType = sortType
-		librarySortTypeOption = option
+	func libraryViewController(_ view: LibraryViewController, didChange libraryKind: KKLibrary.Kind) {
+		DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+			guard let self = self else { return }
+			DispatchQueue.main.async {
+				self.configureEmptyDataView()
+			}
 
-//		switch (librarySortType, librarySortTypeOption) {
+			Task {
+				await self.fetchLibrary()
+			}
+		}
+	}
+
+	func sortLibrary(by sortType: KKLibrary.SortType, option: KKLibrary.SortType.Options) {
+		self.librarySortType = sortType
+		self.librarySortTypeOption = option
+
+//		switch (self.librarySortType, self.librarySortTypeOption) {
 //		case (.alphabetically, .ascending):
 //			self.shows.sort { $0.attributes.title < $1.attributes.title }
 //			self.updateDataSource()
@@ -260,17 +361,12 @@ extension LibraryListCollectionViewController: LibraryViewControllerDelegate {
 //		default: break
 //		}
 
-		DispatchQueue.global(qos: .userInteractive).async {
-			self.fetchLibrary()
+		DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+			guard let self = self else { return }
+			Task {
+				await self.fetchLibrary()
+			}
 		}
-	}
-
-	func sortValue() -> KKLibrary.SortType {
-		return librarySortType
-	}
-
-	func sortOptionValue() -> KKLibrary.SortType.Options {
-		return librarySortTypeOption
 	}
 }
 
@@ -297,5 +393,46 @@ extension LibraryListCollectionViewController {
 	/// ```
 	enum SectionLayoutKind: Int, CaseIterable {
 		case main = 0
+	}
+
+	/// List of available Item Kind types.
+	enum ItemKind: Hashable {
+		// MARK: - Cases
+		/// Indicates the item kind contains a `Show` object.
+		case show(_: Show, id: UUID = UUID())
+
+		/// Indicates the item kind contains a `Literature` object.
+		case literature(_: Literature, id: UUID = UUID())
+
+		/// Indicates the item kind contains a `Game` object.
+		case game(_: Game, id: UUID = UUID())
+
+		// MARK: - Functions
+		func hash(into hasher: inout Hasher) {
+			switch self {
+			case .show(let show, let id):
+				hasher.combine(show)
+				hasher.combine(id)
+			case .literature(let literature, let id):
+				hasher.combine(literature)
+				hasher.combine(id)
+			case .game(let game, let id):
+				hasher.combine(game)
+				hasher.combine(id)
+			}
+		}
+
+		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
+			switch (lhs, rhs) {
+			case (.show(let show1, let id1), .show(let show2, let id2)):
+				return show1 == show2 && id1 == id2
+			case (.literature(let literature1, let id1), .literature(let literature2, let id2)):
+				return literature1 == literature2 && id1 == id2
+			case (.game(let game1, let id1), .game(let game2, let id2)):
+				return game1 == game2 && id1 == id2
+			default:
+				return false
+			}
+		}
 	}
 }

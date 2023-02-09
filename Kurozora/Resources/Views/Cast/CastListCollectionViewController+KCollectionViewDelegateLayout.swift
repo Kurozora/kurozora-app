@@ -11,7 +11,15 @@ import UIKit
 extension CastListCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
-		let columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
+		let columnCount: Int
+
+		switch self.castKind {
+		case .show:
+			columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
+		case .literature:
+			columnCount = (width / 140.0).rounded().int
+		}
+
 		return columnCount > 0 ? columnCount : 1
 	}
 

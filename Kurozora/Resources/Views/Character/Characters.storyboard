@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19115.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Wbi-gb-YhQ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Wbi-gb-YhQ">
     <device id="retina6_5" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19107.5"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -73,6 +74,8 @@
                         <segue destination="KC6-Qs-BNG" kind="show" identifier="ShowsListSegue" id="TEk-dB-pBC"/>
                         <segue destination="8It-Wp-9UB" kind="show" identifier="PeopleListSegue" id="dF8-nT-d2W"/>
                         <segue destination="0Jq-Bj-HEL" kind="show" identifier="PersonDetailsSegue" id="xuT-bX-nvW"/>
+                        <segue destination="ccY-eX-KEU" kind="show" identifier="LiteratureDetailsSegue" id="pBz-YL-tCN"/>
+                        <segue destination="91Q-UJ-nlL" kind="show" identifier="LiteraturesListSegue" id="w5q-Yp-DTI"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MZB-Hc-Zu0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -97,7 +100,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="25V-SB-ha9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3699" y="-816"/>
+            <point key="canvasLocation" x="3699" y="-829"/>
         </scene>
         <!--PersonDetailsCollectionViewController-->
         <scene sceneID="wDz-Ao-krm">
@@ -107,7 +110,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pf0-so-jgl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3709" y="-885"/>
+            <point key="canvasLocation" x="3714" y="-898"/>
         </scene>
         <!--PeopleListCollectionViewController-->
         <scene sceneID="AB1-jH-UBz">
@@ -166,6 +169,26 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VYz-WA-mZY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2026" y="-867"/>
+        </scene>
+        <!--LiteratureDetailsCollectionViewController-->
+        <scene sceneID="SLq-Hb-byX">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Literatures" referencedIdentifier="LiteratureDetailsCollectionViewController" id="ccY-eX-KEU" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="XLl-g7-QFk"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SRb-ZT-ZvB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3727" y="-784"/>
+        </scene>
+        <!--LiteraturesListCollectionViewController-->
+        <scene sceneID="isU-eA-S3c">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Literatures" referencedIdentifier="LiteraturesListCollectionViewController" id="91Q-UJ-nlL" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Tqj-4A-JFm"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0YN-d0-zYx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3717" y="-764"/>
         </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

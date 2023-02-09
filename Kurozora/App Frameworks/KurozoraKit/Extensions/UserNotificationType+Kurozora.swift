@@ -19,7 +19,7 @@ extension UserNotificationType {
 			return Trans.follower
 		case .feedMessageReply, .feedMessageReShare:
 			return Trans.message
-		case .animeImportFinished:
+		case .libraryImportFinished:
 			return Trans.libraryImport
 		case .subscriptionStatus:
 			return Trans.subscriptionUpdate
@@ -37,7 +37,7 @@ extension UserNotificationType {
 			return R.image.icons.follower()
 		case .feedMessageReply, .feedMessageReShare:
 			return R.image.icons.message()
-		case .animeImportFinished:
+		case .libraryImportFinished:
 			return R.image.icons.library()
 		case .subscriptionStatus:
 			return R.image.icons.unlock()

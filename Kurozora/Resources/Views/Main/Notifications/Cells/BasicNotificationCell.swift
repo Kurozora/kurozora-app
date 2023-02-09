@@ -21,7 +21,7 @@ class BasicNotificationCell: BaseNotificationCell {
 		self.notificationIconImageView.image = userNotification.attributes.type.iconValue
 
 		switch userNotification.attributes.type {
-		case .animeImportFinished:
+		case .libraryImportFinished:
 			self.chevronImageView.isHidden = true
 		default:
 			self.chevronImageView.isHidden = false

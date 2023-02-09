@@ -30,13 +30,13 @@ class EpisodeDetail {
 		var stringValue: String {
 			switch self {
 			case .header:
-				return "Header"
+				return Trans.header
 			case .synopsis:
-				return "Synopsis"
+				return Trans.synopsis
 			case .rating:
-				return "Rating"
+				return Trans.rating
 			case .information:
-				return "Information"
+				return Trans.information
 			}
 		}
 
@@ -75,11 +75,11 @@ extension EpisodeDetail {
 		var stringValue: String {
 			switch self {
 			case .number:
-				return "Number"
+				return Trans.number
 			case .duration:
-				return "Duration"
+				return Trans.duration
 			case .airDate:
-				return "Aired"
+				return Trans.aired
 			}
 		}
 
@@ -108,7 +108,7 @@ extension EpisodeDetail {
 			case .duration:
 				return episode.attributes.duration
 			case .airDate:
-				return episode.attributes.firstAired?.formatted(date: .abbreviated, time: .omitted) ?? "TBA"
+				return episode.attributes.startedAt?.formatted(date: .abbreviated, time: .omitted) ?? Trans.tba
 			}
 		}
 
@@ -157,7 +157,7 @@ extension EpisodeDetail {
 			case .duration:
 				return nil
 			case .airDate:
-				if let isInFuture = episode.attributes.firstAired?.isInFuture {
+				if let isInFuture = episode.attributes.startedAt?.isInFuture {
 					return isInFuture ? "The episode will air on the announced date." : "The episode has finished airing."
 				}
 				return "A release date has yet to be announced."

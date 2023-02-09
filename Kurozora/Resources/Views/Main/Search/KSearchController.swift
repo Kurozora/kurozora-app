@@ -39,7 +39,7 @@ class KSearchController: UISearchController {
 		#if targetEnvironment(macCatalyst)
 		self.searchBar.placeholder = Trans.search
 		#else
-		self.searchBar.placeholder = "Anime, Character, Person, and More"
+		self.searchBar.placeholder = "Anime, Manga, Character, and More"
 		#endif
 		self.searchBar.scopeButtonTitles = KKSearchScope.allString
 		self.searchBar.selectedScopeButtonIndex = self.searchScope.rawValue

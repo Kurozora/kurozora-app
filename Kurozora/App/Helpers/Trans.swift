@@ -120,25 +120,25 @@ struct Trans {
 	static let forgotPasswordErrorAlertSubheadline: String = String(localized: "Please type a valid Kurozora ID 😣",
 																	comment: "The subheadline string for resetting password alert.")
 
-	// MARK: - MAL
-	/// The headline string for the MAL Improt view.
+	// MARK: - Library Import
+	/// The headline string for the Library Import view.
 	///
-	/// - Tag: Trans-malImportHeadline
-	static let malImportHeadline: String = String(localized: "Move from MyAnimeList",
-												  table: "Services",
-												  comment: "The headline string for the MAL Improt view")
-	/// The subheadline string for the MAL Improt view.
+	/// - Tag: Trans-libraryImportHeadline
+	static let libraryImportHeadline: String = String(localized: "Move from Other Services",
+													  table: "Services",
+													  comment: "The headline string for the Library Import view")
+	/// The subheadline string for the Library Import view.
 	///
-	/// - Tag: Trans-malImportSubheadline
-	static let malImportSubheadline: String = String(localized: "If you have an export of your anime library from MyAnimeList you can select it below.",
-													 table: "Services",
-													 comment: "The subheadline string for the MAL Improt view.")
-	/// The footer string for the MAL Improt view.
+	/// - Tag: Trans-libraryImportSubheadline
+	static let libraryImportSubheadline: String = String(localized: "If you have an export of your anime or manga library from other services, such as MyAnimeList, you can select it below.",
+														 table: "Services",
+														 comment: "The subheadline string for the Library Import view.")
+	/// The footer string for the Library Import view.
 	///
-	/// - Tag: Trans-malImportFooter
-	static let malImportFooter: String = String(localized: "Kurozora does not guarantee all shows will be imported to your library. Once the request has been processed a notification which contains the status of the import request will be sent. Furthermore the uploaded file is deleted as soon as the import request has been processed.",
-												table: "Services",
-												comment: "The footer string for the MAL Improt view.")
+	/// - Tag: Trans-libraryImportFooter
+	static let libraryImportFooter: String = String(localized: "Kurozora does not guarantee all shows and mangas will be imported to your library. Once the request has been processed, a notification which contains the status of the import request will be sent. Furthermore, the uploaded file is deleted as soon as the import request has been processed.",
+													table: "Services",
+													comment: "The footer string for the Library Import view.")
 
 	// MARK: - Redeem
 	/// The headline string for the Redeem view.
@@ -645,6 +645,26 @@ struct Trans {
 	/// - Tag: Trans-information
 	static let information: String = String(localized: "Information",
 											comment: "The string for the word 'information'.")
+	/// The string for the word 'number'.
+	///
+	/// - Tag: Trans-number
+	static let number: String = String(localized: "Number",
+									   comment: "The string for the word 'number'.")
+	/// The string for the word 'duration'.
+	///
+	/// - Tag: Trans-duration
+	static let duration: String = String(localized: "Duration",
+										 comment: "The string for the word 'duration'.")
+	/// The string for the word 'aired'.
+	///
+	/// - Tag: Trans-aired
+	static let aired: String = String(localized: "Aired",
+									  comment: "The string for the word 'aired'.")
+	/// The string for the word 'tba'.
+	///
+	/// - Tag: Trans-tba
+	static let tba: String = String(localized: "TBA",
+									comment: "The string for the word 'tba'.")
 	/// The string for the word 'shows'.
 	///
 	/// - Tag: Trans-shows
@@ -745,11 +765,31 @@ struct Trans {
 	/// - Tag: Trans-yourlibrary
 	static let yourlibrary: String = String(localized: "Your Library",
 											comment: "The string for the word 'your library'.")
+	/// The string for the word 'add to library'.
+	///
+	/// - Tag: Trans-addTolibrary
+	static let addTolibrary: String = String(localized: "Add to Library",
+											 comment: "The string for the word 'add to library'.")
+	/// The string for the word 'update library status'.
+	///
+	/// - Tag: Trans-updateLibraryStatus
+	static let updateLibraryStatus: String = String(localized: "Update Library Status",
+													comment: "The string for the word 'update library status'.")
+	/// The string for the word 'remove from library'.
+	///
+	/// - Tag: Trans-removeFromlibrary
+	static let removeFromLibrary: String = String(localized: "Remove from Library",
+												  comment: "The string for the word 'remove from library'.")
 	/// The string for the word 'anime'.
 	///
 	/// - Tag: Trans-anime
 	static let anime: String = String(localized: "Anime",
 									  comment: "The string for the word 'anime'.")
+	/// The string for the word 'literature'.
+	///
+	/// - Tag: Trans-literature
+	static let literatures: String = String(localized: "Literatures",
+											comment: "The string for the word 'literatures'.")
 	/// The string for the word 'user'.
 	///
 	/// - Tag: Trans-user
@@ -1015,11 +1055,16 @@ struct Trans {
 	/// - Tag: Trans-moreBy
 	static let moreBy: String = String(localized: "More by",
 									   comment: "The string for the word 'more by'.")
-	/// The string for the word 'related'.
+	/// The string for the word 'related shows'.
 	///
-	/// - Tag: Trans-related
-	static let related: String = String(localized: "Related",
-										comment: "The string for the word 'related'.")
+	/// - Tag: Trans-relatedShows
+	static let relatedShows: String = String(localized: "Related Shows",
+											 comment: "The string for the word 'related shows'.")
+	/// The string for the word 'related literatures'.
+	///
+	/// - Tag: Trans-relatedLiteratures
+	static let relatedLiteratures: String = String(localized: "Related Literatures",
+												   comment: "The string for the word 'related literatures'.")
 	/// The string for the word 'copyright'.
 	///
 	/// - Tag: Trans-copyright

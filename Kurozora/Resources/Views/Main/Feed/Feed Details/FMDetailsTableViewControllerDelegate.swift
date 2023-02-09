@@ -9,5 +9,5 @@
 import Foundation
 
 protocol FMDetailsTableViewControllerDelegate: AnyObject {
-	func fmDetailsTableViewController(delete messageID: Int)
+	func fmDetailsTableViewController(delete messageID: String)
 }

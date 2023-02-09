@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SelectTableViewCell" rowHeight="44" id="IhI-e0-bIC" customClass="SelectTableViewCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IhI-e0-bIC" id="hFy-QG-Qhj">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JiK-Xy-RTQ" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="177" y="0.0" width="60" height="44"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                        <state key="normal" title="Select ▾">
+                            <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="didPressSelectButton:" destination="IhI-e0-bIC" eventType="touchUpInside" id="Mhc-1M-Fb0"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="JiK-Xy-RTQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="hFy-QG-Qhj" secondAttribute="leadingMargin" id="3iX-v5-gyL"/>
+                    <constraint firstAttribute="bottom" secondItem="JiK-Xy-RTQ" secondAttribute="bottom" id="HmG-NJ-4Ln"/>
+                    <constraint firstItem="JiK-Xy-RTQ" firstAttribute="top" secondItem="hFy-QG-Qhj" secondAttribute="top" id="pau-F5-pJ1"/>
+                    <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="JiK-Xy-RTQ" secondAttribute="trailing" id="uHH-E2-lqc"/>
+                    <constraint firstItem="JiK-Xy-RTQ" firstAttribute="centerX" secondItem="hFy-QG-Qhj" secondAttribute="centerX" id="w02-Ls-SaE"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="joV-EE-Z8P"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="selectButton" destination="JiK-Xy-RTQ" id="nDj-d1-ewu"/>
+            </connections>
+            <point key="canvasLocation" x="45.801526717557252" y="6.3380281690140849"/>
+        </tableViewCell>
+    </objects>
+</document>

@@ -11,12 +11,16 @@ import KurozoraKit
 import Alamofire
 
 enum StudiosListFetchType {
+//	case game
+	case literature
 	case show
 	case search
 }
 
 class StudiosListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
+	var gameIdentity: GameIdentity?
+	var literatureIdentity: LiteratureIdentity?
 	var showIdentity: ShowIdentity?
 	var studios: [IndexPath: Studio] = [:]
 	var studioIdentities: [StudioIdentity] = []
@@ -86,7 +90,7 @@ class StudiosListCollectionViewController: KCollectionViewController {
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		if self.showIdentity != nil {
+		if self.showIdentity != nil || self.literatureIdentity != nil || self.gameIdentity != nil {
 			self.nextPageURL = nil
 			Task { [weak self] in
 				guard let self = self else { return }
@@ -96,10 +100,10 @@ class StudiosListCollectionViewController: KCollectionViewController {
 	}
 
 	override func configureEmptyDataView() {
-		emptyBackgroundView.configureImageView(image: R.image.empty.cast()!)
-		emptyBackgroundView.configureLabels(title: "No Studios", detail: "Can't get studios list. Please reload the page or restart the app and check your WiFi connection.")
+		self.emptyBackgroundView.configureImageView(image: R.image.empty.cast()!)
+		self.emptyBackgroundView.configureLabels(title: "No Studios", detail: "Can't get studios list. Please reload the page or restart the app and check your WiFi connection.")
 
-		collectionView.backgroundView?.alpha = 0
+		self.collectionView.backgroundView?.alpha = 0
 	}
 
 	/// Fades in and out the empty data view according to the number of rows.
@@ -134,6 +138,38 @@ class StudiosListCollectionViewController: KCollectionViewController {
 		#endif
 
 		switch self.studiosListFetchType {
+//		case .game:
+//			guard let gameIdentity = self.gameIdentity else { return }
+//			do {
+//				let studioIdentityResponse = try await KService.getStudios(forLiterature: gameIdentity, next: self.nextPageURL).value
+//				// Reset data if necessary
+//				if self.nextPageURL == nil {
+//					self.studioIdentities = []
+//				}
+//
+//				// Save next page url and append new data
+//				self.nextPageURL = studioIdentityResponse.next
+//				self.studioIdentities.append(contentsOf: studioIdentityResponse.data)
+//				self.studioIdentities.removeDuplicates()
+//			} catch {
+//				print(error.localizedDescription)
+//			}
+		case .literature:
+			guard let literatureIdentity = self.literatureIdentity else { return }
+			do {
+				let studioIdentityResponse = try await KService.getStudios(forLiterature: literatureIdentity, next: self.nextPageURL).value
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.studioIdentities = []
+				}
+
+				// Save next page url and append new data
+				self.nextPageURL = studioIdentityResponse.next
+				self.studioIdentities.append(contentsOf: studioIdentityResponse.data)
+				self.studioIdentities.removeDuplicates()
+			} catch {
+				print(error.localizedDescription)
+			}
 		case .show:
 			guard let showIdentity = self.showIdentity else { return }
 			do {

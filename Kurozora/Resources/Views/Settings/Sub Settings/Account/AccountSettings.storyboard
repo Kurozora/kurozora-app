@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="L5B-1B-AEl">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="L5B-1B-AEl">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -90,7 +91,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Manage Active Sessions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="com-5g-Jx0">
-                                                            <rect key="frame" x="46" y="17" width="156.5" height="17"/>
+                                                            <rect key="frame" x="46" y="15" width="185" height="20.5"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -176,7 +177,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign in with Apple" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uo0-tx-sLu">
-                                                            <rect key="frame" x="46" y="17" width="115.5" height="17"/>
+                                                            <rect key="frame" x="46" y="15" width="136" height="20.5"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -265,8 +266,8 @@
                                                                 </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Import From MAL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DM1-7u-B1i">
-                                                            <rect key="frame" x="46" y="17" width="112.5" height="17"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Import From Other Services" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DM1-7u-B1i">
+                                                            <rect key="frame" x="46" y="15" width="211" height="21"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -317,7 +318,7 @@
                                             <outlet property="primaryLabel" destination="DM1-7u-B1i" id="kWk-RM-enm"/>
                                             <outlet property="secondaryLabel" destination="MaH-GN-l5c" id="ctb-dk-5kt"/>
                                             <outlet property="selectedView" destination="ViS-6i-h9d" id="cNi-Ly-lrw"/>
-                                            <segue destination="DIR-xz-9GA" kind="show" identifier="MALSegue" id="gps-Hr-430"/>
+                                            <segue destination="DIR-xz-9GA" kind="show" identifier="ImportLibrarySegue" id="gps-Hr-430"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -335,7 +336,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="374" height="44.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign Out" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FvH-H3-tLK">
-                                                            <rect key="frame" x="158" y="6" width="58.5" height="32.5"/>
+                                                            <rect key="frame" x="153" y="6" width="68.5" height="32.5"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="32" id="iaj-6a-iBJ"/>
                                                             </constraints>
@@ -378,7 +379,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="374" height="44.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete Account" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TMU-bF-sJl">
-                                                            <rect key="frame" x="135.5" y="6" width="103" height="32.5"/>
+                                                            <rect key="frame" x="126" y="6" width="122" height="32.5"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="32" id="qDk-g0-kdQ"/>
                                                             </constraints>
@@ -480,7 +481,7 @@
                 <navigationController storyboardIdentifier="AccountKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="L5B-1B-AEl" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="FTe-gh-hAL">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -500,10 +501,10 @@
             </objects>
             <point key="canvasLocation" x="-1959" y="-1240"/>
         </scene>
-        <!--MAL Import-->
+        <!--Import Library-->
         <scene sceneID="hhu-hI-Zga">
             <objects>
-                <tableViewController storyboardIdentifier="MALImportTableViewController" title="MAL Import" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="DIR-xz-9GA" customClass="MALImportTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="LibraryImportTableViewController" title="Import Library" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="DIR-xz-9GA" customClass="LibraryImportTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="6Ey-t8-QCc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -512,15 +513,15 @@
                         <viewLayoutGuide key="contentLayoutGuide" id="gDd-z3-4al"/>
                         <viewLayoutGuide key="frameLayoutGuide" id="EKX-29-mXG"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MALImportActionTableViewCell" id="wzI-fo-fZU" customClass="MALImportActionTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="49.5" width="414" height="73"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="LibraryImportActionTableViewCell" id="wzI-fo-fZU" customClass="LibraryImportActionTableViewCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="55.5" width="414" height="77"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wzI-fo-fZU" id="RzM-O7-AXb">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="73"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="77"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eYh-Je-pHY">
-                                            <rect key="frame" x="173.5" y="0.0" width="67" height="29"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eYh-Je-pHY" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                            <rect key="frame" x="167.5" y="0.0" width="79" height="33"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <state key="normal" title="Select File">
                                                 <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -529,8 +530,8 @@
                                                 <action selector="actionButtonPressed:" destination="wzI-fo-fZU" eventType="touchUpInside" id="fts-Qu-2WD"/>
                                             </connections>
                                         </button>
-                                        <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="My Anime List.xml" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="E7m-eK-qXP" customClass="KTextField" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="20" y="39" width="374" height="34"/>
+                                        <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Library.xml" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="E7m-eK-qXP" customClass="KTextField" customModule="Kurozora" customModuleProvider="target">
+                                            <rect key="frame" x="20" y="43" width="374" height="34"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="jEe-eB-nI0"/>
                                             </constraints>
@@ -562,7 +563,7 @@
                             <outlet property="delegate" destination="DIR-xz-9GA" id="kGG-uG-bg4"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="MAL Import" id="qeZ-1l-ztb">
+                    <navigationItem key="navigationItem" title="Import Library" id="qeZ-1l-ztb">
                         <barButtonItem key="rightBarButtonItem" title="Import 📲" id="ONF-L1-axW">
                             <connections>
                                 <action selector="rightNavigationBarButtonPressedWithSender:" destination="DIR-xz-9GA" id="PiX-SN-3Om"/>
@@ -590,7 +591,7 @@
                         <viewLayoutGuide key="frameLayoutGuide" id="28X-av-ogq"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SIWAButtonTableViewCell" id="9Dz-AS-Ze4" customClass="SIWAButtonTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="49.5" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="55.5" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9Dz-AS-Ze4" id="b1l-fR-G61">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -633,6 +634,6 @@
         <image name="Icons/Brands/Apple" width="130" height="130"/>
         <image name="Icons/Brands/MyAnimeList" width="128" height="128"/>
         <image name="Icons/Session" width="128" height="128"/>
-        <image name="chevron.right" catalog="system" width="96" height="128"/>
+        <image name="chevron.right" catalog="system" width="97" height="128"/>
     </resources>
 </document>

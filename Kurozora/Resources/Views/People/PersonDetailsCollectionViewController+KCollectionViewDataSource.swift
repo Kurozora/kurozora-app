@@ -58,7 +58,7 @@ extension PersonDetailsCollectionViewController {
 				return informationCollectionViewCell
 			case .characters:
 				return collectionView.dequeueConfiguredReusableCell(using: characterCellRegistration, for: indexPath, item: itemKind)
-			case .shows:
+			case .shows, .literatures:
 				return collectionView.dequeueConfiguredReusableCell(using: smallCellRegistration, for: indexPath, item: itemKind)
 			}
 		}
@@ -107,6 +107,14 @@ extension PersonDetailsCollectionViewController {
 					}
 					self.snapshot.appendItems(showIdentityItems, toSection: personDetailSection)
 				}
+			case .literatures:
+				if !self.literatureIdentities.isEmpty {
+					self.snapshot.appendSections([personDetailSection])
+					let literatureIdentityItems: [ItemKind] = self.literatureIdentities.map { literatureIdentity in
+						return .literatureIdentity(literatureIdentity)
+					}
+					self.snapshot.appendItems(literatureIdentityItems, toSection: personDetailSection)
+				}
 			}
 		}
 
@@ -116,6 +124,11 @@ extension PersonDetailsCollectionViewController {
 	func fetchShow(at indexPath: IndexPath) -> Show? {
 		guard let show = self.shows[indexPath] else { return nil }
 		return show
+	}
+
+	func fetchLiterature(at indexPath: IndexPath) -> Literature? {
+		guard let literature = self.literatures[indexPath] else { return nil }
+		return literature
 	}
 
 	func fetchCharacter(at indexPath: IndexPath) -> Character? {
@@ -135,12 +148,13 @@ extension PersonDetailsCollectionViewController {
 	func getConfiguredSmallCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.smallLockupCollectionViewCell)) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
-			let show = self.fetchShow(at: indexPath)
-			var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? smallLockupCollectionViewCell.dataRequest
 
-			if dataRequest == nil && show == nil {
-				switch itemKind {
-				case .showIdentity(let showIdentity, _):
+			switch itemKind {
+			case .showIdentity(let showIdentity, _):
+				let show = self.fetchShow(at: indexPath)
+				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? smallLockupCollectionViewCell.dataRequest
+
+				if dataRequest == nil && show == nil {
 					dataRequest = KService.getDetails(forShow: showIdentity) { result in
 						switch result {
 						case .success(let shows):
@@ -149,13 +163,31 @@ extension PersonDetailsCollectionViewController {
 						case .failure: break
 						}
 					}
-				default: break
 				}
-			}
 
-			smallLockupCollectionViewCell.dataRequest = dataRequest
-			smallLockupCollectionViewCell.delegate = self
-			smallLockupCollectionViewCell.configure(using: show)
+				smallLockupCollectionViewCell.dataRequest = dataRequest
+				smallLockupCollectionViewCell.delegate = self
+				smallLockupCollectionViewCell.configure(using: show)
+			case .literatureIdentity(let literatureIdentity, _):
+				let literature = self.fetchLiterature(at: indexPath)
+				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? smallLockupCollectionViewCell.dataRequest
+
+				if dataRequest == nil && literature == nil {
+					dataRequest = KService.getDetails(forLiterature: literatureIdentity) { result in
+						switch result {
+						case .success(let literatures):
+							self.literatures[indexPath] = literatures.first
+							self.setItemKindNeedsUpdate(itemKind)
+						case .failure: break
+						}
+					}
+				}
+
+				smallLockupCollectionViewCell.dataRequest = dataRequest
+				smallLockupCollectionViewCell.delegate = self
+				smallLockupCollectionViewCell.configure(using: literature)
+			default: break
+			}
 		}
 	}
 

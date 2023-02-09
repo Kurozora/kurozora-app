@@ -26,6 +26,10 @@ extension SearchResultsCollectionViewController {
 			guard let show = self.shows[indexPath] else { return }
 			SearchHistory.saveContentsOf(show)
 			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.showDetailsSegue, sender: show)
+		case .literatureIdentity:
+			guard let literature = self.literatures[indexPath] else { return }
+//			SearchHistory.saveContentsOf(literature)
+			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.literatureDetailsSegue, sender: literature)
 		case .songIdentity:
 			let song = self.songs[indexPath]
 			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.songDetailsSegue, sender: song)
@@ -36,22 +40,6 @@ extension SearchResultsCollectionViewController {
 			let user = self.users[indexPath]
 			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.userDetailsSegue, sender: user)
 		default: break
-		}
-	}
-
-	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		switch self.currentScope {
-		case .kurozora: break
-		case .library:
-			let showIdentitiesCount = self.showIdentities.count - 1
-			var itemsCount = showIdentitiesCount / 4 / 2
-			itemsCount = itemsCount > 15 ? 15 : itemsCount // Make sure count isn't above 15
-			itemsCount = showIdentitiesCount - itemsCount
-			itemsCount = itemsCount < 1 ? 1 : itemsCount // Make sure count isn't below 1
-
-			if indexPath.item >= itemsCount && self.nextPageURL != nil {
-				self.performSearch(with: "", in: .library, resettingResults: false)
-			}
 		}
 	}
 

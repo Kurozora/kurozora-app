@@ -27,17 +27,17 @@ extension Notification.Name {
 // MARK: - Shows
 extension Notification.Name {
 	/// A notification posted when the favorite shows list changes.
-	static var KFavoriteShowsListDidChange: NSNotification.Name {
+	static var KFavoriteModelsListDidChange: NSNotification.Name {
 		return Notification.Name(#function)
 	}
 
 	/// A notification posted when the favorite button is toggled.
-	static var KShowFavoriteIsToggled: NSNotification.Name {
+	static var KModelFavoriteIsToggled: NSNotification.Name {
 		return Notification.Name(#function)
 	}
 
 	/// A notification posted when the reminder button is toggled.
-	static var KShowReminderIsToggled: NSNotification.Name {
+	static var KModelReminderIsToggled: NSNotification.Name {
 		return Notification.Name(#function)
 	}
 }

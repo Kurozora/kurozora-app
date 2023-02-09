@@ -164,7 +164,7 @@ extension ManageThemesCollectionViewController: ThemesCollectionViewCellDelegate
 				// Add remove action
 				let removeAction = UIAlertAction(title: "Remove Theme", style: .destructive) { _ in
 					self.handleRemoveTheme(cell)
-					if UserSettings.currentTheme.int == theme.id {
+					if UserSettings.currentTheme == theme.id {
 						KThemeStyle.switchTo(style: .default)
 					}
 				}

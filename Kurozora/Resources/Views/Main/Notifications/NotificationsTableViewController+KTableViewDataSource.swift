@@ -27,7 +27,7 @@ extension NotificationsTableViewController {
 				return tableView.dequeueConfiguredReusableCell(using: iconNotificationCellRegistration, for: indexPath, item: userNotification)
 			case .feedMessageReply, .feedMessageReShare:
 				return tableView.dequeueConfiguredReusableCell(using: iconNotificationCellRegistration, for: indexPath, item: userNotification)
-			case .animeImportFinished, .subscriptionStatus:
+			case .libraryImportFinished, .subscriptionStatus:
 				return tableView.dequeueConfiguredReusableCell(using: basicNotificationCellRegistration, for: indexPath, item: userNotification)
 			case .other:
 				return tableView.dequeueConfiguredReusableCell(using: baseNotificationCellRegistration, for: indexPath, item: userNotification)

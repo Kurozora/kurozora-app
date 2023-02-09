@@ -17,7 +17,7 @@ extension ShowDetailsCollectionViewController {
 			RatingCollectionViewCell.self,
 			InformationCollectionViewCell.self,
 			MusicLockupCollectionViewCell.self,
-			SosumiShowCollectionViewCell.self
+			SosumiCollectionViewCell.self
 		]
 	}
 
@@ -42,7 +42,7 @@ extension ShowDetailsCollectionViewController {
 				let showDetailHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.showDetailHeaderCollectionViewCell, for: indexPath)
 				switch itemKind {
 				case .show(let show, _):
-					showDetailHeaderCollectionViewCell?.show = show
+					showDetailHeaderCollectionViewCell?.configure(using: show)
 				default: break
 				}
 				return showDetailHeaderCollectionViewCell
@@ -50,10 +50,9 @@ extension ShowDetailsCollectionViewController {
 				let showDetailBadge = ShowDetail.Badge(rawValue: indexPath.item) ?? .rating
 				let badgeReuseIdentifier = showDetailBadge == ShowDetail.Badge.rating ? R.reuseIdentifier.ratingBadgeCollectionViewCell.identifier : R.reuseIdentifier.badgeCollectionViewCell.identifier
 				let badgeCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: badgeReuseIdentifier, for: indexPath) as? BadgeCollectionViewCell
-				badgeCollectionViewCell?.showDetailBage = showDetailBadge
 				switch itemKind {
 				case .show(let show, _):
-					badgeCollectionViewCell?.configureCell(with: show)
+					badgeCollectionViewCell?.configureCell(with: show, showDetailBadge: showDetailBadge)
 				default: break
 				}
 				return badgeCollectionViewCell
@@ -92,14 +91,16 @@ extension ShowDetailsCollectionViewController {
 				return collectionView.dequeueConfiguredReusableCell(using: studioShowCellConfiguration, for: indexPath, item: itemKind)
 			case .relatedShows:
 				return collectionView.dequeueConfiguredReusableCell(using: relatedShowCellConfiguration, for: indexPath, item: itemKind)
+			case .relatedLiteratures:
+				return collectionView.dequeueConfiguredReusableCell(using: relatedShowCellConfiguration, for: indexPath, item: itemKind)
 			case .sosumi:
-				let sosumiShowCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.sosumiShowCollectionViewCell, for: indexPath)
+				let sosumiCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.sosumiCollectionViewCell, for: indexPath)
 				switch itemKind {
 				case .show(let show, _):
-					sosumiShowCollectionViewCell?.copyrightText = show.attributes.copyright
+					sosumiCollectionViewCell?.copyrightText = show.attributes.copyright
 				default: break
 				}
-				return sosumiShowCollectionViewCell
+				return sosumiCollectionViewCell
 			}
 		}
 
@@ -195,6 +196,14 @@ extension ShowDetailsCollectionViewController {
 					}
 					self.snapshot.appendItems(relatedShowItems, toSection: showDetailSection)
 				}
+			case .relatedLiteratures:
+				if !self.relatedLiteratures.isEmpty {
+					self.snapshot.appendSections([showDetailSection])
+					let relatedLiteratureItems: [ItemKind] = self.relatedLiteratures.map { relatedLiterature in
+						return .relatedLiterature(relatedLiterature)
+					}
+					self.snapshot.appendItems(relatedLiteratureItems, toSection: showDetailSection)
+				}
 			case .sosumi:
 				if let copyrightIsEmpty = self.show.attributes.copyright?.isEmpty, !copyrightIsEmpty {
 					self.snapshot.appendSections([showDetailSection])
@@ -246,7 +255,7 @@ extension ShowDetailsCollectionViewController {
 				if cast == nil {
 					Task {
 						do {
-							let castResponse = try await KService.getDetails(forCast: castIdentitiy).value
+							let castResponse = try await KService.getDetails(forShowCast: castIdentitiy).value
 							self.cast[indexPath] = castResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
 						} catch {
@@ -358,6 +367,8 @@ extension ShowDetailsCollectionViewController {
 			switch itemKind {
 			case .relatedShow(let relatedShow, _):
 				smallLockupCollectionViewCell.configure(using: relatedShow)
+			case .relatedLiterature(let relatedLiterature, _):
+				smallLockupCollectionViewCell.configure(using: relatedLiterature)
 			default: return
 			}
 		}

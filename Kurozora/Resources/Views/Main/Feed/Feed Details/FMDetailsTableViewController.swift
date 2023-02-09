@@ -11,10 +11,10 @@ import KurozoraKit
 
 class FMDetailsTableViewController: KTableViewController {
 	// MARK: - Properties
-	var feedMessageID: Int = 0
+	var feedMessageID: String = ""
 	var feedMessage: FeedMessage! {
 		didSet {
-			self.feedMessageID = feedMessage?.id ?? feedMessageID
+			self.feedMessageID = feedMessage?.id ?? ""
 
 			let repliesCount = feedMessage.attributes.metrics.replyCount
 			self.title = "\(repliesCount.kkFormatted) replies"
@@ -60,7 +60,7 @@ class FMDetailsTableViewController: KTableViewController {
 	/// - Parameter feedMessageID: The feed message id to use when initializing the view.
 	///
 	/// - Returns: an initialized instance of FMDetailsTableViewController.
-	static func `init`(with feedMessageID: Int) -> FMDetailsTableViewController {
+	static func `init`(with feedMessageID: String) -> FMDetailsTableViewController {
 		if let fmDetailsTableViewController = R.storyboard.feed.fmDetailsTableViewController() {
 			fmDetailsTableViewController.feedMessageID = feedMessageID
 			return fmDetailsTableViewController
@@ -218,10 +218,9 @@ class FMDetailsTableViewController: KTableViewController {
 		if segue.identifier == R.segue.fmDetailsTableViewController.feedMessageDetailsSegue.identifier {
 			// Show detail for explore cell
 			if let fmDetailsTableViewController = segue.destination as? FMDetailsTableViewController {
-				if let feedMessageID = sender as? Int {
-					fmDetailsTableViewController.feedMessageID = feedMessageID
-					fmDetailsTableViewController.fmDetailsTableViewControllerDelegate = self
-				}
+				guard let feedMessageID = sender as? String else { return }
+				fmDetailsTableViewController.feedMessageID = feedMessageID
+				fmDetailsTableViewController.fmDetailsTableViewControllerDelegate = self
 			}
 		}
 	}
@@ -360,9 +359,9 @@ extension FMDetailsTableViewController: KFeedMessageTextEditorViewDelegate {
 
 // MARK: - FMDetailsTableViewControllerDelegate
 extension FMDetailsTableViewController: FMDetailsTableViewControllerDelegate {
-	func fmDetailsTableViewController(delete messageID: Int) {
+	func fmDetailsTableViewController(delete messageID: String) {
 		self.feedMessageReplies.removeFirst { feedMessageReply in
-			feedMessageReply.id == messageID
+			feedMessageReply.id == String(messageID)
 		}
 	}
 }

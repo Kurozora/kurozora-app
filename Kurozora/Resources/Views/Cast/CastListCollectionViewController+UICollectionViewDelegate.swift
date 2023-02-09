@@ -9,6 +9,17 @@
 import UIKit
 
 extension CastListCollectionViewController {
+	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		switch self.castKind {
+		case .show:
+			break
+		case .literature:
+			guard self.cast[indexPath] != nil else { return }
+			let character = self.cast[indexPath]?.relationships.characters.data.first
+			self.performSegue(withIdentifier: R.segue.castListCollectionViewController.characterDetailsSegue, sender: character)
+		}
+	}
+
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 		let castIdentities = self.castIdentities.count - 1
 		var itemsCount = castIdentities / 4 / 2

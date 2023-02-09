@@ -97,7 +97,7 @@ extension AppDelegate {
 // MARK: - Continuity
 extension AppDelegate {
 	func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-		if userActivity.activityType == "OpenAnimeIntent", let parameters = userActivity.userInfo as? [String: Int] {
+		if userActivity.activityType == "OpenAnimeIntent", let parameters = userActivity.userInfo as? [String: String] {
 			guard let showID = parameters["showID"] else { return false }
 
 			let showDetailsCollectionViewController = ShowDetailsCollectionViewController.`init`(with: showID)

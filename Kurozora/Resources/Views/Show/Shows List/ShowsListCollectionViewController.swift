@@ -11,6 +11,7 @@ import KurozoraKit
 import Alamofire
 
 enum ShowsListFetchType {
+	case literature
 	case charcter
 	case explore
 	case person
@@ -23,16 +24,26 @@ enum ShowsListFetchType {
 
 class ShowsListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
+	var literatureIdentity: LiteratureIdentity? = nil
+
 	var personIdentity: PersonIdentity? = nil
+
 	var characterIdentity: CharacterIdentity? = nil
+
 	var showIdentity: ShowIdentity? = nil
+
 	var studioIdentity: StudioIdentity? = nil
+
 	var exploreCategoryIdentity: ExploreCategoryIdentity? = nil
+
 	var shows: [IndexPath: Show] = [:]
 	var showIdentities: [ShowIdentity] = []
+
 	var relatedShows: [RelatedShow] = []
+
 	var searachQuery: String = ""
 	var showsListFetchType: ShowsListFetchType = .search
+
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
 
@@ -97,10 +108,10 @@ class ShowsListCollectionViewController: KCollectionViewController {
 	}
 
 	override func configureEmptyDataView() {
-		emptyBackgroundView.configureImageView(image: R.image.empty.library()!)
-		emptyBackgroundView.configureLabels(title: "No Shows", detail: "Can't get shows list. Please refresh the page or restart the app and check your WiFi connection.")
+		self.emptyBackgroundView.configureImageView(image: R.image.empty.animeLibrary()!)
+		self.emptyBackgroundView.configureLabels(title: "No Shows", detail: "Can't get shows list. Please refresh the page or restart the app and check your WiFi connection.")
 
-		collectionView.backgroundView?.alpha = 0
+		self.collectionView.backgroundView?.alpha = 0
 	}
 
 	/// Fades in and out the empty data view according to the number of rows.
@@ -135,6 +146,20 @@ class ShowsListCollectionViewController: KCollectionViewController {
 
 		do {
 			switch self.showsListFetchType {
+			case .literature:
+				guard let literatureIdentity = self.literatureIdentity else { return }
+				let relatedShowsResponse = try await KService.getRelatedShows(forLiterature: literatureIdentity, next: self.nextPageURL).value
+
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.relatedShows = []
+					self.showIdentities = []
+				}
+
+				// Save next page url and append new data
+				self.nextPageURL = relatedShowsResponse.next
+				self.relatedShows.append(contentsOf: relatedShowsResponse.data)
+				self.relatedShows.removeDuplicates()
 			case .charcter:
 				guard let characterIdentity = self.characterIdentity else { return }
 
@@ -158,25 +183,17 @@ class ShowsListCollectionViewController: KCollectionViewController {
 				}
 			case .person:
 				guard let personIdentity = self.personIdentity else { return }
+				let showIdentityResponse = try await KService.getShows(forPerson: personIdentity, next: self.nextPageURL).value
 
-				KService.getShows(forPerson: personIdentity, next: self.nextPageURL) { [weak self] result in
-					guard let self = self else { return }
-					switch result {
-					case .success(let showIdentityResponse):
-						// Reset data if necessary
-						if self.nextPageURL == nil {
-							self.showIdentities = []
-						}
-
-						// Save next page url and append new data
-						self.nextPageURL = showIdentityResponse.next
-						self.showIdentities.append(contentsOf: showIdentityResponse.data)
-						self.showIdentities.removeDuplicates()
-
-						self.endFetch()
-					case .failure: break
-					}
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.showIdentities = []
 				}
+
+				// Save next page url and append new data
+				self.nextPageURL = showIdentityResponse.next
+				self.showIdentities.append(contentsOf: showIdentityResponse.data)
+				self.showIdentities.removeDuplicates()
 			case .search:
 				let searchResponse = try await KService.search(.kurozora, of: [.shows], for: self.searachQuery, next: self.nextPageURL, limit: 25).value
 
@@ -291,11 +308,12 @@ extension ShowsListCollectionViewController: BaseLockupCollectionViewCellDelegat
 			let show = self.shows[indexPath] ?? self.relatedShows[indexPath.item].show
 
 			let oldLibraryStatus = cell.libraryStatus
-			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: oldLibraryStatus, action: { title, value  in
-				KService.addToLibrary(withLibraryStatus: value, showID: show.id) { result in
-					switch result {
-					case .success(let libraryUpdate):
-						show.attributes.update(using: libraryUpdate)
+			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value  in
+				Task {
+					do {
+						let libraryUpdateResponse = try await KService.addToLibrary(.shows, withLibraryStatus: value, modelID: String(show.id)).value
+
+						show.attributes.update(using: libraryUpdateResponse.data)
 
 						// Update entry in library
 						cell.libraryStatus = value
@@ -303,18 +321,19 @@ extension ShowsListCollectionViewController: BaseLockupCollectionViewCellDelegat
 
 						let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
 						NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
-					case .failure:
-						break
+					} catch let error as KKAPIError {
+						self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
+						print("----- Add to library failed", error.message)
 					}
 				}
 			})
 
 			if cell.libraryStatus != .none {
-				actionSheetAlertController.addAction(UIAlertAction(title: "Remove from library", style: .destructive) { _ in
-					KService.removeFromLibrary(showID: show.id) { result in
-						switch result {
-						case .success(let libraryUpdate):
-							show.attributes.update(using: libraryUpdate)
+				actionSheetAlertController.addAction(UIAlertAction(title: Trans.removeFromLibrary, style: .destructive) { _ in
+					Task {
+						do {
+							let libraryUpdateResponse = try await KService.removeFromLibrary(.shows, modelID: String(show.id)).value
+							show.attributes.update(using: libraryUpdateResponse.data)
 
 							// Update edntry in library
 							cell.libraryStatus = .none
@@ -322,8 +341,9 @@ extension ShowsListCollectionViewController: BaseLockupCollectionViewCellDelegat
 
 							let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
 							NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
-						case .failure:
-							break
+						} catch let error as KKAPIError {
+							self.presentAlertController(title: "Can't Remove From Your Library 😔", message: error.message)
+							print("----- Remove from library failed", error.message)
 						}
 					}
 				})

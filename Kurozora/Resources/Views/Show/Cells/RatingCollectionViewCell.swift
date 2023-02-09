@@ -10,8 +10,7 @@ import UIKit
 import KurozoraKit
 
 protocol RatingCollectionViewCellDelegate: AnyObject {
-	func rateShow(with rating: Double)
-	func rateEpisode(with rating: Double)
+	func ratingCollectionViewCell(rateWith rating: Double)
 }
 
 class RatingCollectionViewCell: UICollectionViewCell {
@@ -33,7 +32,7 @@ class RatingCollectionViewCell: UICollectionViewCell {
 
 		self.cosmosView.didFinishTouchingCosmos = { rating in
 			WorkflowController.shared.isSignedIn {
-				self.delegate?.rateShow(with: rating)
+				self.delegate?.ratingCollectionViewCell(rateWith: rating)
 			}
 
 			if !User.isSignedIn {
@@ -49,6 +48,30 @@ class RatingCollectionViewCell: UICollectionViewCell {
 		self.cosmosDetailLabel.text = ratingCount != 0 ? "\(ratingCount.kkFormatted) Ratings" : "Not enough ratings"
 	}
 
+	/// Configure the cell with the given details.
+	func configure(using literature: Literature) {
+		// Configure cosmos view
+		let userRating = literature.attributes.givenRating
+		self.cosmosView.rating = userRating ?? 0.0
+
+		self.cosmosView.didFinishTouchingCosmos = { rating in
+			WorkflowController.shared.isSignedIn {
+				self.delegate?.ratingCollectionViewCell(rateWith: rating)
+			}
+
+			if !User.isSignedIn {
+				self.cosmosView.rating = 0.0
+			}
+		}
+
+		// Configure average rating
+		self.ratingLabel.text = "\(literature.attributes.stats?.ratingAverage ?? 0.0)"
+
+		// Configure rating count
+		let ratingCount = literature.attributes.stats?.ratingCount ?? 0
+		self.cosmosDetailLabel.text = ratingCount != 0 ? "\(ratingCount.kkFormatted) Ratings" : "Not enough ratings"
+	}
+
 	/// Configure the cell with the episode details.
 	func configure(using episode: Episode) {
 		// Configure cosmos view
@@ -57,7 +80,7 @@ class RatingCollectionViewCell: UICollectionViewCell {
 
 		self.cosmosView.didFinishTouchingCosmos = { rating in
 			WorkflowController.shared.isSignedIn {
-				self.delegate?.rateEpisode(with: rating)
+				self.delegate?.ratingCollectionViewCell(rateWith: rating)
 			}
 
 			if !User.isSignedIn {

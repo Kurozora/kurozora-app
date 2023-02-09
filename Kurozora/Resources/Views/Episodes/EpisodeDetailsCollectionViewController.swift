@@ -11,7 +11,7 @@ import KurozoraKit
 
 class EpisodeDetailsCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var episodeID = 0
+	var episodeID: String = ""
 	var episode: Episode! {
 		didSet {
 			self.title = self.episode.attributes.title
@@ -54,7 +54,7 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController {
 	/// - Parameter episodeID: The episode id to use when initializing the view.
 	///
 	/// - Returns: an initialized instance of EpisodeDetailsCollectionViewController.
-	static func `init`(with episodeID: Int) -> EpisodeDetailsCollectionViewController {
+	static func `init`(with episodeID: String) -> EpisodeDetailsCollectionViewController {
 		if let episodeDetailsCollectionViewController = R.storyboard.episodes.episodeDetailsCollectionViewController() {
 			episodeDetailsCollectionViewController.episodeID = episodeID
 			return episodeDetailsCollectionViewController
@@ -252,9 +252,7 @@ extension EpisodeDetailsCollectionViewController: TitleHeaderCollectionReusableV
 
 // MARK: - RatingCollectionViewCellDelegate
 extension EpisodeDetailsCollectionViewController: RatingCollectionViewCellDelegate {
-	func rateShow(with rating: Double) { }
-
-	func rateEpisode(with rating: Double) {
+	func ratingCollectionViewCell(rateWith rating: Double) {
 		Task {
 			await self.episode.rate(using: rating)
 		}

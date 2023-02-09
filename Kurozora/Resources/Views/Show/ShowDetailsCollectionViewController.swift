@@ -41,13 +41,6 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 			#endif
 		}
 	}
-	var responseCount: Int = 0 {
-		didSet {
-			if self.responseCount == 6 {
-				self.updateDataSource()
-			}
-		}
-	}
 
 	/// Season properties.
 	var seasons: [IndexPath: Season] = [:]
@@ -55,6 +48,9 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 
 	/// Related Show properties.
 	var relatedShows: [RelatedShow] = []
+
+	/// Related Literature properties.
+	var relatedLiteratures: [RelatedLiterature] = []
 
 	/// Cast properties.
 	var cast: [IndexPath: Cast] = [:]
@@ -112,7 +108,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 	/// - Parameter showID: The show id to use when initializing the view.
 	///
 	/// - Returns: an initialized instance of ShowDetailsCollectionViewController.
-	static func `init`(with showID: Int) -> ShowDetailsCollectionViewController {
+	static func `init`(with showID: String) -> ShowDetailsCollectionViewController {
 		if let showDetailsCollectionViewController = R.storyboard.shows.showDetailsCollectionViewController() {
 			showDetailsCollectionViewController.showIdentity = ShowIdentity(id: showID)
 			return showDetailsCollectionViewController
@@ -138,8 +134,8 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		NotificationCenter.default.addObserver(self, selector: #selector(handleFavoriteToggle(_:)), name: .KShowFavoriteIsToggled, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(handleReminderToggle(_:)), name: .KShowReminderIsToggled, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(handleFavoriteToggle(_:)), name: .KModelFavoriteIsToggled, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(handleReminderToggle(_:)), name: .KModelReminderIsToggled, object: nil)
 
 		self.navigationTitleLabel.alpha = 0
 
@@ -184,7 +180,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 	}
 
 	override func configureEmptyDataView() {
-		emptyBackgroundView.configureImageView(image: R.image.empty.library()!)
+		emptyBackgroundView.configureImageView(image: R.image.empty.animeLibrary()!)
 		emptyBackgroundView.configureLabels(title: "No Details", detail: "This show doesn't have details yet. Please check back again later.")
 
 		collectionView.backgroundView?.alpha = 0
@@ -225,7 +221,6 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		do {
 			let seasonIdentityResponse = try await KService.getSeasons(forShow: showIdentity, reversed: true, next: nil, limit: 10).value
 			self.seasonIdentities = seasonIdentityResponse.data
-			self.responseCount += 1
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -233,7 +228,6 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		do {
 			let castIdentityResponse = try await KService.getCast(forShow: showIdentity, limit: 10).value
 			self.castIdentities = castIdentityResponse.data
-			self.responseCount += 1
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -241,7 +235,6 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		do {
 			let showSongResponse = try await KService.getSongs(forShow: showIdentity, limit: 10).value
 			self.showSongs = showSongResponse.data
-			self.responseCount += 1
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -249,8 +242,6 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		do {
 			let studioIdentityResponse = try await KService.getStudios(forShow: showIdentity, limit: 10).value
 			self.studioIdentities = studioIdentityResponse.data
-
-			self.responseCount += 1
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -258,8 +249,6 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		do {
 			let showIdentityResponse = try await KService.getMoreByStudio(forShow: showIdentity, limit: 10).value
 			self.studioShowIdentities = showIdentityResponse.data
-
-			self.responseCount += 1
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -267,10 +256,18 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		do {
 			let relatedShowResponse = try await KService.getRelatedShows(forShow: showIdentity, limit: 10).value
 			self.relatedShows = relatedShowResponse.data
-			self.responseCount += 1
 		} catch {
 			print(error.localizedDescription)
 		}
+
+		do {
+			let relatedLiteraturesResponse = try await KService.getRelatedLiteratures(forShow: showIdentity, limit: 10).value
+			self.relatedLiteratures = relatedLiteraturesResponse.data
+		} catch {
+			print(error.localizedDescription)
+		}
+
+		self.updateDataSource()
 	}
 
 	@objc func toggleFavorite() {
@@ -314,6 +311,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		case R.segue.showDetailsCollectionViewController.castListSegue.identifier:
 			// Segue to cast list
 			guard let castListCollectionViewController = segue.destination as? CastListCollectionViewController else { return }
+			castListCollectionViewController.castKind = .show
 			castListCollectionViewController.showIdentity = self.showIdentity
 		case R.segue.showDetailsCollectionViewController.songsListSegue.identifier:
 			// Segue to songs list
@@ -324,15 +322,21 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 			guard let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController else { return }
 			guard let indexPath = sender as? IndexPath else { return }
 
-			if indexPath.section == SectionLayoutKind.moreByStudio.rawValue {
+			if self.snapshot.sectionIdentifiers[indexPath.section] == .moreByStudio {
 				showsListCollectionViewController.title = "\(Trans.moreBy) \(self.show.attributes.studio ?? Trans.studio)"
 				showsListCollectionViewController.showIdentity = self.showIdentity
 				showsListCollectionViewController.showsListFetchType = .moreByStudio
 			} else {
-				showsListCollectionViewController.title = "Related"
+				showsListCollectionViewController.title = Trans.relatedShows
 				showsListCollectionViewController.showIdentity = self.showIdentity
 				showsListCollectionViewController.showsListFetchType = .relatedShow
 			}
+		case R.segue.showDetailsCollectionViewController.literaturesListSegue.identifier:
+			// Segue to literatures list
+			guard let literatureListCollectionViewController = segue.destination as? LiteraturesListCollectionViewController else { return }
+			literatureListCollectionViewController.title = Trans.relatedLiteratures
+			literatureListCollectionViewController.showIdentity = self.showIdentity
+			literatureListCollectionViewController.literaturesListFetchType = .show
 		case R.segue.showDetailsCollectionViewController.studiosListSegue.identifier:
 			// Segue to studios list
 			guard let studiosListCollectionViewController = segue.destination as? StudiosListCollectionViewController else { return }
@@ -343,6 +347,11 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
 			showDetailsCollectionViewController.show = show
+		case R.segue.showDetailsCollectionViewController.literatureDetailsSegue.identifier:
+			// Segue to literature details
+			guard let literatureDetailsCollectionViewController = segue.destination as? LiteratureDetailsCollectionViewController else { return }
+			guard let literature = sender as? Literature else { return }
+			literatureDetailsCollectionViewController.literature = literature
 		case R.segue.showDetailsCollectionViewController.studioDetailsSegue.identifier:
 			// Segue to studio details
 			guard let studioDetailsCollectionViewController = segue.destination as? StudioDetailsCollectionViewController else { return }
@@ -360,7 +369,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 			guard let personDetailsCollectionViewController = segue.destination as? PersonDetailsCollectionViewController else { return }
 			guard let cell = sender as? CastCollectionViewCell else { return }
 			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-			guard let person = self.cast[indexPath]?.relationships.people.data.first else { return }
+			guard let person = self.cast[indexPath]?.relationships.people?.data.first else { return }
 			personDetailsCollectionViewController.person = person
 		case R.segue.showDetailsCollectionViewController.episodesListSegue.identifier:
 			// Segue to season details
@@ -430,11 +439,9 @@ extension ShowDetailsCollectionViewController {
 
 // MARK: - RatingCollectionViewCellDelegate
 extension ShowDetailsCollectionViewController: RatingCollectionViewCellDelegate {
-	func rateShow(with rating: Double) {
+	func ratingCollectionViewCell(rateWith rating: Double) {
 		self.show.rate(using: rating)
 	}
-
-	func rateEpisode(with rating: Double) { }
 }
 
 // MARK: - MusicLockupCollectionViewCellDelegate
@@ -494,6 +501,7 @@ extension ShowDetailsCollectionViewController {
 		case studios
 		case moreByStudio
 		case relatedShows
+		case relatedLiteratures
 		case sosumi
 
 		// MARK: - Properties
@@ -521,7 +529,9 @@ extension ShowDetailsCollectionViewController {
 			case .moreByStudio:
 				return Trans.moreBy
 			case .relatedShows:
-				return Trans.related
+				return Trans.relatedShows
+			case .relatedLiteratures:
+				return Trans.relatedLiteratures
 			case .sosumi:
 				return Trans.copyright
 			}
@@ -552,6 +562,8 @@ extension ShowDetailsCollectionViewController {
 				return R.segue.showDetailsCollectionViewController.showsListSegue.identifier
 			case .relatedShows:
 				return R.segue.showDetailsCollectionViewController.showsListSegue.identifier
+			case .relatedLiteratures:
+				return R.segue.showDetailsCollectionViewController.literaturesListSegue.identifier
 			case .sosumi:
 				return ""
 			}
@@ -572,6 +584,9 @@ extension ShowDetailsCollectionViewController {
 
 		/// Indicates the item kind contains a `RelatedShow` object.
 		case relatedShow(_: RelatedShow, id: UUID = UUID())
+
+		/// Indicates the item kind contains a `RelatedLiterature` object.
+		case relatedLiterature(_: RelatedLiterature, id: UUID = UUID())
 
 		/// Indicates the item kind contains a `ShowSong` object.
 		case showSong(_: ShowSong, id: UUID = UUID())
@@ -603,6 +618,9 @@ extension ShowDetailsCollectionViewController {
 			case .relatedShow(let relatedShow, let id):
 				hasher.combine(relatedShow)
 				hasher.combine(id)
+			case .relatedLiterature(let relatedLiterature, let id):
+				hasher.combine(relatedLiterature)
+				hasher.combine(id)
 			case .showSong(let showSong, let id):
 				hasher.combine(showSong)
 				hasher.combine(id)
@@ -631,6 +649,8 @@ extension ShowDetailsCollectionViewController {
 				return showIdentity1 == showIdentity2 && id1 == id2
 			case (.relatedShow(let relatedShow1, let id1), .relatedShow(let relatedShow2, let id2)):
 				return relatedShow1 == relatedShow2 && id1 == id2
+			case (.relatedLiterature(let relatedLiterature1, let id1), .relatedLiterature(let relatedLiterature2, let id2)):
+				return relatedLiterature1 == relatedLiterature2 && id1 == id2
 			case (.showSong(let showSong1, let id1), .showSong(let showSong2, let id2)):
 				return showSong1 == showSong2 && id1 == id2
 			case (.characterIdentity(let characterIdentity1, let id1), .characterIdentity(let characterIdentity2, let id2)):

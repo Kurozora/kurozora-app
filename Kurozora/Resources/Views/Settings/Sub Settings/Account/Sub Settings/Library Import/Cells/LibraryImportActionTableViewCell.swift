@@ -1,5 +1,5 @@
 //
-//  MALImportActionTableViewCell.swift
+//  LibraryImportActionTableViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 04/05/2020.
@@ -10,13 +10,13 @@ import UIKit
 import MobileCoreServices
 import UniformTypeIdentifiers
 
-class MALImportActionTableViewCell: ProductActionTableViewCell {
+class LibraryImportActionTableViewCell: ProductActionTableViewCell {
 	// MARK: - Functions
 	override func actionButtonPressed(_ sender: UIButton) {
 		let documentPicker: UIDocumentPickerViewController
 		let types: [UTType] = [.xml]
 		documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: types)
-		documentPicker.delegate = self.parentViewController as? MALImportTableViewController
+		documentPicker.delegate = self.parentViewController as? LibraryImportTableViewController
 		documentPicker.modalPresentationStyle = .formSheet
 		self.parentViewController?.present(documentPicker, animated: true, completion: nil)
 	}

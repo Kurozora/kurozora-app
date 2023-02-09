@@ -18,9 +18,6 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	/// The collection of results fetched by the search request.
 	var searchResults: Search?
 
-	/// The collection of show identity results.
-	var showIdentities: [ShowIdentity] = []
-
 	/// The current scope of the search.
 	var currentScope: KKSearchScope = .kurozora
 
@@ -28,18 +25,13 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	var searachQuery: String = ""
 
 	/// The collection of suggested shows.
-	var suggestionElements: [Show]? {
-		didSet {
-			if self.suggestionElements != nil {
-				self.updateDataSource()
-			}
-		}
-	}
+	var suggestionElements: [Show] = []
 
 	var characters: [IndexPath: Character] = [:]
 	var episodes: [IndexPath: Episode] = [:]
 	var people: [IndexPath: Person] = [:]
 	var shows: [IndexPath: Show] = [:]
+	var literatures: [IndexPath: Literature] = [:]
 	var songs: [IndexPath: Song] = [:]
 	var studios: [IndexPath: Studio] = [:]
 	var users: [IndexPath: User] = [:]
@@ -96,10 +88,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		self.configureDataSource()
 
 		// Fetch user's search history.
-		SearchHistory.getContent { [weak self] showDetailsElements in
-			guard let self = self else { return }
-			self.suggestionElements = showDetailsElements
-		}
+		self.suggestionElements = SearchHistory.getContent()
 
 		if self.includesSearchBar {
 			self.setupSearchController()
@@ -153,13 +142,13 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		case .kurozora:
 			Task { [weak self] in
 				guard let self = self else { return }
-				await self.search(scope: searchScope, types: [.shows, .episodes, .characters, .people, .songs, .studios, .users], query: query)
+				await self.search(scope: searchScope, types: [.shows, .literatures, .episodes, .characters, .people, .songs, .studios, .users], query: query)
 			}
 		case .library:
-			WorkflowController.shared.isSignedIn {
-				Task { [weak self] in
+			WorkflowController.shared.isSignedIn { [weak self] in
+				Task {
 					guard let self = self else { return }
-					await self.search(scope: searchScope, types: [.shows], query: query)
+					await self.search(scope: searchScope, types: [.shows, .literatures], query: query)
 				}
 			}
 		}
@@ -182,14 +171,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 			// Perform library search request.
 			let searchResponse = try await KService.search(scope, of: types, for: query, next: self.nextPageURL, limit: limit).value
 
-			switch self.currentScope {
-			case .kurozora:
-				self.searchResults = searchResponse.data
-			case .library:
-				self.nextPageURL = searchResponse.data.shows?.next
-				self.showIdentities.append(contentsOf: searchResponse.data.shows?.data ?? [])
-			}
-
+			self.searchResults = searchResponse.data
 			self.isRequestInProgress = false
 
 			// Update data source.
@@ -207,11 +189,11 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	fileprivate func resetSearchResults() {
 		self.searchResults = nil
 		self.nextPageURL = nil
-		self.showIdentities = []
 		self.characters = [:]
 		self.episodes = [:]
 		self.people = [:]
 		self.shows = [:]
+		self.literatures = [:]
 		self.songs = [:]
 		self.studios = [:]
 		self.users = [:]
@@ -230,6 +212,11 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 			guard let episodeDetailsCollectionViewController = segue.destination as? EpisodeDetailsCollectionViewController else { return }
 			guard let episode = sender as? Episode else { return }
 			episodeDetailsCollectionViewController.episode = episode
+		case R.segue.searchResultsCollectionViewController.literatureDetailsSegue.identifier:
+			// Segue to literature details
+			guard let literatureDetailCollectionViewController = segue.destination as? LiteratureDetailsCollectionViewController else { return }
+			guard let literature = sender as? Literature else { return }
+			literatureDetailCollectionViewController.literature = literature
 		case R.segue.searchResultsCollectionViewController.personDetailsSegue.identifier:
 			// Segue to person details
 			guard let personDetailCollectionViewController = segue.destination as? PersonDetailsCollectionViewController else { return }
@@ -265,6 +252,11 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 			guard let episodesListCollectionViewController = segue.destination as? EpisodesListCollectionViewController else { return }
 			episodesListCollectionViewController.searachQuery = self.searachQuery
 			episodesListCollectionViewController.episodesListFetchType = .search
+		case R.segue.searchResultsCollectionViewController.literaturesListSegue.identifier:
+			// Segue to literatures list
+			guard let literaturesListCollectionViewController = segue.destination as? LiteraturesListCollectionViewController else { return }
+			literaturesListCollectionViewController.searachQuery = self.searachQuery
+			literaturesListCollectionViewController.literaturesListFetchType = .search
 		case R.segue.searchResultsCollectionViewController.peopleListSegue.identifier:
 			// Segue to people list
 			guard let peopleListCollectionViewController = segue.destination as? PeopleListCollectionViewController else { return }
@@ -332,14 +324,29 @@ extension SearchResultsCollectionViewController: BaseLockupCollectionViewCellDel
 	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressStatus button: UIButton) {
 		WorkflowController.shared.isSignedIn {
 			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-			guard let show = self.shows[indexPath] else { return }
+			let modelID: String
+
+			switch cell.libraryKind {
+			case .shows:
+				guard let show = self.shows[indexPath] else { return }
+				modelID = String(show.id)
+			case .literatures:
+				guard let literatures = self.literatures[indexPath] else { return }
+				modelID = literatures.id
+			}
 
 			let oldLibraryStatus = cell.libraryStatus
-			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: oldLibraryStatus, action: { title, value  in
-				KService.addToLibrary(withLibraryStatus: value, showID: show.id) { result in
-					switch result {
-					case .success(let libraryUpdate):
-						show.attributes.update(using: libraryUpdate)
+			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value  in
+				Task {
+					do {
+						let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID).value
+
+						switch cell.libraryKind {
+						case .shows:
+							self.shows[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
+						case .literatures:
+							self.literatures[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
+						}
 
 						// Update entry in library
 						cell.libraryStatus = value
@@ -347,18 +354,25 @@ extension SearchResultsCollectionViewController: BaseLockupCollectionViewCellDel
 
 						let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
 						NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
-					case .failure:
-						break
+					} catch let error as KKAPIError {
+						self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
+						print("----- Add to library failed", error.message)
 					}
 				}
 			})
 
 			if cell.libraryStatus != .none {
-				actionSheetAlertController.addAction(UIAlertAction(title: "Remove from library", style: .destructive, handler: { _ in
-					KService.removeFromLibrary(showID: show.id) { result in
-						switch result {
-						case .success(let libraryUpdate):
-							show.attributes.update(using: libraryUpdate)
+				actionSheetAlertController.addAction(UIAlertAction(title: Trans.removeFromLibrary, style: .destructive, handler: { _ in
+					Task {
+						do {
+							let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID).value
+
+							switch cell.libraryKind {
+							case .shows:
+								self.shows[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
+							case .literatures:
+								self.literatures[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
+							}
 
 							// Update edntry in library
 							cell.libraryStatus = .none
@@ -366,8 +380,9 @@ extension SearchResultsCollectionViewController: BaseLockupCollectionViewCellDel
 
 							let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
 							NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
-						case .failure:
-							break
+						} catch let error as KKAPIError {
+							self.presentAlertController(title: "Can't Remove From Your Library 😔", message: error.message)
+							print("----- Remove from library failed", error.message)
 						}
 					}
 				}))
@@ -507,11 +522,17 @@ extension SearchResultsCollectionViewController {
 	/// List of character section layout kind.
 	enum SectionLayoutKind: Int, CaseIterable {
 		// MARK: - Cases
+		/// Indicates a search history section layout type.
+		case searchHistory
+
 		/// Indicates the characters' section layout type.
 		case characters
 
 		/// Indicates the episodes' section layout type.
 		case episodes
+
+		/// Indicates the literatures' section layout type.
+		case literatures
 
 		/// Indicates the people's section layout type.
 		case people
@@ -532,63 +553,92 @@ extension SearchResultsCollectionViewController {
 	/// List of available Item Kind types.
 	enum ItemKind: Hashable {
 		// MARK: - Cases
+		/// Indicates the item kind contains a `Show` object.
+		case show(_: Show)
+
+		/// Indicates the item kind contains a `Literature` object.
+		case literature(_: Literature)
+
 		/// Indicates the item kind contains a `CharacterIdentity` object.
-		case characterIdentity(_: CharacterIdentity)
+		case characterIdentity(_: CharacterIdentity, _: UUID = UUID())
 
 		/// Indicates the item kind contains a `EpisodeIdentity` object.
-		case episodeIdentity(_: EpisodeIdentity)
+		case episodeIdentity(_: EpisodeIdentity, _: UUID = UUID())
+
+		/// Indicates the item kind contains a `LiteratureIdentity` object.
+		case literatureIdentity(_: LiteratureIdentity, _: UUID = UUID())
 
 		/// Indicates the item kind contains a `PersonIdentity` object.
-		case personIdentity(_: PersonIdentity)
+		case personIdentity(_: PersonIdentity, _: UUID = UUID())
 
 		/// Indicates the item kind contains a `ShowIdentity` object.
-		case showIdentity(_: ShowIdentity)
+		case showIdentity(_: ShowIdentity, _: UUID = UUID())
 
 		/// Indicates the item kind contains a `SongIdentity` object.
-		case songIdentity(_: SongIdentity)
+		case songIdentity(_: SongIdentity, _: UUID = UUID())
 
 		/// Indicates the item kind contains a `StudioIdentity` object.
-		case studioIdentity(_: StudioIdentity)
+		case studioIdentity(_: StudioIdentity, _: UUID = UUID())
 
 		/// Indicates the item kind contains a `UserIdentity` object.
-		case userIdentity(_: UserIdentity)
+		case userIdentity(_: UserIdentity, _: UUID = UUID())
 
 		// MARK: - Functions
 		func hash(into hasher: inout Hasher) {
 			switch self {
-			case .characterIdentity(let characterIdentity):
+			case .show(let show):
+				hasher.combine(show)
+			case .literature(let literature):
+				hasher.combine(literature)
+			case .characterIdentity(let characterIdentity, let uuid):
 				hasher.combine(characterIdentity)
-			case .episodeIdentity(let episodeIdentity):
+				hasher.combine(uuid)
+			case .episodeIdentity(let episodeIdentity, let uuid):
 				hasher.combine(episodeIdentity)
-			case .personIdentity(let personIdentity):
+				hasher.combine(uuid)
+			case .literatureIdentity(let literatureIdentity, let uuid):
+				hasher.combine(literatureIdentity)
+				hasher.combine(uuid)
+			case .personIdentity(let personIdentity, let uuid):
 				hasher.combine(personIdentity)
-			case .showIdentity(let showIdentity):
+				hasher.combine(uuid)
+			case .showIdentity(let showIdentity, let uuid):
 				hasher.combine(showIdentity)
-			case .songIdentity(let songIdentity):
+				hasher.combine(uuid)
+			case .songIdentity(let songIdentity, let uuid):
 				hasher.combine(songIdentity)
-			case .studioIdentity(let studioIdentity):
+				hasher.combine(uuid)
+			case .studioIdentity(let studioIdentity, let uuid):
 				hasher.combine(studioIdentity)
-			case .userIdentity(let userIdentity):
+				hasher.combine(uuid)
+			case .userIdentity(let userIdentity, let uuid):
 				hasher.combine(userIdentity)
+				hasher.combine(uuid)
 			}
 		}
 
 		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
 			switch (lhs, rhs) {
-			case (.characterIdentity(let characterIdentity1), .characterIdentity(let characterIdentity2)):
-				return characterIdentity1 == characterIdentity2
-			case (.episodeIdentity(let episodeIdentity1), .episodeIdentity(let episodeIdentity2)):
-				return episodeIdentity1 == episodeIdentity2
-			case (.personIdentity(let personIdentity1), .personIdentity(let personIdentity2)):
-				return personIdentity1 == personIdentity2
-			case (.showIdentity(let showIdentity1), .showIdentity(let showIdentity2)):
-				return showIdentity1 == showIdentity2
-			case (.songIdentity(let songIdentity1), .songIdentity(let songIdentity2)):
-				return songIdentity1 == songIdentity2
-			case (.studioIdentity(let studioIdentity1), .studioIdentity(let studioIdentity2)):
-				return studioIdentity1 == studioIdentity2
-			case (.userIdentity(let userIdentity1), .userIdentity(let userIdentity2)):
-				return userIdentity1 == userIdentity2
+			case (.show(let show1), .show(let show2)):
+				return show1 == show2
+			case (.literature(let literature1), .literature(let literature2)):
+				return literature1 == literature2
+			case (.characterIdentity(let characterIdentity1, let uuid1), .characterIdentity(let characterIdentity2, let uuid2)):
+				return characterIdentity1 == characterIdentity2 && uuid1 == uuid2
+			case (.episodeIdentity(let episodeIdentity1, let uuid1), .episodeIdentity(let episodeIdentity2, let uuid2)):
+				return episodeIdentity1 == episodeIdentity2 && uuid1 == uuid2
+			case (.literatureIdentity(let literatureIdentity1, let uuid1), .literatureIdentity(let literatureIdentity2, let uuid2)):
+				return literatureIdentity1 == literatureIdentity2 && uuid1 == uuid2
+			case (.personIdentity(let personIdentity1, let uuid1), .personIdentity(let personIdentity2, let uuid2)):
+				return personIdentity1 == personIdentity2 && uuid1 == uuid2
+			case (.showIdentity(let showIdentity1, let uuid1), .showIdentity(let showIdentity2, let uuid2)):
+				return showIdentity1 == showIdentity2 && uuid1 == uuid2
+			case (.songIdentity(let songIdentity1, let uuid1), .songIdentity(let songIdentity2, let uuid2)):
+				return songIdentity1 == songIdentity2 && uuid1 == uuid2
+			case (.studioIdentity(let studioIdentity1, let uuid1), .studioIdentity(let studioIdentity2, let uuid2)):
+				return studioIdentity1 == studioIdentity2 && uuid1 == uuid2
+			case (.userIdentity(let userIdentity1, let uuid1), .userIdentity(let userIdentity2, let uuid2)):
+				return userIdentity1 == userIdentity2 && uuid1 == uuid2
 			default:
 				return false
 			}

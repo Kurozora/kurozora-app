@@ -27,6 +27,7 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 	// MARK: - Properties
 	var showDetailsCollectionViewController: ShowDetailsCollectionViewController?
 	var libraryStatus: KKLibrary.Status = .none
+	var libraryKind: KKLibrary.Kind = .shows
 	weak var delegate: BaseLockupCollectionViewCellDelegate?
 
 	// MARK: - Functions
@@ -34,6 +35,7 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 	///
 	/// - Parameter show: The `Show` object used to configure the cell.
 	func configure(using show: Show?) {
+		self.libraryKind = .shows
 		guard let show = show else {
 			self.showSkeleton()
 			return
@@ -62,8 +64,57 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 		}
 
 		// Configure library status
-		self.libraryStatus = show.attributes.libraryStatus ?? .none
-		self.libraryStatusButton?.setTitle(self.libraryStatus != .none ? "\(self.libraryStatus.stringValue.capitalized) ▾" : "ADD", for: .normal)
+		self.configureLibraryStatus(with: show.attributes.libraryStatus ?? .none)
+	}
+
+	/// Configure the cell with the `Literature` object.
+	///
+	/// - Parameter show: The `Literature` object used to configure the cell.
+	func configure(using literature: Literature?) {
+		self.libraryKind = .literatures
+		guard let literature = literature else {
+			self.showSkeleton()
+			return
+		}
+		self.hideSkeleton()
+		// Configure title
+		self.primaryLabel?.text = literature.attributes.title
+
+		// Configure genres
+		self.secondaryLabel?.text = (literature.attributes.tagline ?? "").isEmpty ? literature.attributes.genres?.localizedJoined() : literature.attributes.tagline
+
+		// Configure banner
+		if let bannerBackgroundColor = literature.attributes.banner?.backgroundColor {
+			self.bannerImageView?.backgroundColor = UIColor(hexString: bannerBackgroundColor)
+		}
+		if self.bannerImageView != nil {
+			literature.attributes.bannerImage(imageView: self.bannerImageView!)
+		}
+
+		// Configure poster
+		if let posterBackgroundColor = literature.attributes.poster?.backgroundColor {
+			self.posterImageView?.backgroundColor = UIColor(hexString: posterBackgroundColor)
+		}
+		if self.posterImageView != nil {
+			literature.attributes.posterImage(imageView: self.posterImageView!)
+		}
+
+		// Configure library status
+		self.configureLibraryStatus(with: literature.attributes.libraryStatus ?? .none)
+	}
+
+	func configureLibraryStatus(with libraryStatus: KKLibrary.Status) {
+		self.libraryStatus = libraryStatus
+
+		var libraryStatusString: String
+		switch self.libraryKind {
+		case .shows:
+			libraryStatusString = self.libraryStatus.showStringValue
+		case .literatures:
+			libraryStatusString = self.libraryStatus.literatureStringValue
+		}
+
+		self.libraryStatusButton?.setTitle(self.libraryStatus != .none ? "\(libraryStatusString.capitalized) ▾" : "ADD", for: .normal)
 	}
 
 	// MARK: - IBActions

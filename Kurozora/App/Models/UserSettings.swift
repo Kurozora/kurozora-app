@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 
 class UserSettings: UserDefaults {
 	/// The base UserDefaults suit of the Kurozora apps.
@@ -134,6 +135,12 @@ extension UserSettings {
 	static var libraryCellStyles: [String: Int] {
 		guard let libraryLayouts = shared.dictionary(forKey: #function) as? [String: Int] else { return [:] }
 		return libraryLayouts
+	}
+
+	/// Returns a library kind indicating the library kind the user was on last.
+	static var libraryKind: KKLibrary.Kind {
+		guard let libraryKind = KKLibrary.Kind(rawValue: shared.integer(forKey: #function)) else { return .shows }
+		return libraryKind
 	}
 }
 

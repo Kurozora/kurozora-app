@@ -14,7 +14,7 @@ extension SearchResultsCollectionViewController {
 		var columnCount = 0
 
 		switch section {
-		case .characters:
+		case .characters, .people:
 			columnCount = (width / 140.0).rounded().int
 		case .episodes:
 			if width >= 414.0 {
@@ -22,11 +22,9 @@ extension SearchResultsCollectionViewController {
 			} else {
 				columnCount = (width / 284.0).rounded().int
 			}
-		case .people:
-			columnCount = (width / 140.0).rounded().int
 		case .songs:
 			columnCount = (width / 250.0).rounded().int
-		case .shows:
+		case .shows, .literatures, .searchHistory:
 			if width >= 414.0 {
 				columnCount = (width / 384.0).rounded().int
 			} else {
@@ -47,7 +45,7 @@ extension SearchResultsCollectionViewController {
 		}
 
 		switch section {
-		case .shows, .studios:
+		case .shows, .literatures, .studios:
 			// Limit columns to 5 or less
 			if columnCount > 5 {
 				columnCount = 5
@@ -73,28 +71,39 @@ extension SearchResultsCollectionViewController {
 	override func createLayout() -> UICollectionViewLayout? {
 		return UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
-			let searchResultSection = self.dataSource.snapshot().sectionIdentifiers[section]
+			guard let searchResultSection = self.dataSource.snapshot().sectionIdentifiers[safe: section] else { return nil }
 			let columns = self.columnCount(forSection: searchResultSection, layout: layoutEnvironment)
 			var sectionLayout: NSCollectionLayoutSection? = nil
+			var hasHeader: Bool = false
 
 			switch searchResultSection {
+			case .searchHistory:
+				hasHeader = false
+				sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
 			case .characters:
+				hasHeader = true
 				sectionLayout = Layouts.charactersSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 			case .episodes:
+				hasHeader = true
 				sectionLayout = Layouts.episodesSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 			case .people:
+				hasHeader = true
 				sectionLayout = Layouts.peopleSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
-			case .shows:
+			case .shows, .literatures:
+				hasHeader = true
 				sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: self.currentScope == .kurozora)
 			case .songs:
+				hasHeader = true
 				sectionLayout = Layouts.musicSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 			case .studios:
+				hasHeader = true
 				sectionLayout = Layouts.studiosSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 			case .users:
+				hasHeader = true
 				sectionLayout = Layouts.usersSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 			}
 
-			if self.currentScope == .kurozora {
+			if hasHeader {
 				// Add header supplementary view.
 				let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0))
 				let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(

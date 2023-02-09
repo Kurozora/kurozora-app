@@ -15,8 +15,8 @@ extension ShowDetailsCollectionViewController: NSTouchBarDelegate {
 		touchBar.delegate = self
 
 		touchBar.defaultItemIdentifiers = [
-			.toggleShowIsReminded,
-			.toggleShowIsFavorite
+			.toggleModelIsReminded,
+			.toggleModelIsFavorite
 		]
 		return touchBar
 	}
@@ -26,16 +26,16 @@ extension ShowDetailsCollectionViewController: NSTouchBarDelegate {
 		guard let show = self.show else { return nil }
 
 		switch identifier {
-		case .toggleShowIsFavorite:
+		case .toggleModelIsFavorite:
 			let name = show.attributes.favoriteStatus == .favorited ? "heart.fill" : "heart"
 			guard let image = UIImage(systemName: name) else { return nil }
-			toggleShowIsFavoriteTouchBarItem = NSButtonTouchBarItem(identifier: identifier, image: image, target: self, action: #selector(self.toggleFavorite))
-			touchBarItem = toggleShowIsFavoriteTouchBarItem
-		case .toggleShowIsReminded:
+			self.toggleShowIsFavoriteTouchBarItem = NSButtonTouchBarItem(identifier: identifier, image: image, target: self, action: #selector(self.toggleFavorite))
+			touchBarItem = self.toggleShowIsFavoriteTouchBarItem
+		case .toggleModelIsReminded:
 			let name = show.attributes.reminderStatus == .reminded ? "bell.fill" : "bell"
 			guard let image = UIImage(systemName: name) else { return nil }
-			toggleShowIsRemindedTouchBarItem = NSButtonTouchBarItem(identifier: identifier, image: image, target: self, action: #selector(self.toggleReminder))
-			touchBarItem = toggleShowIsRemindedTouchBarItem
+			self.toggleShowIsRemindedTouchBarItem = NSButtonTouchBarItem(identifier: identifier, image: image, target: self, action: #selector(self.toggleReminder))
+			touchBarItem = self.toggleShowIsRemindedTouchBarItem
 		default:
 			touchBarItem = nil
 		}

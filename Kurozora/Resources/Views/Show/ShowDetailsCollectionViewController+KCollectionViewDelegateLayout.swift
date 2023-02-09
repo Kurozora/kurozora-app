@@ -49,7 +49,7 @@ extension ShowDetailsCollectionViewController {
 			if columnCount > 5 {
 				return 5
 			}
-		case .moreByStudio, .relatedShows:
+		case .moreByStudio, .relatedShows, .relatedLiteratures:
 			columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
 			if columnCount > 5 {
 				return 5
@@ -153,6 +153,12 @@ extension ShowDetailsCollectionViewController {
 					hasSectionHeader = true
 					hasBackgroundDecoration = true
 				}
+			case .relatedLiteratures:
+				if !self.relatedLiteratures.isEmpty {
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					hasSectionHeader = true
+					hasBackgroundDecoration = true
+				}
 			case .sosumi:
 				if let copyrightIsEmpty = self.show.attributes.copyright?.isEmpty, !copyrightIsEmpty {
 					let fullSection = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
@@ -193,20 +199,6 @@ extension ShowDetailsCollectionViewController {
 		return layoutSection
 	}
 
-//	func fullSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-//		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-//		let heightDimension = self.heightDimension(forSection: section, with: columns, layout: layoutEnvironment)
-//		let layoutSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: heightDimension)
-//
-//		let item = NSCollectionLayoutItem(layoutSize: layoutSize)
-//
-//		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitem: item, count: columns)
-//
-//		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-//		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
-//		return layoutSection
-//	}
-
 	func badgeSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
 		let width = layoutEnvironment.container.effectiveContentSize.width
 		var item: NSCollectionLayoutItem!
@@ -232,19 +224,4 @@ extension ShowDetailsCollectionViewController {
 		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
 		return layoutSection
 	}
-
-//	func gridSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-//		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-//		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(160.0))
-//		let item = NSCollectionLayoutItem(layoutSize: itemSize)
-//
-//		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(160.0))
-//		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-//		layoutGroup.interItemSpacing = .fixed(10.0)
-//
-//		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-//		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
-//		layoutSection.interGroupSpacing = 10.0
-//		return layoutSection
-//	}
 }

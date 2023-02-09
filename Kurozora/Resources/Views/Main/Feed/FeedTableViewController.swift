@@ -239,10 +239,9 @@ class FeedTableViewController: KTableViewController {
 		if segue.identifier == R.segue.feedTableViewController.feedMessageDetailsSegue.identifier {
 			// Show details of feed message
 			if let fmDetailsTableViewController = segue.destination as? FMDetailsTableViewController {
-				if let feedMessageID = sender as? Int {
-					fmDetailsTableViewController.feedMessageID = feedMessageID
-					fmDetailsTableViewController.fmDetailsTableViewControllerDelegate = self
-				}
+				guard let feedMessageID = sender as? String else { return }
+				fmDetailsTableViewController.feedMessageID = feedMessageID
+				fmDetailsTableViewController.fmDetailsTableViewControllerDelegate = self
 			}
 		}
 	}
@@ -355,7 +354,7 @@ extension FeedTableViewController: KFeedMessageTextEditorViewDelegate {
 
 // MARK: - FMDetailsTableViewControllerDelegate
 extension FeedTableViewController: FMDetailsTableViewControllerDelegate {
-	func fmDetailsTableViewController(delete messageID: Int) {
+	func fmDetailsTableViewController(delete messageID: String) {
 		self.feedMessages.removeFirst { feedMessage in
 			feedMessage.id == messageID
 		}

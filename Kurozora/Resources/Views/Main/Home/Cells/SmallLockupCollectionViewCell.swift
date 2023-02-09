@@ -13,6 +13,10 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var scoreLabel: KTintedLabel!
 	@IBOutlet weak var scoreView: KCosmosView!
+	@IBOutlet weak var posterImageOverlay: UIImageView!
+
+	// MARK: - Properties
+	let mangaMask: UIImageView? = UIImageView(image: UIImage(named: "book_mask"))
 
 	// MARK: - Functions
 	override func configure(using show: Show?) {
@@ -27,6 +31,28 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 
 		self.scoreView.isHidden = ratingAverage == 0.0
 		self.scoreLabel.isHidden = ratingAverage == 0.0
+
+		self.posterImageView?.mask = nil
+		self.posterImageView?.cornerRadius = 10.0
+		self.posterImageOverlay.isHidden = true
+	}
+
+	override func configure(using literature: Literature?) {
+		super.configure(using: literature)
+
+		// Configure tagline
+		self.ternaryLabel?.text = nil
+
+		let ratingAverage = literature?.attributes.stats?.ratingAverage ?? 0.0
+		self.scoreView.rating = ratingAverage
+		self.scoreLabel.text = "\(ratingAverage)"
+
+		self.scoreView.isHidden = ratingAverage == 0.0
+		self.scoreLabel.isHidden = ratingAverage == 0.0
+
+		self.posterImageView?.mask = self.mangaMask
+		self.posterImageView?.cornerRadius = 0.0
+		self.posterImageOverlay.isHidden = false
 	}
 
 	/// Configures the cell using a `RelatedShow` object.
@@ -38,5 +64,24 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.ternaryLabel?.text = relatedShow.attributes.relation.name
 		self.scoreView.isHidden = true
 		self.scoreLabel.isHidden = true
+
+		self.posterImageView?.mask = nil
+		self.posterImageView?.cornerRadius = 10.0
+		self.posterImageOverlay.isHidden = true
+	}
+
+	/// Configures the cell using a `RelatedLiterature` object.
+	///
+	/// - Parameter relatedLiterature: The `RelatedLiterature` object used to configure the cell.
+	func configure(using relatedLiterature: RelatedLiterature) {
+		self.configure(using: relatedLiterature.literature)
+
+		self.ternaryLabel?.text = relatedLiterature.attributes.relation.name
+		self.scoreView.isHidden = true
+		self.scoreLabel.isHidden = true
+
+		self.posterImageView?.mask = self.mangaMask
+		self.posterImageView?.cornerRadius = 0.0
+		self.posterImageOverlay.isHidden = false
 	}
 }

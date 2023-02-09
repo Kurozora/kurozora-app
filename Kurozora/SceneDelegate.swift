@@ -116,7 +116,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	/// - Parameter activity: A representation of the state of your app at a moment in time.
     func configure(window: UIWindow?, with activity: NSUserActivity) -> Bool {
         if activity.title == "OpenShowDetail" {
-			if let parameters = activity.userInfo as? [String: Int] {
+			if let parameters = activity.userInfo as? [String: String] {
 				guard let showID = parameters["showID"] else { return false }
 				let showDetailsCollectionViewController = ShowDetailsCollectionViewController.`init`(with: showID)
 				if let tabBarController = window?.rootViewController as? KTabBarController {

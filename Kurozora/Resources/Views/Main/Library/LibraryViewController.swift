@@ -17,18 +17,21 @@ class LibraryViewController: KTabbedViewController {
 	@IBOutlet weak var scrollViewHeightConstraint: NSLayoutConstraint!
 	@IBOutlet weak var changeLayoutBarButtonItem: UIBarButtonItem!
 	@IBOutlet weak var sortTypeBarButtonItem: UIBarButtonItem!
+	@IBOutlet weak var libraryKindSegmentedControl: UISegmentedControl!
 
 	// MARK: - Properties
 	var rightBarButtonItems: [UIBarButtonItem]? = nil
 	var leftBarButtonItems: [UIBarButtonItem]? = nil
+	var libraryKind: KKLibrary.Kind = UserSettings.libraryKind
 
+	weak var libraryViewControllerDataSource: LibraryViewControllerDataSource?
 	weak var libraryViewControllerDelegate: LibraryViewControllerDelegate?
 
 	// MARK: - View
 	override func viewWillReload() {
 		super.viewWillReload()
 
-		enableActions()
+		self.enableActions()
 
 		#if targetEnvironment(macCatalyst)
 		self.touchBar = nil
@@ -39,20 +42,20 @@ class LibraryViewController: KTabbedViewController {
         super.viewDidLoad()
 
 		// Actions
-		enableActions()
+		self.enableActions()
 
 		// Make sure scrollView is always first hierarchically
-		view.sendSubviewToBack(scrollView)
+		self.view.sendSubviewToBack(scrollView)
     }
 
 	// MARK: - Functions
 	override func configureTabBarViewVisibility() {
 		if User.isSignedIn {
-			if let barItemsCount = bar.items?.count {
-				bar.isHidden = barItemsCount <= 1
+			if let barItemsCount = self.bar.items?.count {
+				self.bar.isHidden = barItemsCount <= 1
 			}
 		} else {
-			bar.isHidden = true
+			self.bar.isHidden = true
 		}
 	}
 
@@ -60,13 +63,20 @@ class LibraryViewController: KTabbedViewController {
 	private func enableActions() {
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
+			self.libraryKindSegmentedControl.segmentTitles = KKLibrary.Kind.allString
+			self.libraryKindSegmentedControl.sizeToFit()
+			self.libraryKindSegmentedControl.selectedSegmentIndex = self.libraryKind.rawValue
+
 			if !User.isSignedIn {
+				self.libraryKindSegmentedControl.isHidden = true
 				self.rightBarButtonItems = self.navigationItem.rightBarButtonItems
 				self.leftBarButtonItems = self.navigationItem.leftBarButtonItems
 
 				self.navigationItem.rightBarButtonItems = nil
 				self.navigationItem.leftBarButtonItems = nil
 			} else {
+				self.libraryKindSegmentedControl.isHidden = false
+
 				if self.navigationItem.rightBarButtonItems == nil, self.rightBarButtonItems != nil {
 					self.navigationItem.rightBarButtonItems = self.rightBarButtonItems
 				}
@@ -80,23 +90,22 @@ class LibraryViewController: KTabbedViewController {
 
 	/// Updates the layout button icon to reflect the current layout when switching between views.
 	fileprivate func updateChangeLayoutBarButtonItem(_ cellStyle: KKLibrary.CellStyle) {
-		changeLayoutBarButtonItem.tag = cellStyle.rawValue
-		changeLayoutBarButtonItem.title = cellStyle.stringValue
-		changeLayoutBarButtonItem.image = cellStyle.imageValue
+		self.changeLayoutBarButtonItem.tag = cellStyle.rawValue
+		self.changeLayoutBarButtonItem.title = cellStyle.stringValue
+		self.changeLayoutBarButtonItem.image = cellStyle.imageValue
 	}
 
 	/// Updates the sort type button icon to reflect the current sort type when switching between views.
 	fileprivate func updateSortTypeBarButtonItem(_ sortType: KKLibrary.SortType) {
-		sortTypeBarButtonItem.tag = sortType.rawValue
-		sortTypeBarButtonItem.title = sortType.stringValue
-		sortTypeBarButtonItem.image = sortType.imageValue
+		self.sortTypeBarButtonItem.tag = sortType.rawValue
+		self.sortTypeBarButtonItem.title = sortType.stringValue
+		self.sortTypeBarButtonItem.image = sortType.imageValue
 	}
 
 	fileprivate func savePreferredCellStyle(for currentSection: LibraryListCollectionViewController) {
-		let libraryLayouts = UserSettings.libraryCellStyles
-		var newLibraryLayouts = libraryLayouts
-		newLibraryLayouts[currentSection.libraryStatus.sectionValue] = changeLayoutBarButtonItem.tag
-		UserSettings.set(newLibraryLayouts, forKey: .libraryCellStyles)
+		var libraryLayouts = UserSettings.libraryCellStyles
+		libraryLayouts[currentSection.libraryStatus.sectionValue] = changeLayoutBarButtonItem.tag
+		UserSettings.set(libraryLayouts, forKey: .libraryCellStyles)
 	}
 
 	/// Changes the layout between the available library cell styles.
@@ -106,12 +115,12 @@ class LibraryViewController: KTabbedViewController {
 
 		// Change button information
 		libraryCellStyle = libraryCellStyle.next
-		changeLayoutBarButtonItem.tag = libraryCellStyle.rawValue
-		changeLayoutBarButtonItem.title = libraryCellStyle.stringValue
-		changeLayoutBarButtonItem.image = libraryCellStyle.imageValue
+		self.changeLayoutBarButtonItem.tag = libraryCellStyle.rawValue
+		self.changeLayoutBarButtonItem.title = libraryCellStyle.stringValue
+		self.changeLayoutBarButtonItem.image = libraryCellStyle.imageValue
 
 		// Save cell style change to UserSettings
-		savePreferredCellStyle(for: currentSection)
+		self.savePreferredCellStyle(for: currentSection)
 
 		// Update library list
 		currentSection.libraryCellStyle = libraryCellStyle
@@ -125,9 +134,9 @@ class LibraryViewController: KTabbedViewController {
 	///
 	/// - Parameter sender: The object containing a reference to the button that initiated this action.
 	fileprivate func populateSortActions(_ sender: UIBarButtonItem) {
-		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.SortType.alertControllerItems, currentSelection: self.libraryViewControllerDelegate?.sortValue()) { [weak self] _, value, _  in
+		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.SortType.alertControllerItems, currentSelection: self.libraryViewControllerDataSource?.sortValue()) { [weak self] _, value, _  in
 			guard let self = self else { return }
-			let subActionSheetAlertController = UIAlertController.actionSheetWithItems(items: value.subAlertControllerItems, currentSelection: self.libraryViewControllerDelegate?.sortOptionValue()) { _, subValue, _ in
+			let subActionSheetAlertController = UIAlertController.actionSheetWithItems(items: value.subAlertControllerItems, currentSelection: self.libraryViewControllerDataSource?.sortOptionValue()) { _, subValue, _ in
 				self.libraryViewControllerDelegate?.sortLibrary(by: value, option: subValue)
 			}
 
@@ -141,7 +150,7 @@ class LibraryViewController: KTabbedViewController {
 			}
 		}
 
-		if let sortValue = self.libraryViewControllerDelegate?.sortValue() {
+		if let sortValue = self.libraryViewControllerDataSource?.sortValue() {
 			if sortValue != .none {
 				// Report thread action
 				let stopSortingAction = UIAlertAction(title: "Stop sorting", style: .destructive) { [weak self] _ in
@@ -178,16 +187,32 @@ class LibraryViewController: KTabbedViewController {
 
 	// MARK: - IBActions
 	@IBAction func changeLayoutBarButtonItemPressed(_ sender: UIBarButtonItem) {
-		changeLayout()
+		self.changeLayout()
 	}
 
 	@IBAction func sortTypeBarButtonItemPressed(_ sender: UIBarButtonItem) {
-		populateSortActions(sender)
+		self.populateSortActions(sender)
+	}
+
+	@IBAction func libraryKindSegmentdControlDidChange(_ sender: UISegmentedControl) {
+		guard let libraryKind = KKLibrary.Kind(rawValue: sender.selectedSegmentIndex) else { return }
+		self.libraryKind = libraryKind
+		self.bar.reloadData(at: 0...KKLibrary.Status.all.count - 1, context: .full)
+		self.libraryViewControllerDelegate?.libraryViewController(self, didChange: libraryKind)
+		UserSettings.set(libraryKind.rawValue, forKey: .libraryKind)
 	}
 
 	// MARK: - TMBarDataSource
 	override func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
-		let sectionTitle = KKLibrary.Status.all[index].stringValue
+		let sectionTitle: String
+
+		switch self.libraryKind {
+		case .shows:
+			sectionTitle = KKLibrary.Status.all[index].showStringValue
+		case .literatures:
+			sectionTitle = KKLibrary.Status.all[index].literatureStringValue
+		}
+
 		return TMBarItem(title: sectionTitle)
 	}
 
@@ -213,11 +238,11 @@ class LibraryViewController: KTabbedViewController {
 // MARK: - LibraryListViewControllerDelegate
 extension LibraryViewController: LibraryListViewControllerDelegate {
 	func libraryListViewController(updateLayoutWith cellStyle: KKLibrary.CellStyle) {
-		updateChangeLayoutBarButtonItem(cellStyle)
+		self.updateChangeLayoutBarButtonItem(cellStyle)
 	}
 
 	func libraryListViewController(updateSortWith sortType: KKLibrary.SortType) {
-		updateSortTypeBarButtonItem(sortType)
+		self.updateSortTypeBarButtonItem(sortType)
 	}
 }
 

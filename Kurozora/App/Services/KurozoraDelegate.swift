@@ -198,20 +198,20 @@ class KurozoraDelegate {
 		if url.pathExtension == "xml" {
 			WorkflowController.shared.isSignedIn {
 				let topViewController = UIApplication.topViewController
-				if let malImportTableViewController = topViewController as? MALImportTableViewController {
-					malImportTableViewController.selectedFileURL = url
+				if let libraryImportTableViewController = topViewController as? LibraryImportTableViewController {
+					libraryImportTableViewController.selectedFileURL = url
 				} else if let kNavigationController = (topViewController as? SettingsSplitViewController)?.viewControllers[1] as? KNavigationController {
-					if let malImportTableViewController = kNavigationController.topViewController as? MALImportTableViewController {
-						malImportTableViewController.selectedFileURL = url
-					} else if let malImportTableViewController = R.storyboard.accountSettings.malImportTableViewController() {
-						malImportTableViewController.selectedFileURL = url
-						kNavigationController.show(malImportTableViewController, sender: nil)
+					if let libraryImportTableViewController = kNavigationController.topViewController as? LibraryImportTableViewController {
+						libraryImportTableViewController.selectedFileURL = url
+					} else if let libraryImportTableViewController = R.storyboard.accountSettings.libraryImportTableViewController() {
+						libraryImportTableViewController.selectedFileURL = url
+						kNavigationController.show(libraryImportTableViewController, sender: nil)
 					}
-				} else if let malImportTableViewController = R.storyboard.accountSettings.malImportTableViewController() {
-					let closeBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: malImportTableViewController, action: #selector(malImportTableViewController.dismissButtonPressed))
-					malImportTableViewController.navigationItem.leftBarButtonItem = closeBarButtonItem
-					malImportTableViewController.selectedFileURL = url
-					let kNavigationController = KNavigationController(rootViewController: malImportTableViewController)
+				} else if let libraryImportTableViewController = R.storyboard.accountSettings.libraryImportTableViewController() {
+					let closeBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: libraryImportTableViewController, action: #selector(libraryImportTableViewController.dismissButtonPressed))
+					libraryImportTableViewController.navigationItem.leftBarButtonItem = closeBarButtonItem
+					libraryImportTableViewController.selectedFileURL = url
+					let kNavigationController = KNavigationController(rootViewController: libraryImportTableViewController)
 					topViewController?.show(kNavigationController, sender: nil)
 				}
 			}
@@ -222,14 +222,13 @@ class KurozoraDelegate {
 
 		switch scheme {
 		case .anime, .show:
-			let showIDString = url.lastPathComponent
-			if !showIDString.isEmpty {
-				guard let showID = Int(showIDString) else { return }
+			let showID = url.lastPathComponent
+			if !showID.isEmpty {
 				let showDetailsCollectionViewController = ShowDetailsCollectionViewController.`init`(with: showID)
 				UIApplication.topViewController?.show(showDetailsCollectionViewController, sender: nil)
 			}
 		case .profile, .user:
-			guard let userID = url.lastPathComponent.int else { return }
+			let userID = url.lastPathComponent
 			let profileTableViewController = ProfileTableViewController.`init`(with: userID)
 
 			if UIDevice.isPhone {

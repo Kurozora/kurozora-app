@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 
 class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 	// MARK: - IBOutlets
@@ -14,8 +15,8 @@ class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 	@IBOutlet weak var userProgressLabel: UILabel!
 
 	// MARK: - Functions
-	override func configureCell() {
-		super.configureCell()
+	override func configure(using show: Show) {
+		super.configure(using: show)
 
 		// Configure title
 		self.titleLabel.textColor = .white
@@ -24,10 +25,48 @@ class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 		self.userProgressLabel.text = show.attributes.informationStringShort
 
 		// Configure episode preview
-		if let episodeBackgroundColor = self.show.attributes.banner?.backgroundColor {
+		if let episodeBackgroundColor = show.attributes.banner?.backgroundColor {
 			self.episodeImageView.backgroundColor = UIColor(hexString: episodeBackgroundColor)
 		}
-		self.show.attributes.bannerImage(imageView: self.episodeImageView)
+		show.attributes.bannerImage(imageView: self.episodeImageView)
+
+		// Configure poster
+		self.posterShadowView?.applyShadow()
+	}
+
+	override func configure(using literature: Literature) {
+		super.configure(using: literature)
+
+		// Configure title
+		self.titleLabel.textColor = .white
+
+		// Configure user progress
+		self.userProgressLabel.text = literature.attributes.informationStringShort
+
+		// Configure episode preview
+		if let episodeBackgroundColor = literature.attributes.banner?.backgroundColor {
+			self.episodeImageView.backgroundColor = UIColor(hexString: episodeBackgroundColor)
+		}
+		literature.attributes.bannerImage(imageView: self.episodeImageView)
+
+		// Configure poster
+		self.posterShadowView?.applyShadow()
+	}
+
+	override func configure(using game: Game) {
+		super.configure(using: game)
+
+		// Configure title
+		self.titleLabel.textColor = .white
+
+		// Configure user progress
+//		self.userProgressLabel.text = game.attributes.informationStringShort
+
+		// Configure episode preview
+		if let episodeBackgroundColor = game.attributes.banner?.backgroundColor {
+			self.episodeImageView.backgroundColor = UIColor(hexString: episodeBackgroundColor)
+		}
+//		game.attributes.bannerImage(imageView: self.episodeImageView)
 
 		// Configure poster
 		self.posterShadowView?.applyShadow()

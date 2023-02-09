@@ -15,12 +15,22 @@ class RatingBadgeCollectionViewCell: BadgeCollectionViewCell {
 	@IBOutlet weak var ratingScoreLabel: KTintedLabel!
 
 	// MARK: - Functions
-	override func configureCell(with show: Show?) {
-		super.configureCell(with: show)
+	override func configureCell(with show: Show?, showDetailBadge: ShowDetail.Badge) {
+		super.configureCell(with: show, showDetailBadge: showDetailBadge)
 		guard let show = show else { return }
 
 		// Configure rating view
 		let ratingAverage = show.attributes.stats?.ratingAverage ?? 0.0
+		self.cosmosView.rating = ratingAverage
+		self.ratingScoreLabel.text = "\(ratingAverage)"
+	}
+
+	override func configureCell(with literature: Literature?, literatureDetailBadge: LiteratureDetail.Badge) {
+		super.configureCell(with: literature, literatureDetailBadge: literatureDetailBadge)
+		guard let literature = literature else { return }
+
+		// Configure rating view
+		let ratingAverage = literature.attributes.stats?.ratingAverage ?? 0.0
 		self.cosmosView.rating = ratingAverage
 		self.ratingScoreLabel.text = "\(ratingAverage)"
 	}

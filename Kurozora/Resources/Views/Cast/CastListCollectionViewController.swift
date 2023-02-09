@@ -10,9 +10,16 @@ import UIKit
 import KurozoraKit
 import Alamofire
 
+enum CastKind {
+	case show
+	case literature
+}
+
 class CastListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
+	var literatureIdentity: LiteratureIdentity? = nil
 	var showIdentity: ShowIdentity? = nil
+	var castKind: CastKind = .show
 	var cast: [IndexPath: Cast] = [:]
 	var castIdentities: [CastIdentity] = [] {
 		didSet {
@@ -91,7 +98,7 @@ class CastListCollectionViewController: KCollectionViewController {
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		if self.showIdentity != nil {
+		if self.showIdentity != nil || self.literatureIdentity != nil {
 			self.nextPageURL = nil
 			Task { [weak self] in
 				guard let self = self else { return }
@@ -101,10 +108,10 @@ class CastListCollectionViewController: KCollectionViewController {
 	}
 
 	override func configureEmptyDataView() {
-		emptyBackgroundView.configureImageView(image: R.image.empty.cast()!)
-		emptyBackgroundView.configureLabels(title: "No Cast", detail: "This show doesn't have casts yet. Please check back again later.")
+		self.emptyBackgroundView.configureImageView(image: R.image.empty.cast()!)
+		self.emptyBackgroundView.configureLabels(title: "No Cast", detail: "This show doesn't have casts yet. Please check back again later.")
 
-		collectionView.backgroundView?.alpha = 0
+		self.collectionView.backgroundView?.alpha = 0
 	}
 
 	/// Fades in and out the empty data view according to the number of rows.
@@ -142,21 +149,40 @@ class CastListCollectionViewController: KCollectionViewController {
 		self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing cast...")
 		#endif
 
-		do {
-			guard let showIdentity = self.showIdentity else { return }
-			let castIdentityResponse = try await KService.getCast(forShow: showIdentity, next: self.nextPageURL).value
+		if self.showIdentity != nil {
+			do {
+				guard let showIdentity = self.showIdentity else { return }
+				let castIdentityResponse = try await KService.getCast(forShow: showIdentity, next: self.nextPageURL).value
 
-			// Reset data if necessary
-			if self.nextPageURL == nil {
-				self.castIdentities = []
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.castIdentities = []
+				}
+
+				// Save next page url and append new data
+				self.nextPageURL = castIdentityResponse.next
+				self.castIdentities.append(contentsOf: castIdentityResponse.data)
+				self.castIdentities.removeDuplicates()
+			} catch {
+				print(error.localizedDescription)
 			}
+		} else if self.literatureIdentity != nil {
+			do {
+				guard let literatureIdentity = self.literatureIdentity else { return }
+				let castIdentityResponse = try await KService.getCast(forLiterature: literatureIdentity, next: self.nextPageURL).value
 
-			// Save next page url and append new data
-			self.nextPageURL = castIdentityResponse.next
-			self.castIdentities.append(contentsOf: castIdentityResponse.data)
-			self.castIdentities.removeDuplicates()
-		} catch {
-			print(error.localizedDescription)
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.castIdentities = []
+				}
+
+				// Save next page url and append new data
+				self.nextPageURL = castIdentityResponse.next
+				self.castIdentities.append(contentsOf: castIdentityResponse.data)
+				self.castIdentities.removeDuplicates()
+			} catch {
+				print(error.localizedDescription)
+			}
 		}
 
 		self.endFetch()
@@ -184,7 +210,7 @@ extension CastListCollectionViewController: CastCollectionViewCellDelegate {
 		guard let indexPath = collectionView.indexPath(for: cell) else { return }
 		guard self.cast[indexPath] != nil else { return }
 
-		let person = self.cast[indexPath]?.relationships.people.data.first
+		let person = self.cast[indexPath]?.relationships.people?.data.first
 		self.performSegue(withIdentifier: R.segue.castListCollectionViewController.personDetailsSegue.identifier, sender: person)
 	}
 

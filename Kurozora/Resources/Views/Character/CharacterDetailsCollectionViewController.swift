@@ -36,6 +36,9 @@ class CharacterDetailsCollectionViewController: KCollectionViewController {
 	var shows: [IndexPath: Show] = [:]
 	var showIdentities: [ShowIdentity] = []
 
+	var literatures: [IndexPath: Literature] = [:]
+	var literatureIdentities: [LiteratureIdentity] = []
+
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
 	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
@@ -66,7 +69,7 @@ class CharacterDetailsCollectionViewController: KCollectionViewController {
 	/// - Parameter characterID: The character id to use when initializing the view.
 	///
 	/// - Returns: an initialized instance of CharacterDetailsCollectionViewController.
-	static func `init`(with characterID: Int) -> CharacterDetailsCollectionViewController {
+	static func `init`(with characterID: String) -> CharacterDetailsCollectionViewController {
 		if let characterDetailsCollectionViewController = R.storyboard.characters.characterDetailsCollectionViewController() {
 			characterDetailsCollectionViewController.characterIdentity = CharacterIdentity(id: characterID)
 			return characterDetailsCollectionViewController
@@ -122,10 +125,10 @@ class CharacterDetailsCollectionViewController: KCollectionViewController {
 	}
 
 	override func configureEmptyDataView() {
-		emptyBackgroundView.configureImageView(image: R.image.empty.cast()!)
-		emptyBackgroundView.configureLabels(title: "No Details", detail: "This character doesn't have details yet. Please check back again later.")
+		self.emptyBackgroundView.configureImageView(image: R.image.empty.cast()!)
+		self.emptyBackgroundView.configureLabels(title: "No Details", detail: "This character doesn't have details yet. Please check back again later.")
 
-		collectionView.backgroundView?.alpha = 0
+		self.collectionView.backgroundView?.alpha = 0
 	}
 
 	/// Fades in and out the empty data view according to the number of rows.
@@ -170,6 +173,17 @@ class CharacterDetailsCollectionViewController: KCollectionViewController {
 			case .failure: break
 			}
 		}
+
+		KService.getLiteratures(forCharacter: characterIdentity, limit: 10) { [weak self] result in
+			guard let self = self else { return }
+			switch result {
+			case .success(let literatureIdentityResponse):
+				self.literatureIdentities = literatureIdentityResponse.data
+
+				self.updateDataSource()
+			case .failure: break
+			}
+		}
 	}
 
 	// MARK: - Segue
@@ -183,6 +197,14 @@ class CharacterDetailsCollectionViewController: KCollectionViewController {
 			guard let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
 			showDetailCollectionViewController.show = show
+		case R.segue.characterDetailsCollectionViewController.literaturesListSegue.identifier:
+			guard let literaturesListCollectionViewController = segue.destination as? LiteraturesListCollectionViewController else { return }
+			literaturesListCollectionViewController.characterIdentity = self.characterIdentity
+			literaturesListCollectionViewController.literaturesListFetchType = .charcter
+		case R.segue.characterDetailsCollectionViewController.literatureDetailsSegue.identifier:
+			guard let literatureDetailCollectionViewController = segue.destination as? LiteratureDetailsCollectionViewController else { return }
+			guard let literature = sender as? Literature else { return }
+			literatureDetailCollectionViewController.literature = literature
 		case R.segue.characterDetailsCollectionViewController.peopleListSegue.identifier:
 			guard let peopleListCollectionViewController = segue.destination as? PeopleListCollectionViewController else { return }
 			peopleListCollectionViewController.characterIdentity = self.characterIdentity
@@ -233,14 +255,29 @@ extension CharacterDetailsCollectionViewController: BaseLockupCollectionViewCell
 	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressStatus button: UIButton) {
 		WorkflowController.shared.isSignedIn {
 			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-			guard let show = self.shows[indexPath] else { return }
+			let modelID: String
+
+			switch cell.libraryKind {
+			case .shows:
+				guard let show = self.shows[indexPath] else { return }
+				modelID = String(show.id)
+			case .literatures:
+				guard let literatures = self.literatures[indexPath] else { return }
+				modelID = literatures.id
+			}
 
 			let oldLibraryStatus = cell.libraryStatus
-			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: oldLibraryStatus, action: { title, value in
-				KService.addToLibrary(withLibraryStatus: value, showID: show.id) { result in
-					switch result {
-					case .success(let libraryUpdate):
-						show.attributes.update(using: libraryUpdate)
+			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
+				Task {
+					do {
+						let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID).value
+
+						switch cell.libraryKind {
+						case .shows:
+							self.shows[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
+						case .literatures:
+							self.literatures[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
+						}
 
 						// Update entry in library
 						cell.libraryStatus = value
@@ -248,18 +285,25 @@ extension CharacterDetailsCollectionViewController: BaseLockupCollectionViewCell
 
 						let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
 						NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
-					case .failure:
-						break
+					} catch let error as KKAPIError {
+						self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
+						print("----- Add to library failed", error.message)
 					}
 				}
 			})
 
 			if cell.libraryStatus != .none {
-				actionSheetAlertController.addAction(UIAlertAction(title: "Remove from library", style: .destructive) { _ in
-					KService.removeFromLibrary(showID: show.id) { result in
-						switch result {
-						case .success(let libraryUpdate):
-							show.attributes.update(using: libraryUpdate)
+				actionSheetAlertController.addAction(UIAlertAction(title: Trans.removeFromLibrary, style: .destructive) { _ in
+					Task {
+						do {
+							let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID).value
+
+							switch cell.libraryKind {
+							case .shows:
+								self.shows[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
+							case .literatures:
+								self.literatures[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
+							}
 
 							// Update edntry in library
 							cell.libraryStatus = .none
@@ -267,8 +311,9 @@ extension CharacterDetailsCollectionViewController: BaseLockupCollectionViewCell
 
 							let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
 							NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
-						case .failure:
-							break
+						} catch let error as KKAPIError {
+							self.presentAlertController(title: "Can't Remove From Your Library 😔", message: error.message)
+							print("----- Remove from library failed", error.message)
 						}
 					}
 				})
@@ -313,6 +358,9 @@ extension CharacterDetailsCollectionViewController {
 		/// Indicates shows section layout type.
 		case shows
 
+		/// Indicates literatures section layout type.
+		case literatures
+
 		// MARK: - Properties
 		/// The string value of a character section type.
 		var stringValue: String {
@@ -327,6 +375,8 @@ extension CharacterDetailsCollectionViewController {
 				return Trans.people
 			case .shows:
 				return Trans.shows
+			case .literatures:
+				return Trans.literatures
 			}
 		}
 
@@ -342,7 +392,9 @@ extension CharacterDetailsCollectionViewController {
 			case .people:
 				return R.segue.characterDetailsCollectionViewController.peopleListSegue.identifier
 			case .shows:
-				return R.segue.personDetailsCollectionViewController.showsListSegue.identifier
+				return R.segue.characterDetailsCollectionViewController.showsListSegue.identifier
+			case .literatures:
+				return R.segue.characterDetailsCollectionViewController.literaturesListSegue.identifier
 			}
 		}
 	}
@@ -359,6 +411,9 @@ extension CharacterDetailsCollectionViewController {
 		/// Indicates the item kind contains a `ShowIdentity` object.
 		case showIdentity(_: ShowIdentity, id: UUID = UUID())
 
+		/// Indicates the item kind contains a `LiteratureIdentity` object.
+		case literatureIdentity(_: LiteratureIdentity, id: UUID = UUID())
+
 		// MARK: - Functions
 		func hash(into hasher: inout Hasher) {
 			switch self {
@@ -371,6 +426,9 @@ extension CharacterDetailsCollectionViewController {
 			case .showIdentity(let showIdentity, let id):
 				hasher.combine(showIdentity)
 				hasher.combine(id)
+			case .literatureIdentity(let literatureIdentity, let id):
+				hasher.combine(literatureIdentity)
+				hasher.combine(id)
 			}
 		}
 
@@ -382,6 +440,8 @@ extension CharacterDetailsCollectionViewController {
 				return personIdentity1 == personIdentity2 && id1 == id2
 			case (.showIdentity(let showIdentity1, let id1), .showIdentity(let showIdentity2, let id2)):
 				return showIdentity1 == showIdentity2 && id1 == id2
+			case (.literatureIdentity(let literatureIdentity1, let id1), .literatureIdentity(let literatureIdentity2, let id2)):
+				return literatureIdentity1 == literatureIdentity2 && id1 == id2
 			default:
 				return false
 			}

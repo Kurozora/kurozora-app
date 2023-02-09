@@ -1,5 +1,5 @@
 //
-//  SosumiShowCollectionViewCell.swift
+//  SosumiCollectionViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 30/06/2020.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SosumiShowCollectionViewCell: UICollectionViewCell {
+class SosumiCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var copyrightLabel: KSecondaryLabel!
 	@IBOutlet weak var separatorView: SeparatorView!

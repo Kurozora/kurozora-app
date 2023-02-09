@@ -17,7 +17,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l8x-AP-XJF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2094" y="148"/>
+            <point key="canvasLocation" x="2101" y="194"/>
         </scene>
         <!--Purchase-->
         <scene sceneID="ADX-YZ-3zP">
@@ -25,7 +25,7 @@
                 <viewControllerPlaceholder storyboardName="Purchase" id="0a7-9G-Fd6" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X9D-7O-4i7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1969" y="423"/>
+            <point key="canvasLocation" x="1975" y="451"/>
         </scene>
         <!--Legal-->
         <scene sceneID="TgQ-yC-U46">
@@ -33,7 +33,7 @@
                 <viewControllerPlaceholder storyboardName="Legal" id="iCt-dj-RF4" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qr2-al-HuS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1950" y="459"/>
+            <point key="canvasLocation" x="1959" y="470"/>
         </scene>
         <!--Explore-->
         <scene sceneID="cmd-mB-OEl">
@@ -153,6 +153,10 @@
                         <segue destination="9dW-1f-CLB" kind="show" identifier="ThemesSegue" id="MxL-F5-FxR"/>
                         <segue destination="1ZL-Bt-evP" kind="show" identifier="SongsListSegue" id="fCm-nL-TRo"/>
                         <segue destination="9os-gD-27a" kind="show" identifier="SongDetailsSegue" id="Bn9-pN-4Yd"/>
+                        <segue destination="9xN-N2-9Og" kind="show" identifier="EpisodeDetailsSegue" id="reJ-I4-cys"/>
+                        <segue destination="VID-kH-G6m" kind="show" identifier="LiteratureDetailsSegue" id="NiJ-nw-uNa"/>
+                        <segue destination="ZQo-OB-q6J" kind="show" identifier="EpisodesListSegue" id="tPw-LU-zCp"/>
+                        <segue destination="GEx-kn-XGr" kind="show" identifier="LiteraturesListSegue" id="N8n-Di-zO4"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XSz-C9-PSE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -190,7 +194,7 @@
                 <viewControllerPlaceholder storyboardName="Redeem" id="SJ2-V2-Ihb" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5a5-ET-Z3V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1963" y="386"/>
+            <point key="canvasLocation" x="1969" y="429"/>
         </scene>
         <!--HomeCollectionViewController-->
         <scene sceneID="JZQ-XP-0tx">
@@ -200,7 +204,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="adX-LK-gOS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2065" y="113"/>
+            <point key="canvasLocation" x="2068" y="-64"/>
         </scene>
         <!--ShowsListCollectionViewController-->
         <scene sceneID="4AQ-m0-2Yb">
@@ -210,7 +214,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TK9-g6-Pdu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2080" y="1"/>
+            <point key="canvasLocation" x="2092" y="212"/>
         </scene>
         <!--GenresCollectionViewController-->
         <scene sceneID="kYl-2s-0xC">
@@ -220,7 +224,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6gk-Ki-YZB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2071" y="76"/>
+            <point key="canvasLocation" x="2074" y="-23"/>
         </scene>
         <!--CharacterDetailsCollectionViewController-->
         <scene sceneID="SMd-V9-8qa">
@@ -230,7 +234,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6KD-PT-lmE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2114" y="183"/>
+            <point key="canvasLocation" x="2121" y="240"/>
         </scene>
         <!--PersonDetailsCollectionViewController-->
         <scene sceneID="vml-Rx-QI2">
@@ -240,7 +244,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LmV-7f-g5Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2099" y="244"/>
+            <point key="canvasLocation" x="2108" y="301"/>
         </scene>
         <!--PeopleListCollectionViewController-->
         <scene sceneID="RzH-Yu-dMa">
@@ -250,7 +254,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z2m-RO-K1F" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2084" y="275"/>
+            <point key="canvasLocation" x="2091" y="319"/>
         </scene>
         <!--CharactersListCollectionViewController-->
         <scene sceneID="v5G-rj-ee9">
@@ -260,7 +264,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SBL-w4-YZS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2104" y="214"/>
+            <point key="canvasLocation" x="2110" y="260"/>
         </scene>
         <!--ThemesCollectionViewController-->
         <scene sceneID="URR-Sw-5Ha">
@@ -270,7 +274,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oXL-DI-6I3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2070" y="40"/>
+            <point key="canvasLocation" x="2076" y="-44"/>
         </scene>
         <!--SongsListCollectionViewController-->
         <scene sceneID="L08-1Y-q6k">
@@ -280,7 +284,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Cz-OP-sPl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2078" y="352"/>
+            <point key="canvasLocation" x="2086" y="388"/>
         </scene>
         <!--SongDetailsCollectionViewController-->
         <scene sceneID="VFA-hF-ijv">
@@ -290,7 +294,47 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jwT-wl-9T0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2087" y="311"/>
+            <point key="canvasLocation" x="2097" y="368"/>
+        </scene>
+        <!--EpisodesListCollectionViewController-->
+        <scene sceneID="DaD-oX-aWs">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Episodes" referencedIdentifier="EpisodesListCollectionViewController" id="ZQo-OB-q6J" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="bnR-d6-BZt"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cAc-5h-2fg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2104" y="155"/>
+        </scene>
+        <!--LiteraturesListCollectionViewController-->
+        <scene sceneID="BJz-hk-0iW">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Literatures" referencedIdentifier="LiteraturesListCollectionViewController" id="GEx-kn-XGr" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Pgv-5h-vUf"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ypo-Ec-Nt1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2110" y="35"/>
+        </scene>
+        <!--EpisodeDetailsCollectionViewController-->
+        <scene sceneID="u8Z-Lp-8Yg">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Episodes" referencedIdentifier="EpisodeDetailsCollectionViewController" id="9xN-N2-9Og" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="4r4-7a-vq1"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NLC-ZR-2P1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2115" y="135"/>
+        </scene>
+        <!--LiteratureDetailsCollectionViewController-->
+        <scene sceneID="D5F-5P-Zt7">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Literatures" referencedIdentifier="LiteratureDetailsCollectionViewController" id="VID-kH-G6m" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="VUQ-NT-FmN"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4Bi-cs-RfK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2122" y="14"/>
         </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -27,7 +27,7 @@ extension Show.Attributes {
 		informationString += " · \(self.duration)"
 
 		// Add the year
-		if let airYear = self.firstAired?.year {
+		if let airYear = self.startedAt?.year {
 			informationString += " · "
 			if let airSeason = self.airSeason {
 				informationString += "\(airSeason) "

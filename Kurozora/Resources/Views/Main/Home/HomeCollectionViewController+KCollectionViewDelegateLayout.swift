@@ -50,6 +50,12 @@ extension HomeCollectionViewController {
 			} else {
 				columnCount = (width / 360).rounded().int
 			}
+		case .episode:
+			if width >= 414 {
+				columnCount = (width / 384).rounded().int
+			} else {
+				columnCount = (width / 284).rounded().int
+			}
 		case .music:
 			columnCount = (width / 250.0).rounded().int
 		case .profile:
@@ -100,6 +106,8 @@ extension HomeCollectionViewController {
 				sectionLayout = Layouts.videoSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 			case .upcoming:
 				sectionLayout = Layouts.upcomingSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+			case .episode:
+				sectionLayout = Layouts.episodesSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 			case .music:
 				sectionLayout = Layouts.musicSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 			case .profile:

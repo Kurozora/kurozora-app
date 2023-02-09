@@ -27,15 +27,12 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 			#endif
 		}
 	}
+
 	var shows: [IndexPath: Show] = [:]
 	var showIdentities: [ShowIdentity] = []
-	var responseCount: Int = 0 {
-		didSet {
-			if self.responseCount == 2 {
-				self.updateDataSource()
-			}
-		}
-	}
+
+	var literatures: [IndexPath: Literature] = [:]
+	var literatureIdentities: [LiteratureIdentity] = []
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
@@ -67,7 +64,7 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 	/// - Parameter studioID: The studio id to use when initializing the view.
 	///
 	/// - Returns: an initialized instance of StudioDetailsCollectionViewController.
-	static func `init`(with studioID: Int) -> StudioDetailsCollectionViewController {
+	static func `init`(with studioID: String) -> StudioDetailsCollectionViewController {
 		if let studioDetailsCollectionViewController = R.storyboard.studios.studioDetailsCollectionViewController() {
 			studioDetailsCollectionViewController.studioIdentity = StudioIdentity(id: studioID)
 			return studioDetailsCollectionViewController
@@ -131,7 +128,6 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 		do {
 			let studioResponse = try await KService.getDetails(forStudio: studioIdentity).value
 			self.studio = studioResponse.data.first
-			self.responseCount += 1
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -139,10 +135,18 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 		do {
 			let showIdentityResponse = try await KService.getShows(forStudio: studioIdentity, limit: 10).value
 			self.showIdentities = showIdentityResponse.data
-			self.responseCount += 1
 		} catch {
 			print(error.localizedDescription)
 		}
+
+		do {
+			let literatureIdentityResponse = try await KService.getLiteratures(forStudio: studioIdentity, limit: 10).value
+			self.literatureIdentities = literatureIdentityResponse.data
+		} catch {
+			print(error.localizedDescription)
+		}
+
+		self.updateDataSource()
 	}
 
 	// MARK: - Segue
@@ -156,6 +160,14 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 			guard let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController else { return }
 			showsListCollectionViewController.studioIdentity = self.studioIdentity
 			showsListCollectionViewController.showsListFetchType = .studio
+		case R.segue.studioDetailsCollectionViewController.literatureDetailsSegue.identifier:
+			guard let literatureDetailCollectionViewController = segue.destination as? LiteratureDetailsCollectionViewController else { return }
+			guard let literature = sender as? Literature else { return }
+			literatureDetailCollectionViewController.literature = literature
+		case R.segue.studioDetailsCollectionViewController.literaturesListSegue.identifier:
+			guard let literaturesListCollectionViewController = segue.destination as? LiteraturesListCollectionViewController else { return }
+			literaturesListCollectionViewController.studioIdentity = self.studioIdentity
+			literaturesListCollectionViewController.literaturesListFetchType = .studio
 		default: break
 		}
 	}
@@ -207,14 +219,29 @@ extension StudioDetailsCollectionViewController: BaseLockupCollectionViewCellDel
 	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressStatus button: UIButton) {
 		WorkflowController.shared.isSignedIn {
 			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-			guard let show = self.shows[indexPath] else { return }
+			let modelID: String
+
+			switch cell.libraryKind {
+			case .shows:
+				guard let show = self.shows[indexPath] else { return }
+				modelID = String(show.id)
+			case .literatures:
+				guard let literatures = self.literatures[indexPath] else { return }
+				modelID = literatures.id
+			}
 
 			let oldLibraryStatus = cell.libraryStatus
-			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: oldLibraryStatus, action: { title, value  in
-				KService.addToLibrary(withLibraryStatus: value, showID: show.id) { result in
-					switch result {
-					case .success(let libraryUpdate):
-						show.attributes.update(using: libraryUpdate)
+			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value  in
+				Task {
+					do {
+						let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID).value
+
+						switch cell.libraryKind {
+						case .shows:
+							self.shows[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
+						case .literatures:
+							self.literatures[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
+						}
 
 						// Update entry in library
 						cell.libraryStatus = value
@@ -222,18 +249,25 @@ extension StudioDetailsCollectionViewController: BaseLockupCollectionViewCellDel
 
 						let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
 						NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
-					case .failure:
-						break
+					} catch let error as KKAPIError {
+						self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
+						print("----- Add to library failed", error.message)
 					}
 				}
 			})
 
 			if cell.libraryStatus != .none {
-				actionSheetAlertController.addAction(UIAlertAction(title: "Remove from library", style: .destructive) { _ in
-					KService.removeFromLibrary(showID: show.id) { result in
-						switch result {
-						case .success(let libraryUpdate):
-							show.attributes.update(using: libraryUpdate)
+				actionSheetAlertController.addAction(UIAlertAction(title: Trans.removeFromLibrary, style: .destructive) { _ in
+					Task {
+						do {
+							let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID).value
+
+							switch cell.libraryKind {
+							case .shows:
+								self.shows[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
+							case .literatures:
+								self.literatures[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
+							}
 
 							// Update edntry in library
 							cell.libraryStatus = .none
@@ -241,8 +275,9 @@ extension StudioDetailsCollectionViewController: BaseLockupCollectionViewCellDel
 
 							let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
 							NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
-						case .failure:
-							break
+						} catch let error as KKAPIError {
+							self.presentAlertController(title: "Can't Remove From Your Library 😔", message: error.message)
+							print("----- Remove from library failed", error.message)
 						}
 					}
 				})
@@ -282,6 +317,9 @@ extension StudioDetailsCollectionViewController {
 		/// Indicates shows section layout type.
 		case shows
 
+		/// Indicates literatures section layout type.
+		case literatures
+
 		// MARK: - Properties
 		/// The string value of a studio section type.
 		var stringValue: String {
@@ -294,6 +332,8 @@ extension StudioDetailsCollectionViewController {
 				return Trans.information
 			case .shows:
 				return Trans.shows
+			case .literatures:
+				return Trans.literatures
 			}
 		}
 
@@ -308,6 +348,8 @@ extension StudioDetailsCollectionViewController {
 				return ""
 			case .shows:
 				return R.segue.studioDetailsCollectionViewController.showsListSegue.identifier
+			case .literatures:
+				return R.segue.studioDetailsCollectionViewController.literaturesListSegue.identifier
 			}
 		}
 	}
@@ -321,6 +363,9 @@ extension StudioDetailsCollectionViewController {
 		/// Indicates the item kind contains a `ShowIdentity` object.
 		case showIdentity(_: ShowIdentity, id: UUID = UUID())
 
+		/// Indicates the item kind contains a `LiteratureIdentity` object.
+		case literatureIdentity(_: LiteratureIdentity, id: UUID = UUID())
+
 		// MARK: - Functions
 		func hash(into hasher: inout Hasher) {
 			switch self {
@@ -329,6 +374,9 @@ extension StudioDetailsCollectionViewController {
 				hasher.combine(id)
 			case .showIdentity(let showIdentity, let id):
 				hasher.combine(showIdentity)
+				hasher.combine(id)
+			case .literatureIdentity(let literatureIdentity, let id):
+				hasher.combine(literatureIdentity)
 				hasher.combine(id)
 			}
 		}
@@ -339,6 +387,8 @@ extension StudioDetailsCollectionViewController {
 				return studio1 == studio2 && id1 == id2
 			case (.showIdentity(let showIdentity1, let id1), .showIdentity(let showIdentity2, let id2)):
 				return showIdentity1 == showIdentity2 && id1 == id2
+			case (.literatureIdentity(let literatureIdentity1, let id1), .literatureIdentity(let literatureIdentity2, let id2)):
+				return literatureIdentity1 == literatureIdentity2 && id1 == id2
 			default:
 				return false
 			}

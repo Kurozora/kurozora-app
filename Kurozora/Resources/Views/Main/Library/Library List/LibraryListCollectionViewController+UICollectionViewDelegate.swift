@@ -10,22 +10,43 @@ import UIKit
 
 extension LibraryListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		let libraryBaseCollectionViewCell = collectionView.cellForItem(at: indexPath) as? LibraryBaseCollectionViewCell
-		performSegue(withIdentifier: R.segue.libraryListCollectionViewController.showDetailsSegue, sender: libraryBaseCollectionViewCell)
+		switch UserSettings.libraryKind {
+		case .shows:
+			let show = self.shows[safe: indexPath.item]
+			self.performSegue(withIdentifier: R.segue.libraryListCollectionViewController.showDetailsSegue, sender: show)
+		case .literatures:
+			let literature = self.literatures[safe: indexPath.item]
+			self.performSegue(withIdentifier: R.segue.libraryListCollectionViewController.literatureDetailsSegue, sender: literature)
+		}
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		if indexPath.item == self.shows.count - 20 && self.nextPageURL != nil {
-			self.fetchLibrary()
+		switch UserSettings.libraryKind {
+		case .shows:
+			if indexPath.item == self.shows.count - 20 && self.nextPageURL != nil {
+				Task { [weak self] in
+					guard let self = self else { return }
+					await self.fetchLibrary()
+				}
+			}
+		case .literatures:
+			if indexPath.item == self.literatures.count - 20 && self.nextPageURL != nil {
+				Task { [weak self] in
+					guard let self = self else { return }
+					await self.fetchLibrary()
+				}
+			}
 		}
 	}
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		if let libraryBaseCollectionViewCell = collectionView.cellForItem(at: indexPath) as? LibraryBaseCollectionViewCell {
-			return libraryBaseCollectionViewCell.show?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		switch UserSettings.libraryKind {
+		case .shows:
+			return self.shows[safe: indexPath.item]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		case .literatures:
+			return self.literatures[safe: indexPath.item]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		}
-		return nil
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {

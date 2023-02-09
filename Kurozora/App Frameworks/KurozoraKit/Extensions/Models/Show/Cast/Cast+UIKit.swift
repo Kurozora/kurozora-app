@@ -42,7 +42,7 @@ extension Cast {
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
 		var activityItems: [Any] = []
 
-		if let person = self.relationships.people.data.first?.attributes.fullName,
+		if let person = self.relationships.people?.data.first?.attributes.fullName,
 		   let character = self.relationships.characters.data.first?.attributes.name {
 			activityItems.append("TIL, \(person) is the voice actor of \(character) via @KurozoraApp")
 		}
@@ -69,7 +69,7 @@ extension Cast {
 	///
 	/// - Returns: a combined image of the cast.
 	private func castImage() -> UIImage? {
-		guard let personImage = self.relationships.people.data.first?.attributes.personalImage.image else { return nil}
+		guard let personImage = self.relationships.people?.data.first?.attributes.personalImage.image else { return nil}
 		guard let characterImage = self.relationships.characters.data.first?.attributes.personalImage.image else {return nil }
 		let leftImage = personImage
 		let rightImage = characterImage

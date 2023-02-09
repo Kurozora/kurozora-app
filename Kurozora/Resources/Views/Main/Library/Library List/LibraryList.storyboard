@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="g0M-vX-pSL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="g0M-vX-pSL">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -13,7 +14,7 @@
             <objects>
                 <navigationController storyboardIdentifier="LibraryListKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="g0M-vX-pSL" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="dJO-ab-Vkr">
-                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
@@ -39,7 +40,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x4J-je-Fmm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1433" y="865"/>
+            <point key="canvasLocation" x="1432" y="823"/>
         </scene>
         <!--Library List Collection View Controller-->
         <scene sceneID="gAV-I5-hGW">
@@ -100,24 +101,31 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="70" height="105"/>
                                                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book_texture_overlay" translatesAutoresizingMaskIntoConstraints="NO" id="AEM-ez-9he">
+                                                    <rect key="frame" x="0.0" y="0.0" width="70" height="105"/>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="70" id="7bY-Z2-Y30"/>
                                                 <constraint firstItem="6GI-Jb-5fL" firstAttribute="top" secondItem="jg5-R7-81q" secondAttribute="top" id="AeN-0E-CBT"/>
                                                 <constraint firstAttribute="trailing" secondItem="6GI-Jb-5fL" secondAttribute="trailing" id="H54-T6-Cvj"/>
+                                                <constraint firstItem="AEM-ez-9he" firstAttribute="bottom" secondItem="6GI-Jb-5fL" secondAttribute="bottom" id="K8i-Qb-7If"/>
+                                                <constraint firstItem="AEM-ez-9he" firstAttribute="leading" secondItem="6GI-Jb-5fL" secondAttribute="leading" id="QPR-Rn-hpH"/>
                                                 <constraint firstAttribute="bottom" secondItem="6GI-Jb-5fL" secondAttribute="bottom" id="UbP-rC-OCu"/>
+                                                <constraint firstItem="AEM-ez-9he" firstAttribute="top" secondItem="6GI-Jb-5fL" secondAttribute="top" id="dqW-Ky-njq"/>
                                                 <constraint firstAttribute="width" secondItem="jg5-R7-81q" secondAttribute="height" multiplier="2:3" id="eMR-tt-cyD"/>
                                                 <constraint firstItem="6GI-Jb-5fL" firstAttribute="leading" secondItem="jg5-R7-81q" secondAttribute="leading" id="q2p-tZ-rek"/>
+                                                <constraint firstItem="AEM-ez-9he" firstAttribute="trailing" secondItem="6GI-Jb-5fL" secondAttribute="trailing" id="uJN-hX-Yna"/>
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Re: Zero Kara Kajimeru Isekai Seikatsu" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" translatesAutoresizingMaskIntoConstraints="NO" id="SQi-P9-bcN">
-                                            <rect key="frame" x="90" y="183.5" width="300" height="17"/>
+                                            <rect key="frame" x="90" y="154.5" width="300" height="42.5"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TV · ✓ 10/24 · ☆ 5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" translatesAutoresizingMaskIntoConstraints="NO" id="A5H-Ef-BHb">
-                                            <rect key="frame" x="90" y="200.5" width="300" height="14.5"/>
+                                            <rect key="frame" x="90" y="197" width="300" height="18"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
@@ -142,6 +150,7 @@
                                 <size key="customSize" width="400" height="225"/>
                                 <connections>
                                     <outlet property="episodeImageView" destination="idd-F4-WkK" id="5fC-Es-SY5"/>
+                                    <outlet property="posterImageOverlayView" destination="AEM-ez-9he" id="ban-RB-Ny4"/>
                                     <outlet property="posterImageView" destination="6GI-Jb-5fL" id="3Lg-OY-r44"/>
                                     <outlet property="posterShadowView" destination="jg5-R7-81q" id="gyH-GZ-uPD"/>
                                     <outlet property="titleLabel" destination="SQi-P9-bcN" id="rUi-DY-f69"/>
@@ -149,10 +158,10 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="LibraryListCollectionViewCell" id="pub-h9-xFx" customClass="LibraryListCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="69" y="235" width="276" height="150"/>
+                                <rect key="frame" x="63.5" y="235" width="287.5" height="150"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="gsr-YW-pIm">
-                                    <rect key="frame" x="0.0" y="0.0" width="276" height="150"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="287.5" height="150"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oko-rM-p6D">
@@ -162,36 +171,43 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="100" height="150"/>
                                                     <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                                 </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book_texture_overlay" translatesAutoresizingMaskIntoConstraints="NO" id="1PX-FA-lW8">
+                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="150"/>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="1PX-FA-lW8" firstAttribute="top" secondItem="dJ4-Px-xIz" secondAttribute="top" id="0A3-Xu-w8r"/>
                                                 <constraint firstAttribute="trailing" secondItem="dJ4-Px-xIz" secondAttribute="trailing" id="Bfm-uw-SRu"/>
                                                 <constraint firstAttribute="width" secondItem="Oko-rM-p6D" secondAttribute="height" multiplier="2:3" id="CRJ-6w-kLK"/>
+                                                <constraint firstItem="1PX-FA-lW8" firstAttribute="bottom" secondItem="dJ4-Px-xIz" secondAttribute="bottom" id="Ssj-tM-SvA"/>
                                                 <constraint firstItem="dJ4-Px-xIz" firstAttribute="leading" secondItem="Oko-rM-p6D" secondAttribute="leading" id="g3D-pE-H0A"/>
                                                 <constraint firstItem="dJ4-Px-xIz" firstAttribute="top" secondItem="Oko-rM-p6D" secondAttribute="top" id="hET-M9-iSo"/>
                                                 <constraint firstAttribute="width" constant="100" id="hUP-Dd-Yi8"/>
+                                                <constraint firstItem="1PX-FA-lW8" firstAttribute="trailing" secondItem="dJ4-Px-xIz" secondAttribute="trailing" id="rh4-Ui-hHZ"/>
                                                 <constraint firstAttribute="bottom" secondItem="dJ4-Px-xIz" secondAttribute="bottom" id="t9r-Nw-gDE"/>
+                                                <constraint firstItem="1PX-FA-lW8" firstAttribute="leading" secondItem="dJ4-Px-xIz" secondAttribute="leading" id="wfO-v2-OhA"/>
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Episode 1 - 1d, 19h, 8m, 30s" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" translatesAutoresizingMaskIntoConstraints="NO" id="JGA-WR-aAD" customClass="KTintedLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="108" y="0.0" width="160" height="14.5"/>
+                                            <rect key="frame" x="108" y="0.0" width="171.5" height="16"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                             <color key="textColor" systemColor="systemOrangeColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Adventure" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" translatesAutoresizingMaskIntoConstraints="NO" id="ZCE-hc-XLF" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="108" y="33.5" width="58" height="14.5"/>
+                                            <rect key="frame" x="108" y="38.5" width="70.5" height="18"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                             <color key="textColor" systemColor="secondaryLabelColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TV · ✓ 10/24 · ☆ 5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" translatesAutoresizingMaskIntoConstraints="NO" id="6Uy-DS-JYA" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="108" y="48" width="105" height="14.5"/>
+                                            <rect key="frame" x="108" y="56.5" width="127" height="18"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                             <color key="textColor" systemColor="secondaryLabelColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="One Piece" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" translatesAutoresizingMaskIntoConstraints="NO" id="kcq-VT-wfM" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="108" y="16.5" width="68" height="17"/>
+                                            <rect key="frame" x="108" y="18" width="80.5" height="20.5"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -220,15 +236,16 @@
                                     <outlet property="estimatedAiringLabel" destination="JGA-WR-aAD" id="bnZ-LO-FMe"/>
                                     <outlet property="genresLabel" destination="ZCE-hc-XLF" id="GIp-z3-nMH"/>
                                     <outlet property="informationLabel" destination="6Uy-DS-JYA" id="Yp9-Nr-488"/>
+                                    <outlet property="posterImageOverlayView" destination="1PX-FA-lW8" id="KTL-5M-3zV"/>
                                     <outlet property="posterImageView" destination="dJ4-Px-xIz" id="TVR-hv-cFw"/>
                                     <outlet property="titleLabel" destination="kcq-VT-wfM" id="vkT-Mq-RjP"/>
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="LibraryCompactCollectionViewCell" id="7rh-R8-9Vh" customClass="LibraryCompactCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="140.5" y="395" width="133.5" height="225"/>
+                                <rect key="frame" x="140.5" y="395" width="133.5" height="228.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="nht-sC-kIZ">
-                                    <rect key="frame" x="0.0" y="0.0" width="133.5" height="225"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="133.5" height="228.5"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Rx-W6-qbb">
@@ -238,18 +255,25 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="133.5" height="200"/>
                                                     <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book_texture_overlay" translatesAutoresizingMaskIntoConstraints="NO" id="oEo-sK-NpU">
+                                                    <rect key="frame" x="0.0" y="0.0" width="133.5" height="200"/>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="QKT-op-oBI" firstAttribute="top" secondItem="6Rx-W6-qbb" secondAttribute="top" id="8WT-8U-A6R"/>
+                                                <constraint firstItem="oEo-sK-NpU" firstAttribute="top" secondItem="QKT-op-oBI" secondAttribute="top" id="S9n-xH-ZA4"/>
                                                 <constraint firstItem="QKT-op-oBI" firstAttribute="leading" secondItem="6Rx-W6-qbb" secondAttribute="leading" id="VBb-b7-Rf8"/>
+                                                <constraint firstItem="oEo-sK-NpU" firstAttribute="trailing" secondItem="QKT-op-oBI" secondAttribute="trailing" id="g1e-Ws-2he"/>
+                                                <constraint firstItem="oEo-sK-NpU" firstAttribute="bottom" secondItem="QKT-op-oBI" secondAttribute="bottom" id="kNK-vA-AeV"/>
                                                 <constraint firstAttribute="width" secondItem="6Rx-W6-qbb" secondAttribute="height" multiplier="2:3" id="kzU-jY-bT4"/>
+                                                <constraint firstItem="oEo-sK-NpU" firstAttribute="leading" secondItem="QKT-op-oBI" secondAttribute="leading" id="oaF-7s-Vsz"/>
                                                 <constraint firstAttribute="bottom" secondItem="QKT-op-oBI" secondAttribute="bottom" id="pbS-iE-gQc"/>
                                                 <constraint firstAttribute="trailing" secondItem="QKT-op-oBI" secondAttribute="trailing" id="sqk-54-9AV"/>
                                                 <constraint firstAttribute="height" constant="200" id="ubA-YQ-5Ut"/>
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="One Piece" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C2e-VZ-lQA" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="208" width="133.5" height="17"/>
+                                            <rect key="frame" x="0.0" y="208" width="133.5" height="20.5"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -267,6 +291,7 @@
                                 </collectionViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
+                                    <outlet property="posterImageOverlayView" destination="oEo-sK-NpU" id="WvX-z8-d4j"/>
                                     <outlet property="posterImageView" destination="QKT-op-oBI" id="Tir-18-8ae"/>
                                     <outlet property="titleLabel" destination="C2e-VZ-lQA" id="cIS-Ud-Nje"/>
                                 </connections>
@@ -281,17 +306,29 @@
                     <navigationItem key="navigationItem" id="hdC-Io-Wsy"/>
                     <connections>
                         <segue destination="3xf-dq-TdG" kind="show" identifier="ShowDetailsSegue" id="acw-1g-1eB"/>
+                        <segue destination="9jn-OH-mnf" kind="show" identifier="LiteratureDetailsSegue" id="eCq-e0-lMj"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ORQ-vq-p8c" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="769.56521739130437" y="864.50892857142856"/>
         </scene>
+        <!--LiteratureDetailsCollectionViewController-->
+        <scene sceneID="Yha-sl-4Dc">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Literatures" referencedIdentifier="LiteratureDetailsCollectionViewController" id="9jn-OH-mnf" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="gnZ-Al-OnH"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dyl-fT-fjg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1451" y="865"/>
+        </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
         <image name="Placeholders/Show Banner" width="1920" height="1080"/>
         <image name="Placeholders/Show Poster" width="680" height="1000"/>
+        <image name="book_texture_overlay" width="160" height="240"/>
         <image name="shadow" width="6" height="30"/>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>

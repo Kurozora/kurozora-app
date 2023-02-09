@@ -42,7 +42,7 @@ class CastCollectionViewCell: KCollectionViewCell {
 		self.hideSkeleton()
 
 		// Configure person
-		if let person = cast.relationships.people.data.first {
+		if let person = cast.relationships.people?.data.first {
 			self.personNameLabel.text = person.attributes.fullName
 			self.personImageView.setImage(with: person.attributes.profile?.url ?? "", placeholder: person.attributes.placeholderImage)
 		}

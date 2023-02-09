@@ -276,8 +276,8 @@ extension ShowDetail {
 				}
 				return broadcastInfo
 			case .airDates:
-				guard let firstAired = show.attributes.firstAired?.formatted(date: .abbreviated, time: .omitted) else { return "-" }
-				return "🚀 \(firstAired)"
+				guard let startedAt = show.attributes.startedAt?.formatted(date: .abbreviated, time: .omitted) else { return "-" }
+				return "🚀 \(startedAt)"
 			case .rating:
 				return show.attributes.tvRating.name
 			case .languages:
@@ -313,7 +313,7 @@ extension ShowDetail {
 		func primaryInformation(from show: Show) -> String? {
 			switch self {
 			case .broadcast:
-				guard show.attributes.lastAired == nil else { return nil }
+				guard show.attributes.endedAt == nil else { return nil }
 				guard let broadcastDate = show.attributes.broadcastDate else { return nil }
 				return broadcastDate.formatted(.relative(presentation: .named, unitsStyle: .abbreviated))
 			default: return nil
@@ -331,8 +331,8 @@ extension ShowDetail {
 				if show.attributes.type.name == "Movie" {
 					return self.information(from: show)
 				}
-				guard let lastAired = show.attributes.lastAired?.formatted(date: .abbreviated, time: .omitted) else { return nil }
-				return "\(lastAired) 🏁"
+				guard let endedAt = show.attributes.endedAt?.formatted(date: .abbreviated, time: .omitted) else { return nil }
+				return "\(endedAt) 🏁"
 			default: return nil
 			}
 		}
@@ -373,7 +373,7 @@ extension ShowDetail {
 			case .duration:
 				return "With a total of \(show.attributes.durationTotal)."
 			case .broadcast:
-				guard show.attributes.lastAired == nil else { return "The broadcasting of this series has ended." }
+				guard show.attributes.endedAt == nil else { return "The broadcasting of this series has ended." }
 				guard show.attributes.broadcastDate == nil else { return nil }
 				return "No broadcast data available at the moment."
 			case .airDates:

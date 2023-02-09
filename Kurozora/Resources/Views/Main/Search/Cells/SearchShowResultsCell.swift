@@ -25,10 +25,11 @@ class SearchShowResultsCell: KCollectionViewCell {
 	@IBOutlet weak var cosmosView: KCosmosView!
 
 	// MARK: - Properties
+	var libraryKind: KKLibrary.Kind = .shows
 	var libraryStatus: KKLibrary.Status = .none
 
 	// MARK: - Functions
-	func configure(using show: Show?, libraryStatus: KKLibrary.Status = .none) {
+	func configure(using show: Show?, libraryStatus: KKLibrary.Status = .none, libraryKind: KKLibrary.Kind) {
 		guard let show = show else {
 			showSkeleton()
 			return
@@ -49,8 +50,18 @@ class SearchShowResultsCell: KCollectionViewCell {
 		show.attributes.posterImage(imageView: self.posterImageView)
 
 		// Configure library status
+		self.libraryKind = libraryKind
 		self.libraryStatus = show.attributes.libraryStatus ?? .none
-		self.actionButton.setTitle(self.libraryStatus != .none ? "\(self.libraryStatus.stringValue.capitalized) ▾" : "ADD", for: .normal)
+		let libraryStatus: String
+
+		switch self.libraryKind {
+		case .shows:
+			libraryStatus = self.libraryStatus.showStringValue
+		case .literatures:
+			libraryStatus = self.libraryStatus.literatureStringValue
+		}
+
+		self.actionButton.setTitle(self.libraryStatus != .none ? "\(libraryStatus.capitalized) ▾" : "ADD", for: .normal)
 
 		// Cinfigure rating
 		self.showRatingLabel.text = show.attributes.tvRating.name
@@ -62,7 +73,7 @@ class SearchShowResultsCell: KCollectionViewCell {
 		self.episodeCountLabel.isHidden = episodeCount == 0
 
 		// Configure air date
-		if let airYear = show.attributes.firstAired?.year {
+		if let airYear = show.attributes.startedAt?.year {
 			self.airDateLabel.text = "\(airYear)"
 			self.airDateLabel.isHidden = false
 		} else {

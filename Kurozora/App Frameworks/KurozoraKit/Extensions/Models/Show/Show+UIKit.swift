@@ -42,7 +42,7 @@ extension Show {
 
 		if User.isSignedIn {
 			if libraryStatus != .none {
-				let removeFromLibraryAction = UIAction(title: "Remove from Library", image: UIImage(systemName: "minus.circle"), attributes: .destructive) { [weak self] _ in
+				let removeFromLibraryAction = UIAction(title: Trans.removeFromLibrary, image: UIImage(systemName: "minus.circle"), attributes: .destructive) { [weak self] _ in
 					guard let self = self else { return }
 					self.removeFromLibrary()
 				}
@@ -81,7 +81,7 @@ extension Show {
 
 	func addToLibrary() -> UIMenu {
 		let libraryStatus = self.attributes.libraryStatus ?? .none
-		let addToLibraryMenuTitle = libraryStatus == .none ? "Add to Library" : "Update Library Status"
+		let addToLibraryMenuTitle = libraryStatus == .none ? Trans.addTolibrary : Trans.updateLibraryStatus
 		let addToLibraryMenuImage = libraryStatus == .none ? UIImage(systemName: "plus") : UIImage(systemName: "arrow.left.arrow.right")
 		var menuElements: [UIMenuElement] = []
 
@@ -89,18 +89,20 @@ extension Show {
 			guard let self = self else { return }
 			let selectedLibraryStatus = libraryStatus == actionLibraryStatus
 
-			menuElements.append(UIAction(title: actionLibraryStatus.stringValue, image: selectedLibraryStatus ? UIImage(systemName: "checkmark") : nil, handler: { _ in
+			menuElements.append(UIAction(title: actionLibraryStatus.showStringValue, image: selectedLibraryStatus ? UIImage(systemName: "checkmark") : nil, handler: { _ in
 				WorkflowController.shared.isSignedIn {
-					KService.addToLibrary(withLibraryStatus: actionLibraryStatus, showID: self.id) { result in
-						switch result {
-						case .success(let libraryUpdate):
+					Task {
+						do {
+							let libraryUpdateResponse = try await KService.addToLibrary(.shows, withLibraryStatus: actionLibraryStatus, modelID: String(self.id)).value
+
 							// Update entry in library
-							self.attributes.update(using: libraryUpdate)
+							self.attributes.update(using: libraryUpdateResponse.data)
 
 							let libraryAddToNotificationName = Notification.Name("AddTo\(actionLibraryStatus.sectionValue)Section")
 							NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
-						case .failure:
-							break
+						} catch let error as KKAPIError {
+							//						self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
+							print("----- Add to library failed", error.message)
 						}
 					}
 				}
@@ -111,31 +113,32 @@ extension Show {
 	}
 
 	private func removeFromLibrary() {
-		KService.removeFromLibrary(showID: self.id) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let libraryUpdate):
+		Task {
+			do {
+				let libraryUpdateResponse = try await KService.removeFromLibrary(.shows, modelID: String(self.id)).value
+
 				// Update entry in library
-				self.attributes = self.attributes.updated(using: libraryUpdate)
+				self.attributes = self.attributes.updated(using: libraryUpdateResponse.data)
 
 				if let oldLibraryStatus = self.attributes.libraryStatus {
 					let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
 					NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
 				}
-			case .failure:
-				break
+			} catch let error as KKAPIError {
+//				self.presentAlertController(title: "Can't Remove From Your Library 😔", message: error.message)
+				print("----- Remove from library failed", error.message)
 			}
 		}
 	}
 
 	func toggleFavorite() {
 		WorkflowController.shared.isSignedIn {
-			KService.updateFavoriteShowStatus(self.id) { [weak self] result in
+			KService.updateFavoriteStatus(inLibrary: .shows, modelID: String(self.id)) { [weak self] result in
 				guard let self = self else { return }
 				switch result {
 				case .success(let favoriteStatus):
 					self.attributes.favoriteStatus = favoriteStatus
-					NotificationCenter.default.post(name: .KShowFavoriteIsToggled, object: nil)
+					NotificationCenter.default.post(name: .KModelFavoriteIsToggled, object: nil)
 				case .failure: break
 				}
 			}
@@ -151,7 +154,7 @@ extension Show {
 						switch result {
 						case .success(let reminderStatus):
 							self.attributes.reminderStatus = reminderStatus
-							NotificationCenter.default.post(name: .KShowReminderIsToggled, object: nil)
+							NotificationCenter.default.post(name: .KModelReminderIsToggled, object: nil)
 						case .failure: break
 						}
 					}

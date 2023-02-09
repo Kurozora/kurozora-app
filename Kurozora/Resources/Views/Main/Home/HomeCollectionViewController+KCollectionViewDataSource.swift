@@ -56,6 +56,9 @@ extension HomeCollectionViewController {
 					return collectionView.dequeueConfiguredReusableCell(using: personCellConfiguration, for: indexPath, item: itemKind)
 				default: return nil
 				}
+			case .episode:
+				return nil
+//				return collectionView.dequeueConfiguredReusableCell(using: episodCellConfiguration, for: indexPath, item: itemKind)
 			case .music:
 				return collectionView.dequeueConfiguredReusableCell(using: musicCellConfiguration, for: indexPath, item: itemKind)
 			case .quickLinks:
@@ -92,7 +95,12 @@ extension HomeCollectionViewController {
 
 			switch sectionLayoutKind {
 			case .banner(let exploreCategory), .video(let exploreCategory), .upcoming(let exploreCategory), .small(let exploreCategory), .large(let exploreCategory):
-				segueID = R.segue.homeCollectionViewController.showsListSegue.identifier
+				switch exploreCategory.attributes.exploreCategoryType {
+				case .literatures, .mostPopularLiteratures, .upcomingLiteratures, .newLiteratures:
+					segueID = R.segue.homeCollectionViewController.literaturesListSegue.identifier
+				default:
+					segueID = R.segue.homeCollectionViewController.showsListSegue.identifier
+				}
 				exploreSectionTitleCell.configure(withTitle: exploreCategory.attributes.title, exploreCategory.attributes.description, indexPath: indexPath, segueID: segueID)
 			case .medium(let exploreCategory):
 				switch exploreCategory.attributes.exploreCategoryType {
@@ -111,6 +119,9 @@ extension HomeCollectionViewController {
 					segueID = R.segue.homeCollectionViewController.peopleListSegue.identifier
 				default: break
 				}
+				exploreSectionTitleCell.configure(withTitle: exploreCategory.attributes.title, exploreCategory.attributes.description, indexPath: indexPath, segueID: segueID)
+			case .episode(let exploreCategory):
+				segueID = R.segue.homeCollectionViewController.episodesListSegue.identifier
 				exploreSectionTitleCell.configure(withTitle: exploreCategory.attributes.title, exploreCategory.attributes.description, indexPath: indexPath, segueID: segueID)
 			case .music(let exploreCategory):
 				segueID = R.segue.homeCollectionViewController.songsListSegue.identifier
@@ -135,21 +146,29 @@ extension HomeCollectionViewController {
 			var itemKinds: [ItemKind] = []
 
 			switch exploreCategory.attributes.exploreCategoryType {
-			case .mostPopularShows:
+			case .mostPopularShows, .mostPopularLiteratures: // , .mostPopularGames:
 				sectionHeader = .banner(exploreCategory)
 				if let shows = exploreCategory.relationships.shows?.data {
 					itemKinds = shows.map { showIdentity in
 						return .showIdentity(showIdentity)
 					}
+				} else if let literatures = exploreCategory.relationships.literatures?.data {
+					itemKinds = literatures.map { literatureIdentity in
+						return .literatureIdentity(literatureIdentity)
+					}
 				}
-			case .upcomingShows:
+			case .upcomingShows, .upcomingLiteratures: // , .upcomingGames:
 				sectionHeader = .upcoming(exploreCategory)
 				if let shows = exploreCategory.relationships.shows?.data {
 					itemKinds = shows.prefix(10).map { showIdentity in
 						return .showIdentity(showIdentity)
 					}
+				} else if let literatures = exploreCategory.relationships.literatures?.data {
+					itemKinds = literatures.prefix(10).map { literatureIdentity in
+						return .literatureIdentity(literatureIdentity)
+					}
 				}
-			case .shows:
+			case .shows, .newShows:
 				switch exploreCategory.attributes.exploreCategorySize {
 				case .banner:
 					sectionHeader = .banner(exploreCategory)
@@ -167,6 +186,53 @@ extension HomeCollectionViewController {
 				if let shows = exploreCategory.relationships.shows?.data {
 					itemKinds = shows.prefix(10).map { showIdentity in
 						return .showIdentity(showIdentity)
+					}
+				}
+			case .literatures, .newLiteratures:
+				switch exploreCategory.attributes.exploreCategorySize {
+				case .banner:
+					sectionHeader = .banner(exploreCategory)
+				case .large:
+					sectionHeader = .large(exploreCategory)
+				case .medium:
+					sectionHeader = .medium(exploreCategory)
+				case .small:
+					sectionHeader = .small(exploreCategory)
+				case .upcoming:
+					sectionHeader = .upcoming(exploreCategory)
+				case .video:
+					sectionHeader = .video(exploreCategory)
+				}
+				if let literature = exploreCategory.relationships.literatures?.data {
+					itemKinds = literature.prefix(10).map { literatureIdentity in
+						return .literatureIdentity(literatureIdentity)
+					}
+				}
+//			case .games:
+//				switch exploreCategory.attributes.exploreCategorySize {
+//				case .banner:
+//					sectionHeader = .banner(exploreCategory)
+//				case .large:
+//					sectionHeader = .large(exploreCategory)
+//				case .medium:
+//					sectionHeader = .medium(exploreCategory)
+//				case .small:
+//					sectionHeader = .small(exploreCategory)
+//				case .upcoming:
+//					sectionHeader = .upcoming(exploreCategory)
+//				case .video:
+//					sectionHeader = .video(exploreCategory)
+//				}
+//				if let games = exploreCategory.relationships.games?.data {
+//					itemKinds = games.prefix(10).map { gameIdentity in
+//						return .gameIdentity(gameIdentity)
+//					}
+//				}
+			case .episodes:
+				sectionHeader = .episode(exploreCategory)
+				if let episodes = exploreCategory.relationships.episodes?.data {
+					itemKinds = episodes.prefix(10).map { episodeIdentity in
+						return .episodeIdentity(episodeIdentity)
 					}
 				}
 			case .songs:
@@ -237,6 +303,11 @@ extension HomeCollectionViewController {
 	func fetchShow(at indexPath: IndexPath) -> Show? {
 		guard let show = self.shows[indexPath] else { return nil }
 		return show
+	}
+
+	func fetchLiterature(at indexPath: IndexPath) -> Literature? {
+		guard let literature = self.literatures[indexPath] else { return nil }
+		return literature
 	}
 
 	func fetchGenre(at indexPath: IndexPath) -> Genre? {

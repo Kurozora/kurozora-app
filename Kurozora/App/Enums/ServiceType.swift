@@ -12,8 +12,8 @@ import SwiftTheme
 /// The set of available service types.
 enum ServiceType {
 	// MARK: - Cases
-	/// Used to display information related to importing from MAL.
-	case malImport
+	/// Used to display information related to importing from other services.
+	case libraryImport
 
 	/// Used to display information related to redeeming code.
 	case redeem
@@ -34,8 +34,8 @@ enum ServiceType {
 	/// The headline string value of a service type.
 	var headlineStringValue: String {
 		switch self {
-		case .malImport:
-			return Trans.malImportHeadline
+		case .libraryImport:
+			return Trans.libraryImportHeadline
 		case .redeem:
 			return Trans.redeemHeadline
 		case .signInWithApple:
@@ -48,8 +48,8 @@ enum ServiceType {
 	/// The subhead string value of a service type.
 	var subheadStringValue: String {
 		switch self {
-		case .malImport:
-			return Trans.malImportSubheadline
+		case .libraryImport:
+			return Trans.libraryImportSubheadline
 		case .redeem:
 			return Trans.redeemSubheadline
 		case .signInWithApple:
@@ -62,8 +62,8 @@ enum ServiceType {
 	/// The footer string value of a service type.
 	var footerStringValue: String {
 		switch self {
-		case .malImport:
-			return Trans.malImportFooter
+		case .libraryImport:
+			return Trans.libraryImportFooter
 		case .redeem:
 			return Trans.redeemFooter
 		case .signInWithApple:

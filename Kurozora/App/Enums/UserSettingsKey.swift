@@ -55,6 +55,8 @@ enum UserSettingsKey: String {
 	case libraryPage
 	/// The key to the last selected library cell style.
 	case libraryCellStyles
+	/// The key to the last selected library kind.
+	case libraryKind
 
 	// Notification settings keys
 	/// The key to the selected option for allowing notifications.

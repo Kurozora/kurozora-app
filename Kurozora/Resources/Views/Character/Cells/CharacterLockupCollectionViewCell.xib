@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -10,10 +12,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="jA4-RP-D4X" customClass="CharacterLockupCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="128" height="156.5"/>
+            <rect key="frame" x="0.0" y="0.0" width="128" height="178"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="fxe-Hf-WsG">
-                <rect key="frame" x="0.0" y="0.0" width="128" height="156.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="128" height="178"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Person Poster" translatesAutoresizingMaskIntoConstraints="NO" id="NwE-aG-8uu" customClass="CharacterImageView" customModule="Kurozora" customModuleProvider="target">
@@ -22,34 +24,49 @@
                             <constraint firstAttribute="width" secondItem="NwE-aG-8uu" secondAttribute="height" multiplier="1:1" id="QXa-or-pn9"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kOD-68-UMF" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="136" width="128" height="20.5"/>
-                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="6Gs-ei-RUM">
+                        <rect key="frame" x="0.0" y="136" width="128" height="42"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gnV-3y-dRY" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="44.5" y="0.0" width="39" height="22.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kOD-68-UMF" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="46.5" y="22.5" width="35" height="19.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                <color key="textColor" systemColor="secondaryLabelColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="kOD-68-UMF" firstAttribute="top" secondItem="NwE-aG-8uu" secondAttribute="bottom" constant="8" symbolic="YES" id="53S-LS-8pW"/>
                     <constraint firstItem="NwE-aG-8uu" firstAttribute="top" secondItem="fxe-Hf-WsG" secondAttribute="top" id="5Ep-o0-BgW"/>
-                    <constraint firstItem="kOD-68-UMF" firstAttribute="centerX" secondItem="NwE-aG-8uu" secondAttribute="centerX" id="5hk-7f-rTq"/>
                     <constraint firstItem="NwE-aG-8uu" firstAttribute="trailing" secondItem="fxe-Hf-WsG" secondAttribute="trailing" id="7Ym-1O-sCY"/>
-                    <constraint firstAttribute="trailing" secondItem="kOD-68-UMF" secondAttribute="trailing" id="D5m-L7-Ksd"/>
-                    <constraint firstAttribute="bottom" secondItem="kOD-68-UMF" secondAttribute="bottom" id="Phb-hJ-f9q"/>
-                    <constraint firstItem="kOD-68-UMF" firstAttribute="leading" secondItem="fxe-Hf-WsG" secondAttribute="leading" id="VRz-bU-9E4"/>
+                    <constraint firstAttribute="trailing" secondItem="6Gs-ei-RUM" secondAttribute="trailing" id="ZIM-X4-Q6w"/>
                     <constraint firstItem="NwE-aG-8uu" firstAttribute="width" secondItem="NwE-aG-8uu" secondAttribute="height" multiplier="1:1" id="cMr-k6-jP4"/>
+                    <constraint firstItem="6Gs-ei-RUM" firstAttribute="top" secondItem="NwE-aG-8uu" secondAttribute="bottom" constant="8" symbolic="YES" id="gFU-Eq-dtC"/>
                     <constraint firstItem="NwE-aG-8uu" firstAttribute="leading" secondItem="fxe-Hf-WsG" secondAttribute="leading" id="pwo-K1-IvF"/>
+                    <constraint firstAttribute="bottom" secondItem="6Gs-ei-RUM" secondAttribute="bottom" id="ucj-S1-nIX"/>
+                    <constraint firstItem="6Gs-ei-RUM" firstAttribute="leading" secondItem="fxe-Hf-WsG" secondAttribute="leading" id="yWy-nP-Qws"/>
                 </constraints>
             </collectionViewCellContentView>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <size key="customSize" width="128" height="213"/>
             <connections>
                 <outlet property="characterImageView" destination="NwE-aG-8uu" id="XgX-Fa-mX1"/>
-                <outlet property="nameLabel" destination="kOD-68-UMF" id="Ddh-13-bXb"/>
+                <outlet property="primaryLabel" destination="gnV-3y-dRY" id="9mQ-lc-XrE"/>
+                <outlet property="secondaryLabel" destination="kOD-68-UMF" id="H4y-ll-Yy1"/>
             </connections>
-            <point key="canvasLocation" x="175" y="156"/>
+            <point key="canvasLocation" x="173.91304347826087" y="174.10714285714286"/>
         </collectionViewCell>
     </objects>
     <resources>
         <image name="Placeholders/Person Poster" width="680" height="1000"/>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

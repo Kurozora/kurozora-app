@@ -59,7 +59,7 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 
 		// Configure episode title label
 		self.episodeTitleLabel.text = episode.attributes.title
-		self.episodeFirstAiredLabel.text = episode.attributes.firstAired?.formatted(date: .abbreviated, time: .omitted) ?? "TBA"
+		self.episodeFirstAiredLabel.text = episode.attributes.startedAt?.formatted(date: .abbreviated, time: .omitted) ?? "TBA"
 	}
 
 	/// Configures the watch button of the episode.

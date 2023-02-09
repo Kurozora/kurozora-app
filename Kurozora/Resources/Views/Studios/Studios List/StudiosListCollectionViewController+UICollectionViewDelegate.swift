@@ -17,10 +17,10 @@ extension StudiosListCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		let showIdentitiesCount = self.studioIdentities.count - 1
-		var itemsCount = showIdentitiesCount / 4 / 2
+		let studioIdentitiesCount = self.studioIdentities.count - 1
+		var itemsCount = studioIdentitiesCount / 4 / 2
 		itemsCount = itemsCount > 15 ? 15 : itemsCount // Make sure count isn't above 15
-		itemsCount = showIdentitiesCount - itemsCount
+		itemsCount = studioIdentitiesCount - itemsCount
 		itemsCount = itemsCount < 1 ? 1 : itemsCount // Make sure count isn't below 1
 
 		if indexPath.item >= itemsCount && self.nextPageURL != nil {

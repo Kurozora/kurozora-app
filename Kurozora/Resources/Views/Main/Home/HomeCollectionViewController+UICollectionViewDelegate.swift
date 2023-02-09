@@ -14,9 +14,18 @@ extension HomeCollectionViewController {
 		switch self.dataSource.sectionIdentifier(for: indexPath.section) {
 		case .banner(let exploreCategory), .small(let exploreCategory), .medium(let exploreCategory), .large(let exploreCategory), .upcoming(let exploreCategory), .video(let exploreCategory), .profile(let exploreCategory), .music(let exploreCategory):
 			switch exploreCategory.attributes.exploreCategoryType {
-			case .mostPopularShows, .upcomingShows, .shows:
+			case .shows, .mostPopularShows, .upcomingShows, .newShows:
 				let show = self.shows[indexPath]
 				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.showDetailsSegue, sender: show)
+			case .literatures, .mostPopularLiteratures, .upcomingLiteratures, .newLiteratures:
+				let literature = self.literatures[indexPath]
+				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.literatureDetailsSegue, sender: literature)
+//			case .mostPopularGames, .upcomingGames, .games:
+//				let game = self.games[indexPath]
+//				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.gameDetailsSegue, sender: game)
+			case .episodes:
+				let episode = self.episodes[indexPath]
+				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.episodeDetailsSegue, sender: episode)
 			case .genres:
 				let genre = self.genres[indexPath]
 				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.exploreSegue, sender: genre)
@@ -45,8 +54,14 @@ extension HomeCollectionViewController {
 			let exploreCategory = self.exploreCategories[indexPath.section]
 
 			switch exploreCategory.attributes.exploreCategoryType {
-			case .shows, .upcomingShows, .mostPopularShows:
+			case .shows, .upcomingShows, .mostPopularShows, .newShows:
 				return self.shows[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			case .literatures, .upcomingLiteratures, .mostPopularLiteratures, .newLiteratures:
+				return self.literatures[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+//			case .games, .upcomingGames, .mostPopularGames:
+//				return self.games[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			case .episodes:
+				return self.episodes[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 			case .songs:
 				return self.showSongs[indexPath]?.song.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 			case .genres:

@@ -11,8 +11,8 @@ import UIKit
 #if targetEnvironment(macCatalyst)
 extension NSTouchBarItem.Identifier {
 	// MARK: - ShowDetailsViewController
-	static let toggleShowIsFavorite = NSTouchBarItem.Identifier("app.kurozora.tracker.toggleShowIsFavorite")
-	static let toggleShowIsReminded = NSTouchBarItem.Identifier("app.kurozora.tracker.toggleShowIsReminded")
+	static let toggleModelIsFavorite = NSTouchBarItem.Identifier("app.kurozora.tracker.toggleModelIsFavorite")
+	static let toggleModelIsReminded = NSTouchBarItem.Identifier("app.kurozora.tracker.toggleModelIsReminded")
 
 	// MARK: - KTabbedViewController
 	static let listTabBar = NSTouchBarItem.Identifier("app.kurozora.tracker.listTabBar")

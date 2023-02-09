@@ -11,28 +11,18 @@ import KurozoraKit
 
 extension CastListCollectionViewController {
 	override func configureDataSource() {
-		let castCellRegistration = UICollectionView.CellRegistration<CastCollectionViewCell, CastIdentity>(cellNib: UINib(resource: R.nib.castCollectionViewCell)) { [weak self] castCollectionViewCell, indexPath, castIdentity in
-			guard let self = self else { return }
-			let cast = self.fetchCast(at: indexPath)
+		let castCellRegistration = self.getCastCellRegistration()
+		let characterCellRegistration = self.getCharacterCellRegistration()
 
-			if cast == nil {
-				Task {
-					do {
-						let castResponse = try await KService.getDetails(forCast: castIdentity).value
-						self.cast[indexPath] = castResponse.data.first
-						self.setCastNeedsUpdate(castIdentity)
-					} catch {
-						print(error.localizedDescription)
-					}
-				}
+		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, CastIdentity>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, castIdentity: CastIdentity) -> UICollectionViewCell? in
+			guard let self = self else { return nil }
+
+			switch self.castKind {
+			case .show:
+				return collectionView.dequeueConfiguredReusableCell(using: castCellRegistration, for: indexPath, item: castIdentity)
+			case .literature:
+				return collectionView.dequeueConfiguredReusableCell(using: characterCellRegistration, for: indexPath, item: castIdentity)
 			}
-
-			castCollectionViewCell.delegate = self
-			castCollectionViewCell.configure(using: cast)
-		}
-
-		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, CastIdentity>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, castIdentity: CastIdentity) -> UICollectionViewCell? in
-			return collectionView.dequeueConfiguredReusableCell(using: castCellRegistration, for: indexPath, item: castIdentity)
 		}
 	}
 
@@ -52,5 +42,50 @@ extension CastListCollectionViewController {
 		var snapshot = self.dataSource.snapshot()
 		snapshot.reconfigureItems([castIdentity])
 		self.dataSource.apply(snapshot, animatingDifferences: true)
+	}
+}
+
+extension CastListCollectionViewController {
+	func getCastCellRegistration() -> UICollectionView.CellRegistration<CastCollectionViewCell, CastIdentity> {
+		return UICollectionView.CellRegistration<CastCollectionViewCell, CastIdentity>(cellNib: UINib(resource: R.nib.castCollectionViewCell)) { [weak self] castCollectionViewCell, indexPath, castIdentity in
+			guard let self = self else { return }
+			let cast = self.fetchCast(at: indexPath)
+
+			if cast == nil {
+				Task {
+					do {
+						let castResponse = try await KService.getDetails(forShowCast: castIdentity).value
+						self.cast[indexPath] = castResponse.data.first
+						self.setCastNeedsUpdate(castIdentity)
+					} catch {
+						print(error.localizedDescription)
+					}
+				}
+			}
+
+			castCollectionViewCell.delegate = self
+			castCollectionViewCell.configure(using: cast)
+		}
+	}
+
+	func getCharacterCellRegistration() -> UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, CastIdentity> {
+		return UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, CastIdentity>(cellNib: UINib(resource: R.nib.characterLockupCollectionViewCell)) { [weak self] characterLockupCollctionViewcell, indexPath, castIdentity in
+			guard let self = self else { return }
+			let cast = self.fetchCast(at: indexPath)
+
+			if cast == nil {
+				Task {
+					do {
+						let castResponse = try await KService.getDetails(forLiteratureCast: castIdentity).value
+						self.cast[indexPath] = castResponse.data.first
+						self.setCastNeedsUpdate(castIdentity)
+					} catch {
+						print(error.localizedDescription)
+					}
+				}
+			}
+
+			characterLockupCollctionViewcell.configure(using: cast?.relationships.characters.data.first, role: cast?.attributes.role)
+		}
 	}
 }

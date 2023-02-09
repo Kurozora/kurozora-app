@@ -35,16 +35,23 @@ extension LibraryViewController: NSTouchBarDelegate {
 
 		switch identifier {
 		case .listTabBar:
-			let labels: [String] = KKLibrary.Status.all.map { libraryStatus -> String in
-				libraryStatus.stringValue
+			let labels: [String] = KKLibrary.Status.all.map { libraryStatus in
+				switch self.libraryKind {
+				case .shows:
+					return libraryStatus.showStringValue
+				case .literatures:
+					return libraryStatus.literatureStringValue
+//				case .games:
+//					return libraryStatus.gameStringValue
+				}
 			}
 
-			tabBarTouchBarItem = NSPickerTouchBarItem(identifier: identifier, labels: labels, selectionMode: .selectOne, target: self, action: #selector(goToSelectedView(_:)))
-			tabBarTouchBarItem?.selectedIndex = self.currentIndex ?? 0
-			touchBarItem = tabBarTouchBarItem
+			self.tabBarTouchBarItem = NSPickerTouchBarItem(identifier: identifier, labels: labels, selectionMode: .selectOne, target: self, action: #selector(goToSelectedView(_:)))
+			self.tabBarTouchBarItem?.selectedIndex = self.currentIndex ?? 0
+			touchBarItem = self.tabBarTouchBarItem
 		case .showFavorites:
 			guard let image = UIImage(systemName: "heart.circle") else { return nil }
-			touchBarItem = NSButtonTouchBarItem(identifier: identifier, image: image, target: self, action: #selector(segueToFavoriteShows))
+			touchBarItem = NSButtonTouchBarItem(identifier: identifier, image: image, target: self, action: #selector(self.segueToFavoriteShows))
 		default:
 			touchBarItem = nil
 		}

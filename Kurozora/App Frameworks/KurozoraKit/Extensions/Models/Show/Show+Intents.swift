@@ -13,7 +13,7 @@ extension Show {
 	// MARK: - Properties
 	/// Create an NSUserActivity from the selected show.
 	public var openDetailUserActivity: NSUserActivity {
-		let userActivity = NSUserActivity(activityType: "OpenAnimeIntent")
+		let userActivity = NSUserActivity(activityType: "OpenShowIntent")
 		let title = "Open \(self.attributes.title)"
 		userActivity.title = title
 		userActivity.userInfo = ["showID": self.id]

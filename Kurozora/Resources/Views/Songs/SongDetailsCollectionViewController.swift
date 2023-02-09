@@ -76,7 +76,7 @@ class SongDetailsCollectionViewController: KCollectionViewController {
 	/// - Parameter songID: The song id to use when initializing the view.
 	///
 	/// - Returns: an initialized instance of SongDetailsCollectionViewController.
-	static func `init`(with songID: Int) -> SongDetailsCollectionViewController {
+	static func `init`(with songID: String) -> SongDetailsCollectionViewController {
 		if let songDetailsCollectionViewController = R.storyboard.songs.songDetailsCollectionViewController() {
 			songDetailsCollectionViewController.songIdentity = SongIdentity(id: songID)
 			return songDetailsCollectionViewController
@@ -201,11 +201,12 @@ extension SongDetailsCollectionViewController: BaseLockupCollectionViewCellDeleg
 			guard let show = self.shows[indexPath] else { return }
 
 			let oldLibraryStatus = cell.libraryStatus
-			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: oldLibraryStatus, action: { title, value  in
-				KService.addToLibrary(withLibraryStatus: value, showID: show.id) { result in
-					switch result {
-					case .success(let libraryUpdate):
-						show.attributes.update(using: libraryUpdate)
+			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value  in
+				Task {
+					do {
+						let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: String(show.id)).value
+
+						show.attributes.update(using: libraryUpdateResponse.data)
 
 						// Update entry in library
 						cell.libraryStatus = value
@@ -213,18 +214,20 @@ extension SongDetailsCollectionViewController: BaseLockupCollectionViewCellDeleg
 
 						let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
 						NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
-					case .failure:
-						break
+					} catch let error as KKAPIError {
+						self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
+						print("----- Add to library failed", error.message)
 					}
 				}
 			})
 
 			if cell.libraryStatus != .none {
-				actionSheetAlertController.addAction(UIAlertAction(title: "Remove from library", style: .destructive) { _ in
-					KService.removeFromLibrary(showID: show.id) { result in
-						switch result {
-						case .success(let libraryUpdate):
-							show.attributes.update(using: libraryUpdate)
+				actionSheetAlertController.addAction(UIAlertAction(title: Trans.removeFromLibrary, style: .destructive) { _ in
+					Task {
+						do {
+							let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: String(show.id)).value
+
+							show.attributes.update(using: libraryUpdateResponse.data)
 
 							// Update edntry in library
 							cell.libraryStatus = .none
@@ -232,8 +235,9 @@ extension SongDetailsCollectionViewController: BaseLockupCollectionViewCellDeleg
 
 							let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
 							NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
-						case .failure:
-							break
+						} catch let error as KKAPIError {
+							self.presentAlertController(title: "Can't Remove From Your Library 😔", message: error.message)
+							print("----- Remove from library failed", error.message)
 						}
 					}
 				})

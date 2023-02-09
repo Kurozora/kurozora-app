@@ -102,34 +102,34 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 
 		switch self.kTheme {
 		case .other(let theme):
-			if Int(currentThemeID) == theme.id {
+			if currentThemeID == theme.id {
 				if User.isPro || User.isSubscribed {
 					if KThemeStyle.isUpToDate(theme.id, version: theme.attributes.version) {
-						getThemeButton.setTitle("USING", for: .normal)
+						self.getThemeButton.setTitle("USING", for: .normal)
 					} else {
-						getThemeButton.setTitle("UPDATE", for: .normal)
+						self.getThemeButton.setTitle("UPDATE", for: .normal)
 					}
 				} else {
-					getThemeButton.setTitle("USING", for: .normal)
+					self.getThemeButton.setTitle("USING", for: .normal)
 				}
 			} else if KThemeStyle.themeExist(for: theme) {
 				if User.isPro || User.isSubscribed {
 					if KThemeStyle.isUpToDate(theme.id, version: theme.attributes.version) {
-						getThemeButton.setTitle("USE", for: .normal)
+						self.getThemeButton.setTitle("USE", for: .normal)
 					} else {
-						getThemeButton.setTitle("UPDATE", for: .normal)
+						self.getThemeButton.setTitle("UPDATE", for: .normal)
 					}
 				} else {
-					getThemeButton.setTitle("USE", for: .normal)
+					self.getThemeButton.setTitle("USE", for: .normal)
 				}
 			} else {
-				getThemeButton.setTitle("GET", for: .normal)
+				self.getThemeButton.setTitle("GET", for: .normal)
 			}
 		default:
 			if self.kTheme.isEqual(currentThemeID) {
-				getThemeButton.setTitle("USING", for: .normal)
+				self.getThemeButton.setTitle("USING", for: .normal)
 			} else {
-				getThemeButton.setTitle("USE", for: .normal)
+				self.getThemeButton.setTitle("USE", for: .normal)
 			}
 		}
 	}

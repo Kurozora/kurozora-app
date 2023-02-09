@@ -15,12 +15,17 @@ protocol LibraryViewControllerDelegate: AnyObject {
 	/// - Parameter sortType: The sort type by which the library should be sorted.
 	func sortLibrary(by sortType: KKLibrary.SortType, option: KKLibrary.SortType.Options)
 
-	/// Tells your `LibraryViewControllerDelegate` the current sort value used to sort the items in the library.
+	/// Tells your `LibraryViewControllerDelegate` the current library kind value changed.
+	func libraryViewController(_ view: LibraryViewController, didChange libraryKind: KKLibrary.Kind)
+}
+
+protocol LibraryViewControllerDataSource: AnyObject {
+	/// Tells your `LibraryViewControllerDataSource` the current sort value used to sort the items in the library.
 	///
 	/// - Returns: The current sort value used to sort the items in the library.
 	func sortValue() -> KKLibrary.SortType
 
-	/// Tells your `LibraryViewControllerDelegate` the current sort option value used to sort the items in the library.
+	/// Tells your `LibraryViewControllerDataSource` the current sort option value used to sort the items in the library.
 	///
 	/// - Returns: The current sort option value used to sort the items in the library.
 	func sortOptionValue() -> KKLibrary.SortType.Options

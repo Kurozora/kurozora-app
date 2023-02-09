@@ -99,7 +99,29 @@ class InformationCollectionViewCell: UICollectionViewCell {
 
 		switch showDetailInformation {
 		case .airDates:
-			self.primaryImageViewHeightConstraint?.isActive = primaryImageView.image != nil
+			self.primaryImageViewHeightConstraint?.isActive = self.primaryImageView.image != nil
+			self.secondaryLabel.textAlignment = .right
+			self.secondaryLabel.font = .preferredFont(forTextStyle: .headline)
+		default:
+			self.primaryImageViewHeightConstraint?.isActive = false
+			self.secondaryLabel.textAlignment = .natural
+			self.secondaryLabel.font = .preferredFont(forTextStyle: .body)
+		}
+	}
+
+	/// Configure the cell with the given literature details.
+	func configure(using literature: Literature, for literatureDetailInformation: LiteratureDetail.Information) {
+		self.typeImageView.image = literatureDetailInformation.imageValue
+		self.typeLabel.text = literatureDetailInformation.stringValue
+		self.headlineLabel.text = literatureDetailInformation.information(from: literature)
+		self.primaryLabel.text = literatureDetailInformation.primaryInformation(from: literature)
+		self.primaryImageView.image = literatureDetailInformation.primaryImage(from: literature)
+		self.secondaryLabel.text = literatureDetailInformation.secondaryInformation(from: literature)
+		self.footerLabel.text = literatureDetailInformation.footnote(from: literature)
+
+		switch literatureDetailInformation {
+		case .publicationDates:
+			self.primaryImageViewHeightConstraint?.isActive = self.primaryImageView.image != nil
 			self.secondaryLabel.textAlignment = .right
 			self.secondaryLabel.font = .preferredFont(forTextStyle: .headline)
 		default:

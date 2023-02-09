@@ -15,7 +15,7 @@ extension CharacterDetailsCollectionViewController {
 		switch self.snapshot.sectionIdentifiers[section] {
 		case .header, .about:
 			return 1
-		case .shows:
+		case .shows, .literatures:
 			let columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
 			return columnCount > 0 ? columnCount : 1
 		case .people:
@@ -84,6 +84,11 @@ extension CharacterDetailsCollectionViewController {
 					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 					hasSectionHeader = true
 				}
+			case .literatures:
+				if self.literatureIdentities.count != 0 {
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					hasSectionHeader = true
+				}
 			}
 
 			if hasSectionHeader {
@@ -98,33 +103,4 @@ extension CharacterDetailsCollectionViewController {
 		}
 		return layout
 	}
-
-//	func fullSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-//		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-//		let heightDimension = self.heightDimension(forSection: section, with: columns, layout: layoutEnvironment)
-//		let layoutSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: heightDimension)
-//
-//		let item = NSCollectionLayoutItem(layoutSize: layoutSize)
-//
-//		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitem: item, count: columns)
-//
-//		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-//		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
-//		return layoutSection
-//	}
-
-//	func gridSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-//		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-//		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(160.0))
-//		let item = NSCollectionLayoutItem(layoutSize: itemSize)
-//
-//		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(160.0))
-//		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-//		layoutGroup.interItemSpacing = .fixed(10.0)
-//
-//		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-//		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
-//		layoutSection.interGroupSpacing = 10.0
-//		return layoutSection
-//	}
 }

@@ -56,7 +56,7 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 		super.viewDidLoad()
 		// Observe NotificationCenter for an update.
 		if self.user?.id == User.current?.id {
-			NotificationCenter.default.addObserver(self, selector: #selector(self.fetchFavoritesList), name: .KFavoriteShowsListDidChange, object: nil)
+			NotificationCenter.default.addObserver(self, selector: #selector(self.fetchFavoritesList), name: .KFavoriteModelsListDidChange, object: nil)
 		}
 
 		self.configureDataSource()
@@ -128,7 +128,7 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 		let userIdentity = UserIdentity(id: userID)
 
 		do {
-			let showResponse = try await KService.getFavoriteShows(forUser: userIdentity, next: self.nextPageURL).value
+			let showResponse = try await KService.getFavorites(forUser: userIdentity, libraryKind: .shows, next: self.nextPageURL).value
 
 			// Reset data if necessary
 			if self.nextPageURL == nil {

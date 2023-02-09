@@ -44,7 +44,7 @@ class SeasonLockupCollectionViewCell: KCollectionViewCell {
 		self.titleLabel.text = season.attributes.title
 
 		// Configure premiere date
-		self.firstAiredLabel.text = season.attributes.firstAired?.formatted(date: .abbreviated, time: .omitted) ?? "TBA"
+		self.firstAiredLabel.text = season.attributes.startedAt?.formatted(date: .abbreviated, time: .omitted) ?? "TBA"
 
 		// Configure episode count
 		self.episodeCountLabel.text = "\(season.attributes.episodeCount)"

@@ -27,50 +27,102 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var statusButton: UIButton!
 	@IBOutlet weak var shadowView: UIView!
 	@IBOutlet weak var posterImageView: PosterImageView!
+	@IBOutlet weak var posterImageOverlayView: UIImageView!
 
 	// MARK: - Properties
-	var show: Show! {
-		didSet {
-			self.libraryStatus = show.attributes.libraryStatus ?? .none
-			updateDetails()
-		}
-	}
 	var libraryStatus: KKLibrary.Status = .none
+	var libraryKind: KKLibrary.Kind = .shows
+	let mangaMask: UIImageView? = UIImageView(image: UIImage(named: "book_mask"))
+
+	private var show: Show? = nil
+	private var literature: Literature? = nil
 }
 
 // MARK: - Functions
 extension ShowDetailHeaderCollectionViewCell {
 	/// Updates the view with the details fetched from the server.
-	fileprivate func updateDetails() {
+	func configure(using show: Show) {
+		self.libraryKind = .shows
+		self.literature = nil
+		self.show = show
 		NotificationCenter.default.removeObserver(self)
-		NotificationCenter.default.addObserver(self, selector: #selector(handleFavoriteToggle(_:)), name: .KShowFavoriteIsToggled, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(handleReminderToggle(_:)), name: .KShowReminderIsToggled, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(handleFavoriteToggle(_:)), name: .KModelFavoriteIsToggled, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(handleReminderToggle(_:)), name: .KModelReminderIsToggled, object: nil)
 
 		// Configure library status
-		self.libraryStatus = self.show.attributes.libraryStatus ?? .none
-		updateLibraryActions()
+		self.libraryStatus = show.attributes.libraryStatus ?? .none
+		self.updateLibraryActions(using: show)
 
 		// Configure title label
-		self.primaryLabel.text = self.show.attributes.title
+		self.primaryLabel.text = show.attributes.title
 
 		// Configure tags label
-		self.secondaryLabel.text = self.show.attributes.informationString
+		self.secondaryLabel.text = show.attributes.informationString
 
 		// Configure airing status label
-		self.statusButton.setTitle(self.show.attributes.status.name, for: .normal)
-		self.statusButton.backgroundColor = UIColor(hexString: self.show.attributes.status.color)
+		self.statusButton.setTitle(show.attributes.status.name, for: .normal)
+		self.statusButton.backgroundColor = UIColor(hexString: show.attributes.status.color)
 
 		// Configure poster view
-		if let posterBackgroundColor = self.show.attributes.poster?.backgroundColor {
+		if let posterBackgroundColor = show.attributes.poster?.backgroundColor {
 			self.posterImageView.backgroundColor = UIColor(hexString: posterBackgroundColor)
 		}
-		self.show.attributes.posterImage(imageView: self.posterImageView)
+		show.attributes.posterImage(imageView: self.posterImageView)
+		self.posterImageOverlayView.isHidden = true
+		self.posterImageView.cornerRadius = 10.0
+		self.posterImageView.mask = nil
 
 		// Configure banner view
-		if let bannerBackgroundColor = self.show.attributes.banner?.backgroundColor {
+		if let bannerBackgroundColor = show.attributes.banner?.backgroundColor {
 			self.bannerImageView.backgroundColor = UIColor(hexString: bannerBackgroundColor)
 		}
-		self.show.attributes.bannerImage(imageView: self.bannerImageView)
+		show.attributes.bannerImage(imageView: self.bannerImageView)
+
+		// Configure shadows
+		self.shadowView.applyShadow()
+		self.reminderButton.applyShadow()
+		self.favoriteButton.applyShadow()
+
+		// Display details
+		self.quickDetailsView.isHidden = false
+	}
+
+	func configure(using literature: Literature) {
+		self.libraryKind = .literatures
+		self.show = nil
+		self.literature = literature
+		NotificationCenter.default.removeObserver(self)
+		NotificationCenter.default.addObserver(self, selector: #selector(handleFavoriteToggle(_:)), name: .KModelFavoriteIsToggled, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(handleReminderToggle(_:)), name: .KModelReminderIsToggled, object: nil)
+
+		// Configure library status
+		self.libraryStatus = literature.attributes.libraryStatus ?? .none
+		self.updateLibraryActions(using: literature)
+
+		// Configure title label
+		self.primaryLabel.text = literature.attributes.title
+
+		// Configure tags label
+		self.secondaryLabel.text = literature.attributes.informationString
+
+		// Configure airing status label
+		self.statusButton.setTitle(literature.attributes.status.name, for: .normal)
+		self.statusButton.backgroundColor = UIColor(hexString: literature.attributes.status.color)
+
+		// Configure poster view
+		if let posterBackgroundColor = literature.attributes.poster?.backgroundColor {
+			self.posterImageView.backgroundColor = UIColor(hexString: posterBackgroundColor)
+		}
+		literature.attributes.posterImage(imageView: self.posterImageView)
+		self.posterImageOverlayView.isHidden = false
+		self.posterImageView.cornerRadius = 0.0
+		self.posterImageView.mask = self.mangaMask
+
+		// Configure banner view
+		if let bannerBackgroundColor = literature.attributes.banner?.backgroundColor {
+			self.bannerImageView.backgroundColor = UIColor(hexString: bannerBackgroundColor)
+		}
+		literature.attributes.bannerImage(imageView: self.bannerImageView)
 
 		// Configure shadows
 		self.shadowView.applyShadow()
@@ -82,22 +134,32 @@ extension ShowDetailHeaderCollectionViewCell {
 	}
 
 	func updateLibraryStatus() {
-		self.libraryStatusButton.setTitle(libraryStatus != .none ? "\(libraryStatus.stringValue.capitalized) ▾" : "ADD", for: .normal)
+		let libraryStatus: String
+
+		switch self.libraryKind {
+		case .shows:
+			libraryStatus = self.libraryStatus.showStringValue
+		case .literatures:
+			libraryStatus = self.libraryStatus.literatureStringValue
+		}
+
+		self.libraryStatusButton.setTitle(self.libraryStatus != .none ? "\(libraryStatus.capitalized) ▾" : "ADD", for: .normal)
 	}
 
 	@objc func handleFavoriteToggle(_ notification: NSNotification) {
-		updateFavoriteStatus()
+		guard let favoriteStatus = notification.userInfo?["favoriteStatus"] as? FavoriteStatus else { return }
+		self.updateFavoriteStatus(favoriteStatus)
 	}
 
 	@objc func handleReminderToggle(_ notification: NSNotification) {
-		updateReminderStatus()
+		guard let reminderStatus = notification.userInfo?["reminderStatus"] as? ReminderStatus else { return }
+		self.updateReminderStatus(reminderStatus)
 	}
 
 	/// Updates the `favoriteButton` appearance with the favorite status of the show.
 	///
 	/// - Parameter animated: A boolean value indicating whether to update changes with animations.
-	func updateFavoriteStatus(animated: Bool = false) {
-		let favoriteStatus = self.show.attributes.favoriteStatus
+	func updateFavoriteStatus(_ favoriteStatus: FavoriteStatus, animated: Bool = false) {
 		if self.libraryStatus == .none || favoriteStatus == .disabled {
 			self.favoriteButton.isHidden = true
 			self.favoriteButton.isUserInteractionEnabled = false
@@ -106,7 +168,7 @@ extension ShowDetailHeaderCollectionViewCell {
 			self.favoriteButton.isUserInteractionEnabled = true
 
 			self.favoriteButton.setImage(favoriteStatus.imageValue, for: .normal)
-			NotificationCenter.default.post(name: .KFavoriteShowsListDidChange, object: nil)
+			NotificationCenter.default.post(name: .KFavoriteModelsListDidChange, object: nil)
 
 			if animated {
 				self.favoriteButton.animateBounce()
@@ -117,8 +179,7 @@ extension ShowDetailHeaderCollectionViewCell {
 	/// Updates the `reminderButton` appearance with the reminder status of the show.
 	///
 	/// - Parameter animated: A boolean value indicating whether to update changes with animations.
-	func updateReminderStatus(animated: Bool = false) {
-		let reminderStatus = self.show.attributes.reminderStatus
+	func updateReminderStatus(_ reminderStatus: ReminderStatus, animated: Bool = false) {
 		if self.libraryStatus == .none || reminderStatus == .disabled {
 			self.reminderButton.isHidden = true
 			self.reminderButton.isUserInteractionEnabled = false
@@ -127,7 +188,7 @@ extension ShowDetailHeaderCollectionViewCell {
 			self.reminderButton.isUserInteractionEnabled = true
 
 			self.reminderButton.setImage(reminderStatus.imageValue, for: .normal)
-			NotificationCenter.default.post(name: .KFavoriteShowsListDidChange, object: nil)
+			NotificationCenter.default.post(name: .KFavoriteModelsListDidChange, object: nil)
 
 			if animated {
 				self.reminderButton.animateBounce()
@@ -137,11 +198,24 @@ extension ShowDetailHeaderCollectionViewCell {
 
 	/// Updates `favoriteButton`, `reminderButton` and `libraryStatusButton` with the attributes of the show.
 	///
-	/// - Parameter animated: A boolean value indicating whether to update changes with animations.
-	func updateLibraryActions(animated: Bool = false) {
+	/// - Parameters:
+	///    - show: The show object used to udpate the actions.
+	///    - animated: A boolean value indicating whether to update changes with animations.
+	func updateLibraryActions(using show: Show, animated: Bool = false) {
 		self.updateLibraryStatus()
-		self.updateFavoriteStatus(animated: animated)
-		self.updateReminderStatus(animated: animated)
+		self.updateFavoriteStatus(show.attributes.favoriteStatus, animated: animated)
+		self.updateReminderStatus(show.attributes.reminderStatus, animated: animated)
+	}
+
+	/// Updates `favoriteButton`, `reminderButton` and `libraryStatusButton` with the attributes of the show.
+	///
+	/// - Parameters:
+	///    - literature: The literature object used to udpate the actions.
+	///    - animated: A boolean value indicating whether to update changes with animations.
+	func updateLibraryActions(using literature: Literature, animated: Bool = false) {
+		self.updateLibraryStatus()
+		self.updateFavoriteStatus(literature.attributes.favoriteStatus, animated: animated)
+		self.updateReminderStatus(literature.attributes.reminderStatus, animated: animated)
 	}
 }
 
@@ -150,47 +224,77 @@ extension ShowDetailHeaderCollectionViewCell {
 	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
 		WorkflowController.shared.isSignedIn {
 			let oldLibraryStatus = self.libraryStatus
-			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: oldLibraryStatus, action: { [weak self] (_, value)  in
+			let modelID: String
+
+			switch self.libraryKind {
+			case .shows:
+				guard let show = self.show else { return }
+				modelID = String(show.id)
+			case .literatures:
+				guard let literatures = self.literature else { return }
+				modelID = literatures.id
+			}
+
+			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: self.libraryKind), currentSelection: oldLibraryStatus, action: { [weak self] (_, value)  in
 				guard let self = self else { return }
+
 				if oldLibraryStatus != value {
-					KService.addToLibrary(withLibraryStatus: value, showID: self.show.id) { result in
-						switch result {
-						case .success(let libraryUpdate):
-							self.show.attributes.update(using: libraryUpdate)
+					Task {
+						do {
+							let libraryUpdateResponse = try await KService.addToLibrary(self.libraryKind, withLibraryStatus: value, modelID: modelID).value
 
 							// Update entry in library
 							self.libraryStatus = value
-							self.updateLibraryActions(animated: oldLibraryStatus == .none)
+
+							switch self.libraryKind {
+							case .shows:
+								guard let show = self.show else { return }
+								show.attributes.update(using: libraryUpdateResponse.data)
+								self.updateLibraryActions(using: show, animated: oldLibraryStatus == .none)
+							case .literatures:
+								guard let literature = self.literature else { return }
+								literature.attributes.update(using: libraryUpdateResponse.data)
+								self.updateLibraryActions(using: literature, animated: oldLibraryStatus == .none)
+							}
 
 							let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
 							NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
 
 							let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
 							NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
-						case .failure:
-							break
+						} catch let error as KKAPIError {
+//							self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
+							print("----- Add to library failed", error.message)
 						}
 					}
 				}
 			})
 
 			if self.libraryStatus != .none {
-				actionSheetAlertController.addAction(UIAlertAction(title: "Remove from library", style: .destructive, handler: { [weak self] _ in
-					guard let self = self else { return }
-					KService.removeFromLibrary(showID: self.show.id) { result in
-						switch result {
-						case .success(let libraryUpdate):
-							self.show.attributes.update(using: libraryUpdate)
+				actionSheetAlertController.addAction(UIAlertAction(title: Trans.removeFromLibrary, style: .destructive, handler: { _ in
+					Task {
+						do {
+							let libraryUpdateResponse = try await KService.removeFromLibrary(self.libraryKind, modelID: modelID).value
+
+							switch self.libraryKind {
+							case .shows:
+								guard let show = self.show else { return }
+								show.attributes.update(using: libraryUpdateResponse.data)
+								self.updateLibraryActions(using: show, animated: true)
+							case .literatures:
+								guard let literature = self.literature else { return }
+								literature.attributes.update(using: libraryUpdateResponse.data)
+								self.updateLibraryActions(using: literature, animated: true)
+							}
 
 							// Update edntry in library
 							self.libraryStatus = .none
 
 							let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
 							NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
-
-							self.updateLibraryActions(animated: true)
-						case .failure:
-							break
+						} catch let error as KKAPIError {
+//							self.presentAlertController(title: "Can't Remove From Your Library 😔", message: error.message)
+							print("----- Remove from library failed", error.message)
 						}
 					}
 				}))
@@ -209,10 +313,12 @@ extension ShowDetailHeaderCollectionViewCell {
 	}
 
 	@IBAction func favoriteButtonPressed(_ sender: UIButton) {
-		self.show.toggleFavorite()
+		self.show?.toggleFavorite()
+		self.literature?.toggleFavorite()
 	}
 
 	@IBAction func raminderButtonPressed(_ sender: UIButton) {
-		self.show.toggleReminder()
+		self.show?.toggleReminder()
+//		self.literature?.toggleReminder()
 	}
 }

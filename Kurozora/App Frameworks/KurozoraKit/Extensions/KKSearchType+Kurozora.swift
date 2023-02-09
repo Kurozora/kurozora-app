@@ -19,8 +19,8 @@ extension KKSearchType {
 			return Trans.episodes
 //		case .games:
 //			return Trans.games
-//		case .literature:
-//			return Trans.literature
+		case .literatures:
+			return Trans.literatures
 		case .people:
 			return Trans.people
 		case .shows:
@@ -45,8 +45,8 @@ extension KKSearchType {
 //			return [""]
 		case .shows:
 			return ["One Piece", "Shaman Asakaura", "young girl with a head full of air", "massive online role-playing game", "vampires"]
-//		case .literature:
-//			return ["Sword Art Online", "One Piece", "BLAME", "Bungo Stray Dogs"]
+		case .literatures:
+			return ["Sword Art Online", "One Piece", "BLAME", "Bungo Stray Dogs"]
 		case .people:
 			return ["Konomi Suzuki", "Reiki Kawahara", "Hayao Miyazaki", "Mayumi Tanaka", "Gosho Aoyama"]
 		case .songs:

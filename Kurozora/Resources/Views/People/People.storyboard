@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19115.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="AgD-mW-InF">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="AgD-mW-InF">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19107.5"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -73,6 +74,8 @@
                         <segue destination="5be-S9-IEG" kind="show" identifier="ShowsListSegue" id="rMe-81-LfS"/>
                         <segue destination="kKM-2N-uwE" kind="show" identifier="CharactersListSegue" id="sIx-q7-dCa"/>
                         <segue destination="CVK-4m-JQM" kind="show" identifier="CharacterDetailsSegue" id="ATk-vT-1ZC"/>
+                        <segue destination="Isr-MK-fnn" kind="show" identifier="LiteratureDetailsSegue" id="oyx-WX-Jqx"/>
+                        <segue destination="vpE-Qa-FFg" kind="show" identifier="LiteraturesListSegue" id="t6H-54-YBd"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eW9-Cw-VCA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -97,7 +100,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MCc-dQ-433" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3714" y="-74"/>
+            <point key="canvasLocation" x="3712" y="-88"/>
         </scene>
         <!--CharacterDetailsCollectionViewController-->
         <scene sceneID="uMs-iG-kTE">
@@ -107,7 +110,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mem-zh-8SX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3743" y="-143"/>
+            <point key="canvasLocation" x="3741" y="-156"/>
         </scene>
         <!--CharactersListCollectionViewController-->
         <scene sceneID="hNn-hg-SRZ">
@@ -125,7 +128,7 @@
                 <navigationController storyboardIdentifier="PeopleKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="AgD-mW-InF" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="WWt-YS-znN">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -166,6 +169,26 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mGo-e3-PuJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2059" y="-125"/>
+        </scene>
+        <!--LiteratureDetailsCollectionViewController-->
+        <scene sceneID="xgn-1a-m50">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Literatures" referencedIdentifier="LiteratureDetailsCollectionViewController" id="Isr-MK-fnn" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="2jB-Ja-RvS"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eAQ-lD-WzD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3741" y="-45"/>
+        </scene>
+        <!--LiteraturesListCollectionViewController-->
+        <scene sceneID="PPP-HN-osR">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Literatures" referencedIdentifier="LiteraturesListCollectionViewController" id="vpE-Qa-FFg" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="cUc-Vv-45M"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="O4e-ld-3KQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3732" y="-26"/>
         </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
