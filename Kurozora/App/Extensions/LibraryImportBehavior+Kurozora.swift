@@ -1,18 +1,18 @@
 //
-//  KKLibraryStatus+Kurozora.swift
+//  LibraryImportBehavior+Kurozora.swift
 //  Kurozora
 //
-//  Created by Khoren Katklian on 07/04/2020.
-//  Copyright © 2020 Kurozora. All rights reserved.
+//  Created by Khoren Katklian on 28/01/2023.
+//  Copyright © 2023 Kurozora. All rights reserved.
 //
 
 import KurozoraKit
 
-extension KKLibrary.Status {
-	/// An array containing all library section string value and its equivalent section value.
-	static var alertControllerItems: [(String, KKLibrary.Status)] {
-		var items = [(String, KKLibrary.Status)]()
-		for section in KKLibrary.Status.all {
+extension LibraryImport.Behavior {
+	/// An array containing all `LibraryImport.Behavior` key and value pairs.
+	static var alertControllerItems: [(String, LibraryImport.Behavior)] {
+		var items = [(String, LibraryImport.Behavior)]()
+		for section in LibraryImport.Behavior.allCases {
 			items.append((section.stringValue, section))
 		}
 		return items

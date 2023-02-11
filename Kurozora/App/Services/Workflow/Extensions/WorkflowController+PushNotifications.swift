@@ -98,11 +98,11 @@ extension WorkflowController: UNUserNotificationCenterDelegate {
 		case NotificationKind.Action.viewSessionDetails.identifierValue:
 			self.openSessionsManager()
 		case NotificationKind.Action.viewShowDetails.identifierValue:
-			if let showID = userInfo["SHOW_ID"] as? Int {
+			if let showID = userInfo["SHOW_ID"] as? String {
 				self.openShowDetails(for: showID)
 			}
 		case NotificationKind.Action.viewProfileDetails.identifierValue:
-			if let userID = userInfo["USER_ID"] as? Int {
+			if let userID = userInfo["USER_ID"] as? String {
 				self.openUserProfile(for: userID)
 			}
 		default: break
@@ -159,7 +159,7 @@ extension WorkflowController {
 	/// Open the show details view for the given show ID.
 	///
 	/// - Parameter showID: The id of the show with which the details view will be loaded.
-	func openShowDetails(for showID: Int, in viewController: UIViewController? = UIApplication.topViewController) {
+	func openShowDetails(for showID: String, in viewController: UIViewController? = UIApplication.topViewController) {
 		let showDetailsCollectionViewController = ShowDetailsCollectionViewController.`init`(with: showID)
 		viewController?.show(showDetailsCollectionViewController, sender: nil)
 	}
@@ -167,7 +167,7 @@ extension WorkflowController {
 	/// Open the profile view for the given user ID.
 	///
 	/// - Parameter userID: The id of the user with which the profile view will be loaded.
-	func openUserProfile(for userID: Int, in viewController: UIViewController? = UIApplication.topViewController) {
+	func openUserProfile(for userID: String, in viewController: UIViewController? = UIApplication.topViewController) {
 		let profileTableViewController = ProfileTableViewController.`init`(with: userID)
 		viewController?.show(profileTableViewController, sender: nil)
 	}
@@ -175,7 +175,7 @@ extension WorkflowController {
 	/// Open the feed message details view for the given feed message ID.
 	///
 	/// - Parameter userID: The id of the feed message with which the feed message details view will be loaded.
-	func openFeedMessage(for feedMessageID: Int, in viewController: UIViewController? = UIApplication.topViewController) {
+	func openFeedMessage(for feedMessageID: String, in viewController: UIViewController? = UIApplication.topViewController) {
 		let fmDetailsTableViewController = FMDetailsTableViewController.`init`(with: feedMessageID)
 		viewController?.show(fmDetailsTableViewController, sender: nil)
 	}
