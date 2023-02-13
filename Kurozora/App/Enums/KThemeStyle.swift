@@ -297,6 +297,7 @@ extension KThemeStyle {
 		}
 
 		let sessionConfig = URLSessionConfiguration.default
+		sessionConfig.headers = [.authorization(bearerToken: KService.authenticationKey)]
 		let session = URLSession(configuration: sessionConfig)
 		guard let request = try? URLRequest(url: urlString, method: .get) else {
 			DispatchQueue.main.async {
