@@ -70,22 +70,22 @@ class SidebarViewController: KCollectionViewController {
 	fileprivate func configureSearchBar() {
 		#if targetEnvironment(macCatalyst)
 		// Disable search bar in navigation for the results view
-		searchResultsCollectionViewController.includesSearchBar = false
+		self.searchResultsCollectionViewController.includesSearchBar = false
 
 		// Configure search bar
-		kSearchController.viewController = searchResultsCollectionViewController
-		kSearchController.searchScope = .kurozora
-		kSearchController.forceShowsCancelButton = false
-		kSearchController.obscuresBackgroundDuringPresentation = false
-		kSearchController.automaticallyShowsCancelButton = false
-		kSearchController.automaticallyShowsScopeBar = true
-		kSearchController.searchResultsUpdater = self
-		kSearchController.delegate = self
+		self.kSearchController.viewController = self.searchResultsCollectionViewController
+		self.kSearchController.searchScope = .kurozora
+		self.kSearchController.forceShowsCancelButton = false
+		self.kSearchController.obscuresBackgroundDuringPresentation = false
+		self.kSearchController.automaticallyShowsCancelButton = false
+		self.kSearchController.automaticallyShowsScopeBar = true
+		self.kSearchController.searchResultsUpdater = self
+		self.kSearchController.delegate = self
 
 		// Add search bar to navigation controller
 		navigationItem.searchController = kSearchController
 		#else
-		searchResultsCollectionViewController.includesSearchBar = true
+		self.searchResultsCollectionViewController.includesSearchBar = true
 		#endif
 	}
 
@@ -167,7 +167,7 @@ extension SidebarViewController {
 	}
 
 	private func applyInitialSnapshot() {
-		self.dataSource.apply(sideBarSnapshot(), to: .main, animatingDifferences: false) { [weak self] in
+		self.dataSource.apply(self.sideBarSnapshot(), to: .main, animatingDifferences: false) { [weak self] in
 			guard let self = self else { return }
 			// Select the home view
 			let indexPath = IndexPath(row: 0, section: 0)
@@ -191,8 +191,15 @@ extension SidebarViewController {
 			self.kSearchController.isActive = false
 		}
 
-		if shouldSegue {
-			self.splitViewController?.setViewController(self.viewControllers[indexPath.row], for: .secondary)
+		switch self.selectedItem {
+		case .settings:
+			let settingsSplitViewController = self.viewControllers[indexPath.row]
+			settingsSplitViewController.modalPresentationStyle = .fullScreen
+			self.present(settingsSplitViewController, animated: true)
+		default:
+			if shouldSegue {
+				self.splitViewController?.setViewController(self.viewControllers[indexPath.row], for: .secondary)
+			}
 		}
 	}
 

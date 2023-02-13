@@ -905,6 +905,11 @@ struct Trans {
 	/// - Tag: Trans-search
 	static let search: String = String(localized: "Search",
 									   comment: "The string for the word 'search'.")
+	/// The string for the word 'settings'.
+	///
+	/// - Tag: Trans-settings
+	static let settings: String = String(localized: "Settings",
+										 comment: "The string for the word 'settings'.")
 	/// The string for the word 'subscribe'.
 	///
 	/// - Tag: Trans-subscribe

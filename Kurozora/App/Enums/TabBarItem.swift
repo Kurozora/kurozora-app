@@ -26,12 +26,18 @@ enum TabBarItem: Int, CaseIterable {
 	/// Representing the search tab.
 	case search
 
+	/// Representing the settings tab.
+	case settings
+
 	// MARK: - Properties
-	#if targetEnvironment(macCatalyst)
-	static var sideBarCases: [TabBarItem] = [.home, .library, .feed, .notifications]
-	#else
-	static var sideBarCases: [TabBarItem] = [.home, .library, .feed, .notifications, .search]
-	#endif
+	static var sideBarCases: [TabBarItem] {
+		if UIDevice.isPad {
+			return [.home, .library, .feed, .notifications, .search, .settings]
+		} else if UIDevice.isMac {
+			return [.home, .library, .feed, .notifications, .settings]
+		}
+		return [.home, .library, .feed, .notifications, .search]
+	}
 
 	// MARK: - Structs
 	/// List of row identifiers.
@@ -50,6 +56,9 @@ enum TabBarItem: Int, CaseIterable {
 
 		/// The unique identifier for the search tab.
 		static let search = UUID()
+
+		/// The unique identifier for the settings tab.
+		static let settings = UUID()
 	}
 
 	// MARK: - Properties
@@ -66,6 +75,8 @@ enum TabBarItem: Int, CaseIterable {
 			return Trans.notifications
 		case .search:
 			return Trans.search
+		case .settings:
+			return Trans.settings
 		}
 	}
 
@@ -82,6 +93,8 @@ enum TabBarItem: Int, CaseIterable {
 			return UIImage(systemName: "app.badge")!
 		case .search:
 			return UIImage(systemName: "magnifyingglass")!
+		case .settings:
+			return UIImage(systemName: "gear")!
 		}
 	}
 
@@ -98,6 +111,8 @@ enum TabBarItem: Int, CaseIterable {
 			return UIImage(systemName: "app.badge.fill")!
 		case .search:
 			return UIImage(systemName: "text.magnifyingglass")!
+		case .settings:
+			return UIImage(systemName: "gear")!
 		}
 	}
 
@@ -114,6 +129,8 @@ enum TabBarItem: Int, CaseIterable {
 			return R.storyboard.notifications.notificationsTableViewController()!
 		case .search:
 			return R.storyboard.search.searchResultsCollectionViewController()!
+		case .settings:
+			return R.storyboard.settings.settingsSplitViewController()!
 		}
 	}
 
@@ -130,6 +147,8 @@ enum TabBarItem: Int, CaseIterable {
 			return R.storyboard.notifications.notificationKNvaigationController()!
 		case .search:
 			return R.storyboard.search.searchKNvaigationController()!
+		case .settings:
+			return R.storyboard.settings.instantiateInitialViewController()!
 		}
 	}
 
@@ -146,6 +165,8 @@ enum TabBarItem: Int, CaseIterable {
 			return RowIdentifier.notifications
 		case .search:
 			return RowIdentifier.search
+		case .settings:
+			return RowIdentifier.settings
 		}
 	}
 }
