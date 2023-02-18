@@ -156,7 +156,7 @@ struct Trans {
 	/// The footer string for the Redeem view.
 	///
 	/// - Tag: Trans-redeemFooter
-	static let redeemFooter: String = String(localized: "Redeeming a code will immediately apply the credits onto your account. Please keep in mind Kurozora codes are redeemable only once per account and expire after one use.",
+	static let redeemFooter: String = String(localized: "Redeeming a code will unlock special badges and achievements, as well as increase your reputation points. Please keep in mind Kurozora codes are redeemable only once per account and expire after one use.",
 											 table: "Redeem",
 											 comment: "The footer string for the Redeem view.")
 	/// The headline string for the redeem error pop-up.
@@ -258,6 +258,12 @@ struct Trans {
 											 comment: "The footer string for the Tip Jar view.")
 
 	// MARK: - Privacy Policy
+	/// The string for the word terms of use.
+	///
+	/// - Tag: Trans-termsOfUse
+	static let termsOfUse: String = String(localized: "Terms of Use",
+										   table: "Legal",
+										   comment: "The string for the word terms of use.")
 	/// The string for the word privacy policy.
 	///
 	/// - Tag: Trans-privacyPolicy
