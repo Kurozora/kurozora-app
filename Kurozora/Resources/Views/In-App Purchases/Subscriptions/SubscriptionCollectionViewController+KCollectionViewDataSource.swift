@@ -73,7 +73,7 @@ extension SubscriptionCollectionViewController {
 			case .footer:
 				let purchaseFooterCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.purchaseFooterCollectionViewCell, for: indexPath)
 				purchaseFooterCollectionViewCell?.delegate = self
-				purchaseFooterCollectionViewCell?.configureCell(using: Trans.subscriptionFooter, privacyButtonText: Trans.visitPrivacyPolicy, restorePurchaseButtonText: Trans.restorePurchase)
+				purchaseFooterCollectionViewCell?.configureCell(using: Trans.subscriptionFooter, termsOfUseButtonText: Trans.termsOfUse, privacyButtonText: Trans.privacyPolicy, restorePurchaseButtonText: Trans.restorePurchase)
 				return purchaseFooterCollectionViewCell
 			}
 		}

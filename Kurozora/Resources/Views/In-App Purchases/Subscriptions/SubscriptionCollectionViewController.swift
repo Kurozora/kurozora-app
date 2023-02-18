@@ -197,6 +197,10 @@ extension SubscriptionCollectionViewController: PurchaseButtonCollectionViewCell
 
 // MARK: - PurchaseFooterCollectionViewCellDelegate
 extension SubscriptionCollectionViewController: PurchaseFooterCollectionViewCellDelegate {
+	func purchaseFooterCollectionViewCell(_ cell: PurchaseFooterCollectionViewCell, didPressTermsOfUseButton button: UIButton) {
+		UIApplication.shared.kOpen(URL.appStoreEULA)
+	}
+
 	func purchaseFooterCollectionViewCell(_ cell: PurchaseFooterCollectionViewCell, didPressPrivacyButton button: UIButton) {
 		guard let legalKNavigationViewController = R.storyboard.legal.instantiateInitialViewController() else { return }
 		self.present(legalKNavigationViewController, animated: true)

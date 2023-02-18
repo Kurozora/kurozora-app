@@ -32,6 +32,9 @@ extension URL {
 	/// The deep link URL to the App Store page of Kurozora.
 	static let appStoreURL = URL(string: "itms-apps://apps.apple.com/us/app/kurozora/id1476153872")
 
+	/// The deep link URL to the App Store's EULA.
+	static let appStoreEULA = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")
+
 	/// The deep link URL to the App Store rating page of Kurozora.
 	static let rateURL = URL(string: "itms-apps://apps.apple.com/us/app/kurozora/id1476153872?action=write-review")
 

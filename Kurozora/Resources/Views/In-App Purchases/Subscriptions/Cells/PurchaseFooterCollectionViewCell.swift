@@ -11,23 +11,26 @@ import SwiftTheme
 
 protocol PurchaseFooterCollectionViewCellDelegate: AnyObject {
 	func purchaseFooterCollectionViewCell(_ cell: PurchaseFooterCollectionViewCell, didPressPrivacyButton button: UIButton)
+	func purchaseFooterCollectionViewCell(_ cell: PurchaseFooterCollectionViewCell, didPressTermsOfUseButton button: UIButton)
 }
 
 class PurchaseFooterCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlet
 	@IBOutlet weak var restorePurchaseButton: KButton?
 	@IBOutlet weak var primaryLabel: KLabel!
-	@IBOutlet weak var privacyButtonPressed: UIButton!
+	@IBOutlet weak var termsOfUseButton: KButton!
+	@IBOutlet weak var privacyButton: KButton!
 
 	// MARK: - Properties
 	weak var delegate: PurchaseFooterCollectionViewCellDelegate?
 
 	// MARK: - Functions
-	func configureCell(using primaryText: String?, privacyButtonText: ThemeAttributedStringPicker?, restorePurchaseButtonText: String?) {
+	func configureCell(using primaryText: String?, termsOfUseButtonText: String?, privacyButtonText: String?, restorePurchaseButtonText: String?) {
 		self.contentView.backgroundColor = .clear
 
 		self.primaryLabel.text = primaryText
-		self.privacyButtonPressed.theme_setAttributedTitle(privacyButtonText, forState: .normal)
+		self.termsOfUseButton.setTitle(termsOfUseButtonText, for: .normal)
+		self.privacyButton.setTitle(privacyButtonText, for: .normal)
 		self.restorePurchaseButton?.setTitle(restorePurchaseButtonText, for: .normal)
 	}
 
@@ -36,6 +39,10 @@ class PurchaseFooterCollectionViewCell: UICollectionViewCell {
 		Task {
 			await store.restore()
 		}
+	}
+
+	@IBAction func termsOfUseButtonPressed(_ sender: UIButton) {
+		self.delegate?.purchaseFooterCollectionViewCell(self, didPressTermsOfUseButton: sender)
 	}
 
 	@IBAction func privacyButtonPressed(_ sender: UIButton) {
