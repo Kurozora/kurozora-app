@@ -147,10 +147,17 @@ extension AppDelegate {
 // MARK: - Menu Actions
 extension AppDelegate {
 	/// Used to update your content.
+	@objc func handleNewScene() {
+		if UIApplication.shared.connectedScenes.count == 0 {
+			UIApplication.shared.requestSceneSessionActivation(nil, userActivity: nil, options: nil)
+		}
+	}
+
+	/// Used to update your content.
 	@objc func handleRefreshControl() { }
 
-	/// User chose "Preferences..." from the Application menu.
-	@objc func handlePreferences(_ sender: AnyObject) {
+	/// User chose "Settings..." from the Application menu.
+	@objc func handleSettings(_ sender: AnyObject) {
 		if let settingsSplitViewController = R.storyboard.settings.instantiateInitialViewController() {
 			settingsSplitViewController.modalPresentationStyle = .fullScreen
 			UIApplication.topViewController?.splitViewController?.present(settingsSplitViewController, animated: true)

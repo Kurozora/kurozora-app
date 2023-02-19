@@ -123,6 +123,8 @@
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
 		<true/>
+		<key>UIApplicationSupportsTabbedSceneCollection</key>
+		<false/>
 		<key>UISceneConfigurations</key>
 		<dict>
 			<key>UIWindowSceneSessionRoleApplication</key>
