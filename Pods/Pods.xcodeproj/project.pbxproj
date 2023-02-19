@@ -1395,7 +1395,7 @@
 		092E39A0E200A4655F9FCB1B48DB0F47 /* FollowStatus.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FollowStatus.swift; path = KurozoraKit/Classes/Enums/FollowStatus.swift; sourceTree = "<group>"; };
 		098BFAA4DF857A95D677F84E613F3A11 /* NibLoadable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NibLoadable.swift; path = WhatsNew/Utils/NibLoadable.swift; sourceTree = "<group>"; };
 		09ABE84F217EF5DE74DC8DFC776F142A /* OSCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OSCache.h; path = Classes/Network/OSCache/OSCache.h; sourceTree = "<group>"; };
-		09AD74EC054EC43438AD565AF400DCEE /* FLEXFirebaseTransaction.mm */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.objcpp; name = FLEXFirebaseTransaction.mm; path = Classes/Network/FLEXFirebaseTransaction.mm; sourceTree = "<group>"; };
+		09AD74EC054EC43438AD565AF400DCEE /* FLEXFirebaseTransaction.mm */ = {isa = PBXFileReference; includeInIndex = 1; name = FLEXFirebaseTransaction.mm; path = Classes/Network/FLEXFirebaseTransaction.mm; sourceTree = "<group>"; };
 		09B4C201B6D3972A2A747967BF0F10B5 /* LibraryImport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LibraryImport.swift; path = KurozoraKit/Classes/Models/Miscellaneous/LibraryImport.swift; sourceTree = "<group>"; };
 		0A0D3A6537A51443D4872432D336BC1B /* ServerTrustEvaluation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ServerTrustEvaluation.swift; path = Source/ServerTrustEvaluation.swift; sourceTree = "<group>"; };
 		0A4F58B907107266BEB43D9193D6E3C9 /* FLEXTabsViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FLEXTabsViewController.m; path = Classes/ExplorerInterface/Tabs/FLEXTabsViewController.m; sourceTree = "<group>"; };
@@ -1589,7 +1589,7 @@
 		335FA8BA94DE6E69832BA9809BF7888A /* UIKit+Theme.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIKit+Theme.swift"; path = "Sources/UIKit+Theme.swift"; sourceTree = "<group>"; };
 		3377DCA64870C5E7D46D631257A38599 /* FLEXObjectExplorer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FLEXObjectExplorer.m; path = Classes/ObjectExplorers/FLEXObjectExplorer.m; sourceTree = "<group>"; };
 		33AD8F827824062D92DF5A6F4B1CE0C9 /* UIView+Localization.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIView+Localization.swift"; path = "Sources/Pageboy/Utilities/Extensions/UIView+Localization.swift"; sourceTree = "<group>"; };
-		33BAB94E853931763455DF9F7FA2AF26 /* FLEXSwiftInternal.mm */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.objcpp; name = FLEXSwiftInternal.mm; path = Classes/Utility/Runtime/Objc/FLEXSwiftInternal.mm; sourceTree = "<group>"; };
+		33BAB94E853931763455DF9F7FA2AF26 /* FLEXSwiftInternal.mm */ = {isa = PBXFileReference; includeInIndex = 1; name = FLEXSwiftInternal.mm; path = Classes/Utility/Runtime/Objc/FLEXSwiftInternal.mm; sourceTree = "<group>"; };
 		33EF40584B4FFB90D646B51AFEAE5733 /* WhatsNewItemImageView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WhatsNewItemImageView.swift; path = WhatsNew/Items/WhatsNewItemImageView.swift; sourceTree = "<group>"; };
 		346878E20529A149AF684D3C778069AB /* SPConfettiModifier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SPConfettiModifier.swift; path = Sources/SPConfetti/SwiftUI/SPConfettiModifier.swift; sourceTree = "<group>"; };
 		34CC9FB9BD85ACDC81ADC069966FCAF3 /* NotificationCenterExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NotificationCenterExtensions.swift; path = Sources/SwifterSwift/Foundation/NotificationCenterExtensions.swift; sourceTree = "<group>"; };
@@ -1833,7 +1833,7 @@
 		6697CE633370E785C398DD3C4A0DA676 /* TMBarButtonInteractionController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TMBarButtonInteractionController.swift; path = Sources/Tabman/Bar/BarButton/TMBarButtonInteractionController.swift; sourceTree = "<group>"; };
 		66A5019D5D859C416BB429B78B974B5A /* UIView+Animation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIView+Animation.swift"; path = "Sources/Pageboy/Utilities/Extensions/UIView+Animation.swift"; sourceTree = "<group>"; };
 		66B40BA9E955F4B05BC2A742A99B679B /* ColorResource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ColorResource.swift; path = Sources/RswiftResources/ColorResource.swift; sourceTree = "<group>"; };
-		66D9FAFC0E74D33DA71B752AA6022958 /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = en.lproj; path = Sources/en.lproj; sourceTree = "<group>"; };
+		66D9FAFC0E74D33DA71B752AA6022958 /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = en.lproj; path = Sources/en.lproj; sourceTree = "<group>"; };
 		6721BEF701560DACD779A027BEB50C74 /* NSUserDefaults+FLEX.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSUserDefaults+FLEX.m"; path = "Classes/Utility/Categories/NSUserDefaults+FLEX.m"; sourceTree = "<group>"; };
 		674595C68BBB5C56B5A80922F055BD02 /* PageboyViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PageboyViewController.swift; path = Sources/Pageboy/PageboyViewController.swift; sourceTree = "<group>"; };
 		67695425299E2C45777D9BBD86CC1530 /* FollowUpdateResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FollowUpdateResponse.swift; path = "KurozoraKit/Classes/Models/User/Follow Update/FollowUpdateResponse.swift"; sourceTree = "<group>"; };
@@ -1893,7 +1893,7 @@
 		727E7B349590B011D0C44260CEF02D46 /* IQUIViewController+Additions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "IQUIViewController+Additions.swift"; path = "IQKeyboardManagerSwift/Categories/IQUIViewController+Additions.swift"; sourceTree = "<group>"; };
 		72B997598BF3A33BE1265F784B6FC2C1 /* FLEXExplorerViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FLEXExplorerViewController.h; path = Classes/ExplorerInterface/FLEXExplorerViewController.h; sourceTree = "<group>"; };
 		72CFB3BC051B6E563530C6E69A1FA890 /* Pods-Kurozora-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Kurozora-Info.plist"; sourceTree = "<group>"; };
-		7305C5DF561276E9953083361C2A07FA /* FLEXObjcInternal.mm */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.objcpp; name = FLEXObjcInternal.mm; path = Classes/Utility/Runtime/Objc/FLEXObjcInternal.mm; sourceTree = "<group>"; };
+		7305C5DF561276E9953083361C2A07FA /* FLEXObjcInternal.mm */ = {isa = PBXFileReference; includeInIndex = 1; name = FLEXObjcInternal.mm; path = Classes/Utility/Runtime/Objc/FLEXObjcInternal.mm; sourceTree = "<group>"; };
 		734165778107E058FCBDF84218939C20 /* XCDYouTubeVideo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = XCDYouTubeVideo.h; path = XCDYouTubeKit/XCDYouTubeVideo.h; sourceTree = "<group>"; };
 		738E3BDF212C5863034CB897A8A1A0D2 /* PersonAttributes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PersonAttributes.swift; path = KurozoraKit/Classes/Models/Person/PersonAttributes.swift; sourceTree = "<group>"; };
 		73A1CEB245779A073AF17FD5CD1FE264 /* SCNVector3Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SCNVector3Extensions.swift; path = Sources/SwifterSwift/SceneKit/SCNVector3Extensions.swift; sourceTree = "<group>"; };
@@ -2103,7 +2103,7 @@
 		9D1CE927506A6E8BBF72B47A80C52C61 /* ThemeActivityIndicatorViewStylePicker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ThemeActivityIndicatorViewStylePicker.swift; path = Sources/ThemeActivityIndicatorViewStylePicker.swift; sourceTree = "<group>"; };
 		9D6F1DF7A862CE25523017ABAABC3A54 /* FLEXHierarchyTableViewCell.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FLEXHierarchyTableViewCell.m; path = Classes/ViewHierarchy/TreeExplorer/FLEXHierarchyTableViewCell.m; sourceTree = "<group>"; };
 		9D8E58FE7C1FEEE5D6280069768FF719 /* UIScrollViewExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UIScrollViewExtensions.swift; path = Sources/SwifterSwift/UIKit/UIScrollViewExtensions.swift; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9DD50776F4C5F39BF256D02414842EF5 /* FLEXLayerShortcuts.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FLEXLayerShortcuts.h; path = Classes/ObjectExplorers/Sections/Shortcuts/FLEXLayerShortcuts.h; sourceTree = "<group>"; };
 		9DDFA9153D1BD081F7190F1F353C99FA /* FLEXManager+Extensibility.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "FLEXManager+Extensibility.m"; path = "Classes/Manager/FLEXManager+Extensibility.m"; sourceTree = "<group>"; };
 		9E118F8AEB3A90EDE1B9817863F1C66E /* LibraryResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LibraryResponse.swift; path = KurozoraKit/Classes/Models/Library/LibraryResponse.swift; sourceTree = "<group>"; };
@@ -2377,7 +2377,7 @@
 		CF9950547627C6682B4F67D39835358E /* Pods-Kurozora.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Kurozora.release.xcconfig"; sourceTree = "<group>"; };
 		CFA65236239D08AC9408132BA2F48D9C /* NSDateFormatter+FLEX.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSDateFormatter+FLEX.h"; path = "Classes/Utility/Categories/NSDateFormatter+FLEX.h"; sourceTree = "<group>"; };
 		CFDC03DED139A355988B8CFB1893036E /* URLExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = URLExtensions.swift; path = Sources/SwifterSwift/Foundation/URLExtensions.swift; sourceTree = "<group>"; };
-		D04C4C16B94DCF6B411747388FFE8A28 /* flex_fishhook.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = flex_fishhook.c; path = Classes/Utility/Runtime/flex_fishhook.c; sourceTree = "<group>"; };
+		D04C4C16B94DCF6B411747388FFE8A28 /* flex_fishhook.c */ = {isa = PBXFileReference; includeInIndex = 1; name = flex_fishhook.c; path = Classes/Utility/Runtime/flex_fishhook.c; sourceTree = "<group>"; };
 		D0A4945A58BC9B10D117457DFC13B947 /* FLEXTableView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FLEXTableView.h; path = Classes/Core/Views/FLEXTableView.h; sourceTree = "<group>"; };
 		D0A52DBE2C913C428AC625142EBEDE6B /* TabmanViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TabmanViewController.swift; path = Sources/Tabman/TabmanViewController.swift; sourceTree = "<group>"; };
 		D0B5D955ACE885112FED4A64B97F620E /* GameIdentity.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GameIdentity.swift; path = KurozoraKit/Classes/Models/Game/Identity/GameIdentity.swift; sourceTree = "<group>"; };
@@ -2853,6 +2853,7 @@
 				B27C9C676081AE4C8A5205E2263B8698 /* Reachability.swift */,
 				0211E8AE452BC50D79055466065D2319 /* Support Files */,
 			);
+			name = ReachabilitySwift;
 			path = ReachabilitySwift;
 			sourceTree = "<group>";
 		};
@@ -2955,6 +2956,7 @@
 				A54DF2D706EA0BEC69A0E024122AD4C2 /* XCDYouTubeVideoWebpage.m */,
 				8145E815EDA2C28066184B87DDDF1274 /* Support Files */,
 			);
+			name = XCDYouTubeKit;
 			path = XCDYouTubeKit;
 			sourceTree = "<group>";
 		};
@@ -3075,6 +3077,7 @@
 				029E417B1CB7DDD14DCF53F71EEC2FB3 /* WeakContainer.swift */,
 				42F124484E042F93BA50992ADD4B2BA4 /* Support Files */,
 			);
+			name = Pageboy;
 			path = Pageboy;
 			sourceTree = "<group>";
 		};
@@ -3129,6 +3132,7 @@
 				3D2EC8E6539D66E17EB6CDFC452084E5 /* UITextField+PlaceholderAttributes.swift */,
 				F719B72B69A0E9F9B121A89713B59A6E /* Support Files */,
 			);
+			name = SwiftTheme;
 			path = SwiftTheme;
 			sourceTree = "<group>";
 		};
@@ -3373,6 +3377,7 @@
 				C8C9B08E4F5EDF97B1B2989A16727FE9 /* WatchStatus.swift */,
 				A7963FAB1F7427FDA92F277AC13D0720 /* Support Files */,
 			);
+			name = KurozoraKit;
 			path = KurozoraKit;
 			sourceTree = "<group>";
 		};
@@ -3393,6 +3398,7 @@
 				395BFBD49DC2D5C83D4BB90D666F00A2 /* Resources */,
 				19BF0782351E885DE029171F1D204632 /* Support Files */,
 			);
+			name = SPConfetti;
 			path = SPConfetti;
 			sourceTree = "<group>";
 		};
@@ -3424,6 +3430,7 @@
 				727E7B349590B011D0C44260CEF02D46 /* IQUIViewController+Additions.swift */,
 				6870EC19029C6F0C05D864698B4BFBA7 /* Support Files */,
 			);
+			name = IQKeyboardManagerSwift;
 			path = IQKeyboardManagerSwift;
 			sourceTree = "<group>";
 		};
@@ -3470,6 +3477,7 @@
 				EC664D0AF4C2DAE1D57EB1BC357F195C /* Resources */,
 				827A755064BDD7CCB3DB678F607FD517 /* Support Files */,
 			);
+			name = "ESTabBarController-swift";
 			path = "ESTabBarController-swift";
 			sourceTree = "<group>";
 		};
@@ -3576,6 +3584,7 @@
 				DCEDE5ED2B6E22E57005FC2B4A225B39 /* WKInterfaceImage+Kingfisher.swift */,
 				80C540254FA7FC4ED7BEA027058DB512 /* Support Files */,
 			);
+			name = Kingfisher;
 			path = Kingfisher;
 			sourceTree = "<group>";
 		};
@@ -3652,6 +3661,7 @@
 				019E44C098143618D57BFB069ABB8CBF /* WeakContainer.swift */,
 				55718E32ABE6BFE92EA28B0B83187C92 /* Support Files */,
 			);
+			name = Tabman;
 			path = Tabman;
 			sourceTree = "<group>";
 		};
@@ -3732,6 +3742,7 @@
 				3ACB1E2803F391B1870B85F109BE07DE /* Support Files */,
 				6B39B7191DCB8C697DF57C9A3703A79F /* SwiftyJSON */,
 			);
+			name = TRON;
 			path = TRON;
 			sourceTree = "<group>";
 		};
@@ -3763,6 +3774,7 @@
 				7B195AA203B3227B711E43963F0B2404 /* Resources */,
 				9B986E5ABEE42DA14B6878CB0590D889 /* Support Files */,
 			);
+			name = WhatsNew;
 			path = WhatsNew;
 			sourceTree = "<group>";
 		};
@@ -3780,6 +3792,7 @@
 				FB7289964C256ACB11E223BC00A4EFBF /* SwiftyJSON.swift */,
 				F72B33D2E9D186791EA3A6346A3E4270 /* Support Files */,
 			);
+			name = SwiftyJSON;
 			path = SwiftyJSON;
 			sourceTree = "<group>";
 		};
@@ -3846,6 +3859,7 @@
 				82DBD7148CD93BF9FA55CD75817B8E72 /* Validation.swift */,
 				2B104141F0E6D34F90F7C897F876CAAF /* Support Files */,
 			);
+			name = Alamofire;
 			path = Alamofire;
 			sourceTree = "<group>";
 		};
@@ -3955,6 +3969,7 @@
 				829FC8EC38006A2A90811A4062D0303A /* ValidationError.swift */,
 				E64B0510D748A911ED0E477870739156 /* Support Files */,
 			);
+			name = R.swift;
 			path = R.swift;
 			sourceTree = "<group>";
 		};
@@ -4076,6 +4091,7 @@
 				033EFBBEF5807715C70967152D633884 /* SwiftStdlib */,
 				0AD483907FB1E214B57A6FB7889CBDD4 /* UIKit */,
 			);
+			name = SwifterSwift;
 			path = SwifterSwift;
 			sourceTree = "<group>";
 		};
@@ -4092,6 +4108,7 @@
 				137FCA3828592C473571F1D369C91A2B /* Keychain.swift */,
 				55C7F8C16582EFC75A0E4A4DB517B7AB /* Support Files */,
 			);
+			name = KeychainAccess;
 			path = KeychainAccess;
 			sourceTree = "<group>";
 		};
@@ -4126,6 +4143,7 @@
 				381CE3D6B9AC9DFC539950ED8393231E /* StarLayer.swift */,
 				15A02B5A99FCCFA6F45EDB96C9942266 /* Support Files */,
 			);
+			name = Cosmos;
 			path = Cosmos;
 			sourceTree = "<group>";
 		};
@@ -4135,6 +4153,7 @@
 				BA4CD4A938C8DDDF350FEA5644EA7E21 /* Solar.swift */,
 				EEB2827519134F5B6644FCEB0FB75BD7 /* Support Files */,
 			);
+			name = Solar;
 			path = Solar;
 			sourceTree = "<group>";
 		};
@@ -4505,6 +4524,7 @@
 				055C44EDD99C4C0570B4E57B53193C67 /* UIView+FLEX_Layout.m */,
 				7A3C9B2108C58D1194634FD8EFD23A35 /* Support Files */,
 			);
+			name = FLEX;
 			path = FLEX;
 			sourceTree = "<group>";
 		};
@@ -5398,7 +5418,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1300;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1300;
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 12.0";
@@ -7587,7 +7607,6 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -7693,7 +7712,6 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
