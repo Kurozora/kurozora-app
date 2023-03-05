@@ -207,8 +207,8 @@ class HomeCollectionViewController: KCollectionViewController {
 						return !(exploreCategory.relationships.shows?.data.isEmpty ?? false)
 					case .literatures, .upcomingLiteratures, .mostPopularLiteratures, .newLiteratures:
 						return !(exploreCategory.relationships.literatures?.data.isEmpty ?? false)
-//					case .game, .upcomingGame, .mostPopularGame:
-//						return !(exploreCategory.relationships.games?.data.isEmpty ?? false)
+					case .games, .upcomingGames, .mostPopularGames, .newGames:
+						return !(exploreCategory.relationships.games?.data.isEmpty ?? false)
 					case .episodes:
 						return !(exploreCategory.relationships.episodes?.data.isEmpty ?? false)
 					case .songs:
@@ -241,6 +241,11 @@ class HomeCollectionViewController: KCollectionViewController {
 			guard let literatureDetailCollectionViewController = segue.destination as? LiteratureDetailsCollectionViewController else { return }
 			guard let literature = sender as? Literature else { return }
 			literatureDetailCollectionViewController.literature = literature
+		case R.segue.homeCollectionViewController.gameDetailsSegue.identifier:
+			// Segue to show details
+			guard let gameDetailCollectionViewController = segue.destination as? GameDetailsCollectionViewController else { return }
+			guard let game = sender as? Game else { return }
+			gameDetailCollectionViewController.game = game
 		case R.segue.homeCollectionViewController.songsListSegue.identifier:
 			// Segue to show songs list
 			guard let showSongsListCollectionViewController = segue.destination as? ShowSongsListCollectionViewController else { return }
@@ -299,6 +304,20 @@ class HomeCollectionViewController: KCollectionViewController {
 				literaturesListCollectionViewController.exploreCategoryIdentity = ExploreCategoryIdentity(id: exploreCategory.id)
 				literaturesListCollectionViewController.literaturesListFetchType = .explore
 			}
+		case R.segue.homeCollectionViewController.gamesListSegue.identifier:
+			// Segue to games list
+			guard let gamesListCollectionViewController = segue.destination as? GamesListCollectionViewController else { return }
+			guard let indexPath = sender as? IndexPath else { return }
+			let exploreCategory = self.exploreCategories[indexPath.section]
+
+			gamesListCollectionViewController.title = self.exploreCategories[indexPath.section].attributes.title
+
+			if exploreCategory.attributes.exploreCategoryType == .upcomingGames {
+				gamesListCollectionViewController.gamesListFetchType = .upcoming
+			} else {
+				gamesListCollectionViewController.exploreCategoryIdentity = ExploreCategoryIdentity(id: exploreCategory.id)
+				gamesListCollectionViewController.gamesListFetchType = .explore
+			}
 		case R.segue.homeCollectionViewController.charactersListSegue.identifier:
 			// Segue to characters list
 			guard let charactersListCollectionViewController = segue.destination as? CharactersListCollectionViewController else { return }
@@ -343,10 +362,13 @@ extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 			switch cell.libraryKind {
 			case .shows:
 				guard let show = self.shows[indexPath] else { return }
-				modelID = String(show.id)
+				modelID = show.id
 			case .literatures:
-				guard let literatures = self.literatures[indexPath] else { return }
-				modelID = literatures.id
+				guard let literature = self.literatures[indexPath] else { return }
+				modelID = literature.id
+			case .games:
+				guard let game = self.games[indexPath] else { return }
+				modelID = game.id
 			}
 
 			let oldLibraryStatus = cell.libraryStatus
@@ -360,6 +382,8 @@ extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 							self.shows[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
 						case .literatures:
 							self.literatures[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
+						case .games:
+							self.games[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
 						}
 
 						// Update entry in library
@@ -386,6 +410,8 @@ extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 								self.shows[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
 							case .literatures:
 								self.literatures[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
+							case .games:
+								self.games[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
 							}
 
 							// Update edntry in library
@@ -600,6 +626,9 @@ extension HomeCollectionViewController {
 		/// Indicates the item kind contains a `LiteratureIdentity` object.
 		case literatureIdentity(_: LiteratureIdentity, id: UUID = UUID())
 
+		/// Indicates the item kind contains a `GameIdentity` object.
+		case gameIdentity(_: GameIdentity, id: UUID = UUID())
+
 		/// Indicates the item kind contains a `EpisodeIdentity` object.
 		case episodeIdentity(_: EpisodeIdentity, id: UUID = UUID())
 
@@ -636,6 +665,9 @@ extension HomeCollectionViewController {
 			case .literatureIdentity(let literatureIdentity, let id):
 				hasher.combine(literatureIdentity)
 				hasher.combine(id)
+			case .gameIdentity(let gameIdentity, let id):
+				hasher.combine(gameIdentity)
+				hasher.combine(id)
 			case .episodeIdentity(let episodeIdentity, let id):
 				hasher.combine(episodeIdentity)
 				hasher.combine(id)
@@ -671,6 +703,8 @@ extension HomeCollectionViewController {
 				return showIdentity1 == showIdentity2 && id1 == id2
 			case (.literatureIdentity(let literatureIdentity1, let id1), .literatureIdentity(let literatureIdentity2, let id2)):
 				return literatureIdentity1 == literatureIdentity2 && id1 == id2
+			case (.gameIdentity(let gameIdentity1, let id1), .gameIdentity(let gameIdentity2, let id2)):
+				return gameIdentity1 == gameIdentity2 && id1 == id2
 			case (.episodeIdentity(let episodeIdentity1, let id1), .episodeIdentity(let episodeIdentity2, let id2)):
 				return episodeIdentity1 == episodeIdentity2 && id1 == id2
 			case (.showSong(let showSong1, let id1), .showSong(let showSong2, let id2)):
@@ -766,6 +800,34 @@ extension HomeCollectionViewController {
 				smallLockupCollectionViewCell.delegate = self
 				smallLockupCollectionViewCell.dataRequest = dataRequest
 				smallLockupCollectionViewCell.configure(using: literature)
+			default: break
+			}
+		}
+	}
+
+	func getConfiguredGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.gameLockupCollectionViewCell)) { [weak self] gameLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .gameIdentity(let gameIdentity, _):
+				let game = self.fetchGame(at: indexPath)
+				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? gameLockupCollectionViewCell.dataRequest
+
+				if dataRequest == nil && game == nil {
+					dataRequest = KService.getDetails(forGame: gameIdentity) { result in
+						switch result {
+						case .success(let games):
+							self.games[indexPath] = games.first
+							self.setItemKindNeedsUpdate(itemKind)
+						case .failure: break
+						}
+					}
+				}
+
+				gameLockupCollectionViewCell.delegate = self
+				gameLockupCollectionViewCell.dataRequest = dataRequest
+				gameLockupCollectionViewCell.configure(using: game)
 			default: break
 			}
 		}

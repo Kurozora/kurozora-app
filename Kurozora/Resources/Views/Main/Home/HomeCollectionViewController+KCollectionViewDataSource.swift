@@ -22,14 +22,15 @@ extension HomeCollectionViewController {
 
 	override func configureDataSource() {
 		let bannerCellConfiguration = self.getConfiguredBannerCell()
+		let characterCellConfiguration = self.getConfiguredCharacterCell()
+		let gameCellConfiguration = self.getConfiguredGameCell()
 		let largeCellConfiguration = self.getConfiguredLargeCell()
 		let mediumCellConfiguration = self.getConfiguredMediumCell()
-		let smallShowCellConfiguration = self.getConfiguredSmallCell()
+		let musicCellConfiguration = self.getConfiguredMusicCell()
+		let personCellConfiguration = self.getConfiguredPersonCell()
+		let smallCellConfiguration = self.getConfiguredSmallCell()
 		let upcomingCellConfiguration = self.getConfiguredUpcomingCell()
 		let videoCellConfiguration = self.getConfiguredVideoCell()
-		let characterCellConfiguration = self.getConfiguredCharacterCell()
-		let personCellConfiguration = self.getConfiguredPersonCell()
-		let musicCellConfiguration = self.getConfiguredMusicCell()
 
 		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, itemKind: ItemKind) -> UICollectionViewCell? in
 			guard let self = self else { return nil }
@@ -39,7 +40,12 @@ extension HomeCollectionViewController {
 			case .banner:
 				return collectionView.dequeueConfiguredReusableCell(using: bannerCellConfiguration, for: indexPath, item: itemKind)
 			case .small:
-				return collectionView.dequeueConfiguredReusableCell(using: smallShowCellConfiguration, for: indexPath, item: itemKind)
+				switch itemKind {
+				case .gameIdentity:
+					return collectionView.dequeueConfiguredReusableCell(using: gameCellConfiguration, for: indexPath, item: itemKind)
+				default:
+					return collectionView.dequeueConfiguredReusableCell(using: smallCellConfiguration, for: indexPath, item: itemKind)
+				}
 			case .medium:
 				return collectionView.dequeueConfiguredReusableCell(using: mediumCellConfiguration, for: indexPath, item: itemKind)
 			case .large:
@@ -98,6 +104,8 @@ extension HomeCollectionViewController {
 				switch exploreCategory.attributes.exploreCategoryType {
 				case .literatures, .mostPopularLiteratures, .upcomingLiteratures, .newLiteratures:
 					segueID = R.segue.homeCollectionViewController.literaturesListSegue.identifier
+				case .games, .mostPopularGames, .upcomingGames, .newGames:
+					segueID = R.segue.homeCollectionViewController.gamesListSegue.identifier
 				default:
 					segueID = R.segue.homeCollectionViewController.showsListSegue.identifier
 				}
@@ -146,7 +154,7 @@ extension HomeCollectionViewController {
 			var itemKinds: [ItemKind] = []
 
 			switch exploreCategory.attributes.exploreCategoryType {
-			case .mostPopularShows, .mostPopularLiteratures: // , .mostPopularGames:
+			case .mostPopularShows, .mostPopularLiteratures, .mostPopularGames:
 				sectionHeader = .banner(exploreCategory)
 				if let shows = exploreCategory.relationships.shows?.data {
 					itemKinds = shows.map { showIdentity in
@@ -156,8 +164,12 @@ extension HomeCollectionViewController {
 					itemKinds = literatures.map { literatureIdentity in
 						return .literatureIdentity(literatureIdentity)
 					}
+				} else if let games = exploreCategory.relationships.games?.data {
+					itemKinds = games.map { gameIdentity in
+						return .gameIdentity(gameIdentity)
+					}
 				}
-			case .upcomingShows, .upcomingLiteratures: // , .upcomingGames:
+			case .upcomingShows, .upcomingLiteratures, .upcomingGames:
 				sectionHeader = .upcoming(exploreCategory)
 				if let shows = exploreCategory.relationships.shows?.data {
 					itemKinds = shows.prefix(10).map { showIdentity in
@@ -166,6 +178,10 @@ extension HomeCollectionViewController {
 				} else if let literatures = exploreCategory.relationships.literatures?.data {
 					itemKinds = literatures.prefix(10).map { literatureIdentity in
 						return .literatureIdentity(literatureIdentity)
+					}
+				} else if let games = exploreCategory.relationships.games?.data {
+					itemKinds = games.prefix(10).map { gameIdentity in
+						return .gameIdentity(gameIdentity)
 					}
 				}
 			case .shows, .newShows:
@@ -208,26 +224,26 @@ extension HomeCollectionViewController {
 						return .literatureIdentity(literatureIdentity)
 					}
 				}
-//			case .games:
-//				switch exploreCategory.attributes.exploreCategorySize {
-//				case .banner:
-//					sectionHeader = .banner(exploreCategory)
-//				case .large:
-//					sectionHeader = .large(exploreCategory)
-//				case .medium:
-//					sectionHeader = .medium(exploreCategory)
-//				case .small:
-//					sectionHeader = .small(exploreCategory)
-//				case .upcoming:
-//					sectionHeader = .upcoming(exploreCategory)
-//				case .video:
-//					sectionHeader = .video(exploreCategory)
-//				}
-//				if let games = exploreCategory.relationships.games?.data {
-//					itemKinds = games.prefix(10).map { gameIdentity in
-//						return .gameIdentity(gameIdentity)
-//					}
-//				}
+			case .games, .newGames:
+				switch exploreCategory.attributes.exploreCategorySize {
+				case .banner:
+					sectionHeader = .banner(exploreCategory)
+				case .large:
+					sectionHeader = .large(exploreCategory)
+				case .medium:
+					sectionHeader = .medium(exploreCategory)
+				case .small:
+					sectionHeader = .small(exploreCategory)
+				case .upcoming:
+					sectionHeader = .upcoming(exploreCategory)
+				case .video:
+					sectionHeader = .video(exploreCategory)
+				}
+				if let games = exploreCategory.relationships.games?.data {
+					itemKinds = games.prefix(10).map { gameIdentity in
+						return .gameIdentity(gameIdentity)
+					}
+				}
 			case .episodes:
 				sectionHeader = .episode(exploreCategory)
 				if let episodes = exploreCategory.relationships.episodes?.data {
@@ -308,6 +324,11 @@ extension HomeCollectionViewController {
 	func fetchLiterature(at indexPath: IndexPath) -> Literature? {
 		guard let literature = self.literatures[indexPath] else { return nil }
 		return literature
+	}
+
+	func fetchGame(at indexPath: IndexPath) -> Game? {
+		guard let game = self.games[indexPath] else { return nil }
+		return game
 	}
 
 	func fetchGenre(at indexPath: IndexPath) -> Genre? {

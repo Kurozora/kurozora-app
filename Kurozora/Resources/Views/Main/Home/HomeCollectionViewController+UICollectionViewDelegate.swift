@@ -20,9 +20,9 @@ extension HomeCollectionViewController {
 			case .literatures, .mostPopularLiteratures, .upcomingLiteratures, .newLiteratures:
 				let literature = self.literatures[indexPath]
 				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.literatureDetailsSegue, sender: literature)
-//			case .mostPopularGames, .upcomingGames, .games:
-//				let game = self.games[indexPath]
-//				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.gameDetailsSegue, sender: game)
+			case .games, .mostPopularGames, .upcomingGames, .newGames:
+				let game = self.games[indexPath]
+				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.gameDetailsSegue, sender: game)
 			case .episodes:
 				let episode = self.episodes[indexPath]
 				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.episodeDetailsSegue, sender: episode)
@@ -58,8 +58,8 @@ extension HomeCollectionViewController {
 				return self.shows[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 			case .literatures, .upcomingLiteratures, .mostPopularLiteratures, .newLiteratures:
 				return self.literatures[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-//			case .games, .upcomingGames, .mostPopularGames:
-//				return self.games[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			case .games, .upcomingGames, .mostPopularGames, .newGames:
+				return self.games[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 			case .episodes:
 				return self.episodes[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 			case .songs:

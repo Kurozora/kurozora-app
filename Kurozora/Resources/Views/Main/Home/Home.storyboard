@@ -157,6 +157,8 @@
                         <segue destination="VID-kH-G6m" kind="show" identifier="LiteratureDetailsSegue" id="NiJ-nw-uNa"/>
                         <segue destination="ZQo-OB-q6J" kind="show" identifier="EpisodesListSegue" id="tPw-LU-zCp"/>
                         <segue destination="GEx-kn-XGr" kind="show" identifier="LiteraturesListSegue" id="N8n-Di-zO4"/>
+                        <segue destination="pkG-ca-5LU" kind="show" identifier="GameDetailsSegue" id="6Mb-fq-kIc"/>
+                        <segue destination="o3G-a8-Qbb" kind="show" identifier="GamesListSegue" id="REO-8e-Cjd"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XSz-C9-PSE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -335,6 +337,26 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Bi-cs-RfK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2122" y="14"/>
+        </scene>
+        <!--GamesListCollectionViewController-->
+        <scene sceneID="MTN-S7-rDm">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Games" referencedIdentifier="GamesListCollectionViewController" id="o3G-a8-Qbb" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="l49-2t-OqC"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7FB-9z-AQe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2089" y="90"/>
+        </scene>
+        <!--GameDetailsCollectionViewController-->
+        <scene sceneID="4XY-z3-wYs">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Games" referencedIdentifier="GameDetailsCollectionViewController" id="pkG-ca-5LU" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="gZn-F1-Bpe"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3IC-9v-R7c" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2099" y="69"/>
         </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
