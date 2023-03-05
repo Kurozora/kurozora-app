@@ -78,4 +78,27 @@ extension KurozoraKit {
 		request.method = .get
 		return request.perform().serializingDecodable(LiteratureIdentityResponse.self, decoder: self.tron.codable.modelDecoder)
 	}
+
+	///	Fetch the games for the given studio identity.
+	///
+	/// - Parameters:
+	///    - studioIdentity: The studio identity object for which the games should be fetched.
+	///	   - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+	///	   - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
+	///
+	/// - Returns: An instance of `DataTask` with the results of the request.
+	public func getGames(forStudio studioIdentity: StudioIdentity, next: String? = nil, limit: Int = 25) -> DataTask<GameIdentityResponse> {
+		let studiosGames = next ?? KKEndpoint.Studios.games(studioIdentity).endpointValue
+		let request: APIRequest<GameIdentityResponse, KKAPIError> = tron.codable.request(studiosGames).buildURL(.relativeToBaseURL)
+
+		request.headers = headers
+		if !self.authenticationKey.isEmpty {
+			request.headers.add(.authorization(bearerToken: self.authenticationKey))
+		}
+
+		request.parameters["limit"] = limit
+
+		request.method = .get
+		return request.perform().serializingDecodable(GameIdentityResponse.self, decoder: self.tron.codable.modelDecoder)
+	}
 }

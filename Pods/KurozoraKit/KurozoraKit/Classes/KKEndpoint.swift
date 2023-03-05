@@ -69,6 +69,9 @@ extension KKEndpoint {
 		/// The endpoint to the details of a literature cast.
 		case literatureCast(_ castIdentity: CastIdentity)
 
+		/// The endpoint to the details of a game cast.
+		case gameCast(_ castIdentity: CastIdentity)
+
 		// MARK: - Properties
 		/// The endpoint value of the Cast API type.
 		var endpointValue: String {
@@ -77,6 +80,8 @@ extension KKEndpoint {
 				return "show-cast/\(castIdentity.id)"
 			case .literatureCast(let castIdentity):
 				return "literature-cast/\(castIdentity.id)"
+			case .gameCast(let castIdentity):
+				return "game-cast/\(castIdentity.id)"
 			}
 		}
 	}
@@ -184,7 +189,10 @@ extension KKEndpoint {
 		case relatedShows(_ showIdentity: ShowIdentity)
 
 		/// The endpoint to the related literatures belonging to a show.
-		case relatedLiteratures(_ literatureIdentity: ShowIdentity)
+		case relatedLiteratures(_ showIdentity: ShowIdentity)
+
+		/// The endpoint to the related games belonging to a show.
+		case relatedGames(_ showIdentity: ShowIdentity)
 
 		/// The endpoint to the seasons belonging to a show.
 		case seasons(_ showIdentity: ShowIdentity)
@@ -198,7 +206,7 @@ extension KKEndpoint {
 		/// The endpoint to the studio shows related to a show.
 		case moreByStudio(_ showIdentity: ShowIdentity)
 
-		/// The endpoint to upcoming for shows.
+		/// The endpoint to upcoming shows.
 		case upcoming
 
 		// MARK: - Properties
@@ -219,6 +227,8 @@ extension KKEndpoint {
 				return "anime/\(showIdentity.id)/related-shows"
 			case .relatedLiteratures(let showIdentity):
 				return "anime/\(showIdentity.id)/related-literatures"
+			case .relatedGames(let showIdentity):
+				return "anime/\(showIdentity.id)/related-games"
 			case .seasons(let showIdentity):
 				return "anime/\(showIdentity.id)/seasons"
 			case .songs(let showIdentity):
@@ -260,17 +270,20 @@ extension KKEndpoint {
 		/// The endpoint to the related literature belonging to a literature.
 		case relatedLiteratures(_ literatureIdentity: LiteratureIdentity)
 
+		/// The endpoint to the related games belonging to a literature.
+		case relatedGames(_ literatureIdentity: LiteratureIdentity)
+
 		/// The endpoint to the studios belonging to a literature.
 		case studios(_ literatureIdentity: LiteratureIdentity)
 
 		/// The endpoint to the studio shows related to a literature.
 		case moreByStudio(_ literatureIdentity: LiteratureIdentity)
 
-		/// The endpoint to upcoming for shows.
+		/// The endpoint to upcoming literatures.
 		case upcoming
 
 		// MARK: - Properties
-		/// The endpoint value of the Shows API type.
+		/// The endpoint value of the Literatures API type.
 		var endpointValue: String {
 			switch self {
 			case .details(let literatureIdentity):
@@ -287,12 +300,83 @@ extension KKEndpoint {
 				return "manga/\(literatureIdentity.id)/related-shows"
 			case .relatedLiteratures(let literatureIdentity):
 				return "manga/\(literatureIdentity.id)/related-literatures"
+			case .relatedGames(let literatureIdentity):
+				return "manga/\(literatureIdentity.id)/related-games"
 			case .studios(let literatureIdentity):
 				return "manga/\(literatureIdentity.id)/studios"
 			case .moreByStudio(let literatureIdentity):
 				return "manga/\(literatureIdentity.id)/more-by-studio"
 			case .upcoming:
 				return "manga/upcoming"
+			}
+		}
+	}
+}
+
+// MARK: - Games
+extension KKEndpoint {
+	/// The set of available Games API endpoints types.
+	internal enum Games {
+		// MARK: - Cases
+		/// The endpoint to the details of a game.
+		case details(_ gameIdentity: GameIdentity)
+
+		/// The endpoint to the cast belonging to a game.
+		case cast(_ gameIdentity: GameIdentity)
+
+		/// The endpoint to the characters belonging to a game.
+		case characters(_ gameIdentity: GameIdentity)
+
+		/// The endpoint to the people belonging to a game.
+		case people(_ gameIdentity: GameIdentity)
+
+		/// The endpoint to leave a rating on a literature.
+		case rate(_ gameIdentity: GameIdentity)
+
+		/// The endpoint to the related shows belonging to a game.
+		case relatedShows(_ gameIdentity: GameIdentity)
+
+		/// The endpoint to the related literature belonging to a game.
+		case relatedLiteratures(_ gameIdentity: GameIdentity)
+
+		/// The endpoint to the related games belonging to a game.
+		case relatedGames(_ gameIdentity: GameIdentity)
+
+		/// The endpoint to the studios belonging to a game.
+		case studios(_ gameIdentity: GameIdentity)
+
+		/// The endpoint to the studio shows related to a game.
+		case moreByStudio(_ gameIdentity: GameIdentity)
+
+		/// The endpoint to upcoming games.
+		case upcoming
+
+		// MARK: - Properties
+		/// The endpoint value of the Games API type.
+		var endpointValue: String {
+			switch self {
+			case .details(let gameIdentity):
+				return "games/\(gameIdentity.id)"
+			case .cast(let gameIdentity):
+				return "games/\(gameIdentity.id)/cast"
+			case .characters(let gameIdentity):
+				return "games/\(gameIdentity.id)/characters"
+			case .people(let gameIdentity):
+				return "games/\(gameIdentity.id)/people"
+			case .rate(let gameIdentity):
+				return "games/\(gameIdentity.id)/rate"
+			case .relatedShows(let gameIdentity):
+				return "games/\(gameIdentity.id)/related-shows"
+			case .relatedLiteratures(let gameIdentity):
+				return "games/\(gameIdentity.id)/related-literatures"
+			case .relatedGames(let gameIdentity):
+				return "games/\(gameIdentity.id)/related-games"
+			case .studios(let gameIdentity):
+				return "games/\(gameIdentity.id)/studios"
+			case .moreByStudio(let gameIdentity):
+				return "games/\(gameIdentity.id)/more-by-studio"
+			case .upcoming:
+				return "games/upcoming"
 			}
 		}
 	}

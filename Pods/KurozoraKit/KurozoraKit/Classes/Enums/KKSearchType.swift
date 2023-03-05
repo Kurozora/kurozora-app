@@ -29,10 +29,10 @@ public enum KKSearchType: String {
 	/// - Tag: KKSearchType-episodes
 	case episodes
 
-//	/// Indicates the fetched resource should be of the `games` type.
-//	///
-//	/// - Tag: KKSearchType-games
-//	case games
+	/// Indicates the fetched resource should be of the `games` type.
+	///
+	/// - Tag: KKSearchType-games
+	case games
 
 	/// Indicates the fetched resource should be of the `literatures` type.
 	///

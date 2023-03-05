@@ -24,6 +24,9 @@ extension Game {
 		/// The related literature belonging to the game.
 		public let relatedLiterature: RelatedLiteratureResponse?
 
+		/// The related games belonging to the game.
+		public let relatedGames: RelatedGameResponse?
+
 		/// The staff belonging to the game.
 		public let staff: StaffResponse?
 

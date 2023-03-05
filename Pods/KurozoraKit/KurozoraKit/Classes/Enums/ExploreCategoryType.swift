@@ -32,14 +32,17 @@ public enum ExploreCategoryType: String, Codable {
 	/// Indicates that the explore category is of the `literatures` type.
 	case literatures
 
-//	/// Indicates that the explore category is of the `mostPopularGames` type.
-//	case mostPopularGames = "most-popular-games"
-//
-//	/// Indicates that the explore category is of the `upcomingGames` type.
-//	case upcomingGames = "upcoming-games"
-//
-//	/// Indicates that the explore category is of the `games` type.
-//	case games
+	/// Indicates that the explore category is of the `mostPopularGames` type.
+	case mostPopularGames = "most-popular-games"
+
+	/// Indicates that the explore category is of the `upcomingGames` type.
+	case upcomingGames = "upcoming-games"
+
+	/// Indicates that the explore category is of the `newGames` type.
+	case newGames = "new-games"
+
+	/// Indicates that the explore category is of the `games` type.
+	case games
 
 	/// Indicates that the explore category is of the `episodes` type.
 	case episodes

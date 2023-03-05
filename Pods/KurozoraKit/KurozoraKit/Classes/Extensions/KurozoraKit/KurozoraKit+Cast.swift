@@ -41,4 +41,21 @@ extension KurozoraKit {
 		// Send request
 		return request.sender()
 	}
+
+	/// Fetch the cast details for the given cast id.
+	///
+	/// - Parameters:
+	///    - castID: The id of the cast for which the details should be fetched.
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the cast details response.
+	public func getDetails(forGameCast castIdentity: CastIdentity) -> RequestSender<CastResponse, KKAPIError> {
+		// Prepare request
+		let castsDetails = KKEndpoint.Cast.gameCast(castIdentity).endpointValue
+		let request: APIRequest<CastResponse, KKAPIError> = tron.codable.request(castsDetails)
+			.method(.get)
+			.headers(self.headers)
+
+		// Send request
+		return request.sender()
+	}
 }

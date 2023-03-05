@@ -32,8 +32,8 @@ public enum KKLibrary {
 		/// The literature library of the user.
 		case literatures = 1
 
-//		/// The games library of the user.
-//		case games = 3
+		/// The games library of the user.
+		case games = 3
 
 		// MARK: - Properties
 		/// The string value of a library type.
@@ -43,8 +43,8 @@ public enum KKLibrary {
 				return "Shows"
 			case .literatures:
 				return "Literatures"
-//			case .gamse:
-//				return "Games"
+			case .games:
+				return "Games"
 			}
 		}
 	}
