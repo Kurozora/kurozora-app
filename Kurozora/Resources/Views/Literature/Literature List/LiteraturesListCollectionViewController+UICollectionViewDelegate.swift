@@ -3,7 +3,7 @@
 //  Kurozora
 //
 //  Created by Khoren Katklian on 01/02/2023.
-//  Copyright © 2021 Kurozora. All rights reserved.
+//  Copyright © 2023 Kurozora. All rights reserved.
 //
 
 import UIKit
@@ -17,7 +17,7 @@ extension LiteraturesListCollectionViewController {
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 		switch self.literaturesListFetchType {
-		case .relatedLiterature, .show:
+		case .relatedLiterature, .show, .game:
 			let literatureIdentitiesCount = self.relatedLiteratures.count - 1
 			var itemsCount = literatureIdentitiesCount / 4 / 2
 			itemsCount = itemsCount > 15 ? 15 : itemsCount // Make sure count isn't above 15
@@ -49,7 +49,7 @@ extension LiteraturesListCollectionViewController {
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
 		switch self.literaturesListFetchType {
-		case .relatedLiterature, .show:
+		case .relatedLiterature, .show, .game:
 			return self.relatedLiteratures[safe: indexPath.item]?.literature.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		default:
 			guard self.literatures[indexPath] != nil else { return nil }

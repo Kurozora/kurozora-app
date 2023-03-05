@@ -3,7 +3,7 @@
 //  Kurozora
 //
 //  Created by Khoren Katklian on 01/02/2023.
-//  Copyright © 2021 Kurozora. All rights reserved.
+//  Copyright © 2023 Kurozora. All rights reserved.
 //
 
 import UIKit
@@ -55,6 +55,9 @@ extension LiteratureDetailsCollectionViewController {
 		case .relatedShows:
 			let show = self.relatedShows[indexPath.item].show
 			self.performSegue(withIdentifier: R.segue.literatureDetailsCollectionViewController.showDetailsSegue.identifier, sender: show)
+		case .relatedGames:
+			let game = self.relatedGames[indexPath.item].game
+			self.performSegue(withIdentifier: R.segue.literatureDetailsCollectionViewController.gameDetailsSegue.identifier, sender: game)
 		default: return
 		}
 	}
@@ -72,6 +75,8 @@ extension LiteratureDetailsCollectionViewController {
 			return self.relatedLiteratures[indexPath.item].literature.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .relatedShows:
 			return self.relatedShows[indexPath.item].show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		case .relatedGames:
+			return self.relatedGames[indexPath.item].game.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		default: break
 		}
 

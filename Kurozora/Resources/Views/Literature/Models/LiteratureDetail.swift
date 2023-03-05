@@ -2,8 +2,8 @@
 //  LiteratureDetail.swift
 //  Kurozora
 //
-//  Created by Khoren Katklian on 27/04/2019.
-//  Copyright © 2019 Kurozora. All rights reserved.
+//  Created by Khoren Katklian on 01/02/2023.
+//  Copyright © 2023 Kurozora. All rights reserved.
 //
 
 import UIKit
@@ -175,9 +175,9 @@ extension LiteratureDetail {
 			case .duration:
 				return "Duration"
 			case .publication:
-				return "Broadcast"
+				return "Publication"
 			case .publicationDates:
-				return "Aired"
+				return "Published"
 			case .rating:
 				return "Rating"
 			case .languages:

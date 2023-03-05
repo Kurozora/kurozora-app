@@ -3,7 +3,7 @@
 //  Kurozora
 //
 //  Created by Khoren Katklian on 01/02/2023.
-//  Copyright © 2021 Kurozora. All rights reserved.
+//  Copyright © 2023 Kurozora. All rights reserved.
 //
 
 import UIKit
@@ -30,6 +30,7 @@ extension LiteratureDetailsCollectionViewController {
 		let studioLiteratureCellConfiguration = self.getConfiguredStudioLiteratureCell()
 		let studioCellConfiguration = self.getConfiguredStudioCell()
 		let relatedLiteratureCellConfiguration = self.getConfiguredRelatedLiteratureCell()
+		let relatedGameCellConfiguration = self.getConfiguredRelatedGameCell()
 
 		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, itemKind: ItemKind) -> UICollectionViewCell? in
 			guard let self = self else { return nil }
@@ -85,6 +86,8 @@ extension LiteratureDetailsCollectionViewController {
 				return collectionView.dequeueConfiguredReusableCell(using: studioLiteratureCellConfiguration, for: indexPath, item: itemKind)
 			case .relatedLiteratures, .relatedShows:
 				return collectionView.dequeueConfiguredReusableCell(using: relatedLiteratureCellConfiguration, for: indexPath, item: itemKind)
+			case .relatedGames:
+				return collectionView.dequeueConfiguredReusableCell(using: relatedGameCellConfiguration, for: indexPath, item: itemKind)
 			case .sosumi:
 				let sosumiCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.sosumiCollectionViewCell, for: indexPath)
 				switch itemKind {
@@ -179,6 +182,14 @@ extension LiteratureDetailsCollectionViewController {
 						return .relatedShow(relatedShow)
 					}
 					self.snapshot.appendItems(relatedShowItems, toSection: literatureDetailSection)
+				}
+			case .relatedGames:
+				if !self.relatedGames.isEmpty {
+					self.snapshot.appendSections([literatureDetailSection])
+					let relatedGameItems: [ItemKind] = self.relatedGames.map { relatedGame in
+						return .relatedGame(relatedGame)
+					}
+					self.snapshot.appendItems(relatedGameItems, toSection: literatureDetailSection)
 				}
 			case .sosumi:
 				if let copyrightIsEmpty = self.literature.attributes.copyright?.isEmpty, !copyrightIsEmpty {
@@ -301,6 +312,16 @@ extension LiteratureDetailsCollectionViewController {
 				smallLockupCollectionViewCell.configure(using: relatedLiterature)
 			case .relatedShow(let relatedShow, _):
 				smallLockupCollectionViewCell.configure(using: relatedShow)
+			default: return
+			}
+		}
+	}
+
+	func getConfiguredRelatedGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.gameLockupCollectionViewCell)) { gameLockupCollectionViewCell, _, itemKind in
+			switch itemKind {
+			case .relatedGame(let relatedGame, _):
+				gameLockupCollectionViewCell.configure(using: relatedGame)
 			default: return
 			}
 		}

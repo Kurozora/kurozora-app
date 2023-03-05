@@ -3,7 +3,7 @@
 //  Kurozora
 //
 //  Created by Khoren Katklian on 01/02/2023.
-//  Copyright © 2020 Kurozora. All rights reserved.
+//  Copyright © 2023 Kurozora. All rights reserved.
 //
 
 import UIKit
@@ -39,7 +39,7 @@ extension LiteratureDetailsCollectionViewController {
 			if columnCount > 5 {
 				return 5
 			}
-		case .moreByStudio, .relatedLiteratures, .relatedShows:
+		case .moreByStudio, .relatedLiteratures, .relatedShows, .relatedGames:
 			columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
 			if columnCount > 5 {
 				return 5
@@ -135,6 +135,12 @@ extension LiteratureDetailsCollectionViewController {
 				}
 			case .relatedShows:
 				if !self.relatedShows.isEmpty {
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					hasSectionHeader = true
+					hasBackgroundDecoration = true
+				}
+			case .relatedGames:
+				if !self.relatedGames.isEmpty {
 					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 					hasSectionHeader = true
 					hasBackgroundDecoration = true

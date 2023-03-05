@@ -3,7 +3,7 @@
 //  Kurozora
 //
 //  Created by Khoren Katklian on 01/02/2023.
-//  Copyright © 2021 Kurozora. All rights reserved.
+//  Copyright © 2023 Kurozora. All rights reserved.
 //
 
 #if targetEnvironment(macCatalyst)

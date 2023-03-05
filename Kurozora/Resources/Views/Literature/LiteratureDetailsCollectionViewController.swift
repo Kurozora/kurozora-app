@@ -3,7 +3,7 @@
 //  Kurozora
 //
 //  Created by Khoren Katklian on 01/02/2023.
-//  Copyright © 2018 Kurozora. All rights reserved.
+//  Copyright © 2023 Kurozora. All rights reserved.
 //
 
 import UIKit
@@ -47,6 +47,9 @@ class LiteratureDetailsCollectionViewController: KCollectionViewController {
 
 	/// Related Show properties.
 	var relatedShows: [RelatedShow] = []
+
+	/// Related Game properties.
+	var relatedGames: [RelatedGame] = []
 
 	/// Cast properties.
 	var cast: [IndexPath: Cast] = [:]
@@ -240,6 +243,13 @@ class LiteratureDetailsCollectionViewController: KCollectionViewController {
 			print(error.localizedDescription)
 		}
 
+		do {
+			let relatedGameResponse = try await KService.getRelatedGames(forLiterature: literatureIdentity, limit: 10).value
+			self.relatedGames = relatedGameResponse.data
+		} catch {
+			print(error.localizedDescription)
+		}
+
 		self.updateDataSource()
 	}
 
@@ -302,6 +312,12 @@ class LiteratureDetailsCollectionViewController: KCollectionViewController {
 			showsListCollectionViewController.title = Trans.relatedShows
 			showsListCollectionViewController.literatureIdentity = self.literatureIdentity
 			showsListCollectionViewController.showsListFetchType = .literature
+		case R.segue.literatureDetailsCollectionViewController.gamesListSegue.identifier:
+			// Segue to games list
+			guard let gamesListCollectionViewController = segue.destination as? GamesListCollectionViewController else { return }
+			gamesListCollectionViewController.title = Trans.relatedGames
+			gamesListCollectionViewController.literatureIdentity = self.literatureIdentity
+			gamesListCollectionViewController.gamesListFetchType = .literature
 		case R.segue.literatureDetailsCollectionViewController.studiosListSegue.identifier:
 			// Segue to studios list
 			guard let studiosListCollectionViewController = segue.destination as? StudiosListCollectionViewController else { return }
@@ -317,6 +333,11 @@ class LiteratureDetailsCollectionViewController: KCollectionViewController {
 			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
 			showDetailsCollectionViewController.show = show
+		case R.segue.literatureDetailsCollectionViewController.gameDetailsSegue.identifier:
+			// Segue to game details
+			guard let gameDetailsCollectionViewController = segue.destination as? GameDetailsCollectionViewController else { return }
+			guard let game = sender as? Game else { return }
+			gameDetailsCollectionViewController.game = game
 		case R.segue.literatureDetailsCollectionViewController.studioDetailsSegue.identifier:
 			// Segue to studio details
 			guard let studioDetailsCollectionViewController = segue.destination as? StudioDetailsCollectionViewController else { return }
@@ -408,6 +429,7 @@ extension LiteratureDetailsCollectionViewController {
 		case moreByStudio
 		case relatedLiteratures
 		case relatedShows
+		case relatedGames
 		case sosumi
 
 		// MARK: - Properties
@@ -434,6 +456,8 @@ extension LiteratureDetailsCollectionViewController {
 				return Trans.relatedLiteratures
 			case .relatedShows:
 				return Trans.relatedShows
+			case .relatedGames:
+				return Trans.relatedGames
 			case .sosumi:
 				return Trans.copyright
 			}
@@ -462,6 +486,8 @@ extension LiteratureDetailsCollectionViewController {
 				return R.segue.literatureDetailsCollectionViewController.literaturesListSegue.identifier
 			case .relatedShows:
 				return R.segue.literatureDetailsCollectionViewController.showsListSegue.identifier
+			case .relatedGames:
+				return R.segue.literatureDetailsCollectionViewController.gamesListSegue.identifier
 			case .sosumi:
 				return ""
 			}
@@ -482,6 +508,9 @@ extension LiteratureDetailsCollectionViewController {
 
 		/// Indicates the item kind contains a `RelatedShow` object.
 		case relatedShow(_: RelatedShow, id: UUID = UUID())
+
+		/// Indicates the item kind contains a `RelatedGame` object.
+		case relatedGame(_: RelatedGame, id: UUID = UUID())
 
 		/// Indicates the item kind contains a `CharacterIdentity` object.
 		case characterIdentity(_: CharacterIdentity, id: UUID = UUID())
@@ -510,6 +539,9 @@ extension LiteratureDetailsCollectionViewController {
 			case .relatedShow(let relatedShow, let id):
 				hasher.combine(relatedShow)
 				hasher.combine(id)
+			case .relatedGame(let relatedGame, let id):
+				hasher.combine(relatedGame)
+				hasher.combine(id)
 			case .characterIdentity(let characterIdentity, let id):
 				hasher.combine(characterIdentity)
 				hasher.combine(id)
@@ -535,6 +567,8 @@ extension LiteratureDetailsCollectionViewController {
 				return relatedLiterature1 == relatedLiterature2 && id1 == id2
 			case (.relatedShow(let relatedShow1, let id1), .relatedShow(let relatedShow2, let id2)):
 				return relatedShow1 == relatedShow2 && id1 == id2
+			case (.relatedGame(let relatedGame1, let id1), .relatedGame(let relatedGame2, let id2)):
+				return relatedGame1 == relatedGame2 && id1 == id2
 			case (.characterIdentity(let characterIdentity1, let id1), .characterIdentity(let characterIdentity2, let id2)):
 				return characterIdentity1 == characterIdentity2 && id1 == id2
 			case (.personIdentity(let personIdentity1, let id1), .personIdentity(let personIdentity2, let id2)):

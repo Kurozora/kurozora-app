@@ -3,7 +3,7 @@
 //  Kurozora
 //
 //  Created by Khoren Katklian on 01/02/2023.
-//  Copyright © 2022 Kurozora. All rights reserved.
+//  Copyright © 2023 Kurozora. All rights reserved.
 //
 
 import UIKit
@@ -91,7 +91,7 @@ extension LiteraturesListCollectionViewController {
 
 		// Append items
 		switch self.literaturesListFetchType {
-		case .relatedLiterature, .show:
+		case .relatedLiterature, .show, .game:
 			let relatedLiteratureItems: [ItemKind] = self.relatedLiteratures.map { relatedLiterature in
 				return .relatedLiterature(relatedLiterature)
 			}

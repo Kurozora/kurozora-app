@@ -3,7 +3,7 @@
 //  Kurozora
 //
 //  Created by Khoren Katklian on 01/02/2023.
-//  Copyright © 2020 Kurozora. All rights reserved.
+//  Copyright © 2023 Kurozora. All rights reserved.
 //
 
 import UIKit
@@ -12,6 +12,7 @@ import Alamofire
 
 enum LiteraturesListFetchType {
 	case show
+	case game
 	case charcter
 	case explore
 	case person
@@ -25,6 +26,8 @@ enum LiteraturesListFetchType {
 class LiteraturesListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var showIdentity: ShowIdentity? = nil
+
+	var gameIdentity: GameIdentity? = nil
 
 	var personIdentity: PersonIdentity? = nil
 
@@ -149,6 +152,20 @@ class LiteraturesListCollectionViewController: KCollectionViewController {
 			case .show:
 				guard let showIdentity = self.showIdentity else { return }
 				let relatedLiteraturesResponse = try await KService.getRelatedLiteratures(forShow: showIdentity, next: self.nextPageURL).value
+
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.relatedLiteratures = []
+					self.literatureIdentities = []
+				}
+
+				// Save next page url and append new data
+				self.nextPageURL = relatedLiteraturesResponse.next
+				self.relatedLiteratures.append(contentsOf: relatedLiteraturesResponse.data)
+				self.relatedLiteratures.removeDuplicates()
+			case .game:
+				guard let gameIdentity = self.gameIdentity else { return }
+				let relatedLiteraturesResponse = try await KService.getRelatedLiteratures(forGame: gameIdentity, next: self.nextPageURL).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
