@@ -36,6 +36,7 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 
 	private var show: Show? = nil
 	private var literature: Literature? = nil
+	private var game: Game? = nil
 }
 
 // MARK: - Functions
@@ -133,6 +134,52 @@ extension ShowDetailHeaderCollectionViewCell {
 		self.quickDetailsView.isHidden = false
 	}
 
+	func configure(using game: Game) {
+		self.libraryKind = .games
+		self.show = nil
+		self.game = game
+		NotificationCenter.default.removeObserver(self)
+		NotificationCenter.default.addObserver(self, selector: #selector(handleFavoriteToggle(_:)), name: .KModelFavoriteIsToggled, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(handleReminderToggle(_:)), name: .KModelReminderIsToggled, object: nil)
+
+		// Configure library status
+		self.libraryStatus = game.attributes.libraryStatus ?? .none
+		self.updateLibraryActions(using: game)
+
+		// Configure title label
+		self.primaryLabel.text = game.attributes.title
+
+		// Configure tags label
+		self.secondaryLabel.text = game.attributes.informationString
+
+		// Configure airing status label
+		self.statusButton.setTitle(game.attributes.status.name, for: .normal)
+		self.statusButton.backgroundColor = UIColor(hexString: game.attributes.status.color)
+
+		// Configure poster view
+		if let posterBackgroundColor = game.attributes.poster?.backgroundColor {
+			self.posterImageView.backgroundColor = UIColor(hexString: posterBackgroundColor)
+		}
+		game.attributes.posterImage(imageView: self.posterImageView)
+		self.posterImageOverlayView.isHidden = true
+		self.posterImageView.cornerRadius = 18.0
+		self.posterImageView.mask = nil
+
+		// Configure banner view
+		if let bannerBackgroundColor = game.attributes.banner?.backgroundColor {
+			self.bannerImageView.backgroundColor = UIColor(hexString: bannerBackgroundColor)
+		}
+		game.attributes.bannerImage(imageView: self.bannerImageView)
+
+		// Configure shadows
+		self.shadowView.applyShadow()
+		self.reminderButton.applyShadow()
+		self.favoriteButton.applyShadow()
+
+		// Display details
+		self.quickDetailsView.isHidden = false
+	}
+
 	func updateLibraryStatus() {
 		let libraryStatus: String
 
@@ -141,6 +188,8 @@ extension ShowDetailHeaderCollectionViewCell {
 			libraryStatus = self.libraryStatus.showStringValue
 		case .literatures:
 			libraryStatus = self.libraryStatus.literatureStringValue
+		case .games:
+			libraryStatus = self.libraryStatus.gameStringValue
 		}
 
 		self.libraryStatusButton.setTitle(self.libraryStatus != .none ? "\(libraryStatus.capitalized) ▾" : "ADD", for: .normal)
@@ -207,7 +256,7 @@ extension ShowDetailHeaderCollectionViewCell {
 		self.updateReminderStatus(show.attributes.reminderStatus, animated: animated)
 	}
 
-	/// Updates `favoriteButton`, `reminderButton` and `libraryStatusButton` with the attributes of the show.
+	/// Updates `favoriteButton`, `reminderButton` and `libraryStatusButton` with the attributes of the literature.
 	///
 	/// - Parameters:
 	///    - literature: The literature object used to udpate the actions.
@@ -216,6 +265,17 @@ extension ShowDetailHeaderCollectionViewCell {
 		self.updateLibraryStatus()
 		self.updateFavoriteStatus(literature.attributes.favoriteStatus, animated: animated)
 		self.updateReminderStatus(literature.attributes.reminderStatus, animated: animated)
+	}
+
+	/// Updates `favoriteButton`, `reminderButton` and `libraryStatusButton` with the attributes of the game.
+	///
+	/// - Parameters:
+	///    - game: The game object used to udpate the actions.
+	///    - animated: A boolean value indicating whether to update changes with animations.
+	func updateLibraryActions(using game: Game, animated: Bool = false) {
+		self.updateLibraryStatus()
+		self.updateFavoriteStatus(game.attributes.favoriteStatus, animated: animated)
+		self.updateReminderStatus(game.attributes.reminderStatus, animated: animated)
 	}
 }
 
@@ -231,8 +291,11 @@ extension ShowDetailHeaderCollectionViewCell {
 				guard let show = self.show else { return }
 				modelID = String(show.id)
 			case .literatures:
-				guard let literatures = self.literature else { return }
-				modelID = literatures.id
+				guard let literature = self.literature else { return }
+				modelID = literature.id
+			case .games:
+				guard let game = self.game else { return }
+				modelID = game.id
 			}
 
 			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: self.libraryKind), currentSelection: oldLibraryStatus, action: { [weak self] (_, value)  in
@@ -255,6 +318,10 @@ extension ShowDetailHeaderCollectionViewCell {
 								guard let literature = self.literature else { return }
 								literature.attributes.update(using: libraryUpdateResponse.data)
 								self.updateLibraryActions(using: literature, animated: oldLibraryStatus == .none)
+							case .games:
+								guard let game = self.game else { return }
+								game.attributes.update(using: libraryUpdateResponse.data)
+								self.updateLibraryActions(using: game, animated: oldLibraryStatus == .none)
 							}
 
 							let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
@@ -285,6 +352,10 @@ extension ShowDetailHeaderCollectionViewCell {
 								guard let literature = self.literature else { return }
 								literature.attributes.update(using: libraryUpdateResponse.data)
 								self.updateLibraryActions(using: literature, animated: true)
+							case .games:
+								guard let game = self.game else { return }
+								game.attributes.update(using: libraryUpdateResponse.data)
+								self.updateLibraryActions(using: game, animated: true)
 							}
 
 							// Update edntry in library

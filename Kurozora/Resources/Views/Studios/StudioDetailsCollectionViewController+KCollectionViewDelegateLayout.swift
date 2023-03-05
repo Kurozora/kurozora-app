@@ -15,7 +15,7 @@ extension StudioDetailsCollectionViewController {
 		switch self.snapshot.sectionIdentifiers[section] {
 		case .header, .about:
 			return 1
-		case .shows, .literatures:
+		case .shows, .literatures, .games:
 			let columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
 			return columnCount > 0 ? columnCount : 1
 		default:
@@ -80,6 +80,13 @@ extension StudioDetailsCollectionViewController {
 				}
 			case .literatures:
 				if !self.literatureIdentities.isEmpty {
+					let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
+					let smallSectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					sectionLayout = smallSectionLayout
+					hasSectionHeader = true
+				}
+			case .games:
+				if !self.gameIdentities.isEmpty {
 					let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 					let smallSectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 					sectionLayout = smallSectionLayout

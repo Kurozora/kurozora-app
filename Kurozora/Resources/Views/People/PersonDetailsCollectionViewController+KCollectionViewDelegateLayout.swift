@@ -16,7 +16,7 @@ extension PersonDetailsCollectionViewController {
 		switch self.snapshot.sectionIdentifiers[section] {
 		case .header, .about:
 			columnCount = 1
-		case .shows, .literatures:
+		case .shows, .literatures, .games:
 			if width >= 414 {
 				columnCount = (width / 384).rounded().int
 			} else {
@@ -90,6 +90,11 @@ extension PersonDetailsCollectionViewController {
 				}
 			case .literatures:
 				if !self.literatureIdentities.isEmpty {
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					hasSectionHeader = true
+				}
+			case .games:
+				if !self.gameIdentities.isEmpty {
 					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 					hasSectionHeader = true
 				}

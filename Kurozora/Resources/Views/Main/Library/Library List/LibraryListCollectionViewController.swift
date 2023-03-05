@@ -33,6 +33,17 @@ class LibraryListCollectionViewController: KCollectionViewController {
 			#endif
 		}
 	}
+	var games: [Game] = [] {
+		didSet {
+			self.updateDataSource()
+			self._prefersActivityIndicatorHidden = true
+			self.toggleEmptyDataView()
+
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.endRefreshing()
+			#endif
+		}
+	}
 	var nextPageURL: String?
 	var libraryStatus: KKLibrary.Status = .planning
 	var sectionIndex: Int?
@@ -103,6 +114,8 @@ class LibraryListCollectionViewController: KCollectionViewController {
 			libraryStatus = self.libraryStatus.showStringValue
 		case .literatures:
 			libraryStatus = self.libraryStatus.literatureStringValue
+		case .games:
+			libraryStatus = self.libraryStatus.gameStringValue
 		}
 
 		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your \(libraryStatus.lowercased()) list.")
@@ -176,11 +189,11 @@ class LibraryListCollectionViewController: KCollectionViewController {
 			titleString = "No Literatures"
 			subtitleString = "Add a literature to your \(libraryStatus.lowercased()) list and it will show up here."
 			image = R.image.empty.mangaLibrary()!
-//		case .games:
-//			libraryStatus = self.libraryStatus.gameStringValue
-//			titleString = "No Games"
-//			subtitleString = "Add a game to your \(libraryStatus.lowercased()) list and it will show up here."
-//			image = R.image.empty.gameLibrary()!
+		case .games:
+			libraryStatus = self.libraryStatus.gameStringValue
+			titleString = "No Games"
+			subtitleString = "Add a game to your \(libraryStatus.lowercased()) list and it will show up here."
+			image = R.image.empty.gameLibrary()!
 		}
 
 		if User.isSignedIn {
@@ -219,6 +232,8 @@ class LibraryListCollectionViewController: KCollectionViewController {
 				libraryStatus = self.libraryStatus.showStringValue
 			case .literatures:
 				libraryStatus = self.libraryStatus.literatureStringValue
+			case .games:
+				libraryStatus = self.libraryStatus.gameStringValue
 			}
 
 			DispatchQueue.main.async { [weak self] in
@@ -235,6 +250,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 				if self.nextPageURL == nil {
 					self.shows = []
 					self.literatures = []
+					self.games = []
 				}
 
 				// Save next page url and append new data
@@ -244,6 +260,9 @@ class LibraryListCollectionViewController: KCollectionViewController {
 				}
 				if let literatures = libraryResponse.data.literatures {
 					self.literatures.append(contentsOf: literatures)
+				}
+				if let games = libraryResponse.data.games {
+					self.games.append(contentsOf: games)
 				}
 			} catch {
 				print(error.localizedDescription)
@@ -299,6 +318,10 @@ class LibraryListCollectionViewController: KCollectionViewController {
 			guard let literatureDetailCollectionViewController = segue.destination as? LiteratureDetailsCollectionViewController else { return }
 			guard let literature = sender as? Literature else { return }
 			literatureDetailCollectionViewController.literature = literature
+		case R.segue.libraryListCollectionViewController.gameDetailsSegue.identifier:
+			guard let gameDetailCollectionViewController = segue.destination as? GameDetailsCollectionViewController else { return }
+			guard let game = sender as? Game else { return }
+			gameDetailCollectionViewController.game = game
 		default: break
 		}
 	}

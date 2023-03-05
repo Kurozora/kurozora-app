@@ -17,6 +17,9 @@ extension LibraryListCollectionViewController {
 		case .literatures:
 			let literature = self.literatures[safe: indexPath.item]
 			self.performSegue(withIdentifier: R.segue.libraryListCollectionViewController.literatureDetailsSegue, sender: literature)
+		case .games:
+			let game = self.games[safe: indexPath.item]
+			self.performSegue(withIdentifier: R.segue.libraryListCollectionViewController.gameDetailsSegue, sender: game)
 		}
 	}
 
@@ -36,6 +39,13 @@ extension LibraryListCollectionViewController {
 					await self.fetchLibrary()
 				}
 			}
+		case .games:
+			if indexPath.item == self.games.count - 20 && self.nextPageURL != nil {
+				Task { [weak self] in
+					guard let self = self else { return }
+					await self.fetchLibrary()
+				}
+			}
 		}
 	}
 
@@ -46,6 +56,8 @@ extension LibraryListCollectionViewController {
 			return self.shows[safe: indexPath.item]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .literatures:
 			return self.literatures[safe: indexPath.item]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		case .games:
+			return self.games[safe: indexPath.item]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		}
 	}
 

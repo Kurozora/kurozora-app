@@ -307,6 +307,7 @@
                     <connections>
                         <segue destination="3xf-dq-TdG" kind="show" identifier="ShowDetailsSegue" id="acw-1g-1eB"/>
                         <segue destination="9jn-OH-mnf" kind="show" identifier="LiteratureDetailsSegue" id="eCq-e0-lMj"/>
+                        <segue destination="IC9-zz-BIp" kind="show" identifier="GameDetailsSegue" id="gjk-fh-csi"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ORQ-vq-p8c" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -322,6 +323,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dyl-fT-fjg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1451" y="865"/>
+        </scene>
+        <!--GameDetailsCollectionViewController-->
+        <scene sceneID="P4G-rE-84f">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Games" referencedIdentifier="GameDetailsCollectionViewController" id="IC9-zz-BIp" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="GFK-uN-ZPu"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mce-bx-HAg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1433" y="907"/>
         </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

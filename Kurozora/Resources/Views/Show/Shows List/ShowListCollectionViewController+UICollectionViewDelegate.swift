@@ -17,7 +17,7 @@ extension ShowsListCollectionViewController {
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 		switch self.showsListFetchType {
-		case .relatedShow:
+		case .relatedShow, .literature, .game:
 			let showIdentitiesCount = self.relatedShows.count - 1
 			var itemsCount = showIdentitiesCount / 4 / 2
 			itemsCount = itemsCount > 15 ? 15 : itemsCount // Make sure count isn't above 15
@@ -48,8 +48,13 @@ extension ShowsListCollectionViewController {
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		guard self.shows[indexPath] != nil else { return nil }
-		return self.shows[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		switch self.showsListFetchType {
+		case .relatedShow, .literature, .game:
+			return self.relatedShows[safe: indexPath.item]?.show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		default:
+			guard self.shows[indexPath] != nil else { return nil }
+			return self.shows[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		}
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {

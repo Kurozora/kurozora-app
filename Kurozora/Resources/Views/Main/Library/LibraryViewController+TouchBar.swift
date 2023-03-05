@@ -41,8 +41,8 @@ extension LibraryViewController: NSTouchBarDelegate {
 					return libraryStatus.showStringValue
 				case .literatures:
 					return libraryStatus.literatureStringValue
-//				case .games:
-//					return libraryStatus.gameStringValue
+				case .games:
+					return libraryStatus.gameStringValue
 				}
 			}
 

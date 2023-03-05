@@ -39,4 +39,12 @@ class BadgeCollectionViewCell: UICollectionViewCell {
 		self.primaryImageView?.image = literatureDetailBadge.primaryImage(from: literature)
 		self.secondaryLabel.text = literatureDetailBadge.secondaryInformation(from: literature)
 	}
+
+	func configureCell(with game: Game?, gameDetailBadge: GameDetail.Badge) {
+		guard let game = game else { return }
+
+		self.primaryLabel?.text = gameDetailBadge.primaryInformation(from: game)
+		self.primaryImageView?.image = gameDetailBadge.primaryImage(from: game)
+		self.secondaryLabel.text = gameDetailBadge.secondaryInformation(from: game)
+	}
 }

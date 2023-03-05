@@ -791,11 +791,16 @@ struct Trans {
 	/// - Tag: Trans-anime
 	static let anime: String = String(localized: "Anime",
 									  comment: "The string for the word 'anime'.")
-	/// The string for the word 'literature'.
+	/// The string for the word 'literatures'.
 	///
-	/// - Tag: Trans-literature
+	/// - Tag: Trans-literatures
 	static let literatures: String = String(localized: "Literatures",
 											comment: "The string for the word 'literatures'.")
+	/// The string for the word 'game'.
+	///
+	/// - Tag: Trans-games
+	static let games: String = String(localized: "Games",
+									  comment: "The string for the word 'games'.")
 	/// The string for the word 'user'.
 	///
 	/// - Tag: Trans-user
@@ -1076,6 +1081,11 @@ struct Trans {
 	/// - Tag: Trans-relatedLiteratures
 	static let relatedLiteratures: String = String(localized: "Related Literatures",
 												   comment: "The string for the word 'related literatures'.")
+	/// The string for the word 'related games'.
+	///
+	/// - Tag: Trans-relatedGames
+	static let relatedGames: String = String(localized: "Related Games",
+											 comment: "The string for the word 'related games'.")
 	/// The string for the word 'copyright'.
 	///
 	/// - Tag: Trans-copyright

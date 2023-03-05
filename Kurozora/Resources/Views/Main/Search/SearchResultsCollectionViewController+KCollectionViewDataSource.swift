@@ -17,6 +17,7 @@ extension SearchResultsCollectionViewController {
 	override func configureDataSource() {
 		let characterCellConfiguration = self.getConfiguredCharacterCell()
 		let episodeCellConfiguration = self.getConfiguredEpisodeCell()
+		let gameCellConfiguration = self.getConfiguredGameCell()
 		let personCellConfiguration = self.getConfiguredPersonCell()
 		let musicCellConfiguration = self.getConfiguredMusicCell()
 		let showCellConfiguration = self.getConfiguredShowCell()
@@ -29,6 +30,8 @@ extension SearchResultsCollectionViewController {
 				return collectionView.dequeueConfiguredReusableCell(using: characterCellConfiguration, for: indexPath, item: itemKind)
 			case .literature:
 				return collectionView.dequeueConfiguredReusableCell(using: characterCellConfiguration, for: indexPath, item: itemKind)
+			case .game:
+				return collectionView.dequeueConfiguredReusableCell(using: characterCellConfiguration, for: indexPath, item: itemKind)
 			case .characterIdentity:
 				return collectionView.dequeueConfiguredReusableCell(using: characterCellConfiguration, for: indexPath, item: itemKind)
 			case .episodeIdentity:
@@ -39,6 +42,8 @@ extension SearchResultsCollectionViewController {
 				return collectionView.dequeueConfiguredReusableCell(using: musicCellConfiguration, for: indexPath, item: itemKind)
 			case .showIdentity, .literatureIdentity:
 				return collectionView.dequeueConfiguredReusableCell(using: showCellConfiguration, for: indexPath, item: itemKind)
+			case .gameIdentity:
+				return collectionView.dequeueConfiguredReusableCell(using: gameCellConfiguration, for: indexPath, item: itemKind)
 			case .studioIdentity:
 				return collectionView.dequeueConfiguredReusableCell(using: studioCellConfiguration, for: indexPath, item: itemKind)
 			case .userIdentity:
@@ -62,6 +67,9 @@ extension SearchResultsCollectionViewController {
 			case .episodes:
 				segueID = R.segue.searchResultsCollectionViewController.episodesListSegue.identifier
 				exploreSectionTitleCell.configure(withTitle: Trans.episodes, indexPath: indexPath, segueID: segueID)
+			case .games:
+				segueID = R.segue.searchResultsCollectionViewController.gamesListSegue.identifier
+				exploreSectionTitleCell.configure(withTitle: Trans.games, indexPath: indexPath, segueID: segueID)
 			case .literatures:
 				segueID = R.segue.searchResultsCollectionViewController.literaturesListSegue.identifier
 				exploreSectionTitleCell.configure(withTitle: Trans.literatures, indexPath: indexPath, segueID: segueID)
@@ -95,6 +103,11 @@ extension SearchResultsCollectionViewController {
 	func fetchEpisode(at indexPath: IndexPath) -> Episode? {
 		guard let episode = self.episodes[indexPath] else { return nil }
 		return episode
+	}
+
+	func fetchGame(at indexPath: IndexPath) -> Game? {
+		guard let game = self.games[indexPath] else { return nil }
+		return game
 	}
 
 	func fetchLiterature(at indexPath: IndexPath) -> Literature? {
@@ -155,6 +168,15 @@ extension SearchResultsCollectionViewController {
 
 				snapshot.appendSections([.literatures])
 				snapshot.appendItems(literatureItems, toSection: .literatures)
+			}
+
+			if let gameSearchResults = self.searchResults?.games?.data, !gameSearchResults.isEmpty {
+				let gameItems: [ItemKind] = gameSearchResults.map { gameIdentity in
+					return .gameIdentity(gameIdentity)
+				}
+
+				snapshot.appendSections([.games])
+				snapshot.appendItems(gameItems, toSection: .games)
 			}
 
 			if let episodeSearchResults = self.searchResults?.episodes?.data, !episodeSearchResults.isEmpty {
@@ -230,6 +252,15 @@ extension SearchResultsCollectionViewController {
 				snapshot.appendSections([.literatures])
 				snapshot.appendItems(literatureItems, toSection: .literatures)
 			}
+
+			if let gameSearchResults = self.searchResults?.games?.data, !gameSearchResults.isEmpty {
+				let gameItems: [ItemKind] = gameSearchResults.map { gameIdentity in
+					return .gameIdentity(gameIdentity)
+				}
+
+				snapshot.appendSections([.games])
+				snapshot.appendItems(gameItems, toSection: .games)
+			}
 		}
 
 		if snapshot.numberOfSections == 0 {
@@ -299,6 +330,33 @@ extension SearchResultsCollectionViewController {
 		}
 	}
 
+	func getConfiguredGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.gameLockupCollectionViewCell)) { [weak self] gameLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .gameIdentity(let gameIdentity, _):
+				let game = self.fetchGame(at: indexPath)
+				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? gameLockupCollectionViewCell.dataRequest
+
+				if dataRequest == nil && game == nil {
+					dataRequest = KService.getDetails(forGame: gameIdentity) { result in
+						switch result {
+						case .success(let games):
+							self.games[indexPath] = games.first
+							self.setItemKindNeedsUpdate(itemKind)
+						case .failure: break
+						}
+					}
+				}
+
+				gameLockupCollectionViewCell.delegate = self
+				gameLockupCollectionViewCell.dataRequest = dataRequest
+				gameLockupCollectionViewCell.configure(using: game)
+			default: break
+			}
+		}
+	}
 	func getConfiguredPersonCell() -> UICollectionView.CellRegistration<PersonLockupCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<PersonLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.personLockupCollectionViewCell)) { [weak self] personLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }

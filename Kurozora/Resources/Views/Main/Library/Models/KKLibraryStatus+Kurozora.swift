@@ -60,8 +60,8 @@ extension KKLibrary.Status {
 				items.append((section.showStringValue, section))
 			case .literatures:
 				items.append((section.literatureStringValue, section))
-//			case .games:
-//				items.append((section.gameStringValue, section))
+			case .games:
+				items.append((section.gameStringValue, section))
 			}
 		}
 		return items

@@ -11,6 +11,7 @@ import KurozoraKit
 import Alamofire
 
 enum ShowsListFetchType {
+	case game
 	case literature
 	case charcter
 	case explore
@@ -24,6 +25,8 @@ enum ShowsListFetchType {
 
 class ShowsListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
+	var gameIdentity: GameIdentity? = nil
+
 	var literatureIdentity: LiteratureIdentity? = nil
 
 	var personIdentity: PersonIdentity? = nil
@@ -146,6 +149,20 @@ class ShowsListCollectionViewController: KCollectionViewController {
 
 		do {
 			switch self.showsListFetchType {
+			case .game:
+				guard let gameIdentity = self.gameIdentity else { return }
+				let relatedShowsResponse = try await KService.getRelatedShows(forGame: gameIdentity, next: self.nextPageURL).value
+
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.relatedShows = []
+					self.showIdentities = []
+				}
+
+				// Save next page url and append new data
+				self.nextPageURL = relatedShowsResponse.next
+				self.relatedShows.append(contentsOf: relatedShowsResponse.data)
+				self.relatedShows.removeDuplicates()
 			case .literature:
 				guard let literatureIdentity = self.literatureIdentity else { return }
 				let relatedShowsResponse = try await KService.getRelatedShows(forLiterature: literatureIdentity, next: self.nextPageURL).value

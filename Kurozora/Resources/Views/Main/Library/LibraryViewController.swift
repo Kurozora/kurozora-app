@@ -211,6 +211,8 @@ class LibraryViewController: KTabbedViewController {
 			sectionTitle = KKLibrary.Status.all[index].showStringValue
 		case .literatures:
 			sectionTitle = KKLibrary.Status.all[index].literatureStringValue
+		case .games:
+			sectionTitle = KKLibrary.Status.all[index].gameStringValue
 		}
 
 		return TMBarItem(title: sectionTitle)

@@ -131,6 +131,28 @@ class InformationCollectionViewCell: UICollectionViewCell {
 		}
 	}
 
+	/// Configure the cell with the given game details.
+	func configure(using game: Game, for gameDetailInformation: GameDetail.Information) {
+		self.typeImageView.image = gameDetailInformation.imageValue
+		self.typeLabel.text = gameDetailInformation.stringValue
+		self.headlineLabel.text = gameDetailInformation.information(from: game)
+		self.primaryLabel.text = gameDetailInformation.primaryInformation(from: game)
+		self.primaryImageView.image = gameDetailInformation.primaryImage(from: game)
+		self.secondaryLabel.text = gameDetailInformation.secondaryInformation(from: game)
+		self.footerLabel.text = gameDetailInformation.footnote(from: game)
+
+		switch gameDetailInformation {
+		case .publicationDates:
+			self.primaryImageViewHeightConstraint?.isActive = self.primaryImageView.image != nil
+			self.secondaryLabel.textAlignment = .right
+			self.secondaryLabel.font = .preferredFont(forTextStyle: .headline)
+		default:
+			self.primaryImageViewHeightConstraint?.isActive = false
+			self.secondaryLabel.textAlignment = .natural
+			self.secondaryLabel.font = .preferredFont(forTextStyle: .body)
+		}
+	}
+
 	/// Configure the cell with the given studio details.
 	func configure(using studio: Studio, for studioDetailInformation: StudioInformation) {
 		self.typeImageView.image = studioDetailInformation.imageValue

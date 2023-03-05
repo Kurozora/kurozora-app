@@ -14,7 +14,7 @@ extension CastListCollectionViewController {
 		let columnCount: Int
 
 		switch self.castKind {
-		case .show:
+		case .show, .game:
 			columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
 		case .literature:
 			columnCount = (width / 140.0).rounded().int

@@ -32,6 +32,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	var people: [IndexPath: Person] = [:]
 	var shows: [IndexPath: Show] = [:]
 	var literatures: [IndexPath: Literature] = [:]
+	var games: [IndexPath: Game] = [:]
 	var songs: [IndexPath: Song] = [:]
 	var studios: [IndexPath: Studio] = [:]
 	var users: [IndexPath: User] = [:]
@@ -142,13 +143,13 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		case .kurozora:
 			Task { [weak self] in
 				guard let self = self else { return }
-				await self.search(scope: searchScope, types: [.shows, .literatures, .episodes, .characters, .people, .songs, .studios, .users], query: query)
+				await self.search(scope: searchScope, types: [.shows, .literatures, .games, .episodes, .characters, .people, .songs, .studios, .users], query: query)
 			}
 		case .library:
 			WorkflowController.shared.isSignedIn { [weak self] in
 				Task {
 					guard let self = self else { return }
-					await self.search(scope: searchScope, types: [.shows, .literatures], query: query)
+					await self.search(scope: searchScope, types: [.shows, .literatures, .games], query: query)
 				}
 			}
 		}
@@ -194,6 +195,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		self.people = [:]
 		self.shows = [:]
 		self.literatures = [:]
+		self.games = [:]
 		self.songs = [:]
 		self.studios = [:]
 		self.users = [:]
@@ -217,6 +219,11 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 			guard let literatureDetailCollectionViewController = segue.destination as? LiteratureDetailsCollectionViewController else { return }
 			guard let literature = sender as? Literature else { return }
 			literatureDetailCollectionViewController.literature = literature
+		case R.segue.searchResultsCollectionViewController.gameDetailsSegue.identifier:
+			// Segue to game details
+			guard let gameDetailCollectionViewController = segue.destination as? GameDetailsCollectionViewController else { return }
+			guard let game = sender as? Game else { return }
+			gameDetailCollectionViewController.game = game
 		case R.segue.searchResultsCollectionViewController.personDetailsSegue.identifier:
 			// Segue to person details
 			guard let personDetailCollectionViewController = segue.destination as? PersonDetailsCollectionViewController else { return }
@@ -257,6 +264,11 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 			guard let literaturesListCollectionViewController = segue.destination as? LiteraturesListCollectionViewController else { return }
 			literaturesListCollectionViewController.searachQuery = self.searachQuery
 			literaturesListCollectionViewController.literaturesListFetchType = .search
+		case R.segue.searchResultsCollectionViewController.gamesListSegue.identifier:
+			// Segue to games list
+			guard let gamesListCollectionViewController = segue.destination as? GamesListCollectionViewController else { return }
+			gamesListCollectionViewController.searachQuery = self.searachQuery
+			gamesListCollectionViewController.gamesListFetchType = .search
 		case R.segue.searchResultsCollectionViewController.peopleListSegue.identifier:
 			// Segue to people list
 			guard let peopleListCollectionViewController = segue.destination as? PeopleListCollectionViewController else { return }
@@ -329,10 +341,13 @@ extension SearchResultsCollectionViewController: BaseLockupCollectionViewCellDel
 			switch cell.libraryKind {
 			case .shows:
 				guard let show = self.shows[indexPath] else { return }
-				modelID = String(show.id)
+				modelID = show.id
 			case .literatures:
-				guard let literatures = self.literatures[indexPath] else { return }
-				modelID = literatures.id
+				guard let literature = self.literatures[indexPath] else { return }
+				modelID = literature.id
+			case .games:
+				guard let game = self.games[indexPath] else { return }
+				modelID = game.id
 			}
 
 			let oldLibraryStatus = cell.libraryStatus
@@ -346,6 +361,8 @@ extension SearchResultsCollectionViewController: BaseLockupCollectionViewCellDel
 							self.shows[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
 						case .literatures:
 							self.literatures[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
+						case .games:
+							self.games[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
 						}
 
 						// Update entry in library
@@ -372,6 +389,8 @@ extension SearchResultsCollectionViewController: BaseLockupCollectionViewCellDel
 								self.shows[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
 							case .literatures:
 								self.literatures[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
+							case .games:
+								self.games[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
 							}
 
 							// Update edntry in library
@@ -531,6 +550,9 @@ extension SearchResultsCollectionViewController {
 		/// Indicates the episodes' section layout type.
 		case episodes
 
+		/// Indicates the games' section layout type.
+		case games
+
 		/// Indicates the literatures' section layout type.
 		case literatures
 
@@ -559,11 +581,17 @@ extension SearchResultsCollectionViewController {
 		/// Indicates the item kind contains a `Literature` object.
 		case literature(_: Literature)
 
+		/// Indicates the item kind contains a `Game` object.
+		case game(_: Game)
+
 		/// Indicates the item kind contains a `CharacterIdentity` object.
 		case characterIdentity(_: CharacterIdentity, _: UUID = UUID())
 
 		/// Indicates the item kind contains a `EpisodeIdentity` object.
 		case episodeIdentity(_: EpisodeIdentity, _: UUID = UUID())
+
+		/// Indicates the item kind contains a `GameIdentity` object.
+		case gameIdentity(_: GameIdentity, _: UUID = UUID())
 
 		/// Indicates the item kind contains a `LiteratureIdentity` object.
 		case literatureIdentity(_: LiteratureIdentity, _: UUID = UUID())
@@ -590,11 +618,16 @@ extension SearchResultsCollectionViewController {
 				hasher.combine(show)
 			case .literature(let literature):
 				hasher.combine(literature)
+			case .game(let game):
+				hasher.combine(game)
 			case .characterIdentity(let characterIdentity, let uuid):
 				hasher.combine(characterIdentity)
 				hasher.combine(uuid)
 			case .episodeIdentity(let episodeIdentity, let uuid):
 				hasher.combine(episodeIdentity)
+				hasher.combine(uuid)
+			case .gameIdentity(let gameIdentity, let uuid):
+				hasher.combine(gameIdentity)
 				hasher.combine(uuid)
 			case .literatureIdentity(let literatureIdentity, let uuid):
 				hasher.combine(literatureIdentity)
@@ -623,10 +656,14 @@ extension SearchResultsCollectionViewController {
 				return show1 == show2
 			case (.literature(let literature1), .literature(let literature2)):
 				return literature1 == literature2
+			case (.game(let game1), .game(let game2)):
+				return game1 == game2
 			case (.characterIdentity(let characterIdentity1, let uuid1), .characterIdentity(let characterIdentity2, let uuid2)):
 				return characterIdentity1 == characterIdentity2 && uuid1 == uuid2
 			case (.episodeIdentity(let episodeIdentity1, let uuid1), .episodeIdentity(let episodeIdentity2, let uuid2)):
 				return episodeIdentity1 == episodeIdentity2 && uuid1 == uuid2
+			case (.gameIdentity(let gameIdentity1, let uuid1), .gameIdentity(let gameIdentity2, let uuid2)):
+				return gameIdentity1 == gameIdentity2 && uuid1 == uuid2
 			case (.literatureIdentity(let literatureIdentity1, let uuid1), .literatureIdentity(let literatureIdentity2, let uuid2)):
 				return literatureIdentity1 == literatureIdentity2 && uuid1 == uuid2
 			case (.personIdentity(let personIdentity1, let uuid1), .personIdentity(let personIdentity2, let uuid2)):

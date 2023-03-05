@@ -11,7 +11,7 @@ import KurozoraKit
 import Alamofire
 
 enum StudiosListFetchType {
-//	case game
+	case game
 	case literature
 	case show
 	case search
@@ -138,22 +138,22 @@ class StudiosListCollectionViewController: KCollectionViewController {
 		#endif
 
 		switch self.studiosListFetchType {
-//		case .game:
-//			guard let gameIdentity = self.gameIdentity else { return }
-//			do {
-//				let studioIdentityResponse = try await KService.getStudios(forLiterature: gameIdentity, next: self.nextPageURL).value
-//				// Reset data if necessary
-//				if self.nextPageURL == nil {
-//					self.studioIdentities = []
-//				}
-//
-//				// Save next page url and append new data
-//				self.nextPageURL = studioIdentityResponse.next
-//				self.studioIdentities.append(contentsOf: studioIdentityResponse.data)
-//				self.studioIdentities.removeDuplicates()
-//			} catch {
-//				print(error.localizedDescription)
-//			}
+		case .game:
+			guard let gameIdentity = self.gameIdentity else { return }
+			do {
+				let studioIdentityResponse = try await KService.getStudios(forGame: gameIdentity, next: self.nextPageURL).value
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.studioIdentities = []
+				}
+
+				// Save next page url and append new data
+				self.nextPageURL = studioIdentityResponse.next
+				self.studioIdentities.append(contentsOf: studioIdentityResponse.data)
+				self.studioIdentities.removeDuplicates()
+			} catch {
+				print(error.localizedDescription)
+			}
 		case .literature:
 			guard let literatureIdentity = self.literatureIdentity else { return }
 			do {

@@ -59,6 +59,8 @@ class SearchShowResultsCell: KCollectionViewCell {
 			libraryStatus = self.libraryStatus.showStringValue
 		case .literatures:
 			libraryStatus = self.libraryStatus.literatureStringValue
+		case .games:
+			libraryStatus = self.libraryStatus.gameStringValue
 		}
 
 		self.actionButton.setTitle(self.libraryStatus != .none ? "\(libraryStatus.capitalized) ▾" : "ADD", for: .normal)

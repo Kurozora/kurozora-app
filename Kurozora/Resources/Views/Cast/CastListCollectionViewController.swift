@@ -10,15 +10,17 @@ import UIKit
 import KurozoraKit
 import Alamofire
 
-enum CastKind {
+enum CastKind: String {
 	case show
 	case literature
+	case game
 }
 
 class CastListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var literatureIdentity: LiteratureIdentity? = nil
 	var showIdentity: ShowIdentity? = nil
+	var gameIdentity: GameIdentity? = nil
 	var castKind: CastKind = .show
 	var cast: [IndexPath: Cast] = [:]
 	var castIdentities: [CastIdentity] = [] {
@@ -98,7 +100,7 @@ class CastListCollectionViewController: KCollectionViewController {
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		if self.showIdentity != nil || self.literatureIdentity != nil {
+		if self.showIdentity != nil || self.literatureIdentity != nil || self.gameIdentity != nil {
 			self.nextPageURL = nil
 			Task { [weak self] in
 				guard let self = self else { return }
@@ -109,7 +111,7 @@ class CastListCollectionViewController: KCollectionViewController {
 
 	override func configureEmptyDataView() {
 		self.emptyBackgroundView.configureImageView(image: R.image.empty.cast()!)
-		self.emptyBackgroundView.configureLabels(title: "No Cast", detail: "This show doesn't have casts yet. Please check back again later.")
+		self.emptyBackgroundView.configureLabels(title: "No Cast", detail: "This \(self.castKind.rawValue) doesn't have casts yet. Please check back again later.")
 
 		self.collectionView.backgroundView?.alpha = 0
 	}
@@ -149,7 +151,8 @@ class CastListCollectionViewController: KCollectionViewController {
 		self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing cast...")
 		#endif
 
-		if self.showIdentity != nil {
+		switch self.castKind {
+		case .show:
 			do {
 				guard let showIdentity = self.showIdentity else { return }
 				let castIdentityResponse = try await KService.getCast(forShow: showIdentity, next: self.nextPageURL).value
@@ -166,10 +169,27 @@ class CastListCollectionViewController: KCollectionViewController {
 			} catch {
 				print(error.localizedDescription)
 			}
-		} else if self.literatureIdentity != nil {
+		case .literature:
 			do {
 				guard let literatureIdentity = self.literatureIdentity else { return }
 				let castIdentityResponse = try await KService.getCast(forLiterature: literatureIdentity, next: self.nextPageURL).value
+
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.castIdentities = []
+				}
+
+				// Save next page url and append new data
+				self.nextPageURL = castIdentityResponse.next
+				self.castIdentities.append(contentsOf: castIdentityResponse.data)
+				self.castIdentities.removeDuplicates()
+			} catch {
+				print(error.localizedDescription)
+			}
+		case .game:
+			do {
+				guard let gameIdentity = self.gameIdentity else { return }
+				let castIdentityResponse = try await KService.getCast(forGame: gameIdentity, next: self.nextPageURL).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {

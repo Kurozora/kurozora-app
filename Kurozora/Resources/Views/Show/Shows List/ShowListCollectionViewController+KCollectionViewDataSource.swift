@@ -91,7 +91,7 @@ extension ShowsListCollectionViewController {
 
 		// Append items
 		switch self.showsListFetchType {
-		case .relatedShow:
+		case .relatedShow, .literature, .game:
 			let relatedShowItems: [ItemKind] = self.relatedShows.map { relatedShow in
 				return .relatedShow(relatedShow)
 			}

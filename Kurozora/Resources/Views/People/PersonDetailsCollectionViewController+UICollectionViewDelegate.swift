@@ -17,6 +17,9 @@ extension PersonDetailsCollectionViewController {
 		case .literatures:
 			let literature = self.literatures[indexPath]
 			self.performSegue(withIdentifier: R.segue.personDetailsCollectionViewController.literatureDetailsSegue, sender: literature)
+		case .games:
+			let game = self.games[indexPath]
+			self.performSegue(withIdentifier: R.segue.personDetailsCollectionViewController.gameDetailsSegue, sender: game)
 		case .characters:
 			let character = self.characters[indexPath]
 			self.performSegue(withIdentifier: R.segue.personDetailsCollectionViewController.characterDetailsSegue, sender: character)
@@ -31,6 +34,8 @@ extension PersonDetailsCollectionViewController {
 			return self.shows[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .literatures:
 			return self.literatures[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		case .games:
+			return self.games[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .characters:
 			return self.characters[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		default: break

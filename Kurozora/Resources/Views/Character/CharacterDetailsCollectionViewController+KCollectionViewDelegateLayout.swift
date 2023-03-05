@@ -15,7 +15,7 @@ extension CharacterDetailsCollectionViewController {
 		switch self.snapshot.sectionIdentifiers[section] {
 		case .header, .about:
 			return 1
-		case .shows, .literatures:
+		case .shows, .literatures, .games:
 			let columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
 			return columnCount > 0 ? columnCount : 1
 		case .people:
@@ -86,6 +86,11 @@ extension CharacterDetailsCollectionViewController {
 				}
 			case .literatures:
 				if self.literatureIdentities.count != 0 {
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+					hasSectionHeader = true
+				}
+			case .games:
+				if self.gameIdentities.count != 0 {
 					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 					hasSectionHeader = true
 				}

@@ -24,7 +24,7 @@ extension SearchResultsCollectionViewController {
 			}
 		case .songs:
 			columnCount = (width / 250.0).rounded().int
-		case .shows, .literatures, .searchHistory:
+		case .shows, .literatures, .games, .searchHistory:
 			if width >= 414.0 {
 				columnCount = (width / 384.0).rounded().int
 			} else {
@@ -45,7 +45,7 @@ extension SearchResultsCollectionViewController {
 		}
 
 		switch section {
-		case .shows, .literatures, .studios:
+		case .shows, .literatures, .games, .studios:
 			// Limit columns to 5 or less
 			if columnCount > 5 {
 				columnCount = 5
@@ -89,7 +89,7 @@ extension SearchResultsCollectionViewController {
 			case .people:
 				hasHeader = true
 				sectionLayout = Layouts.peopleSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
-			case .shows, .literatures:
+			case .shows, .literatures, .games:
 				hasHeader = true
 				sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: self.currentScope == .kurozora)
 			case .songs:

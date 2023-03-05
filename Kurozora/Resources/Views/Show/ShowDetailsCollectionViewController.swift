@@ -52,6 +52,9 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 	/// Related Literature properties.
 	var relatedLiteratures: [RelatedLiterature] = []
 
+	/// Related Game properties.
+	var relatedGames: [RelatedGame] = []
+
 	/// Cast properties.
 	var cast: [IndexPath: Cast] = [:]
 	var castIdentities: [CastIdentity] = []
@@ -267,6 +270,13 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 			print(error.localizedDescription)
 		}
 
+		do {
+			let relatedGamesResponse = try await KService.getRelatedGames(forShow: showIdentity, limit: 10).value
+			self.relatedGames = relatedGamesResponse.data
+		} catch {
+			print(error.localizedDescription)
+		}
+
 		self.updateDataSource()
 	}
 
@@ -337,6 +347,12 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 			literatureListCollectionViewController.title = Trans.relatedLiteratures
 			literatureListCollectionViewController.showIdentity = self.showIdentity
 			literatureListCollectionViewController.literaturesListFetchType = .show
+		case R.segue.showDetailsCollectionViewController.gamesListSegue.identifier:
+			// Segue to games list
+			guard let gameListCollectionViewController = segue.destination as? GamesListCollectionViewController else { return }
+			gameListCollectionViewController.title = Trans.relatedGames
+			gameListCollectionViewController.showIdentity = self.showIdentity
+			gameListCollectionViewController.gamesListFetchType = .show
 		case R.segue.showDetailsCollectionViewController.studiosListSegue.identifier:
 			// Segue to studios list
 			guard let studiosListCollectionViewController = segue.destination as? StudiosListCollectionViewController else { return }
@@ -352,6 +368,11 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 			guard let literatureDetailsCollectionViewController = segue.destination as? LiteratureDetailsCollectionViewController else { return }
 			guard let literature = sender as? Literature else { return }
 			literatureDetailsCollectionViewController.literature = literature
+		case R.segue.showDetailsCollectionViewController.gameDetailsSegue.identifier:
+			// Segue to game details
+			guard let gameDetailsCollectionViewController = segue.destination as? GameDetailsCollectionViewController else { return }
+			guard let game = sender as? Game else { return }
+			gameDetailsCollectionViewController.game = game
 		case R.segue.showDetailsCollectionViewController.studioDetailsSegue.identifier:
 			// Segue to studio details
 			guard let studioDetailsCollectionViewController = segue.destination as? StudioDetailsCollectionViewController else { return }
@@ -502,6 +523,7 @@ extension ShowDetailsCollectionViewController {
 		case moreByStudio
 		case relatedShows
 		case relatedLiteratures
+		case relatedGames
 		case sosumi
 
 		// MARK: - Properties
@@ -532,6 +554,8 @@ extension ShowDetailsCollectionViewController {
 				return Trans.relatedShows
 			case .relatedLiteratures:
 				return Trans.relatedLiteratures
+			case .relatedGames:
+				return Trans.relatedGames
 			case .sosumi:
 				return Trans.copyright
 			}
@@ -564,6 +588,8 @@ extension ShowDetailsCollectionViewController {
 				return R.segue.showDetailsCollectionViewController.showsListSegue.identifier
 			case .relatedLiteratures:
 				return R.segue.showDetailsCollectionViewController.literaturesListSegue.identifier
+			case .relatedGames:
+				return R.segue.showDetailsCollectionViewController.gamesListSegue.identifier
 			case .sosumi:
 				return ""
 			}
@@ -587,6 +613,9 @@ extension ShowDetailsCollectionViewController {
 
 		/// Indicates the item kind contains a `RelatedLiterature` object.
 		case relatedLiterature(_: RelatedLiterature, id: UUID = UUID())
+
+		/// Indicates the item kind contains a `RelatedGame` object.
+		case relatedGame(_: RelatedGame, id: UUID = UUID())
 
 		/// Indicates the item kind contains a `ShowSong` object.
 		case showSong(_: ShowSong, id: UUID = UUID())
@@ -621,6 +650,9 @@ extension ShowDetailsCollectionViewController {
 			case .relatedLiterature(let relatedLiterature, let id):
 				hasher.combine(relatedLiterature)
 				hasher.combine(id)
+			case .relatedGame(let relatedGame, let id):
+				hasher.combine(relatedGame)
+				hasher.combine(id)
 			case .showSong(let showSong, let id):
 				hasher.combine(showSong)
 				hasher.combine(id)
@@ -651,6 +683,8 @@ extension ShowDetailsCollectionViewController {
 				return relatedShow1 == relatedShow2 && id1 == id2
 			case (.relatedLiterature(let relatedLiterature1, let id1), .relatedLiterature(let relatedLiterature2, let id2)):
 				return relatedLiterature1 == relatedLiterature2 && id1 == id2
+			case (.relatedGame(let relatedGame1, let id1), .relatedGame(let relatedGame2, let id2)):
+				return relatedGame1 == relatedGame2 && id1 == id2
 			case (.showSong(let showSong1, let id1), .showSong(let showSong2, let id2)):
 				return showSong1 == showSong2 && id1 == id2
 			case (.characterIdentity(let characterIdentity1, let id1), .characterIdentity(let characterIdentity2, let id2)):

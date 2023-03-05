@@ -39,6 +39,9 @@ class CharacterDetailsCollectionViewController: KCollectionViewController {
 	var literatures: [IndexPath: Literature] = [:]
 	var literatureIdentities: [LiteratureIdentity] = []
 
+	var games: [IndexPath: Game] = [:]
+	var gameIdentities: [GameIdentity] = []
+
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
 	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
@@ -184,6 +187,17 @@ class CharacterDetailsCollectionViewController: KCollectionViewController {
 			case .failure: break
 			}
 		}
+
+		KService.getGames(forCharacter: characterIdentity, limit: 10) { [weak self] result in
+			guard let self = self else { return }
+			switch result {
+			case .success(let gameIdentityResponse):
+				self.gameIdentities = gameIdentityResponse.data
+
+				self.updateDataSource()
+			case .failure: break
+			}
+		}
 	}
 
 	// MARK: - Segue
@@ -205,6 +219,14 @@ class CharacterDetailsCollectionViewController: KCollectionViewController {
 			guard let literatureDetailCollectionViewController = segue.destination as? LiteratureDetailsCollectionViewController else { return }
 			guard let literature = sender as? Literature else { return }
 			literatureDetailCollectionViewController.literature = literature
+		case R.segue.characterDetailsCollectionViewController.gamesListSegue.identifier:
+			guard let gamesListCollectionViewController = segue.destination as? GamesListCollectionViewController else { return }
+			gamesListCollectionViewController.characterIdentity = self.characterIdentity
+			gamesListCollectionViewController.gamesListFetchType = .charcter
+		case R.segue.characterDetailsCollectionViewController.gameDetailsSegue.identifier:
+			guard let gameDetailCollectionViewController = segue.destination as? GameDetailsCollectionViewController else { return }
+			guard let game = sender as? Game else { return }
+			gameDetailCollectionViewController.game = game
 		case R.segue.characterDetailsCollectionViewController.peopleListSegue.identifier:
 			guard let peopleListCollectionViewController = segue.destination as? PeopleListCollectionViewController else { return }
 			peopleListCollectionViewController.characterIdentity = self.characterIdentity
@@ -260,10 +282,13 @@ extension CharacterDetailsCollectionViewController: BaseLockupCollectionViewCell
 			switch cell.libraryKind {
 			case .shows:
 				guard let show = self.shows[indexPath] else { return }
-				modelID = String(show.id)
+				modelID = show.id
 			case .literatures:
-				guard let literatures = self.literatures[indexPath] else { return }
-				modelID = literatures.id
+				guard let literature = self.literatures[indexPath] else { return }
+				modelID = literature.id
+			case .games:
+				guard let game = self.games[indexPath] else { return }
+				modelID = game.id
 			}
 
 			let oldLibraryStatus = cell.libraryStatus
@@ -277,6 +302,8 @@ extension CharacterDetailsCollectionViewController: BaseLockupCollectionViewCell
 							self.shows[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
 						case .literatures:
 							self.literatures[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
+						case .games:
+							self.games[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
 						}
 
 						// Update entry in library
@@ -303,6 +330,8 @@ extension CharacterDetailsCollectionViewController: BaseLockupCollectionViewCell
 								self.shows[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
 							case .literatures:
 								self.literatures[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
+							case .games:
+								self.games[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
 							}
 
 							// Update edntry in library
@@ -361,6 +390,9 @@ extension CharacterDetailsCollectionViewController {
 		/// Indicates literatures section layout type.
 		case literatures
 
+		/// Indicates games section layout type.
+		case games
+
 		// MARK: - Properties
 		/// The string value of a character section type.
 		var stringValue: String {
@@ -377,6 +409,8 @@ extension CharacterDetailsCollectionViewController {
 				return Trans.shows
 			case .literatures:
 				return Trans.literatures
+			case .games:
+				return Trans.games
 			}
 		}
 
@@ -395,6 +429,8 @@ extension CharacterDetailsCollectionViewController {
 				return R.segue.characterDetailsCollectionViewController.showsListSegue.identifier
 			case .literatures:
 				return R.segue.characterDetailsCollectionViewController.literaturesListSegue.identifier
+			case .games:
+				return R.segue.characterDetailsCollectionViewController.gamesListSegue.identifier
 			}
 		}
 	}
@@ -414,6 +450,9 @@ extension CharacterDetailsCollectionViewController {
 		/// Indicates the item kind contains a `LiteratureIdentity` object.
 		case literatureIdentity(_: LiteratureIdentity, id: UUID = UUID())
 
+		/// Indicates the item kind contains a `GameIdentity` object.
+		case gameIdentity(_: GameIdentity, id: UUID = UUID())
+
 		// MARK: - Functions
 		func hash(into hasher: inout Hasher) {
 			switch self {
@@ -429,6 +468,9 @@ extension CharacterDetailsCollectionViewController {
 			case .literatureIdentity(let literatureIdentity, let id):
 				hasher.combine(literatureIdentity)
 				hasher.combine(id)
+			case .gameIdentity(let gameIdentity, let id):
+				hasher.combine(gameIdentity)
+				hasher.combine(id)
 			}
 		}
 
@@ -442,6 +484,8 @@ extension CharacterDetailsCollectionViewController {
 				return showIdentity1 == showIdentity2 && id1 == id2
 			case (.literatureIdentity(let literatureIdentity1, let id1), .literatureIdentity(let literatureIdentity2, let id2)):
 				return literatureIdentity1 == literatureIdentity2 && id1 == id2
+			case (.gameIdentity(let gameIdentity1, let id1), .gameIdentity(let gameIdentity2, let id2)):
+				return gameIdentity1 == gameIdentity2 && id1 == id2
 			default:
 				return false
 			}

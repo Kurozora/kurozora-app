@@ -31,6 +31,7 @@ extension ShowDetailsCollectionViewController {
 		let studioShowCellConfiguration = self.getConfiguredStudioShowCell()
 		let studioCellConfiguration = self.getConfiguredStudioCell()
 		let relatedShowCellConfiguration = self.getConfiguredRelatedShowCell()
+		let relatedGameCellConfiguration = self.getConfiguredRelatedGameCell()
 		let musicCellConfiguration = self.getConfiguredMusicCell()
 
 		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, itemKind: ItemKind) -> UICollectionViewCell? in
@@ -93,6 +94,8 @@ extension ShowDetailsCollectionViewController {
 				return collectionView.dequeueConfiguredReusableCell(using: relatedShowCellConfiguration, for: indexPath, item: itemKind)
 			case .relatedLiteratures:
 				return collectionView.dequeueConfiguredReusableCell(using: relatedShowCellConfiguration, for: indexPath, item: itemKind)
+			case .relatedGames:
+				return collectionView.dequeueConfiguredReusableCell(using: relatedGameCellConfiguration, for: indexPath, item: itemKind)
 			case .sosumi:
 				let sosumiCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.sosumiCollectionViewCell, for: indexPath)
 				switch itemKind {
@@ -203,6 +206,14 @@ extension ShowDetailsCollectionViewController {
 						return .relatedLiterature(relatedLiterature)
 					}
 					self.snapshot.appendItems(relatedLiteratureItems, toSection: showDetailSection)
+				}
+			case .relatedGames:
+				if !self.relatedGames.isEmpty {
+					self.snapshot.appendSections([showDetailSection])
+					let relatedGameItems: [ItemKind] = self.relatedGames.map { relatedGame in
+						return .relatedGame(relatedGame)
+					}
+					self.snapshot.appendItems(relatedGameItems, toSection: showDetailSection)
 				}
 			case .sosumi:
 				if let copyrightIsEmpty = self.show.attributes.copyright?.isEmpty, !copyrightIsEmpty {
@@ -369,6 +380,16 @@ extension ShowDetailsCollectionViewController {
 				smallLockupCollectionViewCell.configure(using: relatedShow)
 			case .relatedLiterature(let relatedLiterature, _):
 				smallLockupCollectionViewCell.configure(using: relatedLiterature)
+			default: return
+			}
+		}
+	}
+
+	func getConfiguredRelatedGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.gameLockupCollectionViewCell)) { gameLockupCollectionViewCell, _, itemKind in
+			switch itemKind {
+			case .relatedGame(let relatedGame, _):
+				gameLockupCollectionViewCell.configure(using: relatedGame)
 			default: return
 			}
 		}

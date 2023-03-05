@@ -11,7 +11,7 @@ import UIKit
 extension CastListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		switch self.castKind {
-		case .show:
+		case .show, .game:
 			break
 		case .literature:
 			guard self.cast[indexPath] != nil else { return }

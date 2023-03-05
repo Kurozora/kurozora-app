@@ -15,8 +15,11 @@ extension CharacterDetailsCollectionViewController {
 			let show = self.shows[indexPath]
 			self.performSegue(withIdentifier: R.segue.characterDetailsCollectionViewController.showDetailsSegue, sender: show)
 		case .literatures:
-			let show = self.literatures[indexPath]
-			self.performSegue(withIdentifier: R.segue.characterDetailsCollectionViewController.literatureDetailsSegue, sender: show)
+			let literature = self.literatures[indexPath]
+			self.performSegue(withIdentifier: R.segue.characterDetailsCollectionViewController.literatureDetailsSegue, sender: literature)
+		case .games:
+			let game = self.games[indexPath]
+			self.performSegue(withIdentifier: R.segue.characterDetailsCollectionViewController.gameDetailsSegue, sender: game)
 		case .people:
 			let person = self.people[indexPath]
 			self.performSegue(withIdentifier: R.segue.characterDetailsCollectionViewController.personDetailsSegue, sender: person)
@@ -31,6 +34,8 @@ extension CharacterDetailsCollectionViewController {
 			return self.shows[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .literatures:
 			return self.literatures[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		case .games:
+			return self.games[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .people:
 			return self.people[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		default: break

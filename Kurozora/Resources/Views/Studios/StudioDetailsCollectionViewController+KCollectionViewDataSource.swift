@@ -24,6 +24,7 @@ extension StudioDetailsCollectionViewController {
 
 	override func configureDataSource() {
 		let smallCellRegistration = self.getConfiguredSmallCell()
+		let gameCellRegistration = self.getConfiguredGameCell()
 
 		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, itemKind: ItemKind) -> UICollectionViewCell? in
 			guard let self = self else { return nil }
@@ -58,6 +59,8 @@ extension StudioDetailsCollectionViewController {
 				return informationCollectionViewCell
 			case .shows, .literatures:
 				return collectionView.dequeueConfiguredReusableCell(using: smallCellRegistration, for: indexPath, item: itemKind)
+			case .games:
+				return collectionView.dequeueConfiguredReusableCell(using: gameCellRegistration, for: indexPath, item: itemKind)
 			}
 		}
 
@@ -107,6 +110,14 @@ extension StudioDetailsCollectionViewController {
 					}
 					self.snapshot.appendItems(literatureIdentityItems, toSection: studioDetailSection)
 				}
+			case .games:
+				if !self.gameIdentities.isEmpty {
+					self.snapshot.appendSections([studioDetailSection])
+					let gameIdentityItems: [ItemKind] = self.gameIdentities.map { gameIdentity in
+						return .gameIdentity(gameIdentity)
+					}
+					self.snapshot.appendItems(gameIdentityItems, toSection: studioDetailSection)
+				}
 			}
 		}
 
@@ -121,6 +132,11 @@ extension StudioDetailsCollectionViewController {
 	func fetchLiterature(at indexPath: IndexPath) -> Literature? {
 		guard let literature = self.literatures[indexPath] else { return nil }
 		return literature
+	}
+
+	func fetchGame(at indexPath: IndexPath) -> Game? {
+		guard let game = self.games[indexPath] else { return nil }
+		return game
 	}
 
 	func setItemKindNeedsUpdate(_ itemKind: ItemKind) {
@@ -173,6 +189,34 @@ extension StudioDetailsCollectionViewController {
 				smallLockupCollectionViewCell.dataRequest = dataRequest
 				smallLockupCollectionViewCell.delegate = self
 				smallLockupCollectionViewCell.configure(using: literature)
+			default: break
+			}
+		}
+	}
+
+	func getConfiguredGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.gameLockupCollectionViewCell)) { [weak self] gameLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .gameIdentity(let gameIdentity, _):
+				let game = self.fetchGame(at: indexPath)
+				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? gameLockupCollectionViewCell.dataRequest
+
+				if dataRequest == nil && game == nil {
+					dataRequest = KService.getDetails(forGame: gameIdentity) { result in
+						switch result {
+						case .success(let games):
+							self.games[indexPath] = games.first
+							self.setItemKindNeedsUpdate(itemKind)
+						case .failure: break
+						}
+					}
+				}
+
+				gameLockupCollectionViewCell.dataRequest = dataRequest
+				gameLockupCollectionViewCell.delegate = self
+				gameLockupCollectionViewCell.configure(using: game)
 			default: break
 			}
 		}

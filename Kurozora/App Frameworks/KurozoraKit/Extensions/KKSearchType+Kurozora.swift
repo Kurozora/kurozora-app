@@ -17,8 +17,8 @@ extension KKSearchType {
 			return Trans.characters
 		case .episodes:
 			return Trans.episodes
-//		case .games:
-//			return Trans.games
+		case .games:
+			return Trans.games
 		case .literatures:
 			return Trans.literatures
 		case .people:
@@ -41,8 +41,8 @@ extension KKSearchType {
 			return ["Kirito", "Luffy", "Monokuma", "Izuku Midoriya", "Koro-sensei"]
 		case .episodes:
 			return ["Zombie", "Red Hat", "Witch", "Subaru", "Cream Puff"]
-//		case .games:
-//			return [""]
+		case .games:
+			return ["ワンピース オデッセイ", "Steins;Gate", "Danganronpa", "Pokémon Shining Pearl", "Lost in Memories"]
 		case .shows:
 			return ["One Piece", "Shaman Asakaura", "young girl with a head full of air", "massive online role-playing game", "vampires"]
 		case .literatures:

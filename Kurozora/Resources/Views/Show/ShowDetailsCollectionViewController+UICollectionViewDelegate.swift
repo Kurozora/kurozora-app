@@ -58,6 +58,9 @@ extension ShowDetailsCollectionViewController {
 		case .relatedLiteratures:
 			let literature = self.relatedLiteratures[indexPath.item].literature
 			self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.literatureDetailsSegue.identifier, sender: literature)
+		case .relatedGames:
+			let game = self.relatedGames[indexPath.item].game
+			self.performSegue(withIdentifier: R.segue.showDetailsCollectionViewController.gameDetailsSegue.identifier, sender: game)
 		default: return
 		}
 	}
@@ -79,6 +82,8 @@ extension ShowDetailsCollectionViewController {
 			return self.relatedShows[indexPath.item].show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .relatedLiteratures:
 			return self.relatedLiteratures[indexPath.item].literature.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		case .relatedGames:
+			return self.relatedGames[indexPath.item].game.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		default: break
 		}
 

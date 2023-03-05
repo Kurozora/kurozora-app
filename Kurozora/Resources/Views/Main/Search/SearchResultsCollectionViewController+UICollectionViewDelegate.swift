@@ -30,6 +30,10 @@ extension SearchResultsCollectionViewController {
 			guard let literature = self.literatures[indexPath] else { return }
 //			SearchHistory.saveContentsOf(literature)
 			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.literatureDetailsSegue, sender: literature)
+		case .gameIdentity:
+			guard let game = self.games[indexPath] else { return }
+//			SearchHistory.saveContentsOf(game)
+			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.gameDetailsSegue, sender: game)
 		case .songIdentity:
 			let song = self.songs[indexPath]
 			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.songDetailsSegue, sender: song)
@@ -56,6 +60,14 @@ extension SearchResultsCollectionViewController {
 			guard let show = self.shows[indexPath] else { return nil }
 			SearchHistory.saveContentsOf(show)
 			return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		case .literatureIdentity:
+			guard let literature = self.literatures[indexPath] else { return nil }
+//			SearchHistory.saveContentsOf(literature)
+			return literature.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		case .gameIdentity:
+			guard let game = self.games[indexPath] else { return nil }
+//			SearchHistory.saveContentsOf(game)
+			return game.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .songIdentity:
 			return self.songs[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .studioIdentity:

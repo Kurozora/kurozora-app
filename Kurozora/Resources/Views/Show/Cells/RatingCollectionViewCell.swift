@@ -72,6 +72,30 @@ class RatingCollectionViewCell: UICollectionViewCell {
 		self.cosmosDetailLabel.text = ratingCount != 0 ? "\(ratingCount.kkFormatted) Ratings" : "Not enough ratings"
 	}
 
+	/// Configure the cell with the given details.
+	func configure(using game: Game) {
+		// Configure cosmos view
+		let userRating = game.attributes.givenRating
+		self.cosmosView.rating = userRating ?? 0.0
+
+		self.cosmosView.didFinishTouchingCosmos = { rating in
+			WorkflowController.shared.isSignedIn {
+				self.delegate?.ratingCollectionViewCell(rateWith: rating)
+			}
+
+			if !User.isSignedIn {
+				self.cosmosView.rating = 0.0
+			}
+		}
+
+		// Configure average rating
+		self.ratingLabel.text = "\(game.attributes.stats?.ratingAverage ?? 0.0)"
+
+		// Configure rating count
+		let ratingCount = game.attributes.stats?.ratingCount ?? 0
+		self.cosmosDetailLabel.text = ratingCount != 0 ? "\(ratingCount.kkFormatted) Ratings" : "Not enough ratings"
+	}
+
 	/// Configure the cell with the episode details.
 	func configure(using episode: Episode) {
 		// Configure cosmos view

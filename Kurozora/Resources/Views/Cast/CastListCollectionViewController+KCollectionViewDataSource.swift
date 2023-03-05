@@ -18,7 +18,7 @@ extension CastListCollectionViewController {
 			guard let self = self else { return nil }
 
 			switch self.castKind {
-			case .show:
+			case .show, .game:
 				return collectionView.dequeueConfiguredReusableCell(using: castCellRegistration, for: indexPath, item: castIdentity)
 			case .literature:
 				return collectionView.dequeueConfiguredReusableCell(using: characterCellRegistration, for: indexPath, item: castIdentity)
@@ -52,14 +52,28 @@ extension CastListCollectionViewController {
 			let cast = self.fetchCast(at: indexPath)
 
 			if cast == nil {
-				Task {
-					do {
-						let castResponse = try await KService.getDetails(forShowCast: castIdentity).value
-						self.cast[indexPath] = castResponse.data.first
-						self.setCastNeedsUpdate(castIdentity)
-					} catch {
-						print(error.localizedDescription)
+				switch self.castKind {
+				case .show:
+					Task {
+						do {
+							let castResponse = try await KService.getDetails(forShowCast: castIdentity).value
+							self.cast[indexPath] = castResponse.data.first
+							self.setCastNeedsUpdate(castIdentity)
+						} catch {
+							print(error.localizedDescription)
+						}
 					}
+				case .game:
+					Task {
+						do {
+							let castResponse = try await KService.getDetails(forGameCast: castIdentity).value
+							self.cast[indexPath] = castResponse.data.first
+							self.setCastNeedsUpdate(castIdentity)
+						} catch {
+							print(error.localizedDescription)
+						}
+					}
+				case .literature: break
 				}
 			}
 

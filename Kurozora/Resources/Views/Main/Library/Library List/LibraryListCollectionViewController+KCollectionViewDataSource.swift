@@ -43,6 +43,11 @@ extension LibraryListCollectionViewController {
 				return .literature(literature)
 			}
 			snapshot.appendItems(literatures, toSection: .main)
+		case .games:
+			let games: [ItemKind] = self.games.map { game in
+				return .game(game)
+			}
+			snapshot.appendItems(games, toSection: .main)
 		}
 
 		self.dataSource.apply(snapshot, animatingDifferences: true)

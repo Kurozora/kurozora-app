@@ -17,6 +17,9 @@ extension StudioDetailsCollectionViewController {
 		case .literatures:
 			let literature = self.literatures[indexPath]
 			self.performSegue(withIdentifier: R.segue.studioDetailsCollectionViewController.literatureDetailsSegue, sender: literature)
+		case .games:
+			let game = self.games[indexPath]
+			self.performSegue(withIdentifier: R.segue.studioDetailsCollectionViewController.gameDetailsSegue, sender: game)
 		default: break
 		}
 	}
@@ -28,6 +31,8 @@ extension StudioDetailsCollectionViewController {
 			return self.shows[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .literatures:
 			return self.literatures[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		case .games:
+			return self.games[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		default: break
 		}
 
