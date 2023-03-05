@@ -126,10 +126,10 @@ class HomeCollectionViewController: KCollectionViewController {
 		// Configure ConfettiView
 		let date = Date()
 
-		if date >= Date(unixTimestamp: 1672527600)
-			&& date <= Date(unixTimestamp: 1674169200)
+		if date >= Date(unixTimestamp: 1678748400)
+			&& date <= Date(unixTimestamp: 1679353200)
 			&& WhatsNew.shouldPresent(with: .always) {
-			SPConfetti.startAnimating(.fullWidthToDown, particles: [.star, .arc])
+			SPConfetti.startAnimating(.fullWidthToDown, particles: [.heart])
 		}
 
 		// Configure Quick Actions.
