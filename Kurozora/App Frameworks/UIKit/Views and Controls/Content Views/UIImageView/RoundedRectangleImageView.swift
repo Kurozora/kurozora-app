@@ -13,9 +13,23 @@ import UIKit
 /// `RoundedRectangleImageView` adjusts some options to achieve its design, this includes:
 /// - Rounding the image's corners.
 class RoundedRectangleImageView: UIImageView {
+	/// The corner radius value.
+	fileprivate var _cornerRadius: CGFloat = 10.0
+
 	// MARK: - View
 	override func layoutSubviews() {
 		super.layoutSubviews()
-		self.cornerRadius = 10
+		self.cornerRadius = self._cornerRadius
+	}
+
+	// MARK: - Functions
+	/// Applies the given corner radius to the image view.
+	///
+	/// - Parameters:
+	///    - cornerRadius: The corner radius value to apply on the image view.
+	func applyCornerRadius(_ cornerRadius: CGFloat) {
+		self._cornerRadius = cornerRadius
+
+		self.setNeedsLayout()
 	}
 }

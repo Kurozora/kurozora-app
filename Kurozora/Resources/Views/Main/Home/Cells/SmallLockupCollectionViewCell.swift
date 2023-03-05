@@ -33,7 +33,7 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.scoreLabel.isHidden = ratingAverage == 0.0
 
 		self.posterImageView?.mask = nil
-		self.posterImageView?.cornerRadius = 10.0
+		self.posterImageView?.applyCornerRadius(10.0)
 		self.posterImageOverlay.isHidden = true
 	}
 
@@ -51,7 +51,7 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.scoreLabel.isHidden = ratingAverage == 0.0
 
 		self.posterImageView?.mask = self.mangaMask
-		self.posterImageView?.cornerRadius = 0.0
+		self.posterImageView?.applyCornerRadius(0.0)
 		self.posterImageOverlay.isHidden = false
 	}
 
@@ -66,7 +66,7 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.scoreLabel.isHidden = true
 
 		self.posterImageView?.mask = nil
-		self.posterImageView?.cornerRadius = 10.0
+		self.posterImageView?.applyCornerRadius(10.0)
 		self.posterImageOverlay.isHidden = true
 	}
 
@@ -81,7 +81,7 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.scoreLabel.isHidden = true
 
 		self.posterImageView?.mask = self.mangaMask
-		self.posterImageView?.cornerRadius = 0.0
+		self.posterImageView?.applyCornerRadius(0.0)
 		self.posterImageOverlay.isHidden = false
 	}
 }

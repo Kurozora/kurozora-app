@@ -69,7 +69,7 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 
 	/// Configure the cell with the `Literature` object.
 	///
-	/// - Parameter show: The `Literature` object used to configure the cell.
+	/// - Parameter literature: The `Literature` object used to configure the cell.
 	func configure(using literature: Literature?) {
 		self.libraryKind = .literatures
 		guard let literature = literature else {
@@ -103,6 +103,42 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 		self.configureLibraryStatus(with: literature.attributes.libraryStatus ?? .none)
 	}
 
+	/// Configure the cell with the `Game` object.
+	///
+	/// - Parameter game: The `Game` object used to configure the cell.
+	func configure(using game: Game?) {
+		self.libraryKind = .games
+		guard let game = game else {
+			self.showSkeleton()
+			return
+		}
+		self.hideSkeleton()
+		// Configure title
+		self.primaryLabel?.text = game.attributes.title
+
+		// Configure genres
+		self.secondaryLabel?.text = (game.attributes.tagline ?? "").isEmpty ? game.attributes.genres?.localizedJoined() : game.attributes.tagline
+
+		// Configure banner
+		if let bannerBackgroundColor = game.attributes.banner?.backgroundColor {
+			self.bannerImageView?.backgroundColor = UIColor(hexString: bannerBackgroundColor)
+		}
+		if self.bannerImageView != nil {
+			game.attributes.bannerImage(imageView: self.bannerImageView!)
+		}
+
+		// Configure poster
+		if let posterBackgroundColor = game.attributes.poster?.backgroundColor {
+			self.posterImageView?.backgroundColor = UIColor(hexString: posterBackgroundColor)
+		}
+		if self.posterImageView != nil {
+			game.attributes.posterImage(imageView: self.posterImageView!)
+		}
+
+		// Configure library status
+		self.configureLibraryStatus(with: game.attributes.libraryStatus ?? .none)
+	}
+
 	func configureLibraryStatus(with libraryStatus: KKLibrary.Status) {
 		self.libraryStatus = libraryStatus
 
@@ -112,6 +148,8 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 			libraryStatusString = self.libraryStatus.showStringValue
 		case .literatures:
 			libraryStatusString = self.libraryStatus.literatureStringValue
+		case .games:
+			libraryStatusString = self.libraryStatus.gameStringValue
 		}
 
 		self.libraryStatusButton?.setTitle(self.libraryStatus != .none ? "\(libraryStatusString.capitalized) ▾" : "ADD", for: .normal)
