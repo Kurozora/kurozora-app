@@ -11,15 +11,23 @@ import WhatsNew
 class KWhatsNew {
 	/// Features of the current version of the app. Don't forget to change
 	static var current: [WhatsNewItem] {
-		return v12
+		return v13
 	}
+
+	/// Features of version 1.3 of the app.
+	static var v13: [WhatsNewItem] = [
+		.image(title: "White Day Delight", subtitle: "Celebrate White Day with our heartfelt app icon, delectable White Chocolate theme, and our new Romantic Reminders anime and manga recommendations!", image: R.image.icons.gift()!),
+		.image(title: "Track your manga journey", subtitle: "Explore a vast universe of manga, light novels and other literature titles! Keep track of your reading progress and history while never missing a single chapter!", image: R.image.icons.manga()!),
+		.image(title: "Game On!", subtitle: "Stay Ahead of the Game! Game tracking on Kurozora is now a breeze. Explore a wide variety of anime-related games, keep track of your favorites, and never miss a beat on the latest anime-inspired titles. Expand your universe beyond TV and books!", image: R.image.icons.game()!),
+		.image(title: "UAL", subtitle: "With PRO and Kurozora+ you can now use the new Unified Anime Linking feature. It supports up to 12 services!", image: R.image.icons.mention()!),
+		.image(title: "Jump-start", subtitle: "Now you can easily import your anime and manga list from other services directly into Kurozora, streamlining your tracking experience with just a few *taps*!", image: R.image.icons.brands.myAnimeList()!)
+	]
 
 	/// Features of version 1.2 of the app.
 	static var v12: [WhatsNewItem] = [
 		.image(title: "Happy Valentine’s", subtitle: "Fall in love with our Valentine’s Day update: Love Bug app icon and theme. Don’t forget to check out the Love to Bits anime recommendation.", image: R.image.icons.gift()!),
 		.image(title: "UAL", subtitle: "With PRO and Kurozora+ you can now use the new Unified Anime Linking feature. It supports up to 12 services!", image: R.image.icons.mention()!),
 		.image(title: "Track your manga journey", subtitle: "Anime isn’t enough for you? Or are you more of a reader? No matter what your reason is, Kurozora has you covered. You can now keep track of your manga reading progress and history, rate and never forget where you left off. Try it now!", image: R.image.icons.manga()!),
-//		.image(title: "Game On!", subtitle: "Wait, you’re (also) a gamer? Game tracking is now a breeze. Explore a wide variety of anime-related games, keep track of your favorites, and never miss a beat on the latest anime-inspired titles. Expand your anime universe beyond TV and books!", image: R.image.icons.game()!),
 		.image(title: "Jump-start", subtitle: "Now you can easily import your anime and manga list from other services directly into Kurozora, streamlining your tracking experience with just a few *taps*!", image: R.image.icons.brands.myAnimeList()!)
 	]
 
