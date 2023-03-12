@@ -35,34 +35,34 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Prequel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uj2-2R-JfR" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="108" y="0.0" width="55.5" height="19.5"/>
+                        <rect key="frame" x="108" y="0.0" width="55.5" height="22"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                         <color key="textColor" systemColor="secondaryLabelColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="One Piece" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qYV-48-V8n" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="108" y="19.5" width="78" height="20.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" text="One Piece" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qYV-48-V8n" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="108" y="19.666666666666671" width="78" height="20.333333333333329"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Adventure" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ciX-y3-ckv" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" text="Adventure" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ciX-y3-ckv" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
                         <rect key="frame" x="108" y="40" width="70.5" height="18"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                         <color key="textColor" systemColor="secondaryLabelColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8Rt-0U-w0W" userLabel="Rating View">
-                        <rect key="frame" x="108" y="66" width="266" height="18"/>
+                        <rect key="frame" x="108" y="68" width="266" height="16"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L1r-cx-vgB" customClass="KTintedLabel" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="21.5" height="18"/>
+                                <rect key="frame" x="0.0" y="0.0" width="21.5" height="16"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <color key="textColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gR1-Br-bAK" customClass="KCosmosView" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="25.5" y="0.0" width="240.5" height="18"/>
+                                <rect key="frame" x="25.5" y="0.0" width="240.5" height="16"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="updateOnTouch" value="NO"/>
                                     <userDefinedRuntimeAttribute type="number" keyPath="textSize">
@@ -113,7 +113,7 @@
                     <constraint firstAttribute="trailing" secondItem="8Rt-0U-w0W" secondAttribute="trailing" id="4Kz-Fz-v0t"/>
                     <constraint firstItem="ciX-y3-ckv" firstAttribute="top" secondItem="qYV-48-V8n" secondAttribute="bottom" id="5Wn-KQ-rXs"/>
                     <constraint firstItem="otZ-dn-j5q" firstAttribute="top" relation="greaterThanOrEqual" secondItem="8Rt-0U-w0W" secondAttribute="bottom" constant="8" symbolic="YES" id="DSy-QO-4sc"/>
-                    <constraint firstItem="vA2-tR-GbT" firstAttribute="top" relation="greaterThanOrEqual" secondItem="yH4-oR-1eT" secondAttribute="top" id="FJW-v3-c8P"/>
+                    <constraint firstItem="vA2-tR-GbT" firstAttribute="top" secondItem="qYV-48-V8n" secondAttribute="top" id="FJW-v3-c8P"/>
                     <constraint firstItem="ciX-y3-ckv" firstAttribute="leading" secondItem="qYV-48-V8n" secondAttribute="leading" id="IMp-nE-tba"/>
                     <constraint firstItem="8Rt-0U-w0W" firstAttribute="top" secondItem="ciX-y3-ckv" secondAttribute="bottom" constant="8" symbolic="YES" id="XEh-6W-6NL"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Uj2-2R-JfR" secondAttribute="trailing" id="XZm-d1-cmU"/>
