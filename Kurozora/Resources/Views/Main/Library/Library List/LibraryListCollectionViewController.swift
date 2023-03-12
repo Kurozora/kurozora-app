@@ -330,15 +330,31 @@ class LibraryListCollectionViewController: KCollectionViewController {
 // MARK: - UICollectionViewDragDelegate
 extension LibraryListCollectionViewController: UICollectionViewDragDelegate {
 	func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-		guard let libraryBaseCollectionViewCell = collectionView.cellForItem(at: indexPath) as? LibraryBaseCollectionViewCell else { return [UIDragItem]() }
-		let selectedShow = self.shows[indexPath.row]
-		let userActivity = selectedShow.openDetailUserActivity
+		guard let libraryBaseCollectionViewCell = collectionView.cellForItem(at: indexPath) as? LibraryBaseCollectionViewCell else { return [] }
+		var userActivity: NSUserActivity
+		var localObject: Any?
+
+		switch UserSettings.libraryKind {
+		case .shows:
+			guard let selectedShow = self.shows[safe: indexPath.row] else { return [] }
+			userActivity = selectedShow.openDetailUserActivity
+			localObject = selectedShow
+		case .literatures:
+			guard let selectedLiterature = self.literatures[safe: indexPath.row] else { return [] }
+			userActivity = selectedLiterature.openDetailUserActivity
+			localObject = selectedLiterature
+		case .games:
+			guard let selectedGame = self.games[safe: indexPath.row] else { return [] }
+			userActivity = selectedGame.openDetailUserActivity
+			localObject = selectedGame
+		}
+
 		let itemProvider = NSItemProvider(object: (libraryBaseCollectionViewCell as? LibraryDetailedCollectionViewCell)?.episodeImageView?.image ?? libraryBaseCollectionViewCell.posterImageView.image ?? R.image.placeholders.showPoster()!)
 		itemProvider.suggestedName = libraryBaseCollectionViewCell.titleLabel.text
 		itemProvider.registerObject(userActivity, visibility: .all)
 
         let dragItem = UIDragItem(itemProvider: itemProvider)
-        dragItem.localObject = selectedShow
+        dragItem.localObject = localObject
 
         return [dragItem]
     }

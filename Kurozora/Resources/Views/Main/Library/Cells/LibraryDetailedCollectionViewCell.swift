@@ -60,13 +60,13 @@ class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 		self.titleLabel.textColor = .white
 
 		// Configure user progress
-//		self.userProgressLabel.text = game.attributes.informationStringShort
+		self.userProgressLabel.text = game.attributes.informationStringShort
 
 		// Configure episode preview
 		if let episodeBackgroundColor = game.attributes.banner?.backgroundColor {
 			self.episodeImageView.backgroundColor = UIColor(hexString: episodeBackgroundColor)
 		}
-//		game.attributes.bannerImage(imageView: self.episodeImageView)
+		game.attributes.bannerImage(imageView: self.episodeImageView)
 
 		// Configure poster
 		self.posterShadowView?.applyShadow()

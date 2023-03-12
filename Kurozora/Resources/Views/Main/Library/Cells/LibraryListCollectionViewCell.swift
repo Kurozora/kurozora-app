@@ -52,13 +52,13 @@ class LibraryListCollectionViewCell: LibraryBaseCollectionViewCell {
 
 	override func configure(using game: Game) {
 		super.configure(using: game)
-//		self.broadcastDate = game.attributes.publicationDate
-//		self.informationLabel.text = game.attributes.informationStringShort
+		self.broadcastDate = game.attributes.publicationDate
+		self.informationLabel.text = game.attributes.informationStringShort
 		self.estimatedAiringLabel.text = ""
 
-//		if game.attributes.status.name == "Currently Publishing" && game.attributes.publicationDate != nil {
-//			self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateEstimatedAiringLabel), userInfo: nil, repeats: true)
-//		}
+		if game.attributes.status.name == "Currently Publishing" && game.attributes.publicationDate != nil {
+			self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateEstimatedAiringLabel), userInfo: nil, repeats: true)
+		}
 	}
 
 	@objc func updateEstimatedAiringLabel() {

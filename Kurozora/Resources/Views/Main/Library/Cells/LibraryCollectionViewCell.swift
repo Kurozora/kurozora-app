@@ -32,7 +32,7 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 		show.attributes.posterImage(imageView: self.posterImageView)
 
 		self.posterImageView?.mask = nil
-		self.posterImageView?.cornerRadius = 10.0
+		self.posterImageView?.applyCornerRadius(10.0)
 		self.posterImageOverlayView.isHidden = true
 	}
 
@@ -48,7 +48,7 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 		literature.attributes.posterImage(imageView: self.posterImageView)
 
 		self.posterImageView?.mask = self.mangaMask
-		self.posterImageView?.cornerRadius = 0.0
+		self.posterImageView?.applyCornerRadius(0.0)
 		self.posterImageOverlayView.isHidden = false
 	}
 
@@ -61,10 +61,10 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 		if let backgroundColor = game.attributes.poster?.backgroundColor {
 			self.posterImageView.backgroundColor = UIColor(hexString: backgroundColor)
 		}
-//		game.attributes.posterImage(imageView: self.posterImageView)
+		game.attributes.posterImage(imageView: self.posterImageView)
 
-		self.posterImageView?.mask = self.mangaMask
-		self.posterImageView?.cornerRadius = 0.0
-		self.posterImageOverlayView.isHidden = false
+		self.posterImageView?.mask = nil
+		self.posterImageView?.applyCornerRadius(18.0)
+		self.posterImageOverlayView.isHidden = true
 	}
 }

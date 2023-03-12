@@ -17,7 +17,7 @@ class LibraryStatisticsCollectionViewCell: UICollectionViewCell {
 	// MARK: - Properties
 	var shows: [Show] = [] {
 		didSet {
-			configureCell()
+			self.configureCell()
 		}
 	}
 
@@ -28,19 +28,19 @@ class LibraryStatisticsCollectionViewCell: UICollectionViewCell {
 		let movieCount = self.getOccurancesOf(strings: ["Movie"])
 		let ovaCount = self.getOccurancesOf(strings: ["OVA"])
 		let undefinedCount = self.getOccurancesOfNot(strings: ["Tv", "Movie"])
-		secondaryLabel.text = "\(tvCount) TV · \(movieCount) Movie · \(ovaCount) OVA · \(undefinedCount) Music/ONA/Specials"
+		self.secondaryLabel.text = "\(tvCount) TV · \(movieCount) Movie · \(ovaCount) OVA · \(undefinedCount) Music/ONA/Specials"
 	}
 
 	/// Gets number of occurances of the given string in the shows array.
 	func getOccurancesOf(strings: [String]) -> Int {
-		return shows.filter({ show -> Bool in
+		return self.shows.filter({ show -> Bool in
 			strings.contains(show.attributes.type.name)
 		}).count
 	}
 
 	/// Gets number of occurances that doesn't match of the given string in the shows array.
 	func getOccurancesOfNot(strings: [String]) -> Int {
-		return shows.filter({ show -> Bool in
+		return self.shows.filter({ show -> Bool in
 			!strings.contains(show.attributes.type.name)
 		}).count
 	}
