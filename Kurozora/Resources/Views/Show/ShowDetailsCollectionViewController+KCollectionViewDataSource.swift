@@ -302,6 +302,7 @@ extension ShowDetailsCollectionViewController {
 					}
 				}
 
+				smallLockupCollectionViewCell.delegate = self
 				smallLockupCollectionViewCell.dataRequest = dataRequest
 				smallLockupCollectionViewCell.configure(using: show)
 			default: return
@@ -375,6 +376,8 @@ extension ShowDetailsCollectionViewController {
 
 	func getConfiguredRelatedShowCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.smallLockupCollectionViewCell)) { smallLockupCollectionViewCell, _, itemKind in
+			smallLockupCollectionViewCell.delegate = self
+
 			switch itemKind {
 			case .relatedShow(let relatedShow, _):
 				smallLockupCollectionViewCell.configure(using: relatedShow)
@@ -387,6 +390,8 @@ extension ShowDetailsCollectionViewController {
 
 	func getConfiguredRelatedGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.gameLockupCollectionViewCell)) { gameLockupCollectionViewCell, _, itemKind in
+			gameLockupCollectionViewCell.delegate = self
+
 			switch itemKind {
 			case .relatedGame(let relatedGame, _):
 				gameLockupCollectionViewCell.configure(using: relatedGame)

@@ -272,6 +272,7 @@ extension LiteratureDetailsCollectionViewController {
 					}
 				}
 
+				smallLockupCollectionViewCell.delegate = self
 				smallLockupCollectionViewCell.dataRequest = dataRequest
 				smallLockupCollectionViewCell.configure(using: literature)
 			default: return
@@ -307,6 +308,8 @@ extension LiteratureDetailsCollectionViewController {
 
 	func getConfiguredRelatedLiteratureCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.smallLockupCollectionViewCell)) { smallLockupCollectionViewCell, _, itemKind in
+			smallLockupCollectionViewCell.delegate = self
+
 			switch itemKind {
 			case .relatedLiterature(let relatedLiterature, _):
 				smallLockupCollectionViewCell.configure(using: relatedLiterature)
@@ -319,6 +322,8 @@ extension LiteratureDetailsCollectionViewController {
 
 	func getConfiguredRelatedGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.gameLockupCollectionViewCell)) { gameLockupCollectionViewCell, _, itemKind in
+			gameLockupCollectionViewCell.delegate = self
+
 			switch itemKind {
 			case .relatedGame(let relatedGame, _):
 				gameLockupCollectionViewCell.configure(using: relatedGame)

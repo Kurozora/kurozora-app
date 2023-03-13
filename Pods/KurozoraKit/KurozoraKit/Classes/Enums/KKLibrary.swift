@@ -20,7 +20,7 @@ public enum KKLibrary {
 	/// ```
 	/// case anime = 0
 	/// case literature = 1
-	/// case game = 3
+	/// case game = 2
 	/// ```
 	///
 	/// - Tag: KKL-Kind
@@ -33,7 +33,7 @@ public enum KKLibrary {
 		case literatures = 1
 
 		/// The games library of the user.
-		case games = 3
+		case games = 2
 
 		// MARK: - Properties
 		/// The string value of a library type.
