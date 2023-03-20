@@ -78,24 +78,26 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="ar8-ZO-ryb"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PurchaseHeaderTableViewCell" id="qKP-xb-LrH" customClass="ProductHeaderTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="55.5" width="374" height="271.5"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PurchaseHeaderTableViewCell" rowHeight="357" id="qKP-xb-LrH" customClass="ProductHeaderTableViewCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="20" y="55.5" width="374" height="357"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qKP-xb-LrH" id="SwT-sQ-aFG">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="271.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="357"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Kurozora Tip Jar" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SNO-SQ-6IZ" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="8" y="0.0" width="358" height="17.5"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kurozora Tip Jar" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SNO-SQ-6IZ" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                            <rect key="frame" x="122" y="0.0" width="130" height="20.5"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6lv-DP-NZ5" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="8" y="27.5" width="358" height="150"/>
-                                            <string key="text">Kurozora is made by a small team consisting of 1 person. I rely on your support to develop Kurozora. If you find it to be useful to you, please consider supporting me by leaving a tip in the Kurozora Tip Jar. I would like to keep working on and improving Kurozora, so any amount is incredibly appreciated. Please know that even if you don't tip I am still grateful that you use this app.
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6lv-DP-NZ5" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                            <rect key="frame" x="8" y="28.5" width="358" height="328.5"/>
+                                            <mutableString key="text">The Kurozora app is built by a small team—me and my little sister! We may be small, but we're mighty, and we pour our hearts into making this app as useful and delightful as possible.
 
-Any amount unlocks Pro 🚀</string>
+We rely on your support to develop Kurozora. If you find it to be useful to you, please consider supporting us by leaving a tip in the Kurozora Tip Jar. We would like to keep working on and improving Kurozora, so any amount is incredibly appreciated. Please know that even if you don't tip we're still grateful that you use this app.
+
+Any amount unlocks Pro 🚀</mutableString>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -103,11 +105,13 @@ Any amount unlocks Pro 🚀</string>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="6lv-DP-NZ5" firstAttribute="leading" secondItem="SwT-sQ-aFG" secondAttribute="leading" constant="8" id="0ZA-xX-gE3"/>
-                                        <constraint firstAttribute="trailing" secondItem="SNO-SQ-6IZ" secondAttribute="trailing" constant="8" id="MMo-ib-YcE"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="SNO-SQ-6IZ" secondAttribute="trailing" constant="8" id="MMo-ib-YcE"/>
                                         <constraint firstAttribute="bottom" secondItem="6lv-DP-NZ5" secondAttribute="bottom" id="N8r-U6-PTu"/>
                                         <constraint firstItem="SNO-SQ-6IZ" firstAttribute="top" secondItem="SwT-sQ-aFG" secondAttribute="top" id="NC0-l6-4Ru"/>
-                                        <constraint firstItem="6lv-DP-NZ5" firstAttribute="top" secondItem="SNO-SQ-6IZ" secondAttribute="bottom" constant="10" id="Y2b-Ra-uOJ"/>
-                                        <constraint firstItem="SNO-SQ-6IZ" firstAttribute="leading" secondItem="SwT-sQ-aFG" secondAttribute="leading" constant="8" id="hxz-jD-r2Z"/>
+                                        <constraint firstItem="6lv-DP-NZ5" firstAttribute="centerX" secondItem="SwT-sQ-aFG" secondAttribute="centerX" id="WfT-E6-ehV"/>
+                                        <constraint firstItem="6lv-DP-NZ5" firstAttribute="top" secondItem="SNO-SQ-6IZ" secondAttribute="bottom" constant="8" symbolic="YES" id="Y2b-Ra-uOJ"/>
+                                        <constraint firstItem="SNO-SQ-6IZ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="SwT-sQ-aFG" secondAttribute="leading" constant="8" id="hxz-jD-r2Z"/>
+                                        <constraint firstItem="SNO-SQ-6IZ" firstAttribute="centerX" secondItem="SwT-sQ-aFG" secondAttribute="centerX" id="ncI-Dz-2vK"/>
                                         <constraint firstAttribute="trailing" secondItem="6lv-DP-NZ5" secondAttribute="trailing" constant="8" id="v9b-Iu-5gj"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -118,7 +122,7 @@ Any amount unlocks Pro 🚀</string>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PurchaseButtonTableViewCell" id="Nkv-1p-7XE" customClass="PurchaseButtonTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="327" width="374" height="66.5"/>
+                                <rect key="frame" x="20" y="412.5" width="374" height="66.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Nkv-1p-7XE" id="mPN-VW-XNH">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="66.5"/>
