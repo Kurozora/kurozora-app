@@ -30,8 +30,7 @@ class KTabBarController: ESTabBarController {
 		super.viewDidLoad()
 
 		// Initialize views
-
-		self.viewControllers = TabBarItem.allCases.map {
+		self.viewControllers = TabBarItem.sideBarCases.map {
 			let rootNavigationController = $0.kViewControllerValue
 			let tabBarItem = ESTabBarItem(BounceAnimation(), title: $0.stringValue, image: $0.imageValue, selectedImage: $0.selectedImageValue)
 			rootNavigationController.tabBarItem = tabBarItem
