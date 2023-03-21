@@ -137,8 +137,26 @@
                             <outlet property="delegate" destination="lLs-XV-jFy" id="czP-tB-SM9"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="Explore" id="2aK-dy-bZm"/>
+                    <navigationItem key="navigationItem" title="Explore" id="2aK-dy-bZm">
+                        <barButtonItem key="rightBarButtonItem" title="Profile" id="Ypr-Dg-Xjg">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ZYb-6d-0Mn" customClass="ProfileImageButton" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="342" y="5" width="52" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="28" id="c3J-r2-6pk"/>
+                                    <constraint firstAttribute="width" secondItem="ZYb-6d-0Mn" secondAttribute="height" multiplier="1:1" id="g0c-cL-Xfn"/>
+                                </constraints>
+                                <state key="normal" title="Profile">
+                                    <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="profileButtonPressed:" destination="lLs-XV-jFy" eventType="touchUpInside" id="WVw-G6-XN6"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="profileImageButton" destination="ZYb-6d-0Mn" id="TNK-Mo-WCl"/>
                         <segue destination="0a7-9G-Fd6" kind="presentation" identifier="SubscriptionSegue" id="3ef-dN-WV5"/>
                         <segue destination="SJ2-V2-Ihb" kind="presentation" identifier="RedeemSegue" id="X7E-Wd-lXb"/>
                         <segue destination="iCt-dj-RF4" kind="presentation" identifier="LegalSegue" id="ctZ-Iy-Ut3"/>

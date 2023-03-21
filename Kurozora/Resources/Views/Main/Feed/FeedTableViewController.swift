@@ -138,7 +138,7 @@ class FeedTableViewController: KTableViewController {
 
 	/// Configures the view with the user's details.
 	func configureUserDetails() {
-		profileImageButton.setImage(User.current?.attributes.profileImageView.image ?? R.image.placeholders.userProfile(), for: .normal)
+		self.profileImageButton.setImage(User.current?.attributes.profileImageView.image ?? R.image.placeholders.userProfile(), for: .normal)
 	}
 
 	/// Fetch feed posts for the current section.
@@ -244,14 +244,6 @@ class FeedTableViewController: KTableViewController {
 				fmDetailsTableViewController.fmDetailsTableViewControllerDelegate = self
 			}
 		}
-	}
-
-	override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-		if identifier == R.segue.feedTableViewController.profileSegue.identifier {
-			return WorkflowController.shared.isSignedIn()
-		}
-
-		return true
 	}
 }
 

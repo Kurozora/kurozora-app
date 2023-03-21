@@ -15,6 +15,9 @@ import SPConfetti
 import WhatsNew
 
 class HomeCollectionViewController: KCollectionViewController {
+	// MARK: - IBOutlets
+	@IBOutlet weak var profileImageButton: ProfileImageButton!
+
 	// MARK: - Properties
 	lazy var genre: Genre? = nil
 	lazy var theme: Theme? = nil
@@ -110,8 +113,12 @@ class HomeCollectionViewController: KCollectionViewController {
 	override func viewWillReload() {
 		super.viewWillReload()
 
-		self.configureQuickActions()
-		self.handleRefreshControl()
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			self.configureQuickActions()
+			self.configureUserDetails()
+			self.handleRefreshControl()
+		}
 	}
 
 	override func viewDidLoad() {
@@ -137,6 +144,9 @@ class HomeCollectionViewController: KCollectionViewController {
 
 		// Configure data source
 		self.configureDataSource()
+
+		// Configure navigation bar items
+		self.configureUserDetails()
 
 		// Fetch explore details.
 		DispatchQueue.global(qos: .userInteractive).async {
@@ -226,6 +236,25 @@ class HomeCollectionViewController: KCollectionViewController {
 			case .failure: break
 			}
 		}
+	}
+
+	/// Configures the view with the user's details.
+	func configureUserDetails() {
+		self.profileImageButton.setImage(User.current?.attributes.profileImageView.image ?? R.image.placeholders.userProfile(), for: .normal)
+	}
+
+	/// Performs segue to the profile view.
+	@objc func segueToProfile() {
+		WorkflowController.shared.isSignedIn {
+			if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
+				self.show(profileTableViewController, sender: nil)
+			}
+		}
+	}
+
+	// MARK: - IBActions
+	@IBAction func profileButtonPressed(_ sender: UIButton) {
+		self.segueToProfile()
 	}
 
 	// MARK: - Segue
