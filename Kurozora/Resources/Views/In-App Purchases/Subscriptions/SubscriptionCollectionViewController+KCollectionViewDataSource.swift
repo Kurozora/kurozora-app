@@ -27,7 +27,7 @@ extension SubscriptionCollectionViewController {
 			switch subscriptionSection {
 			case .header:
 				let purchaseHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.purchaseHeaderCollectionViewCell, for: indexPath)
-				purchaseHeaderCollectionViewCell?.configureCell(using: "Elevate your anime tracking with Kurozora+", secondaryText: "Take your anime tracking to the next level with Kurozora+. Get access to exclusive features like gif profile images, premium app icons, customizable themes, and iCal reminders to never miss an episode. Upgrade to Kurozora+ and get the ultimate anime experience.")
+				purchaseHeaderCollectionViewCell?.configureCell(using: "Elevate your tracking with Kurozora+", secondaryText: "Take your tracking to the next level with Kurozora+. Get access to exclusive features like GIF profile images, premium app icons, customizable themes, and iCal reminders to never miss an episode. Upgrade to Kurozora+ and get the ultimate experience.")
 				return purchaseHeaderCollectionViewCell
 			case .currentSubscription:
 				switch indexPath.item {
