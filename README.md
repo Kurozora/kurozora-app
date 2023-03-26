@@ -4,7 +4,7 @@
     <sup><em>Discover, share and track anime with friends.</em></sup>
 </p>
 
-# Kurozora [![Swift 5](https://img.shields.io/badge/Swift-5-orange.svg?style=flat&logo=Swift)](https://swift.org) [![Platform](https://img.shields.io/badge/Platform-iOS%20|%20ipadOS%20|%20macOS-lightgrey.svg?style=flat&logo=Apple)](https://www.apple.com/ios) [![Discord](https://img.shields.io/discord/449250093623934977?style=flat&label=Discord&logo=Discord&color=7289DA)](https://discord.gg/f3QFzGqsah) [![License](https://img.shields.io/badge/License-GPLv3-blue.svg?style=flat)](https://github.com/Anarios/return-youtube-dislike/blob/main/LICENSE)
+# Kurozora [![Swift 5](https://img.shields.io/badge/Swift%205-white.svg?style=flat&logo=Swift)](https://swift.org) [![Apple Platform](https://img.shields.io/badge/iOS%20|%20ipadOS%20|%20macOS-black?style=flat&logo=Apple)](https://apple.co/3CsQlKq) [![Kurozora Discord Server](https://img.shields.io/discord/449250093623934977?style=flat&label=&logo=Discord&logoColor=white&color=7289DA)](https://discord.gg/f3QFzGqsah) [![License](https://img.shields.io/badge/License-GPLv3-blue.svg?style=flat)](LICENSE)
 
 [Kurozora](https://kurozora.app) is your go-to platform **discovering**, **sharing** and **tracking** anime and much more! `kurozora-app` is the client side of the Kurozora service. It is designed to be:
 

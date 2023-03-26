@@ -99,7 +99,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		print("----- Scene became active.")
 		if self.authenticationCount < 1 {
 			if Date.uptime() > KurozoraDelegate.shared.authenticationInterval, KurozoraDelegate.shared.authenticationEnabled {
-				KurozoraDelegate.shared.prepareForAuthentication()
+				DispatchQueue.main.async {
+					KurozoraDelegate.shared.prepareForAuthentication()
+				}
 			}
 		}
 

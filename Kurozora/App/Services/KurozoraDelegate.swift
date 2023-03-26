@@ -295,7 +295,9 @@ extension KurozoraDelegate {
 	/// Tells the app that the user has to authenticate so the app prepares for it.
 	func userHasToAuthenticate() {
 		if UserSettings.authenticationEnabled {
-			prepareForAuthentication()
+			DispatchQueue.main.async {
+				self.prepareForAuthentication()
+			}
 		}
 	}
 
