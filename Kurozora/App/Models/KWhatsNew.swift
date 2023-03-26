@@ -11,8 +11,17 @@ import WhatsNew
 class KWhatsNew {
 	/// Features of the current version of the app. Don't forget to change
 	static var current: [WhatsNewItem] {
-		return v13
+		return v133
 	}
+
+	/// Features of version 1.3.3 of the app.
+	static var v133: [WhatsNewItem] = [
+		.image(title: "Hippity Hop", subtitle: "Get ready to hop into spring with the Eggatha app icon! It’s back and ready to spread Easter cheer together with our new Pastel Paradise theme. And don’t miss out on the Easter special anime and manga recommendations!", image: R.image.icons.gift()!),
+		.image(title: "Track your manga journey", subtitle: "Explore a vast universe of manga, light novels and other literature titles! Keep track of your reading progress and history while never missing a single chapter!", image: R.image.icons.manga()!),
+		.image(title: "Game On!", subtitle: "Stay Ahead of the Game! Game tracking on Kurozora is now a breeze. Explore a wide variety of anime-related games, keep track of your favorites, and never miss a beat on the latest anime-inspired titles. Expand your universe beyond TV and books!", image: R.image.icons.game()!),
+		.image(title: "UAL", subtitle: "With PRO and Kurozora+ you can now use the new Unified Anime Linking feature. It supports up to 12 services!", image: R.image.icons.mention()!),
+		.image(title: "Jump-start", subtitle: "Now you can easily import your anime and manga list from other services directly into Kurozora, streamlining your tracking experience with just a few *taps*!", image: R.image.icons.brands.myAnimeList()!)
+	]
 
 	/// Features of version 1.3 of the app.
 	static var v13: [WhatsNewItem] = [
