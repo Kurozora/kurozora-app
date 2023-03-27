@@ -1,4 +1,3 @@
-source 'https://github.com/kiritokatklian/Specs.git'
 source 'https://cdn.cocoapods.org'
 # Uncomment the next line to define a global platform for your project
 platform :ios, '15.0'

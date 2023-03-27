@@ -1,10 +1,10 @@
-<p align="center"><img src="https://developer.kurozora.app/assets/images/icons/KurozoraKit.png"></p>
+<p align="center"><img src=".github/Assets/KurozoraKit_icon.png"></p>
 
 <p align="center">
     <sup><b>KurozoraKit</b></sup>
 </p>
 
-# KurozoraKit [![Swift 5](https://img.shields.io/badge/Swift-5-orange.svg?style=flat&logo=Swift)](https://swift.org) [![Platform](https://img.shields.io/badge/Platform-iOS%20|%20iPadOS%20|%20macOS-lightgrey.svg?style=flat&logo=Apple)](https://www.apple.com/ios) [![Documentation](https://img.shields.io/badge/Documentation-100%25-green.svg?style=flat)](https://developer.kurozora.app/KurozoraKit) [![Discord](https://img.shields.io/discord/449250093623934977?style=flat&label=Discord&logo=Discord&color=7289DA)](https://discord.gg/bHUmr3h)
+# KurozoraKit [![Swift 5](https://img.shields.io/badge/Swift%205-white.svg?style=flat&logo=Swift)](https://swift.org)  [![Apple Platform](https://img.shields.io/badge/iOS%20|%20ipadOS%20|%20macOS-black?style=flat&logo=Apple)](https://apple.co/3CsQlKq) [![Kurozora Discord Server](https://img.shields.io/discord/449250093623934977?style=flat&label=&logo=Discord&logoColor=white&color=7289DA)](https://discord.gg/f3QFzGqsah) [![Documentation](https://img.shields.io/badge/Documentation-100%25-green.svg?style=flat)](https://developer.kurozora.app/KurozoraKit) [![License](https://img.shields.io/badge/License-GPLv3-blue.svg?style=flat)](LICENSE)
 
 [KurozoraKit](https://developer.kurozora.app/kurozorakit) lets users manage their anime library and access many other serices from your app. When users provide permission to access their Kurozora account, they can use your app to share anime, add anime to their library, and discover any of the millions of anime in the Kurozora catalog. If your app detects that the user is not yet a Kurozora member, you can offer them to create an account within your app.
 
@@ -85,12 +85,16 @@ If you happen to find a security vulnerability, we would appreciate you letting 
 
 # Getting in Touch
 
-If you have any questions or just want to say hi, join the Kurozora [Discord](https://discord.gg/bHUmr3h) and drop a message on the #development channel.
+If you have any questions or just want to say hi, join the Kurozora [Discord](https://discord.gg/f3QFzGqsah) and drop a message on the #development channel.
 
-# Author
+# More by Kurozora
 
-Khoren Katklian, a.k.a Kiritokatklian or simply Kirito.
+- [Kurozora Web](https://github.com/kurozora/kurozora-web) — Home to the Kurozora website and API.
+- [Kurozora iOS App](https://github.com/kurozora/kurozora-app) — iOS/iPadOS/MacOS client app.
+- [Kurozora Web Extension](https://github.com/Kurozora/kurozora-extension) — The Ultimate Search Engine for Anime, Manga and Game Fans.
+- [Kurozora Discord Bot](https://github.com/kurozora/kurozora-discord-bot) — A versatile Discord bot with access to Kurozora services.
+- [Kurozora Android App](https://github.com/kurozora/kurozora-android) — Android client app.
 
 # License
 
-All rights reserved.
+Kurozora-web is an Open Source project covered by the [GNU General Public License v3.0](LICENSE).
