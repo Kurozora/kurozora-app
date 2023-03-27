@@ -10,8 +10,7 @@ import UIKit
 
 class ManageIconTableViewController: SubSettingsViewController {
 	// MARK: - Properties
-	var alternativeIcons: AlternativeIcons?
-	private var alternativeIconsDict: [String: [String]] = [:]
+	var alternativeIcons: [AlternativeIcons] = []
 
 	// MARK: - Initializers
 	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -37,10 +36,14 @@ class ManageIconTableViewController: SubSettingsViewController {
 	private func sharedInit() {
 		if let path = Bundle.main.path(forResource: "App Icons", ofType: "plist"),
 		   let plist = FileManager.default.contents(atPath: path) {
-			self.alternativeIconsDict = (try? PropertyListSerialization.propertyList(from: plist, format: nil) as? [String: [String]]) ?? [:]
-			self.alternativeIcons = AlternativeIcons(dict: self.alternativeIconsDict)
-		} else {
-			self.alternativeIconsDict = [:]
+			let alternativeIconsDict = (try? PropertyListSerialization.propertyList(from: plist, format: nil) as? [[String: Any]]) ?? []
+			alternativeIconsDict.forEach { alternativeIconPack in
+				guard let title = alternativeIconPack["title"] as? String,
+					  let icons = alternativeIconPack["icons"] as? [String]
+				else { return }
+
+				self.alternativeIcons.append(AlternativeIcons(title: title, icons: icons))
+			}
 		}
 	}
 }
@@ -48,69 +51,28 @@ class ManageIconTableViewController: SubSettingsViewController {
 // MARK: - UITableViewDataSource
 extension ManageIconTableViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return 4
+		return self.alternativeIcons.count
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		switch section {
-		case 0:
-			guard let defaultIconsCount = self.alternativeIcons?.defaultIcons.count else { return 0 }
-			return defaultIconsCount
-		case 1:
-			guard let natureIconsCount = self.alternativeIcons?.natureIcons.count else { return 0 }
-			return natureIconsCount
-		case 2:
-			guard let premiumIconsCount = self.alternativeIcons?.premiumIcons.count else { return 0 }
-			return premiumIconsCount
-		case 3:
-			guard let limitedIconsCount = self.alternativeIcons?.limitedIcons.count else { return 0 }
-			return limitedIconsCount
-		default:
-			return 0
-		}
+		return self.alternativeIcons[section].icons.count
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let iconTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.iconTableViewCell, for: indexPath) else {
 			fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.iconTableViewCell.identifier)")
 		}
-		var alternativeIconsElement: AlternativeIconsElement? = nil
-		switch indexPath.section {
-		case 0:
-			alternativeIconsElement = self.alternativeIcons?.defaultIcons[indexPath.row]
-		case 1:
-			alternativeIconsElement = self.alternativeIcons?.natureIcons[indexPath.row]
-		case 2:
-			alternativeIconsElement = self.alternativeIcons?.premiumIcons[indexPath.row]
-		case 3:
-			alternativeIconsElement = self.alternativeIcons?.limitedIcons[indexPath.row]
-		default: break
-		}
+		let alternativeIconsElement = self.alternativeIcons[indexPath.section].icons[indexPath.row]
 		iconTableViewCell.configureCell(using: alternativeIconsElement)
-		iconTableViewCell.setSelected(alternativeIconsElement?.name == UserSettings.appIcon)
+		iconTableViewCell.setSelected(alternativeIconsElement.name == UserSettings.appIcon)
 		return iconTableViewCell
 	}
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		switch section {
-		case 0:
-			if self.alternativeIcons?.defaultIcons.count != 0 {
-				return "DEFAULT"
-			}
-		case 1:
-			if self.alternativeIcons?.premiumIcons.count != 0 {
-				return "NATURE"
-			}
-		case 2:
-			if self.alternativeIcons?.premiumIcons.count != 0 {
-				return "PREMIUM"
-			}
-		case 3:
-			if self.alternativeIcons?.limitedIcons.count != 0 {
-				return "LIMITED TIME"
-			}
-		default: break
+		if self.alternativeIcons[section].icons.count != 0 {
+			return self.alternativeIcons[section].title.uppercased()
 		}
+
 		return nil
 	}
 }

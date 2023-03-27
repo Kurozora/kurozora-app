@@ -1,44 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>Default</key>
-	<array>
-		<string>Kurozora</string>
-		<string>Day</string>
-		<string>Night</string>
-	</array>
-	<key>Nature</key>
-	<array>
-		<string>Winter</string>
-		<string>Spring</string>
-		<string>Summer</string>
-		<string>Fall</string>
-		<string>Sakura</string>
-		<string>Flame</string>
-		<string>Wind</string>
-		<string>Thunder</string>
-	</array>
-	<key>Premium</key>
-	<array>
-		<string>Coral</string>
-		<string>Dutch Orange</string>
-		<string>Green</string>
-		<string>Ocean Blue</string>
-		<string>Peach Orange</string>
-		<string>Red</string>
-		<string>Rose Gold</string>
-		<string>Sky Blue</string>
-		<string>Yellow</string>
-	</array>
-	<key>Limited</key>
-	<array>
-		<string>Eggatha</string>
-		<string>Monozora</string>
-		<string>Cookiezora</string>
-		<string>Kurogram</string>
-		<string>Kurolicious</string>
-		<string>Product(RED)</string>
-	</array>
-</dict>
+<array>
+	<dict>
+		<key>title</key>
+		<string>Default</string>
+		<key>icons</key>
+		<array>
+			<string>Kurozora</string>
+			<string>Day</string>
+			<string>Night</string>
+		</array>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>Events</string>
+		<key>icons</key>
+		<array>
+			<string>Eggatha</string>
+		</array>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>Nature</string>
+		<key>icons</key>
+		<array>
+			<string>Winter</string>
+			<string>Spring</string>
+			<string>Summer</string>
+			<string>Fall</string>
+			<string>Sakura</string>
+			<string>Flame</string>
+			<string>Wind</string>
+			<string>Thunder</string>
+		</array>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>Premium</string>
+		<key>icons</key>
+		<array>
+			<string>Coral</string>
+			<string>Dutch Orange</string>
+			<string>Green</string>
+			<string>Ocean Blue</string>
+			<string>Peach Orange</string>
+			<string>Red</string>
+			<string>Rose Gold</string>
+			<string>Sky Blue</string>
+			<string>Yellow</string>
+		</array>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>Special Edition</string>
+		<key>icons</key>
+		<array>
+			<string>Monozora</string>
+			<string>Cookiezora</string>
+			<string>Kurogram</string>
+			<string>Kurolicious</string>
+			<string>Product(RED)</string>
+		</array>
+	</dict>
+</array>
 </plist>
