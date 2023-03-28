@@ -68,7 +68,7 @@ extension SplashscreenViewController {
 // MARK: - Display
 extension SplashscreenViewController: SplashscreenDisplayLogic {
 	func displaySomething(viewModel: Splashscreen.Something.ViewModel) {
-//		self.sceneView.setData()
+		self.sceneView.setData()
 	}
 }
 

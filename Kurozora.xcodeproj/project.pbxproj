@@ -588,6 +588,7 @@
 		66FDDB7323B95AF600364886 /* UICollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FDDB7223B95AF600364886 /* UICollectionViewController+KCollectionViewDelegateLayout.swift */; };
 		66FE5CFF215B665200E2844A /* DebugSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FE5CFE215B665200E2844A /* DebugSettingsTableViewController.swift */; };
 		66FE5D01215B739D00E2844A /* KDefaultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FE5D00215B739D00E2844A /* KDefaultsCell.swift */; };
+		66FE68FD29D26AE300C9AD8E /* shop_door_bell.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 66FE68FC29D26AE300C9AD8E /* shop_door_bell.m4a */; };
 		73E9082EEADA42DDD54D9805 /* Pods_Kurozora.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E06CAB22F87FA1B89AE618FB /* Pods_Kurozora.framework */; };
 /* End PBXBuildFile section */
 
@@ -1191,6 +1192,7 @@
 		66FDDB7223B95AF600364886 /* UICollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
 		66FE5CFE215B665200E2844A /* DebugSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugSettingsTableViewController.swift; sourceTree = "<group>"; };
 		66FE5D00215B739D00E2844A /* KDefaultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KDefaultsCell.swift; sourceTree = "<group>"; };
+		66FE68FC29D26AE300C9AD8E /* shop_door_bell.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = shop_door_bell.m4a; sourceTree = "<group>"; };
 		737689E9E0DAAABD1B6489DE /* Pods-KurozoraKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KurozoraKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-KurozoraKit/Pods-KurozoraKit.release.xcconfig"; sourceTree = "<group>"; };
 		E06CAB22F87FA1B89AE618FB /* Pods_Kurozora.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kurozora.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -3300,6 +3302,7 @@
 		66FA97CD281A15750054FC2E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				66FE68F929D2646A00C9AD8E /* Audios */,
 				66FA97D0281A16150054FC2E /* Themes */,
 				66ABBBFF240215BE00CE8A26 /* Views */,
 			);
@@ -3389,6 +3392,14 @@
 				66AEABF022994F4600949FD8 /* EpisodeSection.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		66FE68F929D2646A00C9AD8E /* Audios */ = {
+			isa = PBXGroup;
+			children = (
+				66FE68FC29D26AE300C9AD8E /* shop_door_bell.m4a */,
+			);
+			path = Audios;
 			sourceTree = "<group>";
 		};
 		D4A795E40A9FE3FA76278C67 /* Pods */ = {
@@ -3545,6 +3556,7 @@
 				666938B721B1D4FE00BA9620 /* CommentCell.xib in Resources */,
 				66AA35C024030FA60006EC5B /* Episodes.storyboard in Resources */,
 				660C043223D1500A0040C749 /* MediumLockupCollectionViewCell.xib in Resources */,
+				66FE68FD29D26AE300C9AD8E /* shop_door_bell.m4a in Resources */,
 				6640E18922AD633500D0F575 /* Authentication.storyboard in Resources */,
 				66EDBA6D2946943700FF1A2E /* Launch Background.png in Resources */,
 				661F186024AB5C6F00542AFB /* SosumiCollectionViewCell.xib in Resources */,

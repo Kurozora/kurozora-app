@@ -18,6 +18,6 @@ final class SplashscreenPresenter: SplashscreenPresentationLogic {
 
 	func presentSomething(response: Splashscreen.Something.Response) {
 		let viewModel = Splashscreen.Something.ViewModel()
-		viewController?.displaySomething(viewModel: viewModel)
+		self.viewController?.displaySomething(viewModel: viewModel)
 	}
 }

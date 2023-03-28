@@ -26,7 +26,7 @@ final class SplashscreenInteractor: SplashscreenDataStore {
 // MARK: - BusinessLogic
 extension SplashscreenInteractor: SplashscreenBusinessLogic {
 	func doSomething(request: Splashscreen.Something.Request) {
-		worker?.doSomeWork(completion: {
+		self.worker?.doSomeWork(completion: {
 			let response = Splashscreen.Something.Response()
 			self.presenter?.presentSomething(response: response)
 		})
