@@ -9,13 +9,14 @@
 import UIKit
 
 extension ThemesCollectionViewController {
+	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		guard let theme = self.dataSource.itemIdentifier(for: indexPath) else { return }
+		self.performSegue(withIdentifier: R.segue.themesCollectionViewController.exploreSegue, sender: theme)
+	}
+
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		if let themeLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? ThemeLockupCollectionViewCell {
-			return themeLockupCollectionViewCell.theme.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-		}
-
-		return nil
+		return self.dataSource.itemIdentifier(for: indexPath)?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {

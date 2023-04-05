@@ -11,9 +11,9 @@ import KurozoraKit
 
 extension ThemesCollectionViewController {
 	override func configureDataSource() {
-		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Theme>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: Theme) -> UICollectionViewCell? in
+		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Theme>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, theme: Theme) -> UICollectionViewCell? in
 			let themeLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: ThemeLockupCollectionViewCell.self, for: indexPath)
-			themeLockupCollectionViewCell.theme = item
+			themeLockupCollectionViewCell.configure(using: theme)
 			return themeLockupCollectionViewCell
 		}
 	}

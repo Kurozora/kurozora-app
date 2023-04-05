@@ -18,8 +18,17 @@ extension Theme {
 		/// The description of the theme.
 		public let description: String?
 
-		/// The color of the theme.
-		public let color: String
+		/// The first background color of the theme.
+		public let backgroundColor1: String
+
+		/// The second background color of the theme.
+		public let backgroundColor2: String
+
+		/// The first text color of the theme.
+		public let textColor1: String
+
+		/// The second text color of the theme.
+		public let textColor2: String
 
 		/// The media object of the symbol of the theme.
 		public let symbol: Media?

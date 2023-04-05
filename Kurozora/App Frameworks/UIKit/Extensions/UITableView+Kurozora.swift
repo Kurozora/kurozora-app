@@ -75,7 +75,7 @@ extension UITableView {
 	/// - Tag: UIKit-UITableView-CellRegistration
 	struct CellRegistration<Cell, Item> where Cell: UITableViewCell {
 		// swiftlint:disable nesting
-		///
+		/// A closure that handles the cell registration and configuration.
 		typealias Handler = (_ cell: Cell, _ indexPath: IndexPath, _ itemIdentifier: Item) -> Void
 
 		/// A closure that handles the cell registration and configuration.
@@ -88,6 +88,9 @@ extension UITableView {
 		fileprivate let identifier: String
 
 		/// Creates a cell registration with the specified registration handler.
+		///
+		/// - Parameters:
+		///   - handler: The closure that handles the cell registration and configuration.
 		init(handler: @escaping UITableView.CellRegistration<Cell, Item>.Handler) {
 			self.handler = handler
 			self.cellNib = nil
@@ -95,11 +98,16 @@ extension UITableView {
 		}
 
 		/// Creates a cell registration with the specified registration handler and nib file.
+		///
+		/// - Parameters:
+		///   - cellNib: The `UINib` object that contains the Interface Builder nib file of the cell.
+		///   - handler: The closure that handles the cell registration and configuration.
 		init(cellNib: UINib, handler: @escaping UITableView.CellRegistration<Cell, Item>.Handler) {
 			self.handler = handler
 			self.cellNib = cellNib
 			self.identifier = "\(type(of: Item.self))_\(type(of: Cell.self))"
 		}
+		// swiftlint:enable nesting
 	}
 
 	/// Dequeues a configured reusable cell object.

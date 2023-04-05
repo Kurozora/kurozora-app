@@ -20,4 +20,5 @@ extension NSLayoutManager {
 		}
 		return count
 	}
+	// swiftlint:enable legacy_constructor
 }

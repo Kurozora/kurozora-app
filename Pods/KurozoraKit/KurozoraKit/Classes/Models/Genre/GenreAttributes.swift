@@ -18,8 +18,17 @@ extension Genre {
 		/// The description of the genre.
 		public let description: String?
 
-		/// The color of the genre.
-		public let color: String
+		/// The first background color of the genre.
+		public let backgroundColor1: String
+
+		/// The second background color of the genre.
+		public let backgroundColor2: String
+
+		/// The first text color of the genre.
+		public let textColor1: String
+
+		/// The second text color of the genre.
+		public let textColor2: String
 
 		/// The media object of the symbol of the genre.
 		public let symbol: Media?

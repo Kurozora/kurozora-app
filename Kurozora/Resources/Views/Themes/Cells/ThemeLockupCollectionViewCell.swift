@@ -9,31 +9,41 @@
 import UIKit
 import KurozoraKit
 
-class ThemeLockupCollectionViewCell: UICollectionViewCell {
+class ThemeLockupCollectionViewCell: KCollectionViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var primaryLabel: KLabel!
+	@IBOutlet weak var primaryLabel: KUnderlinedLabel!
 	@IBOutlet weak var secondaryLabel: KSecondaryLabel!
 	@IBOutlet weak var symbolImageView: UIImageView!
-
-	// MARK: - Properties
-	var theme: Theme! {
-		didSet {
-			self.configureCell()
-		}
-	}
+	@IBOutlet weak var patterImageView: UIImageView!
+	@IBOutlet weak var borderView: UIView!
+	@IBOutlet weak var gradientView: GradientView!
 
 	// MARK: - Functions
-	/// Configures the cell with th
-	func configureCell() {
-		switch self.theme.attributes.color.lowercased() {
-		case "#ffffff":
-			self.contentView.backgroundColor = #colorLiteral(red: 0.2174204886, green: 0.2404745221, blue: 0.3324468732, alpha: 1)
-		default:
-			self.contentView.backgroundColor = UIColor(hexString: self.theme.attributes.color)
+	/// Configures the cell with the given `Theme` obejct.
+	///
+	/// - Parameter theme: The `Theme` object used to configure the cell.
+	func configure(using theme: Theme?) {
+		guard let theme = theme else {
+			self.showSkeleton()
+			return
 		}
+		self.hideSkeleton()
 
-		self.primaryLabel.text = self.theme.attributes.name
-		self.secondaryLabel.text = self.theme.attributes.description
-		self.symbolImageView.setImage(with: self.theme.attributes.symbol?.url ?? "", placeholder: R.image.kurozoraIcon()!)
+		self.gradientView.gradientLayer.colors = [
+			UIColor(hexString: theme.attributes.backgroundColor1)?.cgColor ?? UIColor.orange.cgColor,
+			UIColor(hexString: theme.attributes.backgroundColor2)?.cgColor ?? UIColor.purple.cgColor
+		]
+
+		self.borderView.backgroundColor = UIColor(hexString: theme.attributes.backgroundColor2)
+
+		self.primaryLabel.text = theme.attributes.name.uppercased()
+		self.primaryLabel.textColor = UIColor(hexString: theme.attributes.textColor1)
+
+		self.secondaryLabel.text = theme.attributes.description?.uppercased()
+		self.secondaryLabel.textColor = UIColor(hexString: theme.attributes.textColor2)
+
+		self.symbolImageView.setImage(with: theme.attributes.symbol?.url ?? "", placeholder: UIImage())
+
+		self.contentView.cornerRadius = 10.0
 	}
 }

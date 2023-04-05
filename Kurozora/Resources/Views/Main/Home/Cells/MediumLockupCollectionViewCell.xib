@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,14 +17,20 @@
                 <rect key="frame" x="0.0" y="0.0" width="284" height="190"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ni9-Cf-IrR">
+                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ni9-Cf-IrR" customClass="GradientView" customModule="Kurozora" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="284" height="160"/>
                         <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="genre_pattern" translatesAutoresizingMaskIntoConstraints="NO" id="1ri-jr-BHw">
+                                <rect key="frame" x="0.0" y="0.0" width="284" height="160"/>
+                            </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hQ3-se-UId">
                                 <rect key="frame" x="72" y="10" width="140" height="140"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="hQ3-se-UId" secondAttribute="height" multiplier="1:1" id="yNp-oR-HYf"/>
                                 </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="grain" translatesAutoresizingMaskIntoConstraints="NO" id="QHT-Mg-dgm">
+                                <rect key="frame" x="0.0" y="0.0" width="284" height="160"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3cC-BS-6hY" userLabel="Border View">
                                 <rect key="frame" x="0.0" y="0.0" width="284" height="160"/>
@@ -40,17 +47,24 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.75686281919999998" green="0.75686287880000003" blue="0.75686275960000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
+                            <constraint firstItem="QHT-Mg-dgm" firstAttribute="leading" secondItem="ni9-Cf-IrR" secondAttribute="leading" id="26y-t3-6Dl"/>
                             <constraint firstItem="3cC-BS-6hY" firstAttribute="leading" secondItem="ni9-Cf-IrR" secondAttribute="leading" id="8Q0-wg-NdR"/>
                             <constraint firstItem="hQ3-se-UId" firstAttribute="centerX" secondItem="ni9-Cf-IrR" secondAttribute="centerX" id="DkD-Qh-a3t"/>
                             <constraint firstItem="3cC-BS-6hY" firstAttribute="top" secondItem="ni9-Cf-IrR" secondAttribute="top" id="ELM-q7-Msn"/>
+                            <constraint firstAttribute="bottom" secondItem="1ri-jr-BHw" secondAttribute="bottom" id="GOa-7e-ZlW"/>
                             <constraint firstAttribute="bottom" secondItem="3cC-BS-6hY" secondAttribute="bottom" id="KA5-vy-wHF"/>
                             <constraint firstItem="hQ3-se-UId" firstAttribute="top" secondItem="ni9-Cf-IrR" secondAttribute="top" constant="10" id="MkH-Ki-Qjf"/>
                             <constraint firstAttribute="width" secondItem="ni9-Cf-IrR" secondAttribute="height" multiplier="16:9" id="RjS-aX-sHW"/>
                             <constraint firstAttribute="bottom" secondItem="hQ3-se-UId" secondAttribute="bottom" constant="10" id="TVY-8p-0o0"/>
+                            <constraint firstAttribute="trailing" secondItem="QHT-Mg-dgm" secondAttribute="trailing" id="UsT-tp-9yo"/>
+                            <constraint firstItem="1ri-jr-BHw" firstAttribute="leading" secondItem="ni9-Cf-IrR" secondAttribute="leading" id="W8a-TI-tkG"/>
                             <constraint firstAttribute="trailing" secondItem="3cC-BS-6hY" secondAttribute="trailing" id="heC-s8-VeA"/>
+                            <constraint firstItem="QHT-Mg-dgm" firstAttribute="top" secondItem="ni9-Cf-IrR" secondAttribute="top" id="iyR-3B-9zG"/>
                             <constraint firstItem="hQ3-se-UId" firstAttribute="centerY" secondItem="ni9-Cf-IrR" secondAttribute="centerY" id="kXF-Vg-zoW"/>
+                            <constraint firstItem="1ri-jr-BHw" firstAttribute="top" secondItem="ni9-Cf-IrR" secondAttribute="top" id="s4l-MD-arZ"/>
+                            <constraint firstAttribute="trailing" secondItem="1ri-jr-BHw" secondAttribute="trailing" id="uLp-JD-S4p"/>
+                            <constraint firstAttribute="bottom" secondItem="QHT-Mg-dgm" secondAttribute="bottom" id="xkS-7I-TOU"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -85,4 +99,8 @@
             <point key="canvasLocation" x="740.57971014492762" y="152.67857142857142"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="genre_pattern" width="600" height="600"/>
+        <image name="grain" width="700" height="700"/>
+    </resources>
 </document>

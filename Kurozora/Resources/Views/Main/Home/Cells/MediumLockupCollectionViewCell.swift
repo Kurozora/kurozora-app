@@ -12,7 +12,7 @@ import KurozoraKit
 class MediumLockupCollectionViewCell: KCollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var primaryLabel: KLabel!
-	@IBOutlet weak var backgroundColorView: UIView!
+	@IBOutlet weak var backgroundColorView: GradientView!
 	@IBOutlet weak var symbolImageView: UIImageView!
 
 	// MARK: - Functions
@@ -27,7 +27,12 @@ class MediumLockupCollectionViewCell: KCollectionViewCell {
 		self.hideSkeleton()
 
 		self.primaryLabel.text = genre.attributes.name
-		self.backgroundColorView.backgroundColor = UIColor(hexString: genre.attributes.color)
+
+		self.backgroundColorView.gradientLayer.colors = [
+			UIColor(hexString: genre.attributes.backgroundColor1)?.cgColor ?? UIColor.orange.cgColor,
+			UIColor(hexString: genre.attributes.backgroundColor2)?.cgColor ?? UIColor.purple.cgColor
+		]
+
 		self.symbolImageView.setImage(with: genre.attributes.symbol?.url ?? "", placeholder: R.image.kurozoraIcon()!)
 	}
 
@@ -42,7 +47,12 @@ class MediumLockupCollectionViewCell: KCollectionViewCell {
 		self.hideSkeleton()
 
 		self.primaryLabel.text = theme.attributes.name
-		self.backgroundColorView.backgroundColor = UIColor(hexString: theme.attributes.color)
+
+		self.backgroundColorView.gradientLayer.colors = [
+			UIColor(hexString: theme.attributes.backgroundColor1)?.cgColor ?? UIColor.orange.cgColor,
+			UIColor(hexString: theme.attributes.backgroundColor2)?.cgColor ?? UIColor.purple.cgColor
+		]
+
 		self.symbolImageView.setImage(with: theme.attributes.symbol?.url ?? "", placeholder: R.image.kurozoraIcon()!)
 	}
 }

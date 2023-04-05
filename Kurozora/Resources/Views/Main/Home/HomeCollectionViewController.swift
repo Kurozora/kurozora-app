@@ -869,37 +869,35 @@ extension HomeCollectionViewController {
 			switch itemKind {
 			case .genreIdentity(let genreIdentity, _):
 				let genre = self.fetchGenre(at: indexPath)
-				var genreDataRequest = self.prefetchingIndexPathOperations[indexPath] ?? mediumLockupCollectionViewCell.dataRequest
 
-				if genreDataRequest == nil && genre == nil {
-					genreDataRequest = KService.getDetails(forGenre: genreIdentity) { result in
-						switch result {
-						case .success(let genres):
-							self.genres[indexPath] = genres.first
+				if genre == nil {
+					Task {
+						do {
+							let genreResponse = try await KService.getDetails(forGenre: genreIdentity).value
+							self.genres[indexPath] = genreResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
-						case .failure: break
+						} catch {
+							print(error.localizedDescription)
 						}
 					}
 				}
 
-				mediumLockupCollectionViewCell.dataRequest = genreDataRequest
 				mediumLockupCollectionViewCell.configure(using: genre)
 			case .themeIdentity(let themeIdentity, _):
 				let theme = self.fetchTheme(at: indexPath)
-				var themeDataRequest = self.prefetchingIndexPathOperations[indexPath] ?? mediumLockupCollectionViewCell.dataRequest
 
-				if themeDataRequest == nil && theme == nil {
-					themeDataRequest = KService.getDetails(forTheme: themeIdentity) { result in
-						switch result {
-						case .success(let themes):
-							self.themes[indexPath] = themes.first
+				if theme == nil {
+					Task {
+						do {
+							let themeResponse = try await KService.getDetails(forTheme: themeIdentity).value
+							self.themes[indexPath] = themeResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
-						case .failure: break
+						} catch {
+							print(error.localizedDescription)
 						}
 					}
 				}
 
-				mediumLockupCollectionViewCell.dataRequest = themeDataRequest
 				mediumLockupCollectionViewCell.configure(using: theme)
 			default: break
 			}

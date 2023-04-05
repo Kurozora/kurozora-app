@@ -74,14 +74,18 @@ class GenresCollectionViewController: KCollectionViewController {
 
 		self.configureDataSource()
 
-		DispatchQueue.global(qos: .userInteractive).async {
-			self.fetchGenres()
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchGenres()
 		}
 	}
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		self.fetchGenres()
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchGenres()
+		}
 	}
 
 	override func configureEmptyDataView() {
@@ -101,7 +105,7 @@ class GenresCollectionViewController: KCollectionViewController {
 	}
 
 	/// Fetches genres from the server.
-	func fetchGenres() {
+	func fetchGenres() async {
 		DispatchQueue.main.async {
 			#if DEBUG
 			#if !targetEnvironment(macCatalyst)
@@ -110,25 +114,23 @@ class GenresCollectionViewController: KCollectionViewController {
 			#endif
 		}
 
-		KService.getGenres { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let genres):
-				self.genres = genres
-				self.updateDataSource()
-			case .failure: break
-			}
+		do {
+			let genreResponse = try await  KService.getGenres().value
+			self.genres = genreResponse.data
+			self.updateDataSource()
+		} catch {
+			print(error.localizedDescription)
 		}
 	}
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == R.segue.genresCollectionViewController.exploreSegue.identifier {
-			if let homeCollectionViewController = segue.destination as? HomeCollectionViewController {
-				if let genreLockupCollectionViewCell = sender as? GenreLockupCollectionViewCell {
-					homeCollectionViewController.genre = genreLockupCollectionViewCell.genre
-				}
-			}
+		switch segue.identifier {
+		case R.segue.genresCollectionViewController.exploreSegue.identifier:
+			guard let homeCollectionViewController = segue.destination as? HomeCollectionViewController else { return }
+			guard let genre = sender as? Genre else { return }
+			homeCollectionViewController.genre = genre
+		default: break
 		}
 	}
 }

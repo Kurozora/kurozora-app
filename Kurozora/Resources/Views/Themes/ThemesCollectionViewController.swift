@@ -74,14 +74,18 @@ class ThemesCollectionViewController: KCollectionViewController {
 
 		self.configureDataSource()
 
-		DispatchQueue.global(qos: .userInteractive).async {
-			self.fetchThemes()
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchThemes()
 		}
 	}
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		self.fetchThemes()
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchThemes()
+		}
 	}
 
 	override func configureEmptyDataView() {
@@ -101,7 +105,7 @@ class ThemesCollectionViewController: KCollectionViewController {
 	}
 
 	/// Fetches themes from the server.
-	func fetchThemes() {
+	func fetchThemes() async {
 		DispatchQueue.main.async {
 			#if DEBUG
 			#if !targetEnvironment(macCatalyst)
@@ -110,25 +114,23 @@ class ThemesCollectionViewController: KCollectionViewController {
 			#endif
 		}
 
-		KService.getThemes { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let themes):
-				self.themes = themes
-				self.updateDataSource()
-			case .failure: break
-			}
+		do {
+			let themeResponse = try await KService.getThemes().value
+			self.themes = themeResponse.data
+			self.updateDataSource()
+		} catch {
+			print(error.localizedDescription)
 		}
 	}
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == R.segue.themesCollectionViewController.exploreSegue.identifier {
-			if let homeCollectionViewController = segue.destination as? HomeCollectionViewController {
-				if let themeLockupCollectionViewCell = sender as? ThemeLockupCollectionViewCell {
-					homeCollectionViewController.theme = themeLockupCollectionViewCell.theme
-				}
-			}
+		switch segue.identifier {
+		case R.segue.themesCollectionViewController.exploreSegue.identifier:
+			guard let homeCollectionViewController = segue.destination as? HomeCollectionViewController else { return }
+			guard let theme = sender as? Theme else { return }
+			homeCollectionViewController.theme = theme
+		default: break
 		}
 	}
 }
