@@ -13,6 +13,5 @@ class OnboardingBaseTableViewCell: UITableViewCell {
 	var accountOnboardingType: AccountOnboarding = .signIn
 
 	// MARK: - Functions
-	func configureCell() {
-	}
+	func configureCell() { }
 }

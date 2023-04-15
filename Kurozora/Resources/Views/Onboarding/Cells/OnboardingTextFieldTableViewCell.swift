@@ -16,35 +16,35 @@ class OnboardingTextFieldTableViewCell: OnboardingBaseTableViewCell {
 	override func configureCell() {
 		super.configureCell()
 
-		switch accountOnboardingType {
+		switch self.accountOnboardingType {
 		case .signUp:
-			switch textField.textType {
+			switch self.textField.textType {
 			case .username:
-				textField.placeholder = "Username: pick a cool one 🙉"
+				self.textField.placeholder = "Username: pick a cool one 🙉"
 			case .emailAddress:
-				textField.placeholder = "Email: we all forget our passwords 🙈"
+				self.textField.placeholder = "Email: we all forget our passwords 🙈"
 			case .password:
-				textField.placeholder = "Password: make it super secret 🙊"
+				self.textField.placeholder = "Password: make it super secret 🙊"
 			default: break
 			}
 		case .siwa:
-			switch textField.textType {
+			switch self.textField.textType {
 			case .username:
-				textField.placeholder = "Username: pick a cool one 🙉"
+				self.textField.placeholder = "Username: pick a cool one 🙉"
 			default: break
 			}
 		case .signIn:
-			switch textField.textType {
+			switch self.textField.textType {
 			case .emailAddress:
-				textField.placeholder = "The cool Kurozora ID you claimed 🙌"
+				self.textField.placeholder = "The cool Kurozora ID you claimed 🙌"
 			case .password:
-				textField.placeholder = "Your super secret password 👀"
+				self.textField.placeholder = "Your super secret password 👀"
 			default: break
 			}
 		case .reset:
-			switch textField.textType {
+			switch self.textField.textType {
 			case .emailAddress:
-				textField.placeholder = "Your email address to the rescue 💌"
+				self.textField.placeholder = "Your email address to the rescue 💌"
 			default: break
 			}
 		}

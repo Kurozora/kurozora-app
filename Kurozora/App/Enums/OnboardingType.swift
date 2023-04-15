@@ -24,6 +24,9 @@ extension AccountOnboarding {
 		/// New password cell type.
 		case newPassword = 3
 
+		/// One Time Code cell type.
+		case oneTimeCode = 4
+
 		// MARK: - Properties
 		/// An array containing all Sign in with Apple cell types.
 		static let siwaCases: [TextField] = [.username]
@@ -46,20 +49,22 @@ extension AccountOnboarding {
 				return .emailAddress
 			case .password, .newPassword:
 				return .password
+			case .oneTimeCode:
+				return .generic
 			}
 		}
 
 		/// The text type of a text field type.
 		var textContentType: UITextContentType {
 			switch self {
-			case .username:
+			case .username, .email:
 				return .username
-			case .email:
-				return .emailAddress
 			case .password:
 				return .password
 			case .newPassword:
 				return .newPassword
+			case .oneTimeCode:
+				return .oneTimeCode
 			}
 		}
 	}
