@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="eeh-Yo-M66">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="eeh-Yo-M66">
     <device id="retina6_5" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -86,51 +85,6 @@
                                     <outlet property="actionButton" destination="hQi-Li-0s1" id="ee8-2e-8as"/>
                                 </connections>
                             </collectionViewCell>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="ActionLinkExploreCollectionViewCell" id="cs5-kK-m9g" customClass="ActionLinkExploreCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="54" width="374" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Lxa-tq-PyS">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <subviews>
-                                        <button contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BP6-qW-Rpr" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="43"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="310" id="ACF-Ni-dc2"/>
-                                                <constraint firstAttribute="height" constant="34" id="fWq-VW-vB9"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                            <state key="normal" title="About In-App Purchases">
-                                                <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="actionButtonPressed:" destination="cs5-kK-m9g" eventType="touchUpInside" id="4jv-lp-7R3"/>
-                                            </connections>
-                                        </button>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O5x-GY-rSM" customClass="SecondarySeparatorView" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="43" width="374" height="1"/>
-                                            <color key="backgroundColor" systemColor="separatorColor"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="1" id="0Bz-ru-qZS"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="O5x-GY-rSM" secondAttribute="bottom" id="99b-Cy-pKP"/>
-                                        <constraint firstAttribute="trailing" secondItem="O5x-GY-rSM" secondAttribute="trailing" id="MzY-9s-g48"/>
-                                        <constraint firstItem="O5x-GY-rSM" firstAttribute="top" secondItem="BP6-qW-Rpr" secondAttribute="bottom" id="Ya8-ip-gLz"/>
-                                        <constraint firstItem="BP6-qW-Rpr" firstAttribute="trailing" secondItem="O5x-GY-rSM" secondAttribute="trailing" id="h63-ql-VNC"/>
-                                        <constraint firstItem="BP6-qW-Rpr" firstAttribute="top" secondItem="Lxa-tq-PyS" secondAttribute="top" id="hdP-XQ-mIq"/>
-                                        <constraint firstItem="BP6-qW-Rpr" firstAttribute="leading" secondItem="O5x-GY-rSM" secondAttribute="leading" id="vJL-nG-RwC"/>
-                                        <constraint firstItem="O5x-GY-rSM" firstAttribute="leading" secondItem="Lxa-tq-PyS" secondAttribute="leading" id="wQU-4R-c5Z"/>
-                                    </constraints>
-                                </collectionViewCellContentView>
-                                <size key="customSize" width="374" height="44"/>
-                                <connections>
-                                    <outlet property="actionButton" destination="BP6-qW-Rpr" id="hOS-bj-HDP"/>
-                                    <outlet property="separatorView" destination="O5x-GY-rSM" id="1bc-iW-6K3"/>
-                                </connections>
-                            </collectionViewCell>
                         </cells>
                         <connections>
                             <outlet property="dataSource" destination="lLs-XV-jFy" id="RAD-Wk-ntS"/>
@@ -139,7 +93,7 @@
                     </collectionView>
                     <navigationItem key="navigationItem" title="Explore" id="2aK-dy-bZm">
                         <barButtonItem key="rightBarButtonItem" title="Profile" id="Ypr-Dg-Xjg">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ZYb-6d-0Mn" customClass="ProfileImageButton" customModule="Kurozora" customModuleProvider="target">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ZYb-6d-0Mn" customClass="ProfileImageButton" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="342" y="5" width="52" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
@@ -378,9 +332,4 @@
         </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-    <resources>
-        <systemColor name="separatorColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-    </resources>
 </document>

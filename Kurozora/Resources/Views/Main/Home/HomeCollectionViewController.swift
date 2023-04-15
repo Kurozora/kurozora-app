@@ -537,7 +537,6 @@ extension HomeCollectionViewController: ActionBaseExploreCollectionViewCellDeleg
 			self.performSegue(withIdentifier: quickAction.segueID, sender: nil)
 		default: break
 		}
-
 	}
 }
 
@@ -760,6 +759,19 @@ extension HomeCollectionViewController {
 }
 
 extension HomeCollectionViewController {
+	func getConfiguredActionLinkCell() -> UICollectionView.CellRegistration<ActionLinkExploreCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<ActionLinkExploreCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.actionLinkExploreCollectionViewCell)) { [weak self] actionLinkExploreCollectionViewCell, _, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .quickLink(let quickLink, _):
+				actionLinkExploreCollectionViewCell.delegate = self
+				actionLinkExploreCollectionViewCell.configure(using: quickLink)
+			default: break
+			}
+		}
+	}
+
 	func getConfiguredBannerCell() -> UICollectionView.CellRegistration<BannerLockupCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<BannerLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.bannerLockupCollectionViewCell)) { [weak self] bannerLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }

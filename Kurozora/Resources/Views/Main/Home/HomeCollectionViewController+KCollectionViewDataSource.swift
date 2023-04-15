@@ -31,6 +31,7 @@ extension HomeCollectionViewController {
 		let smallCellConfiguration = self.getConfiguredSmallCell()
 		let upcomingCellConfiguration = self.getConfiguredUpcomingCell()
 		let videoCellConfiguration = self.getConfiguredVideoCell()
+		let actionLinkCellConfiguration = self.getConfiguredActionLinkCell()
 
 		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, itemKind: ItemKind) -> UICollectionViewCell? in
 			guard let self = self else { return nil }
@@ -68,14 +69,7 @@ extension HomeCollectionViewController {
 			case .music:
 				return collectionView.dequeueConfiguredReusableCell(using: musicCellConfiguration, for: indexPath, item: itemKind)
 			case .quickLinks:
-				switch itemKind {
-				case .quickLink(let quickLink, _):
-					let actionLinkExploreCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.actionLinkExploreCollectionViewCell, for: indexPath)
-					actionLinkExploreCollectionViewCell?.delegate = self
-					actionLinkExploreCollectionViewCell?.configure(using: quickLink)
-					return actionLinkExploreCollectionViewCell
-				default: return nil
-				}
+				return collectionView.dequeueConfiguredReusableCell(using: actionLinkCellConfiguration, for: indexPath, item: itemKind)
 			case .quickActions:
 				switch itemKind {
 				case .quickAction(let quickAction, _):
