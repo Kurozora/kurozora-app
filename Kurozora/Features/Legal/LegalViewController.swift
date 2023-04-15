@@ -13,7 +13,7 @@ class LegalViewController: KViewController {
 	@IBOutlet weak var navigationTitleView: UIView!
 	@IBOutlet weak var navigationTitleLabel: UILabel! {
 		didSet {
-			navigationTitleLabel.theme_textColor = KThemePicker.barTitleTextColor.rawValue
+			self.navigationTitleLabel.theme_textColor = KThemePicker.barTitleTextColor.rawValue
 		}
 	}
 
@@ -24,15 +24,17 @@ class LegalViewController: KViewController {
 	// MARK: - Initializers
 	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-		DispatchQueue.global(qos: .userInteractive).async {
-			self.fetchData()
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchData()
 		}
 	}
 
 	required init?(coder: NSCoder) {
 		super.init(coder: coder)
-		DispatchQueue.global(qos: .userInteractive).async {
-			self.fetchData()
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchData()
 		}
 	}
 
@@ -58,14 +60,12 @@ class LegalViewController: KViewController {
 
 	// MARK: - Functions
 	/// Makes an API request to fetch the relevant data for the view.
-	func fetchData() {
-		KService.getPrivacyPolicy { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let privacyPolicy):
-				self.setPrivacyPolicy(privacyPolicy.attributes.text.htmlAttributedString())
-			case .failure: break
-			}
+	func fetchData() async {
+		do {
+			let legalResponse = try await KService.getPrivacyPolicy().value
+			self.setPrivacyPolicy(legalResponse.data.attributes.text.htmlAttributedString())
+		} catch {
+			print(error.localizedDescription)
 		}
 	}
 
