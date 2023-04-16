@@ -259,21 +259,21 @@ extension LiteratureDetailsCollectionViewController {
 			switch itemKind {
 			case .literatureIdentity(let literatureIdentity, _):
 				let literature = self.fetchStudioLiterature(at: indexPath)
-				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? smallLockupCollectionViewCell.dataRequest
 
-				if dataRequest == nil && literature == nil {
-					dataRequest = KService.getDetails(forLiterature: literatureIdentity) { result in
-						switch result {
-						case .success(let literatures):
-							self.studioLiteratures[indexPath] = literatures.first
+				if literature == nil {
+					Task {
+						do {
+							let literatureResponse = try await KService.getDetails(forLiterature: literatureIdentity).value
+
+							self.studioLiteratures[indexPath] = literatureResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
-						case .failure: break
+						} catch {
+							print(error.localizedDescription)
 						}
 					}
 				}
 
 				smallLockupCollectionViewCell.delegate = self
-				smallLockupCollectionViewCell.dataRequest = dataRequest
 				smallLockupCollectionViewCell.configure(using: literature)
 			default: return
 			}

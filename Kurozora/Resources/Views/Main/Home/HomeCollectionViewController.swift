@@ -827,15 +827,16 @@ extension HomeCollectionViewController {
 				smallLockupCollectionViewCell.configure(using: show)
 			case .literatureIdentity(let literatureIdentity, _):
 				let literature = self.fetchLiterature(at: indexPath)
-				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? smallLockupCollectionViewCell.dataRequest
 
-				if dataRequest == nil && literature == nil {
-					dataRequest = KService.getDetails(forLiterature: literatureIdentity) { result in
-						switch result {
-						case .success(let literatures):
-							self.literatures[indexPath] = literatures.first
+				if literature == nil {
+					Task {
+						do {
+							let literatureResponse = try await KService.getDetails(forLiterature: literatureIdentity).value
+
+							self.literatures[indexPath] = literatureResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
-						case .failure: break
+						} catch {
+							print(error.localizedDescription)
 						}
 					}
 				}

@@ -190,16 +190,14 @@ class LiteratureDetailsCollectionViewController: KCollectionViewController {
 		guard let literatureIdentity = self.literatureIdentity else { return }
 
 		if self.literature == nil {
-			KService.getDetails(forLiterature: literatureIdentity) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let literatures):
-					self.literature = literatures.first
+			do {
+				let literatureResponse = try await KService.getDetails(forLiterature: literatureIdentity).value
+				self.literature = literatureResponse.data.first
 
-					// Donate suggestion to Siri
-					self.userActivity = self.literature.openDetailUserActivity
-				case .failure: break
-				}
+				// Donate suggestion to Siri
+				self.userActivity = self.literature.openDetailUserActivity
+			} catch {
+				print(error.localizedDescription)
 			}
 		} else {
 			// Donate suggestion to Siri
@@ -510,7 +508,10 @@ extension LiteratureDetailsCollectionViewController: BaseLockupCollectionViewCel
 // MARK: - RatingCollectionViewCellDelegate
 extension LiteratureDetailsCollectionViewController: RatingCollectionViewCellDelegate {
 	func ratingCollectionViewCell(rateWith rating: Double) {
-		self.literature.rate(using: rating)
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.literature.rate(using: rating)
+		}
 	}
 }
 

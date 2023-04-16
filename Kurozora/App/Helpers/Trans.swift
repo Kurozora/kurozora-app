@@ -510,6 +510,20 @@ struct Trans {
 											  table: "Notification",
 											  comment: "The string for the 'library import' notification type")
 
+	// MARK: - Rating
+	/// The string for the rating submitted title.
+	///
+	/// - Tag: Trans-ratingSubmitted
+	static let ratingSubmitted: String = String(localized: "Rating Submitted",
+												table: "Rating",
+												comment: "The string for the 'rating submitted' section.")
+	/// The string for the rating submitted description.
+	///
+	/// - Tag: Trans-thankYouForRating
+	static let thankYouForRating: String = String(localized: "Thank you for rating.",
+												  table: "Rating",
+												  comment: "The string for the rating submitted description.")
+
 	// MARK: - Sessions
 	/// The string for the 'current session' section.
 	///
