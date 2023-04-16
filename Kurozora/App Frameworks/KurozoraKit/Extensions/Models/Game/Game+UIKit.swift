@@ -148,25 +148,23 @@ extension Game {
 	/// Rate the game with the given rating.
 	///
 	/// - Parameter rating: The rating to be saved when the game has been rated by the user.
-	func rate(using rating: Double) {
-		let gameIdentity = ShowIdentity(id: self.id)
+	func rate(using rating: Double) async {
+		let gameIdentity = GameIdentity(id: self.id)
 
-		KService.rateShow(gameIdentity, with: rating, description: nil) { [weak self] result in
-			guard let self = self else { return }
+		do {
+			_ = try await KService.rateGame(gameIdentity, with: rating, description: nil).value
 
-			switch result {
-			case .success:
-				// Update current rating for the user.
-				self.attributes.givenRating = rating
+			// Update current rating for the user.
+			self.attributes.givenRating = rating
 
-				// Show a success alert thanking the user for rating.
-				let alertController = UIApplication.topViewController?.presentAlertController(title: "Rating Submitted", message: "Thank you for rating.")
+			// Show a success alert thanking the user for rating.
+			let alertController = await UIApplication.topViewController?.presentAlertController(title: Trans.ratingSubmitted, message: Trans.thankYouForRating)
 
-				DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
-					alertController?.dismiss(animated: true, completion: nil)
-				}
-			case .failure: break
+			DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+				alertController?.dismiss(animated: true, completion: nil)
 			}
+		} catch {
+			print(error.localizedDescription)
 		}
 	}
 }

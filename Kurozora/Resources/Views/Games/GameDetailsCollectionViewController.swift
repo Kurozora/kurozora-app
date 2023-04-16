@@ -190,16 +190,14 @@ class GameDetailsCollectionViewController: KCollectionViewController {
 		guard let gameIdentity = self.gameIdentity else { return }
 
 		if self.game == nil {
-			KService.getDetails(forGame: gameIdentity) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let games):
-					self.game = games.first
+			do {
+				let gameResponse = try await KService.getDetails(forGame: gameIdentity).value
+				self.game = gameResponse.data.first
 
-					// Donate suggestion to Siri
-					self.userActivity = self.game.openDetailUserActivity
-				case .failure: break
-				}
+				// Donate suggestion to Siri
+				self.userActivity = self.game.openDetailUserActivity
+			} catch {
+				print(error.localizedDescription)
 			}
 		} else {
 			// Donate suggestion to Siri
@@ -514,7 +512,10 @@ extension GameDetailsCollectionViewController: BaseLockupCollectionViewCellDeleg
 // MARK: - RatingCollectionViewCellDelegate
 extension GameDetailsCollectionViewController: RatingCollectionViewCellDelegate {
 	func ratingCollectionViewCell(rateWith rating: Double) {
-		self.game.rate(using: rating)
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.game.rate(using: rating)
+		}
 	}
 }
 

@@ -842,7 +842,6 @@ extension HomeCollectionViewController {
 				}
 
 				smallLockupCollectionViewCell.delegate = self
-				smallLockupCollectionViewCell.dataRequest = dataRequest
 				smallLockupCollectionViewCell.configure(using: literature)
 			default: break
 			}
@@ -856,21 +855,21 @@ extension HomeCollectionViewController {
 			switch itemKind {
 			case .gameIdentity(let gameIdentity, _):
 				let game = self.fetchGame(at: indexPath)
-				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? gameLockupCollectionViewCell.dataRequest
 
-				if dataRequest == nil && game == nil {
-					dataRequest = KService.getDetails(forGame: gameIdentity) { result in
-						switch result {
-						case .success(let games):
-							self.games[indexPath] = games.first
+				if game == nil {
+					Task {
+						do {
+							let gameResponse = try await KService.getDetails(forGame: gameIdentity).value
+
+							self.games[indexPath] = gameResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
-						case .failure: break
+						} catch {
+							print(error.localizedDescription)
 						}
 					}
 				}
 
 				gameLockupCollectionViewCell.delegate = self
-				gameLockupCollectionViewCell.dataRequest = dataRequest
 				gameLockupCollectionViewCell.configure(using: game)
 			default: break
 			}

@@ -18,20 +18,20 @@ extension GamesListCollectionViewController {
 			switch itemKind {
 			case .gameIdentity(let gameIdentity):
 				let game = self.fetchGame(at: indexPath)
-				var gameDataRequest = self.prefetchingIndexPathOperations[indexPath] ?? gameLockupCollectionViewCell.dataRequest
 
-				if gameDataRequest == nil && game == nil {
-					gameDataRequest = KService.getDetails(forGame: gameIdentity) { result in
-						switch result {
-						case .success(let games):
-							self.games[indexPath] = games.first
+				if game == nil {
+					Task {
+						do {
+							let gameResponse = try await KService.getDetails(forGame: gameIdentity).value
+
+							self.games[indexPath] = gameResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
-						case .failure: break
+						} catch {
+							print(error.localizedDescription)
 						}
 					}
 				}
 
-				gameLockupCollectionViewCell.dataRequest = gameDataRequest
 				gameLockupCollectionViewCell.delegate = self
 				gameLockupCollectionViewCell.configure(using: game)
 			case .relatedGame(let relatedGame):
@@ -46,20 +46,20 @@ extension GamesListCollectionViewController {
 			switch itemKind {
 			case .gameIdentity(let gameIdentity):
 				let game = self.fetchGame(at: indexPath)
-				var gameDataRequest = self.prefetchingIndexPathOperations[indexPath] ?? upcomingLockupCollectionViewCell.dataRequest
 
-				if gameDataRequest == nil && game == nil {
-					gameDataRequest = KService.getDetails(forGame: gameIdentity) { result in
-						switch result {
-						case .success(let games):
-							self.games[indexPath] = games.first
+				if game == nil {
+					Task {
+						do {
+							let gameResponse = try await KService.getDetails(forGame: gameIdentity).value
+
+							self.games[indexPath] = gameResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
-						case .failure: break
+						} catch {
+							print(error.localizedDescription)
 						}
 					}
 				}
 
-				upcomingLockupCollectionViewCell.dataRequest = gameDataRequest
 				upcomingLockupCollectionViewCell.delegate = self
 				upcomingLockupCollectionViewCell.configure(using: game)
 			default: break
