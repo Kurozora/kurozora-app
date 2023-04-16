@@ -149,8 +149,9 @@ class HomeCollectionViewController: KCollectionViewController {
 		self.configureUserDetails()
 
 		// Fetch explore details.
-		DispatchQueue.global(qos: .userInteractive).async {
-			self.fetchExplore()
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchExplore()
 		}
 	}
 
@@ -175,8 +176,9 @@ class HomeCollectionViewController: KCollectionViewController {
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		DispatchQueue.global(qos: .userInteractive).async {
-			self.fetchExplore()
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchExplore()
 		}
 	}
 
@@ -205,36 +207,36 @@ class HomeCollectionViewController: KCollectionViewController {
 	}
 
 	/// Fetches the explore page from the server.
-	fileprivate func fetchExplore() {
-		KService.getExplore(genreID: self.genre?.id, themeID: self.theme?.id) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let exploreCategories):
-				// Remove any empty sections
-				self.exploreCategories = exploreCategories.filter { exploreCategory in
-					switch exploreCategory.attributes.exploreCategoryType {
-					case .shows, .upcomingShows, .mostPopularShows, .newShows:
-						return !(exploreCategory.relationships.shows?.data.isEmpty ?? false)
-					case .literatures, .upcomingLiteratures, .mostPopularLiteratures, .newLiteratures:
-						return !(exploreCategory.relationships.literatures?.data.isEmpty ?? false)
-					case .games, .upcomingGames, .mostPopularGames, .newGames:
-						return !(exploreCategory.relationships.games?.data.isEmpty ?? false)
-					case .episodes:
-						return !(exploreCategory.relationships.episodes?.data.isEmpty ?? false)
-					case .songs:
-						return !(exploreCategory.relationships.showSongs?.data.isEmpty ?? false)
-					case .genres:
-						return !(exploreCategory.relationships.genres?.data.isEmpty ?? false)
-					case .themes:
-						return !(exploreCategory.relationships.themes?.data.isEmpty ?? false)
-					case .characters:
-						return !(exploreCategory.relationships.characters?.data.isEmpty ?? false)
-					case .people:
-						return !(exploreCategory.relationships.people?.data.isEmpty ?? false)
-					}
+	fileprivate func fetchExplore() async {
+		do {
+			let exploreCategoryResponse = try await KService.getExplore(genreID: self.genre?.id, themeID: self.theme?.id).value
+			let exploreCategories = exploreCategoryResponse.data
+
+			// Remove any empty sections
+			self.exploreCategories = exploreCategories.filter { exploreCategory in
+				switch exploreCategory.attributes.exploreCategoryType {
+				case .shows, .upcomingShows, .mostPopularShows, .newShows:
+					return !(exploreCategory.relationships.shows?.data.isEmpty ?? false)
+				case .literatures, .upcomingLiteratures, .mostPopularLiteratures, .newLiteratures:
+					return !(exploreCategory.relationships.literatures?.data.isEmpty ?? false)
+				case .games, .upcomingGames, .mostPopularGames, .newGames:
+					return !(exploreCategory.relationships.games?.data.isEmpty ?? false)
+				case .episodes:
+					return !(exploreCategory.relationships.episodes?.data.isEmpty ?? false)
+				case .songs:
+					return !(exploreCategory.relationships.showSongs?.data.isEmpty ?? false)
+				case .genres:
+					return !(exploreCategory.relationships.genres?.data.isEmpty ?? false)
+				case .themes:
+					return !(exploreCategory.relationships.themes?.data.isEmpty ?? false)
+				case .characters:
+					return !(exploreCategory.relationships.characters?.data.isEmpty ?? false)
+				case .people:
+					return !(exploreCategory.relationships.people?.data.isEmpty ?? false)
 				}
-			case .failure: break
 			}
+		} catch {
+			print(error.localizedDescription)
 		}
 	}
 
@@ -779,21 +781,21 @@ extension HomeCollectionViewController {
 			switch itemKind {
 			case .showIdentity(let showIdentity, _):
 				let show = self.fetchShow(at: indexPath)
-				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? bannerLockupCollectionViewCell.dataRequest
 
-				if dataRequest == nil && show == nil {
-					dataRequest = KService.getDetails(forShow: showIdentity) { result in
-						switch result {
-						case .success(let shows):
-							self.shows[indexPath] = shows.first
+				if show == nil {
+					Task {
+						do {
+							let showResponse = try await KService.getDetails(forShow: showIdentity).value
+
+							self.shows[indexPath] = showResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
-						case .failure: break
+						} catch {
+							print(error.localizedDescription)
 						}
 					}
 				}
 
 				bannerLockupCollectionViewCell.delegate = self
-				bannerLockupCollectionViewCell.dataRequest = dataRequest
 				bannerLockupCollectionViewCell.configure(using: show)
 			default: break
 			}
@@ -807,21 +809,21 @@ extension HomeCollectionViewController {
 			switch itemKind {
 			case .showIdentity(let showIdentity, _):
 				let show = self.fetchShow(at: indexPath)
-				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? smallLockupCollectionViewCell.dataRequest
 
-				if dataRequest == nil && show == nil {
-					dataRequest = KService.getDetails(forShow: showIdentity) { result in
-						switch result {
-						case .success(let shows):
-							self.shows[indexPath] = shows.first
+				if show == nil {
+					Task {
+						do {
+							let showResponse = try await KService.getDetails(forShow: showIdentity).value
+
+							self.shows[indexPath] = showResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
-						case .failure: break
+						} catch {
+							print(error.localizedDescription)
 						}
 					}
 				}
 
 				smallLockupCollectionViewCell.delegate = self
-				smallLockupCollectionViewCell.dataRequest = dataRequest
 				smallLockupCollectionViewCell.configure(using: show)
 			case .literatureIdentity(let literatureIdentity, _):
 				let literature = self.fetchLiterature(at: indexPath)
@@ -923,21 +925,21 @@ extension HomeCollectionViewController {
 			switch itemKind {
 			case .showIdentity(let showIdentity, _):
 				let show = self.fetchShow(at: indexPath)
-				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? largeLockupCollectionViewCell.dataRequest
 
-				if dataRequest == nil && show == nil {
-					dataRequest = KService.getDetails(forShow: showIdentity) { result in
-						switch result {
-						case .success(let shows):
-							self.shows[indexPath] = shows.first
+				if show == nil {
+					Task {
+						do {
+							let showResponse = try await KService.getDetails(forShow: showIdentity).value
+
+							self.shows[indexPath] = showResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
-						case .failure: break
+						} catch {
+							print(error.localizedDescription)
 						}
 					}
 				}
 
 				largeLockupCollectionViewCell.delegate = self
-				largeLockupCollectionViewCell.dataRequest = dataRequest
 				largeLockupCollectionViewCell.configure(using: show)
 			default: break
 			}
@@ -951,21 +953,21 @@ extension HomeCollectionViewController {
 			switch itemKind {
 			case .showIdentity(let showIdentity, _):
 				let show = self.fetchShow(at: indexPath)
-				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? upcomingLockupCollectionViewCell.dataRequest
 
-				if dataRequest == nil && show == nil {
-					dataRequest = KService.getDetails(forShow: showIdentity) { result in
-						switch result {
-						case .success(let shows):
-							self.shows[indexPath] = shows.first
+				if show == nil {
+					Task {
+						do {
+							let showResponse = try await KService.getDetails(forShow: showIdentity).value
+
+							self.shows[indexPath] = showResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
-						case .failure: break
+						} catch {
+							print(error.localizedDescription)
 						}
 					}
 				}
 
 				upcomingLockupCollectionViewCell.delegate = self
-				upcomingLockupCollectionViewCell.dataRequest = dataRequest
 				upcomingLockupCollectionViewCell.configure(using: show)
 			default: break
 			}
@@ -979,21 +981,21 @@ extension HomeCollectionViewController {
 			switch itemKind {
 			case .showIdentity(let showIdentity, _):
 				let show = self.fetchShow(at: indexPath)
-				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? videoLockupCollectionViewCell.dataRequest
 
-				if dataRequest == nil && show == nil {
-					dataRequest = KService.getDetails(forShow: showIdentity) { result in
-						switch result {
-						case .success(let shows):
-							self.shows[indexPath] = shows.first
+				if show == nil {
+					Task {
+						do {
+							let showResponse = try await KService.getDetails(forShow: showIdentity).value
+
+							self.shows[indexPath] = showResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
-						case .failure: break
+						} catch {
+							print(error.localizedDescription)
 						}
 					}
 				}
 
 				videoLockupCollectionViewCell.delegate = self
-				videoLockupCollectionViewCell.dataRequest = dataRequest
 				videoLockupCollectionViewCell.configure(using: show)
 			default: break
 			}

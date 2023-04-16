@@ -179,25 +179,17 @@ class GamesListCollectionViewController: KCollectionViewController {
 				self.relatedGames.removeDuplicates()
 			case .charcter:
 				guard let characterIdentity = self.characterIdentity else { return }
+				let gameIdentityResponse = try await KService.getGames(forCharacter: characterIdentity, next: self.nextPageURL).value
 
-				KService.getGames(forCharacter: characterIdentity, next: self.nextPageURL) { [weak self] result in
-					guard let self = self else { return }
-					switch result {
-					case .success(let gameIdentityResponse):
-						// Reset data if necessary
-						if self.nextPageURL == nil {
-							self.gameIdentities = []
-						}
-
-						// Save next page url and append new data
-						self.nextPageURL = gameIdentityResponse.next
-						self.gameIdentities.append(contentsOf: gameIdentityResponse.data)
-						self.gameIdentities.removeDuplicates()
-
-						self.endFetch()
-					case .failure: break
-					}
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.gameIdentities = []
 				}
+
+				// Save next page url and append new data
+				self.nextPageURL = gameIdentityResponse.next
+				self.gameIdentities.append(contentsOf: gameIdentityResponse.data)
+				self.gameIdentities.removeDuplicates()
 			case .person:
 				guard let personIdentity = self.personIdentity else { return }
 				let gameIdentityResponse = try await KService.getGames(forPerson: personIdentity, next: self.nextPageURL).value
@@ -265,24 +257,17 @@ class GamesListCollectionViewController: KCollectionViewController {
 				self.gameIdentities.append(contentsOf: gameIdentityResponse.data)
 				self.gameIdentities.removeDuplicates()
 			case .upcoming:
-				KService.getUpcomingGames(next: self.nextPageURL) { [weak self] result in
-					guard let self = self else { return }
-					switch result {
-					case .success(let gameIdentityResponse):
-						// Reset data if necessary
-						if self.nextPageURL == nil {
-							self.gameIdentities = []
-						}
+				let gameIdentityResponse = try await KService.getUpcomingGames(next: self.nextPageURL).value
 
-						// Save next page url and append new data
-						self.nextPageURL = gameIdentityResponse.next
-						self.gameIdentities.append(contentsOf: gameIdentityResponse.data)
-						self.gameIdentities.removeDuplicates()
-
-						self.endFetch()
-					case .failure: break
-					}
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.gameIdentities = []
 				}
+
+				// Save next page url and append new data
+				self.nextPageURL = gameIdentityResponse.next
+				self.gameIdentities.append(contentsOf: gameIdentityResponse.data)
+				self.gameIdentities.removeDuplicates()
 			case .explore:
 				guard let exploreCategoryIdentity = self.exploreCategoryIdentity else { return }
 				let exploreCategoryResponse = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL, limit: 25).value

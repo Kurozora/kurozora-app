@@ -25,20 +25,20 @@ extension ShowsListCollectionViewController {
 			switch itemKind {
 			case .showIdentity(let showIdentity):
 				let show = self.fetchShow(at: indexPath)
-				var showDataRequest = self.prefetchingIndexPathOperations[indexPath] ?? smallLockupCollectionViewCell.dataRequest
 
-				if showDataRequest == nil && show == nil {
-					showDataRequest = KService.getDetails(forShow: showIdentity) { result in
-						switch result {
-						case .success(let shows):
-							self.shows[indexPath] = shows.first
+				if show == nil {
+					Task {
+						do {
+							let showResponse = try await KService.getDetails(forShow: showIdentity).value
+
+							self.shows[indexPath] = showResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
-						case .failure: break
+						} catch {
+							print(error.localizedDescription)
 						}
 					}
 				}
 
-				smallLockupCollectionViewCell.dataRequest = showDataRequest
 				smallLockupCollectionViewCell.delegate = self
 				smallLockupCollectionViewCell.configure(using: show)
 			case .relatedShow(let relatedShow):
@@ -53,20 +53,20 @@ extension ShowsListCollectionViewController {
 			switch itemKind {
 			case .showIdentity(let showIdentity):
 				let show = self.fetchShow(at: indexPath)
-				var showDataRequest = self.prefetchingIndexPathOperations[indexPath] ?? upcomingLockupCollectionViewCell.dataRequest
 
-				if showDataRequest == nil && show == nil {
-					showDataRequest = KService.getDetails(forShow: showIdentity) { result in
-						switch result {
-						case .success(let shows):
-							self.shows[indexPath] = shows.first
+				if show == nil {
+					Task {
+						do {
+							let showResponse = try await KService.getDetails(forShow: showIdentity).value
+
+							self.shows[indexPath] = showResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
-						case .failure: break
+						} catch {
+							print(error.localizedDescription)
 						}
 					}
 				}
 
-				upcomingLockupCollectionViewCell.dataRequest = showDataRequest
 				upcomingLockupCollectionViewCell.delegate = self
 				upcomingLockupCollectionViewCell.configure(using: show)
 			default: break

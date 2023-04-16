@@ -155,20 +155,20 @@ extension StudioDetailsCollectionViewController {
 			switch itemKind {
 			case .showIdentity(let showIdentity, _):
 				let show = self.fetchShow(at: indexPath)
-				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? smallLockupCollectionViewCell.dataRequest
 
-				if dataRequest == nil && show == nil {
-					dataRequest = KService.getDetails(forShow: showIdentity) { result in
-						switch result {
-						case .success(let shows):
-							self.shows[indexPath] = shows.first
+				if show == nil {
+					Task {
+						do {
+							let showResponse = try await KService.getDetails(forShow: showIdentity).value
+
+							self.shows[indexPath] = showResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
-						case .failure: break
+						} catch {
+							print(error.localizedDescription)
 						}
 					}
 				}
 
-				smallLockupCollectionViewCell.dataRequest = dataRequest
 				smallLockupCollectionViewCell.delegate = self
 				smallLockupCollectionViewCell.configure(using: show)
 			case .literatureIdentity(let literatureIdentity, _):

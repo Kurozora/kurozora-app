@@ -87,27 +87,28 @@ extension SongDetailsCollectionViewController {
 	func getConfiguredSmallCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.smallLockupCollectionViewCell)) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
-			let show = self.fetchShow(at: indexPath)
-			var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? smallLockupCollectionViewCell.dataRequest
 
-			if dataRequest == nil && show == nil {
-				switch itemKind {
-				case .showIdentity(let showIdentity, _):
-					dataRequest = KService.getDetails(forShow: showIdentity) { result in
-						switch result {
-						case .success(let shows):
-							self.shows[indexPath] = shows.first
+			switch itemKind {
+			case .showIdentity(let showIdentity, _):
+				let show = self.fetchShow(at: indexPath)
+
+				if show == nil {
+					Task {
+						do {
+							let showResponse = try await KService.getDetails(forShow: showIdentity).value
+
+							self.shows[indexPath] = showResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
-						case .failure: break
+						} catch {
+							print(error.localizedDescription)
 						}
 					}
-				default: break
 				}
-			}
 
-			smallLockupCollectionViewCell.dataRequest = dataRequest
-			smallLockupCollectionViewCell.delegate = self
-			smallLockupCollectionViewCell.configure(using: show)
+				smallLockupCollectionViewCell.delegate = self
+				smallLockupCollectionViewCell.configure(using: show)
+			default: break
+			}
 		}
 	}
 }

@@ -179,25 +179,17 @@ class ShowsListCollectionViewController: KCollectionViewController {
 				self.relatedShows.removeDuplicates()
 			case .charcter:
 				guard let characterIdentity = self.characterIdentity else { return }
+				let showIdentityResponse = try await KService.getShows(forCharacter: characterIdentity, next: self.nextPageURL).value
 
-				KService.getShows(forCharacter: characterIdentity, next: self.nextPageURL) { [weak self] result in
-					guard let self = self else { return }
-					switch result {
-					case .success(let showIdentityResponse):
-						// Reset data if necessary
-						if self.nextPageURL == nil {
-							self.showIdentities = []
-						}
-
-						// Save next page url and append new data
-						self.nextPageURL = showIdentityResponse.next
-						self.showIdentities.append(contentsOf: showIdentityResponse.data)
-						self.showIdentities.removeDuplicates()
-
-						self.endFetch()
-					case .failure: break
-					}
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.showIdentities = []
 				}
+
+				// Save next page url and append new data
+				self.nextPageURL = showIdentityResponse.next
+				self.showIdentities.append(contentsOf: showIdentityResponse.data)
+				self.showIdentities.removeDuplicates()
 			case .person:
 				guard let personIdentity = self.personIdentity else { return }
 				let showIdentityResponse = try await KService.getShows(forPerson: personIdentity, next: self.nextPageURL).value
@@ -265,24 +257,17 @@ class ShowsListCollectionViewController: KCollectionViewController {
 				self.showIdentities.append(contentsOf: showIdentityResponse.data)
 				self.showIdentities.removeDuplicates()
 			case .upcoming:
-				KService.getUpcomingShows(next: self.nextPageURL) { [weak self] result in
-					guard let self = self else { return }
-					switch result {
-					case .success(let showIdentityResponse):
-						// Reset data if necessary
-						if self.nextPageURL == nil {
-							self.showIdentities = []
-						}
+				let showIdentityResponse = try await KService.getUpcomingShows(next: self.nextPageURL).value
 
-						// Save next page url and append new data
-						self.nextPageURL = showIdentityResponse.next
-						self.showIdentities.append(contentsOf: showIdentityResponse.data)
-						self.showIdentities.removeDuplicates()
-
-						self.endFetch()
-					case .failure: break
-					}
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.showIdentities = []
 				}
+
+				// Save next page url and append new data
+				self.nextPageURL = showIdentityResponse.next
+				self.showIdentities.append(contentsOf: showIdentityResponse.data)
+				self.showIdentities.removeDuplicates()
 			case .explore:
 				guard let exploreCategoryIdentity = self.exploreCategoryIdentity else { return }
 				let exploreCategoryResponse = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL, limit: 25).value

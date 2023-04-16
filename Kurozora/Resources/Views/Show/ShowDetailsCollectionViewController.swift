@@ -203,16 +203,14 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		guard let showIdentity = self.showIdentity else { return }
 
 		if self.show == nil {
-			KService.getDetails(forShow: showIdentity) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let shows):
-					self.show = shows.first
+			do {
+				let showResponse = try await KService.getDetails(forShow: showIdentity).value
+				self.show = showResponse.data.first
 
-					// Donate suggestion to Siri
-					self.userActivity = self.show.openDetailUserActivity
-				case .failure: break
-				}
+				// Donate suggestion to Siri
+				self.userActivity = self.show.openDetailUserActivity
+			} catch {
+				print(error.localizedDescription)
 			}
 		} else {
 			// Donate suggestion to Siri

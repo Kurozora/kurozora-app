@@ -166,37 +166,25 @@ class CharacterDetailsCollectionViewController: KCollectionViewController {
 			print(error.localizedDescription)
 		}
 
-		KService.getShows(forCharacter: characterIdentity, limit: 10) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let showIdentityResponse):
-				self.showIdentities = showIdentityResponse.data
-
-				self.updateDataSource()
-			case .failure: break
-			}
+		do {
+			let showIdentityResponse = try await KService.getShows(forCharacter: characterIdentity, limit: 10).value
+			self.showIdentities = showIdentityResponse.data
+		} catch {
+			print(error.localizedDescription)
 		}
 
-		KService.getLiteratures(forCharacter: characterIdentity, limit: 10) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let literatureIdentityResponse):
-				self.literatureIdentities = literatureIdentityResponse.data
-
-				self.updateDataSource()
-			case .failure: break
-			}
+		do {
+			let literatureIdentityResponse = try await KService.getLiteratures(forCharacter: characterIdentity, limit: 10).value
+			self.literatureIdentities = literatureIdentityResponse.data
+		} catch {
+			print(error.localizedDescription)
 		}
 
-		KService.getGames(forCharacter: characterIdentity, limit: 10) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let gameIdentityResponse):
-				self.gameIdentities = gameIdentityResponse.data
-
-				self.updateDataSource()
-			case .failure: break
-			}
+		do {
+			let gameIdentityResponse = try await KService.getGames(forCharacter: characterIdentity, limit: 10).value
+			self.gameIdentities = gameIdentityResponse.data
+		} catch {
+			print(error.localizedDescription)
 		}
 	}
 

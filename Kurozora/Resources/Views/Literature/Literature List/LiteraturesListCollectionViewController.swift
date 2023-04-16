@@ -179,25 +179,17 @@ class LiteraturesListCollectionViewController: KCollectionViewController {
 				self.relatedLiteratures.removeDuplicates()
 			case .charcter:
 				guard let characterIdentity = self.characterIdentity else { return }
+				let literatureIdentityResponse = try await KService.getLiteratures(forCharacter: characterIdentity, next: self.nextPageURL).value
 
-				KService.getLiteratures(forCharacter: characterIdentity, next: self.nextPageURL) { [weak self] result in
-					guard let self = self else { return }
-					switch result {
-					case .success(let literatureIdentityResponse):
-						// Reset data if necessary
-						if self.nextPageURL == nil {
-							self.literatureIdentities = []
-						}
-
-						// Save next page url and append new data
-						self.nextPageURL = literatureIdentityResponse.next
-						self.literatureIdentities.append(contentsOf: literatureIdentityResponse.data)
-						self.literatureIdentities.removeDuplicates()
-
-						self.endFetch()
-					case .failure: break
-					}
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.literatureIdentities = []
 				}
+
+				// Save next page url and append new data
+				self.nextPageURL = literatureIdentityResponse.next
+				self.literatureIdentities.append(contentsOf: literatureIdentityResponse.data)
+				self.literatureIdentities.removeDuplicates()
 			case .person:
 				guard let personIdentity = self.personIdentity else { return }
 				let literatureIdentityResponse = try await KService.getLiteratures(forPerson: personIdentity, next: self.nextPageURL).value
@@ -265,24 +257,17 @@ class LiteraturesListCollectionViewController: KCollectionViewController {
 				self.literatureIdentities.append(contentsOf: literatureIdentityResponse.data)
 				self.literatureIdentities.removeDuplicates()
 			case .upcoming:
-				KService.getUpcomingLiteratures(next: self.nextPageURL) { [weak self] result in
-					guard let self = self else { return }
-					switch result {
-					case .success(let literatureIdentityResponse):
-						// Reset data if necessary
-						if self.nextPageURL == nil {
-							self.literatureIdentities = []
-						}
+				let literatureIdentityResponse = try await KService.getUpcomingLiteratures(next: self.nextPageURL).value
 
-						// Save next page url and append new data
-						self.nextPageURL = literatureIdentityResponse.next
-						self.literatureIdentities.append(contentsOf: literatureIdentityResponse.data)
-						self.literatureIdentities.removeDuplicates()
-
-						self.endFetch()
-					case .failure: break
-					}
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.literatureIdentities = []
 				}
+
+				// Save next page url and append new data
+				self.nextPageURL = literatureIdentityResponse.next
+				self.literatureIdentities.append(contentsOf: literatureIdentityResponse.data)
+				self.literatureIdentities.removeDuplicates()
 			case .explore:
 				guard let exploreCategoryIdentity = self.exploreCategoryIdentity else { return }
 				let exploreCategoryResponse = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL, limit: 25).value
