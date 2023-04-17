@@ -200,8 +200,9 @@ class ProfileTableViewController: KTableViewController {
 		}
 
 		// Fetch user details
-		DispatchQueue.global(qos: .userInteractive).async {
-			self.fetchUserDetails()
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchUserDetails()
 		}
 	}
 
@@ -223,7 +224,11 @@ class ProfileTableViewController: KTableViewController {
 	// MARK: - Functions
 	override func handleRefreshControl() {
 		self.nextPageURL = nil
-		self.fetchUserDetails()
+
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchUserDetails()
+		}
 	}
 
 	override func configureEmptyDataView() {
@@ -279,31 +284,21 @@ class ProfileTableViewController: KTableViewController {
 	}
 
 	/// Fetches user detail.
-	private func fetchUserDetails() {
+	@MainActor
+	private func fetchUserDetails() async {
 		guard let userIdentity = self.userIdentity else { return }
 
-		DispatchQueue.main.async { [weak self] in
-			guard let self = self else { return }
-			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing profile details...")
-			#endif
-		}
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing profile details...")
+		#endif
 
-		if self.user == nil || self.user.id != userIdentity.id {
-			KService.getDetails(forUser: userIdentity) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let users):
-					self.user = users.first
-					self.configureProfile()
-				case .failure: break
-				}
-			}
-		} else {
-			DispatchQueue.main.async { [weak self] in
-				guard let self = self else { return }
-				self.configureProfile()
-			}
+		do {
+			let userResponse = try await KService.getDetails(forUser: userIdentity).value
+
+			self.user = userResponse.data.first
+			self.configureProfile()
+		} catch {
+			print(error.localizedDescription)
 		}
 
 		self.fetchFeedMessages()

@@ -283,20 +283,20 @@ extension SearchResultsCollectionViewController {
 			switch itemKind {
 			case .characterIdentity(let characterIdentity, _):
 				let character = self.fetchCharacter(at: indexPath)
-				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? characterLockupCollectionViewCell.dataRequest
 
-				if dataRequest == nil && character == nil {
-					dataRequest = KService.getDetails(forCharacter: characterIdentity) { result in
-						switch result {
-						case .success(let characters):
-							self.characters[indexPath] = characters.first
+				if character == nil {
+					Task {
+						do {
+							let characterResponse = try await KService.getDetails(forCharacter: characterIdentity).value
+
+							self.characters[indexPath] = characterResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
-						case .failure: break
+						} catch {
+							print(error.localizedDescription)
 						}
 					}
 				}
 
-				characterLockupCollectionViewCell.dataRequest = dataRequest
 				characterLockupCollectionViewCell.configure(using: character)
 			default: return
 			}
@@ -337,21 +337,21 @@ extension SearchResultsCollectionViewController {
 			switch itemKind {
 			case .gameIdentity(let gameIdentity, _):
 				let game = self.fetchGame(at: indexPath)
-				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? gameLockupCollectionViewCell.dataRequest
 
-				if dataRequest == nil && game == nil {
-					dataRequest = KService.getDetails(forGame: gameIdentity) { result in
-						switch result {
-						case .success(let games):
-							self.games[indexPath] = games.first
+				if game == nil {
+					Task {
+						do {
+							let gameResponse = try await KService.getDetails(forGame: gameIdentity).value
+
+							self.games[indexPath] = gameResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
-						case .failure: break
+						} catch {
+							print(error.localizedDescription)
 						}
 					}
 				}
 
 				gameLockupCollectionViewCell.delegate = self
-				gameLockupCollectionViewCell.dataRequest = dataRequest
 				gameLockupCollectionViewCell.configure(using: game)
 			default: break
 			}
@@ -364,20 +364,20 @@ extension SearchResultsCollectionViewController {
 			switch itemKind {
 			case .personIdentity(let personIdentity, _):
 				let person = self.fetchPerson(at: indexPath)
-				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? personLockupCollectionViewCell.dataRequest
 
-				if dataRequest == nil && person == nil {
-					dataRequest = KService.getDetails(forPerson: personIdentity) { result in
-						switch result {
-						case .success(let persons):
-							self.people[indexPath] = persons.first
+				if person == nil {
+					Task {
+						do {
+							let personResponse = try await KService.getDetails(forPerson: personIdentity).value
+
+							self.people[indexPath] = personResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
-						case .failure: break
+						} catch {
+							print(error.localizedDescription)
 						}
 					}
 				}
 
-				personLockupCollectionViewCell.dataRequest = dataRequest
 				personLockupCollectionViewCell.configure(using: person)
 			default: return
 			}
@@ -391,21 +391,21 @@ extension SearchResultsCollectionViewController {
 			switch itemKind {
 			case .songIdentity(let songIdentity, _):
 				let song = self.fetchSong(at: indexPath)
-				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? musicLockupCollectionViewCell.dataRequest
 
-				if dataRequest == nil && song == nil {
-					dataRequest = KService.getDetails(forSong: songIdentity) { result in
-						switch result {
-						case .success(let song):
-							self.songs[indexPath] = song.data.first
+				if song == nil {
+					Task {
+						do {
+							let songResponse = try await KService.getDetails(forSong: songIdentity).value
+
+							self.songs[indexPath] = songResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
-						case .failure: break
+						} catch {
+							print(error.localizedDescription)
 						}
 					}
 				}
 
 				musicLockupCollectionViewCell.delegate = self
-				musicLockupCollectionViewCell.dataRequest = dataRequest
 				musicLockupCollectionViewCell.configure(using: song, at: indexPath)
 			default: break
 			}
@@ -437,21 +437,21 @@ extension SearchResultsCollectionViewController {
 				smallLockupCollectionViewCell.configure(using: show)
 			case .literatureIdentity(let literatureIdentity, _):
 				let literature = self.fetchLiterature(at: indexPath)
-				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? smallLockupCollectionViewCell.dataRequest
 
-				if dataRequest == nil && literature == nil {
-					dataRequest = KService.getDetails(forLiterature: literatureIdentity) { result in
-						switch result {
-						case .success(let literatures):
-							self.literatures[indexPath] = literatures.first
+				if literature == nil {
+					Task {
+						do {
+							let literatureResponse = try await KService.getDetails(forLiterature: literatureIdentity).value
+
+							self.literatures[indexPath] = literatureResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
-						case .failure: break
+						} catch {
+							print(error.localizedDescription)
 						}
 					}
 				}
 
 				smallLockupCollectionViewCell.delegate = self
-				smallLockupCollectionViewCell.dataRequest = dataRequest
 				smallLockupCollectionViewCell.configure(using: literature)
 			default: break
 			}
@@ -491,21 +491,21 @@ extension SearchResultsCollectionViewController {
 			switch itemKind {
 			case .userIdentity(let userIdentity, _):
 				let user = self.fetchUser(at: indexPath)
-				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? userLockupCollectionViewCell.dataRequest
 
-				if dataRequest == nil && user == nil {
-					dataRequest = KService.getDetails(forUser: userIdentity) { result in
-						switch result {
-						case .success(let users):
-							self.users[indexPath] = users.first
+				if user == nil {
+					Task {
+						do {
+							let userResponse = try await KService.getDetails(forUser: userIdentity).value
+
+							self.users[indexPath] = userResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
-						case .failure: break
+						} catch {
+							print(error.localizedDescription)
 						}
 					}
 				}
 
 				userLockupCollectionViewCell.delegate = self
-				userLockupCollectionViewCell.dataRequest = dataRequest
 				userLockupCollectionViewCell.configure(using: user)
 			default: break
 			}

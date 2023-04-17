@@ -14,20 +14,20 @@ extension PeopleListCollectionViewController {
 		let personCellRegistration = UICollectionView.CellRegistration<PersonLockupCollectionViewCell, PersonIdentity>(cellNib: UINib(resource: R.nib.personLockupCollectionViewCell)) { [weak self] personLockupCollectionViewCell, indexPath, personIdentity in
 			guard let self = self else { return }
 			let person = self.fetchPerson(at: indexPath)
-			var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? personLockupCollectionViewCell.dataRequest
 
-			if dataRequest == nil && person == nil {
-				dataRequest = KService.getDetails(forPerson: personIdentity) { result in
-					switch result {
-					case .success(let people):
-						self.people[indexPath] = people.first
+			if person == nil {
+				Task {
+					do {
+						let personResponse = try await KService.getDetails(forPerson: personIdentity).value
+
+						self.people[indexPath] = personResponse.data.first
 						self.setPersonNeedsUpdate(personIdentity)
-					case .failure: break
+					} catch {
+						print(error.localizedDescription)
 					}
 				}
 			}
 
-			personLockupCollectionViewCell.dataRequest = dataRequest
 			personLockupCollectionViewCell.configure(using: person)
 		}
 

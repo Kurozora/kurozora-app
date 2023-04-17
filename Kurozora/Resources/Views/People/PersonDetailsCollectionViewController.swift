@@ -148,13 +148,11 @@ class PersonDetailsCollectionViewController: KCollectionViewController {
 		guard let personIdentity = self.personIdentity else { return }
 
 		if self.person == nil {
-			KService.getDetails(forPerson: personIdentity) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let people):
-					self.person = people.first
-				case .failure: break
-				}
+			do {
+				let personResponse = try await KService.getDetails(forPerson: personIdentity).value
+				self.person = personResponse.data.first
+			} catch {
+				print(error.localizedDescription)
 			}
 		} else {
 			self.updateDataSource()

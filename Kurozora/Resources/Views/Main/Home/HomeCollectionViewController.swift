@@ -1023,20 +1023,20 @@ extension HomeCollectionViewController {
 			switch itemKind {
 			case .personIdentity(let personIdentity, _):
 				let person = self.fetchPerson(at: indexPath)
-				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? personLockupCollectionViewCell.dataRequest
 
-				if dataRequest == nil && person == nil {
-					dataRequest = KService.getDetails(forPerson: personIdentity) { result in
-						switch result {
-						case .success(let persons):
-							self.people[indexPath] = persons.first
+				if person == nil {
+					Task {
+						do {
+							let personResponse = try await KService.getDetails(forPerson: personIdentity).value
+
+							self.people[indexPath] = personResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
-						case .failure: break
+						} catch {
+							print(error.localizedDescription)
 						}
 					}
 				}
 
-				personLockupCollectionViewCell.dataRequest = dataRequest
 				personLockupCollectionViewCell.configure(using: person)
 			default: return
 			}
@@ -1050,20 +1050,20 @@ extension HomeCollectionViewController {
 			switch itemKind {
 			case .characterIdentity(let characterIdentity, _):
 				let character = self.fetchCharacter(at: indexPath)
-				var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? characterLockupCollectionViewCell.dataRequest
 
-				if dataRequest == nil && character == nil {
-					dataRequest = KService.getDetails(forCharacter: characterIdentity) { result in
-						switch result {
-						case .success(let characters):
-							self.characters[indexPath] = characters.first
+				if character == nil {
+					Task {
+						do {
+							let characterResponse = try await KService.getDetails(forCharacter: characterIdentity).value
+
+							self.characters[indexPath] = characterResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
-						case .failure: break
+						} catch {
+							print(error.localizedDescription)
 						}
 					}
 				}
 
-				characterLockupCollectionViewCell.dataRequest = dataRequest
 				characterLockupCollectionViewCell.configure(using: character)
 			default: return
 			}

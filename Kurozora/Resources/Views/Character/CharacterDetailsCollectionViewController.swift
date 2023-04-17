@@ -147,13 +147,11 @@ class CharacterDetailsCollectionViewController: KCollectionViewController {
 		guard let characterIdentity = self.characterIdentity else { return }
 
 		if self.character == nil {
-			KService.getDetails(forCharacter: characterIdentity) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let characters):
-					self.character = characters.first
-				case .failure: break
-				}
+			do {
+				let characterResponse = try await KService.getDetails(forCharacter: characterIdentity).value
+				self.character = characterResponse.data.first
+			} catch {
+				print(error.localizedDescription)
 			}
 		} else {
 			self.updateDataSource()

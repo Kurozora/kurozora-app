@@ -243,25 +243,25 @@ extension CharacterDetailsCollectionViewController {
 		return UICollectionView.CellRegistration<PersonLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.personLockupCollectionViewCell)) { [weak self] personLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 			let person = self.fetchPerson(at: indexPath)
-			var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? personLockupCollectionViewCell.dataRequest
 
-			if dataRequest == nil && person == nil {
-				switch itemKind {
-				case .personIdentity(let personIdentity, _):
-					dataRequest = KService.getDetails(forPerson: personIdentity) { result in
-						switch result {
-						case .success(let persons):
-							self.people[indexPath] = persons.first
+			switch itemKind {
+			case .personIdentity(let personIdentity, _):
+				if person == nil {
+					Task {
+						do {
+							let personResponse = try await KService.getDetails(forPerson: personIdentity).value
+
+							self.people[indexPath] = personResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
-						case .failure: break
+						} catch {
+							print(error.localizedDescription)
 						}
 					}
-				default: break
 				}
-			}
 
-			personLockupCollectionViewCell.dataRequest = dataRequest
-			personLockupCollectionViewCell.configure(using: person)
+				personLockupCollectionViewCell.configure(using: person)
+			default: break
+			}
 		}
 	}
 }

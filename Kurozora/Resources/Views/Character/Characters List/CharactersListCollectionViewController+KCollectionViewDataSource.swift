@@ -14,20 +14,20 @@ extension CharactersListCollectionViewController {
 		let characterCellRegistration = UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, CharacterIdentity>(cellNib: UINib(resource: R.nib.characterLockupCollectionViewCell)) { [weak self] characterLockupCollectionViewCell, indexPath, characterIdentity in
 			guard let self = self else { return }
 			let character = self.fetchCharacter(at: indexPath)
-			var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? characterLockupCollectionViewCell.dataRequest
 
-			if dataRequest == nil && character == nil {
-				dataRequest = KService.getDetails(forCharacter: characterIdentity) { result in
-					switch result {
-					case .success(let characters):
-						self.characters[indexPath] = characters.first
+			if character == nil {
+				Task {
+					do {
+						let characterResponse = try await KService.getDetails(forCharacter: characterIdentity).value
+
+						self.characters[indexPath] = characterResponse.data.first
 						self.setCharacterNeedsUpdate(characterIdentity)
-					case .failure: break
+					} catch {
+						print(error.localizedDescription)
 					}
 				}
 			}
 
-			characterLockupCollectionViewCell.dataRequest = dataRequest
 			characterLockupCollectionViewCell.configure(using: character)
 		}
 

@@ -14,21 +14,21 @@ extension UsersListCollectionViewController {
 		let userCellRegistration = UICollectionView.CellRegistration<UserLockupCollectionViewCell, UserIdentity>(cellNib: UINib(resource: R.nib.userLockupCollectionViewCell)) { [weak self] userLockupCollectionViewCell, indexPath, userIdentity in
 			guard let self = self else { return }
 			let user = self.fetchUser(at: indexPath)
-			var dataRequest = self.prefetchingIndexPathOperations[indexPath] ?? userLockupCollectionViewCell.dataRequest
 
-			if dataRequest == nil && user == nil {
-				dataRequest = KService.getDetails(forUser: userIdentity) { result in
-					switch result {
-					case .success(let users):
-						self.users[indexPath] = users.first
+			if user == nil {
+				Task {
+					do {
+						let userResponse = try await KService.getDetails(forUser: userIdentity).value
+
+						self.users[indexPath] = userResponse.data.first
 						self.setUserNeedsUpdate(userIdentity)
-					case .failure: break
+					} catch {
+						print(error.localizedDescription)
 					}
 				}
 			}
 
 			userLockupCollectionViewCell.delegate = self
-			userLockupCollectionViewCell.dataRequest = dataRequest
 			userLockupCollectionViewCell.configure(using: user)
 		}
 
