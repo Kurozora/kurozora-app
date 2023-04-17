@@ -26,19 +26,7 @@ class FMDetailsTableViewController: KTableViewController {
 	}
 
 	// Reply variables
-	var feedMessageReplies: [FeedMessage] = [] {
-		didSet {
-			self.tableView.reloadData {
-				self._prefersActivityIndicatorHidden = true
-				self.toggleEmptyDataView()
-			}
-
-			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.endRefreshing()
-			self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh message details and replies!")
-			#endif
-		}
-	}
+	var feedMessageReplies: [FeedMessage] = []
 	var nextPageURL: String?
 
 	// Delegates
@@ -91,11 +79,13 @@ class FMDetailsTableViewController: KTableViewController {
 		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh message details and replies!")
 		#endif
 
-		DispatchQueue.global(qos: .userInteractive).async {
+		Task { [weak self] in
+			guard let self = self else { return }
+
 			if self.feedMessage == nil {
-				self.fetchDetails()
+				await self.fetchDetails()
 			} else {
-				self.fetchFeedReplies()
+				await self.fetchFeedReplies()
 			}
 		}
 	}
@@ -115,7 +105,11 @@ class FMDetailsTableViewController: KTableViewController {
 	// MARK: - Functions
 	override func handleRefreshControl() {
 		self.nextPageURL = nil
-		self.fetchDetails()
+
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchDetails()
+		}
 	}
 
 	override func configureEmptyDataView() {
@@ -169,48 +163,51 @@ class FMDetailsTableViewController: KTableViewController {
 	}
 
 	/// Fetch feed message details.
-	func fetchDetails() {
-		DispatchQueue.main.async { [weak self] in
-			guard let self = self else { return }
-			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing message details...")
-			#endif
+	func fetchDetails() async {
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing message details...")
+		#endif
+
+		do {
+			let feedMessageResponse = try await KService.getDetails(forFeedMessage: self.feedMessageID).value
+
+			self.feedMessage = feedMessageResponse.data.first
+		} catch {
+			print(error.localizedDescription)
 		}
 
-		KService.getDetails(forFeedMessage: self.feedMessageID) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let feedMessages):
-				DispatchQueue.main.async {
-					self.feedMessage = feedMessages.first
-					self.tableView.reloadData()
-				}
-			case .failure: break
-			}
-		}
+		self.tableView.reloadData()
 
-		self.fetchFeedReplies()
+		await self.fetchFeedReplies()
 	}
 
 	/// Fetch the feed message replies.
-	func fetchFeedReplies() {
-		KService.getReplies(forFeedMessage: self.feedMessageID, next: self.nextPageURL) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let feedMessageResponse):
-				DispatchQueue.main.async {
-					// Reset data if necessary
-					if self.nextPageURL == nil {
-						self.feedMessageReplies = []
-					}
+	@MainActor
+	func fetchFeedReplies() async {
+		do {
+			let feedMessageResponse = try await KService.getReplies(forFeedMessage: self.feedMessageID, next: self.nextPageURL).value
 
-					// Save next page url and append new data
-					self.nextPageURL = feedMessageResponse.next
-					self.feedMessageReplies.append(contentsOf: feedMessageResponse.data)
-				}
-			case .failure: break
+			// Reset data if necessary
+			if self.nextPageURL == nil {
+				self.feedMessageReplies = []
 			}
+
+			// Save next page url and append new data
+			self.nextPageURL = feedMessageResponse.next
+			self.feedMessageReplies.append(contentsOf: feedMessageResponse.data)
+		} catch {
+			print(error.localizedDescription)
 		}
+
+		self.tableView.reloadData {
+			self._prefersActivityIndicatorHidden = true
+			self.toggleEmptyDataView()
+		}
+
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.endRefreshing()
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh message details and replies!")
+		#endif
 	}
 
 	// MARK: - Segue

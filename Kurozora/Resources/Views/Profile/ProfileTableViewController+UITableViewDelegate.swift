@@ -15,7 +15,10 @@ extension ProfileTableViewController {
 
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 		if indexPath.section == self.feedMessages.count - 20 && self.nextPageURL != nil {
-			self.fetchFeedMessages()
+			Task { [weak self] in
+				guard let self = self else { return }
+				await self.fetchFeedMessages()
+			}
 		}
 	}
 

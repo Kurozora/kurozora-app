@@ -56,8 +56,9 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 		#endif
 
 		// Fetch app themes
-		DispatchQueue.global(qos: .userInteractive).async {
-			self.fetchAppThemes()
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchAppThemes()
 		}
 	}
 
@@ -77,7 +78,11 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 	// MARK: - Functions
 	override func handleRefreshControl() {
 		self.appThemes = []
-		self.fetchAppThemes()
+
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchAppThemes()
+		}
 	}
 
 	override func configureEmptyDataView() {
@@ -97,17 +102,13 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 	}
 
 	/// Fetches themes from the server.
-	func fetchAppThemes() {
-		KService.getThemeStore { [weak self] result in
-			guard let self = self else { return }
-
-			switch result {
-			case .success(let appThemes):
-				DispatchQueue.main.async {
-					self.appThemes.append(contentsOf: appThemes)
-				}
-			case .failure: break
-			}
+	@MainActor
+	func fetchAppThemes() async {
+		do {
+			let appThemeResponse = try await KService.getThemeStore().value
+			self.appThemes = appThemeResponse.data
+		} catch {
+			print(error.localizedDescription)
 		}
 	}
 }

@@ -301,37 +301,32 @@ class ProfileTableViewController: KTableViewController {
 			print(error.localizedDescription)
 		}
 
-		self.fetchFeedMessages()
+		await self.fetchFeedMessages()
 	}
 
 	/// Fetches posts for the user whose page is being viewed.
-	func fetchFeedMessages() {
+	@MainActor
+	func fetchFeedMessages() async {
 		guard let userIdentity = self.userIdentity else { return }
 
-		KService.getFeedMessages(forUser: userIdentity, next: self.nextPageURL) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let feedMessageResponse):
-				DispatchQueue.main.async {
-					// Reset data if necessary
-					if self.nextPageURL == nil {
-						self.feedMessages = []
-					}
+		do {
+			let feedMessageResponse = try await KService.getFeedMessages(forUser: userIdentity, next: self.nextPageURL).value
 
-					// Save next page url and append new data
-					self.nextPageURL = feedMessageResponse.next
-					self.feedMessages.append(contentsOf: feedMessageResponse.data)
-				}
-			case .failure: break
+			// Reset data if necessary
+			if self.nextPageURL == nil {
+				self.feedMessages = []
 			}
+
+			// Save next page url and append new data
+			self.nextPageURL = feedMessageResponse.next
+			self.feedMessages.append(contentsOf: feedMessageResponse.data)
+		} catch {
+			print(error.localizedDescription)
 		}
 
-		DispatchQueue.main.async { [weak self] in
-			guard let self = self else { return }
-			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.endRefreshing()
-			#endif
-		}
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.endRefreshing()
+		#endif
 	}
 
 	/// Configure the profile view with the details of the user whose page is being viewed.

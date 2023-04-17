@@ -65,8 +65,9 @@ class FeedTableViewController: KTableViewController {
 		self.configureUserDetails()
 
 		// Fetch feed posts.
-		DispatchQueue.global(qos: .userInteractive).async {
-			self.fetchFeedMessages()
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchFeedMessages()
 		}
 	}
 
@@ -85,7 +86,11 @@ class FeedTableViewController: KTableViewController {
 	// MARK: - Functions
 	override func handleRefreshControl() {
 		self.nextPageURL = nil
-		fetchFeedMessages()
+
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchFeedMessages()
+		}
 	}
 
 	override func configureEmptyDataView() {
@@ -142,36 +147,30 @@ class FeedTableViewController: KTableViewController {
 	}
 
 	/// Fetch feed posts for the current section.
-	func fetchFeedMessages() {
-		DispatchQueue.main.async { [weak self] in
-			guard let self = self else { return }
-			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing your explore feed...")
-			#endif
-		}
+	@MainActor
+	func fetchFeedMessages() async {
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing your explore feed...")
+		#endif
 
-		KService.getFeedExplore(next: self.nextPageURL) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let feedMessageResponse):
-				// Reset data if necessary
-				if self.nextPageURL == nil {
-					self.feedMessages = []
-				}
+		do {
+			let feedMessageResponse = try await KService.getFeedExplore(next: self.nextPageURL).value
 
-				// Save next page url and append new data
-				self.nextPageURL = feedMessageResponse.next
-				self.feedMessages.append(contentsOf: feedMessageResponse.data)
-			case .failure: break
+			// Reset data if necessary
+			if self.nextPageURL == nil {
+				self.feedMessages = []
 			}
+
+			// Save next page url and append new data
+			self.nextPageURL = feedMessageResponse.next
+			self.feedMessages.append(contentsOf: feedMessageResponse.data)
+		} catch {
+			print(error.localizedDescription)
 		}
 
-		DispatchQueue.main.async { [weak self] in
-			guard let self = self else { return }
-			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.endRefreshing()
-			#endif
-		}
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.endRefreshing()
+		#endif
 	}
 
 	/// Enables and disables actions such as buttons and the refresh control according to the user sign in state.

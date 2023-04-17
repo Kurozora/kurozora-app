@@ -117,7 +117,9 @@ extension AppDelegate {
 		print("----- did register notification with device.", tokenParts, apnDeviceToken)
 
 		if User.isSignedIn {
-			KService.updateAccessToken(withAPNToken: apnDeviceToken) { _ in }
+			Task {
+				_ = try await KService.updateAccessToken(withAPNToken: apnDeviceToken).value
+			}
 		}
 	}
 

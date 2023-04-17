@@ -64,7 +64,9 @@ extension FeedMessage {
 				let deleteAction = UIAction(title: "Delete Message", attributes: .destructive) { [weak self] _ in
 					guard let self = self else { return }
 					if let indexPath = userInfo["indexPath"] as? IndexPath {
-						self.remove(at: indexPath)
+						Task {
+							await self.remove(at: indexPath)
+						}
 					}
 				}
 				deleteMenuElements.append(deleteAction)
@@ -124,17 +126,20 @@ extension FeedMessage {
 	///    - viewController: The view controller initiating the action.
 	///    - userInfo: Any infromation passed by the user.
 	func heartMessage(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any?]) {
-		WorkflowController.shared.isSignedIn {
-			KService.heartMessage(self.id) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let feedMessageUpdate):
-					self.attributes.update(using: feedMessageUpdate)
+		WorkflowController.shared.isSignedIn { [weak self] in
+			guard let self = self else { return }
+
+			Task {
+				do {
+					let feedMessageUpdateResponse = try await KService.heartMessage(self.id).value
+
+					self.attributes.update(using: feedMessageUpdateResponse.data)
 
 					if let indexPath = userInfo["indexPath"] as? IndexPath {
 						NotificationCenter.default.post(name: .KFMDidUpdate, object: nil, userInfo: ["indexPath": indexPath])
 					}
-				case .failure: break
+				} catch {
+					print(error.localizedDescription)
 				}
 			}
 		}
@@ -266,14 +271,13 @@ extension FeedMessage {
 	/// Remove the feed message from the user's messages list.
 	///
 	/// - Parameter indexPath: The index path of the message.
-	func remove(at indexPath: IndexPath) {
-		KService.deleteMessage(self.id) { result in
-			switch result {
-			case .success:
-				NotificationCenter.default.post(name: .KFMDidDelete, object: nil, userInfo: ["indexPath": indexPath])
-			case .failure:
-				break
-			}
+	func remove(at indexPath: IndexPath) async {
+		do {
+			_ = try await KService.deleteMessage(self.id).value
+
+			NotificationCenter.default.post(name: .KFMDidDelete, object: nil, userInfo: ["indexPath": indexPath])
+		} catch {
+			print(error.localizedDescription)
 		}
 	}
 
@@ -284,7 +288,9 @@ extension FeedMessage {
 
 			let deleteAction = UIAlertAction(title: "Delete Message", style: .destructive) { _ in
 				if let indexPath = userInfo["indexPath"] as? IndexPath {
-					self.remove(at: indexPath)
+					Task {
+						await self.remove(at: indexPath)
+					}
 				}
 			}
 			deleteAction.setValue(UIImage(systemName: "trash.fill"), forKey: "image")

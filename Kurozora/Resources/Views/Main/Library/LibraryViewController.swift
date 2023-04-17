@@ -250,8 +250,8 @@ extension LibraryViewController: LibraryListViewControllerDelegate {
 
 // MARK: - KTabbedViewControllerDataSource
 extension LibraryViewController {
-	override func initializeViewControllers(with count: Int) -> [UIViewController]? {
-		var viewControllers = [UIViewController]()
+	override func initializeViewControllers(with count: Int) -> [UIViewController] {
+		var viewControllers: [UIViewController] = []
 
 		for index in 0 ..< count {
 			if let libraryListCollectionViewController = R.storyboard.libraryList.libraryListCollectionViewController() {

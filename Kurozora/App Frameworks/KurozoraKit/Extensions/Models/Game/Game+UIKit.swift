@@ -44,7 +44,10 @@ extension Game {
 			if libraryStatus != .none {
 				let removeFromLibraryAction = UIAction(title: Trans.removeFromLibrary, image: UIImage(systemName: "minus.circle"), attributes: .destructive) { [weak self] _ in
 					guard let self = self else { return }
-					self.removeFromLibrary()
+
+					Task {
+						await self.removeFromLibrary()
+					}
 				}
 				let subMenu = UIMenu(title: "", options: .displayInline, children: [removeFromLibraryAction])
 				menuElements.append(subMenu)
@@ -112,34 +115,36 @@ extension Game {
 		return UIMenu(title: addToLibraryMenuTitle, image: addToLibraryMenuImage, children: menuElements)
 	}
 
-	private func removeFromLibrary() {
-		Task {
-			do {
-				let libraryUpdateResponse = try await KService.removeFromLibrary(.games, modelID: self.id).value
+	func removeFromLibrary() async {
+		do {
+			let libraryUpdateResponse = try await KService.removeFromLibrary(.games, modelID: self.id).value
 
-				// Update entry in library
-				self.attributes = self.attributes.updated(using: libraryUpdateResponse.data)
+			// Update entry in library
+			self.attributes = self.attributes.updated(using: libraryUpdateResponse.data)
 
-				if let oldLibraryStatus = self.attributes.libraryStatus {
-					let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
-					NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
-				}
-			} catch let error as KKAPIError {
-//				self.presentAlertController(title: "Can't Remove From Your Library 😔", message: error.message)
-				print("----- Remove from library failed", error.message)
+			if let oldLibraryStatus = self.attributes.libraryStatus {
+				let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
+				NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
 			}
+		} catch let error as KKAPIError {
+			print("----- Remove from library failed", error.message)
+		} catch {
+			print(error.localizedDescription)
 		}
 	}
 
 	func toggleFavorite() {
-		WorkflowController.shared.isSignedIn {
-			KService.updateFavoriteStatus(inLibrary: .games, modelID: self.id) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let favoriteStatus):
-					self.attributes.favoriteStatus = favoriteStatus
+		WorkflowController.shared.isSignedIn { [weak self] in
+			guard let self = self else { return }
+
+			Task {
+				do {
+					let favoriteResponse = try await KService.updateFavoriteStatus(inLibrary: .games, modelID: self.id).value
+
+					self.attributes.favoriteStatus = favoriteResponse.data.favoriteStatus
 					NotificationCenter.default.post(name: .KModelFavoriteIsToggled, object: nil)
-				case .failure: break
+				} catch {
+					print(error.localizedDescription)
 				}
 			}
 		}
