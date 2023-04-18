@@ -22,7 +22,7 @@ import Pageboy
 	/// - Returns: A collection of view controllers.
 	///
 	/// - Tag: KTabbedViewControllerDataSource-initializeViewControllersWithCount
-	@objc func initializeViewControllers(with count: Int) -> [UIViewController]?
+	@objc func initializeViewControllers(with count: Int) -> [UIViewController]
 
 	/// Tells `KTabbedViewControllerDataSource` to fetch sections from an external source, such as from an API.
 	///
@@ -49,7 +49,7 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 
 	// MARK: - Properties
 	/// The view controllers that are associated with the bar.
-	var viewControllers: [UIViewController]?
+	var viewControllers: [UIViewController] = []
 
 	/// A `UIView` that contains a `TMBarLayout` which displays a collection of `TMBarButton`, and a `TMBarIndicator`.
 	let bar = TMBar.KBar()
@@ -119,7 +119,7 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 
 	/// Configures the view controllers for the tab bar data source.
 	private func configureViewControllers() {
-		self.viewControllers = self.tabBarDataSource?.initializeViewControllers(with: self.numberOfViewControllers(in: self))
+		self.viewControllers = self.tabBarDataSource?.initializeViewControllers(with: self.numberOfViewControllers(in: self)) ?? []
 	}
 
 	/// Configures the tab bar view with the specified style.
@@ -136,28 +136,28 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 	/// Applies the the style for the currently enabled theme on the tab bar.
 	private func styleTabBarView() {
 		// Background view
-		bar.backgroundView.style = .custom(view: KVisualEffectView())
+		self.bar.backgroundView.style = .custom(view: KVisualEffectView())
 
 		// Indicator
-		bar.indicator.layout(in: bar)
+		self.bar.indicator.layout(in: bar)
 
 		// Scrolling
-		bar.scrollMode = .interactive
+		self.bar.scrollMode = .interactive
 
 		// State
-		bar.buttons.customize { button in
+		self.bar.buttons.customize { button in
 			button.contentInset = UIEdgeInsets(top: 12.0, left: 12.0, bottom: 12.0, right: 12.0)
 			button.selectedTintColor = KThemePicker.textColor.colorValue
 			button.tintColor = button.selectedTintColor.withAlphaComponent(0.50)
 		}
 
 		// Layout
-		bar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 5.0, bottom: 0.0, right: 5.0)
-		bar.layout.interButtonSpacing = 0.0
-		bar.layout.contentMode = UIDevice.isPhone ? .intrinsic : .fit
+		self.bar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 5.0, bottom: 0.0, right: 5.0)
+		self.bar.layout.interButtonSpacing = 0.0
+		self.bar.layout.contentMode = UIDevice.isPhone ? .intrinsic : .fit
 
 		// Style
-		bar.fadesContentEdges = true
+		self.bar.fadesContentEdges = true
 	}
 
 	/// Configures the tab bar's visibility.
@@ -166,7 +166,7 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 	///
 	/// - Tag: KTabbedViewController-configureTabBarViewVisibility
 	func configureTabBarViewVisibility() {
-		bar.isHidden = bar.items?.count ?? 0 <= 1
+		self.bar.isHidden = self.bar.items?.count ?? 0 <= 1
 	}
 
 	// MARK: - TMBarDataSource
@@ -194,8 +194,7 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 	///
 	/// - Returns: The total number of view controllers to display.
 	func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
-		let numberOfViews = 0
-		return numberOfViews
+		return self.viewControllers.count
 	}
 
 	/// The view controller to display at a page index.
@@ -206,7 +205,7 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 	///
 	/// - Returns: The view controller to display
 	func viewController(for pageboyViewController: PageboyViewController, at index: PageboyViewController.PageIndex) -> UIViewController? {
-		return viewControllers?.count ?? 0 > index ? self.viewControllers?[index] : nil
+		return self.viewControllers.count > index ? self.viewControllers[index] : nil
 	}
 
 	/// The default page index to display in the Pageboy view controller.
@@ -228,8 +227,8 @@ extension KTabbedViewController: KTabbedViewControllerDataSource {
 	/// - Parameter count: The number of view controllers to initialize.
 	///
 	/// - Returns: A collection of view controllers.
-	func initializeViewControllers(with count: Int) -> [UIViewController]? {
-		return nil
+	func initializeViewControllers(with count: Int) -> [UIViewController] {
+		return []
 	}
 
 	/// Tells `KTabbedViewControllerDataSource` to fetch sections from an external source, such as from an API.
