@@ -125,7 +125,7 @@ class KCollectionViewController: UICollectionViewController {
 			collectionView.collectionViewLayout = colllectionViewLayout
 		}
 		collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-		collectionView.backgroundView = emptyBackgroundView
+		collectionView.backgroundView = self.emptyBackgroundView
 
 		// Register cells with the collection view.
 		registerCells()

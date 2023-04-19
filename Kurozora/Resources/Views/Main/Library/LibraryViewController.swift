@@ -13,6 +13,8 @@ import Pageboy
 
 class LibraryViewController: KTabbedViewController {
 	// MARK: - IBOutlets
+	@IBOutlet weak var profileImageButton: ProfileImageButton!
+	@IBOutlet weak var toolbar: UIToolbar!
 	@IBOutlet weak var scrollView: UIScrollView!
 	@IBOutlet weak var scrollViewHeightConstraint: NSLayoutConstraint!
 	@IBOutlet weak var changeLayoutBarButtonItem: UIBarButtonItem!
@@ -31,7 +33,11 @@ class LibraryViewController: KTabbedViewController {
 	override func viewWillReload() {
 		super.viewWillReload()
 
-		self.enableActions()
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			self.enableActions()
+			self.configureUserDetails()
+		}
 
 		#if targetEnvironment(macCatalyst)
 		self.touchBar = nil
@@ -41,12 +47,23 @@ class LibraryViewController: KTabbedViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+		// Configurations
+		self.configureToolbar()
+		self.configureUserDetails()
+
 		// Actions
 		self.enableActions()
 
 		// Make sure scrollView is always first hierarchically
 		self.view.sendSubviewToBack(scrollView)
     }
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+
+		self.navigationController?.navigationBar.standardAppearance.shadowColor = .clear
+		self.navigationController?.navigationBar.compactAppearance?.shadowColor = .clear
+	}
 
 	// MARK: - Functions
 	override func configureTabBarViewVisibility() {
@@ -59,23 +76,46 @@ class LibraryViewController: KTabbedViewController {
 		}
 	}
 
+	func configureToolbar() {
+		self.toolbar.delegate = self
+		self.toolbar.isTranslucent = false
+		self.toolbar.backgroundColor = .clear
+		self.toolbar.barStyle = .default
+		self.toolbar.theme_tintColor = KThemePicker.tintColor.rawValue
+		self.toolbar.theme_barTintColor = KThemePicker.barTintColor.rawValue
+	}
+
+	/// Configures the view with the user's details.
+	func configureUserDetails() {
+		self.profileImageButton.setImage(User.current?.attributes.profileImageView.image ?? R.image.placeholders.userProfile(), for: .normal)
+	}
+
+	/// Performs segue to the profile view.
+	@objc func segueToProfile() {
+		WorkflowController.shared.isSignedIn {
+			if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
+				self.show(profileTableViewController, sender: nil)
+			}
+		}
+	}
+
 	/// Enables and disables actions such as buttons and the refresh control according to the user sign in state.
 	private func enableActions() {
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
 			self.libraryKindSegmentedControl.segmentTitles = KKLibrary.Kind.allString
-			self.libraryKindSegmentedControl.sizeToFit()
 			self.libraryKindSegmentedControl.selectedSegmentIndex = self.libraryKind.rawValue
 
 			if !User.isSignedIn {
-				self.libraryKindSegmentedControl.isHidden = true
+				self.toolbar.isHidden = true
+
 				self.rightBarButtonItems = self.navigationItem.rightBarButtonItems
 				self.leftBarButtonItems = self.navigationItem.leftBarButtonItems
 
 				self.navigationItem.rightBarButtonItems = nil
 				self.navigationItem.leftBarButtonItems = nil
 			} else {
-				self.libraryKindSegmentedControl.isHidden = false
+				self.toolbar.isHidden = false
 
 				if self.navigationItem.rightBarButtonItems == nil, self.rightBarButtonItems != nil {
 					self.navigationItem.rightBarButtonItems = self.rightBarButtonItems
@@ -202,6 +242,20 @@ class LibraryViewController: KTabbedViewController {
 		UserSettings.set(libraryKind.rawValue, forKey: .libraryKind)
 	}
 
+	@IBAction func profileButtonPressed(_ sender: UIButton) {
+		self.segueToProfile()
+	}
+
+	// MARK: - Segue
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		switch segue.identifier {
+		case R.segue.libraryViewController.favoriteShowsSegue.identifier:
+			guard let favoriteShowsCollectionViewController = segue.destination as? FavoriteShowsCollectionViewController else { return }
+			favoriteShowsCollectionViewController.libraryKind = self.libraryKind
+		default: break
+		}
+	}
+
 	// MARK: - TMBarDataSource
 	override func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
 		let sectionTitle: String
@@ -272,5 +326,12 @@ extension LibraryViewController {
 		}
 
 		return viewControllers
+	}
+}
+
+// MARK: - UIToolbarDelegate
+extension LibraryViewController: UIToolbarDelegate {
+	func position(for bar: UIBarPositioning) -> UIBarPosition {
+		return .topAttached
 	}
 }

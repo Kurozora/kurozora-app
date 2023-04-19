@@ -76,6 +76,7 @@ class KNavigationController: UINavigationController {
 
 	/// Setup toolbar style with the currently used theme.
 	func setupToolbarStyle() {
+		self.toolbar.isTranslucent = true
 		self.toolbar.backgroundColor = .clear
 		self.toolbar.barStyle = .default
 		self.toolbar.theme_tintColor = KThemePicker.tintColor.rawValue

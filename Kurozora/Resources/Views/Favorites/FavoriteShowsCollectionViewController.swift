@@ -10,7 +10,11 @@ import UIKit
 import KurozoraKit
 
 class FavoriteShowsCollectionViewController: KCollectionViewController {
+	var libraryKindSegmentedControl = UISegmentedControl()
+	var toolbar = UIToolbar()
+
 	// MARK: - Properties
+	var libraryKind: KKLibrary.Kind = UserSettings.libraryKind
 	var shows: [Show] = [] {
 		didSet {
 			self._prefersActivityIndicatorHidden = true
@@ -59,6 +63,16 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 			NotificationCenter.default.addObserver(self, selector: #selector(self.fetchFavoritesList), name: .KFavoriteModelsListDidChange, object: nil)
 		}
 
+		self.collectionView.contentInset.top = 50
+		self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset
+
+		self.configureLibraryKindSegmentedControl()
+		self.configureToolbar()
+		self.toolbar.setItems([UIBarButtonItem(customView: self.libraryKindSegmentedControl)], animated: true)
+
+		self.configureViewHierarchy()
+		self.configureViewConstraints()
+
 		self.configureDataSource()
 
 		Task { [weak self] in
@@ -73,6 +87,45 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - Functions
+	func configureLibraryKindSegmentedControl() {
+		self.libraryKindSegmentedControl.segmentTitles = KKLibrary.Kind.allString
+		self.libraryKindSegmentedControl.selectedSegmentIndex = self.libraryKind.rawValue
+		self.libraryKindSegmentedControl.addTarget(self, action: #selector(self.libraryKindSegmentdControlDidChange(_:)), for: .valueChanged)
+	}
+
+	func configureToolbar() {
+		self.toolbar.translatesAutoresizingMaskIntoConstraints = false
+		self.toolbar.delegate = self
+		self.toolbar.isTranslucent = false
+		self.toolbar.backgroundColor = .clear
+		self.toolbar.barStyle = .default
+		self.toolbar.theme_tintColor = KThemePicker.tintColor.rawValue
+		self.toolbar.theme_barTintColor = KThemePicker.barTintColor.rawValue
+	}
+
+	func configureViewHierarchy() {
+		self.view.addSubview(self.toolbar)
+	}
+
+	func configureViewConstraints() {
+		NSLayoutConstraint.activate([
+			self.toolbar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+			self.toolbar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+			self.toolbar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+		])
+	}
+
+	@objc
+	func libraryKindSegmentdControlDidChange(_ sender: UISegmentedControl) {
+		guard let libraryKind = KKLibrary.Kind(rawValue: sender.selectedSegmentIndex) else { return }
+		self.libraryKind = libraryKind
+
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchFavoritesList()
+		}
+	}
+
 	/// Enable and show the dismiss button.
 	func enableDismissButton() {
 		let leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(dismissButtonPressed))
@@ -119,6 +172,10 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 	@objc func fetchFavoritesList() async {
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
+			self.collectionView.backgroundView?.alpha = 0
+
+			self._prefersActivityIndicatorHidden = false
+
 			#if !targetEnvironment(macCatalyst)
 			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing favorites list...")
 			#endif
@@ -128,7 +185,7 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 		let userIdentity = UserIdentity(id: userID)
 
 		do {
-			let showResponse = try await KService.getFavorites(forUser: userIdentity, libraryKind: .shows, next: self.nextPageURL).value
+			let showResponse = try await KService.getFavorites(forUser: userIdentity, libraryKind: self.libraryKind, next: self.nextPageURL).value
 
 			// Reset data if necessary
 			if self.nextPageURL == nil {
@@ -150,6 +207,13 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 		guard let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 		guard let show = sender as? Show else { return }
 		showDetailCollectionViewController.show = show
+	}
+}
+
+// MARK: - UIToolbarDelegate
+extension FavoriteShowsCollectionViewController: UIToolbarDelegate {
+	func position(for bar: UIBarPositioning) -> UIBarPosition {
+		return .topAttached
 	}
 }
 

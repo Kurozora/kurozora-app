@@ -11,39 +11,9 @@ import KurozoraKit
 
 class LibraryListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var shows: [Show] = [] {
-		didSet {
-			self.updateDataSource()
-			self._prefersActivityIndicatorHidden = true
-			self.toggleEmptyDataView()
-
-			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.endRefreshing()
-			#endif
-		}
-	}
-	var literatures: [Literature] = [] {
-		didSet {
-			self.updateDataSource()
-			self._prefersActivityIndicatorHidden = true
-			self.toggleEmptyDataView()
-
-			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.endRefreshing()
-			#endif
-		}
-	}
-	var games: [Game] = [] {
-		didSet {
-			self.updateDataSource()
-			self._prefersActivityIndicatorHidden = true
-			self.toggleEmptyDataView()
-
-			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.endRefreshing()
-			#endif
-		}
-	}
+	var shows: [Show] = []
+	var literatures: [Literature] = []
+	var games: [Game] = []
 	var nextPageURL: String?
 	var libraryStatus: KKLibrary.Status = .planning
 	var sectionIndex: Int?
@@ -96,7 +66,9 @@ class LibraryListCollectionViewController: KCollectionViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(removeFromLibrary(_:)), name: Notification.Name("RemoveFrom\(self.libraryStatus.sectionValue)Section"), object: nil)
 
 		// Add bottom inset to avoid the tabbar obscuring the view
-		self.collectionView.contentInset.bottom = 50
+		self.collectionView.contentInset.top = 50
+		self.collectionView.contentInset.bottom = 60
+		self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset
 
 		// Hide activity indicator if user is not signed in.
 		if !User.isSignedIn {
@@ -238,6 +210,10 @@ class LibraryListCollectionViewController: KCollectionViewController {
 
 			DispatchQueue.main.async { [weak self] in
 				guard let self = self else { return }
+				self.collectionView.backgroundView?.alpha = 0
+
+				self._prefersActivityIndicatorHidden = false
+
 				#if !targetEnvironment(macCatalyst)
 				self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing your \(libraryStatus.lowercased()) list...")
 				#endif
@@ -266,6 +242,17 @@ class LibraryListCollectionViewController: KCollectionViewController {
 				}
 			} catch {
 				print(error.localizedDescription)
+			}
+
+			DispatchQueue.main.async { [weak self] in
+				guard let self = self else { return }
+				self.updateDataSource()
+				self._prefersActivityIndicatorHidden = true
+				self.toggleEmptyDataView()
+
+				#if !targetEnvironment(macCatalyst)
+				self.refreshControl?.endRefreshing()
+				#endif
 			}
 
 			// Reset refresh controller title

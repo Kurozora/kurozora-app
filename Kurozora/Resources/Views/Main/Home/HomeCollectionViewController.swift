@@ -130,7 +130,7 @@ class HomeCollectionViewController: KCollectionViewController {
 		self._prefersRefreshControlDisabled = true
 		#endif
 
-		// Configure ConfettiView
+		// Determing whether to show confetti
 		let date = Date()
 
 		if date >= Date(unixTimestamp: 1678748400)
@@ -139,13 +139,9 @@ class HomeCollectionViewController: KCollectionViewController {
 			SPConfetti.startAnimating(.fullWidthToDown, particles: [.heart])
 		}
 
-		// Configure Quick Actions.
+		// Configurations
 		self.configureQuickActions()
-
-		// Configure data source
 		self.configureDataSource()
-
-		// Configure navigation bar items
 		self.configureUserDetails()
 
 		// Fetch explore details.
