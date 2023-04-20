@@ -1,5 +1,5 @@
 //
-//  FavoriteShowsCollectionViewController+UICollectionViewDelegate.swift
+//  FavoritesCollectionViewController+UICollectionViewDelegate.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 24/02/2021.
@@ -8,10 +8,10 @@
 
 import UIKit
 
-extension FavoriteShowsCollectionViewController {
+extension FavoritesCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let show = self.shows[indexPath.item]
-		performSegue(withIdentifier: R.segue.favoriteShowsCollectionViewController.showDetailsSegue, sender: show)
+		performSegue(withIdentifier: R.segue.favoritesCollectionViewController.showDetailsSegue, sender: show)
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

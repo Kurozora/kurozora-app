@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="q9O-KI-xnB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="q9O-KI-xnB">
     <device id="retina5_9" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--FavoriteShowsCollectionViewController-->
+        <!--FavoritesCollectionViewController-->
         <scene sceneID="dSu-ot-U5F">
             <objects>
-                <viewControllerPlaceholder storyboardName="Favorites" referencedIdentifier="FavoriteShowsCollectionViewController" id="MLI-TH-L8z" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="Favorites" referencedIdentifier="FavoritesCollectionViewController" id="MLI-TH-L8z" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Buf-ae-aTm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1634" y="-1228"/>
@@ -449,7 +449,7 @@
                         <outlet property="separatorView" destination="OmS-Rs-je8" id="Bft-MF-SNP"/>
                         <outlet property="usernameLabel" destination="Ak5-fH-5eB" id="D24-4f-G7c"/>
                         <outlet property="verificationImageView" destination="AjX-o4-bZA" id="b5H-E0-3QG"/>
-                        <segue destination="MLI-TH-L8z" kind="presentation" identifier="FavoriteShowsSegue" id="q0e-Li-wfz"/>
+                        <segue destination="MLI-TH-L8z" kind="presentation" identifier="FavoritesSegue" id="q0e-Li-wfz"/>
                         <segue destination="t9u-UF-w8N" kind="show" identifier="FeedMessageDetailsSegue" id="xgQ-g1-FoH"/>
                     </connections>
                 </tableViewController>
@@ -473,7 +473,7 @@
                 <navigationController storyboardIdentifier="ProfileKNavigationController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="q9O-KI-xnB" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="BjF-6X-pb5">
-                        <rect key="frame" x="0.0" y="47" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="50" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">

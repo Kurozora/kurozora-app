@@ -51,7 +51,7 @@ extension LibraryViewController: NSTouchBarDelegate {
 			touchBarItem = self.tabBarTouchBarItem
 		case .showFavorites:
 			guard let image = UIImage(systemName: "heart.circle") else { return nil }
-			touchBarItem = NSButtonTouchBarItem(identifier: identifier, image: image, target: self, action: #selector(self.segueToFavoriteShows))
+			touchBarItem = NSButtonTouchBarItem(identifier: identifier, image: image, target: self, action: #selector(self.segueToFavorites))
 		default:
 			touchBarItem = nil
 		}

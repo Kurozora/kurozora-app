@@ -26,7 +26,7 @@ extension Notification.Name {
 
 // MARK: - Shows
 extension Notification.Name {
-	/// A notification posted when the favorite shows list changes.
+	/// A notification posted when the favorites list changes.
 	static var KFavoriteModelsListDidChange: NSNotification.Name {
 		return Notification.Name(#function)
 	}

@@ -131,9 +131,9 @@ class MenuController {
 		// Create the Redeem command.
 		let redeemCommand = UICommand(title: "Redeem...", action: #selector(AppDelegate.handleRedeem(_:)), discoverabilityTitle: "Redeem...")
 
-		// Create the Favorite Shows command.
-		let favoriteShowsCommand = UICommand(title: "Favorite Shows", action: #selector(AppDelegate.handleFavoriteShows(_:)), discoverabilityTitle: "Favorite Shows")
+		// Create the Favorites command.
+		let favoritesCommand = UICommand(title: "Favorites", action: #selector(AppDelegate.handleFavorites(_:)), discoverabilityTitle: "Favorites")
 
-		return UIMenu(title: "Account", identifier: UIMenu.Identifier("app.kurozora.menus.account"), options: [], children: [userMenu, subscriptionMenu, redeemCommand, favoriteShowsCommand])
+		return UIMenu(title: "Account", identifier: UIMenu.Identifier("app.kurozora.menus.account"), options: [], children: [userMenu, subscriptionMenu, redeemCommand, favoritesCommand])
 	}
 }

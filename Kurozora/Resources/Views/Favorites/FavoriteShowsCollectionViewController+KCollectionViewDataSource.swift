@@ -1,5 +1,5 @@
 //
-//  FavoriteShowsCollectionViewController+KCollectionViewDataSource.swift
+//  FavoritesCollectionViewController+KCollectionViewDataSource.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 16/01/2021.
@@ -9,7 +9,7 @@
 import UIKit
 import KurozoraKit
 
-extension FavoriteShowsCollectionViewController {
+extension FavoritesCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
 		return [SmallLockupCollectionViewCell.self]
 	}

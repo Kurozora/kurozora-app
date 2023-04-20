@@ -637,13 +637,13 @@ class ProfileTableViewController: KTableViewController {
 		dismiss(animated: true, completion: nil)
 	}
 
-	/// Performs segue to `FavoriteShowsCollectionViewController` with `FavoriteShowsSegue` as the identifier.
-	fileprivate func showFavoriteShowsList() {
-		if let favoriteShowsCollectionViewController = R.storyboard.favorites.favoriteShowsCollectionViewController() {
-			favoriteShowsCollectionViewController.user = self.user
-			favoriteShowsCollectionViewController.dismissButtonIsEnabled = true
+	/// Performs segue to `FavoritesCollectionViewController` with `FavoritesSegue` as the identifier.
+	fileprivate func showFavoritesList() {
+		if let favoritesCollectionViewController = R.storyboard.favorites.favoritesCollectionViewController() {
+			favoritesCollectionViewController.user = self.user
+			favoritesCollectionViewController.dismissButtonIsEnabled = true
 
-			let kNavigationViewController = KNavigationController(rootViewController: favoriteShowsCollectionViewController)
+			let kNavigationViewController = KNavigationController(rootViewController: favoritesCollectionViewController)
 			self.present(kNavigationViewController, animated: true)
 		}
 	}
@@ -655,12 +655,12 @@ class ProfileTableViewController: KTableViewController {
 
 			// Go to last watched episode
 			if User.isSignedIn {
-				let showFavoriteShowsList = UIAlertAction(title: "Favorite shows", style: .default) { _ in
-					self.showFavoriteShowsList()
+				let showFavoritesList = UIAlertAction(title: "Favorites", style: .default) { _ in
+					self.showFavoritesList()
 				}
-				showFavoriteShowsList.setValue(UIImage(systemName: "heart.circle"), forKey: "image")
-				showFavoriteShowsList.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-				actionSheetAlertController.addAction(showFavoriteShowsList)
+				showFavoritesList.setValue(UIImage(systemName: "heart.circle"), forKey: "image")
+				showFavoritesList.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+				actionSheetAlertController.addAction(showFavoritesList)
 			}
 		}
 

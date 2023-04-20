@@ -1,5 +1,5 @@
 //
-//  FavoriteShowsCollectionViewController.swift
+//  FavoritesCollectionViewController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 08/05/2018.
@@ -9,7 +9,7 @@
 import UIKit
 import KurozoraKit
 
-class FavoriteShowsCollectionViewController: KCollectionViewController {
+class FavoritesCollectionViewController: KCollectionViewController {
 	var libraryKindSegmentedControl = UISegmentedControl()
 	var toolbar = UIToolbar()
 
@@ -211,14 +211,14 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 }
 
 // MARK: - UIToolbarDelegate
-extension FavoriteShowsCollectionViewController: UIToolbarDelegate {
+extension FavoritesCollectionViewController: UIToolbarDelegate {
 	func position(for bar: UIBarPositioning) -> UIBarPosition {
 		return .topAttached
 	}
 }
 
 // MARK: - SectionLayoutKind
-extension FavoriteShowsCollectionViewController {
+extension FavoritesCollectionViewController {
 	/// List of  favorites section layout kind.
 	///
 	/// ```

@@ -220,9 +220,9 @@ class LibraryViewController: KTabbedViewController {
 	}
 	#endif
 
-	/// Segues to the favorite shows view.
-	@objc func segueToFavoriteShows() {
-		self.performSegue(withIdentifier: R.segue.libraryViewController.favoriteShowsSegue, sender: nil)
+	/// Segues to the favorites view.
+	@objc func segueToFavorites() {
+		self.performSegue(withIdentifier: R.segue.libraryViewController.favoritesSegue, sender: nil)
 	}
 
 	// MARK: - IBActions
@@ -249,9 +249,9 @@ class LibraryViewController: KTabbedViewController {
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
-		case R.segue.libraryViewController.favoriteShowsSegue.identifier:
-			guard let favoriteShowsCollectionViewController = segue.destination as? FavoriteShowsCollectionViewController else { return }
-			favoriteShowsCollectionViewController.libraryKind = self.libraryKind
+		case R.segue.libraryViewController.favoritesSegue.identifier:
+			guard let favoritesCollectionViewController = segue.destination as? FavoritesCollectionViewController else { return }
+			favoritesCollectionViewController.libraryKind = self.libraryKind
 		default: break
 		}
 	}
