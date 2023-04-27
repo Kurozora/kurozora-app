@@ -12,7 +12,9 @@ import KurozoraKit
 // MARK: - UICollectionViewDelegate
 extension SearchResultsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		switch self.dataSource.itemIdentifier(for: indexPath) {
+		guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return }
+
+		switch itemKind {
 		case .characterIdentity:
 			let character = self.characters[indexPath]
 			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.characterDetailsSegue, sender: character)
@@ -24,15 +26,12 @@ extension SearchResultsCollectionViewController {
 			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.personDetailsSegue, sender: person)
 		case .showIdentity:
 			guard let show = self.shows[indexPath] else { return }
-			SearchHistory.saveContentsOf(show)
 			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.showDetailsSegue, sender: show)
 		case .literatureIdentity:
 			guard let literature = self.literatures[indexPath] else { return }
-//			SearchHistory.saveContentsOf(literature)
 			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.literatureDetailsSegue, sender: literature)
 		case .gameIdentity:
 			guard let game = self.games[indexPath] else { return }
-//			SearchHistory.saveContentsOf(game)
 			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.gameDetailsSegue, sender: game)
 		case .songIdentity:
 			let song = self.songs[indexPath]
@@ -43,7 +42,73 @@ extension SearchResultsCollectionViewController {
 		case .userIdentity:
 			let user = self.users[indexPath]
 			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.userDetailsSegue, sender: user)
-		default: break
+		case .discoverSuggestion: break
+		case .show: break
+		case .literature: break
+		case .game: break
+		}
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+		guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return }
+		var identitiesCount: Int = 0
+		var type: KKSearchType = .shows
+		var nextPageURL: String? = nil
+
+		switch itemKind {
+		case .characterIdentity:
+			identitiesCount = self.characterIdentities.count
+			type = .characters
+			nextPageURL = self.characterNextPageURL
+		case .episodeIdentity:
+			identitiesCount = self.episodeIdentities.count
+			type = .episodes
+			nextPageURL = self.episodeNextPageURL
+		case .personIdentity:
+			identitiesCount = self.personIdentities.count
+			nextPageURL = self.personNextPageURL
+			type = .people
+		case .showIdentity:
+			identitiesCount = self.showIdentities.count
+			nextPageURL = self.showNextPageURL
+			type = .shows
+		case .literatureIdentity:
+			identitiesCount = self.literatureIdentities.count
+			nextPageURL = self.literatureNextPageURL
+			type = .literatures
+		case .gameIdentity:
+			identitiesCount = self.gameIdentities.count
+			nextPageURL = self.gameNextPageURL
+			type = .games
+		case .songIdentity:
+			identitiesCount = self.songIdentities.count
+			type = .songs
+			nextPageURL = self.songNextPageURL
+		case .studioIdentity:
+			identitiesCount = self.studioIdentities.count
+			nextPageURL = self.studioNextPageURL
+			type = .studios
+		case .userIdentity:
+			identitiesCount = self.userIdentities.count
+			nextPageURL = self.userNextPageURL
+			type = .users
+		case .discoverSuggestion: break
+		case .show: break
+		case .literature: break
+		case .game: break
+		}
+
+		if identitiesCount != 0 {
+			identitiesCount -= 1
+
+			var itemsCount = identitiesCount / 4 / 2
+			itemsCount = itemsCount > 15 ? 15 : itemsCount // Make sure count isn't above 15
+			itemsCount = identitiesCount - itemsCount
+			itemsCount = itemsCount < 1 ? 1 : itemsCount // Make sure count isn't below 1
+
+			if indexPath.item >= itemsCount && nextPageURL != nil && !self.isRequestInProgress {
+				self.performSearch(with: self.searachQuery, in: self.currentScope, for: [type], with: nil, next: nextPageURL, resettingResults: false)
+			}
 		}
 	}
 
@@ -58,15 +123,12 @@ extension SearchResultsCollectionViewController {
 			return self.people[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .showIdentity:
 			guard let show = self.shows[indexPath] else { return nil }
-			SearchHistory.saveContentsOf(show)
 			return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .literatureIdentity:
 			guard let literature = self.literatures[indexPath] else { return nil }
-//			SearchHistory.saveContentsOf(literature)
 			return literature.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .gameIdentity:
 			guard let game = self.games[indexPath] else { return nil }
-//			SearchHistory.saveContentsOf(game)
 			return game.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .songIdentity:
 			return self.songs[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])

@@ -23,6 +23,17 @@ extension SearchResultsCollectionViewController {
 		let showCellConfiguration = self.getConfiguredShowCell()
 		let studioCellConfiguration = self.getConfiguredStudioCell()
 		let userCellConfiguration = self.getConfiguredUserCell()
+		let discoverSuggestionCellConfiguration = UICollectionView.CellRegistration<ActionLinkExploreCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.actionLinkExploreCollectionViewCell)) { [weak self] actionLinkExploreCollectionViewCell, _, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .discoverSuggestion(let discoverSuggestion):
+				let quickLink = QuickLink(title: discoverSuggestion, url: "")
+				actionLinkExploreCollectionViewCell.delegate = self
+				actionLinkExploreCollectionViewCell.configure(using: quickLink)
+			default: break
+			}
+		}
 
 		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, itemKind: ItemKind) -> UICollectionViewCell? in
 			switch itemKind {
@@ -48,6 +59,8 @@ extension SearchResultsCollectionViewController {
 				return collectionView.dequeueConfiguredReusableCell(using: studioCellConfiguration, for: indexPath, item: itemKind)
 			case .userIdentity:
 				return collectionView.dequeueConfiguredReusableCell(using: userCellConfiguration, for: indexPath, item: itemKind)
+			case .discoverSuggestion:
+				return collectionView.dequeueConfiguredReusableCell(using: discoverSuggestionCellConfiguration, for: indexPath, item: itemKind)
 			}
 		}
 		self.dataSource.supplementaryViewProvider = { [weak self] (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
@@ -60,7 +73,6 @@ extension SearchResultsCollectionViewController {
 			exploreSectionTitleCell.delegate = self
 
 			switch sectionLayoutKind {
-			case .searchHistory: break
 			case .characters:
 				segueID = R.segue.searchResultsCollectionViewController.charactersListSegue.identifier
 				exploreSectionTitleCell.configure(withTitle: Trans.characters, indexPath: indexPath, segueID: segueID)
@@ -88,6 +100,8 @@ extension SearchResultsCollectionViewController {
 			case .users:
 				segueID = R.segue.searchResultsCollectionViewController.usersListSegue.identifier
 				exploreSectionTitleCell.configure(withTitle: Trans.users, indexPath: indexPath, segueID: segueID)
+			case .discover:
+				exploreSectionTitleCell.configure(withTitle: Trans.discover, indexPath: indexPath, segueID: segueID)
 			}
 
 			// Return the view.
@@ -150,125 +164,132 @@ extension SearchResultsCollectionViewController {
 	override func updateDataSource() {
 		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 
-		switch self.currentScope {
-		case .kurozora:
-			if let showSearchResults = self.searchResults?.shows?.data, !showSearchResults.isEmpty {
-				let showItems: [ItemKind] = showSearchResults.map { showIdentity in
-					return .showIdentity(showIdentity)
+		if !self.filters.isEmpty {
+			switch self.currentScope {
+			case .kurozora:
+				switch self.filters[self.currentIndex] {
+				case .shows:
+					if !self.showIdentities.isEmpty {
+						let showItems: [ItemKind] = self.showIdentities.map { showIdentity in
+							return .showIdentity(showIdentity)
+						}
+
+						snapshot.appendSections([.shows])
+						snapshot.appendItems(showItems, toSection: .shows)
+					}
+				case .literatures:
+					if !self.literatureIdentities.isEmpty {
+						let literatureItems: [ItemKind] = self.literatureIdentities.map { literatureIdentity in
+							return .literatureIdentity(literatureIdentity)
+						}
+
+						snapshot.appendSections([.literatures])
+						snapshot.appendItems(literatureItems, toSection: .literatures)
+					}
+				case .games:
+					if !self.gameIdentities.isEmpty {
+						let gameItems: [ItemKind] = self.gameIdentities.map { gameIdentity in
+							return .gameIdentity(gameIdentity)
+						}
+
+						snapshot.appendSections([.games])
+						snapshot.appendItems(gameItems, toSection: .games)
+					}
+				case .episodes:
+					if !self.episodeIdentities.isEmpty {
+						let episodeItems: [ItemKind] = self.episodeIdentities.map { episodeIdentity in
+							return .episodeIdentity(episodeIdentity)
+						}
+
+						snapshot.appendSections([.episodes])
+						snapshot.appendItems(episodeItems, toSection: .episodes)
+					}
+				case .characters:
+					if !self.characterIdentities.isEmpty {
+						let characterItems: [ItemKind] = self.characterIdentities.map { characterIdentity in
+							return .characterIdentity(characterIdentity)
+						}
+
+						snapshot.appendSections([.characters])
+						snapshot.appendItems(characterItems, toSection: .characters)
+					}
+				case .people:
+					if !self.personIdentities.isEmpty {
+						let peopleItems: [ItemKind] = self.personIdentities.map { personIdentity in
+							return .personIdentity(personIdentity)
+						}
+
+						snapshot.appendSections([.people])
+						snapshot.appendItems(peopleItems, toSection: .people)
+					}
+				case .songs:
+					if !self.songIdentities.isEmpty {
+						let songItems: [ItemKind] = self.songIdentities.map { songIdentity in
+							return .songIdentity(songIdentity)
+						}
+
+						snapshot.appendSections([.songs])
+						snapshot.appendItems(songItems, toSection: .songs)
+					}
+				case .studios:
+					if !self.studioIdentities.isEmpty {
+						let studioItems: [ItemKind] = self.studioIdentities.map { studioIdentity in
+							return .studioIdentity(studioIdentity)
+						}
+
+						snapshot.appendSections([.studios])
+						snapshot.appendItems(studioItems, toSection: .studios)
+					}
+				case .users:
+					if !self.userIdentities.isEmpty {
+						let userItems: [ItemKind] = self.userIdentities.map { userIdentity in
+							return .userIdentity(userIdentity)
+						}
+
+						snapshot.appendSections([.users])
+						snapshot.appendItems(userItems, toSection: .users)
+					}
 				}
+			case .library:
+				switch self.filters[self.currentIndex] {
+				case .shows:
+					if !self.showIdentities.isEmpty {
+						let showItems: [ItemKind] = self.showIdentities.map { showIdentity in
+							return .showIdentity(showIdentity)
+						}
 
-				snapshot.appendSections([.shows])
-				snapshot.appendItems(showItems, toSection: .shows)
-			}
+						snapshot.appendSections([.shows])
+						snapshot.appendItems(showItems, toSection: .shows)
+					}
+				case .literatures:
+					if !self.literatureIdentities.isEmpty {
+						let literatureItems: [ItemKind] = self.literatureIdentities.map { literatureIdentity in
+							return .literatureIdentity(literatureIdentity)
+						}
 
-			if let literatureSearchResults = self.searchResults?.literatures?.data, !literatureSearchResults.isEmpty {
-				let literatureItems: [ItemKind] = literatureSearchResults.map { literatureIdentity in
-					return .literatureIdentity(literatureIdentity)
+						snapshot.appendSections([.literatures])
+						snapshot.appendItems(literatureItems, toSection: .literatures)
+					}
+				case .games:
+					if !self.gameIdentities.isEmpty {
+						let gameItems: [ItemKind] = self.gameIdentities.map { gameIdentity in
+							return .gameIdentity(gameIdentity)
+						}
+
+						snapshot.appendSections([.games])
+						snapshot.appendItems(gameItems, toSection: .games)
+					}
+				default: break
 				}
-
-				snapshot.appendSections([.literatures])
-				snapshot.appendItems(literatureItems, toSection: .literatures)
-			}
-
-			if let gameSearchResults = self.searchResults?.games?.data, !gameSearchResults.isEmpty {
-				let gameItems: [ItemKind] = gameSearchResults.map { gameIdentity in
-					return .gameIdentity(gameIdentity)
-				}
-
-				snapshot.appendSections([.games])
-				snapshot.appendItems(gameItems, toSection: .games)
-			}
-
-			if let episodeSearchResults = self.searchResults?.episodes?.data, !episodeSearchResults.isEmpty {
-				let episodeItems: [ItemKind] = episodeSearchResults.map { episodeIdentity in
-					return .episodeIdentity(episodeIdentity)
-				}
-
-				snapshot.appendSections([.episodes])
-				snapshot.appendItems(episodeItems, toSection: .episodes)
-			}
-
-			if let characterSearchResults = self.searchResults?.characters?.data, !characterSearchResults.isEmpty {
-				let characterItems: [ItemKind] = characterSearchResults.map { characterIdentity in
-					return .characterIdentity(characterIdentity)
-				}
-
-				snapshot.appendSections([.characters])
-				snapshot.appendItems(characterItems, toSection: .characters)
-			}
-
-			if let peopleSearchResults = self.searchResults?.people?.data, !peopleSearchResults.isEmpty {
-				let peopleItems: [ItemKind] = peopleSearchResults.map { personIdentity in
-					return .personIdentity(personIdentity)
-				}
-
-				snapshot.appendSections([.people])
-				snapshot.appendItems(peopleItems, toSection: .people)
-			}
-
-			if let songSearchResults = self.searchResults?.songs?.data, !songSearchResults.isEmpty {
-				let songItems: [ItemKind] = songSearchResults.map { songIdentity in
-					return .songIdentity(songIdentity)
-				}
-
-				snapshot.appendSections([.songs])
-				snapshot.appendItems(songItems, toSection: .songs)
-			}
-
-			if let studioSearchResults = self.searchResults?.studios?.data, !studioSearchResults.isEmpty {
-				let studioItems: [ItemKind] = studioSearchResults.map { studioIdentity in
-					return .studioIdentity(studioIdentity)
-				}
-
-				snapshot.appendSections([.studios])
-				snapshot.appendItems(studioItems, toSection: .studios)
-			}
-
-			if let userSearchResults = self.searchResults?.users?.data, !userSearchResults.isEmpty {
-				let userItems: [ItemKind] = userSearchResults.map { userIdentity in
-					return .userIdentity(userIdentity)
-				}
-
-				snapshot.appendSections([.users])
-				snapshot.appendItems(userItems, toSection: .users)
-			}
-		case .library:
-			if let showSearchResults = self.searchResults?.shows?.data,
-			   !showSearchResults.isEmpty {
-				let showItems: [ItemKind] = showSearchResults.map { showIdentity in
-					return .showIdentity(showIdentity)
-				}
-
-				snapshot.appendSections([.shows])
-				snapshot.appendItems(showItems, toSection: .shows)
-			}
-
-			if let literatureSearchResults = self.searchResults?.literatures?.data,
-			   !literatureSearchResults.isEmpty {
-				let literatureItems: [ItemKind] = literatureSearchResults.map { literatureIdentity in
-					return .literatureIdentity(literatureIdentity)
-				}
-
-				snapshot.appendSections([.literatures])
-				snapshot.appendItems(literatureItems, toSection: .literatures)
-			}
-
-			if let gameSearchResults = self.searchResults?.games?.data, !gameSearchResults.isEmpty {
-				let gameItems: [ItemKind] = gameSearchResults.map { gameIdentity in
-					return .gameIdentity(gameIdentity)
-				}
-
-				snapshot.appendSections([.games])
-				snapshot.appendItems(gameItems, toSection: .games)
 			}
 		}
 
 		if snapshot.numberOfSections == 0 {
-//			let showItems: [ItemKind] = self.suggestionElements.map { show in
-//				return .show(show)
-//			}
-			snapshot.appendSections([.searchHistory])
-			snapshot.appendItems([], toSection: .searchHistory)
+			let discoverSuggestionItems: [ItemKind] = self.discoverSuggestions.map { discoverSuggestions in
+				return .discoverSuggestion(discoverSuggestions)
+			}
+			snapshot.appendSections([.discover])
+			snapshot.appendItems(discoverSuggestionItems, toSection: .discover)
 		}
 
 		self.dataSource.apply(snapshot)

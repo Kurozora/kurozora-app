@@ -24,7 +24,7 @@ extension SearchResultsCollectionViewController {
 			}
 		case .songs:
 			columnCount = (width / 250.0).rounded().int
-		case .shows, .literatures, .games, .searchHistory:
+		case .shows, .literatures, .games:
 			if width >= 414.0 {
 				columnCount = (width / 384.0).rounded().int
 			} else {
@@ -37,6 +37,12 @@ extension SearchResultsCollectionViewController {
 				columnCount = (width / 284.0).rounded().int
 			}
 		case .users:
+			if width >= 414.0 {
+				columnCount = (width / 384.0).rounded().int
+			} else {
+				columnCount = (width / 284.0).rounded().int
+			}
+		case .discover:
 			if width >= 414.0 {
 				columnCount = (width / 384.0).rounded().int
 			} else {
@@ -77,30 +83,30 @@ extension SearchResultsCollectionViewController {
 			var hasHeader: Bool = false
 
 			switch searchResultSection {
-			case .searchHistory:
+			case .characters:
+				hasHeader = false
+				sectionLayout = Layouts.charactersSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
+			case .episodes:
+				hasHeader = false
+				sectionLayout = Layouts.episodesSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
+			case .people:
+				hasHeader = false
+				sectionLayout = Layouts.peopleSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
+			case .shows, .literatures, .games:
 				hasHeader = false
 				sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
-			case .characters:
-				hasHeader = true
-				sectionLayout = Layouts.charactersSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
-			case .episodes:
-				hasHeader = true
-				sectionLayout = Layouts.episodesSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
-			case .people:
-				hasHeader = true
-				sectionLayout = Layouts.peopleSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
-			case .shows, .literatures, .games:
-				hasHeader = true
-				sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: self.currentScope == .kurozora)
 			case .songs:
-				hasHeader = true
-				sectionLayout = Layouts.musicSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				hasHeader = false
+				sectionLayout = Layouts.musicSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
 			case .studios:
-				hasHeader = true
-				sectionLayout = Layouts.studiosSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				hasHeader = false
+				sectionLayout = Layouts.studiosSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
 			case .users:
+				hasHeader = false
+				sectionLayout = Layouts.usersSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
+			case .discover:
 				hasHeader = true
-				sectionLayout = Layouts.usersSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				sectionLayout = Layouts.usersSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
 			}
 
 			if hasHeader {

@@ -650,6 +650,11 @@ struct Trans {
 											 comment: "The string for the 'follow our story on Medium' settings option.")
 
 	// MARK: - Misc
+	/// The string for the word 'discover'.
+	///
+	/// - Tag: Trans-discover
+	static let discover: String = String(localized: "Discover",
+										 comment: "The string for the word 'discover'.")
 	/// The string for the word 'header'.
 	///
 	/// - Tag: Trans-header
@@ -930,6 +935,11 @@ struct Trans {
 	/// - Tag: Trans-search
 	static let search: String = String(localized: "Search",
 									   comment: "The string for the word 'search'.")
+	/// The string for the word 'filters'.
+	///
+	/// - Tag: Trans-filters
+	static let filters: String = String(localized: "Filters",
+										comment: "The string for the word 'filters'.")
 	/// The string for the word 'settings'.
 	///
 	/// - Tag: Trans-settings

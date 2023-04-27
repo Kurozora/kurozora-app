@@ -204,7 +204,7 @@ class ShowsListCollectionViewController: KCollectionViewController {
 				self.showIdentities.append(contentsOf: showIdentityResponse.data)
 				self.showIdentities.removeDuplicates()
 			case .search:
-				let searchResponse = try await KService.search(.kurozora, of: [.shows], for: self.searachQuery, next: self.nextPageURL, limit: 25).value
+				let searchResponse = try await KService.search(.kurozora, of: [.shows], for: self.searachQuery, next: self.nextPageURL, limit: 25, filter: nil).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {

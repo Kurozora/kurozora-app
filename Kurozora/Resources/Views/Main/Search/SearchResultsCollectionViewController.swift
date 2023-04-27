@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Tabman
 import KurozoraKit
 import Alamofire
 import AVFoundation
@@ -15,6 +16,11 @@ import MediaPlayer
 /// The collection view controller in charge of providing the necessary functionalities for searching shows, threads and users.
 class SearchResultsCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
+	let toolbar = UIToolbar()
+	let tabBarView = TMBar.KBar()
+	var currentTopContentInset: CGFloat = 0
+	var currentIndex: Int = 0
+
 	/// The collection of results fetched by the search request.
 	var searchResults: Search?
 
@@ -24,8 +30,14 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	/// The search query that is performed.
 	var searachQuery: String = ""
 
-	/// The collection of suggested shows.
-	var suggestionElements: [Show] = []
+	/// The collection of discover suggestions.
+	var discoverSuggestions: [String] = []
+
+	public var filters: [KKSearchType] = [] {
+		didSet {
+			self.reloadView()
+		}
+	}
 
 	var characters: [IndexPath: Character] = [:]
 	var episodes: [IndexPath: Episode] = [:]
@@ -37,6 +49,26 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	var studios: [IndexPath: Studio] = [:]
 	var users: [IndexPath: User] = [:]
 
+	var characterIdentities: [CharacterIdentity] = []
+	var episodeIdentities: [EpisodeIdentity] = []
+	var personIdentities: [PersonIdentity] = []
+	var showIdentities: [ShowIdentity] = []
+	var literatureIdentities: [LiteratureIdentity] = []
+	var gameIdentities: [GameIdentity] = []
+	var songIdentities: [SongIdentity] = []
+	var studioIdentities: [StudioIdentity] = []
+	var userIdentities: [UserIdentity] = []
+
+	var characterNextPageURL: String? = nil
+	var episodeNextPageURL: String? = nil
+	var personNextPageURL: String? = nil
+	var showNextPageURL: String? = nil
+	var literatureNextPageURL: String? = nil
+	var gameNextPageURL: String? = nil
+	var songNextPageURL: String? = nil
+	var studioNextPageURL: String? = nil
+	var userNextPageURL: String? = nil
+
 	/// The object that provides the interface to control the player’s transport behavior.
 	var player: AVPlayer?
 
@@ -46,9 +78,6 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
 	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
-
-	/// The next page url of the pagination.
-	var nextPageURL: String?
 
 	/// Whether a fetch request is currently in progress.
 	var isRequestInProgress: Bool = false
@@ -80,20 +109,39 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - View
+	override func themeWillReload() {
+		super.themeWillReload()
+
+		self.styleTabBarView()
+	}
+
 	override func viewDidLoad() {
         super.viewDidLoad()
 		// Disable Refresh Control & hide Activity Indicator
 		self._prefersRefreshControlDisabled = true
 		self._prefersActivityIndicatorHidden = true
 
-		self.configureDataSource()
-
-		// Fetch user's search history.
-		self.suggestionElements = SearchHistory.getContent()
-
+		// Determine if search bar is included
 		if self.includesSearchBar {
 			self.setupSearchController()
 		}
+
+		// Configurations
+		self.configureTabBarView()
+		self.configureToolbar()
+		self.configureViewHierarchy()
+		self.configureViewConstraints()
+
+		// Fetch discover elements
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchSearchSuggestions()
+			self.updateDataSource()
+		}
+
+		// Update data source
+		self.configureDataSource()
+		self.updateDataSource()
     }
 
 	override func viewWillDisappear(_ animated: Bool) {
@@ -103,6 +151,55 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - Functions
+	func configureTabBarView() {
+		self.tabBarView.delegate = self
+		self.tabBarView.dataSource = self
+		self.updateBar(to: 0.0, animated: false, direction: .none)
+		self.styleTabBarView()
+	}
+
+	func updateBar(to position: CGFloat?, animated: Bool, direction: TMBarUpdateDirection) {
+		let animation = TMAnimation(isEnabled: animated, duration: 0.25)
+		self.tabBarView.update(for: position ?? 0.0, capacity: self.filters.count, direction: .forward, animation: animation)
+	}
+
+	fileprivate func styleTabBarView() {
+		// Background view
+		self.tabBarView.backgroundView.style = .clear
+
+		// Indicator
+		self.tabBarView.indicator.layout(in: self.tabBarView)
+
+		// Scrolling
+		self.tabBarView.scrollMode = .interactive
+
+		// State
+		self.tabBarView.buttons.customize { button in
+			button.contentInset = UIEdgeInsets(top: 8.0, left: 12.0, bottom: 4.0, right: 12.0)
+			button.selectedTintColor = KThemePicker.textColor.colorValue
+			button.tintColor = button.selectedTintColor.withAlphaComponent(0.50)
+		}
+
+		// Layout
+		self.tabBarView.layout.contentInset = UIEdgeInsets(top: 0.0, left: 0.2, bottom: 0.0, right: 0.0)
+		self.tabBarView.layout.interButtonSpacing = 0.0
+		self.tabBarView.layout.contentMode = UIDevice.isPhone ? .intrinsic : .fit
+
+		// Style
+		self.tabBarView.fadesContentEdges = true
+	}
+
+	func configureToolbar() {
+		self.toolbar.translatesAutoresizingMaskIntoConstraints = false
+		self.toolbar.delegate = self
+		self.toolbar.isHidden = true
+		self.toolbar.isTranslucent = false
+		self.toolbar.backgroundColor = .clear
+		self.toolbar.barStyle = .default
+		self.toolbar.theme_tintColor = KThemePicker.tintColor.rawValue
+		self.toolbar.theme_barTintColor = KThemePicker.barTintColor.rawValue
+	}
+
 	/// Setup the search controller with the desired settings.
 	func setupSearchController() {
 		// Set the current view as the view controller of the search
@@ -115,9 +212,24 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		#else
 		if #available(iOS 16.0, *) {
 			self.navigationItem.preferredSearchBarPlacement = .stacked
-		} else {
 		}
 		#endif
+	}
+
+	func configureViewHierarchy() {
+		self.view.addSubview(self.toolbar)
+		self.toolbar.setItems([UIBarButtonItem(customView: self.tabBarView)], animated: true)
+	}
+
+	func configureViewConstraints() {
+		NSLayoutConstraint.activate([
+			self.toolbar.topAnchor.constraint(equalTo: self.view.layoutMarginsGuide.topAnchor),
+			self.toolbar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+			self.toolbar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+			self.toolbar.heightAnchor.constraint(equalToConstant: 49.0)
+		])
+
+		self.tabBarView.fillToSuperview()
 	}
 
 	/// Perform search with the given search text and the search scope.
@@ -126,7 +238,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	///    - query: The string which to search for.
 	///    - searchScope: The scope in which the text should be searched.
 	///    - resettingResults: Whether to reset the results.
-	func performSearch(with query: String, in searchScope: KKSearchScope, resettingResults: Bool = true) {
+	func performSearch(with query: String, in searchScope: KKSearchScope, for types: [KKSearchType], with filter: KKSearchFilter?, next: String?, resettingResults: Bool = true) {
 		// Prepare view for search
 		self.currentScope = searchScope
 
@@ -143,19 +255,21 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		case .kurozora:
 			Task { [weak self] in
 				guard let self = self else { return }
-				await self.search(scope: searchScope, types: [.shows, .literatures, .games, .episodes, .characters, .people, .songs, .studios, .users], query: query)
+				let types: [KKSearchType] = self.searchResults != nil ? types : [.shows, .literatures, .games, .episodes, .characters, .people, .songs, .studios, .users]
+				await self.search(scope: searchScope, types: types, query: query, next: next, filter: nil)
 			}
 		case .library:
 			WorkflowController.shared.isSignedIn { [weak self] in
 				Task {
 					guard let self = self else { return }
-					await self.search(scope: searchScope, types: [.shows, .literatures, .games], query: query)
+					let types: [KKSearchType] = self.searchResults != nil ? types : [.shows, .literatures, .games]
+					await self.search(scope: searchScope, types: types, query: query, next: next, filter: nil)
 				}
 			}
 		}
 	}
 
-	func search(scope: KKSearchScope, types: [KKSearchType], query: String) async {
+	fileprivate func search(scope: KKSearchScope, types: [KKSearchType], query: String, next: String?, filter: KKSearchFilter?) async {
 		guard !self.isRequestInProgress else {
 			return
 		}
@@ -167,29 +281,113 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		self.searachQuery = query
 
 		do {
-			let limit = self.currentScope == .library ? 25 : 5
-
 			// Perform library search request.
-			let searchResponse = try await KService.search(scope, of: types, for: query, next: self.nextPageURL, limit: limit).value
+			let searchResponse = try await KService.search(scope, of: types, for: query, next: next, limit: 25, filter: filter).value
 
-			self.searchResults = searchResponse.data
-			self.isRequestInProgress = false
+			if types.count > 1 {
+				self.searchResults = searchResponse.data
+			}
+
+			self.characterNextPageURL = searchResponse.data.characters?.next ?? self.characterNextPageURL
+			self.episodeNextPageURL = searchResponse.data.episodes?.next ?? self.episodeNextPageURL
+			self.personNextPageURL = searchResponse.data.people?.next ?? self.personNextPageURL
+			self.showNextPageURL = searchResponse.data.shows?.next ?? self.showNextPageURL
+			self.literatureNextPageURL = searchResponse.data.literatures?.next ?? self.literatureNextPageURL
+			self.gameNextPageURL = searchResponse.data.games?.next ?? self.gameNextPageURL
+			self.songNextPageURL = searchResponse.data.songs?.next ?? self.songNextPageURL
+			self.studioNextPageURL = searchResponse.data.studios?.next ?? self.studioNextPageURL
+			self.userNextPageURL = searchResponse.data.users?.next ?? self.userNextPageURL
+
+			self.characterIdentities.append(contentsOf: searchResponse.data.characters?.data ?? [])
+			self.episodeIdentities.append(contentsOf: searchResponse.data.episodes?.data ?? [])
+			self.personIdentities.append(contentsOf: searchResponse.data.people?.data ?? [])
+			self.showIdentities.append(contentsOf: searchResponse.data.shows?.data ?? [])
+			self.literatureIdentities.append(contentsOf: searchResponse.data.literatures?.data ?? [])
+			self.gameIdentities.append(contentsOf: searchResponse.data.games?.data ?? [])
+			self.songIdentities.append(contentsOf: searchResponse.data.songs?.data ?? [])
+			self.studioIdentities.append(contentsOf: searchResponse.data.studios?.data ?? [])
+			self.userIdentities.append(contentsOf: searchResponse.data.users?.data ?? [])
+
+			// Show toolbar
+			self.filters = self.determineResultTypes()
+
+			self.kSearchController.searchBar.setShowsScope(false, animated: true)
+			self.currentTopContentInset = self.collectionView.contentInset.top
+			self.collectionView.contentInset.top = 62
+			self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset
+			self.toolbar.isHidden = false
 
 			// Update data source.
 			self.updateDataSource()
 		} catch {
-			self.isRequestInProgress = false
 			print(error.localizedDescription)
 		}
+
+		self.isRequestInProgress = false
 
 		// Hide activity indicator.
 		self._prefersActivityIndicatorHidden = true
 	}
 
+	fileprivate func determineResultTypes() -> [KKSearchType] {
+		guard let searchResults = self.searchResults else { return [] }
+		var resultTypes: [KKSearchType] = []
+
+		if !(searchResults.shows?.data.isEmpty ?? true) {
+			resultTypes.append(.shows)
+		}
+		if !(searchResults.literatures?.data.isEmpty ?? true) {
+			resultTypes.append(.literatures)
+		}
+		if !(searchResults.games?.data.isEmpty ?? true) {
+			resultTypes.append(.games)
+		}
+		if !(searchResults.episodes?.data.isEmpty ?? true) {
+			resultTypes.append(.episodes)
+		}
+		if !(searchResults.characters?.data.isEmpty ?? true) {
+			resultTypes.append(.characters)
+		}
+		if !(searchResults.people?.data.isEmpty ?? true) {
+			resultTypes.append(.people)
+		}
+		if !(searchResults.songs?.data.isEmpty ?? true) {
+			resultTypes.append(.songs)
+		}
+		if !(searchResults.studios?.data.isEmpty ?? true) {
+			resultTypes.append(.studios)
+		}
+		if !(searchResults.users?.data.isEmpty ?? true) {
+			resultTypes.append(.users)
+		}
+
+		return resultTypes
+	}
+
 	/// Sets all search results to nil and reloads the table view
 	fileprivate func resetSearchResults() {
 		self.searchResults = nil
-		self.nextPageURL = nil
+
+		self.characterIdentities = []
+		self.episodeIdentities = []
+		self.personIdentities = []
+		self.showIdentities = []
+		self.literatureIdentities = []
+		self.gameIdentities = []
+		self.songIdentities = []
+		self.studioIdentities = []
+		self.userIdentities = []
+
+		self.characterNextPageURL = nil
+		self.episodeNextPageURL = nil
+		self.personNextPageURL = nil
+		self.showNextPageURL = nil
+		self.literatureNextPageURL = nil
+		self.gameNextPageURL = nil
+		self.songNextPageURL = nil
+		self.studioNextPageURL = nil
+		self.userNextPageURL = nil
+
 		self.characters = [:]
 		self.episodes = [:]
 		self.people = [:]
@@ -199,9 +397,20 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		self.songs = [:]
 		self.studios = [:]
 		self.users = [:]
+
 		self.updateDataSource()
 	}
 
+	func fetchSearchSuggestions() async {
+		do {
+			let searchSuggestionResponse = try await KService.getSearchSuggestions(.kurozora, of: [.shows], for: "o").value
+			self.discoverSuggestions = searchSuggestionResponse.data
+		} catch {
+			print(error.localizedDescription)
+		}
+	}
+
+	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
 		case R.segue.searchResultsCollectionViewController.characterDetailsSegue.identifier:
@@ -300,32 +509,89 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	}
 }
 
+// MARK: - TMBarDataSource
+extension SearchResultsCollectionViewController: TMBarDataSource {
+	func reloadView() {
+		self.tabBarView.reloadData(at: 0...self.filters.count - 1, context: .full)
+	}
+
+	func barItem(for bar: Tabman.TMBar, at index: Int) -> Tabman.TMBarItemable {
+		return TMBarItem(title: self.filters[index].stringValue)
+	}
+}
+
+// MARK: - TMBarDelegate
+extension SearchResultsCollectionViewController: TMBarDelegate {
+	func bar(_ bar: Tabman.TMBar, didRequestScrollTo index: Int) {
+		let direction = TMBarUpdateDirection.forPage(index, previousPage: self.currentIndex)
+		self.updateBar(to: CGFloat(index), animated: true, direction: direction)
+
+		self.currentIndex = index
+		self.updateDataSource()
+	}
+}
+
+extension TMBarUpdateDirection {
+	static func forPage(_ page: Int, previousPage: Int) -> TMBarUpdateDirection {
+		return forPosition(CGFloat(page), previous: CGFloat(previousPage))
+	}
+
+	static func forPosition(_ position: CGFloat, previous previousPosition: CGFloat) -> TMBarUpdateDirection {
+		if position == previousPosition {
+			return .none
+		}
+		return  position > previousPosition ? .forward : .reverse
+	}
+}
+
 // MARK: - UISearchBarDelegate
 extension SearchResultsCollectionViewController: UISearchBarDelegate {
+	func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+		searchBar.setShowsScope(true, animated: true)
+		self.toolbar.isHidden = true
+		self.collectionView.contentInset.top = self.currentTopContentInset
+		self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset
+	}
+
+	func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+		searchBar.setShowsScope(false, animated: true)
+	}
+
 	func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
 		guard let searchScope = KKSearchScope(rawValue: selectedScope) else { return }
 		guard let query = searchBar.text, !query.isEmpty else { return }
 
 		switch searchScope {
+		case .kurozora:
+			self.performSearch(with: query, in: searchScope, for: [], with: nil, next: nil)
 		case .library:
 			WorkflowController.shared.isSignedIn {
-				self.performSearch(with: query, in: searchScope)
+				self.performSearch(with: query, in: searchScope, for: [], with: nil, next: nil)
 				return
 			}
 			searchBar.selectedScopeButtonIndex = self.currentScope.rawValue
-		default:
-			self.performSearch(with: query, in: searchScope)
 		}
+	}
+
+	func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
+		let searchFilterViewController = SearchFilterViewController()
+		self.present(searchFilterViewController, animated: true)
 	}
 
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 		guard let searchScope = KKSearchScope(rawValue: searchBar.selectedScopeButtonIndex) else { return }
 		guard let query = searchBar.text else { return }
-		self.performSearch(with: query, in: searchScope)
+		self.performSearch(with: query, in: searchScope, for: [], with: nil, next: nil)
+
+		searchBar.showsBookmarkButton = true
 	}
 
 	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+		searchBar.showsBookmarkButton = false
 		self.resetSearchResults()
+		self.toolbar.isHidden = true
+		self.collectionView.contentInset.top = self.currentTopContentInset
+		self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset
 	}
 }
 
@@ -536,13 +802,38 @@ extension SearchResultsCollectionViewController: MusicLockupCollectionViewCellDe
 	}
 }
 
+// MARK: - ActionBaseExploreCollectionViewCellDelegate
+extension SearchResultsCollectionViewController: ActionBaseExploreCollectionViewCellDelegate {
+	func actionButtonPressed(_ sender: UIButton, cell: ActionBaseExploreCollectionViewCell) {
+		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+
+		switch cell.self {
+		case is ActionLinkExploreCollectionViewCell:
+			let discoverSuggestion = self.discoverSuggestions[indexPath.item]
+			self.kSearchController.searchBar.text = discoverSuggestion
+			self.kSearchController.searchBar.becomeFirstResponder()
+			self.kSearchController.searchBar.resignFirstResponder()
+			self.searchBarSearchButtonClicked(self.kSearchController.searchBar)
+		case is ActionButtonExploreCollectionViewCell: break
+		default: break
+		}
+	}
+}
+
+// MARK: - UIToolbarDelegate
+extension SearchResultsCollectionViewController: UIToolbarDelegate {
+	func position(for bar: UIBarPositioning) -> UIBarPosition {
+		return .topAttached
+	}
+}
+
 // MARK: - Enums
 extension SearchResultsCollectionViewController {
 	/// List of character section layout kind.
 	enum SectionLayoutKind: Int, CaseIterable {
 		// MARK: - Cases
-		/// Indicates a search history section layout type.
-		case searchHistory
+		/// Indicates a discover section layout type.
+		case discover
 
 		/// Indicates the characters' section layout type.
 		case characters
@@ -575,6 +866,9 @@ extension SearchResultsCollectionViewController {
 	/// List of available Item Kind types.
 	enum ItemKind: Hashable {
 		// MARK: - Cases
+		/// Indicates the item kind contains a discover suggestion.
+		case discoverSuggestion(_: String)
+
 		/// Indicates the item kind contains a `Show` object.
 		case show(_: Show)
 
@@ -614,6 +908,8 @@ extension SearchResultsCollectionViewController {
 		// MARK: - Functions
 		func hash(into hasher: inout Hasher) {
 			switch self {
+			case .discoverSuggestion(let discoverSuggestion):
+				hasher.combine(discoverSuggestion)
 			case .show(let show):
 				hasher.combine(show)
 			case .literature(let literature):
@@ -652,6 +948,8 @@ extension SearchResultsCollectionViewController {
 
 		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
 			switch (lhs, rhs) {
+			case (.discoverSuggestion(let discoverSuggestion1), .discoverSuggestion(let discoverSuggestion2)):
+				return discoverSuggestion1 == discoverSuggestion2
 			case (.show(let show1), .show(let show2)):
 				return show1 == show2
 			case (.literature(let literature1), .literature(let literature2)):

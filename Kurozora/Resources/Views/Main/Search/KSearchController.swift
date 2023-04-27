@@ -39,7 +39,8 @@ class KSearchController: UISearchController {
 		#if targetEnvironment(macCatalyst)
 		self.searchBar.placeholder = Trans.search
 		#else
-		self.searchBar.placeholder = "Anime, Manga, Character, and More"
+		self.searchBar.placeholder = "Anime, Manga, Games and More"
+		self.searchBar.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle"), for: .bookmark, state: .normal)
 		#endif
 		self.searchBar.scopeButtonTitles = KKSearchScope.allString
 		self.searchBar.selectedScopeButtonIndex = self.searchScope.rawValue
@@ -52,6 +53,12 @@ extension KSearchController: UISearchControllerDelegate {
 	func willPresentSearchController(_ searchController: UISearchController) {
 		if self.forceShowsCancelButton {
 			self.searchBar.showsCancelButton = true
+		}
+
+		if #available(iOS 16.0, *) {
+			self.scopeBarActivation = .onSearchActivation
+		} else {
+			self.automaticallyShowsScopeBar = true
 		}
 	}
 
