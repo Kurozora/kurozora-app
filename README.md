@@ -1,20 +1,21 @@
 <p align="center"><img src=".github/Assets/Kurozora_on_Device.png"></p>
 
 <p align="center">
-    <sup><em>Discover, share and track anime with friends.</em></sup>
+    <sup><em>Your one-stop shop for everything anime on iOS!</em></sup>
 </p>
 
 # Kurozora [![Swift 5](https://img.shields.io/badge/Swift%205-white.svg?style=flat&logo=Swift)](https://swift.org) [![Apple Platform](https://img.shields.io/badge/iOS%20|%20ipadOS%20|%20macOS-black?style=flat&logo=Apple)](https://apple.co/3CsQlKq) [![Kurozora Discord Server](https://img.shields.io/discord/449250093623934977?style=flat&label=&logo=Discord&logoColor=white&color=7289DA)](https://discord.gg/f3QFzGqsah) [![License](https://img.shields.io/badge/License-GPLv3-blue.svg?style=flat)](LICENSE)
 
-[Kurozora](https://kurozora.app) is your go-to platform **discovering**, **sharing** and **tracking** anime and much more! `kurozora-app` is the client side of the Kurozora service. It is designed to be:
+[Kurozora](https://kurozora.app) is your one-stop shop for everything anime!
+The Kurozora iOS client app gives you access to the huge catalogue of anime, manga and games. It is designed to be:
 
 * **🏃🏻‍♂️ Responsive:** Kurozora is built with Swift, one of the **fast**, **modern**, **safe** and **interactive** programming languages.
 
 * **💻 Colossal:** The app is carefully designed to work perfectly on all screen sizes. Yes even on Samsung's Insane 292-Inch Wall TV.
 
-* **🎨 Chameleon:** Whether black, blue, purple, or orange, it looks too good to… uh oh, it’s gone hiding again, dammit!
+* **🎨 Chameleon:** Whether black, blue, purple, or orange, it fits right with your custom theme that you spent countless hours to perfect instead of doing your work.
 
-* **📚 Documented:** With up to 75% documentation coverage and more in production. Just need my publisher to finalise some last minute details.
+* **📚 Documented:** With up to 85% documentation coverage.
 
 * **💕 Excellence:** [Kurozora API](https://github.com/kurozora/kurozora-web) and Kurozora app are simply meant to be for each other. It’s like peanut butter and jelly, like yin and yang, like a lace in a shoe, like you're the sail of my love boat wait.. ughhh…
 
@@ -64,11 +65,12 @@ If you have any questions or just want to say hi, join the Kurozora [Discord](ht
 
 # More by Kurozora
 
-- [Kurozora Web](https://github.com/kurozora/kurozora-web) — Home to the Kurozora website and API.
+- [Kurozora Android App](https://github.com/kurozora/kurozora-android) — Android client app
+- [Kurozora Discord Bot](https://github.com/kurozora/kurozora-discord-bot) — A versatile Discord bot with access to Kurozora services
 - [KurozoraKit](https://github.com/kurozora/KurozoraKit) — Simple to use framework for interacting with the Kurozora API
-- [Kurozora Web Extension](https://github.com/Kurozora/kurozora-extension) — The Ultimate Search Engine for Anime, Manga and Game Fans.
-- [Kurozora Discord Bot](https://github.com/kurozora/kurozora-discord-bot) — A versatile Discord bot with access to Kurozora services.
-- [Kurozora Android App](https://github.com/kurozora/kurozora-android) — Android client app.
+- [Kurozora Linux App](https://github.com/kurozora/kurozora-linux) — Linux client app
+- [Kurozora Web](https://github.com/kurozora/kurozora-web) — Home to the Kurozora website and API
+- [Kurozora Web Extension](https://github.com/Kurozora/kurozora-extension) — Anime, Manga and Game search engine for FireFox and Chrome
 
 # License
 
