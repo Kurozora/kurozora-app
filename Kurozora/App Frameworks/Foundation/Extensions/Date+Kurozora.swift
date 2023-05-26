@@ -115,6 +115,13 @@ extension Date {
 		return dateFormatter.string(from: self)
 	}
 
+	/// Formats the date as a 24 hour time.
+	func convertTo24Hour() -> String {
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "HH:mm:ss"
+		return dateFormatter.string(from: self)
+	}
+
 	/// Return device's system uptime.
 	///
 	/// - Returns: device's system uptime.

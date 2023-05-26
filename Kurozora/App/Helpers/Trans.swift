@@ -650,6 +650,16 @@ struct Trans {
 											 comment: "The string for the 'follow our story on Medium' settings option.")
 
 	// MARK: - Misc
+	/// The string for the word 'apply'.
+	///
+	/// - Tag: Trans-apply
+	static let apply: String = String(localized: "Apply",
+									  comment: "The string for the word 'apply'.")
+	/// The string for the word 'reset'.
+	///
+	/// - Tag: Trans-reset
+	static let reset: String = String(localized: "Reset",
+									  comment: "The string for the word 'reset'.")
 	/// The string for the word 'discover'.
 	///
 	/// - Tag: Trans-discover
