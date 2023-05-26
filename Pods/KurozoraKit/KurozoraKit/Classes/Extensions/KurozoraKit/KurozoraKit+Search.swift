@@ -5,7 +5,6 @@
 //  Created by Khoren Katklian on 21/05/2022.
 //
 
-import Alamofire
 import TRON
 
 extension KurozoraKit {
@@ -18,30 +17,98 @@ extension KurozoraKit {
 	///	   - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
 	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 5 and the maximum value is 25.
 	///
-	/// - Returns: An instance of `DataTask` with the results of the request.
-	public func search(_ scope: KKSearchScope, of types: [KKSearchType], for query: String, next: String? = nil, limit: Int = 5) -> DataTask<SearchResponse> {
-		let showsSearch = next ?? KKEndpoint.Search.index.endpointValue
-		let request: APIRequest<SearchResponse, KKAPIError> = tron.codable.request(showsSearch).buildURL(.relativeToBaseURL)
-
-		request.headers = headers
+	/// - Returns: An instance of `RequestSender` with the results of the search response.
+	public func search(_ scope: KKSearchScope, of types: [KKSearchType], for query: String, next: String? = nil, limit: Int = 5, filter: KKSearchFilter?) -> RequestSender<SearchResponse, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
 		if !self.authenticationKey.isEmpty {
-			request.headers.add(.authorization(bearerToken: self.authenticationKey))
+			headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
+		// Prepare parameters
+		var parameters: [String: Any] = [:]
 		if next == nil {
 			let types: [String] = types.map { kkSearchType in
 				return kkSearchType.rawValue
 			}
 
-			request.parameters = [
+			parameters = [
 				"scope": scope.queryValue,
 				"types": types,
 				"query": query,
 				"limit": limit
 			]
+
+			if let filter = filter {
+				var filters: [String: Any] = [:]
+
+				switch filter {
+				case .appTheme(let filter as Filterable),
+						.character(let filter as Filterable),
+						.episode(let filter as Filterable),
+						.game(let filter as Filterable),
+						.literature(let filter as Filterable),
+						.person(let filter as Filterable),
+						.show(let filter as Filterable),
+						.song(let filter as Filterable),
+						.studio(let filter as Filterable),
+						.user(let filter as Filterable):
+					filters = filter.toFilterArray().compactMapValues { value in
+						return value
+					}
+				}
+
+				parameters.merge(filters) { current, _ in
+					return current
+				}
+			}
 		}
 
-		request.method = .get
-		return request.perform().serializingDecodable(SearchResponse.self, decoder: self.tron.codable.modelDecoder)
+		// Prepare request
+		let searchIndex = next ?? KKEndpoint.Search.index.endpointValue
+		let request: APIRequest<SearchResponse, KKAPIError> = tron.codable.request(searchIndex).buildURL(.relativeToBaseURL)
+			.method(.get)
+			.parameters(parameters)
+			.headers(headers)
+
+		// Send request
+		return request.sender()
+	}
+
+	/// Fetch a list of resources matching the search query.
+	///
+	/// - Parameters:
+	///    - scope: The scope of the search.
+	///    - types: The types of the search.
+	///    - query: The search query.
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the search suggestions response.
+	public func getSearchSuggestions(_ scope: KKSearchScope, of types: [KKSearchType], for query: String) -> RequestSender<SearchSuggestionsResponse, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
+		if !self.authenticationKey.isEmpty {
+			headers.add(.authorization(bearerToken: self.authenticationKey))
+		}
+
+		// Prepare parameters
+		let types: [String] = types.map { kkSearchType in
+			return kkSearchType.rawValue
+		}
+
+		let parameters: [String : Any] = [
+			"scope": scope.queryValue,
+			"types": types,
+			"query": query
+		]
+
+		// Prepare request
+		let searchSuggestions = KKEndpoint.Search.suggestions.endpointValue
+		let request: APIRequest<SearchSuggestionsResponse, KKAPIError> = tron.codable.request(searchSuggestions).buildURL(.relativeToBaseURL)
+			.method(.get)
+			.parameters(parameters)
+			.headers(headers)
+
+		// Send request
+		return request.sender()
 	}
 }

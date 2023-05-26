@@ -19,7 +19,7 @@ extension KurozoraKit {
 	///    - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
 	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
 	///
-	/// - Returns: An instance of `RequestSender` with the results of the get episode detail response.
+	/// - Returns: An instance of `RequestSender` with the results of the get library response.
 	public func getLibrary(_ libraryKind: KKLibrary.Kind, withLibraryStatus libraryStatus: KKLibrary.Status, withSortType sortType: KKLibrary.SortType, withSortOption sortOption: KKLibrary.SortType.Options, next: String? = nil, limit: Int = 25) -> RequestSender<LibraryResponse, KKAPIError> {
 		// Prepare headers
 		var headers = self.headers
@@ -53,7 +53,7 @@ extension KurozoraKit {
 	///    - libraryStatus: The library status to assign to the item.
 	///    - modelID: The id of the model to add.
 	///
-	/// - Returns: An instance of `RequestSender` with the results of the get episode detail response.
+	/// - Returns: An instance of `RequestSender` with the results of the add to library response.
 	public func addToLibrary(_ libraryKind: KKLibrary.Kind, withLibraryStatus libraryStatus: KKLibrary.Status, modelID: String) -> RequestSender<LibraryUpdateResponse, KKAPIError> {
 		// Prepare headers
 		var headers = self.headers
@@ -83,7 +83,7 @@ extension KurozoraKit {
 	///    - libraryKind: From which library to delete the item.
 	///    - modelID: The id of the model to be deleted.
 	///
-	/// - Returns: An instance of `RequestSender` with the results of the get episode detail response.
+	/// - Returns: An instance of `RequestSender` with the results of the remove from library response.
 	public func removeFromLibrary(_ libraryKind: KKLibrary.Kind, modelID: String) -> RequestSender<LibraryUpdateResponse, KKAPIError> {
 		// Prepare headers
 		var headers = self.headers
@@ -114,7 +114,7 @@ extension KurozoraKit {
 	///    - behavior: The preferred behavior of importing the file.
 	///    - filePath: The path to the file to be imported.
 	///
-	/// - Returns: An instance of `RequestSender` with the results of the get episode detail response.
+	/// - Returns: An instance of `RequestSender` with the results of the import to library response.
 	public func importToLibrary(_ libraryKind: KKLibrary.Kind, importService service: LibraryImport.Service, importBehavior behavior: LibraryImport.Behavior, filePath: URL) -> RequestSender<KKSuccess, KKAPIError> {
 		// Prepare headers
 		var headers: HTTPHeaders = [

@@ -1,16 +1,16 @@
 PODS:
-  - Alamofire (5.6.4)
+  - Alamofire (5.7.1)
   - Cosmos (23.0.0)
   - ESTabBarController-swift (2.8.0)
   - FLEX (5.22.10)
   - IQKeyboardManagerSwift (6.5.11)
   - KeychainAccess (4.2.2)
-  - Kingfisher (7.6.2)
-  - KurozoraKit (1.6.0):
+  - Kingfisher (7.7.0)
+  - KurozoraKit (1.7.0):
     - KeychainAccess
     - TRON (= 5.5.0-beta.1)
   - Pageboy (4.0.2)
-  - R.swift (7.3.0)
+  - R.swift (7.3.2)
   - ReachabilitySwift (5.0.0)
   - Solar (2.1.0)
   - SPConfetti (1.4.0)
@@ -109,16 +109,16 @@ CHECKOUT OPTIONS:
     :git: https://github.com/armendh/XCDYouTubeKit
 
 SPEC CHECKSUMS:
-  Alamofire: 4e95d97098eacb88856099c4fc79b526a299e48c
+  Alamofire: 0123a34370cb170936ae79a8df46cc62b2edeb88
   Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
   ESTabBarController-swift: 05593a6ad64700b03c0eb60ff625916370aa4136
   FLEX: f21ee4f498eed3f8a1eded66b21939fd3b7a22ce
   IQKeyboardManagerSwift: c7955c0bdbf7b2eb29bb7daaa44e3d90f55a9a85
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
-  Kingfisher: 6c5449c6450c5239166510ba04afe374a98afc4f
-  KurozoraKit: 3635c2c8377eebf281aa92e8752230dd50a92bd5
+  Kingfisher: f043ac666dfc96c1f37604f93effb45a7ee3a3e1
+  KurozoraKit: 3aba52b0546168cfdc262bf687402a637f3267b5
   Pageboy: 34ff11e8d1041b81769d5bcde9b19a0cb7218bd9
-  R.swift: cef1c530541cb49412752721797f10dae6b32d11
+  R.swift: 0af0d882f49f03711415cb4e5215daa977d8a480
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
   SPConfetti: 4ba720ff652d960f59c3e4eadee2c0c3ef6ce9a4
@@ -132,4 +132,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 98485e86b0eb8ea37ce9df3c8a8d377261f68f27
 
-COCOAPODS: 1.12.0
+COCOAPODS: 1.12.1

@@ -40,46 +40,6 @@ extension KurozoraKit {
 		return request.sender()
 	}
 
-	/// Fetch the song details for the given song identity.
-	///
-	/// - Parameters:
-	///    - songIdentity: The identity of the song for which the details should be fetched.
-	///    - relationships: The relationships to include in the response.
-	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-	///    - result: A value that represents either a success or a failure, including an associated value in each case.
-	@discardableResult
-	public func getDetails(forSong songIdentity: SongIdentity, including relationships: [String] = [], completion completionHandler: @escaping (_ result: Result<SongResponse, KKAPIError>) -> Void) -> DataRequest {
-		// Prepare headers
-		var headers = self.headers
-		if !self.authenticationKey.isEmpty {
-			headers.add(.authorization(bearerToken: self.authenticationKey))
-		}
-
-		// Prepare parameters
-		var parameters: [String: Any] = [:]
-		if !relationships.isEmpty {
-			parameters["include"] = relationships.joined(separator: ",")
-		}
-
-		// Prepare request
-		let songsDetails = KKEndpoint.Songs.details(songIdentity).endpointValue
-		let request: APIRequest<SongResponse, KKAPIError> = tron.codable.request(songsDetails)
-			.method(.get)
-			.parameters(parameters)
-			.headers(headers)
-
-		// Send request
-		return request.perform(withSuccess: { songResponse in
-			completionHandler(.success(songResponse))
-		}, failure: { error in
-			print("❌ Received get show details error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message)
-			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
-			print("└ Failure reason:", error.failureReason ?? "No reason available")
-			completionHandler(.failure(error))
-		})
-	}
-
 	///	Fetch the shows for the given song identity.
 	///
 	/// - Parameters:

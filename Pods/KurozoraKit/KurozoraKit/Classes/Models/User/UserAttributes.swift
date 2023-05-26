@@ -67,14 +67,20 @@ extension User {
 		/// The reputation count of the user.
 		public let reputationCount: Int
 
+		/// The user's preferred language.
+		public let preferredLanguage: String?
+
+		/// The user's preferred TV rating.
+		public let preferredTVRating: Int?
+
+		/// Whether the user can change their username.
+		public let canChangeUsername: Bool?
+
 		/// Whether the user is followed by the current user.
 		fileprivate var isFollowed: Bool?
 
 		/// The follow status of the user.
 		fileprivate var _followStatus: FollowStatus?
-
-//		/// Whether the app theme has been bought by the user.
-//		public let appThemeBought: Bool?
 	}
 }
 

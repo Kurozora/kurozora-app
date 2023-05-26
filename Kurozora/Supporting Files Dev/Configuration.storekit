@@ -105,9 +105,39 @@
           "locale" : "en_US"
         }
       ],
-      "productID" : "app.kurozora.temporary.nonConsumable.kurozoraOne",
+      "productID" : "app.kurozora.temporary.kurozoraOne",
       "referenceName" : "Kurozora One",
       "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "49.99",
+      "familyShareable" : false,
+      "internalID" : "09FAC3F9",
+      "localizations" : [
+        {
+          "description" : "A tip endangering the survival of universe.",
+          "displayName" : "Extraterrestrial tip",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "app.kurozora.temporary.extraterrestrialTip",
+      "referenceName" : "Extraterrestrial tip 👽",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "99.99",
+      "familyShareable" : false,
+      "internalID" : "BB753F9F",
+      "localizations" : [
+        {
+          "description" : "A tip endangering the survival of multiverse.",
+          "displayName" : "Eternal tip",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "app.kurozora.temporary.eternalTip",
+      "referenceName" : "Eternal tip ♾️",
+      "type" : "Consumable"
     }
   ],
   "settings" : {
@@ -126,6 +156,9 @@
       "subscriptions" : [
         {
           "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
 
           ],
           "displayPrice" : "3.99",
@@ -154,6 +187,9 @@
           "adHocOffers" : [
 
           ],
+          "codeOffers" : [
+
+          ],
           "displayPrice" : "11.99",
           "familyShareable" : false,
           "groupNumber" : 1,
@@ -178,6 +214,9 @@
         },
         {
           "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
 
           ],
           "displayPrice" : "18.99",
@@ -206,7 +245,7 @@
     }
   ],
   "version" : {
-    "major" : 1,
-    "minor" : 1
+    "major" : 2,
+    "minor" : 0
   }
 }

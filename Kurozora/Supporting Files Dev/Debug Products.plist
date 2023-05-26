@@ -2,7 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>app.kurozora.temporary.nonConsumable.kurozoraOne</key>
+	<key>app.kurozora.temporary.kurozoraOne</key>
 	<string>Kurozora One</string>
 	<key>app.kurozora.temporary.wolfTip</key>
 	<string>🐺</string>
@@ -14,6 +14,10 @@
 	<string>🐲</string>
 	<key>app.kurozora.temporary.godTip</key>
 	<string>🙏</string>
+	<key>app.kurozora.temporary.extraterrestrialTip</key>
+	<string>👽</string>
+	<key>app.kurozora.temporary.eternalTip</key>
+	<string>♾️</string>
 	<key>app.kurozora.temporary.kurozoraPlus1Month</key>
 	<string>One Month</string>
 	<key>app.kurozora.temporary.kurozoraPlus6Months</key>

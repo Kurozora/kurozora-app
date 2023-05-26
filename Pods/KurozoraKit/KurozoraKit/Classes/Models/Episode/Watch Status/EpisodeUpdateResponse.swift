@@ -1,5 +1,5 @@
 //
-//  FavoriteShowResponse.swift
+//  EpisodeUpdateResponse.swift
 //  KurozoraKit
 //
 //  Created by Khoren Katklian on 13/08/2020.

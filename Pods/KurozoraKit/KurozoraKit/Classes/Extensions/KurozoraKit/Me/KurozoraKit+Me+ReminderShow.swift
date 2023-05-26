@@ -13,63 +13,57 @@ extension KurozoraKit {
 	/// - Parameters:
 	///    - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
 	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
-	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-	///    - result: A value that represents either a success or a failure, including an associated value in each case.
-	public func getReminderShows(next: String? = nil, limit: Int = 25, completion completionHandler: @escaping (_ result: Result<ShowResponse, KKAPIError>) -> Void) {
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the get reminders response.
+	public func getReminders(from libraryKind: KKLibrary.Kind, next: String? = nil, limit: Int = 25) -> RequestSender<ShowResponse, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
+		headers.add(.authorization(bearerToken: self.authenticationKey))
+
+		// Prepare parameters
+		let parameters: [String: Any] = [
+			"library": libraryKind.rawValue,
+			"limit": limit
+		]
+
+		// Prepare request
 		let meReminderShowIndex = next ?? KKEndpoint.Me.ReminderShow.index.endpointValue
 		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(meReminderShowIndex).buildURL(.relativeToBaseURL)
+			.method(.get)
+			.parameters(parameters)
+			.headers(headers)
 
-		request.headers = headers
-		request.headers.add(.authorization(bearerToken: self.authenticationKey))
-
-		request.parameters["limit"] = limit
-
-		request.method = .get
-		request.perform(withSuccess: { showResponse in
-			completionHandler(.success(showResponse))
-		}, failure: { [weak self] error in
-			guard let self = self else { return }
-			if self.services.showAlerts {
-				UIApplication.topViewController?.presentAlertController(title: "Can't Get Reminders 😔", message: error.message)
-			}
-			print("❌ Received get reminder show error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message)
-			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
-			print("└ Failure reason:", error.failureReason ?? "No reason available")
-			completionHandler(.failure(error))
-		})
+		// Send request
+		return request.sender()
 	}
 
-	/// Update the `ReminderStatus` value of a show in the authenticated user's library.
+	/// Update the `ReminderStatus` value of a model in the authenticated user's library.
 	///
 	/// - Parameters:
-	///    - showID: The id of the show whose reminder status should be updated.
-	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-	///    - result: A value that represents either a success or a failure, including an associated value in each case.
-	public func updateReminderStatus(forShow showID: String, completion completionHandler: @escaping (_ result: Result<ReminderStatus, KKAPIError>) -> Void) {
+	///    - libraryKind: To which library the model belongs.
+	///    - modelID: The id of the model whose reminder status should be updated.
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the update reminder status response.
+	public func updateReminderStatus(inLibrary libraryKind: KKLibrary.Kind, modelID: String) -> RequestSender<ReminderShowResponse, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
+		headers.add(.authorization(bearerToken: self.authenticationKey))
+
+		// Prepare parameters
+		let parameters: [String: Any] = [
+			"library": libraryKind.rawValue,
+			"model_id": modelID
+		]
+
+		// Prepare request
 		let meReminderShowUpdate = KKEndpoint.Me.ReminderShow.update.endpointValue
 		let request: APIRequest<ReminderShowResponse, KKAPIError> = tron.codable.request(meReminderShowUpdate)
+			.method(.post)
+			.parameters(parameters)
+			.headers(headers)
 
-		request.headers = headers
-		request.headers.add(.authorization(bearerToken: self.authenticationKey))
-
-		request.method = .post
-		request.parameters = [
-			"anime_id": showID,
-		]
-		request.perform(withSuccess: { reminderShowResponse in
-			completionHandler(.success(reminderShowResponse.data.reminderStatus))
-		}, failure: { [weak self] error in
-			guard let self = self else { return }
-			if self.services.showAlerts {
-				UIApplication.topViewController?.presentAlertController(title: "Can't Update Reminder Status 😔", message: error.message)
-			}
-			print("❌ Received update reminder status error", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message)
-			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
-			print("└ Failure reason:", error.failureReason ?? "No reason available")
-			completionHandler(.failure(error))
-		})
+		// Send request
+		return request.sender()
 	}
 
 	/// The reminder subscription url of the authenticated user.

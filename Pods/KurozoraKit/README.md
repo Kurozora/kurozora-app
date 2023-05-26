@@ -1,7 +1,7 @@
-<p align="center"><img src=".github/Assets/KurozoraKit_icon.png"></p>
+<p align="center"><img src=".github/Assets/KurozoraKit_icon.png" width="256px"></p>
 
 <p align="center">
-    <sup><b>KurozoraKit</b></sup>
+    <sup><b>The magic behind Kurozora app</b></sup>
 </p>
 
 # KurozoraKit [![Swift 5](https://img.shields.io/badge/Swift%205-white.svg?style=flat&logo=Swift)](https://swift.org)  [![Apple Platform](https://img.shields.io/badge/iOS%20|%20ipadOS%20|%20macOS-black?style=flat&logo=Apple)](https://apple.co/3CsQlKq) [![Kurozora Discord Server](https://img.shields.io/discord/449250093623934977?style=flat&label=&logo=Discord&logoColor=white&color=7289DA)](https://discord.gg/f3QFzGqsah) [![Documentation](https://img.shields.io/badge/Documentation-100%25-green.svg?style=flat)](https://developer.kurozora.app/KurozoraKit) [![License](https://img.shields.io/badge/License-GPLv3-blue.svg?style=flat)](LICENSE)
@@ -20,7 +20,7 @@ KurozoraKit is designed to be:
 
 # Requirements
 
-KurozoraKit has been tested to work on iOS 15.0+ and macOS 12+.  It also works best with Swift 5.0+
+KurozoraKit has been tested to work on iOS 15.0+ and macOS 12+. It also works best with Swift 5.0+
 
 To use KurozoraKit in your project, you need to install it first.
 
@@ -89,12 +89,13 @@ If you have any questions or just want to say hi, join the Kurozora [Discord](ht
 
 # More by Kurozora
 
-- [Kurozora Web](https://github.com/kurozora/kurozora-web) — Home to the Kurozora website and API.
-- [Kurozora iOS App](https://github.com/kurozora/kurozora-app) — iOS/iPadOS/MacOS client app.
-- [Kurozora Web Extension](https://github.com/Kurozora/kurozora-extension) — The Ultimate Search Engine for Anime, Manga and Game Fans.
-- [Kurozora Discord Bot](https://github.com/kurozora/kurozora-discord-bot) — A versatile Discord bot with access to Kurozora services.
-- [Kurozora Android App](https://github.com/kurozora/kurozora-android) — Android client app.
+- [Kurozora Android App](https://github.com/kurozora/kurozora-android) — Android client app
+- [Kurozora Discord Bot](https://github.com/kurozora/kurozora-discord-bot) — A versatile Discord bot with access to Kurozora services
+- [Kurozora iOS App](https://github.com/kurozora/kurozora-app) — iOS/iPadOS/MacOS client app
+- [Kurozora Linux App](https://github.com/kurozora/kurozora-linux) — Linux client app
+- [Kurozora Web](https://github.com/kurozora/kurozora-web) — Home to the Kurozora website and API
+- [Kurozora Web Extension](https://github.com/Kurozora/kurozora-extension) — Anime, Manga and Game search engine for FireFox and Chrome
 
 # License
 
-Kurozora-web is an Open Source project covered by the [GNU General Public License v3.0](LICENSE).
+KurozoraKit is an Open Source project covered by the [MIT License](LICENSE).

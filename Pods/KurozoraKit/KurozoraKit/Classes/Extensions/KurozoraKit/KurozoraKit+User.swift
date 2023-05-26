@@ -116,13 +116,9 @@ extension KurozoraKit {
 		return request.perform(withSuccess: { [weak self] oAuthResponse in
 			guard let self = self else { return }
 			self.authenticationKey = oAuthResponse.authenticationToken
-			if let user = oAuthResponse.data?.first {
-				User.current = user
-			}
+			User.current = oAuthResponse.data?.first
 			completionHandler(.success(oAuthResponse))
-			if oAuthResponse.data?.first != nil {
-				NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
-			}
+			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
 			UIView().endEditing(true)
@@ -249,28 +245,23 @@ extension KurozoraKit {
 	///
 	/// - Parameters:
 	///    - userIdentity: The identity of the user whose profile details should be fetched.
-	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-	///    - result: A value that represents either a success or a failure, including an associated value in each case.
-	@discardableResult
-	public func getDetails(forUser userIdentity: UserIdentity, completion completionHandler: @escaping (_ result: Result<[User], KKAPIError>) -> Void) -> DataRequest {
-		let usersProfile = KKEndpoint.Users.profile(userIdentity).endpointValue
-		let request: APIRequest<UserResponse, KKAPIError> = tron.codable.request(usersProfile)
-
-		request.headers = headers
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the get user details response.
+	public func getDetails(forUser userIdentity: UserIdentity) -> RequestSender<UserResponse, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
 		if !self.authenticationKey.isEmpty {
-			request.headers.add(.authorization(bearerToken: self.authenticationKey))
+			headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
-		request.method = .get
-		return request.perform(withSuccess: { userResponse in
-			completionHandler(.success(userResponse.data))
-		}, failure: { error in
-			print("❌ Received user profile error:", error.errorDescription ?? "Unknown error")
-			print("┌ Server message:", error.message)
-			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
-			print("└ Failure reason:", error.failureReason ?? "No reason available")
-			completionHandler(.failure(error))
-		})
+		// Prepare request
+		let usersProfile = KKEndpoint.Users.profile(userIdentity).endpointValue
+		let request: APIRequest<UserResponse, KKAPIError> = tron.codable.request(usersProfile)
+			.method(.get)
+			.headers(headers)
+
+		// Send request
+		return request.sender()
 	}
 
 	/// Search for a user using the given username.

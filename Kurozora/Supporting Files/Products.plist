@@ -14,6 +14,10 @@
 	<string>🐲</string>
 	<key>app.kurozora.consumable.godTip</key>
 	<string>🙏</string>
+	<key>app.kurozora.consumable.extraterrestrialTip</key>
+	<string>👽</string>
+	<key>app.kurozora.consumable.eternalTip</key>
+	<string>♾️</string>
 	<key>app.kurozora.autoRenewableSubscription.kPlus1Month</key>
 	<string>One Month</string>
 	<key>app.kurozora.autoRenewableSubscription.kPlus6Months</key>

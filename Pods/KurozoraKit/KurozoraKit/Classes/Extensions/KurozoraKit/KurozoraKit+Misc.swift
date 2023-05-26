@@ -12,15 +12,19 @@ extension KurozoraKit {
 	///
 	/// - Returns: An instance of `RequestSender` with the results of the meta response.
 	public func getInfo() -> RequestSender<MetaResponse, KKAPIError> {
-		let metaRepsonse = KKEndpoint.Misc.info.endpointValue
-		let request: APIRequest<MetaResponse, KKAPIError> = tron.codable.request(metaRepsonse)
-
-		request.headers = headers
+		// Prepare headers
+		var headers = self.headers
 		if !self.authenticationKey.isEmpty {
-			request.headers.add(.authorization(bearerToken: self.authenticationKey))
+			headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
-		request.method = .get
+		// Prepare request
+		let metaRepsonse = KKEndpoint.Misc.info.endpointValue
+		let request: APIRequest<MetaResponse, KKAPIError> = tron.codable.request(metaRepsonse)
+			.method(.get)
+			.headers(headers)
+
+		// Send request
 		return request.sender()
 	}
 
@@ -28,15 +32,19 @@ extension KurozoraKit {
 	///k
 	/// - Returns: An instance of `RequestSender` with the results of the settings response.
 	public func getSettings() -> RequestSender<SettingsResponse, KKAPIError> {
-		let settingsRepsonse = KKEndpoint.Misc.settings.endpointValue
-		let request: APIRequest<SettingsResponse, KKAPIError> = tron.codable.request(settingsRepsonse)
-
-		request.headers = headers
+		// Prepare headers
+		var headers = self.headers
 		if !self.authenticationKey.isEmpty {
-			request.headers.add(.authorization(bearerToken: self.authenticationKey))
+			headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
-		request.method = .get
+		// Prepare request
+		let settingsRepsonse = KKEndpoint.Misc.settings.endpointValue
+		let request: APIRequest<SettingsResponse, KKAPIError> = tron.codable.request(settingsRepsonse)
+			.method(.get)
+			.headers(headers)
+
+		// Send request
 		return request.sender()
 	}
 }
