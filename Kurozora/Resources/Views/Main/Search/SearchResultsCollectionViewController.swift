@@ -33,11 +33,15 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	/// The collection of discover suggestions.
 	var discoverSuggestions: [String] = []
 
-	public var filters: [KKSearchType] = [] {
+	/// The collection of search types in the current search request
+	var searchTypes: [KKSearchType] = [] {
 		didSet {
 			self.reloadView()
 		}
 	}
+
+	/// The search filters applied to the respective search type
+	var searchFilters: [KKSearchType: KKSearchFilter?] = [:]
 
 	var characters: [IndexPath: Character] = [:]
 	var episodes: [IndexPath: Episode] = [:]
@@ -75,8 +79,8 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	/// The index path of the song that's currently playing.
 	var currentPlayerIndexPath: IndexPath?
 
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
-	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
+	var dataSource: UICollectionViewDiffableDataSource<SearchResults.Section, SearchResults.Item>! = nil
+	var snapshot: NSDiffableDataSourceSnapshot<SearchResults.Section, SearchResults.Item>! = nil
 	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
 
 	/// Whether a fetch request is currently in progress.
@@ -160,7 +164,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 
 	func updateBar(to position: CGFloat?, animated: Bool, direction: TMBarUpdateDirection) {
 		let animation = TMAnimation(isEnabled: animated, duration: 0.25)
-		self.tabBarView.update(for: position ?? 0.0, capacity: self.filters.count, direction: .forward, animation: animation)
+		self.tabBarView.update(for: position ?? 0.0, capacity: self.searchTypes.count, direction: .forward, animation: animation)
 	}
 
 	fileprivate func styleTabBarView() {
@@ -237,6 +241,9 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	/// - Parameters:
 	///    - query: The string which to search for.
 	///    - searchScope: The scope in which the text should be searched.
+	///    - types: The search types.
+	///    - filter: The filter applied to the search request.
+	///    - next: The URL string of the next page in the paginated response. Use nil to get first page.
 	///    - resettingResults: Whether to reset the results.
 	func performSearch(with query: String, in searchScope: KKSearchScope, for types: [KKSearchType], with filter: KKSearchFilter?, next: String?, resettingResults: Bool = true) {
 		// Prepare view for search
@@ -247,7 +254,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 			self._prefersActivityIndicatorHidden = false
 
 			// Reset results
-			self.resetSearchResults()
+			self.resetSearchResults(for: types.count > 1 ? nil : types.first)
 		}
 
 		// Decide with wich endpoint to perform the search
@@ -256,14 +263,14 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 			Task { [weak self] in
 				guard let self = self else { return }
 				let types: [KKSearchType] = self.searchResults != nil ? types : [.shows, .literatures, .games, .episodes, .characters, .people, .songs, .studios, .users]
-				await self.search(scope: searchScope, types: types, query: query, next: next, filter: nil)
+				await self.search(scope: searchScope, types: types, query: query, next: next, filter: filter)
 			}
 		case .library:
 			WorkflowController.shared.isSignedIn { [weak self] in
 				Task {
 					guard let self = self else { return }
 					let types: [KKSearchType] = self.searchResults != nil ? types : [.shows, .literatures, .games]
-					await self.search(scope: searchScope, types: types, query: query, next: next, filter: nil)
+					await self.search(scope: searchScope, types: types, query: query, next: next, filter: filter)
 				}
 			}
 		}
@@ -286,36 +293,65 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 
 			if types.count > 1 {
 				self.searchResults = searchResponse.data
+
+				self.characterNextPageURL = searchResponse.data.characters?.next ?? self.characterNextPageURL
+				self.episodeNextPageURL = searchResponse.data.episodes?.next ?? self.episodeNextPageURL
+				self.personNextPageURL = searchResponse.data.people?.next ?? self.personNextPageURL
+				self.showNextPageURL = searchResponse.data.shows?.next ?? self.showNextPageURL
+				self.literatureNextPageURL = searchResponse.data.literatures?.next ?? self.literatureNextPageURL
+				self.gameNextPageURL = searchResponse.data.games?.next ?? self.gameNextPageURL
+				self.songNextPageURL = searchResponse.data.songs?.next ?? self.songNextPageURL
+				self.studioNextPageURL = searchResponse.data.studios?.next ?? self.studioNextPageURL
+				self.userNextPageURL = searchResponse.data.users?.next ?? self.userNextPageURL
+
+				self.characterIdentities.append(contentsOf: searchResponse.data.characters?.data ?? [])
+				self.episodeIdentities.append(contentsOf: searchResponse.data.episodes?.data ?? [])
+				self.personIdentities.append(contentsOf: searchResponse.data.people?.data ?? [])
+				self.showIdentities.append(contentsOf: searchResponse.data.shows?.data ?? [])
+				self.literatureIdentities.append(contentsOf: searchResponse.data.literatures?.data ?? [])
+				self.gameIdentities.append(contentsOf: searchResponse.data.games?.data ?? [])
+				self.songIdentities.append(contentsOf: searchResponse.data.songs?.data ?? [])
+				self.studioIdentities.append(contentsOf: searchResponse.data.studios?.data ?? [])
+				self.userIdentities.append(contentsOf: searchResponse.data.users?.data ?? [])
+
+				// Determine search types
+				self.searchTypes = self.determineResultTypes()
+
+				// Update search bar
+				self.kSearchController.searchBar.setShowsScope(false, animated: true)
+				self.kSearchController.searchBar.showsBookmarkButton = true
+				self.setShowToolbar(true)
+			} else if let searchType = types.first {
+				switch searchType {
+				case .characters:
+					self.characterNextPageURL = searchResponse.data.characters?.next ?? self.characterNextPageURL
+					self.characterIdentities.append(contentsOf: searchResponse.data.characters?.data ?? [])
+				case .episodes:
+					self.episodeNextPageURL = searchResponse.data.episodes?.next ?? self.episodeNextPageURL
+					self.episodeIdentities.append(contentsOf: searchResponse.data.episodes?.data ?? [])
+				case .games:
+					self.gameNextPageURL = searchResponse.data.games?.next ?? self.gameNextPageURL
+					self.gameIdentities.append(contentsOf: searchResponse.data.games?.data ?? [])
+				case .literatures:
+					self.literatureNextPageURL = searchResponse.data.literatures?.next ?? self.literatureNextPageURL
+					self.literatureIdentities.append(contentsOf: searchResponse.data.literatures?.data ?? [])
+				case .people:
+					self.personNextPageURL = searchResponse.data.people?.next ?? self.personNextPageURL
+					self.personIdentities.append(contentsOf: searchResponse.data.people?.data ?? [])
+				case .shows:
+					self.showNextPageURL = searchResponse.data.shows?.next ?? self.showNextPageURL
+					self.showIdentities.append(contentsOf: searchResponse.data.shows?.data ?? [])
+				case .songs:
+					self.songNextPageURL = searchResponse.data.songs?.next ?? self.songNextPageURL
+					self.songIdentities.append(contentsOf: searchResponse.data.songs?.data ?? [])
+				case .studios:
+					self.studioNextPageURL = searchResponse.data.studios?.next ?? self.studioNextPageURL
+					self.studioIdentities.append(contentsOf: searchResponse.data.studios?.data ?? [])
+				case .users:
+					self.userNextPageURL = searchResponse.data.users?.next ?? self.userNextPageURL
+					self.userIdentities.append(contentsOf: searchResponse.data.users?.data ?? [])
+				}
 			}
-
-			self.characterNextPageURL = searchResponse.data.characters?.next ?? self.characterNextPageURL
-			self.episodeNextPageURL = searchResponse.data.episodes?.next ?? self.episodeNextPageURL
-			self.personNextPageURL = searchResponse.data.people?.next ?? self.personNextPageURL
-			self.showNextPageURL = searchResponse.data.shows?.next ?? self.showNextPageURL
-			self.literatureNextPageURL = searchResponse.data.literatures?.next ?? self.literatureNextPageURL
-			self.gameNextPageURL = searchResponse.data.games?.next ?? self.gameNextPageURL
-			self.songNextPageURL = searchResponse.data.songs?.next ?? self.songNextPageURL
-			self.studioNextPageURL = searchResponse.data.studios?.next ?? self.studioNextPageURL
-			self.userNextPageURL = searchResponse.data.users?.next ?? self.userNextPageURL
-
-			self.characterIdentities.append(contentsOf: searchResponse.data.characters?.data ?? [])
-			self.episodeIdentities.append(contentsOf: searchResponse.data.episodes?.data ?? [])
-			self.personIdentities.append(contentsOf: searchResponse.data.people?.data ?? [])
-			self.showIdentities.append(contentsOf: searchResponse.data.shows?.data ?? [])
-			self.literatureIdentities.append(contentsOf: searchResponse.data.literatures?.data ?? [])
-			self.gameIdentities.append(contentsOf: searchResponse.data.games?.data ?? [])
-			self.songIdentities.append(contentsOf: searchResponse.data.songs?.data ?? [])
-			self.studioIdentities.append(contentsOf: searchResponse.data.studios?.data ?? [])
-			self.userIdentities.append(contentsOf: searchResponse.data.users?.data ?? [])
-
-			// Show toolbar
-			self.filters = self.determineResultTypes()
-
-			self.kSearchController.searchBar.setShowsScope(false, animated: true)
-			self.currentTopContentInset = self.collectionView.contentInset.top
-			self.collectionView.contentInset.top = 62
-			self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset
-			self.toolbar.isHidden = false
 
 			// Update data source.
 			self.updateDataSource()
@@ -365,38 +401,79 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	}
 
 	/// Sets all search results to nil and reloads the table view
-	fileprivate func resetSearchResults() {
-		self.searchResults = nil
+	fileprivate func resetSearchResults(for type: KKSearchType?) {
+		if let type = type {
+			switch type {
+			case .characters:
+				self.characterIdentities = []
+				self.characterNextPageURL = nil
+				self.characters = [:]
+			case .episodes:
+				self.episodeIdentities = []
+				self.episodeNextPageURL = nil
+				self.episodes = [:]
+			case .games:
+				self.gameIdentities = []
+				self.gameNextPageURL = nil
+				self.games = [:]
+			case .literatures:
+				self.literatureIdentities = []
+				self.literatureNextPageURL = nil
+				self.literatures = [:]
+			case .people:
+				self.personIdentities = []
+				self.personNextPageURL = nil
+				self.people = [:]
+			case .shows:
+				self.showIdentities = []
+				self.showNextPageURL = nil
+				self.shows = [:]
+			case .songs:
+				self.songIdentities = []
+				self.songNextPageURL = nil
+				self.songs = [:]
+			case .studios:
+				self.studioIdentities = []
+				self.studioNextPageURL = nil
+				self.studios = [:]
+			case .users:
+				self.userIdentities = []
+				self.userNextPageURL = nil
+				self.users = [:]
+			}
+		} else {
+			self.searchResults = nil
 
-		self.characterIdentities = []
-		self.episodeIdentities = []
-		self.personIdentities = []
-		self.showIdentities = []
-		self.literatureIdentities = []
-		self.gameIdentities = []
-		self.songIdentities = []
-		self.studioIdentities = []
-		self.userIdentities = []
+			self.characterIdentities = []
+			self.episodeIdentities = []
+			self.personIdentities = []
+			self.showIdentities = []
+			self.literatureIdentities = []
+			self.gameIdentities = []
+			self.songIdentities = []
+			self.studioIdentities = []
+			self.userIdentities = []
 
-		self.characterNextPageURL = nil
-		self.episodeNextPageURL = nil
-		self.personNextPageURL = nil
-		self.showNextPageURL = nil
-		self.literatureNextPageURL = nil
-		self.gameNextPageURL = nil
-		self.songNextPageURL = nil
-		self.studioNextPageURL = nil
-		self.userNextPageURL = nil
+			self.characterNextPageURL = nil
+			self.episodeNextPageURL = nil
+			self.personNextPageURL = nil
+			self.showNextPageURL = nil
+			self.literatureNextPageURL = nil
+			self.gameNextPageURL = nil
+			self.songNextPageURL = nil
+			self.studioNextPageURL = nil
+			self.userNextPageURL = nil
 
-		self.characters = [:]
-		self.episodes = [:]
-		self.people = [:]
-		self.shows = [:]
-		self.literatures = [:]
-		self.games = [:]
-		self.songs = [:]
-		self.studios = [:]
-		self.users = [:]
+			self.characters = [:]
+			self.episodes = [:]
+			self.people = [:]
+			self.shows = [:]
+			self.literatures = [:]
+			self.games = [:]
+			self.songs = [:]
+			self.studios = [:]
+			self.users = [:]
+		}
 
 		self.updateDataSource()
 	}
@@ -408,6 +485,17 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		} catch {
 			print(error.localizedDescription)
 		}
+	}
+
+	func setShowToolbar(_ show: Bool) {
+		if show {
+			self.currentTopContentInset = self.collectionView.contentInset.top
+		}
+
+		self.collectionView.contentInset.top = show ? 62.0 : self.currentTopContentInset
+		self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset
+
+		self.toolbar.isHidden = !show
 	}
 
 	// MARK: - Segue
@@ -512,11 +600,11 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 // MARK: - TMBarDataSource
 extension SearchResultsCollectionViewController: TMBarDataSource {
 	func reloadView() {
-		self.tabBarView.reloadData(at: 0...self.filters.count - 1, context: .full)
+		self.tabBarView.reloadData(at: 0...self.searchTypes.count - 1, context: .full)
 	}
 
 	func barItem(for bar: Tabman.TMBar, at index: Int) -> Tabman.TMBarItemable {
-		return TMBarItem(title: self.filters[index].stringValue)
+		return TMBarItem(title: self.searchTypes[index].stringValue)
 	}
 }
 
@@ -548,13 +636,17 @@ extension TMBarUpdateDirection {
 extension SearchResultsCollectionViewController: UISearchBarDelegate {
 	func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
 		searchBar.setShowsScope(true, animated: true)
-		self.toolbar.isHidden = true
-		self.collectionView.contentInset.top = self.currentTopContentInset
-		self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset
+		searchBar.showsBookmarkButton = false
+		self.setShowToolbar(false)
 	}
 
 	func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
 		searchBar.setShowsScope(false, animated: true)
+
+		if self.searchResults != nil {
+			searchBar.showsBookmarkButton = true
+			self.setShowToolbar(true)
+		}
 	}
 
 	func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
@@ -574,24 +666,26 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 	}
 
 	func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
-		let searchFilterViewController = SearchFilterViewController()
-		self.present(searchFilterViewController, animated: true)
+		guard let searchType = self.searchTypes[safe: self.currentIndex] else { return }
+		guard let searchFilterViewController = R.storyboard.searchFilter.searchFilterCollectionViewController() else { return }
+		searchFilterViewController.delegate = self
+		searchFilterViewController.searchType = searchType
+		searchFilterViewController.filter = self.searchFilters[searchType] ?? nil
+
+		let kNavigationController = KNavigationController(rootViewController: searchFilterViewController)
+		self.present(kNavigationController, animated: true)
 	}
 
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 		guard let searchScope = KKSearchScope(rawValue: searchBar.selectedScopeButtonIndex) else { return }
 		guard let query = searchBar.text else { return }
 		self.performSearch(with: query, in: searchScope, for: [], with: nil, next: nil)
-
-		searchBar.showsBookmarkButton = true
 	}
 
 	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
 		searchBar.showsBookmarkButton = false
-		self.resetSearchResults()
-		self.toolbar.isHidden = true
-		self.collectionView.contentInset.top = self.currentTopContentInset
-		self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset
+		self.setShowToolbar(false)
+		self.resetSearchResults(for: nil)
 	}
 }
 
@@ -827,156 +921,29 @@ extension SearchResultsCollectionViewController: UIToolbarDelegate {
 	}
 }
 
-// MARK: - Enums
-extension SearchResultsCollectionViewController {
-	/// List of character section layout kind.
-	enum SectionLayoutKind: Int, CaseIterable {
-		// MARK: - Cases
-		/// Indicates a discover section layout type.
-		case discover
+// MARK: - SearchFilterCollectionViewControllerDelegate
+extension SearchResultsCollectionViewController: SearchFilterCollectionViewControllerDelegate {
+	func searchFilterCollectionViewController(_ searchFilterCollectionViewController: SearchFilterCollectionViewController, didApply filter: KKSearchFilter) {
+		guard let searchScope = KKSearchScope(rawValue: self.kSearchController.searchBar.selectedScopeButtonIndex) else { return }
+		guard let query = self.kSearchController.searchBar.text else { return }
+		guard let searchType = self.searchTypes[safe: self.currentIndex] else { return }
 
-		/// Indicates the characters' section layout type.
-		case characters
+		self.searchFilters[searchType] = filter
 
-		/// Indicates the episodes' section layout type.
-		case episodes
+		self.performSearch(with: query, in: searchScope, for: [searchType], with: filter, next: nil, resettingResults: true)
 
-		/// Indicates the games' section layout type.
-		case games
-
-		/// Indicates the literatures' section layout type.
-		case literatures
-
-		/// Indicates the people's section layout type.
-		case people
-
-		/// Indicates the songs' section layout type.
-		case songs
-
-		/// Indicates the shows' section layout type.
-		case shows
-
-		/// Indicates the studios' section layout type.
-		case studios
-
-		/// Indicates the users' section layout type.
-		case users
+		self.kSearchController.searchBar.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle.fill"), for: .bookmark, state: .normal)
 	}
 
-	/// List of available Item Kind types.
-	enum ItemKind: Hashable {
-		// MARK: - Cases
-		/// Indicates the item kind contains a discover suggestion.
-		case discoverSuggestion(_: String)
+	func searchFilterCollectionViewControllerDidReset(_ searchFilterCollectionViewController: SearchFilterCollectionViewController) {
+		guard let searchType = self.searchTypes[safe: self.currentIndex] else { return }
 
-		/// Indicates the item kind contains a `Show` object.
-		case show(_: Show)
+		self.searchFilters[searchType] = nil
 
-		/// Indicates the item kind contains a `Literature` object.
-		case literature(_: Literature)
+		self.kSearchController.searchBar.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle"), for: .bookmark, state: .normal)
+	}
 
-		/// Indicates the item kind contains a `Game` object.
-		case game(_: Game)
-
-		/// Indicates the item kind contains a `CharacterIdentity` object.
-		case characterIdentity(_: CharacterIdentity, _: UUID = UUID())
-
-		/// Indicates the item kind contains a `EpisodeIdentity` object.
-		case episodeIdentity(_: EpisodeIdentity, _: UUID = UUID())
-
-		/// Indicates the item kind contains a `GameIdentity` object.
-		case gameIdentity(_: GameIdentity, _: UUID = UUID())
-
-		/// Indicates the item kind contains a `LiteratureIdentity` object.
-		case literatureIdentity(_: LiteratureIdentity, _: UUID = UUID())
-
-		/// Indicates the item kind contains a `PersonIdentity` object.
-		case personIdentity(_: PersonIdentity, _: UUID = UUID())
-
-		/// Indicates the item kind contains a `ShowIdentity` object.
-		case showIdentity(_: ShowIdentity, _: UUID = UUID())
-
-		/// Indicates the item kind contains a `SongIdentity` object.
-		case songIdentity(_: SongIdentity, _: UUID = UUID())
-
-		/// Indicates the item kind contains a `StudioIdentity` object.
-		case studioIdentity(_: StudioIdentity, _: UUID = UUID())
-
-		/// Indicates the item kind contains a `UserIdentity` object.
-		case userIdentity(_: UserIdentity, _: UUID = UUID())
-
-		// MARK: - Functions
-		func hash(into hasher: inout Hasher) {
-			switch self {
-			case .discoverSuggestion(let discoverSuggestion):
-				hasher.combine(discoverSuggestion)
-			case .show(let show):
-				hasher.combine(show)
-			case .literature(let literature):
-				hasher.combine(literature)
-			case .game(let game):
-				hasher.combine(game)
-			case .characterIdentity(let characterIdentity, let uuid):
-				hasher.combine(characterIdentity)
-				hasher.combine(uuid)
-			case .episodeIdentity(let episodeIdentity, let uuid):
-				hasher.combine(episodeIdentity)
-				hasher.combine(uuid)
-			case .gameIdentity(let gameIdentity, let uuid):
-				hasher.combine(gameIdentity)
-				hasher.combine(uuid)
-			case .literatureIdentity(let literatureIdentity, let uuid):
-				hasher.combine(literatureIdentity)
-				hasher.combine(uuid)
-			case .personIdentity(let personIdentity, let uuid):
-				hasher.combine(personIdentity)
-				hasher.combine(uuid)
-			case .showIdentity(let showIdentity, let uuid):
-				hasher.combine(showIdentity)
-				hasher.combine(uuid)
-			case .songIdentity(let songIdentity, let uuid):
-				hasher.combine(songIdentity)
-				hasher.combine(uuid)
-			case .studioIdentity(let studioIdentity, let uuid):
-				hasher.combine(studioIdentity)
-				hasher.combine(uuid)
-			case .userIdentity(let userIdentity, let uuid):
-				hasher.combine(userIdentity)
-				hasher.combine(uuid)
-			}
-		}
-
-		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
-			switch (lhs, rhs) {
-			case (.discoverSuggestion(let discoverSuggestion1), .discoverSuggestion(let discoverSuggestion2)):
-				return discoverSuggestion1 == discoverSuggestion2
-			case (.show(let show1), .show(let show2)):
-				return show1 == show2
-			case (.literature(let literature1), .literature(let literature2)):
-				return literature1 == literature2
-			case (.game(let game1), .game(let game2)):
-				return game1 == game2
-			case (.characterIdentity(let characterIdentity1, let uuid1), .characterIdentity(let characterIdentity2, let uuid2)):
-				return characterIdentity1 == characterIdentity2 && uuid1 == uuid2
-			case (.episodeIdentity(let episodeIdentity1, let uuid1), .episodeIdentity(let episodeIdentity2, let uuid2)):
-				return episodeIdentity1 == episodeIdentity2 && uuid1 == uuid2
-			case (.gameIdentity(let gameIdentity1, let uuid1), .gameIdentity(let gameIdentity2, let uuid2)):
-				return gameIdentity1 == gameIdentity2 && uuid1 == uuid2
-			case (.literatureIdentity(let literatureIdentity1, let uuid1), .literatureIdentity(let literatureIdentity2, let uuid2)):
-				return literatureIdentity1 == literatureIdentity2 && uuid1 == uuid2
-			case (.personIdentity(let personIdentity1, let uuid1), .personIdentity(let personIdentity2, let uuid2)):
-				return personIdentity1 == personIdentity2 && uuid1 == uuid2
-			case (.showIdentity(let showIdentity1, let uuid1), .showIdentity(let showIdentity2, let uuid2)):
-				return showIdentity1 == showIdentity2 && uuid1 == uuid2
-			case (.songIdentity(let songIdentity1, let uuid1), .songIdentity(let songIdentity2, let uuid2)):
-				return songIdentity1 == songIdentity2 && uuid1 == uuid2
-			case (.studioIdentity(let studioIdentity1, let uuid1), .studioIdentity(let studioIdentity2, let uuid2)):
-				return studioIdentity1 == studioIdentity2 && uuid1 == uuid2
-			case (.userIdentity(let userIdentity1, let uuid1), .userIdentity(let userIdentity2, let uuid2)):
-				return userIdentity1 == userIdentity2 && uuid1 == uuid2
-			default:
-				return false
-			}
-		}
+	func searchFilterCollectionViewControllerDidCancel(_ searchFilterCollectionViewController: SearchFilterCollectionViewController) {
+		print("----- did cancel")
 	}
 }

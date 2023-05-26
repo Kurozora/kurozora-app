@@ -23,7 +23,7 @@ extension SearchResultsCollectionViewController {
 		let showCellConfiguration = self.getConfiguredShowCell()
 		let studioCellConfiguration = self.getConfiguredStudioCell()
 		let userCellConfiguration = self.getConfiguredUserCell()
-		let discoverSuggestionCellConfiguration = UICollectionView.CellRegistration<ActionLinkExploreCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.actionLinkExploreCollectionViewCell)) { [weak self] actionLinkExploreCollectionViewCell, _, itemKind in
+		let discoverSuggestionCellConfiguration = UICollectionView.CellRegistration<ActionLinkExploreCollectionViewCell, SearchResults.Item>(cellNib: UINib(resource: R.nib.actionLinkExploreCollectionViewCell)) { [weak self] actionLinkExploreCollectionViewCell, _, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
@@ -35,7 +35,7 @@ extension SearchResultsCollectionViewController {
 			}
 		}
 
-		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, itemKind: ItemKind) -> UICollectionViewCell? in
+		self.dataSource = UICollectionViewDiffableDataSource<SearchResults.Section, SearchResults.Item>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, itemKind: SearchResults.Item) -> UICollectionViewCell? in
 			switch itemKind {
 			case .show:
 				return collectionView.dequeueConfiguredReusableCell(using: characterCellConfiguration, for: indexPath, item: itemKind)
@@ -154,7 +154,7 @@ extension SearchResultsCollectionViewController {
 		return user
 	}
 
-	func setItemKindNeedsUpdate(_ itemKind: ItemKind) {
+	func setItemKindNeedsUpdate(_ itemKind: SearchResults.Item) {
 		var snapshot = self.dataSource.snapshot()
 		guard snapshot.indexOfItem(itemKind) != nil else { return }
 		snapshot.reconfigureItems([itemKind])
@@ -162,15 +162,15 @@ extension SearchResultsCollectionViewController {
 	}
 
 	override func updateDataSource() {
-		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
+		var snapshot = NSDiffableDataSourceSnapshot<SearchResults.Section, SearchResults.Item>()
 
-		if !self.filters.isEmpty {
+		if !self.searchTypes.isEmpty {
 			switch self.currentScope {
 			case .kurozora:
-				switch self.filters[self.currentIndex] {
+				switch self.searchTypes[self.currentIndex] {
 				case .shows:
 					if !self.showIdentities.isEmpty {
-						let showItems: [ItemKind] = self.showIdentities.map { showIdentity in
+						let showItems: [SearchResults.Item] = self.showIdentities.map { showIdentity in
 							return .showIdentity(showIdentity)
 						}
 
@@ -179,7 +179,7 @@ extension SearchResultsCollectionViewController {
 					}
 				case .literatures:
 					if !self.literatureIdentities.isEmpty {
-						let literatureItems: [ItemKind] = self.literatureIdentities.map { literatureIdentity in
+						let literatureItems: [SearchResults.Item] = self.literatureIdentities.map { literatureIdentity in
 							return .literatureIdentity(literatureIdentity)
 						}
 
@@ -188,7 +188,7 @@ extension SearchResultsCollectionViewController {
 					}
 				case .games:
 					if !self.gameIdentities.isEmpty {
-						let gameItems: [ItemKind] = self.gameIdentities.map { gameIdentity in
+						let gameItems: [SearchResults.Item] = self.gameIdentities.map { gameIdentity in
 							return .gameIdentity(gameIdentity)
 						}
 
@@ -197,7 +197,7 @@ extension SearchResultsCollectionViewController {
 					}
 				case .episodes:
 					if !self.episodeIdentities.isEmpty {
-						let episodeItems: [ItemKind] = self.episodeIdentities.map { episodeIdentity in
+						let episodeItems: [SearchResults.Item] = self.episodeIdentities.map { episodeIdentity in
 							return .episodeIdentity(episodeIdentity)
 						}
 
@@ -206,7 +206,7 @@ extension SearchResultsCollectionViewController {
 					}
 				case .characters:
 					if !self.characterIdentities.isEmpty {
-						let characterItems: [ItemKind] = self.characterIdentities.map { characterIdentity in
+						let characterItems: [SearchResults.Item] = self.characterIdentities.map { characterIdentity in
 							return .characterIdentity(characterIdentity)
 						}
 
@@ -215,7 +215,7 @@ extension SearchResultsCollectionViewController {
 					}
 				case .people:
 					if !self.personIdentities.isEmpty {
-						let peopleItems: [ItemKind] = self.personIdentities.map { personIdentity in
+						let peopleItems: [SearchResults.Item] = self.personIdentities.map { personIdentity in
 							return .personIdentity(personIdentity)
 						}
 
@@ -224,7 +224,7 @@ extension SearchResultsCollectionViewController {
 					}
 				case .songs:
 					if !self.songIdentities.isEmpty {
-						let songItems: [ItemKind] = self.songIdentities.map { songIdentity in
+						let songItems: [SearchResults.Item] = self.songIdentities.map { songIdentity in
 							return .songIdentity(songIdentity)
 						}
 
@@ -233,7 +233,7 @@ extension SearchResultsCollectionViewController {
 					}
 				case .studios:
 					if !self.studioIdentities.isEmpty {
-						let studioItems: [ItemKind] = self.studioIdentities.map { studioIdentity in
+						let studioItems: [SearchResults.Item] = self.studioIdentities.map { studioIdentity in
 							return .studioIdentity(studioIdentity)
 						}
 
@@ -242,7 +242,7 @@ extension SearchResultsCollectionViewController {
 					}
 				case .users:
 					if !self.userIdentities.isEmpty {
-						let userItems: [ItemKind] = self.userIdentities.map { userIdentity in
+						let userItems: [SearchResults.Item] = self.userIdentities.map { userIdentity in
 							return .userIdentity(userIdentity)
 						}
 
@@ -251,10 +251,10 @@ extension SearchResultsCollectionViewController {
 					}
 				}
 			case .library:
-				switch self.filters[self.currentIndex] {
+				switch self.searchTypes[self.currentIndex] {
 				case .shows:
 					if !self.showIdentities.isEmpty {
-						let showItems: [ItemKind] = self.showIdentities.map { showIdentity in
+						let showItems: [SearchResults.Item] = self.showIdentities.map { showIdentity in
 							return .showIdentity(showIdentity)
 						}
 
@@ -263,7 +263,7 @@ extension SearchResultsCollectionViewController {
 					}
 				case .literatures:
 					if !self.literatureIdentities.isEmpty {
-						let literatureItems: [ItemKind] = self.literatureIdentities.map { literatureIdentity in
+						let literatureItems: [SearchResults.Item] = self.literatureIdentities.map { literatureIdentity in
 							return .literatureIdentity(literatureIdentity)
 						}
 
@@ -272,7 +272,7 @@ extension SearchResultsCollectionViewController {
 					}
 				case .games:
 					if !self.gameIdentities.isEmpty {
-						let gameItems: [ItemKind] = self.gameIdentities.map { gameIdentity in
+						let gameItems: [SearchResults.Item] = self.gameIdentities.map { gameIdentity in
 							return .gameIdentity(gameIdentity)
 						}
 
@@ -285,7 +285,7 @@ extension SearchResultsCollectionViewController {
 		}
 
 		if snapshot.numberOfSections == 0 {
-			let discoverSuggestionItems: [ItemKind] = self.discoverSuggestions.map { discoverSuggestions in
+			let discoverSuggestionItems: [SearchResults.Item] = self.discoverSuggestions.map { discoverSuggestions in
 				return .discoverSuggestion(discoverSuggestions)
 			}
 			snapshot.appendSections([.discover])
@@ -297,8 +297,8 @@ extension SearchResultsCollectionViewController {
 }
 
 extension SearchResultsCollectionViewController {
-	func getConfiguredCharacterCell() -> UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.characterLockupCollectionViewCell)) { [weak self] characterLockupCollectionViewCell, indexPath, itemKind in
+	func getConfiguredCharacterCell() -> UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, SearchResults.Item> {
+		return UICollectionView.CellRegistration<CharacterLockupCollectionViewCell, SearchResults.Item>(cellNib: UINib(resource: R.nib.characterLockupCollectionViewCell)) { [weak self] characterLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
@@ -324,8 +324,8 @@ extension SearchResultsCollectionViewController {
 		}
 	}
 
-	func getConfiguredEpisodeCell() -> UICollectionView.CellRegistration<EpisodeLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<EpisodeLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.episodeLockupCollectionViewCell)) { [weak self] episodeLockupCollectionViewCell, indexPath, itemKind in
+	func getConfiguredEpisodeCell() -> UICollectionView.CellRegistration<EpisodeLockupCollectionViewCell, SearchResults.Item> {
+		return UICollectionView.CellRegistration<EpisodeLockupCollectionViewCell, SearchResults.Item>(cellNib: UINib(resource: R.nib.episodeLockupCollectionViewCell)) { [weak self] episodeLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
@@ -351,8 +351,8 @@ extension SearchResultsCollectionViewController {
 		}
 	}
 
-	func getConfiguredGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.gameLockupCollectionViewCell)) { [weak self] gameLockupCollectionViewCell, indexPath, itemKind in
+	func getConfiguredGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, SearchResults.Item> {
+		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, SearchResults.Item>(cellNib: UINib(resource: R.nib.gameLockupCollectionViewCell)) { [weak self] gameLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
@@ -378,8 +378,8 @@ extension SearchResultsCollectionViewController {
 			}
 		}
 	}
-	func getConfiguredPersonCell() -> UICollectionView.CellRegistration<PersonLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<PersonLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.personLockupCollectionViewCell)) { [weak self] personLockupCollectionViewCell, indexPath, itemKind in
+	func getConfiguredPersonCell() -> UICollectionView.CellRegistration<PersonLockupCollectionViewCell, SearchResults.Item> {
+		return UICollectionView.CellRegistration<PersonLockupCollectionViewCell, SearchResults.Item>(cellNib: UINib(resource: R.nib.personLockupCollectionViewCell)) { [weak self] personLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
@@ -405,8 +405,8 @@ extension SearchResultsCollectionViewController {
 		}
 	}
 
-	func getConfiguredMusicCell() -> UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.musicLockupCollectionViewCell)) { [weak self] musicLockupCollectionViewCell, indexPath, itemKind in
+	func getConfiguredMusicCell() -> UICollectionView.CellRegistration<MusicLockupCollectionViewCell, SearchResults.Item> {
+		return UICollectionView.CellRegistration<MusicLockupCollectionViewCell, SearchResults.Item>(cellNib: UINib(resource: R.nib.musicLockupCollectionViewCell)) { [weak self] musicLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
@@ -433,8 +433,8 @@ extension SearchResultsCollectionViewController {
 		}
 	}
 
-	func getConfiguredShowCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.smallLockupCollectionViewCell)) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
+	func getConfiguredShowCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, SearchResults.Item> {
+		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, SearchResults.Item>(cellNib: UINib(resource: R.nib.smallLockupCollectionViewCell)) { [weak self] smallLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
@@ -479,8 +479,8 @@ extension SearchResultsCollectionViewController {
 		}
 	}
 
-	func getConfiguredStudioCell() -> UICollectionView.CellRegistration<StudioLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<StudioLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.studioLockupCollectionViewCell)) { [weak self] studioLockupCollectionViewCell, indexPath, itemKind in
+	func getConfiguredStudioCell() -> UICollectionView.CellRegistration<StudioLockupCollectionViewCell, SearchResults.Item> {
+		return UICollectionView.CellRegistration<StudioLockupCollectionViewCell, SearchResults.Item>(cellNib: UINib(resource: R.nib.studioLockupCollectionViewCell)) { [weak self] studioLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
@@ -505,8 +505,8 @@ extension SearchResultsCollectionViewController {
 		}
 	}
 
-	func getConfiguredUserCell() -> UICollectionView.CellRegistration<UserLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<UserLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.userLockupCollectionViewCell)) { [weak self] userLockupCollectionViewCell, indexPath, itemKind in
+	func getConfiguredUserCell() -> UICollectionView.CellRegistration<UserLockupCollectionViewCell, SearchResults.Item> {
+		return UICollectionView.CellRegistration<UserLockupCollectionViewCell, SearchResults.Item>(cellNib: UINib(resource: R.nib.userLockupCollectionViewCell)) { [weak self] userLockupCollectionViewCell, indexPath, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {

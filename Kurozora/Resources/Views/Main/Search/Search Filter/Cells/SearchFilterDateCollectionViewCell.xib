@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="2fq-pH-06f" customClass="SearchFilterDateCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="466" height="55"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="ct3-3h-kbL">
+                <rect key="frame" x="0.0" y="0.0" width="466" height="55"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JuO-Ee-pEJ" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="19.999999999999996" y="12" width="38.666666666666657" height="31"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="NOj-Ii-aCM">
+                        <rect key="frame" x="356" y="12" width="90" height="31"/>
+                        <constraints>
+                            <constraint firstAttribute="width" priority="999" constant="90" id="TYK-ju-txh"/>
+                        </constraints>
+                        <connections>
+                            <action selector="dateDidChange:" destination="2fq-pH-06f" eventType="valueChanged" id="bAm-6E-d1Q"/>
+                        </connections>
+                    </datePicker>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="JuO-Ee-pEJ" firstAttribute="top" secondItem="ct3-3h-kbL" secondAttribute="top" constant="12" id="Ev6-oi-Dwe"/>
+                    <constraint firstItem="NOj-Ii-aCM" firstAttribute="top" secondItem="ct3-3h-kbL" secondAttribute="top" constant="12" id="KZU-Or-tL5"/>
+                    <constraint firstAttribute="trailing" secondItem="NOj-Ii-aCM" secondAttribute="trailing" constant="20" symbolic="YES" id="dVI-28-7xA"/>
+                    <constraint firstAttribute="bottom" secondItem="NOj-Ii-aCM" secondAttribute="bottom" constant="12" id="g1q-v2-HCh"/>
+                    <constraint firstItem="NOj-Ii-aCM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="JuO-Ee-pEJ" secondAttribute="trailing" constant="8" symbolic="YES" id="rQ7-1x-Zoc"/>
+                    <constraint firstItem="NOj-Ii-aCM" firstAttribute="centerY" secondItem="ct3-3h-kbL" secondAttribute="centerY" id="tO3-cK-f3P"/>
+                    <constraint firstItem="JuO-Ee-pEJ" firstAttribute="leading" secondItem="ct3-3h-kbL" secondAttribute="leading" constant="20" symbolic="YES" id="uRc-e7-c8k"/>
+                    <constraint firstAttribute="bottom" secondItem="JuO-Ee-pEJ" secondAttribute="bottom" constant="12" id="zgU-3d-KeM"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <size key="customSize" width="466" height="50"/>
+            <connections>
+                <outlet property="datePicker" destination="NOj-Ii-aCM" id="esv-vJ-8FU"/>
+                <outlet property="primaryLabel" destination="JuO-Ee-pEJ" id="uTe-qF-3jn"/>
+            </connections>
+            <point key="canvasLocation" x="48.854961832061065" y="-27.112676056338028"/>
+        </collectionViewCell>
+    </objects>
+</document>

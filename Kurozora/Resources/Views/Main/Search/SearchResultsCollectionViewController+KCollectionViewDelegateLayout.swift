@@ -9,7 +9,7 @@
 import UIKit
 
 extension SearchResultsCollectionViewController {
-	func columnCount(forSection section: SectionLayoutKind, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
+	func columnCount(forSection section: SearchResults.Section, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
 		var columnCount = 0
 

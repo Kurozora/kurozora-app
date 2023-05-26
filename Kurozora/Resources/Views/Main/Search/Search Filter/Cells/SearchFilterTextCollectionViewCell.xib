@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Wkc-hn-ffh" customClass="SearchFilterTextCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="466" height="55"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="PZa-5Q-K3Y">
+                <rect key="frame" x="0.0" y="0.0" width="466" height="55"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="czk-9W-VBN" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="19.999999999999996" y="12" width="38.666666666666657" height="31"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fav-QL-g8z" customClass="KTextField" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="318" y="12" width="128" height="31"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="128" id="eIK-lT-0lR"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="fav-QL-g8z" firstAttribute="centerY" secondItem="PZa-5Q-K3Y" secondAttribute="centerY" id="3w9-gH-GI2"/>
+                    <constraint firstItem="fav-QL-g8z" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="czk-9W-VBN" secondAttribute="trailing" constant="8" symbolic="YES" id="Bui-PO-2wT"/>
+                    <constraint firstAttribute="trailing" secondItem="fav-QL-g8z" secondAttribute="trailing" constant="20" symbolic="YES" id="CEd-So-SuF"/>
+                    <constraint firstAttribute="bottom" secondItem="fav-QL-g8z" secondAttribute="bottom" constant="12" id="FDt-az-boI"/>
+                    <constraint firstItem="fav-QL-g8z" firstAttribute="top" secondItem="PZa-5Q-K3Y" secondAttribute="top" constant="12" id="ZZs-5L-lfQ"/>
+                    <constraint firstItem="czk-9W-VBN" firstAttribute="top" secondItem="PZa-5Q-K3Y" secondAttribute="top" constant="12" id="ceE-we-SQy"/>
+                    <constraint firstItem="czk-9W-VBN" firstAttribute="leading" secondItem="PZa-5Q-K3Y" secondAttribute="leading" constant="20" symbolic="YES" id="qfl-D0-tnT"/>
+                    <constraint firstAttribute="bottom" secondItem="czk-9W-VBN" secondAttribute="bottom" constant="12" id="wjp-Dd-x2J"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <size key="customSize" width="466" height="50"/>
+            <connections>
+                <outlet property="primaryLabel" destination="czk-9W-VBN" id="INI-UX-SNd"/>
+                <outlet property="textField" destination="fav-QL-g8z" id="XRR-XN-ar1"/>
+            </connections>
+            <point key="canvasLocation" x="104" y="-20"/>
+        </collectionViewCell>
+    </objects>
+</document>
