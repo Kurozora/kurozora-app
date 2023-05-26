@@ -1,5 +1,5 @@
 //
-//  UsersListCollectionViewController+UITableViewDelegate.swift
+//  UsersListCollectionViewController+UICollectionViewDelegate.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 24/02/2021.
