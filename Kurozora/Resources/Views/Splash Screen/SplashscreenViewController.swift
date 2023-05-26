@@ -16,7 +16,7 @@ final class SplashscreenViewController: UIViewController {
 	// MARK: - IBOutlets
 	@IBOutlet private var sceneView: SplashscreenView!
 
-	// MARK: - Parameters
+	// MARK: - Properties
 	var interactor: SplashscreenBusinessLogic?
 	var router: (SplashscreenRoutingLogic & SplashscreenDataPassing)?
 

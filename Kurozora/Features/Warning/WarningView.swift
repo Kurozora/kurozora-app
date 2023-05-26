@@ -19,7 +19,7 @@ final class WarningView: UIView {
 	@IBOutlet weak var secondaryLabel: KLabel!
 	@IBOutlet weak var actionButton: KButton!
 
-	// MARK: - Parameters
+	// MARK: - Properties
 	public weak var viewDelegate: WarningViewDelegate?
 
 	// MARK: - XIB loaded

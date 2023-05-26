@@ -17,7 +17,7 @@ final class SplashscreenView: UIView {
 	// MARK: - IBOutlets
     @IBOutlet private weak var logoImageView: UIImageView!
 
-	// MARK: - Parameters
+	// MARK: - Properties
 	public weak var viewDelegate: SplashscreenViewDelegate?
 	private var player: AVAudioPlayer?
 

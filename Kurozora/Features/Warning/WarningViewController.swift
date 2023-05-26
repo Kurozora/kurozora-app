@@ -17,7 +17,7 @@ final class WarningViewController: KViewController {
 	// MARK: - IBOutlets
 	@IBOutlet private var sceneView: WarningView!
 
-	// MARK: - Parameters
+	// MARK: - Properties
 	var interactor: WarningBusinessLogic?
 	var router: (WarningRoutingLogic & WarningDataPassing)?
 
