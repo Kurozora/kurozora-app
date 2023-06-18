@@ -1,3 +1,5 @@
+<p></p>
+
 <p align="center"><img src=".github/Assets/Kurozora_on_Device.png"></p>
 
 <p align="center">
@@ -57,11 +59,15 @@ Read our [Contributing Guide](CONTRIBUTING.md) to learn about reporting issues, 
 
 # Security
 
-If you happen to find a security vulnerability, we would appreciate you letting us know at kurozoraapp@gmail.com and allowing us to respond before disclosing the issue publicly.
+Read our [Security Policy](SECURITY.md) to learn about reporting security issues.
 
 # Getting in Touch
 
 If you have any questions or just want to say hi, join the Kurozora [Discord](https://discord.gg/f3QFzGqsah) and drop a message on the #development channel.
+
+# Code of Conduct
+
+This project has a [Code of Conduct](CODE_OF_CONDUCT.md). By interacting with this repository, or community you agree to abide by its terms.
 
 # More by Kurozora
 
