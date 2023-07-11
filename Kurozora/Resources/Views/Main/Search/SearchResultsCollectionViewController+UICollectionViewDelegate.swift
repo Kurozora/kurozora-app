@@ -107,8 +107,6 @@ extension SearchResultsCollectionViewController {
 			itemsCount = itemsCount < 1 ? 1 : itemsCount // Make sure count isn't below 1
 
 			if indexPath.item >= itemsCount && nextPageURL != nil && !self.isRequestInProgress {
-				self.isRequestInProgress = true
-
 				self.performSearch(with: self.searachQuery, in: self.currentScope, for: [type], with: nil, next: nextPageURL, resettingResults: false)
 			}
 		}
