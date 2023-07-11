@@ -187,7 +187,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		// Layout
 		self.tabBarView.layout.contentInset = UIEdgeInsets(top: 0.0, left: 0.2, bottom: 0.0, right: 0.0)
 		self.tabBarView.layout.interButtonSpacing = 0.0
-		self.tabBarView.layout.contentMode = UIDevice.isPhone ? .intrinsic : .fit
+		self.tabBarView.layout.contentMode = .intrinsic
 
 		// Style
 		self.tabBarView.fadesContentEdges = true
