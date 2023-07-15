@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ZFv-oo-i2b">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ZFv-oo-i2b">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Badges-->
         <scene sceneID="uMt-9e-34v">
             <objects>
-                <tableViewController storyboardIdentifier="BadgesTableViewController" title="Badges" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="7lz-4n-ijn" customClass="BadgesTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="AchievementsTableViewController" title="Badges" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="7lz-4n-ijn" customClass="AchievementsTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="insetGrouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="NB2-D2-7og">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -19,15 +19,15 @@
                         <color key="sectionIndexColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LeftBadgeCell" rowHeight="70" id="IWG-If-maU" customClass="BadgeTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="55.5" width="374" height="70"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LeftBadgeCell" id="IWG-If-maU" customClass="AchievementTableViewCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="20" y="55.5" width="374" height="77"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IWG-If-maU" id="A6G-gw-Lvl">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="70"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="77"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ini-vw-7Yu">
-                                            <rect key="frame" x="20" y="10" width="50" height="50"/>
+                                            <rect key="frame" x="20" y="13.5" width="50" height="50"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XGt-l2-mgQ" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -43,14 +43,14 @@
                                                 <constraint firstAttribute="bottom" secondItem="XGt-l2-mgQ" secondAttribute="bottom" id="uUR-fn-3b5"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Badge Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QIg-cZ-Az0">
-                                            <rect key="frame" x="80" y="10" width="101.5" height="20.5"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QIg-cZ-Az0">
+                                            <rect key="frame" x="80" y="10" width="41" height="21"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is the description of a badge." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RGy-4p-D6Y">
-                                            <rect key="frame" x="80" y="30.5" width="232.5" height="18"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is the description of an achievements." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RGy-4p-D6Y">
+                                            <rect key="frame" x="80" y="31" width="193.5" height="38"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -73,32 +73,32 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
-                                    <outlet property="badgeDescriptionLabel" destination="RGy-4p-D6Y" id="FPy-jH-0dR"/>
-                                    <outlet property="badgeImageView" destination="XGt-l2-mgQ" id="ZMU-0b-dYp"/>
-                                    <outlet property="badgeTitleLabel" destination="QIg-cZ-Az0" id="wDf-im-NR0"/>
+                                    <outlet property="primaryLabel" destination="QIg-cZ-Az0" id="q2a-2X-QRQ"/>
+                                    <outlet property="secondaryLabel" destination="RGy-4p-D6Y" id="tCX-0B-bd6"/>
+                                    <outlet property="symbolImageView" destination="XGt-l2-mgQ" id="pCw-UT-rqm"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RightBadgeCell" rowHeight="70" id="ZHt-e6-nGv" customClass="BadgeTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="125.5" width="374" height="70"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RightBadgeCell" id="ZHt-e6-nGv" customClass="AchievementTableViewCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="20" y="132.5" width="374" height="81.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZHt-e6-nGv" id="W5G-bu-pWk">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="70"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="81.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Badge Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mo6-7W-wcP">
-                                            <rect key="frame" x="20" y="10" width="101.5" height="20.5"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mo6-7W-wcP">
+                                            <rect key="frame" x="20" y="10" width="41" height="21"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is the description of a badge." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hc6-Ng-wZB">
-                                            <rect key="frame" x="20" y="30.5" width="257.5" height="20.5"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is the description of an achievements." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hc6-Ng-wZB">
+                                            <rect key="frame" x="20" y="31" width="214.5" height="42.5"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ERm-zZ-yUv">
-                                            <rect key="frame" x="304" y="10" width="50" height="50"/>
+                                            <rect key="frame" x="304" y="16" width="50" height="50"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dMZ-lh-ekU" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -132,9 +132,9 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
-                                    <outlet property="badgeDescriptionLabel" destination="Hc6-Ng-wZB" id="KGr-2z-5y2"/>
-                                    <outlet property="badgeImageView" destination="dMZ-lh-ekU" id="zZq-eR-ylJ"/>
-                                    <outlet property="badgeTitleLabel" destination="Mo6-7W-wcP" id="Pj4-3T-GoW"/>
+                                    <outlet property="primaryLabel" destination="Mo6-7W-wcP" id="S1O-Kl-XPK"/>
+                                    <outlet property="secondaryLabel" destination="Hc6-Ng-wZB" id="BrQ-9U-Diq"/>
+                                    <outlet property="symbolImageView" destination="dMZ-lh-ekU" id="Ubj-bW-INe"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -152,7 +152,7 @@
         <!--Navigation Controller-->
         <scene sceneID="Ck7-ux-UdY">
             <objects>
-                <navigationController storyboardIdentifier="BadgeKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ZFv-oo-i2b" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="AchievementKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ZFv-oo-i2b" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="Ssb-Oj-cq2">
                         <rect key="frame" x="0.0" y="48" width="414" height="44"/>

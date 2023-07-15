@@ -1,5 +1,5 @@
 //
-//  BadgesTableViewController.swift
+//  AchievementsTableViewController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 02/12/2018.
@@ -9,9 +9,9 @@
 import UIKit
 import KurozoraKit
 
-class BadgesTableViewController: KTableViewController {
+class AchievementsTableViewController: KTableViewController {
 	// MARK: - Properties
-	var badges: [Badge] = [] {
+	var achievements: [Badge] = [] {
 		didSet {
 			self._prefersActivityIndicatorHidden = true
 			self.tableView.reloadData {
@@ -46,7 +46,7 @@ class BadgesTableViewController: KTableViewController {
         super.viewDidLoad()
 
 		self._prefersRefreshControlDisabled = true
-		self.badges = self.user.relationships?.badges?.data ?? []
+		self.achievements = self.user.relationships?.badges?.data ?? []
     }
 
 	// MARK: - Functions
@@ -54,15 +54,15 @@ class BadgesTableViewController: KTableViewController {
 		var detailString: String
 
 		if self.user?.id == User.current?.id {
-			detailString = "Badges you earn show up here."
+			detailString = "achievements you earn show up here."
 		} else {
-			detailString = "\(self.user.attributes.username) has not earned any badges yet."
+			detailString = "\(self.user.attributes.username) has not earned any achievements yet."
 		}
 
-		emptyBackgroundView.configureImageView(image: R.image.empty.badge()!)
-		emptyBackgroundView.configureLabels(title: "No Badges", detail: detailString)
+		self.emptyBackgroundView.configureImageView(image: R.image.empty.badge()!)
+		self.emptyBackgroundView.configureLabels(title: "No Badges", detail: detailString)
 
-		tableView.backgroundView?.alpha = 0
+		self.tableView.backgroundView?.alpha = 0
 	}
 
 	/// Fades in and out the empty data view according to the number of sections.
@@ -76,9 +76,9 @@ class BadgesTableViewController: KTableViewController {
 }
 
 // MARK: - UITableViewDataSource
-extension BadgesTableViewController {
+extension AchievementsTableViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return badges.count
+		return self.achievements.count
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -90,7 +90,7 @@ extension BadgesTableViewController {
 		guard let badgeTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath as IndexPath) else {
 			fatalError("Cannot dequeue cell with reuse identifier \(identifier.identifier)")
 		}
-		badgeTableViewCell.configureCell(using: self.badges[indexPath.section])
+		badgeTableViewCell.configureCell(using: self.achievements[indexPath.section])
 		return badgeTableViewCell
 	}
 }
