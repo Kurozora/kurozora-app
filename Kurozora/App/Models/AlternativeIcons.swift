@@ -31,12 +31,4 @@ struct AlternativeIconsElement {
 	// MARK: - Properties
 	/// The name of the alternative icon.
 	let name: String
-
-	// MARK: - Initializers
-	/// Initializes a new instance of `AlternativeIconsElement` using the given name.
-	///
-	/// - Parameter name: The name of the alternative icon.
-	init(name: String) {
-		self.name = name
-	}
 }
