@@ -183,7 +183,7 @@ extension FeedMessage {
 			if isEditingMessage {
 				kfmReplyTextEditorViewController.editingFeedMessage = self
 				kfmReplyTextEditorViewController.opFeedMessage = self.relationships.parent?.data.first
-				kfmReplyTextEditorViewController.userInfo = userInfo
+				kfmReplyTextEditorViewController.userInfo = userInfo as [AnyHashable: Any]
 			} else {
 				kfmReplyTextEditorViewController.segueToOPFeedDetails = !(userInfo["liveReplyEnabled"] as? Bool ?? false)
 				kfmReplyTextEditorViewController.opFeedMessage = self
@@ -212,7 +212,7 @@ extension FeedMessage {
 			if isEditingMessage {
 				kfmReShareTextEditorViewController.editingFeedMessage = self
 				kfmReShareTextEditorViewController.opFeedMessage = self.relationships.parent?.data.first
-				kfmReShareTextEditorViewController.userInfo = userInfo
+				kfmReShareTextEditorViewController.userInfo = userInfo as [AnyHashable: Any]
 			} else {
 				kfmReShareTextEditorViewController.segueToOPFeedDetails = !(userInfo["liveReShareEnabled"] as? Bool ?? false)
 				kfmReShareTextEditorViewController.opFeedMessage = self
@@ -239,7 +239,7 @@ extension FeedMessage {
 		if let kFeedMessageTextEditorViewController = R.storyboard.textEditor.kFeedMessageTextEditorViewController() {
 			if isEditingMessage {
 				kFeedMessageTextEditorViewController.editingFeedMessage = self
-				kFeedMessageTextEditorViewController.userInfo = userInfo
+				kFeedMessageTextEditorViewController.userInfo = userInfo as [AnyHashable: Any]
 			}
 
 			let kurozoraNavigationController = KNavigationController(rootViewController: kFeedMessageTextEditorViewController)
