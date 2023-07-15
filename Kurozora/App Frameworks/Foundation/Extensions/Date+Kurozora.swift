@@ -184,4 +184,14 @@ extension Date {
 	func etaStringForDate(short: Bool = false) -> String {
 		return etaForDateWithString(short: short).etaString
 	}
+
+	/// Returns the number of months between the current date and the specified date.
+	///
+	/// - Parameters:
+	///    - date: The date with which the current date is compared.
+	///
+	/// - Returns: The number of months between the current and the specified date.
+	func months(from date: Date) -> Int {
+		return Calendar.current.dateComponents([.month], from: date, to: self).month ?? 0
+	}
 }
