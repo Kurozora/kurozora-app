@@ -855,11 +855,6 @@ struct Trans {
 	/// - Tag: Trans-pro
 	static let pro: String = String(localized: "Pro",
 									comment: "The string for the word 'pro'.")
-	/// The string for the word 'pro+'.
-	///
-	/// - Tag: Trans-proPlus
-	static let proPlus: String = String(localized: "Pro+",
-										comment: "The string for the word 'pro+'.")
 	/// The string for the word 'alerts'.
 	///
 	/// - Tag: Trans-alerts
@@ -1040,6 +1035,11 @@ struct Trans {
 	/// - Tag: Trans-expected
 	static let expected: String = String(localized: "Expected",
 										 comment: "The string for the word 'expected'.")
+	/// The string for the word 'achievements'.
+	///
+	/// - Tag: Trans-achievements
+	static let achievements: String = String(localized: "Achievements",
+											 comment: "The string for the word 'achievements'.")
 	/// The string for the word 'badges'.
 	///
 	/// - Tag: Trans-badges
