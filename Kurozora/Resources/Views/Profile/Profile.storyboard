@@ -14,7 +14,7 @@
                 <viewControllerPlaceholder storyboardName="Favorites" referencedIdentifier="FavoritesCollectionViewController" id="MLI-TH-L8z" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Buf-ae-aTm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1634" y="-1228"/>
+            <point key="canvasLocation" x="1609" y="-1230"/>
         </scene>
         <!--FMDetailsTableViewController-->
         <scene sceneID="l48-2t-gRR">
@@ -24,7 +24,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jcN-Kh-Qg8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1590" y="-1176"/>
+            <point key="canvasLocation" x="1589" y="-1168"/>
         </scene>
         <!--UsersListCollectionViewController-->
         <scene sceneID="WB3-oB-wNl">
@@ -34,7 +34,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vZf-gO-OAw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1608" y="-1074"/>
+            <point key="canvasLocation" x="1610" y="-1073"/>
         </scene>
         <!--Profile-->
         <scene sceneID="oXQ-6R-gF7">
@@ -84,7 +84,7 @@
                                     <rect key="frame" x="8" y="151" width="359" height="98"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PR0-Kq-mbS" userLabel="Profile Photo Wrapper">
-                                            <rect key="frame" x="8" y="0.0" width="80" height="80"/>
+                                            <rect key="frame" x="8" y="18" width="80" height="80"/>
                                             <subviews>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wJX-ls-ZaG" userLabel="Profile View" customClass="CircularView" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
@@ -146,7 +146,7 @@
                                             </constraints>
                                         </view>
                                         <button hidden="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bkn-1Z-yJM" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="284" y="54" width="67" height="32"/>
+                                            <rect key="frame" x="284" y="52" width="67" height="32"/>
                                             <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="32" id="WHj-Jg-99m"/>
@@ -165,7 +165,7 @@
                                             </connections>
                                         </button>
                                         <button hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EtH-JN-qoL" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="303" y="54" width="48" height="32"/>
+                                            <rect key="frame" x="303" y="52" width="48" height="32"/>
                                             <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="32" id="iDf-IJ-PTB"/>
@@ -186,64 +186,38 @@
                                                 <action selector="editProfileButtonPressed:" destination="zlF-Vo-yv3" eventType="touchUpInside" id="qSH-Jl-fow"/>
                                             </connections>
                                         </button>
-                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Kurozora kajsd lkajslkdjalksd" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ak5-fH-5eB" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="96" y="59.000000000000007" width="178" height="20.333333333333336"/>
+                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Kurozora" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ak5-fH-5eB" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                            <rect key="frame" x="96" y="57" width="73.666666666666686" height="21"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="r4X-ZG-tb5">
-                                            <rect key="frame" x="276" y="59.000000000000007" width="0.0" height="20.333333333333336"/>
-                                            <subviews>
-                                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.seal.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="AjX-o4-bZA">
-                                                    <rect key="frame" x="0.0" y="-0.66666666666666785" width="20" height="21.333333333333336"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" secondItem="AjX-o4-bZA" secondAttribute="height" multiplier="1:1" id="Yao-KC-F2u"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <button hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ip4-yd-sOn">
-                                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="20"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="20" id="tbx-fd-I1F"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
-                                                    <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
-                                                    <state key="normal" title="PRO">
-                                                        <color key="titleColor" red="1" green="0.82352941180000006" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    </state>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                            <real key="value" value="1"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                            <color key="value" red="1" green="0.82352941180000006" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <real key="value" value="10"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
-                                                </button>
-                                            </subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="r4X-ZG-tb5" customClass="ProfileBadgeStackView" customModule="Kurozora" customModuleProvider="target">
+                                            <rect key="frame" x="96" y="78" width="100" height="20"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20" id="5qB-A3-qW3"/>
+                                                <constraint firstAttribute="width" priority="1" constant="100" id="Ux9-sx-cz8"/>
+                                            </constraints>
                                         </stackView>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="bkn-1Z-yJM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="r4X-ZG-tb5" secondAttribute="trailing" constant="8" symbolic="YES" id="04Y-LO-f6O"/>
                                         <constraint firstItem="bkn-1Z-yJM" firstAttribute="firstBaseline" secondItem="Ak5-fH-5eB" secondAttribute="firstBaseline" id="3J5-Z0-oKA"/>
-                                        <constraint firstItem="bkn-1Z-yJM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="r4X-ZG-tb5" secondAttribute="trailing" constant="8" symbolic="YES" id="3O7-nr-MpS"/>
-                                        <constraint firstItem="r4X-ZG-tb5" firstAttribute="centerY" secondItem="Ak5-fH-5eB" secondAttribute="centerY" id="4Ac-tZ-d8O"/>
-                                        <constraint firstItem="EtH-JN-qoL" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="r4X-ZG-tb5" secondAttribute="trailing" constant="8" symbolic="YES" id="853-rT-men"/>
                                         <constraint firstItem="EtH-JN-qoL" firstAttribute="centerY" secondItem="bkn-1Z-yJM" secondAttribute="centerY" id="Iy1-oE-bVA"/>
-                                        <constraint firstItem="r4X-ZG-tb5" firstAttribute="leading" secondItem="Ak5-fH-5eB" secondAttribute="trailing" constant="2" id="Lk1-ca-XWy"/>
+                                        <constraint firstItem="r4X-ZG-tb5" firstAttribute="leading" secondItem="Ak5-fH-5eB" secondAttribute="leading" id="JDo-sz-PJa"/>
                                         <constraint firstItem="EtH-JN-qoL" firstAttribute="top" secondItem="bkn-1Z-yJM" secondAttribute="top" id="Nni-n8-lMe"/>
-                                        <constraint firstItem="EtH-JN-qoL" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ak5-fH-5eB" secondAttribute="trailing" id="O7X-TZ-9yD"/>
+                                        <constraint firstItem="EtH-JN-qoL" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ak5-fH-5eB" secondAttribute="trailing" constant="8" symbolic="YES" id="O7X-TZ-9yD"/>
                                         <constraint firstItem="EtH-JN-qoL" firstAttribute="trailing" secondItem="bkn-1Z-yJM" secondAttribute="trailing" id="Pmw-vr-VSr"/>
+                                        <constraint firstItem="PR0-Kq-mbS" firstAttribute="bottom" secondItem="r4X-ZG-tb5" secondAttribute="bottom" id="SDU-Om-NaJ"/>
                                         <constraint firstAttribute="leadingMargin" secondItem="PR0-Kq-mbS" secondAttribute="leading" id="Whk-A3-nGc"/>
-                                        <constraint firstItem="bkn-1Z-yJM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ak5-fH-5eB" secondAttribute="trailing" id="eN8-s8-1JZ"/>
+                                        <constraint firstItem="EtH-JN-qoL" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="r4X-ZG-tb5" secondAttribute="trailing" constant="8" symbolic="YES" id="d3M-Qs-FxI"/>
+                                        <constraint firstItem="bkn-1Z-yJM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ak5-fH-5eB" secondAttribute="trailing" constant="8" symbolic="YES" id="eN8-s8-1JZ"/>
                                         <constraint firstItem="Ak5-fH-5eB" firstAttribute="leading" secondItem="PR0-Kq-mbS" secondAttribute="trailing" constant="8" symbolic="YES" id="f21-Gx-KX8"/>
-                                        <constraint firstItem="PR0-Kq-mbS" firstAttribute="top" secondItem="L3e-NK-2YU" secondAttribute="top" id="gbb-eF-UPj"/>
-                                        <constraint firstItem="r4X-ZG-tb5" firstAttribute="bottom" secondItem="Ak5-fH-5eB" secondAttribute="bottom" id="hHp-P8-2OK"/>
-                                        <constraint firstItem="r4X-ZG-tb5" firstAttribute="top" secondItem="Ak5-fH-5eB" secondAttribute="top" id="mfm-Jc-gBk"/>
+                                        <constraint firstItem="PR0-Kq-mbS" firstAttribute="top" relation="greaterThanOrEqual" secondItem="L3e-NK-2YU" secondAttribute="top" id="gbb-eF-UPj"/>
+                                        <constraint firstItem="r4X-ZG-tb5" firstAttribute="top" secondItem="Ak5-fH-5eB" secondAttribute="bottom" id="ljc-dr-0q9"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="EtH-JN-qoL" secondAttribute="trailing" id="mgR-vv-UhD"/>
                                         <constraint firstAttribute="height" constant="98" id="msY-bC-Ipb"/>
+                                        <constraint firstAttribute="bottom" secondItem="r4X-ZG-tb5" secondAttribute="bottom" id="ofx-Tn-7LU"/>
                                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="bkn-1Z-yJM" secondAttribute="bottom" constant="8" id="xkS-dd-gs8"/>
                                     </constraints>
                                 </view>
@@ -295,7 +269,7 @@
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                                 </attributes>
                                                             </fragment>
-                                                            <fragment content="Badges">
+                                                            <fragment content="Achievements">
                                                                 <attributes>
                                                                     <color key="NSColor" red="0.76470588240000004" green="0.76862745099999996" blue="0.79215686269999996" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <font key="NSFont" size="15" name="SFProText-Regular"/>
@@ -305,7 +279,7 @@
                                                         </attributedString>
                                                     </state>
                                                     <connections>
-                                                        <segue destination="1u3-lU-S8H" kind="show" identifier="BadgeSegue" id="qIF-9v-juK">
+                                                        <segue destination="1u3-lU-S8H" kind="show" identifier="AchievementsSegue" id="qIF-9v-juK">
                                                             <segue key="commit" inheritsFrom="parent" id="mfz-u7-T02"/>
                                                             <segue key="preview" inheritsFrom="commit" id="Ban-ki-CNE"/>
                                                         </segue>
@@ -406,7 +380,7 @@
                             <constraints>
                                 <constraint firstAttribute="leadingMargin" secondItem="L3e-NK-2YU" secondAttribute="leading" id="7CY-Qu-5c8"/>
                                 <constraint firstAttribute="trailing" secondItem="ct4-sA-QJa" secondAttribute="trailing" id="8GX-FS-xgS"/>
-                                <constraint firstItem="Ak5-fH-5eB" firstAttribute="top" secondItem="ct4-sA-QJa" secondAttribute="bottom" constant="10" id="Q6Y-bf-qKY"/>
+                                <constraint firstItem="Ak5-fH-5eB" firstAttribute="top" secondItem="ct4-sA-QJa" secondAttribute="bottom" constant="8" id="Q6Y-bf-qKY"/>
                                 <constraint firstItem="ct4-sA-QJa" firstAttribute="top" secondItem="YlQ-WU-WCF" secondAttribute="top" id="RBj-wh-xqR"/>
                                 <constraint firstAttribute="trailingMargin" secondItem="L3e-NK-2YU" secondAttribute="trailing" id="Rrb-Iy-gjA"/>
                                 <constraint firstItem="qhJ-dz-VUa" firstAttribute="trailing" secondItem="L3e-NK-2YU" secondAttribute="trailing" id="brs-gr-AUc"/>
@@ -430,7 +404,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="badgesButton" destination="E2w-Ry-UIw" id="PQd-Wb-u8H"/>
+                        <outlet property="achievementsButton" destination="E2w-Ry-UIw" id="iFf-UH-1dR"/>
                         <outlet property="bannerImageView" destination="zl8-rJ-jxV" id="59M-1e-QfB"/>
                         <outlet property="bioTextView" destination="gIa-4A-kfT" id="Nn7-CY-HZA"/>
                         <outlet property="buttonsStackView" destination="LNz-X2-qla" id="QPq-oh-OOt"/>
@@ -440,7 +414,7 @@
                         <outlet property="followingButton" destination="T5J-l1-I4p" id="AzJ-6a-vDQ"/>
                         <outlet property="onlineIndicatorContainerView" destination="IvN-D6-AVe" id="k1b-86-JqY"/>
                         <outlet property="onlineIndicatorView" destination="P4i-DJ-cm7" id="fKP-bx-typ"/>
-                        <outlet property="proBadgeButton" destination="Ip4-yd-sOn" id="VlB-eU-Qst"/>
+                        <outlet property="profileBadgeStackView" destination="r4X-ZG-tb5" id="VeD-bF-T3D"/>
                         <outlet property="profileImageView" destination="NzS-ZZ-Ald" id="FNo-NK-Uze"/>
                         <outlet property="profileNavigationItem" destination="yJS-kC-jrS" id="V2w-eF-nJ2"/>
                         <outlet property="reputationButton" destination="Ldj-y1-nlK" id="LyN-rH-NYP"/>
@@ -448,7 +422,6 @@
                         <outlet property="selectProfileImageButton" destination="vBP-c7-LwV" id="f1e-b1-tsM"/>
                         <outlet property="separatorView" destination="OmS-Rs-je8" id="Bft-MF-SNP"/>
                         <outlet property="usernameLabel" destination="Ak5-fH-5eB" id="D24-4f-G7c"/>
-                        <outlet property="verificationImageView" destination="AjX-o4-bZA" id="b5H-E0-3QG"/>
                         <segue destination="MLI-TH-L8z" kind="presentation" identifier="FavoritesSegue" id="q0e-Li-wfz"/>
                         <segue destination="t9u-UF-w8N" kind="show" identifier="FeedMessageDetailsSegue" id="xgQ-g1-FoH"/>
                     </connections>
@@ -457,15 +430,15 @@
             </objects>
             <point key="canvasLocation" x="928.79999999999995" y="-1112.0689655172414"/>
         </scene>
-        <!--BadgesTableViewController-->
+        <!--AchievementsTableViewController-->
         <scene sceneID="CN5-5Z-irS">
             <objects>
-                <viewControllerPlaceholder storyboardName="Badge" referencedIdentifier="BadgesTableViewController" id="1u3-lU-S8H" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="Achievement" referencedIdentifier="AchievementsTableViewController" id="1u3-lU-S8H" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="h1U-wI-JAG"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ujU-z3-G2n" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1577" y="-1125"/>
+            <point key="canvasLocation" x="1609" y="-1130"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="o26-8I-W3L">
@@ -531,7 +504,6 @@
     <resources>
         <image name="Placeholders/User Banner" width="1130" height="706"/>
         <image name="Placeholders/User Profile" width="300" height="300"/>
-        <image name="checkmark.seal.fill" catalog="system" width="128" height="124"/>
         <image name="ellipsis.circle" catalog="system" width="128" height="123"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

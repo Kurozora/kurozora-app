@@ -10,6 +10,7 @@
 		6601C3A023BBB98000466BA3 /* ShowDetailHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6601C39F23BBB98000466BA3 /* ShowDetailHeaderCollectionViewCell.swift */; };
 		6601F1AC2118488D0074C1DD /* IconNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6601F1AB2118488D0074C1DD /* IconNotificationCell.swift */; };
 		66058DBA212E97670084B79E /* ReviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66058DB9212E97670084B79E /* ReviewCollectionViewCell.swift */; };
+		660628BC2A62F79100D4A8BB /* ProfileBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660628BB2A62F79100D4A8BB /* ProfileBadge.swift */; };
 		6609005429DCE0B00015FE9F /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6609005329DCE0AF0015FE9F /* GradientView.swift */; };
 		6609FAD721D8D237008DF5E4 /* KurozoraDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6609FAD621D8D237008DF5E4 /* KurozoraDelegate.swift */; };
 		6609FAD921D90C13008DF5E4 /* KNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6609FAD821D90C13008DF5E4 /* KNetworkManager.swift */; };
@@ -307,8 +308,8 @@
 		667943632273933400E2D0D0 /* TextViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667943622273933400E2D0D0 /* TextViewCollectionViewCell.swift */; };
 		667943652273A33D00E2D0D0 /* EpisodeDetailsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667943642273A33D00E2D0D0 /* EpisodeDetailsCollectionViewController.swift */; };
 		667B38432361CE6500786EF6 /* KWhatsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667B38422361CE6500786EF6 /* KWhatsNew.swift */; };
-		667F9AD421B47E6D003F6629 /* BadgeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9AD321B47E6D003F6629 /* BadgeTableViewCell.swift */; };
-		667F9AD921B47FA4003F6629 /* BadgesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9AD821B47FA4003F6629 /* BadgesTableViewController.swift */; };
+		667F9AD421B47E6D003F6629 /* AchievementTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9AD321B47E6D003F6629 /* AchievementTableViewCell.swift */; };
+		667F9AD921B47FA4003F6629 /* AchievementsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9AD821B47FA4003F6629 /* AchievementsTableViewController.swift */; };
 		667F9ADB21B57D5C003F6629 /* Date+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9ADA21B57D5C003F6629 /* Date+Kurozora.swift */; };
 		667F9ADD21B5F354003F6629 /* SettingsSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9ADC21B5F354003F6629 /* SettingsSplitViewController.swift */; };
 		668142D3245B4804008FC7BE /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668142D2245B4804008FC7BE /* ProfileImageView.swift */; };
@@ -378,7 +379,7 @@
 		66AC3D1F23D8FB0800D28EE6 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66AC3D1E23D8FB0800D28EE6 /* GameKit.framework */; };
 		66AC3D2223D923ED00D28EE6 /* KViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AC3D2123D923ED00D28EE6 /* KViewController.swift */; };
 		66ACA19222C2627000FAEF08 /* AppearanceOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ACA19122C2627000FAEF08 /* AppearanceOptionsViewController.swift */; };
-		66AE01242593D4E200308636 /* Badge.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66AE01232593D4E200308636 /* Badge.storyboard */; };
+		66AE01242593D4E200308636 /* Achievement.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66AE01232593D4E200308636 /* Achievement.storyboard */; };
 		66AE01292594018400308636 /* Genre.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66AE01282594018400308636 /* Genre.storyboard */; };
 		66AE1E0B24A0C41300FD3FFC /* StudioDetailsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AE1E0A24A0C41300FD3FFC /* StudioDetailsCollectionViewController.swift */; };
 		66AE1E0D24A0C42600FD3FFC /* Studios.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66AE1E0C24A0C42600FD3FFC /* Studios.storyboard */; };
@@ -495,6 +496,7 @@
 		66D0BF9C25616637000AB7BF /* ShowDetailsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D0BF9B25616637000AB7BF /* ShowDetailsCollectionView.swift */; };
 		66D1358D228087920079438C /* KButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D1358C228087920079438C /* KButton.swift */; };
 		66D4735221AB5FE600A894B7 /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D4735121AB5FE300A894B7 /* UIAlertController+Extension.swift */; };
+		66D4C8EB2A62FC7200971206 /* ProfileBadgeStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D4C8EA2A62FC7200971206 /* ProfileBadgeStackView.swift */; };
 		66D6237720A1BB6600304914 /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D6237620A1BB6600304914 /* LibraryViewController.swift */; };
 		66D6237920A1BEAC00304914 /* LibraryListCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D6237820A1BEAC00304914 /* LibraryListCollectionViewController.swift */; };
 		66D6237B20A1BFD300304914 /* FavoritesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D6237A20A1BFD300304914 /* FavoritesCollectionViewController.swift */; };
@@ -646,6 +648,7 @@
 		6601C39F23BBB98000466BA3 /* ShowDetailHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetailHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
 		6601F1AB2118488D0074C1DD /* IconNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconNotificationCell.swift; sourceTree = "<group>"; };
 		66058DB9212E97670084B79E /* ReviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCollectionViewCell.swift; sourceTree = "<group>"; };
+		660628BB2A62F79100D4A8BB /* ProfileBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileBadge.swift; sourceTree = "<group>"; };
 		6609005329DCE0AF0015FE9F /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		6609FAD621D8D237008DF5E4 /* KurozoraDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KurozoraDelegate.swift; sourceTree = "<group>"; };
 		6609FAD821D90C13008DF5E4 /* KNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KNetworkManager.swift; sourceTree = "<group>"; };
@@ -939,8 +942,8 @@
 		667943622273933400E2D0D0 /* TextViewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewCollectionViewCell.swift; sourceTree = "<group>"; };
 		667943642273A33D00E2D0D0 /* EpisodeDetailsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDetailsCollectionViewController.swift; sourceTree = "<group>"; };
 		667B38422361CE6500786EF6 /* KWhatsNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KWhatsNew.swift; sourceTree = "<group>"; };
-		667F9AD321B47E6D003F6629 /* BadgeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeTableViewCell.swift; sourceTree = "<group>"; };
-		667F9AD821B47FA4003F6629 /* BadgesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgesTableViewController.swift; sourceTree = "<group>"; };
+		667F9AD321B47E6D003F6629 /* AchievementTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementTableViewCell.swift; sourceTree = "<group>"; };
+		667F9AD821B47FA4003F6629 /* AchievementsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsTableViewController.swift; sourceTree = "<group>"; };
 		667F9ADA21B57D5C003F6629 /* Date+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Kurozora.swift"; sourceTree = "<group>"; };
 		667F9ADC21B5F354003F6629 /* SettingsSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSplitViewController.swift; sourceTree = "<group>"; };
 		668142D2245B4804008FC7BE /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
@@ -1010,7 +1013,7 @@
 		66AC3D1E23D8FB0800D28EE6 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		66AC3D2123D923ED00D28EE6 /* KViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KViewController.swift; sourceTree = "<group>"; };
 		66ACA19122C2627000FAEF08 /* AppearanceOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceOptionsViewController.swift; sourceTree = "<group>"; };
-		66AE01232593D4E200308636 /* Badge.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Badge.storyboard; sourceTree = "<group>"; };
+		66AE01232593D4E200308636 /* Achievement.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Achievement.storyboard; sourceTree = "<group>"; };
 		66AE01282594018400308636 /* Genre.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Genre.storyboard; sourceTree = "<group>"; };
 		66AE1E0A24A0C41300FD3FFC /* StudioDetailsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioDetailsCollectionViewController.swift; sourceTree = "<group>"; };
 		66AE1E0C24A0C42600FD3FFC /* Studios.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Studios.storyboard; sourceTree = "<group>"; };
@@ -1136,6 +1139,7 @@
 		66D0BF9B25616637000AB7BF /* ShowDetailsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetailsCollectionView.swift; sourceTree = "<group>"; };
 		66D1358C228087920079438C /* KButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KButton.swift; sourceTree = "<group>"; };
 		66D4735121AB5FE300A894B7 /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
+		66D4C8EA2A62FC7200971206 /* ProfileBadgeStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileBadgeStackView.swift; sourceTree = "<group>"; };
 		66D6237620A1BB6600304914 /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
 		66D6237820A1BEAC00304914 /* LibraryListCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryListCollectionViewController.swift; sourceTree = "<group>"; };
 		66D6237A20A1BFD300304914 /* FavoritesCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCollectionViewController.swift; sourceTree = "<group>"; };
@@ -2224,14 +2228,14 @@
 			path = Experiments;
 			sourceTree = "<group>";
 		};
-		667F9AD521B47E8B003F6629 /* Badges */ = {
+		667F9AD521B47E8B003F6629 /* Achievements */ = {
 			isa = PBXGroup;
 			children = (
-				667F9AD821B47FA4003F6629 /* BadgesTableViewController.swift */,
-				667F9AD321B47E6D003F6629 /* BadgeTableViewCell.swift */,
-				66AE01232593D4E200308636 /* Badge.storyboard */,
+				667F9AD821B47FA4003F6629 /* AchievementsTableViewController.swift */,
+				667F9AD321B47E6D003F6629 /* AchievementTableViewCell.swift */,
+				66AE01232593D4E200308636 /* Achievement.storyboard */,
 			);
-			path = Badges;
+			path = Achievements;
 			sourceTree = "<group>";
 		};
 		668142D4245B4931008FC7BE /* Views and Controls */ = {
@@ -2282,6 +2286,7 @@
 		668142D8245B49E4008FC7BE /* Content Views */ = {
 			isa = PBXGroup;
 			children = (
+				66D4C8E92A62FC6200971206 /* UIStackView */,
 				66DB2549245D72ED000AA6DB /* KActivityIndicatorView.swift */,
 				664AAF8624EE901800FF4AA5 /* UIImageView */,
 			);
@@ -3040,7 +3045,7 @@
 				66CF6D7020A9934F00F98375 /* Profile.storyboard */,
 				66CF6D6620A987D100F98375 /* ProfileTableViewController.swift */,
 				660E39E125E4664200A46EB0 /* ProfileTableViewController+UITableViewDelegate.swift */,
-				667F9AD521B47E8B003F6629 /* Badges */,
+				667F9AD521B47E8B003F6629 /* Achievements */,
 				66232CD7231004EE00C45B5A /* Cells */,
 				66AE01252593D5C000308636 /* Follow */,
 			);
@@ -3140,6 +3145,14 @@
 				660C042D23D14F5C0040C749 /* VideoLockupCollectionViewCell.xib */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		66D4C8E92A62FC6200971206 /* UIStackView */ = {
+			isa = PBXGroup;
+			children = (
+				66D4C8EA2A62FC7200971206 /* ProfileBadgeStackView.swift */,
+			);
+			path = UIStackView;
 			sourceTree = "<group>";
 		};
 		66D6237520A1BB4000304914 /* Library */ = {
@@ -3430,6 +3443,7 @@
 				666C899729FF30800075B5D6 /* FilterableType.swift */,
 				66973DFC231202AF0097A9F8 /* UserSettingsKey.swift */,
 				66EDBA642944A8E300FF1A2E /* WarningType.swift */,
+				660628BB2A62F79100D4A8BB /* ProfileBadge.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -3642,7 +3656,7 @@
 				666938B921B1D50E00BA9620 /* WriteACommentCell.xib in Resources */,
 				664E2CDF289B37140002F886 /* IconNotificationCell.xib in Resources */,
 				66FA97EA281F07AE0054FC2E /* BannerLockupCollectionViewCell.xib in Resources */,
-				66AE01242593D4E200308636 /* Badge.storyboard in Resources */,
+				66AE01242593D4E200308636 /* Achievement.storyboard in Resources */,
 				66F27EC0283A805800CC2277 /* SearchSuggestionResultCell.xib in Resources */,
 				66C5797B22A86435001B8F51 /* DebugSettings.storyboard in Resources */,
 				66500D0C295FCC520098D59D /* PurchaseFeatureCollectionViewCell.xib in Resources */,
@@ -3907,7 +3921,7 @@
 				66EA1DF425B5F68800FCD07A /* TextViewCollectionViewCellDelegate.swift in Sources */,
 				66EDBA5D2944212B00FF1A2E /* WarningRouter.swift in Sources */,
 				6698D3C924E59427006B7A4C /* ReminderStatus+Kurozora.swift in Sources */,
-				667F9AD921B47FA4003F6629 /* BadgesTableViewController.swift in Sources */,
+				667F9AD921B47FA4003F6629 /* AchievementsTableViewController.swift in Sources */,
 				66C1E7E6295A16AD00C7C44C /* SplashscreenPresenter.swift in Sources */,
 				66500D1C296067820098D59D /* SubscriptionCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				667074D523382756008C1A75 /* AccountOnboardingTableViewController.swift in Sources */,
@@ -4010,6 +4024,7 @@
 				6671F28B27A586AD005D3A0D /* ThemesCollectionViewController.swift in Sources */,
 				66EA1DDD25B5BBF600FCD07A /* CharacterDetailsCollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				6645408628270BEA0001E5B2 /* PeopleListCollectionViewController+KCollectionViewDataSource.swift in Sources */,
+				66D4C8EB2A62FC7200971206 /* ProfileBadgeStackView.swift in Sources */,
 				662DB4DD237EF40800B7FE7E /* Tabman+Kurozora.swift in Sources */,
 				66707838208B846C00471FBC /* SettingsTableViewController.swift in Sources */,
 				66EA1DE825B5BD7000FCD07A /* SeasonsListCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
@@ -4029,6 +4044,7 @@
 				66E1215729AFEE0C0051C4ED /* GameDetailsCollectionViewController.swift in Sources */,
 				66B216A821C033B9006E167D /* UIView+Kurozora.swift in Sources */,
 				66319DAD27C82EAD0063DE7F /* MusicLockupCollectionViewCell.swift in Sources */,
+				660628BC2A62F79100D4A8BB /* ProfileBadge.swift in Sources */,
 				661F184524A5594C00542AFB /* KCopyableTintedLabel.swift in Sources */,
 				664AAFA124EEEE9F00FF4AA5 /* PersonHeaderCollectionViewCell.swift in Sources */,
 				664AAFA724EEF3D600FF4AA5 /* CharacterLockupCollectionViewCell.swift in Sources */,
@@ -4264,7 +4280,7 @@
 				665CBBA022C27E90004D0D3E /* SelectableSettingsCell.swift in Sources */,
 				666C89B02A0079BD0075B5D6 /* SearchFilterDateCollectionViewCell.swift in Sources */,
 				666D3E8C244DE7240068A103 /* UserAttributes+UIImage.swift in Sources */,
-				667F9AD421B47E6D003F6629 /* BadgeTableViewCell.swift in Sources */,
+				667F9AD421B47E6D003F6629 /* AchievementTableViewCell.swift in Sources */,
 				668142D3245B4804008FC7BE /* ProfileImageView.swift in Sources */,
 				66C4DAE1243BE52900C4B90A /* KKLibrarySortTypeOptions+Kurozora.swift in Sources */,
 				666E0D2122888B2300AA8BA4 /* KNavigationController.swift in Sources */,

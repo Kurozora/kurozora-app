@@ -19,17 +19,15 @@ class ProfileTableViewController: KTableViewController {
 	@IBOutlet weak var onlineIndicatorContainerView: UIView!
 	@IBOutlet weak var bannerImageView: UIImageView!
 	@IBOutlet weak var bioTextView: KTextView!
+	@IBOutlet weak var profileBadgeStackView: ProfileBadgeStackView!
 
 	@IBOutlet weak var followButton: KTintedButton!
 
 	@IBOutlet weak var buttonsStackView: UIStackView!
 	@IBOutlet weak var reputationButton: KButton!
-	@IBOutlet weak var badgesButton: KButton!
+	@IBOutlet weak var achievementsButton: KButton!
 	@IBOutlet weak var followingButton: KButton!
 	@IBOutlet weak var followersButton: KButton!
-
-	@IBOutlet weak var proBadgeButton: UIButton!
-	@IBOutlet weak var verificationImageView: UIImageView!
 
 	@IBOutlet weak var selectBannerImageButton: KButton!
 	@IBOutlet weak var selectProfileImageButton: KButton!
@@ -412,31 +410,29 @@ class ProfileTableViewController: KTableViewController {
 		self.updateFollowButton()
 
 		// Badges
-		self.verificationImageView.isHidden = !user.attributes.isVerified
-		let proTitle = user.attributes.isSubscribed ? Trans.proPlus : Trans.pro
-		self.proBadgeButton.setTitle(proTitle.uppercased(), for: .normal)
-		self.proBadgeButton.isHidden = !user.attributes.isPro || !user.attributes.isSubscribed
+		self.profileBadgeStackView.delegate = self
+		self.profileBadgeStackView.configure(for: user)
 
-		// Determine badge count
-		var badgeCount = 0
-		if let badges = user.relationships?.badges?.data {
-			badgeCount = badges.count
+		// Determine achievements count
+		var achievementsCount = 0
+		if let achievements = user.relationships?.badges?.data {
+			achievementsCount = achievements.count
 		}
 
-		// Configure badge button
-		let badgeCountString = NSAttributedString(string: "\(badgeCount)", attributes: [
+		// Configure achievements button
+		let achievementsCountString = NSAttributedString(string: "\(achievementsCount)", attributes: [
 			NSAttributedString.Key.foregroundColor: KThemePicker.textColor.colorValue,
 			NSAttributedString.Key.paragraphStyle: centerAlign
 		])
-		let badgesTitleString = NSAttributedString(string: "\nBadges", attributes: [
+		let achievementsTitleString = NSAttributedString(string: "\n\(Trans.achievements)", attributes: [
 			NSAttributedString.Key.foregroundColor: KThemePicker.subTextColor.colorValue,
 			NSAttributedString.Key.paragraphStyle: centerAlign
 		])
-		let badgesButtonTitle = NSMutableAttributedString()
-		badgesButtonTitle.append(badgeCountString)
-		badgesButtonTitle.append(badgesTitleString)
+		let achievementsButtonTitle = NSMutableAttributedString()
+		achievementsButtonTitle.append(achievementsCountString)
+		achievementsButtonTitle.append(achievementsTitleString)
 
-		self.badgesButton.setAttributedTitle(badgesButtonTitle, for: .normal)
+		self.achievementsButton.setAttributedTitle(achievementsButtonTitle, for: .normal)
 
 		// Configure AutoLayout
 		self.tableView.setTableHeaderView(headerView: self.tableView.tableHeaderView)
@@ -726,9 +722,9 @@ class ProfileTableViewController: KTableViewController {
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
-		case R.segue.profileTableViewController.badgeSegue.identifier:
-			guard let badgesTableViewController = segue.destination as? BadgesTableViewController else { return }
-			badgesTableViewController.user = self.user
+		case R.segue.profileTableViewController.achievementsSegue.identifier:
+			guard let achievementsTableViewController = segue.destination as? AchievementsTableViewController else { return }
+			achievementsTableViewController.user = self.user
 		case R.segue.profileTableViewController.followingSegue.identifier:
 			guard let followTableViewController = segue.destination as? UsersListCollectionViewController else { return }
 			followTableViewController.user = self.user
@@ -815,6 +811,10 @@ extension ProfileTableViewController: BaseFeedMessageCellDelegate {
 		if let indexPath = self.tableView.indexPath(for: cell) {
 			self.feedMessages[indexPath.section].visitOriginalPosterProfile(from: self)
 		}
+	}
+
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressProfileBadge profileBadge: ProfileBadge) {
+		self.presentAlertController(title: "", message: profileBadge.description)
 	}
 
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressUserName sender: AnyObject) {
@@ -1049,5 +1049,12 @@ extension ProfileTableViewController: UITextViewDelegate {
 		}
 
 		return true
+	}
+}
+
+// MARK: - ProfileBadgeStackViewDelegate
+extension ProfileTableViewController: ProfileBadgeStackViewDelegate {
+	func profileBadgeStackView(_ view: ProfileBadgeStackView, didPress profileBadge: ProfileBadge) {
+		self.presentAlertController(title: "", message: profileBadge.description)
 	}
 }
