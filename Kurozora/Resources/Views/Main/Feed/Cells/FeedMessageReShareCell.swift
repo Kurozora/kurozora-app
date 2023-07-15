@@ -16,8 +16,7 @@ class FeedMessageReShareCell: FeedMessageCell {
 	@IBOutlet weak var opMessageTextView: KTextView!
 	@IBOutlet weak var opDateTimeLabel: KSecondaryLabel!
 	@IBOutlet weak var opView: UIView?
-	@IBOutlet weak var opVerificationImageView: UIImageView!
-	@IBOutlet weak var opProBadgeButton: UIButton!
+	@IBOutlet weak var opProfileBadgeStackView: ProfileBadgeStackView!
 
 	// MARK: - Functions
 	override func configureCell(using feedMessage: FeedMessage?) {
@@ -39,10 +38,8 @@ class FeedMessageReShareCell: FeedMessageCell {
 			self.configureOPProfilePageGesture(for: self.opUsernameLabel)
 
 			// Badges
-			self.opVerificationImageView.isHidden = !opUser.attributes.isVerified
-			let proTitle = opUser.attributes.isSubscribed ? Trans.proPlus : Trans.pro
-			self.opProBadgeButton.setTitle(proTitle.uppercased(), for: .normal)
-			self.opProBadgeButton.isHidden = !opUser.attributes.isPro || !opUser.attributes.isSubscribed
+			self.opProfileBadgeStackView.delegate = self
+			self.opProfileBadgeStackView.configure(for: opUser)
 		}
 
 		if let opView = self.opView, opView.gestureRecognizers.isNilOrEmpty {

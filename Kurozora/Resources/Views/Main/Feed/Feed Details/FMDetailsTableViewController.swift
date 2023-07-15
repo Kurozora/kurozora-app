@@ -331,6 +331,10 @@ extension FMDetailsTableViewController: BaseFeedMessageCellDelegate {
 		}
 	}
 
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressProfileBadge profileBadge: ProfileBadge) {
+		self.presentAlertController(title: "", message: profileBadge.description)
+	}
+
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressUserName sender: AnyObject) {
 		self.feedMessage.relationships.parent?.data.first?.visitOriginalPosterProfile(from: self)
 	}

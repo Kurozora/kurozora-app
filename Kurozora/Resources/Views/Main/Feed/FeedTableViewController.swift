@@ -315,6 +315,10 @@ extension FeedTableViewController: BaseFeedMessageCellDelegate {
 		}
 	}
 
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressProfileBadge profileBadge: ProfileBadge) {
+		self.presentAlertController(title: "", message: profileBadge.description)
+	}
+
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressUserName sender: AnyObject) {
 		if let indexPath = self.tableView.indexPath(for: cell) {
 			self.feedMessages[indexPath.section].relationships.parent?.data.first?.visitOriginalPosterProfile(from: self)

@@ -14,6 +14,7 @@ protocol BaseFeedMessageCellDelegate: AnyObject {
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressReplyButton button: UIButton)
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressReShareButton button: UIButton)
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressUserName sender: AnyObject)
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressProfileBadge profileBadge: ProfileBadge)
 
 	// MARK: Feed Message ReShare
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressUserName sender: AnyObject)

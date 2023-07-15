@@ -16,15 +16,13 @@ class BaseFeedMessageCell: KTableViewCell {
 
 	@IBOutlet weak var profileImageView: ProfileImageView!
 	@IBOutlet weak var usernameLabel: KLabel!
+	@IBOutlet weak var profileBadgeStackView: ProfileBadgeStackView!
 	@IBOutlet weak var dateTimeLabel: KSecondaryLabel!
 	@IBOutlet weak var postTextView: KTextView!
 	@IBOutlet weak var heartButton: CellActionButton!
 	@IBOutlet weak var commentButton: CellActionButton!
 	@IBOutlet weak var shareButton: CellActionButton!
 	@IBOutlet weak var moreButton: CellActionButton!
-
-	@IBOutlet weak var verificationImageView: UIImageView!
-	@IBOutlet weak var proBadgeButton: UIButton!
 
 	// MARK: - Properties
 	weak var delegate: BaseFeedMessageCellDelegate?
@@ -64,10 +62,8 @@ class BaseFeedMessageCell: KTableViewCell {
 			self.configureProfilePageGesture(for: self.profileImageView)
 
 			// Badges
-			self.verificationImageView.isHidden = !user.attributes.isVerified
-			let proTitle = user.attributes.isSubscribed ? Trans.proPlus : Trans.pro
-			self.proBadgeButton.setTitle(proTitle.uppercased(), for: .normal)
-			self.proBadgeButton.isHidden = !user.attributes.isPro || !user.attributes.isSubscribed
+			self.profileBadgeStackView.delegate = self
+			self.profileBadgeStackView.configure(for: user)
 		}
 
 		// Configure body
@@ -219,5 +215,12 @@ extension BaseFeedMessageCell: UITextViewDelegate {
 		}
 
 		return true
+	}
+}
+
+// MARK: - ProfileBadgeStackViewDelegate
+extension BaseFeedMessageCell: ProfileBadgeStackViewDelegate {
+	func profileBadgeStackView(_ view: ProfileBadgeStackView, didPress profileBadge: ProfileBadge) {
+		self.delegate?.baseFeedMessageCell(self, didPressProfileBadge: profileBadge)
 	}
 }

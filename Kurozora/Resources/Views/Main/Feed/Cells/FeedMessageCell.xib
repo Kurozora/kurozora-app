@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -26,46 +26,16 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Kurozora" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="27X-h2-WMd" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="60" y="8" width="70.5" height="20"/>
+                        <rect key="frame" x="60" y="8" width="71.5" height="20"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="iwK-VE-5g4">
-                        <rect key="frame" x="132.5" y="8" width="210.5" height="20"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.seal.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="vU6-rX-RFb">
-                                <rect key="frame" x="0.0" y="-1" width="20" height="21.5"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="vU6-rX-RFb" secondAttribute="height" multiplier="1:1" id="0Yg-C2-lmd"/>
-                                </constraints>
-                            </imageView>
-                            <button userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L4p-TN-0Sq">
-                                <rect key="frame" x="24" y="0.0" width="40" height="20"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="6he-NJ-eGu"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
-                                <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
-                                <state key="normal" title="PRO">
-                                    <color key="titleColor" red="1" green="0.82352941180000006" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" red="1" green="0.82352941180000006" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </button>
-                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BBd-qV-7QB">
-                                <rect key="frame" x="68" y="0.0" width="142.5" height="20"/>
-                            </view>
-                        </subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="iwK-VE-5g4" customClass="ProfileBadgeStackView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="133.5" y="8" width="209.5" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="S7u-6h-WaK"/>
+                        </constraints>
                     </stackView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2d" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yad-DN-7du" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
                         <rect key="frame" x="351" y="8" width="15" height="20"/>
@@ -87,7 +57,7 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZDW-d9-wqu" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                    <rect key="frame" x="134.5" y="11.5" width="37" height="19.5"/>
+                                    <rect key="frame" x="134.5" y="11" width="37" height="19.5"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -113,10 +83,10 @@
                         <rect key="frame" x="60" y="77.5" width="306" height="44"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="2r3-Rh-BUE">
-                                <rect key="frame" x="0.0" y="0.0" width="128.5" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="123" height="44"/>
                                 <subviews>
                                     <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZRS-WP-vqK" customClass="CellActionButton" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="34.5" height="44"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="29" height="44"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <color key="tintColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <state key="normal" title="0" image="Symbols/message.left.and.message.right.fill">
@@ -127,7 +97,7 @@
                                         </connections>
                                     </button>
                                     <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wjh-je-WtR" customClass="CellActionButton" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="42.5" y="0.0" width="40.5" height="44"/>
+                                        <rect key="frame" x="37" y="0.0" width="40.5" height="44"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <color key="tintColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <state key="normal" title="0" image="square.and.arrow.up.on.square.fill" catalog="system">
@@ -141,7 +111,7 @@
                                         </connections>
                                     </button>
                                     <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7eR-Hg-lR6" customClass="CellActionButton" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="91" y="0.0" width="37.5" height="44"/>
+                                        <rect key="frame" x="85.5" y="0.0" width="37.5" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="XNf-jS-xWL"/>
                                         </constraints>
@@ -223,11 +193,10 @@
                 <outlet property="heartButton" destination="7eR-Hg-lR6" id="5nR-ot-cVo"/>
                 <outlet property="moreButton" destination="jiI-CD-mWg" id="7Z7-Cb-jiE"/>
                 <outlet property="postTextView" destination="I35-Go-4sT" id="2NN-Yo-Rwj"/>
-                <outlet property="proBadgeButton" destination="L4p-TN-0Sq" id="1yl-5f-pp3"/>
+                <outlet property="profileBadgeStackView" destination="iwK-VE-5g4" id="f9p-hD-TBE"/>
                 <outlet property="profileImageView" destination="qEa-CS-cR6" id="y0z-IG-ZnW"/>
                 <outlet property="shareButton" destination="Wjh-je-WtR" id="nPb-tM-GGT"/>
                 <outlet property="usernameLabel" destination="27X-h2-WMd" id="eDx-vg-PZV"/>
-                <outlet property="verificationImageView" destination="vU6-rX-RFb" id="XP3-h5-WMu"/>
                 <outlet property="warningTranscriptLabel" destination="ZDW-d9-wqu" id="Fqt-6z-Asm"/>
                 <outlet property="warningVisualEffectView" destination="Cfl-Ds-ElJ" id="wT1-O7-MAl"/>
             </connections>
@@ -235,8 +204,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Symbols/message.left.and.message.right.fill" width="24" height="19"/>
-        <image name="checkmark.seal.fill" catalog="system" width="128" height="124"/>
+        <image name="Symbols/message.left.and.message.right.fill" width="18" height="15"/>
         <image name="ellipsis" catalog="system" width="128" height="37"/>
         <image name="heart.fill" catalog="system" width="128" height="107"/>
         <image name="square.and.arrow.up.on.square.fill" catalog="system" width="119" height="128"/>
