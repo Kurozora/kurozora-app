@@ -173,7 +173,7 @@ Manages the return key to work like next/done in a view hierarchy.
 
     /**
     Should pass UITextField/UITextView intance. Assign textFieldView delegate to self, change it's returnKeyType.
-
+    
     @param view UITextField/UITextView object to register.
     */
     @objc public func addTextFieldView(_ view: UIView) {
@@ -198,7 +198,7 @@ Manages the return key to work like next/done in a view hierarchy.
 
     /**
     Should pass UITextField/UITextView intance. Restore it's textFieldView delegate and it's returnKeyType.
-
+    
     @param view UITextField/UITextView object to unregister.
     */
     @objc public func removeTextFieldView(_ view: UIView) {
@@ -224,7 +224,7 @@ Manages the return key to work like next/done in a view hierarchy.
 
     /**
     Add all the UITextField/UITextView responderView's.
-
+    
     @param view UIView object to register all it's responder subviews.
     */
     @objc public func addResponderFromView(_ view: UIView) {
@@ -239,7 +239,7 @@ Manages the return key to work like next/done in a view hierarchy.
 
     /**
     Remove all the UITextField/UITextView responderView's.
-
+    
     @param view UIView object to unregister all it's responder subviews.
     */
     @objc public func removeResponderFromView(_ view: UIView) {

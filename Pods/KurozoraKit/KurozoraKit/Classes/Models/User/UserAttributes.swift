@@ -46,6 +46,15 @@ extension User {
 		/// The banner image of the user.
 		public var banner: Media?
 
+		/// Whether the user is a developer.
+		public var isDeveloper: Bool
+
+		/// Whether the user is a staff member.
+		public var isStaff: Bool
+
+		/// Whether the user is an early supporter.
+		public var isEarlySupporter: Bool
+
 		/// Whether the user has a valid pro account.
 		public var isPro: Bool
 
@@ -56,7 +65,10 @@ extension User {
 		public var isVerified: Bool
 
 		/// The join date of the user.
-		public let joinDate: Date
+		public let joinedAt: Date
+
+		/// The subscription date of the user.
+		public let subscribedAt: Date?
 
 		/// The follower count of the user.
 		public var followerCount: Int

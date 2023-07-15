@@ -33,13 +33,16 @@ extension Person {
 		/// The deceased date of the person.
 		public let deceasedDate: Date?
 
-		/// The astrological sign of the person.
-		public let astrologicalSign: String?
-
 		/// The biogrpahy of the person.
 		public let about: String?
 
+		/// The short description of the person.
+		public let shortDescription: String?
+
 		/// The link to the website of the person.
 		public let websiteURLs: [String]?
+
+		/// The astrological sign of the person.
+		public let astrologicalSign: String?
 	}
 }

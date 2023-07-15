@@ -12,7 +12,7 @@ extension Character {
 		/// The slug of the character.
 		public let slug: String
 
-		/// The link to a profile image of the chracter.
+		/// The link to a profile image of the character.
 		public let profile: Media?
 
 		/// The name of the character.
@@ -20,6 +20,9 @@ extension Character {
 
 		/// The biogrpahy of the character.
 		public let about: String?
+
+		/// The short description of the character.
+		public let shortDescription: String?
 
 		/// The debut information of the character,
 		public let debut: String?

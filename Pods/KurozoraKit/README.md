@@ -1,10 +1,12 @@
-<p align="center"><img src=".github/Assets/KurozoraKit_icon.png" width="256px"></p>
+<p></p>
+
+<p align="center"><img src=".github/Assets/KurozoraKit.png" width="200px"></p>
 
 <p align="center">
     <sup><b>The magic behind Kurozora app</b></sup>
 </p>
 
-# KurozoraKit [![Swift 5](https://img.shields.io/badge/Swift%205-white.svg?style=flat&logo=Swift)](https://swift.org)  [![Apple Platform](https://img.shields.io/badge/iOS%20|%20ipadOS%20|%20macOS-black?style=flat&logo=Apple)](https://apple.co/3CsQlKq) [![Kurozora Discord Server](https://img.shields.io/discord/449250093623934977?style=flat&label=&logo=Discord&logoColor=white&color=7289DA)](https://discord.gg/f3QFzGqsah) [![Documentation](https://img.shields.io/badge/Documentation-100%25-green.svg?style=flat)](https://developer.kurozora.app/KurozoraKit) [![License](https://img.shields.io/badge/License-GPLv3-blue.svg?style=flat)](LICENSE)
+# KurozoraKit [![Swift 5](https://img.shields.io/badge/Swift%205-white.svg?style=flat&logo=Swift)](https://swift.org)  [![Apple Platform](https://img.shields.io/badge/iOS%20|%20ipadOS%20|%20macOS-black?style=flat&logo=Apple)](https://apple.co/3CsQlKq) [![Kurozora Discord Server](https://img.shields.io/discord/449250093623934977?style=flat&label=&logo=Discord&logoColor=white&color=7289DA)](https://discord.gg/f3QFzGqsah) [![Documentation](https://img.shields.io/badge/Documentation-100%25-green.svg?style=flat)](https://developer.kurozora.app/KurozoraKit) [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat)](LICENSE)
 
 [KurozoraKit](https://developer.kurozora.app/kurozorakit) lets users manage their anime library and access many other serices from your app. When users provide permission to access their Kurozora account, they can use your app to share anime, add anime to their library, and discover any of the millions of anime in the Kurozora catalog. If your app detects that the user is not yet a Kurozora member, you can offer them to create an account within your app.
 
@@ -81,11 +83,15 @@ Read the [Contributing Guide](CONTRIBUTING) to learn about reporting issues, con
 
 # Security
 
-If you happen to find a security vulnerability, we would appreciate you letting us know at kurozoraapp@gmail.com and allowing us to respond before disclosing the issue publicly.
+Read our [Security Policy](SECURITY.md) to learn about reporting security issues.
 
 # Getting in Touch
 
 If you have any questions or just want to say hi, join the Kurozora [Discord](https://discord.gg/f3QFzGqsah) and drop a message on the #development channel.
+
+# Code of Conduct
+
+This project has a [Code of Conduct](CODE_OF_CONDUCT.md). By interacting with this repository, or community you agree to abide by its terms.
 
 # More by Kurozora
 
