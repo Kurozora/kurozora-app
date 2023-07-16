@@ -516,6 +516,8 @@
 		66DF090E26C673D0005AED93 /* NotificationKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF090D26C673CF005AED93 /* NotificationKind.swift */; };
 		66DF091326C7C1FB005AED93 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF091226C7C1FA005AED93 /* Store.swift */; };
 		66DF091826C94A47005AED93 /* StoreKit+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF091726C94A47005AED93 /* StoreKit+Kurozora.swift */; };
+		66E077D62A6349DB005385F8 /* BadgeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E077D52A6349DB005385F8 /* BadgeViewController.swift */; };
+		66E077D82A636242005385F8 /* Badge.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66E077D72A636242005385F8 /* Badge.storyboard */; };
 		66E08369211324D400B39A75 /* SessionLockupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E08368211324D300B39A75 /* SessionLockupCell.swift */; };
 		66E1215029AFEE090051C4ED /* GamesListCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E1214C29AFED390051C4ED /* GamesListCollectionViewController.swift */; };
 		66E1215129AFEE090051C4ED /* GamesListCollectionViewController+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E1214D29AFED3A0051C4ED /* GamesListCollectionViewController+UICollectionViewDelegate.swift */; };
@@ -1159,6 +1161,8 @@
 		66DF090D26C673CF005AED93 /* NotificationKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationKind.swift; sourceTree = "<group>"; };
 		66DF091226C7C1FA005AED93 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		66DF091726C94A47005AED93 /* StoreKit+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StoreKit+Kurozora.swift"; sourceTree = "<group>"; };
+		66E077D52A6349DB005385F8 /* BadgeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeViewController.swift; sourceTree = "<group>"; };
+		66E077D72A636242005385F8 /* Badge.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Badge.storyboard; sourceTree = "<group>"; };
 		66E08368211324D300B39A75 /* SessionLockupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionLockupCell.swift; sourceTree = "<group>"; };
 		66E1214329AFEC320051C4ED /* GameDetailsCollectionViewController+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameDetailsCollectionViewController+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
 		66E1214429AFEC320051C4ED /* GameDetailsCollectionViewController+TouchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameDetailsCollectionViewController+TouchBar.swift"; sourceTree = "<group>"; };
@@ -3046,6 +3050,7 @@
 				66CF6D6620A987D100F98375 /* ProfileTableViewController.swift */,
 				660E39E125E4664200A46EB0 /* ProfileTableViewController+UITableViewDelegate.swift */,
 				667F9AD521B47E8B003F6629 /* Achievements */,
+				66E077D42A6349A8005385F8 /* Badge */,
 				66232CD7231004EE00C45B5A /* Cells */,
 				66AE01252593D5C000308636 /* Follow */,
 			);
@@ -3230,6 +3235,15 @@
 				66F27EBF283A805800CC2277 /* SearchSuggestionResultCell.xib */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		66E077D42A6349A8005385F8 /* Badge */ = {
+			isa = PBXGroup;
+			children = (
+				66E077D52A6349DB005385F8 /* BadgeViewController.swift */,
+				66E077D72A636242005385F8 /* Badge.storyboard */,
+			);
+			path = Badge;
 			sourceTree = "<group>";
 		};
 		66E1214229AFEC160051C4ED /* Games */ = {
@@ -3686,6 +3700,7 @@
 				664AAF8124EE8E2F00FF4AA5 /* Characters.storyboard in Resources */,
 				6684225025967A65000A09F8 /* TitleHeaderTableReusableView.xib in Resources */,
 				66CE8118246093DE00DB0C49 /* ServiceHeaderTableViewCell.xib in Resources */,
+				66E077D82A636242005385F8 /* Badge.storyboard in Resources */,
 				66707823208B1C6800471FBC /* LaunchScreen.xib in Resources */,
 				66AA35BE24030F570006EC5B /* Seasons.storyboard in Resources */,
 				66CBDD9A24647B3500CA5F83 /* EpisodeLockupCollectionViewCell.xib in Resources */,
@@ -4344,6 +4359,7 @@
 				66CE80FD246035C700DB0C49 /* KTableViewDataSource.swift in Sources */,
 				66500D11295FD4B30098D59D /* PurchaseHeaderCollectionViewCell.swift in Sources */,
 				66F944B322F0D11B009F1FE2 /* KWebViewController.swift in Sources */,
+				66E077D62A6349DB005385F8 /* BadgeViewController.swift in Sources */,
 				66F944AE22F0C08E009F1FE2 /* BaseLockupCollectionViewCell.swift in Sources */,
 				66AC3D2223D923ED00D28EE6 /* KViewController.swift in Sources */,
 				66785E2A2363C714003EF24C /* CastCollectionViewCell.swift in Sources */,

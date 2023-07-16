@@ -813,8 +813,27 @@ extension ProfileTableViewController: BaseFeedMessageCellDelegate {
 		}
 	}
 
-	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressProfileBadge profileBadge: ProfileBadge) {
-		self.presentAlertController(title: "", message: profileBadge.description)
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) {
+		if let badgeViewController = R.storyboard.badge.instantiateInitialViewController() {
+			badgeViewController.profileBadge = profileBadge
+
+			#if targetEnvironment(macCatalyst)
+			#else
+			if #available(iOS 16.0, *) {
+				badgeViewController.sheetPresentationController?.detents = [.custom(resolver: { _ in
+					return badgeViewController.preferredContentSize.height
+				})]
+			} else {
+				badgeViewController.sheetPresentationController?.detents = [.medium()]
+			}
+			#endif
+
+			badgeViewController.popoverPresentationController?.sourceView = button
+			badgeViewController.popoverPresentationController?.sourceRect = button.bounds
+			badgeViewController.sheetPresentationController?.prefersGrabberVisible = true
+
+			self.present(badgeViewController, animated: true, completion: nil)
+		}
 	}
 
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressUserName sender: AnyObject) {
@@ -1054,7 +1073,26 @@ extension ProfileTableViewController: UITextViewDelegate {
 
 // MARK: - ProfileBadgeStackViewDelegate
 extension ProfileTableViewController: ProfileBadgeStackViewDelegate {
-	func profileBadgeStackView(_ view: ProfileBadgeStackView, didPress profileBadge: ProfileBadge) {
-		self.presentAlertController(title: "", message: profileBadge.description)
+	func profileBadgeStackView(_ view: ProfileBadgeStackView, didPress button: UIButton, for profileBadge: ProfileBadge) {
+		if let badgeViewController = R.storyboard.badge.instantiateInitialViewController() {
+			badgeViewController.profileBadge = profileBadge
+
+			#if targetEnvironment(macCatalyst)
+			#else
+			if #available(iOS 16.0, *) {
+				badgeViewController.sheetPresentationController?.detents = [.custom(resolver: { _ in
+					return badgeViewController.preferredContentSize.height
+				})]
+			} else {
+				badgeViewController.sheetPresentationController?.detents = [.medium()]
+			}
+			#endif
+
+			badgeViewController.popoverPresentationController?.sourceView = button
+			badgeViewController.popoverPresentationController?.sourceRect = button.bounds
+			badgeViewController.sheetPresentationController?.prefersGrabberVisible = true
+
+			self.present(badgeViewController, animated: true, completion: nil)
+		}
 	}
 }

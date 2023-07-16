@@ -10,7 +10,7 @@ import UIKit
 import KurozoraKit
 
 protocol ProfileBadgeStackViewDelegate: AnyObject {
-	func profileBadgeStackView(_ view: ProfileBadgeStackView, didPress profileBadge: ProfileBadge)
+	func profileBadgeStackView(_ view: ProfileBadgeStackView, didPress button: UIButton, for profileBadge: ProfileBadge)
 }
 
 @MainActor
@@ -79,7 +79,7 @@ class ProfileBadgeStackView: UIStackView {
 			profileBadges.append(.developer)
 		}
 		if user.attributes.isEarlySupporter {
-			profileBadges.append(.earlyBird)
+			profileBadges.append(.earlySupporter)
 		}
 		if user.attributes.isPro {
 			profileBadges.append(.pro)
@@ -93,6 +93,6 @@ class ProfileBadgeStackView: UIStackView {
 
 	@objc private func handleProfileBadgePressed(_ sender: UIButton) {
 		guard let profileBadge = self.profileBadges[safe: sender.tag] else { return }
-		self.delegate?.profileBadgeStackView(self, didPress: profileBadge)
+		self.delegate?.profileBadgeStackView(self, didPress: sender, for: profileBadge)
 	}
 }

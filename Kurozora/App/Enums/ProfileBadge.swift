@@ -11,19 +11,37 @@ import UIKit
 enum ProfileBadge {
 	// MARK: - Cases
 	case developer
-	case earlyBird
+	case earlySupporter
 	case staff
 	case pro
 	case subscriber(sinceDate: Date)
 	case verified
 
 	// MARK: - Properties
+	/// The title value of a profile badge.
+	var title: String {
+		switch self {
+		case .developer:
+			return "Active Developer"
+		case .earlySupporter:
+			return "Early Supporter"
+		case .staff:
+			return "Staff"
+		case .pro:
+			return "Kurozora Pro"
+		case .subscriber:
+			return "Kurozora+"
+		case .verified:
+			return "Verified"
+		}
+	}
+
 	/// The description value of a profile badge.
 	var description: String {
 		switch self {
 		case .developer:
 			return "This account is an active developer."
-		case .earlyBird:
+		case .earlySupporter:
 			return "This account is an early supporter of Kurozora."
 		case .staff:
 			return "This account is a staff member."
@@ -32,7 +50,25 @@ enum ProfileBadge {
 		case .subscriber(let sinceDate):
 			return "This account is a Kurozora+ subscriber since \(sinceDate.formatted(date: .abbreviated, time: .omitted))."
 		case .verified:
-			return "This account is a staff member."
+			return "This account is verified because it’s notable in animators, voice actors, entertainment studios, or another designated category."
+		}
+	}
+
+	/// The button title value of a profile badge.
+	var buttonTitle: String? {
+		switch self {
+		case .developer:
+			return "Become a Developer"
+		case .earlySupporter:
+			return nil
+		case .staff:
+			return "Join Kurozora Staff"
+		case .pro:
+			return "Become a Pro User"
+		case .subscriber:
+			return "Become a Subscriber"
+		case .verified:
+			return "Get Verified"
 		}
 	}
 
@@ -41,7 +77,7 @@ enum ProfileBadge {
 		switch self {
 		case .developer:
 			return R.image.badges.hammer_app()
-		case .earlyBird:
+		case .earlySupporter:
 			return R.image.badges.bird_triangle()
 		case .staff:
 			return R.image.badges.sakura_shield()

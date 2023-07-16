@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
+    <device id="retina6_12" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Badge View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="BadgeViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y6W-OH-hqX" customClass="BadgeViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="fsD-7g-2nT">
+                                <rect key="frame" x="8" y="67" width="377" height="743"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="coX-aT-iIN">
+                                        <rect key="frame" x="0.0" y="0.0" width="377" height="687"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oyH-b2-yi4">
+                                                <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                                                <subviews>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Badges/checkmark_seal" translatesAutoresizingMaskIntoConstraints="NO" id="wyT-sq-SzG">
+                                                        <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="56" id="GzA-qw-UcI"/>
+                                                            <constraint firstAttribute="width" secondItem="wyT-sq-SzG" secondAttribute="height" multiplier="1:1" id="bab-5t-Dl8"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="trailing" secondItem="wyT-sq-SzG" secondAttribute="trailing" id="II6-Af-m2H"/>
+                                                    <constraint firstItem="wyT-sq-SzG" firstAttribute="top" secondItem="oyH-b2-yi4" secondAttribute="top" id="SeA-oG-Ubk"/>
+                                                    <constraint firstItem="wyT-sq-SzG" firstAttribute="leading" secondItem="oyH-b2-yi4" secondAttribute="leading" id="WTX-00-CJn"/>
+                                                    <constraint firstAttribute="bottom" secondItem="wyT-sq-SzG" secondAttribute="bottom" id="z5e-8b-2kk"/>
+                                                </constraints>
+                                            </view>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Ntc-C4-ld6">
+                                                <rect key="frame" x="64" y="0.0" width="313" height="50"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dlp-EX-GoL">
+                                                        <rect key="frame" x="0.0" y="0.0" width="313" height="50"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hbm-PY-eBc" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="0.0" width="313" height="20.333333333333332"/>
+                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="czv-wF-cRO" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="24.333333333333329" width="313" height="25.666666666666671"/>
+                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                                <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstItem="Hbm-PY-eBc" firstAttribute="leading" secondItem="Dlp-EX-GoL" secondAttribute="leading" id="3ct-RA-wKj"/>
+                                                            <constraint firstItem="czv-wF-cRO" firstAttribute="leading" secondItem="Dlp-EX-GoL" secondAttribute="leading" id="BhW-pb-5hl"/>
+                                                            <constraint firstAttribute="trailing" secondItem="czv-wF-cRO" secondAttribute="trailing" id="J9b-hb-iKO"/>
+                                                            <constraint firstAttribute="trailing" secondItem="Hbm-PY-eBc" secondAttribute="trailing" id="V7R-vX-NKn"/>
+                                                            <constraint firstItem="czv-wF-cRO" firstAttribute="top" secondItem="Hbm-PY-eBc" secondAttribute="bottom" constant="4" id="l9r-1E-MLd"/>
+                                                            <constraint firstItem="Hbm-PY-eBc" firstAttribute="top" secondItem="Dlp-EX-GoL" secondAttribute="top" id="vB9-Hc-T54"/>
+                                                            <constraint firstAttribute="bottom" secondItem="czv-wF-cRO" secondAttribute="bottom" id="yX1-F2-pwP"/>
+                                                        </constraints>
+                                                    </view>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EYg-Md-IuV" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="703" width="377" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="ieF-E8-KZZ"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="_test"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="primaryButtonPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="SFB-5t-sRM"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="Utp-DN-h72"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="fsD-7g-2nT" secondAttribute="trailing" constant="8" id="B6Q-aX-leJ"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="fsD-7g-2nT" secondAttribute="bottom" constant="8" id="r0J-Em-AFf"/>
+                            <constraint firstItem="fsD-7g-2nT" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="8" id="sT7-FJ-dhQ"/>
+                            <constraint firstItem="fsD-7g-2nT" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="8" id="wrc-dN-4fZ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="primaryButton" destination="EYg-Md-IuV" id="560-Nx-ACJ"/>
+                        <outlet property="primaryLabel" destination="Hbm-PY-eBc" id="aqN-te-F5f"/>
+                        <outlet property="secondaryLabel" destination="czv-wF-cRO" id="rva-81-NAx"/>
+                        <outlet property="symbolImageView" destination="wyT-sq-SzG" id="xHk-Wy-QuU"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7" y="-6"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Badges/checkmark_seal" width="100" height="100"/>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

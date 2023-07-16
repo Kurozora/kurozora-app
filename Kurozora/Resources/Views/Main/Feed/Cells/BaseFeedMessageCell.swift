@@ -220,7 +220,7 @@ extension BaseFeedMessageCell: UITextViewDelegate {
 
 // MARK: - ProfileBadgeStackViewDelegate
 extension BaseFeedMessageCell: ProfileBadgeStackViewDelegate {
-	func profileBadgeStackView(_ view: ProfileBadgeStackView, didPress profileBadge: ProfileBadge) {
-		self.delegate?.baseFeedMessageCell(self, didPressProfileBadge: profileBadge)
+	func profileBadgeStackView(_ view: ProfileBadgeStackView, didPress button: UIButton, for profileBadge: ProfileBadge) {
+		self.delegate?.baseFeedMessageCell(self, didPressProfileBadge: button, for: profileBadge)
 	}
 }
