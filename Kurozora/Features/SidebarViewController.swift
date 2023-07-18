@@ -26,13 +26,14 @@ class SidebarViewController: KCollectionViewController {
 	var listConfiguration: UICollectionLayoutListConfiguration!
 
 	private var selectedItem: TabBarItem?
+	private var deselectedItem: TabBarItem?
 	private lazy var viewControllers: [UIViewController] = {
 		return TabBarItem.sideBarCases.map {
 			return $0.kViewControllerValue
 		}
 	}()
 
-	private var dataSource: UICollectionViewDiffableDataSource<SidebarSection, SidebarItem>!
+	private var dataSource: UICollectionViewDiffableDataSource<SidebarSection, TabBarItem>!
 
 	// MARK: - Initializers
 	convenience init() {
@@ -44,7 +45,6 @@ class SidebarViewController: KCollectionViewController {
 		super.themeWillReload()
 
 		self.listConfiguration.backgroundColor = KThemePicker.backgroundColor.colorValue
-		self.applyInitialSnapshot()
 	}
 
 	override func viewDidLoad() {
@@ -96,31 +96,37 @@ class SidebarViewController: KCollectionViewController {
 	///    - cell: A collection view cell that provides list features and default styling.
 	///
 	/// - Returns: a list content configuration.
-	private func getContentConfiguration(_ configuration: UIListContentConfiguration?, cell: UICollectionViewListCell?) -> UIListContentConfiguration? {
+	private func getContentConfiguration(_ configuration: UIListContentConfiguration?, cell: UICollectionViewListCell?, item: TabBarItem) -> UIListContentConfiguration? {
 		var contentConfiguration = configuration ?? cell?.defaultContentConfiguration()
-		contentConfiguration?.text = self.selectedItem?.stringValue
+		contentConfiguration?.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10.0, leading: 10.0, bottom: 10.0, trailing: 10.0)
+
+		// Configure text
+		contentConfiguration?.text = item.stringValue
 		contentConfiguration?.textProperties.colorTransformer = UIConfigurationColorTransformer { _ in
-			guard let state = cell?.configurationState else { return KThemePicker.textColor.colorValue }
+			guard let state = cell?.configurationState, item != .settings else { return KThemePicker.textColor.colorValue }
 			return state.isSelected || state.isHighlighted ? KThemePicker.tintedButtonTextColor.colorValue : KThemePicker.textColor.colorValue
 		}
+
+		// Configure image
+		let currentImage = contentConfiguration?.image
 		contentConfiguration?.imageToTextPadding = 10.0
-		contentConfiguration?.image = { [weak self] in
-			guard let self = self else { return nil }
-			guard let state = cell?.configurationState else { return self.selectedItem?.imageValue }
-			return state.isSelected || state.isHighlighted ? self.selectedItem?.selectedImageValue : self.selectedItem?.imageValue
+		contentConfiguration?.image = {
+			guard let state = cell?.configurationState, item != .settings else { return item.imageValue }
+			return state.isSelected || state.isHighlighted ? item.selectedImageValue : item.imageValue
 		}()
 		contentConfiguration?.imageProperties.preferredSymbolConfiguration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 14.0))
 		contentConfiguration?.imageProperties.tintColorTransformer = UIConfigurationColorTransformer { _ in
-			guard let state = cell?.configurationState else { return KThemePicker.tintColor.colorValue }
+			guard let state = cell?.configurationState, item != .settings else { return KThemePicker.tintColor.colorValue }
 			return state.isSelected || state.isHighlighted ? KThemePicker.tintedButtonTextColor.colorValue : KThemePicker.tintColor.colorValue
 		}
-		contentConfiguration?.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10.0, leading: 10.0, bottom: 10.0, trailing: 10.0)
 
+		// Configure background
 		cell?.backgroundConfiguration?.backgroundColorTransformer = UIConfigurationColorTransformer { _ in
-			guard let state = cell?.configurationState else { return .clear }
+			guard let state = cell?.configurationState, item != .settings else { return .clear }
 			return state.isSelected || state.isHighlighted ? KThemePicker.tintColor.colorValue : .clear
 		}
 		cell?.backgroundConfiguration?.cornerRadius = 8.0
+
 		return contentConfiguration
 	}
 }
@@ -144,25 +150,22 @@ extension SidebarViewController {
 // MARK: - KCollectionViewDataSource
 extension SidebarViewController {
 	override func configureDataSource() {
-		let rowRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, SidebarItem> { [weak self] cell, _, item in
+		let rowRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, TabBarItem> { [weak self] cell, _, item in
 			guard let self = self else { return }
-			var contentConfiguration = self.getContentConfiguration(UIListContentConfiguration.sidebarCell(), cell: cell)
-			contentConfiguration?.text = item.title
-			contentConfiguration?.image = item.image
+			var contentConfiguration = self.getContentConfiguration(.sidebarCell(), cell: cell, item: item)
+			contentConfiguration?.text = item.stringValue
+			contentConfiguration?.image = item.imageValue
 			cell.contentConfiguration = contentConfiguration
 		}
 
-		self.dataSource = UICollectionViewDiffableDataSource<SidebarSection, SidebarItem>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell in
+		self.dataSource = UICollectionViewDiffableDataSource<SidebarSection, TabBarItem>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell in
 			return collectionView.dequeueConfiguredReusableCell(using: rowRegistration, for: indexPath, item: item)
 		}
 	}
 
-	private func sideBarSnapshot() -> NSDiffableDataSourceSectionSnapshot<SidebarItem> {
-		var snapshot = NSDiffableDataSourceSectionSnapshot<SidebarItem>()
-		let items: [SidebarItem] = TabBarItem.sideBarCases.map {
-			return .row(title: $0.stringValue, image: $0.imageValue, id: $0.rowIdentifierValue)
-		}
-		snapshot.append(items)
+	private func sideBarSnapshot() -> NSDiffableDataSourceSectionSnapshot<TabBarItem> {
+		var snapshot = NSDiffableDataSourceSectionSnapshot<TabBarItem>()
+		snapshot.append(TabBarItem.sideBarCases)
 		return snapshot
 	}
 
@@ -170,7 +173,7 @@ extension SidebarViewController {
 		self.dataSource.apply(self.sideBarSnapshot(), to: .main, animatingDifferences: false) { [weak self] in
 			guard let self = self else { return }
 			// Select the home view
-			let indexPath = IndexPath(row: 0, section: 0)
+			let indexPath = IndexPath(row: TabBarItem.home.rawValue, section: 0)
 			self.collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
 			self.collectionView(self.collectionView, didSelectItemAt: indexPath)
 		}
@@ -180,19 +183,24 @@ extension SidebarViewController {
 // MARK: - UICollectionViewDelegate
 extension SidebarViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		let newlySelectedItem = TabBarItem.sideBarCases[indexPath.row]
+		guard let newlySelectedItem = self.dataSource.itemIdentifier(for: indexPath) else { return }
+		let cell = collectionView.cellForItem(at: indexPath) as? UICollectionViewListCell
 		let shouldSegue = self.selectedItem != newlySelectedItem
 
-		self.selectedItem = newlySelectedItem
-		let cell = collectionView.cellForItem(at: indexPath) as? UICollectionViewListCell
-		cell?.contentConfiguration = self.getContentConfiguration(nil, cell: cell)
+		if newlySelectedItem != .settings {
+			self.selectedItem = newlySelectedItem
+		}
 
 		if self.kSearchController.isActive {
 			self.kSearchController.isActive = false
 		}
 
-		switch self.selectedItem {
+		switch newlySelectedItem {
 		case .settings:
+			if let deselectedItem = self.deselectedItem, let indexPath = self.dataSource.indexPath(for: deselectedItem) {
+				self.collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
+			}
+
 			let settingsSplitViewController = self.viewControllers[indexPath.row]
 			settingsSplitViewController.modalPresentationStyle = .fullScreen
 			self.present(settingsSplitViewController, animated: true)
@@ -204,8 +212,7 @@ extension SidebarViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-		let cell = collectionView.cellForItem(at: indexPath) as? UICollectionViewListCell
-		cell?.contentConfiguration = self.getContentConfiguration(nil, cell: cell)
+		self.deselectedItem = self.dataSource.itemIdentifier(for: indexPath)
 	}
 }
 
