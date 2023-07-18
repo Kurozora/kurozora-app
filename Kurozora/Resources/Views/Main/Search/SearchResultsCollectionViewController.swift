@@ -16,6 +16,7 @@ import MediaPlayer
 /// The collection view controller in charge of providing the necessary functionalities for searching shows, threads and users.
 class SearchResultsCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
+	var filterBarButtonItem: UIBarButtonItem!
 	let toolbar = UIToolbar()
 	let tabBarView = TMBar.KBar()
 	var currentTopContentInset: CGFloat = 0
@@ -131,6 +132,9 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		}
 
 		// Configurations
+		#if targetEnvironment(macCatalyst)
+		self.configureFilterBarButtonItem()
+		#endif
 		self.configureTabBarView()
 		self.configureToolbar()
 		self.configureViewHierarchy()
@@ -155,6 +159,10 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - Functions
+	func configureFilterBarButtonItem() {
+		self.filterBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal.decrease.circle"), style: .plain, target: self, action: #selector(self.handleFilterBarButtonItemPressed(_:)))
+	}
+
 	func configureTabBarView() {
 		self.tabBarView.delegate = self
 		self.tabBarView.dataSource = self
@@ -212,8 +220,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		// Add search bar to navigation controller
 		self.navigationItem.searchController = self.kSearchController
 
-		#if targetEnvironment(macCatalyst)
-		#else
+		#if !targetEnvironment(macCatalyst)
 		if #available(iOS 16.0, *) {
 			self.navigationItem.preferredSearchBarPlacement = .stacked
 		}
@@ -319,7 +326,11 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 
 				// Update search bar
 				self.kSearchController.searchBar.setShowsScope(false, animated: true)
+				#if targetEnvironment(macCatalyst)
+				self.navigationItem.rightBarButtonItems = [self.filterBarButtonItem]
+				#else
 				self.kSearchController.searchBar.showsBookmarkButton = true
+				#endif
 				self.setShowToolbar(true)
 			} else if let searchType = types.first {
 				switch searchType {
@@ -498,6 +509,25 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		self.toolbar.isHidden = !show
 	}
 
+	func getSearchFilterCollectionViewController() -> SearchFilterCollectionViewController? {
+		guard let searchType = self.searchTypes[safe: self.currentIndex] else { return nil }
+		guard let searchFilterViewController = R.storyboard.searchFilter.searchFilterCollectionViewController() else { return nil }
+		searchFilterViewController.delegate = self
+		searchFilterViewController.searchType = searchType
+		searchFilterViewController.filter = self.searchFilters[searchType] ?? nil
+		return searchFilterViewController
+	}
+
+	@objc func handleFilterBarButtonItemPressed(_ sender: UIBarButtonItem) {
+		guard let searchFilterCollectionViewController = self.getSearchFilterCollectionViewController() else { return }
+		let kNavigationController = KNavigationController(rootViewController: searchFilterCollectionViewController)
+		kNavigationController.modalPresentationStyle = .popover
+		kNavigationController.popoverPresentationController?.barButtonItem = sender
+		kNavigationController.navigationBar.prefersLargeTitles = false
+
+		self.present(kNavigationController, animated: true)
+	}
+
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
@@ -636,7 +666,11 @@ extension TMBarUpdateDirection {
 extension SearchResultsCollectionViewController: UISearchBarDelegate {
 	func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
 		searchBar.setShowsScope(true, animated: true)
+		#if targetEnvironment(macCatalyst)
+		self.navigationItem.rightBarButtonItems = []
+		#else
 		searchBar.showsBookmarkButton = false
+		#endif
 		self.setShowToolbar(false)
 	}
 
@@ -644,7 +678,11 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 		searchBar.setShowsScope(false, animated: true)
 
 		if self.searchResults != nil {
+			#if targetEnvironment(macCatalyst)
+			self.navigationItem.rightBarButtonItems = [self.filterBarButtonItem]
+			#else
 			searchBar.showsBookmarkButton = true
+			#endif
 			self.setShowToolbar(true)
 		}
 	}
@@ -666,13 +704,9 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 	}
 
 	func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
-		guard let searchType = self.searchTypes[safe: self.currentIndex] else { return }
-		guard let searchFilterViewController = R.storyboard.searchFilter.searchFilterCollectionViewController() else { return }
-		searchFilterViewController.delegate = self
-		searchFilterViewController.searchType = searchType
-		searchFilterViewController.filter = self.searchFilters[searchType] ?? nil
+		guard let searchFilterCollectionViewController = self.getSearchFilterCollectionViewController() else { return }
 
-		let kNavigationController = KNavigationController(rootViewController: searchFilterViewController)
+		let kNavigationController = KNavigationController(rootViewController: searchFilterCollectionViewController)
 		self.present(kNavigationController, animated: true)
 	}
 
@@ -683,7 +717,11 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 	}
 
 	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+		#if targetEnvironment(macCatalyst)
+		self.navigationItem.rightBarButtonItems = []
+		#else
 		searchBar.showsBookmarkButton = false
+		#endif
 		self.setShowToolbar(false)
 		self.resetSearchResults(for: nil)
 	}
@@ -925,12 +963,11 @@ extension SearchResultsCollectionViewController: UIToolbarDelegate {
 extension SearchResultsCollectionViewController: SearchFilterCollectionViewControllerDelegate {
 	func searchFilterCollectionViewController(_ searchFilterCollectionViewController: SearchFilterCollectionViewController, didApply filter: KKSearchFilter) {
 		guard let searchScope = KKSearchScope(rawValue: self.kSearchController.searchBar.selectedScopeButtonIndex) else { return }
-		guard let query = self.kSearchController.searchBar.text else { return }
 		guard let searchType = self.searchTypes[safe: self.currentIndex] else { return }
 
 		self.searchFilters[searchType] = filter
 
-		self.performSearch(with: query, in: searchScope, for: [searchType], with: filter, next: nil, resettingResults: true)
+		self.performSearch(with: self.searachQuery, in: searchScope, for: [searchType], with: filter, next: nil, resettingResults: true)
 
 		self.kSearchController.searchBar.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle.fill"), for: .bookmark, state: .normal)
 	}
