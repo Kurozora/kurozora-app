@@ -71,14 +71,13 @@ class SidebarViewController: KCollectionViewController {
 		#if targetEnvironment(macCatalyst)
 		// Disable search bar in navigation for the results view
 		self.searchResultsCollectionViewController.includesSearchBar = false
+		self.searchResultsCollectionViewController.kSearchController = self.kSearchController
 
 		// Configure search bar
 		self.kSearchController.viewController = self.searchResultsCollectionViewController
-		self.kSearchController.searchScope = .kurozora
 		self.kSearchController.forceShowsCancelButton = false
 		self.kSearchController.obscuresBackgroundDuringPresentation = false
 		self.kSearchController.automaticallyShowsCancelButton = false
-		self.kSearchController.automaticallyShowsScopeBar = true
 		self.kSearchController.searchResultsUpdater = self
 		self.kSearchController.delegate = self
 
@@ -227,7 +226,7 @@ extension SidebarViewController {
 // MARK: - UISearchControllerDelegate
 extension SidebarViewController: UISearchControllerDelegate, UISearchResultsUpdating {
 	func updateSearchResults(for searchController: UISearchController) {
-		guard let kNavigationController = splitViewController?.viewController(for: .secondary) as? KNavigationController else { return }
+		guard let kNavigationController = self.splitViewController?.viewController(for: .secondary) as? KNavigationController else { return }
 		if (kNavigationController.topViewController as? SearchResultsCollectionViewController) == nil {
 			let kNavigationController = KNavigationController(rootViewController: self.searchResultsCollectionViewController)
 			self.splitViewController?.setViewController(kNavigationController, for: .secondary)
@@ -240,12 +239,14 @@ extension SidebarViewController: UISearchControllerDelegate, UISearchResultsUpda
 		// Deselect collection view item
 		for indexPath in self.collectionView.indexPathsForSelectedItems ?? [] {
 			self.collectionView.deselectItem(at: indexPath, animated: true)
-			self.collectionView.delegate?.collectionView?(self.collectionView, didDeselectItemAt: indexPath)
+			self.collectionView(self.collectionView, didDeselectItemAt: indexPath)
 		}
+
 		self.selectedItem = nil
 	}
 
 	func willDismissSearchController(_ searchController: UISearchController) {
 		self.kSearchController.willDismissSearchController(searchController)
+		self.kSearchController.searchBar.setShowsScope(false, animated: true)
 	}
 }

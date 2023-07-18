@@ -325,10 +325,10 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 				self.searchTypes = self.determineResultTypes()
 
 				// Update search bar
-				self.kSearchController.searchBar.setShowsScope(false, animated: true)
 				#if targetEnvironment(macCatalyst)
 				self.navigationItem.rightBarButtonItems = [self.filterBarButtonItem]
 				#else
+				self.kSearchController.searchBar.setShowsScope(false, animated: true)
 				self.kSearchController.searchBar.showsBookmarkButton = true
 				#endif
 				self.setShowToolbar(true)
@@ -665,17 +665,19 @@ extension TMBarUpdateDirection {
 // MARK: - UISearchBarDelegate
 extension SearchResultsCollectionViewController: UISearchBarDelegate {
 	func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-		searchBar.setShowsScope(true, animated: true)
 		#if targetEnvironment(macCatalyst)
 		self.navigationItem.rightBarButtonItems = []
 		#else
+		searchBar.setShowsScope(true, animated: true)
 		searchBar.showsBookmarkButton = false
 		#endif
 		self.setShowToolbar(false)
 	}
 
 	func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+		#if !targetEnvironment(macCatalyst)
 		searchBar.setShowsScope(false, animated: true)
+		#endif
 
 		if self.searchResults != nil {
 			#if targetEnvironment(macCatalyst)

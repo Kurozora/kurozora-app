@@ -56,7 +56,12 @@ extension KSearchController: UISearchControllerDelegate {
 		}
 
 		if #available(iOS 16.0, *) {
+			#if targetEnvironment(macCatalyst)
+			self.scopeBarActivation = .manual
+			self.searchBar.showsScopeBar = true
+			#else
 			self.scopeBarActivation = .onSearchActivation
+			#endif
 		} else {
 			self.automaticallyShowsScopeBar = true
 		}
@@ -66,5 +71,9 @@ extension KSearchController: UISearchControllerDelegate {
 		if self.forceShowsCancelButton {
 			self.searchBar.showsCancelButton = false
 		}
+
+		#if targetEnvironment(macCatalyst)
+		self.searchBar.showsScopeBar = false
+		#endif
 	}
 }
