@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
-    <device id="retina6_12" orientation="portrait" appearance="dark"/>
+    <device id="retina6_72" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
@@ -15,94 +15,103 @@
             <objects>
                 <viewController storyboardIdentifier="BadgeViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y6W-OH-hqX" customClass="BadgeViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="fsD-7g-2nT">
-                                <rect key="frame" x="8" y="67" width="377" height="743"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Pg-v7-Mrb">
+                                <rect key="frame" x="0.0" y="59" width="430" height="839"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="coX-aT-iIN">
-                                        <rect key="frame" x="0.0" y="0.0" width="377" height="687"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="fsD-7g-2nT">
+                                        <rect key="frame" x="20" y="20" width="390" height="799"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oyH-b2-yi4">
-                                                <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="coX-aT-iIN">
+                                                <rect key="frame" x="0.0" y="0.0" width="390" height="743"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Badges/checkmark_seal" translatesAutoresizingMaskIntoConstraints="NO" id="wyT-sq-SzG">
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oyH-b2-yi4">
                                                         <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" constant="56" id="GzA-qw-UcI"/>
-                                                            <constraint firstAttribute="width" secondItem="wyT-sq-SzG" secondAttribute="height" multiplier="1:1" id="bab-5t-Dl8"/>
-                                                        </constraints>
-                                                    </imageView>
-                                                </subviews>
-                                                <constraints>
-                                                    <constraint firstAttribute="trailing" secondItem="wyT-sq-SzG" secondAttribute="trailing" id="II6-Af-m2H"/>
-                                                    <constraint firstItem="wyT-sq-SzG" firstAttribute="top" secondItem="oyH-b2-yi4" secondAttribute="top" id="SeA-oG-Ubk"/>
-                                                    <constraint firstItem="wyT-sq-SzG" firstAttribute="leading" secondItem="oyH-b2-yi4" secondAttribute="leading" id="WTX-00-CJn"/>
-                                                    <constraint firstAttribute="bottom" secondItem="wyT-sq-SzG" secondAttribute="bottom" id="z5e-8b-2kk"/>
-                                                </constraints>
-                                            </view>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Ntc-C4-ld6">
-                                                <rect key="frame" x="64" y="0.0" width="313" height="50"/>
-                                                <subviews>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dlp-EX-GoL">
-                                                        <rect key="frame" x="0.0" y="0.0" width="313" height="50"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hbm-PY-eBc" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="0.0" width="313" height="20.333333333333332"/>
-                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="czv-wF-cRO" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="24.333333333333329" width="313" height="25.666666666666671"/>
-                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                                <color key="textColor" systemColor="secondaryLabelColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Badges/checkmark_seal" translatesAutoresizingMaskIntoConstraints="NO" id="wyT-sq-SzG">
+                                                                <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="56" id="GzA-qw-UcI"/>
+                                                                    <constraint firstAttribute="width" secondItem="wyT-sq-SzG" secondAttribute="height" multiplier="1:1" id="bab-5t-Dl8"/>
+                                                                </constraints>
+                                                            </imageView>
                                                         </subviews>
                                                         <constraints>
-                                                            <constraint firstItem="Hbm-PY-eBc" firstAttribute="leading" secondItem="Dlp-EX-GoL" secondAttribute="leading" id="3ct-RA-wKj"/>
-                                                            <constraint firstItem="czv-wF-cRO" firstAttribute="leading" secondItem="Dlp-EX-GoL" secondAttribute="leading" id="BhW-pb-5hl"/>
-                                                            <constraint firstAttribute="trailing" secondItem="czv-wF-cRO" secondAttribute="trailing" id="J9b-hb-iKO"/>
-                                                            <constraint firstAttribute="trailing" secondItem="Hbm-PY-eBc" secondAttribute="trailing" id="V7R-vX-NKn"/>
-                                                            <constraint firstItem="czv-wF-cRO" firstAttribute="top" secondItem="Hbm-PY-eBc" secondAttribute="bottom" constant="4" id="l9r-1E-MLd"/>
-                                                            <constraint firstItem="Hbm-PY-eBc" firstAttribute="top" secondItem="Dlp-EX-GoL" secondAttribute="top" id="vB9-Hc-T54"/>
-                                                            <constraint firstAttribute="bottom" secondItem="czv-wF-cRO" secondAttribute="bottom" id="yX1-F2-pwP"/>
+                                                            <constraint firstAttribute="trailing" secondItem="wyT-sq-SzG" secondAttribute="trailing" id="II6-Af-m2H"/>
+                                                            <constraint firstItem="wyT-sq-SzG" firstAttribute="top" secondItem="oyH-b2-yi4" secondAttribute="top" id="SeA-oG-Ubk"/>
+                                                            <constraint firstItem="wyT-sq-SzG" firstAttribute="leading" secondItem="oyH-b2-yi4" secondAttribute="leading" id="WTX-00-CJn"/>
+                                                            <constraint firstAttribute="bottom" secondItem="wyT-sq-SzG" secondAttribute="bottom" id="z5e-8b-2kk"/>
                                                         </constraints>
                                                     </view>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Ntc-C4-ld6">
+                                                        <rect key="frame" x="64" y="0.0" width="326" height="66.666666666666671"/>
+                                                        <subviews>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dlp-EX-GoL">
+                                                                <rect key="frame" x="0.0" y="0.0" width="326" height="66.666666666666671"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hbm-PY-eBc" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="326" height="42.333333333333336"/>
+                                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="czv-wF-cRO" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="46.333333333333329" width="326" height="20.333333333333329"/>
+                                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                                        <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                                <constraints>
+                                                                    <constraint firstItem="Hbm-PY-eBc" firstAttribute="leading" secondItem="Dlp-EX-GoL" secondAttribute="leading" id="3ct-RA-wKj"/>
+                                                                    <constraint firstItem="czv-wF-cRO" firstAttribute="leading" secondItem="Dlp-EX-GoL" secondAttribute="leading" id="BhW-pb-5hl"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="czv-wF-cRO" secondAttribute="trailing" id="J9b-hb-iKO"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="Hbm-PY-eBc" secondAttribute="trailing" id="V7R-vX-NKn"/>
+                                                                    <constraint firstItem="czv-wF-cRO" firstAttribute="top" secondItem="Hbm-PY-eBc" secondAttribute="bottom" constant="4" id="l9r-1E-MLd"/>
+                                                                    <constraint firstItem="Hbm-PY-eBc" firstAttribute="top" secondItem="Dlp-EX-GoL" secondAttribute="top" id="vB9-Hc-T54"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="czv-wF-cRO" secondAttribute="bottom" id="yX1-F2-pwP"/>
+                                                                </constraints>
+                                                            </view>
+                                                        </subviews>
+                                                    </stackView>
                                                 </subviews>
                                             </stackView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EYg-Md-IuV" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="759" width="390" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="ieF-E8-KZZ"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="_test"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="primaryButtonPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="SFB-5t-sRM"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                     </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EYg-Md-IuV" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="703" width="377" height="40"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="ieF-E8-KZZ"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" title="_test"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="primaryButtonPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="SFB-5t-sRM"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="300" id="Utp-DN-h72"/>
+                                    <constraint firstItem="fsD-7g-2nT" firstAttribute="leading" secondItem="8Pg-v7-Mrb" secondAttribute="leading" constant="20" symbolic="YES" id="Eje-UP-erV"/>
+                                    <constraint firstAttribute="width" constant="300" id="QVt-RQ-qQJ"/>
+                                    <constraint firstAttribute="bottom" secondItem="fsD-7g-2nT" secondAttribute="bottom" constant="20" symbolic="YES" id="XuE-hU-4gV"/>
+                                    <constraint firstAttribute="trailing" secondItem="fsD-7g-2nT" secondAttribute="trailing" constant="20" symbolic="YES" id="enI-6F-z2D"/>
+                                    <constraint firstItem="fsD-7g-2nT" firstAttribute="top" secondItem="8Pg-v7-Mrb" secondAttribute="top" constant="20" symbolic="YES" id="yRE-hK-aqD"/>
                                 </constraints>
-                            </stackView>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="fsD-7g-2nT" secondAttribute="trailing" constant="8" id="B6Q-aX-leJ"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="fsD-7g-2nT" secondAttribute="bottom" constant="8" id="r0J-Em-AFf"/>
-                            <constraint firstItem="fsD-7g-2nT" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="8" id="sT7-FJ-dhQ"/>
-                            <constraint firstItem="fsD-7g-2nT" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="8" id="wrc-dN-4fZ"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="leading" secondItem="8Pg-v7-Mrb" secondAttribute="leading" id="ABE-lO-qzg"/>
+                            <constraint firstItem="8Pg-v7-Mrb" firstAttribute="bottom" secondItem="vDu-zF-Fre" secondAttribute="bottom" id="IP9-jd-VBw"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="top" secondItem="8Pg-v7-Mrb" secondAttribute="top" id="J65-UZ-avp"/>
+                            <constraint firstItem="8Pg-v7-Mrb" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="VBz-wT-bO9"/>
                         </constraints>
                     </view>
                     <connections>
@@ -110,6 +119,7 @@
                         <outlet property="primaryLabel" destination="Hbm-PY-eBc" id="aqN-te-F5f"/>
                         <outlet property="secondaryLabel" destination="czv-wF-cRO" id="rva-81-NAx"/>
                         <outlet property="symbolImageView" destination="wyT-sq-SzG" id="xHk-Wy-QuU"/>
+                        <outlet property="viewWidthConstraint" destination="QVt-RQ-qQJ" id="HVx-EC-JAW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
