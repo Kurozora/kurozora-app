@@ -53,7 +53,7 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 		return self._prefersActivityIndicatorHidden
 	}
 
-	// MARK: - View lifecycle
+	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
@@ -76,6 +76,7 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 
 	func configureViews() {
 		self.configureView()
+		self.configureCollectionView()
 		self.configureRestBarButtonItem()
 		self.configureApplyButton()
 	}
@@ -85,6 +86,11 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 		self._prefersRefreshControlDisabled = true
 		self._prefersActivityIndicatorHidden = true
 		self.title = Trans.filters
+	}
+
+	func configureCollectionView() {
+		self.collectionView.contentInset.bottom = 50
+		self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset
 	}
 
 	func configureRestBarButtonItem() {
@@ -486,7 +492,7 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 
 			let showFilter = ShowFilter(airDay: airDay, airSeason: airSeason, airTime: airTime, duration: duration, isNSFW: isNSFW, startedAt: startedAt, endedAt: endedAt, mediaType: mediaType, source: source, status: status, tvRating: tvRating, seasonCount: seasonCount, episodeCount: episodeCount)
 			return .show(showFilter)
-		} else if let songFilter = searchFilter as? SongFilter {
+		} else if searchFilter is SongFilter {
 			self.filterableAttributes.forEach { key, _ in
 				switch key {
 				default: break
@@ -521,7 +527,7 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 
 			let studioFilter = StudioFilter(address: address, founded: founded, isNSFW: isNSFW, type: type)
 			return .studio(studioFilter)
-		} else if let userFilter = searchFilter as? UserFilter {
+		} else if searchFilter is UserFilter {
 			self.filterableAttributes.forEach { key, _ in
 				switch key {
 				default: break
