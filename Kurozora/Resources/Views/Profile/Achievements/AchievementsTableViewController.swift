@@ -59,8 +59,8 @@ class AchievementsTableViewController: KTableViewController {
 			detailString = "\(self.user.attributes.username) has not earned any achievements yet."
 		}
 
-		self.emptyBackgroundView.configureImageView(image: R.image.empty.badge()!)
-		self.emptyBackgroundView.configureLabels(title: "No Badges", detail: detailString)
+		self.emptyBackgroundView.configureImageView(image: R.image.empty.achievement()!)
+		self.emptyBackgroundView.configureLabels(title: "No Achievements", detail: detailString)
 
 		self.tableView.backgroundView?.alpha = 0
 	}
@@ -86,7 +86,7 @@ extension AchievementsTableViewController {
 	}
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let identifier = (indexPath.section % 2 == 0) ? R.reuseIdentifier.leftBadgeCell : R.reuseIdentifier.rightBadgeCell
+		let identifier = (indexPath.section % 2 == 0) ? R.reuseIdentifier.leftAchievementCell : R.reuseIdentifier.rightAchievementCell
 		guard let badgeTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath as IndexPath) else {
 			fatalError("Cannot dequeue cell with reuse identifier \(identifier.identifier)")
 		}

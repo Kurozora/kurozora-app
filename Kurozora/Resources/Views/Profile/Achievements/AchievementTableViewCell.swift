@@ -10,6 +10,7 @@ import UIKit
 import KurozoraKit
 
 class AchievementTableViewCell: UITableViewCell, SkeletonDisplayable {
+	// MARK: - IBOutlets
 	@IBOutlet weak var primaryLabel: UILabel!
 	@IBOutlet weak var secondaryLabel: UILabel!
 	@IBOutlet weak var symbolImageView: ProfileImageView!

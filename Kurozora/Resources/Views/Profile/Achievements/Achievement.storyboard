@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Badges-->
+        <!--Achievements-->
         <scene sceneID="uMt-9e-34v">
             <objects>
-                <tableViewController storyboardIdentifier="AchievementsTableViewController" title="Badges" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="7lz-4n-ijn" customClass="AchievementsTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="AchievementsTableViewController" title="Achievements" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="7lz-4n-ijn" customClass="AchievementsTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="insetGrouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="NB2-D2-7og">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -19,7 +19,7 @@
                         <color key="sectionIndexColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LeftBadgeCell" id="IWG-If-maU" customClass="AchievementTableViewCell" customModule="Kurozora" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LeftAchievementCell" id="IWG-If-maU" customClass="AchievementTableViewCell" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="20" y="55.5" width="374" height="77"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IWG-If-maU" id="A6G-gw-Lvl">
@@ -78,7 +78,7 @@
                                     <outlet property="symbolImageView" destination="XGt-l2-mgQ" id="pCw-UT-rqm"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RightBadgeCell" id="ZHt-e6-nGv" customClass="AchievementTableViewCell" customModule="Kurozora" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RightAchievementCell" id="ZHt-e6-nGv" customClass="AchievementTableViewCell" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="20" y="132.5" width="374" height="81.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZHt-e6-nGv" id="W5G-bu-pWk">
@@ -143,7 +143,7 @@
                             <outlet property="delegate" destination="7lz-4n-ijn" id="aZG-PH-l2D"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Badges" id="SX9-vs-m2p"/>
+                    <navigationItem key="navigationItem" title="Achievements" id="SX9-vs-m2p"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ctH-nK-bSc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
