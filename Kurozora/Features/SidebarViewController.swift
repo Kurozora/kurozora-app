@@ -83,7 +83,7 @@ class SidebarViewController: KCollectionViewController {
 		self.kSearchController.delegate = self
 
 		// Add search bar to navigation controller
-		navigationItem.searchController = kSearchController
+		self.navigationItem.searchController = self.kSearchController
 		#else
 		self.searchResultsCollectionViewController.includesSearchBar = true
 		#endif
@@ -103,26 +103,25 @@ class SidebarViewController: KCollectionViewController {
 		// Configure text
 		contentConfiguration?.text = item.stringValue
 		contentConfiguration?.textProperties.colorTransformer = UIConfigurationColorTransformer { _ in
-			guard let state = cell?.configurationState, item != .settings else { return KThemePicker.textColor.colorValue }
+			guard let state = cell?.configurationState else { return KThemePicker.textColor.colorValue }
 			return state.isSelected || state.isHighlighted ? KThemePicker.tintedButtonTextColor.colorValue : KThemePicker.textColor.colorValue
 		}
 
 		// Configure image
-		let currentImage = contentConfiguration?.image
 		contentConfiguration?.imageToTextPadding = 10.0
 		contentConfiguration?.image = {
-			guard let state = cell?.configurationState, item != .settings else { return item.imageValue }
+			guard let state = cell?.configurationState else { return item.imageValue }
 			return state.isSelected || state.isHighlighted ? item.selectedImageValue : item.imageValue
 		}()
 		contentConfiguration?.imageProperties.preferredSymbolConfiguration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 14.0))
 		contentConfiguration?.imageProperties.tintColorTransformer = UIConfigurationColorTransformer { _ in
-			guard let state = cell?.configurationState, item != .settings else { return KThemePicker.tintColor.colorValue }
+			guard let state = cell?.configurationState else { return KThemePicker.tintColor.colorValue }
 			return state.isSelected || state.isHighlighted ? KThemePicker.tintedButtonTextColor.colorValue : KThemePicker.tintColor.colorValue
 		}
 
 		// Configure background
 		cell?.backgroundConfiguration?.backgroundColorTransformer = UIConfigurationColorTransformer { _ in
-			guard let state = cell?.configurationState, item != .settings else { return .clear }
+			guard let state = cell?.configurationState else { return .clear }
 			return state.isSelected || state.isHighlighted ? KThemePicker.tintColor.colorValue : .clear
 		}
 		cell?.backgroundConfiguration?.cornerRadius = 8.0
@@ -185,6 +184,7 @@ extension SidebarViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		guard let newlySelectedItem = self.dataSource.itemIdentifier(for: indexPath) else { return }
 		let cell = collectionView.cellForItem(at: indexPath) as? UICollectionViewListCell
+		cell?.contentConfiguration = self.getContentConfiguration(.sidebarCell(), cell: cell, item: newlySelectedItem)
 		let shouldSegue = self.selectedItem != newlySelectedItem
 
 		if newlySelectedItem != .settings {
@@ -197,8 +197,12 @@ extension SidebarViewController {
 
 		switch newlySelectedItem {
 		case .settings:
-			if let deselectedItem = self.deselectedItem, let indexPath = self.dataSource.indexPath(for: deselectedItem) {
-				self.collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
+			if let deselectedItem = self.deselectedItem, let deselectedIndexPath = self.dataSource.indexPath(for: deselectedItem) {
+				self.collectionView.selectItem(at: deselectedIndexPath, animated: false, scrollPosition: [])
+				self.collectionView(self.collectionView, didSelectItemAt: deselectedIndexPath)
+
+				self.collectionView.deselectItem(at: indexPath, animated: false)
+				self.collectionView(self.collectionView, didDeselectItemAt: indexPath)
 			}
 
 			let settingsSplitViewController = self.viewControllers[indexPath.row]
@@ -212,7 +216,11 @@ extension SidebarViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-		self.deselectedItem = self.dataSource.itemIdentifier(for: indexPath)
+		guard let deselectedItem = self.dataSource.itemIdentifier(for: indexPath) else { return }
+		let cell = collectionView.cellForItem(at: indexPath) as? UICollectionViewListCell
+		cell?.contentConfiguration = self.getContentConfiguration(.sidebarCell(), cell: cell, item: deselectedItem)
+
+		self.deselectedItem = deselectedItem
 	}
 }
 
