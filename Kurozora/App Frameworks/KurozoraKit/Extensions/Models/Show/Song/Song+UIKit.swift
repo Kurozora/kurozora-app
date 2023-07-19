@@ -24,12 +24,44 @@ extension Song {
 	func makeContextMenu(in viewController: UIViewController?, userInfo: [AnyHashable: Any?]) -> UIMenu {
 		var menuElements: [UIMenuElement] = []
 
-		// Create "Apple Music" element
+		// Create "View on Amazon Music" elemtn
+		if let amazonID = self.attributes.amazonID, let amazonMusicLink = URL.amazonMusicURL(amazonID: amazonID) {
+			let amazonMusicAction = UIAction(title: Trans.viewOnAmazonMusic, image: R.image.symbols.musicSmileCircleFill()) { _ in
+				UIApplication.shared.kOpen(amazonMusicLink)
+			}
+			menuElements.append(amazonMusicAction)
+		}
+
+		// Create "View on Apple Music" element
 		if let appleMusicLink = userInfo["appleMusicLink"] as? URL {
 			let amAction = UIAction(title: Trans.viewOnAppleMusic, image: R.image.symbols.musicNoteCircleFill()) { _ in
-				self.openAMLink(appleMusicLink)
+				UIApplication.shared.kOpen(appleMusicLink)
 			}
 			menuElements.append(amAction)
+		}
+
+		// Create "View on Deezer" element
+		if let deezerID = self.attributes.deezerID, let deezerLink = URL.deezerURL(deezerID: deezerID) {
+			let deezerAction = UIAction(title: Trans.viewOnDeezer, image: R.image.symbols.musicWaveformCircleFill()) { _ in
+				UIApplication.shared.kOpen(deezerLink)
+			}
+			menuElements.append(deezerAction)
+		}
+
+		// Create "View on Spotify" element
+		if let spotifyID = self.attributes.spotifyID, let spotifyLink = URL.spotifyURL(spotifyID: spotifyID) {
+			let spotifyAction = UIAction(title: Trans.viewOnSpotify, image: R.image.symbols.wave3UpCircleFill()) { _ in
+				UIApplication.shared.kOpen(spotifyLink)
+			}
+			menuElements.append(spotifyAction)
+		}
+
+		// Create "View on YouTube Music" element
+		if let youtubeID = self.attributes.youtubeID, let youtubeLink = URL.youtubeURL(youtubeID: youtubeID) {
+			let spotifyAction = UIAction(title: Trans.viewOnYouTube, image: R.image.symbols.playCircleCircleFill()) { _ in
+				UIApplication.shared.kOpen(youtubeLink)
+			}
+			menuElements.append(spotifyAction)
 		}
 
 		// Create "share" element
@@ -40,11 +72,6 @@ extension Song {
 
 		// Create and return a UIMenu with the share action
 		return UIMenu(title: "", children: menuElements)
-	}
-
-	/// Open Apple Music link.
-	func openAMLink(_ appleMusicLink: URL) {
-		UIApplication.shared.open(appleMusicLink)
 	}
 
 	/// Present share sheet for the show.
