@@ -999,12 +999,32 @@ struct Trans {
 	///
 	/// - Tag: Trans-asHeardOn
 	static let asHeardOn: String = String(localized: "As Heard On",
-												 comment: "The string for the word 'As Heard On'.")
+										  comment: "The string for the word 'As Heard On'.")
+	/// The string for the word 'viewOnAmazonMusic'.
+	///
+	/// - Tag: Trans-viewOnAmazonMusic
+	static let viewOnAmazonMusic: String = String(localized: "View on Amazon Music",
+												  comment: "The string for the word 'View on Amazon Music'.")
 	/// The string for the word 'viewOnAppleMusic'.
 	///
 	/// - Tag: Trans-viewOnAppleMusic
 	static let viewOnAppleMusic: String = String(localized: "View on Apple Music",
 												 comment: "The string for the word 'View on Apple Music'.")
+	/// The string for the word 'viewOnDeezer'.
+	///
+	/// - Tag: Trans-viewOnDeezer
+	static let viewOnDeezer: String = String(localized: "View on Deezer",
+											 comment: "The string for the word 'View on Deezer'.")
+	/// The string for the word 'viewOnSpotify'.
+	///
+	/// - Tag: Trans-viewOnSpotify
+	static let viewOnSpotify: String = String(localized: "View on Spotify",
+											  comment: "The string for the word 'View on Spotify'.")
+	/// The string for the word 'viewOnYouTube'.
+	///
+	/// - Tag: Trans-viewOnYouTube
+	static let viewOnYouTube: String = String(localized: "View on YouTube",
+											  comment: "The string for the word 'View on YouTube'.")
 	/// The string for the word 'preview'.
 	///
 	/// - Tag: Trans-preview
