@@ -42,6 +42,42 @@ extension URL {
 	static let twitterPageURL = URL(string: "https://www.twitter.com/KurozoraApp")
 
 	// MARK: - Functions
+	/// The Amazon Music URL for the given ID.
+	///
+	/// - Parameter amazonID: The song's ID on Amazon Music.
+	///
+	/// - Returns: The Amazon Music URL for the given ID.
+	static func amazonMusicURL(amazonID: String) -> URL? {
+		return URL(string: "https://amazon.com/music/player/albums/\(amazonID)")
+	}
+
+	/// The Deezer URL for the given ID.
+	///
+	/// - Parameter deezerID: The song's ID on Deezer.
+	///
+	/// - Returns: The Deezer URL for the given ID.
+	static func deezerURL(deezerID: Int) -> URL? {
+		return URL(string: "https://deezer.com/track/\(deezerID)")
+	}
+
+	/// The Spotify URL for the given ID.
+	///
+	/// - Parameter spotifyID: The song's ID on Spotify.
+	///
+	/// - Returns: The Spotify URL for the given ID.
+	static func spotifyURL(spotifyID: String) -> URL? {
+		return URL(string: "https://open.spotify.com/track/\(spotifyID)")
+	}
+
+	/// The YouTube URL for the given ID.
+	///
+	/// - Parameter youtubeID: The song's ID on YouTube.
+	///
+	/// - Returns: The YouTube URL for the given ID.
+	static func youtubeURL(youtubeID: String) -> URL? {
+		return URL(string: "https://music.youtube.com/watch?v=\(youtubeID)")
+	}
+
 	/// Returns the preferred `URL` to open by the app.
 	///
 	/// Replaces the scheme of the url with ther user's preferred scheme if the scheme can be opened by the system, otherwise the url is returned as is.
