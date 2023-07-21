@@ -310,56 +310,48 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == R.segue.episodesListCollectionViewController.episodeDetailSegue.identifier, let episodeCell = sender as? EpisodeLockupCollectionViewCell {
-			if let episodeDetailsCollectionViewController = segue.destination as? EpisodeDetailsCollectionViewController, let indexPath = self.collectionView.indexPath(for: episodeCell) {
-				episodeDetailsCollectionViewController.indexPath = indexPath
-				episodeDetailsCollectionViewController.episode = self.episodes[indexPath]
-			}
+		switch segue.identifier {
+		case  R.segue.episodesListCollectionViewController.showDetailsSegue.identifier:
+			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
+			guard let show = sender as? Show else { return }
+			showDetailsCollectionViewController.show = show
+		case R.segue.episodesListCollectionViewController.episodeDetailsSegue.identifier:
+			guard let episodeDetailsCollectionViewController = segue.destination as? EpisodeDetailsCollectionViewController else { return }
+			guard let episodeDict = (sender as? [IndexPath: Episode])?.first else { return }
+
+			episodeDetailsCollectionViewController.indexPath = episodeDict.key
+			episodeDetailsCollectionViewController.episode = episodeDict.value
+		case R.segue.episodesListCollectionViewController.episodesListSegue.identifier:
+			guard let episodesListCollectionViewController = segue.destination as? EpisodesListCollectionViewController else { return }
+			guard let season = sender as? Season else { return }
+			episodesListCollectionViewController.seasonIdentity = SeasonIdentity(id: season.id)
+			episodesListCollectionViewController.episodesListFetchType = .season
+		default: break
 		}
 	}
 }
 
 // MARK: - EpisodeLockupCollectionViewCellDelegate
 extension EpisodesListCollectionViewController: EpisodeLockupCollectionViewCellDelegate {
-	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressWatchButton button: UIButton) {
+	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressWatchStatusButton button: UIButton) {
 		guard let indexPath = collectionView.indexPath(for: cell) else { return }
 		Task {
 			await self.episodes[indexPath]?.updateWatchStatus(userInfo: ["indexPath": indexPath])
 		}
 	}
 
-	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressMoreButton button: UIButton) {
-		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		let episode = self.episodes[indexPath]
+	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressShowButton button: UIButton) {
+		guard let indexPath = collectionView.indexPath(for: cell) else { return }
+		guard let show = self.episodes[indexPath]?.relationships?.shows?.data.first else { return }
 
-		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
-			guard let self = self else { return }
-			let watchStatus = episode?.attributes.watchStatus
+		self.performSegue(withIdentifier: R.segue.episodesListCollectionViewController.showDetailsSegue, sender: show)
+	}
 
-			if watchStatus != .disabled {
-				let actionTitle = watchStatus == .notWatched ? "Mark as Watched" : "Mark as Un-watched"
+	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressSeasonButton button: UIButton) {
+		guard let indexPath = collectionView.indexPath(for: cell) else { return }
+		guard let season = self.episodes[indexPath]?.relationships?.seasons?.data.first else { return }
 
-				actionSheetAlertController.addAction(UIAlertAction(title: actionTitle, style: .default, handler: { _ in
-					Task {
-						await episode?.updateWatchStatus(userInfo: ["indexPath": indexPath])
-					}
-				}))
-			}
-//			actionSheetAlertController.addAction(UIAlertAction(title: "Rate", style: .default, handler: nil))
-			actionSheetAlertController.addAction(UIAlertAction(title: Trans.share, style: .default, handler: { _ in
-				episode?.openShareSheet(on: self, button)
-			}))
-		}
-
-		// Present the controller
-		if let popoverController = actionSheetAlertController.popoverPresentationController {
-			popoverController.sourceView = button
-			popoverController.sourceRect = button.bounds
-		}
-
-		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
-			self.present(actionSheetAlertController, animated: true, completion: nil)
-		}
+		self.performSegue(withIdentifier: R.segue.episodesListCollectionViewController.episodesListSegue, sender: season)
 	}
 }
 
