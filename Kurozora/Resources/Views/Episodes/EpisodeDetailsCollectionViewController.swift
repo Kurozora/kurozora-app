@@ -11,10 +11,12 @@ import KurozoraKit
 
 class EpisodeDetailsCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var episodeID: String = ""
+	var episodeIdentity: EpisodeIdentity? = nil
 	var episode: Episode! {
 		didSet {
 			self.title = self.episode.attributes.title
+			self.episodeIdentity = EpisodeIdentity(id: self.episode.id)
+
 			self._prefersActivityIndicatorHidden = true
 			self.collectionView.reloadData {
 				self.toggleEmptyDataView()
@@ -56,7 +58,7 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController {
 	/// - Returns: an initialized instance of EpisodeDetailsCollectionViewController.
 	static func `init`(with episodeID: String) -> EpisodeDetailsCollectionViewController {
 		if let episodeDetailsCollectionViewController = R.storyboard.episodes.episodeDetailsCollectionViewController() {
-			episodeDetailsCollectionViewController.episodeID = episodeID
+			episodeDetailsCollectionViewController.episodeIdentity = EpisodeIdentity(id: episodeID)
 			return episodeDetailsCollectionViewController
 		}
 
@@ -93,11 +95,9 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController {
 		self._prefersRefreshControlDisabled = true
 		#endif
 
-		// Fetch cast
-		if self.episode == nil {
-			DispatchQueue.global(qos: .userInteractive).async {
-				self.fetchEpisodeDetails()
-			}
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchDetails()
 		}
 	}
 
@@ -115,7 +115,10 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController {
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		self.fetchEpisodeDetails()
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchDetails()
+		}
 	}
 
 	override func configureEmptyDataView() {
@@ -134,18 +137,17 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController {
 		}
 	}
 
-	/// Fetch details for the current episode.
-	fileprivate func fetchEpisodeDetails() {
-//		KService.getDetails(forEpisode: self.episodeID) { [weak self] result in
-//			guard let self = self else { return }
-//			switch result {
-//			case .success(let episode):
-//				DispatchQueue.main.async {
-//					self.episode = episode.first
-//				}
-//			case .failure: break
-//			}
-//		}
+	func fetchDetails() async {
+		guard let episodeIdentity = self.episodeIdentity else { return }
+
+		if self.episode == nil {
+			do {
+				let episodeResponse = try await KService.getDetails(forEpisode: episodeIdentity).value
+				self.episode = episodeResponse.data.first
+			} catch {
+				print("-----", error.localizedDescription)
+			}
+		}
 	}
 
 	/// Update the episodes list.
