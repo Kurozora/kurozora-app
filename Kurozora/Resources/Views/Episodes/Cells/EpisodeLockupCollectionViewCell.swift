@@ -8,87 +8,82 @@
 
 import UIKit
 import KurozoraKit
-import Alamofire
 
 protocol EpisodeLockupCollectionViewCellDelegate: AnyObject {
-	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressWatchButton button: UIButton)
-	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressMoreButton button: UIButton)
+	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressShowButton button: UIButton)
+	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressSeasonButton button: UIButton)
+	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressWatchStatusButton button: UIButton)
 }
 
 class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var episodeImageView: BannerImageView!
-	@IBOutlet weak var shadowImageview: UIImageView!
 	@IBOutlet weak var shadowView: UIView!
 	@IBOutlet weak var cornerView: UIView!
-	@IBOutlet weak var episodeNumberLabel: UILabel!
-	@IBOutlet weak var episodeTitleLabel: KLabel!
-	@IBOutlet weak var myRatingLabel: KTintedLabel!
-	@IBOutlet weak var episodeFirstAiredLabel: UILabel!
-	@IBOutlet weak var episodeWatchedButton: KButton!
-	@IBOutlet weak var episodeMoreButton: KButton!
-	@IBOutlet weak var cosmosView: KCosmosView!
+	@IBOutlet weak var rankLabel: UILabel!
+	@IBOutlet weak var primaryLabel: KLabel!
+	@IBOutlet weak var secondaryLabel: KSecondaryLabel!
+	@IBOutlet weak var ternaryLabel: KSecondaryLabel!
+	@IBOutlet weak var showButton: KButton!
+	@IBOutlet weak var watchStatusButton: KButton!
 
 	// MARK: - Properties
 	weak var delegate: EpisodeLockupCollectionViewCellDelegate?
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
-	func configure(using episode: Episode?) {
+	func configure(using episode: Episode?, rank: Int? = nil) {
 		guard let episode = episode else {
 			self.showSkeleton()
 			return
 		}
-		self.hideSkeleton()
 
-		// Round corners
+		// Configure view
 		self.cornerView.cornerRadius = 10
 
+		// Configure image view
 		self.episodeImageView.setImage(with: episode.attributes.banner?.url ?? "", placeholder: R.image.placeholders.episodeBanner()!)
 
-		// Configure watch status
-		self.configureWatchButton(with: episode.attributes.watchStatus)
-
-		// Configure cosmos view
-		let userRating = episode.attributes.givenRating
-		self.cosmosView.rating = userRating ?? 0.0
-
-		// Configure episode number label
-		let episodeNumber = episode.attributes.numberTotal
-		self.episodeNumberLabel.text = "Episode \(episodeNumber)"
-
-		// Configure episode title label
-		self.episodeTitleLabel.text = episode.attributes.title
-		self.episodeFirstAiredLabel.text = episode.attributes.startedAt?.formatted(date: .abbreviated, time: .omitted) ?? "TBA"
-	}
-
-	/// Configures the watch button of the episode.
-	///
-	/// - Parameter watchStatus: The WatchStatus object used to configure the button.
-	func configureWatchButton(with watchStatus: WatchStatus?) {
-		switch watchStatus ?? .disabled {
-		case .disabled:
-			self.episodeWatchedButton.isEnabled = false
-			self.episodeWatchedButton.isHidden = true
-		case .watched:
-			self.episodeWatchedButton.isEnabled = true
-			self.episodeWatchedButton.isHidden = false
-			self.episodeWatchedButton.backgroundColor = .kurozora
-			self.episodeWatchedButton.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-		case .notWatched:
-			self.episodeWatchedButton.isEnabled = true
-			self.episodeWatchedButton.isHidden = false
-			self.episodeWatchedButton.backgroundColor = #colorLiteral(red: 0.1568627451, green: 0.1568627451, blue: 0.1568627451, alpha: 1).withAlphaComponent(0.80)
-			self.episodeWatchedButton.tintColor = #colorLiteral(red: 0.5019607843, green: 0.5019607843, blue: 0.5019607843, alpha: 1).withAlphaComponent(0.80)
+		// Confgiure rank
+		if let rank = rank {
+			self.rankLabel.text = "#\(rank)"
+			self.rankLabel.isHidden = false
+		} else {
+			self.rankLabel.text = nil
 		}
-    }
+
+		// Configure secondary label
+		let seasonNumber = episode.relationships?.seasons?.data.first?.attributes.number ?? 0
+		let episodeNumber = episode.attributes.number
+		self.secondaryLabel.text = "S\(seasonNumber) · E\(episodeNumber)"
+
+		// Configure primary label
+		self.primaryLabel.text = episode.attributes.title
+
+		// Configure ternary label
+		let viewCount = episode.attributes.viewCount
+		let viewCountText = viewCount == 1 ? "\(viewCount) view" : "\(viewCount) views"
+		let dateText = episode.attributes.startedAt?.formatted(date: .abbreviated, time: .omitted) ?? "TBA"
+		self.ternaryLabel.text = "\(viewCountText) · \(dateText)"
+
+		// Configure watch button
+		let watchStatusButtonTitle = episode.attributes.watchStatus == .watched ? "✓ \(Trans.watched)" : Trans.markAsWatched
+		self.watchStatusButton.setTitle(watchStatusButtonTitle, for: .normal)
+
+		// Configure show button
+		let showTitle = episode.relationships?.shows?.data.first?.attributes.title
+		self.showButton.setTitle(showTitle, for: .normal)
+		self.showButton.titleLabel?.numberOfLines = 0
+
+		self.hideSkeleton()
+	}
 
 	// MARK: - IBActions
-	@IBAction func watchedButtonPressed(_ sender: UIButton) {
-		self.delegate?.episodeLockupCollectionViewCell(self, didPressWatchButton: sender)
+	@IBAction func showButtonPressed(_ sender: UIButton) {
+		self.delegate?.episodeLockupCollectionViewCell(self, didPressShowButton: sender)
 	}
 
-	@IBAction func moreButtonPressed(_ sender: UIButton) {
-		self.delegate?.episodeLockupCollectionViewCell(self, didPressMoreButton: sender)
+	@IBAction func watchStatusButtonPressed(_ sender: UIButton) {
+		self.delegate?.episodeLockupCollectionViewCell(self, didPressWatchStatusButton: sender)
 	}
 }
