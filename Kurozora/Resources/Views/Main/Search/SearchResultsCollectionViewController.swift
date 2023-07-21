@@ -853,46 +853,26 @@ extension SearchResultsCollectionViewController: UserLockupCollectionViewCellDel
 
 // MARK: - EpisodeLockupCollectionViewCellDelegate
 extension SearchResultsCollectionViewController: EpisodeLockupCollectionViewCellDelegate {
-	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressWatchButton button: UIButton) {
-		guard let indexPath = collectionView.indexPath(for: cell) else { return }
+	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressWatchStatusButton button: UIButton) {
+		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 		Task { [weak self] in
 			guard let self = self else { return }
 			await self.episodes[indexPath]?.updateWatchStatus(userInfo: ["indexPath": indexPath])
 		}
 	}
 
-	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressMoreButton button: UIButton) {
+	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressShowButton button: UIButton) {
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		let episode = self.episodes[indexPath]
+		guard let show = self.episodes[indexPath]?.relationships?.shows?.data.first else { return }
 
-		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
-			guard let self = self else { return }
-			let watchStatus = episode?.attributes.watchStatus
+		self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.showDetailsSegue, sender: show)
+	}
 
-			if watchStatus != .disabled {
-				let actionTitle = watchStatus == .notWatched ? "Mark as Watched" : "Mark as Un-watched"
+	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressSeasonButton button: UIButton) {
+		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+		guard let season = self.episodes[indexPath]?.relationships?.seasons?.data.first else { return }
 
-				actionSheetAlertController.addAction(UIAlertAction(title: actionTitle, style: .default, handler: { _ in
-					Task {
-						await episode?.updateWatchStatus(userInfo: ["indexPath": indexPath])
-					}
-				}))
-			}
-//			actionSheetAlertController.addAction(UIAlertAction(title: "Rate", style: .default, handler: nil))
-			actionSheetAlertController.addAction(UIAlertAction(title: Trans.share, style: .default, handler: { _ in
-				episode?.openShareSheet(on: self, button)
-			}))
-		}
-
-		// Present the controller
-		if let popoverController = actionSheetAlertController.popoverPresentationController {
-			popoverController.sourceView = button
-			popoverController.sourceRect = button.bounds
-		}
-
-		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
-			self.present(actionSheetAlertController, animated: true, completion: nil)
-		}
+		self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.episodesListSegue, sender: season)
 	}
 }
 

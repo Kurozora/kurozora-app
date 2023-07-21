@@ -9,7 +9,7 @@
 public class Episode: IdentityResource, Hashable {
 	// MARK: - Enums
 	public enum CodingKeys : String, CodingKey {
-		case id = "uuid", type, href, attributes
+		case id = "uuid", type, href, attributes, relationships
 	}
 
 	// MARK: - Properties
@@ -21,6 +21,9 @@ public class Episode: IdentityResource, Hashable {
 
 	/// The attributes belonging to the episode.
 	public var attributes: Episode.Attributes
+
+	/// The relationships belonging to the episode.
+	public let relationships: Episode.Relationships?
 
 	// MARK: - Functions
 	public static func == (lhs: Episode, rhs: Episode) -> Bool {

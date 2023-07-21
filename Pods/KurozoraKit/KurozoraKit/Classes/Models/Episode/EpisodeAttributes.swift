@@ -24,6 +24,9 @@ extension Episode {
 		/// The title of the episodes.
 		public let title: String
 
+		/// The synopsis text of the episode.
+		public let synopsis: String?
+
 		/// The duration of the episode.
 		public let duration: String
 
@@ -33,8 +36,8 @@ extension Episode {
 		/// The air date of the episode.
 		public let startedAt: Date?
 
-		/// The synopsis text of the episode.
-		public let synopsis: String?
+		/// The view count of the episode.
+		public let viewCount: Int
 
 		/// Whether the episode is a filler.
 		public let isFiller: Bool
