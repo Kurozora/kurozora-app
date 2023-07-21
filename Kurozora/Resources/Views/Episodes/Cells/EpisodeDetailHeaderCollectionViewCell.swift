@@ -16,7 +16,7 @@ class EpisodeDetailHeaderCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var bannerContainerView: UIView!
 
 	// Action buttons
-	@IBOutlet weak var watchStatusButton: KButton!
+	@IBOutlet weak var watchStatusButton: KTintedButton!
 
 	// Quick details view
 	@IBOutlet weak var quickDetailsView: UIView!
@@ -40,7 +40,7 @@ extension EpisodeDetailHeaderCollectionViewCell {
 		NotificationCenter.default.removeObserver(self, name: .KEpisodeWatchStatusDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(handleWatchStatusUpdate(_:)), name: .KEpisodeWatchStatusDidUpdate, object: nil)
 
-		// Configure library status
+		// Configure watch status button
 		self.configureWatchButton(with: self.episode.attributes.watchStatus)
 
 		// Configure title label
@@ -79,16 +79,8 @@ extension EpisodeDetailHeaderCollectionViewCell {
 	///
 	/// - Parameter watchStatus: The WatchStatus object used to configure the button.
 	func configureWatchButton(with watchStatus: WatchStatus?) {
-		switch watchStatus ?? .disabled {
-		case .watched:
-			self.watchStatusButton.setTitle("Mark as Un-Watched", for: .normal)
-			self.watchStatusButton.backgroundColor = .kurozora
-			self.watchStatusButton.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-		case .notWatched, .disabled:
-			self.watchStatusButton.setTitle("Mark as Watched", for: .normal)
-			self.watchStatusButton.backgroundColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
-			self.watchStatusButton.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-		}
+		let watchStatusButtonTitle = self.episode.attributes.watchStatus == .watched ? "✓ \(Trans.watched)" : Trans.markAsWatched
+		self.watchStatusButton.setTitle(watchStatusButtonTitle, for: .normal)
 	}
 }
 

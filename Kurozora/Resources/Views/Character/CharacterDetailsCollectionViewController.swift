@@ -151,7 +151,7 @@ class CharacterDetailsCollectionViewController: KCollectionViewController {
 				let characterResponse = try await KService.getDetails(forCharacter: characterIdentity).value
 				self.character = characterResponse.data.first
 			} catch {
-				print(error.localizedDescription)
+				print("-----", error.localizedDescription)
 			}
 		} else {
 			self.updateDataSource()
@@ -161,28 +161,28 @@ class CharacterDetailsCollectionViewController: KCollectionViewController {
 			let personIdentityResponse = try await KService.getPeople(forCharacter: characterIdentity, limit: 10).value
 			self.personIdentities = personIdentityResponse.data
 		} catch {
-			print(error.localizedDescription)
+			print("-----", error.localizedDescription)
 		}
 
 		do {
 			let showIdentityResponse = try await KService.getShows(forCharacter: characterIdentity, limit: 10).value
 			self.showIdentities = showIdentityResponse.data
 		} catch {
-			print(error.localizedDescription)
+			print("-----", error.localizedDescription)
 		}
 
 		do {
 			let literatureIdentityResponse = try await KService.getLiteratures(forCharacter: characterIdentity, limit: 10).value
 			self.literatureIdentities = literatureIdentityResponse.data
 		} catch {
-			print(error.localizedDescription)
+			print("-----", error.localizedDescription)
 		}
 
 		do {
 			let gameIdentityResponse = try await KService.getGames(forCharacter: characterIdentity, limit: 10).value
 			self.gameIdentities = gameIdentityResponse.data
 		} catch {
-			print(error.localizedDescription)
+			print("-----", error.localizedDescription)
 		}
 	}
 
