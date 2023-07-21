@@ -31,7 +31,7 @@ extension Episode {
 			let watchStatus = self.attributes.watchStatus
 
 			if watchStatus != .disabled {
-				let updateWatchStatusTitle = watchStatus == .notWatched ? "Mark as Watched" : "Mark as Un-watched"
+				let updateWatchStatusTitle = watchStatus == .watched ? Trans.watched : Trans.markAsWatched
 				let updateWatchStatusImage = watchStatus == .notWatched ? UIImage(systemName: "plus.circle") : UIImage(systemName: "minus.circle")
 				let attributes: UIAction.Attributes = watchStatus == .notWatched ? [] : .destructive
 

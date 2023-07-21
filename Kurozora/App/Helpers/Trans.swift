@@ -815,6 +815,16 @@ struct Trans {
 	/// - Tag: Trans-removeFromlibrary
 	static let removeFromLibrary: String = String(localized: "Remove from Library",
 												  comment: "The string for the word 'remove from library'.")
+	/// The string for the word 'watched'.
+	///
+	/// - Tag: Trans-watched
+	static let watched: String = String(localized: "Watched",
+										comment: "The string for the word 'watched'.")
+	/// The string for the word 'mark as Watched'.
+	///
+	/// - Tag: Trans-markAsWatched
+	static let markAsWatched: String = String(localized: "Mark as Watched",
+											  comment: "The string for the word 'mark as Watched'.")
 	/// The string for the word 'anime'.
 	///
 	/// - Tag: Trans-anime
