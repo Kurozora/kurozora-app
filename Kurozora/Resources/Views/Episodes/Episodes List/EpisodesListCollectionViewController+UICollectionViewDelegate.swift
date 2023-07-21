@@ -10,10 +10,10 @@ import UIKit
 
 extension EpisodesListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		let collectionViewCell = collectionView.cellForItem(at: indexPath)
-		let segueIdentifier = R.segue.episodesListCollectionViewController.episodeDetailSegue
+		guard let episode = self.episodes[indexPath] else { return }
+		let segueIdentifier = R.segue.episodesListCollectionViewController.episodeDetailsSegue
 
-		self.performSegue(withIdentifier: segueIdentifier, sender: collectionViewCell)
+		self.performSegue(withIdentifier: segueIdentifier, sender: [indexPath: episode])
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
