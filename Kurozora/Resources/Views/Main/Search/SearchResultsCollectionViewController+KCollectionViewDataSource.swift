@@ -335,7 +335,7 @@ extension SearchResultsCollectionViewController {
 				if episode == nil {
 					Task {
 						do {
-							let episodeResponse = try await KService.getDetails(forEpisode: episodeIdentity).value
+							let episodeResponse = try await KService.getDetails(forEpisode: episodeIdentity, including: ["show", "season"]).value
 							self.episodes[indexPath] = episodeResponse.data.first
 							self.setItemKindNeedsUpdate(itemKind)
 						} catch {

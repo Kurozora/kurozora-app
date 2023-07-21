@@ -584,8 +584,13 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		case R.segue.searchResultsCollectionViewController.episodesListSegue.identifier:
 			// Segue to episodes list
 			guard let episodesListCollectionViewController = segue.destination as? EpisodesListCollectionViewController else { return }
-			episodesListCollectionViewController.searachQuery = self.searachQuery
-			episodesListCollectionViewController.episodesListFetchType = .search
+			if let season = sender as? Season {
+				episodesListCollectionViewController.seasonIdentity = SeasonIdentity(id: season.id)
+				episodesListCollectionViewController.episodesListFetchType = .season
+			} else {
+				episodesListCollectionViewController.searachQuery = self.searachQuery
+				episodesListCollectionViewController.episodesListFetchType = .search
+			}
 		case R.segue.searchResultsCollectionViewController.literaturesListSegue.identifier:
 			// Segue to literatures list
 			guard let literaturesListCollectionViewController = segue.destination as? LiteraturesListCollectionViewController else { return }
