@@ -92,7 +92,8 @@ class LibraryViewController: KTabbedViewController {
 
 	/// Performs segue to the profile view.
 	@objc func segueToProfile() {
-		WorkflowController.shared.isSignedIn {
+		WorkflowController.shared.isSignedIn { [weak self] in
+			guard let self = self else { return }
 			if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
 				self.show(profileTableViewController, sender: nil)
 			}

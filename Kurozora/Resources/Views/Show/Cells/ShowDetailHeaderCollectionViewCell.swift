@@ -307,7 +307,8 @@ extension ShowDetailHeaderCollectionViewCell {
 // MARK: - IBActions
 extension ShowDetailHeaderCollectionViewCell {
 	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
-		WorkflowController.shared.isSignedIn {
+		WorkflowController.shared.isSignedIn { [weak self] in
+			guard let self = self else { return }
 			let oldLibraryStatus = self.libraryStatus
 			let modelID: String
 

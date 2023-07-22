@@ -196,7 +196,8 @@ extension SongDetailsCollectionViewController: TitleHeaderCollectionReusableView
 // MARK: - BaseLockupCollectionViewCellDelegate
 extension SongDetailsCollectionViewController: BaseLockupCollectionViewCellDelegate {
 	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressStatus button: UIButton) {
-		WorkflowController.shared.isSignedIn {
+		WorkflowController.shared.isSignedIn { [weak self] in
+			guard let self = self else { return }
 			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 			guard let show = self.shows[indexPath] else { return }
 

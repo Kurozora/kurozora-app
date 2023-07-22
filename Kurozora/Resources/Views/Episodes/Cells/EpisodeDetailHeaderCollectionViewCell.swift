@@ -87,7 +87,9 @@ extension EpisodeDetailHeaderCollectionViewCell {
 // MARK: - IBActions
 extension EpisodeDetailHeaderCollectionViewCell {
 	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
-		WorkflowController.shared.isSignedIn {
+		WorkflowController.shared.isSignedIn { [weak self] in
+			guard let self = self else { return }
+
 			Task {
 				await self.episode.updateWatchStatus(userInfo: ["indexPath": self.indexPath])
 			}

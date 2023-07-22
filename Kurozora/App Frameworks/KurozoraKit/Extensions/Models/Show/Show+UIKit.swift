@@ -151,7 +151,9 @@ extension Show {
 	}
 
 	func toggleReminder() {
-		WorkflowController.shared.isSignedIn {
+		WorkflowController.shared.isSignedIn { [weak self] in
+			guard let self = self else { return }
+
 			Task {
 				if await WorkflowController.shared.isSubscribed() {
 					do {

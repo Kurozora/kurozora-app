@@ -31,7 +31,8 @@ class RatingCollectionViewCell: UICollectionViewCell {
 		self.cosmosView.rating = userRating ?? 0.0
 
 		self.cosmosView.didFinishTouchingCosmos = { rating in
-			WorkflowController.shared.isSignedIn {
+			WorkflowController.shared.isSignedIn { [weak self] in
+				guard let self = self else { return }
 				self.delegate?.ratingCollectionViewCell(rateWith: rating)
 			}
 
@@ -55,7 +56,8 @@ class RatingCollectionViewCell: UICollectionViewCell {
 		self.cosmosView.rating = userRating ?? 0.0
 
 		self.cosmosView.didFinishTouchingCosmos = { rating in
-			WorkflowController.shared.isSignedIn {
+			WorkflowController.shared.isSignedIn { [weak self] in
+				guard let self = self else { return }
 				self.delegate?.ratingCollectionViewCell(rateWith: rating)
 			}
 
@@ -79,7 +81,8 @@ class RatingCollectionViewCell: UICollectionViewCell {
 		self.cosmosView.rating = userRating ?? 0.0
 
 		self.cosmosView.didFinishTouchingCosmos = { rating in
-			WorkflowController.shared.isSignedIn {
+			WorkflowController.shared.isSignedIn { [weak self] in
+				guard let self = self else { return }
 				self.delegate?.ratingCollectionViewCell(rateWith: rating)
 			}
 
@@ -103,7 +106,8 @@ class RatingCollectionViewCell: UICollectionViewCell {
 		self.cosmosView.rating = userRating ?? 0.0
 
 		self.cosmosView.didFinishTouchingCosmos = { rating in
-			WorkflowController.shared.isSignedIn {
+			WorkflowController.shared.isSignedIn { [weak self] in
+				guard let self = self else { return }
 				self.delegate?.ratingCollectionViewCell(rateWith: rating)
 			}
 

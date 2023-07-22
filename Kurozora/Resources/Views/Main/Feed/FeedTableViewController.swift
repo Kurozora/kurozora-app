@@ -199,7 +199,8 @@ class FeedTableViewController: KTableViewController {
 
 	/// Performs segue to the profile view.
 	@objc func segueToProfile() {
-		WorkflowController.shared.isSignedIn {
+		WorkflowController.shared.isSignedIn { [weak self] in
+			guard let self = self else { return }
 			if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
 				self.show(profileTableViewController, sender: nil)
 			}
@@ -208,7 +209,8 @@ class FeedTableViewController: KTableViewController {
 
 	/// Shows the text editor for posintg a new message.
 	@objc func postNewMessage() {
-		WorkflowController.shared.isSignedIn {
+		WorkflowController.shared.isSignedIn { [weak self] in
+			guard let self = self else { return }
 			if let kFeedMessageTextEditorViewController = R.storyboard.textEditor.kFeedMessageTextEditorViewController() {
 				kFeedMessageTextEditorViewController.delegate = self
 

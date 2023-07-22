@@ -243,7 +243,8 @@ class HomeCollectionViewController: KCollectionViewController {
 
 	/// Performs segue to the profile view.
 	@objc func segueToProfile() {
-		WorkflowController.shared.isSignedIn {
+		WorkflowController.shared.isSignedIn { [weak self] in
+			guard let self = self else { return }
 			if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
 				self.show(profileTableViewController, sender: nil)
 			}
@@ -382,7 +383,8 @@ extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 	}
 
 	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressStatus button: UIButton) {
-		WorkflowController.shared.isSignedIn {
+		WorkflowController.shared.isSignedIn { [weak self] in
+			guard let self = self else { return }
 			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 			let modelID: String
 

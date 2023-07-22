@@ -151,7 +151,8 @@ extension FeedMessage {
 	///    - viewController: The view controller initiating the action.
 	///    - userInfo: Any infromation passed by the user.
 	func replyToMessage(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any?]) {
-		WorkflowController.shared.isSignedIn {
+		WorkflowController.shared.isSignedIn { [weak self] in
+			guard let self = self else { return }
 			self.openReplyTextEditor(via: viewController, userInfo: userInfo, isEditingMessage: false)
 		}
 	}
@@ -162,7 +163,8 @@ extension FeedMessage {
 	///    - viewController: The view controller initiating the action.
 	///    - userInfo: Any infromation passed by the user.
 	func reShareMessage(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any?]) {
-		WorkflowController.shared.isSignedIn {
+		WorkflowController.shared.isSignedIn { [weak self] in
+			guard let self = self else { return }
 			if !self.attributes.isReShared {
 				self.openReShareTextEditor(via: viewController, userInfo: userInfo, isEditingMessage: false)
 			} else {
