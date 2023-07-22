@@ -163,9 +163,14 @@ extension ShowDetailHeaderCollectionViewCell {
 		// Configure tags label
 		self.secondaryLabel.text = game.attributes.informationString
 
-		// Configure airing status label
+		// Configure publishing status label
 		self.statusButton.setTitle(game.attributes.status.name, for: .normal)
 		self.statusButton.backgroundColor = UIColor(hexString: game.attributes.status.color)
+
+		// Confgiure rank button
+		let rank = game.attributes.stats?.rankTotal ?? 0
+		let rankLabel = rank > 0 ? "Rank #\(rank)" : "Rank -"
+		self.rankButton.setTitle(rankLabel, for: .normal)
 
 		// Configure poster view
 		if let posterBackgroundColor = game.attributes.poster?.backgroundColor {
