@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ftf-WB-7ul">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ftf-WB-7ul">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -106,7 +106,7 @@
                                                         <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sok-gv-7aN" customClass="KVisualEffectView" customModule="Kurozora" customModuleProvider="target">
                                                             <rect key="frame" x="8" y="0.0" width="358" height="172.5"/>
                                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="lNp-3S-JbC">
-                                                                <rect key="frame" x="0.0" y="0.0" width="358" height="173"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="358" height="172.5"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             </view>
                                                             <blurEffect style="regular"/>
@@ -173,26 +173,48 @@
                                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <button userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AGH-kj-cmg">
+                                                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ZTa-2R-6VO">
                                                                             <rect key="frame" x="0.0" y="88.5" width="234" height="30"/>
-                                                                            <color key="backgroundColor" red="0.20000000000000001" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                            <accessibility key="accessibilityConfiguration">
-                                                                                <accessibilityTraits key="traits" button="YES" notEnabled="YES"/>
-                                                                            </accessibility>
+                                                                            <subviews>
+                                                                                <button userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AGH-kj-cmg">
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="113" height="30"/>
+                                                                                    <color key="backgroundColor" red="0.20000000000000001" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                    <accessibility key="accessibilityConfiguration">
+                                                                                        <accessibilityTraits key="traits" button="YES" notEnabled="YES"/>
+                                                                                    </accessibility>
+                                                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                                                    <inset key="contentEdgeInsets" minX="4" minY="0.0" maxX="4" maxY="0.0"/>
+                                                                                    <state key="normal" title="TBA">
+                                                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                    </state>
+                                                                                    <userDefinedRuntimeAttributes>
+                                                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                                            <integer key="value" value="10"/>
+                                                                                        </userDefinedRuntimeAttribute>
+                                                                                    </userDefinedRuntimeAttributes>
+                                                                                </button>
+                                                                                <button userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kKl-jc-dlD">
+                                                                                    <rect key="frame" x="121" y="0.0" width="113" height="30"/>
+                                                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                    <accessibility key="accessibilityConfiguration">
+                                                                                        <accessibilityTraits key="traits" button="YES" notEnabled="YES"/>
+                                                                                    </accessibility>
+                                                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                                                    <inset key="contentEdgeInsets" minX="4" minY="0.0" maxX="4" maxY="0.0"/>
+                                                                                    <state key="normal" title="Rank -">
+                                                                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                    </state>
+                                                                                    <userDefinedRuntimeAttributes>
+                                                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                                            <integer key="value" value="10"/>
+                                                                                        </userDefinedRuntimeAttribute>
+                                                                                    </userDefinedRuntimeAttributes>
+                                                                                </button>
+                                                                            </subviews>
                                                                             <constraints>
-                                                                                <constraint firstAttribute="height" constant="30" id="HxA-Cl-vUv"/>
+                                                                                <constraint firstAttribute="height" constant="30" id="EDx-X6-pse"/>
                                                                             </constraints>
-                                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                                            <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
-                                                                            <state key="normal" title="TBA">
-                                                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                            </state>
-                                                                            <userDefinedRuntimeAttributes>
-                                                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                                    <real key="value" value="15"/>
-                                                                                </userDefinedRuntimeAttribute>
-                                                                            </userDefinedRuntimeAttributes>
-                                                                        </button>
+                                                                        </stackView>
                                                                         <button contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g7Z-lw-ybF" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
                                                                             <rect key="frame" x="0.0" y="126.5" width="101" height="30"/>
                                                                             <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -258,21 +280,21 @@
                                                                     </subviews>
                                                                     <constraints>
                                                                         <constraint firstAttribute="trailingMargin" secondItem="lo1-qa-GNH" secondAttribute="trailing" id="0dE-Lp-m1q"/>
+                                                                        <constraint firstItem="ZTa-2R-6VO" firstAttribute="top" secondItem="XfO-Gc-p0Z" secondAttribute="bottom" constant="8" symbolic="YES" id="19d-UK-A1d"/>
                                                                         <constraint firstItem="qZj-3p-1ji" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="g7Z-lw-ybF" secondAttribute="trailing" constant="8" symbolic="YES" id="25F-v3-L9d"/>
                                                                         <constraint firstItem="lo1-qa-GNH" firstAttribute="leading" secondItem="qZj-3p-1ji" secondAttribute="trailing" constant="8" symbolic="YES" id="49R-sE-2cS"/>
-                                                                        <constraint firstAttribute="trailingMargin" secondItem="AGH-kj-cmg" secondAttribute="trailing" id="ABY-B2-IRa"/>
+                                                                        <constraint firstItem="g7Z-lw-ybF" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ZTa-2R-6VO" secondAttribute="bottom" constant="8" symbolic="YES" id="51f-QU-TXJ"/>
                                                                         <constraint firstAttribute="trailingMargin" secondItem="MLW-nK-QtG" secondAttribute="trailing" id="DA8-pt-eib"/>
+                                                                        <constraint firstItem="ZTa-2R-6VO" firstAttribute="leading" secondItem="XfO-Gc-p0Z" secondAttribute="leading" id="GOe-os-pST"/>
                                                                         <constraint firstItem="MLW-nK-QtG" firstAttribute="top" secondItem="Yga-Gy-V0w" secondAttribute="top" id="GkN-Oq-bXh"/>
-                                                                        <constraint firstItem="AGH-kj-cmg" firstAttribute="top" secondItem="XfO-Gc-p0Z" secondAttribute="bottom" constant="8" symbolic="YES" id="Pvg-3g-dZE"/>
                                                                         <constraint firstAttribute="trailingMargin" secondItem="XfO-Gc-p0Z" secondAttribute="trailing" id="Udw-WZ-x5u"/>
                                                                         <constraint firstItem="XfO-Gc-p0Z" firstAttribute="top" secondItem="MLW-nK-QtG" secondAttribute="bottom" id="WBx-qC-xN9"/>
-                                                                        <constraint firstItem="g7Z-lw-ybF" firstAttribute="leading" secondItem="AGH-kj-cmg" secondAttribute="leading" id="agG-fI-ahe"/>
-                                                                        <constraint firstItem="AGH-kj-cmg" firstAttribute="leading" secondItem="XfO-Gc-p0Z" secondAttribute="leading" id="gLC-o1-3mV"/>
+                                                                        <constraint firstItem="ZTa-2R-6VO" firstAttribute="leading" secondItem="g7Z-lw-ybF" secondAttribute="leading" id="hBW-h8-T5f"/>
                                                                         <constraint firstItem="qZj-3p-1ji" firstAttribute="bottom" secondItem="g7Z-lw-ybF" secondAttribute="bottom" id="ky6-Ne-7By"/>
-                                                                        <constraint firstItem="g7Z-lw-ybF" firstAttribute="top" relation="greaterThanOrEqual" secondItem="AGH-kj-cmg" secondAttribute="bottom" constant="8" id="lcN-gg-7cY"/>
                                                                         <constraint firstItem="qZj-3p-1ji" firstAttribute="bottom" secondItem="lo1-qa-GNH" secondAttribute="bottom" id="pRf-VU-atS"/>
                                                                         <constraint firstItem="MLW-nK-QtG" firstAttribute="leading" secondItem="Yga-Gy-V0w" secondAttribute="leading" id="pgb-6Z-FA1"/>
                                                                         <constraint firstAttribute="bottom" secondItem="g7Z-lw-ybF" secondAttribute="bottom" id="rhw-Zo-Vh7"/>
+                                                                        <constraint firstAttribute="trailingMargin" secondItem="ZTa-2R-6VO" secondAttribute="trailing" id="s9T-e3-JbD"/>
                                                                         <constraint firstItem="XfO-Gc-p0Z" firstAttribute="leading" secondItem="MLW-nK-QtG" secondAttribute="leading" id="t5N-6z-Yzf"/>
                                                                     </constraints>
                                                                 </view>
@@ -329,6 +351,7 @@
                                     <outlet property="posterImageView" destination="lVv-bj-3os" id="J4T-Hh-dFJ"/>
                                     <outlet property="primaryLabel" destination="MLW-nK-QtG" id="NzQ-ZW-ayS"/>
                                     <outlet property="quickDetailsView" destination="kP9-Yc-DGS" id="ixM-pY-b1F"/>
+                                    <outlet property="rankButton" destination="kKl-jc-dlD" id="blh-jJ-JZ2"/>
                                     <outlet property="reminderButton" destination="qZj-3p-1ji" id="A42-Tf-eQo"/>
                                     <outlet property="secondaryLabel" destination="XfO-Gc-p0Z" id="eQb-JJ-93u"/>
                                     <outlet property="shadowView" destination="fKf-7k-rgZ" id="6g3-Wy-5Fx"/>

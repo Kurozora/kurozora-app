@@ -64,7 +64,8 @@ extension LiteratureDetail {
 			case .season:
 				return literature.attributes.publicationSeason ?? "-"
 			case .rank:
-				return "-" // e.g #13 — literature.attributes.popularity.rank
+				let rank = literature.attributes.stats?.rankTotal ?? 0
+				return rank > 0 ? "#\(rank)" : "-"
 			case .tvRating:
 				return literature.attributes.tvRating.name
 			case .studio:
@@ -85,18 +86,18 @@ extension LiteratureDetail {
 				let ratingCount = literature?.attributes.stats?.ratingCount ?? 0
 				return ratingCount != 0 ? "\(ratingCount.kkFormatted) Ratings" : "Not enough ratings"
 			case .season:
-				return "Season"
+				return Trans.season
 			case .rank:
 				return "Chart" // e.g. Thriller — literature.attributes.popularity.genre
 			case .tvRating:
 				return "Rated"
 			case .studio:
-				return "Studio"
+				return Trans.studio
 			case .language:
 				let languages = literature?.attributes.languages ?? []
 				switch languages.count - 1 {
 				case 0:
-					return "Language"
+					return Trans.language
 				case 1:
 					return "+1 More Language"
 				default:

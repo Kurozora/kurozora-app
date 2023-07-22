@@ -112,9 +112,14 @@ extension ShowDetailHeaderCollectionViewCell {
 		// Configure tags label
 		self.secondaryLabel.text = literature.attributes.informationString
 
-		// Configure airing status label
+		// Configure publishing status label
 		self.statusButton.setTitle(literature.attributes.status.name, for: .normal)
 		self.statusButton.backgroundColor = UIColor(hexString: literature.attributes.status.color)
+
+		// Confgiure rank button
+		let rank = literature.attributes.stats?.rankTotal ?? 0
+		let rankLabel = rank > 0 ? "Rank #\(rank)" : "Rank -"
+		self.rankButton.setTitle(rankLabel, for: .normal)
 
 		// Configure poster view
 		if let posterBackgroundColor = literature.attributes.poster?.backgroundColor {
