@@ -235,7 +235,8 @@ extension StudioDetailsCollectionViewController: TitleHeaderCollectionReusableVi
 // MARK: - BaseLockupCollectionViewCellDelegate
 extension StudioDetailsCollectionViewController: BaseLockupCollectionViewCellDelegate {
 	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressStatus button: UIButton) {
-		WorkflowController.shared.isSignedIn {
+		WorkflowController.shared.isSignedIn { [weak self] in
+			guard let self = self else { return }
 			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 			let modelID: String
 

@@ -856,10 +856,13 @@ extension SearchResultsCollectionViewController: UserLockupCollectionViewCellDel
 // MARK: - EpisodeLockupCollectionViewCellDelegate
 extension SearchResultsCollectionViewController: EpisodeLockupCollectionViewCellDelegate {
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressWatchStatusButton button: UIButton) {
-		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		Task { [weak self] in
+		WorkflowController.shared.isSignedIn { [weak self] in
 			guard let self = self else { return }
-			await self.episodes[indexPath]?.updateWatchStatus(userInfo: ["indexPath": indexPath])
+			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+
+			Task {
+				await self.episodes[indexPath]?.updateWatchStatus(userInfo: ["indexPath": indexPath])
+			}
 		}
 	}
 

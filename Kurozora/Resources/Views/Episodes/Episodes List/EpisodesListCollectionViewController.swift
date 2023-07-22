@@ -334,9 +334,13 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 // MARK: - EpisodeLockupCollectionViewCellDelegate
 extension EpisodesListCollectionViewController: EpisodeLockupCollectionViewCellDelegate {
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressWatchStatusButton button: UIButton) {
-		guard let indexPath = collectionView.indexPath(for: cell) else { return }
-		Task {
-			await self.episodes[indexPath]?.updateWatchStatus(userInfo: ["indexPath": indexPath])
+		WorkflowController.shared.isSignedIn { [weak self] in
+			guard let self = self else { return }
+			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+
+			Task {
+				await self.episodes[indexPath]?.updateWatchStatus(userInfo: ["indexPath": indexPath])
+			}
 		}
 	}
 
