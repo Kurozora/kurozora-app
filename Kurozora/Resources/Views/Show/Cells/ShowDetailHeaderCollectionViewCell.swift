@@ -25,6 +25,7 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var primaryLabel: UILabel!
 	@IBOutlet weak var secondaryLabel: UILabel!
 	@IBOutlet weak var statusButton: UIButton!
+	@IBOutlet weak var rankButton: UIButton!
 	@IBOutlet weak var shadowView: UIView!
 	@IBOutlet weak var posterImageView: PosterImageView!
 	@IBOutlet weak var posterImageOverlayView: UIImageView!
@@ -63,6 +64,11 @@ extension ShowDetailHeaderCollectionViewCell {
 		// Configure airing status label
 		self.statusButton.setTitle(show.attributes.status.name, for: .normal)
 		self.statusButton.backgroundColor = UIColor(hexString: show.attributes.status.color)
+
+		// Confgiure rank button
+		let rank = show.attributes.stats?.rankTotal ?? 0
+		let rankLabel = rank > 0 ? "Rank #\(rank)" : "Rank -"
+		self.rankButton.setTitle(rankLabel, for: .normal)
 
 		// Configure poster view
 		if let posterBackgroundColor = show.attributes.poster?.backgroundColor {

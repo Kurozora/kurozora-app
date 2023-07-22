@@ -64,7 +64,8 @@ extension ShowDetail {
 			case .season:
 				return show.attributes.airSeason ?? "-"
 			case .rank:
-				return "-" // e.g #13 — show.attributes.popularity.rank
+				let rank = show.attributes.stats?.rankTotal ?? 0
+				return rank > 0 ? "#\(rank)" : "-"
 			case .tvRating:
 				return show.attributes.tvRating.name
 			case .studio:
