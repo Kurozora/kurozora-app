@@ -33,7 +33,13 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 	// MARK: - Properties
 	var libraryStatus: KKLibrary.Status = .none
 	var libraryKind: KKLibrary.Kind = .shows
-	let mangaMask: UIImageView? = UIImageView(image: UIImage(named: "book_mask"))
+
+	lazy var literatureMask: CALayer = {
+		let literatureMask = CALayer()
+		literatureMask.contents =  UIImage(named: "book_mask")?.cgImage
+		literatureMask.frame = self.posterImageView.bounds
+		return literatureMask
+	}()
 
 	private var show: Show? = nil
 	private var literature: Literature? = nil
@@ -75,9 +81,10 @@ extension ShowDetailHeaderCollectionViewCell {
 			self.posterImageView.backgroundColor = UIColor(hexString: posterBackgroundColor)
 		}
 		show.attributes.posterImage(imageView: self.posterImageView)
+
+		self.posterImageView.applyCornerRadius(10.0)
+		self.posterImageView.layer.mask = nil
 		self.posterImageOverlayView.isHidden = true
-		self.posterImageView.cornerRadius = 10.0
-		self.posterImageView.mask = nil
 
 		// Configure banner view
 		if let bannerBackgroundColor = show.attributes.banner?.backgroundColor {
@@ -126,9 +133,10 @@ extension ShowDetailHeaderCollectionViewCell {
 			self.posterImageView.backgroundColor = UIColor(hexString: posterBackgroundColor)
 		}
 		literature.attributes.posterImage(imageView: self.posterImageView)
+
+		self.posterImageView.applyCornerRadius(0.0)
+		self.posterImageView.layer.mask = self.literatureMask
 		self.posterImageOverlayView.isHidden = false
-		self.posterImageView.cornerRadius = 0.0
-		self.posterImageView.mask = self.mangaMask
 
 		// Configure banner view
 		if let bannerBackgroundColor = literature.attributes.banner?.backgroundColor {
@@ -181,8 +189,6 @@ extension ShowDetailHeaderCollectionViewCell {
 		self.posterImageView.applyCornerRadius(18.0)
 		self.posterImageView.layer.mask = nil
 		self.posterImageOverlayView.isHidden = true
-		self.posterImageView.cornerRadius = 18.0
-		self.posterImageView.mask = nil
 
 		// Configure banner view
 		if let bannerBackgroundColor = game.attributes.banner?.backgroundColor {
@@ -405,10 +411,12 @@ extension ShowDetailHeaderCollectionViewCell {
 	@IBAction func favoriteButtonPressed(_ sender: UIButton) {
 		self.show?.toggleFavorite()
 		self.literature?.toggleFavorite()
+		self.game?.toggleFavorite()
 	}
 
 	@IBAction func raminderButtonPressed(_ sender: UIButton) {
 		self.show?.toggleReminder()
 //		self.literature?.toggleReminder()
+//		self.game?.toggleReminder()
 	}
 }

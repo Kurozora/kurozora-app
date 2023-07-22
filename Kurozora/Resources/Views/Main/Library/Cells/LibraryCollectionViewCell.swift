@@ -17,7 +17,12 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var posterImageOverlayView: UIImageView!
 
 	// MARK: - Properties
-	let mangaMask: UIImageView? = UIImageView(image: UIImage(named: "book_mask"))
+	lazy var literatureMask: CALayer = {
+		let literatureMask = CALayer()
+		literatureMask.contents =  UIImage(named: "book_mask")?.cgImage
+		literatureMask.frame = self.posterImageView.bounds
+		return literatureMask
+	}()
 
 	// MARK: - Functions
 	/// Configure the cell with the given show's details.
@@ -31,8 +36,8 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 		}
 		show.attributes.posterImage(imageView: self.posterImageView)
 
-		self.posterImageView?.mask = nil
 		self.posterImageView?.applyCornerRadius(10.0)
+		self.posterImageView?.layer.mask = nil
 		self.posterImageOverlayView.isHidden = true
 	}
 
@@ -47,8 +52,8 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 		}
 		literature.attributes.posterImage(imageView: self.posterImageView)
 
-		self.posterImageView?.mask = self.mangaMask
 		self.posterImageView?.applyCornerRadius(0.0)
+		self.posterImageView?.layer.mask = self.literatureMask
 		self.posterImageOverlayView.isHidden = false
 	}
 
@@ -63,8 +68,8 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 		}
 		game.attributes.posterImage(imageView: self.posterImageView)
 
-		self.posterImageView?.mask = nil
 		self.posterImageView?.applyCornerRadius(18.0)
+		self.posterImageView?.layer.mask = nil
 		self.posterImageOverlayView.isHidden = true
 	}
 }
