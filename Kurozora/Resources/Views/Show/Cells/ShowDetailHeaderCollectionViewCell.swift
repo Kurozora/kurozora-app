@@ -177,6 +177,9 @@ extension ShowDetailHeaderCollectionViewCell {
 			self.posterImageView.backgroundColor = UIColor(hexString: posterBackgroundColor)
 		}
 		game.attributes.posterImage(imageView: self.posterImageView)
+
+		self.posterImageView.applyCornerRadius(18.0)
+		self.posterImageView.layer.mask = nil
 		self.posterImageOverlayView.isHidden = true
 		self.posterImageView.cornerRadius = 18.0
 		self.posterImageView.mask = nil
