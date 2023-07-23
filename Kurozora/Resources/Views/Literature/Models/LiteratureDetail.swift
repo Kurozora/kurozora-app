@@ -41,7 +41,7 @@ extension LiteratureDetail {
 			}
 		}
 
-		/// The cell identifier string of a character information section.
+		/// The cell identifier string of a literature badge section.
 		var identifierString: String {
 			switch self {
 			case .rating:
@@ -142,6 +142,29 @@ extension LiteratureDetail {
 	}
 }
 
+// MARK: - Ratings
+extension LiteratureDetail {
+	/// List of available literature rating types.
+	enum Rating: Int, CaseIterable {
+		case average = 0
+		case sentiment
+		case bar
+
+		// MARK: - Properties
+		/// The cell identifier string of a literature rating section.
+		var identifierString: String {
+			switch self {
+			case .average:
+				return R.reuseIdentifier.ratingCollectionViewCell.identifier
+			case .sentiment:
+				return R.reuseIdentifier.ratingSentimentCollectionViewCell.identifier
+			case .bar:
+				return R.reuseIdentifier.ratingBarCollectionViewCell.identifier
+			}
+		}
+	}
+}
+
 // MARK: - Information
 extension LiteratureDetail {
 	/// List of available literature information types.
@@ -220,7 +243,7 @@ extension LiteratureDetail {
 			}
 		}
 
-		/// The cell identifier string of a character information section.
+		/// The cell identifier string of a literature information section.
 		var identifierString: String {
 			switch self {
 			case .type:
