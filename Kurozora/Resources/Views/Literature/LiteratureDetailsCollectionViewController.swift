@@ -524,6 +524,7 @@ extension LiteratureDetailsCollectionViewController {
 		case badge
 		case synopsis
 		case rating
+		case reviews
 		case information
 		case cast
 		case studios
@@ -544,7 +545,9 @@ extension LiteratureDetailsCollectionViewController {
 			case .synopsis:
 				return Trans.synopsis
 			case .rating:
-				return Trans.ratings
+				return Trans.ratingsAndReviews
+			case .reviews:
+				return ""
 			case .information:
 				return Trans.information
 			case .cast:
@@ -574,6 +577,8 @@ extension LiteratureDetailsCollectionViewController {
 			case .synopsis:
 				return ""
 			case .rating:
+				return ""
+			case .reviews:
 				return ""
 			case .information:
 				return ""

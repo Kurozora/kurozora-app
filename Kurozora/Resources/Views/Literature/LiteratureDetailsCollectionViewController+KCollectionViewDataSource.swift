@@ -15,6 +15,8 @@ extension LiteratureDetailsCollectionViewController {
 		return [
 			TextViewCollectionViewCell.self,
 			RatingCollectionViewCell.self,
+			RatingSentimentCollectionViewCell.self,
+			RatingBarCollectionViewCell.self,
 			InformationCollectionViewCell.self,
 			MusicLockupCollectionViewCell.self,
 			SosumiCollectionViewCell.self
@@ -61,12 +63,22 @@ extension LiteratureDetailsCollectionViewController {
 				textViewCollectionViewCell?.textViewCollectionViewCellType = .synopsis
 				textViewCollectionViewCell?.textViewContent = self.literature.attributes.synopsis
 				return textViewCollectionViewCell
-			case .rating:
-				let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.ratingCollectionViewCell, for: indexPath)
-				ratingCollectionViewCell?.delegate = self
+			case .rating, .reviews:
+				let literatureDetailRating = LiteratureDetail.Rating(rawValue: indexPath.item) ?? .average
+				let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: literatureDetailRating.identifierString, for: indexPath)
+
 				switch itemKind {
 				case .literature(let literature, _):
-					ratingCollectionViewCell?.configure(using: literature)
+					if let stats = literature.attributes.stats {
+						switch literatureDetailRating {
+						case .average:
+							(ratingCollectionViewCell as? RatingCollectionViewCell)?.configure(using: literature)
+						case .sentiment:
+							(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configure(using: stats)
+						case .bar:
+							(ratingCollectionViewCell as? RatingBarCollectionViewCell)?.configure(using: stats)
+						}
+					}
 				default: break
 				}
 				return ratingCollectionViewCell
@@ -137,7 +149,10 @@ extension LiteratureDetailsCollectionViewController {
 				}
 			case .rating:
 				self.snapshot.appendSections([literatureDetailSection])
-				self.snapshot.appendItems([.literature(self.literature)], toSection: literatureDetailSection)
+				LiteratureDetail.Rating.allCases.forEach { _ in
+					self.snapshot.appendItems([.literature(self.literature)], toSection: literatureDetailSection)
+				}
+			case .reviews: break
 			case .information:
 				self.snapshot.appendSections([literatureDetailSection])
 				LiteratureDetail.Information.allCases.forEach { _ in
