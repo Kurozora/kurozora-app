@@ -15,6 +15,8 @@ extension ShowDetailsCollectionViewController {
 		return [
 			TextViewCollectionViewCell.self,
 			RatingCollectionViewCell.self,
+			RatingSentimentCollectionViewCell.self,
+			RatingBarCollectionViewCell.self,
 			InformationCollectionViewCell.self,
 			MusicLockupCollectionViewCell.self,
 			SosumiCollectionViewCell.self
@@ -49,8 +51,7 @@ extension ShowDetailsCollectionViewController {
 				return showDetailHeaderCollectionViewCell
 			case .badge:
 				let showDetailBadge = ShowDetail.Badge(rawValue: indexPath.item) ?? .rating
-				let badgeReuseIdentifier = showDetailBadge == ShowDetail.Badge.rating ? R.reuseIdentifier.ratingBadgeCollectionViewCell.identifier : R.reuseIdentifier.badgeCollectionViewCell.identifier
-				let badgeCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: badgeReuseIdentifier, for: indexPath) as? BadgeCollectionViewCell
+				let badgeCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: showDetailBadge.identifierString, for: indexPath) as? BadgeCollectionViewCell
 				switch itemKind {
 				case .show(let show, _):
 					badgeCollectionViewCell?.configureCell(with: show, showDetailBadge: showDetailBadge)
@@ -63,12 +64,22 @@ extension ShowDetailsCollectionViewController {
 				textViewCollectionViewCell?.textViewCollectionViewCellType = .synopsis
 				textViewCollectionViewCell?.textViewContent = self.show.attributes.synopsis
 				return textViewCollectionViewCell
-			case .rating:
-				let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.ratingCollectionViewCell, for: indexPath)
-				ratingCollectionViewCell?.delegate = self
+			case .rating, .reviews:
+				let showDetailRating = ShowDetail.Rating(rawValue: indexPath.item) ?? .average
+				let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: showDetailRating.identifierString, for: indexPath)
+
 				switch itemKind {
 				case .show(let show, _):
-					ratingCollectionViewCell?.configure(using: show)
+					if let stats = show.attributes.stats {
+						switch showDetailRating {
+						case .average:
+							(ratingCollectionViewCell as? RatingCollectionViewCell)?.configure(using: show)
+						case .sentiment:
+							(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configure(using: stats)
+						case .bar:
+							(ratingCollectionViewCell as? RatingBarCollectionViewCell)?.configure(using: stats)
+						}
+					}
 				default: break
 				}
 				return ratingCollectionViewCell
@@ -145,7 +156,10 @@ extension ShowDetailsCollectionViewController {
 				}
 			case .rating:
 				self.snapshot.appendSections([showDetailSection])
-				self.snapshot.appendItems([.show(self.show)], toSection: showDetailSection)
+				ShowDetail.Rating.allCases.forEach { _ in
+					self.snapshot.appendItems([.show(self.show)], toSection: showDetailSection)
+				}
+			case .reviews: break
 			case .information:
 				self.snapshot.appendSections([showDetailSection])
 				ShowDetail.Information.allCases.forEach { _ in
