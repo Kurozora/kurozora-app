@@ -110,8 +110,8 @@ extension KTabBarController {
 		super.tabBar(tabBar, didSelect: item)
 
 		if selectedTwice {
-			let selectedViewController = (viewControllers?[selectedIndex] as? KNavigationController)?.visibleViewController
-			switch selectedIndex {
+			let selectedViewController = (self.viewControllers?[safe: self.selectedIndex] as? KNavigationController)?.visibleViewController
+			switch self.selectedIndex {
 			case 0:
 				let collectionView = (selectedViewController as? UICollectionViewController)?.collectionView
 				if collectionView?.isAtTop ?? true {
