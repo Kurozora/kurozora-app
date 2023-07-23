@@ -1085,6 +1085,11 @@ struct Trans {
 	/// - Tag: Trans-rating
 	static let rating: String = String(localized: "Rating",
 									   comment: "The string for the word 'rating'.")
+	/// The string for the word 'ratings & reviews'.
+	///
+	/// - Tag: Trans-ratingsAndReviews
+	static let ratingsAndReviews: String = String(localized: "Ratings & Reviews",
+												  comment: "The string for the word 'ratings & reviews'.")
 	/// The string for the word 'rank'.
 	///
 	/// - Tag: Trans-rank
