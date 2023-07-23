@@ -12,7 +12,7 @@ class SettingsSplitViewController: UISplitViewController {
 	// MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+		self.view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		self.delegate = self
     }
 }

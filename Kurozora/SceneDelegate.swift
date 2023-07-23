@@ -60,8 +60,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 		// Configure window or resotre previous activity.
 		if let userActivity = connectionOptions.userActivities.first ?? session.stateRestorationActivity {
-			if !configure(window: self.window, with: userActivity) {
-				print("Failed to restore from \(userActivity)")
+			if !self.configure(window: self.window, with: userActivity) {
+				print("----- Failed to restore from \(userActivity)")
 			}
 		}
 	}
