@@ -86,18 +86,18 @@ extension GameDetail {
 				let ratingCount = game?.attributes.stats?.ratingCount ?? 0
 				return ratingCount != 0 ? "\(ratingCount.kkFormatted) Ratings" : "Not enough ratings"
 			case .season:
-				return "Season"
+				return Trans.season
 			case .rank:
 				return "Chart" // e.g. Thriller — game.attributes.popularity.genre
 			case .tvRating:
 				return "Rated"
 			case .studio:
-				return "Studio"
+				return Trans.studio
 			case .language:
 				let languages = game?.attributes.languages ?? []
 				switch languages.count - 1 {
 				case 0:
-					return "Language"
+					return Trans.language
 				case 1:
 					return "+1 More Language"
 				default:

@@ -8,11 +8,12 @@
 
 import UIKit
 import KurozoraKit
-import Alamofire
 
 extension GameDetailsCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
 		return [
+			BadgeCollectionViewCell.self,
+			RatingBadgeCollectionViewCell.self,
 			TextViewCollectionViewCell.self,
 			RatingCollectionViewCell.self,
 			RatingSentimentCollectionViewCell.self,
