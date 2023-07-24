@@ -16,7 +16,7 @@ extension Literature {
 
 		return UIContextMenuConfiguration(identifier: identifier, previewProvider: { [weak self] in
 			guard let self = self else { return nil }
-			return ShowDetailsCollectionViewController.`init`(with: self.id)
+			return LiteratureDetailsCollectionViewController.`init`(with: self.id)
 		}) { [weak self] _ in
 			guard let self = self else { return nil }
 			return self.makeContextMenu(in: viewController)
