@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TapToRateCollectionViewCell" id="Ryl-vZ-zy1" customClass="TapToRateCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="260" height="50"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="KYG-Se-jxo">
+                <rect key="frame" x="0.0" y="0.0" width="260" height="50"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap to Rate:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TaF-SC-EA8" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="14.999999999999998" width="90.666666666666671" height="20.333333333333329"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oeu-he-Mob" customClass="KCosmosView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="140" y="0.0" width="120" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="120" placeholder="YES" id="KOe-aF-OUd"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="starSize">
+                                <real key="value" value="20"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="fillMode">
+                                <integer key="value" value="2"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="oeu-he-Mob" secondAttribute="bottom" id="6Kl-u1-cHo"/>
+                    <constraint firstItem="TaF-SC-EA8" firstAttribute="centerY" secondItem="KYG-Se-jxo" secondAttribute="centerY" id="6xh-kb-Fwf"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="TaF-SC-EA8" secondAttribute="bottom" id="EpC-PH-boy"/>
+                    <constraint firstItem="oeu-he-Mob" firstAttribute="top" secondItem="KYG-Se-jxo" secondAttribute="top" id="Xj6-Ab-BWR"/>
+                    <constraint firstItem="TaF-SC-EA8" firstAttribute="top" relation="greaterThanOrEqual" secondItem="KYG-Se-jxo" secondAttribute="top" id="fO1-5b-Zk1"/>
+                    <constraint firstAttribute="trailing" secondItem="oeu-he-Mob" secondAttribute="trailing" id="gtz-bV-koy"/>
+                    <constraint firstItem="oeu-he-Mob" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="TaF-SC-EA8" secondAttribute="trailing" constant="8" symbolic="YES" id="nSh-3F-Igj"/>
+                    <constraint firstItem="TaF-SC-EA8" firstAttribute="leading" secondItem="KYG-Se-jxo" secondAttribute="leading" id="prk-dF-TVm"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <size key="customSize" width="260" height="64"/>
+            <connections>
+                <outlet property="cosmosView" destination="oeu-he-Mob" id="b2o-HP-bZb"/>
+                <outlet property="primaryLabel" destination="TaF-SC-EA8" id="G48-PC-XHj"/>
+            </connections>
+            <point key="canvasLocation" x="61.068702290076331" y="166.19718309859155"/>
+        </collectionViewCell>
+    </objects>
+    <designables>
+        <designable name="oeu-he-Mob">
+            <size key="intrinsicContentSize" width="112" height="20"/>
+        </designable>
+    </designables>
+</document>

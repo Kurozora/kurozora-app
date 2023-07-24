@@ -45,14 +45,6 @@ extension Episode {
 			}
 		}
 
-//		// Create "rate" element
-//		let rateAction = UIAction(title: "Rate", image: UIImage(systemName: "star.circle")) { [weak self] _ in
-//			// TODO: - Implement rate episode feature.
-//			guard let self = self else { return }
-//			self.rate(using: 1.0)
-//		}
-//		menuElements.append(rateAction)
-
 		// Create "share" element
 		let shareAction = UIAction(title: Trans.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
 			guard let self = self else { return }

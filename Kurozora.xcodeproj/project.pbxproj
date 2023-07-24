@@ -61,6 +61,8 @@
 		6617C82A2A0C4BB60091EFAC /* SearchFilterModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6617C8292A0C4BB60091EFAC /* SearchFilterModels.swift */; };
 		6617C82C2A0FE0830091EFAC /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6617C82B2A0FE0830091EFAC /* SearchResults.swift */; };
 		66192D7327CEA3720041D102 /* WorkflowController+MusicKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66192D7227CEA3720041D102 /* WorkflowController+MusicKit.swift */; };
+		661937752A6E544C00447084 /* TapToRateCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661937732A6E544C00447084 /* TapToRateCollectionViewCell.swift */; };
+		661937762A6E544C00447084 /* TapToRateCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 661937742A6E544C00447084 /* TapToRateCollectionViewCell.xib */; };
 		661A002527BA9FDE00DC646C /* KImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A002427BA9FDD00DC646C /* KImageView.swift */; };
 		661A002A27C28F7A00DC646C /* KTrailerPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A002927C28F7A00DC646C /* KTrailerPlayerView.swift */; };
 		661ACC9B25ADA41B002407A7 /* ShowDetailsCollectionViewController+TouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661ACC9A25ADA41B002407A7 /* ShowDetailsCollectionViewController+TouchBar.swift */; };
@@ -706,6 +708,8 @@
 		6617C8292A0C4BB60091EFAC /* SearchFilterModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFilterModels.swift; sourceTree = "<group>"; };
 		6617C82B2A0FE0830091EFAC /* SearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResults.swift; sourceTree = "<group>"; };
 		66192D7227CEA3720041D102 /* WorkflowController+MusicKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkflowController+MusicKit.swift"; sourceTree = "<group>"; };
+		661937732A6E544C00447084 /* TapToRateCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapToRateCollectionViewCell.swift; sourceTree = "<group>"; };
+		661937742A6E544C00447084 /* TapToRateCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TapToRateCollectionViewCell.xib; sourceTree = "<group>"; };
 		661A002427BA9FDD00DC646C /* KImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KImageView.swift; sourceTree = "<group>"; };
 		661A002927C28F7A00DC646C /* KTrailerPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KTrailerPlayerView.swift; sourceTree = "<group>"; };
 		661ACC9A25ADA41B002407A7 /* ShowDetailsCollectionViewController+TouchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShowDetailsCollectionViewController+TouchBar.swift"; sourceTree = "<group>"; };
@@ -3128,6 +3132,8 @@
 				6601C39F23BBB98000466BA3 /* ShowDetailHeaderCollectionViewCell.swift */,
 				661F186124AB5CCE00542AFB /* SosumiCollectionViewCell.swift */,
 				661F185F24AB5C6E00542AFB /* SosumiCollectionViewCell.xib */,
+				661937732A6E544C00447084 /* TapToRateCollectionViewCell.swift */,
+				661937742A6E544C00447084 /* TapToRateCollectionViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -3724,6 +3730,7 @@
 				66CBA53722BC454600FBEC13 /* Feed.storyboard in Resources */,
 				66A4FD1A270F7B3900E7C702 /* Icons.storyboard in Resources */,
 				66CE81202460E6F800DB0C49 /* Redeem.storyboard in Resources */,
+				661937762A6E544C00447084 /* TapToRateCollectionViewCell.xib in Resources */,
 				66C8FBF124671CBC00C82D60 /* SwitchAccountSettings.storyboard in Resources */,
 				66B13A672405DBE000CD732B /* Onboarding.storyboard in Resources */,
 				66CB8D5224F83FE00047A2CF /* FeedMessageCell.xib in Resources */,
@@ -4421,6 +4428,7 @@
 				666C898C29FF283A0075B5D6 /* LiteratureStatus.swift in Sources */,
 				66EA1DB425B3638200FCD07A /* LibraryViewControllerDelegate.swift in Sources */,
 				66CE810A24608D9D00DB0C49 /* ServiceFooterTableViewCell.swift in Sources */,
+				661937752A6E544C00447084 /* TapToRateCollectionViewCell.swift in Sources */,
 				66B853F0269EE3D8006DD34E /* RatingBadgeCollectionViewCell.swift in Sources */,
 				66CE8E1D2406C41500052AE9 /* UIButton+Kurozora.swift in Sources */,
 			);
