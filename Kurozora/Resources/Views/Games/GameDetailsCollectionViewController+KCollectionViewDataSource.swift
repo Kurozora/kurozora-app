@@ -17,6 +17,7 @@ extension GameDetailsCollectionViewController {
 			RatingCollectionViewCell.self,
 			RatingSentimentCollectionViewCell.self,
 			RatingBarCollectionViewCell.self,
+			TapToRateCollectionViewCell.self,
 			InformationCollectionViewCell.self,
 			MusicLockupCollectionViewCell.self,
 			SosumiCollectionViewCell.self
@@ -82,6 +83,15 @@ extension GameDetailsCollectionViewController {
 				default: break
 				}
 				return ratingCollectionViewCell
+			case .rateAndReview:
+				let tapToRateCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.tapToRateCollectionViewCell, for: indexPath)
+				tapToRateCollectionViewCell?.delegate = self
+				switch itemKind {
+				case .game(let game, _):
+					tapToRateCollectionViewCell?.configure(using: game.attributes.givenRating)
+				default: break
+				}
+				return tapToRateCollectionViewCell
 			case .information:
 				let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.informationCollectionViewCell, for: indexPath)
 				switch itemKind {
@@ -152,6 +162,9 @@ extension GameDetailsCollectionViewController {
 				GameDetail.Rating.allCases.forEach { _ in
 					self.snapshot.appendItems([.game(self.game)], toSection: gameDetailSection)
 				}
+			case .rateAndReview:
+				self.snapshot.appendSections([gameDetailSection])
+				self.snapshot.appendItems([.game(self.game)], toSection: gameDetailSection)
 			case .reviews: break
 			case .information:
 				self.snapshot.appendSections([gameDetailSection])

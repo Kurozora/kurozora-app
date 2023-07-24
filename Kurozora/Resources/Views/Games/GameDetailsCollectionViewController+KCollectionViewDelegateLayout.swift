@@ -21,6 +21,8 @@ extension GameDetailsCollectionViewController {
 		case .rating:
 			let columnCount = (width / 250).rounded().int
 			return columnCount >= 3 ? 3 : 2
+		case .rateAndReview:
+			return width > 414 ? 2 : 1
 		case .reviews: break
 		case .information:
 			columnCount = width >= 414 ? (width / 200).rounded().int : (width / 160).rounded().int
@@ -103,7 +105,14 @@ extension GameDetailsCollectionViewController {
 				let ratingSection = Layouts.ratingSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				sectionLayout = ratingSection
 				hasSectionHeader = true
-			case .reviews: break
+			case .rateAndReview:
+				let fullSection = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				sectionLayout = fullSection
+				hasSectionHeader = true
+			case .reviews:
+				let bannerSection = Layouts.bannerSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				sectionLayout = bannerSection
+				hasSectionHeader = false
 			case .information:
 				let gridSection = Layouts.gridSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				sectionLayout = gridSection

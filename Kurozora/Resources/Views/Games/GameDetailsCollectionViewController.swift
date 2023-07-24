@@ -510,9 +510,9 @@ extension GameDetailsCollectionViewController: BaseLockupCollectionViewCellDeleg
 	}
 }
 
-// MARK: - RatingCollectionViewCellDelegate
-extension GameDetailsCollectionViewController: RatingCollectionViewCellDelegate {
-	func ratingCollectionViewCell(rateWith rating: Double) {
+// MARK: - TapToRateCollectionViewCellDelegate
+extension GameDetailsCollectionViewController: TapToRateCollectionViewCellDelegate {
+	func tapToRateCollectionViewCell(rateWith rating: Double) {
 		Task { [weak self] in
 			guard let self = self else { return }
 			await self.game.rate(using: rating)
@@ -528,6 +528,7 @@ extension GameDetailsCollectionViewController {
 		case badge
 		case synopsis
 		case rating
+		case rateAndReview
 		case reviews
 		case information
 		case cast
@@ -550,6 +551,8 @@ extension GameDetailsCollectionViewController {
 				return Trans.synopsis
 			case .rating:
 				return Trans.ratingsAndReviews
+			case .rateAndReview:
+				return ""
 			case .reviews:
 				return ""
 			case .information:
@@ -581,6 +584,8 @@ extension GameDetailsCollectionViewController {
 			case .synopsis:
 				return ""
 			case .rating:
+				return ""
+			case .rateAndReview:
 				return ""
 			case .reviews:
 				return ""
