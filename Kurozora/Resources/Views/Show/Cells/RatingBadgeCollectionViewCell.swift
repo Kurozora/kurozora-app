@@ -17,21 +17,27 @@ class RatingBadgeCollectionViewCell: BadgeCollectionViewCell {
 	// MARK: - Functions
 	override func configureCell(with show: Show?, showDetailBadge: ShowDetail.Badge) {
 		super.configureCell(with: show, showDetailBadge: showDetailBadge)
-		guard let show = show else { return }
+		guard let stats = show?.attributes.stats else { return }
 
-		// Configure rating view
-		let ratingAverage = show.attributes.stats?.ratingAverage ?? 0.0
-		self.cosmosView.rating = ratingAverage
-		self.ratingScoreLabel.text = "\(ratingAverage)"
+		self.configureCell(using: stats)
 	}
 
 	override func configureCell(with literature: Literature?, literatureDetailBadge: LiteratureDetail.Badge) {
 		super.configureCell(with: literature, literatureDetailBadge: literatureDetailBadge)
-		guard let literature = literature else { return }
+		guard let stats = literature?.attributes.stats else { return }
 
-		// Configure rating view
-		let ratingAverage = literature.attributes.stats?.ratingAverage ?? 0.0
-		self.cosmosView.rating = ratingAverage
-		self.ratingScoreLabel.text = "\(ratingAverage)"
+		self.configureCell(using: stats)
+	}
+
+	override func configureCell(with game: Game?, gameDetailBadge: GameDetail.Badge) {
+		super.configureCell(with: game, gameDetailBadge: gameDetailBadge)
+		guard let stats = game?.attributes.stats else { return }
+
+		self.configureCell(using: stats)
+	}
+
+	private func configureCell(using stats: MediaStat) {
+		self.cosmosView.rating = stats.ratingAverage
+		self.ratingScoreLabel.text = "\(stats.ratingAverage)"
 	}
 }
