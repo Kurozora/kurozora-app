@@ -215,7 +215,6 @@ extension EpisodeDetailsCollectionViewController {
 			return textViewCollectionViewCell
 		case .rating:
 			let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: episodeDetailSection.identifierString, for: indexPath) as! RatingCollectionViewCell
-			ratingCollectionViewCell.delegate = self
 			if let stats = self.episode.attributes.stats {
 				ratingCollectionViewCell.configure(using: stats)
 			}
@@ -254,10 +253,11 @@ extension EpisodeDetailsCollectionViewController: TitleHeaderCollectionReusableV
 	}
 }
 
-// MARK: - RatingCollectionViewCellDelegate
-extension EpisodeDetailsCollectionViewController: RatingCollectionViewCellDelegate {
-	func ratingCollectionViewCell(rateWith rating: Double) {
-		Task {
+// MARK: - TapToRateCollectionViewCellDelegate
+extension EpisodeDetailsCollectionViewController: TapToRateCollectionViewCellDelegate {
+	func tapToRateCollectionViewCell(rateWith rating: Double) {
+		Task { [weak self] in
+			guard let self = self else { return }
 			await self.episode.rate(using: rating)
 		}
 	}
