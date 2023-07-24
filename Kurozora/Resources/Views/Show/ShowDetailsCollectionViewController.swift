@@ -556,9 +556,9 @@ extension ShowDetailsCollectionViewController: BaseLockupCollectionViewCellDeleg
 	}
 }
 
-// MARK: - RatingCollectionViewCellDelegate
-extension ShowDetailsCollectionViewController: RatingCollectionViewCellDelegate {
-	func ratingCollectionViewCell(rateWith rating: Double) {
+// MARK: - TapToRateCollectionViewCellDelegate
+extension ShowDetailsCollectionViewController: TapToRateCollectionViewCellDelegate {
+	func tapToRateCollectionViewCell(rateWith rating: Double) {
 		Task { [weak self] in
 			guard let self = self else { return }
 			await self.show.rate(using: rating)

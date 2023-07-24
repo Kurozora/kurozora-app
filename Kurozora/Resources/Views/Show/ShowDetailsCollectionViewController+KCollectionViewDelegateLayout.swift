@@ -116,7 +116,7 @@ extension ShowDetailsCollectionViewController {
 			case .rateAndReview:
 				let fullSection = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				sectionLayout = fullSection
-				hasSectionHeader = false
+				hasSectionHeader = true
 			case .reviews:
 				let bannerSection = Layouts.bannerSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				sectionLayout = bannerSection

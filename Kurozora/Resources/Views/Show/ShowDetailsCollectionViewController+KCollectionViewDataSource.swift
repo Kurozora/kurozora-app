@@ -17,6 +17,7 @@ extension ShowDetailsCollectionViewController {
 			RatingCollectionViewCell.self,
 			RatingSentimentCollectionViewCell.self,
 			RatingBarCollectionViewCell.self,
+			TapToRateCollectionViewCell.self,
 			InformationCollectionViewCell.self,
 			MusicLockupCollectionViewCell.self,
 			SosumiCollectionViewCell.self
@@ -64,7 +65,7 @@ extension ShowDetailsCollectionViewController {
 				textViewCollectionViewCell?.textViewCollectionViewCellType = .synopsis
 				textViewCollectionViewCell?.textViewContent = self.show.attributes.synopsis
 				return textViewCollectionViewCell
-			case .rating, .reviews, .rateAndReview:
+			case .rating, .reviews:
 				let showDetailRating = ShowDetail.Rating(rawValue: indexPath.item) ?? .average
 				let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: showDetailRating.identifierString, for: indexPath)
 
@@ -83,6 +84,15 @@ extension ShowDetailsCollectionViewController {
 				default: break
 				}
 				return ratingCollectionViewCell
+			case .rateAndReview:
+				let tapToRateCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.tapToRateCollectionViewCell, for: indexPath)
+				tapToRateCollectionViewCell?.delegate = self
+				switch itemKind {
+				case .show(let show, _):
+					tapToRateCollectionViewCell?.configure(using: show.attributes.givenRating)
+				default: break
+				}
+				return tapToRateCollectionViewCell
 			case .information:
 				let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.informationCollectionViewCell, for: indexPath)
 				switch itemKind {
@@ -159,7 +169,9 @@ extension ShowDetailsCollectionViewController {
 				ShowDetail.Rating.allCases.forEach { _ in
 					self.snapshot.appendItems([.show(self.show)], toSection: showDetailSection)
 				}
-			case .rateAndReview: break
+			case .rateAndReview:
+				self.snapshot.appendSections([showDetailSection])
+				self.snapshot.appendItems([.show(self.show)], toSection: showDetailSection)
 			case .reviews: break
 			case .information:
 				self.snapshot.appendSections([showDetailSection])
