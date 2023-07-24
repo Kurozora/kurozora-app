@@ -38,8 +38,6 @@ class GameLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.configure(using: relatedGame.game)
 
 		self.ternaryLabel?.text = relatedGame.attributes.relation.name
-		self.scoreView.isHidden = true
-		self.scoreLabel.isHidden = true
 
 		self.posterImageView?.applyCornerRadius(18.0)
 	}
