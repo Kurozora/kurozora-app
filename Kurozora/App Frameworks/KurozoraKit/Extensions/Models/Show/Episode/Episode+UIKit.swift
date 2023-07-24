@@ -110,7 +110,9 @@ extension Episode {
 	/// Rate the show with the given rating.
 	///
 	/// - Parameter rating: The rating to be saved when the show has been rated by the user.
-	func rate(using rating: Double) async {
+	///
+	/// - Returns: the rating applied to the game if rated successfully.
+	func rate(using rating: Double) async -> Double? {
 		do {
 			let episodeIdentity = EpisodeIdentity(id: self.id)
 			_ = try await KService.rateEpisode(episodeIdentity, with: rating, description: nil).value
@@ -124,8 +126,21 @@ extension Episode {
 			DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
 				alertController?.dismiss(animated: true, completion: nil)
 			}
+
+			return rating
 		} catch {
 			print(error.localizedDescription)
+			return nil
 		}
+	}
+
+	private func validateIsInLibrary() async -> Bool {
+//		if self.attributes.libraryStatus == nil {
+//			await UIApplication.topViewController?.presentAlertController(title: Trans.addTolibrary, message: "Please add \(self.attributes.title) to your library first.")
+//
+//			return false
+//		}
+
+		return true
 	}
 }

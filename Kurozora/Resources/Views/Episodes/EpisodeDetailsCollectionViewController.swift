@@ -255,10 +255,10 @@ extension EpisodeDetailsCollectionViewController: TitleHeaderCollectionReusableV
 
 // MARK: - TapToRateCollectionViewCellDelegate
 extension EpisodeDetailsCollectionViewController: TapToRateCollectionViewCellDelegate {
-	func tapToRateCollectionViewCell(rateWith rating: Double) {
+	func tapToRateCollectionViewCell(_ cell: TapToRateCollectionViewCell, rateWith rating: Double) {
 		Task { [weak self] in
 			guard let self = self else { return }
-			await self.episode.rate(using: rating)
+			cell.configure(using: await self.episode.rate(using: rating))
 		}
 	}
 }
