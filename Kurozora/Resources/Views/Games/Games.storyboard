@@ -182,6 +182,9 @@
                                                                                     <accessibility key="accessibilityConfiguration">
                                                                                         <accessibilityTraits key="traits" button="YES" notEnabled="YES"/>
                                                                                     </accessibility>
+                                                                                    <constraints>
+                                                                                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="oZZ-qB-rar"/>
+                                                                                    </constraints>
                                                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
                                                                                     <inset key="contentEdgeInsets" minX="4" minY="0.0" maxX="4" maxY="0.0"/>
                                                                                     <state key="normal" title="TBA">
