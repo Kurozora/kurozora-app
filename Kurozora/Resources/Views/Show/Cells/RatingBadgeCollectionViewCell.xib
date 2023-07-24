@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" reuseIdentifier="RatingBadgeCollectionViewCell" id="i5O-fD-l1H" customClass="RatingBadgeCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="124.5" height="62.666666666666664"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" id="df6-h1-gan">
+                <rect key="frame" x="0.0" y="0.0" width="124.5" height="62.666666666666664"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="111-JR-jdL" customClass="KTintedLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="116.66666666666667" height="21"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                        <color key="textColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="slI-ld-Dgp" customClass="KCosmosView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="7.3333333333333357" y="25" width="102" height="18"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="updateOnTouch" value="NO"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="starSize">
+                                <real key="value" value="18"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="fillMode">
+                                <integer key="value" value="2"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not enough ratings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rkx-0l-8Ng" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="47" width="116.66666666666667" height="15.666666666666664"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="slI-ld-Dgp" firstAttribute="centerX" secondItem="111-JR-jdL" secondAttribute="centerX" id="1Yd-zj-ecQ"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="slI-ld-Dgp" secondAttribute="trailing" id="2x6-b6-H11"/>
+                    <constraint firstItem="rkx-0l-8Ng" firstAttribute="leading" secondItem="df6-h1-gan" secondAttribute="leading" id="E42-Ow-pOc"/>
+                    <constraint firstAttribute="trailing" secondItem="rkx-0l-8Ng" secondAttribute="trailing" constant="8" id="FCU-Eb-mCW"/>
+                    <constraint firstAttribute="trailing" secondItem="111-JR-jdL" secondAttribute="trailing" constant="8" id="H05-RU-ndf"/>
+                    <constraint firstItem="rkx-0l-8Ng" firstAttribute="top" secondItem="slI-ld-Dgp" secondAttribute="bottom" constant="4" id="Lhd-da-wlU"/>
+                    <constraint firstItem="111-JR-jdL" firstAttribute="leading" secondItem="df6-h1-gan" secondAttribute="leading" id="Mur-ee-84J"/>
+                    <constraint firstItem="slI-ld-Dgp" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="df6-h1-gan" secondAttribute="leading" id="RJ3-Tj-7Us"/>
+                    <constraint firstAttribute="bottom" secondItem="rkx-0l-8Ng" secondAttribute="bottom" id="hRx-vs-v4r"/>
+                    <constraint firstItem="slI-ld-Dgp" firstAttribute="top" secondItem="111-JR-jdL" secondAttribute="bottom" constant="4" id="jBz-U4-pic"/>
+                    <constraint firstItem="rkx-0l-8Ng" firstAttribute="centerX" secondItem="111-JR-jdL" secondAttribute="centerX" id="krU-Tn-3Yd"/>
+                    <constraint firstItem="111-JR-jdL" firstAttribute="top" secondItem="df6-h1-gan" secondAttribute="top" id="ppI-1e-alM"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <size key="customSize" width="124.5" height="62.5"/>
+            <connections>
+                <outlet property="cosmosView" destination="slI-ld-Dgp" id="A0i-ff-aA3"/>
+                <outlet property="ratingScoreLabel" destination="111-JR-jdL" id="Uxu-BY-V3S"/>
+                <outlet property="secondaryLabel" destination="rkx-0l-8Ng" id="lT9-2n-D0S"/>
+            </connections>
+            <point key="canvasLocation" x="-65" y="20"/>
+        </collectionViewCell>
+    </objects>
+    <designables>
+        <designable name="slI-ld-Dgp">
+            <size key="intrinsicContentSize" width="102" height="18"/>
+        </designable>
+    </designables>
+</document>
