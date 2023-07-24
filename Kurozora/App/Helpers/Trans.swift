@@ -1010,27 +1010,27 @@ struct Trans {
 	/// - Tag: Trans-asHeardOn
 	static let asHeardOn: String = String(localized: "As Heard On",
 										  comment: "The string for the word 'As Heard On'.")
-	/// The string for the word 'viewOnAmazonMusic'.
+	/// The string for the word 'view on Amazon Music'.
 	///
 	/// - Tag: Trans-viewOnAmazonMusic
 	static let viewOnAmazonMusic: String = String(localized: "View on Amazon Music",
 												  comment: "The string for the word 'View on Amazon Music'.")
-	/// The string for the word 'viewOnAppleMusic'.
+	/// The string for the word 'view on Apple Music'.
 	///
 	/// - Tag: Trans-viewOnAppleMusic
 	static let viewOnAppleMusic: String = String(localized: "View on Apple Music",
 												 comment: "The string for the word 'View on Apple Music'.")
-	/// The string for the word 'viewOnDeezer'.
+	/// The string for the word 'view on Deezer'.
 	///
 	/// - Tag: Trans-viewOnDeezer
 	static let viewOnDeezer: String = String(localized: "View on Deezer",
 											 comment: "The string for the word 'View on Deezer'.")
-	/// The string for the word 'viewOnSpotify'.
+	/// The string for the word 'view on Spotify'.
 	///
 	/// - Tag: Trans-viewOnSpotify
 	static let viewOnSpotify: String = String(localized: "View on Spotify",
 											  comment: "The string for the word 'View on Spotify'.")
-	/// The string for the word 'viewOnYouTube'.
+	/// The string for the word 'view on YouTube'.
 	///
 	/// - Tag: Trans-viewOnYouTube
 	static let viewOnYouTube: String = String(localized: "View on YouTube",
@@ -1075,21 +1075,6 @@ struct Trans {
 	/// - Tag: Trans-badges
 	static let badges: String = String(localized: "Badges",
 									   comment: "The string for the word 'badges'.")
-	/// The string for the word 'ratings'.
-	///
-	/// - Tag: Trans-ratings
-	static let ratings: String = String(localized: "Ratings",
-										comment: "The string for the word 'ratings'.")
-	/// The string for the word 'rating'.
-	///
-	/// - Tag: Trans-rating
-	static let rating: String = String(localized: "Rating",
-									   comment: "The string for the word 'rating'.")
-	/// The string for the word 'ratings & reviews'.
-	///
-	/// - Tag: Trans-ratingsAndReviews
-	static let ratingsAndReviews: String = String(localized: "Ratings & Reviews",
-												  comment: "The string for the word 'ratings & reviews'.")
 	/// The string for the word 'rank'.
 	///
 	/// - Tag: Trans-rank
@@ -1190,6 +1175,33 @@ struct Trans {
 	/// - Tag: Trans-whatsNew
 	static let whatsNew: String = String(localized: "What’s New",
 										 comment: "The string for the word 'What’s New'.")
+
+	// MARK: - Ratings
+	/// The string for the word 'ratings'.
+	///
+	/// - Tag: Trans-ratings
+	static let ratings: String = String(localized: "Ratings",
+										comment: "The string for the word 'ratings'.")
+	/// The string for the word 'rating'.
+	///
+	/// - Tag: Trans-rating
+	static let rating: String = String(localized: "Rating",
+									   comment: "The string for the word 'rating'.")
+	/// The string for the word 'ratings & reviews'.
+	///
+	/// - Tag: Trans-ratingsAndReviews
+	static let ratingsAndReviews: String = String(localized: "Ratings & Reviews",
+												  comment: "The string for the word 'ratings & reviews'.")
+	/// The string for the word 'tap to rate'.
+	///
+	/// - Tag: Trans-tapToRate
+	static let tapToRate: String = String(localized: "Tap to Rate",
+										  comment: "The string for the word 'tap to rate'.")
+	/// The string for the word 'click to rate'.
+	///
+	/// - Tag: Trans-clickToRate
+	static let clickToRate: String = String(localized: "Click to Rate",
+											comment: "The string for the word 'click to rate'.")
 
 	// MARK: - Warnings
 	/// The string for the no signal warning title.

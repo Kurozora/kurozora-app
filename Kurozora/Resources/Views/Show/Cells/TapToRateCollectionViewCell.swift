@@ -24,6 +24,9 @@ class TapToRateCollectionViewCell: UICollectionViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	func configure(using givenRating: Double?) {
+		// Configure primary label
+		self.primaryLabel.text = UIDevice.isPhone || UIDevice.isPad ? Trans.tapToRate : Trans.clickToRate
+
 		// Configure cosmos view
 		self.cosmosView.rating = givenRating ?? 0.0
 
