@@ -153,7 +153,10 @@ extension Game {
 	/// Rate the game with the given rating.
 	///
 	/// - Parameter rating: The rating to be saved when the game has been rated by the user.
-	func rate(using rating: Double) async {
+	///
+	/// - Returns: the rating applied to the game if rated successfully.
+	func rate(using rating: Double) async -> Double? {
+		guard await self.validateIsInLibrary() else { return nil }
 		let gameIdentity = GameIdentity(id: self.id)
 
 		do {
@@ -165,11 +168,24 @@ extension Game {
 			// Show a success alert thanking the user for rating.
 			let alertController = await UIApplication.topViewController?.presentAlertController(title: Trans.ratingSubmitted, message: Trans.thankYouForRating)
 
-			DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+			DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
 				alertController?.dismiss(animated: true, completion: nil)
 			}
+
+			return rating
 		} catch {
 			print(error.localizedDescription)
+			return nil
 		}
+	}
+
+	private func validateIsInLibrary() async -> Bool {
+		if self.attributes.libraryStatus == nil {
+			await UIApplication.topViewController?.presentAlertController(title: Trans.addTolibrary, message: "Please add \(self.attributes.title) to your library first.")
+
+			return false
+		}
+
+		return true
 	}
 }
