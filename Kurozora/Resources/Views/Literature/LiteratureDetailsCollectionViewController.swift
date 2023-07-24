@@ -506,9 +506,9 @@ extension LiteratureDetailsCollectionViewController: BaseLockupCollectionViewCel
 	}
 }
 
-// MARK: - RatingCollectionViewCellDelegate
-extension LiteratureDetailsCollectionViewController: RatingCollectionViewCellDelegate {
-	func ratingCollectionViewCell(rateWith rating: Double) {
+// MARK: - TapToRateCollectionViewCellDelegate
+extension LiteratureDetailsCollectionViewController: TapToRateCollectionViewCellDelegate {
+	func tapToRateCollectionViewCell(rateWith rating: Double) {
 		Task { [weak self] in
 			guard let self = self else { return }
 			await self.literature.rate(using: rating)
@@ -524,6 +524,7 @@ extension LiteratureDetailsCollectionViewController {
 		case badge
 		case synopsis
 		case rating
+		case rateAndReview
 		case reviews
 		case information
 		case cast
@@ -546,6 +547,8 @@ extension LiteratureDetailsCollectionViewController {
 				return Trans.synopsis
 			case .rating:
 				return Trans.ratingsAndReviews
+			case .rateAndReview:
+				return ""
 			case .reviews:
 				return ""
 			case .information:
@@ -577,6 +580,8 @@ extension LiteratureDetailsCollectionViewController {
 			case .synopsis:
 				return ""
 			case .rating:
+				return ""
+			case .rateAndReview:
 				return ""
 			case .reviews:
 				return ""

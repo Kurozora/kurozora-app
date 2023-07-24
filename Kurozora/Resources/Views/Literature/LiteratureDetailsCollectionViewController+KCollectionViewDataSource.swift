@@ -17,6 +17,7 @@ extension LiteratureDetailsCollectionViewController {
 			RatingCollectionViewCell.self,
 			RatingSentimentCollectionViewCell.self,
 			RatingBarCollectionViewCell.self,
+			TapToRateCollectionViewCell.self,
 			InformationCollectionViewCell.self,
 			MusicLockupCollectionViewCell.self,
 			SosumiCollectionViewCell.self
@@ -82,6 +83,15 @@ extension LiteratureDetailsCollectionViewController {
 				default: break
 				}
 				return ratingCollectionViewCell
+			case .rateAndReview:
+				let tapToRateCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.tapToRateCollectionViewCell, for: indexPath)
+				tapToRateCollectionViewCell?.delegate = self
+				switch itemKind {
+				case .literature(let literature, _):
+					tapToRateCollectionViewCell?.configure(using: literature.attributes.givenRating)
+				default: break
+				}
+				return tapToRateCollectionViewCell
 			case .information:
 				let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.informationCollectionViewCell, for: indexPath)
 				switch itemKind {
@@ -152,6 +162,9 @@ extension LiteratureDetailsCollectionViewController {
 				LiteratureDetail.Rating.allCases.forEach { _ in
 					self.snapshot.appendItems([.literature(self.literature)], toSection: literatureDetailSection)
 				}
+			case .rateAndReview:
+				self.snapshot.appendSections([literatureDetailSection])
+				self.snapshot.appendItems([.literature(self.literature)], toSection: literatureDetailSection)
 			case .reviews: break
 			case .information:
 				self.snapshot.appendSections([literatureDetailSection])
