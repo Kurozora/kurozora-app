@@ -1195,12 +1195,12 @@ struct Trans {
 	/// The string for the word 'tap to rate'.
 	///
 	/// - Tag: Trans-tapToRate
-	static let tapToRate: String = String(localized: "Tap to Rate",
+	static let tapToRate: String = String(localized: "Tap to Rate:",
 										  comment: "The string for the word 'tap to rate'.")
 	/// The string for the word 'click to rate'.
 	///
 	/// - Tag: Trans-clickToRate
-	static let clickToRate: String = String(localized: "Click to Rate",
+	static let clickToRate: String = String(localized: "Click to Rate:",
 											comment: "The string for the word 'click to rate'.")
 
 	// MARK: - Warnings
