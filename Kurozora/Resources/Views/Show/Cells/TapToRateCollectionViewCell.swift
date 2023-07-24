@@ -10,7 +10,7 @@ import UIKit
 import KurozoraKit
 
 protocol TapToRateCollectionViewCellDelegate: AnyObject {
-	func tapToRateCollectionViewCell(rateWith rating: Double)
+	func tapToRateCollectionViewCell(_ cell: TapToRateCollectionViewCell, rateWith rating: Double)
 }
 
 class TapToRateCollectionViewCell: UICollectionViewCell {
@@ -31,7 +31,7 @@ class TapToRateCollectionViewCell: UICollectionViewCell {
 			guard let self = self else { return }
 
 			WorkflowController.shared.isSignedIn {
-				self.delegate?.tapToRateCollectionViewCell(rateWith: rating)
+				self.delegate?.tapToRateCollectionViewCell(self, rateWith: rating)
 			}
 
 			if !User.isSignedIn {
