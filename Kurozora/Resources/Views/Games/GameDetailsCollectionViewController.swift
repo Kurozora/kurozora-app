@@ -528,6 +528,7 @@ extension GameDetailsCollectionViewController {
 		case badge
 		case synopsis
 		case rating
+		case reviews
 		case information
 		case cast
 		case studios
@@ -548,7 +549,9 @@ extension GameDetailsCollectionViewController {
 			case .synopsis:
 				return Trans.synopsis
 			case .rating:
-				return Trans.ratings
+				return Trans.ratingsAndReviews
+			case .reviews:
+				return ""
 			case .information:
 				return Trans.information
 			case .cast:
@@ -578,6 +581,8 @@ extension GameDetailsCollectionViewController {
 			case .synopsis:
 				return ""
 			case .rating:
+				return ""
+			case .reviews:
 				return ""
 			case .information:
 				return ""

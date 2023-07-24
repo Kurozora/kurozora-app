@@ -19,15 +19,9 @@ extension GameDetailsCollectionViewController {
 		case .badge:
 			return width > 414 ? GameDetail.Badge.allCases.count : (width / 132).rounded().int
 		case .rating:
-			if width > 828 {
-				columnCount = (width / 374).rounded().int
-				if columnCount >= 3 {
-					return 3
-				} else if columnCount > 0 {
-					return columnCount
-				}
-			}
-			return 1
+			let columnCount = (width / 250).rounded().int
+			return columnCount >= 3 ? 3 : 2
+		case .reviews: break
 		case .information:
 			columnCount = width >= 414 ? (width / 200).rounded().int : (width / 160).rounded().int
 			return columnCount > 0 ? columnCount : 2
@@ -106,9 +100,10 @@ extension GameDetailsCollectionViewController {
 					hasSectionHeader = true
 				}
 			case .rating:
-				let fullSection = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
-				sectionLayout = fullSection
+				let ratingSection = Layouts.ratingSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				sectionLayout = ratingSection
 				hasSectionHeader = true
+			case .reviews: break
 			case .information:
 				let gridSection = Layouts.gridSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				sectionLayout = gridSection

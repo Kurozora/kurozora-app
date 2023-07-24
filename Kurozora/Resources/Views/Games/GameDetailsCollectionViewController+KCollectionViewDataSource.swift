@@ -15,6 +15,8 @@ extension GameDetailsCollectionViewController {
 		return [
 			TextViewCollectionViewCell.self,
 			RatingCollectionViewCell.self,
+			RatingSentimentCollectionViewCell.self,
+			RatingBarCollectionViewCell.self,
 			InformationCollectionViewCell.self,
 			MusicLockupCollectionViewCell.self,
 			SosumiCollectionViewCell.self
@@ -61,12 +63,22 @@ extension GameDetailsCollectionViewController {
 				textViewCollectionViewCell?.textViewCollectionViewCellType = .synopsis
 				textViewCollectionViewCell?.textViewContent = self.game.attributes.synopsis
 				return textViewCollectionViewCell
-			case .rating:
-				let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.ratingCollectionViewCell, for: indexPath)
-				ratingCollectionViewCell?.delegate = self
+			case .rating, .reviews:
+				let gameDetailRating = GameDetail.Rating(rawValue: indexPath.item) ?? .average
+				let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: gameDetailRating.identifierString, for: indexPath)
+
 				switch itemKind {
 				case .game(let game, _):
-					ratingCollectionViewCell?.configure(using: game)
+					if let stats = game.attributes.stats {
+						switch gameDetailRating {
+						case .average:
+							(ratingCollectionViewCell as? RatingCollectionViewCell)?.configure(using: game)
+						case .sentiment:
+							(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configure(using: stats)
+						case .bar:
+							(ratingCollectionViewCell as? RatingBarCollectionViewCell)?.configure(using: stats)
+						}
+					}
 				default: break
 				}
 				return ratingCollectionViewCell
@@ -137,7 +149,10 @@ extension GameDetailsCollectionViewController {
 				}
 			case .rating:
 				self.snapshot.appendSections([gameDetailSection])
-				self.snapshot.appendItems([.game(self.game)], toSection: gameDetailSection)
+				GameDetail.Rating.allCases.forEach { _ in
+					self.snapshot.appendItems([.game(self.game)], toSection: gameDetailSection)
+				}
+			case .reviews: break
 			case .information:
 				self.snapshot.appendSections([gameDetailSection])
 				GameDetail.Information.allCases.forEach { _ in
