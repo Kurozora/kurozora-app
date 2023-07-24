@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -24,16 +25,21 @@
                                 <constraint firstAttribute="height" constant="0.5" id="lgn-AK-pbX"/>
                             </constraints>
                         </view>
-                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C54-Ie-qpN" customClass="HeaderButton" customModule="Kurozora" customModuleProvider="target">
-                            <rect key="frame" x="369" y="10" width="45" height="32"/>
-                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                            <state key="normal" title="See All">
-                                <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </state>
-                            <connections>
-                                <action selector="headerButtonPressed:" destination="Hf8-gr-7y4" eventType="touchUpInside" id="Uj2-Yk-alj"/>
-                            </connections>
-                        </button>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="kqi-V0-Mbk">
+                            <rect key="frame" x="361" y="10" width="53" height="33"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IAa-4j-FQj" customClass="HeaderButton" customModule="Kurozora" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="53" height="33"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                    <state key="normal" title="See All">
+                                        <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="headerButtonPressed:" destination="Hf8-gr-7y4" eventType="touchUpInside" id="yTH-1c-N8G"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </stackView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Top Anime" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BPG-X0-YJI" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="10" width="108" height="26.5"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
@@ -41,7 +47,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1da-OZ-n7O" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="40.5" width="31" height="24.5"/>
+                            <rect key="frame" x="0.0" y="40.5" width="37" height="24.5"/>
                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
@@ -51,17 +57,17 @@
                         <constraint firstItem="BPG-X0-YJI" firstAttribute="leading" secondItem="daF-G8-yJ2" secondAttribute="leading" id="0Zv-ML-wpp"/>
                         <constraint firstItem="BPG-X0-YJI" firstAttribute="top" secondItem="As0-2d-X7c" secondAttribute="top" constant="10" id="2m1-l8-vyd"/>
                         <constraint firstAttribute="bottom" secondItem="1da-OZ-n7O" secondAttribute="bottom" constant="10" id="3ac-In-cCW"/>
-                        <constraint firstItem="C54-Ie-qpN" firstAttribute="trailing" secondItem="daF-G8-yJ2" secondAttribute="trailing" id="4sc-8r-Fea"/>
-                        <constraint firstItem="C54-Ie-qpN" firstAttribute="top" secondItem="As0-2d-X7c" secondAttribute="top" constant="10" id="Fmi-5B-IVp"/>
+                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="kqi-V0-Mbk" secondAttribute="bottom" constant="10" id="Acl-OM-A4u"/>
                         <constraint firstAttribute="trailing" secondItem="daF-G8-yJ2" secondAttribute="trailing" id="KG4-vm-YZq"/>
                         <constraint firstItem="daF-G8-yJ2" firstAttribute="leading" secondItem="As0-2d-X7c" secondAttribute="leading" id="KR8-Ic-YIW"/>
-                        <constraint firstItem="C54-Ie-qpN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="BPG-X0-YJI" secondAttribute="trailing" constant="8" symbolic="YES" id="L8R-hA-Xna"/>
                         <constraint firstItem="1da-OZ-n7O" firstAttribute="leading" secondItem="As0-2d-X7c" secondAttribute="leading" id="Pme-69-Jef"/>
-                        <constraint firstItem="BPG-X0-YJI" firstAttribute="firstBaseline" secondItem="C54-Ie-qpN" secondAttribute="firstBaseline" id="SlR-cW-cQc"/>
-                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="C54-Ie-qpN" secondAttribute="bottom" constant="10" id="fzo-ue-pMn"/>
-                        <constraint firstItem="C54-Ie-qpN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1da-OZ-n7O" secondAttribute="trailing" constant="8" symbolic="YES" id="kac-rX-4Dr"/>
+                        <constraint firstItem="kqi-V0-Mbk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1da-OZ-n7O" secondAttribute="trailing" constant="8" symbolic="YES" id="cEY-pp-xBY"/>
+                        <constraint firstItem="BPG-X0-YJI" firstAttribute="firstBaseline" secondItem="kqi-V0-Mbk" secondAttribute="firstBaseline" symbolic="YES" id="dYq-Dx-zSW"/>
+                        <constraint firstItem="kqi-V0-Mbk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="BPG-X0-YJI" secondAttribute="trailing" constant="8" symbolic="YES" id="i6h-Bf-Sgv"/>
                         <constraint firstItem="daF-G8-yJ2" firstAttribute="top" secondItem="As0-2d-X7c" secondAttribute="top" id="lBB-3l-0UZ"/>
                         <constraint firstItem="1da-OZ-n7O" firstAttribute="top" secondItem="BPG-X0-YJI" secondAttribute="bottom" constant="4" id="ntb-pQ-udY"/>
+                        <constraint firstAttribute="trailing" secondItem="kqi-V0-Mbk" secondAttribute="trailing" id="r9n-Sa-xNw"/>
+                        <constraint firstItem="kqi-V0-Mbk" firstAttribute="top" secondItem="As0-2d-X7c" secondAttribute="top" constant="10" id="zGc-tJ-IAk"/>
                     </constraints>
                 </view>
             </subviews>
@@ -74,7 +80,7 @@
                 <constraint firstItem="As0-2d-X7c" firstAttribute="leading" secondItem="Hf8-gr-7y4" secondAttribute="leading" id="XOu-xj-Esg"/>
             </constraints>
             <connections>
-                <outlet property="headerButton" destination="C54-Ie-qpN" id="paZ-pP-DnA"/>
+                <outlet property="headerButton" destination="IAa-4j-FQj" id="w7J-Mr-ZFE"/>
                 <outlet property="separatorView" destination="daF-G8-yJ2" id="PgJ-6a-r9Y"/>
                 <outlet property="subTitleHeader" destination="1da-OZ-n7O" id="Jxm-eZ-sxr"/>
                 <outlet property="titleLabel" destination="BPG-X0-YJI" id="Bti-Qa-cP8"/>
