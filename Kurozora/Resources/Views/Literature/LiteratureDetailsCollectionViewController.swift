@@ -508,10 +508,10 @@ extension LiteratureDetailsCollectionViewController: BaseLockupCollectionViewCel
 
 // MARK: - TapToRateCollectionViewCellDelegate
 extension LiteratureDetailsCollectionViewController: TapToRateCollectionViewCellDelegate {
-	func tapToRateCollectionViewCell(rateWith rating: Double) {
+	func tapToRateCollectionViewCell(_ cell: TapToRateCollectionViewCell, rateWith rating: Double) {
 		Task { [weak self] in
 			guard let self = self else { return }
-			await self.literature.rate(using: rating)
+			cell.configure(using: await self.literature.rate(using: rating))
 		}
 	}
 }
