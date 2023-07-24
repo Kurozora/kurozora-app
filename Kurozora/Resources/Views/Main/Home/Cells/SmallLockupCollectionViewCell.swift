@@ -71,10 +71,6 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		// Configure relation
 		self.ternaryLabel?.text = relatedShow.attributes.relation.name
 
-		// Configure score
-		self.scoreView.isHidden = true
-		self.scoreLabel.isHidden = true
-
 		// Configure poster image
 		self.posterImageView?.applyCornerRadius(10.0)
 		self.posterImageView?.layer.mask = nil
@@ -89,10 +85,6 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 
 		// Configure relation
 		self.ternaryLabel?.text = relatedLiterature.attributes.relation.name
-
-		// Configure score
-		self.scoreView.isHidden = true
-		self.scoreLabel.isHidden = true
 
 		// Configure poster image
 		self.posterImageView?.applyCornerRadius(0.0)
