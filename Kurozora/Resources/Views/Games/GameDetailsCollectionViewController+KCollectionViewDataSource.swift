@@ -72,7 +72,7 @@ extension GameDetailsCollectionViewController {
 					if let stats = game.attributes.stats {
 						switch gameDetailRating {
 						case .average:
-							(ratingCollectionViewCell as? RatingCollectionViewCell)?.configure(using: game)
+							(ratingCollectionViewCell as? RatingCollectionViewCell)?.configure(using: stats)
 						case .sentiment:
 							(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configure(using: stats)
 						case .bar:

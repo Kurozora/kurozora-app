@@ -216,7 +216,9 @@ extension EpisodeDetailsCollectionViewController {
 		case .rating:
 			let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: episodeDetailSection.identifierString, for: indexPath) as! RatingCollectionViewCell
 			ratingCollectionViewCell.delegate = self
-			ratingCollectionViewCell.configure(using: self.episode)
+			if let stats = self.episode.attributes.stats {
+				ratingCollectionViewCell.configure(using: stats)
+			}
 			return ratingCollectionViewCell
 		case .information:
 			let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: episodeDetailSection.identifierString, for: indexPath) as! InformationCollectionViewCell

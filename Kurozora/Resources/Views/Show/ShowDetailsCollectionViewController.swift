@@ -616,6 +616,7 @@ extension ShowDetailsCollectionViewController {
 		case badge
 		case synopsis
 		case rating
+		case rateAndReview
 		case reviews
 		case information
 		case seasons
@@ -640,6 +641,8 @@ extension ShowDetailsCollectionViewController {
 				return Trans.synopsis
 			case .rating:
 				return Trans.ratingsAndReviews
+			case .rateAndReview:
+				return ""
 			case .reviews:
 				return ""
 			case .information:
@@ -675,6 +678,8 @@ extension ShowDetailsCollectionViewController {
 			case .synopsis:
 				return ""
 			case .rating:
+				return ""
+			case .rateAndReview:
 				return ""
 			case .reviews:
 				return ""

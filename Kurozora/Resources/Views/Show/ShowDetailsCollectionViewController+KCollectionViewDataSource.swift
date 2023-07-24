@@ -64,7 +64,7 @@ extension ShowDetailsCollectionViewController {
 				textViewCollectionViewCell?.textViewCollectionViewCellType = .synopsis
 				textViewCollectionViewCell?.textViewContent = self.show.attributes.synopsis
 				return textViewCollectionViewCell
-			case .rating, .reviews:
+			case .rating, .reviews, .rateAndReview:
 				let showDetailRating = ShowDetail.Rating(rawValue: indexPath.item) ?? .average
 				let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: showDetailRating.identifierString, for: indexPath)
 
@@ -73,7 +73,7 @@ extension ShowDetailsCollectionViewController {
 					if let stats = show.attributes.stats {
 						switch showDetailRating {
 						case .average:
-							(ratingCollectionViewCell as? RatingCollectionViewCell)?.configure(using: show)
+							(ratingCollectionViewCell as? RatingCollectionViewCell)?.configure(using: stats)
 						case .sentiment:
 							(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configure(using: stats)
 						case .bar:
@@ -159,6 +159,7 @@ extension ShowDetailsCollectionViewController {
 				ShowDetail.Rating.allCases.forEach { _ in
 					self.snapshot.appendItems([.show(self.show)], toSection: showDetailSection)
 				}
+			case .rateAndReview: break
 			case .reviews: break
 			case .information:
 				self.snapshot.appendSections([showDetailSection])

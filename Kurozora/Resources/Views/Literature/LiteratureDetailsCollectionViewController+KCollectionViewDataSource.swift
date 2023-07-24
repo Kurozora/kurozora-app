@@ -72,7 +72,7 @@ extension LiteratureDetailsCollectionViewController {
 					if let stats = literature.attributes.stats {
 						switch literatureDetailRating {
 						case .average:
-							(ratingCollectionViewCell as? RatingCollectionViewCell)?.configure(using: literature)
+							(ratingCollectionViewCell as? RatingCollectionViewCell)?.configure(using: stats)
 						case .sentiment:
 							(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configure(using: stats)
 						case .bar:
