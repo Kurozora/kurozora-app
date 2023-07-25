@@ -100,7 +100,7 @@ class KTextView: UITextView {
 
 	/// Called when the user ends editing.
 	@objc private func handleTextDidEndEditing() {
-		self.placeholderLabel.isHidden = false
+		self.placeholderLabel.isHidden = !self.text.isEmpty
 	}
 }
 
