@@ -569,7 +569,9 @@ extension ShowDetailsCollectionViewController: TapToRateCollectionViewCellDelega
 // MARK: - WriteAReviewCollectionViewCellDelegate
 extension ShowDetailsCollectionViewController: WriteAReviewCollectionViewCellDelegate {
 	func writeAReviewCollectionViewCell(_ cell: WriteAReviewCollectionViewCell, didPress button: UIButton) {
+		guard let showIdentity = self.showIdentity else { return }
 		let reviewTextEditorViewController = ReviewTextEditorViewController()
+		reviewTextEditorViewController.router?.dataStore?.kind = .show(showIdentity: showIdentity)
 		reviewTextEditorViewController.router?.dataStore?.rating = self.show.attributes.givenRating
 		reviewTextEditorViewController.router?.dataStore?.review = nil
 

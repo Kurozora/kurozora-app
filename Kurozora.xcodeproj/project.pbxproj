@@ -65,6 +65,16 @@
 		661937762A6E544C00447084 /* TapToRateCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 661937742A6E544C00447084 /* TapToRateCollectionViewCell.xib */; };
 		661937782A6ED07200447084 /* BadgeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 661937772A6ED07200447084 /* BadgeCollectionViewCell.xib */; };
 		6619377A2A6ED23A00447084 /* RatingBadgeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 661937792A6ED23A00447084 /* RatingBadgeCollectionViewCell.xib */; };
+		6619377D2A6ED83700447084 /* WriteAReviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6619377B2A6ED83700447084 /* WriteAReviewCollectionViewCell.swift */; };
+		6619377E2A6ED83700447084 /* WriteAReviewCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6619377C2A6ED83700447084 /* WriteAReviewCollectionViewCell.xib */; };
+		661937882A6EEB8E00447084 /* ReviewTextEditorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661937802A6EEB8E00447084 /* ReviewTextEditorPresenter.swift */; };
+		661937892A6EEB8E00447084 /* ReviewTextEditorWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661937812A6EEB8E00447084 /* ReviewTextEditorWorker.swift */; };
+		6619378A2A6EEB8E00447084 /* ReviewTextEditorRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661937822A6EEB8E00447084 /* ReviewTextEditorRouter.swift */; };
+		6619378B2A6EEB8E00447084 /* ReviewTextEditorModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661937832A6EEB8E00447084 /* ReviewTextEditorModels.swift */; };
+		6619378C2A6EEB8E00447084 /* ReviewTextEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661937842A6EEB8E00447084 /* ReviewTextEditorViewController.swift */; };
+		6619378D2A6EEB8E00447084 /* ReviewTextEditorInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661937852A6EEB8E00447084 /* ReviewTextEditorInteractor.swift */; };
+		6619378E2A6EEB8E00447084 /* ReviewTextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661937862A6EEB8E00447084 /* ReviewTextEditorView.swift */; };
+		6619378F2A6EEB8E00447084 /* ReviewTextEditorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 661937872A6EEB8E00447084 /* ReviewTextEditorView.xib */; };
 		661A002527BA9FDE00DC646C /* KImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A002427BA9FDD00DC646C /* KImageView.swift */; };
 		661A002A27C28F7A00DC646C /* KTrailerPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A002927C28F7A00DC646C /* KTrailerPlayerView.swift */; };
 		661ACC9B25ADA41B002407A7 /* ShowDetailsCollectionViewController+TouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661ACC9A25ADA41B002407A7 /* ShowDetailsCollectionViewController+TouchBar.swift */; };
@@ -714,6 +724,16 @@
 		661937742A6E544C00447084 /* TapToRateCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TapToRateCollectionViewCell.xib; sourceTree = "<group>"; };
 		661937772A6ED07200447084 /* BadgeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BadgeCollectionViewCell.xib; sourceTree = "<group>"; };
 		661937792A6ED23A00447084 /* RatingBadgeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RatingBadgeCollectionViewCell.xib; sourceTree = "<group>"; };
+		6619377B2A6ED83700447084 /* WriteAReviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteAReviewCollectionViewCell.swift; sourceTree = "<group>"; };
+		6619377C2A6ED83700447084 /* WriteAReviewCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WriteAReviewCollectionViewCell.xib; sourceTree = "<group>"; };
+		661937802A6EEB8E00447084 /* ReviewTextEditorPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTextEditorPresenter.swift; sourceTree = "<group>"; };
+		661937812A6EEB8E00447084 /* ReviewTextEditorWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTextEditorWorker.swift; sourceTree = "<group>"; };
+		661937822A6EEB8E00447084 /* ReviewTextEditorRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTextEditorRouter.swift; sourceTree = "<group>"; };
+		661937832A6EEB8E00447084 /* ReviewTextEditorModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTextEditorModels.swift; sourceTree = "<group>"; };
+		661937842A6EEB8E00447084 /* ReviewTextEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTextEditorViewController.swift; sourceTree = "<group>"; };
+		661937852A6EEB8E00447084 /* ReviewTextEditorInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTextEditorInteractor.swift; sourceTree = "<group>"; };
+		661937862A6EEB8E00447084 /* ReviewTextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTextEditorView.swift; sourceTree = "<group>"; };
+		661937872A6EEB8E00447084 /* ReviewTextEditorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReviewTextEditorView.xib; sourceTree = "<group>"; };
 		661A002427BA9FDD00DC646C /* KImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KImageView.swift; sourceTree = "<group>"; };
 		661A002927C28F7A00DC646C /* KTrailerPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KTrailerPlayerView.swift; sourceTree = "<group>"; };
 		661ACC9A25ADA41B002407A7 /* ShowDetailsCollectionViewController+TouchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShowDetailsCollectionViewController+TouchBar.swift"; sourceTree = "<group>"; };
@@ -1568,6 +1588,21 @@
 				6617C8292A0C4BB60091EFAC /* SearchFilterModels.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		6619377F2A6EEAF100447084 /* Review Text Editor */ = {
+			isa = PBXGroup;
+			children = (
+				661937802A6EEB8E00447084 /* ReviewTextEditorPresenter.swift */,
+				661937812A6EEB8E00447084 /* ReviewTextEditorWorker.swift */,
+				661937822A6EEB8E00447084 /* ReviewTextEditorRouter.swift */,
+				661937832A6EEB8E00447084 /* ReviewTextEditorModels.swift */,
+				661937842A6EEB8E00447084 /* ReviewTextEditorViewController.swift */,
+				661937852A6EEB8E00447084 /* ReviewTextEditorInteractor.swift */,
+				661937862A6EEB8E00447084 /* ReviewTextEditorView.swift */,
+				661937872A6EEB8E00447084 /* ReviewTextEditorView.xib */,
+			);
+			path = "Review Text Editor";
 			sourceTree = "<group>";
 		};
 		661A002627C28F2D00DC646C /* AVFoundation */ = {
@@ -2592,6 +2627,7 @@
 				661F9F872087383500CF4153 /* Onboarding */,
 				664AAF8F24EEA24D00FF4AA5 /* People */,
 				66CF6D6320A9875600F98375 /* Profile */,
+				6619377F2A6EEAF100447084 /* Review Text Editor */,
 				66C86400216DF9040054EE16 /* Seasons */,
 				66707836208B844800471FBC /* Settings */,
 				66AA35C22403125F0006EC5B /* Show */,
@@ -3140,6 +3176,8 @@
 				661F185F24AB5C6E00542AFB /* SosumiCollectionViewCell.xib */,
 				661937732A6E544C00447084 /* TapToRateCollectionViewCell.swift */,
 				661937742A6E544C00447084 /* TapToRateCollectionViewCell.xib */,
+				6619377B2A6ED83700447084 /* WriteAReviewCollectionViewCell.swift */,
+				6619377C2A6ED83700447084 /* WriteAReviewCollectionViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -3681,6 +3719,7 @@
 			files = (
 				66ED9D8722ABD60400C7A45C /* NotificationSettings.storyboard in Resources */,
 				66B216AC21C1681F006E167D /* TextEditor.storyboard in Resources */,
+				6619378F2A6EEB8E00447084 /* ReviewTextEditorView.xib in Resources */,
 				66CB8D4E24F83ECD0047A2CF /* PostImageCell.xib in Resources */,
 				6640E19722ADD30100D0F575 /* AuthenticationSettings.storyboard in Resources */,
 				66A4FD13270F62D300E7C702 /* Configuration.storekit in Resources */,
@@ -3757,6 +3796,7 @@
 				661F186024AB5C6F00542AFB /* SosumiCollectionViewCell.xib in Resources */,
 				665A457F24660D9500154F41 /* RatingCollectionViewCell.xib in Resources */,
 				666004A929E49CFA00871801 /* ActionLinkExploreCollectionViewCell.xib in Resources */,
+				6619377E2A6ED83700447084 /* WriteAReviewCollectionViewCell.xib in Resources */,
 				669A36BF24F1BFD60045D04A /* OnboardingHeaderTableViewCell.xib in Resources */,
 				669A36C324F1C08D0045D04A /* OnboardingFooterTableViewCell.xib in Resources */,
 				664AAFA924EEF3DD00FF4AA5 /* CharacterLockupCollectionViewCell.xib in Resources */,
@@ -3981,6 +4021,7 @@
 				66DE65282401AEDB001C2773 /* FilterSection.swift in Sources */,
 				66CAE6872337CFC800991E59 /* OnboardingBaseTableViewCell.swift in Sources */,
 				66E1215029AFEE090051C4ED /* GamesListCollectionViewController.swift in Sources */,
+				6619378E2A6EEB8E00447084 /* ReviewTextEditorView.swift in Sources */,
 				661A002A27C28F7A00DC646C /* KTrailerPlayerView.swift in Sources */,
 				661DBC51234A4E00009292DF /* TipJarTableViewController.swift in Sources */,
 				663C95B923084FAC003720A4 /* SceneDelegate.swift in Sources */,
@@ -4097,6 +4138,7 @@
 				6617C82A2A0C4BB60091EFAC /* SearchFilterModels.swift in Sources */,
 				6632C449298B110000702F7C /* LiteraturesListCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				66DE652A2401B0A8001C2773 /* BrowseType.swift in Sources */,
+				6619378A2A6EEB8E00447084 /* ReviewTextEditorRouter.swift in Sources */,
 				666938B321B1D4E200BA9620 /* ShowMoreCell.swift in Sources */,
 				66232CDB2310055900C45B5A /* BaseFeedMessageCell.swift in Sources */,
 				6646A272236A5D8400DCC0A4 /* BrowserSettingsTableViewController.swift in Sources */,
@@ -4141,6 +4183,7 @@
 				66EDBA5B2944212B00FF1A2E /* WarningPresenter.swift in Sources */,
 				664AAF8324EE8F0C00FF4AA5 /* CharacterHeaderCollectionViewCell.swift in Sources */,
 				66EA1DEC25B5BDD400FCD07A /* StudioDetailsCollectionViewController+KCollectionViewDataSource.swift in Sources */,
+				661937882A6EEB8E00447084 /* ReviewTextEditorPresenter.swift in Sources */,
 				667943632273933400E2D0D0 /* TextViewCollectionViewCell.swift in Sources */,
 				66938FD8211CD3E600ADA5D6 /* ShowDetailsCollectionViewController.swift in Sources */,
 				66FA97C4281A11720054FC2E /* SubscriptionTier.swift in Sources */,
@@ -4158,6 +4201,7 @@
 				66AF50DD21D9B67900FC622E /* NotificationsSettingsViewController.swift in Sources */,
 				66C4DADF243BE4CF00C4B90A /* KKLibrarySortType+Kurozora.swift in Sources */,
 				66D8B14B24F8559E00F0DE7B /* KFeedMessageEditorViewController.swift in Sources */,
+				6619377D2A6ED83700447084 /* WriteAReviewCollectionViewCell.swift in Sources */,
 				66F944AC22F0C08E009F1FE2 /* TitleHeaderCollectionReusableView.swift in Sources */,
 				66A08C6D23E3A2F0007B6418 /* PrivacySettingsViewController.swift in Sources */,
 				667B38432361CE6500786EF6 /* KWhatsNew.swift in Sources */,
@@ -4341,6 +4385,7 @@
 				66647B542084995500CF624F /* AppDelegate.swift in Sources */,
 				662F117B24E5EEB40000375A /* StudioLogoImageView.swift in Sources */,
 				66B4F1DB223D2CA5007C5048 /* SearchBaseResultsCell.swift in Sources */,
+				661937892A6EEB8E00447084 /* ReviewTextEditorWorker.swift in Sources */,
 				662F118224E60F1C0000375A /* SeasonAttributes+UIImage.swift in Sources */,
 				669C8D582107B8170014EB7A /* BasicTabBarItemContentView.swift in Sources */,
 				66CE8107246088DA00DB0C49 /* ServiceTableViewController.swift in Sources */,
@@ -4357,6 +4402,7 @@
 				66FA97C6281A118E0054FC2E /* StoreError.swift in Sources */,
 				667F9ADD21B5F354003F6629 /* SettingsSplitViewController.swift in Sources */,
 				668422462595F762000A09F8 /* CharacterDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
+				6619378D2A6EEB8E00447084 /* ReviewTextEditorInteractor.swift in Sources */,
 				665CBBA222C2B139004D0D3E /* DateSettingsCell.swift in Sources */,
 				66A1C65C232B75360044EAD1 /* UserLockupCollectionViewCell.swift in Sources */,
 				66500D1829605F810098D59D /* PurchaseFooterCollectionViewCell.swift in Sources */,
@@ -4393,8 +4439,10 @@
 				6611234E208F70CB00E6033A /* UIViewController+Kurozora.swift in Sources */,
 				664133E521DA8E5F00CE823A /* NotificationsGroupingCell.swift in Sources */,
 				66973DFA2311E4400097A9F8 /* Notification+Kurozora.swift in Sources */,
+				6619378C2A6EEB8E00447084 /* ReviewTextEditorViewController.swift in Sources */,
 				66208AC42A12E6C700783FD1 /* Double+Kurozora.swift in Sources */,
 				66CF5D8021E798C800969BBB /* UIScrollView+Kurozora.swift in Sources */,
+				6619378B2A6EEB8E00447084 /* ReviewTextEditorModels.swift in Sources */,
 				66EA1DDF25B5BC2F00FCD07A /* EpisodesListCollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				6648ED7022A4636E00E1BE18 /* GroupedNotifications.swift in Sources */,
 				660E39F925E5CF3900A46EB0 /* CharacterDetailsCollectionViewController+UICollectionViewDelegate.swift in Sources */,
