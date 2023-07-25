@@ -338,7 +338,7 @@ struct Trans {
 	/// The placeholder string for creating a new feed message.
 	///
 	/// - Tag: Trans-whatsOnYourMind
-	static let whatsOnYourMind: String = String(localized: "What's on your mind...",
+	static let whatsOnYourMind: String = String(localized: "What’s on your mind?",
 												table: "Feed",
 												comment: "The placeholder string for creating a new feed message.")
 	/// The placeholder string for creating a new comment.
@@ -1202,6 +1202,11 @@ struct Trans {
 	/// - Tag: Trans-clickToRate
 	static let clickToRate: String = String(localized: "Click to Rate:",
 											comment: "The string for the word 'click to rate'.")
+	/// The string for the word 'write a review'.
+	///
+	/// - Tag: Trans-writeAReview
+	static let writeAReview: String = String(localized: "Write a Review",
+											 comment: "The string for the word 'write a review'.")
 
 	// MARK: - Warnings
 	/// The string for the no signal warning title.
