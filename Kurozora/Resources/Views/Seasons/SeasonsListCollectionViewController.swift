@@ -57,7 +57,7 @@ class SeasonsListCollectionViewController: KCollectionViewController {
 
 	// MARK: - View
 	override func viewDidLoad() {
-        super.viewDidLoad()
+		super.viewDidLoad()
 
 		#if DEBUG
 		self._prefersRefreshControlDisabled = false
@@ -81,7 +81,7 @@ class SeasonsListCollectionViewController: KCollectionViewController {
 				await self.fetchSeasons()
 			}
 		}
-    }
+	}
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
@@ -154,7 +154,7 @@ class SeasonsListCollectionViewController: KCollectionViewController {
 		}
 
 		self.endFetch()
-    }
+	}
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

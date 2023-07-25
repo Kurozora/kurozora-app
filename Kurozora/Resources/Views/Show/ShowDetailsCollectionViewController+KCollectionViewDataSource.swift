@@ -19,6 +19,7 @@ extension ShowDetailsCollectionViewController {
 			RatingSentimentCollectionViewCell.self,
 			RatingBarCollectionViewCell.self,
 			TapToRateCollectionViewCell.self,
+			WriteAReviewCollectionViewCell.self,
 			InformationCollectionViewCell.self,
 			MusicLockupCollectionViewCell.self,
 			SosumiCollectionViewCell.self
@@ -86,14 +87,21 @@ extension ShowDetailsCollectionViewController {
 				}
 				return ratingCollectionViewCell
 			case .rateAndReview:
-				let tapToRateCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.tapToRateCollectionViewCell, for: indexPath)
-				tapToRateCollectionViewCell?.delegate = self
-				switch itemKind {
-				case .show(let show, _):
-					tapToRateCollectionViewCell?.configure(using: show.attributes.givenRating)
-				default: break
+				let showDetailRateAndReview = ShowDetail.RateAndReview(rawValue: indexPath.item) ?? .tapToRate
+				let rateAndReviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: showDetailRateAndReview.identifierString, for: indexPath)
+
+				switch showDetailRateAndReview {
+				case .tapToRate:
+					switch itemKind {
+					case .show(let show, _):
+						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.delegate = self
+						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.configure(using: show.attributes.givenRating)
+					default: break
+					}
+				case .writeAReview:
+					(rateAndReviewCollectionViewCell as? WriteAReviewCollectionViewCell)?.delegate = self
 				}
-				return tapToRateCollectionViewCell
+				return rateAndReviewCollectionViewCell
 			case .information:
 				let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.informationCollectionViewCell, for: indexPath)
 				switch itemKind {
@@ -172,7 +180,9 @@ extension ShowDetailsCollectionViewController {
 				}
 			case .rateAndReview:
 				self.snapshot.appendSections([showDetailSection])
-				self.snapshot.appendItems([.show(self.show)], toSection: showDetailSection)
+				ShowDetail.RateAndReview.allCases.forEach { _ in
+					self.snapshot.appendItems([.show(self.show)], toSection: showDetailSection)
+				}
 			case .reviews: break
 			case .information:
 				self.snapshot.appendSections([showDetailSection])

@@ -9,6 +9,6 @@
 import UIKit
 
 class LinkCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var linkLabel: UILabel!
-    @IBOutlet weak var titleLabel: UILabel!
+	@IBOutlet weak var linkLabel: UILabel!
+	@IBOutlet weak var titleLabel: UILabel!
 }

@@ -165,6 +165,26 @@ extension ShowDetail {
 	}
 }
 
+// MARK: - Rating & Review
+extension ShowDetail {
+	/// List of available show rate & review types.
+	enum RateAndReview: Int, CaseIterable {
+		case tapToRate = 0
+		case writeAReview
+
+		// MARK: - Properties
+		/// The cell identifier string of a show rate & review section.
+		var identifierString: String {
+			switch self {
+			case .tapToRate:
+				return R.reuseIdentifier.tapToRateCollectionViewCell.identifier
+			case .writeAReview:
+				return R.reuseIdentifier.writeAReviewCollectionViewCell.identifier
+			}
+		}
+	}
+}
+
 // MARK: - Information
 extension ShowDetail {
 	/// List of available show information types.

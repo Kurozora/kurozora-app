@@ -206,7 +206,7 @@ struct ShowDetailsCollectionView: View {
 }
 
 struct ShowDetailsCollectionView_Previews: PreviewProvider {
-    static var previews: some View {
+	static var previews: some View {
 		Group {
 			ShowDetailsCollectionView()
 			ShowDetailsCollectionView()
@@ -217,5 +217,5 @@ struct ShowDetailsCollectionView_Previews: PreviewProvider {
 			ShowDetailsCollectionView()
 				.previewDevice("iPad Pro (12.9-inch) (4th generation)")
 		}
-    }
+	}
 }

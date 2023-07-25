@@ -12,10 +12,10 @@ import KurozoraKit
 class UserSettings: UserDefaults {
 	/// The base UserDefaults suit of the Kurozora apps.
 	static var shared: UserDefaults {
-        let combined = UserDefaults.standard
-        combined.addSuite(named: "group.settings.app.kurozora.anime")
-        return combined
-    }
+		let combined = UserDefaults.standard
+		combined.addSuite(named: "group.settings.app.kurozora.anime")
+		return combined
+	}
 
 	/// Set value for key in shared UserDefaults.
 	static func set(_ value: Any?, forKey key: UserSettingsKey) {

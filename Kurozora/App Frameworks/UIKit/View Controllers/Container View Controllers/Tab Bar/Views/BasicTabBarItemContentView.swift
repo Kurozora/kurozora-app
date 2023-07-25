@@ -11,10 +11,10 @@ import ESTabBarController_swift
 
 class BasicTabBarItemContentView: ESTabBarItemContentView {
 	// MARK: - Initializers
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+	override init(frame: CGRect) {
+		super.init(frame: frame)
 		self.sharedInit()
-    }
+	}
 
 	required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)

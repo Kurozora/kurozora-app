@@ -44,8 +44,8 @@ class LibraryViewController: KTabbedViewController {
 		#endif
 	}
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+	override func viewDidLoad() {
+		super.viewDidLoad()
 
 		// Configurations
 		self.configureToolbar()
@@ -56,7 +56,7 @@ class LibraryViewController: KTabbedViewController {
 
 		// Make sure scrollView is always first hierarchically
 		self.view.sendSubviewToBack(scrollView)
-    }
+	}
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)

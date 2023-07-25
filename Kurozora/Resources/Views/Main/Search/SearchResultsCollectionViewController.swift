@@ -121,7 +121,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	}
 
 	override func viewDidLoad() {
-        super.viewDidLoad()
+		super.viewDidLoad()
 		// Disable Refresh Control & hide Activity Indicator
 		self._prefersRefreshControlDisabled = true
 		self._prefersActivityIndicatorHidden = true
@@ -150,7 +150,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		// Update data source
 		self.configureDataSource()
 		self.updateDataSource()
-    }
+	}
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)

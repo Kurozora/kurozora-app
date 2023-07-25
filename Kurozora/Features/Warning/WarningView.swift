@@ -9,7 +9,7 @@
 import UIKit
 
 protocol WarningViewDelegate: AnyObject {
-    func handleActionButtonPressed()
+	func handleActionButtonPressed()
 }
 
 final class WarningView: UIView {

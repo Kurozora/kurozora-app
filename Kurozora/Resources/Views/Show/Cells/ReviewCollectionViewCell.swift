@@ -9,8 +9,8 @@
 import UIKit
 
 class ReviewCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var reviewerButton: KButton!
-    @IBOutlet weak var scoreLabel: KSecondaryLabel!
+	@IBOutlet weak var reviewerButton: KButton!
+	@IBOutlet weak var scoreLabel: KSecondaryLabel!
 	@IBOutlet weak var cosmosView: KCosmosView!
-    @IBOutlet weak var reviewLabel: KLabel!
+	@IBOutlet weak var reviewLabel: KLabel!
 }

@@ -11,14 +11,14 @@ import SwiftTheme
 
 class KNavigationController: UINavigationController {
 	// MARK: - View
-    override func viewDidLoad() {
-        super.viewDidLoad()
+	override func viewDidLoad() {
+		super.viewDidLoad()
 
 		NotificationCenter.default.addObserver(self, selector: #selector(updateTheme(_:)), name: .ThemeUpdateNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(updatePrefersLargeTitles(_:)), name: .KSPrefersLargeTitlesDidChange, object: nil)
 
 		self.sharedInit()
-    }
+	}
 
 	// MARK: - Functions
 	/// The shared settings used to initialize tab bar view.

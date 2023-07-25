@@ -93,7 +93,7 @@ extension ManageIconTableViewController {
 		default:
 			Task {
 				if await WorkflowController.shared.isProOrSubscribed() {
-				    KThemeStyle.changeIcon(to: iconTableViewCell.alternativeIconsElement?.name)
+					KThemeStyle.changeIcon(to: iconTableViewCell.alternativeIconsElement?.name)
 					self.changeIcon(tableView: tableView, iconTableViewCell: iconTableViewCell)
 				}
 			}

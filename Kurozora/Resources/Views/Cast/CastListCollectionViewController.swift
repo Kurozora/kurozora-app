@@ -72,8 +72,8 @@ class CastListCollectionViewController: KCollectionViewController {
 		self.handleRefreshControl()
 	}
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+	override func viewDidLoad() {
+		super.viewDidLoad()
 
 		#if DEBUG
 		self._prefersRefreshControlDisabled = false
@@ -96,7 +96,7 @@ class CastListCollectionViewController: KCollectionViewController {
 				await self.fetchCast()
 			}
 		}
-    }
+	}
 
 	// MARK: - Functions
 	override func handleRefreshControl() {

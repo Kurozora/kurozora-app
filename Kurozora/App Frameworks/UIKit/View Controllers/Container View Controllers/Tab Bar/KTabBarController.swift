@@ -26,7 +26,7 @@ class KTabBarController: ESTabBarController {
 	}
 
 	// MARK: - View
-    override func viewDidLoad() {
+	override func viewDidLoad() {
 		super.viewDidLoad()
 
 		// Initialize views
@@ -39,7 +39,7 @@ class KTabBarController: ESTabBarController {
 
 		self.setupBadgeValue()
 		NotificationCenter.default.addObserver(self, selector: #selector(self.toggleBadge), name: .KSNotificationsBadgeIsOn, object: nil)
-    }
+	}
 
 	// MARK: - Functions
 	/// The shared settings used to initialize tab bar view.

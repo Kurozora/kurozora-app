@@ -15,7 +15,7 @@ protocol SplashscreenViewDelegate: AnyObject {
 
 final class SplashscreenView: UIView {
 	// MARK: - IBOutlets
-    @IBOutlet private weak var logoImageView: UIImageView!
+	@IBOutlet private weak var logoImageView: UIImageView!
 
 	// MARK: - Properties
 	public weak var viewDelegate: SplashscreenViewDelegate?
@@ -28,7 +28,7 @@ final class SplashscreenView: UIView {
 	}
 
 	// MARK: - Display
-    func setData() {
+	func setData() {
 		self.playLaunchAudio()
 	}
 

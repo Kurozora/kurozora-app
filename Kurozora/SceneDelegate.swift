@@ -116,8 +116,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	///
 	/// - Parameter window: The backdrop for your app’s user interface and the object that dispatches events to your views.
 	/// - Parameter activity: A representation of the state of your app at a moment in time.
-    func configure(window: UIWindow?, with activity: NSUserActivity) -> Bool {
-        if activity.title == "OpenShowDetail" {
+	func configure(window: UIWindow?, with activity: NSUserActivity) -> Bool {
+		if activity.title == "OpenShowDetail" {
 			if let parameters = activity.userInfo as? [String: String] {
 				guard let showID = parameters["showID"] else { return false }
 				let showDetailsCollectionViewController = ShowDetailsCollectionViewController.`init`(with: showID)
@@ -125,10 +125,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 					tabBarController.present(showDetailsCollectionViewController, animated: true)
 					return true
 				}
-            }
-        }
-        return false
-    }
+			}
+		}
+		return false
+	}
 
 	static func createTwoColumnSplitViewController() -> UISplitViewController {
 		let navigationController = KNavigationController(rootViewController: SidebarViewController())

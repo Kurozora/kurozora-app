@@ -15,7 +15,7 @@ protocol WarningBusinessLogic {
 
 protocol WarningDataStore: AnyObject {
 	var window: UIWindow? { get set }
-    var warningType: WarningType { get set }
+	var warningType: WarningType { get set }
 }
 
 // MARK: - DataStore

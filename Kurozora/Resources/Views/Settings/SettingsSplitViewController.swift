@@ -10,11 +10,11 @@ import UIKit
 
 class SettingsSplitViewController: UISplitViewController {
 	// MARK: - View
-    override func viewDidLoad() {
-        super.viewDidLoad()
+	override func viewDidLoad() {
+		super.viewDidLoad()
 		self.view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		self.delegate = self
-    }
+	}
 }
 
 // MARK: - UISplitViewControllerDelegate

@@ -59,8 +59,8 @@ class LibraryListCollectionViewController: KCollectionViewController {
 		self.handleRefreshControl()
 	}
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+	override func viewDidLoad() {
+		super.viewDidLoad()
 
 		NotificationCenter.default.addObserver(self, selector: #selector(addToLibrary(_:)), name: Notification.Name("AddTo\(self.libraryStatus.sectionValue)Section"), object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(removeFromLibrary(_:)), name: Notification.Name("RemoveFrom\(self.libraryStatus.sectionValue)Section"), object: nil)
@@ -104,7 +104,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 				}
 			}
 		}
-    }
+	}
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -340,11 +340,11 @@ extension LibraryListCollectionViewController: UICollectionViewDragDelegate {
 		itemProvider.suggestedName = libraryBaseCollectionViewCell.titleLabel.text
 		itemProvider.registerObject(userActivity, visibility: .all)
 
-        let dragItem = UIDragItem(itemProvider: itemProvider)
-        dragItem.localObject = localObject
+		let dragItem = UIDragItem(itemProvider: itemProvider)
+		dragItem.localObject = localObject
 
-        return [dragItem]
-    }
+		return [dragItem]
+	}
 }
 
 // MARK: - LibraryViewControllerDataSource

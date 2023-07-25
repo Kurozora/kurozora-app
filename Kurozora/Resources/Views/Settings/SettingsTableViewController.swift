@@ -54,10 +54,10 @@ class SettingsTableViewController: KTableViewController {
 		self._prefersRefreshControlDisabled = true
 	}
 
-    // MARK: - IBActions
-    @IBAction func dismissPressed(_ sender: UIBarButtonItem) {
-        self.dismiss(animated: true, completion: nil)
-    }
+	// MARK: - IBActions
+	@IBAction func dismissPressed(_ sender: UIBarButtonItem) {
+		self.dismiss(animated: true, completion: nil)
+	}
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

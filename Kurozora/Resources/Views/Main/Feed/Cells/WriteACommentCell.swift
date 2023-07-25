@@ -9,7 +9,7 @@
 import UIKit
 
 class WriteACommentCell: UITableViewCell {
-    public class func registerNibFor(tableView: UITableView) {
-        tableView.register(R.nib.writeACommentCell)
-    }
+	public class func registerNibFor(tableView: UITableView) {
+		tableView.register(R.nib.writeACommentCell)
+	}
 }

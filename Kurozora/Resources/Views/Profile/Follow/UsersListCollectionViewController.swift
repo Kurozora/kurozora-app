@@ -59,8 +59,8 @@ class UsersListCollectionViewController: KCollectionViewController {
 		self.handleRefreshControl()
 	}
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+	override func viewDidLoad() {
+		super.viewDidLoad()
 
 		self.title = self.usersListType.stringValue
 
@@ -91,7 +91,7 @@ class UsersListCollectionViewController: KCollectionViewController {
 				await self.fetchUsers()
 			}
 		}
-    }
+	}
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
@@ -189,7 +189,7 @@ class UsersListCollectionViewController: KCollectionViewController {
 	}
 
 	/// Fetch the follow list for the currently viewed profile.
-    func fetchUsers() async {
+	func fetchUsers() async {
 		guard !self.isRequestInProgress else {
 			return
 		}

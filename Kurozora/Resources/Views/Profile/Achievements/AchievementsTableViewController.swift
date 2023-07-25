@@ -42,12 +42,12 @@ class AchievementsTableViewController: KTableViewController {
 	}
 
 	// MARK: - View
-    override func viewDidLoad() {
-        super.viewDidLoad()
+	override func viewDidLoad() {
+		super.viewDidLoad()
 
 		self._prefersRefreshControlDisabled = true
 		self.achievements = self.user.relationships?.badges?.data ?? []
-    }
+	}
 
 	// MARK: - Functions
 	override func configureEmptyDataView() {
@@ -85,7 +85,7 @@ extension AchievementsTableViewController {
 		return 1
 	}
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let identifier = (indexPath.section % 2 == 0) ? R.reuseIdentifier.leftAchievementCell : R.reuseIdentifier.rightAchievementCell
 		guard let badgeTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath as IndexPath) else {
 			fatalError("Cannot dequeue cell with reuse identifier \(identifier.identifier)")

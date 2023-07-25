@@ -566,6 +566,18 @@ extension ShowDetailsCollectionViewController: TapToRateCollectionViewCellDelega
 	}
 }
 
+// MARK: - WriteAReviewCollectionViewCellDelegate
+extension ShowDetailsCollectionViewController: WriteAReviewCollectionViewCellDelegate {
+	func writeAReviewCollectionViewCell(_ cell: WriteAReviewCollectionViewCell, didPress button: UIButton) {
+		let reviewTextEditorViewController = ReviewTextEditorViewController()
+		reviewTextEditorViewController.router?.dataStore?.rating = self.show.attributes.givenRating
+		reviewTextEditorViewController.router?.dataStore?.review = nil
+
+		let navigationController = KNavigationController(rootViewController: reviewTextEditorViewController)
+		self.present(navigationController, animated: true)
+	}
+}
+
 // MARK: - MusicLockupCollectionViewCellDelegate
 extension ShowDetailsCollectionViewController: MusicLockupCollectionViewCellDelegate {
 	func playButtonPressed(_ sender: UIButton, cell: MusicLockupCollectionViewCell) {
