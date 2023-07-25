@@ -38,8 +38,11 @@ extension UIViewController {
 		let player = AVPlayer(url: videoURL!)
 		let playerViewController = AVPlayerViewController()
 		playerViewController.player = player
-		self.present(playerViewController, animated: true) {
-			playerViewController.player!.play()
+
+		DispatchQueue.main.async {
+			self.present(playerViewController, animated: true) {
+				playerViewController.player!.play()
+			}
 		}
 	}
 
@@ -66,7 +69,9 @@ extension UIViewController {
 		let defaultAction = UIAlertAction(title: defaultActionButtonTitle, style: .cancel, handler: handler)
 		alertController.addAction(defaultAction)
 
-		self.present(alertController, animated: true, completion: nil)
+		DispatchQueue.main.async {
+			self.present(alertController, animated: true, completion: nil)
+		}
 		return alertController
 	}
 
@@ -104,7 +109,9 @@ extension UIViewController {
 
 		activityIndicator.startAnimating()
 
-		self.present(alertController, animated: true, completion: nil)
+		DispatchQueue.main.async {
+			self.present(alertController, animated: true, completion: nil)
+		}
 		return alertController
 	}
 }
