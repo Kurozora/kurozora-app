@@ -19,7 +19,7 @@ extension KurozoraKit {
 		}
 
 		// Prepare request
-		let themesIndex = KKEndpoint.Shows.Themes.index.endpointValue
+		let themesIndex = KKEndpoint.Themes.index.endpointValue
 		let request: APIRequest<ThemeResponse, KKAPIError> = tron.codable.request(themesIndex)
 			.method(.get)
 			.headers(headers)
@@ -42,7 +42,7 @@ extension KurozoraKit {
 		}
 
 		// Prepare request
-		let themesDetails = KKEndpoint.Shows.Themes.details(themeIdentity).endpointValue
+		let themesDetails = KKEndpoint.Themes.details(themeIdentity).endpointValue
 		let request: APIRequest<ThemeResponse, KKAPIError> = tron.codable.request(themesDetails)
 			.method(.get)
 			.headers(headers)

@@ -16,6 +16,12 @@ extension KurozoraKit {
 	///
 	/// - Returns: An instance of `RequestSender` with the results of the get season details response.
 	public func getDetails(forSeason seasonIdentity: SeasonIdentity, including relationships: [String] = []) -> RequestSender<SeasonResponse, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
+		if !self.authenticationKey.isEmpty {
+			headers.add(.authorization(bearerToken: self.authenticationKey))
+		}
+
 		// Prepare parameters
 		var parameters: [String: Any] = [:]
 		if !relationships.isEmpty {
@@ -27,7 +33,7 @@ extension KurozoraKit {
 		let request: APIRequest<SeasonResponse, KKAPIError> = tron.codable.request(seasonsDetails)
 			.method(.get)
 			.parameters(parameters)
-			.headers(self.headers)
+			.headers(headers)
 
 		// Send request
 		return request.sender()
@@ -60,6 +66,28 @@ extension KurozoraKit {
 		let request: APIRequest<EpisodeIdentityResponse, KKAPIError> = tron.codable.request(seasonsEpisodes).buildURL(.relativeToBaseURL)
 			.method(.get)
 			.parameters(parameters)
+			.headers(headers)
+
+		// Send request
+		return request.sender()
+	}
+
+	/// Update an season's watch status.
+	///
+	///	- Parameter seasonIdentity: The season identity object of the season that should be marked as watched/unwatched.
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the update season watch status response.
+	public func updateSeasonWatchStatus(_ seasonIdentity: SeasonIdentity) -> RequestSender<SeasonUpdateResponse, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
+		if !self.authenticationKey.isEmpty {
+			headers.add(.authorization(bearerToken: self.authenticationKey))
+		}
+
+		// Prepare request
+		let seasonsWatched = KKEndpoint.Shows.Seasons.watched(seasonIdentity).endpointValue
+		let request: APIRequest<SeasonUpdateResponse, KKAPIError> = tron.codable.request(seasonsWatched)
+			.method(.post)
 			.headers(headers)
 
 		// Send request

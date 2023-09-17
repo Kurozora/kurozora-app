@@ -26,5 +26,44 @@ extension Season {
 
 		/// The premiere date of the season.
 		public let startedAt: Date?
+
+		/// Whether the authenticated user has watched the episode.
+		fileprivate let isWatched: Bool?
+
+		/// The watch status of the episode for the authenticated user.
+		fileprivate var _watchStatus: WatchStatus?
+	}
+}
+
+// MARK: - Helpers
+extension Season.Attributes {
+	// MARK: - Properties
+	/// The watch status of the season.
+	public var watchStatus: WatchStatus? {
+		get {
+			return self._watchStatus ?? WatchStatus(self.isWatched)
+		}
+		set {
+			self._watchStatus = newValue
+		}
+	}
+
+	// MARK: - Functions
+	/// Updates the attributes with the given `WatchStatus` object.
+	///
+	/// - Parameter watchStatus: The `WatchStatus` object used to update the attributes.
+	public mutating func update(using watchStatus: WatchStatus) {
+		self.watchStatus = watchStatus
+	}
+
+	/// Returns a copy of the object with the updated attributes from the given `WatchStatus` object.
+	///
+	/// - Parameter watchStatus: The `WatchStatus` object used to update the attributes.
+	///
+	/// - Returns: a copy of the object with the updated attributes from the given `WatchStatus` object.
+	public mutating func updated(using watchStatus: WatchStatus) -> Self {
+		var seasonAttributes = self
+		seasonAttributes.watchStatus = watchStatus
+		return seasonAttributes
 	}
 }

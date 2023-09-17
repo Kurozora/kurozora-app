@@ -19,7 +19,7 @@ extension KurozoraKit {
 		}
 
 		// Prepare request
-		let genresIndex = KKEndpoint.Shows.Genres.index.endpointValue
+		let genresIndex = KKEndpoint.Genres.index.endpointValue
 		let request: APIRequest<GenreResponse, KKAPIError> = tron.codable.request(genresIndex)
 			.method(.get)
 			.headers(headers)
@@ -42,7 +42,7 @@ extension KurozoraKit {
 		}
 
 		// Prepare request
-		let genresDetails = KKEndpoint.Shows.Genres.details(genreIdentity).endpointValue
+		let genresDetails = KKEndpoint.Genres.details(genreIdentity).endpointValue
 		let request: APIRequest<GenreResponse, KKAPIError> = tron.codable.request(genresDetails)
 			.method(.get)
 			.headers(headers)

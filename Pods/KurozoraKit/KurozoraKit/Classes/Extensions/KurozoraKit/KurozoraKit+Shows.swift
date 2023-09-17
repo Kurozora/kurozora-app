@@ -166,8 +166,8 @@ extension KurozoraKit {
 		]
 
 		// Prepare request
-		let literaturesRelatedLiteratures = next ?? KKEndpoint.Shows.relatedLiteratures(showIdentity).endpointValue
-		let request: APIRequest<RelatedLiteratureResponse, KKAPIError> = tron.codable.request(literaturesRelatedLiteratures).buildURL(.relativeToBaseURL)
+		let showsRelatedLiteratures = next ?? KKEndpoint.Shows.relatedLiteratures(showIdentity).endpointValue
+		let request: APIRequest<RelatedLiteratureResponse, KKAPIError> = tron.codable.request(showsRelatedLiteratures).buildURL(.relativeToBaseURL)
 			.method(.get)
 			.parameters(parameters)
 			.headers(headers)
@@ -197,8 +197,39 @@ extension KurozoraKit {
 		]
 
 		// Prepare request
-		let gamesRelatedGames = next ?? KKEndpoint.Shows.relatedGames(showIdentity).endpointValue
-		let request: APIRequest<RelatedGameResponse, KKAPIError> = tron.codable.request(gamesRelatedGames).buildURL(.relativeToBaseURL)
+		let showsRelatedGames = next ?? KKEndpoint.Shows.relatedGames(showIdentity).endpointValue
+		let request: APIRequest<RelatedGameResponse, KKAPIError> = tron.codable.request(showsRelatedGames).buildURL(.relativeToBaseURL)
+			.method(.get)
+			.parameters(parameters)
+			.headers(headers)
+
+		// Send request
+		return request.sender()
+	}
+
+	///	Fetch the reviews for a the given show identity.
+	///
+	///	- Parameters:
+	///	   - showIdentity: The show identity object for which the reviews should be fetched.
+	///	   - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+	///	   - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the get reviews response.
+	public func getReviews(forShow showIdentity: ShowIdentity, next: String? = nil, limit: Int = 25) -> RequestSender<ReviewResponse, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
+		if !self.authenticationKey.isEmpty {
+			headers.add(.authorization(bearerToken: self.authenticationKey))
+		}
+
+		// Prepare parameters
+		let parameters: [String: Any] = [
+			"limit": limit
+		]
+
+		// Prepare request
+		let showsReviews = next ?? KKEndpoint.Shows.reviews(showIdentity).endpointValue
+		let request: APIRequest<ReviewResponse, KKAPIError> = tron.codable.request(showsReviews).buildURL(.relativeToBaseURL)
 			.method(.get)
 			.parameters(parameters)
 			.headers(headers)

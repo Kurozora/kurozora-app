@@ -20,7 +20,7 @@ public class Season: IdentityResource, Hashable {
 	public let href: String
 
 	/// The attributes belonging to the season.
-	public let attributes: Season.Attributes
+	public var attributes: Season.Attributes
 
 	// MARK: - Functions
 	public static func == (lhs: Season, rhs: Season) -> Bool {
