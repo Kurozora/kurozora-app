@@ -31,8 +31,8 @@ extension Episode {
 			let watchStatus = self.attributes.watchStatus
 
 			if watchStatus != .disabled {
-				let updateWatchStatusTitle = watchStatus == .watched ? Trans.watched : Trans.markAsWatched
-				let updateWatchStatusImage = watchStatus == .notWatched ? UIImage(systemName: "plus.circle") : UIImage(systemName: "minus.circle")
+				let updateWatchStatusTitle = watchStatus == .watched ? Trans.markAsUnwatched : Trans.markAsWatched
+				let updateWatchStatusImage = watchStatus == .watched ? UIImage(systemName: "eye.fill.slash") : UIImage(systemName: "eye.fill")
 				let attributes: UIAction.Attributes = watchStatus == .notWatched ? [] : .destructive
 
 				let watchAction = UIAction(title: updateWatchStatusTitle, image: updateWatchStatusImage, attributes: attributes) { [weak self] _ in
@@ -69,6 +69,9 @@ extension Episode {
 			self.attributes = self.attributes.updated(using: watchStatus)
 
 			NotificationCenter.default.post(name: .KEpisodeWatchStatusDidUpdate, object: nil, userInfo: userInfo)
+		} catch let error as KKAPIError {
+			await UIApplication.topViewController?.presentAlertController(title: Trans.addTolibrary, message: error.message)
+			print("----- Update episode watch status failed", error.message)
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -138,12 +141,12 @@ extension Episode {
 		}
 	}
 
-	private func validateIsInLibrary() async -> Bool {
-//		if self.attributes.libraryStatus == nil {
-//			await UIApplication.topViewController?.presentAlertController(title: Trans.addTolibrary, message: "Please add \(self.attributes.title) to your library first.")
-//
-//			return false
-//		}
+	private func validateIsWatched() async -> Bool {
+		if self.attributes.watchStatus == nil {
+			await UIApplication.topViewController?.presentAlertController(title: Trans.addTolibrary, message: "Please watch \(self.attributes.title) first.")
+
+			return false
+		}
 
 		return true
 	}
