@@ -107,15 +107,19 @@ extension Episode {
 		}
 	}
 
-	/// Rate the show with the given rating.
+	/// Rate the episode with the given rating.
 	///
-	/// - Parameter rating: The rating to be saved when the show has been rated by the user.
+	/// - Parameters:
+	///    - rating: The rating given by the user.
+	///    - description: The review given by the user.
 	///
-	/// - Returns: the rating applied to the game if rated successfully.
-	func rate(using rating: Double) async -> Double? {
+	/// - Returns: the rating applied to the episode if rated successfully.
+	func rate(using rating: Double, description: String?) async -> Double? {
+		guard await self.validateIsWatched() else { return nil }
+		let episodeIdentity = EpisodeIdentity(id: self.id)
+
 		do {
-			let episodeIdentity = EpisodeIdentity(id: self.id)
-			_ = try await KService.rateEpisode(episodeIdentity, with: rating, description: nil).value
+			_ = try await KService.rateEpisode(episodeIdentity, with: rating, description: description).value
 
 			// Update current rating for the user.
 			self.attributes.givenRating = rating

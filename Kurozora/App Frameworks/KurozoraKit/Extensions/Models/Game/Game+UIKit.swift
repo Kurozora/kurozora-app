@@ -152,15 +152,17 @@ extension Game {
 
 	/// Rate the game with the given rating.
 	///
-	/// - Parameter rating: The rating to be saved when the game has been rated by the user.
+	/// - Parameters:
+	///    - rating: The rating given by the user.
+	///    - description: The review given by the user.
 	///
 	/// - Returns: the rating applied to the game if rated successfully.
-	func rate(using rating: Double) async -> Double? {
+	func rate(using rating: Double, description: String?) async -> Double? {
 		guard await self.validateIsInLibrary() else { return nil }
 		let gameIdentity = GameIdentity(id: self.id)
 
 		do {
-			_ = try await KService.rateGame(gameIdentity, with: rating, description: nil).value
+			_ = try await KService.rateGame(gameIdentity, with: rating, description: description).value
 
 			// Update current rating for the user.
 			self.attributes.givenRating = rating
@@ -181,7 +183,7 @@ extension Game {
 
 	private func validateIsInLibrary() async -> Bool {
 		if self.attributes.libraryStatus == nil {
-			await UIApplication.topViewController?.presentAlertController(title: Trans.addTolibrary, message: "Please add \(self.attributes.title) to your library first.")
+			await UIApplication.topViewController?.presentAlertController(title: Trans.addTolibrary, message: "Please add \"\(self.attributes.title)\" to your library first.")
 
 			return false
 		}
