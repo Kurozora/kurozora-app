@@ -24,6 +24,14 @@ extension Notification.Name {
 	}
 }
 
+// MARK: - Seasons
+extension Notification.Name {
+	/// A notification posted when the watch status of an season changes.
+	static var KSeasonWatchStatusDidUpdate: NSNotification.Name {
+		return Notification.Name(#function)
+	}
+}
+
 // MARK: - Shows
 extension Notification.Name {
 	/// A notification posted when the favorites list changes.

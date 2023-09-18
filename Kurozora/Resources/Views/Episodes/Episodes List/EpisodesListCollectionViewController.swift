@@ -18,9 +18,11 @@ enum EpisodesListFetchType {
 class EpisodesListCollectionViewController: KCollectionViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var goToButton: UIBarButtonItem!
+	@IBOutlet weak var moreBarButtonItem: UIBarButtonItem!
 	@IBOutlet weak var filterButton: UIBarButtonItem!
 
 	// MARK: - Properties
+	var season: Season? = nil
 	var seasonIdentity: SeasonIdentity? = nil
 	var episodes: [IndexPath: Episode] = [:]
 	var episodeIdentities: [EpisodeIdentity] = []
@@ -84,7 +86,7 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		NotificationCenter.default.addObserver(self, selector: #selector(updateEpisodes(_:)), name: .KEpisodeWatchStatusDidUpdate, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.updateEpisodes(_:)), name: .KEpisodeWatchStatusDidUpdate, object: nil)
 
 		#if DEBUG
 		self._prefersRefreshControlDisabled = false
@@ -106,6 +108,15 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 				guard let self = self else { return }
 				await self.fetchEpisodes()
 			}
+		}
+
+		if self.season == nil {
+			Task { [weak self] in
+				guard let self = self else { return }
+				await self.fetchSeason()
+			}
+		} else {
+			self.configureNavBarButtons()
 		}
 	}
 
@@ -136,6 +147,10 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 		}
 	}
 
+	func configureNavBarButtons() {
+		self.moreBarButtonItem.menu = self.season?.makeContextMenu(in: self, userInfo: [:])
+	}
+
 	func endFetch() {
 		self.isRequestInProgress = false
 		self.updateDataSource()
@@ -146,6 +161,19 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 		self.refreshControl?.endRefreshing()
 		#endif
 		#endif
+	}
+
+	func fetchSeason() async {
+		do {
+			guard let seasonIdentity = self.seasonIdentity else { return }
+			let seasonResponse = try await KService.getDetails(forSeason: seasonIdentity).value
+
+			self.season = seasonResponse.data.first
+		} catch {
+			print(error.localizedDescription)
+		}
+
+		self.configureNavBarButtons()
 	}
 
 	/// Fetches the episodes from the server.
@@ -209,23 +237,23 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 	///
 	/// - Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
 	@objc func updateEpisodes(_ notification: NSNotification) {
-		guard let indexPath = notification.userInfo?["indexPath"] as? IndexPath, let selectedEpisode = dataSource.itemIdentifier(for: indexPath) else { return }
+		guard let indexPath = notification.userInfo?["indexPath"] as? IndexPath, let selectedEpisode = self.dataSource.itemIdentifier(for: indexPath) else { return }
 
-		var newSnapshot = dataSource.snapshot()
+		var newSnapshot = self.dataSource.snapshot()
 		newSnapshot.reloadItems([selectedEpisode])
-		dataSource.apply(newSnapshot)
+		self.dataSource.apply(newSnapshot)
 	}
 
 	/// Goes to the first item in the presented collection view.
 	fileprivate func goToFirstEpisode() {
-		collectionView.safeScrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredVertically, animated: true)
-		goToButton.image = UIImage(systemName: "chevron.down.circle")
+		self.collectionView.safeScrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredVertically, animated: true)
+		self.goToButton.image = UIImage(systemName: "chevron.down.circle")
 	}
 
 	/// Goes to the last item in the presented collection view.
 	fileprivate func goToLastEpisode() {
-		collectionView.safeScrollToItem(at: IndexPath(row: dataSource.snapshot().numberOfItems - 1, section: 0), at: .centeredVertically, animated: true)
-		goToButton.image = UIImage(systemName: "chevron.up.circle")
+		self.collectionView.safeScrollToItem(at: IndexPath(row: dataSource.snapshot().numberOfItems - 1, section: 0), at: .centeredVertically, animated: true)
+		self.goToButton.image = UIImage(systemName: "chevron.up.circle")
 	}
 
 	/// Goes to the last watched episode in the presented collection view.
@@ -325,6 +353,7 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 			guard let episodesListCollectionViewController = segue.destination as? EpisodesListCollectionViewController else { return }
 			guard let season = sender as? Season else { return }
 			episodesListCollectionViewController.seasonIdentity = SeasonIdentity(id: season.id)
+			episodesListCollectionViewController.season = season
 			episodesListCollectionViewController.episodesListFetchType = .season
 		default: break
 		}

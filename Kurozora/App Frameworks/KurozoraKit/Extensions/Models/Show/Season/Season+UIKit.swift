@@ -19,12 +19,31 @@ extension Season {
 			return EpisodesListCollectionViewController.`init`(with: self.id)
 		}, actionProvider: { [weak self] _ in
 			guard let self = self else { return nil }
-			return self.makeContextMenu(in: viewController)
+			return self.makeContextMenu(in: viewController, userInfo: userInfo)
 		})
 	}
 
-	private func makeContextMenu(in viewController: UIViewController) -> UIMenu {
+	func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?) -> UIMenu {
 		var menuElements: [UIMenuElement] = []
+
+		if User.isSignedIn {
+			// Create "update watch status" element
+			let watchStatus = self.attributes.watchStatus
+
+			if watchStatus != .disabled {
+				let updateWatchStatusTitle = watchStatus == .watched ? Trans.markAllUnwatched : Trans.markAllWatched
+				let updateWatchStatusImage = watchStatus == .watched ? UIImage(systemName: "eye.fill.slash") : UIImage(systemName: "eye.fill")
+				let attributes: UIAction.Attributes = watchStatus == .notWatched ? [] : .destructive
+
+				let watchAction = UIAction(title: updateWatchStatusTitle, image: updateWatchStatusImage, attributes: attributes) { [weak self] _ in
+					guard let self = self else { return }
+					Task {
+						await self.updateWatchStatus(userInfo: userInfo)
+					}
+				}
+				menuElements.append(watchAction)
+			}
+		}
 
 		// Create "share" element
 		let shareAction = UIAction(title: Trans.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
@@ -35,6 +54,24 @@ extension Season {
 
 		// Create and return a UIMenu with the share action
 		return UIMenu(title: "", children: menuElements)
+	}
+
+	/// Updates the watch status of the season.
+	///
+	/// - Parameter userInfo: A dictionary that contains information related to the notification.
+	func updateWatchStatus(userInfo: [AnyHashable: Any]?) async {
+		do {
+			let seasonIdentity = SeasonIdentity(id: self.id)
+			let seasonUpdateResponse = try await KService.updateSeasonWatchStatus(seasonIdentity).value
+			let watchStatus = seasonUpdateResponse.data.watchStatus
+
+			// Update watch status
+			self.attributes = self.attributes.updated(using: watchStatus)
+
+			NotificationCenter.default.post(name: .KSeasonWatchStatusDidUpdate, object: nil, userInfo: userInfo)
+		} catch {
+			print(error.localizedDescription)
+		}
 	}
 
 	/// Present share sheet for the season.
