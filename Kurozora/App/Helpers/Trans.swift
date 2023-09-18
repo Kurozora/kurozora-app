@@ -820,11 +820,26 @@ struct Trans {
 	/// - Tag: Trans-watched
 	static let watched: String = String(localized: "Watched",
 										comment: "The string for the word 'watched'.")
-	/// The string for the word 'mark as Watched'.
+	/// The string for the phrase 'mark as watched'.
 	///
 	/// - Tag: Trans-markAsWatched
 	static let markAsWatched: String = String(localized: "Mark as Watched",
-											  comment: "The string for the word 'mark as Watched'.")
+											  comment: "The string for the phrase 'mark as watched'.")
+	/// The string for the phrase 'mark as unwatched'.
+	///
+	/// - Tag: Trans-markAsUnwatched
+	static let markAsUnwatched: String = String(localized: "Mark as Unwatched",
+												comment: "The string for the phrase 'mark as unwatched'.")
+	/// The string for the phrase 'mark all watched'.
+	///
+	/// - Tag: Trans-markAllWatched
+	static let markAllWatched: String = String(localized: "Mark All Watched",
+											   comment: "The string for the phrase 'mark all watched'.")
+	/// The string for the phrase 'mark all unwatched'.
+	///
+	/// - Tag: Trans-markAllUnwatched
+	static let markAllUnwatched: String = String(localized: "Mark All Unwatched",
+												 comment: "The string for the phrase 'mark all unwatched'.")
 	/// The string for the word 'anime'.
 	///
 	/// - Tag: Trans-anime
