@@ -54,8 +54,7 @@ extension UIApplication {
 		}
 
 		if let split = base as? UISplitViewController {
-			let column: UISplitViewController.Column = UIDevice.isPhone ? .primary : .secondary
-			if let firstView = split.viewController(for: column) {
+			if let firstView = split.viewController(for: .secondary) {
 				let top = self.topViewController(firstView)
 				return top
 			}
