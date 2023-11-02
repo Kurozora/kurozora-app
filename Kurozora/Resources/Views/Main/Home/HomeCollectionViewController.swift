@@ -261,9 +261,12 @@ class HomeCollectionViewController: KCollectionViewController {
 		switch segue.identifier {
 		case R.segue.homeCollectionViewController.showDetailsSegue.identifier:
 			// Segue to show details
-			guard let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
-			guard let show = sender as? Show else { return }
-			showDetailCollectionViewController.show = show
+			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
+			if let show = sender as? Show {
+				showDetailsCollectionViewController.show = show
+			} else if let showIdentity = sender as? ShowIdentity {
+				showDetailsCollectionViewController.showIdentity = showIdentity
+			}
 		case R.segue.homeCollectionViewController.literatureDetailsSegue.identifier:
 			// Segue to show details
 			guard let literatureDetailCollectionViewController = segue.destination as? LiteratureDetailsCollectionViewController else { return }

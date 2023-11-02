@@ -341,8 +341,11 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 		switch segue.identifier {
 		case  R.segue.episodesListCollectionViewController.showDetailsSegue.identifier:
 			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
-			guard let show = sender as? Show else { return }
-			showDetailsCollectionViewController.show = show
+			if let show = sender as? Show {
+				showDetailsCollectionViewController.show = show
+			} else if let showIdentity = sender as? ShowIdentity {
+				showDetailsCollectionViewController.showIdentity = showIdentity
+			}
 		case R.segue.episodesListCollectionViewController.episodeDetailsSegue.identifier:
 			guard let episodeDetailsCollectionViewController = segue.destination as? EpisodeDetailsCollectionViewController else { return }
 			guard let episodeDict = (sender as? [IndexPath: Episode])?.first else { return }

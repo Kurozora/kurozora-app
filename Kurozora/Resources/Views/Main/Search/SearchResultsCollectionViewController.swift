@@ -558,9 +558,12 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 			personDetailCollectionViewController.person = person
 		case R.segue.searchResultsCollectionViewController.showDetailsSegue.identifier:
 			// Segue to show details
-			guard let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
-			guard let show = sender as? Show else { return }
-			showDetailCollectionViewController.show = show
+			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
+			if let show = sender as? Show {
+				showDetailsCollectionViewController.show = show
+			} else if let showIdentity = sender as? ShowIdentity {
+				showDetailsCollectionViewController.showIdentity = showIdentity
+			}
 		case R.segue.searchResultsCollectionViewController.songDetailsSegue.identifier:
 			// Segue to studio details
 			guard let songDetailCollectionViewController = segue.destination as? SongDetailsCollectionViewController else { return }
@@ -586,6 +589,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 			guard let episodesListCollectionViewController = segue.destination as? EpisodesListCollectionViewController else { return }
 			if let season = sender as? Season {
 				episodesListCollectionViewController.seasonIdentity = SeasonIdentity(id: season.id)
+				episodesListCollectionViewController.season = season
 				episodesListCollectionViewController.episodesListFetchType = .season
 			} else {
 				episodesListCollectionViewController.searachQuery = self.searachQuery

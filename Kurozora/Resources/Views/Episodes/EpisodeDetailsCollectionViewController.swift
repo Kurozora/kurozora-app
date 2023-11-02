@@ -258,7 +258,7 @@ extension EpisodeDetailsCollectionViewController: TapToRateCollectionViewCellDel
 	func tapToRateCollectionViewCell(_ cell: TapToRateCollectionViewCell, rateWith rating: Double) {
 		Task { [weak self] in
 			guard let self = self else { return }
-			cell.configure(using: await self.episode.rate(using: rating))
+			cell.configure(using: await self.episode.rate(using: rating, description: nil))
 		}
 	}
 }

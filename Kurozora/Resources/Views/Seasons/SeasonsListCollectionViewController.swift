@@ -137,7 +137,7 @@ class SeasonsListCollectionViewController: KCollectionViewController {
 		#endif
 
 		do {
-			guard let showIdentity = showIdentity else { return }
+			guard let showIdentity = self.showIdentity else { return }
 			let seasonIdentityResponse = try await KService.getSeasons(forShow: showIdentity, next: self.nextPageURL).value
 
 			// Reset data if necessary
@@ -164,6 +164,7 @@ class SeasonsListCollectionViewController: KCollectionViewController {
 			guard let lockupCollectionViewCell = sender as? SeasonLockupCollectionViewCell else { return }
 			guard let indexPath = collectionView.indexPath(for: lockupCollectionViewCell) else { return }
 			episodesListCollectionViewController.seasonIdentity = self.seasonIdentities[indexPath.item]
+			episodesListCollectionViewController.season = self.seasons[indexPath]
 			episodesListCollectionViewController.episodesListFetchType = .season
 		default: break
 		}

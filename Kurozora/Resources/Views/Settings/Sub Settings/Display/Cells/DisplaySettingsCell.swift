@@ -113,14 +113,14 @@ class DisplaySettingsCell: SettingsCell {
 	func updateAppAppearanceOptions(with option: AppAppearanceOption) {
 		switch option {
 		case .light:
-			lightOptionSelectedImageView?.borderWidth = 0
-			darkOptionSelectedImageView?.borderWidth = 2
+			lightOptionSelectedImageView?.layer.borderWidth = 0
+			darkOptionSelectedImageView?.layer.borderWidth = 2
 
 			lightOptionSelectedImageView?.image = UIImage(systemName: "checkmark.circle.fill")
 			darkOptionSelectedImageView?.image = nil
 		case .dark:
-			darkOptionSelectedImageView?.borderWidth = 0
-			lightOptionSelectedImageView?.borderWidth = 2
+			darkOptionSelectedImageView?.layer.borderWidth = 0
+			lightOptionSelectedImageView?.layer.borderWidth = 2
 
 			darkOptionSelectedImageView?.image = UIImage(systemName: "checkmark.circle.fill")
 			lightOptionSelectedImageView?.image = nil

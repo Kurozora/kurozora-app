@@ -44,6 +44,6 @@ class ThemeLockupCollectionViewCell: KCollectionViewCell {
 
 		self.symbolImageView.setImage(with: theme.attributes.symbol?.url ?? "", placeholder: UIImage())
 
-		self.contentView.cornerRadius = 10.0
+		self.contentView.layerCornerRadius = 10.0
 	}
 }

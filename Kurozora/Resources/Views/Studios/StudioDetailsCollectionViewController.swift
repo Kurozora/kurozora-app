@@ -163,9 +163,9 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
 		case R.segue.studioDetailsCollectionViewController.showDetailsSegue.identifier:
-			guard let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
+			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
-			showDetailCollectionViewController.show = show
+			showDetailsCollectionViewController.show = show
 		case R.segue.studioDetailsCollectionViewController.showsListSegue.identifier:
 			guard let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController else { return }
 			showsListCollectionViewController.studioIdentity = self.studioIdentity

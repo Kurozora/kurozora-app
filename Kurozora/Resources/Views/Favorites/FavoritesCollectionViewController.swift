@@ -204,9 +204,9 @@ class FavoritesCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		guard let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
+		guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 		guard let show = sender as? Show else { return }
-		showDetailCollectionViewController.show = show
+		showDetailsCollectionViewController.show = show
 	}
 }
 

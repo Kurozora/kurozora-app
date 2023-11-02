@@ -197,9 +197,9 @@ class PersonDetailsCollectionViewController: KCollectionViewController {
 			showsListCollectionViewController.personIdentity = self.personIdentity
 			showsListCollectionViewController.showsListFetchType = .person
 		case R.segue.personDetailsCollectionViewController.showDetailsSegue.identifier:
-			guard let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
+			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
-			showDetailCollectionViewController.show = show
+			showDetailsCollectionViewController.show = show
 		case R.segue.personDetailsCollectionViewController.literaturesListSegue.identifier:
 			guard let literaturesListCollectionViewController = segue.destination as? LiteraturesListCollectionViewController else { return }
 			literaturesListCollectionViewController.personIdentity = self.personIdentity

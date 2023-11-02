@@ -298,9 +298,9 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
 		case R.segue.libraryListCollectionViewController.showDetailsSegue.identifier:
-			guard let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
+			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
-			showDetailCollectionViewController.show = show
+			showDetailsCollectionViewController.show = show
 		case R.segue.libraryListCollectionViewController.literatureDetailsSegue.identifier:
 			guard let literatureDetailCollectionViewController = segue.destination as? LiteratureDetailsCollectionViewController else { return }
 			guard let literature = sender as? Literature else { return }

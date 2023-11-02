@@ -160,9 +160,9 @@ class ShowSongsListCollectionViewController: KCollectionViewController {
 		switch segue.identifier {
 		case R.segue.showSongsListCollectionViewController.showDetailsSegue.identifier:
 			// Segue to show details
-			guard let showDetailCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
+			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
-			showDetailCollectionViewController.show = show
+			showDetailsCollectionViewController.show = show
 		case R.segue.showSongsListCollectionViewController.songDetailsSegue.identifier:
 			// Segue to song details
 			guard let songDetailsCollectionViewController = segue.destination as? SongDetailsCollectionViewController else { return }

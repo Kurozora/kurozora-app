@@ -39,7 +39,7 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 		}
 
 		// Configure view
-		self.cornerView.cornerRadius = 10
+		self.cornerView.layerCornerRadius = 10
 
 		// Configure image view
 		self.episodeImageView.setImage(with: episode.attributes.banner?.url ?? "", placeholder: R.image.placeholders.episodeBanner()!)
@@ -53,9 +53,7 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 		}
 
 		// Configure secondary label
-		let seasonNumber = episode.relationships?.seasons?.data.first?.attributes.number ?? 0
-		let episodeNumber = episode.attributes.number
-		self.secondaryLabel.text = "S\(seasonNumber) · E\(episodeNumber)"
+		self.secondaryLabel.text = "S\(episode.attributes.seasonNumber) · E\(episode.attributes.number)"
 
 		// Configure primary label
 		self.primaryLabel.text = episode.attributes.title
@@ -71,8 +69,7 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 		self.watchStatusButton.setTitle(watchStatusButtonTitle, for: .normal)
 
 		// Configure show button
-		let showTitle = episode.relationships?.shows?.data.first?.attributes.title
-		self.showButton.setTitle(showTitle, for: .normal)
+		self.showButton.setTitle(episode.attributes.showTitle, for: .normal)
 		self.showButton.titleLabel?.numberOfLines = 0
 
 		self.hideSkeleton()
