@@ -23,7 +23,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 		}
 	}
 	@IBOutlet weak var sendButton: UIBarButtonItem!
-	
+
 	// MARK: - Properties
 	let characterLimit = 240
 	var placeholderText: String {

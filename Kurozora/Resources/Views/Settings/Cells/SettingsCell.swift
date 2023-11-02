@@ -14,19 +14,11 @@ class SettingsCell: KTableViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var iconImageView: UIImageView? {
 		didSet {
-			self.iconImageView?.borderColor = UIColor.white.withAlphaComponent(0.2)
+			self.iconImageView?.layerBorderColor = UIColor.white.withAlphaComponent(0.2)
 		}
 	}
-	@IBOutlet weak var primaryLabel: UILabel? {
-		didSet {
-			self.primaryLabel?.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
-	@IBOutlet weak var secondaryLabel: UILabel? {
-		didSet {
-			self.secondaryLabel?.theme_textColor = KThemePicker.subTextColor.rawValue
-		}
-	}
+	@IBOutlet weak var primaryLabel: KLabel?
+	@IBOutlet weak var secondaryLabel: KSecondaryLabel?
 	@IBOutlet weak var selectedView: UIView? {
 		didSet {
 			self.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
@@ -37,10 +29,9 @@ class SettingsCell: KTableViewCell {
 			self.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
 		}
 	}
-	@IBOutlet weak var notificationGroupingValueLabel: UILabel? {
+	@IBOutlet weak var notificationGroupingValueLabel: KSecondaryLabel? {
 		didSet {
 			self.notificationGroupingValueLabel?.text = KNotification.GroupStyle(rawValue: UserSettings.notificationsGrouping)?.stringValue
-			self.notificationGroupingValueLabel?.theme_textColor = KThemePicker.subTextColor.rawValue
 			NotificationCenter.default.addObserver(self, selector: #selector(updateNotificationValueLabels), name: .KSNotificationOptionsValueLabelsNotification, object: nil)
 		}
 	}
