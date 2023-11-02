@@ -135,29 +135,35 @@ class FMDetailsTableViewController: KTableViewController {
 	///
 	/// - Parameter notification: An object containing information broadcast to registered observers.
 	@objc func updateFeedMessage(_ notification: NSNotification) {
-		// Start update process
-		self.tableView.performBatchUpdates({
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+
+			// Start update process
 			if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
 				self.tableView.reloadRows(at: [indexPath], with: .none)
 			}
-		}, completion: nil)
+		}
 	}
 
 	/// Deletes the feed message with the received information.
 	///
 	/// - Parameter notification: An object containing information broadcast to registered observers.
 	@objc func deleteFeedMessage(_ notification: NSNotification) {
-		if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
-			switch indexPath.section {
-			case 1:
-				// Start delete process
-				self.tableView.performBatchUpdates({
-					self.feedMessageReplies.remove(at: indexPath.item)
-					self.tableView.deleteRows(at: [indexPath], with: .automatic)
-				}, completion: nil)
-			default:
-				self.fmDetailsTableViewControllerDelegate?.fmDetailsTableViewController(delete: feedMessageID)
-				self.navigationController?.popViewController(animated: true, nil)
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+
+			if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
+				switch indexPath.section {
+				case 1:
+					// Start delete process
+					self.tableView.performBatchUpdates({
+						self.feedMessageReplies.remove(at: indexPath.item)
+						self.tableView.deleteRows(at: [indexPath], with: .automatic)
+					}, completion: nil)
+				default:
+					self.fmDetailsTableViewControllerDelegate?.fmDetailsTableViewController(delete: self.feedMessageID)
+					self.navigationController?.popViewController(animated: true, nil)
+				}
 			}
 		}
 	}

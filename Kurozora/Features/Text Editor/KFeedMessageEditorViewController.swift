@@ -22,7 +22,8 @@ class KFeedMessageTextEditorViewController: KViewController {
 			self.commentPreviewContainer.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 		}
 	}
-
+	@IBOutlet weak var sendButton: UIBarButtonItem!
+	
 	// MARK: - Properties
 	let characterLimit = 240
 	var placeholderText: String {
@@ -141,6 +142,8 @@ class KFeedMessageTextEditorViewController: KViewController {
 
 	/// Send the feed message and dismiss this controller.
 	func sendMessage() async {
+		self.sendButton.isEnabled = false
+
 		// Post is within the allowed character limit.
 		if let characterCount = self.characterCountLabel.text?.int, characterCount >= 0 {
 			// Disable editing to hide the keyboard.
@@ -152,6 +155,8 @@ class KFeedMessageTextEditorViewController: KViewController {
 			// Character limit reached. Present an alert to the user.
 			self.presentAlertController(title: Trans.characterLimitReachedHeadline, message: Trans.characterLimitReachedSubheadline)
 		}
+
+		self.sendButton.isEnabled = true
 	}
 
 	/// Performs the request to post the feed message.

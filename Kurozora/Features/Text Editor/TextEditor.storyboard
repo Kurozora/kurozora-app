@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="omk-JT-iW1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="omk-JT-iW1">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -213,6 +213,7 @@
                         <outlet property="opProfileImageView" destination="gJ1-Pl-djc" id="DXd-Ql-VkG"/>
                         <outlet property="opUsernameLabel" destination="xep-Jx-5iG" id="kOb-ah-12c"/>
                         <outlet property="profileImageView" destination="kls-an-ezp" id="hSm-q2-UFN"/>
+                        <outlet property="sendButton" destination="vo2-JT-FF3" id="7Av-8s-U33"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0my-Rg-Y7L" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -416,6 +417,7 @@
                         <outlet property="opProfileImageView" destination="xCg-WK-oOs" id="bhJ-xv-oWa"/>
                         <outlet property="opUsernameLabel" destination="vTS-Ro-gTX" id="81z-Gi-gIj"/>
                         <outlet property="profileImageView" destination="FgP-VV-4bc" id="Uzz-iw-csn"/>
+                        <outlet property="sendButton" destination="Jhs-Hs-5sY" id="GJL-2H-d2z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q1n-wc-ni4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -616,6 +618,7 @@
                         <outlet property="isNSFWSwitch" destination="MQE-0W-kws" id="4Fi-f1-oyN"/>
                         <outlet property="isSpoilerSwitch" destination="lD2-Pw-9qR" id="4XD-Ey-NuH"/>
                         <outlet property="profileImageView" destination="8f0-ED-K20" id="YtO-Fe-rcg"/>
+                        <outlet property="sendButton" destination="HhI-6l-hqw" id="QtQ-BH-Bgm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qRx-bH-fPZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -627,7 +630,7 @@
     <resources>
         <image name="Placeholders/User Profile" width="300" height="300"/>
         <systemColor name="labelColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

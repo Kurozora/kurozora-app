@@ -74,14 +74,17 @@ class BaseFeedMessageCell: KTableViewCell {
 		self.dateTimeLabel.text = feedMessage.attributes.createdAt.relativeToNow
 
 		// Configure metrics
-		let heartsCount = feedMessage.attributes.metrics.heartCount
-		self.heartButton.setTitle(heartsCount.kkFormatted, for: .normal)
+		var heartsCount: Int? = feedMessage.attributes.metrics.heartCount
+		heartsCount = heartsCount == 0 ? nil : heartsCount
+		self.heartButton.setTitle(heartsCount?.kkFormatted, for: .normal)
 
-		let replyCount = feedMessage.attributes.metrics.replyCount
-		self.commentButton.setTitle(replyCount.kkFormatted, for: .normal)
+		var replyCount: Int? = feedMessage.attributes.metrics.replyCount
+		replyCount = replyCount == 0 ? nil : replyCount
+		self.commentButton.setTitle(replyCount?.kkFormatted, for: .normal)
 
-		let reShareCount = feedMessage.attributes.metrics.reShareCount
-		self.shareButton.setTitle(reShareCount.kkFormatted, for: .normal)
+		var reShareCount: Int? = feedMessage.attributes.metrics.reShareCount
+		reShareCount = reShareCount == 0 ? nil : reShareCount
+		self.shareButton.setTitle(reShareCount?.kkFormatted, for: .normal)
 
 		// Configure more button
 		self.moreButton.showsMenuAsPrimaryAction = true
@@ -96,8 +99,8 @@ class BaseFeedMessageCell: KTableViewCell {
 	/// Configures the re-share button.
 	fileprivate func configureReShareButton(for feedMessage: FeedMessage) {
 		if feedMessage.attributes.isReShared {
-			shareButton.setTitleColor(.kGreen, for: .normal)
-			shareButton.tintColor = .kGreen
+			self.shareButton.theme_setTitleColor(KThemePicker.tintColor.rawValue, forState: .normal)
+			self.shareButton.theme_tintColor = KThemePicker.tintColor.rawValue
 		} else {
 			self.shareButton.theme_setTitleColor(KThemePicker.tableViewCellActionDefaultColor.rawValue, forState: .normal)
 			self.shareButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
@@ -156,11 +159,11 @@ class BaseFeedMessageCell: KTableViewCell {
 	/// Update the heart status of the message.
 	fileprivate func updateHeartStatus(for feedMessage: FeedMessage) {
 		if feedMessage.attributes.isHearted ?? false {
-			self.heartButton.tintColor = .kLightRed
-			self.heartButton.setTitleColor(.kLightRed, for: .normal)
+			self.heartButton.theme_setTitleColor(KThemePicker.tintColor.rawValue, forState: .normal)
+			self.heartButton.theme_tintColor = KThemePicker.tintColor.rawValue
 		} else {
-			self.heartButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
 			self.heartButton.theme_setTitleColor(KThemePicker.tableViewCellActionDefaultColor.rawValue, forState: .normal)
+			self.heartButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
 		}
 	}
 

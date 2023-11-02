@@ -115,7 +115,7 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 
 		// Configure play button
 		self.playButton.isHidden = true
-		self.playButton.cornerRadius = self.playButton.height / 2
+		self.playButton.layerCornerRadius = self.playButton.height / 2
 		self.playButton.addBlurEffect()
 
 		if let appleMusicID = song.attributes.amID {

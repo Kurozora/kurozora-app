@@ -260,25 +260,31 @@ class ProfileTableViewController: KTableViewController {
 	///
 	/// - Parameter notification: An object containing information broadcast to registered observers.
 	@objc func updateFeedMessage(_ notification: NSNotification) {
-		// Start update process
-		self.tableView.performBatchUpdates({
+		DispatchQueue.main.sync { [weak self] in
+			guard let self = self else { return }
+
+			// Start update process
 			if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
 				self.tableView.reloadSections([indexPath.section], with: .none)
 			}
-		}, completion: nil)
+		}
 	}
 
 	/// Deletes the feed message with the received information.
 	///
 	/// - Parameter notification: An object containing information broadcast to registered observers.
 	@objc func deleteFeedMessage(_ notification: NSNotification) {
-		// Start delete process
-		self.tableView.performBatchUpdates({
-			if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
-				self.feedMessages.remove(at: indexPath.section)
-				self.tableView.deleteSections([indexPath.section], with: .automatic)
-			}
-		}, completion: nil)
+		DispatchQueue.main.sync { [weak self] in
+			guard let self = self else { return }
+
+			// Start delete process
+			self.tableView.performBatchUpdates({
+				if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
+					self.feedMessages.remove(at: indexPath.section)
+					self.tableView.deleteSections([indexPath.section], with: .automatic)
+				}
+			}, completion: nil)
+		}
 	}
 
 	/// Fetches user detail.
@@ -673,15 +679,15 @@ class ProfileTableViewController: KTableViewController {
 		let followStatus = self.user?.attributes.followStatus ?? .disabled
 		switch followStatus {
 		case .followed:
-			self.followButton.setTitle("✓ Following", for: .normal)
+			self.followButton.setTitle("Following", for: .normal)
 			self.followButton.isHidden = false
 			self.followButton.isUserInteractionEnabled = true
 		case .notFollowed:
-			self.followButton.setTitle("＋ Follow", for: .normal)
+			self.followButton.setTitle("Follow", for: .normal)
 			self.followButton.isHidden = false
 			self.followButton.isUserInteractionEnabled = true
 		case .disabled:
-			self.followButton.setTitle("＋ Follow", for: .normal)
+			self.followButton.setTitle("Follow", for: .normal)
 			self.followButton.isHidden = true
 			self.followButton.isUserInteractionEnabled = false
 		}

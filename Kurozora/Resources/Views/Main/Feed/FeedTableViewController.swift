@@ -123,9 +123,13 @@ class FeedTableViewController: KTableViewController {
 	///
 	/// - Parameter notification: An object containing information broadcast to registered observers.
 	@objc func updateFeedMessage(_ notification: NSNotification) {
-		// Start update process
-		if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
-			self.tableView.reloadSections([indexPath.section], with: .none)
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+
+			// Start update process
+			if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
+				self.tableView.reloadSections([indexPath.section], with: .none)
+			}
 		}
 	}
 
@@ -133,12 +137,13 @@ class FeedTableViewController: KTableViewController {
 	///
 	/// - Parameter notification: An object containing information broadcast to registered observers.
 	@objc func deleteFeedMessage(_ notification: NSNotification) {
-		// Start delete process
-		self.tableView.performBatchUpdates({
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+
 			if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
 				self.deleteMessage(at: indexPath)
 			}
-		}, completion: nil)
+		}
 	}
 
 	/// Configures the view with the user's details.
@@ -211,6 +216,7 @@ class FeedTableViewController: KTableViewController {
 	@objc func postNewMessage() {
 		WorkflowController.shared.isSignedIn { [weak self] in
 			guard let self = self else { return }
+
 			if let kFeedMessageTextEditorViewController = R.storyboard.textEditor.kFeedMessageTextEditorViewController() {
 				kFeedMessageTextEditorViewController.delegate = self
 
