@@ -19,7 +19,7 @@ class RoundedRectangleImageView: UIImageView {
 	// MARK: - View
 	override func layoutSubviews() {
 		super.layoutSubviews()
-		self.cornerRadius = self._cornerRadius
+		self.layerCornerRadius = self._cornerRadius
 	}
 
 	// MARK: - Functions

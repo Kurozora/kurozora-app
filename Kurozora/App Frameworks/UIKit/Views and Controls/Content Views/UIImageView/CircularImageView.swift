@@ -16,6 +16,6 @@ class CircularImageView: KImageView {
 	// MARK: - View
 	override func layoutSubviews() {
 		super.layoutSubviews()
-		self.cornerRadius = self.height / 2
+		self.layerCornerRadius = self.height / 2
 	}
 }

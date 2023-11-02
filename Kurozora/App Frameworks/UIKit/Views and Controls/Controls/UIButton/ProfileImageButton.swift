@@ -28,13 +28,13 @@ class ProfileImageButton: UIButton {
 	// MARK: - View
 	override func layoutSubviews() {
 		super.layoutSubviews()
-		self.cornerRadius = self.height / 2
+		self.layerCornerRadius = self.height / 2
 	}
 
 	// MARK: - Functions
 	/// The shared settings used to initialize the button.
 	func sharedInit() {
-		self.borderWidth = 2
-		self.borderColor = UIColor.white.withAlphaComponent(0.20)
+		self.layer.borderWidth = 2
+		self.layerBorderColor = UIColor.white.withAlphaComponent(0.20)
 	}
 }

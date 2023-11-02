@@ -13,9 +13,9 @@ import Tabman
 class KFillBarIndicator: TMBarIndicator {
 	// MARK: - Properties
 	/// The top constraint of the bar indicator.
-	private var topConstraint: NSLayoutConstraint?
+	fileprivate var barTopConstraint: NSLayoutConstraint?
 	/// The bottom constraint of the bar indicator.
-	private var bottomConstraint: NSLayoutConstraint?
+	fileprivate var barBottomConstraint: NSLayoutConstraint?
 
 	// MARK: - Properties
 	override var displayMode: TMBarIndicator.DisplayMode {
@@ -34,13 +34,13 @@ class KFillBarIndicator: TMBarIndicator {
 	override func layout(in view: UIView) {
 		super.layout(in: view)
 
-		let topConstraint = self.topAnchor.constraint(equalTo: view.topAnchor, constant: 5)
-		topConstraint.isActive = true
-		self.topConstraint = topConstraint
+		let barTopConstraint = self.topAnchor.constraint(equalTo: view.topAnchor, constant: 5)
+		barTopConstraint.isActive = true
+		self.barTopConstraint = barTopConstraint
 
-		let bottomConstraint = self.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -5)
-		bottomConstraint.isActive = true
-		self.bottomConstraint = bottomConstraint
+		let barBottomConstraint = self.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -5)
+		barBottomConstraint.isActive = true
+		self.barBottomConstraint = barBottomConstraint
 
 		self.theme_tintColor = KThemePicker.textColor.rawValue
 		self.backgroundColor = self.tintColor.withAlphaComponent(0.25)

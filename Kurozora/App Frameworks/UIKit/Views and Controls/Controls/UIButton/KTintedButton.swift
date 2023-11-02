@@ -15,7 +15,7 @@ class KTintedButton: KButton {
 	override func sharedInit() {
 		super.sharedInit()
 
-		self.cornerRadius = self.cornerRadius == .zero ? 10 : self.cornerRadius
+		self.layerCornerRadius = self.layerCornerRadius == .zero ? 10 : self.layerCornerRadius
 		self.theme_backgroundColor = KThemePicker.tintColor.rawValue
 		self.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
 	}

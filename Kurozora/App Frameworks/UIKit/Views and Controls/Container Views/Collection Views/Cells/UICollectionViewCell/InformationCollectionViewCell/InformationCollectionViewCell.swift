@@ -42,7 +42,7 @@ class InformationCollectionViewCell: UICollectionViewCell {
 	/// The shared settings used to initialize the cell.
 	fileprivate func sharedInit() {
 		self.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-		self.cornerRadius = 8
+		self.layerCornerRadius = 8
 	}
 
 	/// Configure the cell with the given person details.

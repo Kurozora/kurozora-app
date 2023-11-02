@@ -128,7 +128,7 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 		self.addBar(self.bar, dataSource: self, at: .custom(view: self.bottomBarView, layout: nil))
 
 		// Set corner raduis after the tab bar has been populated with data so it uses the correct height
-		self.bar.cornerRadius = bar.height / 2
+		self.bar.layerCornerRadius = bar.height / 2
 
 		self.configureTabBarViewVisibility()
 	}

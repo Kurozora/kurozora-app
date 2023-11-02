@@ -41,7 +41,7 @@ class BannerImageView: RoundedRectangleImageView {
 	func sharedInit() {
 		self.image = self.image ?? R.image.placeholders.showBanner()
 
-		self.borderWidth = 2
-		self.borderColor = UIColor.white.withAlphaComponent(0.20)
+		self.layer.borderWidth = 2
+		self.layerBorderColor = UIColor.white.withAlphaComponent(0.20)
 	}
 }
