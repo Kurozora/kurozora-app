@@ -80,7 +80,7 @@ class MenuController {
 	///  - Returns: The "Refresh Page" UIMenu object.
 	class func search() -> UIMenu {
 		let refreshPageCommand = UIKeyCommand(title: "Search", action: #selector(AppDelegate.handleSearch(_:)), input: "F", modifierFlags: .command, discoverabilityTitle: "Search")
-		return UIMenu(title: "Serach", identifier: UIMenu.Identifier("app.kurozora.menus.search"), options: .displayInline, children: [refreshPageCommand])
+		return UIMenu(title: "Search", identifier: UIMenu.Identifier("app.kurozora.menus.search"), options: .displayInline, children: [refreshPageCommand])
 	}
 
 	class func account() -> UIMenu {
