@@ -1,17 +1,11 @@
-//
-//  UITabBarExtensions.swift
-//  SwifterSwift
-//
-//  Created by Omar Albeik on 9/28/16.
-//  Copyright © 2016 SwifterSwift
-//
+// UITabBarExtensions.swift - Copyright 2023 SwifterSwift
 
 #if canImport(UIKit) && !os(watchOS)
 import UIKit
 
 // MARK: - Methods
-public extension UITabBar {
 
+public extension UITabBar {
     /// SwifterSwift: Set tabBar colors.
     ///
     /// - Parameters:
@@ -24,7 +18,6 @@ public extension UITabBar {
         selectedBackground: UIColor? = nil,
         item: UIColor? = nil,
         selectedItem: UIColor? = nil) {
-
         // background
         barTintColor = background ?? barTintColor
 
@@ -32,23 +25,22 @@ public extension UITabBar {
         tintColor = selectedItem ?? tintColor
         // shadowImage = UIImage()
         backgroundImage = UIImage()
+        #if !os(visionOS)
         isTranslucent = false
+        #endif
 
-        // selectedBackgoundColor
+        // selectedBackgroundColor
         guard let barItems = items else {
             return
         }
 
         if let selectedbg = selectedBackground {
-            let rect = CGSize(width: frame.width/CGFloat(barItems.count), height: frame.height)
+            let rect = CGSize(width: frame.width / CGFloat(barItems.count), height: frame.height)
             selectionIndicatorImage = { (color: UIColor, size: CGSize) -> UIImage in
-                UIGraphicsBeginImageContextWithOptions(size, false, 1)
-                color.setFill()
-                UIRectFill(CGRect(x: 0, y: 0, width: size.width, height: size.height))
-                guard let image = UIGraphicsGetImageFromCurrentImageContext() else { return UIImage() }
-                UIGraphicsEndImageContext()
-                guard let aCgImage = image.cgImage else { return UIImage() }
-                return UIImage(cgImage: aCgImage)
+                return UIGraphicsImageRenderer(size: size).image { context in
+                    color.setFill()
+                    context.fill(context.format.bounds)
+                }
             }(selectedbg, rect)
         }
 
@@ -58,25 +50,24 @@ public extension UITabBar {
                 guard let image = barItem.image else { continue }
 
                 barItem.image = { (image: UIImage, color: UIColor) -> UIImage in
-                    UIGraphicsBeginImageContextWithOptions(image.size, false, image.scale)
-                    color.setFill()
-                    guard let context = UIGraphicsGetCurrentContext() else {
-                        return image
-                    }
-
-                    context.translateBy(x: 0, y: image.size.height)
-                    context.scaleBy(x: 1.0, y: -1.0)
-                    context.setBlendMode(CGBlendMode.normal)
-
-                    let rect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
                     guard let mask = image.cgImage else { return image }
-                    context.clip(to: rect, mask: mask)
-                    context.fill(rect)
 
-                    let newImage = UIGraphicsGetImageFromCurrentImageContext()!
-                    UIGraphicsEndImageContext()
-                    return newImage
-                    }(image, itemColor).withRenderingMode(.alwaysOriginal)
+                    let format = UIGraphicsImageRendererFormat()
+                    format.scale = image.scale
+                    return UIGraphicsImageRenderer(size: image.size, format: format).image {
+                        let context = $0.cgContext
+
+                        color.setFill()
+
+                        context.translateBy(x: 0, y: image.size.height)
+                        context.scaleBy(x: 1.0, y: -1.0)
+                        context.setBlendMode(CGBlendMode.normal)
+
+                        let rect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
+                        context.clip(to: rect, mask: mask)
+                        context.fill(rect)
+                    }
+                }(image, itemColor).withRenderingMode(.alwaysOriginal)
 
                 barItem.setTitleTextAttributes([.foregroundColor: itemColor], for: .normal)
                 if let selected = selectedItem {
@@ -85,7 +76,6 @@ public extension UITabBar {
             }
         }
     }
-
 }
 
 #endif

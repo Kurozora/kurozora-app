@@ -6,31 +6,34 @@
 //
 
 extension Game {
-	/// A root object that stores information about game relationships, such as the studios, and badges that belong to it.
+	/// A root object that stores information about game relationships, such as the studios, and cast that belong to it.
 	public struct Relationships: Codable {
 		// MARK: - Properties
 		/// The cast belonging to the game.
 		public let cast: CastIdentityResponse?
 
 		/// The characters belonging to the game.
-		public let characters: CharacterResponse?
+		public let characters: CharacterIdentityResponse?
 
 		/// The people belonging to the game.
-		public let people: PersonResponse?
-
-		/// The related shows belonging to the game.
+		public let people: PersonIdentityResponse?
+		
+		/// The shows related to the game.
 		public let relatedShows: RelatedShowResponse?
 
-		/// The related literature belonging to the game.
-		public let relatedLiterature: RelatedLiteratureResponse?
-
-		/// The related games belonging to the game.
+		/// The games related to the game.
 		public let relatedGames: RelatedGameResponse?
 
+		/// The literatures related to the game.
+		public let relatedLiteratures: RelatedLiteratureResponse?
+
+		/// The songs belonging to the game.
+		public let songs: SongIdentityResponse?
+
 		/// The staff belonging to the game.
-		public let staff: StaffResponse?
+		public let staff: StaffIdentityResponse?
 
 		/// The studios belonging to the game.
-		public let studios: StudioResponse?
+		public let studios: StudioIdentityResponse?
 	}
 }

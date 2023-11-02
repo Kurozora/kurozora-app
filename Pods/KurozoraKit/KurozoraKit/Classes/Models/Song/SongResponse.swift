@@ -1,5 +1,5 @@
 //
-//  SongDetails.swift
+//  SongResponse.swift
 //  KurozoraKit
 //
 //  Created by Khoren Katklian on 25/02/2022.

@@ -21,7 +21,7 @@ extension KurozoraKit {
 		headers.add(.authorization(bearerToken: self.authenticationKey))
 
 		// Prepare parameters
-		var parameters: [String: Any] = [
+		let parameters: [String: Any] = [
 			"limit": limit
 		]
 

@@ -81,9 +81,12 @@ public enum KKLibrary {
 		/// The library's dropped list.
 		case dropped = 1
 
+		/// The library's ignored list.
+		case ignored = 6
+
 		// MARK: - Properties
 		/// An array containing all library status types.
-		public static let all: [Status] = [.inProgress, .planning, .completed, .onHold, .dropped]
+		public static let all: [Status] = [.inProgress, .planning, .completed, .onHold, .dropped, .ignored]
 
 		/// The string value of a library status type.
 		public var stringValue: String {
@@ -100,6 +103,8 @@ public enum KKLibrary {
 				return "On-Hold"
 			case .dropped:
 				return "Dropped"
+			case .ignored:
+				return "Ignored"
 			}
 		}
 

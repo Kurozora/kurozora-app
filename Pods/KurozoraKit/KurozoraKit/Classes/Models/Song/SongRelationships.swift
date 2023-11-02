@@ -1,15 +1,18 @@
 //
-//  ShowRelationships.swift
+//  SongRelationships.swift
 //  KurozoraKit
 //
 //  Created by Khoren Katklian on 25/02/2022.
 //
 
 extension Song {
-	/// A root object that stores information about show relationships, such as the people that belong to it.
+	/// A root object that stores information about song relationships, such as the shows that belong to it.
 	public struct Relationships: Codable {
 		// MARK: - Properties
-		/// The people belonging to the show.
-		public let characters: PersonResponse?
+		/// The shows belonging to the song.
+		public let shows: ShowIdentityResponse?
+
+		/// The games belonging to the song.
+		public let games: GameIdentityResponse?
 	}
 }

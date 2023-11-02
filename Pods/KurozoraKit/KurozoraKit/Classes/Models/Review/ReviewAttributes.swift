@@ -19,4 +19,3 @@ extension Review {
 		public let createdAt: Date
 	}
 }
-

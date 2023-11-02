@@ -1,10 +1,4 @@
-//
-//  NSAttributedStringExtensions.swift
-//  SwifterSwift
-//
-//  Created by Omar Albeik on 26/11/2016.
-//  Copyright © 2016 SwifterSwift
-//
+// NSAttributedStringExtensions.swift - Copyright 2023 SwifterSwift
 
 #if canImport(Foundation)
 import Foundation
@@ -18,12 +12,24 @@ import AppKit
 #endif
 
 // MARK: - Properties
-public extension NSAttributedString {
 
-    #if os(iOS)
-    /// SwifterSwift: Bolded string.
+public extension NSAttributedString {
+    /// SwifterSwift: Bolded string using the system font.
+    #if !os(Linux)
     var bolded: NSAttributedString {
-        return applying(attributes: [.font: UIFont.boldSystemFont(ofSize: UIFont.systemFontSize)])
+        guard !string.isEmpty else { return self }
+
+        let pointSize: CGFloat
+        if let font = attribute(.font, at: 0, effectiveRange: nil) as? SFFont {
+            pointSize = font.pointSize
+        } else {
+            #if os(tvOS) || os(watchOS)
+            pointSize = SFFont.preferredFont(forTextStyle: .headline).pointSize
+            #else
+            pointSize = SFFont.systemFontSize
+            #endif
+        }
+        return applying(attributes: [.font: SFFont.boldSystemFont(ofSize: pointSize)])
     }
     #endif
 
@@ -34,66 +40,73 @@ public extension NSAttributedString {
     }
     #endif
 
-    #if os(iOS)
-    /// SwifterSwift: Italicized string.
+    #if canImport(UIKit)
+    /// SwifterSwift: Italicized string using the system font.
     var italicized: NSAttributedString {
-        return applying(attributes: [.font: UIFont.italicSystemFont(ofSize: UIFont.systemFontSize)])
+        guard !string.isEmpty else { return self }
+
+        let pointSize: CGFloat
+        if let font = attribute(.font, at: 0, effectiveRange: nil) as? UIFont {
+            pointSize = font.pointSize
+        } else {
+            #if os(tvOS) || os(watchOS)
+            pointSize = UIFont.preferredFont(forTextStyle: .headline).pointSize
+            #else
+            pointSize = UIFont.systemFontSize
+            #endif
+        }
+        return applying(attributes: [.font: UIFont.italicSystemFont(ofSize: pointSize)])
     }
     #endif
 
     #if !os(Linux)
     /// SwifterSwift: Struckthrough string.
     var struckthrough: NSAttributedString {
-        return applying(attributes: [.strikethroughStyle: NSNumber(value: NSUnderlineStyle.single.rawValue as Int)])
+        return applying(attributes: [.strikethroughStyle: NSNumber(value: NSUnderlineStyle.single.rawValue)])
     }
     #endif
 
-    #if !os(Linux)
-    /// SwifterSwift: Dictionary of the attributes applied across the whole string
-    var attributes: [NSAttributedString.Key: Any] {
-        guard self.length > 0 else { return [:] }
+    /// SwifterSwift: Dictionary of the attributes applied across the whole string.
+    var attributes: [Key: Any] {
+        guard length > 0 else { return [:] }
         return attributes(at: 0, effectiveRange: nil)
     }
-    #endif
-
 }
 
 // MARK: - Methods
+
 public extension NSAttributedString {
-
-    #if !os(Linux)
-    /// SwifterSwift: Applies given attributes to the new instance of NSAttributedString initialized with self object
+    /// SwifterSwift: Applies given attributes to the new instance of NSAttributedString initialized with self object.
     ///
-    /// - Parameter attributes: Dictionary of attributes
-    /// - Returns: NSAttributedString with applied attributes
-    fileprivate func applying(attributes: [NSAttributedString.Key: Any]) -> NSAttributedString {
-        let copy = NSMutableAttributedString(attributedString: self)
-        let range = (string as NSString).range(of: string)
-        copy.addAttributes(attributes, range: range)
+    /// - Parameter attributes: Dictionary of attributes.
+    /// - Returns: NSAttributedString with applied attributes.
+    func applying(attributes: [Key: Any]) -> NSAttributedString {
+        guard !string.isEmpty else { return self }
 
+        let copy = NSMutableAttributedString(attributedString: self)
+        copy.addAttributes(attributes, range: NSRange(0..<length))
         return copy
     }
-    #endif
 
     #if canImport(AppKit) || canImport(UIKit)
     /// SwifterSwift: Add color to NSAttributedString.
     ///
     /// - Parameter color: text color.
     /// - Returns: a NSAttributedString colored with given color.
-    func colored(with color: Color) -> NSAttributedString {
+    func colored(with color: SFColor) -> NSAttributedString {
         return applying(attributes: [.foregroundColor: color])
     }
     #endif
 
-    #if !os(Linux)
-    /// SwifterSwift: Apply attributes to substrings matching a regular expression
+    /// SwifterSwift: Apply attributes to substrings matching a regular expression.
     ///
     /// - Parameters:
-    ///   - attributes: Dictionary of attributes
-    ///   - pattern: a regular expression to target
-    ///   - options: The regular expression options that are applied to the expression during matching. See NSRegularExpression.Options for possible values.
-    /// - Returns: An NSAttributedString with attributes applied to substrings matching the pattern
-    func applying(attributes: [NSAttributedString.Key: Any],
+    ///   - attributes: Dictionary of attributes.
+    ///   - pattern: a regular expression to target.
+    ///   - options: The regular expression options that are applied to the expression during matching. See
+    /// NSRegularExpression.Options for possible values.
+    /// - Returns: An NSAttributedString with attributes applied to substrings matching the pattern.
+    func applying(attributes: [Key: Any],
                   toRangesMatching pattern: String,
                   options: NSRegularExpression.Options = []) -> NSAttributedString {
         guard let pattern = try? NSRegularExpression(pattern: pattern, options: options) else { return self }
@@ -108,24 +121,23 @@ public extension NSAttributedString {
         return result
     }
 
-    /// SwifterSwift: Apply attributes to occurrences of a given string
+    /// SwifterSwift: Apply attributes to occurrences of a given string.
     ///
     /// - Parameters:
-    ///   - attributes: Dictionary of attributes
-    ///   - target: a subsequence string for the attributes to be applied to
-    /// - Returns: An NSAttributedString with attributes applied on the target string
-    func applying<T: StringProtocol>(attributes: [NSAttributedString.Key: Any], toOccurrencesOf target: T) -> NSAttributedString {
+    ///   - attributes: Dictionary of attributes.
+    ///   - target: a subsequence string for the attributes to be applied to.
+    /// - Returns: An NSAttributedString with attributes applied on the target string.
+    func applying<T: StringProtocol>(attributes: [Key: Any],
+                                     toOccurrencesOf target: T) -> NSAttributedString {
         let pattern = "\\Q\(target)\\E"
 
         return applying(attributes: attributes, toRangesMatching: pattern)
     }
-    #endif
-
 }
 
 // MARK: - Operators
-public extension NSAttributedString {
 
+public extension NSAttributedString {
     /// SwifterSwift: Add a NSAttributedString to another NSAttributedString.
     ///
     /// - Parameters:
@@ -137,7 +149,8 @@ public extension NSAttributedString {
         lhs = string
     }
 
-    /// SwifterSwift: Add a NSAttributedString to another NSAttributedString and return a new NSAttributedString instance.
+    /// SwifterSwift: Add a NSAttributedString to another NSAttributedString and return a new NSAttributedString
+    /// instance.
     ///
     /// - Parameters:
     ///   - lhs: NSAttributedString to add.
@@ -158,7 +171,8 @@ public extension NSAttributedString {
         lhs += NSAttributedString(string: rhs)
     }
 
-    /// SwifterSwift: Add a NSAttributedString to another NSAttributedString and return a new NSAttributedString instance.
+    /// SwifterSwift: Add a NSAttributedString to another NSAttributedString and return a new NSAttributedString
+    /// instance.
     ///
     /// - Parameters:
     ///   - lhs: NSAttributedString to add.
@@ -167,7 +181,31 @@ public extension NSAttributedString {
     static func + (lhs: NSAttributedString, rhs: String) -> NSAttributedString {
         return lhs + NSAttributedString(string: rhs)
     }
-
 }
 
+public extension Array where Element: NSAttributedString {
+    /// SwifterSwift: Returns a new `NSAttributedString` by concatenating the elements of the sequence, adding the given
+    /// separator between each element.
+    ///
+    /// [Is there joinWithSeparator for attributed strings](https://stackoverflow.com/q/32830519/1627511)
+    ///
+    /// - Parameter separator: An `NSAttributedString` to add between the elements of the sequence.
+    /// - Returns: NSAttributedString with applied attributes.
+    func joined(separator: NSAttributedString) -> NSAttributedString {
+        guard let firstElement = first else { return NSMutableAttributedString(string: "") }
+        return dropFirst().reduce(into: NSMutableAttributedString(attributedString: firstElement)) { result, element in
+            result.append(separator)
+            result.append(element)
+        }
+    }
+
+    func joined(separator: String) -> NSAttributedString {
+        guard let firstElement = first else { return NSMutableAttributedString(string: "") }
+        let attributedStringSeparator = NSAttributedString(string: separator)
+        return dropFirst().reduce(into: NSMutableAttributedString(attributedString: firstElement)) { result, element in
+            result.append(attributedStringSeparator)
+            result.append(element)
+        }
+    }
+}
 #endif

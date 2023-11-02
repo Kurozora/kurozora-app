@@ -1,18 +1,12 @@
-//
-//  UILabelExtensions.swift
-//  SwifterSwift
-//
-//  Created by Omar Albeik on 9/23/16.
-//  Copyright © 2016 SwifterSwift
-//
+// UILabelExtensions.swift - Copyright 2023 SwifterSwift
 
 #if canImport(UIKit) && !os(watchOS)
 import UIKit
 
 // MARK: - Methods
-public extension UILabel {
 
-    /// SwifterSwift: Initialize a UILabel with text
+public extension UILabel {
+    /// SwifterSwift: Initialize a UILabel with text.
     convenience init(text: String?) {
         self.init()
         self.text = text
@@ -29,7 +23,7 @@ public extension UILabel {
         self.text = text
     }
 
-    /// SwifterSwift: Required height for a label
+    /// SwifterSwift: Required height for a label.
     var requiredHeight: CGFloat {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: frame.width, height: CGFloat.greatestFiniteMagnitude))
         label.numberOfLines = 0
@@ -40,7 +34,6 @@ public extension UILabel {
         label.sizeToFit()
         return label.frame.height
     }
-
 }
 
 #endif

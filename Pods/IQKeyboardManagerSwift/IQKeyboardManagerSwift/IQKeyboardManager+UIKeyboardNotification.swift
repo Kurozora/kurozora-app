@@ -41,13 +41,13 @@ public extension IQKeyboardManager {
     }
 
     private struct AssociatedKeys {
-        static var keyboardSizeObservers = "keyboardSizeObservers"
-        static var keyboardLastNotifySize = "keyboardLastNotifySize"
-        static var keyboardShowing = "keyboardShowing"
-        static var keyboardShowNotification = "keyboardShowNotification"
-        static var keyboardFrame = "keyboardFrame"
-        static var animationDuration = "animationDuration"
-        static var animationCurve = "animationCurve"
+        static var keyboardSizeObservers: Int = 0
+        static var keyboardLastNotifySize: Int = 0
+        static var keyboardShowing: Int = 0
+        static var keyboardShowNotification: Int = 0
+        static var keyboardFrame: Int = 0
+        static var animationDuration: Int = 0
+        static var animationCurve: Int = 0
     }
 
     private var keyboardLastNotifySize: CGSize {
@@ -161,7 +161,11 @@ public extension IQKeyboardManager {
             }
 
             //  Getting keyboard animation duration
-            animationDuration = info[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval ?? 0.25
+            if let duration = info[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval, duration != 0 {
+                animationDuration = duration
+            } else {
+                animationDuration = 0.25
+            }
 
             //  Getting UIKeyboardSize.
             if let kbFrame = info[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
@@ -175,6 +179,7 @@ public extension IQKeyboardManager {
         guard privateIsEnabled() else {
             restorePosition()
             topViewBeginOrigin = IQKeyboardManager.kIQCGPointInvalid
+            topViewBeginSafeAreaInsets = .zero
             return
         }
 
@@ -194,6 +199,7 @@ public extension IQKeyboardManager {
                     topViewBeginOrigin = topViewBeginOriginWhilePopGestureRecognizerActive
                 } else {
                     topViewBeginOrigin = controller.view.frame.origin
+                    topViewBeginSafeAreaInsets = controller.view.safeAreaInsets
                 }
 
                 rootViewControllerWhilePopGestureRecognizerActive = nil
@@ -203,39 +209,19 @@ public extension IQKeyboardManager {
             }
         }
 
-        //If last restored keyboard size is different(any orientation accure), then refresh. otherwise not.
+        // If last restored keyboard size is different(any orientation accure), then refresh. otherwise not.
         if keyboardFrame.equalTo(oldKBFrame) == false {
 
-            //If textFieldView is inside UITableViewController then let UITableViewController to handle it (Bug ID: #37) (Bug ID: #76) See note:- https://developer.apple.com/library/ios/documentation/StringsTextFonts/Conceptual/TextAndWebiPhoneOS/KeyboardManagement/KeyboardManagement.html If it is UIAlertView textField then do not affect anything (Bug ID: #70).
+            // If textFieldView is inside UITableViewController then let UITableViewController to handle it (Bug ID: #37) (Bug ID: #76) See note:- https://developer.apple.com/library/ios/documentation/StringsTextFonts/Conceptual/TextAndWebiPhoneOS/KeyboardManagement/KeyboardManagement.html If it is UIAlertView textField then do not affect anything (Bug ID: #70).
 
             if keyboardShowing,
                 let textFieldView = textFieldView,
                 textFieldView.isAlertViewTextField() == false {
 
                 //  keyboard is already showing. adjust position.
-                optimizedAdjustPosition()
+                self.adjustPosition()
             }
         }
-
-        let elapsedTime = CACurrentMediaTime() - startTime
-        showLog("⌨️<<<<< \(#function) ended: \(elapsedTime) seconds <<<<<", indentation: -1)
-    }
-
-    /*  UIKeyboardDidShowNotification. */
-    @objc internal func keyboardDidShow(_ notification: Notification) {
-
-        guard privateIsEnabled(),
-            let textFieldView = textFieldView,
-            let parentController = textFieldView.parentContainerViewController(), (parentController.modalPresentationStyle == UIModalPresentationStyle.formSheet || parentController.modalPresentationStyle == UIModalPresentationStyle.pageSheet),
-            textFieldView.isAlertViewTextField() == false else {
-                return
-        }
-
-        let startTime = CACurrentMediaTime()
-        showLog("⌨️>>>>> \(#function) started >>>>>", indentation: 1)
-        showLog("Notification Object:\(notification.object ?? "NULL")")
-
-        self.optimizedAdjustPosition()
 
         let elapsedTime = CACurrentMediaTime() - startTime
         showLog("⌨️<<<<< \(#function) ended: \(elapsedTime) seconds <<<<<", indentation: -1)
@@ -244,7 +230,7 @@ public extension IQKeyboardManager {
     /*  UIKeyboardWillHideNotification. So setting rootViewController to it's default frame. */
     @objc internal func keyboardWillHide(_ notification: Notification?) {
 
-        //If it's not a fake notification generated by [self setEnable:NO].
+        // If it's not a fake notification generated by [self setEnable:NO].
         if notification != nil {
             keyboardShowNotification = nil
         }
@@ -262,10 +248,14 @@ public extension IQKeyboardManager {
             }
 
             //  Getting keyboard animation duration
-            animationDuration = info[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval ?? 0.25
+            if let duration = info[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval, duration != 0 {
+                animationDuration = duration
+            } else {
+                animationDuration = 0.25
+            }
         }
 
-        //If not enabled then do nothing.
+        // If not enabled then do nothing.
         guard privateIsEnabled() else {
             return
         }
@@ -274,11 +264,11 @@ public extension IQKeyboardManager {
         showLog("⌨️>>>>> \(#function) started >>>>>", indentation: 1)
         showLog("Notification Object:\(notification?.object ?? "NULL")")
 
-        //Commented due to #56. Added all the conditions below to handle WKWebView's textFields.    (Bug ID: #56)
+        // Commented due to #56. Added all the conditions below to handle WKWebView's textFields.    (Bug ID: #56)
         //  We are unable to get textField object while keyboard showing on WKWebView's textField.  (Bug ID: #11)
         //    if (_textFieldView == nil)   return
 
-        //Restoring the contentOffset of the lastScrollView
+        // Restoring the contentOffset of the lastScrollView
         if let lastScrollView = lastScrollView {
 
             UIView.animate(withDuration: animationDuration, delay: 0, options: animationCurve, animations: { () -> Void in
@@ -335,29 +325,15 @@ public extension IQKeyboardManager {
 
         restorePosition()
 
-        //Reset all values
+        // Reset all values
         lastScrollView = nil
-        keyboardFrame = CGRect.zero
+        keyboardFrame = .zero
         notifyKeyboardSize(size: keyboardFrame.size)
-        startingContentInsets = UIEdgeInsets()
-        startingScrollIndicatorInsets = UIEdgeInsets()
+        startingContentInsets = .zero
+        startingScrollIndicatorInsets = .zero
         startingContentOffset = CGPoint.zero
-        //    topViewBeginRect = CGRectZero    //Commented due to #82
-
-        let elapsedTime = CACurrentMediaTime() - startTime
-        showLog("⌨️<<<<< \(#function) ended: \(elapsedTime) seconds <<<<<", indentation: -1)
-    }
-
-    @objc internal func keyboardDidHide(_ notification: Notification) {
-
-        let startTime = CACurrentMediaTime()
-        showLog("⌨️>>>>> \(#function) started >>>>>", indentation: 1)
-        showLog("Notification Object:\(notification.object ?? "NULL")")
-
         topViewBeginOrigin = IQKeyboardManager.kIQCGPointInvalid
-
-        keyboardFrame = CGRect.zero
-        notifyKeyboardSize(size: keyboardFrame.size)
+        topViewBeginSafeAreaInsets = .zero
 
         let elapsedTime = CACurrentMediaTime() - startTime
         showLog("⌨️<<<<< \(#function) ended: \(elapsedTime) seconds <<<<<", indentation: -1)

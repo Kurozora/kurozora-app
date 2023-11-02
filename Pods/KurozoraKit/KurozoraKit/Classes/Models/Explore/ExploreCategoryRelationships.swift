@@ -12,11 +12,11 @@ extension ExploreCategory {
 		/// The shows belonging to the explore category.
 		public let shows: ShowIdentityResponse?
 
-		/// The literature belonging to the explore category.
-		public let literatures: LiteratureIdentityResponse?
-
 		/// The games belonging to the explore category.
 		public let games: GameIdentityResponse?
+
+		/// The literature belonging to the explore category.
+		public let literatures: LiteratureIdentityResponse?
 
 		/// The episodes belonging to the explore category.
 		public let episodes: EpisodeIdentityResponse?

@@ -10,9 +10,15 @@ extension Character {
 	public struct Relationships: Codable {
 		// MARK: - Properties
 		/// The people that played the character.
-		public let people: PersonResponse?
+		public let people: PersonIdentityResponse?
 
 		/// The shows in which the character showed up.
-		public let shows: ShowResponse?
+		public let shows: ShowIdentityResponse?
+
+		/// The games in which the character showed up.
+		public let games: GameIdentityResponse?
+
+		/// The literatures in which the character showed up.
+		public let literatures: LiteratureIdentityResponse?
 	}
 }

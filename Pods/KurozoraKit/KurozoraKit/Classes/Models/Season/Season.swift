@@ -31,4 +31,3 @@ public class Season: IdentityResource, Hashable {
 		hasher.combine(self.id)
 	}
 }
-

@@ -11,5 +11,11 @@ extension Studio {
 		// MARK: - Properties
 		/// The shows created by the studio.
 		public let shows: ShowIdentityResponse?
+
+		/// The games created by the studio.
+		public let games: GameIdentityResponse?
+
+		/// The literatures created by the studio.
+		public let literatures: LiteratureIdentityResponse?
 	}
 }

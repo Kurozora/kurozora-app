@@ -21,11 +21,17 @@ extension Episode {
 		/// The total number of the episode.
 		public let numberTotal: Int
 
+		/// The number of the season.
+		public let seasonNumber: Int
+
 		/// The title of the episodes.
 		public let title: String
 
 		/// The synopsis text of the episode.
 		public let synopsis: String?
+
+		/// The title of the show.
+		public let showTitle: String
 
 		/// The duration of the episode.
 		public let duration: String

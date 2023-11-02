@@ -6,28 +6,31 @@
 //
 
 extension Literature {
-	/// A root object that stores information about literature relationships, such as the studios, and badges that belong to it.
+	/// A root object that stores information about literature relationships, such as the studios, and cast that belong to it.
 	public struct Relationships: Codable {
 		// MARK: - Properties
 		/// The cast belonging to the literature.
 		public let cast: CastIdentityResponse?
 
 		/// The characters belonging to the literature.
-		public let characters: CharacterResponse?
+		public let characters: CharacterIdentityResponse?
 
 		/// The people belonging to the literature.
-		public let people: PersonResponse?
+		public let people: PersonIdentityResponse?
 
-		/// The related shows belonging to the literature.
+		/// The shows related to the literature.
 		public let relatedShows: RelatedShowResponse?
 
-		/// The related literature belonging to the literature.
-		public let relatedLiterature: RelatedLiteratureResponse?
+		/// The games related to the literature.
+		public let relatedGames: RelatedGameResponse?
+
+		/// The literatures related to the literature.
+		public let relatedLiteratures: RelatedLiteratureResponse?
 
 		/// The staff belonging to the literature.
-		public let staff: StaffResponse?
+		public let staff: StaffIdentityResponse?
 
 		/// The studios belonging to the literature.
-		public let studios: StudioResponse?
+		public let studios: StudioIdentityResponse?
 	}
 }

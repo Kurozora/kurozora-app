@@ -390,7 +390,7 @@ extension KurozoraKit {
 		}
 
 		// Prepare parameters
-		var parameters: [String: Any] = [
+		let parameters: [String: Any] = [
 			"limit": limit
 		]
 

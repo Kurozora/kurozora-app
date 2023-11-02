@@ -1,10 +1,4 @@
-//
-//  URLRequestExtensions.swift
-//  SwifterSwift
-//
-//  Created by Omar Albeik on 9/5/17.
-//  Copyright © 2017 SwifterSwift
-//
+// URLRequestExtensions.swift - Copyright 2023 SwifterSwift
 
 #if canImport(Foundation)
 import Foundation
@@ -14,8 +8,8 @@ import FoundationNetworking
 #endif
 
 // MARK: - Initializers
-public extension URLRequest {
 
+public extension URLRequest {
     /// SwifterSwift: Create URLRequest from URL string.
     ///
     /// - Parameter urlString: URL string to initialize URL request from
@@ -26,7 +20,6 @@ public extension URLRequest {
 
     /// SwifterSwift: cURL command representation of this URL request.
     var curlString: String {
-
         guard let url = url else { return "" }
 
         var baseCommand = "curl \(url.absoluteString)"
@@ -35,7 +28,7 @@ public extension URLRequest {
         }
 
         var command = [baseCommand]
-        if let method = httpMethod, method != "GET" && method != "HEAD" {
+        if let method = httpMethod, method != "GET", method != "HEAD" {
             command.append("-X \(method)")
         }
 
@@ -46,11 +39,43 @@ public extension URLRequest {
         }
 
         if let data = httpBody,
-            let body = String(data: data, encoding: .utf8) {
+           let body = String(data: data, encoding: .utf8) {
             command.append("-d '\(body)'")
         }
 
         return command.joined(separator: " \\\n\t")
+    }
+}
+
+// MARK: - Methods
+
+public extension URLRequest {
+    /// SwifterSwift: Duplicates the request and modifies the HTTP method (verb) for the request (i.e.: GET, POST, PUT)
+    ///
+    ///     let request = URLRequest(url: url)
+    ///         .method("post")
+    ///
+    /// - Parameter methodString: The method as a String value
+    /// - Returns: The modified request
+    func method(_ methodString: String) -> Self {
+        var request = self
+        request.httpMethod = methodString.uppercased()
+        return request
+    }
+
+    /// SwifterSwift: Duplicates the request and set a header with key and value
+    ///
+    ///     let request = URLRequest(url: url)
+    ///         .header(name: "Content-Type", value: "application/json")
+    ///
+    /// - Parameters:
+    ///   - name: The name of the header
+    ///   - value: The value of the header
+    /// - Returns: The modified request
+    func header(name: String, value: String) -> Self {
+        var request = self
+        request.setValue(value, forHTTPHeaderField: name)
+        return request
     }
 }
 

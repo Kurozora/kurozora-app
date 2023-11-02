@@ -19,4 +19,3 @@ extension FeedMessage {
 		public let messages: FeedMessageResponse?
 	}
 }
-

@@ -1,19 +1,14 @@
-//
-//  BinaryFloatingPointExtensions.swift
-//  SwifterSwift
-//
-//  Created by Quentin Jin on 2018/10/13.
-//  Copyright © 2018 SwifterSwift
-//
+// BinaryFloatingPointExtensions.swift - Copyright 2023 SwifterSwift
 
 #if canImport(Foundation)
 import Foundation
 
 // MARK: - Methods
-public extension BinaryFloatingPoint {
 
+public extension BinaryFloatingPoint {
     #if canImport(Foundation)
-    /// SwifterSwift: Returns a rounded value with the specified number of decimal places and rounding rule. If `numberOfDecimalPlaces` is negative, `0` will be used.
+    /// SwifterSwift: Returns a rounded value with the specified number of decimal places and rounding rule. If
+    /// `numberOfDecimalPlaces` is negative, `0` will be used.
     ///
     ///     let num = 3.1415927
     ///     num.rounded(numberOfDecimalPlaces: 3, rule: .up) -> 3.142
@@ -31,7 +26,6 @@ public extension BinaryFloatingPoint {
         return (self * factor).rounded(rule) / factor
     }
     #endif
-
 }
 
 #endif

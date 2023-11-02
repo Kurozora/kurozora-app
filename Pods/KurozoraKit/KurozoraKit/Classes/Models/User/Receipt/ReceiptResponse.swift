@@ -11,4 +11,3 @@ public struct ReceiptResponse: Codable {
 	/// The data included in the repsonse for a receipt object request.
 	public let data: [Receipt]
 }
-

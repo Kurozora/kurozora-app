@@ -6,20 +6,26 @@
 //
 
 extension Show {
-	/// A root object that stores information about show relationships, such as the studios, and badges that belong to it.
+	/// A root object that stores information about show relationships, such as the studios, and cast that belong to it.
 	public struct Relationships: Codable {
 		// MARK: - Properties
 		/// The cast belonging to the show.
 		public let cast: CastIdentityResponse?
 
 		/// The characters belonging to the show.
-		public let characters: CharacterResponse?
+		public let characters: CharacterIdentityResponse?
 
 		/// The people belonging to the show.
-		public let people: PersonResponse?
+		public let people: PersonIdentityResponse?
 
-		/// The relationships belonging to the show.
+		/// The shows related to the show.
 		public let relatedShows: RelatedShowResponse?
+
+		/// The games related to the show.
+		public let relatedGames: RelatedGameResponse?
+
+		/// The literatures related to the show.
+		public let relatedLiteratures: RelatedLiteratureResponse?
 
 		/// The seasons belonging to the show.
 		public let seasons: SeasonIdentityResponse?
@@ -27,10 +33,13 @@ extension Show {
 		/// The relationships belonging to the show.
 		public let showSongs: ShowSongResponse?
 
+		/// The songs belonging to the game.
+		public let songs: SongIdentityResponse?
+
 		/// The staff belonging to the show.
-		public let staff: StaffResponse?
+		public let staff: StaffIdentityResponse?
 
 		/// The studios belonging to the show.
-		public let studios: StudioResponse?
+		public let studios: StudioIdentityResponse?
 	}
 }

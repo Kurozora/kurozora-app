@@ -1,156 +1,152 @@
-//
-//  UIButtonExtensions.swift
-//  SwifterSwift
-//
-//  Created by Omar Albeik on 8/22/16.
-//  Copyright © 2016 SwifterSwift
-//
+// UIButtonExtensions.swift - Copyright 2023 SwifterSwift
 
 #if canImport(UIKit) && !os(watchOS)
 import UIKit
 
 // MARK: - Properties
-public extension UIButton {
 
+public extension UIButton {
     /// SwifterSwift: Image of disabled state for button; also inspectable from Storyboard.
     @IBInspectable
     var imageForDisabled: UIImage? {
-        get {
-            return image(for: .disabled)
-        }
-        set {
-            setImage(newValue, for: .disabled)
-        }
+        get { image(for: .disabled) }
+        set { setImage(newValue, for: .disabled) }
     }
 
     /// SwifterSwift: Image of highlighted state for button; also inspectable from Storyboard.
     @IBInspectable
     var imageForHighlighted: UIImage? {
-        get {
-            return image(for: .highlighted)
-        }
-        set {
-            setImage(newValue, for: .highlighted)
-        }
+        get { image(for: .highlighted) }
+        set { setImage(newValue, for: .highlighted) }
     }
 
     /// SwifterSwift: Image of normal state for button; also inspectable from Storyboard.
     @IBInspectable
     var imageForNormal: UIImage? {
-        get {
-            return image(for: .normal)
-        }
-        set {
-            setImage(newValue, for: .normal)
-        }
+        get { image(for: .normal) }
+        set { setImage(newValue, for: .normal) }
     }
 
     /// SwifterSwift: Image of selected state for button; also inspectable from Storyboard.
     @IBInspectable
     var imageForSelected: UIImage? {
-        get {
-            return image(for: .selected)
-        }
-        set {
-            setImage(newValue, for: .selected)
-        }
+        get { image(for: .selected) }
+        set { setImage(newValue, for: .selected) }
+    }
+
+    /// SwifterSwift: Image of focused state for button; also inspectable from Storyboard.
+    @IBInspectable
+    var imageForFocused: UIImage? {
+        get { image(for: .focused) }
+        set { setImage(newValue, for: .focused) }
     }
 
     /// SwifterSwift: Title color of disabled state for button; also inspectable from Storyboard.
     @IBInspectable
     var titleColorForDisabled: UIColor? {
-        get {
-            return titleColor(for: .disabled)
-        }
-        set {
-            setTitleColor(newValue, for: .disabled)
-        }
+        get { titleColor(for: .disabled) }
+        set { setTitleColor(newValue, for: .disabled) }
     }
 
     /// SwifterSwift: Title color of highlighted state for button; also inspectable from Storyboard.
     @IBInspectable
     var titleColorForHighlighted: UIColor? {
-        get {
-            return titleColor(for: .highlighted)
-        }
-        set {
-            setTitleColor(newValue, for: .highlighted)
-        }
+        get { titleColor(for: .highlighted) }
+        set { setTitleColor(newValue, for: .highlighted) }
     }
 
     /// SwifterSwift: Title color of normal state for button; also inspectable from Storyboard.
     @IBInspectable
     var titleColorForNormal: UIColor? {
-        get {
-            return titleColor(for: .normal)
-        }
-        set {
-            setTitleColor(newValue, for: .normal)
-        }
+        get { titleColor(for: .normal) }
+        set { setTitleColor(newValue, for: .normal) }
     }
 
     /// SwifterSwift: Title color of selected state for button; also inspectable from Storyboard.
     @IBInspectable
     var titleColorForSelected: UIColor? {
-        get {
-            return titleColor(for: .selected)
-        }
-        set {
-            setTitleColor(newValue, for: .selected)
-        }
+        get { titleColor(for: .selected) }
+        set { setTitleColor(newValue, for: .selected) }
+    }
+
+    /// SwifterSwift: Title color of focused state for button; also inspectable from Storyboard.
+    @IBInspectable
+    var titleColorForFocused: UIColor? {
+        get { titleColor(for: .focused) }
+        set { setTitleColor(newValue, for: .focused) }
     }
 
     /// SwifterSwift: Title of disabled state for button; also inspectable from Storyboard.
     @IBInspectable
     var titleForDisabled: String? {
-        get {
-            return title(for: .disabled)
-        }
-        set {
-            setTitle(newValue, for: .disabled)
-        }
+        get { title(for: .disabled) }
+        set { setTitle(newValue, for: .disabled) }
     }
 
     /// SwifterSwift: Title of highlighted state for button; also inspectable from Storyboard.
     @IBInspectable
     var titleForHighlighted: String? {
-        get {
-            return title(for: .highlighted)
-        }
-        set {
-            setTitle(newValue, for: .highlighted)
-        }
+        get { title(for: .highlighted) }
+        set { setTitle(newValue, for: .highlighted) }
     }
 
     /// SwifterSwift: Title of normal state for button; also inspectable from Storyboard.
     @IBInspectable
     var titleForNormal: String? {
-        get {
-            return title(for: .normal)
-        }
-        set {
-            setTitle(newValue, for: .normal)
-        }
+        get { title(for: .normal) }
+        set { setTitle(newValue, for: .normal) }
     }
 
     /// SwifterSwift: Title of selected state for button; also inspectable from Storyboard.
     @IBInspectable
     var titleForSelected: String? {
-        get {
-            return title(for: .selected)
-        }
-        set {
-            setTitle(newValue, for: .selected)
-        }
+        get { title(for: .selected) }
+        set { setTitle(newValue, for: .selected) }
     }
 
+    /// SwifterSwift: Title of focused state for button; also inspectable from Storyboard.
+    @IBInspectable
+    var titleForFocused: String? {
+        get { title(for: .focused) }
+        set { setTitle(newValue, for: .focused) }
+    }
+
+    /// SwifterSwift: Attributed title of disabled state for button.
+    var attributedTitleForDisabled: NSAttributedString? {
+        get { attributedTitle(for: .disabled) }
+        set { setAttributedTitle(newValue, for: .disabled) }
+    }
+
+    /// SwifterSwift: Attributed title of highlighted state for button.
+    var attributedTitleForHighlighted: NSAttributedString? {
+        get { attributedTitle(for: .highlighted) }
+        set { setAttributedTitle(newValue, for: .highlighted) }
+    }
+
+    /// SwifterSwift: Attributed title of normal state for button.
+    var attributedTitleForNormal: NSAttributedString? {
+        get { attributedTitle(for: .normal) }
+        set { setAttributedTitle(newValue, for: .normal) }
+    }
+
+    /// SwifterSwift: Attributed title of selected state for button.
+    var attributedTitleForSelected: NSAttributedString? {
+        get { attributedTitle(for: .selected) }
+        set { setAttributedTitle(newValue, for: .selected) }
+    }
+
+    /// SwifterSwift: Attributed title of focused state for button.
+    var attributedTitleForFocused: NSAttributedString? {
+        get { attributedTitle(for: .focused) }
+        set { setAttributedTitle(newValue, for: .focused) }
+    }
 }
 
 // MARK: - Methods
-public extension UIButton {
 
+public extension UIButton {
     private var states: [UIControl.State] {
-        return [.normal, .selected, .highlighted, .disabled]
+        [.normal, .selected, .highlighted, .disabled, .focused]
     }
 
     /// SwifterSwift: Set image for all states.
@@ -174,9 +170,16 @@ public extension UIButton {
         states.forEach { setTitle(title, for: $0) }
     }
 
-    /// SwifterSwift: Center align title text and image
+    /// SwifterSwift: Set attributed title for all states.
+    ///
+    /// - Parameter title: title string.
+    func setAttributedTitleForAllStates(_ title: NSAttributedString) {
+        states.forEach { setAttributedTitle(title, for: $0) }
+    }
+
+    /// SwifterSwift: Center align title text and image.
     /// - Parameters:
-    ///   - imageAboveText: set true to make image above title text, default is false, image on left of text
+    ///   - imageAboveText: set true to make image above title text, default is false, image on left of text.
     ///   - spacing: spacing between title text and image.
     func centerTextAndImage(imageAboveText: Bool = false, spacing: CGFloat) {
         if imageAboveText {
@@ -184,8 +187,7 @@ public extension UIButton {
             guard
                 let imageSize = imageView?.image?.size,
                 let text = titleLabel?.text,
-                let font = titleLabel?.font
-                else { return }
+                let font = titleLabel?.font else { return }
 
             let titleSize = text.size(withAttributes: [.font: font])
 
@@ -205,6 +207,20 @@ public extension UIButton {
         }
     }
 
+    /// SwifterSwift: Set background color for specified state.
+    /// - Parameters:
+    ///   - color: The color of the image that will be set as background for the button in the given state.
+    ///   - forState: set the UIControl.State for the desired color.
+    func setBackgroundColor(color: UIColor, forState: UIControl.State) {
+        clipsToBounds = true // maintain corner radius
+
+        let colorImage = UIGraphicsImageRenderer(size: CGSize(width: 1, height: 1)).image { context in
+            color.setFill()
+            context.fill(CGRect(x: 0, y: 0, width: 1, height: 1))
+            draw(.zero)
+        }
+        setBackgroundImage(colorImage, for: forState)
+    }
 }
 
 #endif

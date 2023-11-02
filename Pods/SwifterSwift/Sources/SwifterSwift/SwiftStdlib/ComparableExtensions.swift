@@ -1,14 +1,8 @@
-//
-//  ComparableExtensions.swift
-//  SwifterSwift
-//
-//  Created by Shai Mishali on 5/4/18.
-//  Copyright © 2018 SwifterSwift
-//
+// ComparableExtensions.swift - Copyright 2023 SwifterSwift
 
 // MARK: - Methods
-public extension Comparable {
 
+public extension Comparable {
     /// SwifterSwift: Returns true if value is in the provided range.
     ///
     ///    1.isBetween(5...7) // false
@@ -17,10 +11,8 @@ public extension Comparable {
     ///    "c".isBetween(a...d) // true
     ///    0.32.isBetween(0.31...0.33) // true
     ///
-    /// - parameter min: Minimum comparable value.
-    /// - parameter max: Maximum comparable value.
-    ///
-    /// - returns: `true` if value is between `min` and `max`, `false` otherwise.
+    /// - Parameter range: Closed range against which the value is checked to be included.
+    /// - Returns: `true` if the value is included in the range, `false` otherwise.
     func isBetween(_ range: ClosedRange<Self>) -> Bool {
         return range ~= self
     }
@@ -32,12 +24,9 @@ public extension Comparable {
     ///     "c".clamped(to: "e"..."g") // "e"
     ///     0.32.clamped(to: 0.1...0.29) // 0.29
     ///
-    /// - parameter min: Lower bound to limit the value to.
-    /// - parameter max: Upper bound to limit the value to.
-    ///
-    /// - returns: A value limited to the range between `min` and `max`.
+    /// - Parameter range: Closed range that limits the value.
+    /// - Returns: A value limited to the range, i.e. between `range.lowerBound` and `range.upperBound`.
     func clamped(to range: ClosedRange<Self>) -> Self {
         return max(range.lowerBound, min(self, range.upperBound))
     }
-
 }

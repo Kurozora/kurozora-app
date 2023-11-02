@@ -10,9 +10,9 @@ extension Episode {
 	public struct Relationships: Codable {
 		// MARK: - Properties
 		/// The seasons belonging to the episode.
-		public let seasons: SeasonResponse?
+		public let seasons: SeasonIdentityResponse?
 
 		/// The shows belonging to the episode.
-		public let shows: ShowResponse?
+		public let shows: ShowIdentityResponse?
 	}
 }

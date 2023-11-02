@@ -1,25 +1,18 @@
-//
-//  SCNMaterialExtensions.swift
-//  SwifterSwift
-//
-//  Created by Max Härtwig on 06.04.19.
-//  Copyright © 2019 SwifterSwift
-//
+// SCNMaterialExtensions.swift - Copyright 2023 SwifterSwift
 
 #if canImport(SceneKit)
 import SceneKit
 
 // MARK: - Methods
-public extension SCNMaterial {
 
-    /// SwifterSwift: Initializes a SCNMaterial with a specific diffuse color
+public extension SCNMaterial {
+    /// SwifterSwift: Initializes a SCNMaterial with a specific diffuse color.
     ///
-    /// - Parameter color: diffuse color
-    convenience init(color: Color) {
+    /// - Parameter color: diffuse color.
+    convenience init(color: SFColor) {
         self.init()
         diffuse.contents = color
     }
-
 }
 
 #endif

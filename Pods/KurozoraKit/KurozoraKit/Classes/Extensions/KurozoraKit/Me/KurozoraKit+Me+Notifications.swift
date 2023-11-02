@@ -19,6 +19,7 @@ extension KurozoraKit {
 		// Prepare request
 		let meNotificationsIndex = KKEndpoint.Me.Notifications.index.endpointValue
 		let request: APIRequest<UserNotificationResponse, KKAPIError> = tron.codable.request(meNotificationsIndex)
+			.headers(headers)
 			.method(.get)
 
 		// Send request

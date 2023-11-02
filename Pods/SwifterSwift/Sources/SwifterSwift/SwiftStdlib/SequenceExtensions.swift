@@ -1,14 +1,7 @@
-//
-//  SequenceExtensions.swift
-//  SwifterSwift
-//
-//  Created by Anton Novoselov on 04/04/2018.
-//  Copyright © 2018 SwifterSwift
-//
+// SequenceExtensions.swift - Copyright 2023 SwifterSwift
 
 public extension Sequence {
-
-    /// SwifterSwift: Check if all elements in collection match a conditon.
+    /// SwifterSwift: Check if all elements in collection match a condition.
     ///
     ///        [2, 2, 4].all(matching: {$0 % 2 == 0}) -> true
     ///        [1,2, 2, 4].all(matching: {$0 % 2 == 0}) -> false
@@ -19,7 +12,7 @@ public extension Sequence {
         return try !contains { try !condition($0) }
     }
 
-    /// SwifterSwift: Check if no elements in collection match a conditon.
+    /// SwifterSwift: Check if no elements in collection match a condition.
     ///
     ///        [2, 2, 4].none(matching: {$0 % 2 == 0}) -> false
     ///        [1, 3, 5, 7].none(matching: {$0 % 2 == 0}) -> true
@@ -30,7 +23,7 @@ public extension Sequence {
         return try !contains { try condition($0) }
     }
 
-    /// SwifterSwift: Check if any element in collection match a conditon.
+    /// SwifterSwift: Check if any element in collection match a condition.
     ///
     ///        [2, 2, 4].any(matching: {$0 % 2 == 0}) -> false
     ///        [1, 3, 5, 7].any(matching: {$0 % 2 == 0}) -> true
@@ -39,19 +32,6 @@ public extension Sequence {
     /// - Returns: true when no elements in the array match the specified condition.
     func any(matching condition: (Element) throws -> Bool) rethrows -> Bool {
         return try contains { try condition($0) }
-    }
-
-    /// SwifterSwift: Get last element that satisfies a conditon.
-    ///
-    ///        [2, 2, 4, 7].last(where: {$0 % 2 == 0}) -> 4
-    ///
-    /// - Parameter condition: condition to evaluate each element against.
-    /// - Returns: the last element in the array matching the specified condition. (optional)
-    func last(where condition: (Element) throws -> Bool) rethrows -> Element? {
-        for element in reversed() {
-            if try condition(element) { return element }
-        }
-        return nil
     }
 
     /// SwifterSwift: Filter elements based on a rejection condition.
@@ -95,9 +75,7 @@ public extension Sequence {
     ///   - condition: condition to evaluate each element against.
     ///   - body: a closure that takes an element of the array as a parameter.
     func forEach(where condition: (Element) throws -> Bool, body: (Element) throws -> Void) rethrows {
-        for element in self where try condition(element) {
-            try body(element)
-        }
+        try lazy.filter(condition).forEach(body)
     }
 
     /// SwifterSwift: Reduces an array while returning each interim combination.
@@ -124,13 +102,8 @@ public extension Sequence {
     ///   - isIncluded: condition of inclusion to evaluate each element against.
     ///   - transform: transform element function to evaluate every element.
     /// - Returns: Return an filtered and mapped array.
-    func filtered<T>(_ isIncluded: (Element) throws -> Bool, map transform: (Element) throws -> T) rethrows ->  [T] {
-        return try compactMap({
-            if try isIncluded($0) {
-                return try transform($0)
-            }
-            return nil
-        })
+    func filtered<T>(_ isIncluded: (Element) throws -> Bool, map transform: (Element) throws -> T) rethrows -> [T] {
+        return try lazy.filter(isIncluded).map(transform)
     }
 
     /// SwifterSwift: Get the only element based on a condition.
@@ -141,8 +114,9 @@ public extension Sequence {
     ///     [2, 2, 4, 7].single(where: {$0 % 2 == 0}) -> nil
     ///
     /// - Parameter condition: condition to evaluate each element against.
-    /// - Returns: The only element in the array matching the specified condition. If there are more matching elements, nil is returned. (optional)
-    func single(where condition: ((Element) throws -> Bool)) rethrows -> Element? {
+    /// - Returns: The only element in the array matching the specified condition. If there are more matching elements,
+    /// nil is returned. (optional)
+    func single(where condition: (Element) throws -> Bool) rethrows -> Element? {
         var singleElement: Element?
         for element in self where try condition(element) {
             guard singleElement == nil else {
@@ -164,10 +138,11 @@ public extension Sequence {
     /// - Complexity: O(*n*), where *n* is the length of the sequence.
     func withoutDuplicates<T: Hashable>(transform: (Element) throws -> T) rethrows -> [Element] {
         var set = Set<T>()
-        return try filter { set.insert(try transform($0)).inserted }
+        return try filter { try set.insert(transform($0)).inserted }
     }
 
-    /// SwifterSwift: Separates all items into 2 lists based on a given predicate. The first list contains all items for which the specified condition evaluates to true. The second list contains those that don't.
+    ///  SwifterSwift: Separates all items into 2 lists based on a given predicate. The first list contains all items
+    /// for which the specified condition evaluates to true. The second list contains those that don't.
     ///
     ///     let (even, odd) = [0, 1, 2, 3, 4, 5].divided { $0 % 2 == 0 }
     ///     let (minors, adults) = people.divided { $0.age < 18 }
@@ -176,20 +151,20 @@ public extension Sequence {
     /// - Returns: A tuple of matched and non-matched items
     func divided(by condition: (Element) throws -> Bool) rethrows -> (matching: [Element], nonMatching: [Element]) {
         // Inspired by: http://ruby-doc.org/core-2.5.0/Enumerable.html#method-i-partition
-        var matching = ContiguousArray<Element>()
-        var nonMatching = ContiguousArray<Element>()
+        var matching = [Element]()
+        var nonMatching = [Element]()
 
-        var iterator = self.makeIterator()
-        while let element = iterator.next() {
+        for element in self {
+            // swiftlint:disable:next void_function_in_ternary
             try condition(element) ? matching.append(element) : nonMatching.append(element)
         }
-        return (Array(matching), Array(nonMatching))
+        return (matching, nonMatching)
     }
 
     /// SwifterSwift: Return a sorted array based on a key path and a compare function.
     ///
     /// - Parameter keyPath: Key path to sort by.
-    /// - Parameter compare: Comparation function that will determine the ordering.
+    /// - Parameter compare: Comparison function that will determine the ordering.
     /// - Returns: The sorted array.
     func sorted<T>(by keyPath: KeyPath<Element, T>, with compare: (T, T) -> Bool) -> [Element] {
         return sorted { compare($0[keyPath: keyPath], $1[keyPath: keyPath]) }
@@ -203,7 +178,8 @@ public extension Sequence {
         return sorted { $0[keyPath: keyPath] < $1[keyPath: keyPath] }
     }
 
-    /// SwifterSwift: Returns a sorted sequence based on two key paths. The second one will be used in case the values of the first one match.
+    /// SwifterSwift: Returns a sorted sequence based on two key paths. The second one will be used in case the values
+    /// of the first one match.
     ///
     /// - Parameters:
     ///     - keyPath1: Key path to sort by. Must be Comparable.
@@ -218,7 +194,8 @@ public extension Sequence {
         }
     }
 
-    /// SwifterSwift: Returns a sorted sequence based on three key paths. Whenever the values of one key path match, the next one will be used.
+    /// SwifterSwift: Returns a sorted sequence based on three key paths. Whenever the values of one key path match, the
+    /// next one will be used.
     ///
     /// - Parameters:
     ///     - keyPath1: Key path to sort by. Must be Comparable.
@@ -243,39 +220,26 @@ public extension Sequence {
     ///     ["James", "Wade", "Bryant"].sum(for: \.count) -> 15
     ///
     /// - Parameter keyPath: Key path of the `AdditiveArithmetic` property.
-    /// - Returns: The sum of the `AdditiveArithmetic` propertys at `keyPath`.
+    /// - Returns: The sum of the `AdditiveArithmetic` properties at `keyPath`.
     func sum<T: AdditiveArithmetic>(for keyPath: KeyPath<Element, T>) -> T {
         // Inspired by: https://swiftbysundell.com/articles/reducers-in-swift/
         return reduce(.zero) { $0 + $1[keyPath: keyPath] }
     }
 
-    /// SwifterSwift: Returns an array containing the results of mapping the given key path over the sequence’s elements.
+    /// SwifterSwift: Returns the first element of the sequence with having property by given key path equals to given
+    /// `value`.
     ///
-    /// - Parameter keyPath: Key path to map.
-    /// - Returns: An array containing the results of mapping.
-    func map<T>(by keyPath: KeyPath<Element, T>) -> [T] {
-        return map { $0[keyPath: keyPath] }
-    }
-
-    /// SwifterSwift: Returns an array containing the non-nil results of mapping the given key path over the sequence’s elements.
-    ///
-    /// - Parameter keyPath: Key path to map.
-    /// - Returns: An array containing the non-nil results of mapping.
-    func compactMap<T>(by keyPath: KeyPath<Element, T?>) -> [T] {
-        return compactMap { $0[keyPath: keyPath] }
-    }
-
-    /// SwifterSwift: Returns an array containing the results of filtering the sequence’s elements by a boolean key path.
-    ///
-    /// - Parameter keyPath: Boolean key path. If it's value is `true` the element will be added to result.
-    /// - Returns: An array containing filtered elements.
-    func filter(by keyPath: KeyPath<Element, Bool>) -> [Element] {
-        return filter { $0[keyPath: keyPath] }
+    /// - Parameters:
+    ///   - keyPath: The `KeyPath` of property for `Element` to compare.
+    ///   - value: The value to compare with `Element` property.
+    /// - Returns: The first element of the collection that has property by given key path equals to given `value` or
+    /// `nil` if there is no such element.
+    func first<T: Equatable>(where keyPath: KeyPath<Element, T>, equals value: T) -> Element? {
+        return first { $0[keyPath: keyPath] == value }
     }
 }
 
 public extension Sequence where Element: Equatable {
-
     /// SwifterSwift: Check if array contains an array of elements.
     ///
     ///        [1, 2, 3, 4, 5].contains([1, 2]) -> true
@@ -284,31 +248,33 @@ public extension Sequence where Element: Equatable {
     ///
     /// - Parameter elements: array of elements to check.
     /// - Returns: true if array contains all given items.
+    /// - Complexity: _O(m·n)_, where _m_ is the length of `elements` and _n_ is the length of this sequence.
     func contains(_ elements: [Element]) -> Bool {
-        guard !elements.isEmpty else { return true }
-        for element in elements {
-            if !contains(element) {
-                return false
-            }
-        }
-        return true
+        return elements.allSatisfy { contains($0) }
     }
-
 }
 
 public extension Sequence where Element: Hashable {
+    /// SwifterSwift: Check if array contains an array of elements.
+    ///
+    ///        [1, 2, 3, 4, 5].contains([1, 2]) -> true
+    ///        [1.2, 2.3, 4.5, 3.4, 4.5].contains([2, 6]) -> false
+    ///        ["h", "e", "l", "l", "o"].contains(["l", "o"]) -> true
+    ///
+    /// - Parameter elements: array of elements to check.
+    /// - Returns: true if array contains all given items.
+    /// - Complexity: _O(m + n)_, where _m_ is the length of `elements` and _n_ is the length of this sequence.
+    func contains(_ elements: [Element]) -> Bool {
+        let set = Set(self)
+        return elements.allSatisfy { set.contains($0) }
+    }
 
     /// SwifterSwift: Check whether a sequence contains duplicates.
     ///
     /// - Returns: true if the receiver contains duplicates.
     func containsDuplicates() -> Bool {
         var set = Set<Element>()
-        for element in self {
-            if !set.insert(element).inserted {
-                return true
-            }
-        }
-        return false
+        return contains { !set.insert($0).inserted }
     }
 
     /// SwifterSwift: Getting the duplicated elements in a sequence.
@@ -330,16 +296,15 @@ public extension Sequence where Element: Hashable {
     }
 }
 
-// MARK: - Methods (Numeric)
-public extension Sequence where Element: Numeric {
+// MARK: - Methods (AdditiveArithmetic)
 
+public extension Sequence where Element: AdditiveArithmetic {
     /// SwifterSwift: Sum of all elements in array.
     ///
     ///        [1, 2, 3, 4, 5].sum() -> 15
     ///
     /// - Returns: sum of the array's elements.
     func sum() -> Element {
-        return reduce(into: 0, +=)
+        return reduce(.zero, +)
     }
-
 }

@@ -34,4 +34,3 @@ public struct AccessToken: IdentityResource, Hashable {
 		hasher.combine(self.id)
 	}
 }
-
