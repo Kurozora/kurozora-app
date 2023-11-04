@@ -18,6 +18,7 @@ extension GameDetailsCollectionViewController {
 			RatingCollectionViewCell.self,
 			RatingSentimentCollectionViewCell.self,
 			RatingBarCollectionViewCell.self,
+			ReviewCollectionViewCell.self,
 			TapToRateCollectionViewCell.self,
 			InformationCollectionViewCell.self,
 			MusicLockupCollectionViewCell.self,
@@ -65,7 +66,7 @@ extension GameDetailsCollectionViewController {
 				textViewCollectionViewCell?.textViewCollectionViewCellType = .synopsis
 				textViewCollectionViewCell?.textViewContent = self.game.attributes.synopsis
 				return textViewCollectionViewCell
-			case .rating, .reviews:
+			case .rating:
 				let gameDetailRating = GameDetail.Rating(rawValue: indexPath.item) ?? .average
 				let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: gameDetailRating.identifierString, for: indexPath)
 
@@ -93,6 +94,15 @@ extension GameDetailsCollectionViewController {
 				default: break
 				}
 				return tapToRateCollectionViewCell
+			case .reviews:
+				let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.reviewCollectionViewCell, for: indexPath)
+				switch itemKind {
+				case .review(let review, _):
+					reviewCollectionViewCell?.delegate = self
+					reviewCollectionViewCell?.configureCell(using: review)
+				default: break
+				}
+				return reviewCollectionViewCell
 			case .information:
 				let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.informationCollectionViewCell, for: indexPath)
 				switch itemKind {
@@ -166,7 +176,14 @@ extension GameDetailsCollectionViewController {
 			case .rateAndReview:
 				self.snapshot.appendSections([gameDetailSection])
 				self.snapshot.appendItems([.game(self.game)], toSection: gameDetailSection)
-			case .reviews: break
+			case .reviews:
+				if !self.reviews.isEmpty {
+					self.snapshot.appendSections([gameDetailSection])
+					let reviewItems: [ItemKind] = self.reviews.map { review in
+						return .review(review)
+					}
+					self.snapshot.appendItems(reviewItems, toSection: gameDetailSection)
+				}
 			case .information:
 				self.snapshot.appendSections([gameDetailSection])
 				GameDetail.Information.allCases.forEach { _ in
@@ -228,7 +245,7 @@ extension GameDetailsCollectionViewController {
 			}
 		}
 
-		self.dataSource.apply(self.snapshot)
+		self.dataSource.apply(self.snapshot, animatingDifferences: false)
 	}
 
 	func fetchStudioGame(at indexPath: IndexPath) -> Game? {

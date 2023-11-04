@@ -15,6 +15,7 @@ import IntentsUI
 
 class GameDetailsCollectionViewController: KCollectionViewController {
 	// MARK: - IBOutlets
+	@IBOutlet weak var moreBarButtonItem: UIBarButtonItem!
 	@IBOutlet weak var navigationTitleView: UIView!
 	@IBOutlet weak var navigationTitleLabel: UILabel! {
 		didSet {
@@ -41,6 +42,9 @@ class GameDetailsCollectionViewController: KCollectionViewController {
 			#endif
 		}
 	}
+
+	/// Review properties.
+	var reviews: [Review] = []
 
 	/// Related Game properties.
 	var relatedGames: [RelatedGame] = []
@@ -185,6 +189,10 @@ class GameDetailsCollectionViewController: KCollectionViewController {
 		}
 	}
 
+	func configureNavBarButtons() {
+		self.moreBarButtonItem.menu = self.game?.makeContextMenu(in: self, userInfo: [:])
+	}
+
 	/// Fetches details for the given game identity. If none given then the currently viewed game's details are fetched.
 	func fetchDetails() async {
 		guard let gameIdentity = self.gameIdentity else { return }
@@ -199,16 +207,28 @@ class GameDetailsCollectionViewController: KCollectionViewController {
 			} catch {
 				print(error.localizedDescription)
 			}
+
+			self.configureNavBarButtons()
 		} else {
 			// Donate suggestion to Siri
 			self.userActivity = self.game.openDetailUserActivity
 
 			self.updateDataSource()
+			self.configureNavBarButtons()
+		}
+
+		do {
+			let reviewIdentityResponse = try await KService.getReviews(forGame: gameIdentity, next: nil, limit: 10).value
+			self.reviews = reviewIdentityResponse.data
+			self.updateDataSource()
+		} catch {
+			print(error.localizedDescription)
 		}
 
 		do {
 			let castIdentityResponse = try await KService.getCast(forGame: gameIdentity, limit: 10).value
 			self.castIdentities = castIdentityResponse.data
+			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -216,6 +236,7 @@ class GameDetailsCollectionViewController: KCollectionViewController {
 		do {
 			let studioIdentityResponse = try await KService.getStudios(forGame: gameIdentity, limit: 10).value
 			self.studioIdentities = studioIdentityResponse.data
+			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -223,6 +244,7 @@ class GameDetailsCollectionViewController: KCollectionViewController {
 		do {
 			let gameIdentityResponse = try await KService.getMoreByStudio(forGame: gameIdentity, limit: 10).value
 			self.studioGameIdentities = gameIdentityResponse.data
+			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -230,6 +252,7 @@ class GameDetailsCollectionViewController: KCollectionViewController {
 		do {
 			let relatedGameResponse = try await KService.getRelatedGames(forGame: gameIdentity, limit: 10).value
 			self.relatedGames = relatedGameResponse.data
+			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -237,6 +260,7 @@ class GameDetailsCollectionViewController: KCollectionViewController {
 		do {
 			let relatedShowResponse = try await KService.getRelatedShows(forGame: gameIdentity, limit: 10).value
 			self.relatedShows = relatedShowResponse.data
+			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -244,11 +268,10 @@ class GameDetailsCollectionViewController: KCollectionViewController {
 		do {
 			let relatedLiteratureResponse = try await KService.getRelatedLiteratures(forGame: gameIdentity, limit: 10).value
 			self.relatedLiteratures = relatedLiteratureResponse.data
+			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
-
-		self.updateDataSource()
 	}
 
 	@objc func toggleFavorite() {
@@ -275,11 +298,6 @@ class GameDetailsCollectionViewController: KCollectionViewController {
 		let name = self.game.attributes.reminderStatus == .reminded ? "bell.fill" : "bell"
 		self.toggleGameIsRemindedTouchBarItem?.image = UIImage(systemName: name)
 		#endif
-	}
-
-	// MARK: - IBActions
-	@IBAction func moreButtonPressed(_ sender: UIBarButtonItem) {
-		self.game?.openShareSheet(on: self, barButtonItem: sender)
 	}
 
 	// MARK: - Segue
@@ -510,6 +528,24 @@ extension GameDetailsCollectionViewController: BaseLockupCollectionViewCellDeleg
 	}
 }
 
+// MARK: - ReviewCollectionViewCellDelegate
+extension GameDetailsCollectionViewController: ReviewCollectionViewCellDelegate {
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressUserName sender: AnyObject) {
+		guard let indexPath = collectionView.indexPath(for: cell) else { return }
+		self.reviews[indexPath.item].visitOriginalPosterProfile(from: self)
+	}
+
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) {
+		if let badgeViewController = R.storyboard.badge.instantiateInitialViewController() {
+			badgeViewController.profileBadge = profileBadge
+			badgeViewController.popoverPresentationController?.sourceView = button
+			badgeViewController.popoverPresentationController?.sourceRect = button.bounds
+
+			self.present(badgeViewController, animated: true, completion: nil)
+		}
+	}
+}
+
 // MARK: - TapToRateCollectionViewCellDelegate
 extension GameDetailsCollectionViewController: TapToRateCollectionViewCellDelegate {
 	func tapToRateCollectionViewCell(_ cell: TapToRateCollectionViewCell, rateWith rating: Double) {
@@ -517,6 +553,20 @@ extension GameDetailsCollectionViewController: TapToRateCollectionViewCellDelega
 			guard let self = self else { return }
 			cell.configure(using: await self.game.rate(using: rating, description: nil))
 		}
+	}
+}
+
+// MARK: - WriteAReviewCollectionViewCellDelegate
+extension GameDetailsCollectionViewController: WriteAReviewCollectionViewCellDelegate {
+	func writeAReviewCollectionViewCell(_ cell: WriteAReviewCollectionViewCell, didPress button: UIButton) {
+		let reviewTextEditorViewController = ReviewTextEditorViewController()
+		reviewTextEditorViewController.router?.dataStore?.kind = .game(self.game)
+		reviewTextEditorViewController.router?.dataStore?.rating = self.game.attributes.givenRating
+		reviewTextEditorViewController.router?.dataStore?.review = nil
+
+		let navigationController = KNavigationController(rootViewController: reviewTextEditorViewController)
+		navigationController.presentationController?.delegate = reviewTextEditorViewController
+		self.present(navigationController, animated: true)
 	}
 }
 
@@ -615,6 +665,9 @@ extension GameDetailsCollectionViewController {
 		/// Indicates the item kind contains a `Game` object.
 		case game(_: Game, id: UUID = UUID())
 
+		/// Indicates the item kind contains a `Review` object.
+		case review(_: Review, id: UUID = UUID())
+
 		/// Indicates the item kind contains a `GameIdentity` object.
 		case gameIdentity(_: GameIdentity, id: UUID = UUID())
 
@@ -644,6 +697,9 @@ extension GameDetailsCollectionViewController {
 			switch self {
 			case .game(let game, let id):
 				hasher.combine(game)
+				hasher.combine(id)
+			case .review(let review, let id):
+				hasher.combine(review)
 				hasher.combine(id)
 			case .gameIdentity(let gameIdentity, let id):
 				hasher.combine(gameIdentity)
@@ -676,6 +732,8 @@ extension GameDetailsCollectionViewController {
 			switch (lhs, rhs) {
 			case (.game(let game1, let id1), .game(let game2, let id2)):
 				return game1 == game2 && id1 == id2
+			case (.review(let review1, let id1), .review(let review2, let id2)):
+				return review1 == review2 && id1 == id2
 			case (.gameIdentity(let gameIdentity1, let id1), .gameIdentity(let gameIdentity2, let id2)):
 				return gameIdentity1 == gameIdentity2 && id1 == id2
 			case (.relatedGame(let relatedGame1, let id1), .relatedGame(let relatedGame2, let id2)):

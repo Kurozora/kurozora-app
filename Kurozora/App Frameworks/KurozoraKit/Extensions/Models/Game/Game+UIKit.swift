@@ -19,11 +19,11 @@ extension Game {
 			return GameDetailsCollectionViewController.`init`(with: self.id)
 		}) { [weak self] _ in
 			guard let self = self else { return nil }
-			return self.makeContextMenu(in: viewController)
+			return self.makeContextMenu(in: viewController, userInfo: userInfo)
 		}
 	}
 
-	private func makeContextMenu(in viewController: UIViewController) -> UIMenu {
+	func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?) -> UIMenu {
 		var menuElements: [UIMenuElement] = []
 		let libraryStatus = self.attributes.libraryStatus ?? .none
 
