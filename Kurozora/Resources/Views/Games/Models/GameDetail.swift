@@ -165,6 +165,26 @@ extension GameDetail {
 	}
 }
 
+// MARK: - Rating & Review
+extension GameDetail {
+	/// List of available game rate & review types.
+	enum RateAndReview: Int, CaseIterable {
+		case tapToRate = 0
+		case writeAReview
+
+		// MARK: - Properties
+		/// The cell identifier string of a game rate & review section.
+		var identifierString: String {
+			switch self {
+			case .tapToRate:
+				return R.reuseIdentifier.tapToRateCollectionViewCell.identifier
+			case .writeAReview:
+				return R.reuseIdentifier.writeAReviewCollectionViewCell.identifier
+			}
+		}
+	}
+}
+
 // MARK: - Information
 extension GameDetail {
 	/// List of available game information types.

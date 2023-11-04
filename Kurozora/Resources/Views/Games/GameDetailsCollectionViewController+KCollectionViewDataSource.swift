@@ -20,6 +20,7 @@ extension GameDetailsCollectionViewController {
 			RatingBarCollectionViewCell.self,
 			ReviewCollectionViewCell.self,
 			TapToRateCollectionViewCell.self,
+			WriteAReviewCollectionViewCell.self,
 			InformationCollectionViewCell.self,
 			MusicLockupCollectionViewCell.self,
 			SosumiCollectionViewCell.self
@@ -86,14 +87,21 @@ extension GameDetailsCollectionViewController {
 				}
 				return ratingCollectionViewCell
 			case .rateAndReview:
-				let tapToRateCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.tapToRateCollectionViewCell, for: indexPath)
-				tapToRateCollectionViewCell?.delegate = self
-				switch itemKind {
-				case .game(let game, _):
-					tapToRateCollectionViewCell?.configure(using: game.attributes.givenRating)
-				default: break
+				let gameDetailRateAndReview = GameDetail.RateAndReview(rawValue: indexPath.item) ?? .tapToRate
+				let rateAndReviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: gameDetailRateAndReview.identifierString, for: indexPath)
+
+				switch gameDetailRateAndReview {
+				case .tapToRate:
+					switch itemKind {
+					case .game(let game, _):
+						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.delegate = self
+						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.configure(using: game.attributes.givenRating)
+					default: break
+					}
+				case .writeAReview:
+					(rateAndReviewCollectionViewCell as? WriteAReviewCollectionViewCell)?.delegate = self
 				}
-				return tapToRateCollectionViewCell
+				return rateAndReviewCollectionViewCell
 			case .reviews:
 				let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.reviewCollectionViewCell, for: indexPath)
 				switch itemKind {
@@ -175,7 +183,9 @@ extension GameDetailsCollectionViewController {
 				}
 			case .rateAndReview:
 				self.snapshot.appendSections([gameDetailSection])
-				self.snapshot.appendItems([.game(self.game)], toSection: gameDetailSection)
+				GameDetail.RateAndReview.allCases.forEach { _ in
+					self.snapshot.appendItems([.game(self.game)], toSection: gameDetailSection)
+				}
 			case .reviews:
 				if !self.reviews.isEmpty {
 					self.snapshot.appendSections([gameDetailSection])
