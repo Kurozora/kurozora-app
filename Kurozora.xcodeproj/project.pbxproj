@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		6601C3A023BBB98000466BA3 /* ShowDetailHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6601C39F23BBB98000466BA3 /* ShowDetailHeaderCollectionViewCell.swift */; };
 		6601F1AC2118488D0074C1DD /* IconNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6601F1AB2118488D0074C1DD /* IconNotificationCell.swift */; };
-		66058DBA212E97670084B79E /* ReviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66058DB9212E97670084B79E /* ReviewCollectionViewCell.swift */; };
 		660628BC2A62F79100D4A8BB /* ProfileBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660628BB2A62F79100D4A8BB /* ProfileBadge.swift */; };
 		6609005429DCE0B00015FE9F /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6609005329DCE0AF0015FE9F /* GradientView.swift */; };
 		6609FAD721D8D237008DF5E4 /* KurozoraDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6609FAD621D8D237008DF5E4 /* KurozoraDelegate.swift */; };
@@ -340,6 +339,9 @@
 		66856E882931AF730083160D /* SongDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66856E872931AF730083160D /* SongDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */; };
 		66856E8B2931B0960083160D /* SongHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66856E8A2931B06C0083160D /* SongHeaderCollectionViewCell.swift */; };
 		668DBE6726BCA21D00399BEB /* KTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668DBE6626BCA21D00399BEB /* KTheme.swift */; };
+		668F66652AF44E0B0001C592 /* ReviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66058DB9212E97670084B79E /* ReviewCollectionViewCell.swift */; };
+		668F66672AF451030001C592 /* ReviewCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 668F66642AF44D9E0001C592 /* ReviewCollectionViewCell.xib */; };
+		668F666A2AF4554E0001C592 /* Review+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668F66692AF4554E0001C592 /* Review+UIKit.swift */; };
 		6691B83225869A9C005341F9 /* KCosmosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6691B83125869A9C005341F9 /* KCosmosView.swift */; };
 		66938FD8211CD3E600ADA5D6 /* ShowDetailsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66938FD7211CD3E600ADA5D6 /* ShowDetailsCollectionViewController.swift */; };
 		6694202723EAF1C800D69B5E /* Scheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6694202623EAF1C800D69B5E /* Scheme.swift */; };
@@ -993,6 +995,8 @@
 		66856E8A2931B06C0083160D /* SongHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
 		668DBE6626BCA21D00399BEB /* KTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KTheme.swift; sourceTree = "<group>"; };
 		668DBE6B26BCB00300399BEB /* Icons.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Icons.storyboard; sourceTree = "<group>"; };
+		668F66642AF44D9E0001C592 /* ReviewCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReviewCollectionViewCell.xib; sourceTree = "<group>"; };
+		668F66692AF4554E0001C592 /* Review+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Review+UIKit.swift"; sourceTree = "<group>"; };
 		6691B83125869A9C005341F9 /* KCosmosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCosmosView.swift; sourceTree = "<group>"; };
 		66938FD7211CD3E600ADA5D6 /* ShowDetailsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetailsCollectionViewController.swift; sourceTree = "<group>"; };
 		6694202623EAF1C800D69B5E /* Scheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scheme.swift; sourceTree = "<group>"; };
@@ -2505,6 +2509,14 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		668F66682AF455310001C592 /* Review */ = {
+			isa = PBXGroup;
+			children = (
+				668F66692AF4554E0001C592 /* Review+UIKit.swift */,
+			);
+			path = Review;
+			sourceTree = "<group>";
+		};
 		6691B83025869A91005341F9 /* Cosmos */ = {
 			isa = PBXGroup;
 			children = (
@@ -3139,6 +3151,7 @@
 				66349D04256C74DA000B8523 /* Feed */,
 				66E1216429B001CF0051C4ED /* Game */,
 				6632C41B298ACA8D00702F7C /* Literature */,
+				668F66682AF455310001C592 /* Review */,
 				669E0357256B217900CEB794 /* Session */,
 				66D0BF7E25613DE0000AB7BF /* Show */,
 				66F27EBA283A794400CC2277 /* Studio */,
@@ -3171,6 +3184,7 @@
 				66E54D572A6D1FF300F9F8AA /* RatingSentimentCollectionViewCell.swift */,
 				66E54D592A6D218F00F9F8AA /* RatingSentimentCollectionViewCell.xib */,
 				66058DB9212E97670084B79E /* ReviewCollectionViewCell.swift */,
+				668F66642AF44D9E0001C592 /* ReviewCollectionViewCell.xib */,
 				6601C39F23BBB98000466BA3 /* ShowDetailHeaderCollectionViewCell.swift */,
 				661F186124AB5CCE00542AFB /* SosumiCollectionViewCell.swift */,
 				661F185F24AB5C6E00542AFB /* SosumiCollectionViewCell.xib */,
@@ -3805,6 +3819,7 @@
 				666C89A92A00768F0075B5D6 /* SearchFilterSwitchCollectionViewCell.xib in Resources */,
 				66EAB5BA28591C0100D81C06 /* UserLockupCollectionViewCell.xib in Resources */,
 				66A48FE021A411A900F34085 /* Notifications.storyboard in Resources */,
+				668F66672AF451030001C592 /* ReviewCollectionViewCell.xib in Resources */,
 				666C89AB2A00786E0075B5D6 /* SearchFilterDateCollectionViewCell.xib in Resources */,
 				669EA9A222C1491600784181 /* Purchase.storyboard in Resources */,
 				66A4FD19270F6CD100E7C702 /* App Icons.plist in Resources */,
@@ -4061,6 +4076,7 @@
 				66C1E7E8295A16AD00C7C44C /* SplashscreenRouter.swift in Sources */,
 				6632C421298ACB9F00702F7C /* Literature+UIKit.swift in Sources */,
 				66AEABDA22987A4D00949FD8 /* KThemePicker.swift in Sources */,
+				668F66652AF44E0B0001C592 /* ReviewCollectionViewCell.swift in Sources */,
 				6645407F2821EF090001E5B2 /* RoundedRectangleImageView.swift in Sources */,
 				66AEABEF22993E9C00949FD8 /* NotificationsOptionsViewController.swift in Sources */,
 				66DF091326C7C1FB005AED93 /* Store.swift in Sources */,
@@ -4158,6 +4174,7 @@
 				66CE80FA2460348100DB0C49 /* KTableViewController+KTableViewDataSource.swift in Sources */,
 				6601C3A023BBB98000466BA3 /* ShowDetailHeaderCollectionViewCell.swift in Sources */,
 				66FA97C8281A12320054FC2E /* SidebarSection.swift in Sources */,
+				668F666A2AF4554E0001C592 /* Review+UIKit.swift in Sources */,
 				660E39ED25E5BC7500A46EB0 /* Season+UIKit.swift in Sources */,
 				66EAB5C7285D29EC00D81C06 /* ShowListCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				660E39E225E4664200A46EB0 /* ProfileTableViewController+UITableViewDelegate.swift in Sources */,
@@ -4258,7 +4275,6 @@
 				6694202723EAF1C800D69B5E /* Scheme.swift in Sources */,
 				66EA1DF625B5F6EA00FCD07A /* ShowDetailsCollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				66B2C741232F99440042AB12 /* Array+Kurozora.swift in Sources */,
-				66058DBA212E97670084B79E /* ReviewCollectionViewCell.swift in Sources */,
 				6664B81324A403C700E73728 /* TextViewCollectionViewCellType.swift in Sources */,
 				66C4DADD243BE4AA00C4B90A /* KKLibraryStatus+Kurozora.swift in Sources */,
 				66E1215429AFEE0C0051C4ED /* GameDetailsCollectionViewController+UICollectionViewDelegate.swift in Sources */,

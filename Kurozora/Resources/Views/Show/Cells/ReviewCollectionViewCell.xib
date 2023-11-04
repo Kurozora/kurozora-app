@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell contentMode="center" reuseIdentifier="ReviewCollectionViewCell" id="SfZ-Ad-xLi" customClass="ReviewCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="374" height="121.5"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" id="SgI-sl-Z8o">
+                <rect key="frame" x="0.0" y="0.0" width="374" height="121.5"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zF2-lp-0cu" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="8" y="8" width="44" height="44"/>
+                        <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="44" id="65R-7z-FjS"/>
+                            <constraint firstAttribute="height" constant="44" id="lOf-wk-KI6"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Kurozora" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jXb-8G-Omv" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="60" y="8" width="71.5" height="20"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="vcF-nr-S1D" customClass="ProfileBadgeStackView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="133.5" y="8" width="209.5" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="Hhn-mb-6Hb"/>
+                        </constraints>
+                    </stackView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2d" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WKI-z6-jsJ" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="351" y="8" width="15" height="20"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                        <color key="textColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6nH-tN-JrJ" customClass="KCosmosView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="60" y="28" width="306" height="39.5"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="updateOnTouch" value="NO"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="textSize">
+                                <integer key="value" value="12"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="starSize">
+                                <integer key="value" value="16"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="fillMode">
+                                <integer key="value" value="2"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <textView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="_test" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="T9c-i1-chK" customClass="KSelectableTextView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="60" y="75.5" width="306" height="38"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        <dataDetectorType key="dataDetectorTypes" link="YES" calendarEvent="YES" lookupSuggestion="YES"/>
+                    </textView>
+                </subviews>
+                <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <constraints>
+                    <constraint firstItem="vcF-nr-S1D" firstAttribute="leading" secondItem="jXb-8G-Omv" secondAttribute="trailing" constant="2" id="2kD-iK-kMW"/>
+                    <constraint firstItem="WKI-z6-jsJ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jXb-8G-Omv" secondAttribute="trailing" constant="10" id="6TC-NT-VaQ"/>
+                    <constraint firstItem="zF2-lp-0cu" firstAttribute="leading" secondItem="SgI-sl-Z8o" secondAttribute="leading" constant="8" id="A2S-Ps-Cgf"/>
+                    <constraint firstItem="jXb-8G-Omv" firstAttribute="leading" secondItem="zF2-lp-0cu" secondAttribute="trailing" constant="8" symbolic="YES" id="AqN-SV-ELa"/>
+                    <constraint firstItem="zF2-lp-0cu" firstAttribute="top" secondItem="SgI-sl-Z8o" secondAttribute="top" constant="8" id="Bb0-yA-ffX"/>
+                    <constraint firstItem="WKI-z6-jsJ" firstAttribute="leading" secondItem="vcF-nr-S1D" secondAttribute="trailing" constant="8" symbolic="YES" id="Bdp-sq-kvC"/>
+                    <constraint firstAttribute="trailing" secondItem="WKI-z6-jsJ" secondAttribute="trailing" constant="8" id="EVr-tU-x1f"/>
+                    <constraint firstItem="6nH-tN-JrJ" firstAttribute="leading" secondItem="jXb-8G-Omv" secondAttribute="leading" id="Eqd-7c-8WF"/>
+                    <constraint firstItem="WKI-z6-jsJ" firstAttribute="centerY" secondItem="jXb-8G-Omv" secondAttribute="centerY" id="Ex0-Lc-x0y"/>
+                    <constraint firstItem="zF2-lp-0cu" firstAttribute="top" secondItem="jXb-8G-Omv" secondAttribute="top" id="FSU-Yn-mUh"/>
+                    <constraint firstItem="T9c-i1-chK" firstAttribute="trailing" secondItem="WKI-z6-jsJ" secondAttribute="trailing" id="FV3-NT-ste"/>
+                    <constraint firstItem="T9c-i1-chK" firstAttribute="leading" secondItem="jXb-8G-Omv" secondAttribute="leading" id="Q9h-DB-ftj"/>
+                    <constraint firstItem="T9c-i1-chK" firstAttribute="top" secondItem="6nH-tN-JrJ" secondAttribute="bottom" constant="8" symbolic="YES" id="Wfl-sI-Zaf"/>
+                    <constraint firstAttribute="bottom" secondItem="T9c-i1-chK" secondAttribute="bottom" constant="8" id="bxC-Jb-2Tl"/>
+                    <constraint firstItem="vcF-nr-S1D" firstAttribute="top" secondItem="jXb-8G-Omv" secondAttribute="top" id="dmS-P1-wSV"/>
+                    <constraint firstItem="WKI-z6-jsJ" firstAttribute="top" secondItem="jXb-8G-Omv" secondAttribute="top" id="pjv-da-61N"/>
+                    <constraint firstItem="vcF-nr-S1D" firstAttribute="bottom" secondItem="jXb-8G-Omv" secondAttribute="bottom" id="puk-GD-wgz"/>
+                    <constraint firstItem="6nH-tN-JrJ" firstAttribute="top" secondItem="jXb-8G-Omv" secondAttribute="bottom" id="vbK-ag-yim"/>
+                    <constraint firstItem="6nH-tN-JrJ" firstAttribute="trailing" secondItem="WKI-z6-jsJ" secondAttribute="trailing" id="y2A-QV-jKR"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <connections>
+                <outlet property="contentTextView" destination="T9c-i1-chK" id="AwM-yz-ClD"/>
+                <outlet property="cosmosView" destination="6nH-tN-JrJ" id="qKM-ia-c9H"/>
+                <outlet property="dateTimeLabel" destination="WKI-z6-jsJ" id="zg8-ww-DON"/>
+                <outlet property="profileBadgeStackView" destination="vcF-nr-S1D" id="H4j-uF-ZUm"/>
+                <outlet property="profileImageView" destination="zF2-lp-0cu" id="1wL-Ax-pnt"/>
+                <outlet property="usernameLabel" destination="jXb-8G-Omv" id="OaY-tA-aQU"/>
+            </connections>
+            <point key="canvasLocation" x="-259.4202898550725" y="-86.383928571428569"/>
+        </collectionViewCell>
+    </objects>
+    <designables>
+        <designable name="6nH-tN-JrJ">
+            <size key="intrinsicContentSize" width="92" height="16"/>
+        </designable>
+    </designables>
+</document>
