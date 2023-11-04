@@ -15,6 +15,7 @@ import IntentsUI
 
 class LiteratureDetailsCollectionViewController: KCollectionViewController {
 	// MARK: - IBOutlets
+	@IBOutlet weak var moreBarButtonItem: UIBarButtonItem!
 	@IBOutlet weak var navigationTitleView: UIView!
 	@IBOutlet weak var navigationTitleLabel: UILabel! {
 		didSet {
@@ -41,6 +42,9 @@ class LiteratureDetailsCollectionViewController: KCollectionViewController {
 			#endif
 		}
 	}
+
+	/// Review properties.
+	var reviews: [Review] = []
 
 	/// Related Literature properties.
 	var relatedLiteratures: [RelatedLiterature] = []
@@ -185,6 +189,10 @@ class LiteratureDetailsCollectionViewController: KCollectionViewController {
 		}
 	}
 
+	func configureNavBarButtons() {
+		self.moreBarButtonItem.menu = self.literature?.makeContextMenu(in: self, userInfo: [:])
+	}
+
 	/// Fetches details for the given literature identity. If none given then the currently viewed literature's details are fetched.
 	func fetchDetails() async {
 		guard let literatureIdentity = self.literatureIdentity else { return }
@@ -199,16 +207,20 @@ class LiteratureDetailsCollectionViewController: KCollectionViewController {
 			} catch {
 				print(error.localizedDescription)
 			}
+
+			self.configureNavBarButtons()
 		} else {
 			// Donate suggestion to Siri
 			self.userActivity = self.literature.openDetailUserActivity
 
 			self.updateDataSource()
+			self.configureNavBarButtons()
 		}
 
 		do {
 			let castIdentityResponse = try await KService.getCast(forLiterature: literatureIdentity, limit: 10).value
 			self.castIdentities = castIdentityResponse.data
+			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -216,6 +228,7 @@ class LiteratureDetailsCollectionViewController: KCollectionViewController {
 		do {
 			let studioIdentityResponse = try await KService.getStudios(forLiterature: literatureIdentity, limit: 10).value
 			self.studioIdentities = studioIdentityResponse.data
+			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -223,6 +236,7 @@ class LiteratureDetailsCollectionViewController: KCollectionViewController {
 		do {
 			let literatureIdentityResponse = try await KService.getMoreByStudio(forLiterature: literatureIdentity, limit: 10).value
 			self.studioLiteratureIdentities = literatureIdentityResponse.data
+			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -230,6 +244,7 @@ class LiteratureDetailsCollectionViewController: KCollectionViewController {
 		do {
 			let relatedLiteratureResponse = try await KService.getRelatedLiteratures(forLiterature: literatureIdentity, limit: 10).value
 			self.relatedLiteratures = relatedLiteratureResponse.data
+			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -237,6 +252,7 @@ class LiteratureDetailsCollectionViewController: KCollectionViewController {
 		do {
 			let relatedShowResponse = try await KService.getRelatedShows(forLiterature: literatureIdentity, limit: 10).value
 			self.relatedShows = relatedShowResponse.data
+			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -244,11 +260,10 @@ class LiteratureDetailsCollectionViewController: KCollectionViewController {
 		do {
 			let relatedGameResponse = try await KService.getRelatedGames(forLiterature: literatureIdentity, limit: 10).value
 			self.relatedGames = relatedGameResponse.data
+			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
-
-		self.updateDataSource()
 	}
 
 	@objc func toggleFavorite() {
@@ -275,11 +290,6 @@ class LiteratureDetailsCollectionViewController: KCollectionViewController {
 		let name = self.literature.attributes.reminderStatus == .reminded ? "bell.fill" : "bell"
 		self.toggleLiteratureIsRemindedTouchBarItem?.image = UIImage(systemName: name)
 		#endif
-	}
-
-	// MARK: - IBActions
-	@IBAction func moreButtonPressed(_ sender: UIBarButtonItem) {
-		self.literature?.openShareSheet(on: self, barButtonItem: sender)
 	}
 
 	// MARK: - Segue
@@ -506,6 +516,24 @@ extension LiteratureDetailsCollectionViewController: BaseLockupCollectionViewCel
 	}
 }
 
+// MARK: - ReviewCollectionViewCellDelegate
+extension LiteratureDetailsCollectionViewController: ReviewCollectionViewCellDelegate {
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressUserName sender: AnyObject) {
+		guard let indexPath = collectionView.indexPath(for: cell) else { return }
+		self.reviews[indexPath.item].visitOriginalPosterProfile(from: self)
+	}
+
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) {
+		if let badgeViewController = R.storyboard.badge.instantiateInitialViewController() {
+			badgeViewController.profileBadge = profileBadge
+			badgeViewController.popoverPresentationController?.sourceView = button
+			badgeViewController.popoverPresentationController?.sourceRect = button.bounds
+
+			self.present(badgeViewController, animated: true, completion: nil)
+		}
+	}
+}
+
 // MARK: - TapToRateCollectionViewCellDelegate
 extension LiteratureDetailsCollectionViewController: TapToRateCollectionViewCellDelegate {
 	func tapToRateCollectionViewCell(_ cell: TapToRateCollectionViewCell, rateWith rating: Double) {
@@ -513,6 +541,20 @@ extension LiteratureDetailsCollectionViewController: TapToRateCollectionViewCell
 			guard let self = self else { return }
 			cell.configure(using: await self.literature.rate(using: rating, description: nil))
 		}
+	}
+}
+
+// MARK: - WriteAReviewCollectionViewCellDelegate
+extension LiteratureDetailsCollectionViewController: WriteAReviewCollectionViewCellDelegate {
+	func writeAReviewCollectionViewCell(_ cell: WriteAReviewCollectionViewCell, didPress button: UIButton) {
+		let reviewTextEditorViewController = ReviewTextEditorViewController()
+		reviewTextEditorViewController.router?.dataStore?.kind = .literature(self.literature)
+		reviewTextEditorViewController.router?.dataStore?.rating = self.literature.attributes.givenRating
+		reviewTextEditorViewController.router?.dataStore?.review = nil
+
+		let navigationController = KNavigationController(rootViewController: reviewTextEditorViewController)
+		navigationController.presentationController?.delegate = reviewTextEditorViewController
+		self.present(navigationController, animated: true)
 	}
 }
 
@@ -611,6 +653,9 @@ extension LiteratureDetailsCollectionViewController {
 		/// Indicates the item kind contains a `Literature` object.
 		case literature(_: Literature, id: UUID = UUID())
 
+		/// Indicates the item kind contains a `Review` object.
+		case review(_: Review, id: UUID = UUID())
+
 		/// Indicates the item kind contains a `LiteratureIdentity` object.
 		case literatureIdentity(_: LiteratureIdentity, id: UUID = UUID())
 
@@ -640,6 +685,9 @@ extension LiteratureDetailsCollectionViewController {
 			switch self {
 			case .literature(let literature, let id):
 				hasher.combine(literature)
+				hasher.combine(id)
+			case .review(let review, let id):
+				hasher.combine(review)
 				hasher.combine(id)
 			case .literatureIdentity(let literatureIdentity, let id):
 				hasher.combine(literatureIdentity)
@@ -672,6 +720,8 @@ extension LiteratureDetailsCollectionViewController {
 			switch (lhs, rhs) {
 			case (.literature(let literature1, let id1), .literature(let literature2, let id2)):
 				return literature1 == literature2 && id1 == id2
+			case (.review(let review1, let id1), .review(let review2, let id2)):
+				return review1 == review2 && id1 == id2
 			case (.literatureIdentity(let literatureIdentity1, let id1), .literatureIdentity(let literatureIdentity2, let id2)):
 				return literatureIdentity1 == literatureIdentity2 && id1 == id2
 			case (.relatedLiterature(let relatedLiterature1, let id1), .relatedLiterature(let relatedLiterature2, let id2)):

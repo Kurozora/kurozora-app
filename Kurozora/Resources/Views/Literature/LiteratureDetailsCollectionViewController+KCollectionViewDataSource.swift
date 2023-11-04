@@ -18,6 +18,7 @@ extension LiteratureDetailsCollectionViewController {
 			RatingCollectionViewCell.self,
 			RatingSentimentCollectionViewCell.self,
 			RatingBarCollectionViewCell.self,
+			ReviewCollectionViewCell.self,
 			TapToRateCollectionViewCell.self,
 			InformationCollectionViewCell.self,
 			MusicLockupCollectionViewCell.self,
@@ -65,7 +66,7 @@ extension LiteratureDetailsCollectionViewController {
 				textViewCollectionViewCell?.textViewCollectionViewCellType = .synopsis
 				textViewCollectionViewCell?.textViewContent = self.literature.attributes.synopsis
 				return textViewCollectionViewCell
-			case .rating, .reviews:
+			case .rating:
 				let literatureDetailRating = LiteratureDetail.Rating(rawValue: indexPath.item) ?? .average
 				let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: literatureDetailRating.identifierString, for: indexPath)
 
@@ -93,6 +94,15 @@ extension LiteratureDetailsCollectionViewController {
 				default: break
 				}
 				return tapToRateCollectionViewCell
+			case .reviews:
+				let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.reviewCollectionViewCell, for: indexPath)
+				switch itemKind {
+				case .review(let review, _):
+					reviewCollectionViewCell?.delegate = self
+					reviewCollectionViewCell?.configureCell(using: review)
+				default: break
+				}
+				return reviewCollectionViewCell
 			case .information:
 				let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.informationCollectionViewCell, for: indexPath)
 				switch itemKind {
@@ -166,7 +176,14 @@ extension LiteratureDetailsCollectionViewController {
 			case .rateAndReview:
 				self.snapshot.appendSections([literatureDetailSection])
 				self.snapshot.appendItems([.literature(self.literature)], toSection: literatureDetailSection)
-			case .reviews: break
+			case .reviews:
+				if !self.reviews.isEmpty {
+					self.snapshot.appendSections([literatureDetailSection])
+					let reviewItems: [ItemKind] = self.reviews.map { review in
+						return .review(review)
+					}
+					self.snapshot.appendItems(reviewItems, toSection: literatureDetailSection)
+				}
 			case .information:
 				self.snapshot.appendSections([literatureDetailSection])
 				LiteratureDetail.Information.allCases.forEach { _ in
@@ -228,7 +245,7 @@ extension LiteratureDetailsCollectionViewController {
 			}
 		}
 
-		self.dataSource.apply(self.snapshot)
+		self.dataSource.apply(self.snapshot, animatingDifferences: false)
 	}
 
 	func fetchStudioLiterature(at indexPath: IndexPath) -> Literature? {
