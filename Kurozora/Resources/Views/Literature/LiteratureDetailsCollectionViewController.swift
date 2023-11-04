@@ -547,14 +547,18 @@ extension LiteratureDetailsCollectionViewController: TapToRateCollectionViewCell
 // MARK: - WriteAReviewCollectionViewCellDelegate
 extension LiteratureDetailsCollectionViewController: WriteAReviewCollectionViewCellDelegate {
 	func writeAReviewCollectionViewCell(_ cell: WriteAReviewCollectionViewCell, didPress button: UIButton) {
-		let reviewTextEditorViewController = ReviewTextEditorViewController()
-		reviewTextEditorViewController.router?.dataStore?.kind = .literature(self.literature)
-		reviewTextEditorViewController.router?.dataStore?.rating = self.literature.attributes.givenRating
-		reviewTextEditorViewController.router?.dataStore?.review = nil
+		WorkflowController.shared.isSignedIn { [weak self] in
+			guard let self = self else { return }
 
-		let navigationController = KNavigationController(rootViewController: reviewTextEditorViewController)
-		navigationController.presentationController?.delegate = reviewTextEditorViewController
-		self.present(navigationController, animated: true)
+			let reviewTextEditorViewController = ReviewTextEditorViewController()
+			reviewTextEditorViewController.router?.dataStore?.kind = .literature(self.literature)
+			reviewTextEditorViewController.router?.dataStore?.rating = self.literature.attributes.givenRating
+			reviewTextEditorViewController.router?.dataStore?.review = nil
+
+			let navigationController = KNavigationController(rootViewController: reviewTextEditorViewController)
+			navigationController.presentationController?.delegate = reviewTextEditorViewController
+			self.present(navigationController, animated: true)
+		}
 	}
 }
 

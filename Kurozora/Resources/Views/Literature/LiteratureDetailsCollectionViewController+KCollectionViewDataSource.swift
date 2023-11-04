@@ -20,6 +20,7 @@ extension LiteratureDetailsCollectionViewController {
 			RatingBarCollectionViewCell.self,
 			ReviewCollectionViewCell.self,
 			TapToRateCollectionViewCell.self,
+			WriteAReviewCollectionViewCell.self,
 			InformationCollectionViewCell.self,
 			MusicLockupCollectionViewCell.self,
 			SosumiCollectionViewCell.self
@@ -86,14 +87,21 @@ extension LiteratureDetailsCollectionViewController {
 				}
 				return ratingCollectionViewCell
 			case .rateAndReview:
-				let tapToRateCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.tapToRateCollectionViewCell, for: indexPath)
-				tapToRateCollectionViewCell?.delegate = self
-				switch itemKind {
-				case .literature(let literature, _):
-					tapToRateCollectionViewCell?.configure(using: literature.attributes.givenRating)
-				default: break
+				let literatureDetailRateAndReview = LiteratureDetail.RateAndReview(rawValue: indexPath.item) ?? .tapToRate
+				let rateAndReviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: literatureDetailRateAndReview.identifierString, for: indexPath)
+
+				switch literatureDetailRateAndReview {
+				case .tapToRate:
+					switch itemKind {
+					case .literature(let literature, _):
+						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.delegate = self
+						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.configure(using: literature.attributes.givenRating)
+					default: break
+					}
+				case .writeAReview:
+					(rateAndReviewCollectionViewCell as? WriteAReviewCollectionViewCell)?.delegate = self
 				}
-				return tapToRateCollectionViewCell
+				return rateAndReviewCollectionViewCell
 			case .reviews:
 				let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.reviewCollectionViewCell, for: indexPath)
 				switch itemKind {
@@ -175,7 +183,9 @@ extension LiteratureDetailsCollectionViewController {
 				}
 			case .rateAndReview:
 				self.snapshot.appendSections([literatureDetailSection])
-				self.snapshot.appendItems([.literature(self.literature)], toSection: literatureDetailSection)
+				LiteratureDetail.RateAndReview.allCases.forEach { _ in
+					self.snapshot.appendItems([.literature(self.literature)], toSection: literatureDetailSection)
+				}
 			case .reviews:
 				if !self.reviews.isEmpty {
 					self.snapshot.appendSections([literatureDetailSection])

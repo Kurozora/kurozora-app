@@ -165,6 +165,26 @@ extension LiteratureDetail {
 	}
 }
 
+// MARK: - Rating & Review
+extension LiteratureDetail {
+	/// List of available literature rate & review types.
+	enum RateAndReview: Int, CaseIterable {
+		case tapToRate = 0
+		case writeAReview
+
+		// MARK: - Properties
+		/// The cell identifier string of a literature rate & review section.
+		var identifierString: String {
+			switch self {
+			case .tapToRate:
+				return R.reuseIdentifier.tapToRateCollectionViewCell.identifier
+			case .writeAReview:
+				return R.reuseIdentifier.writeAReviewCollectionViewCell.identifier
+			}
+		}
+	}
+}
+
 // MARK: - Information
 extension LiteratureDetail {
 	/// List of available literature information types.
