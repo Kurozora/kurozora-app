@@ -18,6 +18,7 @@ extension ShowDetailsCollectionViewController {
 			RatingCollectionViewCell.self,
 			RatingSentimentCollectionViewCell.self,
 			RatingBarCollectionViewCell.self,
+			ReviewCollectionViewCell.self,
 			TapToRateCollectionViewCell.self,
 			WriteAReviewCollectionViewCell.self,
 			InformationCollectionViewCell.self,
@@ -67,7 +68,7 @@ extension ShowDetailsCollectionViewController {
 				textViewCollectionViewCell?.textViewCollectionViewCellType = .synopsis
 				textViewCollectionViewCell?.textViewContent = self.show.attributes.synopsis
 				return textViewCollectionViewCell
-			case .rating, .reviews:
+			case .rating:
 				let showDetailRating = ShowDetail.Rating(rawValue: indexPath.item) ?? .average
 				let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: showDetailRating.identifierString, for: indexPath)
 
@@ -102,6 +103,15 @@ extension ShowDetailsCollectionViewController {
 					(rateAndReviewCollectionViewCell as? WriteAReviewCollectionViewCell)?.delegate = self
 				}
 				return rateAndReviewCollectionViewCell
+			case .reviews:
+				let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.reviewCollectionViewCell, for: indexPath)
+				switch itemKind {
+				case .review(let review, _):
+					reviewCollectionViewCell?.delegate = self
+					reviewCollectionViewCell?.configureCell(using: review)
+				default: break
+				}
+				return reviewCollectionViewCell
 			case .information:
 				let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.informationCollectionViewCell, for: indexPath)
 				switch itemKind {
@@ -183,7 +193,14 @@ extension ShowDetailsCollectionViewController {
 				ShowDetail.RateAndReview.allCases.forEach { _ in
 					self.snapshot.appendItems([.show(self.show)], toSection: showDetailSection)
 				}
-			case .reviews: break
+			case .reviews:
+				if !self.reviews.isEmpty {
+					self.snapshot.appendSections([showDetailSection])
+					let reviewItems: [ItemKind] = self.reviews.map { review in
+						return .review(review)
+					}
+					self.snapshot.appendItems(reviewItems, toSection: showDetailSection)
+				}
 			case .information:
 				self.snapshot.appendSections([showDetailSection])
 				ShowDetail.Information.allCases.forEach { _ in
@@ -261,7 +278,7 @@ extension ShowDetailsCollectionViewController {
 			}
 		}
 
-		self.dataSource.apply(self.snapshot)
+		self.dataSource.apply(self.snapshot, animatingDifferences: false)
 	}
 
 	func fetchStudioShow(at indexPath: IndexPath) -> Show? {

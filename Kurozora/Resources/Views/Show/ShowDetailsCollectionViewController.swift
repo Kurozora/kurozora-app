@@ -15,6 +15,7 @@ import IntentsUI
 
 class ShowDetailsCollectionViewController: KCollectionViewController {
 	// MARK: - IBOutlets
+	@IBOutlet weak var moreBarButtonItem: UIBarButtonItem!
 	@IBOutlet weak var navigationTitleView: UIView!
 	@IBOutlet weak var navigationTitleLabel: UILabel! {
 		didSet {
@@ -41,6 +42,9 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 			#endif
 		}
 	}
+
+	/// Review properties.
+	var reviews: [Review] = []
 
 	/// Season properties.
 	var seasons: [IndexPath: Season] = [:]
@@ -198,6 +202,10 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		}
 	}
 
+	func configureNavBarButtons() {
+		self.moreBarButtonItem.menu = self.show?.makeContextMenu(in: self, userInfo: [:])
+	}
+
 	/// Fetches details for the given show identity. If none given then the currently viewed show's details are fetched.
 	func fetchDetails() async {
 		guard let showIdentity = self.showIdentity else { return }
@@ -212,16 +220,28 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 			} catch {
 				print(error.localizedDescription)
 			}
+
+			self.configureNavBarButtons()
 		} else {
 			// Donate suggestion to Siri
 			self.userActivity = self.show.openDetailUserActivity
 
 			self.updateDataSource()
+			self.configureNavBarButtons()
+		}
+
+		do {
+			let reviewIdentityResponse = try await KService.getReviews(forShow: showIdentity, next: nil, limit: 10).value
+			self.reviews = reviewIdentityResponse.data
+			self.updateDataSource()
+		} catch {
+			print(error.localizedDescription)
 		}
 
 		do {
 			let seasonIdentityResponse = try await KService.getSeasons(forShow: showIdentity, reversed: true, next: nil, limit: 10).value
 			self.seasonIdentities = seasonIdentityResponse.data
+			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -229,6 +249,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		do {
 			let castIdentityResponse = try await KService.getCast(forShow: showIdentity, limit: 10).value
 			self.castIdentities = castIdentityResponse.data
+			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -236,6 +257,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		do {
 			let showSongResponse = try await KService.getSongs(forShow: showIdentity, limit: 10).value
 			self.showSongs = showSongResponse.data
+			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -243,6 +265,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		do {
 			let studioIdentityResponse = try await KService.getStudios(forShow: showIdentity, limit: 10).value
 			self.studioIdentities = studioIdentityResponse.data
+			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -250,6 +273,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		do {
 			let showIdentityResponse = try await KService.getMoreByStudio(forShow: showIdentity, limit: 10).value
 			self.studioShowIdentities = showIdentityResponse.data
+			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -257,6 +281,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		do {
 			let relatedShowResponse = try await KService.getRelatedShows(forShow: showIdentity, limit: 10).value
 			self.relatedShows = relatedShowResponse.data
+			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -264,6 +289,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		do {
 			let relatedLiteraturesResponse = try await KService.getRelatedLiteratures(forShow: showIdentity, limit: 10).value
 			self.relatedLiteratures = relatedLiteraturesResponse.data
+			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -271,11 +297,10 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		do {
 			let relatedGamesResponse = try await KService.getRelatedGames(forShow: showIdentity, limit: 10).value
 			self.relatedGames = relatedGamesResponse.data
+			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
-
-		self.updateDataSource()
 	}
 
 	@objc func toggleFavorite() {
@@ -302,11 +327,6 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		let name = self.show.attributes.reminderStatus == .reminded ? "bell.fill" : "bell"
 		self.toggleShowIsRemindedTouchBarItem?.image = UIImage(systemName: name)
 		#endif
-	}
-
-	// MARK: - IBActions
-	@IBAction func moreButtonPressed(_ sender: UIBarButtonItem) {
-		self.show?.openShareSheet(on: self, barButtonItem: sender)
 	}
 
 	// MARK: - Segue
@@ -391,10 +411,11 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 			guard let person = self.cast[indexPath]?.relationships.people?.data.first else { return }
 			personDetailsCollectionViewController.person = person
 		case R.segue.showDetailsCollectionViewController.episodesListSegue.identifier:
-			// Segue to season details
+			// Segue to episodes list
 			guard let episodesListCollectionViewController = segue.destination as? EpisodesListCollectionViewController else { return }
 			guard let season = sender as? Season else { return }
 			episodesListCollectionViewController.seasonIdentity = SeasonIdentity(id: season.id)
+			episodesListCollectionViewController.season = season
 			episodesListCollectionViewController.episodesListFetchType = .season
 		case R.segue.homeCollectionViewController.songDetailsSegue.identifier:
 			// Segue to song details
@@ -556,12 +577,30 @@ extension ShowDetailsCollectionViewController: BaseLockupCollectionViewCellDeleg
 	}
 }
 
+// MARK: - ReviewCollectionViewCellDelegate
+extension ShowDetailsCollectionViewController: ReviewCollectionViewCellDelegate {
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressUserName sender: AnyObject) {
+		guard let indexPath = collectionView.indexPath(for: cell) else { return }
+		self.reviews[indexPath.item].visitOriginalPosterProfile(from: self)
+	}
+
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) {
+		if let badgeViewController = R.storyboard.badge.instantiateInitialViewController() {
+			badgeViewController.profileBadge = profileBadge
+			badgeViewController.popoverPresentationController?.sourceView = button
+			badgeViewController.popoverPresentationController?.sourceRect = button.bounds
+
+			self.present(badgeViewController, animated: true, completion: nil)
+		}
+	}
+}
+
 // MARK: - TapToRateCollectionViewCellDelegate
 extension ShowDetailsCollectionViewController: TapToRateCollectionViewCellDelegate {
 	func tapToRateCollectionViewCell(_ cell: TapToRateCollectionViewCell, rateWith rating: Double) {
 		Task { [weak self] in
 			guard let self = self else { return }
-			cell.configure(using: await self.show.rate(using: rating))
+			cell.configure(using: await self.show.rate(using: rating, description: nil))
 		}
 	}
 }
@@ -569,13 +608,13 @@ extension ShowDetailsCollectionViewController: TapToRateCollectionViewCellDelega
 // MARK: - WriteAReviewCollectionViewCellDelegate
 extension ShowDetailsCollectionViewController: WriteAReviewCollectionViewCellDelegate {
 	func writeAReviewCollectionViewCell(_ cell: WriteAReviewCollectionViewCell, didPress button: UIButton) {
-		guard let showIdentity = self.showIdentity else { return }
 		let reviewTextEditorViewController = ReviewTextEditorViewController()
-		reviewTextEditorViewController.router?.dataStore?.kind = .show(showIdentity: showIdentity)
+		reviewTextEditorViewController.router?.dataStore?.kind = .show(self.show)
 		reviewTextEditorViewController.router?.dataStore?.rating = self.show.attributes.givenRating
 		reviewTextEditorViewController.router?.dataStore?.review = nil
 
 		let navigationController = KNavigationController(rootViewController: reviewTextEditorViewController)
+		navigationController.presentationController?.delegate = reviewTextEditorViewController
 		self.present(navigationController, animated: true)
 	}
 }
@@ -727,6 +766,9 @@ extension ShowDetailsCollectionViewController {
 		/// Indicates the item kind contains a `Show` object.
 		case show(_: Show, id: UUID = UUID())
 
+		/// Indicates the item kind contains a `Review` object.
+		case review(_: Review, id: UUID = UUID())
+
 		/// Indicates the item kind contains a `SeasonIdentity` object.
 		case seasonIdentity(_: SeasonIdentity, id: UUID = UUID())
 
@@ -762,6 +804,9 @@ extension ShowDetailsCollectionViewController {
 			switch self {
 			case .show(let show, let id):
 				hasher.combine(show)
+				hasher.combine(id)
+			case .review(let review, let id):
+				hasher.combine(review)
 				hasher.combine(id)
 			case .seasonIdentity(let seasonIdentity, let id):
 				hasher.combine(seasonIdentity)
@@ -800,6 +845,8 @@ extension ShowDetailsCollectionViewController {
 			switch (lhs, rhs) {
 			case (.show(let show1, let id1), .show(let show2, let id2)):
 				return show1 == show2 && id1 == id2
+			case (.review(let review1, let id1), .review(let review2, let id2)):
+				return review1 == review2 && id1 == id2
 			case (.seasonIdentity(let seasonIdentity1, let id1), .seasonIdentity(let seasonIdentity2, let id2)):
 				return seasonIdentity1 == seasonIdentity2 && id1 == id2
 			case (.showIdentity(let showIdentity1, let id1), .showIdentity(let showIdentity2, let id2)):

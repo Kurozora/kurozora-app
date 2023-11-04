@@ -23,8 +23,12 @@ extension ShowDetailsCollectionViewController {
 			let columnCount = (width / 250).rounded().int
 			return columnCount >= 3 ? 3 : 2
 		case .rateAndReview:
+			if UIDevice.isPhone {
+				return 1
+			}
 			return width > 414 ? 2 : 1
-		case .reviews: break
+		case .reviews:
+			columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
 		case .information:
 			columnCount = width >= 414 ? (width / 200).rounded().int : (width / 160).rounded().int
 			return columnCount > 0 ? columnCount : 2
@@ -118,9 +122,9 @@ extension ShowDetailsCollectionViewController {
 				sectionLayout = fullSection
 				hasSectionHeader = true
 			case .reviews:
-				let bannerSection = Layouts.bannerSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
-				sectionLayout = bannerSection
-				hasSectionHeader = false
+				if !self.reviews.isEmpty {
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				}
 			case .information:
 				let gridSection = Layouts.gridSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				sectionLayout = gridSection

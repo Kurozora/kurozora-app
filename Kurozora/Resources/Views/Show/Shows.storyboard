@@ -390,14 +390,11 @@
                                 <constraint firstAttribute="bottom" secondItem="nSg-hj-AjS" secondAttribute="bottom" id="x6Q-c4-7nQ"/>
                             </constraints>
                         </view>
-                        <barButtonItem key="rightBarButtonItem" title="Share" image="ellipsis.circle" catalog="system" id="bSI-Te-0Ll">
-                            <connections>
-                                <action selector="moreButtonPressed:" destination="A3e-GJ-UX5" id="eqY-CA-57g"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="More" image="ellipsis.circle" catalog="system" id="bSI-Te-0Ll"/>
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="32t-Kh-jQa" id="EZI-9u-aUp"/>
+                        <outlet property="moreBarButtonItem" destination="bSI-Te-0Ll" id="cwd-tU-zGf"/>
                         <outlet property="navigationTitleLabel" destination="nSg-hj-AjS" id="Br8-BR-C87"/>
                         <outlet property="navigationTitleView" destination="2Od-B7-0Nf" id="R7u-fJ-Lnu"/>
                         <segue destination="Nem-gQ-vzJ" kind="show" identifier="CastListSegue" id="xyZ-T3-j6h"/>
