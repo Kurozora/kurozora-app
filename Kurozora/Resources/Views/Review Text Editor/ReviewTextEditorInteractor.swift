@@ -11,6 +11,7 @@ import KurozoraKit
 
 protocol ReviewTextEditorBusinessLogic {
 	func doConfigure(request: ReviewTextEditor.Configure.Request)
+	func doUnsavedChanges(request: ReviewTextEditor.UnsavedChanges.Request)
 	func doSaveRating(request: ReviewTextEditor.SaveRating.Request)
 	func doSaveReview(request: ReviewTextEditor.SaveReview.Request)
 	func doCancel(request: ReviewTextEditor.Cancel.Request)
@@ -38,8 +39,14 @@ final class ReviewTextEditorInteractor: ReviewTextEditorDataStore {
 // MARK: - BusinessLogic
 extension ReviewTextEditorInteractor: ReviewTextEditorBusinessLogic {
 	func doConfigure(request: ReviewTextEditor.Configure.Request) {
-		let response = ReviewTextEditor.Configure.Response(rating: self.rating ?? 1, review: self.review)
+		let rating = max(self.rating ?? 1.0, 1.0)
+		let response = ReviewTextEditor.Configure.Response(rating: rating, review: self.review)
 		self.presenter?.presentConfigure(response: response)
+	}
+
+	func doUnsavedChanges(request: ReviewTextEditor.UnsavedChanges.Request) {
+		let response = ReviewTextEditor.UnsavedChanges.Response(isEdited: self.isEdited)
+		self.presenter?.presentUnsavedChanges(response: response)
 	}
 
 	func doSaveRating(request: ReviewTextEditor.SaveRating.Request) {
@@ -69,29 +76,35 @@ extension ReviewTextEditorInteractor: ReviewTextEditorBusinessLogic {
 	}
 
 	func doSubmit(request: ReviewTextEditor.Submit.Request) async {
-		let rating = self.rating ?? 1
-		var payload: (isSuccess: Bool, message: String?)?
+		let rating = max(self.rating ?? 1.0, 1.0)
+		var isSuccess: Bool = false
+		var message: String? = nil
 
 		switch self.kind {
-		case .show(let showIdentity):
-			payload = await self.worker?.rateShow(showIdentity, rating: rating, review: self.review)
-		case .literature(let literatureIdentity):
-			payload = await self.worker?.rateLiterature(literatureIdentity, rating: rating, review: self.review)
-		case .game(let gameIdentity):
-			payload = await self.worker?.rateGame(gameIdentity, rating: rating, review: self.review)
-		case .episode(let episodeIdentity):
-			payload = await self.worker?.rateEpisode(episodeIdentity, rating: rating, review: self.review)
+		case .show(let show):
+			let rating = await show.rate(using: rating, description: self.review)
+			isSuccess = rating != nil
+		case .literature(let literature):
+			let rating = await literature.rate(using: rating, description: self.review)
+			isSuccess = rating != nil
+		case .game(let game):
+			let rating = await game.rate(using: rating, description: self.review)
+			isSuccess = rating != nil
+		case .episode(let episode):
+			let rating = await episode.rate(using: rating, description: self.review)
+			isSuccess = rating != nil
 		case .none:
-			payload = (isSuccess: false, message: "No review kind was specified. Bad developer :O")
+			isSuccess = false
+			message = "No review kind was specified. Bad developer :O"
 		}
 
-		if payload?.isSuccess == true {
+		if isSuccess == true {
 			let response = ReviewTextEditor.Submit.Response()
 			DispatchQueue.main.async {
 				self.presenter?.presentSubmit(response: response)
 			}
 		} else {
-			let response = ReviewTextEditor.Alert.Response(message: payload?.message)
+			let response = ReviewTextEditor.Alert.Response(message: message)
 			self.presenter?.presentAlert(response: response)
 		}
 	}

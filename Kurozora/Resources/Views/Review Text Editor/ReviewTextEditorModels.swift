@@ -24,6 +24,18 @@ enum ReviewTextEditor {
 		}
 	}
 
+	enum UnsavedChanges {
+		struct Request {}
+
+		struct Response {
+			let isEdited: Bool
+		}
+
+		struct ViewModel {
+			let isEdited: Bool
+		}
+	}
+
 	enum SaveRating {
 		struct Request {
 			let rating: Double
@@ -98,9 +110,9 @@ enum ReviewTextEditor {
 // MARK: - Models
 extension ReviewTextEditor {
 	enum Kind {
-		case show(showIdentity: ShowIdentity)
-		case literature(literatureIdentity: LiteratureIdentity)
-		case game(gameIdentity: GameIdentity)
-		case episode(episodeIdentity: EpisodeIdentity)
+		case show(_ show: Show)
+		case literature(_ literature: Literature)
+		case game(_ game: Game)
+		case episode(_ episode: Episode)
 	}
 }

@@ -10,6 +10,7 @@ import UIKit
 
 protocol ReviewTextEditorPresentationLogic {
 	func presentConfigure(response: ReviewTextEditor.Configure.Response)
+	func presentUnsavedChanges(response: ReviewTextEditor.UnsavedChanges.Response)
 	func presentSaveRating(response: ReviewTextEditor.SaveRating.Response)
 	func presentSaveReview(response: ReviewTextEditor.SaveReview.Response)
 	func presentCancel(response: ReviewTextEditor.Cancel.Response)
@@ -25,6 +26,11 @@ final class ReviewTextEditorPresenter: ReviewTextEditorPresentationLogic {
 	func presentConfigure(response: ReviewTextEditor.Configure.Response) {
 		let viewModel = ReviewTextEditor.Configure.ViewModel(rating: response.rating, review: response.review)
 		self.viewController?.displayConfigure(viewModel: viewModel)
+	}
+
+	func presentUnsavedChanges(response: ReviewTextEditor.UnsavedChanges.Response) {
+		let viewModel = ReviewTextEditor.UnsavedChanges.ViewModel(isEdited: response.isEdited)
+		self.viewController?.displayUnsavedChanges(viewModel: viewModel)
 	}
 
 	func presentSaveRating(response: ReviewTextEditor.SaveRating.Response) {

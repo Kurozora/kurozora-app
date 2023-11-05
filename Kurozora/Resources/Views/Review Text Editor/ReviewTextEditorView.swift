@@ -31,7 +31,7 @@ final class ReviewTextEditorView: UIView {
 
 	// MARK: - Display
 	func configure(using viewModel: ReviewTextEditor.Configure.ViewModel) {
-		self.cosmosView.rating = viewModel.rating ?? 1.0
+		self.cosmosView.rating = viewModel.rating
 		self.textView.text = viewModel.review
 	}
 }

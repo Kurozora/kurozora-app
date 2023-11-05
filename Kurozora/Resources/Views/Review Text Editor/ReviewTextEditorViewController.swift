@@ -7,15 +7,21 @@
 //
 
 import UIKit
+import IQKeyboardManagerSwift
 
 protocol ReviewTextEditorDisplayLogic: AnyObject {
 	func displayConfigure(viewModel: ReviewTextEditor.Configure.ViewModel)
+	func displayUnsavedChanges(viewModel: ReviewTextEditor.UnsavedChanges.ViewModel)
 	func displaySaveRating(viewModel: ReviewTextEditor.SaveRating.ViewModel)
 	func displaySaveReview(viewModel: ReviewTextEditor.SaveReview.ViewModel)
 	func displayCancel(viewModel: ReviewTextEditor.Cancel.ViewModel)
 	func displayConfirmCancel(viewModel: ReviewTextEditor.ConfirmCancel.ViewModel)
 	func displaySubmit(viewModel: ReviewTextEditor.Submit.ViewModel)
 	func displayAlert(viewModel: ReviewTextEditor.Alert.ViewModel)
+}
+
+protocol ReviewTextEditorViewControllerDelegate: AnyObject {
+	func reviewTextEditorViewControllerDidSubmitReview()
 }
 
 final class ReviewTextEditorViewController: KViewController {
@@ -28,6 +34,8 @@ final class ReviewTextEditorViewController: KViewController {
 
 	var cancelBarButtonItem: UIBarButtonItem!
 	var sendBarButtonItem: UIBarButtonItem!
+
+	weak var delegate: ReviewTextEditorViewControllerDelegate?
 
 	// MARK: - Initializers
 	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -64,7 +72,6 @@ final class ReviewTextEditorViewController: KViewController {
 
 		self.title = Trans.writeAReview
 
-		self.presentationController?.delegate = self
 		self.navigationController?.navigationBar.prefersLargeTitles = false
 		self.sheetPresentationController?.detents = [.medium(), .large()]
 		self.sheetPresentationController?.selectedDetentIdentifier = .large
@@ -74,6 +81,24 @@ final class ReviewTextEditorViewController: KViewController {
 		self.setupNavigationItems()
 
 		self.doConfigure()
+	}
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+
+		IQKeyboardManager.shared.enable = false
+	}
+
+	override func viewWillLayoutSubviews() {
+		super.viewWillLayoutSubviews()
+
+		self.doUnsavedChanges()
+	}
+
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+
+		IQKeyboardManager.shared.enable = true
 	}
 
 	// MARK: - Functions
@@ -100,6 +125,11 @@ extension ReviewTextEditorViewController {
 	func doConfigure() {
 		let request = ReviewTextEditor.Configure.Request()
 		self.interactor?.doConfigure(request: request)
+	}
+
+	func doUnsavedChanges() {
+		let request = ReviewTextEditor.UnsavedChanges.Request()
+		self.interactor?.doUnsavedChanges(request: request)
 	}
 
 	func doSaveRating(_ rating: Double) {
@@ -137,14 +167,25 @@ extension ReviewTextEditorViewController: ReviewTextEditorDisplayLogic {
 		self.sceneView.configure(using: viewModel)
 	}
 
-	func displaySaveRating(viewModel: ReviewTextEditor.SaveRating.ViewModel) {}
+	func displayUnsavedChanges(viewModel: ReviewTextEditor.UnsavedChanges.ViewModel) {
+		// If there are unsaved changes, enable the Save button and disable the ability to
+		// dismiss using the pull-down gesture.
+		self.navigationItem.rightBarButtonItem?.isEnabled = viewModel.isEdited
+		self.isModalInPresentation = viewModel.isEdited
+	}
 
-	func displaySaveReview(viewModel: ReviewTextEditor.SaveReview.ViewModel) {}
+	func displaySaveRating(viewModel: ReviewTextEditor.SaveRating.ViewModel) {
+		self.doUnsavedChanges()
+	}
+
+	func displaySaveReview(viewModel: ReviewTextEditor.SaveReview.ViewModel) {
+		self.doUnsavedChanges()
+	}
 
 	func displayCancel(viewModel: ReviewTextEditor.Cancel.ViewModel) {
 		if !viewModel.forceCancel && viewModel.hasChanges {
 			// The user tapped Cancel with unsaved changes. Confirm that it's OK to lose the changes.
-			self.doConfirmCancel(showingSend: false)
+			self.doConfirmCancel(showingSend: viewModel.hasChanges)
 		} else {
 			// There are no unsaved changes. Dismiss immediately.
 			self.dismiss(animated: true)
@@ -180,7 +221,11 @@ extension ReviewTextEditorViewController: ReviewTextEditorDisplayLogic {
 	}
 
 	func displaySubmit(viewModel: ReviewTextEditor.Submit.ViewModel) {
-		self.dismiss(animated: true)
+		let `self` = self
+
+		`self`.dismiss(animated: true) {
+			`self`.delegate?.reviewTextEditorViewControllerDidSubmitReview()
+		}
 	}
 
 	func displayAlert(viewModel: ReviewTextEditor.Alert.ViewModel) {
