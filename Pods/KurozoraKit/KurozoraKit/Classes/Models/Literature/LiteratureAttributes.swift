@@ -121,6 +121,8 @@ extension Literature {
 		// Library attirbutes
 		public var givenRating: Double?
 
+		public var givenReview: String?
+
 		public var libraryStatus: KKLibrary.Status?
 
 		public var isFavorited: Bool?

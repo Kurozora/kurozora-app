@@ -9,22 +9,25 @@
 ///
 /// Use the `LibraryAttributes` protocol to provide a library attributes to a class or value type. For example, you could define a Show type with a library status property that is stable across your app and your app’s database storage. You could use the library status property to identify a particular show's library status even if other data fields change, such as the show's title.
 public protocol LibraryAttributes: Codable {
-	/// The rating given to the show.
+	/// The rating given to the item.
 	var givenRating: Double? { get set }
 
-	/// Whether the show is favorited.
+	/// The review given to the item.
+	var givenReview: String? { get set }
+
+	/// Whether the item is favorited.
 	var isFavorited: Bool? { get }
 
-	/// The favorite status of the show.
+	/// The favorite status of the item.
 	var _favoriteStatus: FavoriteStatus? { get set }
 
-	/// Whether the reminder for the show is turned on.
+	/// Whether the reminder for the item is turned on.
 	var isReminded: Bool? { get set }
 
-	/// The reminder status of the show.
+	/// The reminder status of the item.
 	var _reminderStatus: ReminderStatus? { get set }
 
-	/// The library status of the show.
+	/// The library status of the item.
 	var libraryStatus: KKLibrary.Status? { get set }
 }
 
@@ -34,20 +37,20 @@ extension LibraryAttributes {
 	/// The favorite status of the show.
 	public var favoriteStatus: FavoriteStatus {
 		get {
-			return _favoriteStatus ?? FavoriteStatus(isFavorited)
+			return self._favoriteStatus ?? FavoriteStatus(isFavorited)
 		}
 		set {
-			_favoriteStatus = newValue
+			self._favoriteStatus = newValue
 		}
 	}
 
 	/// The reminder status of the show.
 	public var reminderStatus: ReminderStatus {
 		get {
-			return _reminderStatus ?? ReminderStatus(isReminded)
+			return self._reminderStatus ?? ReminderStatus(isReminded)
 		}
 		set {
-			_reminderStatus = newValue
+			self._reminderStatus = newValue
 		}
 	}
 

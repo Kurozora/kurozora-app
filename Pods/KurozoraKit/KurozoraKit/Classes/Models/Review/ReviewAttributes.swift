@@ -10,7 +10,7 @@ extension Review {
 	public struct Attributes: Codable {
 		// MARK: - Properties
 		/// The score of the review.
-		public let score: Int
+		public let score: Double
 
 		/// The description of the review.
 		public let description: String?

@@ -9,7 +9,7 @@ extension Review {
 	/// A root object that stores information about review relationships, such as the user that belong to it.
 	public struct Relationships: Codable {
 		// MARK: - Properties
-		/// The user belonging to the review.
-		public let user: UserResponse?
+		/// The users belonging to the review.
+		public let users: UserResponse?
 	}
 }
