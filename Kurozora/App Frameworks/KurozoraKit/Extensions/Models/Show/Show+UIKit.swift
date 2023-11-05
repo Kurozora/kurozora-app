@@ -186,11 +186,9 @@ extension Show {
 			// Update current rating for the user.
 			self.attributes.givenRating = rating
 
-			// Show a success alert thanking the user for rating.
-			let alertController = await UIApplication.topViewController?.presentAlertController(title: Trans.ratingSubmitted, message: Trans.thankYouForRating)
-
-			DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
-				alertController?.dismiss(animated: true, completion: nil)
+			// Update review only if the user removes it explicitly.
+			if description != nil {
+				self.attributes.givenReview = description
 			}
 
 			return rating

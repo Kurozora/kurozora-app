@@ -46,11 +46,11 @@ extension Review {
 		menuElements.append(UIMenu(title: "", options: .displayInline, children: userMenuElements))
 
 		if User.isSignedIn {
-			// Report message action
+			// Report review action
 			var reportMenuElements: [UIMenuElement] = []
-			let reportAction = UIAction(title: "Report Message", image: UIImage(systemName: "exclamationmark.circle.fill"), attributes: .destructive) { [weak self] _ in
+			let reportAction = UIAction(title: "Report Review", image: UIImage(systemName: "exclamationmark.circle.fill"), attributes: .destructive) { [weak self] _ in
 				guard let self = self else { return }
-				self.reportMessage()
+				self.reportReview()
 			}
 			reportMenuElements.append(reportAction)
 
@@ -62,7 +62,7 @@ extension Review {
 		return UIMenu(title: "", children: menuElements)
 	}
 
-	/// Presents the profile view for the message poster.
+	/// Presents the profile view for the review poster.
 	///
 	/// - Parameter viewController: The view controller initiaing the segue.
 	func visitOriginalPosterProfile(from viewController: UIViewController? = UIApplication.topViewController) {
@@ -103,8 +103,8 @@ extension Review {
 		viewController?.present(activityViewController, animated: true, completion: nil)
 	}
 
-	/// Sends a report of the selected message to the mods.
-	func reportMessage() {
+	/// Sends a report of the selected review to the mods.
+	func reportReview() {
 		WorkflowController.shared.isSignedIn {
 			UIApplication.topViewController?.presentAlertController(title: "Review Reported", message: "Thank you for helping keep the community safe.")
 		}

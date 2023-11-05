@@ -274,6 +274,15 @@ class GameDetailsCollectionViewController: KCollectionViewController {
 		}
 	}
 
+	/// Show a success alert thanking the user for rating.
+	private func showRatingSuccessAlert() {
+		let alertController = UIApplication.topViewController?.presentAlertController(title: Trans.ratingSubmitted, message: Trans.thankYouForRating)
+
+		DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+			alertController?.dismiss(animated: true, completion: nil)
+		}
+	}
+
 	@objc func toggleFavorite() {
 		self.game?.toggleFavorite()
 	}
@@ -551,7 +560,12 @@ extension GameDetailsCollectionViewController: TapToRateCollectionViewCellDelega
 	func tapToRateCollectionViewCell(_ cell: TapToRateCollectionViewCell, rateWith rating: Double) {
 		Task { [weak self] in
 			guard let self = self else { return }
-			cell.configure(using: await self.game.rate(using: rating, description: nil))
+			let rating = await self.game.rate(using: rating, description: nil)
+			cell.configure(using: rating)
+
+			if rating != nil {
+				self.showRatingSuccessAlert()
+			}
 		}
 	}
 }
@@ -563,6 +577,7 @@ extension GameDetailsCollectionViewController: WriteAReviewCollectionViewCellDel
 			guard let self = self else { return }
 
 			let reviewTextEditorViewController = ReviewTextEditorViewController()
+			reviewTextEditorViewController.delegate = self
 			reviewTextEditorViewController.router?.dataStore?.kind = .game(self.game)
 			reviewTextEditorViewController.router?.dataStore?.rating = self.game.attributes.givenRating
 			reviewTextEditorViewController.router?.dataStore?.review = nil
@@ -571,6 +586,13 @@ extension GameDetailsCollectionViewController: WriteAReviewCollectionViewCellDel
 			navigationController.presentationController?.delegate = reviewTextEditorViewController
 			self.present(navigationController, animated: true)
 		}
+	}
+}
+
+// MARK: - ReviewTextEditorViewControllerDelegate
+extension GameDetailsCollectionViewController: ReviewTextEditorViewControllerDelegate {
+	func reviewTextEditorViewControllerDidSubmitReview() {
+		self.showRatingSuccessAlert()
 	}
 }
 

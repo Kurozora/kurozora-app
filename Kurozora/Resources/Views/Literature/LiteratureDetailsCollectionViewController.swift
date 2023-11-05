@@ -218,6 +218,14 @@ class LiteratureDetailsCollectionViewController: KCollectionViewController {
 		}
 
 		do {
+			let reviewIdentityResponse = try await KService.getReviews(forLiterature: literatureIdentity, next: nil, limit: 10).value
+			self.reviews = reviewIdentityResponse.data
+			self.updateDataSource()
+		} catch {
+			print(error.localizedDescription)
+		}
+
+		do {
 			let castIdentityResponse = try await KService.getCast(forLiterature: literatureIdentity, limit: 10).value
 			self.castIdentities = castIdentityResponse.data
 			self.updateDataSource()
@@ -263,6 +271,15 @@ class LiteratureDetailsCollectionViewController: KCollectionViewController {
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
+		}
+	}
+
+	/// Show a success alert thanking the user for rating.
+	private func showRatingSuccessAlert() {
+		let alertController = UIApplication.topViewController?.presentAlertController(title: Trans.ratingSubmitted, message: Trans.thankYouForRating)
+
+		DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+			alertController?.dismiss(animated: true, completion: nil)
 		}
 	}
 
@@ -539,7 +556,12 @@ extension LiteratureDetailsCollectionViewController: TapToRateCollectionViewCell
 	func tapToRateCollectionViewCell(_ cell: TapToRateCollectionViewCell, rateWith rating: Double) {
 		Task { [weak self] in
 			guard let self = self else { return }
-			cell.configure(using: await self.literature.rate(using: rating, description: nil))
+			let rating = await self.literature.rate(using: rating, description: nil)
+			cell.configure(using: rating)
+
+			if rating != nil {
+				self.showRatingSuccessAlert()
+			}
 		}
 	}
 }
@@ -551,6 +573,7 @@ extension LiteratureDetailsCollectionViewController: WriteAReviewCollectionViewC
 			guard let self = self else { return }
 
 			let reviewTextEditorViewController = ReviewTextEditorViewController()
+			reviewTextEditorViewController.delegate = self
 			reviewTextEditorViewController.router?.dataStore?.kind = .literature(self.literature)
 			reviewTextEditorViewController.router?.dataStore?.rating = self.literature.attributes.givenRating
 			reviewTextEditorViewController.router?.dataStore?.review = nil
@@ -559,6 +582,13 @@ extension LiteratureDetailsCollectionViewController: WriteAReviewCollectionViewC
 			navigationController.presentationController?.delegate = reviewTextEditorViewController
 			self.present(navigationController, animated: true)
 		}
+	}
+}
+
+// MARK: - ReviewTextEditorViewControllerDelegate
+extension LiteratureDetailsCollectionViewController: ReviewTextEditorViewControllerDelegate {
+	func reviewTextEditorViewControllerDidSubmitReview() {
+		self.showRatingSuccessAlert()
 	}
 }
 
