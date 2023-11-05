@@ -57,6 +57,9 @@ extension ShowDetailHeaderCollectionViewCell {
 		NotificationCenter.default.addObserver(self, selector: #selector(handleFavoriteToggle(_:)), name: .KModelFavoriteIsToggled, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(handleReminderToggle(_:)), name: .KModelReminderIsToggled, object: nil)
 
+		// Configure visual effect
+		self.visualEffectView.layerCornerRadius = 10.0
+
 		// Configure library status
 		self.libraryStatus = show.attributes.libraryStatus ?? .none
 		self.updateLibraryActions(using: show)
@@ -109,6 +112,9 @@ extension ShowDetailHeaderCollectionViewCell {
 		NotificationCenter.default.addObserver(self, selector: #selector(handleFavoriteToggle(_:)), name: .KModelFavoriteIsToggled, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(handleReminderToggle(_:)), name: .KModelReminderIsToggled, object: nil)
 
+		// Configure visual effect
+		self.visualEffectView.layer.cornerRadius = 10.0
+
 		// Configure library status
 		self.libraryStatus = literature.attributes.libraryStatus ?? .none
 		self.updateLibraryActions(using: literature)
@@ -160,6 +166,9 @@ extension ShowDetailHeaderCollectionViewCell {
 		NotificationCenter.default.removeObserver(self)
 		NotificationCenter.default.addObserver(self, selector: #selector(handleFavoriteToggle(_:)), name: .KModelFavoriteIsToggled, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(handleReminderToggle(_:)), name: .KModelReminderIsToggled, object: nil)
+
+		// Configure visual effect
+		self.visualEffectView.layer.cornerRadius = 10.0
 
 		// Configure library status
 		self.libraryStatus = game.attributes.libraryStatus ?? .none
