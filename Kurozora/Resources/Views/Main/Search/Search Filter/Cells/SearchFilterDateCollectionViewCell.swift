@@ -17,7 +17,6 @@ class SearchFilterDateCollectionViewCell: SearchFilterBaseCollectionViewCell {
 		super.layoutSubviews()
 
 		self.datePicker.theme_tintColor = KThemePicker.tintColor.rawValue
-		self.datePicker.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 	}
 
 	// MARK: - Functions

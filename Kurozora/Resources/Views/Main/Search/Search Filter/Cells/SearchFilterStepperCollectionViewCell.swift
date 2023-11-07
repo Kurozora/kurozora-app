@@ -17,9 +17,7 @@ class SearchFilterStepperCollectionViewCell: SearchFilterBaseCollectionViewCell 
 		super.configureCell(title: title)
 		self.stepper.maximumValue = 100000
 
-		if let selected = selected {
-			self.stepper.value = selected
-		}
+		self.stepper.value = selected ?? 0
 	}
 
 	// MARK: - IBactions

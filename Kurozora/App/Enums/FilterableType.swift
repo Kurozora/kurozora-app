@@ -6,12 +6,19 @@
 //  Copyright © 2023 Kurozora. All rights reserved.
 //
 
-struct FilterableAttribute {
+class FilterableAttribute {
 	// MARK: - Properties
 	let name: String
 	let type: FilterableType
 	let options: [(key: String, value: Int)]?
-	var selected: Any? = nil
+	var selected: AnyHashable?
+
+	init(name: String, type: FilterableType, options: [(key: String, value: Int)]?, selected: AnyHashable? = nil) {
+		self.name = name
+		self.type = type
+		self.options = options
+		self.selected = selected
+	}
 }
 
 enum FilterableType {
@@ -27,6 +34,7 @@ enum FilterableType {
 }
 
 enum FilterKey {
+	// MARK: - Cases
 	case age
 	case astrologicalSign
 	case birthDay

@@ -93,8 +93,8 @@ extension KKSearchType {
 			}
 
 			filterableAttributes.append(contentsOf: [
-				(key: .number, value: FilterableAttribute(name: "Number", type: .text, options: nil)),
-				(key: .numberTotal, value: FilterableAttribute(name: "Number Total", type: .text, options: nil)),
+				(key: .number, value: FilterableAttribute(name: "Number", type: .stepper, options: nil)),
+				(key: .numberTotal, value: FilterableAttribute(name: "Number Total", type: .stepper, options: nil)),
 				(key: .startedAt, value: FilterableAttribute(name: "First Aired", type: .date, options: nil)),
 				(key: .endedAt, value: FilterableAttribute(name: "Last Aired", type: .date, options: nil))
 			])
@@ -122,7 +122,7 @@ extension KKSearchType {
 					return (dayOfWeek.name, dayOfWeek.rawValue)
 				})),
 				(key: .duration, value: FilterableAttribute(name: "Duration (minutes)", type: .stepper, options: nil)),
-				(key: .startedAt, value: FilterableAttribute(name: "First Published", type: .date, options: nil))
+				(key: .publishedAt, value: FilterableAttribute(name: "First Published", type: .date, options: nil))
 			]
 
 			if self.includeNSFW() {

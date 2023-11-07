@@ -18,5 +18,11 @@ class SearchFilterTextCollectionViewCell: SearchFilterBaseCollectionViewCell {
 
 		self.textField.placeholder = placeholder
 		self.textField.text = selected
+		self.textField.textAlignment = .right
+	}
+
+	// MARK: - IBActions
+	@IBAction func textChanged(_ sender: UITextField) {
+		self.delegate?.searchFilterBaseCollectionViewCell(self, didChangeValue: sender.text)
 	}
 }

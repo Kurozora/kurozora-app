@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Wkc-hn-ffh" customClass="SearchFilterSelectCollectionViewCell" customModule="Kurozora">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Wkc-hn-ffh" customClass="SearchFilterSelectCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="466" height="55"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="PZa-5Q-K3Y">
@@ -28,6 +28,7 @@
                         <state key="normal" title="Select"/>
                     </button>
                 </subviews>
+                <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="C5J-Zb-PsL" secondAttribute="bottom" constant="12" id="4lC-Pd-XyE"/>
                     <constraint firstItem="czk-9W-VBN" firstAttribute="centerY" secondItem="PZa-5Q-K3Y" secondAttribute="centerY" id="Le9-tV-E2q"/>
@@ -39,6 +40,7 @@
                     <constraint firstAttribute="bottom" secondItem="czk-9W-VBN" secondAttribute="bottom" constant="12" id="wjp-Dd-x2J"/>
                 </constraints>
             </collectionViewCellContentView>
+            <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <size key="customSize" width="466" height="50"/>
             <connections>
                 <outlet property="popupButton" destination="C5J-Zb-PsL" id="ESf-SC-nw0"/>

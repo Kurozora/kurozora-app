@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -48,17 +48,19 @@
                         </connections>
                     </view>
                 </subviews>
+                <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
                     <constraint firstItem="czk-9W-VBN" firstAttribute="centerY" secondItem="UHh-Iu-cja" secondAttribute="centerY" id="D9o-nO-N3K"/>
                     <constraint firstAttribute="bottom" secondItem="UHh-Iu-cja" secondAttribute="bottom" constant="12" id="KYR-Z0-ycK"/>
                     <constraint firstItem="UHh-Iu-cja" firstAttribute="top" secondItem="PZa-5Q-K3Y" secondAttribute="top" constant="12" id="Np6-qu-DPZ"/>
                     <constraint firstItem="UHh-Iu-cja" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="czk-9W-VBN" secondAttribute="trailing" constant="8" symbolic="YES" id="OSv-S5-HPP"/>
                     <constraint firstItem="czk-9W-VBN" firstAttribute="top" secondItem="PZa-5Q-K3Y" secondAttribute="top" constant="12" id="ceE-we-SQy"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="UHh-Iu-cja" secondAttribute="trailing" id="knJ-rR-Ghp"/>
+                    <constraint firstAttribute="trailing" secondItem="UHh-Iu-cja" secondAttribute="trailing" constant="20" symbolic="YES" id="knJ-rR-Ghp"/>
                     <constraint firstItem="czk-9W-VBN" firstAttribute="leading" secondItem="PZa-5Q-K3Y" secondAttribute="leading" constant="20" symbolic="YES" id="qfl-D0-tnT"/>
                     <constraint firstAttribute="bottom" secondItem="czk-9W-VBN" secondAttribute="bottom" constant="12" id="wjp-Dd-x2J"/>
                 </constraints>
             </collectionViewCellContentView>
+            <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <size key="customSize" width="466" height="50"/>
             <connections>
                 <outlet property="primaryLabel" destination="czk-9W-VBN" id="INI-UX-SNd"/>
@@ -69,7 +71,7 @@
     </objects>
     <resources>
         <systemColor name="labelColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

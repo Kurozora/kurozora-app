@@ -9,12 +9,12 @@
 import Foundation
 
 extension String {
-	// MARK: - Properties
+	// MARK: - Functions
 	/// Returns a date object for given string.
-	var toDate: Date {
+	func toDate(format: String = "yyyy-MM-dd HH:mm:ss") -> Date {
 		if self != "" {
 			let dateFormatter = DateFormatter()
-			dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+			dateFormatter.dateFormat = format
 
 			if let dateFromString = dateFormatter.date(from: self) {
 				return dateFromString

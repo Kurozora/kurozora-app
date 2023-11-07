@@ -183,21 +183,21 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 			var astrologicalSign: Int? = characterFilter.astrologicalSign
 			var birthDay: Int? = characterFilter.birthDay
 			var birthMonth: Int? = characterFilter.birthMonth
-			var bust: Double? = characterFilter.bust
-			var height: Double? = characterFilter.height
-			var hip: Double? = characterFilter.hip
+			var bust: String? = characterFilter.bust
+			var height: String? = characterFilter.height
+			var hip: String? = characterFilter.hip
 			var status: Int? = characterFilter.status
-			var waist: Double? = characterFilter.waist
-			var weight: Double? = characterFilter.weight
+			var waist: String? = characterFilter.waist
+			var weight: String? = characterFilter.weight
 
 			self.filterableAttributes.forEach { key, value in
 				switch key {
-				case .age:
-					age = value.selected as? Int
-				case .astrologicalSign:
-					astrologicalSign = value.options?.first { key, _ in
+				case .status:
+					status = value.options?.first { key, _ in
 						key == value.selected as? String
 					}?.value
+				case .age:
+					age = value.selected as? Int
 				case .birthDay:
 					birthDay = value.options?.first { key, _ in
 						key == value.selected as? String
@@ -207,19 +207,19 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 						key == value.selected as? String
 					}?.value
 				case .bust:
-					bust = value.selected as? Double
+					bust = value.selected as? String
 				case .height:
-					height = value.selected as? Double
+					height = value.selected as? String
 				case .hip:
-					hip = value.selected as? Double
-				case .status:
-					status = value.options?.first { key, _ in
+					hip = value.selected as? String
+				case .waist:
+					waist = value.selected as? String
+				case .weight:
+					weight = value.selected as? String
+				case .astrologicalSign:
+					astrologicalSign = value.options?.first { key, _ in
 						key == value.selected as? String
 					}?.value
-				case .waist:
-					waist = value.selected as? Double
-				case .weight:
-					weight = value.selected as? Double
 				default: break
 				}
 			}
@@ -267,9 +267,9 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 						key == value.selected as? String
 					}?.value as? NSNumber)?.boolValue
 				case .number:
-					number = value.selected as? Int
+					number = (value.selected as? Double)?.int
 				case .numberTotal:
-					numberTotal = value.selected as? Int
+					numberTotal = (value.selected as? Double)?.int
 				case .season:
 					season = value.selected as? Int
 				case .tvRating:
@@ -301,9 +301,13 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 			self.filterableAttributes.forEach { key, value in
 				switch key {
 				case .publicationDay:
-					publicationDay = value.selected as? Int
+					publicationDay = value.options?.first { key, _ in
+						key == value.selected as? String
+					}?.value
 				case .publicationSeason:
-					publicationSeason = value.selected as? Int
+					publicationSeason = value.options?.first { key, _ in
+						key == value.selected as? String
+					}?.value
 				case .duration:
 					if let selected = (value.selected as? Double)?.int {
 						duration = selected * 60
@@ -503,7 +507,7 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 			return .song(songFilter)
 		} else if let studioFilter = searchFilter as? StudioFilter {
 			var address: String? = studioFilter.address
-			var founded: String? = studioFilter.founded
+			var founded: TimeInterval? = studioFilter.founded
 			var isNSFW: Bool? = studioFilter.isNSFW
 			var type: Int? = studioFilter.type
 
@@ -512,7 +516,7 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 				case .address:
 					address = value.selected as? String
 				case .founded:
-					founded = value.selected as? String
+					founded = (value.selected as? Date)?.timeIntervalSince1970
 				case .isNSFW:
 					isNSFW = (value.options?.first { key, _ in
 						key == value.selected as? String
@@ -559,7 +563,7 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 
 // MARK: - SearchFilterBaseCollectionViewCellDelegate
 extension SearchFilterCollectionViewController: SearchFilterBaseCollectionViewCellDelegate {
-	func searchFilterBaseCollectionViewCell(_ cell: SearchFilterBaseCollectionViewCell, didChangeValue value: Any?) {
+	func searchFilterBaseCollectionViewCell(_ cell: SearchFilterBaseCollectionViewCell, didChangeValue value: AnyHashable?) {
 		guard let indexPath = collectionView.indexPath(for: cell) else { return }
 		guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return }
 
