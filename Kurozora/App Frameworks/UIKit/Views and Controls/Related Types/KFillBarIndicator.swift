@@ -12,12 +12,6 @@ import Tabman
 /// Simple indicator that displays as a filled pill.
 class KFillBarIndicator: TMBarIndicator {
 	// MARK: - Properties
-	/// The top constraint of the bar indicator.
-	fileprivate var barTopConstraint: NSLayoutConstraint?
-	/// The bottom constraint of the bar indicator.
-	fileprivate var barBottomConstraint: NSLayoutConstraint?
-
-	// MARK: - Properties
 	override var displayMode: TMBarIndicator.DisplayMode {
 		return .fill
 	}
@@ -34,13 +28,8 @@ class KFillBarIndicator: TMBarIndicator {
 	override func layout(in view: UIView) {
 		super.layout(in: view)
 
-		let barTopConstraint = self.topAnchor.constraint(equalTo: view.topAnchor, constant: 5)
-		barTopConstraint.isActive = true
-		self.barTopConstraint = barTopConstraint
-
-		let barBottomConstraint = self.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -5)
-		barBottomConstraint.isActive = true
-		self.barBottomConstraint = barBottomConstraint
+		self.topConstraint?.constant = 5
+		self.bottomConstraint?.constant = -5
 
 		self.theme_tintColor = KThemePicker.textColor.rawValue
 		self.backgroundColor = self.tintColor.withAlphaComponent(0.25)
