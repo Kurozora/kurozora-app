@@ -44,9 +44,8 @@ extension UITableView {
 	///
 	/// The following example creates a cell registration for cells of type [UITableViewCell](https://developer.apple.com/documentation/uikit/uitableviewcell). It creates a content configuration with a system default style, customizes the content and appearance of the configuration, and then assigns the configuration to the cell.
 	///
-	/// ```
+	/// ```swift
 	/// let cellRegistration = UITableView.CellRegistration<UITableViewCell, Int> { cell, indexPath, item in
-	///
 	///    var contentConfiguration = cell.defaultContentConfiguration()
 	///
 	///    contentConfiguration.text = "\(item)"
@@ -58,10 +57,9 @@ extension UITableView {
 	///
 	/// After you create a cell registration, you pass it in to [dequeueConfiguredReusableCell(using:for:item:)](x-source-tag://UIKit-UITableView-DequeueConfiguredReusableCell), which you call from your data source’s cell provider.
 	///
-	/// ```
+	/// ```swift
 	/// dataSource = UITableViewDiffableDataSource<Section, Int>(tableView: tableView) {
 	///     (tableView: UITableView, indexPath: IndexPath, itemIdentifier: Int) -> UITableViewCell? in
-	///
 	///	    return tableView.dequeueConfiguredReusableCell(using: cellRegistration,
 	///							   for: indexPath,
 	///							   item: itemIdentifier)

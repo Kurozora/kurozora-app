@@ -8,10 +8,12 @@
 
 import UIKit
 
+// MARK: - KStepperDelegate
 protocol KStepperDelegate: AnyObject {
 	func kStepper(_ stepper: KStepper, valueChanged value: Double)
 }
 
+// MARK: - KStepper
 /// A control for incrementing or decrementing a value.
 ///
 /// By default, pressing and holding a stepper’s button increments or decrements the stepper’s value repeatedly. The rate of change depends on how long the user continues pressing the control. To turn off this behavior, set the [autorepeat](x-source-tag://KStepper-autorepeat) property to `false`.
@@ -76,6 +78,7 @@ protocol KStepperDelegate: AnyObject {
 
 			if self.isContinuous {
 				self.sendActions(for: .valueChanged)
+				self.delegate?.kStepper(self, valueChanged: self.value)
 			}
 		}
 	}
@@ -152,17 +155,17 @@ protocol KStepperDelegate: AnyObject {
 		self.configure()
 	}
 
-	required public init?(coder: NSCoder) {
+	public required init?(coder: NSCoder) {
 		super.init(coder: coder)
 		self.configure()
 	}
 
-	open override func prepareForInterfaceBuilder() {
+	override open func prepareForInterfaceBuilder() {
 		super.prepareForInterfaceBuilder()
 		self.updateValueTextField()
 	}
 
-	open override func awakeFromNib() {
+	override open func awakeFromNib() {
 		super.awakeFromNib()
 		self.updateValueTextField()
 	}
@@ -219,7 +222,8 @@ extension KStepper {
 		self.valueTextField.theme_tintColor = KThemePicker.tintColor.rawValue
 		self.valueTextField.theme_textColor = KThemePicker.textColor.rawValue
 
-		self.valueTextField.addTarget(self, action: #selector(self.handleValueTextFieldChanged), for: .editingChanged)
+		self.valueTextField.addTarget(self, action: #selector(self.handleTextFieldValueChanged), for: .editingChanged)
+		self.valueTextField.addTarget(self, action: #selector(self.handleTextFieldEditingDidEnd), for: .editingDidEnd)
 	}
 
 	func configureIncrementButton() {
@@ -282,6 +286,7 @@ private extension KStepper {
 
 		if !self.isContinuous {
 			self.sendActions(for: .valueChanged)
+			self.delegate?.kStepper(self, valueChanged: self.value)
 		}
 	}
 
@@ -298,6 +303,7 @@ private extension KStepper {
 
 		if !self.isContinuous {
 			self.sendActions(for: .valueChanged)
+			self.delegate?.kStepper(self, valueChanged: self.value)
 		}
 	}
 
@@ -309,8 +315,10 @@ private extension KStepper {
 		}
 	}
 
-	@objc func handleValueTextFieldChanged() {
-		guard let text = self.valueTextField.text, let newValue = Double(text) else { return }
+	@objc func handleTextFieldValueChanged() {
+		guard let text = self.valueTextField.text, let newValue = Double(text) else {
+			return
+		}
 		guard newValue >= self.minimumValue else {
 			self.value = self.minimumValue
 			self.updateButtonEnabledState()
@@ -326,13 +334,24 @@ private extension KStepper {
 		self.updateButtonEnabledState()
 	}
 
+	@objc func handleTextFieldEditingDidEnd() {
+		if !self.isContinuous {
+			self.delegate?.kStepper(self, valueChanged: self.value)
+		}
+	}
+
 	func updateValueTextField() {
 		self.valueTextField.text = self.value.withoutTrailingZeros
 	}
 
 	func updateButtonEnabledState() {
-		self.decrementButton.isEnabled = self.value > self.minimumValue
-		self.incrementButton.isEnabled = self.value < self.maximumValue
+		if !self.wraps {
+			self.decrementButton.isEnabled = self.value > self.minimumValue
+			self.incrementButton.isEnabled = self.value < self.maximumValue
+		} else {
+			self.decrementButton.isEnabled = true
+			self.incrementButton.isEnabled = true
+		}
 	}
 
 	func updateValueIfNeeded() {
@@ -348,10 +367,8 @@ private extension KStepper {
 	@objc func decrementValue() {
 		if self.value - self.stepValue >= self.minimumValue {
 			self.value -= self.stepValue
-			self.delegate?.kStepper(self, valueChanged: self.value)
 		} else if self.wraps {
 			self.value = self.maximumValue
-			self.delegate?.kStepper(self, valueChanged: self.value)
 		}
 
 		self.updateButtonEnabledState()
@@ -360,10 +377,8 @@ private extension KStepper {
 	@objc func incrementValue() {
 		if self.value + self.stepValue <= self.maximumValue {
 			self.value += self.stepValue
-			self.delegate?.kStepper(self, valueChanged: self.value)
 		} else if self.wraps {
 			self.value = self.minimumValue
-			self.delegate?.kStepper(self, valueChanged: self.value)
 		}
 
 		self.updateButtonEnabledState()

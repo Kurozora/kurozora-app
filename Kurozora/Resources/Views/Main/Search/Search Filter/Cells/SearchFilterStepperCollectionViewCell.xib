@@ -24,7 +24,7 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UHh-Iu-cja" customClass="KStepper" customModule="Kurozora" customModuleProvider="target">
+                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UHh-Iu-cja" customClass="KStepper" customModule="Kurozora" customModuleProvider="target">
                         <rect key="frame" x="347" y="12" width="99" height="31"/>
                         <color key="tintColor" systemColor="labelColor"/>
                         <userDefinedRuntimeAttributes>
@@ -40,8 +40,6 @@
                             <userDefinedRuntimeAttribute type="number" keyPath="stepValue">
                                 <real key="value" value="1"/>
                             </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="isContinuous" value="YES"/>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="autorepeat" value="NO"/>
                         </userDefinedRuntimeAttributes>
                         <connections>
                             <action selector="stepperValueChanged:" destination="Wkc-hn-ffh" eventType="valueChanged" id="pFF-Hy-Jna"/>
