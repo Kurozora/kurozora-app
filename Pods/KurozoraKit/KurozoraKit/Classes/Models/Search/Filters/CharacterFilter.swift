@@ -11,15 +11,15 @@ public struct CharacterFilter {
 	public var astrologicalSign: Int?
 	public var birthDay: Int?
 	public var birthMonth: Int?
-	public var bust: Double?
-	public var height: Double?
-	public var hip: Double?
+	public var bust: String?
+	public var height: String?
+	public var hip: String?
 	public var status: Int?
-	public var waist: Double?
-	public var weight: Double?
+	public var waist: String?
+	public var weight: String?
 
 	// MARK: - Initializers
-	public init(age: Int? = nil, astrologicalSign: Int? = nil, birthDay: Int? = nil, birthMonth: Int? = nil, bust: Double? = nil, height: Double? = nil, hip: Double? = nil, status: Int? = nil, waist: Double? = nil, weight: Double? = nil) {
+	public init(age: Int? = nil, astrologicalSign: Int? = nil, birthDay: Int? = nil, birthMonth: Int? = nil, bust: String? = nil, height: String? = nil, hip: String? = nil, status: Int? = nil, waist: String? = nil, weight: String? = nil) {
 		self.age = age
 		self.astrologicalSign = astrologicalSign
 		self.birthDay = birthDay

@@ -8,12 +8,12 @@
 public struct StudioFilter {
 	// MARK: - Properties
 	public let address: String?
-	public let founded: String?
+	public let founded: TimeInterval?
 	public let isNSFW: Bool?
 	public let type: Int?
 
 	// MARK: - Initializers
-	public init(address: String? = nil, founded: String? = nil, isNSFW: Bool? = nil, type: Int? = nil) {
+	public init(address: String? = nil, founded: TimeInterval? = nil, isNSFW: Bool? = nil, type: Int? = nil) {
 		self.address = address
 		self.founded = founded
 		self.isNSFW = isNSFW

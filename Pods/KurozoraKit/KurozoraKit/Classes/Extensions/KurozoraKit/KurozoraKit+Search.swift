@@ -58,8 +58,11 @@ extension KurozoraKit {
 					}
 				}
 
-				parameters.merge(filters) { current, _ in
-					return current
+				do {
+					let filterData = try JSONSerialization.data(withJSONObject: filters, options: [])
+					parameters["filter"] = filterData.base64EncodedString()
+				} catch {
+					print("❌ Encode error: Could not make base64 string from filter data", filters)
 				}
 			}
 		}
