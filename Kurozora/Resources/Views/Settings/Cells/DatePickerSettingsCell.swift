@@ -15,6 +15,13 @@ class DatePickerSettingsCell: SettingsCell {
 	// MARK: - Properties
 	weak var delegate: DatePickerSettingsCellDelegate?
 
+	// MARK: - View
+	override func layoutSubviews() {
+		super.layoutSubviews()
+
+		self.datePicker.theme_tintColor = KThemePicker.tintColor.rawValue
+	}
+
 	// MARK: - Functions
 	func updateCell(with date: Date, for indexPath: IndexPath) {
 		self.datePicker.setDate(date, animated: true)

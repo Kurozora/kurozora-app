@@ -150,7 +150,6 @@ extension AppearanceOptionsViewController: DatePickerSettingsCellDelegate {
 
 		NotificationCenter.default.post(name: .KSAutomaticDarkThemeDidChange, object: nil)
 
-		datePicker.setValue(KThemePicker.textColor.colorValue, forKeyPath: "textColor")
 		tableView.reloadRows(at: [indexPath], with: .none)
 	}
 }
