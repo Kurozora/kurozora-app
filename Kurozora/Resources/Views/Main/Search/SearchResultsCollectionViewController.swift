@@ -187,7 +187,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 
 		// State
 		self.tabBarView.buttons.customize { button in
-			button.contentInset = UIEdgeInsets(top: 8.0, left: 12.0, bottom: 4.0, right: 12.0)
+			button.contentInset = UIEdgeInsets(top: 12.0, left: 12.0, bottom: 12.0, right: 12.0)
 			button.selectedTintColor = KThemePicker.textColor.colorValue
 			button.tintColor = button.selectedTintColor.withAlphaComponent(0.50)
 		}
@@ -654,6 +654,21 @@ extension SearchResultsCollectionViewController: TMBarDelegate {
 		self.updateBar(to: CGFloat(index), animated: true, direction: direction)
 
 		self.currentIndex = index
+
+		guard let searchType = self.searchTypes[safe: self.currentIndex] else { return }
+
+		switch searchType {
+		case .songs, .users:
+			self.kSearchController.searchBar.showsBookmarkButton = false
+		default:
+			self.kSearchController.searchBar.showsBookmarkButton = true
+			if self.searchFilters[searchType] != nil {
+				self.kSearchController.searchBar.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle.fill"), for: .bookmark, state: .normal)
+			} else {
+				self.kSearchController.searchBar.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle"), for: .bookmark, state: .normal)
+			}
+		}
+
 		self.updateDataSource()
 	}
 }
@@ -977,6 +992,6 @@ extension SearchResultsCollectionViewController: SearchFilterCollectionViewContr
 	}
 
 	func searchFilterCollectionViewControllerDidCancel(_ searchFilterCollectionViewController: SearchFilterCollectionViewController) {
-		print("----- did cancel")
+		print("----- search filter did cancel")
 	}
 }

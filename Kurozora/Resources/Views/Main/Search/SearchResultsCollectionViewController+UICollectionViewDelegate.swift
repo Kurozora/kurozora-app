@@ -99,14 +99,9 @@ extension SearchResultsCollectionViewController {
 		}
 
 		if identitiesCount != 0 {
-			identitiesCount -= 1
+			let itemsCount = identitiesCount - 1
 
-			var itemsCount = identitiesCount / 4 / 2
-			itemsCount = itemsCount > 15 ? 15 : itemsCount // Make sure count isn't above 15
-			itemsCount = identitiesCount - itemsCount
-			itemsCount = itemsCount < 1 ? 1 : itemsCount // Make sure count isn't below 1
-
-			if indexPath.item >= itemsCount && nextPageURL != nil && !self.isRequestInProgress {
+			if indexPath.item == itemsCount && nextPageURL != nil && !self.isRequestInProgress {
 				self.performSearch(with: self.searachQuery, in: self.currentScope, for: [type], with: nil, next: nextPageURL, resettingResults: false)
 			}
 		}
