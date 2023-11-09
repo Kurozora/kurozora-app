@@ -58,6 +58,7 @@ public enum KKLibrary {
 	/// case completed = 3
 	/// case onHold = 4
 	/// case dropped = 1
+	/// case ignored = 5
 	/// ```
 	///
 	/// - Tag: KKL-Status
@@ -82,7 +83,7 @@ public enum KKLibrary {
 		case dropped = 1
 
 		/// The library's ignored list.
-		case ignored = 6
+		case ignored = 5
 
 		// MARK: - Properties
 		/// An array containing all library status types.
