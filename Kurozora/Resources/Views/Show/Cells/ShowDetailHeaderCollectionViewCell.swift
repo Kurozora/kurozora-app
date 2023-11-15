@@ -113,7 +113,7 @@ extension ShowDetailHeaderCollectionViewCell {
 		NotificationCenter.default.addObserver(self, selector: #selector(handleReminderToggle(_:)), name: .KModelReminderIsToggled, object: nil)
 
 		// Configure visual effect
-		self.visualEffectView.layer.cornerRadius = 10.0
+		self.visualEffectView.layerCornerRadius = 10.0
 
 		// Configure library status
 		self.libraryStatus = literature.attributes.libraryStatus ?? .none
@@ -168,7 +168,7 @@ extension ShowDetailHeaderCollectionViewCell {
 		NotificationCenter.default.addObserver(self, selector: #selector(handleReminderToggle(_:)), name: .KModelReminderIsToggled, object: nil)
 
 		// Configure visual effect
-		self.visualEffectView.layer.cornerRadius = 10.0
+		self.visualEffectView.layerCornerRadius = 10.0
 
 		// Configure library status
 		self.libraryStatus = game.attributes.libraryStatus ?? .none
