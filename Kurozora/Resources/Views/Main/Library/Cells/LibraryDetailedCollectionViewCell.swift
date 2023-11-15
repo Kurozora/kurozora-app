@@ -11,12 +11,16 @@ import KurozoraKit
 
 class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 	// MARK: - IBOutlets
+	@IBOutlet weak var bannerContainerView: UIView!
 	@IBOutlet weak var episodeImageView: BannerImageView!
 	@IBOutlet weak var userProgressLabel: UILabel!
 
 	// MARK: - Functions
 	override func configure(using show: Show) {
 		super.configure(using: show)
+
+		// Configure banner container
+		self.bannerContainerView.layerCornerRadius = 10.0
 
 		// Configure title
 		self.titleLabel.textColor = .white
@@ -36,6 +40,9 @@ class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 
 	override func configure(using literature: Literature) {
 		super.configure(using: literature)
+		
+		// Configure banner container
+		self.bannerContainerView.layerCornerRadius = 10.0
 
 		// Configure title
 		self.titleLabel.textColor = .white
@@ -55,6 +62,9 @@ class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 
 	override func configure(using game: Game) {
 		super.configure(using: game)
+
+		// Configure banner container
+		self.bannerContainerView.layerCornerRadius = 10.0
 
 		// Configure title
 		self.titleLabel.textColor = .white

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="g0M-vX-pSL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="g0M-vX-pSL">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -88,11 +88,6 @@
                                                 <constraint firstItem="Xhf-NI-alx" firstAttribute="trailing" secondItem="idd-F4-WkK" secondAttribute="trailing" id="irp-rq-akA"/>
                                                 <constraint firstItem="Xhf-NI-alx" firstAttribute="bottom" secondItem="idd-F4-WkK" secondAttribute="bottom" id="zO2-hf-X1o"/>
                                             </constraints>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                    <real key="value" value="10"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jg5-R7-81q">
                                             <rect key="frame" x="10" y="110" width="70" height="105"/>
@@ -149,6 +144,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <size key="customSize" width="400" height="225"/>
                                 <connections>
+                                    <outlet property="bannerContainerView" destination="bFo-m7-mmy" id="cmp-sK-rL2"/>
                                     <outlet property="episodeImageView" destination="idd-F4-WkK" id="5fC-Es-SY5"/>
                                     <outlet property="posterImageOverlayView" destination="AEM-ez-9he" id="ban-RB-Ny4"/>
                                     <outlet property="posterImageView" destination="6GI-Jb-5fL" id="3Lg-OY-r44"/>
