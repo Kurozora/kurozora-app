@@ -142,7 +142,9 @@ extension Show {
 					let favoriteResponse = try await KService.updateFavoriteStatus(inLibrary: .shows, modelID: String(self.id)).value
 
 					self.attributes.favoriteStatus = favoriteResponse.data.favoriteStatus
-					NotificationCenter.default.post(name: .KModelFavoriteIsToggled, object: nil)
+					NotificationCenter.default.post(name: .KModelFavoriteIsToggled, object: nil, userInfo: [
+						"favoriteStatus": favoriteResponse.data.favoriteStatus
+					])
 				} catch {
 					print(error.localizedDescription)
 				}
@@ -160,7 +162,9 @@ extension Show {
 						let updateReminderResponse = try await KService.updateReminderStatus(inLibrary: .shows, modelID: String(self.id)).value
 
 						self.attributes.reminderStatus = updateReminderResponse.data.reminderStatus
-						NotificationCenter.default.post(name: .KModelReminderIsToggled, object: nil)
+						NotificationCenter.default.post(name: .KModelReminderIsToggled, object: nil, userInfo: [
+							"reminderStatus": updateReminderResponse.data.reminderStatus
+						])
 					} catch {
 						print(error.localizedDescription)
 					}

@@ -176,10 +176,10 @@ extension SettingsTableViewController {
 
 		#if DEBUG
 		/// An array containing all settings rows.
-		static let all: [Row] = [.account, .switchAccount, .keychain, .notifications, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .unlockFeatures, .tipjar, .manageSubscriptions, .rate, .restoreFeatures, .joinDiscord, .followTwitter, .followMedium]
+		static let all: [Row] = [.account, .switchAccount, .keychain, .notifications, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .unlockFeatures, .tipjar, .rate, .restoreFeatures, .joinDiscord, .followTwitter, .followMedium]
 		#else
 		/// An array containing all normal user settings rows.
-		static let all: [Row] = [.account, .switchAccount, .notifications, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .unlockFeatures, .tipjar, .manageSubscriptions, .restoreFeatures, .rate, .joinDiscord, .followTwitter, .followMedium]
+		static let all: [Row] = [.account, .switchAccount, .notifications, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .unlockFeatures, .tipjar, .restoreFeatures, .rate, .joinDiscord, .followTwitter, .followMedium]
 		#endif
 
 		/// An array containing all account section settings rows.
@@ -217,7 +217,7 @@ extension SettingsTableViewController {
 			if ProcessInfo.processInfo.isiOSAppOnMac {
 				return [.unlockFeatures, .tipjar, .restoreFeatures]
 			} else {
-				return [.unlockFeatures, .tipjar, .manageSubscriptions, .restoreFeatures]
+				return [.unlockFeatures, .tipjar, .restoreFeatures]
 			}
 			#endif
 		}

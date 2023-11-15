@@ -231,12 +231,18 @@ extension ShowDetailHeaderCollectionViewCell {
 
 	@objc func handleFavoriteToggle(_ notification: NSNotification) {
 		guard let favoriteStatus = notification.userInfo?["favoriteStatus"] as? FavoriteStatus else { return }
-		self.updateFavoriteStatus(favoriteStatus)
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			self.updateFavoriteStatus(favoriteStatus)
+		}
 	}
 
 	@objc func handleReminderToggle(_ notification: NSNotification) {
 		guard let reminderStatus = notification.userInfo?["reminderStatus"] as? ReminderStatus else { return }
-		self.updateReminderStatus(reminderStatus)
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			self.updateReminderStatus(reminderStatus)
+		}
 	}
 
 	/// Updates the `favoriteButton` appearance with the favorite status of the show.
@@ -251,7 +257,6 @@ extension ShowDetailHeaderCollectionViewCell {
 			self.favoriteButton.isUserInteractionEnabled = true
 
 			self.favoriteButton.setImage(favoriteStatus.imageValue, for: .normal)
-			NotificationCenter.default.post(name: .KFavoriteModelsListDidChange, object: nil)
 
 			if animated {
 				self.favoriteButton.animateBounce()
@@ -271,7 +276,6 @@ extension ShowDetailHeaderCollectionViewCell {
 			self.reminderButton.isUserInteractionEnabled = true
 
 			self.reminderButton.setImage(reminderStatus.imageValue, for: .normal)
-			NotificationCenter.default.post(name: .KFavoriteModelsListDidChange, object: nil)
 
 			if animated {
 				self.reminderButton.animateBounce()

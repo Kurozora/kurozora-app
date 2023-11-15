@@ -142,7 +142,9 @@ extension Game {
 					let favoriteResponse = try await KService.updateFavoriteStatus(inLibrary: .games, modelID: self.id).value
 
 					self.attributes.favoriteStatus = favoriteResponse.data.favoriteStatus
-					NotificationCenter.default.post(name: .KModelFavoriteIsToggled, object: nil)
+					NotificationCenter.default.post(name: .KModelFavoriteIsToggled, object: nil, userInfo: [
+						"favoriteStatus": favoriteResponse.data.favoriteStatus
+					])
 				} catch {
 					print(error.localizedDescription)
 				}
