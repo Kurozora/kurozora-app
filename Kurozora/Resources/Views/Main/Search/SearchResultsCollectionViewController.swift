@@ -639,6 +639,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 // MARK: - TMBarDataSource
 extension SearchResultsCollectionViewController: TMBarDataSource {
 	func reloadView() {
+		guard self.searchTypes.count > 0 else { return }
 		self.tabBarView.reloadData(at: 0...self.searchTypes.count - 1, context: .full)
 	}
 
