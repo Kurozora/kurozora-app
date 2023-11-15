@@ -40,7 +40,7 @@ class ReviewCollectionViewCell: KCollectionViewCell {
 	// MARK: - Functions
 	/// The shared settings used to initialize the cell.
 	fileprivate func sharedInit() {
-		self.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+		self.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 		self.layerCornerRadius = 8
 	}
 
