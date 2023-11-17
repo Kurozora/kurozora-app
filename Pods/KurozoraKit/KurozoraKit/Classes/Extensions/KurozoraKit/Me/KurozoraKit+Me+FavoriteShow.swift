@@ -16,7 +16,7 @@ extension KurozoraKit {
 	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
 	///
 	/// - Returns: An instance of `RequestSender` with the results of the get favorites response.
-	public func getFavorites(from libraryKind: KKLibrary.Kind, next: String? = nil, limit: Int = 25) -> RequestSender<ShowResponse, KKAPIError> {
+	public func getFavorites(from libraryKind: KKLibrary.Kind, next: String? = nil, limit: Int = 25) -> RequestSender<FavoriteLibraryResponse, KKAPIError> {
 		// Prepare headers
 		var headers = self.headers
 		headers.add(.authorization(bearerToken: self.authenticationKey))
@@ -29,7 +29,7 @@ extension KurozoraKit {
 
 		// Prepare request
 		let meFavoritesIndex = next ?? KKEndpoint.Me.Favorites.index.endpointValue
-		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(meFavoritesIndex).buildURL(.relativeToBaseURL)
+		let request: APIRequest<FavoriteLibraryResponse, KKAPIError> = tron.codable.request(meFavoritesIndex).buildURL(.relativeToBaseURL)
 			.method(.get)
 			.parameters(parameters)
 			.headers(headers)
