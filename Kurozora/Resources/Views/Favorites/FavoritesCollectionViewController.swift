@@ -14,18 +14,11 @@ class FavoritesCollectionViewController: KCollectionViewController {
 	var toolbar = UIToolbar()
 
 	// MARK: - Properties
-	var libraryKind: KKLibrary.Kind = UserSettings.libraryKind
-	var shows: [Show] = [] {
-		didSet {
-			self._prefersActivityIndicatorHidden = true
-
-			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.endRefreshing()
-			self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh favorites list!")
-			#endif
-		}
-	}
+	var shows: [Show] = []
+	var literatures: [Literature] = []
+	var games: [Game] = []
 	var nextPageURL: String?
+	var libraryKind: KKLibrary.Kind = UserSettings.libraryKind
 	var _user: User? = User.current
 	var user: User? {
 		get {
@@ -42,8 +35,8 @@ class FavoritesCollectionViewController: KCollectionViewController {
 			}
 		}
 	}
-	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Show>! = nil
-	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, Show>! = nil
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -148,15 +141,29 @@ class FavoritesCollectionViewController: KCollectionViewController {
 		var detailString: String
 
 		if self.user?.id == User.current?.id {
-			detailString = "Favorited shows will show up on this page!"
+			switch self.libraryKind {
+			case .shows:
+				detailString = "Favorited shows will show up on this page!"
+			case .literatures:
+				detailString = "Favorited literatures will show up on this page!"
+			case .games:
+				detailString = "Favorited games will show up on this page!"
+			}
 		} else {
-			detailString = "\(self.user?.attributes.username ?? "This user") hasn't favorited shows yet."
+			switch self.libraryKind {
+			case .shows:
+				detailString = "\(self.user?.attributes.username ?? "This user") hasn't favorited shows yet."
+			case .literatures:
+				detailString = "\(self.user?.attributes.username ?? "This user") hasn't favorited literatures yet."
+			case .games:
+				detailString = "\(self.user?.attributes.username ?? "This user") hasn't favorited games yet."
+			}
 		}
 
-		emptyBackgroundView.configureImageView(image: R.image.empty.favorites()!)
-		emptyBackgroundView.configureLabels(title: "No Favorites", detail: detailString)
+		self.emptyBackgroundView.configureImageView(image: R.image.empty.favorites()!)
+		self.emptyBackgroundView.configureLabels(title: "No Favorites", detail: detailString)
 
-		collectionView.backgroundView?.alpha = 0
+		self.collectionView.backgroundView?.alpha = 0
 	}
 
 	/// Fades in and out the empty data view according to the number of sections.
@@ -169,7 +176,13 @@ class FavoritesCollectionViewController: KCollectionViewController {
 	}
 
 	/// Fetches the user's favorite list.
+	var fetchInProgress: Bool = false
 	@objc func fetchFavoritesList() async {
+		if self.fetchInProgress {
+			return
+		}
+		self.fetchInProgress = true
+
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
 			self.collectionView.backgroundView?.alpha = 0
@@ -185,28 +198,66 @@ class FavoritesCollectionViewController: KCollectionViewController {
 		let userIdentity = UserIdentity(id: userID)
 
 		do {
-			let showResponse = try await KService.getFavorites(forUser: userIdentity, libraryKind: self.libraryKind, next: self.nextPageURL).value
+			let favoriteLibraryResponse = try await KService.getFavorites(forUser: userIdentity, libraryKind: self.libraryKind, next: self.nextPageURL).value
 
 			// Reset data if necessary
 			if self.nextPageURL == nil {
 				self.shows = []
+				self.literatures = []
+				self.games = []
 			}
 
 			// Save next page url and append new data
-			self.nextPageURL = showResponse.next
-			self.shows.append(contentsOf: showResponse.data)
+			self.nextPageURL = favoriteLibraryResponse.next
+			if let shows = favoriteLibraryResponse.data.shows {
+				self.shows.append(contentsOf: shows)
+			}
+			if let literatures = favoriteLibraryResponse.data.literatures {
+				self.literatures.append(contentsOf: literatures)
+			}
+			if let games = favoriteLibraryResponse.data.games {
+				self.games.append(contentsOf: games)
+			}
 		} catch {
 			print("-----", error.localizedDescription)
 		}
 
-		self.updateDataSource()
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			self.updateDataSource()
+			self._prefersActivityIndicatorHidden = true
+			self.toggleEmptyDataView()
+
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.endRefreshing()
+			#endif
+		}
+
+		// Reset refresh controller title
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh favorites list!")
+		#endif
+
+		self.fetchInProgress = false
 	}
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
-		guard let show = sender as? Show else { return }
-		showDetailsCollectionViewController.show = show
+		switch segue.identifier {
+		case R.segue.favoritesCollectionViewController.showDetailsSegue.identifier:
+			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
+			guard let show = sender as? Show else { return }
+			showDetailsCollectionViewController.show = show
+		case R.segue.favoritesCollectionViewController.literatureDetailsSegue.identifier:
+			guard let literatureDetailCollectionViewController = segue.destination as? LiteratureDetailsCollectionViewController else { return }
+			guard let literature = sender as? Literature else { return }
+			literatureDetailCollectionViewController.literature = literature
+		case R.segue.favoritesCollectionViewController.gameDetailsSegue.identifier:
+			guard let gameDetailCollectionViewController = segue.destination as? GameDetailsCollectionViewController else { return }
+			guard let game = sender as? Game else { return }
+			gameDetailCollectionViewController.game = game
+		default: break
+		}
 	}
 }
 
@@ -226,5 +277,46 @@ extension FavoritesCollectionViewController {
 	/// ```
 	enum SectionLayoutKind: Int, CaseIterable {
 		case main = 0
+	}
+
+	/// List of available Item Kind types.
+	enum ItemKind: Hashable {
+		// MARK: - Cases
+		/// Indicates the item kind contains a `Show` object.
+		case show(_: Show, id: UUID = UUID())
+
+		/// Indicates the item kind contains a `Literature` object.
+		case literature(_: Literature, id: UUID = UUID())
+
+		/// Indicates the item kind contains a `Game` object.
+		case game(_: Game, id: UUID = UUID())
+
+		// MARK: - Functions
+		func hash(into hasher: inout Hasher) {
+			switch self {
+			case .show(let show, let id):
+				hasher.combine(show)
+				hasher.combine(id)
+			case .literature(let literature, let id):
+				hasher.combine(literature)
+				hasher.combine(id)
+			case .game(let game, let id):
+				hasher.combine(game)
+				hasher.combine(id)
+			}
+		}
+
+		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
+			switch (lhs, rhs) {
+			case (.show(let show1, let id1), .show(let show2, let id2)):
+				return show1 == show2 && id1 == id2
+			case (.literature(let literature1, let id1), .literature(let literature2, let id2)):
+				return literature1 == literature2 && id1 == id2
+			case (.game(let game1, let id1), .game(let game2, let id2)):
+				return game1 == game2 && id1 == id2
+			default:
+				return false
+			}
+		}
 	}
 }

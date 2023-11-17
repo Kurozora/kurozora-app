@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="8NB-r7-Zt3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="8NB-r7-Zt3">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,7 +16,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jIN-wM-Zqa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="991" y="202"/>
+            <point key="canvasLocation" x="981" y="115"/>
         </scene>
         <!--My Favorites-->
         <scene sceneID="ws2-75-oPq">
@@ -80,6 +80,8 @@
                     <navigationItem key="navigationItem" title="My Favorites" id="NFd-7S-oCL"/>
                     <connections>
                         <segue destination="l9G-KJ-lhF" kind="show" identifier="ShowDetailsSegue" id="jq7-tr-0gm"/>
+                        <segue destination="Eoi-uv-foo" kind="show" identifier="LiteratureDetailsSegue" id="yQ3-a8-bij"/>
+                        <segue destination="iz2-d0-Vjl" kind="show" identifier="GameDetailsSegue" id="Uep-Qm-BQC"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UB3-8V-Y1T" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -108,6 +110,26 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4ap-UE-tlz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-538" y="202"/>
+        </scene>
+        <!--LiteratureDetailsCollectionViewController-->
+        <scene sceneID="2a0-1P-cZ2">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Literatures" referencedIdentifier="LiteratureDetailsCollectionViewController" id="Eoi-uv-foo" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="XPY-Io-4rH"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zjP-5H-1xg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1001" y="168"/>
+        </scene>
+        <!--GameDetailsCollectionViewController-->
+        <scene sceneID="iAg-F9-HoF">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Games" referencedIdentifier="GameDetailsCollectionViewController" id="iz2-d0-Vjl" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="uFh-Rh-mlu"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iMI-bD-pFh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="983" y="220"/>
         </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

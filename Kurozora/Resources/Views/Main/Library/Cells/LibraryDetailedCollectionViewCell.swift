@@ -40,7 +40,7 @@ class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 
 	override func configure(using literature: Literature) {
 		super.configure(using: literature)
-		
+
 		// Configure banner container
 		self.bannerContainerView.layerCornerRadius = 10.0
 
