@@ -243,10 +243,12 @@ final class Store: NSObject, ObservableObject {
 
 	#if !targetEnvironment(macCatalyst)
 	/// Presents the user with the manage subscription view.
-	func manageSubscriptions() async {
-		if let windowScene = await UIApplication.sharedKeyWindow?.windowScene {
-			try? await AppStore.showManageSubscriptions(in: windowScene)
-		}
+	///
+	/// - Parameters:
+	///    - windowScene: the scene on which the subscription view is presented.
+	func manageSubscriptions(in windowScene: UIWindowScene?) async {
+		guard let windowScene = windowScene else { return }
+		try? await AppStore.showManageSubscriptions(in: windowScene)
 	}
 	#endif
 

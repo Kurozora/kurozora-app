@@ -186,8 +186,9 @@ extension SettingsTableViewController {
 		case .tipjar: break
 		#if !targetEnvironment(macCatalyst)
 		case .manageSubscriptions:
-			Task {
-				await store.manageSubscriptions()
+			Task { [weak self] in
+				guard let self = self else { return }
+				await store.manageSubscriptions(in: self.view.window?.windowScene)
 			}
 			return
 		#endif
