@@ -124,7 +124,7 @@ struct Trans {
 	/// The headline string for the Library Import view.
 	///
 	/// - Tag: Trans-libraryImportHeadline
-	static let libraryImportHeadline: String = String(localized: "Move from Other Services",
+	static let libraryImportHeadline: String = String(localized: "Move From Another Servic",
 													  table: "Services",
 													  comment: "The headline string for the Library Import view")
 	/// The subheadline string for the Library Import view.
@@ -136,7 +136,7 @@ struct Trans {
 	/// The footer string for the Library Import view.
 	///
 	/// - Tag: Trans-libraryImportFooter
-	static let libraryImportFooter: String = String(localized: "Kurozora does not guarantee all shows and mangas will be imported to your library. Once the request has been processed, a notification which contains the status of the import request will be sent. Furthermore, the uploaded file is deleted as soon as the import request has been processed.",
+	static let libraryImportFooter: String = String(localized: "Kurozora does not guarantee all shows and mangas will be imported to your library. Once the request has been processed, a notification which contains the status of the import request will be sent. Furthermore, the uploaded file is deleted as soon as the import request has been processed.\n\nSelecting \"overwrite\" will replace your Kurozora library with the imported one from the file.\nSelecting \"merge\" will add missing items to your Kurozora library. If an item exists then the tracking information in your Kurozora library will be updated with the imported one from the file.",
 													table: "Services",
 													comment: "The footer string for the Library Import view.")
 

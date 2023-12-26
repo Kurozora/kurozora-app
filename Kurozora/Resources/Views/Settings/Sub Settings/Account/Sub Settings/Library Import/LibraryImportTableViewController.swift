@@ -51,7 +51,13 @@ class LibraryImportTableViewController: ServiceTableViewController {
 	@IBAction func rightNavigationBarButtonPressed(sender: AnyObject) {
 		DispatchQueue.global(qos: .userInitiated).async {
 			guard let filePath = self.selectedFileURL else { return }
+
 			Task {
+				// Make sure you release the security-scoped resource when you finish.
+				defer {
+					filePath.stopAccessingSecurityScopedResource()
+				}
+
 				do {
 					_ = try await KService.importToLibrary(.shows, importService: .mal, importBehavior: .overwrite, filePath: filePath).value
 				} catch let error as KKAPIError {
@@ -217,9 +223,6 @@ extension LibraryImportTableViewController: UIDocumentPickerDelegate {
 			// Handle the failure here.
 			return
 		}
-
-		// Make sure you release the security-scoped resource when you finish.
-		defer { url.stopAccessingSecurityScopedResource() }
 
 		self.selectedFileURL = url
 	}
