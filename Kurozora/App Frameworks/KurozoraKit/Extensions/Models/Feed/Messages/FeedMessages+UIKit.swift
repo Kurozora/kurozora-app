@@ -106,14 +106,14 @@ extension FeedMessage {
 		if User.isSignedIn {
 			// Report message action
 			var reportMenuElements: [UIMenuElement] = []
-			let reportAction = UIAction(title: "Report Message", image: UIImage(systemName: "exclamationmark.circle.fill"), attributes: .destructive) { [weak self] _ in
+			let reportAction = UIAction(title: "Report Message", attributes: .destructive) { [weak self] _ in
 				guard let self = self else { return }
 				self.reportMessage()
 			}
 			reportMenuElements.append(reportAction)
 
 			// Append report menu
-			menuElements.append(UIMenu(title: "", options: .displayInline, children: reportMenuElements))
+			menuElements.append(UIMenu(title: "Report", image: UIImage(systemName: "exclamationmark.circle.fill"), children: reportMenuElements))
 		}
 
 		// Create and return a UIMenu
