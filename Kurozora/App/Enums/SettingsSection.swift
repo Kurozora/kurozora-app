@@ -28,9 +28,6 @@ extension SettingsTableViewController {
 		/// The section representing the debug group of cells.
 		case debug
 
-		/// The section representing the pro group of cells.
-		case pro
-
 		/// The section representing the alerts group of cells.
 		case alerts
 
@@ -55,10 +52,6 @@ extension SettingsTableViewController {
 			sections.append(.debug)
 			#endif
 
-			if User.isSignedIn {
-				sections.append(.pro)
-			}
-
 			sections.append(contentsOf: [.alerts, .general, .support, .social, .about])
 			return sections
 		}
@@ -70,8 +63,6 @@ extension SettingsTableViewController {
 				return Row.allAccount
 			case .debug:
 				return Row.allDebug
-			case .pro:
-				return Row.allPro
 			case .alerts:
 				return Row.allAlerts
 			case .general:
@@ -92,8 +83,6 @@ extension SettingsTableViewController {
 				return Trans.account
 			case .debug:
 				return Trans.debug
-			case .pro:
-				return Trans.pro
 			case .alerts:
 				return Trans.alerts
 			case .general:
@@ -120,11 +109,14 @@ extension SettingsTableViewController {
 		/// The row representing the keychain cell.
 		case keychain
 
-		/// The row representing the reminder cell.
-		case reminder
-
 		/// The row representing the notifications cell.
 		case notifications
+
+		/// The row representing the sound cell.
+		case sound
+
+		/// The row representing the reminder cell.
+		case reminder
 
 		/// The row representing the display and blindness cell.
 		case displayBlindness
@@ -147,9 +139,6 @@ extension SettingsTableViewController {
 		/// The row representing the privacy cell.
 		case privacy
 
-		/// The row representing the rate cell.
-		case rate
-
 		/// The row representing the unlock features cell.
 		case unlockFeatures
 
@@ -165,21 +154,27 @@ extension SettingsTableViewController {
 //		/// The row representing the refund request cell.
 //		case requestRefund
 
+		/// The row representing the rate cell.
+		case rate
+
 		/// The row representing the Discord cell.
 		case joinDiscord
+
+		/// The row representing the GitHub cell.
+		case followGitHub
+
+		/// The row representing the Mastodon cell.
+		case followMastodon
 
 		/// The row representing the Twitter cell.
 		case followTwitter
 
-		/// The row representing the Medium cell.
-		case followMedium
-
 		#if DEBUG
 		/// An array containing all settings rows.
-		static let all: [Row] = [.account, .switchAccount, .keychain, .notifications, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .unlockFeatures, .tipjar, .rate, .restoreFeatures, .joinDiscord, .followTwitter, .followMedium]
+		static let all: [Row] = [.account, .switchAccount, .keychain, .notifications, .sound, .reminder, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .unlockFeatures, .tipjar, .restoreFeatures, .rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter]
 		#else
 		/// An array containing all normal user settings rows.
-		static let all: [Row] = [.account, .switchAccount, .notifications, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .unlockFeatures, .tipjar, .restoreFeatures, .rate, .joinDiscord, .followTwitter, .followMedium]
+		static let all: [Row] = [.account, .switchAccount, .notifications, .sound, .reminder, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .unlockFeatures, .tipjar, .restoreFeatures, .rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter]
 		#endif
 
 		/// An array containing all account section settings rows.
@@ -194,11 +189,8 @@ extension SettingsTableViewController {
 		/// An array containing all debug section settings rows.
 		static let allDebug: [Row] = [.keychain]
 
-		/// An array containing all pro section settings rows.
-		static let allPro: [Row] = [.reminder]
-
 		/// An array containing all alerts section settings rows.
-		static let allAlerts: [Row] = [.notifications]
+		static var allAlerts: [Row] = [.notifications, .sound, .reminder]
 
 		/// An array containing all general section settings rows.
 		static var allGeneral: [Row] {
@@ -223,7 +215,7 @@ extension SettingsTableViewController {
 		}
 
 		/// An array containing all social section settings rows.
-		static let allSocial: [Row] = [.rate, .joinDiscord, .followTwitter, .followMedium]
+		static let allSocial: [Row] = [.rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter]
 
 		/// An array containing all about section settings rows.
 		static let allAbout: [Row] = []
@@ -237,10 +229,12 @@ extension SettingsTableViewController {
 				return R.segue.settingsTableViewController.switchAccountSegue.identifier
 			case .keychain:
 				return R.segue.settingsTableViewController.keysSegue.identifier
-			case .reminder:
-				return ""
 			case .notifications:
 				return R.segue.settingsTableViewController.notificationSegue.identifier
+			case .sound:
+				return R.segue.settingsTableViewController.soundSegue.identifier
+			case .reminder:
+				return ""
 			case .displayBlindness:
 				return R.segue.settingsTableViewController.displaySegue.identifier
 			case .theme:
@@ -269,9 +263,11 @@ extension SettingsTableViewController {
 				return ""
 			case .joinDiscord:
 				return ""
-			case .followTwitter:
+			case .followGitHub:
 				return ""
-			case .followMedium:
+			case .followMastodon:
+				return ""
+			case .followTwitter:
 				return ""
 			}
 		}
@@ -285,10 +281,12 @@ extension SettingsTableViewController {
 				return .chevron
 			case .keychain:
 				return .chevron
-			case .reminder:
-				return .none
 			case .notifications:
 				return .chevron
+			case .sound:
+				return .chevron
+			case .reminder:
+				return .none
 			case .displayBlindness:
 				return .chevron
 			case .theme:
@@ -317,9 +315,11 @@ extension SettingsTableViewController {
 				return .none
 			case .joinDiscord:
 				return .none
-			case .followTwitter:
+			case .followGitHub:
 				return .none
-			case .followMedium:
+			case .followMastodon:
+				return .none
+			case .followTwitter:
 				return .none
 			}
 		}
@@ -333,10 +333,12 @@ extension SettingsTableViewController {
 				return Trans.switchAccount
 			case .keychain:
 				return Trans.keysManager
-			case .reminder:
-				return Trans.subscribeToReminders
 			case .notifications:
 				return Trans.notifications
+			case .sound:
+				return Trans.sound
+			case .reminder:
+				return Trans.subscribeToReminders
 			case .displayBlindness:
 				return Trans.displayBlindness
 			case .theme:
@@ -372,10 +374,12 @@ extension SettingsTableViewController {
 				return Trans.rateAppStore
 			case .joinDiscord:
 				return Trans.joinDiscord
+			case .followGitHub:
+				return Trans.followGitHub
+			case .followMastodon:
+				return Trans.followMastodon
 			case .followTwitter:
 				return Trans.followTwitter
-			case .followMedium:
-				return Trans.followMedium
 			}
 		}
 
@@ -398,10 +402,12 @@ extension SettingsTableViewController {
 				return R.image.icons.accountSwitch()
 			case .keychain:
 				return R.image.icons.kDefaults()
-			case .reminder:
-				return R.image.icons.reminder()
 			case .notifications:
 				return R.image.icons.notifications()
+			case .sound:
+				return R.image.icons.sound()
+			case .reminder:
+				return R.image.icons.reminder()
 			case .displayBlindness:
 				return R.image.icons.display()
 			case .theme:
@@ -437,10 +443,12 @@ extension SettingsTableViewController {
 				return R.image.icons.rate()
 			case .joinDiscord:
 				return R.image.icons.brands.discord()
+			case .followGitHub:
+				return R.image.icons.brands.gitHub()
+			case .followMastodon:
+				return R.image.icons.brands.mastodon()
 			case .followTwitter:
 				return R.image.icons.brands.twitter()
-			case .followMedium:
-				return R.image.icons.brands.medium()
 			}
 		}
 	}
