@@ -47,4 +47,15 @@ class IconTableViewCell: SelectableSettingsCell {
 		self.primaryLabel?.text = browser.stringValue
 		self.iconImageView?.image = browser.image
 	}
+
+	func configureCell(using appChimeElement: AppChimeElement?) {
+		guard let appChimeElement = appChimeElement else {
+			self.showSkeleton()
+			return
+		}
+		self.hideSkeleton()
+
+		self.primaryLabel?.text = appChimeElement.name
+		self.iconImageView?.image = UIImage(systemName: "play.circle")
+	}
 }

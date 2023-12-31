@@ -15,9 +15,11 @@ struct AlternativeIcons {
 	let icons: [AlternativeIconsElement]
 
 	// MARK: - Initializers
-	/// Initializes a new instance of `AlternativeIcons` using the given dictionary.
+	/// Initializes a new instance of `AlternativeIcons`.
 	///
-	/// - Parameter dict: The dictionary that contains the array of alternative icons.
+	/// - Parameters:
+	///    - title: The title of the group
+	///    - icons: The icons in the group
 	init(title: String, icons: [String]) {
 		self.title = title
 		self.icons = icons.map { iconName in

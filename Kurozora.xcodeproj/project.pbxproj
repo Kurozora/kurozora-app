@@ -242,6 +242,18 @@
 		666004A729DE1B3B00871801 /* KUnderlinedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666004A629DE1B3B00871801 /* KUnderlinedLabel.swift */; };
 		666004A929E49CFA00871801 /* ActionLinkExploreCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 666004A829E49CF900871801 /* ActionLinkExploreCollectionViewCell.xib */; };
 		666131F52847F43C0009FEA2 /* Studio+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666131F42847F43C0009FEA2 /* Studio+UIKit.swift */; };
+		66631B492B4024450006F02B /* SoundSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66631B482B4024450006F02B /* SoundSettings.storyboard */; };
+		66631B4B2B4041860006F02B /* SoundOptionsSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66631B4A2B4041860006F02B /* SoundOptionsSettingsViewController.swift */; };
+		66631B4F2B407A2C0006F02B /* tuturu.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 66631B4E2B407A2B0006F02B /* tuturu.m4a */; };
+		66631B512B408D7A0006F02B /* jeb_.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 66631B502B408D790006F02B /* jeb_.m4a */; };
+		66631B532B408D970006F02B /* nya.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 66631B522B408D970006F02B /* nya.m4a */; };
+		66631B552B408DA70006F02B /* plus_ultra-v2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 66631B542B408DA70006F02B /* plus_ultra-v2.m4a */; };
+		66631B582B408DBB0006F02B /* ryoiki_tenkai.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 66631B572B408DBB0006F02B /* ryoiki_tenkai.m4a */; };
+		66631B5C2B4092D00006F02B /* plus_ultra.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 66631B5B2B4092D00006F02B /* plus_ultra.m4a */; };
+		66631B5E2B40C8430006F02B /* plus_ultra-v3.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 66631B5D2B40C8420006F02B /* plus_ultra-v3.m4a */; };
+		66631B612B40D1070006F02B /* AppChimeGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66631B602B40D1070006F02B /* AppChimeGroup.swift */; };
+		66631B622B40E30E0006F02B /* App Chimes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66631B5F2B40CF820006F02B /* App Chimes.plist */; };
+		66631B662B40E5D20006F02B /* yare_yare_daze.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 66631B652B40E5D20006F02B /* yare_yare_daze.m4a */; };
 		6663985B2366298100713B8B /* UICollectionViewCell+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6663985A2366298100713B8B /* UICollectionViewCell+Kurozora.swift */; };
 		66647B542084995500CF624F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66647B532084995500CF624F /* AppDelegate.swift */; };
 		6664B81324A403C700E73728 /* TextViewCollectionViewCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6664B81224A403C700E73728 /* TextViewCollectionViewCellType.swift */; };
@@ -395,6 +407,7 @@
 		66AC3D1F23D8FB0800D28EE6 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66AC3D1E23D8FB0800D28EE6 /* GameKit.framework */; };
 		66AC3D2223D923ED00D28EE6 /* KViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AC3D2123D923ED00D28EE6 /* KViewController.swift */; };
 		66ACA19222C2627000FAEF08 /* AppearanceOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ACA19122C2627000FAEF08 /* AppearanceOptionsViewController.swift */; };
+		66AD1A052B3CD53400694BF7 /* Chime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AD1A042B3CD53400694BF7 /* Chime.swift */; };
 		66AE01242593D4E200308636 /* Achievement.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66AE01232593D4E200308636 /* Achievement.storyboard */; };
 		66AE01292594018400308636 /* Genre.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66AE01282594018400308636 /* Genre.storyboard */; };
 		66AE1E0B24A0C41300FD3FFC /* StudioDetailsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AE1E0A24A0C41300FD3FFC /* StudioDetailsCollectionViewController.swift */; };
@@ -518,6 +531,7 @@
 		66D6237B20A1BFD300304914 /* FavoritesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D6237A20A1BFD300304914 /* FavoritesCollectionViewController.swift */; };
 		66D6237D20A1CB9C00304914 /* LibraryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D6237C20A1CB9C00304914 /* LibraryCollectionViewCell.swift */; };
 		66D6237F20A1CC1D00304914 /* Library.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66D6237E20A1CC1D00304914 /* Library.storyboard */; };
+		66D888F52B3E2C1100885043 /* SoundSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D888F42B3E2C1100885043 /* SoundSettingsViewController.swift */; };
 		66D8B14B24F8559E00F0DE7B /* KFeedMessageEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D8B14A24F8559E00F0DE7B /* KFeedMessageEditorViewController.swift */; };
 		66D8B14D24F9417E00F0DE7B /* KSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D8B14C24F9417E00F0DE7B /* KSwitch.swift */; };
 		66DB11D024E6103900C99754 /* Shows.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66DB11CF24E6103900C99754 /* Shows.storyboard */; };
@@ -648,7 +662,7 @@
 		66FDDB7323B95AF600364886 /* UICollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FDDB7223B95AF600364886 /* UICollectionViewController+KCollectionViewDelegateLayout.swift */; };
 		66FE5CFF215B665200E2844A /* DebugSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FE5CFE215B665200E2844A /* DebugSettingsTableViewController.swift */; };
 		66FE5D01215B739D00E2844A /* KDefaultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FE5D00215B739D00E2844A /* KDefaultsCell.swift */; };
-		66FE68FD29D26AE300C9AD8E /* shop_door_bell.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 66FE68FC29D26AE300C9AD8E /* shop_door_bell.m4a */; };
+		66FE68FD29D26AE300C9AD8E /* furin.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 66FE68FC29D26AE300C9AD8E /* furin.m4a */; };
 		73E9082EEADA42DDD54D9805 /* Pods_Kurozora.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E06CAB22F87FA1B89AE618FB /* Pods_Kurozora.framework */; };
 /* End PBXBuildFile section */
 
@@ -905,6 +919,18 @@
 		666004A629DE1B3B00871801 /* KUnderlinedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KUnderlinedLabel.swift; sourceTree = "<group>"; };
 		666004A829E49CF900871801 /* ActionLinkExploreCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActionLinkExploreCollectionViewCell.xib; sourceTree = "<group>"; };
 		666131F42847F43C0009FEA2 /* Studio+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Studio+UIKit.swift"; sourceTree = "<group>"; };
+		66631B482B4024450006F02B /* SoundSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SoundSettings.storyboard; sourceTree = "<group>"; };
+		66631B4A2B4041860006F02B /* SoundOptionsSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundOptionsSettingsViewController.swift; sourceTree = "<group>"; };
+		66631B4E2B407A2B0006F02B /* tuturu.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = tuturu.m4a; sourceTree = "<group>"; };
+		66631B502B408D790006F02B /* jeb_.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = jeb_.m4a; sourceTree = "<group>"; };
+		66631B522B408D970006F02B /* nya.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = nya.m4a; sourceTree = "<group>"; };
+		66631B542B408DA70006F02B /* plus_ultra-v2.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "plus_ultra-v2.m4a"; sourceTree = "<group>"; };
+		66631B572B408DBB0006F02B /* ryoiki_tenkai.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = ryoiki_tenkai.m4a; sourceTree = "<group>"; };
+		66631B5B2B4092D00006F02B /* plus_ultra.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = plus_ultra.m4a; sourceTree = "<group>"; };
+		66631B5D2B40C8420006F02B /* plus_ultra-v3.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "plus_ultra-v3.m4a"; sourceTree = "<group>"; };
+		66631B5F2B40CF820006F02B /* App Chimes.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "App Chimes.plist"; sourceTree = "<group>"; };
+		66631B602B40D1070006F02B /* AppChimeGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppChimeGroup.swift; sourceTree = "<group>"; };
+		66631B652B40E5D20006F02B /* yare_yare_daze.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = yare_yare_daze.m4a; sourceTree = "<group>"; };
 		6663985A2366298100713B8B /* UICollectionViewCell+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+Kurozora.swift"; sourceTree = "<group>"; };
 		66647B502084995500CF624F /* Kurozora.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kurozora.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66647B532084995500CF624F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -1050,6 +1076,7 @@
 		66AC3D1E23D8FB0800D28EE6 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		66AC3D2123D923ED00D28EE6 /* KViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KViewController.swift; sourceTree = "<group>"; };
 		66ACA19122C2627000FAEF08 /* AppearanceOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceOptionsViewController.swift; sourceTree = "<group>"; };
+		66AD1A042B3CD53400694BF7 /* Chime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chime.swift; sourceTree = "<group>"; };
 		66AE01232593D4E200308636 /* Achievement.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Achievement.storyboard; sourceTree = "<group>"; };
 		66AE01282594018400308636 /* Genre.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Genre.storyboard; sourceTree = "<group>"; };
 		66AE1E0A24A0C41300FD3FFC /* StudioDetailsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioDetailsCollectionViewController.swift; sourceTree = "<group>"; };
@@ -1182,6 +1209,7 @@
 		66D6237A20A1BFD300304914 /* FavoritesCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCollectionViewController.swift; sourceTree = "<group>"; };
 		66D6237C20A1CB9C00304914 /* LibraryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCollectionViewCell.swift; sourceTree = "<group>"; };
 		66D6237E20A1CC1D00304914 /* Library.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Library.storyboard; sourceTree = "<group>"; };
+		66D888F42B3E2C1100885043 /* SoundSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSettingsViewController.swift; sourceTree = "<group>"; };
 		66D8B14A24F8559E00F0DE7B /* KFeedMessageEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KFeedMessageEditorViewController.swift; sourceTree = "<group>"; };
 		66D8B14C24F9417E00F0DE7B /* KSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KSwitch.swift; sourceTree = "<group>"; };
 		66DB11CF24E6103900C99754 /* Shows.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Shows.storyboard; sourceTree = "<group>"; };
@@ -1312,7 +1340,7 @@
 		66FDDB7223B95AF600364886 /* UICollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
 		66FE5CFE215B665200E2844A /* DebugSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugSettingsTableViewController.swift; sourceTree = "<group>"; };
 		66FE5D00215B739D00E2844A /* KDefaultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KDefaultsCell.swift; sourceTree = "<group>"; };
-		66FE68FC29D26AE300C9AD8E /* shop_door_bell.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = shop_door_bell.m4a; sourceTree = "<group>"; };
+		66FE68FC29D26AE300C9AD8E /* furin.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = furin.m4a; sourceTree = "<group>"; };
 		737689E9E0DAAABD1B6489DE /* Pods-KurozoraKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KurozoraKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-KurozoraKit/Pods-KurozoraKit.release.xcconfig"; sourceTree = "<group>"; };
 		E06CAB22F87FA1B89AE618FB /* Pods_Kurozora.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kurozora.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -1899,6 +1927,7 @@
 				66FA97E4281EC9DC0054FC2E /* QuickLink.swift */,
 				66DF091226C7C1FA005AED93 /* Store.swift */,
 				664133E721DB828E00CE823A /* UserSettings.swift */,
+				66631B602B40D1070006F02B /* AppChimeGroup.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2001,6 +2030,16 @@
 				66CDC088234A8278009E799C /* Cells */,
 			);
 			path = "Tip Jar";
+			sourceTree = "<group>";
+		};
+		6659E03C2B3DB044007853F5 /* Sound */ = {
+			isa = PBXGroup;
+			children = (
+				66631B482B4024450006F02B /* SoundSettings.storyboard */,
+				66631B4A2B4041860006F02B /* SoundOptionsSettingsViewController.swift */,
+				66D888F42B3E2C1100885043 /* SoundSettingsViewController.swift */,
+			);
+			path = Sound;
 			sourceTree = "<group>";
 		};
 		665A45802466EFDB00154F41 /* Visual Effects */ = {
@@ -2651,6 +2690,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		66AD1A032B3CD52100694BF7 /* Chime */ = {
+			isa = PBXGroup;
+			children = (
+				66AD1A042B3CD53400694BF7 /* Chime.swift */,
+			);
+			path = Chime;
+			sourceTree = "<group>";
+		};
 		66AE01252593D5C000308636 /* Follow */ = {
 			isa = PBXGroup;
 			children = (
@@ -2806,10 +2853,11 @@
 			children = (
 				66BFF4EA25FFF879009EBA30 /* SidebarViewController.swift */,
 				6640E18722AD631F00D0F575 /* Authentication */,
-				66EDBA52294420DA00FF1A2E /* Warning */,
+				66AD1A032B3CD52100694BF7 /* Chime */,
 				66A08C6B23E3A2DD007B6418 /* Legal */,
 				66CE8105246088C000DB0C49 /* Services */,
 				66B216A921C166B5006E167D /* Text Editor */,
+				66EDBA52294420DA00FF1A2E /* Warning */,
 				66D8AA7522F0DDFE00456E75 /* Web Browser */,
 				66BEC131231711C40039D683 /* WhatsNew */,
 			);
@@ -2905,14 +2953,15 @@
 			children = (
 				66A08C6F23E3B342007B6418 /* SubSettingsViewController.swift */,
 				6614409221DA411C00E54915 /* Account */,
-				66C8FBEF24671CAA00C82D60 /* Switch Account */,
-				6614409121DA40F300E54915 /* Debug */,
 				6640E19122ADD20700D0F575 /* Authentication */,
 				6646A26F236A5D1C00DCC0A4 /* Browser */,
+				6614409121DA40F300E54915 /* Debug */,
 				661049BE22C0425800A2A354 /* Display */,
+				668DBE6826BCAFC800399BEB /* Icons */,
 				6614409021DA40AB00E54915 /* Notifications */,
 				66C27A7223E3A09E00BC09D3 /* Privacy */,
-				668DBE6826BCAFC800399BEB /* Icons */,
+				6659E03C2B3DB044007853F5 /* Sound */,
+				66C8FBEF24671CAA00C82D60 /* Switch Account */,
 				664133DE21DA42F900CE823A /* Theme Store */,
 			);
 			path = "Sub Settings";
@@ -3370,6 +3419,7 @@
 				66A4FD11270F62D300E7C702 /* Settings.bundle */,
 				66A4FD0F270F62D300E7C702 /* Intents.intentdefinition */,
 				66A4FD18270F6CD100E7C702 /* App Icons.plist */,
+				66631B5F2B40CF820006F02B /* App Chimes.plist */,
 				66A4FD10270F62D300E7C702 /* Info.plist */,
 				66A4FD12270F62D300E7C702 /* Products.plist */,
 				66EDBA6B2946943700FF1A2E /* Launch Background.png */,
@@ -3633,7 +3683,15 @@
 		66FE68F929D2646A00C9AD8E /* Audios */ = {
 			isa = PBXGroup;
 			children = (
-				66FE68FC29D26AE300C9AD8E /* shop_door_bell.m4a */,
+				66FE68FC29D26AE300C9AD8E /* furin.m4a */,
+				66631B502B408D790006F02B /* jeb_.m4a */,
+				66631B522B408D970006F02B /* nya.m4a */,
+				66631B5B2B4092D00006F02B /* plus_ultra.m4a */,
+				66631B542B408DA70006F02B /* plus_ultra-v2.m4a */,
+				66631B5D2B40C8420006F02B /* plus_ultra-v3.m4a */,
+				66631B572B408DBB0006F02B /* ryoiki_tenkai.m4a */,
+				66631B4E2B407A2B0006F02B /* tuturu.m4a */,
+				66631B652B40E5D20006F02B /* yare_yare_daze.m4a */,
 			);
 			path = Audios;
 			sourceTree = "<group>";
@@ -3750,6 +3808,7 @@
 				66500D0C295FCC520098D59D /* PurchaseFeatureCollectionViewCell.xib in Resources */,
 				66AE1E0D24A0C42600FD3FFC /* Studios.storyboard in Resources */,
 				66E54D5A2A6D218F00F9F8AA /* RatingSentimentCollectionViewCell.xib in Resources */,
+				66631B582B408DBB0006F02B /* ryoiki_tenkai.m4a in Resources */,
 				66AA35BC24030E420006EC5B /* Cast.storyboard in Resources */,
 				6619377A2A6ED23A00447084 /* RatingBadgeCollectionViewCell.xib in Resources */,
 				6623CB202724D27600050EAA /* IconTableViewCell.xib in Resources */,
@@ -3772,6 +3831,7 @@
 				666C89A32A006D4A0075B5D6 /* SearchFilterBaseCollectionViewCell.xib in Resources */,
 				66319DAF27C858CD0063DE7F /* MusicLockupCollectionViewCell.xib in Resources */,
 				66A3488629B3FC1800ABF1FE /* GameLockupCollectionViewCell.xib in Resources */,
+				66631B622B40E30E0006F02B /* App Chimes.plist in Resources */,
 				66500D13295FD5180098D59D /* PurchaseHeaderCollectionViewCell.xib in Resources */,
 				6623CB1E2724C7F800050EAA /* SelectableSettingsCell.xib in Resources */,
 				664AAF8124EE8E2F00FF4AA5 /* Characters.storyboard in Resources */,
@@ -3785,6 +3845,7 @@
 				66AC260622F0E58A0064541B /* WebBrowser.storyboard in Resources */,
 				660C042523D0CFC00040C749 /* SeasonLockupCollectionViewCell.xib in Resources */,
 				6647237824601707008E5111 /* ServiceFooterTableViewCell.xib in Resources */,
+				66631B662B40E5D20006F02B /* yare_yare_daze.m4a in Resources */,
 				66A4FD17270F62D300E7C702 /* Products.plist in Resources */,
 				664AAF9824EEE53700FF4AA5 /* People.storyboard in Resources */,
 				66A4FCFD270EFDCA00E7C702 /* Assets.xcassets in Resources */,
@@ -3796,15 +3857,17 @@
 				66B13A672405DBE000CD732B /* Onboarding.storyboard in Resources */,
 				66CB8D5224F83FE00047A2CF /* FeedMessageCell.xib in Resources */,
 				666C825A2168031B00C93A70 /* Home.storyboard in Resources */,
+				66631B5C2B4092D00006F02B /* plus_ultra.m4a in Resources */,
 				662A17F7288A1F5D009D4A0D /* SessionLockupCell.xib in Resources */,
 				666FBD9022C4E170007DB5D8 /* Black.plist in Resources */,
 				66A08C6A23E3A2D5007B6418 /* PrivacySettings.storyboard in Resources */,
+				66631B512B408D7A0006F02B /* jeb_.m4a in Resources */,
 				66C5797922A83726001B8F51 /* ThemeStore.storyboard in Resources */,
 				666938B721B1D4FE00BA9620 /* CommentCell.xib in Resources */,
 				666C89B92A007EA60075B5D6 /* SearchFilterStepperCollectionViewCell.xib in Resources */,
 				66AA35C024030FA60006EC5B /* Episodes.storyboard in Resources */,
 				660C043223D1500A0040C749 /* MediumLockupCollectionViewCell.xib in Resources */,
-				66FE68FD29D26AE300C9AD8E /* shop_door_bell.m4a in Resources */,
+				66FE68FD29D26AE300C9AD8E /* furin.m4a in Resources */,
 				6640E18922AD633500D0F575 /* Authentication.storyboard in Resources */,
 				66EDBA6D2946943700FF1A2E /* Launch Background.png in Resources */,
 				661F186024AB5C6F00542AFB /* SosumiCollectionViewCell.xib in Resources */,
@@ -3817,6 +3880,7 @@
 				66C5797D22A864CB001B8F51 /* Legal.storyboard in Resources */,
 				66EDBA6C2946943700FF1A2E /* Launch Icon.png in Resources */,
 				666C89A92A00768F0075B5D6 /* SearchFilterSwitchCollectionViewCell.xib in Resources */,
+				66631B5E2B40C8430006F02B /* plus_ultra-v3.m4a in Resources */,
 				66EAB5BA28591C0100D81C06 /* UserLockupCollectionViewCell.xib in Resources */,
 				66A48FE021A411A900F34085 /* Notifications.storyboard in Resources */,
 				668F66672AF451030001C592 /* ReviewCollectionViewCell.xib in Resources */,
@@ -3831,11 +3895,14 @@
 				6646A275236A5F7600DCC0A4 /* BrowserSettings.storyboard in Resources */,
 				6632C3E32983468900702F7C /* SelectTableViewCell.xib in Resources */,
 				66500D08295FC82F0098D59D /* PurchaseButtonCollectionViewCell.xib in Resources */,
+				66631B4F2B407A2C0006F02B /* tuturu.m4a in Resources */,
 				660C043023D14F760040C749 /* SmallLockupCollectionViewCell.xib in Resources */,
 				66CBDD9224634AB700CA5F83 /* TitleHeaderCollectionReusableView.xib in Resources */,
 				66E1215A29AFEE120051C4ED /* Games.storyboard in Resources */,
+				66631B532B408D970006F02B /* nya.m4a in Resources */,
 				664AAF9424EEA37800FF4AA5 /* PersonLockupCollectionViewCell.xib in Resources */,
 				66500D1A29605FF30098D59D /* PurchaseFooterCollectionViewCell.xib in Resources */,
+				66631B492B4024450006F02B /* SoundSettings.storyboard in Resources */,
 				660C043423D150310040C749 /* LargeLockupCollectionViewCell.xib in Resources */,
 				66E54D5E2A6D352700F9F8AA /* RatingBarCollectionViewCell.xib in Resources */,
 				666938BB21B1D51800BA9620 /* PostLinkCell.xib in Resources */,
@@ -3846,6 +3913,7 @@
 				66707835208B842E00471FBC /* Settings.storyboard in Resources */,
 				660C042E23D14F5C0040C749 /* VideoLockupCollectionViewCell.xib in Resources */,
 				664B52D122C03C0900B988B3 /* DisplaySettings.storyboard in Resources */,
+				66631B552B408DA70006F02B /* plus_ultra-v2.m4a in Resources */,
 				6675263022280ACB007C1617 /* Day.plist in Resources */,
 				66CBDDA124649CB300CA5F83 /* Synopsis.storyboard in Resources */,
 				664E2CE3289B39180002F886 /* BaseNotificationCell.xib in Resources */,
@@ -4198,6 +4266,7 @@
 				664A065E21EA1BA7008CF4A6 /* GenresCollectionViewController.swift in Sources */,
 				66EAB5C5285D298E00D81C06 /* ShowListCollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				66EDBA5B2944212B00FF1A2E /* WarningPresenter.swift in Sources */,
+				66631B612B40D1070006F02B /* AppChimeGroup.swift in Sources */,
 				664AAF8324EE8F0C00FF4AA5 /* CharacterHeaderCollectionViewCell.swift in Sources */,
 				66EA1DEC25B5BDD400FCD07A /* StudioDetailsCollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				661937882A6EEB8E00447084 /* ReviewTextEditorPresenter.swift in Sources */,
@@ -4368,6 +4437,7 @@
 				66F27ECF283ACEBB00CC2277 /* SearchResultsCollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				6699A1C123779E6800517C2C /* TimeInterval+String.swift in Sources */,
 				6671F29327A58883005D3A0D /* ThemeLockupCollectionViewCell.swift in Sources */,
+				66AD1A052B3CD53400694BF7 /* Chime.swift in Sources */,
 				66999C4A24E71E1A00001A6E /* GenreAttributes+UIImage.swift in Sources */,
 				66D8B14D24F9417E00F0DE7B /* KSwitch.swift in Sources */,
 				662F706D22A45C2A00C3599D /* TitleHeaderTableReusableView.swift in Sources */,
@@ -4439,6 +4509,7 @@
 				6640E19922AE7FCB00D0F575 /* AuthenticationOptionsCell.swift in Sources */,
 				665CBBA422C2B2C2004D0D3E /* DatePickerSettingsCell.swift in Sources */,
 				66A08C7023E3B342007B6418 /* SubSettingsViewController.swift in Sources */,
+				66D888F52B3E2C1100885043 /* SoundSettingsViewController.swift in Sources */,
 				66EA1DDB25B5BBAB00FCD07A /* CastListCollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				66EA1DEA25B5BD9000FCD07A /* SeasonsListCollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				669EA9A022C1490A00784181 /* SubscriptionCollectionViewController.swift in Sources */,
@@ -4486,6 +4557,7 @@
 				660E3A0525E5D7BB00A46EB0 /* StudioDetailsCollectionViewController+UICollectionViewDelegate.swift in Sources */,
 				66500D04295FC67C0098D59D /* PurchaseStatusCollectionViewCell.swift in Sources */,
 				66CB8D5024F83F2D0047A2CF /* PostCell.swift in Sources */,
+				66631B4B2B4041860006F02B /* SoundOptionsSettingsViewController.swift in Sources */,
 				666C898629FF24980075B5D6 /* GameType.swift in Sources */,
 				668421E425954F25000A09F8 /* PersonDetailsCollectionViewController.swift in Sources */,
 				66FC6DF62342BA5C00A454DD /* UIStatusBarStyle+Theme.swift in Sources */,
