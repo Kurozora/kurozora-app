@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AVFoundation
 
 protocol SplashscreenViewDelegate: AnyObject {
 //    func handleButtonPress()
@@ -19,7 +18,6 @@ final class SplashscreenView: UIView {
 
 	// MARK: - Properties
 	public weak var viewDelegate: SplashscreenViewDelegate?
-	private var player: AVAudioPlayer?
 
 	// MARK: - XIB loaded
 	override func awakeFromNib() {
@@ -29,19 +27,8 @@ final class SplashscreenView: UIView {
 
 	// MARK: - Display
 	func setData() {
-		self.playLaunchAudio()
-	}
-
-	// MARK: - Functions
-	func playLaunchAudio() {
-		guard let url = Bundle.main.url(forResource: "shop_door_bell", withExtension: "m4a") else { return }
-
-		do {
-			self.player = try AVAudioPlayer(contentsOf: url)
-			self.player?.prepareToPlay()
-			self.player?.play()
-		} catch {
-			print("----- Failed to play launch audio: \(error.localizedDescription)")
+		if UserSettings.startupSoundAllowed {
+			Chime.shared.play()
 		}
 	}
 }
@@ -56,7 +43,6 @@ private extension SplashscreenView {
 	func setupViews() {
 		self.setupView()
 		self.setupLogoImageView()
-		self.setupAudio()
 	}
 
 	func setupView() {
@@ -65,16 +51,5 @@ private extension SplashscreenView {
 
 	func setupLogoImageView() {
 //		self.logoImageView.theme_tintColor = KThemePicker.tintColor.rawValue
-	}
-
-	func setupAudio() {
-		let audioSession = AVAudioSession.sharedInstance()
-
-		do {
-			try audioSession.setCategory(.playback, mode: .default, options: [.mixWithOthers])
-			try audioSession.setActive(true)
-		} catch {
-			print("---------- Failed to set up audio session: \(error.localizedDescription)")
-		}
 	}
 }
