@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>title</key>
+		<string>Default</string>
+		<key>chimes</key>
+		<array>
+			<dict>
+				<key>name</key>
+				<string>Furin</string>
+				<key>file</key>
+				<string>furin.m4a</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>Premium</string>
+		<key>chimes</key>
+		<array>
+			<dict>
+				<key>name</key>
+				<string>jeb_</string>
+				<key>file</key>
+				<string>jeb_.m4a</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>Nya~</string>
+				<key>file</key>
+				<string>nya.m4a</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>PLUS ULTRA!</string>
+				<key>file</key>
+				<string>plus_ultra.m4a</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>Ryoiki Tenkai</string>
+				<key>file</key>
+				<string>ryoiki_tenkai.m4a</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>Tuturu~</string>
+				<key>file</key>
+				<string>tuturu.m4a</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>Yare Yare Daze</string>
+				<key>file</key>
+				<string>yare_yare_daze.m4a</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>Special Edition</string>
+		<key>chimes</key>
+		<array/>
+	</dict>
+</array>
+</plist>
