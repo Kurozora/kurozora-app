@@ -21,13 +21,10 @@ extension URL {
 	static let discordPageURL = URL(string: "https://discord.gg/f3QFzGqsah")
 
 	/// The GitHub URL of Kurozora.
-	static let githubURL = URL(string: "https://github.com/Kurozora")
+	static let gitHubPageURL = URL(string: "https://github.com/Kurozora")
 
-	/// The deep link URL to the Medium page of Kurozora.
-	static let mediumPageDeepLink = URL(string: "medium://@kurozora")
-
-	/// The Medium page URL of Kurozora.
-	static let mediumPageURL = URL(string: "https://medium.com/@kurozora")
+	/// The Mastodon page URL of Kurozora.
+	static let mastodonPageURL = URL(string: "https://mastodon.social/@kurozora")
 
 	/// The deep link URL to the App Store rating page of Kurozora.
 	static let rateURL = URL(string: "itms-apps://apps.apple.com/us/app/kurozora/id1476153872?action=write-review")

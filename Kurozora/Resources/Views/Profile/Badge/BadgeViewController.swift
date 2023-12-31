@@ -89,7 +89,7 @@ class BadgeViewController: KViewController {
 	}
 
 	private func goToGitHub() {
-		UIApplication.shared.kOpen(.githubURL)
+		UIApplication.shared.kOpen(.gitHubPageURL)
 	}
 
 	private func goToDiscord() {
