@@ -259,7 +259,7 @@ extension SongDetailsCollectionViewController: BaseLockupCollectionViewCellDeleg
 	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressReminder button: UIButton) {
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 		guard let show = self.shows[indexPath] else { return }
-		show.toggleReminder()
+		show.toggleReminder(on: self)
 	}
 }
 

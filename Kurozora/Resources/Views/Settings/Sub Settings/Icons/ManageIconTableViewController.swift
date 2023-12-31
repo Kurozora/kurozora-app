@@ -81,6 +81,7 @@ extension ManageIconTableViewController {
 extension ManageIconTableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		guard let iconTableViewCell = tableView.cellForRow(at: indexPath) as? IconTableViewCell else { return }
+
 		switch indexPath.section {
 		case 0:
 			if indexPath.row == 0 {
@@ -92,7 +93,7 @@ extension ManageIconTableViewController {
 			self.changeIcon(tableView: tableView, iconTableViewCell: iconTableViewCell)
 		default:
 			Task {
-				if await WorkflowController.shared.isProOrSubscribed() {
+				if await WorkflowController.shared.isProOrSubscribed(on: self) {
 					KThemeStyle.changeIcon(to: iconTableViewCell.alternativeIconsElement?.name)
 					self.changeIcon(tableView: tableView, iconTableViewCell: iconTableViewCell)
 				}

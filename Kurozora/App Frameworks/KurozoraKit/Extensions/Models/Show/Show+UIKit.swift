@@ -152,12 +152,13 @@ extension Show {
 		}
 	}
 
-	func toggleReminder() {
+	func toggleReminder(on viewController: UIViewController? = nil) {
 		WorkflowController.shared.isSignedIn { [weak self] in
 			guard let self = self else { return }
+			let viewController = viewController ?? UIApplication.topViewController
 
 			Task {
-				if await WorkflowController.shared.isSubscribed() {
+				if await WorkflowController.shared.isSubscribed(on: viewController) {
 					do {
 						let updateReminderResponse = try await KService.updateReminderStatus(inLibrary: .shows, modelID: String(self.id)).value
 

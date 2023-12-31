@@ -317,7 +317,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 	}
 
 	@objc func toggleReminder() {
-		self.show?.toggleReminder()
+		self.show?.toggleReminder(on: self)
 	}
 
 	@objc func shareShow() {

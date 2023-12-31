@@ -39,7 +39,7 @@ class SwitchAccountsTableViewController: SubSettingsViewController {
 // MARK: - UITableViewDataSource
 extension SwitchAccountsTableViewController {
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return accounts.count
+		return self.accounts.count
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

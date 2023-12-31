@@ -134,7 +134,7 @@ extension ManageThemesCollectionViewController: ThemesCollectionViewCellDelegate
 				KTheme.other(theme).switchToTheme()
 			} else {
 				Task {
-					if await WorkflowController.shared.isProOrSubscribed() {
+					if await WorkflowController.shared.isProOrSubscribed(on: self) {
 						if KThemeStyle.themeExist(for: theme) && !KThemeStyle.isUpToDate(theme.id, version: theme.attributes.version) {
 							self.handleRedownloadTheme(cell)
 						} else {

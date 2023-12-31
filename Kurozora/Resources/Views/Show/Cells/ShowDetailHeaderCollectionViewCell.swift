@@ -430,7 +430,7 @@ extension ShowDetailHeaderCollectionViewCell {
 
 	@IBAction func raminderButtonPressed(_ sender: UIButton) {
 		self.show?.toggleReminder()
-//		self.literature?.toggleReminder()
-//		self.game?.toggleReminder()
+//		self.literature?.toggleReminder(on: self)
+//		self.game?.toggleReminder(on: self)
 	}
 }

@@ -25,8 +25,10 @@ extension WorkflowController {
 	}
 
 	/// Checks whether the current user has a valid subscription. If the user dos then a success block is run. Otherwise subscription features are turned off.
+	///
+	///	- Parameter viewController: The view controller on which the subscription flow is presented if necessary.
 	@MainActor
-	func isSubscribed() async -> Bool {
+	func isSubscribed(on viewController: UIViewController? = nil) async -> Bool {
 		// Perform action if everything is ok, otherwise prompt for subscription.
 		if User.current?.attributes.isSubscribed ?? false {
 			return true
@@ -34,15 +36,16 @@ extension WorkflowController {
 
 		let subscribeAction = UIAlertAction(title: Trans.subscribe, style: .default) { [weak self] _ in
 			guard let self = self else { return }
-			self.presentSubscribeView()
+			self.presentSubscribeView(on: viewController)
 		}
 
-		_ = UIApplication.topViewController?.presentAlertController(title: "Kurozora+ Required", message: "This feature is only accessible to Kurozora+ users. Funds from this go to supporting Kurozora's development.", actions: [subscribeAction])
+		let viewController = viewController ?? UIApplication.topViewController
+		_ = viewController?.presentAlertController(title: "Kurozora+ Required", message: "This feature is only accessible to Kurozora+ users. Funds from this go to supporting Kurozora's development.", actions: [subscribeAction])
 		return false
 	}
 
 	@MainActor
-	func isProOrSubscribed() async -> Bool {
+	func isProOrSubscribed(on viewController: UIViewController? = nil) async -> Bool {
 		// Perform action if everything is ok, otherwise prompt for subscription.
 		if User.current?.attributes.isSubscribed ?? false || User.current?.attributes.isPro ?? false {
 			return true
@@ -50,22 +53,23 @@ extension WorkflowController {
 
 		let subscribeAction = UIAlertAction(title: Trans.subscribe, style: .default) { [weak self] _ in
 			guard let self = self else { return }
-			self.presentSubscribeView()
+			self.presentSubscribeView(on: viewController)
 		}
 
 		let proAction = UIAlertAction(title: Trans.pro, style: .default) { [weak self] _ in
 			guard let self = self else { return }
-			self.presentTipJarView()
+			self.presentTipJarView(on: viewController)
 		}
 
-		_ = UIApplication.topViewController?.presentAlertController(title: "Pro Required", message: "This feature is accessible to Pro users. Funds from this go to supporting Kurozora's development. Alternatively, this feature and all other features are also included with Kurozora+.", actions: [proAction, subscribeAction])
+		let viewController = viewController ?? UIApplication.topViewController
+		_ = viewController?.presentAlertController(title: "Pro Required", message: "This feature is accessible to Pro users. Funds from this go to supporting Kurozora's development. Alternatively, this feature and all other features are also included with Kurozora+.", actions: [proAction, subscribeAction])
 		return false
 	}
 
 	/// Subscribes user with their reminders.
-	func subscribeToReminders() {
+	func subscribeToReminders(on viewController: UIViewController? = nil) {
 		Task {
-			if await WorkflowController.shared.isSubscribed() {
+			if await WorkflowController.shared.isSubscribed(on: viewController) {
 				let reminderSubscriptionURL = KService.reminderSubscriptionURL
 				let reminderSubscriptionString = reminderSubscriptionURL.absoluteString.removingPrefix(reminderSubscriptionURL.scheme ?? "")
 				DispatchQueue.main.async {
@@ -120,16 +124,22 @@ extension WorkflowController {
 	}
 
 	/// Presents the user with the subscribe view.
-	func presentSubscribeView() {
+	///
+	///	- Parameter viewController: The view controller on which the subscription view is presented.
+	func presentSubscribeView(on viewController: UIViewController? = nil) {
 		if let subscriptionKNavigationController = R.storyboard.purchase.subscriptionKNavigationController() {
-			UIApplication.topViewController?.present(subscriptionKNavigationController, animated: true)
+			let viewController = viewController ?? UIApplication.topViewController
+			viewController?.present(subscriptionKNavigationController, animated: true)
 		}
 	}
 
 	/// Presents the user with the tip jar view.
-	func presentTipJarView() {
+	///
+	///	- Parameter viewController: The view controller on which the Tip Jar view is presented .
+	func presentTipJarView(on viewController: UIViewController? = nil) {
 		if let tipJarKNavigationController = R.storyboard.purchase.tipJarKNavigationController() {
-			UIApplication.topViewController?.present(tipJarKNavigationController, animated: true)
+			let viewController = viewController ?? UIApplication.topViewController
+			viewController?.present(tipJarKNavigationController, animated: true)
 		}
 	}
 

@@ -114,8 +114,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	// MARK: - Functions
 	/// Configures the scene according to the passed activity.
 	///
-	/// - Parameter window: The backdrop for your app’s user interface and the object that dispatches events to your views.
-	/// - Parameter activity: A representation of the state of your app at a moment in time.
+	/// - Parameters:
+	///    - window: The backdrop for your app’s user interface and the object that dispatches events to your views.
+	///    - activity: A representation of the state of your app at a moment in time.
 	func configure(window: UIWindow?, with activity: NSUserActivity) -> Bool {
 		if activity.title == "OpenShowDetail" {
 			if let parameters = activity.userInfo as? [String: String] {
