@@ -90,8 +90,10 @@ extension SettingsTableViewController {
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		var identifier = R.reuseIdentifier.settingsCell
-		switch indexPath {
-		case [0, 0]:
+		let settingsRow = self.settingsSection[indexPath.section].rowsValue[indexPath.row]
+
+		switch settingsRow {
+		case .account:
 			identifier = R.reuseIdentifier.accountCell
 		default: break
 		}
@@ -99,7 +101,7 @@ extension SettingsTableViewController {
 		guard let settingsCell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) else {
 			fatalError("Cannot dequeue cell with reuse identifier \(identifier.identifier)")
 		}
-		settingsCell.configureCell(using: self.settingsSection[indexPath.section].rowsValue[indexPath.row])
+		settingsCell.configureCell(using: settingsRow)
 		return settingsCell
 	}
 
@@ -120,7 +122,7 @@ extension SettingsTableViewController {
 extension SettingsTableViewController {
 	override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
 		if let headerView = view as? UITableViewHeaderFooterView {
-			headerView.textLabel?.font = UIFont.systemFont(ofSize: 15)
+			headerView.textLabel?.font = .systemFont(ofSize: 15)
 			headerView.textLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
 		}
 	}
@@ -158,10 +160,19 @@ extension SettingsTableViewController {
 		switch sectionRows {
 		case .account:
 			shouldPerformSegue = WorkflowController.shared.isSignedIn(on: self)
-		case .reminder:
-			WorkflowController.shared.subscribeToReminders()
+		case .switchAccount: break
+		case .keychain: break
 		case .notifications:
-			shouldPerformSegue = WorkflowController.shared.isSignedIn()
+			shouldPerformSegue = WorkflowController.shared.isSignedIn(on: self)
+		case .sound: break
+		case .reminder:
+			WorkflowController.shared.subscribeToReminders(on: self)
+			return
+		case .displayBlindness: break
+		case .theme: break
+		case .icon: break
+		case .browser: break
+		case .biometrics: break
 		case .cache:
 			let alertController = self.presentAlertController(title: "Clear all Cache?", message: "All of your caches will be cleared.", defaultActionButtonTitle: Trans.cancel)
 			alertController.addAction(UIAlertAction(title: "Clear 🗑", style: .destructive) { _ in
@@ -178,6 +189,7 @@ extension SettingsTableViewController {
 				tableView.reloadData()
 			})
 			return
+		case .privacy: break
 		case .rate:
 			if let rateURL = URL.rateURL {
 				UIApplication.shared.open(rateURL)
@@ -197,16 +209,19 @@ extension SettingsTableViewController {
 				await store.restore()
 			}
 			return
+		case .unlockFeatures: break
 		case .joinDiscord:
 			UIApplication.shared.kOpen(.discordPageURL)
+			return
+		case .followGitHub:
+			UIApplication.shared.kOpen(.gitHubPageURL)
+			return
+		case .followMastodon:
+			UIApplication.shared.kOpen(.mastodonPageURL)
 			return
 		case .followTwitter:
 			UIApplication.shared.kOpen(.twitterPageURL, deepLink: .twitterPageDeepLink)
 			return
-		case .followMedium:
-			UIApplication.shared.kOpen(.mediumPageURL, deepLink: .mediumPageDeepLink)
-			return
-		default: break
 		}
 
 		let identifierString = sectionRows.segueIdentifier
