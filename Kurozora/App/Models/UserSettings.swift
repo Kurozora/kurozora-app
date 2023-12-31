@@ -175,3 +175,22 @@ extension UserSettings {
 		return shared.bool(forKey: #function)
 	}
 }
+
+// MARK: - Sound Settings
+extension UserSettings {
+	/// Returns a boolean indicating if startup sound is enabled.
+	static var startupSoundAllowed: Bool {
+		return shared.bool(forKey: #function)
+	}
+
+	/// Returns a boolean indicating if UI sounds are enabled.
+	static var uiSoundsAllowed: Bool {
+		return shared.bool(forKey: #function)
+	}
+
+	/// Returns a string indicating the preferred chime sound.
+	static var selectedChime: String {
+		guard let selectedChime = shared.string(forKey: #function) else { return "" }
+		return selectedChime
+	}
+}
