@@ -563,91 +563,122 @@ struct Trans {
 	static let accountSignedInSubheadline: String = String(localized: "Kurozora ID, Sign in with Apple & MAL Import",
 														   table: "Settings",
 														   comment: "The sub-headline string for the account settings option when signed in.")
-	/// The string for the 'switch account' settings option.
+	/// The string for the 'Switch Account' settings option.
 	///
 	/// - Tag: Trans-switchAccount
 	static let switchAccount: String = String(localized: "Switch Account",
 											  table: "Settings",
-											  comment: "The string for the 'switch account' settings option.")
-	/// The string for the 'keys manager' settings option.
+											  comment: "The string for the 'Switch Account' settings option.")
+	/// The string for the 'Keys Manager' settings option.
 	///
 	/// - Tag: Trans-keysManager
 	static let keysManager: String = String(localized: "Keys Manager",
 											table: "Settings",
-											comment: "The string for the 'keys manager' settings option.")
-	/// The string for the 'subscribe to reminders' settings option.
+											comment: "The string for the 'Keys Manager' settings option.")
+	/// The string for the 'Subscribe to Reminders' settings option.
 	///
 	/// - Tag: Trans-subscribeToReminders
 	static let subscribeToReminders: String = String(localized: "Subscribe to Reminders",
 													 table: "Settings",
-													 comment: "The string for the 'subscribe to reminders' settings option.")
-	/// The string for the 'display & blindness' settings option.
+													 comment: "The string for the 'Subscribe to Reminders' settings option.")
+	/// The string for the 'Sound' settings option.
+	///
+	/// - Tag: Trans-sound
+	static let sound: String = String(localized: "Sound",
+									  table: "Settings",
+									  comment: "The string for the 'Sound' settings option.")
+	/// The string for the 'Display & Blindness' settings option.
 	///
 	/// - Tag: Trans-displayBlindness
 	static let displayBlindness: String = String(localized: "Display & Blindness",
 												 table: "Settings",
-												 comment: "The string for the 'display & blindness' settings option.")
-
-	/// The string for the 'face id & passcode' settings option.
+												 comment: "The string for the 'Display & Blindness' settings option.")
+	/// The string for the 'Face ID & Passcode' settings option.
 	///
 	/// - Tag: Trans-faceIDPasscode
 	static let faceIDPasscode: String = String(localized: "Face ID & Passcode",
 											   table: "Settings",
-											   comment: "The string for the 'face id & passcode' settings option.")
-	/// The string for the 'touch id & passcode' settings option.
+											   comment: "The string for the 'Face ID & Passcode' settings option.")
+	/// The string for the 'Touch ID & Passcode' settings option.
 	///
 	/// - Tag: Trans-touchIDPasscode
 	static let touchIDPasscode: String = String(localized: "Touch ID & Passcode",
 												table: "Settings",
-												comment: "The string for the 'touch id & passcode' settings option.")
-	/// The string for the 'unlock features' settings option.
+												comment: "The string for the 'Touch ID & Passcode' settings option.")
+	/// The string for the 'Unlock Features' settings option.
 	///
 	/// - Tag: Trans-unlockfeatures
 	static let unlockFeatures: String = String(localized: "Unlock Features",
 											   table: "Settings",
-											   comment: "The string for the 'unlock features' settings option.")
-	/// The string for the 'tip jar' settings option.
+											   comment: "The string for the 'Unlock Features' settings option.")
+	/// The string for the 'Tip Jar' settings option.
 	///
 	/// - Tag: Trans-tipJar
 	static let tipJar: String = String(localized: "Tip Jar",
 									   table: "Settings",
-									   comment: "The string for the 'tip jar' settings option.")
-	/// The string for the 'restore purchase' settings option.
+									   comment: "The string for the 'Tip Jar' settings option.")
+	/// The string for the 'Restore Purchase' settings option.
 	///
 	/// - Tag: Trans-restorePurchase
 	static let restorePurchase: String = String(localized: "Restore Purchase",
 												table: "Settings",
-												comment: "The string for the 'restore purchase' settings option.")
-	/// The string for the 'request refund' settings option.
+												comment: "The string for the 'Restore Purchase' settings option.")
+	/// The string for the 'Request Refund' settings option.
 	///
 	/// - Tag: Trans-requestRefund
 	static let requestRefund: String = String(localized: "Request Refund",
 											  table: "Settings",
-											  comment: "The string for the 'request refund' settings option.")
-	/// The string for the 'rate us on App Store' settings option.
+											  comment: "The string for the 'Request Refund' settings option.")
+	/// The string for the 'Rate us on App Store' settings option.
 	///
 	/// - Tag: Trans-rateAppStore
 	static let rateAppStore: String = String(localized: "Rate us on App Store",
 											 table: "Settings",
-											 comment: "The string for the 'rate us on App Store' settings option.")
-	/// The string for the 'join our Discord community' settings option.
+											 comment: "The string for the 'Rate us on App Store' settings option.")
+	/// The string for the 'Join our Discord Community' settings option.
 	///
 	/// - Tag: Trans-joinDiscord
 	static let joinDiscord: String = String(localized: "Join our Discord Community",
 											table: "Settings",
-											comment: "The string for the 'join our Discord community' settings option.")
-	/// The string for the 'follow us on Twitter' settings option.
+											comment: "The string for the 'Join our Discord Community' settings option.")
+	/// The string for the 'Follow our story on Medium' settings option.
+	///
+	/// - Tag: Trans-followGitHub
+	static let followGitHub: String = String(localized: "Follow us on GitHub",
+											 table: "Settings",
+											 comment: "The string for the 'Follow us on GitHub' settings option.")
+	/// The string for the 'Follow us on Mastodon' settings option.
+	///
+	/// - Tag: Trans-followMastodon
+	static let followMastodon: String = String(localized: "Follow us on Mastodon",
+											   table: "Settings",
+											   comment: "The string for the 'Follow us on Mastodon' settings option.")
+	/// The string for the 'Follow us on Twitter' settings option.
 	///
 	/// - Tag: Trans-followTwitter
 	static let followTwitter: String = String(localized: "Follow us on Twitter",
 											  table: "Settings",
-											  comment: "The string for the 'follow us on Twitter' settings option.")
-	/// The string for the 'follow our story on Medium' settings option.
+											  comment: "The string for the 'Follow us on Twitter' settings option.")
+
+	// MARK: - Sound
+	/// The string for the 'Chime Sound' settings option.
 	///
-	/// - Tag: Trans-followMedium
-	static let followMedium: String = String(localized: "Follow our story on Medium",
-											 table: "Settings",
-											 comment: "The string for the 'follow our story on Medium' settings option.")
+	/// - Tag: Trans-chimeSound
+	static let chimeSound: String = String(localized: "Chime Sound",
+										   table: "Sound",
+										   comment: "The string for the 'Chime Sound' settings option.")
+	/// The string for the 'Chime on Startup' settings option.
+	///
+	/// - Tag: Trans-chimeOnStartup
+	static let chimeOnStartup: String = String(localized: "Chime on Startup",
+											   table: "Sound",
+											   comment: "The string for the 'Chime on Startup' settings option.")
+	/// The string for the 'User Interface Sounds' settings option.
+	///
+	/// - Tag: Trans-playUISoundEffects
+	static let uiSounds: String = String(localized: "User Interface Sounds",
+										 table: "Sound",
+										 comment: "The string for the 'User Interface Sounds' settings option.")
 
 	// MARK: - Misc
 	/// The string for the word 'apply'.
