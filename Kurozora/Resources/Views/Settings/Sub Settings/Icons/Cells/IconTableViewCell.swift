@@ -9,16 +9,8 @@
 import UIKit
 
 class IconTableViewCell: SelectableSettingsCell {
-	// MARK: - Properties
-	/// The object containing the `AlternativeIconsElement` information.
-	var alternativeIconsElement: AlternativeIconsElement?
-
-	/// The object containing the `KBrowser` type.
-	var browser: KBrowser?
-
 	// MARK: - Functions
 	func configureCell(using alternativeIconsElement: AlternativeIconsElement?) {
-		self.alternativeIconsElement = alternativeIconsElement
 		guard let alternativeIconsElement = alternativeIconsElement else {
 			self.showSkeleton()
 			return
@@ -37,7 +29,6 @@ class IconTableViewCell: SelectableSettingsCell {
 	}
 
 	func configureCell(using browser: KBrowser?) {
-		self.browser = browser
 		guard let browser = browser else {
 			self.showSkeleton()
 			return
@@ -56,6 +47,6 @@ class IconTableViewCell: SelectableSettingsCell {
 		self.hideSkeleton()
 
 		self.primaryLabel?.text = appChimeElement.name
-		self.iconImageView?.image = UIImage(systemName: "play.circle")
+		self.iconImageView?.image = UIImage(systemName: "speaker.wave.3")
 	}
 }

@@ -80,29 +80,29 @@ extension ManageIconTableViewController {
 // MARK: - UITableViewDelegate
 extension ManageIconTableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		guard let iconTableViewCell = tableView.cellForRow(at: indexPath) as? IconTableViewCell else { return }
+		let alternativeIconsElement = self.alternativeIcons[indexPath.section].icons[indexPath.item]
 
 		switch indexPath.section {
 		case 0:
 			if indexPath.row == 0 {
 				KThemeStyle.changeIcon(to: nil)
 			} else {
-				KThemeStyle.changeIcon(to: iconTableViewCell.alternativeIconsElement?.name)
+				KThemeStyle.changeIcon(to: alternativeIconsElement.name)
 			}
 
-			self.changeIcon(tableView: tableView, iconTableViewCell: iconTableViewCell)
+			self.changeIcon(tableView: tableView, alternativeIconsElement: alternativeIconsElement)
 		default:
 			Task {
 				if await WorkflowController.shared.isProOrSubscribed(on: self) {
-					KThemeStyle.changeIcon(to: iconTableViewCell.alternativeIconsElement?.name)
-					self.changeIcon(tableView: tableView, iconTableViewCell: iconTableViewCell)
+					KThemeStyle.changeIcon(to: alternativeIconsElement.name)
+					self.changeIcon(tableView: tableView, alternativeIconsElement: alternativeIconsElement)
 				}
 			}
 		}
 	}
 
-	func changeIcon(tableView: UITableView, iconTableViewCell: IconTableViewCell) {
-		UserSettings.set(iconTableViewCell.alternativeIconsElement?.name, forKey: .appIcon)
+	fileprivate func changeIcon(tableView: UITableView, alternativeIconsElement: AlternativeIconsElement) {
+		UserSettings.set(alternativeIconsElement.name, forKey: .appIcon)
 		NotificationCenter.default.post(name: .KSAppIconDidChange, object: nil)
 		tableView.reloadData()
 	}
