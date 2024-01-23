@@ -42,7 +42,7 @@ extension UIButton {
 		let blurView = KVisualEffectView()
 		blurView.isUserInteractionEnabled = false
 		if cornerRadius > 0 {
-			blurView.layer.cornerRadius = cornerRadius
+			blurView.layerCornerRadius = cornerRadius
 			blurView.layer.masksToBounds = true
 		}
 		self.insertSubview(blurView, at: 0)

@@ -51,7 +51,7 @@ class ImageAnnotationView: MKAnnotationView {
 		self.imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
 		self.addSubview(self.imageView)
 
-		self.imageView.layer.cornerRadius = self.imageView.height / 2
+		self.imageView.layerCornerRadius = self.imageView.height / 2
 		self.imageView.layerBorderColor = .green
 		self.imageView.layer.borderWidth = 2
 		self.imageView.layer.masksToBounds = true

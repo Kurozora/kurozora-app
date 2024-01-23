@@ -101,7 +101,7 @@ class KUnderlinedLabel: UILabel {
 			} else {
 				let view = UIView(frame: frame)
 				view.backgroundColor = self.textColor
-				view.layer.cornerRadius = tag == 4 || tag == 5 ? self.circleDiameter / 2 : self.underlineRadius
+				view.layerCornerRadius = tag == 4 || tag == 5 ? self.circleDiameter / 2 : self.underlineRadius
 				view.tag = tag
 				superview.addSubview(view)
 			}

@@ -41,6 +41,6 @@ class KFillBarIndicator: TMBarIndicator {
 		super.layoutSubviews()
 
 		self.superview?.layoutIfNeeded()
-		self.layer.cornerRadius = self.cornerStyle.cornerRadius(for: self.bounds)
+		self.layerCornerRadius = self.cornerStyle.cornerRadius(for: self.bounds)
 	}
 }
