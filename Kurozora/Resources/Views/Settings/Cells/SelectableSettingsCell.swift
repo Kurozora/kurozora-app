@@ -10,17 +10,13 @@ import UIKit
 
 class SelectableSettingsCell: SettingsCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var selectedImageView: KImageView! {
-		didSet {
-			self.selectedImageView.image = nil
-		}
-	}
+	@IBOutlet weak var selectedImageView: KImageView!
 
 	// MARK: - Functions
 	/// Sets the selected status of the cell.
 	///
 	/// - Parameter selected: The boolean value indicating whether the cell is selected.
 	func setSelected(_ selected: Bool) {
-		self.selectedImageView?.image = selected ? UIImage(systemName: "checkmark") : nil
+		self.selectedImageView?.isHidden = !selected
 	}
 }

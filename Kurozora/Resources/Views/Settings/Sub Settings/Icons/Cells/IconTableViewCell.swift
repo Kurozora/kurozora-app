@@ -26,6 +26,9 @@ class IconTableViewCell: SelectableSettingsCell {
 			image = UIImage(named: "\(alternativeIconsElement.name) Preview")
 		}
 		self.iconImageView?.image = image
+		self.iconImageView?.preferredSymbolConfiguration = nil
+		self.iconImageView?.contentMode = .scaleAspectFit
+		self.iconImageView?.layerCornerRadius = 10.0
 	}
 
 	func configureCell(using browser: KBrowser?) {
@@ -37,6 +40,9 @@ class IconTableViewCell: SelectableSettingsCell {
 
 		self.primaryLabel?.text = browser.stringValue
 		self.iconImageView?.image = browser.image
+		self.iconImageView?.preferredSymbolConfiguration = nil
+		self.iconImageView?.contentMode = .scaleAspectFit
+		self.iconImageView?.layerCornerRadius = 10.0
 	}
 
 	func configureCell(using appChimeElement: AppChimeElement?) {
@@ -48,5 +54,8 @@ class IconTableViewCell: SelectableSettingsCell {
 
 		self.primaryLabel?.text = appChimeElement.name
 		self.iconImageView?.image = UIImage(systemName: "speaker.wave.3")
+		self.iconImageView?.preferredSymbolConfiguration = UIImage.SymbolConfiguration(pointSize: UIFont.preferredFont(forTextStyle: .body).pointSize, weight: .regular, scale: .default)
+		self.iconImageView?.contentMode = .center
+		self.iconImageView?.layerCornerRadius = 0.0
 	}
 }

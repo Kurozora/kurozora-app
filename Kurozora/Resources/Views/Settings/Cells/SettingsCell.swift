@@ -12,7 +12,7 @@ import Kingfisher
 
 class SettingsCell: KTableViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var iconImageView: UIImageView? {
+	@IBOutlet weak var iconImageView: KImageView? {
 		didSet {
 			self.iconImageView?.layerBorderColor = UIColor.white.withAlphaComponent(0.2)
 		}
