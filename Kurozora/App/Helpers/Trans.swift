@@ -587,6 +587,12 @@ struct Trans {
 	static let sound: String = String(localized: "Sound",
 									  table: "Settings",
 									  comment: "The string for the 'Sound' settings option.")
+	/// The string for the 'Sounds & Haptics' settings option.
+	///
+	/// - Tag: Trans-soundsAndHaptics
+	static let soundsAndHaptics: String = String(localized: "Sounds & Haptics",
+												 table: "Settings",
+												 comment: "The string for the 'Sounds & Haptics' settings option.")
 	/// The string for the 'Display & Blindness' settings option.
 	///
 	/// - Tag: Trans-displayBlindness
@@ -660,25 +666,37 @@ struct Trans {
 											  table: "Settings",
 											  comment: "The string for the 'Follow us on Twitter' settings option.")
 
-	// MARK: - Sound
+	// MARK: - Sounds & Haptics
 	/// The string for the 'Chime Sound' settings option.
 	///
 	/// - Tag: Trans-chimeSound
 	static let chimeSound: String = String(localized: "Chime Sound",
-										   table: "Sound",
+										   table: "Sounds & Haptics",
 										   comment: "The string for the 'Chime Sound' settings option.")
 	/// The string for the 'Chime on Startup' settings option.
 	///
 	/// - Tag: Trans-chimeOnStartup
 	static let chimeOnStartup: String = String(localized: "Chime on Startup",
-											   table: "Sound",
+											   table: "Sounds & Haptics",
 											   comment: "The string for the 'Chime on Startup' settings option.")
 	/// The string for the 'User Interface Sounds' settings option.
 	///
-	/// - Tag: Trans-playUISoundEffects
+	/// - Tag: Trans-uiSounds
 	static let uiSounds: String = String(localized: "User Interface Sounds",
-										 table: "Sound",
+										 table: "Sounds & Haptics",
 										 comment: "The string for the 'User Interface Sounds' settings option.")
+	/// The string for the 'Haptics' settings option.
+	///
+	/// - Tag: Trans-haptics
+	static let haptics: String = String(localized: "Haptics",
+										table: "Sounds & Haptics",
+										comment: "The string for the 'Haptics' settings option.")
+	/// The footer string for the haptics settings option.
+	///
+	/// - Tag: Trans-hapticsFooter
+	static let hapticsFooter: String = String(localized: "Turning off haptics will only affect custom haptics. Default system controls, like the switches above, will still have a haptic feedback. You can disable all haptics in the System app.",
+											  table: "Sounds & Haptics",
+											  comment: "The footer string for the haptics settings option.")
 
 	// MARK: - Misc
 	/// The string for the word 'apply'.

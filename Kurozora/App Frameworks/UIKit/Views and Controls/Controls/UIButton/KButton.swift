@@ -68,7 +68,10 @@ class KButton: UIButton {
 			animator.stopAnimation(true)
 			backgroundColor = highlightBackgroundColor ?? _highlightBackgroundColor
 		}
-		selectionFeedbackGenerator.selectionChanged()
+
+		if UserSettings.hapticsAllowed {
+			self.selectionFeedbackGenerator.selectionChanged()
+		}
 	}
 
 	/// The actions performed when the user lets go of the button.
@@ -78,7 +81,10 @@ class KButton: UIButton {
 				self.backgroundColor = self.normalBackgroundColor
 			})
 		}
-		self.selectionFeedbackGenerator.selectionChanged()
+
+		if UserSettings.hapticsAllowed {
+			self.selectionFeedbackGenerator.selectionChanged()
+		}
 		animator.startAnimation()
 	}
 }

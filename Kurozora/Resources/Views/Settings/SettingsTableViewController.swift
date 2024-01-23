@@ -164,7 +164,7 @@ extension SettingsTableViewController {
 		case .keychain: break
 		case .notifications:
 			shouldPerformSegue = WorkflowController.shared.isSignedIn(on: self)
-		case .sound: break
+		case .soundsAndHaptics: break
 		case .reminder:
 			WorkflowController.shared.subscribeToReminders(on: self)
 			return

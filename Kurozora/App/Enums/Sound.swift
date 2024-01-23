@@ -19,6 +19,15 @@ enum Sound {
 		case selectChime
 		case toggleChime
 		case toggleUISounds
+		case toggleHaptics
+
+		static var settingsCases: [Sound.Row] {
+			#if targetEnvironment(macCatalyst)
+			return [.selectChime, .toggleChime, .toggleUISounds]
+			#else
+			return [.selectChime, .toggleChime, .toggleUISounds, .toggleHaptics]
+			#endif
+		}
 
 		// MARK: Properties
 		var titleValue: String {
@@ -29,6 +38,8 @@ enum Sound {
 				return Trans.chimeOnStartup
 			case .toggleUISounds:
 				return Trans.uiSounds
+			case .toggleHaptics:
+				return Trans.haptics
 			}
 		}
 	}

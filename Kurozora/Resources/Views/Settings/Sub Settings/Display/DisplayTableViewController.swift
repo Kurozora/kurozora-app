@@ -37,12 +37,3 @@ extension DisplayTableViewController {
 		return super.tableView(tableView, cellForRowAt: indexPath)
 	}
 }
-
-// MARK: - UITableViewDelegate
-extension DisplayTableViewController {
-	override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
-		if let footerView = view as? UITableViewHeaderFooterView {
-			footerView.textLabel?.theme_textColor = KThemePicker.subTextColor.rawValue
-		}
-	}
-}

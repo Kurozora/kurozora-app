@@ -112,8 +112,8 @@ extension SettingsTableViewController {
 		/// The row representing the notifications cell.
 		case notifications
 
-		/// The row representing the sound cell.
-		case sound
+		/// The row representing the sounds and haptics cell.
+		case soundsAndHaptics
 
 		/// The row representing the reminder cell.
 		case reminder
@@ -171,10 +171,10 @@ extension SettingsTableViewController {
 
 		#if DEBUG
 		/// An array containing all settings rows.
-		static let all: [Row] = [.account, .switchAccount, .keychain, .notifications, .sound, .reminder, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .unlockFeatures, .tipjar, .restoreFeatures, .rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter]
+		static let all: [Row] = [.account, .switchAccount, .keychain, .notifications, .soundsAndHaptics, .reminder, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .unlockFeatures, .tipjar, .restoreFeatures, .rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter]
 		#else
 		/// An array containing all normal user settings rows.
-		static let all: [Row] = [.account, .switchAccount, .notifications, .sound, .reminder, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .unlockFeatures, .tipjar, .restoreFeatures, .rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter]
+		static let all: [Row] = [.account, .switchAccount, .notifications, .soundsAndHaptics, .reminder, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .unlockFeatures, .tipjar, .restoreFeatures, .rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter]
 		#endif
 
 		/// An array containing all account section settings rows.
@@ -190,7 +190,7 @@ extension SettingsTableViewController {
 		static let allDebug: [Row] = [.keychain]
 
 		/// An array containing all alerts section settings rows.
-		static var allAlerts: [Row] = [.notifications, .sound, .reminder]
+		static var allAlerts: [Row] = [.notifications, .soundsAndHaptics, .reminder]
 
 		/// An array containing all general section settings rows.
 		static var allGeneral: [Row] {
@@ -231,7 +231,7 @@ extension SettingsTableViewController {
 				return R.segue.settingsTableViewController.keysSegue.identifier
 			case .notifications:
 				return R.segue.settingsTableViewController.notificationSegue.identifier
-			case .sound:
+			case .soundsAndHaptics:
 				return R.segue.settingsTableViewController.soundSegue.identifier
 			case .reminder:
 				return ""
@@ -283,7 +283,7 @@ extension SettingsTableViewController {
 				return .chevron
 			case .notifications:
 				return .chevron
-			case .sound:
+			case .soundsAndHaptics:
 				return .chevron
 			case .reminder:
 				return .none
@@ -335,8 +335,12 @@ extension SettingsTableViewController {
 				return Trans.keysManager
 			case .notifications:
 				return Trans.notifications
-			case .sound:
+			case .soundsAndHaptics:
+				#if targetEnvironment(macCatalyst)
 				return Trans.sound
+				#else
+				return Trans.soundsAndHaptics
+				#endif
 			case .reminder:
 				return Trans.subscribeToReminders
 			case .displayBlindness:
@@ -404,7 +408,7 @@ extension SettingsTableViewController {
 				return R.image.icons.kDefaults()
 			case .notifications:
 				return R.image.icons.notifications()
-			case .sound:
+			case .soundsAndHaptics:
 				return R.image.icons.sound()
 			case .reminder:
 				return R.image.icons.reminder()

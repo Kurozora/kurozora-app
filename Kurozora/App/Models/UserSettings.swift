@@ -19,7 +19,7 @@ class UserSettings: UserDefaults {
 
 	/// Set value for key in shared UserDefaults.
 	static func set(_ value: Any?, forKey key: UserSettingsKey) {
-		shared.set(value, forKey: key.rawValue)
+		self.shared.set(value, forKey: key.rawValue)
 	}
 }
 
@@ -55,7 +55,7 @@ extension UserSettings {
 
 	/// Returns a boolean indicating if the app has been launched once.
 	static var launchedOnce: Bool {
-		return shared.bool(forKey: #function)
+		return self.shared.bool(forKey: #function)
 	}
 }
 
@@ -63,17 +63,17 @@ extension UserSettings {
 extension UserSettings {
 	/// Returns a boolean indicating if automatic dark theme is on.
 	static var appearanceOption: Int {
-		return shared.integer(forKey: #function)
+		return self.shared.integer(forKey: #function)
 	}
 
 	/// Returns a boolean indicating if automatic dark theme is on.
 	static var automaticDarkTheme: Bool {
-		return shared.bool(forKey: #function)
+		return self.shared.bool(forKey: #function)
 	}
 
 	/// Returns a string indicating the preferred dark theme option. Default value is 2, neither automatic nor scheduled.
 	static var darkThemeOption: Int {
-		return shared.integer(forKey: #function)
+		return self.shared.integer(forKey: #function)
 	}
 
 	/// Returns a string indicating the preferred custom dark theme start time.
@@ -93,12 +93,12 @@ extension UserSettings {
 
 	/// Returns a boolean indicating if true black theme is on.
 	static var trueBlackEnabled: Bool {
-		return shared.bool(forKey: #function)
+		return self.shared.bool(forKey: #function)
 	}
 
 	/// Returns a boolean indicating if large titles is on.
 	static var largeTitlesEnabled: Bool {
-		return shared.bool(forKey: #function)
+		return self.shared.bool(forKey: #function)
 	}
 }
 
@@ -106,7 +106,7 @@ extension UserSettings {
 extension UserSettings {
 	/// Returns a boolean indicating whether authentication is enabled.
 	static var authenticationEnabled: Bool {
-		return shared.bool(forKey: #function)
+		return self.shared.bool(forKey: #function)
 	}
 
 	/// Returns an `AuthenticationInterval` type indicating the preferred authentication interval.
@@ -120,7 +120,7 @@ extension UserSettings {
 extension UserSettings {
 	/// Returns an integer indicating the forum page the user was on last.
 	static var forumsPage: Int {
-		return shared.integer(forKey: #function)
+		return self.shared.integer(forKey: #function)
 	}
 }
 
@@ -128,7 +128,7 @@ extension UserSettings {
 extension UserSettings {
 	/// Returns an integer indicating the library page the user was on last.
 	static var libraryPage: Int {
-		return shared.integer(forKey: #function)
+		return self.shared.integer(forKey: #function)
 	}
 
 	/// Returns an array of library sections with the user's preferred cell style for each section.
@@ -157,40 +157,45 @@ extension UserSettings {
 extension UserSettings {
 	/// Returns a boolean indicating if notifications are allowed.
 	static var notificationsAllowed: Bool {
-		return shared.bool(forKey: #function)
+		return self.shared.bool(forKey: #function)
 	}
 
 	/// Returns an integer indicating the notifications grouping type.
 	static var notificationsGrouping: Int {
-		return shared.integer(forKey: #function)
+		return self.shared.integer(forKey: #function)
 	}
 
 	/// Returns a boolean indicating if notifications sound is allowed.
 	static var notificationsSound: Bool {
-		return shared.bool(forKey: #function)
+		return self.shared.bool(forKey: #function)
 	}
 
 	/// Returns a boolean indicating if notifications badge is allowed.
 	static var notificationsBadge: Bool {
-		return shared.bool(forKey: #function)
+		return self.shared.bool(forKey: #function)
 	}
 }
 
-// MARK: - Sound Settings
+// MARK: - Sounds & Haptcs Settings
 extension UserSettings {
-	/// Returns a boolean indicating if startup sound is enabled.
-	static var startupSoundAllowed: Bool {
-		return shared.bool(forKey: #function)
-	}
-
-	/// Returns a boolean indicating if UI sounds are enabled.
-	static var uiSoundsAllowed: Bool {
-		return shared.bool(forKey: #function)
-	}
-
 	/// Returns a string indicating the preferred chime sound.
 	static var selectedChime: String {
 		guard let selectedChime = shared.string(forKey: #function) else { return "" }
 		return selectedChime
+	}
+
+	/// Returns a boolean indicating if startup sound is enabled.
+	static var startupSoundAllowed: Bool {
+		return self.shared.bool(forKey: #function)
+	}
+
+	/// Returns a boolean indicating if UI sounds are enabled.
+	static var uiSoundsAllowed: Bool {
+		return self.shared.bool(forKey: #function)
+	}
+
+	/// Returns a boolean indicating if haptics are enabled.
+	static var hapticsAllowed: Bool {
+		return self.shared.bool(forKey: #function)
 	}
 }

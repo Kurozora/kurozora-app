@@ -81,7 +81,11 @@ class KTabBarController: ESTabBarController {
 				switchAccountKNavigationController.sheetPresentationController?.selectedDetentIdentifier = .medium
 				switchAccountKNavigationController.sheetPresentationController?.prefersEdgeAttachedInCompactHeight = true
 				switchAccountKNavigationController.sheetPresentationController?.prefersGrabberVisible = true
-				UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+
+				if UserSettings.hapticsAllowed {
+					UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+				}
+
 				self.show(switchAccountKNavigationController, sender: nil)
 			}
 		}
@@ -108,7 +112,10 @@ extension KTabBarController {
 		let selectedTwice = tabBar.selectedItem == item
 
 		super.tabBar(tabBar, didSelect: item)
-		UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+
+		if UserSettings.hapticsAllowed {
+			UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+		}
 
 		if selectedTwice {
 			let selectedViewController = (self.viewControllers?[safe: self.selectedIndex] as? KNavigationController)?.visibleViewController

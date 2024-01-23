@@ -65,6 +65,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <sections>
                             <tableViewSection headerTitle="Chime &amp; Sound Effects" id="NL0-Mj-e9A">
+                                <string key="footerTitle">Turning off haptics will only affect custom haptics. Default system controls, like the switches above, will still have a haptic feedback. You can disable all haptics in the System app.</string>
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="50" id="5Km-Sh-Wo1" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="20" y="55.333332061767578" width="353" height="50"/>
@@ -129,44 +130,44 @@
                                             <segue destination="foP-Pf-Mwk" kind="show" identifier="notificationsGroupingSegue" id="WpU-io-M5Y"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="50" id="bdY-I5-UW0" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="50" id="3UN-hb-O8J" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="20" y="105.33333206176758" width="353" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bdY-I5-UW0" id="ORw-ON-3sL">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3UN-hb-O8J" id="mg2-9g-haG">
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chime on Startup" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JXo-HO-qP1" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chime on Startup" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hVU-jC-1BS" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="8" y="14.666666666666664" width="133" height="21"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <switch tag="1" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jR5-gT-alP" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
+                                                <switch tag="1" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RDH-4J-3Dx" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="296" y="10" width="51" height="30"/>
                                                     <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="onTintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
-                                                        <action selector="switchTapped:" destination="aNg-gu-sku" eventType="valueChanged" id="dYn-tg-4Q4"/>
+                                                        <action selector="switchTapped:" destination="aNg-gu-sku" eventType="valueChanged" id="q1B-dg-MP5"/>
                                                     </connections>
                                                 </switch>
                                             </subviews>
                                             <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="jR5-gT-alP" secondAttribute="trailing" constant="8" id="0Ca-2z-Wyr"/>
-                                                <constraint firstItem="jR5-gT-alP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="JXo-HO-qP1" secondAttribute="trailing" constant="8" symbolic="YES" id="3yg-9l-aec"/>
-                                                <constraint firstItem="JXo-HO-qP1" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ORw-ON-3sL" secondAttribute="top" constant="10" id="EPL-rN-lFD"/>
-                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="JXo-HO-qP1" secondAttribute="bottom" constant="10" id="c78-bh-GGN"/>
-                                                <constraint firstAttribute="bottom" secondItem="jR5-gT-alP" secondAttribute="bottom" constant="10" id="gFH-rh-frl"/>
-                                                <constraint firstItem="jR5-gT-alP" firstAttribute="centerY" secondItem="JXo-HO-qP1" secondAttribute="centerY" id="mvK-Kx-3Nf"/>
-                                                <constraint firstItem="JXo-HO-qP1" firstAttribute="leading" secondItem="ORw-ON-3sL" secondAttribute="leading" constant="8" id="ong-JR-rnL"/>
-                                                <constraint firstItem="jR5-gT-alP" firstAttribute="top" secondItem="ORw-ON-3sL" secondAttribute="top" constant="10" id="zge-uI-Waf"/>
+                                                <constraint firstItem="hVU-jC-1BS" firstAttribute="top" relation="greaterThanOrEqual" secondItem="mg2-9g-haG" secondAttribute="top" constant="10" id="9zU-n5-DXT"/>
+                                                <constraint firstItem="RDH-4J-3Dx" firstAttribute="centerY" secondItem="hVU-jC-1BS" secondAttribute="centerY" id="IDg-qk-TAi"/>
+                                                <constraint firstItem="RDH-4J-3Dx" firstAttribute="top" secondItem="mg2-9g-haG" secondAttribute="top" constant="10" id="ObF-3R-1iS"/>
+                                                <constraint firstAttribute="trailing" secondItem="RDH-4J-3Dx" secondAttribute="trailing" constant="8" id="TVe-Df-7aE"/>
+                                                <constraint firstAttribute="bottom" secondItem="RDH-4J-3Dx" secondAttribute="bottom" constant="10" id="c0W-6s-05V"/>
+                                                <constraint firstItem="hVU-jC-1BS" firstAttribute="leading" secondItem="mg2-9g-haG" secondAttribute="leading" constant="8" id="dfM-bi-Pcx"/>
+                                                <constraint firstItem="RDH-4J-3Dx" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="hVU-jC-1BS" secondAttribute="trailing" constant="8" symbolic="YES" id="hOW-Ea-jCj"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="hVU-jC-1BS" secondAttribute="bottom" constant="10" id="k9h-ox-028"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
-                                            <outlet property="primaryLabel" destination="JXo-HO-qP1" id="xvf-Sk-CyN"/>
+                                            <outlet property="primaryLabel" destination="hVU-jC-1BS" id="XfT-Mv-VHJ"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="50" id="tF9-hD-EMa" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
@@ -206,7 +207,47 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
-                                            <outlet property="primaryLabel" destination="zZg-Aw-hRD" id="k6J-cC-ZK0"/>
+                                            <outlet property="primaryLabel" destination="zZg-Aw-hRD" id="O4Z-zk-0bn"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="50" id="bdY-I5-UW0" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="20" y="205.33333206176758" width="353" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bdY-I5-UW0" id="ORw-ON-3sL">
+                                            <rect key="frame" x="0.0" y="0.0" width="353" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Haptics" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JXo-HO-qP1" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                                    <rect key="frame" x="8" y="14.666666666666664" width="59" height="21"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch tag="3" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jR5-gT-alP" customClass="KSwitch" customModule="Kurozora" customModuleProvider="target">
+                                                    <rect key="frame" x="296" y="10" width="51" height="30"/>
+                                                    <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="onTintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="switchTapped:" destination="aNg-gu-sku" eventType="valueChanged" id="dYn-tg-4Q4"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="jR5-gT-alP" secondAttribute="trailing" constant="8" id="0Ca-2z-Wyr"/>
+                                                <constraint firstItem="jR5-gT-alP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="JXo-HO-qP1" secondAttribute="trailing" constant="8" symbolic="YES" id="3yg-9l-aec"/>
+                                                <constraint firstItem="JXo-HO-qP1" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ORw-ON-3sL" secondAttribute="top" constant="10" id="EPL-rN-lFD"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="JXo-HO-qP1" secondAttribute="bottom" constant="10" id="c78-bh-GGN"/>
+                                                <constraint firstAttribute="bottom" secondItem="jR5-gT-alP" secondAttribute="bottom" constant="10" id="gFH-rh-frl"/>
+                                                <constraint firstItem="jR5-gT-alP" firstAttribute="centerY" secondItem="JXo-HO-qP1" secondAttribute="centerY" id="mvK-Kx-3Nf"/>
+                                                <constraint firstItem="JXo-HO-qP1" firstAttribute="leading" secondItem="ORw-ON-3sL" secondAttribute="leading" constant="8" id="ong-JR-rnL"/>
+                                                <constraint firstItem="jR5-gT-alP" firstAttribute="top" secondItem="ORw-ON-3sL" secondAttribute="top" constant="10" id="zge-uI-Waf"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="primaryLabel" destination="JXo-HO-qP1" id="FnE-2a-uii"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -219,8 +260,9 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Sound" id="ZNe-yy-CJI"/>
                     <connections>
+                        <outlet property="hapticsSwitch" destination="jR5-gT-alP" id="Xh9-bH-2QI"/>
                         <outlet property="selectedChimeLabel" destination="zoK-XM-X6q" id="ExP-kD-s9h"/>
-                        <outlet property="startupSoundSwitch" destination="jR5-gT-alP" id="JzB-1L-8r0"/>
+                        <outlet property="startupSoundSwitch" destination="RDH-4J-3Dx" id="o10-cr-YQQ"/>
                         <outlet property="uiSoundsSwitch" destination="Via-nz-8uH" id="N2n-06-VVJ"/>
                     </connections>
                 </tableViewController>

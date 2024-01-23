@@ -31,11 +31,11 @@ enum TabBarItem: Int, CaseIterable {
 
 	// MARK: - Properties
 	static var sideBarCases: [TabBarItem] {
-		if UIDevice.isMac {
-			return [.home, .library, .feed, .notifications, .settings]
-		}
-
+		#if targetEnvironment(macCatalyst)
+		return [.home, .library, .feed, .notifications, .settings]
+		#else
 		return [.home, .library, .feed, .notifications, .search, .settings]
+		#endif
 	}
 
 	static var tabBarCases: [TabBarItem] {

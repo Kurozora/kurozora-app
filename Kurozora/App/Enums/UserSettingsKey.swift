@@ -68,13 +68,15 @@ enum UserSettingsKey: String {
 	/// The key to the selcted notification badge option.
 	case notificationsBadge
 
-	// Sound settings keys
+	// Sounds & Haptics settings keys
+	/// The key to the selected chime option.
+	case selectedChime
 	/// The key to the selected option for allowing startup sound.
 	case startupSoundAllowed
 	/// The key to the selected option for allowing UI sounds.
 	case uiSoundsAllowed
-	/// The key to the selected chime option.
-	case selectedChime
+	/// The key to the selected option for allowing haptics.
+	case hapticsAllowed
 
 	// Register for notification
 	/// The key to the last notifcation registration reuest time.
