@@ -8,32 +8,6 @@
 
 import UIKit
 
-enum Sound {
-	enum Section: Int, CaseIterable {
-		// MARK: Cases
-		case main
-	}
-
-	enum Row: Int, CaseIterable {
-		// MARK: Cases
-		case selectChime
-		case toggleChime
-		case toggleUISounds
-
-		// MARK: Properties
-		var titleValue: String {
-			switch self {
-			case .selectChime:
-				return Trans.chimeSound
-			case .toggleChime:
-				return Trans.chimeOnStartup
-			case .toggleUISounds:
-				return Trans.uiSounds
-			}
-		}
-	}
-}
-
 class SoundSettingsViewController: SubSettingsViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var selectedChimeLabel: KSecondaryLabel!
