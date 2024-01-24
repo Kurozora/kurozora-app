@@ -79,6 +79,7 @@
 		661ACC9B25ADA41B002407A7 /* ShowDetailsCollectionViewController+TouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661ACC9A25ADA41B002407A7 /* ShowDetailsCollectionViewController+TouchBar.swift */; };
 		661B1DCF2B61C148000C9C0E /* oh_my_gah.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 661B1DCE2B61C148000C9C0E /* oh_my_gah.m4a */; };
 		661B1DD12B61C1D7000C9C0E /* bonk.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 661B1DD02B61C1D7000C9C0E /* bonk.m4a */; };
+		661B1DD32B61C77D000C9C0E /* explosion.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 661B1DD22B61C77C000C9C0E /* explosion.m4a */; };
 		661B26B42351E71B00840AF5 /* UIImageView+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661B26B22351E5A100840AF5 /* UIImageView+Kurozora.swift */; };
 		661D646C25C387EA00822D01 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661D646B25C387EA00822D01 /* MenuController.swift */; };
 		661DBC4F234947D7009292DF /* SKProduct+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DBC4E234947D7009292DF /* SKProduct+Kurozora.swift */; };
@@ -764,6 +765,7 @@
 		661ACC9A25ADA41B002407A7 /* ShowDetailsCollectionViewController+TouchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShowDetailsCollectionViewController+TouchBar.swift"; sourceTree = "<group>"; };
 		661B1DCE2B61C148000C9C0E /* oh_my_gah.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = oh_my_gah.m4a; sourceTree = "<group>"; };
 		661B1DD02B61C1D7000C9C0E /* bonk.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = bonk.m4a; sourceTree = "<group>"; };
+		661B1DD22B61C77C000C9C0E /* explosion.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = explosion.m4a; sourceTree = "<group>"; };
 		661B26B22351E5A100840AF5 /* UIImageView+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Kurozora.swift"; sourceTree = "<group>"; };
 		661D646B25C387EA00822D01 /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 		661DBC4E234947D7009292DF /* SKProduct+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKProduct+Kurozora.swift"; sourceTree = "<group>"; };
@@ -3704,6 +3706,7 @@
 			children = (
 				661B1DD02B61C1D7000C9C0E /* bonk.m4a */,
 				6675E2022B4836620050F98C /* boosto.m4a */,
+				661B1DD22B61C77C000C9C0E /* explosion.m4a */,
 				66FE68FC29D26AE300C9AD8E /* furin.m4a */,
 				66631B502B408D790006F02B /* jeb_.m4a */,
 				66631B522B408D970006F02B /* nya.m4a */,
@@ -3820,6 +3823,7 @@
 				66B216AC21C1681F006E167D /* TextEditor.storyboard in Resources */,
 				6619378F2A6EEB8E00447084 /* ReviewTextEditorView.xib in Resources */,
 				661B1DD12B61C1D7000C9C0E /* bonk.m4a in Resources */,
+				661B1DD32B61C77D000C9C0E /* explosion.m4a in Resources */,
 				66CB8D4E24F83ECD0047A2CF /* PostImageCell.xib in Resources */,
 				6640E19722ADD30100D0F575 /* AuthenticationSettings.storyboard in Resources */,
 				66A4FD13270F62D300E7C702 /* Configuration.storekit in Resources */,

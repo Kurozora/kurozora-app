@@ -55,8 +55,8 @@ extension SoundOptionsViewController {
 		}() ?? chimes.first
 
 		let selectedChime = UserSettings.selectedChime
-		iconTableViewCell.configureCell(using: chime)
 		iconTableViewCell.setSelected(chime?.name == selectedChime)
+		iconTableViewCell.configureCell(using: chime)
 
 		return iconTableViewCell
 	}
@@ -74,7 +74,6 @@ extension SoundOptionsViewController {
 extension SoundOptionsViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let chimes = Chime.shared.appChimeGroups[indexPath.section].chimes[indexPath.row]
-		var startIncluding = false
 		let sameChimeGroup = chimes.contains(where: { $0 == self.selectedChime })
 		guard let chime = {
 			if sameChimeGroup, let selectedIndex = chimes.firstIndex(where: { $0 == self.selectedChime }) {

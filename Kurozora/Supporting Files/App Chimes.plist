@@ -57,6 +57,14 @@
 			<array>
 				<dict>
 					<key>name</key>
+					<string>Explosion!</string>
+					<key>file</key>
+					<string>explosion.m4a</string>
+				</dict>
+			</array>
+			<array>
+				<dict>
+					<key>name</key>
 					<string>jeb_</string>
 					<key>file</key>
 					<string>jeb_.m4a</string>
