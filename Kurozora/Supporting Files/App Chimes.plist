@@ -41,6 +41,14 @@
 			<array>
 				<dict>
 					<key>name</key>
+					<string>Bonk</string>
+					<key>file</key>
+					<string>bonk.m4a</string>
+				</dict>
+			</array>
+			<array>
+				<dict>
+					<key>name</key>
 					<string>Boosto!</string>
 					<key>file</key>
 					<string>boosto.m4a</string>
@@ -68,6 +76,14 @@
 					<string>Nyanpasu!</string>
 					<key>file</key>
 					<string>nyanpasu.m4a</string>
+				</dict>
+			</array>
+			<array>
+				<dict>
+					<key>name</key>
+					<string>Oh My Gah!</string>
+					<key>file</key>
+					<string>oh_my_gah.m4a</string>
 				</dict>
 			</array>
 			<array>
