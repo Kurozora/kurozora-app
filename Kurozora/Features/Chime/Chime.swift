@@ -33,7 +33,7 @@ class Chime: NSObject {
 				let decoder = PropertyListDecoder()
 				self.appChimeGroups = try decoder.decode([AppChimeGroup].self, from: plist)
 			} catch {
-				print("----- Error decoding plist: \(error.localizedDescription)")
+				print("----- Error decoding plist: \(String(describing: error))")
 			}
 		}
 	}
@@ -60,10 +60,11 @@ class Chime: NSObject {
 		let selectedChime = UserSettings.selectedChime
 		let chimeFileName = chimeFile ?? {
 			if selectedChime.isEmpty {
-				return self.appChimeGroups.first?.chimes.first?.file
+				return self.appChimeGroups.first?.chimes.first?.first?.file
 			} else {
 				return self.appChimeGroups
 					.flatMap { $0.chimes }
+					.flatMap { $0 }
 					.first { $0.name == selectedChime }?.file
 			}
 		}()
@@ -87,7 +88,7 @@ class Chime: NSObject {
 	/// - Parameters:
 	///   - chime: The chime to switch to.
 	func changeChime(to chime: AppChimeElement?) {
-		let chime = chime ?? self.appChimeGroups.first?.chimes.first
+		let chime = chime ?? self.appChimeGroups.first?.chimes.first?.first
 
 		// Save the chime selection
 		UserSettings.set(chime?.name, forKey: .selectedChime)

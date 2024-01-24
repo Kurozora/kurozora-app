@@ -26,11 +26,7 @@ final class SplashscreenView: UIView {
 	}
 
 	// MARK: - Display
-	func setData() {
-		if UserSettings.startupSoundAllowed {
-			Chime.shared.play()
-		}
-	}
+	func setData() {}
 }
 
 // MARK: - Setup

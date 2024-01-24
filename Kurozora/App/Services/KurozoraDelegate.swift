@@ -94,6 +94,11 @@ class KurozoraDelegate {
 				return
 			}
 
+			// Play chime
+			if UserSettings.startupSoundAllowed {
+				Chime.shared.play()
+			}
+
 			// Initialize split view controller
 			let splitViewController = await SceneDelegate.createTwoColumnSplitViewController()
 

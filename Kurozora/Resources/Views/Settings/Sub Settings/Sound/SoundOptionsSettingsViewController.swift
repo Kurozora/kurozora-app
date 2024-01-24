@@ -15,6 +15,8 @@ protocol SoundOptionsViewControllerDelegate: AnyObject {
 class SoundOptionsViewController: SubSettingsViewController {
 	// MARK: - Properties
 	weak var delegate: SoundOptionsViewControllerDelegate?
+	private var numberOfTaps: Int = 0
+	private var selectedChime: AppChimeElement?
 
 	// MARK: - View
 	override func viewDidLoad() {
@@ -22,6 +24,8 @@ class SoundOptionsViewController: SubSettingsViewController {
 
 		// Disable activity indicator
 		self._prefersActivityIndicatorHidden = true
+
+		self.selectedChime = Chime.shared.appChimeGroups.flatMap({ $0.chimes }).flatMap({ $0 }).first(where: { $0.name == UserSettings.selectedChime })
 	}
 }
 
@@ -36,16 +40,25 @@ extension SoundOptionsViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		guard let notificationsGroupingCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.iconTableViewCell.identifier, for: indexPath) as? IconTableViewCell else {
+		guard let iconTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.iconTableViewCell.identifier, for: indexPath) as? IconTableViewCell else {
 			fatalError("Couldn't dequeue cell with identifier \(R.reuseIdentifier.iconTableViewCell.identifier)")
 		}
-		let chime = Chime.shared.appChimeGroups[indexPath.section].chimes[indexPath.row]
+		let chimes = Chime.shared.appChimeGroups[indexPath.section].chimes[indexPath.row]
+		let sameChimeGroup = chimes.contains(where: { $0 == self.selectedChime })
+		let chime = {
+			if sameChimeGroup, let selectedIndex = chimes.firstIndex(where: { $0 == self.selectedChime }) {
+				let filteredChimes = chimes[selectedIndex...]
+				return filteredChimes.first
+			}
+
+			return chimes.first
+		}() ?? chimes.first
+
 		let selectedChime = UserSettings.selectedChime
+		iconTableViewCell.configureCell(using: chime)
+		iconTableViewCell.setSelected(chime?.name == selectedChime)
 
-		notificationsGroupingCell.configureCell(using: chime)
-		notificationsGroupingCell.setSelected(chime.name == selectedChime)
-
-		return notificationsGroupingCell
+		return iconTableViewCell
 	}
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -60,7 +73,24 @@ extension SoundOptionsViewController {
 // MARK: - UITableViewDelegate
 extension SoundOptionsViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let chime = Chime.shared.appChimeGroups[indexPath.section].chimes[indexPath.row]
+		let chimes = Chime.shared.appChimeGroups[indexPath.section].chimes[indexPath.row]
+		var startIncluding = false
+		let sameChimeGroup = chimes.contains(where: { $0 == self.selectedChime })
+		guard let chime = {
+			if sameChimeGroup, let selectedIndex = chimes.firstIndex(where: { $0 == self.selectedChime }) {
+				let filteredChimes = chimes[selectedIndex...] + chimes[..<selectedIndex]
+				let firstChime = filteredChimes.first
+				return firstChime?.alternativeFileRequiredTaps == self.numberOfTaps ? (filteredChimes.dropFirst().first ?? firstChime) : firstChime
+			}
+
+			return chimes.first
+		}() ?? chimes.first else { return }
+
+		if sameChimeGroup && self.selectedChime?.alternativeFile != nil && self.selectedChime?.alternativeFileRequiredTaps != self.numberOfTaps {
+			self.numberOfTaps += 1
+		} else {
+			self.numberOfTaps = 1
+		}
 
 		switch indexPath.section {
 		case 0:
@@ -80,6 +110,7 @@ extension SoundOptionsViewController {
 		Chime.shared.play(chime.file)
 		Chime.shared.changeChime(to: chime)
 
+		self.selectedChime = chime
 		self.delegate?.soundOptionsViewController(self, didChangeChimeTo: chime)
 
 		self.tableView.reloadData()
