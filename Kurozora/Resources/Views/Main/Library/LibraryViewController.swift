@@ -87,7 +87,7 @@ class LibraryViewController: KTabbedViewController {
 
 	/// Configures the view with the user's details.
 	func configureUserDetails() {
-		self.profileImageButton.setImage(User.current?.attributes.profileImageView.image ?? R.image.placeholders.userProfile(), for: .normal)
+		self.profileImageButton?.setImage(User.current?.attributes.profileImageView.image ?? R.image.placeholders.userProfile(), for: .normal)
 	}
 
 	/// Performs segue to the profile view.
