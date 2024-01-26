@@ -23,6 +23,17 @@
 	</dict>
 	<dict>
 		<key>title</key>
+		<string>Gems</string>
+		<key>icons</key>
+		<array>
+			<string>Amethyst</string>
+			<string>Onyx</string>
+			<string>Ruby</string>
+			<string>Sapphire</string>
+		</array>
+	</dict>
+	<dict>
+		<key>title</key>
 		<string>Nature</string>
 		<key>icons</key>
 		<array>
@@ -57,10 +68,10 @@
 		<string>Special Edition</string>
 		<key>icons</key>
 		<array>
-			<string>Monozora</string>
 			<string>Cookiezora</string>
 			<string>Kurogram</string>
 			<string>Kurolicious</string>
+			<string>Monozora</string>
 			<string>Product(RED)</string>
 		</array>
 	</dict>
