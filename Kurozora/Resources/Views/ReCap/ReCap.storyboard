@@ -29,6 +29,13 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" id="J9T-36-AAJ"/>
+                    <connections>
+                        <segue destination="N0m-Ui-w96" kind="show" identifier="ThemesSegue" id="ze3-pm-pt6"/>
+                        <segue destination="Gcv-Zm-Hty" kind="show" identifier="GenresSegue" id="tH7-G2-EVE"/>
+                        <segue destination="ORM-D6-DI2" kind="show" identifier="LiteratureDetailsSegue" id="zjG-NP-txW"/>
+                        <segue destination="Whg-3J-lxg" kind="show" identifier="GameDetailsSegue" id="h8b-cs-R8W"/>
+                        <segue destination="4a9-go-nKj" kind="show" identifier="ShowDetailsSegue" id="2lF-mK-3qU"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NCO-Gs-FxE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -58,6 +65,56 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oIl-TK-d6S" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-631" y="-1112"/>
+        </scene>
+        <!--LiteratureDetailsCollectionViewController-->
+        <scene sceneID="kbH-GP-4Fp">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Literatures" referencedIdentifier="LiteratureDetailsCollectionViewController" id="ORM-D6-DI2" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="gdn-46-thb"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="O7f-us-nHe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="860" y="-1113"/>
+        </scene>
+        <!--GenresCollectionViewController-->
+        <scene sceneID="Nea-hN-W7A">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Genre" referencedIdentifier="GenresCollectionViewController" id="Gcv-Zm-Hty" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="DWq-KR-0cD"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fgu-Tp-pAV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="815" y="-1144"/>
+        </scene>
+        <!--GameDetailsCollectionViewController-->
+        <scene sceneID="9VC-8R-egK">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Games" referencedIdentifier="GameDetailsCollectionViewController" id="Whg-3J-lxg" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="luy-TE-cNR"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Euf-G4-2FV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="841" y="-1081"/>
+        </scene>
+        <!--ThemesCollectionViewController-->
+        <scene sceneID="2DN-fK-xat">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Theme" referencedIdentifier="ThemesCollectionViewController" id="N0m-Ui-w96" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="bfN-uR-zVG"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dcg-yt-oDc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="819" y="-1179"/>
+        </scene>
+        <!--ShowDetailsCollectionViewController-->
+        <scene sceneID="bMu-sM-ymE">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Shows" referencedIdentifier="ShowDetailsCollectionViewController" id="4a9-go-nKj" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="zIl-O0-HGv"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WyD-sh-aqE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="838" y="-1046"/>
         </scene>
     </scenes>
 </document>

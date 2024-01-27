@@ -535,6 +535,9 @@
 		66D0BF8125613E29000AB7BF /* Show+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D0BF8025613E29000AB7BF /* Show+UIKit.swift */; };
 		66D0BF9C25616637000AB7BF /* ShowDetailsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D0BF9B25616637000AB7BF /* ShowDetailsCollectionView.swift */; };
 		66D1358D228087920079438C /* KButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D1358C228087920079438C /* KButton.swift */; };
+		66D17C7B2B65B19C00373D3D /* ReCapCollectionViewController+KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D17C7A2B65B19C00373D3D /* ReCapCollectionViewController+KCollectionViewDataSource.swift */; };
+		66D17C7F2B65B90A00373D3D /* ReCapCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D17C7E2B65B90A00373D3D /* ReCapCollectionViewController+KCollectionViewDelegateLayout.swift */; };
+		66D17C812B65BA0700373D3D /* ReCapCollectionViewController+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D17C802B65BA0700373D3D /* ReCapCollectionViewController+UICollectionViewDelegate.swift */; };
 		66D4735221AB5FE600A894B7 /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D4735121AB5FE300A894B7 /* UIAlertController+Extension.swift */; };
 		66D4C8EB2A62FC7200971206 /* ProfileBadgeStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D4C8EA2A62FC7200971206 /* ProfileBadgeStackView.swift */; };
 		66D6237720A1BB6600304914 /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D6237620A1BB6600304914 /* LibraryViewController.swift */; };
@@ -1226,6 +1229,9 @@
 		66D0BF8025613E29000AB7BF /* Show+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Show+UIKit.swift"; sourceTree = "<group>"; };
 		66D0BF9B25616637000AB7BF /* ShowDetailsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetailsCollectionView.swift; sourceTree = "<group>"; };
 		66D1358C228087920079438C /* KButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KButton.swift; sourceTree = "<group>"; };
+		66D17C7A2B65B19C00373D3D /* ReCapCollectionViewController+KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReCapCollectionViewController+KCollectionViewDataSource.swift"; sourceTree = "<group>"; };
+		66D17C7E2B65B90A00373D3D /* ReCapCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReCapCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
+		66D17C802B65BA0700373D3D /* ReCapCollectionViewController+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReCapCollectionViewController+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
 		66D4735121AB5FE300A894B7 /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
 		66D4C8EA2A62FC7200971206 /* ProfileBadgeStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileBadgeStackView.swift; sourceTree = "<group>"; };
 		66D6237620A1BB6600304914 /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
@@ -1690,6 +1696,9 @@
 			children = (
 				661B1DD72B646522000C9C0E /* ReCap.storyboard */,
 				661B1DD52B646042000C9C0E /* ReCapCollectionViewController.swift */,
+				66D17C7A2B65B19C00373D3D /* ReCapCollectionViewController+KCollectionViewDataSource.swift */,
+				66D17C7E2B65B90A00373D3D /* ReCapCollectionViewController+KCollectionViewDelegateLayout.swift */,
+				66D17C802B65BA0700373D3D /* ReCapCollectionViewController+UICollectionViewDelegate.swift */,
 			);
 			path = ReCap;
 			sourceTree = "<group>";
@@ -4116,6 +4125,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66D17C812B65BA0700373D3D /* ReCapCollectionViewController+UICollectionViewDelegate.swift in Sources */,
 				66C1E7E9295A16AD00C7C44C /* SplashscreenModels.swift in Sources */,
 				66C898EA24E17C3E00305C96 /* ShowAttributes+UIKit.swift in Sources */,
 				66AE1E0B24A0C41300FD3FFC /* StudioDetailsCollectionViewController.swift in Sources */,
@@ -4136,6 +4146,7 @@
 				664AAF8824EE903700FF4AA5 /* PersonImageView.swift in Sources */,
 				66348C7A22AB17710019AB84 /* SettingsCell.swift in Sources */,
 				666C899F2A0061380075B5D6 /* SearchFilterCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
+				66D17C7B2B65B19C00373D3D /* ReCapCollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				66EA1DF425B5F68800FCD07A /* TextViewCollectionViewCellDelegate.swift in Sources */,
 				66EDBA5D2944212B00FF1A2E /* WarningRouter.swift in Sources */,
 				6698D3C924E59427006B7A4C /* ReminderStatus+Kurozora.swift in Sources */,
@@ -4262,6 +4273,7 @@
 				66FA97C2281A11150054FC2E /* LayoutType.swift in Sources */,
 				66E1215929AFEE0F0051C4ED /* GameDetail.swift in Sources */,
 				664540792821EDFE0001E5B2 /* AlbumImageView.swift in Sources */,
+				66D17C7F2B65B90A00373D3D /* ReCapCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				66E1215729AFEE0C0051C4ED /* GameDetailsCollectionViewController.swift in Sources */,
 				66B216A821C033B9006E167D /* UIView+Kurozora.swift in Sources */,
 				66319DAD27C82EAD0063DE7F /* MusicLockupCollectionViewCell.swift in Sources */,

@@ -18,6 +18,8 @@ class ReCapCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var year: Int = 0
 	var recaps: [Recap] = []
+	var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 
 	/// Show properties.
 	var shows: [IndexPath: Show] = [:]
@@ -103,56 +105,56 @@ extension ReCapCollectionViewController {
 	/// List of available Section Layout Kind types.
 	enum SectionLayoutKind: Hashable {
 		// MARK: - Cases
-		/// Indicates a small section layout type.
-		case topShows(_: ExploreCategory)
+		/// Indicates a top shows section layout type.
+		case topShows(_: Recap)
 
-		/// Indicates a medium section layout type.
-		case topLiteratures(_: ExploreCategory)
+		/// Indicates a top literatures section layout type.
+		case topLiteratures(_: Recap)
 
-		/// Indicates a large section layout type.
-		case topGames(_: ExploreCategory)
+		/// Indicates a top games section layout type.
+		case topGames(_: Recap)
 
-		/// Indicates a video section layout type.
-		case topGenres(_: ExploreCategory)
+		/// Indicates a top genres section layout type.
+		case topGenres(_: Recap)
 
-		/// Indicates a upcoming section layout type.
-		case topThemes(_: ExploreCategory)
+		/// Indicates a top themes section layout type.
+		case topThemes(_: Recap)
 
-		/// Indicates a genre section layout type.
-		case milestones(_: ExploreCategory)
+		/// Indicates a milestones section layout type.
+		case milestones(_: Recap)
 
 		// MARK: - Functions
 		func hash(into hasher: inout Hasher) {
 			switch self {
-			case .topShows(let exploreCategory):
-				hasher.combine(exploreCategory)
-			case .topLiteratures(let exploreCategory):
-				hasher.combine(exploreCategory)
-			case .topGames(let exploreCategory):
-				hasher.combine(exploreCategory)
-			case .topGenres(let exploreCategory):
-				hasher.combine(exploreCategory)
-			case .topThemes(let exploreCategory):
-				hasher.combine(exploreCategory)
-			case .milestones(let exploreCategory):
-				hasher.combine(exploreCategory)
+			case .topShows(let recap):
+				hasher.combine(recap)
+			case .topLiteratures(let recap):
+				hasher.combine(recap)
+			case .topGames(let recap):
+				hasher.combine(recap)
+			case .topGenres(let recap):
+				hasher.combine(recap)
+			case .topThemes(let recap):
+				hasher.combine(recap)
+			case .milestones(let recap):
+				hasher.combine(recap)
 			}
 		}
 
 		static func == (lhs: SectionLayoutKind, rhs: SectionLayoutKind) -> Bool {
 			switch (lhs, rhs) {
-			case (.topShows(let exploreCategory1), .topShows(let exploreCategory2)):
-				return exploreCategory1 == exploreCategory2
-			case (.topLiteratures(let exploreCategory1), .topLiteratures(let exploreCategory2)):
-				return exploreCategory1 == exploreCategory2
-			case (.topGames(let exploreCategory1), .topGames(let exploreCategory2)):
-				return exploreCategory1 == exploreCategory2
-			case (.topGenres(let exploreCategory1), .topGenres(let exploreCategory2)):
-				return exploreCategory1 == exploreCategory2
-			case (.topThemes(let exploreCategory1), .topThemes(let exploreCategory2)):
-				return exploreCategory1 == exploreCategory2
-			case (.milestones(let exploreCategory1), .milestones(let exploreCategory2)):
-				return exploreCategory1 == exploreCategory2
+			case (.topShows(let recap1), .topShows(let recap2)):
+				return recap1 == recap2
+			case (.topLiteratures(let recap1), .topLiteratures(let recap2)):
+				return recap1 == recap2
+			case (.topGames(let recap1), .topGames(let recap2)):
+				return recap1 == recap2
+			case (.topGenres(let recap1), .topGenres(let recap2)):
+				return recap1 == recap2
+			case (.topThemes(let recap1), .topThemes(let recap2)):
+				return recap1 == recap2
+			case (.milestones(let recap1), .milestones(let recap2)):
+				return recap1 == recap2
 			default: return false
 			}
 		}
