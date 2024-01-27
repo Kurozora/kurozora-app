@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="eeh-Yo-M66">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="eeh-Yo-M66">
     <device id="retina6_5" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,7 +24,7 @@
                 <viewControllerPlaceholder storyboardName="Purchase" id="0a7-9G-Fd6" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X9D-7O-4i7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1975" y="451"/>
+            <point key="canvasLocation" x="1975" y="477"/>
         </scene>
         <!--Legal-->
         <scene sceneID="TgQ-yC-U46">
@@ -32,7 +32,7 @@
                 <viewControllerPlaceholder storyboardName="Legal" id="iCt-dj-RF4" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qr2-al-HuS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1959" y="470"/>
+            <point key="canvasLocation" x="1959" y="500"/>
         </scene>
         <!--Explore-->
         <scene sceneID="cmd-mB-OEl">
@@ -131,6 +131,7 @@
                         <segue destination="GEx-kn-XGr" kind="show" identifier="LiteraturesListSegue" id="N8n-Di-zO4"/>
                         <segue destination="pkG-ca-5LU" kind="show" identifier="GameDetailsSegue" id="6Mb-fq-kIc"/>
                         <segue destination="o3G-a8-Qbb" kind="show" identifier="GamesListSegue" id="REO-8e-Cjd"/>
+                        <segue destination="ktl-8u-msx" kind="show" identifier="ReCapSegue" id="j6t-58-mag"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XSz-C9-PSE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -168,7 +169,7 @@
                 <viewControllerPlaceholder storyboardName="Redeem" id="SJ2-V2-Ihb" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5a5-ET-Z3V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1969" y="429"/>
+            <point key="canvasLocation" x="1969" y="455"/>
         </scene>
         <!--HomeCollectionViewController-->
         <scene sceneID="JZQ-XP-0tx">
@@ -329,6 +330,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3IC-9v-R7c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2099" y="69"/>
+        </scene>
+        <!--ReCap-->
+        <scene sceneID="lpv-BW-ZQj">
+            <objects>
+                <viewControllerPlaceholder storyboardName="ReCap" id="ktl-8u-msx" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="rbp-xl-8gV"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gBH-fW-dL6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1964" y="433"/>
         </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

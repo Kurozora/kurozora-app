@@ -80,6 +80,8 @@
 		661B1DCF2B61C148000C9C0E /* oh_my_gah.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 661B1DCE2B61C148000C9C0E /* oh_my_gah.m4a */; };
 		661B1DD12B61C1D7000C9C0E /* bonk.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 661B1DD02B61C1D7000C9C0E /* bonk.m4a */; };
 		661B1DD32B61C77D000C9C0E /* explosion.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 661B1DD22B61C77C000C9C0E /* explosion.m4a */; };
+		661B1DD62B646042000C9C0E /* ReCapCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661B1DD52B646042000C9C0E /* ReCapCollectionViewController.swift */; };
+		661B1DD82B646522000C9C0E /* ReCap.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 661B1DD72B646522000C9C0E /* ReCap.storyboard */; };
 		661B26B42351E71B00840AF5 /* UIImageView+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661B26B22351E5A100840AF5 /* UIImageView+Kurozora.swift */; };
 		661D646C25C387EA00822D01 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661D646B25C387EA00822D01 /* MenuController.swift */; };
 		661DBC4F234947D7009292DF /* SKProduct+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DBC4E234947D7009292DF /* SKProduct+Kurozora.swift */; };
@@ -766,6 +768,8 @@
 		661B1DCE2B61C148000C9C0E /* oh_my_gah.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = oh_my_gah.m4a; sourceTree = "<group>"; };
 		661B1DD02B61C1D7000C9C0E /* bonk.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = bonk.m4a; sourceTree = "<group>"; };
 		661B1DD22B61C77C000C9C0E /* explosion.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = explosion.m4a; sourceTree = "<group>"; };
+		661B1DD52B646042000C9C0E /* ReCapCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReCapCollectionViewController.swift; sourceTree = "<group>"; };
+		661B1DD72B646522000C9C0E /* ReCap.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ReCap.storyboard; sourceTree = "<group>"; };
 		661B26B22351E5A100840AF5 /* UIImageView+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Kurozora.swift"; sourceTree = "<group>"; };
 		661D646B25C387EA00822D01 /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 		661DBC4E234947D7009292DF /* SKProduct+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKProduct+Kurozora.swift"; sourceTree = "<group>"; };
@@ -1679,6 +1683,15 @@
 				661A002927C28F7A00DC646C /* KTrailerPlayerView.swift */,
 			);
 			path = "Player Presentation";
+			sourceTree = "<group>";
+		};
+		661B1DD42B646004000C9C0E /* ReCap */ = {
+			isa = PBXGroup;
+			children = (
+				661B1DD72B646522000C9C0E /* ReCap.storyboard */,
+				661B1DD52B646042000C9C0E /* ReCapCollectionViewController.swift */,
+			);
+			path = ReCap;
 			sourceTree = "<group>";
 		};
 		661F9F872087383500CF4153 /* Onboarding */ = {
@@ -2698,6 +2711,7 @@
 				661F9F872087383500CF4153 /* Onboarding */,
 				664AAF8F24EEA24D00FF4AA5 /* People */,
 				66CF6D6320A9875600F98375 /* Profile */,
+				661B1DD42B646004000C9C0E /* ReCap */,
 				6619377F2A6EEAF100447084 /* Review Text Editor */,
 				66C86400216DF9040054EE16 /* Seasons */,
 				66707836208B844800471FBC /* Settings */,
@@ -3923,6 +3937,7 @@
 				6675E20B2B4868120050F98C /* shishi_odoshi.m4a in Resources */,
 				669EA9A222C1491600784181 /* Purchase.storyboard in Resources */,
 				66A4FD19270F6CD100E7C702 /* App Icons.plist in Resources */,
+				661B1DD82B646522000C9C0E /* ReCap.storyboard in Resources */,
 				66C34FC327DCDBC900298C81 /* UpcomingLockupCollectionViewCell.xib in Resources */,
 				66AE01292594018400308636 /* Genre.storyboard in Resources */,
 				661B1DCF2B61C148000C9C0E /* oh_my_gah.m4a in Resources */,
@@ -4354,6 +4369,7 @@
 				66FA97BB281A0C4B0054FC2E /* AlertType.swift in Sources */,
 				66EA1DE125B5BC5900FCD07A /* EpisodesListCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				66C4DAE6243E133F00C4B90A /* KTabbedViewController.swift in Sources */,
+				661B1DD62B646042000C9C0E /* ReCapCollectionViewController.swift in Sources */,
 				66500D0A295FCB990098D59D /* PurchaseFeatureCollectionViewCell.swift in Sources */,
 				66CF6D6720A987D100F98375 /* ProfileTableViewController.swift in Sources */,
 				66112350208F70D200E6033A /* UIApplication+Navigation.swift in Sources */,

@@ -1229,6 +1229,11 @@ struct Trans {
 	/// - Tag: Trans-becomeASubscriber
 	static let becomeASubscriber: String = String(localized: "Become a Subscriber",
 												  comment: "The string for the word 'Become a Subscriber'.")
+	/// The string for the word 'Re:Cap'.
+	///
+	/// - Tag: Trans-reCap
+	static let reCap: String = String(localized: "Re:Cap",
+									  comment: "The string for the word 'Re:Cap'.")
 	/// The string for the word 'Continue'.
 	///
 	/// - Tag: Trans-continue
