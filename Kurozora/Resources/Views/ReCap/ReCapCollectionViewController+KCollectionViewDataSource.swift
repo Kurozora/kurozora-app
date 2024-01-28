@@ -37,9 +37,23 @@ extension ReCapCollectionViewController {
 		self.dataSource.supplementaryViewProvider = { [weak self] (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
 			guard let self = self else { return nil }
 			let sectionLayoutKind = self.snapshot.sectionIdentifiers[indexPath.section]
-
-			// Get a supplementary view of the desired kind.
 			let exploreSectionTitleCell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
+			let title: String?
+			let subtitle: String?
+
+			switch sectionLayoutKind {
+			case .topShows(let recap), .topGames(let recap), .topLiteratures(let recap):
+				title = Trans.top(recap.attributes.type)
+				subtitle = Trans.totalSeries("\(recap.attributes.totalSeriesCount)")
+			case .topGenres(let recap), .topThemes(let recap):
+				title = Trans.top(recap.attributes.type)
+				subtitle = nil
+			case .milestones:
+				title = Trans.milestones
+				subtitle = nil
+			}
+
+			exploreSectionTitleCell.configure(withTitle: title, subtitle, segueID: "")
 
 			// Return the view.
 			return exploreSectionTitleCell
