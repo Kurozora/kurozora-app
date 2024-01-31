@@ -17,7 +17,17 @@ class ReCapCollectionViewController: KCollectionViewController {
 
 	// MARK: - Properties
 	var year: Int = 0
-	var recaps: [Recap] = []
+	var recapItems: [RecapItem] = [] {
+		didSet {
+			self._prefersActivityIndicatorHidden = true
+
+			#if DEBUG
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.endRefreshing()
+			#endif
+			#endif
+		}
+	}
 	var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 
@@ -72,6 +82,8 @@ class ReCapCollectionViewController: KCollectionViewController {
 		self._prefersRefreshControlDisabled = true
 		#endif
 
+		self.title = "\(Trans.reCAP)’\(self.year % 100)"
+
 		self.configureDataSource()
 
 		// Fetch ReCap details.
@@ -92,7 +104,7 @@ class ReCapCollectionViewController: KCollectionViewController {
 	func fetchDetails() async {
 		do {
 			let recapResponse = try await KService.getRecap(for: "\(self.year)").value
-			self.recaps = recapResponse.data
+			self.recapItems = recapResponse.data
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
@@ -106,55 +118,55 @@ extension ReCapCollectionViewController {
 	enum SectionLayoutKind: Hashable {
 		// MARK: - Cases
 		/// Indicates a top shows section layout type.
-		case topShows(_: Recap)
+		case topShows(_: RecapItem)
 
 		/// Indicates a top literatures section layout type.
-		case topLiteratures(_: Recap)
+		case topLiteratures(_: RecapItem)
 
 		/// Indicates a top games section layout type.
-		case topGames(_: Recap)
+		case topGames(_: RecapItem)
 
 		/// Indicates a top genres section layout type.
-		case topGenres(_: Recap)
+		case topGenres(_: RecapItem)
 
 		/// Indicates a top themes section layout type.
-		case topThemes(_: Recap)
+		case topThemes(_: RecapItem)
 
 		/// Indicates a milestones section layout type.
-		case milestones(_: Recap)
+		case milestones(_: RecapItem)
 
 		// MARK: - Functions
 		func hash(into hasher: inout Hasher) {
 			switch self {
-			case .topShows(let recap):
-				hasher.combine(recap)
-			case .topLiteratures(let recap):
-				hasher.combine(recap)
-			case .topGames(let recap):
-				hasher.combine(recap)
-			case .topGenres(let recap):
-				hasher.combine(recap)
-			case .topThemes(let recap):
-				hasher.combine(recap)
-			case .milestones(let recap):
-				hasher.combine(recap)
+			case .topShows(let recapItem):
+				hasher.combine(recapItem)
+			case .topLiteratures(let recapItem):
+				hasher.combine(recapItem)
+			case .topGames(let recapItem):
+				hasher.combine(recapItem)
+			case .topGenres(let recapItem):
+				hasher.combine(recapItem)
+			case .topThemes(let recapItem):
+				hasher.combine(recapItem)
+			case .milestones(let recapItem):
+				hasher.combine(recapItem)
 			}
 		}
 
 		static func == (lhs: SectionLayoutKind, rhs: SectionLayoutKind) -> Bool {
 			switch (lhs, rhs) {
-			case (.topShows(let recap1), .topShows(let recap2)):
-				return recap1 == recap2
-			case (.topLiteratures(let recap1), .topLiteratures(let recap2)):
-				return recap1 == recap2
-			case (.topGames(let recap1), .topGames(let recap2)):
-				return recap1 == recap2
-			case (.topGenres(let recap1), .topGenres(let recap2)):
-				return recap1 == recap2
-			case (.topThemes(let recap1), .topThemes(let recap2)):
-				return recap1 == recap2
-			case (.milestones(let recap1), .milestones(let recap2)):
-				return recap1 == recap2
+			case (.topShows(let recapItem1), .topShows(let recapItem2)):
+				return recapItem1 == recapItem2
+			case (.topLiteratures(let recapItem1), .topLiteratures(let recapItem2)):
+				return recapItem1 == recapItem2
+			case (.topGames(let recapItem1), .topGames(let recapItem2)):
+				return recapItem1 == recapItem2
+			case (.topGenres(let recapItem1), .topGenres(let recapItem2)):
+				return recapItem1 == recapItem2
+			case (.topThemes(let recapItem1), .topThemes(let recapItem2)):
+				return recapItem1 == recapItem2
+			case (.milestones(let recapItem1), .milestones(let recapItem2)):
+				return recapItem1 == recapItem2
 			default: return false
 			}
 		}

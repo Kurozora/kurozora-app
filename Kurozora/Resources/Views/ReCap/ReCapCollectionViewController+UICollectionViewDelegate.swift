@@ -12,8 +12,8 @@ import KurozoraKit
 extension ReCapCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		switch self.dataSource.sectionIdentifier(for: indexPath.section) {
-		case .topShows(let recap), .topGames(let recap), .topLiteratures(let recap):
-			switch recap.attributes.recapType {
+		case .topShows(let recapItem), .topGames(let recapItem), .topLiteratures(let recapItem):
+			switch recapItem.attributes.recapItemType {
 			case .shows:
 				let show = self.shows[indexPath]
 				self.performSegue(withIdentifier: R.segue.reCapCollectionViewController.showDetailsSegue, sender: show)
@@ -36,10 +36,10 @@ extension ReCapCollectionViewController {
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		if indexPath.section <= self.recaps.count {
-			let recap = self.recaps[indexPath.section]
+		if indexPath.section <= self.recapItems.count {
+			let recapItem = self.recapItems[indexPath.section]
 
-			switch recap.attributes.recapType {
+			switch recapItem.attributes.recapItemType {
 			case .shows:
 				return self.shows[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 			case .literatures:

@@ -64,42 +64,42 @@ extension ReCapCollectionViewController {
 		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 
 		// Add explore categories
-		self.recaps.forEach { recap in
+		self.recapItems.forEach { recapItem in
 			var sectionHeader: SectionLayoutKind
 			var itemKinds: [ItemKind] = []
 
-			switch recap.attributes.recapType {
+			switch recapItem.attributes.recapItemType {
 			case .shows:
-				sectionHeader = .topShows(recap)
-				if let shows = recap.relationships?.shows?.data {
+				sectionHeader = .topShows(recapItem)
+				if let shows = recapItem.relationships?.shows?.data {
 					itemKinds = shows.map { showIdentity in
 						return .showIdentity(showIdentity)
 					}
 				}
 			case .literatures:
-				sectionHeader = .topLiteratures(recap)
-				if let literature = recap.relationships?.literatures?.data {
+				sectionHeader = .topLiteratures(recapItem)
+				if let literature = recapItem.relationships?.literatures?.data {
 					itemKinds = literature.map { literatureIdentity in
 						return .literatureIdentity(literatureIdentity)
 					}
 				}
 			case .games:
-				sectionHeader = .topGames(recap)
-				if let games = recap.relationships?.games?.data {
+				sectionHeader = .topGames(recapItem)
+				if let games = recapItem.relationships?.games?.data {
 					itemKinds = games.map { gameIdentity in
 						return .gameIdentity(gameIdentity)
 					}
 				}
 			case .genres:
-				sectionHeader = .topGenres(recap)
-				if let genres = recap.relationships?.genres?.data {
+				sectionHeader = .topGenres(recapItem)
+				if let genres = recapItem.relationships?.genres?.data {
 					itemKinds = genres.map { genre in
 						return .genreIdentity(genre)
 					}
 				}
 			case .themes:
-				sectionHeader = .topThemes(recap)
-				if let themes = recap.relationships?.themes?.data {
+				sectionHeader = .topThemes(recapItem)
+				if let themes = recapItem.relationships?.themes?.data {
 					itemKinds = themes.map { theme in
 						return .themeIdentity(theme)
 					}
