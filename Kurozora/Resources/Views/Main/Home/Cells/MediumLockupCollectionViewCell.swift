@@ -28,7 +28,7 @@ class MediumLockupCollectionViewCell: KCollectionViewCell {
 
 		self.primaryLabel.text = genre.attributes.name
 
-		self.backgroundColorView.gradientLayer.colors = [
+		self.backgroundColorView.backgroundColors = [
 			UIColor(hexString: genre.attributes.backgroundColor1)?.cgColor ?? UIColor.orange.cgColor,
 			UIColor(hexString: genre.attributes.backgroundColor2)?.cgColor ?? UIColor.purple.cgColor
 		]
@@ -48,7 +48,7 @@ class MediumLockupCollectionViewCell: KCollectionViewCell {
 
 		self.primaryLabel.text = theme.attributes.name
 
-		self.backgroundColorView.gradientLayer.colors = [
+		self.backgroundColorView.backgroundColors = [
 			UIColor(hexString: theme.attributes.backgroundColor1)?.cgColor ?? UIColor.orange.cgColor,
 			UIColor(hexString: theme.attributes.backgroundColor2)?.cgColor ?? UIColor.purple.cgColor
 		]

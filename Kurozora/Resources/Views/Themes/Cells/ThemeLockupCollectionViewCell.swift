@@ -29,7 +29,7 @@ class ThemeLockupCollectionViewCell: KCollectionViewCell {
 		}
 		self.hideSkeleton()
 
-		self.gradientView.gradientLayer.colors = [
+		self.gradientView.backgroundColors = [
 			UIColor(hexString: theme.attributes.backgroundColor1)?.cgColor ?? UIColor.orange.cgColor,
 			UIColor(hexString: theme.attributes.backgroundColor2)?.cgColor ?? UIColor.purple.cgColor
 		]
