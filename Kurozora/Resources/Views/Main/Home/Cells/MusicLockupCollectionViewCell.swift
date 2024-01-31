@@ -52,7 +52,7 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 	// MARK: - Functions
 	/// Configures the cell with the given `ShowSong` object.
 	///
-	/// - Parameter showSong: The `ShowSong` objet used to confgiure the cell.
+	/// - Parameter showSong: The `ShowSong` object used to configure the cell.
 	/// - Parameter indexPath: The index path of the cell within the collection view.
 	/// - Parameter showEpisodes: Whether to show which episodes this song played in.
 	/// - Parameter showShow: Whether to show which show this song belongs to.
@@ -91,7 +91,7 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 
 	/// Configures the cell with the given `Song` object.
 	///
-	/// - Parameter song: The `Song` objet used to confgiure the cell.
+	/// - Parameter song: The `Song` object used to configure the cell.
 	/// - Parameter indexPath: The index path of the cell within the collection view.
 	/// - Parameter fromShowSong: A boolean indicating if the method was called from `configure(using: ShowSong)` method.
 	func configure(using song: KKSong?, at indexPath: IndexPath, fromShowSong: Bool = false) {
