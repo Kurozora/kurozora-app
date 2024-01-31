@@ -30,7 +30,6 @@ class HomeCollectionViewController: KCollectionViewController {
 
 	var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
-	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
 	var exploreCategories: [ExploreCategory] = [] {
 		didSet {
 			self.updateDataSource()
@@ -59,6 +58,7 @@ class HomeCollectionViewController: KCollectionViewController {
 	var people: [IndexPath: Person] = [:]
 	var showSongs: [IndexPath: ShowSong] = [:]
 	var themes: [IndexPath: Theme] = [:]
+	var recaps: [IndexPath: Recap] = [:]
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
@@ -192,7 +192,6 @@ class HomeCollectionViewController: KCollectionViewController {
 		self.quickActions = [
 			QuickAction(title: Trans.redeem, segueID: R.segue.homeCollectionViewController.redeemSegue.identifier),
 			QuickAction(title: title, segueID: R.segue.homeCollectionViewController.subscriptionSegue.identifier),
-			QuickAction(title: Trans.reCap, segueID: R.segue.homeCollectionViewController.reCapSegue.identifier)
 		]
 	}
 
@@ -231,6 +230,8 @@ class HomeCollectionViewController: KCollectionViewController {
 					return !(exploreCategory.relationships.characters?.data.isEmpty ?? false)
 				case .people:
 					return !(exploreCategory.relationships.people?.data.isEmpty ?? false)
+				case .recap:
+					return !(exploreCategory.relationships.recaps?.data.isEmpty ?? false)
 				}
 			}
 		} catch {
@@ -367,6 +368,10 @@ class HomeCollectionViewController: KCollectionViewController {
 			peopleListCollectionViewController.title = exploreCategory.attributes.title
 			peopleListCollectionViewController.exploreCategoryIdentity = ExploreCategoryIdentity(id: exploreCategory.id)
 			peopleListCollectionViewController.peopleListFetchType = .explore
+		case R.segue.homeCollectionViewController.reCapSegue.identifier:
+			guard let reCapCollectionViewController = segue.destination as? ReCapCollectionViewController else { return }
+			guard let recap = sender as? Recap else { return }
+			reCapCollectionViewController.year = recap.attributes.year
 		default: break
 		}
 	}
@@ -680,6 +685,9 @@ extension HomeCollectionViewController {
 		/// Indicates the item kind contains a `PersonIdentity` object.
 		case personIdentity(_: PersonIdentity, id: UUID = UUID())
 
+		/// Indicates the item kind contains a `Recap` object.
+		case recap(_: Recap, id: UUID = UUID())
+
 		/// Indicates the item kind contains a `QuickLink` object.
 		case quickLink(_: QuickLink, id: UUID = UUID())
 
@@ -719,6 +727,9 @@ extension HomeCollectionViewController {
 			case .personIdentity(let personIdentity, let id):
 				hasher.combine(personIdentity)
 				hasher.combine(id)
+			case .recap(let recap, let id):
+				hasher.combine(recap)
+				hasher.combine(id)
 			case .quickLink(let quickLink, let id):
 				hasher.combine(quickLink)
 				hasher.combine(id)
@@ -750,6 +761,8 @@ extension HomeCollectionViewController {
 				return characterIdentity1 == characterIdentity2 && id1 == id2
 			case (.personIdentity(let personIdentity1, let id1), .personIdentity(let personIdentity2, let id2)):
 				return personIdentity1 == personIdentity2 && id1 == id2
+			case (.recap(let recap1, let id1), .recap(let recap2, let id2)):
+				return recap1 == recap2 && id1 == id2
 			case (.quickLink(let quickLink1, let id1), .quickLink(let quickLink2, let id2)):
 				return quickLink1 == quickLink2 && id1 == id2
 			case (.quickAction(let quickAction1, let id1), .quickAction(let quickAction2, let id2)):
@@ -1068,6 +1081,19 @@ extension HomeCollectionViewController {
 				}
 
 				characterLockupCollectionViewCell.configure(using: character)
+			default: return
+			}
+		}
+	}
+
+	func getConfiguredRecapCell() -> UICollectionView.CellRegistration<RecapLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<RecapLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.recapLockupCollectionViewCell)) { [weak self] recapLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .recap(let recap, _):
+				self.recaps[indexPath] = recap
+				recapLockupCollectionViewCell.configure(using: recap)
 			default: return
 			}
 		}

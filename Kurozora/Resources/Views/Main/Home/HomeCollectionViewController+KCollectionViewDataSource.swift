@@ -32,6 +32,7 @@ extension HomeCollectionViewController {
 		let upcomingCellConfiguration = self.getConfiguredUpcomingCell()
 		let videoCellConfiguration = self.getConfiguredVideoCell()
 		let actionLinkCellConfiguration = self.getConfiguredActionLinkCell()
+		let recapCellConfiguration = self.getConfiguredRecapCell()
 
 		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, itemKind: ItemKind) -> UICollectionViewCell? in
 			guard let self = self else { return nil }
@@ -44,6 +45,8 @@ extension HomeCollectionViewController {
 				switch itemKind {
 				case .gameIdentity:
 					return collectionView.dequeueConfiguredReusableCell(using: gameCellConfiguration, for: indexPath, item: itemKind)
+				case .recap:
+					return collectionView.dequeueConfiguredReusableCell(using: recapCellConfiguration, for: indexPath, item: itemKind)
 				default:
 					return collectionView.dequeueConfiguredReusableCell(using: smallCellConfiguration, for: indexPath, item: itemKind)
 				}
@@ -100,6 +103,8 @@ extension HomeCollectionViewController {
 					segueID = R.segue.homeCollectionViewController.literaturesListSegue.identifier
 				case .games, .mostPopularGames, .upcomingGames, .newGames:
 					segueID = R.segue.homeCollectionViewController.gamesListSegue.identifier
+				case .recap:
+					break
 				default:
 					segueID = R.segue.homeCollectionViewController.showsListSegue.identifier
 				}
@@ -278,6 +283,13 @@ extension HomeCollectionViewController {
 				if let themes = exploreCategory.relationships.themes?.data {
 					itemKinds = themes.prefix(10).map { theme in
 						return .themeIdentity(theme)
+					}
+				}
+			case .recap:
+				sectionHeader = .small(exploreCategory)
+				if let recaps = exploreCategory.relationships.recaps?.data {
+					itemKinds = recaps.prefix(10).map { recap in
+						return .recap(recap)
 					}
 				}
 			}

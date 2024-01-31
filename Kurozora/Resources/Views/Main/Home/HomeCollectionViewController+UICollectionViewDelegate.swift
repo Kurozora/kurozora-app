@@ -41,6 +41,9 @@ extension HomeCollectionViewController {
 			case .songs:
 				let song = self.showSongs[indexPath]?.song
 				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.songDetailsSegue, sender: song)
+			case .recap:
+				let recap = self.recaps[indexPath]
+				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.reCapSegue, sender: recap)
 			}
 		case .legal:
 			self.performSegue(withIdentifier: R.segue.homeCollectionViewController.legalSegue, sender: nil)
@@ -72,6 +75,15 @@ extension HomeCollectionViewController {
 				return self.characters[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 			case .people:
 				return self.people[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			case .recap:
+				guard let recap = self.recaps[indexPath] else { return nil }
+				let identifier = indexPath as NSCopying
+
+				return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
+					guard let reCapCollectionViewController = R.storyboard.reCap.reCapCollectionViewController() else { return nil }
+					reCapCollectionViewController.year = recap.attributes.year
+					return reCapCollectionViewController
+				})
 			}
 		}
 		return nil
