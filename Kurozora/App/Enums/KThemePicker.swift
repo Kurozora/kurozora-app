@@ -146,6 +146,18 @@ enum KThemePicker: ThemeColorPicker {
 		return ThemeCGColorPicker(stringLiteral: self.stringValue)
 	}
 
+	var gradientPicker: ThemeAnyPicker {
+		return ThemeAnyPicker(keyPath: self.stringValue) { value in
+			if let hexArray = value as? [String] {
+				return hexArray.map {
+					UIColor(hexString: $0)?.cgColor
+				}
+			}
+
+			return nil
+		}
+	}
+
 	/// Returns a UIBlurEffect.Style from the currently selected theme.
 	var blurValue: UIBlurEffect.Style {
 		guard let blurEffectStyleString = ThemeManager.value(for: KThemePicker.visualEffect.stringValue) as? String else { return .light }
