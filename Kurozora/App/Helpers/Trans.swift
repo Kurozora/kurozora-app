@@ -1229,11 +1229,6 @@ struct Trans {
 	/// - Tag: Trans-becomeASubscriber
 	static let becomeASubscriber: String = String(localized: "Become a Subscriber",
 												  comment: "The string for the word 'Become a Subscriber'.")
-	/// The string for the word 'Re:Cap'.
-	///
-	/// - Tag: Trans-reCap
-	static let reCap: String = String(localized: "Re:Cap",
-									  comment: "The string for the word 'Re:Cap'.")
 	/// The string for the word 'Continue'.
 	///
 	/// - Tag: Trans-continue
@@ -1276,6 +1271,32 @@ struct Trans {
 	/// - Tag: Trans-writeAReview
 	static let writeAReview: String = String(localized: "Write a Review",
 											 comment: "The string for the word 'write a review'.")
+
+	// MARK: - ReCap
+	/// The string for the word 'Re:Cap'.
+	///
+	/// - Tag: Trans-reCAP
+	static let reCAP: String = String(localized: "Re:CAP",
+									  comment: "The string for the word 'Re:CAP'.")
+	/// The string for the word 'Milestones'.
+	///
+	/// - Tag: Trans-milestones
+	static let milestones: String = String(localized: "Milestones",
+										   comment: "The string for the word 'Milestones'.")
+	/// The string for the word 'Top %@'.
+	///
+	/// - Tag: Trans-topX
+	static func top(_ string: String) -> String {
+		return String(localized: "Top \(string)",
+					  comment: "The string for the word 'Top %@'.")
+	}
+	/// The string for the word '%@ total series'.
+	///
+	/// - Tag: Trans-totalSeries
+	static func totalSeries(_ string: String) -> String {
+		return String(localized: "\(string) total series",
+					  comment: "The string for the word '%@ total series'.")
+	}
 
 	// MARK: - Warnings
 	/// The string for the no signal warning title.
