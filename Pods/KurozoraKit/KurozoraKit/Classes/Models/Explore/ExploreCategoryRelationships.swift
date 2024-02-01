@@ -35,5 +35,8 @@ extension ExploreCategory {
 
 		/// The people belonging to the explore category.
 		public let people: PersonIdentityResponse?
+
+		/// The Re:CAP belonging to the explore category.
+		public let recaps: RecapResponse?
 	}
 }

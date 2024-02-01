@@ -152,6 +152,30 @@ extension KKEndpoint.Me {
 	}
 }
 
+// MARK: - Recap
+extension KKEndpoint.Me {
+	/// The set of available Recap API endpoints types.
+	internal enum Recap {
+		// MARK: - Cases
+		/// The endpoint to the recap page.
+		case index
+
+		/// The endpoint to the details of a recap page.
+		case details(_ year: String)
+
+		// MARK: - Properties
+		/// The endpoint value of the Recap API type.
+		var endpointValue: String {
+			switch self {
+			case .index:
+				return "me/recap"
+			case .details(let year):
+				return "me/recap/\(year)"
+			}
+		}
+	}
+}
+
 // MARK: - Reminder Show
 extension KKEndpoint.Me {
 	/// The set of available Reminder Show API endpoint types.

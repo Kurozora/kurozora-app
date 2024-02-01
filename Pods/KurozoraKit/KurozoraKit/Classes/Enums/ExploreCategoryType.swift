@@ -61,4 +61,7 @@ public enum ExploreCategoryType: String, Codable {
 
 	/// Indicates that the explore category is of the `themes` type.
 	case themes
+
+	/// Indicates that the explore category is of the `recap` type.
+	case recap
 }
