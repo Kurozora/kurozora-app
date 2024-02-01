@@ -191,7 +191,7 @@ class HomeCollectionViewController: KCollectionViewController {
 
 		self.quickActions = [
 			QuickAction(title: Trans.redeem, segueID: R.segue.homeCollectionViewController.redeemSegue.identifier),
-			QuickAction(title: title, segueID: R.segue.homeCollectionViewController.subscriptionSegue.identifier),
+			QuickAction(title: title, segueID: R.segue.homeCollectionViewController.subscriptionSegue.identifier)
 		]
 	}
 

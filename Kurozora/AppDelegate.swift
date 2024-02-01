@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		// Configure kyrboard
 		IQKeyboardManager.shared.enable = true
-		IQKeyboardManager.shared.shouldResignOnTouchOutside = true
+		IQKeyboardManager.shared.resignOnTouchOutside = true
 
 		// Max disk cache size
 		ImageCache.default.diskStorage.config.sizeLimit = 300 * 1024 * 1024
