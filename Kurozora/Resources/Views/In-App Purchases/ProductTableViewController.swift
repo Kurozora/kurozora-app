@@ -9,13 +9,6 @@
 import UIKit
 import StoreKit
 
-protocol ProductTableViewControllerDelegate: AnyObject {
-	/// Updates the subscription status of the purchaser.
-	/// Override this method with your implementation to update the subscription status before the view is (re)loaded.
-	@discardableResult
-	func updateSubscriptionStatus() async -> Bool
-}
-
 class ProductTableViewController: KTableViewController {
 	// MARK: - IBOutlets
 	/// The left navigation bar button of the navigation controller's `navigationItem`.
@@ -36,9 +29,6 @@ class ProductTableViewController: KTableViewController {
 	var serviceType: ServiceType? {
 		return nil
 	}
-
-	/// The `ProductTableViewControllerDelegate` object.
-	weak var productTableViewControllerDelegate: ProductTableViewControllerDelegate?
 
 	/// A storage for the `leftBarButtonItems` of `navigationItem`.
 	fileprivate var _leftBarButtonItems: [UIBarButtonItem]?
@@ -124,8 +114,6 @@ extension ProductTableViewController: PurchaseButtonTableViewCellDelegate {
 	func purchase(_ product: Product) async {
 		do {
 			guard try await store.purchase(product) != nil else { return }
-
-			await self.productTableViewControllerDelegate?.updateSubscriptionStatus()
 
 			DispatchQueue.main.async { [weak self] in
 				guard let self = self else { return }

@@ -210,6 +210,8 @@
 		664B6D78230F45F400F9C726 /* DarkThemeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664B6D77230F45F400F9C726 /* DarkThemeOption.swift */; };
 		664B6D7A230F469900F9C726 /* AppAppearanceOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664B6D79230F469900F9C726 /* AppAppearanceOption.swift */; };
 		664B6D7E230F5AA300F9C726 /* UITableView+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664B6D7D230F5AA300F9C726 /* UITableView+Kurozora.swift */; };
+		664C1B932B69B3A1007B7C23 /* RecapLockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661981622B69AC4A0078CE32 /* RecapLockupCollectionViewCell.swift */; };
+		664C1B942B69B3A4007B7C23 /* RecapLockupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 661981642B69ADDE0078CE32 /* RecapLockupCollectionViewCell.xib */; };
 		664D09BD25EAEF1300BA8640 /* EpisodeDetailsCollectionViewController+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664D09BC25EAEF1300BA8640 /* EpisodeDetailsCollectionViewController+UICollectionViewDelegate.swift */; };
 		664E2CDF289B37140002F886 /* IconNotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 664E2CDE289B37140002F886 /* IconNotificationCell.xib */; };
 		664E2CE1289B37E00002F886 /* BasicNotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 664E2CE0289B37E00002F886 /* BasicNotificationCell.xib */; };
@@ -593,7 +595,6 @@
 		66E54EC3244E1698007248EE /* Array+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E54EC2244E1698007248EE /* Array+String.swift */; };
 		66EA1DB225B3630D00FCD07A /* LibraryViewController+TouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DB125B3630D00FCD07A /* LibraryViewController+TouchBar.swift */; };
 		66EA1DB425B3638200FCD07A /* LibraryViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DB325B3638200FCD07A /* LibraryViewControllerDelegate.swift */; };
-		66EA1DC025B3669600FCD07A /* NotificationsViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DBF25B3669600FCD07A /* NotificationsViewControllerDelegate.swift */; };
 		66EA1DC225B366CF00FCD07A /* NotificationsViewController+TouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DC125B366CF00FCD07A /* NotificationsViewController+TouchBar.swift */; };
 		66EA1DC725B3695200FCD07A /* FeedTableViewController+TouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DC625B3695200FCD07A /* FeedTableViewController+TouchBar.swift */; };
 		66EA1DC925B36DC300FCD07A /* FavoriteShowsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA1DC825B36DC300FCD07A /* FavoriteShowsCollectionViewController+KCollectionViewDelegateLayout.swift */; };
@@ -765,6 +766,8 @@
 		661937852A6EEB8E00447084 /* ReviewTextEditorInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTextEditorInteractor.swift; sourceTree = "<group>"; };
 		661937862A6EEB8E00447084 /* ReviewTextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTextEditorView.swift; sourceTree = "<group>"; };
 		661937872A6EEB8E00447084 /* ReviewTextEditorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReviewTextEditorView.xib; sourceTree = "<group>"; };
+		661981622B69AC4A0078CE32 /* RecapLockupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecapLockupCollectionViewCell.swift; sourceTree = "<group>"; };
+		661981642B69ADDE0078CE32 /* RecapLockupCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecapLockupCollectionViewCell.xib; sourceTree = "<group>"; };
 		661A002427BA9FDD00DC646C /* KImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KImageView.swift; sourceTree = "<group>"; };
 		661A002927C28F7A00DC646C /* KTrailerPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KTrailerPlayerView.swift; sourceTree = "<group>"; };
 		661ACC9A25ADA41B002407A7 /* ShowDetailsCollectionViewController+TouchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShowDetailsCollectionViewController+TouchBar.swift"; sourceTree = "<group>"; };
@@ -1286,7 +1289,6 @@
 		66E54EC2244E1698007248EE /* Array+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+String.swift"; sourceTree = "<group>"; };
 		66EA1DB125B3630D00FCD07A /* LibraryViewController+TouchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LibraryViewController+TouchBar.swift"; sourceTree = "<group>"; };
 		66EA1DB325B3638200FCD07A /* LibraryViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewControllerDelegate.swift; sourceTree = "<group>"; };
-		66EA1DBF25B3669600FCD07A /* NotificationsViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewControllerDelegate.swift; sourceTree = "<group>"; };
 		66EA1DC125B366CF00FCD07A /* NotificationsViewController+TouchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationsViewController+TouchBar.swift"; sourceTree = "<group>"; };
 		66EA1DC625B3695200FCD07A /* FeedTableViewController+TouchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedTableViewController+TouchBar.swift"; sourceTree = "<group>"; };
 		66EA1DC825B36DC300FCD07A /* FavoriteShowsCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoriteShowsCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
@@ -1417,7 +1419,6 @@
 				664E2CE4289BD1990002F886 /* NotificationsTableViewController+KTableViewDataSource.swift */,
 				66EA1DC125B366CF00FCD07A /* NotificationsViewController+TouchBar.swift */,
 				660E39DA25E4451300A46EB0 /* NotificationsViewController+UITableViewDelegate.swift */,
-				66EA1DBF25B3669600FCD07A /* NotificationsViewControllerDelegate.swift */,
 				662F707022A45E4E00C3599D /* Cells */,
 			);
 			path = Notifications;
@@ -3308,6 +3309,8 @@
 				660C043123D1500A0040C749 /* MediumLockupCollectionViewCell.xib */,
 				66319DAC27C82EAD0063DE7F /* MusicLockupCollectionViewCell.swift */,
 				66319DAE27C858CD0063DE7F /* MusicLockupCollectionViewCell.xib */,
+				661981622B69AC4A0078CE32 /* RecapLockupCollectionViewCell.swift */,
+				661981642B69ADDE0078CE32 /* RecapLockupCollectionViewCell.xib */,
 				663E34282360D34C003386D1 /* SmallLockupCollectionViewCell.swift */,
 				660C042F23D14F760040C749 /* SmallLockupCollectionViewCell.xib */,
 				6684224725966F97000A09F8 /* UpcomingLockupCollectionViewCell.swift */,
@@ -3872,6 +3875,7 @@
 				66CF6D7120A9934F00F98375 /* Profile.storyboard in Resources */,
 				66DEB4A821D248710093725F /* Search.storyboard in Resources */,
 				66C45842259A88ED00886374 /* Sakura.plist in Resources */,
+				664C1B942B69B3A4007B7C23 /* RecapLockupCollectionViewCell.xib in Resources */,
 				66500D02295FC6170098D59D /* PurchaseStatusCollectionViewCell.xib in Resources */,
 				666C89A12A0062BA0075B5D6 /* SearchFilter.storyboard in Resources */,
 				666938BA21B1D51400BA9620 /* ShowMoreCell.xib in Resources */,
@@ -4468,7 +4472,6 @@
 				66CE81042460377900DB0C49 /* KCollectionViewDelegateLayout.swift in Sources */,
 				66CAE68D2337D0FF00991E59 /* AccountOnboarding.swift in Sources */,
 				66FE5CFF215B665200E2844A /* DebugSettingsTableViewController.swift in Sources */,
-				66EA1DC025B3669600FCD07A /* NotificationsViewControllerDelegate.swift in Sources */,
 				66D6237D20A1CB9C00304914 /* LibraryCollectionViewCell.swift in Sources */,
 				661DBC5B234A6CC9009292DF /* ProductHeaderTableViewCell.swift in Sources */,
 				66C2C5262107ACA10020E21F /* KTabBarController.swift in Sources */,
@@ -4570,6 +4573,7 @@
 				661F9F7C208727D200CF4153 /* ResetPasswordViewController.swift in Sources */,
 				66EA1DC925B36DC300FCD07A /* FavoriteShowsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				66EDBA5E2944212B00FF1A2E /* WarningModels.swift in Sources */,
+				664C1B932B69B3A1007B7C23 /* RecapLockupCollectionViewCell.swift in Sources */,
 				669A36BD24F1B0C30045D04A /* OnboardingHeaderTableViewCell.swift in Sources */,
 				66E1215829AFEE0C0051C4ED /* GameDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				66EA1DCB25B36DE900FCD07A /* FavoriteShowsCollectionViewController+KCollectionViewDataSource.swift in Sources */,
