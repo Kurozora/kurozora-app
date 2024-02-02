@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,11 +19,12 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Launch Icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="KVZ-N2-r3h">
-                    <rect key="frame" x="132.66666666666666" y="374.66666666666669" width="127.99999999999997" height="128"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kurozora_icon_monotone" translatesAutoresizingMaskIntoConstraints="NO" id="KVZ-N2-r3h">
+                    <rect key="frame" x="132.66666666666666" y="371.33333333333331" width="127.99999999999997" height="134.33333333333331"/>
+                    <color key="tintColor" red="0.99607843137254903" green="0.99607843137254903" blue="0.99607843137254903" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstAttribute="width" secondItem="KVZ-N2-r3h" secondAttribute="height" multiplier="1:1" id="Iuc-CW-PFB"/>
-                        <constraint firstAttribute="width" constant="128" id="LTy-8A-99A"/>
+                        <constraint firstAttribute="width" secondItem="KVZ-N2-r3h" secondAttribute="height" multiplier="21:22" id="7Rg-CP-fPW"/>
+                        <constraint firstAttribute="width" constant="128" id="ewb-Di-CU7"/>
                     </constraints>
                 </imageView>
             </subviews>
@@ -32,7 +33,6 @@
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="KVZ-N2-r3h" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="G6C-nb-Day"/>
-                <constraint firstItem="KVZ-N2-r3h" firstAttribute="width" secondItem="KVZ-N2-r3h" secondAttribute="height" multiplier="1:1" id="XI4-8D-oAB"/>
                 <constraint firstItem="KVZ-N2-r3h" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="qT4-u3-Pk8"/>
             </constraints>
             <connections>
@@ -42,6 +42,6 @@
         </view>
     </objects>
     <resources>
-        <image name="Launch Icon.png" width="1024" height="1024"/>
+        <image name="kurozora_icon_monotone" width="42" height="44"/>
     </resources>
 </document>

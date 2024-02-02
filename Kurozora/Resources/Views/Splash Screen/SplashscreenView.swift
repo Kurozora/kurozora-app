@@ -46,6 +46,6 @@ private extension SplashscreenView {
 	}
 
 	func setupLogoImageView() {
-//		self.logoImageView.theme_tintColor = KThemePicker.tintColor.rawValue
+		self.logoImageView.theme_tintColor = KThemePicker.textColor.rawValue
 	}
 }
