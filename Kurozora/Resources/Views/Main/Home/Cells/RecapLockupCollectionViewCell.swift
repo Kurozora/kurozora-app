@@ -34,7 +34,7 @@ class RecapLockupCollectionViewCell: KCollectionViewCell {
 		}
 		self.hideSkeleton()
 
-		self.logoImageView.tintColor = .label
+		self.logoImageView.tintColor = .white
 
 		self.gradientView.backgroundColors = [
 			UIColor(hexString: recap.attributes.backgroundColor1)?.cgColor ?? UIColor.orange.cgColor,
