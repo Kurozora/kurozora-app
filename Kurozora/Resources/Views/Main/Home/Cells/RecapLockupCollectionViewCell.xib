@@ -36,7 +36,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="374" height="374"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Re:CAP" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7E8-5f-qhk">
-                                <rect key="frame" x="8" y="4" width="85" height="40"/>
+                                <rect key="frame" x="8" y="8" width="85" height="28"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -46,12 +46,12 @@
                                 <color key="textColor" systemColor="secondaryLabelColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Kurozora Icon" translatesAutoresizingMaskIntoConstraints="NO" id="0gO-l7-a4f">
-                                <rect key="frame" x="326" y="4" width="40" height="40"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kurozora_icon_monotone" translatesAutoresizingMaskIntoConstraints="NO" id="0gO-l7-a4f">
+                                <rect key="frame" x="338" y="8" width="28" height="28"/>
                                 <color key="tintColor" systemColor="labelColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="0gO-l7-a4f" secondAttribute="height" multiplier="1:1" id="Jkd-ms-IFy"/>
-                                    <constraint firstAttribute="width" constant="40" id="RPn-QD-rBg"/>
+                                    <constraint firstAttribute="width" constant="28" id="RPn-QD-rBg"/>
                                 </constraints>
                             </imageView>
                         </subviews>
@@ -61,7 +61,7 @@
                             <constraint firstItem="7E8-5f-qhk" firstAttribute="leading" secondItem="Fmf-at-mZU" secondAttribute="leading" constant="8" id="2Po-6P-ulh"/>
                             <constraint firstAttribute="bottom" secondItem="gdl-U8-He0" secondAttribute="bottom" constant="-32" id="67Q-4I-n2G"/>
                             <constraint firstItem="MzZ-gM-Qxg" firstAttribute="leading" secondItem="Fmf-at-mZU" secondAttribute="leading" id="E47-rj-hcB"/>
-                            <constraint firstItem="7E8-5f-qhk" firstAttribute="top" secondItem="Fmf-at-mZU" secondAttribute="top" constant="4" id="FA7-Ih-nGo"/>
+                            <constraint firstItem="7E8-5f-qhk" firstAttribute="top" secondItem="Fmf-at-mZU" secondAttribute="top" constant="8" id="FA7-Ih-nGo"/>
                             <constraint firstItem="uNn-wj-mpw" firstAttribute="top" secondItem="Fmf-at-mZU" secondAttribute="top" id="G5f-XC-eAw"/>
                             <constraint firstItem="7E8-5f-qhk" firstAttribute="centerY" secondItem="0gO-l7-a4f" secondAttribute="centerY" id="N6l-Ga-zfL"/>
                             <constraint firstAttribute="trailing" secondItem="MzZ-gM-Qxg" secondAttribute="trailing" id="PR3-oZ-YVf"/>
@@ -75,7 +75,7 @@
                             <constraint firstAttribute="width" secondItem="Fmf-at-mZU" secondAttribute="height" multiplier="1:1" id="heZ-HL-5Hh"/>
                             <constraint firstItem="gdl-U8-He0" firstAttribute="leading" secondItem="Fmf-at-mZU" secondAttribute="leading" constant="-16" id="mJ5-Wv-u4N"/>
                             <constraint firstItem="Ya4-yY-Ehn" firstAttribute="leading" secondItem="Fmf-at-mZU" secondAttribute="leading" id="mwJ-j5-upP"/>
-                            <constraint firstItem="0gO-l7-a4f" firstAttribute="top" secondItem="Fmf-at-mZU" secondAttribute="top" constant="4" id="psy-VL-aq1"/>
+                            <constraint firstItem="0gO-l7-a4f" firstAttribute="top" secondItem="Fmf-at-mZU" secondAttribute="top" constant="8" id="psy-VL-aq1"/>
                             <constraint firstItem="gdl-U8-He0" firstAttribute="top" secondItem="Fmf-at-mZU" secondAttribute="centerY" id="sID-1l-DDf"/>
                             <constraint firstAttribute="bottom" secondItem="uNn-wj-mpw" secondAttribute="bottom" id="waz-ei-bof"/>
                             <constraint firstAttribute="trailing" secondItem="Ya4-yY-Ehn" secondAttribute="trailing" id="zyq-no-35G"/>
@@ -106,8 +106,8 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="Kurozora Icon" width="341.33334350585938" height="341.33334350585938"/>
         <image name="Welcome Wallpaper" width="1920" height="1080"/>
+        <image name="kurozora_icon_monotone" width="42" height="44"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

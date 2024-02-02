@@ -34,7 +34,6 @@ class RecapLockupCollectionViewCell: KCollectionViewCell {
 		}
 		self.hideSkeleton()
 
-		self.logoImageView.image = self.logoImageView.image?.withRenderingMode(.alwaysTemplate)
 		self.logoImageView.tintColor = .label
 
 		self.gradientView.backgroundColors = [
