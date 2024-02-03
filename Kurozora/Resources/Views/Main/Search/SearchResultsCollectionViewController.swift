@@ -492,7 +492,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	func fetchSearchSuggestions() async {
 		do {
 			let alphabet = "abcdefghijklmnopqrstuvwxyz"
-			var suggestionStirng = String(alphabet.randomElement() ?? "o")
+			let suggestionStirng = String(alphabet.randomElement() ?? "o")
 			let searchSuggestionResponse = try await KService.getSearchSuggestions(.kurozora, of: [.shows], for: suggestionStirng).value
 			self.discoverSuggestions = searchSuggestionResponse.data
 		} catch {
