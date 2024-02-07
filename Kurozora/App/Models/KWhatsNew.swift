@@ -18,9 +18,9 @@ class KWhatsNew {
 	static var v15: [WhatsNewItem] = [
 		.image(title: "Love-Struck", subtitle: "Experience romance with the new charming『Touching Clouds』app icon and the romantic『Love Bug』theme.", image: R.image.icons.gift()!),
 		.image(title: "Re:CAP", subtitle: "Your personalized year-end review is now available in the app! Reflect on your top series of the year, along with the milestones you've achieved!", image: R.image.icons.session()!),
-		.image(title: "Splash Screen", subtitle: "The Kurozora logo now dynamically adapts to match your selected theme, creating a cohesive and personalized experience from the moment you open the app.", image: R.image.icons.session()!),
+		.image(title: "Splash Screen", subtitle: "The Kurozora logo now dynamically adapts to match your selected theme, creating a cohesive and personalized experience from the moment you open the app.", image: R.image.icons.theme()!),
 		.image(title: "Sounds & Haptics", subtitle: "A harmonious blend of serene chimes and iconic anime sounds. Whether you seek tranquility or a touch of nostalgia, find the perfect ambiance to accompany your journey.", image: R.image.icons.sound()!),
-		.image(title: "Gem Icons", subtitle: "Created under immense presseure and extreme temperatures, the gem icon set shines with elegance and sophistication. Discover the allure of『Amethyst』,『Onyx』,『Ruby』, and『Sapphire』.", image: R.image.rubyPreview()!)
+		.image(title: "Gem Icons", subtitle: "Created under immense presseure and extreme temperatures, the gem icon set shines with elegance and sophistication. Discover the allure of『Amethyst』,『Onyx』,『Ruby』, and『Sapphire』.", image: R.image.icons.ruby()!)
 	]
 
 	/// Features of version 1.4.0 of the app.
