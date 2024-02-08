@@ -241,7 +241,6 @@ final class Store: NSObject, ObservableObject {
 		}
 	}
 
-	#if !targetEnvironment(macCatalyst)
 	/// Presents the user with the manage subscription view.
 	///
 	/// - Parameters:
@@ -250,7 +249,6 @@ final class Store: NSObject, ObservableObject {
 		guard let windowScene = windowScene else { return }
 		try? await AppStore.showManageSubscriptions(in: windowScene)
 	}
-	#endif
 
 	/// Indicates whether a product is purchased.
 	///
