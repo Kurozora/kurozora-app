@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FEY-7R-0UY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FEY-7R-0UY">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -306,7 +306,7 @@
                         <segue destination="v7i-U9-USe" kind="showDetail" identifier="TipJarSegue" id="TGi-W3-7pk"/>
                         <segue destination="B3o-ew-EQQ" kind="showDetail" identifier="BroswerSegue" id="EJd-Ik-boK"/>
                         <segue destination="rXI-hr-RBS" kind="showDetail" identifier="SwitchAccountSegue" id="RsV-c8-7Ym"/>
-                        <segue destination="IOa-QJ-OWG" kind="show" identifier="SoundSegue" id="gvC-fL-6dY"/>
+                        <segue destination="IOa-QJ-OWG" kind="showDetail" identifier="SoundSegue" id="gvC-fL-6dY"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a4m-0q-T6w" userLabel="First Responder" sceneMemberID="firstResponder"/>
