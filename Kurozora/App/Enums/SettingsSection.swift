@@ -357,6 +357,8 @@ extension SettingsTableViewController {
 					return Trans.faceIDPasscode
 				case .touchID:
 					return Trans.touchIDPasscode
+				case .opticID:
+					return Trans.opticIDPasscode
 				default:
 					return Trans.passcode
 				}

@@ -220,14 +220,7 @@ extension UIDevice {
 		var error: NSError?
 
 		if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-			switch context.biometryType {
-			case .faceID:
-				return .faceID
-			case .touchID:
-				return .touchID
-			default:
-				return .none
-			}
+			return context.biometryType
 		}
 
 		return .none

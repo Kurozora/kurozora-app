@@ -18,6 +18,8 @@ class AuthenticationTableViewController: SubSettingsViewController {
 			title = "Face ID & Passcode"
 		case .touchID:
 			title = "Touch ID & Passcode"
+		case .opticID:
+			title = "Optic ID & Passcode"
 		default:
 			title = "Passcode"
 		}
@@ -37,6 +39,8 @@ extension AuthenticationTableViewController {
 				return "Enable this option so that Kurozora is locked whenever you close it. You'll be asked to authenticate through Face ID or your device's passcode when you reopen the app."
 			case .touchID:
 				return "Enable this option so that Kurozora is locked whenever you close it. You'll be asked to authenticate through Touch ID or your device's passcode when you reopen the app."
+			case .opticID:
+				return "Enable this option so that Kurozora is locked whenever you close it. You'll be asked to authenticate through Optic ID or your device's passcode when you reopen the app."
 			default:
 				return "Enable this option so that Kurozora is locked whenever you close it. You'll be asked to authenticate through your device's passcode when you reopen the app."
 			}

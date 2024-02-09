@@ -611,6 +611,12 @@ struct Trans {
 	static let touchIDPasscode: String = String(localized: "Touch ID & Passcode",
 												table: "Settings",
 												comment: "The string for the 'Touch ID & Passcode' settings option.")
+	/// The string for the 'Optic ID & Passcode' settings option.
+	///
+	/// - Tag: Trans-opticIDPasscode
+	static let opticIDPasscode: String = String(localized: "Optic ID & Passcode",
+												table: "Settings",
+												comment: "The string for the 'Optic ID & Passcode' settings option.")
 	/// The string for the 'Unlock Features' settings option.
 	///
 	/// - Tag: Trans-unlockfeatures
