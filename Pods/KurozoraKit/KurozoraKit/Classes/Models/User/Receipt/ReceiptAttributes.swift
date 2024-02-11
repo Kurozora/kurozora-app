@@ -10,5 +10,8 @@ extension Receipt {
 	public struct Attributes: Codable {
 		/// Whether the receipt is valid.
 		public let isValid: Bool
+
+		/// Whether the receipt needs to be refreshed.
+		public let needsRefresh: Bool
 	}
 }
