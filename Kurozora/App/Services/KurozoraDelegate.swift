@@ -272,6 +272,12 @@ class KurozoraDelegate {
 				guard let splitViewController = UIApplication.topSplitViewController else { return }
 				let tabBarController = splitViewController.viewController(for: .compact) as? UITabBarController
 				tabBarController?.selectedIndex = 4
+			} else {
+				DispatchQueue.main.async { [weak self] in
+					guard let self = self else { return }
+					let appDelegate = UIApplication.shared.delegate as? AppDelegate
+					appDelegate?.handleSearch(self)
+				}
 			}
 		}
 	}
