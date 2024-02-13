@@ -14,6 +14,11 @@ class UserSettings: UserDefaults {
 	static var shared: UserDefaults {
 		let combined = UserDefaults.standard
 		combined.addSuite(named: "group.settings.app.kurozora.anime")
+		combined.register(defaults: [
+			UserSettingsKey.startupSoundAllowed.rawValue: true,
+			UserSettingsKey.uiSoundsAllowed.rawValue: true,
+			UserSettingsKey.hapticsAllowed.rawValue: true
+		])
 		return combined
 	}
 
