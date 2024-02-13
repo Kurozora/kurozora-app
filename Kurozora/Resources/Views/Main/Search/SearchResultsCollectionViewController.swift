@@ -28,6 +28,9 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	/// The current scope of the search.
 	var currentScope: KKSearchScope = .kurozora
 
+	/// The current types of the search.
+	var currentTypes: [KKSearchType] = []
+
 	/// The search query that is performed.
 	var searachQuery: String = ""
 
@@ -93,6 +96,9 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	/// Whether to include a search controller in the navigation bar
 	var includesSearchBar = true
 
+	/// Whether the user was deep linked to this view
+	var isDeepLinked = false
+
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
 		didSet {
@@ -150,6 +156,15 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		// Update data source
 		self.configureDataSource()
 		self.updateDataSource()
+	}
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+
+		if self.isDeepLinked {
+			self.isDeepLinked = false
+			self.performSearch(with: self.searachQuery, in: self.currentScope, for: self.currentTypes, with: nil, next: nil)
+		}
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {

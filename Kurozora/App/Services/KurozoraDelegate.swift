@@ -224,6 +224,7 @@ class KurozoraDelegate {
 
 		guard let urlScheme = url.host?.removingPercentEncoding else { return }
 		guard let scheme: Scheme = Scheme(rawValue: urlScheme) else { return }
+		let parameters: [String: String] = url.queryParameters ?? [:]
 
 		switch scheme {
 		case .anime, .show:
@@ -273,10 +274,37 @@ class KurozoraDelegate {
 				let tabBarController = splitViewController.viewController(for: .compact) as? UITabBarController
 				tabBarController?.selectedIndex = 4
 			} else {
-				DispatchQueue.main.async { [weak self] in
-					guard let self = self else { return }
-					let appDelegate = UIApplication.shared.delegate as? AppDelegate
-					appDelegate?.handleSearch(self)
+				DispatchQueue.main.async {
+					guard let splitViewController = UIApplication.topViewController?.splitViewController else { return }
+					guard let navigationController = splitViewController.viewController(for: .primary) as? KNavigationController else { return }
+					guard let sidebarViewController = navigationController.topViewController as? SidebarViewController else { return }
+					let queryString = parameters["q"] ?? ""
+					let scopeString = Int(parameters["scope"] ?? "0")
+					let typeString = parameters["type"] ?? KKSearchType.shows.rawValue
+					let scope: KKSearchScope = if let scopeString = scopeString {
+						KKSearchScope(rawValue: scopeString) ?? .kurozora
+					} else {
+						.kurozora
+					}
+					let type: KKSearchType = KKSearchType(rawValue: typeString) ?? .shows
+
+					if parameters.isEmpty {
+						sidebarViewController.kSearchController.searchBar.textField?.becomeFirstResponder()
+					} else if !queryString.isEmpty {
+						sidebarViewController.searchResultsCollectionViewController.searachQuery = queryString
+						sidebarViewController.searchResultsCollectionViewController.currentScope = scope
+						sidebarViewController.searchResultsCollectionViewController.currentTypes = [type]
+						sidebarViewController.kSearchController.searchBar.textField?.text = queryString
+						sidebarViewController.kSearchController.searchBar.selectedScopeButtonIndex = scope.rawValue
+
+						if sidebarViewController.searchResultsCollectionViewController.dataSource == nil {
+							sidebarViewController.searchResultsCollectionViewController.isDeepLinked = true
+							sidebarViewController.kSearchController.searchBar.textField?.resignFirstResponder()
+							sidebarViewController.kSearchController.searchBar.textField?.resignFirstResponder()
+						} else {
+							sidebarViewController.searchResultsCollectionViewController.performSearch(with: queryString, in: scope, for: [type], with: nil, next: nil, resettingResults: true)
+						}
+					}
 				}
 			}
 		}
