@@ -602,7 +602,7 @@ class ProfileTableViewController: KTableViewController {
 
 		Task {
 			do {
-				let profileUpdateRequest = ProfileUpdateRequest(username: nil, nickname: nil, biography: biography, profileImage: profileImageURL, bannerImage: bannerImageURL)
+				let profileUpdateRequest = ProfileUpdateRequest(username: nil, nickname: nil, biography: biography, profileImage: profileImageURL, bannerImage: bannerImageURL, preferredLanguage: nil, preferredTVRating: nil, preferredTimezone: nil)
 
 				// Perform update request.
 				let userUpdateResponse = try await KService.updateInformation(profileUpdateRequest).value

@@ -122,7 +122,7 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 
 			Task {
 				do {
-					let profileUpdateRequest = ProfileUpdateRequest(username: nil, nickname: username, biography: nil, profileImage: profileImageURL, bannerImage: nil)
+					let profileUpdateRequest = ProfileUpdateRequest(username: nil, nickname: username, biography: nil, profileImage: profileImageURL, bannerImage: nil, preferredLanguage: nil, preferredTVRating: nil, preferredTimezone: nil)
 
 					// Perform information update request.
 					let userUpdateResponse = try await KService.updateInformation(profileUpdateRequest).value
