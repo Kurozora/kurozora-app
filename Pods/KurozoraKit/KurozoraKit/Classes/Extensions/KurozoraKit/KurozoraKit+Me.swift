@@ -63,6 +63,8 @@ extension KurozoraKit {
 			.accept("application/json"),
 			.authorization(bearerToken: self.authenticationKey)
 		]
+
+		// Prepare parameters
 		var parameters: [String: Any] = [:]
 
 		if let username = profileUpdateRequest.username {
@@ -79,6 +81,15 @@ extension KurozoraKit {
 		}
 		if profileUpdateRequest.bannerImage == nil {
 			parameters["bannerImage"] = "null"
+		}
+		if let preferredLanguage = profileUpdateRequest.preferredLanguage {
+			parameters["preferredLanguage"] = preferredLanguage
+		}
+		if let preferredTVRating = profileUpdateRequest.preferredTVRating {
+			parameters["preferredTVRating"] = preferredTVRating
+		}
+		if let preferredTimezone = profileUpdateRequest.preferredTimezone {
+			parameters["preferredTimezone"] = preferredTimezone
 		}
 
 		// Prepare request

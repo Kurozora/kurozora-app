@@ -79,11 +79,14 @@ extension User {
 		/// The reputation count of the user.
 		public let reputationCount: Int
 
-		/// The user's preferred language.
+		/// The preferred language of the user.
 		public let preferredLanguage: String?
 
-		/// The user's preferred TV rating.
+		/// The preferred TV rating of the user.
 		public let preferredTVRating: Int?
+
+		/// The preferred timezone of the user.
+		public let preferredTimezone: String?
 
 		/// Whether the user can change their username.
 		public let canChangeUsername: Bool?

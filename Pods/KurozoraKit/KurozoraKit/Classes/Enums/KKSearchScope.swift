@@ -13,7 +13,7 @@
 /// - Tag: KKSearchScope
 public enum KKSearchScope: Int, CaseIterable {
 	// MARK: - Cases
-	/// Searches in the Kurozora kurozora.
+	/// Searches in the Kurozora catalog.
 	///
 	/// - Tag: KKSearchScope-kurozora
 	case kurozora = 0
