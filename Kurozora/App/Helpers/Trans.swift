@@ -545,6 +545,18 @@ struct Trans {
 										   comment: "The string for 'this device'.")
 
 	// MARK: - Settings
+	/// The title string or the 'Notification Grouping' settings.
+	///
+	/// - Tag: Trans-notificationGrouping
+	static let notificationGrouping: String = String(localized: "Notification Grouping",
+													 table: "Settings",
+													 comment: "The title string or the 'Notification Grouping' settings.")
+	/// The title string or the 'Timezone' settings.
+	///
+	/// - Tag: Trans-timezone
+	static let timezone: String = String(localized: "Timezone",
+										 table: "Settings",
+										 comment: "The title string or the 'Timezone' settings.")
 	/// The headline string for the account settings option.
 	///
 	/// - Tag: Trans-accountHeadline
