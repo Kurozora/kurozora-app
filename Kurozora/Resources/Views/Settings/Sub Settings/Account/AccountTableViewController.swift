@@ -25,6 +25,8 @@ class AccountTableViewController: SubSettingsViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		self.title = "Kurozora ID"
+
 		self.configureUserDetails()
 	}
 
