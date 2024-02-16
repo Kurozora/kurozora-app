@@ -71,7 +71,7 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 		// Confgiure type button
 		self.typeButton.isHidden = false
 		self.typeButton.layerCornerRadius = 12.0
-		self.typeButton.titleLabel?.font = .systemFont(ofSize: self.typeButton.titleLabel?.font.pointSize ?? 18, weight: .semibold)
+		self.typeButton.titleLabel?.font = .systemFont(ofSize: 12.0, weight: .semibold)
 		self.typeButton.setTitle("\(showSong.attributes.type.abbreviatedStringValue) #\(showSong.attributes.position)", for: .normal)
 		self.typeButton.backgroundColor = showSong.attributes.type.backgroundColorValue
 		self.typeButton.setTitleColor(.white, for: .normal)
