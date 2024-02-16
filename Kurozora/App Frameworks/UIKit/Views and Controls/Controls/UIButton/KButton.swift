@@ -86,6 +86,7 @@ class KButton: UIButton {
 		if UserSettings.hapticsAllowed {
 			self.selectionFeedbackGenerator.selectionChanged()
 		}
+
 		animator.startAnimation()
 	}
 }
