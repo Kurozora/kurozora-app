@@ -224,7 +224,7 @@
 		66500D08295FC82F0098D59D /* PurchaseButtonCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66500D07295FC82F0098D59D /* PurchaseButtonCollectionViewCell.xib */; };
 		66500D0A295FCB990098D59D /* PurchaseFeatureCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66500D09295FCB990098D59D /* PurchaseFeatureCollectionViewCell.swift */; };
 		66500D0C295FCC520098D59D /* PurchaseFeatureCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66500D0B295FCC510098D59D /* PurchaseFeatureCollectionViewCell.xib */; };
-		66500D0F295FCE2E0098D59D /* SubscriptionFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66500D0E295FCE2E0098D59D /* SubscriptionFeature.swift */; };
+		66500D0F295FCE2E0098D59D /* ProductFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66500D0E295FCE2E0098D59D /* ProductFeature.swift */; };
 		66500D11295FD4B30098D59D /* PurchaseHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66500D10295FD4B20098D59D /* PurchaseHeaderCollectionViewCell.swift */; };
 		66500D13295FD5180098D59D /* PurchaseHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66500D12295FD5180098D59D /* PurchaseHeaderCollectionViewCell.xib */; };
 		66500D1629605E840098D59D /* SubscriptionCollectionViewController+KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66500D1529605E840098D59D /* SubscriptionCollectionViewController+KCollectionViewDataSource.swift */; };
@@ -920,7 +920,7 @@
 		66500D07295FC82F0098D59D /* PurchaseButtonCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PurchaseButtonCollectionViewCell.xib; sourceTree = "<group>"; };
 		66500D09295FCB990098D59D /* PurchaseFeatureCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseFeatureCollectionViewCell.swift; sourceTree = "<group>"; };
 		66500D0B295FCC510098D59D /* PurchaseFeatureCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PurchaseFeatureCollectionViewCell.xib; sourceTree = "<group>"; };
-		66500D0E295FCE2E0098D59D /* SubscriptionFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionFeature.swift; sourceTree = "<group>"; };
+		66500D0E295FCE2E0098D59D /* ProductFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductFeature.swift; sourceTree = "<group>"; };
 		66500D10295FD4B20098D59D /* PurchaseHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
 		66500D12295FD5180098D59D /* PurchaseHeaderCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PurchaseHeaderCollectionViewCell.xib; sourceTree = "<group>"; };
 		66500D1529605E840098D59D /* SubscriptionCollectionViewController+KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SubscriptionCollectionViewController+KCollectionViewDataSource.swift"; sourceTree = "<group>"; };
@@ -2066,7 +2066,7 @@
 		66500D0D295FCE220098D59D /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				66500D0E295FCE2E0098D59D /* SubscriptionFeature.swift */,
+				66500D0E295FCE2E0098D59D /* ProductFeature.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -4255,7 +4255,7 @@
 				6699A1C323779E9B00517C2C /* LibraryListCollectionViewCell.swift in Sources */,
 				6617C82C2A0FE0830091EFAC /* SearchResults.swift in Sources */,
 				66CFE5C9282FDACE00E3B2DF /* SkeletonDisplayable.swift in Sources */,
-				66500D0F295FCE2E0098D59D /* SubscriptionFeature.swift in Sources */,
+				66500D0F295FCE2E0098D59D /* ProductFeature.swift in Sources */,
 				6640E19B22AE808C00D0F575 /* AuthenticationOptionsViewController.swift in Sources */,
 				661DBC4F234947D7009292DF /* SKProduct+Kurozora.swift in Sources */,
 				66DF090E26C673D0005AED93 /* NotificationKind.swift in Sources */,
@@ -4821,7 +4821,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon Staging";
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Kurozora/Kurozora.entitlements;
-				CURRENT_PROJECT_VERSION = 1221;
+				CURRENT_PROJECT_VERSION = 1222;
 				DEVELOPMENT_ASSET_PATHS = "Kurozora/Supporting\\ Files\\ Dev";
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				INFOPLIST_FILE = "Kurozora/Supporting Files/Info.plist";
@@ -4831,7 +4831,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.5.1;
+				MARKETING_VERSION = 1.5.2;
 				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.tracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
@@ -4848,7 +4848,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Kurozora/Kurozora.entitlements;
-				CURRENT_PROJECT_VERSION = 1221;
+				CURRENT_PROJECT_VERSION = 1222;
 				DEVELOPMENT_ASSET_PATHS = "Kurozora/Supporting\\ Files\\ Dev";
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				INFOPLIST_FILE = "Kurozora/Supporting Files/Info.plist";
@@ -4858,7 +4858,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.5.1;
+				MARKETING_VERSION = 1.5.2;
 				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.tracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;

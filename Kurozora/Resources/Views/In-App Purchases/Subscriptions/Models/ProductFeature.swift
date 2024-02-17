@@ -1,5 +1,5 @@
 //
-//  SubscriptionFeature.swift
+//  ProductFeature.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 31/12/2022.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct SubscriptionFeature {
+struct ProductFeature {
 	let title: String
 	let description: String?
 	let image: UIImage?

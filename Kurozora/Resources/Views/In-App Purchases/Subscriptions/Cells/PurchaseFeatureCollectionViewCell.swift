@@ -16,11 +16,11 @@ class PurchaseFeatureCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
-	func configureCell(using subscriptionFeature: SubscriptionFeature) {
+	func configureCell(using productFeature: ProductFeature) {
 		self.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 
-		self.primaryLabel.text = subscriptionFeature.title
-		self.secondaryLabel.text = subscriptionFeature.description
-		self.productImageView.image = subscriptionFeature.image
+		self.primaryLabel.text = productFeature.title
+		self.secondaryLabel.text = productFeature.description
+		self.productImageView.image = productFeature.image
 	}
 }

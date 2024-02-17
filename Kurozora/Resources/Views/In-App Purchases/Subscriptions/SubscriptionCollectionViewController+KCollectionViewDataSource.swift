@@ -64,8 +64,8 @@ extension SubscriptionCollectionViewController {
 			case .features:
 				let purchaseFeatureCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.purchaseFeatureCollectionViewCell, for: indexPath)
 				switch itemKind {
-				case .subscriptionFeature(let subscriptionFeature, _):
-					purchaseFeatureCollectionViewCell?.configureCell(using: subscriptionFeature)
+				case .productFeature(let productFeature, _):
+					purchaseFeatureCollectionViewCell?.configureCell(using: productFeature)
 				default:
 					break
 				}
@@ -105,8 +105,8 @@ extension SubscriptionCollectionViewController {
 				self.snapshot.appendSections([sectionLayoutKind])
 				self.snapshot.appendItems(itemKinds, toSection: sectionLayoutKind)
 			case .features:
-				let itemKinds: [ItemKind] = self.subscriptionFeatures.map { subscriptionFeature in
-					return .subscriptionFeature(subscriptionFeature)
+				let itemKinds: [ItemKind] = self.productFeatures.map { productFeature in
+					return .productFeature(productFeature)
 				}
 				self.snapshot.appendSections([sectionLayoutKind])
 				self.snapshot.appendItems(itemKinds, toSection: sectionLayoutKind)

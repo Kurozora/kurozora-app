@@ -23,13 +23,14 @@ class SubscriptionCollectionViewController: KCollectionViewController {
 	}
 	var currentSubscription: Product?
 	var status: Product.SubscriptionInfo.Status?
-	var subscriptionFeatures: [SubscriptionFeature] = [
-		SubscriptionFeature(title: "Unified Anime Linking", description: "Seamlessly transition from other services to Kurozora. Add 'kurozora.app' to any URL and let us bring all your anime data in one place.", image: R.image.promotional.inAppPurchases.unifiedAnimeLinking()),
-		SubscriptionFeature(title: "Calendar Integration", description: "Integrate your anime schedule into your calendar. Never miss an episode again with reminders for new airings.", image: R.image.promotional.inAppPurchases.reminders()),
-		SubscriptionFeature(title: "Dynamic Themes", description: "Choose from a range of themes to create a look that reflects your personality and style.", image: R.image.promotional.inAppPurchases.themes()),
-		SubscriptionFeature(title: "Stylish App Icons", description: "Make your home screen stand out with premium and limited time app icons.", image: R.image.promotional.inAppPurchases.icons()),
-		SubscriptionFeature(title: "Get Animated!", description: "Upgrade your profile with a gif image that captures your unique style.", image: R.image.promotional.inAppPurchases.gifs()),
-		SubscriptionFeature(title: "Support the Community!", description: "Your contribution helps with maintaining the servers, paying for software licenses, and fund events and activities.", image: R.image.promotional.inAppPurchases.support())
+	var productFeatures: [ProductFeature] = [
+		ProductFeature(title: "Unified Anime Linking", description: "Seamlessly transition from other services to Kurozora. Add 'kurozora.app' to any URL and let us bring all your anime data in one place.", image: R.image.promotional.inAppPurchases.unifiedAnimeLinking()),
+		ProductFeature(title: "Calendar Integration", description: "Integrate your anime schedule into your calendar. Never miss an episode again with reminders for new airings.", image: R.image.promotional.inAppPurchases.reminders()),
+		ProductFeature(title: "Dynamic Themes", description: "Choose from a range of themes to create a look that reflects your personality and style.", image: R.image.promotional.inAppPurchases.themes()),
+		ProductFeature(title: "Stylish App Icons", description: "Make your home screen stand out with premium and limited time app icons.", image: R.image.promotional.inAppPurchases.icons()),
+		ProductFeature(title: "Startup Chimes", description: "Immerse yourself in the world of anime from the very start with serene chimes and iconic anime sounds.", image: R.image.promotional.inAppPurchases.chimes()),
+		ProductFeature(title: "Get Animated!", description: "Upgrade your profile with a gif image that captures your unique style.", image: R.image.promotional.inAppPurchases.gifs()),
+		ProductFeature(title: "Support the Community!", description: "Your contribution helps with maintaining the servers, paying for software licenses, and fund events and activities.", image: R.image.promotional.inAppPurchases.support())
 	]
 	var serviceType: ServiceType = .subscription
 
@@ -230,7 +231,7 @@ extension SubscriptionCollectionViewController {
 
 	enum ItemKind: Hashable {
 		case product(Product, id: UUID = UUID())
-		case subscriptionFeature(SubscriptionFeature, id: UUID = UUID())
+		case productFeature(ProductFeature, id: UUID = UUID())
 		case other(id: UUID = UUID())
 
 		// MARK: - Functions
@@ -239,8 +240,8 @@ extension SubscriptionCollectionViewController {
 			case .product(let product, let id):
 				hasher.combine(product)
 				hasher.combine(id)
-			case .subscriptionFeature(let subscriptionFeature, let id):
-				hasher.combine(subscriptionFeature.title)
+			case .productFeature(let productFeature, let id):
+				hasher.combine(productFeature.title)
 				hasher.combine(id)
 			case .other(let id):
 				hasher.combine(id)
@@ -251,8 +252,8 @@ extension SubscriptionCollectionViewController {
 			switch (lhs, rhs) {
 			case (.product(let product1, let id1), .product(let product2, let id2)):
 				return product1 == product2 && id1 == id2
-			case (.subscriptionFeature(let subscriptionFeature1, let id1), .subscriptionFeature(let subscriptionFeature2, let id2)):
-				return subscriptionFeature1.title == subscriptionFeature2.title && id1 == id2
+			case (.productFeature(let productFeature1, let id1), .productFeature(let productFeature2, let id2)):
+				return productFeature1.title == productFeature2.title && id1 == id2
 			case (.other(let id1), .other(let id2)):
 				return id1 == id2
 			default:
