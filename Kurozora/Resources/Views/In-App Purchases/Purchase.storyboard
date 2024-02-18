@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="kAW-tw-WcP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="kAW-tw-WcP">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -72,7 +72,7 @@
         <!--Tip Jar-->
         <scene sceneID="jhX-x0-PCR">
             <objects>
-                <tableViewController storyboardIdentifier="TipJarTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="GcJ-vL-WDl" customClass="TipJarTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="GcJ-vL-WDl" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="SLF-ZW-byi">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -93,11 +93,11 @@
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6lv-DP-NZ5" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                                             <rect key="frame" x="8" y="28.5" width="358" height="328.5"/>
-                                            <mutableString key="text">The Kurozora app is built by a small team—me and my little sister! We may be small, but we're mighty, and we pour our hearts into making this app as useful and delightful as possible.
+                                            <string key="text">The Kurozora app is built by a small team—me and my little sister! We may be small, but we're mighty, and we pour our hearts into making this app as useful and delightful as possible.
 
 We rely on your support to develop Kurozora. If you find it to be useful to you, please consider supporting us by leaving a tip in the Kurozora Tip Jar. We would like to keep working on and improving Kurozora, so any amount is incredibly appreciated. Please know that even if you don't tip we're still grateful that you use this app.
 
-Any amount unlocks Pro 🚀</mutableString>
+Any amount unlocks Pro 🚀</string>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -214,14 +214,49 @@ Any amount unlocks Pro 🚀</mutableString>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BKK-sW-NaO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1176.8115942028987" y="814.95535714285711"/>
+            <point key="canvasLocation" x="1177" y="1519"/>
+        </scene>
+        <!--Tip Jar-->
+        <scene sceneID="ZQn-6Q-7Jn">
+            <objects>
+                <collectionViewController storyboardIdentifier="TipJarCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="DiU-yK-BPF" customClass="TipJarCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="CiN-ew-Sg6">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="bic-7Q-1zR">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells/>
+                        <connections>
+                            <outlet property="dataSource" destination="DiU-yK-BPF" id="GM9-rP-nyG"/>
+                            <outlet property="delegate" destination="DiU-yK-BPF" id="lV4-yh-fr9"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="Tip Jar" id="P80-F5-8P1">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="805-Qo-k4x">
+                            <connections>
+                                <action selector="cancelButtonPressed:" destination="DiU-yK-BPF" id="5Xp-0U-KcG"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="leftNavigationBarButton" destination="805-Qo-k4x" id="5xv-bQ-duK"/>
+                    </connections>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bgp-Ia-yLh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1177" y="860"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="2RZ-lP-i5r">
+        <scene sceneID="VXo-ZK-Eqf">
             <objects>
-                <navigationController storyboardIdentifier="TipJarKNavigationController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="3Je-1X-zCm" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="TipJarKNavigationController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="72p-7I-ZOc" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="Z3H-9K-I0M">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="eAV-va-oFX">
                         <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -234,12 +269,12 @@ Any amount unlocks Pro 🚀</mutableString>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="GcJ-vL-WDl" kind="relationship" relationship="rootViewController" id="Xm2-0u-6QO"/>
+                        <segue destination="DiU-yK-BPF" kind="relationship" relationship="rootViewController" id="xZD-aS-9Ca"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="XvB-nv-qNc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CGz-JN-UCb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="396" y="815"/>
+            <point key="canvasLocation" x="396" y="860"/>
         </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

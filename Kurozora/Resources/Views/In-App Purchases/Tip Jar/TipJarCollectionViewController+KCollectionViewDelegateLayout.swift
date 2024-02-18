@@ -1,5 +1,5 @@
 //
-//  SubscriptionCollectionViewController+KCollectionViewDelegateLayout.swift
+//  TipJarCollectionViewController+KCollectionViewDelegateLayout.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 31/12/2022.
@@ -8,12 +8,12 @@
 
 import UIKit
 
-extension SubscriptionCollectionViewController {
+extension TipJarCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
 
 		switch self.snapshot.sectionIdentifiers[section] {
-		case .header, .currentSubscription, .subscriptions, .footer:
+		case .header, .products, .footer:
 			return 1
 		case .features:
 			let columnCount = (width / 374).rounded().int
@@ -33,10 +33,7 @@ extension SubscriptionCollectionViewController {
 			case .header:
 				let fullSection = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				sectionLayout = fullSection
-			case .currentSubscription:
-				let fullSection = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
-				sectionLayout = fullSection
-			case .subscriptions:
+			case .products:
 				let fullSection = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				sectionLayout = fullSection
 			case .features:

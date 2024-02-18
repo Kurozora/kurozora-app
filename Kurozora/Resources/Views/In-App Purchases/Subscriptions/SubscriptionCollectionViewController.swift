@@ -87,7 +87,7 @@ class SubscriptionCollectionViewController: KCollectionViewController {
 		// Configure data source
 		self.configureDataSource()
 
-		// Warn the user if they are not allowed to make purchases.
+		// Dismiss the view if the user is not allowed to make purchases.
 		if !AppStore.canMakePayments {
 			self.dismiss(animated: true)
 		} else {
@@ -213,19 +213,19 @@ extension SubscriptionCollectionViewController {
 	/// Set of available subscription table view sections.
 	enum SectionLayoutKind: Int, CaseIterable {
 		// MARK: - Cases
-		/// The heder section of the table view.
+		/// The header section of the collection view.
 		case header
 
-		/// The current supscription section of the table view
+		/// The current subscription section of the table view
 		case currentSubscription
 
-		/// The subscriptions section of the table view.
+		/// The subscriptions section of the collection view.
 		case subscriptions
 
-		/// The heder section of the table view.
+		/// The features section of the collection view.
 		case features
 
-		/// The heder section of the table view.
+		/// The footer section of the collection view.
 		case footer
 	}
 

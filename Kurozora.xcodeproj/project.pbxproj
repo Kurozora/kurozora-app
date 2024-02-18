@@ -498,6 +498,8 @@
 		66CAE6872337CFC800991E59 /* OnboardingBaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CAE6862337CFC800991E59 /* OnboardingBaseTableViewCell.swift */; };
 		66CAE6892337D04C00991E59 /* OnboardingOptionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CAE6882337D04C00991E59 /* OnboardingOptionsTableViewCell.swift */; };
 		66CAE68D2337D0FF00991E59 /* AccountOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CAE68C2337D0FF00991E59 /* AccountOnboarding.swift */; };
+		66CB5D262B8169140028A2AC /* TipJarCollectionViewController+KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CB5D252B8169140028A2AC /* TipJarCollectionViewController+KCollectionViewDataSource.swift */; };
+		66CB5D282B8178E80028A2AC /* TipJarCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CB5D272B8178E70028A2AC /* TipJarCollectionViewController+KCollectionViewDelegateLayout.swift */; };
 		66CB8D4E24F83ECD0047A2CF /* PostImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66CB8D4D24F83ECD0047A2CF /* PostImageCell.xib */; };
 		66CB8D5024F83F2D0047A2CF /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CB8D4F24F83F2D0047A2CF /* PostCell.swift */; };
 		66CB8D5224F83FE00047A2CF /* FeedMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66CB8D5124F83FE00047A2CF /* FeedMessageCell.xib */; };
@@ -1190,6 +1192,8 @@
 		66CAE6862337CFC800991E59 /* OnboardingBaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingBaseTableViewCell.swift; sourceTree = "<group>"; };
 		66CAE6882337D04C00991E59 /* OnboardingOptionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingOptionsTableViewCell.swift; sourceTree = "<group>"; };
 		66CAE68C2337D0FF00991E59 /* AccountOnboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountOnboarding.swift; sourceTree = "<group>"; };
+		66CB5D252B8169140028A2AC /* TipJarCollectionViewController+KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TipJarCollectionViewController+KCollectionViewDataSource.swift"; sourceTree = "<group>"; };
+		66CB5D272B8178E70028A2AC /* TipJarCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TipJarCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
 		66CB8D4D24F83ECD0047A2CF /* PostImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostImageCell.xib; sourceTree = "<group>"; };
 		66CB8D4F24F83F2D0047A2CF /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		66CB8D5124F83FE00047A2CF /* FeedMessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedMessageCell.xib; sourceTree = "<group>"; };
@@ -2075,6 +2079,8 @@
 			isa = PBXGroup;
 			children = (
 				661DBC50234A4E00009292DF /* TipJarTableViewController.swift */,
+				66CB5D252B8169140028A2AC /* TipJarCollectionViewController+KCollectionViewDataSource.swift */,
+				66CB5D272B8178E70028A2AC /* TipJarCollectionViewController+KCollectionViewDelegateLayout.swift */,
 				66CDC088234A8278009E799C /* Cells */,
 			);
 			path = "Tip Jar";
@@ -4342,6 +4348,7 @@
 				6601F1AC2118488D0074C1DD /* IconNotificationCell.swift in Sources */,
 				6617C8272A08710B0091EFAC /* Month.swift in Sources */,
 				669E0359256B218900CEB794 /* Session+UIKit.swift in Sources */,
+				66CB5D282B8178E80028A2AC /* TipJarCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				6609FAD721D8D237008DF5E4 /* KurozoraDelegate.swift in Sources */,
 				666C898229FD4BB00075B5D6 /* SeasonOfYear.swift in Sources */,
 				66D1358D228087920079438C /* KButton.swift in Sources */,
@@ -4559,6 +4566,7 @@
 				662F117B24E5EEB40000375A /* StudioLogoImageView.swift in Sources */,
 				66B4F1DB223D2CA5007C5048 /* SearchBaseResultsCell.swift in Sources */,
 				661937892A6EEB8E00447084 /* ReviewTextEditorWorker.swift in Sources */,
+				66CB5D262B8169140028A2AC /* TipJarCollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				662F118224E60F1C0000375A /* SeasonAttributes+UIImage.swift in Sources */,
 				669C8D582107B8170014EB7A /* BasicTabBarItemContentView.swift in Sources */,
 				66CE8107246088DA00DB0C49 /* ServiceTableViewController.swift in Sources */,
