@@ -10,7 +10,7 @@ import UIKit
 import MobileCoreServices
 import UniformTypeIdentifiers
 
-class LibraryImportActionTableViewCell: ProductActionTableViewCell {
+class LibraryImportActionTableViewCell: ActionButtonTableViewCell {
 	// MARK: - Functions
 	override func actionButtonPressed(_ sender: UIButton) {
 		let documentPicker: UIDocumentPickerViewController

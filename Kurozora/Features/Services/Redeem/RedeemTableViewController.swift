@@ -130,17 +130,17 @@ extension RedeemTableViewController {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		switch Section(rawValue: indexPath.section) {
 		case .body:
-			guard let productActionTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.productActionTableViewCell, for: indexPath) else {
-				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.productActionTableViewCell.identifier)")
+			guard let actionButtonTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.actionButtonTableViewCell, for: indexPath) else {
+				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.actionButtonTableViewCell.identifier)")
 			}
-			productActionTableViewCell.delegate = self
-			productActionTableViewCell.actionTextField.tag = indexPath.row
-			productActionTableViewCell.actionTextField.delegate = self
-			productActionTableViewCell.actionTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
-			productActionTableViewCell.actionTextField.placeholder = "Or enter your code manually"
-			productActionTableViewCell.actionButton.isHidden = false
-			textFieldArray.append(productActionTableViewCell.actionTextField)
-			return productActionTableViewCell
+			actionButtonTableViewCell.delegate = self
+			actionButtonTableViewCell.actionTextField.tag = indexPath.row
+			actionButtonTableViewCell.actionTextField.delegate = self
+			actionButtonTableViewCell.actionTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+			actionButtonTableViewCell.actionTextField.placeholder = "Or enter your code manually"
+			actionButtonTableViewCell.actionButton.isHidden = false
+			self.textFieldArray.append(actionButtonTableViewCell.actionTextField)
+			return actionButtonTableViewCell
 		default:
 			return super.tableView(tableView, cellForRowAt: indexPath)
 		}
@@ -182,9 +182,9 @@ extension RedeemTableViewController: UITextFieldDelegate {
 	}
 }
 
-// MARK: - ProductActionTableViewCellDelegate
-extension RedeemTableViewController: ProductActionTableViewCellDelegate {
-	func productActionTableViewCell(_ cell: ProductActionTableViewCell, didPressButton button: UIButton) {
+// MARK: - ActionButtonTableViewCellDelegate
+extension RedeemTableViewController: ActionButtonTableViewCellDelegate {
+	func actionButtonTableViewCell(_ cell: ActionButtonTableViewCell, didPressButton button: UIButton) {
 		if VNDocumentCameraViewController.isSupported {
 			let documentCameraViewController = VNDocumentCameraViewController()
 			documentCameraViewController.delegate = self

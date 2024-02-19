@@ -67,7 +67,7 @@ class SettingsTableViewController: KTableViewController {
 			(kNavigationController?.viewControllers.first as? SubscriptionCollectionViewController)?.leftNavigationBarButtonIsHidden = true
 		case R.segue.settingsTableViewController.tipJarSegue.identifier:
 			let kNavigationController = segue.destination as? KNavigationController
-			(kNavigationController?.viewControllers.first as? TipJarTableViewController)?.leftNavigationBarButtonIsHidden = true
+			(kNavigationController?.viewControllers.first as? TipJarCollectionViewController)?.leftNavigationBarButtonIsHidden = true
 		default: break
 		}
 	}
