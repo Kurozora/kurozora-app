@@ -209,6 +209,8 @@
 		664C1B932B69B3A1007B7C23 /* RecapLockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661981622B69AC4A0078CE32 /* RecapLockupCollectionViewCell.swift */; };
 		664C1B942B69B3A4007B7C23 /* RecapLockupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 661981642B69ADDE0078CE32 /* RecapLockupCollectionViewCell.xib */; };
 		664D09BD25EAEF1300BA8640 /* EpisodeDetailsCollectionViewController+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664D09BC25EAEF1300BA8640 /* EpisodeDetailsCollectionViewController+UICollectionViewDelegate.swift */; };
+		664D0F542B841B2F00CF5E91 /* App Languages.plist in Resources */ = {isa = PBXBuildFile; fileRef = 664D0F532B841B2E00CF5E91 /* App Languages.plist */; };
+		664D0F562B84226B00CF5E91 /* App Timezones.plist in Resources */ = {isa = PBXBuildFile; fileRef = 664D0F552B84226B00CF5E91 /* App Timezones.plist */; };
 		664E2CDF289B37140002F886 /* IconNotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 664E2CDE289B37140002F886 /* IconNotificationCell.xib */; };
 		664E2CE1289B37E00002F886 /* BasicNotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 664E2CE0289B37E00002F886 /* BasicNotificationCell.xib */; };
 		664E2CE3289B39180002F886 /* BaseNotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 664E2CE2289B39180002F886 /* BaseNotificationCell.xib */; };
@@ -903,6 +905,8 @@
 		664B6D79230F469900F9C726 /* AppAppearanceOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAppearanceOption.swift; sourceTree = "<group>"; };
 		664B6D7D230F5AA300F9C726 /* UITableView+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Kurozora.swift"; sourceTree = "<group>"; };
 		664D09BC25EAEF1300BA8640 /* EpisodeDetailsCollectionViewController+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EpisodeDetailsCollectionViewController+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
+		664D0F532B841B2E00CF5E91 /* App Languages.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "App Languages.plist"; sourceTree = "<group>"; };
+		664D0F552B84226B00CF5E91 /* App Timezones.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "App Timezones.plist"; sourceTree = "<group>"; };
 		664E2CDE289B37140002F886 /* IconNotificationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IconNotificationCell.xib; sourceTree = "<group>"; };
 		664E2CE0289B37E00002F886 /* BasicNotificationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BasicNotificationCell.xib; sourceTree = "<group>"; };
 		664E2CE2289B39180002F886 /* BaseNotificationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BaseNotificationCell.xib; sourceTree = "<group>"; };
@@ -3473,8 +3477,10 @@
 			children = (
 				66A4FD11270F62D300E7C702 /* Settings.bundle */,
 				66A4FD0F270F62D300E7C702 /* Intents.intentdefinition */,
-				66A4FD18270F6CD100E7C702 /* App Icons.plist */,
 				664700462B48B1F1002EFD5C /* App Chimes.plist */,
+				66A4FD18270F6CD100E7C702 /* App Icons.plist */,
+				664D0F532B841B2E00CF5E91 /* App Languages.plist */,
+				664D0F552B84226B00CF5E91 /* App Timezones.plist */,
 				66A4FD10270F62D300E7C702 /* Info.plist */,
 				66A4FD12270F62D300E7C702 /* Products.plist */,
 				66EDBA6B2946943700FF1A2E /* Launch Background.png */,
@@ -3872,6 +3878,7 @@
 				66FA97EA281F07AE0054FC2E /* BannerLockupCollectionViewCell.xib in Resources */,
 				66AE01242593D4E200308636 /* Achievement.storyboard in Resources */,
 				66F27EC0283A805800CC2277 /* SearchSuggestionResultCell.xib in Resources */,
+				664D0F542B841B2F00CF5E91 /* App Languages.plist in Resources */,
 				66C5797B22A86435001B8F51 /* DebugSettings.storyboard in Resources */,
 				66500D0C295FCC520098D59D /* PurchaseFeatureCollectionViewCell.xib in Resources */,
 				66AE1E0D24A0C42600FD3FFC /* Studios.storyboard in Resources */,
@@ -3943,6 +3950,7 @@
 				661F186024AB5C6F00542AFB /* SosumiCollectionViewCell.xib in Resources */,
 				665A457F24660D9500154F41 /* RatingCollectionViewCell.xib in Resources */,
 				6675E2052B48366B0050F98C /* upupupu.m4a in Resources */,
+				664D0F562B84226B00CF5E91 /* App Timezones.plist in Resources */,
 				666004A929E49CFA00871801 /* ActionLinkExploreCollectionViewCell.xib in Resources */,
 				6619377E2A6ED83700447084 /* WriteAReviewCollectionViewCell.xib in Resources */,
 				669A36BF24F1BFD60045D04A /* OnboardingHeaderTableViewCell.xib in Resources */,

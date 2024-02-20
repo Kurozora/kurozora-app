@@ -1,0 +1,844 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Africa/Abidjan</key>
+    <string>Africa/Abidjan (UTC +00:00)</string>
+    <key>Africa/Accra</key>
+    <string>Africa/Accra (UTC +00:00)</string>
+    <key>Africa/Addis_Ababa</key>
+    <string>Africa/Addis_Ababa (UTC +03:00)</string>
+    <key>Africa/Algiers</key>
+    <string>Africa/Algiers (UTC +01:00)</string>
+    <key>Africa/Asmara</key>
+    <string>Africa/Asmara (UTC +03:00)</string>
+    <key>Africa/Bamako</key>
+    <string>Africa/Bamako (UTC +00:00)</string>
+    <key>Africa/Bangui</key>
+    <string>Africa/Bangui (UTC +01:00)</string>
+    <key>Africa/Banjul</key>
+    <string>Africa/Banjul (UTC +00:00)</string>
+    <key>Africa/Bissau</key>
+    <string>Africa/Bissau (UTC +00:00)</string>
+    <key>Africa/Blantyre</key>
+    <string>Africa/Blantyre (UTC +02:00)</string>
+    <key>Africa/Brazzaville</key>
+    <string>Africa/Brazzaville (UTC +01:00)</string>
+    <key>Africa/Bujumbura</key>
+    <string>Africa/Bujumbura (UTC +02:00)</string>
+    <key>Africa/Cairo</key>
+    <string>Africa/Cairo (UTC +02:00)</string>
+    <key>Africa/Casablanca</key>
+    <string>Africa/Casablanca (UTC +01:00)</string>
+    <key>Africa/Ceuta</key>
+    <string>Africa/Ceuta (UTC +01:00)</string>
+    <key>Africa/Conakry</key>
+    <string>Africa/Conakry (UTC +00:00)</string>
+    <key>Africa/Dakar</key>
+    <string>Africa/Dakar (UTC +00:00)</string>
+    <key>Africa/Dar_es_Salaam</key>
+    <string>Africa/Dar_es_Salaam (UTC +03:00)</string>
+    <key>Africa/Djibouti</key>
+    <string>Africa/Djibouti (UTC +03:00)</string>
+    <key>Africa/Douala</key>
+    <string>Africa/Douala (UTC +01:00)</string>
+    <key>Africa/El_Aaiun</key>
+    <string>Africa/El_Aaiun (UTC +01:00)</string>
+    <key>Africa/Freetown</key>
+    <string>Africa/Freetown (UTC +00:00)</string>
+    <key>Africa/Gaborone</key>
+    <string>Africa/Gaborone (UTC +02:00)</string>
+    <key>Africa/Harare</key>
+    <string>Africa/Harare (UTC +02:00)</string>
+    <key>Africa/Johannesburg</key>
+    <string>Africa/Johannesburg (UTC +02:00)</string>
+    <key>Africa/Juba</key>
+    <string>Africa/Juba (UTC +02:00)</string>
+    <key>Africa/Kampala</key>
+    <string>Africa/Kampala (UTC +03:00)</string>
+    <key>Africa/Khartoum</key>
+    <string>Africa/Khartoum (UTC +02:00)</string>
+    <key>Africa/Kigali</key>
+    <string>Africa/Kigali (UTC +02:00)</string>
+    <key>Africa/Kinshasa</key>
+    <string>Africa/Kinshasa (UTC +01:00)</string>
+    <key>Africa/Lagos</key>
+    <string>Africa/Lagos (UTC +01:00)</string>
+    <key>Africa/Libreville</key>
+    <string>Africa/Libreville (UTC +01:00)</string>
+    <key>Africa/Lome</key>
+    <string>Africa/Lome (UTC +00:00)</string>
+    <key>Africa/Luanda</key>
+    <string>Africa/Luanda (UTC +01:00)</string>
+    <key>Africa/Lubumbashi</key>
+    <string>Africa/Lubumbashi (UTC +02:00)</string>
+    <key>Africa/Lusaka</key>
+    <string>Africa/Lusaka (UTC +02:00)</string>
+    <key>Africa/Malabo</key>
+    <string>Africa/Malabo (UTC +01:00)</string>
+    <key>Africa/Maputo</key>
+    <string>Africa/Maputo (UTC +02:00)</string>
+    <key>Africa/Maseru</key>
+    <string>Africa/Maseru (UTC +02:00)</string>
+    <key>Africa/Mbabane</key>
+    <string>Africa/Mbabane (UTC +02:00)</string>
+    <key>Africa/Mogadishu</key>
+    <string>Africa/Mogadishu (UTC +03:00)</string>
+    <key>Africa/Monrovia</key>
+    <string>Africa/Monrovia (UTC +00:00)</string>
+    <key>Africa/Nairobi</key>
+    <string>Africa/Nairobi (UTC +03:00)</string>
+    <key>Africa/Ndjamena</key>
+    <string>Africa/Ndjamena (UTC +01:00)</string>
+    <key>Africa/Niamey</key>
+    <string>Africa/Niamey (UTC +01:00)</string>
+    <key>Africa/Nouakchott</key>
+    <string>Africa/Nouakchott (UTC +00:00)</string>
+    <key>Africa/Ouagadougou</key>
+    <string>Africa/Ouagadougou (UTC +00:00)</string>
+    <key>Africa/Porto-Novo</key>
+    <string>Africa/Porto-Novo (UTC +01:00)</string>
+    <key>Africa/Sao_Tome</key>
+    <string>Africa/Sao_Tome (UTC +00:00)</string>
+    <key>Africa/Tripoli</key>
+    <string>Africa/Tripoli (UTC +02:00)</string>
+    <key>Africa/Tunis</key>
+    <string>Africa/Tunis (UTC +01:00)</string>
+    <key>Africa/Windhoek</key>
+    <string>Africa/Windhoek (UTC +02:00)</string>
+    <key>America/Adak</key>
+    <string>America/Adak (UTC -10:00)</string>
+    <key>America/Anchorage</key>
+    <string>America/Anchorage (UTC -09:00)</string>
+    <key>America/Anguilla</key>
+    <string>America/Anguilla (UTC -04:00)</string>
+    <key>America/Antigua</key>
+    <string>America/Antigua (UTC -04:00)</string>
+    <key>America/Araguaina</key>
+    <string>America/Araguaina (UTC -03:00)</string>
+    <key>America/Argentina/Buenos_Aires</key>
+    <string>America/Argentina/Buenos_Aires (UTC -03:00)</string>
+    <key>America/Argentina/Catamarca</key>
+    <string>America/Argentina/Catamarca (UTC -03:00)</string>
+    <key>America/Argentina/Cordoba</key>
+    <string>America/Argentina/Cordoba (UTC -03:00)</string>
+    <key>America/Argentina/Jujuy</key>
+    <string>America/Argentina/Jujuy (UTC -03:00)</string>
+    <key>America/Argentina/La_Rioja</key>
+    <string>America/Argentina/La_Rioja (UTC -03:00)</string>
+    <key>America/Argentina/Mendoza</key>
+    <string>America/Argentina/Mendoza (UTC -03:00)</string>
+    <key>America/Argentina/Rio_Gallegos</key>
+    <string>America/Argentina/Rio_Gallegos (UTC -03:00)</string>
+    <key>America/Argentina/Salta</key>
+    <string>America/Argentina/Salta (UTC -03:00)</string>
+    <key>America/Argentina/San_Juan</key>
+    <string>America/Argentina/San_Juan (UTC -03:00)</string>
+    <key>America/Argentina/San_Luis</key>
+    <string>America/Argentina/San_Luis (UTC -03:00)</string>
+    <key>America/Argentina/Tucuman</key>
+    <string>America/Argentina/Tucuman (UTC -03:00)</string>
+    <key>America/Argentina/Ushuaia</key>
+    <string>America/Argentina/Ushuaia (UTC -03:00)</string>
+    <key>America/Aruba</key>
+    <string>America/Aruba (UTC -04:00)</string>
+    <key>America/Asuncion</key>
+    <string>America/Asuncion (UTC -03:00)</string>
+    <key>America/Atikokan</key>
+    <string>America/Atikokan (UTC -05:00)</string>
+    <key>America/Bahia</key>
+    <string>America/Bahia (UTC -03:00)</string>
+    <key>America/Bahia_Banderas</key>
+    <string>America/Bahia_Banderas (UTC -06:00)</string>
+    <key>America/Barbados</key>
+    <string>America/Barbados (UTC -04:00)</string>
+    <key>America/Belem</key>
+    <string>America/Belem (UTC -03:00)</string>
+    <key>America/Belize</key>
+    <string>America/Belize (UTC -06:00)</string>
+    <key>America/Blanc-Sablon</key>
+    <string>America/Blanc-Sablon (UTC -04:00)</string>
+    <key>America/Boa_Vista</key>
+    <string>America/Boa_Vista (UTC -04:00)</string>
+    <key>America/Bogota</key>
+    <string>America/Bogota (UTC -05:00)</string>
+    <key>America/Boise</key>
+    <string>America/Boise (UTC -07:00)</string>
+    <key>America/Cambridge_Bay</key>
+    <string>America/Cambridge_Bay (UTC -07:00)</string>
+    <key>America/Campo_Grande</key>
+    <string>America/Campo_Grande (UTC -04:00)</string>
+    <key>America/Cancun</key>
+    <string>America/Cancun (UTC -05:00)</string>
+    <key>America/Caracas</key>
+    <string>America/Caracas (UTC -04:00)</string>
+    <key>America/Cayenne</key>
+    <string>America/Cayenne (UTC -03:00)</string>
+    <key>America/Cayman</key>
+    <string>America/Cayman (UTC -05:00)</string>
+    <key>America/Chicago</key>
+    <string>America/Chicago (UTC -06:00)</string>
+    <key>America/Chihuahua</key>
+    <string>America/Chihuahua (UTC -06:00)</string>
+    <key>America/Ciudad_Juarez</key>
+    <string>America/Ciudad_Juarez (UTC -07:00)</string>
+    <key>America/Costa_Rica</key>
+    <string>America/Costa_Rica (UTC -06:00)</string>
+    <key>America/Creston</key>
+    <string>America/Creston (UTC -07:00)</string>
+    <key>America/Cuiaba</key>
+    <string>America/Cuiaba (UTC -04:00)</string>
+    <key>America/Curacao</key>
+    <string>America/Curacao (UTC -04:00)</string>
+    <key>America/Danmarkshavn</key>
+    <string>America/Danmarkshavn (UTC +00:00)</string>
+    <key>America/Dawson</key>
+    <string>America/Dawson (UTC -07:00)</string>
+    <key>America/Dawson_Creek</key>
+    <string>America/Dawson_Creek (UTC -07:00)</string>
+    <key>America/Denver</key>
+    <string>America/Denver (UTC -07:00)</string>
+    <key>America/Detroit</key>
+    <string>America/Detroit (UTC -05:00)</string>
+    <key>America/Dominica</key>
+    <string>America/Dominica (UTC -04:00)</string>
+    <key>America/Edmonton</key>
+    <string>America/Edmonton (UTC -07:00)</string>
+    <key>America/Eirunepe</key>
+    <string>America/Eirunepe (UTC -05:00)</string>
+    <key>America/El_Salvador</key>
+    <string>America/El_Salvador (UTC -06:00)</string>
+    <key>America/Fort_Nelson</key>
+    <string>America/Fort_Nelson (UTC -07:00)</string>
+    <key>America/Fortaleza</key>
+    <string>America/Fortaleza (UTC -03:00)</string>
+    <key>America/Glace_Bay</key>
+    <string>America/Glace_Bay (UTC -04:00)</string>
+    <key>America/Goose_Bay</key>
+    <string>America/Goose_Bay (UTC -04:00)</string>
+    <key>America/Grand_Turk</key>
+    <string>America/Grand_Turk (UTC -05:00)</string>
+    <key>America/Grenada</key>
+    <string>America/Grenada (UTC -04:00)</string>
+    <key>America/Guadeloupe</key>
+    <string>America/Guadeloupe (UTC -04:00)</string>
+    <key>America/Guatemala</key>
+    <string>America/Guatemala (UTC -06:00)</string>
+    <key>America/Guayaquil</key>
+    <string>America/Guayaquil (UTC -05:00)</string>
+    <key>America/Guyana</key>
+    <string>America/Guyana (UTC -04:00)</string>
+    <key>America/Halifax</key>
+    <string>America/Halifax (UTC -04:00)</string>
+    <key>America/Havana</key>
+    <string>America/Havana (UTC -05:00)</string>
+    <key>America/Hermosillo</key>
+    <string>America/Hermosillo (UTC -07:00)</string>
+    <key>America/Indiana/Indianapolis</key>
+    <string>America/Indiana/Indianapolis (UTC -05:00)</string>
+    <key>America/Indiana/Knox</key>
+    <string>America/Indiana/Knox (UTC -06:00)</string>
+    <key>America/Indiana/Marengo</key>
+    <string>America/Indiana/Marengo (UTC -05:00)</string>
+    <key>America/Indiana/Petersburg</key>
+    <string>America/Indiana/Petersburg (UTC -05:00)</string>
+    <key>America/Indiana/Tell_City</key>
+    <string>America/Indiana/Tell_City (UTC -06:00)</string>
+    <key>America/Indiana/Vevay</key>
+    <string>America/Indiana/Vevay (UTC -05:00)</string>
+    <key>America/Indiana/Vincennes</key>
+    <string>America/Indiana/Vincennes (UTC -05:00)</string>
+    <key>America/Indiana/Winamac</key>
+    <string>America/Indiana/Winamac (UTC -05:00)</string>
+    <key>America/Inuvik</key>
+    <string>America/Inuvik (UTC -07:00)</string>
+    <key>America/Iqaluit</key>
+    <string>America/Iqaluit (UTC -05:00)</string>
+    <key>America/Jamaica</key>
+    <string>America/Jamaica (UTC -05:00)</string>
+    <key>America/Juneau</key>
+    <string>America/Juneau (UTC -09:00)</string>
+    <key>America/Kentucky/Louisville</key>
+    <string>America/Kentucky/Louisville (UTC -05:00)</string>
+    <key>America/Kentucky/Monticello</key>
+    <string>America/Kentucky/Monticello (UTC -05:00)</string>
+    <key>America/Kralendijk</key>
+    <string>America/Kralendijk (UTC -04:00)</string>
+    <key>America/La_Paz</key>
+    <string>America/La_Paz (UTC -04:00)</string>
+    <key>America/Lima</key>
+    <string>America/Lima (UTC -05:00)</string>
+    <key>America/Los_Angeles</key>
+    <string>America/Los_Angeles (UTC -08:00)</string>
+    <key>America/Lower_Princes</key>
+    <string>America/Lower_Princes (UTC -04:00)</string>
+    <key>America/Maceio</key>
+    <string>America/Maceio (UTC -03:00)</string>
+    <key>America/Managua</key>
+    <string>America/Managua (UTC -06:00)</string>
+    <key>America/Manaus</key>
+    <string>America/Manaus (UTC -04:00)</string>
+    <key>America/Marigot</key>
+    <string>America/Marigot (UTC -04:00)</string>
+    <key>America/Martinique</key>
+    <string>America/Martinique (UTC -04:00)</string>
+    <key>America/Matamoros</key>
+    <string>America/Matamoros (UTC -06:00)</string>
+    <key>America/Mazatlan</key>
+    <string>America/Mazatlan (UTC -07:00)</string>
+    <key>America/Menominee</key>
+    <string>America/Menominee (UTC -06:00)</string>
+    <key>America/Merida</key>
+    <string>America/Merida (UTC -06:00)</string>
+    <key>America/Metlakatla</key>
+    <string>America/Metlakatla (UTC -09:00)</string>
+    <key>America/Mexico_City</key>
+    <string>America/Mexico_City (UTC -06:00)</string>
+    <key>America/Miquelon</key>
+    <string>America/Miquelon (UTC -03:00)</string>
+    <key>America/Moncton</key>
+    <string>America/Moncton (UTC -04:00)</string>
+    <key>America/Monterrey</key>
+    <string>America/Monterrey (UTC -06:00)</string>
+    <key>America/Montevideo</key>
+    <string>America/Montevideo (UTC -03:00)</string>
+    <key>America/Montserrat</key>
+    <string>America/Montserrat (UTC -04:00)</string>
+    <key>America/Nassau</key>
+    <string>America/Nassau (UTC -05:00)</string>
+    <key>America/New_York</key>
+    <string>America/New_York (UTC -05:00)</string>
+    <key>America/Nome</key>
+    <string>America/Nome (UTC -09:00)</string>
+    <key>America/Noronha</key>
+    <string>America/Noronha (UTC -02:00)</string>
+    <key>America/North_Dakota/Beulah</key>
+    <string>America/North_Dakota/Beulah (UTC -06:00)</string>
+    <key>America/North_Dakota/Center</key>
+    <string>America/North_Dakota/Center (UTC -06:00)</string>
+    <key>America/North_Dakota/New_Salem</key>
+    <string>America/North_Dakota/New_Salem (UTC -06:00)</string>
+    <key>America/Nuuk</key>
+    <string>America/Nuuk (UTC -02:00)</string>
+    <key>America/Ojinaga</key>
+    <string>America/Ojinaga (UTC -06:00)</string>
+    <key>America/Panama</key>
+    <string>America/Panama (UTC -05:00)</string>
+    <key>America/Paramaribo</key>
+    <string>America/Paramaribo (UTC -03:00)</string>
+    <key>America/Phoenix</key>
+    <string>America/Phoenix (UTC -07:00)</string>
+    <key>America/Port-au-Prince</key>
+    <string>America/Port-au-Prince (UTC -05:00)</string>
+    <key>America/Port_of_Spain</key>
+    <string>America/Port_of_Spain (UTC -04:00)</string>
+    <key>America/Porto_Velho</key>
+    <string>America/Porto_Velho (UTC -04:00)</string>
+    <key>America/Puerto_Rico</key>
+    <string>America/Puerto_Rico (UTC -04:00)</string>
+    <key>America/Punta_Arenas</key>
+    <string>America/Punta_Arenas (UTC -03:00)</string>
+    <key>America/Rankin_Inlet</key>
+    <string>America/Rankin_Inlet (UTC -06:00)</string>
+    <key>America/Recife</key>
+    <string>America/Recife (UTC -03:00)</string>
+    <key>America/Regina</key>
+    <string>America/Regina (UTC -06:00)</string>
+    <key>America/Resolute</key>
+    <string>America/Resolute (UTC -06:00)</string>
+    <key>America/Rio_Branco</key>
+    <string>America/Rio_Branco (UTC -05:00)</string>
+    <key>America/Santarem</key>
+    <string>America/Santarem (UTC -03:00)</string>
+    <key>America/Santiago</key>
+    <string>America/Santiago (UTC -03:00)</string>
+    <key>America/Santo_Domingo</key>
+    <string>America/Santo_Domingo (UTC -04:00)</string>
+    <key>America/Sao_Paulo</key>
+    <string>America/Sao_Paulo (UTC -03:00)</string>
+    <key>America/Scoresbysund</key>
+    <string>America/Scoresbysund (UTC -01:00)</string>
+    <key>America/Sitka</key>
+    <string>America/Sitka (UTC -09:00)</string>
+    <key>America/St_Barthelemy</key>
+    <string>America/St_Barthelemy (UTC -04:00)</string>
+    <key>America/St_Johns</key>
+    <string>America/St_Johns (UTC -03:30)</string>
+    <key>America/St_Kitts</key>
+    <string>America/St_Kitts (UTC -04:00)</string>
+    <key>America/St_Lucia</key>
+    <string>America/St_Lucia (UTC -04:00)</string>
+    <key>America/St_Thomas</key>
+    <string>America/St_Thomas (UTC -04:00)</string>
+    <key>America/St_Vincent</key>
+    <string>America/St_Vincent (UTC -04:00)</string>
+    <key>America/Swift_Current</key>
+    <string>America/Swift_Current (UTC -06:00)</string>
+    <key>America/Tegucigalpa</key>
+    <string>America/Tegucigalpa (UTC -06:00)</string>
+    <key>America/Thule</key>
+    <string>America/Thule (UTC -04:00)</string>
+    <key>America/Tijuana</key>
+    <string>America/Tijuana (UTC -08:00)</string>
+    <key>America/Toronto</key>
+    <string>America/Toronto (UTC -05:00)</string>
+    <key>America/Tortola</key>
+    <string>America/Tortola (UTC -04:00)</string>
+    <key>America/Vancouver</key>
+    <string>America/Vancouver (UTC -08:00)</string>
+    <key>America/Whitehorse</key>
+    <string>America/Whitehorse (UTC -07:00)</string>
+    <key>America/Winnipeg</key>
+    <string>America/Winnipeg (UTC -06:00)</string>
+    <key>America/Yakutat</key>
+    <string>America/Yakutat (UTC -09:00)</string>
+    <key>Antarctica/Casey</key>
+    <string>Antarctica/Casey (UTC +08:00)</string>
+    <key>Antarctica/Davis</key>
+    <string>Antarctica/Davis (UTC +07:00)</string>
+    <key>Antarctica/DumontDUrville</key>
+    <string>Antarctica/DumontDUrville (UTC +10:00)</string>
+    <key>Antarctica/Macquarie</key>
+    <string>Antarctica/Macquarie (UTC +11:00)</string>
+    <key>Antarctica/Mawson</key>
+    <string>Antarctica/Mawson (UTC +05:00)</string>
+    <key>Antarctica/McMurdo</key>
+    <string>Antarctica/McMurdo (UTC +13:00)</string>
+    <key>Antarctica/Palmer</key>
+    <string>Antarctica/Palmer (UTC -03:00)</string>
+    <key>Antarctica/Rothera</key>
+    <string>Antarctica/Rothera (UTC -03:00)</string>
+    <key>Antarctica/Syowa</key>
+    <string>Antarctica/Syowa (UTC +03:00)</string>
+    <key>Antarctica/Troll</key>
+    <string>Antarctica/Troll (UTC +00:00)</string>
+    <key>Antarctica/Vostok</key>
+    <string>Antarctica/Vostok (UTC +05:00)</string>
+    <key>Arctic/Longyearbyen</key>
+    <string>Arctic/Longyearbyen (UTC +01:00)</string>
+    <key>Asia/Aden</key>
+    <string>Asia/Aden (UTC +03:00)</string>
+    <key>Asia/Almaty</key>
+    <string>Asia/Almaty (UTC +06:00)</string>
+    <key>Asia/Amman</key>
+    <string>Asia/Amman (UTC +03:00)</string>
+    <key>Asia/Anadyr</key>
+    <string>Asia/Anadyr (UTC +12:00)</string>
+    <key>Asia/Aqtau</key>
+    <string>Asia/Aqtau (UTC +05:00)</string>
+    <key>Asia/Aqtobe</key>
+    <string>Asia/Aqtobe (UTC +05:00)</string>
+    <key>Asia/Ashgabat</key>
+    <string>Asia/Ashgabat (UTC +05:00)</string>
+    <key>Asia/Atyrau</key>
+    <string>Asia/Atyrau (UTC +05:00)</string>
+    <key>Asia/Baghdad</key>
+    <string>Asia/Baghdad (UTC +03:00)</string>
+    <key>Asia/Bahrain</key>
+    <string>Asia/Bahrain (UTC +03:00)</string>
+    <key>Asia/Baku</key>
+    <string>Asia/Baku (UTC +04:00)</string>
+    <key>Asia/Bangkok</key>
+    <string>Asia/Bangkok (UTC +07:00)</string>
+    <key>Asia/Barnaul</key>
+    <string>Asia/Barnaul (UTC +07:00)</string>
+    <key>Asia/Beirut</key>
+    <string>Asia/Beirut (UTC +02:00)</string>
+    <key>Asia/Bishkek</key>
+    <string>Asia/Bishkek (UTC +06:00)</string>
+    <key>Asia/Brunei</key>
+    <string>Asia/Brunei (UTC +08:00)</string>
+    <key>Asia/Chita</key>
+    <string>Asia/Chita (UTC +09:00)</string>
+    <key>Asia/Choibalsan</key>
+    <string>Asia/Choibalsan (UTC +08:00)</string>
+    <key>Asia/Colombo</key>
+    <string>Asia/Colombo (UTC +05:30)</string>
+    <key>Asia/Damascus</key>
+    <string>Asia/Damascus (UTC +03:00)</string>
+    <key>Asia/Dhaka</key>
+    <string>Asia/Dhaka (UTC +06:00)</string>
+    <key>Asia/Dili</key>
+    <string>Asia/Dili (UTC +09:00)</string>
+    <key>Asia/Dubai</key>
+    <string>Asia/Dubai (UTC +04:00)</string>
+    <key>Asia/Dushanbe</key>
+    <string>Asia/Dushanbe (UTC +05:00)</string>
+    <key>Asia/Famagusta</key>
+    <string>Asia/Famagusta (UTC +02:00)</string>
+    <key>Asia/Gaza</key>
+    <string>Asia/Gaza (UTC +02:00)</string>
+    <key>Asia/Hebron</key>
+    <string>Asia/Hebron (UTC +02:00)</string>
+    <key>Asia/Ho_Chi_Minh</key>
+    <string>Asia/Ho_Chi_Minh (UTC +07:00)</string>
+    <key>Asia/Hong_Kong</key>
+    <string>Asia/Hong_Kong (UTC +08:00)</string>
+    <key>Asia/Hovd</key>
+    <string>Asia/Hovd (UTC +07:00)</string>
+    <key>Asia/Irkutsk</key>
+    <string>Asia/Irkutsk (UTC +08:00)</string>
+    <key>Asia/Jakarta</key>
+    <string>Asia/Jakarta (UTC +07:00)</string>
+    <key>Asia/Jayapura</key>
+    <string>Asia/Jayapura (UTC +09:00)</string>
+    <key>Asia/Jerusalem</key>
+    <string>Asia/Jerusalem (UTC +02:00)</string>
+    <key>Asia/Kabul</key>
+    <string>Asia/Kabul (UTC +04:30)</string>
+    <key>Asia/Kamchatka</key>
+    <string>Asia/Kamchatka (UTC +12:00)</string>
+    <key>Asia/Karachi</key>
+    <string>Asia/Karachi (UTC +05:00)</string>
+    <key>Asia/Kathmandu</key>
+    <string>Asia/Kathmandu (UTC +05:45)</string>
+    <key>Asia/Khandyga</key>
+    <string>Asia/Khandyga (UTC +09:00)</string>
+    <key>Asia/Kolkata</key>
+    <string>Asia/Kolkata (UTC +05:30)</string>
+    <key>Asia/Krasnoyarsk</key>
+    <string>Asia/Krasnoyarsk (UTC +07:00)</string>
+    <key>Asia/Kuala_Lumpur</key>
+    <string>Asia/Kuala_Lumpur (UTC +08:00)</string>
+    <key>Asia/Kuching</key>
+    <string>Asia/Kuching (UTC +08:00)</string>
+    <key>Asia/Kuwait</key>
+    <string>Asia/Kuwait (UTC +03:00)</string>
+    <key>Asia/Macau</key>
+    <string>Asia/Macau (UTC +08:00)</string>
+    <key>Asia/Magadan</key>
+    <string>Asia/Magadan (UTC +11:00)</string>
+    <key>Asia/Makassar</key>
+    <string>Asia/Makassar (UTC +08:00)</string>
+    <key>Asia/Manila</key>
+    <string>Asia/Manila (UTC +08:00)</string>
+    <key>Asia/Muscat</key>
+    <string>Asia/Muscat (UTC +04:00)</string>
+    <key>Asia/Nicosia</key>
+    <string>Asia/Nicosia (UTC +02:00)</string>
+    <key>Asia/Novokuznetsk</key>
+    <string>Asia/Novokuznetsk (UTC +07:00)</string>
+    <key>Asia/Novosibirsk</key>
+    <string>Asia/Novosibirsk (UTC +07:00)</string>
+    <key>Asia/Omsk</key>
+    <string>Asia/Omsk (UTC +06:00)</string>
+    <key>Asia/Oral</key>
+    <string>Asia/Oral (UTC +05:00)</string>
+    <key>Asia/Phnom_Penh</key>
+    <string>Asia/Phnom_Penh (UTC +07:00)</string>
+    <key>Asia/Pontianak</key>
+    <string>Asia/Pontianak (UTC +07:00)</string>
+    <key>Asia/Pyongyang</key>
+    <string>Asia/Pyongyang (UTC +09:00)</string>
+    <key>Asia/Qatar</key>
+    <string>Asia/Qatar (UTC +03:00)</string>
+    <key>Asia/Qostanay</key>
+    <string>Asia/Qostanay (UTC +06:00)</string>
+    <key>Asia/Qyzylorda</key>
+    <string>Asia/Qyzylorda (UTC +05:00)</string>
+    <key>Asia/Riyadh</key>
+    <string>Asia/Riyadh (UTC +03:00)</string>
+    <key>Asia/Sakhalin</key>
+    <string>Asia/Sakhalin (UTC +11:00)</string>
+    <key>Asia/Samarkand</key>
+    <string>Asia/Samarkand (UTC +05:00)</string>
+    <key>Asia/Seoul</key>
+    <string>Asia/Seoul (UTC +09:00)</string>
+    <key>Asia/Shanghai</key>
+    <string>Asia/Shanghai (UTC +08:00)</string>
+    <key>Asia/Singapore</key>
+    <string>Asia/Singapore (UTC +08:00)</string>
+    <key>Asia/Srednekolymsk</key>
+    <string>Asia/Srednekolymsk (UTC +11:00)</string>
+    <key>Asia/Taipei</key>
+    <string>Asia/Taipei (UTC +08:00)</string>
+    <key>Asia/Tashkent</key>
+    <string>Asia/Tashkent (UTC +05:00)</string>
+    <key>Asia/Tbilisi</key>
+    <string>Asia/Tbilisi (UTC +04:00)</string>
+    <key>Asia/Tehran</key>
+    <string>Asia/Tehran (UTC +03:30)</string>
+    <key>Asia/Thimphu</key>
+    <string>Asia/Thimphu (UTC +06:00)</string>
+    <key>Asia/Tokyo</key>
+    <string>Asia/Tokyo (UTC +09:00)</string>
+    <key>Asia/Tomsk</key>
+    <string>Asia/Tomsk (UTC +07:00)</string>
+    <key>Asia/Ulaanbaatar</key>
+    <string>Asia/Ulaanbaatar (UTC +08:00)</string>
+    <key>Asia/Urumqi</key>
+    <string>Asia/Urumqi (UTC +06:00)</string>
+    <key>Asia/Ust-Nera</key>
+    <string>Asia/Ust-Nera (UTC +10:00)</string>
+    <key>Asia/Vientiane</key>
+    <string>Asia/Vientiane (UTC +07:00)</string>
+    <key>Asia/Vladivostok</key>
+    <string>Asia/Vladivostok (UTC +10:00)</string>
+    <key>Asia/Yakutsk</key>
+    <string>Asia/Yakutsk (UTC +09:00)</string>
+    <key>Asia/Yangon</key>
+    <string>Asia/Yangon (UTC +06:30)</string>
+    <key>Asia/Yekaterinburg</key>
+    <string>Asia/Yekaterinburg (UTC +05:00)</string>
+    <key>Asia/Yerevan</key>
+    <string>Asia/Yerevan (UTC +04:00)</string>
+    <key>Atlantic/Azores</key>
+    <string>Atlantic/Azores (UTC -01:00)</string>
+    <key>Atlantic/Bermuda</key>
+    <string>Atlantic/Bermuda (UTC -04:00)</string>
+    <key>Atlantic/Canary</key>
+    <string>Atlantic/Canary (UTC +00:00)</string>
+    <key>Atlantic/Cape_Verde</key>
+    <string>Atlantic/Cape_Verde (UTC -01:00)</string>
+    <key>Atlantic/Faroe</key>
+    <string>Atlantic/Faroe (UTC +00:00)</string>
+    <key>Atlantic/Madeira</key>
+    <string>Atlantic/Madeira (UTC +00:00)</string>
+    <key>Atlantic/Reykjavik</key>
+    <string>Atlantic/Reykjavik (UTC +00:00)</string>
+    <key>Atlantic/South_Georgia</key>
+    <string>Atlantic/South_Georgia (UTC -02:00)</string>
+    <key>Atlantic/St_Helena</key>
+    <string>Atlantic/St_Helena (UTC +00:00)</string>
+    <key>Atlantic/Stanley</key>
+    <string>Atlantic/Stanley (UTC -03:00)</string>
+    <key>Australia/Adelaide</key>
+    <string>Australia/Adelaide (UTC +10:30)</string>
+    <key>Australia/Brisbane</key>
+    <string>Australia/Brisbane (UTC +10:00)</string>
+    <key>Australia/Broken_Hill</key>
+    <string>Australia/Broken_Hill (UTC +10:30)</string>
+    <key>Australia/Darwin</key>
+    <string>Australia/Darwin (UTC +09:30)</string>
+    <key>Australia/Eucla</key>
+    <string>Australia/Eucla (UTC +08:45)</string>
+    <key>Australia/Hobart</key>
+    <string>Australia/Hobart (UTC +11:00)</string>
+    <key>Australia/Lindeman</key>
+    <string>Australia/Lindeman (UTC +10:00)</string>
+    <key>Australia/Lord_Howe</key>
+    <string>Australia/Lord_Howe (UTC +11:00)</string>
+    <key>Australia/Melbourne</key>
+    <string>Australia/Melbourne (UTC +11:00)</string>
+    <key>Australia/Perth</key>
+    <string>Australia/Perth (UTC +08:00)</string>
+    <key>Australia/Sydney</key>
+    <string>Australia/Sydney (UTC +11:00)</string>
+    <key>Europe/Amsterdam</key>
+    <string>Europe/Amsterdam (UTC +01:00)</string>
+    <key>Europe/Andorra</key>
+    <string>Europe/Andorra (UTC +01:00)</string>
+    <key>Europe/Astrakhan</key>
+    <string>Europe/Astrakhan (UTC +04:00)</string>
+    <key>Europe/Athens</key>
+    <string>Europe/Athens (UTC +02:00)</string>
+    <key>Europe/Belgrade</key>
+    <string>Europe/Belgrade (UTC +01:00)</string>
+    <key>Europe/Berlin</key>
+    <string>Europe/Berlin (UTC +01:00)</string>
+    <key>Europe/Bratislava</key>
+    <string>Europe/Bratislava (UTC +01:00)</string>
+    <key>Europe/Brussels</key>
+    <string>Europe/Brussels (UTC +01:00)</string>
+    <key>Europe/Bucharest</key>
+    <string>Europe/Bucharest (UTC +02:00)</string>
+    <key>Europe/Budapest</key>
+    <string>Europe/Budapest (UTC +01:00)</string>
+    <key>Europe/Busingen</key>
+    <string>Europe/Busingen (UTC +01:00)</string>
+    <key>Europe/Chisinau</key>
+    <string>Europe/Chisinau (UTC +02:00)</string>
+    <key>Europe/Copenhagen</key>
+    <string>Europe/Copenhagen (UTC +01:00)</string>
+    <key>Europe/Dublin</key>
+    <string>Europe/Dublin (UTC +00:00)</string>
+    <key>Europe/Gibraltar</key>
+    <string>Europe/Gibraltar (UTC +01:00)</string>
+    <key>Europe/Guernsey</key>
+    <string>Europe/Guernsey (UTC +00:00)</string>
+    <key>Europe/Helsinki</key>
+    <string>Europe/Helsinki (UTC +02:00)</string>
+    <key>Europe/Isle_of_Man</key>
+    <string>Europe/Isle_of_Man (UTC +00:00)</string>
+    <key>Europe/Istanbul</key>
+    <string>Europe/Istanbul (UTC +03:00)</string>
+    <key>Europe/Jersey</key>
+    <string>Europe/Jersey (UTC +00:00)</string>
+    <key>Europe/Kaliningrad</key>
+    <string>Europe/Kaliningrad (UTC +02:00)</string>
+    <key>Europe/Kirov</key>
+    <string>Europe/Kirov (UTC +03:00)</string>
+    <key>Europe/Kyiv</key>
+    <string>Europe/Kyiv (UTC +02:00)</string>
+    <key>Europe/Lisbon</key>
+    <string>Europe/Lisbon (UTC +00:00)</string>
+    <key>Europe/Ljubljana</key>
+    <string>Europe/Ljubljana (UTC +01:00)</string>
+    <key>Europe/London</key>
+    <string>Europe/London (UTC +00:00)</string>
+    <key>Europe/Luxembourg</key>
+    <string>Europe/Luxembourg (UTC +01:00)</string>
+    <key>Europe/Madrid</key>
+    <string>Europe/Madrid (UTC +01:00)</string>
+    <key>Europe/Malta</key>
+    <string>Europe/Malta (UTC +01:00)</string>
+    <key>Europe/Mariehamn</key>
+    <string>Europe/Mariehamn (UTC +02:00)</string>
+    <key>Europe/Minsk</key>
+    <string>Europe/Minsk (UTC +03:00)</string>
+    <key>Europe/Monaco</key>
+    <string>Europe/Monaco (UTC +01:00)</string>
+    <key>Europe/Moscow</key>
+    <string>Europe/Moscow (UTC +03:00)</string>
+    <key>Europe/Oslo</key>
+    <string>Europe/Oslo (UTC +01:00)</string>
+    <key>Europe/Paris</key>
+    <string>Europe/Paris (UTC +01:00)</string>
+    <key>Europe/Podgorica</key>
+    <string>Europe/Podgorica (UTC +01:00)</string>
+    <key>Europe/Prague</key>
+    <string>Europe/Prague (UTC +01:00)</string>
+    <key>Europe/Riga</key>
+    <string>Europe/Riga (UTC +02:00)</string>
+    <key>Europe/Rome</key>
+    <string>Europe/Rome (UTC +01:00)</string>
+    <key>Europe/Samara</key>
+    <string>Europe/Samara (UTC +04:00)</string>
+    <key>Europe/San_Marino</key>
+    <string>Europe/San_Marino (UTC +01:00)</string>
+    <key>Europe/Sarajevo</key>
+    <string>Europe/Sarajevo (UTC +01:00)</string>
+    <key>Europe/Saratov</key>
+    <string>Europe/Saratov (UTC +04:00)</string>
+    <key>Europe/Simferopol</key>
+    <string>Europe/Simferopol (UTC +03:00)</string>
+    <key>Europe/Skopje</key>
+    <string>Europe/Skopje (UTC +01:00)</string>
+    <key>Europe/Sofia</key>
+    <string>Europe/Sofia (UTC +02:00)</string>
+    <key>Europe/Stockholm</key>
+    <string>Europe/Stockholm (UTC +01:00)</string>
+    <key>Europe/Tallinn</key>
+    <string>Europe/Tallinn (UTC +02:00)</string>
+    <key>Europe/Tirane</key>
+    <string>Europe/Tirane (UTC +01:00)</string>
+    <key>Europe/Ulyanovsk</key>
+    <string>Europe/Ulyanovsk (UTC +04:00)</string>
+    <key>Europe/Vaduz</key>
+    <string>Europe/Vaduz (UTC +01:00)</string>
+    <key>Europe/Vatican</key>
+    <string>Europe/Vatican (UTC +01:00)</string>
+    <key>Europe/Vienna</key>
+    <string>Europe/Vienna (UTC +01:00)</string>
+    <key>Europe/Vilnius</key>
+    <string>Europe/Vilnius (UTC +02:00)</string>
+    <key>Europe/Volgograd</key>
+    <string>Europe/Volgograd (UTC +03:00)</string>
+    <key>Europe/Warsaw</key>
+    <string>Europe/Warsaw (UTC +01:00)</string>
+    <key>Europe/Zagreb</key>
+    <string>Europe/Zagreb (UTC +01:00)</string>
+    <key>Europe/Zurich</key>
+    <string>Europe/Zurich (UTC +01:00)</string>
+    <key>Indian/Antananarivo</key>
+    <string>Indian/Antananarivo (UTC +03:00)</string>
+    <key>Indian/Chagos</key>
+    <string>Indian/Chagos (UTC +06:00)</string>
+    <key>Indian/Christmas</key>
+    <string>Indian/Christmas (UTC +07:00)</string>
+    <key>Indian/Cocos</key>
+    <string>Indian/Cocos (UTC +06:30)</string>
+    <key>Indian/Comoro</key>
+    <string>Indian/Comoro (UTC +03:00)</string>
+    <key>Indian/Kerguelen</key>
+    <string>Indian/Kerguelen (UTC +05:00)</string>
+    <key>Indian/Mahe</key>
+    <string>Indian/Mahe (UTC +04:00)</string>
+    <key>Indian/Maldives</key>
+    <string>Indian/Maldives (UTC +05:00)</string>
+    <key>Indian/Mauritius</key>
+    <string>Indian/Mauritius (UTC +04:00)</string>
+    <key>Indian/Mayotte</key>
+    <string>Indian/Mayotte (UTC +03:00)</string>
+    <key>Indian/Reunion</key>
+    <string>Indian/Reunion (UTC +04:00)</string>
+    <key>Pacific/Apia</key>
+    <string>Pacific/Apia (UTC +13:00)</string>
+    <key>Pacific/Auckland</key>
+    <string>Pacific/Auckland (UTC +13:00)</string>
+    <key>Pacific/Bougainville</key>
+    <string>Pacific/Bougainville (UTC +11:00)</string>
+    <key>Pacific/Chatham</key>
+    <string>Pacific/Chatham (UTC +13:45)</string>
+    <key>Pacific/Chuuk</key>
+    <string>Pacific/Chuuk (UTC +10:00)</string>
+    <key>Pacific/Easter</key>
+    <string>Pacific/Easter (UTC -05:00)</string>
+    <key>Pacific/Efate</key>
+    <string>Pacific/Efate (UTC +11:00)</string>
+    <key>Pacific/Fakaofo</key>
+    <string>Pacific/Fakaofo (UTC +13:00)</string>
+    <key>Pacific/Fiji</key>
+    <string>Pacific/Fiji (UTC +12:00)</string>
+    <key>Pacific/Funafuti</key>
+    <string>Pacific/Funafuti (UTC +12:00)</string>
+    <key>Pacific/Galapagos</key>
+    <string>Pacific/Galapagos (UTC -06:00)</string>
+    <key>Pacific/Gambier</key>
+    <string>Pacific/Gambier (UTC -09:00)</string>
+    <key>Pacific/Guadalcanal</key>
+    <string>Pacific/Guadalcanal (UTC +11:00)</string>
+    <key>Pacific/Guam</key>
+    <string>Pacific/Guam (UTC +10:00)</string>
+    <key>Pacific/Honolulu</key>
+    <string>Pacific/Honolulu (UTC -10:00)</string>
+    <key>Pacific/Kanton</key>
+    <string>Pacific/Kanton (UTC +13:00)</string>
+    <key>Pacific/Kiritimati</key>
+    <string>Pacific/Kiritimati (UTC +14:00)</string>
+    <key>Pacific/Kosrae</key>
+    <string>Pacific/Kosrae (UTC +11:00)</string>
+    <key>Pacific/Kwajalein</key>
+    <string>Pacific/Kwajalein (UTC +12:00)</string>
+    <key>Pacific/Majuro</key>
+    <string>Pacific/Majuro (UTC +12:00)</string>
+    <key>Pacific/Marquesas</key>
+    <string>Pacific/Marquesas (UTC -09:30)</string>
+    <key>Pacific/Midway</key>
+    <string>Pacific/Midway (UTC -11:00)</string>
+    <key>Pacific/Nauru</key>
+    <string>Pacific/Nauru (UTC +12:00)</string>
+    <key>Pacific/Niue</key>
+    <string>Pacific/Niue (UTC -11:00)</string>
+    <key>Pacific/Norfolk</key>
+    <string>Pacific/Norfolk (UTC +12:00)</string>
+    <key>Pacific/Noumea</key>
+    <string>Pacific/Noumea (UTC +11:00)</string>
+    <key>Pacific/Pago_Pago</key>
+    <string>Pacific/Pago_Pago (UTC -11:00)</string>
+    <key>Pacific/Palau</key>
+    <string>Pacific/Palau (UTC +09:00)</string>
+    <key>Pacific/Pitcairn</key>
+    <string>Pacific/Pitcairn (UTC -08:00)</string>
+    <key>Pacific/Pohnpei</key>
+    <string>Pacific/Pohnpei (UTC +11:00)</string>
+    <key>Pacific/Port_Moresby</key>
+    <string>Pacific/Port_Moresby (UTC +10:00)</string>
+    <key>Pacific/Rarotonga</key>
+    <string>Pacific/Rarotonga (UTC -10:00)</string>
+    <key>Pacific/Saipan</key>
+    <string>Pacific/Saipan (UTC +10:00)</string>
+    <key>Pacific/Tahiti</key>
+    <string>Pacific/Tahiti (UTC -10:00)</string>
+    <key>Pacific/Tarawa</key>
+    <string>Pacific/Tarawa (UTC +12:00)</string>
+    <key>Pacific/Tongatapu</key>
+    <string>Pacific/Tongatapu (UTC +13:00)</string>
+    <key>Pacific/Wake</key>
+    <string>Pacific/Wake (UTC +12:00)</string>
+    <key>Pacific/Wallis</key>
+    <string>Pacific/Wallis (UTC +12:00)</string>
+    <key>UTC</key>
+    <string>UTC (UTC +00:00)</string>
+</dict>
+</plist>
