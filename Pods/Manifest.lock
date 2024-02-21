@@ -1,6 +1,6 @@
 PODS:
   - Alamofire (5.8.1)
-  - Cosmos (23.0.0)
+  - Cosmos (25.0.1)
   - ESTabBarController-swift (2.8.0)
   - FLEX (5.22.10)
   - IQKeyboardManagerSwift (7.0.1)
@@ -118,7 +118,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
-  Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
+  Cosmos: 02db0a1c953107049bfd2d7af19ceef55ecb7e98
   ESTabBarController-swift: 05593a6ad64700b03c0eb60ff625916370aa4136
   FLEX: f21ee4f498eed3f8a1eded66b21939fd3b7a22ce
   IQKeyboardManagerSwift: 7f6b1b1d1497855d2beea7f2f10ffcc6978525b1
@@ -140,4 +140,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 98485e86b0eb8ea37ce9df3c8a8d377261f68f27
 
-COCOAPODS: 1.15.0
+COCOAPODS: 1.15.2
