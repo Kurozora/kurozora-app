@@ -35,6 +35,7 @@ class SettingsCell: KTableViewCell {
 			NotificationCenter.default.addObserver(self, selector: #selector(updateNotificationValueLabels), name: .KSNotificationOptionsValueLabelsNotification, object: nil)
 		}
 	}
+	@IBOutlet weak var popupButton: KButton?
 
 	// MARK: - Properties
 	override var isSkeletonEnabled: Bool {

@@ -9,11 +9,34 @@
 import UIKit
 import KurozoraKit
 
+enum AccountSetting {
+	case language
+	case tvRating
+	case timezone
+}
+
 class AccountTableViewController: SubSettingsViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var profileImageView: ProfileImageView!
 	@IBOutlet weak var usernameLabel: KLabel!
 	@IBOutlet weak var userEmailLabel: KSecondaryLabel!
+	@IBOutlet weak var languageButton: KButton!
+	@IBOutlet weak var tvRatingButton: KButton!
+	@IBOutlet weak var timezoneButton: KButton!
+
+	// MARK: - Properties
+	var languages: [String: String] = [:]
+	var tvRatings: [String: String] = [:]
+	var timezones: [String: String] = [:]
+	var selectedLanguage: String = "en"
+	var selectedTVRating: String = "4"
+	var selectedTimezone: String = "UTC"
+
+//	// MARK: - IBActions
+//	@objc
+//	func menuOptionChanged(_ sender: UIAction) {
+//		self.delegate?.searchFilterBaseCollectionViewCell(self, didChangeValue: sender.title)
+//	}
 
 	// MARK: - View
 	override func viewWillReload() {
@@ -26,6 +49,10 @@ class AccountTableViewController: SubSettingsViewController {
 		super.viewDidLoad()
 
 		self.title = "Kurozora ID"
+
+		self.languages = self.loadOptions(from: "App Languages")
+//		self.tvRatings = self.loadOptions(from: "App TV Ratings")
+		self.timezones = self.loadOptions(from: "App Timezones")
 
 		self.configureUserDetails()
 	}
@@ -43,6 +70,61 @@ class AccountTableViewController: SubSettingsViewController {
 
 		// Setup profile image.
 		user.attributes.profileImage(imageView: self.profileImageView)
+
+		self.selectedLanguage = self.languages.first(where: { $0.key == user.attributes.preferredLanguage })?.value ?? self.selectedLanguage
+		self.selectedTVRating = self.tvRatings.first(where: { $0.key == user.attributes.preferredTVRating?.string })?.value ?? self.selectedTVRating
+		self.selectedTimezone = self.timezones.first(where: { $0.key == user.attributes.preferredTimezone })?.value ?? self.selectedTimezone
+
+		self.languageButton.menu = self.configureMenu(accountSetting: .language, options: self.languages.map({ $0.value }), selected: self.selectedLanguage)
+//		self.tvRatingButton.menu = self.configureMenu(accountSetting: .tvRating, options: [], selected: self.selectedTVRating)
+		self.timezoneButton.menu = self.configureMenu(accountSetting: .timezone, options: self.timezones.map({ $0.value }), selected: self.selectedTimezone)
+	}
+
+	func loadOptions(from file: String) -> [String: String] {
+		if let path = Bundle.main.path(forResource: file, ofType: "plist"),
+		   let plist = FileManager.default.contents(atPath: path) {
+			return (try? PropertyListSerialization.propertyList(from: plist, format: nil) as? [String: String]) ?? [:]
+		} else {
+			return [:]
+		}
+	}
+
+	func configureMenu(accountSetting: AccountSetting, options: [String], selected: String) -> UIMenu {
+		return UIMenu(title: "", options: .singleSelection, children: options.sorted().map { option in
+			return UIAction(title: option, state: option == selected ? .on : .off) { [weak self] action in
+				guard let self = self else { return }
+
+				switch accountSetting {
+				case .language:
+					self.selectedLanguage = action.title
+				case .tvRating:
+					self.selectedTVRating = action.title
+				case .timezone:
+					self.selectedTimezone = action.title
+				}
+
+				self.updateInformation()
+			}
+		})
+	}
+
+	func updateInformation() {
+		guard let selectedLanguage = self.languages.first(where: { $0.value == self.selectedLanguage })?.key else { return }
+		guard let selectedTVRating = self.tvRatings.first(where: { $0.value == self.selectedTVRating })?.key.int else { return }
+		guard let selectedTimezone = self.timezones.first(where: { $0.value == self.selectedTimezone })?.key  else { return }
+
+		Task {
+			do {
+				let profileUpdateRequest = ProfileUpdateRequest(username: nil, nickname: nil, biography: nil, profileImage: nil, bannerImage: nil, preferredLanguage: selectedLanguage, preferredTVRating: selectedTVRating,
+					preferredTimezone: selectedTimezone)
+
+				// Perform update request.
+				let userUpdateResponse = try await KService.updateInformation(profileUpdateRequest).value
+				User.current?.attributes.update(using: userUpdateResponse.data)
+			} catch {
+				print(error.localizedDescription)
+			}
+		}
 	}
 }
 
