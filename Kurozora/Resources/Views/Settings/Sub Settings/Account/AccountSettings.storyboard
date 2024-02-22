@@ -728,6 +728,7 @@
                         <outlet property="languageButton" destination="8oL-Zb-p4u" id="Itk-W2-6xW"/>
                         <outlet property="profileImageView" destination="jpv-OI-j2Q" id="LRO-2z-BMp"/>
                         <outlet property="timezoneButton" destination="CsZ-GR-sVe" id="XX8-mc-fvc"/>
+                        <outlet property="tvRatingButton" destination="vCN-yA-ow2" id="FqI-nN-YYf"/>
                         <outlet property="userEmailLabel" destination="ApI-7E-SrE" id="Kyr-pG-Ith"/>
                         <outlet property="usernameLabel" destination="Oqb-dP-txI" id="fO4-Dq-2XX"/>
                     </connections>

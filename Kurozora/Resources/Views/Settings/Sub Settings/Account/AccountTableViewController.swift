@@ -32,12 +32,6 @@ class AccountTableViewController: SubSettingsViewController {
 	var selectedTVRating: String = "4"
 	var selectedTimezone: String = "UTC"
 
-//	// MARK: - IBActions
-//	@objc
-//	func menuOptionChanged(_ sender: UIAction) {
-//		self.delegate?.searchFilterBaseCollectionViewCell(self, didChangeValue: sender.title)
-//	}
-
 	// MARK: - View
 	override func viewWillReload() {
 		super.viewWillReload()
@@ -51,7 +45,7 @@ class AccountTableViewController: SubSettingsViewController {
 		self.title = "Kurozora ID"
 
 		self.languages = self.loadOptions(from: "App Languages")
-//		self.tvRatings = self.loadOptions(from: "App TV Ratings")
+		self.tvRatings = self.loadOptions(from: "App TV Ratings")
 		self.timezones = self.loadOptions(from: "App Timezones")
 
 		self.configureUserDetails()
@@ -76,7 +70,7 @@ class AccountTableViewController: SubSettingsViewController {
 		self.selectedTimezone = self.timezones.first(where: { $0.key == user.attributes.preferredTimezone })?.value ?? self.selectedTimezone
 
 		self.languageButton.menu = self.configureMenu(accountSetting: .language, options: self.languages.map({ $0.value }), selected: self.selectedLanguage)
-//		self.tvRatingButton.menu = self.configureMenu(accountSetting: .tvRating, options: [], selected: self.selectedTVRating)
+		self.tvRatingButton.menu = self.configureMenu(accountSetting: .tvRating, options: self.tvRatings.map({ $0.value }), selected: self.selectedTVRating)
 		self.timezoneButton.menu = self.configureMenu(accountSetting: .timezone, options: self.timezones.map({ $0.value }), selected: self.selectedTimezone)
 	}
 
