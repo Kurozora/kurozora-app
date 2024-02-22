@@ -53,6 +53,5 @@ public struct ProfileUpdateRequest {
 		self.preferredLanguage = preferredLanguage
 		self.preferredTVRating = preferredTVRating
 		self.preferredTimezone = preferredTimezone
-
 	}
 }

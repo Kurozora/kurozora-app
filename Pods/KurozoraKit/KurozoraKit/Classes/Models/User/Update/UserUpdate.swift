@@ -9,10 +9,10 @@
 public struct UserUpdate: Codable {
 	// MARK: - Properties
 	/// The username of the user.
-	public var username: String?
+	public var username: String
 
 	/// The nickname of the user.
-	public var nickname: String?
+	public var nickname: String
 
 	/// The biography text of the user.
 	public var biography: String?
@@ -24,11 +24,11 @@ public struct UserUpdate: Codable {
 	public var banner: Media?
 
 	/// The preferred language of the user.
-	public var preferredLanguage: String?
+	public var preferredLanguage: String
 
 	/// The preferred TV rating of the user.
-	public var preferredTVRating: String?
+	public var preferredTVRating: Int
 
 	/// The preferred timezone of the user.
-	public var preferredTimezone: String?
+	public var preferredTimezone: String
 }

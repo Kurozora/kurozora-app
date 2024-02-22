@@ -13,10 +13,10 @@ extension User {
 		public let role: Int?
 
 		/// The slug of the user.
-		public let slug: String
+		public var slug: String
 
 		/// The username of the user.
-		public let username: String
+		public var username: String
 
 		/// The Kurozora ID (email address) of the user.
 		///
@@ -80,13 +80,13 @@ extension User {
 		public let reputationCount: Int
 
 		/// The preferred language of the user.
-		public let preferredLanguage: String?
+		public var preferredLanguage: String?
 
 		/// The preferred TV rating of the user.
-		public let preferredTVRating: Int?
+		public var preferredTVRating: Int?
 
 		/// The preferred timezone of the user.
-		public let preferredTimezone: String?
+		public var preferredTimezone: String?
 
 		/// Whether the user can change their username.
 		public let canChangeUsername: Bool?
@@ -135,9 +135,14 @@ extension User.Attributes {
 	///
 	/// - Parameter userUpdate: The `UserUpdate` object used to update the attributes.
 	public mutating func update(using userUpdate: UserUpdate) {
+		self.slug = userUpdate.username
+		self.username = userUpdate.nickname
 		self.biography = userUpdate.biography
 		self.profile = userUpdate.profile
 		self.banner = userUpdate.banner
+		self.preferredLanguage = userUpdate.preferredLanguage
+		self.preferredTVRating = userUpdate.preferredTVRating
+		self.preferredTimezone = userUpdate.preferredTimezone
 	}
 
 	/// Returns a copy of the object with the updated attributes from the given `UserUpdate` object.
@@ -147,9 +152,14 @@ extension User.Attributes {
 	/// - Returns: a copy of the object with the updated attributes from the given `userUpdate` object.
 	public mutating func updated(using userUpdate: UserUpdate) -> Self {
 		var userAttributes = self
+		userAttributes.slug = userUpdate.username
+		userAttributes.username = userUpdate.nickname
 		userAttributes.biography = userUpdate.biography
 		userAttributes.profile = userUpdate.profile
 		userAttributes.banner = userUpdate.banner
+		userAttributes.preferredLanguage = userUpdate.preferredLanguage
+		userAttributes.preferredTVRating = userUpdate.preferredTVRating
+		userAttributes.preferredTimezone = userUpdate.preferredTimezone
 		return userAttributes
 	}
 
