@@ -17,11 +17,11 @@ public struct ProfileUpdateRequest {
 	/// The biography of the user.
 	public let biography: String?
 
-	/// The profile image of the user,
-	public let profileImage: URL?
+	/// The type of profile image request.
+	public let profileImageRequest: ProfileUpdateImageRequest?
 
-	/// The banner image of the user.
-	public let bannerImage: URL?
+	/// The type of banner image request.
+	public let bannerImageRequest: ProfileUpdateImageRequest?
 
 	/// The preferred language of the user.
 	public let preferredLanguage: String?
@@ -39,17 +39,17 @@ public struct ProfileUpdateRequest {
 	///    - username: The new username of the user.
 	///    - nickname: The new nickname of the user.
 	///    - biography: The new biography of the user.
-	///    - profileImage: The path to the new profile image of the user.
-	///    - bannerImage: The path to the new banner image of the user.
+	///    - profileImageRequest: The type of image request.
+	///    - bannerImageRequest: The type of image request.
 	///    - preferredLanguage: The new preferred language.
 	///    - preferredTVRating: The new preferred TV rating.
 	///    - preferredTimezone: The new preferred timezone.
-	public init(username: String?, nickname: String?, biography: String?, profileImage: URL?, bannerImage: URL?, preferredLanguage: String?, preferredTVRating: Int?, preferredTimezone: String?) {
+	public init(username: String?, nickname: String?, biography: String?, profileImageRequest: ProfileUpdateImageRequest?, bannerImageRequest: ProfileUpdateImageRequest?, preferredLanguage: String?, preferredTVRating: Int?, preferredTimezone: String?) {
 		self.username = username
 		self.nickname = nickname
 		self.biography = biography
-		self.profileImage = profileImage
-		self.bannerImage = bannerImage
+		self.profileImageRequest = profileImageRequest
+		self.bannerImageRequest = bannerImageRequest
 		self.preferredLanguage = preferredLanguage
 		self.preferredTVRating = preferredTVRating
 		self.preferredTimezone = preferredTimezone

@@ -587,22 +587,30 @@ class ProfileTableViewController: KTableViewController {
 		// If `originalProfileImage` is equal to `editedProfileImage`, then no change has happened: return `nil`
 		// If `originalProfileImage` is not equal to `editedProfileImage`, then something changed: return `editedProfileImage`
 		// If `editedProfileImage` is equal to the user's placeholder, then the user removed the current profile image: return `UIImage()`
+		let profileImageRequest: ProfileUpdateImageRequest?
 		var profileImageURL: URL? = URL(string: "kurozora://profileimage")
 		if let indefinitiveProfileImage = self.originalProfileImage.isEqual(to: self.editedProfileImage) ? nil : self.editedProfileImage {
 			profileImageURL = indefinitiveProfileImage.isEqual(to: self.user.attributes.profilePlaceholderImage) ? nil : self.editedProfileImageURL
+			profileImageRequest = profileImageURL == nil ? .delete : .update(url: profileImageURL)
+		} else {
+			profileImageRequest = nil
 		}
 
 		// If `originalBannerImage` is equal to `editedBannerImage`, then no change has happened: return `nil`
 		// If `originalBannerImage` is not equal to `editedBannerImage`, then something changed: return `editedBannerImage`
 		// If `editedBannerImage` is equal to the user's placeholder, then the user removed the current banner image: return `UIImage()`
+		let bannerImageRequest: ProfileUpdateImageRequest?
 		var bannerImageURL: URL? = URL(string: "kurozora://bannerimage")
 		if let indefinitiveBannerImage = self.originalBannerImage.isEqual(to: self.editedBannerImage) ? nil : self.editedBannerImage {
 			bannerImageURL = indefinitiveBannerImage.isEqual(to: self.user.attributes.bannerPlaceholderImage) ? nil : self.editedBannerImageURL
+			bannerImageRequest = bannerImageURL == nil ? .delete : .update(url: bannerImageURL)
+		} else {
+			bannerImageRequest = nil
 		}
 
 		Task {
 			do {
-				let profileUpdateRequest = ProfileUpdateRequest(username: nil, nickname: nil, biography: biography, profileImage: profileImageURL, bannerImage: bannerImageURL, preferredLanguage: nil, preferredTVRating: nil, preferredTimezone: nil)
+				let profileUpdateRequest = ProfileUpdateRequest(username: nil, nickname: nil, biography: biography, profileImageRequest: profileImageRequest, bannerImageRequest: bannerImageRequest, preferredLanguage: nil, preferredTVRating: nil, preferredTimezone: nil)
 
 				// Perform update request.
 				let userUpdateResponse = try await KService.updateInformation(profileUpdateRequest).value

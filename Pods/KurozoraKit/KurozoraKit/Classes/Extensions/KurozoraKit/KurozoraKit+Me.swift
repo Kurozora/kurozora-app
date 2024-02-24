@@ -76,11 +76,17 @@ extension KurozoraKit {
 		if let biography = profileUpdateRequest.biography {
 			parameters["biography"] = biography
 		}
-		if profileUpdateRequest.profileImage == nil {
+		switch profileUpdateRequest.profileImageRequest {
+		case .update: break
+		case .delete:
 			parameters["profileImage"] = "null"
+		case .none: break
 		}
-		if profileUpdateRequest.bannerImage == nil {
+		switch profileUpdateRequest.bannerImageRequest {
+		case .update: break
+		case .delete:
 			parameters["bannerImage"] = "null"
+		case .none: break
 		}
 		if let preferredLanguage = profileUpdateRequest.preferredLanguage {
 			parameters["preferredLanguage"] = preferredLanguage
@@ -95,31 +101,42 @@ extension KurozoraKit {
 		// Prepare request
 		let usersProfile = KKEndpoint.Me.update.endpointValue
 		let request: UploadAPIRequest<UserUpdateResponse, KKAPIError> = tron.codable.uploadMultipart(usersProfile) { formData in
-			if let profileImageURL = profileUpdateRequest.profileImage, let profileImageData = try? Data(contentsOf: profileImageURL) {
-				let pathExtension = profileImageURL.pathExtension
-				var uploadImage: Data!
+			switch profileUpdateRequest.profileImageRequest {
+			case .update(url: let profileImageURL):
+				if let profileImageURL = profileImageURL, let profileImageData = try? Data(contentsOf: profileImageURL) {
+					let pathExtension = profileImageURL.pathExtension
+					var uploadImage: Data!
 
-				switch pathExtension {
-				case "jpeg", "jpg", "png":
-					uploadImage = UIImage(data: profileImageData)?.jpegData(compressionQuality: 0.1) ?? profileImageData
-				default:
-					uploadImage = profileImageData
+					switch pathExtension {
+					case "jpeg", "jpg", "png":
+						uploadImage = UIImage(data: profileImageData)?.jpegData(compressionQuality: 0.1) ?? profileImageData
+					default:
+						uploadImage = profileImageData
+					}
+
+					formData.append(uploadImage, withName: "profileImage", fileName: profileImageURL.lastPathComponent, mimeType: "image/\(pathExtension)")
 				}
-
-				formData.append(uploadImage, withName: "profileImage", fileName: profileImageURL.lastPathComponent, mimeType: "image/\(pathExtension)")
+			case .delete: break
+			case .none: break
 			}
-			if let bannerImageURL = profileUpdateRequest.bannerImage, let bannerImageData = try? Data(contentsOf: bannerImageURL) {
-				let pathExtension = bannerImageURL.pathExtension
-				var uploadImage: Data!
 
-				switch pathExtension {
-				case "jpeg", "jpg", "png":
-					uploadImage = UIImage(data: bannerImageData)?.jpegData(compressionQuality: 0.1) ?? bannerImageData
-				default:
-					uploadImage = bannerImageData
+			switch profileUpdateRequest.bannerImageRequest {
+			case .update(url: let bannerImageURL):
+				if let bannerImageURL = bannerImageURL, let bannerImageData = try? Data(contentsOf: bannerImageURL) {
+					let pathExtension = bannerImageURL.pathExtension
+					var uploadImage: Data!
+
+					switch pathExtension {
+					case "jpeg", "jpg", "png":
+						uploadImage = UIImage(data: bannerImageData)?.jpegData(compressionQuality: 0.1) ?? bannerImageData
+					default:
+						uploadImage = bannerImageData
+					}
+
+					formData.append(uploadImage, withName: "bannerImage", fileName: bannerImageURL.lastPathComponent, mimeType: "image/\(pathExtension)")
 				}
-
-				formData.append(uploadImage, withName: "bannerImage", fileName: bannerImageURL.lastPathComponent, mimeType: "image/\(pathExtension)")
+			case .delete: break
+			case .none: break
 			}
 		}
 			.method(.post)

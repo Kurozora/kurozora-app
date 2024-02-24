@@ -109,7 +109,7 @@ class AccountTableViewController: SubSettingsViewController {
 
 		Task {
 			do {
-				let profileUpdateRequest = ProfileUpdateRequest(username: nil, nickname: nil, biography: nil, profileImage: nil, bannerImage: nil, preferredLanguage: selectedLanguage, preferredTVRating: selectedTVRating,
+				let profileUpdateRequest = ProfileUpdateRequest(username: nil, nickname: nil, biography: nil, profileImageRequest: nil, bannerImageRequest: nil, preferredLanguage: selectedLanguage, preferredTVRating: selectedTVRating,
 					preferredTimezone: selectedTimezone)
 
 				// Perform update request.

@@ -116,13 +116,14 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 			// If `originalProfileImage` is equal to `editedProfileImage`, then no change has happened: return `nil`
 			// If `originalProfileImage` is not equal to `editedProfileImage`, then something changed: return `editedProfileImage`
 			let profileImageURL = self.originalProfileImage.isEqual(to: self.editedProfileImage) ? nil : self.editedProfileImageURL
+			let profileImageRequest: ProfileUpdateImageRequest? = profileImageURL == nil ? nil : .update(url: profileImageURL)
 
 			// Disable user interaction.
 			self.disableUserInteraction(true)
 
 			Task {
 				do {
-					let profileUpdateRequest = ProfileUpdateRequest(username: nil, nickname: username, biography: nil, profileImage: profileImageURL, bannerImage: nil, preferredLanguage: nil, preferredTVRating: nil, preferredTimezone: nil)
+					let profileUpdateRequest = ProfileUpdateRequest(username: nil, nickname: username, biography: nil, profileImageRequest: profileImageRequest, bannerImageRequest: nil, preferredLanguage: nil, preferredTVRating: nil, preferredTimezone: nil)
 
 					// Perform information update request.
 					let userUpdateResponse = try await KService.updateInformation(profileUpdateRequest).value
