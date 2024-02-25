@@ -95,7 +95,7 @@ extension GameDetailsCollectionViewController {
 					switch itemKind {
 					case .game(let game, _):
 						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.delegate = self
-						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.configure(using: game.attributes.givenRating)
+						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.configure(using: game.attributes.library?.rating)
 					default: break
 					}
 				case .writeAReview:

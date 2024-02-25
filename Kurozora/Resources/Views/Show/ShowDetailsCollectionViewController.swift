@@ -326,14 +326,14 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 
 	@objc func handleFavoriteToggle(_ notification: NSNotification) {
 		#if targetEnvironment(macCatalyst)
-		let name = self.show.attributes.favoriteStatus == .favorited ? "heart.fill" : "heart"
+		let name = self.show.attributes.library?.favoriteStatus == .favorited ? "heart.fill" : "heart"
 		self.toggleShowIsFavoriteTouchBarItem?.image = UIImage(systemName: name)
 		#endif
 	}
 
 	@objc func handleReminderToggle(_ notification: NSNotification) {
 		#if targetEnvironment(macCatalyst)
-		let name = self.show.attributes.reminderStatus == .reminded ? "bell.fill" : "bell"
+		let name = self.show.attributes.library?.reminderStatus == .reminded ? "bell.fill" : "bell"
 		self.toggleShowIsRemindedTouchBarItem?.image = UIImage(systemName: name)
 		#endif
 	}
@@ -524,11 +524,11 @@ extension ShowDetailsCollectionViewController: BaseLockupCollectionViewCellDeleg
 
 						switch cell.libraryKind {
 						case .shows:
-							self.relatedShows[safe: indexPath.item]?.show.attributes.update(using: libraryUpdateResponse.data)
+							self.relatedShows[safe: indexPath.item]?.show.attributes.library?.update(using: libraryUpdateResponse.data)
 						case .literatures:
-							self.relatedLiteratures[safe: indexPath.item]?.literature.attributes.update(using: libraryUpdateResponse.data)
+							self.relatedLiteratures[safe: indexPath.item]?.literature.attributes.library?.update(using: libraryUpdateResponse.data)
 						case .games:
-							self.relatedGames[safe: indexPath.item]?.game.attributes.update(using: libraryUpdateResponse.data)
+							self.relatedGames[safe: indexPath.item]?.game.attributes.library?.update(using: libraryUpdateResponse.data)
 						}
 
 						// Update entry in library
@@ -552,11 +552,11 @@ extension ShowDetailsCollectionViewController: BaseLockupCollectionViewCellDeleg
 
 							switch cell.libraryKind {
 							case .shows:
-								self.relatedShows[safe: indexPath.item]?.show.attributes.update(using: libraryUpdateResponse.data)
+								self.relatedShows[safe: indexPath.item]?.show.attributes.library?.update(using: libraryUpdateResponse.data)
 							case .literatures:
-								self.relatedLiteratures[safe: indexPath.item]?.literature.attributes.update(using: libraryUpdateResponse.data)
+								self.relatedLiteratures[safe: indexPath.item]?.literature.attributes.library?.update(using: libraryUpdateResponse.data)
 							case .games:
-								self.relatedGames[safe: indexPath.item]?.game.attributes.update(using: libraryUpdateResponse.data)
+								self.relatedGames[safe: indexPath.item]?.game.attributes.library?.update(using: libraryUpdateResponse.data)
 							}
 
 							// Update edntry in library
@@ -628,8 +628,8 @@ extension ShowDetailsCollectionViewController: WriteAReviewCollectionViewCellDel
 			let reviewTextEditorViewController = ReviewTextEditorViewController()
 			reviewTextEditorViewController.delegate = self
 			reviewTextEditorViewController.router?.dataStore?.kind = .show(self.show)
-			reviewTextEditorViewController.router?.dataStore?.rating = self.show.attributes.givenRating
-			reviewTextEditorViewController.router?.dataStore?.review = self.show.attributes.givenReview
+			reviewTextEditorViewController.router?.dataStore?.rating = self.show.attributes.library?.rating
+			reviewTextEditorViewController.router?.dataStore?.review = self.show.attributes.library?.review
 
 			let navigationController = KNavigationController(rootViewController: reviewTextEditorViewController)
 			navigationController.presentationController?.delegate = reviewTextEditorViewController

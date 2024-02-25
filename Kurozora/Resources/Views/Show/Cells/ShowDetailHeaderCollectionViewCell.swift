@@ -61,7 +61,7 @@ extension ShowDetailHeaderCollectionViewCell {
 		self.visualEffectView.layerCornerRadius = 10.0
 
 		// Configure library status
-		self.libraryStatus = show.attributes.libraryStatus ?? .none
+		self.libraryStatus = show.attributes.library?.status ?? .none
 		self.updateLibraryActions(using: show)
 
 		// Configure title label
@@ -116,7 +116,7 @@ extension ShowDetailHeaderCollectionViewCell {
 		self.visualEffectView.layerCornerRadius = 10.0
 
 		// Configure library status
-		self.libraryStatus = literature.attributes.libraryStatus ?? .none
+		self.libraryStatus = literature.attributes.library?.status ?? .none
 		self.updateLibraryActions(using: literature)
 
 		// Configure title label
@@ -171,7 +171,7 @@ extension ShowDetailHeaderCollectionViewCell {
 		self.visualEffectView.layerCornerRadius = 10.0
 
 		// Configure library status
-		self.libraryStatus = game.attributes.libraryStatus ?? .none
+		self.libraryStatus = game.attributes.library?.status ?? .none
 		self.updateLibraryActions(using: game)
 
 		// Configure title label
@@ -247,8 +247,12 @@ extension ShowDetailHeaderCollectionViewCell {
 
 	/// Updates the `favoriteButton` appearance with the favorite status of the show.
 	///
-	/// - Parameter animated: A boolean value indicating whether to update changes with animations.
-	func updateFavoriteStatus(_ favoriteStatus: FavoriteStatus, animated: Bool = false) {
+	/// - Parameters:
+	///    - favoriteStatus: The favorite status of the show.
+	///    - animated: A boolean value indicating whether to update changes with animations.
+	func updateFavoriteStatus(_ favoriteStatus: FavoriteStatus?, animated: Bool = false) {
+		let favoriteStatus = favoriteStatus ?? .disabled
+
 		if self.libraryStatus == .none || favoriteStatus == .disabled {
 			self.favoriteButton.isHidden = true
 			self.favoriteButton.isUserInteractionEnabled = false
@@ -266,8 +270,12 @@ extension ShowDetailHeaderCollectionViewCell {
 
 	/// Updates the `reminderButton` appearance with the reminder status of the show.
 	///
-	/// - Parameter animated: A boolean value indicating whether to update changes with animations.
-	func updateReminderStatus(_ reminderStatus: ReminderStatus, animated: Bool = false) {
+	/// - Parameters:
+	///    - reminderStatus: The reminder status of the show.
+	///    - animated: A boolean value indicating whether to update changes with animations.
+	func updateReminderStatus(_ reminderStatus: ReminderStatus?, animated: Bool = false) {
+		let reminderStatus = reminderStatus ?? .disabled
+
 		if self.libraryStatus == .none || reminderStatus == .disabled {
 			self.reminderButton.isHidden = true
 			self.reminderButton.isUserInteractionEnabled = false
@@ -290,8 +298,8 @@ extension ShowDetailHeaderCollectionViewCell {
 	///    - animated: A boolean value indicating whether to update changes with animations.
 	func updateLibraryActions(using show: Show, animated: Bool = false) {
 		self.updateLibraryStatus()
-		self.updateFavoriteStatus(show.attributes.favoriteStatus, animated: animated)
-		self.updateReminderStatus(show.attributes.reminderStatus, animated: animated)
+		self.updateFavoriteStatus(show.attributes.library?.favoriteStatus, animated: animated)
+		self.updateReminderStatus(show.attributes.library?.reminderStatus, animated: animated)
 	}
 
 	/// Updates `favoriteButton`, `reminderButton` and `libraryStatusButton` with the attributes of the literature.
@@ -301,8 +309,8 @@ extension ShowDetailHeaderCollectionViewCell {
 	///    - animated: A boolean value indicating whether to update changes with animations.
 	func updateLibraryActions(using literature: Literature, animated: Bool = false) {
 		self.updateLibraryStatus()
-		self.updateFavoriteStatus(literature.attributes.favoriteStatus, animated: animated)
-		self.updateReminderStatus(literature.attributes.reminderStatus, animated: animated)
+		self.updateFavoriteStatus(literature.attributes.library?.favoriteStatus, animated: animated)
+		self.updateReminderStatus(literature.attributes.library?.reminderStatus, animated: animated)
 	}
 
 	/// Updates `favoriteButton`, `reminderButton` and `libraryStatusButton` with the attributes of the game.
@@ -312,8 +320,8 @@ extension ShowDetailHeaderCollectionViewCell {
 	///    - animated: A boolean value indicating whether to update changes with animations.
 	func updateLibraryActions(using game: Game, animated: Bool = false) {
 		self.updateLibraryStatus()
-		self.updateFavoriteStatus(game.attributes.favoriteStatus, animated: animated)
-		self.updateReminderStatus(game.attributes.reminderStatus, animated: animated)
+		self.updateFavoriteStatus(game.attributes.library?.favoriteStatus, animated: animated)
+		self.updateReminderStatus(game.attributes.library?.reminderStatus, animated: animated)
 	}
 }
 
@@ -351,15 +359,15 @@ extension ShowDetailHeaderCollectionViewCell {
 							switch self.libraryKind {
 							case .shows:
 								guard let show = self.show else { return }
-								show.attributes.update(using: libraryUpdateResponse.data)
+								show.attributes.library?.update(using: libraryUpdateResponse.data)
 								self.updateLibraryActions(using: show, animated: oldLibraryStatus == .none)
 							case .literatures:
 								guard let literature = self.literature else { return }
-								literature.attributes.update(using: libraryUpdateResponse.data)
+								literature.attributes.library?.update(using: libraryUpdateResponse.data)
 								self.updateLibraryActions(using: literature, animated: oldLibraryStatus == .none)
 							case .games:
 								guard let game = self.game else { return }
-								game.attributes.update(using: libraryUpdateResponse.data)
+								game.attributes.library?.update(using: libraryUpdateResponse.data)
 								self.updateLibraryActions(using: game, animated: oldLibraryStatus == .none)
 							}
 
@@ -385,15 +393,15 @@ extension ShowDetailHeaderCollectionViewCell {
 							switch self.libraryKind {
 							case .shows:
 								guard let show = self.show else { return }
-								show.attributes.update(using: libraryUpdateResponse.data)
+								show.attributes.library?.update(using: libraryUpdateResponse.data)
 								self.updateLibraryActions(using: show, animated: true)
 							case .literatures:
 								guard let literature = self.literature else { return }
-								literature.attributes.update(using: libraryUpdateResponse.data)
+								literature.attributes.library?.update(using: libraryUpdateResponse.data)
 								self.updateLibraryActions(using: literature, animated: true)
 							case .games:
 								guard let game = self.game else { return }
-								game.attributes.update(using: libraryUpdateResponse.data)
+								game.attributes.library?.update(using: libraryUpdateResponse.data)
 								self.updateLibraryActions(using: game, animated: true)
 							}
 

@@ -51,7 +51,7 @@ extension Literature.Attributes {
 //			informationString += " · ✓ \(watchedEpisodesCount)/\(self.episodeCount)"
 //		}
 
-		if let givenRating = self.givenRating {
+		if let givenRating = self.library?.rating {
 			informationString += " · ☆ \(givenRating)"
 		}
 

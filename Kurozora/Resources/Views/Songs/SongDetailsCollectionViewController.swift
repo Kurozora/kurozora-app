@@ -207,7 +207,7 @@ extension SongDetailsCollectionViewController: BaseLockupCollectionViewCellDeleg
 					do {
 						let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: String(show.id)).value
 
-						show.attributes.update(using: libraryUpdateResponse.data)
+						show.attributes.library?.update(using: libraryUpdateResponse.data)
 
 						// Update entry in library
 						cell.libraryStatus = value
@@ -228,7 +228,7 @@ extension SongDetailsCollectionViewController: BaseLockupCollectionViewCellDeleg
 						do {
 							let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: String(show.id)).value
 
-							show.attributes.update(using: libraryUpdateResponse.data)
+							show.attributes.library?.update(using: libraryUpdateResponse.data)
 
 							// Update edntry in library
 							cell.libraryStatus = .none

@@ -25,7 +25,7 @@ extension Show {
 
 	func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?) -> UIMenu {
 		var menuElements: [UIMenuElement] = []
-		let libraryStatus = self.attributes.libraryStatus ?? .none
+		let libraryStatus = self.attributes.library?.status ?? .none
 
 		if User.isSignedIn {
 			// Create "add to library" element
@@ -83,7 +83,7 @@ extension Show {
 	}
 
 	func addToLibrary() -> UIMenu {
-		let libraryStatus = self.attributes.libraryStatus ?? .none
+		let libraryStatus = self.attributes.library?.status ?? .none
 		let addToLibraryMenuTitle = libraryStatus == .none ? Trans.addTolibrary : Trans.updateLibraryStatus
 		let addToLibraryMenuImage = libraryStatus == .none ? UIImage(systemName: "plus") : UIImage(systemName: "arrow.left.arrow.right")
 		var menuElements: [UIMenuElement] = []
@@ -99,7 +99,7 @@ extension Show {
 							let libraryUpdateResponse = try await KService.addToLibrary(.shows, withLibraryStatus: actionLibraryStatus, modelID: String(self.id)).value
 
 							// Update entry in library
-							self.attributes.update(using: libraryUpdateResponse.data)
+							self.attributes.library?.update(using: libraryUpdateResponse.data)
 
 							let libraryAddToNotificationName = Notification.Name("AddTo\(actionLibraryStatus.sectionValue)Section")
 							NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
@@ -120,9 +120,9 @@ extension Show {
 			let libraryUpdateResponse = try await KService.removeFromLibrary(.shows, modelID: String(self.id)).value
 
 			// Update entry in library
-			self.attributes = self.attributes.updated(using: libraryUpdateResponse.data)
+			self.attributes.library?.update(using: libraryUpdateResponse.data)
 
-			if let oldLibraryStatus = self.attributes.libraryStatus {
+			if let oldLibraryStatus = self.attributes.library?.status {
 				let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
 				NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
 			}
@@ -141,7 +141,7 @@ extension Show {
 				do {
 					let favoriteResponse = try await KService.updateFavoriteStatus(inLibrary: .shows, modelID: String(self.id)).value
 
-					self.attributes.favoriteStatus = favoriteResponse.data.favoriteStatus
+					self.attributes.library?.favoriteStatus = favoriteResponse.data.favoriteStatus
 					NotificationCenter.default.post(name: .KModelFavoriteIsToggled, object: nil, userInfo: [
 						"favoriteStatus": favoriteResponse.data.favoriteStatus
 					])
@@ -162,7 +162,7 @@ extension Show {
 					do {
 						let updateReminderResponse = try await KService.updateReminderStatus(inLibrary: .shows, modelID: String(self.id)).value
 
-						self.attributes.reminderStatus = updateReminderResponse.data.reminderStatus
+						self.attributes.library?.reminderStatus = updateReminderResponse.data.reminderStatus
 						NotificationCenter.default.post(name: .KModelReminderIsToggled, object: nil, userInfo: [
 							"reminderStatus": updateReminderResponse.data.reminderStatus
 						])
@@ -189,11 +189,11 @@ extension Show {
 			_ = try await KService.rateShow(showIdentity, with: rating, description: description).value
 
 			// Update current rating for the user.
-			self.attributes.givenRating = rating
+			self.attributes.library?.rating = rating
 
 			// Update review only if the user removes it explicitly.
 			if description != nil {
-				self.attributes.givenReview = description
+				self.attributes.library?.review = description
 			}
 
 			return rating
@@ -204,7 +204,7 @@ extension Show {
 	}
 
 	private func validateIsInLibrary() async -> Bool {
-		if self.attributes.libraryStatus == nil {
+		if self.attributes.library?.status == nil {
 			await UIApplication.topViewController?.presentAlertController(title: Trans.addTolibrary, message: "Please add \"\(self.attributes.title)\" to your library first.")
 
 			return false

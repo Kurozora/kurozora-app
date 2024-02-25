@@ -95,7 +95,7 @@ extension LiteratureDetailsCollectionViewController {
 					switch itemKind {
 					case .literature(let literature, _):
 						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.delegate = self
-						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.configure(using: literature.attributes.givenRating)
+						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.configure(using: literature.attributes.library?.rating)
 					default: break
 					}
 				case .writeAReview:

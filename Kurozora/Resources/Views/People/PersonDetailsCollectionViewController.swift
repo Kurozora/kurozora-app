@@ -257,11 +257,11 @@ extension PersonDetailsCollectionViewController: BaseLockupCollectionViewCellDel
 
 						switch cell.libraryKind {
 						case .shows:
-							self.shows[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
+							self.shows[indexPath]?.attributes.library?.update(using: libraryUpdateResponse.data)
 						case .literatures:
-							self.literatures[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
+							self.literatures[indexPath]?.attributes.library?.update(using: libraryUpdateResponse.data)
 						case .games:
-							self.games[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
+							self.games[indexPath]?.attributes.library?.update(using: libraryUpdateResponse.data)
 						}
 
 						// Update entry in library
@@ -285,11 +285,11 @@ extension PersonDetailsCollectionViewController: BaseLockupCollectionViewCellDel
 
 							switch cell.libraryKind {
 							case .shows:
-								self.shows[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
+								self.shows[indexPath]?.attributes.library?.update(using: libraryUpdateResponse.data)
 							case .literatures:
-								self.literatures[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
+								self.literatures[indexPath]?.attributes.library?.update(using: libraryUpdateResponse.data)
 							case .games:
-								self.games[indexPath]?.attributes.update(using: libraryUpdateResponse.data)
+								self.games[indexPath]?.attributes.library?.update(using: libraryUpdateResponse.data)
 							}
 
 							// Update edntry in library

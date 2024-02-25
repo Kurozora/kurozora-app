@@ -27,7 +27,7 @@ extension LiteratureDetailsCollectionViewController: NSTouchBarDelegate {
 
 		switch identifier {
 		case .toggleModelIsFavorite:
-			let name = literature.attributes.favoriteStatus == .favorited ? "heart.fill" : "heart"
+			let name = literature.attributes.library?.favoriteStatus == .favorited ? "heart.fill" : "heart"
 			guard let image = UIImage(systemName: name) else { return nil }
 			self.toggleLiteratureIsFavoriteTouchBarItem = NSButtonTouchBarItem(identifier: identifier, image: image, target: self, action: #selector(self.toggleFavorite))
 			touchBarItem = self.toggleLiteratureIsFavoriteTouchBarItem

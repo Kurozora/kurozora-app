@@ -51,7 +51,7 @@ class SearchShowResultsCell: KCollectionViewCell {
 
 		// Configure library status
 		self.libraryKind = libraryKind
-		self.libraryStatus = show.attributes.libraryStatus ?? .none
+		self.libraryStatus = show.attributes.library?.status ?? .none
 		let libraryStatus: String
 
 		switch self.libraryKind {

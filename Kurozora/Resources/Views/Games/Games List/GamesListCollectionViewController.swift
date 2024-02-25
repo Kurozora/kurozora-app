@@ -316,7 +316,7 @@ extension GamesListCollectionViewController: BaseLockupCollectionViewCellDelegat
 					do {
 						let libraryUpdateResponse = try await KService.addToLibrary(.games, withLibraryStatus: value, modelID: String(game.id)).value
 
-						game.attributes.update(using: libraryUpdateResponse.data)
+						game.attributes.library?.update(using: libraryUpdateResponse.data)
 
 						// Update entry in library
 						cell.libraryStatus = value
@@ -337,7 +337,7 @@ extension GamesListCollectionViewController: BaseLockupCollectionViewCellDelegat
 						do {
 							let libraryUpdateResponse = try await KService.removeFromLibrary(.games, modelID: String(game.id)).value
 
-							game.attributes.update(using: libraryUpdateResponse.data)
+							game.attributes.library?.update(using: libraryUpdateResponse.data)
 
 							// Update edntry in library
 							cell.libraryStatus = .none

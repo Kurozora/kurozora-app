@@ -64,7 +64,7 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 		}
 
 		// Configure library status
-		self.configureLibraryStatus(with: show.attributes.libraryStatus ?? .none)
+		self.configureLibraryStatus(with: show.attributes.library?.status ?? .none)
 	}
 
 	/// Configure the cell with the `Literature` object.
@@ -100,7 +100,7 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 		}
 
 		// Configure library status
-		self.configureLibraryStatus(with: literature.attributes.libraryStatus ?? .none)
+		self.configureLibraryStatus(with: literature.attributes.library?.status ?? .none)
 	}
 
 	/// Configure the cell with the `Game` object.
@@ -136,7 +136,7 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 		}
 
 		// Configure library status
-		self.configureLibraryStatus(with: game.attributes.libraryStatus ?? .none)
+		self.configureLibraryStatus(with: game.attributes.library?.status ?? .none)
 	}
 
 	func configureLibraryStatus(with libraryStatus: KKLibrary.Status) {

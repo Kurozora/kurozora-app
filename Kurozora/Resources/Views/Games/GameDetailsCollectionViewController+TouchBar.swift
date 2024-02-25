@@ -27,7 +27,7 @@ extension GameDetailsCollectionViewController: NSTouchBarDelegate {
 
 		switch identifier {
 		case .toggleModelIsFavorite:
-			let name = game.attributes.favoriteStatus == .favorited ? "heart.fill" : "heart"
+			let name = game.attributes.library?.favoriteStatus == .favorited ? "heart.fill" : "heart"
 			guard let image = UIImage(systemName: name) else { return nil }
 			self.toggleGameIsFavoriteTouchBarItem = NSButtonTouchBarItem(identifier: identifier, image: image, target: self, action: #selector(self.toggleFavorite))
 			touchBarItem = self.toggleGameIsFavoriteTouchBarItem
