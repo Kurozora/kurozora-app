@@ -18,7 +18,6 @@ def kurozora_pods
 	pod 'R.swift'
 	pod 'ReachabilitySwift'
 	pod 'Solar'
-#	pod 'SnowGlobe'
 	pod 'SPConfetti'
 	pod 'SwiftTheme'
 	pod 'SwifterSwift'

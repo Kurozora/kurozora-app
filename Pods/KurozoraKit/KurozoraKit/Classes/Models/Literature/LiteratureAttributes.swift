@@ -7,7 +7,7 @@
 
 extension Literature {
 	/// A root object that stores information about a single literature, such as the literature's title, episode count, and air date.
-	public struct Attributes: LibraryAttributes {
+	public struct Attributes: Codable {
 		// MARK: - Properties
 		// General
 		/// The AniDB id of the literature.
@@ -118,19 +118,7 @@ extension Literature {
 		/// The copyright text of the literature.
 		public let copyright: String?
 
-		// Library attirbutes
-		public var givenRating: Double?
-
-		public var givenReview: String?
-
-		public var libraryStatus: KKLibrary.Status?
-
-		public var isFavorited: Bool?
-
-		public var _favoriteStatus: FavoriteStatus?
-
-		public var isReminded: Bool?
-
-		public var _reminderStatus: ReminderStatus?
+		/// The library attirbutes of the literature.
+		public var library: LibraryAttributes?
 	}
 }

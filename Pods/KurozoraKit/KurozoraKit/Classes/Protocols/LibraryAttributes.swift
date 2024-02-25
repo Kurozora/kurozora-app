@@ -5,52 +5,72 @@
 //  Created by Khoren Katklian on 14/08/2020.
 //
 
-/// A type that holds the value of library attributes.
-///
-/// Use the `LibraryAttributes` protocol to provide a library attributes to a class or value type. For example, you could define a Show type with a library status property that is stable across your app and your app’s database storage. You could use the library status property to identify a particular show's library status even if other data fields change, such as the show's title.
-public protocol LibraryAttributes: Codable {
+/// A root object that stores information about a library update resource.
+public typealias LibraryUpdate = LibraryAttributes
+
+/// A root object that stores information about a single library item, such as the item's rating, favorite status, and library status.
+public struct LibraryAttributes: Codable {
 	/// The rating given to the item.
-	var givenRating: Double? { get set }
+	public var rating: Double?
 
 	/// The review given to the item.
-	var givenReview: String? { get set }
+	public var review: String?
 
 	/// Whether the item is favorited.
-	var isFavorited: Bool? { get }
+	public var isFavorited: Bool?
 
 	/// The favorite status of the item.
-	var _favoriteStatus: FavoriteStatus? { get set }
+	public var _favoriteStatus: FavoriteStatus?
 
 	/// Whether the reminder for the item is turned on.
-	var isReminded: Bool? { get set }
+	public var isReminded: Bool?
 
 	/// The reminder status of the item.
-	var _reminderStatus: ReminderStatus? { get set }
+	public var _reminderStatus: ReminderStatus?
+
+	/// Whether the item is marked as hidden.
+	public var isHidden: Bool?
+
+	/// The hidden status of the item.
+	public var _hiddenStatus: HiddenStatus?
 
 	/// The library status of the item.
-	var libraryStatus: KKLibrary.Status? { get set }
+	public var status: KKLibrary.Status?
+
+	/// The rewatch count of the item.
+	public var rewathCount: Int?
 }
 
 // MARK: - Helpers
 extension LibraryAttributes {
 	// MARK: - Properties
-	/// The favorite status of the show.
+	/// The favorite status of the library item.
 	public var favoriteStatus: FavoriteStatus {
 		get {
-			return self._favoriteStatus ?? FavoriteStatus(isFavorited)
+			return self._favoriteStatus ?? FavoriteStatus(self.isFavorited)
 		}
 		set {
 			self._favoriteStatus = newValue
 		}
 	}
 
-	/// The reminder status of the show.
+	/// The reminder status of the library item.
 	public var reminderStatus: ReminderStatus {
 		get {
-			return self._reminderStatus ?? ReminderStatus(isReminded)
+			return self._reminderStatus ?? ReminderStatus(self.isReminded)
 		}
 		set {
 			self._reminderStatus = newValue
+		}
+	}
+
+	/// The hidden status of the library item.
+	public var hiddenStatus: HiddenStatus {
+		get {
+			return self.hiddenStatus ?? HiddenStatus(self.isHidden)
+		}
+		set {
+			self._hiddenStatus = newValue
 		}
 	}
 
@@ -61,7 +81,7 @@ extension LibraryAttributes {
 	public mutating func update(using libraryUpdate: LibraryUpdate) {
 		self.favoriteStatus = libraryUpdate.favoriteStatus
 		self.reminderStatus = libraryUpdate.reminderStatus
-		self.libraryStatus = libraryUpdate.libraryStatus
+		self.status = libraryUpdate.status
 	}
 
 	/// Returns a copy of the object with the updated attributes from the given `LibraryUpdate` object.
@@ -73,7 +93,7 @@ extension LibraryAttributes {
 		var libraryAttributes = self
 		libraryAttributes.favoriteStatus = libraryUpdate.favoriteStatus
 		libraryAttributes.reminderStatus = libraryUpdate.reminderStatus
-		libraryAttributes.libraryStatus = libraryUpdate.libraryStatus
+		libraryAttributes.status = libraryUpdate.status
 		return libraryAttributes
 	}
 }
