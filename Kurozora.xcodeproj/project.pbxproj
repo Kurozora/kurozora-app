@@ -329,6 +329,7 @@
 		6671F28E27A58753005D3A0D /* ThemesCollectionViewController+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6671F28727A5855F005D3A0D /* ThemesCollectionViewController+UICollectionViewDelegate.swift */; };
 		6671F29027A58844005D3A0D /* Theme.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6671F28F27A58840005D3A0D /* Theme.storyboard */; };
 		6671F29327A58883005D3A0D /* ThemeLockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6671F29227A58883005D3A0D /* ThemeLockupCollectionViewCell.swift */; };
+		6672A1CD2B8909A30036CFC5 /* App TV Ratings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 669D0FCB2B88015900CBC0BF /* App TV Ratings.plist */; };
 		6674A0C320A45E6D00AAB527 /* LinkCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6674A0C220A45E6D00AAB527 /* LinkCollectionViewCell.swift */; };
 		6675262F22280ACB007C1617 /* Default.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6675262C22280ACA007C1617 /* Default.plist */; };
 		6675263022280ACB007C1617 /* Day.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6675262D22280ACB007C1617 /* Day.plist */; };
@@ -1078,6 +1079,7 @@
 		669A36C224F1C08D0045D04A /* OnboardingFooterTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingFooterTableViewCell.xib; sourceTree = "<group>"; };
 		669C8D552107B7D80014EB7A /* BounceAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BounceAnimation.swift; sourceTree = "<group>"; };
 		669C8D572107B8170014EB7A /* BasicTabBarItemContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTabBarItemContentView.swift; sourceTree = "<group>"; };
+		669D0FCB2B88015900CBC0BF /* App TV Ratings.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "App TV Ratings.plist"; sourceTree = "<group>"; };
 		669E0358256B218900CEB794 /* Session+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Session+UIKit.swift"; sourceTree = "<group>"; };
 		669E89C62345573600092778 /* KStoreObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KStoreObserver.swift; sourceTree = "<group>"; };
 		669EA99F22C1490A00784181 /* SubscriptionCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionCollectionViewController.swift; sourceTree = "<group>"; };
@@ -3481,6 +3483,7 @@
 				66A4FD18270F6CD100E7C702 /* App Icons.plist */,
 				664D0F532B841B2E00CF5E91 /* App Languages.plist */,
 				664D0F552B84226B00CF5E91 /* App Timezones.plist */,
+				669D0FCB2B88015900CBC0BF /* App TV Ratings.plist */,
 				66A4FD10270F62D300E7C702 /* Info.plist */,
 				66A4FD12270F62D300E7C702 /* Products.plist */,
 				66EDBA6B2946943700FF1A2E /* Launch Background.png */,
@@ -3987,6 +3990,7 @@
 				664AAF9424EEA37800FF4AA5 /* PersonLockupCollectionViewCell.xib in Resources */,
 				66500D1A29605FF30098D59D /* PurchaseFooterCollectionViewCell.xib in Resources */,
 				66631B492B4024450006F02B /* SoundSettings.storyboard in Resources */,
+				6672A1CD2B8909A30036CFC5 /* App TV Ratings.plist in Resources */,
 				660C043423D150310040C749 /* LargeLockupCollectionViewCell.xib in Resources */,
 				66E54D5E2A6D352700F9F8AA /* RatingBarCollectionViewCell.xib in Resources */,
 				666938BB21B1D51800BA9620 /* PostLinkCell.xib in Resources */,
