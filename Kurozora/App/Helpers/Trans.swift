@@ -882,6 +882,16 @@ struct Trans {
 	/// - Tag: Trans-removeFromlibrary
 	static let removeFromLibrary: String = String(localized: "Remove from Library",
 												  comment: "The string for the word 'remove from library'.")
+	/// The string for the phrase 'hide from public'.
+	///
+	/// - Tag: Trans-hideFromPublic
+	static let hideFromPublic: String = String(localized: "Hide from Public",
+											   comment: "The string for the phrase 'hide from public'.")
+	/// The string for the phrase 'show to public'.
+	///
+	/// - Tag: Trans-showToPublic
+	static let showToPublic: String = String(localized: "Show to Public",
+											 comment: "The string for the phrase 'show to public'.")
 	/// The string for the word 'watched'.
 	///
 	/// - Tag: Trans-watched

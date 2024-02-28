@@ -33,6 +33,26 @@ extension Show {
 			menuElements.append(addToLibraryAction)
 		}
 
+		if User.isSignedIn {
+			// Create "mark as hidden" element
+			let hiddenStatus = self.attributes.library?.hiddenStatus
+
+			if hiddenStatus != .disabled {
+				let updateHiddenStatusTitle = hiddenStatus == .hidden ? Trans.showToPublic : Trans.hideFromPublic
+				let updateHiddenStatusImage = hiddenStatus == .hidden ? UIImage(systemName: "eye.slash.fill") : UIImage(systemName: "eye.fill")
+
+				let hideAction = UIAction(title: updateHiddenStatusTitle, image: updateHiddenStatusImage) { [weak self] _ in
+					guard let self = self else { return }
+					guard let isHidden = self.attributes.library?.isHidden else { return }
+
+					Task {
+						await self.markAsHidden(!isHidden)
+					}
+				}
+				menuElements.append(hideAction)
+			}
+		}
+
 		// Create "share" element
 		let shareAction = UIAction(title: Trans.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
 			guard let self = self else { return }
@@ -200,6 +220,40 @@ extension Show {
 		} catch {
 			print(error.localizedDescription)
 			return nil
+		}
+	}
+
+	/// Update the hidden status of the show.
+	///
+	/// - Parameters:
+	///    - hidden: The boolean value determining whether to hide the show in the user's library.
+	func markAsHidden(_ hidden: Bool) async {
+		guard await self.validateIsInLibrary() else { return }
+
+		do {
+			_ = try await KService.updateInLibrary(.shows, modelID: self.id, rewatchCount: nil, isHidden: hidden).value
+
+			// Update current rating for the user.
+			self.attributes.library?.isHidden = hidden
+		} catch {
+			print(error.localizedDescription)
+		}
+	}
+
+	/// Update the rewatch count of the show.
+	///
+	/// - Parameters:
+	///    - count: The number to update the rewatch count with.
+	func rewatch(for count: Int) async {
+		guard await self.validateIsInLibrary() else { return }
+
+		do {
+			_ = try await KService.updateInLibrary(.shows, modelID: self.id, rewatchCount: count, isHidden: nil).value
+
+			// Update current rating for the user.
+			self.attributes.library?.rewathCount = count
+		} catch {
+			print(error.localizedDescription)
 		}
 	}
 
