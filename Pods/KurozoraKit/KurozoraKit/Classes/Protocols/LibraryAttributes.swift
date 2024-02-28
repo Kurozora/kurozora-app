@@ -67,7 +67,7 @@ extension LibraryAttributes {
 	/// The hidden status of the library item.
 	public var hiddenStatus: HiddenStatus {
 		get {
-			return self.hiddenStatus ?? HiddenStatus(self.isHidden)
+			return self._hiddenStatus ?? HiddenStatus(self.isHidden)
 		}
 		set {
 			self._hiddenStatus = newValue

@@ -89,10 +89,13 @@ extension KKEndpoint.Me {
 	/// The set of available Library API endpoint types.
 	internal enum Library {
 		// MARK: - Cases
-		/// The endpoint to get and add shows to the authenticated user's library.
+		/// The endpoint to get models/add models to the authenticated user's library.
 		case index
 
-		/// The endpoint to the delete a show from the authenticated user's library.
+		/// The endpoint to update a model in the authenticated user's library.
+		case update
+
+		/// The endpoint to delete a model from the authenticated user's library.
 		case delete
 
 		/// The endpoint to import an exported MyAnimeList file into the  authenticated user's library.
@@ -107,6 +110,8 @@ extension KKEndpoint.Me {
 			switch self {
 			case .index:
 				return "me/library"
+			case .update:
+				return "me/library/update"
 			case .delete:
 				return "me/library/delete"
 			case .malImport:

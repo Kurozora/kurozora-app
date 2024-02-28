@@ -32,7 +32,7 @@ extension Season {
 
 			if watchStatus != .disabled {
 				let updateWatchStatusTitle = watchStatus == .watched ? Trans.markAllUnwatched : Trans.markAllWatched
-				let updateWatchStatusImage = watchStatus == .watched ? UIImage(systemName: "eye.fill.slash") : UIImage(systemName: "eye.fill")
+				let updateWatchStatusImage = watchStatus == .watched ? UIImage(systemName: "eye.slash.fill") : UIImage(systemName: "eye.fill")
 				let attributes: UIAction.Attributes = watchStatus == .notWatched ? [] : .destructive
 
 				let watchAction = UIAction(title: updateWatchStatusTitle, image: updateWatchStatusImage, attributes: attributes) { [weak self] _ in

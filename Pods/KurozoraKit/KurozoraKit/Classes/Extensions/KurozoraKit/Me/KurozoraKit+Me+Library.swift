@@ -77,6 +77,43 @@ extension KurozoraKit {
 		return request.sender()
 	}
 
+	/// Update an item with the given item id in the authenticated user's library.
+	///
+	/// - Parameters:
+	///    - libraryKind: From which library to delete the item.
+	///    - modelID: The id of the model to be deleted.
+	///    - rewatchCount: The rewatch count of the item.
+	///    - isHidden: Wehther the item is marked as hidden.
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the update in library response.
+	public func updateInLibrary(_ libraryKind: KKLibrary.Kind, modelID: String, rewatchCount: Int?, isHidden: Bool?) -> RequestSender<LibraryUpdateResponse, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
+		headers.add(.authorization(bearerToken: self.authenticationKey))
+
+		// Prepare parameters
+		var parameters: [String: Any] = [
+			"library": libraryKind.rawValue,
+			"model_id": modelID
+		]
+		if let rewatchCount = rewatchCount {
+			parameters["rewatch_count"] = rewatchCount
+		}
+		if let isHidden = isHidden {
+			parameters["is_hidden"] = isHidden
+		}
+
+		// Prepare request
+		let meLibraryUpdate = KKEndpoint.Me.Library.update.endpointValue
+		let request: APIRequest<LibraryUpdateResponse, KKAPIError> = tron.codable.request(meLibraryUpdate)
+			.method(.post)
+			.headers(headers)
+			.parameters(parameters)
+
+		// Send request
+		return request.sender()
+	}
+
 	/// Remove an item with the given item id from the authenticated user's library.
 	///
 	/// - Parameters:
