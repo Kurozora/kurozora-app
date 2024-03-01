@@ -46,6 +46,14 @@ class AccountTableViewController: SubSettingsViewController {
 
 		self.languages = self.loadOptions(from: "App Languages")
 		self.tvRatings = self.loadOptions(from: "App TV Ratings")
+		// If the user doesn't have `R18+` already enabled, then hide it along with the `All` option,
+		// just to make sure underaged users, who are more likely to be using the app than the website,
+		// don't have access to those options. Adults will figure out how to change it on the website...
+		// probably...
+		if User.current?.attributes.preferredTVRating != 5 || User.current == nil {
+			self.tvRatings.removeValue(forKey: "-1") // All
+			self.tvRatings.removeValue(forKey: "5") // R18+
+		}
 		self.timezones = self.loadOptions(from: "App Timezones")
 
 		self.configureUserDetails()
@@ -115,6 +123,7 @@ class AccountTableViewController: SubSettingsViewController {
 				// Perform update request.
 				let userUpdateResponse = try await KService.updateInformation(profileUpdateRequest).value
 				User.current?.attributes.update(using: userUpdateResponse.data)
+				NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
 			} catch {
 				print(error.localizedDescription)
 			}
