@@ -66,4 +66,12 @@ extension String {
 	func markdownAttributedString() -> NSAttributedString? {
 		return try? NSAttributedString(markdown: self, options: AttributedString.MarkdownParsingOptions(interpretedSyntax: .inlineOnlyPreservingWhitespace))
 	}
+
+	/// Returns an array of URLs found in the string.
+	func extractURLs() -> [URL] {
+		let detector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+		let matches = detector?.matches(in: self, options: [], range: NSRange(location: 0, length: self.utf16.count))
+
+		return matches?.compactMap { $0.url } ?? []
+	}
 }

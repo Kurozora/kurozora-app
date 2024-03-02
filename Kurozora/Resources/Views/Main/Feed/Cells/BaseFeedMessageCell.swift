@@ -23,6 +23,7 @@ class BaseFeedMessageCell: KTableViewCell {
 	@IBOutlet weak var commentButton: CellActionButton!
 	@IBOutlet weak var shareButton: CellActionButton!
 	@IBOutlet weak var moreButton: CellActionButton!
+	@IBOutlet weak var richLinkStackView: UIStackView?
 
 	// MARK: - Properties
 	weak var delegate: BaseFeedMessageCellDelegate?
@@ -35,6 +36,10 @@ class BaseFeedMessageCell: KTableViewCell {
 		super.prepareForReuse()
 
 		self.warningIsHidden = false
+		self.richLinkStackView?.arrangedSubviews.forEach { subview in
+			self.richLinkStackView?.removeArrangedSubview(subview)
+			subview.removeFromSuperview()
+		}
 	}
 
 	// MARK: - Functions
@@ -94,6 +99,23 @@ class BaseFeedMessageCell: KTableViewCell {
 
 		// Configure warning messages
 		self.configureWarnings(for: feedMessage)
+
+		// Configure rich link previews
+		if let url = feedMessage.attributes.content.extractURLs().last {
+			if let metadata = RichLink.cachedMetadata(for: url) {
+				let metadataView = KLinkView(metadata: metadata)
+				self.richLinkStackView?.addArrangedSubview(metadataView)
+			} else {
+				Task {
+					if let metadata = await RichLink.fetchMetadata(for: url) {
+						let metadataView = KLinkView(metadata: metadata)
+						DispatchQueue.main.async {
+							self.richLinkStackView?.addArrangedSubview(metadataView)
+						}
+					}
+				}
+			}
+		}
 	}
 
 	/// Configures the re-share button.
