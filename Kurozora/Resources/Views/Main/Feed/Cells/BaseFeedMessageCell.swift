@@ -72,7 +72,27 @@ class BaseFeedMessageCell: KTableViewCell {
 		}
 
 		// Configure body
-		self.postTextView.setAttributedText(feedMessage.attributes.contentMarkdown.markdownAttributedString())
+		if let url = feedMessage.attributes.content.extractURLs().last {
+			if let metadata = RichLink.cachedMetadata(for: url) {
+				let metadataView = KLinkView(metadata: metadata)
+				self.richLinkStackView?.addArrangedSubview(metadataView)
+
+				self.configurePostTextView(for: feedMessage, byRemovingURL: url)
+			} else {
+				Task(priority: .background) {
+					if let metadata = await RichLink.fetchMetadata(for: url) {
+						let metadataView = KLinkView(metadata: metadata)
+
+						DispatchQueue.main.async {
+							self.richLinkStackView?.addArrangedSubview(metadataView)
+							self.configurePostTextView(for: feedMessage, byRemovingURL: url)
+						}
+					}
+				}
+			}
+		} else {
+			self.postTextView.setAttributedText(feedMessage.attributes.contentMarkdown.markdownAttributedString())
+		}
 		self.postTextView.delegate = self
 
 		// Configure date time
@@ -99,23 +119,22 @@ class BaseFeedMessageCell: KTableViewCell {
 
 		// Configure warning messages
 		self.configureWarnings(for: feedMessage)
+	}
 
-		// Configure rich link previews
-		if let url = feedMessage.attributes.content.extractURLs().last {
-			if let metadata = RichLink.cachedMetadata(for: url) {
-				let metadataView = KLinkView(metadata: metadata)
-				self.richLinkStackView?.addArrangedSubview(metadataView)
-			} else {
-				Task {
-					if let metadata = await RichLink.fetchMetadata(for: url) {
-						let metadataView = KLinkView(metadata: metadata)
-						DispatchQueue.main.async {
-							self.richLinkStackView?.addArrangedSubview(metadataView)
-						}
-					}
-				}
-			}
+	fileprivate func configurePostTextView(for feedMessage: FeedMessage, byRemovingURL url: URL) {
+		let contentMarkdown = self.removeURLFromEndOfText(url: url, text: feedMessage.attributes.contentMarkdown)
+		self.postTextView.setAttributedText(contentMarkdown.markdownAttributedString())
+	}
+
+	fileprivate func removeURLFromEndOfText(url: URL, text: String) -> String {
+		let urlString = url.absoluteString
+
+		// Remove the URL from the end of the full text
+		if text.hasSuffix(urlString) {
+			return String(text.dropLast(urlString.count))
 		}
+
+		return text
 	}
 
 	/// Configures the re-share button.
