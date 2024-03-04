@@ -10,60 +10,6 @@ import UIKit
 import KurozoraKit
 import LinkPresentation
 
-class GIFView: UIView {
-	// MARK: - Properties
-	let gifURL: URL
-
-	// MARK: - Views
-	let gifImageView: UIImageView = {
-		let imageView = UIImageView()
-		imageView.translatesAutoresizingMaskIntoConstraints = false
-		imageView.contentMode = .scaleAspectFill
-		imageView.layerCornerRadius = 8
-		return imageView
-	}()
-
-	// MARK: - Initializers
-	init(url: URL) {
-		self.gifURL = url
-		super.init(frame: .zero)
-		self.configureLayout()
-		self.configureGIF()
-	}
-
-	required init?(coder: NSCoder) {
-		fatalError("init(coder:) is not supported. Use init(url: URL) instead.")
-	}
-
-	// MARK: - Functions
-	fileprivate func configureGIF() {
-		self.gifImageView.kf.setImage(with: self.gifURL)
-	}
-
-	fileprivate func configureLayout() {
-		self.addSubview(self.gifImageView)
-
-		NSLayoutConstraint.activate([
-			self.gifImageView.topAnchor.constraint(equalTo: self.topAnchor),
-			self.gifImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-			self.gifImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-			self.gifImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-		])
-	}
-
-	override func layoutSubviews() {
-		super.layoutSubviews()
-
-		// Update aspect ratio constraint based on image size
-		if let imageSize = self.gifImageView.image?.size {
-			let aspectRatio = imageSize.width / imageSize.height
-			let aspectRatioConstraint = self.gifImageView.widthAnchor.constraint(equalTo: self.gifImageView.heightAnchor, multiplier: aspectRatio)
-			aspectRatioConstraint.priority = .required - 1
-			aspectRatioConstraint.isActive = true
-		}
-	}
-}
-
 class BaseFeedMessageCell: KTableViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var warningTranscriptLabel: UILabel?
@@ -74,6 +20,7 @@ class BaseFeedMessageCell: KTableViewCell {
 	@IBOutlet weak var profileBadgeStackView: ProfileBadgeStackView!
 	@IBOutlet weak var dateTimeLabel: KSecondaryLabel!
 	@IBOutlet weak var postTextView: KTextView!
+	@IBOutlet weak var postTextViewContainer: UIView?
 	@IBOutlet weak var heartButton: CellActionButton!
 	@IBOutlet weak var commentButton: CellActionButton!
 	@IBOutlet weak var shareButton: CellActionButton!
@@ -92,8 +39,10 @@ class BaseFeedMessageCell: KTableViewCell {
 
 		self.warningIsHidden = false
 		self.richLinkStackView?.arrangedSubviews.forEach { subview in
-			self.richLinkStackView?.removeArrangedSubview(subview)
-			subview.removeFromSuperview()
+			if subview != self.postTextViewContainer {
+				self.richLinkStackView?.removeArrangedSubview(subview)
+				subview.removeFromSuperview()
+			}
 		}
 	}
 
@@ -175,16 +124,17 @@ class BaseFeedMessageCell: KTableViewCell {
 	fileprivate func configurePostTextView(for feedMessage: FeedMessage, byRemovingURL url: URL) {
 		let contentMarkdown = self.removeURLFromEndOfText(url: url, text: feedMessage.attributes.contentMarkdown)
 		self.postTextView.setAttributedText(contentMarkdown.markdownAttributedString())
+		self.postTextViewContainer?.isHidden = contentMarkdown.isEmpty
 	}
 
 	fileprivate func displayMetadata(_ metadata: LPLinkMetadata) {
-		if let gifURL = metadata.url, gifURL.pathExtension.lowercased() == "gif" {
-			let gifView = GIFView(url: gifURL)
-			self.richLinkStackView?.addArrangedSubview(gifView)
-		} else {
-			let metadataView = KLinkView(metadata: metadata)
-			self.richLinkStackView?.addArrangedSubview(metadataView)
-		}
+//		if let gifURL = metadata.url, gifURL.pathExtension.lowercased() == "gif" {
+//			let gifView = GIFView(url: gifURL)
+//			self.richLinkStackView?.addArrangedSubview(gifView)
+//		} else {
+			let linkView = KLinkView(metadata: metadata)
+			self.richLinkStackView?.addArrangedSubview(linkView)
+//		}
 	}
 
 	fileprivate func removeURLFromEndOfText(url: URL, text: String) -> String {
@@ -213,6 +163,8 @@ class BaseFeedMessageCell: KTableViewCell {
 	fileprivate func configureWarnings(for feedMessage: FeedMessage) {
 		let isNSFW = feedMessage.attributes.isNSFW
 		let isSpoiler = feedMessage.attributes.isSpoiler
+
+		self.warningVisualEffectView?.layerCornerRadius = 10.0
 
 		// Configure warning visual effect view
 		if isNSFW || isSpoiler {

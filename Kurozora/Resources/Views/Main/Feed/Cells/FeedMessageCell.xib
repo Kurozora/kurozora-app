@@ -43,44 +43,56 @@
                         <color key="textColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <textView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="_test" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="I35-Go-4sT" customClass="KSelectableTextView" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="60" y="28" width="306" height="38"/>
-                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                        <dataDetectorType key="dataDetectorTypes" link="YES" calendarEvent="YES" lookupSuggestion="YES"/>
-                    </textView>
-                    <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cfl-Ds-ElJ" customClass="KVisualEffectView" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="60" y="28" width="306" height="38"/>
-                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="tiF-e9-Zs7">
-                            <rect key="frame" x="0.0" y="0.0" width="306" height="38"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZDW-d9-wqu" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                    <rect key="frame" x="134.5" y="9.5" width="37" height="19.5"/>
-                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                            <constraints>
-                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="ZDW-d9-wqu" secondAttribute="trailing" id="0m1-vA-5WL"/>
-                                <constraint firstItem="ZDW-d9-wqu" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tiF-e9-Zs7" secondAttribute="leadingMargin" id="41w-dS-WhH"/>
-                                <constraint firstItem="ZDW-d9-wqu" firstAttribute="centerX" secondItem="tiF-e9-Zs7" secondAttribute="centerX" id="KdB-gc-Esw"/>
-                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ZDW-d9-wqu" secondAttribute="bottom" constant="8" id="Phn-uV-jBD"/>
-                                <constraint firstItem="ZDW-d9-wqu" firstAttribute="top" relation="greaterThanOrEqual" secondItem="tiF-e9-Zs7" secondAttribute="top" constant="8" id="Yvp-5h-68U"/>
-                                <constraint firstItem="ZDW-d9-wqu" firstAttribute="centerY" secondItem="tiF-e9-Zs7" secondAttribute="centerY" id="fgY-LZ-c4W"/>
-                            </constraints>
-                        </view>
-                        <blurEffect style="regular"/>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="10"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
-                    </visualEffectView>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="LuX-8s-I8C">
-                        <rect key="frame" x="60" y="74" width="306" height="4"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="LuX-8s-I8C">
+                        <rect key="frame" x="60" y="32" width="306" height="46"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aFz-ci-0el">
+                                <rect key="frame" x="0.0" y="0.0" width="306" height="46"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="_test" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="I35-Go-4sT" customClass="KSelectableTextView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="306" height="46"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <dataDetectorType key="dataDetectorTypes" link="YES" calendarEvent="YES" lookupSuggestion="YES"/>
+                                    </textView>
+                                    <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cfl-Ds-ElJ" customClass="KVisualEffectView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="306" height="46"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="tiF-e9-Zs7">
+                                            <rect key="frame" x="0.0" y="0.0" width="306" height="46"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZDW-d9-wqu" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                                    <rect key="frame" x="134.5" y="13.5" width="37" height="19.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="ZDW-d9-wqu" secondAttribute="trailing" id="0m1-vA-5WL"/>
+                                                <constraint firstItem="ZDW-d9-wqu" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tiF-e9-Zs7" secondAttribute="leadingMargin" id="41w-dS-WhH"/>
+                                                <constraint firstItem="ZDW-d9-wqu" firstAttribute="centerX" secondItem="tiF-e9-Zs7" secondAttribute="centerX" id="KdB-gc-Esw"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ZDW-d9-wqu" secondAttribute="bottom" constant="8" id="Phn-uV-jBD"/>
+                                                <constraint firstItem="ZDW-d9-wqu" firstAttribute="top" relation="greaterThanOrEqual" secondItem="tiF-e9-Zs7" secondAttribute="top" constant="8" id="Yvp-5h-68U"/>
+                                                <constraint firstItem="ZDW-d9-wqu" firstAttribute="centerY" secondItem="tiF-e9-Zs7" secondAttribute="centerY" id="fgY-LZ-c4W"/>
+                                            </constraints>
+                                        </view>
+                                        <blurEffect style="regular"/>
+                                    </visualEffectView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="Cfl-Ds-ElJ" firstAttribute="top" secondItem="I35-Go-4sT" secondAttribute="top" id="0fS-Wg-OYm"/>
+                                    <constraint firstAttribute="trailing" secondItem="I35-Go-4sT" secondAttribute="trailing" id="DZS-0K-pr8"/>
+                                    <constraint firstItem="I35-Go-4sT" firstAttribute="top" secondItem="aFz-ci-0el" secondAttribute="top" id="aqw-fE-7N8"/>
+                                    <constraint firstItem="I35-Go-4sT" firstAttribute="leading" secondItem="aFz-ci-0el" secondAttribute="leading" id="boL-pR-KZV"/>
+                                    <constraint firstAttribute="bottom" secondItem="I35-Go-4sT" secondAttribute="bottom" id="dMk-FQ-Qtj"/>
+                                    <constraint firstItem="Cfl-Ds-ElJ" firstAttribute="leading" secondItem="I35-Go-4sT" secondAttribute="leading" id="gto-7u-wA9"/>
+                                    <constraint firstItem="Cfl-Ds-ElJ" firstAttribute="bottom" secondItem="I35-Go-4sT" secondAttribute="bottom" id="mpf-B1-5GO"/>
+                                    <constraint firstItem="Cfl-Ds-ElJ" firstAttribute="trailing" secondItem="I35-Go-4sT" secondAttribute="trailing" id="ufj-11-KC0"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                     </stackView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U8F-at-A0g">
                         <rect key="frame" x="60" y="86" width="306" height="44"/>
@@ -164,30 +176,23 @@
                 <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
                     <constraint firstItem="Yad-DN-7du" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="27X-h2-WMd" secondAttribute="trailing" constant="10" id="15H-ox-BMJ"/>
-                    <constraint firstItem="Cfl-Ds-ElJ" firstAttribute="top" secondItem="I35-Go-4sT" secondAttribute="top" id="3bT-Tf-zhg"/>
                     <constraint firstAttribute="trailing" secondItem="Yad-DN-7du" secondAttribute="trailing" constant="8" id="4eD-Bc-NGu"/>
-                    <constraint firstItem="LuX-8s-I8C" firstAttribute="trailing" secondItem="I35-Go-4sT" secondAttribute="trailing" id="7pZ-Je-Alo"/>
                     <constraint firstItem="Yad-DN-7du" firstAttribute="centerY" secondItem="27X-h2-WMd" secondAttribute="centerY" id="9ei-BF-Jld"/>
+                    <constraint firstItem="LuX-8s-I8C" firstAttribute="trailing" secondItem="Yad-DN-7du" secondAttribute="trailing" id="Btf-Gg-EmP"/>
+                    <constraint firstItem="U8F-at-A0g" firstAttribute="trailing" secondItem="LuX-8s-I8C" secondAttribute="trailing" id="E0K-FE-d7d"/>
                     <constraint firstAttribute="bottom" secondItem="U8F-at-A0g" secondAttribute="bottom" id="Ef8-Jg-KCU"/>
-                    <constraint firstItem="I35-Go-4sT" firstAttribute="top" secondItem="27X-h2-WMd" secondAttribute="bottom" id="F6i-YT-e6t"/>
                     <constraint firstItem="qEa-CS-cR6" firstAttribute="top" secondItem="792-bS-aOJ" secondAttribute="top" constant="8" id="GF1-Lk-BjX"/>
-                    <constraint firstItem="Cfl-Ds-ElJ" firstAttribute="bottom" secondItem="I35-Go-4sT" secondAttribute="bottom" id="Oa5-Re-Sx7"/>
-                    <constraint firstItem="I35-Go-4sT" firstAttribute="trailing" secondItem="Yad-DN-7du" secondAttribute="trailing" id="Op4-7a-30J"/>
+                    <constraint firstItem="LuX-8s-I8C" firstAttribute="top" secondItem="27X-h2-WMd" secondAttribute="bottom" constant="4" id="MeI-pu-ngh"/>
+                    <constraint firstItem="U8F-at-A0g" firstAttribute="leading" secondItem="LuX-8s-I8C" secondAttribute="leading" id="QRo-cc-O9t"/>
                     <constraint firstItem="iwK-VE-5g4" firstAttribute="top" secondItem="27X-h2-WMd" secondAttribute="top" id="S1Q-1z-KSM"/>
                     <constraint firstItem="U8F-at-A0g" firstAttribute="top" secondItem="LuX-8s-I8C" secondAttribute="bottom" constant="8" symbolic="YES" id="S1o-bW-81c"/>
                     <constraint firstItem="Yad-DN-7du" firstAttribute="top" secondItem="27X-h2-WMd" secondAttribute="top" id="Z9D-Ud-ebt"/>
-                    <constraint firstItem="LuX-8s-I8C" firstAttribute="leading" secondItem="I35-Go-4sT" secondAttribute="leading" id="ZRg-hG-Lqa"/>
                     <constraint firstItem="iwK-VE-5g4" firstAttribute="bottom" secondItem="27X-h2-WMd" secondAttribute="bottom" id="ZTx-bk-XPW"/>
+                    <constraint firstItem="LuX-8s-I8C" firstAttribute="leading" secondItem="27X-h2-WMd" secondAttribute="leading" id="bNe-gv-Aka"/>
                     <constraint firstItem="iwK-VE-5g4" firstAttribute="leading" secondItem="27X-h2-WMd" secondAttribute="trailing" constant="2" id="fGp-jG-1fi"/>
-                    <constraint firstItem="U8F-at-A0g" firstAttribute="trailing" secondItem="I35-Go-4sT" secondAttribute="trailing" id="frQ-qT-1pg"/>
-                    <constraint firstItem="Cfl-Ds-ElJ" firstAttribute="trailing" secondItem="I35-Go-4sT" secondAttribute="trailing" id="fu1-5z-slR"/>
-                    <constraint firstItem="I35-Go-4sT" firstAttribute="leading" secondItem="27X-h2-WMd" secondAttribute="leading" id="ltr-eb-N3g"/>
                     <constraint firstItem="27X-h2-WMd" firstAttribute="top" secondItem="qEa-CS-cR6" secondAttribute="top" id="oGS-UM-qhD"/>
                     <constraint firstItem="Yad-DN-7du" firstAttribute="leading" secondItem="iwK-VE-5g4" secondAttribute="trailing" constant="8" symbolic="YES" id="ps6-eB-Opy"/>
-                    <constraint firstItem="Cfl-Ds-ElJ" firstAttribute="leading" secondItem="I35-Go-4sT" secondAttribute="leading" id="snR-sY-0IJ"/>
-                    <constraint firstItem="U8F-at-A0g" firstAttribute="leading" secondItem="I35-Go-4sT" secondAttribute="leading" id="tUN-Jy-E0L"/>
                     <constraint firstItem="27X-h2-WMd" firstAttribute="leading" secondItem="qEa-CS-cR6" secondAttribute="trailing" constant="8" symbolic="YES" id="uY0-s2-DHX"/>
-                    <constraint firstItem="LuX-8s-I8C" firstAttribute="top" secondItem="I35-Go-4sT" secondAttribute="bottom" constant="8" symbolic="YES" id="wlB-YF-UYd"/>
                     <constraint firstItem="qEa-CS-cR6" firstAttribute="leading" secondItem="792-bS-aOJ" secondAttribute="leading" constant="8" id="xF4-KN-csH"/>
                 </constraints>
             </tableViewCellContentView>
@@ -199,6 +204,7 @@
                 <outlet property="heartButton" destination="7eR-Hg-lR6" id="5nR-ot-cVo"/>
                 <outlet property="moreButton" destination="jiI-CD-mWg" id="7Z7-Cb-jiE"/>
                 <outlet property="postTextView" destination="I35-Go-4sT" id="2NN-Yo-Rwj"/>
+                <outlet property="postTextViewContainer" destination="aFz-ci-0el" id="ifR-ZJ-RTc"/>
                 <outlet property="profileBadgeStackView" destination="iwK-VE-5g4" id="f9p-hD-TBE"/>
                 <outlet property="profileImageView" destination="qEa-CS-cR6" id="y0z-IG-ZnW"/>
                 <outlet property="richLinkStackView" destination="LuX-8s-I8C" id="l3W-od-QHZ"/>
