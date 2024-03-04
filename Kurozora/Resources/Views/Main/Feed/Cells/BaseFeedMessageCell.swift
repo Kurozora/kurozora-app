@@ -8,6 +8,61 @@
 
 import UIKit
 import KurozoraKit
+import LinkPresentation
+
+class GIFView: UIView {
+	// MARK: - Properties
+	let gifURL: URL
+
+	// MARK: - Views
+	let gifImageView: UIImageView = {
+		let imageView = UIImageView()
+		imageView.translatesAutoresizingMaskIntoConstraints = false
+		imageView.contentMode = .scaleAspectFill
+		imageView.layerCornerRadius = 8
+		return imageView
+	}()
+
+	// MARK: - Initializers
+	init(url: URL) {
+		self.gifURL = url
+		super.init(frame: .zero)
+		self.configureLayout()
+		self.configureGIF()
+	}
+
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) is not supported. Use init(url: URL) instead.")
+	}
+
+	// MARK: - Functions
+	fileprivate func configureGIF() {
+		self.gifImageView.kf.setImage(with: self.gifURL)
+	}
+
+	fileprivate func configureLayout() {
+		self.addSubview(self.gifImageView)
+
+		NSLayoutConstraint.activate([
+			self.gifImageView.topAnchor.constraint(equalTo: self.topAnchor),
+			self.gifImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+			self.gifImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+			self.gifImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+		])
+	}
+
+	override func layoutSubviews() {
+		super.layoutSubviews()
+
+		// Update aspect ratio constraint based on image size
+		if let imageSize = self.gifImageView.image?.size {
+			let aspectRatio = imageSize.width / imageSize.height
+			let aspectRatioConstraint = self.gifImageView.widthAnchor.constraint(equalTo: self.gifImageView.heightAnchor, multiplier: aspectRatio)
+			aspectRatioConstraint.priority = .required - 1
+			aspectRatioConstraint.isActive = true
+		}
+	}
+}
 
 class BaseFeedMessageCell: KTableViewCell {
 	// MARK: - IBOutlets
@@ -74,17 +129,13 @@ class BaseFeedMessageCell: KTableViewCell {
 		// Configure body
 		if let url = feedMessage.attributes.content.extractURLs().last {
 			if let metadata = RichLink.cachedMetadata(for: url) {
-				let metadataView = KLinkView(metadata: metadata)
-				self.richLinkStackView?.addArrangedSubview(metadataView)
-
+				self.displayMetadata(metadata)
 				self.configurePostTextView(for: feedMessage, byRemovingURL: url)
 			} else {
 				Task(priority: .background) {
 					if let metadata = await RichLink.fetchMetadata(for: url) {
-						let metadataView = KLinkView(metadata: metadata)
-
 						DispatchQueue.main.async {
-							self.richLinkStackView?.addArrangedSubview(metadataView)
+							self.displayMetadata(metadata)
 							self.configurePostTextView(for: feedMessage, byRemovingURL: url)
 						}
 					}
@@ -124,6 +175,16 @@ class BaseFeedMessageCell: KTableViewCell {
 	fileprivate func configurePostTextView(for feedMessage: FeedMessage, byRemovingURL url: URL) {
 		let contentMarkdown = self.removeURLFromEndOfText(url: url, text: feedMessage.attributes.contentMarkdown)
 		self.postTextView.setAttributedText(contentMarkdown.markdownAttributedString())
+	}
+
+	fileprivate func displayMetadata(_ metadata: LPLinkMetadata) {
+		if let gifURL = metadata.url, gifURL.pathExtension.lowercased() == "gif" {
+			let gifView = GIFView(url: gifURL)
+			self.richLinkStackView?.addArrangedSubview(gifView)
+		} else {
+			let metadataView = KLinkView(metadata: metadata)
+			self.richLinkStackView?.addArrangedSubview(metadataView)
+		}
 	}
 
 	fileprivate func removeURLFromEndOfText(url: URL, text: String) -> String {
