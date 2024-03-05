@@ -35,8 +35,17 @@ class GIFView: UIView {
 
 	// MARK: - Functions
 	fileprivate func configureGIF() {
-		self.gifImageView.kf.setImage(with: self.gifURL)
-		self.setNeedsLayout()
+		self.gifImageView.kf.setImage(with: self.gifURL) { [weak self] result in
+			switch result {
+			case .success:
+				// Update layout after image is loaded
+				self?.setNeedsLayout()
+				self?.layoutIfNeeded()
+				self?.updateAspectRatioConstraints()
+			case .failure(let error):
+				print("Failed to load image: \(error)")
+			}
+		}
 	}
 
 	fileprivate func configureLayout() {
@@ -50,14 +59,18 @@ class GIFView: UIView {
 		])
 	}
 
-	override func layoutSubviews() {
-		super.layoutSubviews()
+	fileprivate func updateAspectRatioConstraints() {
+		// Remove existing aspect ratio constraints
+		self.gifImageView.constraints.filter { $0.identifier == "AspectRatioConstraint" }.forEach {
+			self.gifImageView.removeConstraint($0)
+		}
 
-		// Update aspect ratio constraint based on image size
+		// Add new aspect ratio constraint based on the image size
 		if let imageSize = self.gifImageView.image?.size {
 			let aspectRatio = imageSize.width / imageSize.height
 			let aspectRatioConstraint = self.gifImageView.widthAnchor.constraint(equalTo: self.gifImageView.heightAnchor, multiplier: aspectRatio)
 			aspectRatioConstraint.priority = .required - 1
+			aspectRatioConstraint.identifier = "AspectRatioConstraint"
 			aspectRatioConstraint.isActive = true
 		}
 	}
