@@ -94,4 +94,14 @@ extension URL {
 		}
 		return urlWithPreferredScheme
 	}
+
+	/// Returns true if the extension is an image.
+	public var isImageURL: Bool {
+		return [
+			"jpg", "jpeg", "jpgxl",
+			"png", "apng", "avif",
+			"gif", "webp",
+			"bmp", "tiff"
+		].contains(self.pathExtension)
+	}
 }
