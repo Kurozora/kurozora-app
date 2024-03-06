@@ -61,6 +61,9 @@ class BaseFeedMessageCell: KTableViewCell {
 		// Configure heart status for feed message.
 		self.updateHeartStatus(for: feedMessage)
 
+		// Configure stack view
+		self.richLinkStackView?.distribution = .fillProportionally
+
 		// Configure poster details
 		if let user = feedMessage.relationships.users.data.first {
 			self.usernameLabel.text = user.attributes.username

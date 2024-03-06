@@ -99,7 +99,7 @@ class KTabBarController: ESTabBarController {
 	/// Sets up the badge value on the tab bar item.
 	fileprivate func setupBadgeValue() {
 		if UserSettings.notificationsBadge, User.isSignedIn {
-			self.tabBar.items?[3].badgeValue = "\(69)"
+			self.tabBar.items?[3].badgeValue = nil
 		} else {
 			self.tabBar.items?[3].badgeValue = nil
 		}

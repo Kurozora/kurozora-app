@@ -1265,7 +1265,7 @@ struct Trans {
 	/// The string for the word 'What’s New'.
 	///
 	/// - Tag: Trans-whatsNew
-	static let whatsNew: String = String(localized: "What’s New",
+	static let whatsNew: String = String(localized: "What’s New in Kurozora",
 										 comment: "The string for the word 'What’s New'.")
 
 	// MARK: - Ratings
