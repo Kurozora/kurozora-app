@@ -11,8 +11,25 @@ import WhatsNew
 class KWhatsNew {
 	/// Features of the current version of the app. Don't forget to change
 	static var current: [WhatsNewItem] {
-		return v15
+		return v16
 	}
+
+	/// Features of version 1.6.0 of the app.
+	static var v16: [WhatsNewItem] = [
+		.image(title: "Heart-Thief", subtitle: "Prepare to have your heart stolen by the『White of Crime』app icon and the mysterious『Love Bug』theme.", image: R.image.icons.gift()!),
+		.image(title: "Rich Links", subtitle: "Share gifs, images, videos, and music directly in the feed with enhanced rich link previews, providing more context and information.", image: R.image.icons.link()!),
+		.image(title: "OpticID", subtitle: "Unlock the app effortlessly using OpticID on Apple Vision Pro, providing a seamless and secure way to access your favorite content.", image: R.image.icons.opticID()!),
+		.image(title: "TV Rating", subtitle: "Enjoy more control over your content with the ability to change TV ratings", image: R.image.icons.tvRating()!),
+		.image(title: "Timezone", subtitle: "View schedules, broadcasts and in your timezone.", image: R.image.icons.globe()!),
+		.image(title: "Localization", subtitle: "Tailor your experience by selecting your preferred localization. English will be used as fallback where this feature isn't available yet.", image: R.image.icons.language()!),
+		.image(title: "Tip Jar", subtitle: "Now you can view a list of unlockable features when you tip in the Tip Jar.", image: R.image.icons.tipJar()!),
+		.image(title: "Kurozora+", subtitle: "A revamped Kurozora+ page, with new features listed for your convenience.", image: R.image.icons.unlock()!),
+		.image(title: "Theming Improvements", subtitle: "Say goodbye to inconsistency – unthemed elements now adapt to your selected theme correctly.", image: R.image.icons.theme()!),
+		.image(title: "Re:CAP", subtitle: "Your personalized year-end review is now available in the app! Reflect on your top series of the year, along with the milestones you've achieved!", image: R.image.icons.session()!),
+		.image(title: "Splash Screen", subtitle: "The Kurozora logo now dynamically adapts to match your selected theme, creating a cohesive and personalized experience from the moment you open the app.", image: R.image.icons.theme()!),
+		.image(title: "Sounds & Haptics", subtitle: "A harmonious blend of serene chimes and iconic anime sounds. Whether you seek tranquility or a touch of nostalgia, find the perfect ambiance to accompany your journey.", image: R.image.icons.sound()!),
+		.image(title: "Gem Icons", subtitle: "Created under immense pressure and extreme temperatures, the gem icon set shines with elegance and sophistication. Discover the allure of『Amethyst』,『Onyx』,『Ruby』, and『Sapphire』.", image: R.image.icons.ruby()!)
+	]
 
 	/// Features of version 1.5.0 of the app.
 	static var v15: [WhatsNewItem] = [
@@ -20,7 +37,7 @@ class KWhatsNew {
 		.image(title: "Re:CAP", subtitle: "Your personalized year-end review is now available in the app! Reflect on your top series of the year, along with the milestones you've achieved!", image: R.image.icons.session()!),
 		.image(title: "Splash Screen", subtitle: "The Kurozora logo now dynamically adapts to match your selected theme, creating a cohesive and personalized experience from the moment you open the app.", image: R.image.icons.theme()!),
 		.image(title: "Sounds & Haptics", subtitle: "A harmonious blend of serene chimes and iconic anime sounds. Whether you seek tranquility or a touch of nostalgia, find the perfect ambiance to accompany your journey.", image: R.image.icons.sound()!),
-		.image(title: "Gem Icons", subtitle: "Created under immense presseure and extreme temperatures, the gem icon set shines with elegance and sophistication. Discover the allure of『Amethyst』,『Onyx』,『Ruby』, and『Sapphire』.", image: R.image.icons.ruby()!)
+		.image(title: "Gem Icons", subtitle: "Created under immense pressure and extreme temperatures, the gem icon set shines with elegance and sophistication. Discover the allure of『Amethyst』,『Onyx』,『Ruby』, and『Sapphire』.", image: R.image.icons.ruby()!)
 	]
 
 	/// Features of version 1.4.0 of the app.
@@ -30,7 +47,7 @@ class KWhatsNew {
 		.image(title: "Revamped Search", subtitle: "Experience the all-new Search tab – a sleek and efficient way to discover your favorites.", image: R.image.icons.search()!),
 		.image(title: "Search Filters", subtitle: "Explore enhanced search functionality with new filters to refine your results, making it easier to find your content preferences.", image: R.image.icons.filter()!),
 		.image(title: "Top Rankings", subtitle: "Discover a new dimension of content assessment with rankings for anime, manga, and games, providing valuable insights into what's trending.", image: R.image.icons.ranking()!),
-		.image(title: "Enhanced Ratings and Reviews", subtitle: "Ratings now healp streamline decision-making with charts and an overall sentiment score. Plus you can now share your thoughts with the new reviews feature.", image: R.image.icons.rating()!),
+		.image(title: "Enhanced Ratings and Reviews", subtitle: "Ratings now help streamline decision-making with charts and an overall sentiment score. Plus you can now share your thoughts with the new reviews feature.", image: R.image.icons.rating()!),
 		.image(title: "Favorites Library", subtitle: "Your Favorites library now encompasses manga and games, making it even simpler to keep track of your preferred content.", image: R.image.icons.favorite()!),
 		.image(title: "Episodes Revamp", subtitle: "Get a deeper insight into episodes with the revamped Episode lockups, offering more information and enhancing your viewing experience.", image: R.image.icons.tvSparkles()!),
 		.image(title: "Season-Wide Watching", subtitle: "Effortlessly mark entire seasons as watched through Force Touch, or the convenient new button in the season details navigation bar.", image: R.image.icons.eyeCircle()!),
@@ -75,7 +92,7 @@ class KWhatsNew {
 		.image(title: "Mentions", subtitle: "You can now mention users in the feed, so they never miss your messages.", image: R.image.icons.mention()!),
 		.image(title: "Reminders", subtitle: "Kurozora+ users can now opt-in to personalized iCal subscriptions to be notified the next time their favorite anime is about to air! This can be done in the in-app setting.", image: R.image.icons.reminder()!),
 		.image(title: "Placeholders", subtitle: "Out with the old and in with the new. The new placeholders are a treat to look at!", image: R.image.icons.placeholder()!),
-		.image(title: "Account Badges", subtitle: "Are you a Kurozora+ member? You can wear your PRO+ badge with pride. But, if that's not enough for you, you can also get a verificiation badge! No monthly subscriptions required 😉", image: R.image.icons.badge()!),
+		.image(title: "Account Badges", subtitle: "Are you a Kurozora+ member? You can wear your PRO+ badge with pride. But, if that's not enough for you, you can also get a verification badge! No monthly subscriptions required 😉", image: R.image.icons.badge()!),
 		.image(title: "Song Details", subtitle: "You can now tap on a song to view its details, such as what shows it played on. You can also open songs directly in Apple Music through the share menu at the top.", image: R.image.icons.music()!)
 	]
 
