@@ -17,7 +17,7 @@ class GIFView: UIView {
 		let imageView = UIImageView()
 		imageView.translatesAutoresizingMaskIntoConstraints = false
 		imageView.contentMode = .scaleAspectFill
-		imageView.layerCornerRadius = 8
+		imageView.layerCornerRadius = 10.0
 		return imageView
 	}()
 

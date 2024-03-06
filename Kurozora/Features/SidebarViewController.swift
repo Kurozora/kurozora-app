@@ -123,7 +123,7 @@ class SidebarViewController: KCollectionViewController {
 			guard let state = cell?.configurationState else { return .clear }
 			return state.isSelected || state.isHighlighted ? KThemePicker.tintColor.colorValue : .clear
 		}
-		cell?.backgroundConfiguration?.cornerRadius = 8.0
+		cell?.backgroundConfiguration?.cornerRadius = 10.0
 
 		return contentConfiguration
 	}
