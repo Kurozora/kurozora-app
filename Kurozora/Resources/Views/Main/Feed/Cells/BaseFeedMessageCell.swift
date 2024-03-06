@@ -19,13 +19,13 @@ class BaseFeedMessageCell: KTableViewCell {
 	@IBOutlet weak var usernameLabel: KLabel!
 	@IBOutlet weak var profileBadgeStackView: ProfileBadgeStackView!
 	@IBOutlet weak var dateTimeLabel: KSecondaryLabel!
-	@IBOutlet weak var postTextView: KTextView!
-	@IBOutlet weak var postTextViewContainer: UIView?
+	@IBOutlet weak var postTextView: KSelectableTextView!
+	@IBOutlet weak var postTextViewContainer: UIView!
 	@IBOutlet weak var heartButton: CellActionButton!
 	@IBOutlet weak var commentButton: CellActionButton!
 	@IBOutlet weak var shareButton: CellActionButton!
 	@IBOutlet weak var moreButton: CellActionButton!
-	@IBOutlet weak var richLinkStackView: UIStackView?
+	@IBOutlet weak var richLinkStackView: UIStackView!
 
 	// MARK: - Properties
 	weak var delegate: BaseFeedMessageCellDelegate?
@@ -38,9 +38,11 @@ class BaseFeedMessageCell: KTableViewCell {
 		super.prepareForReuse()
 
 		self.warningIsHidden = false
-		self.richLinkStackView?.arrangedSubviews.forEach { subview in
+		self.postTextView.text = ""
+		self.postTextViewContainer?.isHidden = false
+		self.richLinkStackView.arrangedSubviews.forEach { subview in
 			if subview != self.postTextViewContainer {
-				self.richLinkStackView?.removeArrangedSubview(subview)
+				self.richLinkStackView.removeArrangedSubview(subview)
 				subview.removeFromSuperview()
 			}
 		}
@@ -62,7 +64,7 @@ class BaseFeedMessageCell: KTableViewCell {
 		self.updateHeartStatus(for: feedMessage)
 
 		// Configure stack view
-		self.richLinkStackView?.distribution = .fillProportionally
+		self.richLinkStackView.distribution = .fillProportionally
 
 		// Configure poster details
 		if let user = feedMessage.relationships.users.data.first {
@@ -131,13 +133,13 @@ class BaseFeedMessageCell: KTableViewCell {
 	}
 
 	fileprivate func displayMetadata(_ metadata: LPLinkMetadata) {
-//		if let gifURL = metadata.url, gifURL.pathExtension.lowercased() == "gif" {
-//			let gifView = GIFView(url: gifURL)
-//			self.richLinkStackView?.addArrangedSubview(gifView)
-//		} else {
+		if let gifURL = metadata.url, gifURL.isImageURL {
+			let gifView = GIFView(url: gifURL)
+			self.richLinkStackView.addArrangedSubview(gifView)
+		} else {
 			let linkView = KLinkView(metadata: metadata)
-			self.richLinkStackView?.addArrangedSubview(linkView)
-//		}
+			self.richLinkStackView.addArrangedSubview(linkView)
+		}
 	}
 
 	fileprivate func removeURLFromEndOfText(url: URL, text: String) -> String {

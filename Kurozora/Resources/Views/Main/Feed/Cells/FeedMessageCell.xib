@@ -56,44 +56,40 @@
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         <dataDetectorType key="dataDetectorTypes" link="YES" calendarEvent="YES" lookupSuggestion="YES"/>
                                     </textView>
-                                    <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cfl-Ds-ElJ" customClass="KVisualEffectView" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="306" height="46"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="tiF-e9-Zs7">
-                                            <rect key="frame" x="0.0" y="0.0" width="306" height="46"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZDW-d9-wqu" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="134.5" y="13.5" width="37" height="19.5"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="ZDW-d9-wqu" secondAttribute="trailing" id="0m1-vA-5WL"/>
-                                                <constraint firstItem="ZDW-d9-wqu" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tiF-e9-Zs7" secondAttribute="leadingMargin" id="41w-dS-WhH"/>
-                                                <constraint firstItem="ZDW-d9-wqu" firstAttribute="centerX" secondItem="tiF-e9-Zs7" secondAttribute="centerX" id="KdB-gc-Esw"/>
-                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ZDW-d9-wqu" secondAttribute="bottom" constant="8" id="Phn-uV-jBD"/>
-                                                <constraint firstItem="ZDW-d9-wqu" firstAttribute="top" relation="greaterThanOrEqual" secondItem="tiF-e9-Zs7" secondAttribute="top" constant="8" id="Yvp-5h-68U"/>
-                                                <constraint firstItem="ZDW-d9-wqu" firstAttribute="centerY" secondItem="tiF-e9-Zs7" secondAttribute="centerY" id="fgY-LZ-c4W"/>
-                                            </constraints>
-                                        </view>
-                                        <blurEffect style="regular"/>
-                                    </visualEffectView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="Cfl-Ds-ElJ" firstAttribute="top" secondItem="I35-Go-4sT" secondAttribute="top" id="0fS-Wg-OYm"/>
                                     <constraint firstAttribute="trailing" secondItem="I35-Go-4sT" secondAttribute="trailing" id="DZS-0K-pr8"/>
                                     <constraint firstItem="I35-Go-4sT" firstAttribute="top" secondItem="aFz-ci-0el" secondAttribute="top" id="aqw-fE-7N8"/>
                                     <constraint firstItem="I35-Go-4sT" firstAttribute="leading" secondItem="aFz-ci-0el" secondAttribute="leading" id="boL-pR-KZV"/>
                                     <constraint firstAttribute="bottom" secondItem="I35-Go-4sT" secondAttribute="bottom" id="dMk-FQ-Qtj"/>
-                                    <constraint firstItem="Cfl-Ds-ElJ" firstAttribute="leading" secondItem="I35-Go-4sT" secondAttribute="leading" id="gto-7u-wA9"/>
-                                    <constraint firstItem="Cfl-Ds-ElJ" firstAttribute="bottom" secondItem="I35-Go-4sT" secondAttribute="bottom" id="mpf-B1-5GO"/>
-                                    <constraint firstItem="Cfl-Ds-ElJ" firstAttribute="trailing" secondItem="I35-Go-4sT" secondAttribute="trailing" id="ufj-11-KC0"/>
                                 </constraints>
                             </view>
                         </subviews>
                     </stackView>
+                    <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cfl-Ds-ElJ" customClass="KVisualEffectView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="60" y="32" width="306" height="46"/>
+                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="tiF-e9-Zs7">
+                            <rect key="frame" x="0.0" y="0.0" width="306" height="46"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZDW-d9-wqu" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                    <rect key="frame" x="134.5" y="13.5" width="37" height="19.5"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="ZDW-d9-wqu" secondAttribute="trailing" id="0m1-vA-5WL"/>
+                                <constraint firstItem="ZDW-d9-wqu" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tiF-e9-Zs7" secondAttribute="leadingMargin" id="41w-dS-WhH"/>
+                                <constraint firstItem="ZDW-d9-wqu" firstAttribute="centerX" secondItem="tiF-e9-Zs7" secondAttribute="centerX" id="KdB-gc-Esw"/>
+                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ZDW-d9-wqu" secondAttribute="bottom" constant="8" id="Phn-uV-jBD"/>
+                                <constraint firstItem="ZDW-d9-wqu" firstAttribute="top" relation="greaterThanOrEqual" secondItem="tiF-e9-Zs7" secondAttribute="top" constant="8" id="Yvp-5h-68U"/>
+                                <constraint firstItem="ZDW-d9-wqu" firstAttribute="centerY" secondItem="tiF-e9-Zs7" secondAttribute="centerY" id="fgY-LZ-c4W"/>
+                            </constraints>
+                        </view>
+                        <blurEffect style="regular"/>
+                    </visualEffectView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U8F-at-A0g">
                         <rect key="frame" x="60" y="86" width="306" height="44"/>
                         <subviews>
@@ -181,8 +177,10 @@
                     <constraint firstItem="LuX-8s-I8C" firstAttribute="trailing" secondItem="Yad-DN-7du" secondAttribute="trailing" id="Btf-Gg-EmP"/>
                     <constraint firstItem="U8F-at-A0g" firstAttribute="trailing" secondItem="LuX-8s-I8C" secondAttribute="trailing" id="E0K-FE-d7d"/>
                     <constraint firstAttribute="bottom" secondItem="U8F-at-A0g" secondAttribute="bottom" id="Ef8-Jg-KCU"/>
+                    <constraint firstItem="Cfl-Ds-ElJ" firstAttribute="top" secondItem="LuX-8s-I8C" secondAttribute="top" id="FWT-a4-Laz"/>
                     <constraint firstItem="qEa-CS-cR6" firstAttribute="top" secondItem="792-bS-aOJ" secondAttribute="top" constant="8" id="GF1-Lk-BjX"/>
                     <constraint firstItem="LuX-8s-I8C" firstAttribute="top" secondItem="27X-h2-WMd" secondAttribute="bottom" constant="4" id="MeI-pu-ngh"/>
+                    <constraint firstItem="Cfl-Ds-ElJ" firstAttribute="leading" secondItem="LuX-8s-I8C" secondAttribute="leading" id="Ppt-H1-tPD"/>
                     <constraint firstItem="U8F-at-A0g" firstAttribute="leading" secondItem="LuX-8s-I8C" secondAttribute="leading" id="QRo-cc-O9t"/>
                     <constraint firstItem="iwK-VE-5g4" firstAttribute="top" secondItem="27X-h2-WMd" secondAttribute="top" id="S1Q-1z-KSM"/>
                     <constraint firstItem="U8F-at-A0g" firstAttribute="top" secondItem="LuX-8s-I8C" secondAttribute="bottom" constant="8" symbolic="YES" id="S1o-bW-81c"/>
@@ -190,9 +188,11 @@
                     <constraint firstItem="iwK-VE-5g4" firstAttribute="bottom" secondItem="27X-h2-WMd" secondAttribute="bottom" id="ZTx-bk-XPW"/>
                     <constraint firstItem="LuX-8s-I8C" firstAttribute="leading" secondItem="27X-h2-WMd" secondAttribute="leading" id="bNe-gv-Aka"/>
                     <constraint firstItem="iwK-VE-5g4" firstAttribute="leading" secondItem="27X-h2-WMd" secondAttribute="trailing" constant="2" id="fGp-jG-1fi"/>
+                    <constraint firstItem="Cfl-Ds-ElJ" firstAttribute="bottom" secondItem="LuX-8s-I8C" secondAttribute="bottom" id="loI-7G-wWd"/>
                     <constraint firstItem="27X-h2-WMd" firstAttribute="top" secondItem="qEa-CS-cR6" secondAttribute="top" id="oGS-UM-qhD"/>
                     <constraint firstItem="Yad-DN-7du" firstAttribute="leading" secondItem="iwK-VE-5g4" secondAttribute="trailing" constant="8" symbolic="YES" id="ps6-eB-Opy"/>
                     <constraint firstItem="27X-h2-WMd" firstAttribute="leading" secondItem="qEa-CS-cR6" secondAttribute="trailing" constant="8" symbolic="YES" id="uY0-s2-DHX"/>
+                    <constraint firstItem="Cfl-Ds-ElJ" firstAttribute="trailing" secondItem="LuX-8s-I8C" secondAttribute="trailing" id="vis-CT-V6p"/>
                     <constraint firstItem="qEa-CS-cR6" firstAttribute="leading" secondItem="792-bS-aOJ" secondAttribute="leading" constant="8" id="xF4-KN-csH"/>
                 </constraints>
             </tableViewCellContentView>

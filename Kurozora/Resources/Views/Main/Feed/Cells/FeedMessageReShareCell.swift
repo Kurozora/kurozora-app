@@ -8,15 +8,32 @@
 
 import UIKit
 import KurozoraKit
+import LinkPresentation
 
 class FeedMessageReShareCell: FeedMessageCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var opProfileImageView: ProfileImageView!
 	@IBOutlet weak var opUsernameLabel: KLabel!
-	@IBOutlet weak var opMessageTextView: KTextView!
+	@IBOutlet weak var opPostTextView: KSelectableTextView!
+	@IBOutlet weak var opPostTextViewContainer: UIView!
 	@IBOutlet weak var opDateTimeLabel: KSecondaryLabel!
 	@IBOutlet weak var opView: UIView?
 	@IBOutlet weak var opProfileBadgeStackView: ProfileBadgeStackView!
+	@IBOutlet weak var opRichLinkStackView: UIStackView!
+
+	// MARK: - View
+	override func prepareForReuse() {
+		super.prepareForReuse()
+
+		self.opPostTextView.text = ""
+		self.opPostTextViewContainer?.isHidden = false
+		self.opRichLinkStackView.arrangedSubviews.forEach { subview in
+			if subview != self.opPostTextViewContainer {
+				self.opRichLinkStackView.removeArrangedSubview(subview)
+				subview.removeFromSuperview()
+			}
+		}
+	}
 
 	// MARK: - Functions
 	override func configureCell(using feedMessage: FeedMessage?) {
@@ -27,10 +44,11 @@ class FeedMessageReShareCell: FeedMessageCell {
 
 		guard let opMessage = feedMessage.relationships.parent?.data.first else { return }
 		self.opDateTimeLabel.text = opMessage.attributes.createdAt.relativeToNow
-		self.opMessageTextView.setAttributedText(opMessage.attributes.contentMarkdown.markdownAttributedString())
 
 		if let opUser = opMessage.relationships.users.data.first {
 			opUser.attributes.profileImage(imageView: self.opProfileImageView)
+			// Configure username
+			self.opUsernameLabel.font = UIFont.preferredFont(forTextStyle: .subheadline).bold
 			self.opUsernameLabel.text = opUser.attributes.username
 
 			// Attach gestures
@@ -46,6 +64,52 @@ class FeedMessageReShareCell: FeedMessageCell {
 			let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(showOPMessage(_:)))
 			self.opView?.addGestureRecognizer(tapGestureRecognizer)
 		}
+
+		// Configure body
+		if let url = opMessage.attributes.content.extractURLs().last {
+			if let metadata = RichLink.cachedMetadata(for: url) {
+				self.displayMetadata(metadata)
+				self.configurePostTextView(for: opMessage, byRemovingURL: url)
+			} else {
+				Task(priority: .background) {
+					if let metadata = await RichLink.fetchMetadata(for: url) {
+						DispatchQueue.main.async {
+							self.displayMetadata(metadata)
+							self.configurePostTextView(for: opMessage, byRemovingURL: url)
+						}
+					}
+				}
+			}
+		} else {
+			self.opPostTextView.setAttributedText(opMessage.attributes.contentMarkdown.markdownAttributedString())
+		}
+	}
+
+	fileprivate func configurePostTextView(for feedMessage: FeedMessage, byRemovingURL url: URL) {
+		let contentMarkdown = self.removeURLFromEndOfText(url: url, text: feedMessage.attributes.contentMarkdown)
+		self.opPostTextView.setAttributedText(contentMarkdown.markdownAttributedString())
+		self.opPostTextViewContainer?.isHidden = contentMarkdown.isEmpty
+	}
+
+	fileprivate func displayMetadata(_ metadata: LPLinkMetadata) {
+		if let gifURL = metadata.url, gifURL.isImageURL {
+			let gifView = GIFView(url: gifURL)
+			self.opRichLinkStackView.addArrangedSubview(gifView)
+		} else {
+			let linkView = KLinkView(metadata: metadata)
+			self.opRichLinkStackView.addArrangedSubview(linkView)
+		}
+	}
+
+	fileprivate func removeURLFromEndOfText(url: URL, text: String) -> String {
+		let urlString = url.absoluteString
+
+		// Remove the URL from the end of the full text
+		if text.hasSuffix(urlString) {
+			return String(text.dropLast(urlString.count))
+		}
+
+		return text
 	}
 
 	/// Adds a `UITapGestureRecognizer` which opens the profile image onto the given view.
