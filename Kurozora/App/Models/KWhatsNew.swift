@@ -16,7 +16,7 @@ class KWhatsNew {
 
 	/// Features of version 1.6.0 of the app.
 	static var v16: [WhatsNewItem] = [
-		.image(title: "Heart-Thief", subtitle: "Prepare to have your heart stolen by the『White of Crime』app icon and the mysterious『Love Bug』theme.", image: R.image.icons.gift()!),
+		.image(title: "Heart-Thief", subtitle: "Prepare to have your heart stolen by the『White of Crime』app icon and the mysterious『Blue Sapphire』theme.", image: R.image.icons.gift()!),
 		.image(title: "Rich Links", subtitle: "Share gifs, images, videos, and music directly in the feed with enhanced rich link previews, providing more context and information.", image: R.image.icons.link()!),
 		.image(title: "OpticID", subtitle: "Unlock the app effortlessly using OpticID on Apple Vision Pro, providing a seamless and secure way to access your favorite content.", image: R.image.icons.opticID()!),
 		.image(title: "TV Rating", subtitle: "Enjoy more control over your content with the ability to change TV ratings", image: R.image.icons.tvRating()!),
