@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="q9O-KI-xnB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="q9O-KI-xnB">
     <device id="retina5_9" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -129,6 +129,7 @@
                                                     <rect key="frame" x="60" y="60" width="15" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="15" id="AtG-Qh-7Gj"/>
+                                                        <constraint firstAttribute="width" secondItem="P4i-DJ-cm7" secondAttribute="height" multiplier="1:1" id="Bj6-qY-AQF"/>
                                                         <constraint firstAttribute="width" secondItem="P4i-DJ-cm7" secondAttribute="height" multiplier="1:1" id="DYs-QI-cL0"/>
                                                     </constraints>
                                                 </view>
@@ -136,7 +137,6 @@
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="wJX-ls-ZaG" secondAttribute="trailing" id="6Lf-74-QY9"/>
                                                 <constraint firstAttribute="trailing" secondItem="IvN-D6-AVe" secondAttribute="trailing" id="8kX-3d-B6u"/>
-                                                <constraint firstItem="P4i-DJ-cm7" firstAttribute="width" secondItem="P4i-DJ-cm7" secondAttribute="height" multiplier="1:1" id="Bj6-qY-AQF"/>
                                                 <constraint firstAttribute="bottom" secondItem="IvN-D6-AVe" secondAttribute="bottom" id="BwB-x6-JK9"/>
                                                 <constraint firstItem="wJX-ls-ZaG" firstAttribute="leading" secondItem="PR0-Kq-mbS" secondAttribute="leading" id="EXy-uI-ZT9"/>
                                                 <constraint firstItem="P4i-DJ-cm7" firstAttribute="centerX" secondItem="IvN-D6-AVe" secondAttribute="centerX" id="H6U-mL-zcM"/>
@@ -225,7 +225,7 @@
                                     <rect key="frame" x="8" y="257" width="359" height="104"/>
                                     <subviews>
                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="gIa-4A-kfT" customClass="KTextView" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="8" y="0.0" width="343" height="53"/>
+                                            <rect key="frame" x="8" y="0.0" width="343" height="49"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -237,8 +237,8 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="LNz-X2-qla">
                                             <rect key="frame" x="8" y="53" width="343" height="40"/>
                                             <subviews>
-                                                <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ldj-y1-nlK" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="82" height="40"/>
+                                                <button hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ldj-y1-nlK" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="43.333333333333336"/>
                                                     <state key="normal">
                                                         <attributedString key="attributedTitle">
                                                             <fragment content="0 ">
@@ -251,15 +251,15 @@
                                                             <fragment content="Reputation">
                                                                 <attributes>
                                                                     <color key="NSColor" red="0.76470588240000004" green="0.76862745099999996" blue="0.79215686269999996" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <font key="NSFont" size="15" name="SFProText-Regular"/>
+                                                                    <font key="NSFont" size="12" name="SFProText-Regular"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                                 </attributes>
                                                             </fragment>
                                                         </attributedString>
                                                     </state>
                                                 </button>
-                                                <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E2w-Ry-UIw" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="87" y="0.0" width="82" height="40"/>
+                                                <button hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E2w-Ry-UIw" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="43.333333333333336"/>
                                                     <state key="normal">
                                                         <attributedString key="attributedTitle">
                                                             <fragment content="0 ">
@@ -272,7 +272,7 @@
                                                             <fragment content="Achievements">
                                                                 <attributes>
                                                                     <color key="NSColor" red="0.76470588240000004" green="0.76862745099999996" blue="0.79215686269999996" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <font key="NSFont" size="15" name="SFProText-Regular"/>
+                                                                    <font key="NSFont" size="12" name="SFProText-Regular"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                                 </attributes>
                                                             </fragment>
@@ -285,8 +285,8 @@
                                                         </segue>
                                                     </connections>
                                                 </button>
-                                                <button contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T5J-l1-I4p" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="174" y="0.0" width="82" height="40"/>
+                                                <button hidden="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T5J-l1-I4p" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="43.333333333333336"/>
                                                     <state key="normal">
                                                         <attributedString key="attributedTitle">
                                                             <fragment>
@@ -301,7 +301,7 @@
                                                             <fragment content="Following">
                                                                 <attributes>
                                                                     <color key="NSColor" red="0.76470588235294112" green="0.76862745098039209" blue="0.792156862745098" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <font key="NSFont" size="15" name="SFProText-Regular"/>
+                                                                    <font key="NSFont" size="12" name="SFProText-Regular"/>
                                                                     <font key="NSOriginalFont" metaFont="menu" size="14"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                                 </attributes>
@@ -315,8 +315,8 @@
                                                         </segue>
                                                     </connections>
                                                 </button>
-                                                <button contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ggb-4z-Awv" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="261" y="0.0" width="82" height="40"/>
+                                                <button hidden="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ggb-4z-Awv" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="43.333333333333336"/>
                                                     <state key="normal">
                                                         <attributedString key="attributedTitle">
                                                             <fragment content="0">
@@ -336,7 +336,7 @@
                                                             <fragment content="Followers">
                                                                 <attributes>
                                                                     <color key="NSColor" red="0.76470588235294112" green="0.76862745098039209" blue="0.792156862745098" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                                    <font key="NSFont" size="15" name="SFProText-Regular"/>
+                                                                    <font key="NSFont" size="12" name="SFProText-Regular"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                                 </attributes>
                                                             </fragment>
@@ -368,7 +368,7 @@
                                         <constraint firstAttribute="trailingMargin" secondItem="OmS-Rs-je8" secondAttribute="trailing" id="K2A-7C-Qzu"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="LNz-X2-qla" secondAttribute="trailing" id="fbx-KK-oi1"/>
                                         <constraint firstItem="OmS-Rs-je8" firstAttribute="top" secondItem="LNz-X2-qla" secondAttribute="bottom" constant="10" id="glW-Os-vFu"/>
-                                        <constraint firstItem="LNz-X2-qla" firstAttribute="top" secondItem="gIa-4A-kfT" secondAttribute="bottom" id="iLB-Yb-XQ9"/>
+                                        <constraint firstItem="LNz-X2-qla" firstAttribute="top" secondItem="gIa-4A-kfT" secondAttribute="bottom" constant="4" id="iLB-Yb-XQ9"/>
                                         <constraint firstAttribute="bottom" secondItem="OmS-Rs-je8" secondAttribute="bottom" id="lxz-Ix-MjE"/>
                                         <constraint firstItem="LNz-X2-qla" firstAttribute="leading" secondItem="qhJ-dz-VUa" secondAttribute="leadingMargin" id="qCp-2e-B6h"/>
                                         <constraint firstItem="OmS-Rs-je8" firstAttribute="leading" secondItem="qhJ-dz-VUa" secondAttribute="leadingMargin" id="rbt-Iv-IBK"/>

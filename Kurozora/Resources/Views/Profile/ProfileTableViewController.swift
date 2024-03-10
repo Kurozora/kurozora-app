@@ -126,6 +126,27 @@ class ProfileTableViewController: KTableViewController {
 	var oldLeftBarItems: [UIBarButtonItem]?
 	var oldRightBarItems: [UIBarButtonItem]?
 
+	// Styling
+	var countValueAttributes: [NSAttributedString.Key: Any] {
+		let centerAlign = NSMutableParagraphStyle()
+		centerAlign.alignment = .center
+
+		return [
+			NSAttributedString.Key.foregroundColor: KThemePicker.textColor.colorValue,
+			NSAttributedString.Key.paragraphStyle: centerAlign
+		]
+	}
+	var countTitleAttributes: [NSAttributedString.Key: Any] {
+		let centerAlign = NSMutableParagraphStyle()
+		centerAlign.alignment = .center
+
+		return [
+			NSAttributedString.Key.foregroundColor: KThemePicker.subTextColor.colorValue,
+			NSAttributedString.Key.paragraphStyle: centerAlign,
+			NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2).bold
+		]
+	}
+
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
 		didSet {
@@ -185,6 +206,7 @@ class ProfileTableViewController: KTableViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		NotificationCenter.default.addObserver(self, selector: #selector(self.updateAttributedText), name: .ThemeUpdateNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(updateFeedMessage(_:)), name: .KFMDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(deleteFeedMessage(_:)), name: .KFMDidDelete, object: nil)
 
@@ -253,6 +275,14 @@ class ProfileTableViewController: KTableViewController {
 			self.tableView.backgroundView?.animateFadeIn()
 		} else {
 			self.tableView.backgroundView?.animateFadeOut()
+		}
+	}
+
+	/// Update the attributed text.
+	@objc private func updateAttributedText() {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			self.configureCountButtons()
 		}
 	}
 
@@ -333,11 +363,60 @@ class ProfileTableViewController: KTableViewController {
 		#endif
 	}
 
+	fileprivate func configureCountButtons() {
+		guard let user = self.user else { return }
+
+		// Configure reputation count
+		let reputationCount = user.attributes.reputationCount
+		let reputationCountString = NSAttributedString(string: reputationCount.kkFormatted, attributes: self.countValueAttributes)
+		let reputationTitleString = NSAttributedString(string: "\nReputation", attributes: self.countTitleAttributes)
+		let reputationButtonTitle = NSMutableAttributedString()
+		reputationButtonTitle.append(reputationCountString)
+		reputationButtonTitle.append(reputationTitleString)
+
+		self.reputationButton.setAttributedTitle(reputationButtonTitle, for: .normal)
+		self.reputationButton.isHidden = false
+
+		// Configure achievements button
+		var achievementsCount = 0
+		if let achievements = user.relationships?.badges?.data {
+			achievementsCount = achievements.count
+		}
+
+		let achievementsCountString = NSAttributedString(string: "\(achievementsCount)", attributes: self.countValueAttributes)
+		let achievementsTitleString = NSAttributedString(string: "\n\(Trans.achievements)", attributes: self.countTitleAttributes)
+		let achievementsButtonTitle = NSMutableAttributedString()
+		achievementsButtonTitle.append(achievementsCountString)
+		achievementsButtonTitle.append(achievementsTitleString)
+
+		self.achievementsButton.setAttributedTitle(achievementsButtonTitle, for: .normal)
+		self.achievementsButton.isHidden = false
+
+		// Configure following & followers count
+		let followingCount = user.attributes.followingCount
+		let followingCountString = NSAttributedString(string: followingCount.kkFormatted, attributes: self.countValueAttributes)
+		let followingTitleString = NSAttributedString(string: "\nFollowing", attributes: self.countTitleAttributes)
+		let followingButtonTitle = NSMutableAttributedString()
+		followingButtonTitle.append(followingCountString)
+		followingButtonTitle.append(followingTitleString)
+
+		self.followingButton.setAttributedTitle(followingButtonTitle, for: .normal)
+		self.followingButton.isHidden = false
+
+		let followerCount = user.attributes.followerCount
+		let followerCountString = NSAttributedString(string: followerCount.kkFormatted, attributes: self.countValueAttributes)
+		let followerTitleString = NSAttributedString(string: "\nFollowers", attributes: self.countTitleAttributes)
+		let followersButtonTitle = NSMutableAttributedString()
+		followersButtonTitle.append(followerCountString)
+		followersButtonTitle.append(followerTitleString)
+
+		self.followersButton.setAttributedTitle(followersButtonTitle, for: .normal)
+		self.followersButton.isHidden = false
+	}
+
 	/// Configure the profile view with the details of the user whose page is being viewed.
 	private func configureProfile() {
 		guard let user = self.user else { return }
-		let centerAlign = NSMutableParagraphStyle()
-		centerAlign.alignment = .center
 
 		// Configure username
 		self.usernameLabel.text = user.attributes.username
@@ -362,52 +441,8 @@ class ProfileTableViewController: KTableViewController {
 		// Configure user bio
 		self.bioTextView.setAttributedText(user.attributes.biographyMarkdown?.markdownAttributedString())
 
-		// Configure reputation count
-		let reputationCount = user.attributes.reputationCount
-		let reputationCountString = NSAttributedString(string: reputationCount.kkFormatted, attributes: [
-			NSAttributedString.Key.foregroundColor: KThemePicker.textColor.colorValue,
-			NSAttributedString.Key.paragraphStyle: centerAlign
-		])
-		let reputationTitleString = NSAttributedString(string: "\nReputation", attributes: [
-			NSAttributedString.Key.foregroundColor: KThemePicker.subTextColor.colorValue,
-			NSAttributedString.Key.paragraphStyle: centerAlign
-		])
-		let reputationButtonTitle = NSMutableAttributedString()
-		reputationButtonTitle.append(reputationCountString)
-		reputationButtonTitle.append(reputationTitleString)
-
-		self.reputationButton.setAttributedTitle(reputationButtonTitle, for: .normal)
-
-		// Configure following & followers count
-		let followingCount = user.attributes.followingCount
-		let followingCountString = NSAttributedString(string: followingCount.kkFormatted, attributes: [
-			NSAttributedString.Key.foregroundColor: KThemePicker.textColor.colorValue,
-			NSAttributedString.Key.paragraphStyle: centerAlign
-		])
-		let followingTitleString = NSAttributedString(string: "\nFollowing", attributes: [
-			NSAttributedString.Key.foregroundColor: KThemePicker.subTextColor.colorValue,
-			NSAttributedString.Key.paragraphStyle: centerAlign
-		])
-		let followingButtonTitle = NSMutableAttributedString()
-		followingButtonTitle.append(followingCountString)
-		followingButtonTitle.append(followingTitleString)
-
-		self.followingButton.setAttributedTitle(followingButtonTitle, for: .normal)
-
-		let followerCount = user.attributes.followerCount
-		let followerCountString = NSAttributedString(string: followerCount.kkFormatted, attributes: [
-			NSAttributedString.Key.foregroundColor: KThemePicker.textColor.colorValue,
-			NSAttributedString.Key.paragraphStyle: centerAlign
-		])
-		let followerTitleString = NSAttributedString(string: "\nFollowers", attributes: [
-			NSAttributedString.Key.foregroundColor: KThemePicker.subTextColor.colorValue,
-			NSAttributedString.Key.paragraphStyle: centerAlign
-		])
-		let followersButtonTitle = NSMutableAttributedString()
-		followersButtonTitle.append(followerCountString)
-		followersButtonTitle.append(followerTitleString)
-
-		self.followersButton.setAttributedTitle(followersButtonTitle, for: .normal)
+		// Configure count buttons
+		self.configureCountButtons()
 
 		// Configure edit button
 		self.editProfileButton.isHidden = !(user.id == User.current?.id)
@@ -418,27 +453,6 @@ class ProfileTableViewController: KTableViewController {
 		// Badges
 		self.profileBadgeStackView.delegate = self
 		self.profileBadgeStackView.configure(for: user)
-
-		// Determine achievements count
-		var achievementsCount = 0
-		if let achievements = user.relationships?.badges?.data {
-			achievementsCount = achievements.count
-		}
-
-		// Configure achievements button
-		let achievementsCountString = NSAttributedString(string: "\(achievementsCount)", attributes: [
-			NSAttributedString.Key.foregroundColor: KThemePicker.textColor.colorValue,
-			NSAttributedString.Key.paragraphStyle: centerAlign
-		])
-		let achievementsTitleString = NSAttributedString(string: "\n\(Trans.achievements)", attributes: [
-			NSAttributedString.Key.foregroundColor: KThemePicker.subTextColor.colorValue,
-			NSAttributedString.Key.paragraphStyle: centerAlign
-		])
-		let achievementsButtonTitle = NSMutableAttributedString()
-		achievementsButtonTitle.append(achievementsCountString)
-		achievementsButtonTitle.append(achievementsTitleString)
-
-		self.achievementsButton.setAttributedTitle(achievementsButtonTitle, for: .normal)
 
 		// Configure AutoLayout
 		self.tableView.setTableHeaderView(headerView: self.tableView.tableHeaderView)
