@@ -136,6 +136,7 @@ class BaseFeedMessageCell: KTableViewCell {
 		if let gifURL = metadata.url, gifURL.isImageURL {
 			let gifView = GIFView(url: gifURL)
 			self.richLinkStackView.addArrangedSubview(gifView)
+			gifView.sizeToFit(self.richLinkStackView.bounds.size)
 		} else {
 			let linkView = KLinkView(metadata: metadata)
 			self.richLinkStackView.addArrangedSubview(linkView)

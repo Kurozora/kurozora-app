@@ -95,6 +95,7 @@ class FeedMessageReShareCell: FeedMessageCell {
 		if let gifURL = metadata.url, gifURL.isImageURL {
 			let gifView = GIFView(url: gifURL)
 			self.opRichLinkStackView.addArrangedSubview(gifView)
+			gifView.sizeToFit(self.opRichLinkStackView.bounds.size)
 		} else {
 			let linkView = KLinkView(metadata: metadata)
 			self.opRichLinkStackView.addArrangedSubview(linkView)

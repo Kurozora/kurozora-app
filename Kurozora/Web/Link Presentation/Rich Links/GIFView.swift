@@ -11,12 +11,14 @@ import UIKit
 class GIFView: UIView {
 	// MARK: - Properties
 	let gifURL: URL
+	var imageViewHeightConstraint: NSLayoutConstraint!
+	var aspectRatio: CGFloat = 0.0
 
 	// MARK: - Views
 	let gifImageView: UIImageView = {
 		let imageView = UIImageView()
 		imageView.translatesAutoresizingMaskIntoConstraints = false
-		imageView.contentMode = .scaleAspectFill
+		imageView.contentMode = .scaleAspectFit
 		imageView.layerCornerRadius = 10.0
 		return imageView
 	}()
@@ -36,12 +38,13 @@ class GIFView: UIView {
 	// MARK: - Functions
 	fileprivate func configureGIF() {
 		self.gifImageView.kf.setImage(with: self.gifURL) { [weak self] result in
+			guard let self = self else { return }
+
 			switch result {
-			case .success:
-				// Update layout after image is loaded
-				self?.setNeedsLayout()
-				self?.layoutIfNeeded()
-				self?.updateAspectRatioConstraints()
+			case .success(let value):
+				// Update height constraint based on image aspect ratio
+				let image = value.image
+				self.aspectRatio = image.size.height / image.size.width
 			case .failure(let error):
 				print("Failed to load image: \(error)")
 			}
@@ -51,27 +54,21 @@ class GIFView: UIView {
 	fileprivate func configureLayout() {
 		self.addSubview(self.gifImageView)
 
-		NSLayoutConstraint.activate([
-			self.gifImageView.topAnchor.constraint(equalTo: self.topAnchor),
-			self.gifImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-			self.gifImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-			self.gifImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-		])
+		// Width constraint is set to superview's width
+		self.gifImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+		self.gifImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+
+		// Height constraint
+		self.imageViewHeightConstraint = self.gifImageView.heightAnchor.constraint(equalToConstant: 0)
+		self.imageViewHeightConstraint.isActive = true
+
+		// Top and bottom constraints are optional depending on the usage within the superview
+		// Adjust as needed
+		self.gifImageView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+		self.gifImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
 	}
 
-	fileprivate func updateAspectRatioConstraints() {
-		// Remove existing aspect ratio constraints
-		self.gifImageView.constraints.filter { $0.identifier == "AspectRatioConstraint" }.forEach {
-			self.gifImageView.removeConstraint($0)
-		}
-
-		// Add new aspect ratio constraint based on the image size
-		if let imageSize = self.gifImageView.image?.size {
-			let aspectRatio = imageSize.width / imageSize.height
-			let aspectRatioConstraint = self.gifImageView.widthAnchor.constraint(equalTo: self.gifImageView.heightAnchor, multiplier: aspectRatio)
-			aspectRatioConstraint.priority = .required - 1
-			aspectRatioConstraint.identifier = "AspectRatioConstraint"
-			aspectRatioConstraint.isActive = true
-		}
+	func sizeToFit(_ size: CGSize) {
+		self.imageViewHeightConstraint.constant = size.width * self.aspectRatio
 	}
 }
