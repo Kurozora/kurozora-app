@@ -11,6 +11,7 @@ import UIKit
 class GIFView: UIView {
 	// MARK: - Properties
 	let gifURL: URL
+	private let _superview: UIView
 	var imageViewHeightConstraint: NSLayoutConstraint!
 	var aspectRatio: CGFloat = 0.0
 
@@ -18,14 +19,15 @@ class GIFView: UIView {
 	let gifImageView: UIImageView = {
 		let imageView = UIImageView()
 		imageView.translatesAutoresizingMaskIntoConstraints = false
-		imageView.contentMode = .scaleAspectFit
+		imageView.contentMode = .scaleAspectFill
 		imageView.layerCornerRadius = 10.0
 		return imageView
 	}()
 
 	// MARK: - Initializers
-	init(url: URL) {
+	init(url: URL, in superview: UIView) {
 		self.gifURL = url
+		self._superview = superview
 		super.init(frame: .zero)
 		self.configureLayout()
 		self.configureGIF()
@@ -45,6 +47,8 @@ class GIFView: UIView {
 				// Update height constraint based on image aspect ratio
 				let image = value.image
 				self.aspectRatio = image.size.height / image.size.width
+
+				self.sizeToFit(self._superview.frame.size)
 			case .failure(let error):
 				print("Failed to load image: \(error)")
 			}
@@ -59,7 +63,7 @@ class GIFView: UIView {
 		self.gifImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
 
 		// Height constraint
-		self.imageViewHeightConstraint = self.gifImageView.heightAnchor.constraint(equalToConstant: 0)
+		self.imageViewHeightConstraint = self.gifImageView.heightAnchor.constraint(equalToConstant: 0.0)
 		self.imageViewHeightConstraint.isActive = true
 
 		// Top and bottom constraints are optional depending on the usage within the superview
@@ -70,5 +74,6 @@ class GIFView: UIView {
 
 	func sizeToFit(_ size: CGSize) {
 		self.imageViewHeightConstraint.constant = size.width * self.aspectRatio
+		self.setNeedsUpdateConstraints()
 	}
 }
