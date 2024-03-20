@@ -18,5 +18,6 @@ class KTintedButton: KButton {
 		self.layerCornerRadius = self.layerCornerRadius == .zero ? 10 : self.layerCornerRadius
 		self.theme_backgroundColor = KThemePicker.tintColor.rawValue
 		self.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
+		self.theme_tintColor = KThemePicker.tintedButtonTextColor.rawValue
 	}
 }
