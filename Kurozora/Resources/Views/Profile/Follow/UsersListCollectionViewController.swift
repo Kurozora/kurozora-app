@@ -52,7 +52,7 @@ class UsersListCollectionViewController: KCollectionViewController {
 		return _prefersActivityIndicatorHidden
 	}
 
-	// MARK:- Views
+	// MARK: - Views
 	override func viewWillReload() {
 		super.viewWillReload()
 
@@ -193,6 +193,9 @@ class UsersListCollectionViewController: KCollectionViewController {
 		guard !self.isRequestInProgress else {
 			return
 		}
+
+		// Set request in progress
+		self.isRequestInProgress = true
 
 		#if !targetEnvironment(macCatalyst)
 		switch self.usersListFetchType {
