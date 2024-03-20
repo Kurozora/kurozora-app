@@ -67,21 +67,21 @@ extension Literature.Attributes {
 	// MARK: - Functions
 	/// Set the poster.
 	///
-	/// If the literature has no poster image, then a placeholder literature poster image is returned.
+	/// If the literature has no poster image, then a placeholder literature poster image is used.
 	///
 	/// - Parameter imageView: The image view on which to set the poster image.
 	func posterImage(imageView: UIImageView) {
-		let placeholderImage = R.image.placeholders.showPoster()!
+		guard let placeholderImage = R.image.placeholders.showPoster() else { return }
 		imageView.setImage(with: self.poster?.url ?? "", placeholder: placeholderImage)
 	}
 
 	/// Set the banner.
 	///
-	/// If the literature has no banner image, then a placeholder literature banner image is returned.
+	/// If the literature has no banner image, then a placeholder literature banner image is used.
 	///
 	/// - Parameter imageView: The image view on which to set the banner image.
 	func bannerImage(imageView: UIImageView) {
-		let placeholderImage = R.image.placeholders.showBanner()!
+		guard let placeholderImage = R.image.placeholders.showBanner() else { return }
 		imageView.setImage(with: self.banner?.url ?? self.poster?.url ?? "", placeholder: placeholderImage)
 	}
 }

@@ -32,7 +32,7 @@ extension Character.Attributes {
 	// MARK: - Functions
 	/// Set the image of the character.
 	///
-	/// If the character has no personl image set, then a placeholder image is returned.
+	/// If the character has no personl image set, then a placeholder image is used.
 	///
 	/// - Parameter imageView: The image view on which to set the personal image.
 	func personalImage(imageView: UIImageView) {
