@@ -131,6 +131,8 @@ class StudiosListCollectionViewController: KCollectionViewController {
 		guard !self.isRequestInProgress else {
 			return
 		}
+
+		// Set request in progress
 		self.isRequestInProgress = true
 
 		#if !targetEnvironment(macCatalyst)
