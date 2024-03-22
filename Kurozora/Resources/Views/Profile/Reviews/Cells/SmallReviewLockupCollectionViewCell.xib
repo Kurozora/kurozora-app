@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="Kbv-VF-Tu1" customClass="SmallReviewLockupCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="374" height="149"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="wFC-A4-v33">
+                <rect key="frame" x="0.0" y="0.0" width="374" height="149"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E0g-j2-6fU">
+                        <rect key="frame" x="0.0" y="0.0" width="99.333333333333329" height="149"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Show Poster" translatesAutoresizingMaskIntoConstraints="NO" id="A6J-B2-cz1" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="99.333333333333329" height="149"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book_texture_overlay" translatesAutoresizingMaskIntoConstraints="NO" id="qOc-ew-cig">
+                                <rect key="frame" x="0.0" y="0.0" width="99.333333333333329" height="149"/>
+                            </imageView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="A6J-B2-cz1" secondAttribute="trailing" id="0PW-Ec-ntK"/>
+                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="150" id="BeK-wV-QpO"/>
+                            <constraint firstItem="A6J-B2-cz1" firstAttribute="leading" secondItem="E0g-j2-6fU" secondAttribute="leading" id="Mav-jD-Zfg"/>
+                            <constraint firstAttribute="bottom" secondItem="A6J-B2-cz1" secondAttribute="bottom" id="Zod-IC-n2l"/>
+                            <constraint firstItem="qOc-ew-cig" firstAttribute="bottom" secondItem="A6J-B2-cz1" secondAttribute="bottom" id="d7w-WV-GBB"/>
+                            <constraint firstItem="qOc-ew-cig" firstAttribute="leading" secondItem="A6J-B2-cz1" secondAttribute="leading" id="eR4-bD-tM7"/>
+                            <constraint firstItem="qOc-ew-cig" firstAttribute="top" secondItem="A6J-B2-cz1" secondAttribute="top" id="qFF-yO-JLe"/>
+                            <constraint firstAttribute="width" secondItem="E0g-j2-6fU" secondAttribute="height" multiplier="2:3" id="rmD-f6-89h"/>
+                            <constraint firstItem="A6J-B2-cz1" firstAttribute="top" secondItem="E0g-j2-6fU" secondAttribute="top" id="tbw-HO-0VY"/>
+                            <constraint firstItem="qOc-ew-cig" firstAttribute="trailing" secondItem="A6J-B2-cz1" secondAttribute="trailing" id="wZe-vO-0RN"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oto-x5-kbX">
+                        <rect key="frame" x="107.33333333333334" y="0.0" width="266.66666666666663" height="20.333333333333332"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="One Piece" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bn8-Fu-Nhc" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="80.333333333333329" height="20.333333333333332"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Apr 18, 2018" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rDm-uX-ugn" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="175.33333333333337" y="0.0" width="91.333333333333314" height="19.333333333333332"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="rDm-uX-ugn" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bn8-Fu-Nhc" secondAttribute="trailing" constant="8" symbolic="YES" id="5e3-ug-K5l"/>
+                            <constraint firstItem="rDm-uX-ugn" firstAttribute="top" secondItem="bn8-Fu-Nhc" secondAttribute="top" id="6FJ-cv-eVy"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="rDm-uX-ugn" secondAttribute="bottom" id="QiS-QC-Rzu"/>
+                            <constraint firstAttribute="trailing" secondItem="rDm-uX-ugn" secondAttribute="trailing" id="S8V-Vt-HmP"/>
+                            <constraint firstItem="bn8-Fu-Nhc" firstAttribute="leading" secondItem="Oto-x5-kbX" secondAttribute="leading" id="dCt-1M-HgC"/>
+                            <constraint firstItem="bn8-Fu-Nhc" firstAttribute="top" secondItem="Oto-x5-kbX" secondAttribute="top" id="iBS-S2-mR0"/>
+                            <constraint firstAttribute="bottom" secondItem="bn8-Fu-Nhc" secondAttribute="bottom" id="yeb-Lj-zY0"/>
+                        </constraints>
+                    </view>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="EYW-ai-P9P">
+                        <rect key="frame" x="107.33333333333334" y="20.333333333333336" width="266.66666666666663" height="70.333333333333314"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hE8-fb-knl" userLabel="Rating View">
+                                <rect key="frame" x="0.0" y="0.0" width="266.66666666666669" height="50"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X7R-Rr-sgt" customClass="KTintedLabel" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="21.666666666666668" height="50"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                        <color key="textColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BGF-Ae-cGb" customClass="KCosmosView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="25.666666666666686" y="0.0" width="241" height="50"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="updateOnTouch" value="NO"/>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="textSize">
+                                                <integer key="value" value="12"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="starSize">
+                                                <integer key="value" value="16"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="fillMode">
+                                                <integer key="value" value="2"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="BGF-Ae-cGb" secondAttribute="bottom" id="JjR-1m-IPl"/>
+                                    <constraint firstItem="BGF-Ae-cGb" firstAttribute="centerY" secondItem="X7R-Rr-sgt" secondAttribute="centerY" id="KyL-Op-k7j"/>
+                                    <constraint firstItem="BGF-Ae-cGb" firstAttribute="leading" secondItem="X7R-Rr-sgt" secondAttribute="trailing" constant="4" id="NMy-ut-ShL"/>
+                                    <constraint firstItem="BGF-Ae-cGb" firstAttribute="top" secondItem="hE8-fb-knl" secondAttribute="top" id="OPp-Wn-4cW"/>
+                                    <constraint firstAttribute="bottom" secondItem="X7R-Rr-sgt" secondAttribute="bottom" id="kmE-Fq-CGo"/>
+                                    <constraint firstItem="X7R-Rr-sgt" firstAttribute="leading" secondItem="hE8-fb-knl" secondAttribute="leading" id="qWH-2K-TRn"/>
+                                    <constraint firstAttribute="trailing" secondItem="BGF-Ae-cGb" secondAttribute="trailing" id="xHQ-6K-hqM"/>
+                                    <constraint firstItem="X7R-Rr-sgt" firstAttribute="top" secondItem="hE8-fb-knl" secondAttribute="top" id="z7V-j8-EbS"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S13-Sw-Rqu" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="50" width="266.66666666666669" height="20.333333333333329"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="E0g-j2-6fU" firstAttribute="top" secondItem="wFC-A4-v33" secondAttribute="top" id="GOq-Kn-Fa9"/>
+                    <constraint firstAttribute="trailing" secondItem="Oto-x5-kbX" secondAttribute="trailing" id="Kvg-fd-oHk"/>
+                    <constraint firstItem="Oto-x5-kbX" firstAttribute="top" secondItem="E0g-j2-6fU" secondAttribute="top" id="N21-iD-kkH"/>
+                    <constraint firstAttribute="trailing" secondItem="EYW-ai-P9P" secondAttribute="trailing" id="Tdr-fR-ihq"/>
+                    <constraint firstItem="EYW-ai-P9P" firstAttribute="top" secondItem="Oto-x5-kbX" secondAttribute="bottom" id="Xyh-g0-26Z"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="E0g-j2-6fU" secondAttribute="bottom" id="Ycd-Qu-8GK"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="EYW-ai-P9P" secondAttribute="bottom" id="hIs-ro-46W"/>
+                    <constraint firstItem="EYW-ai-P9P" firstAttribute="leading" secondItem="E0g-j2-6fU" secondAttribute="trailing" constant="8" symbolic="YES" id="lIv-5m-lp3"/>
+                    <constraint firstItem="Oto-x5-kbX" firstAttribute="leading" secondItem="E0g-j2-6fU" secondAttribute="trailing" constant="8" symbolic="YES" id="rZx-Tu-meb"/>
+                    <constraint firstItem="E0g-j2-6fU" firstAttribute="leading" secondItem="wFC-A4-v33" secondAttribute="leading" id="zO5-qh-aGf"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <size key="customSize" width="374" height="159"/>
+            <connections>
+                <outlet property="posterImageOverlayView" destination="qOc-ew-cig" id="1Ol-Hn-YgJ"/>
+                <outlet property="posterImageView" destination="A6J-B2-cz1" id="eZn-a0-0J8"/>
+                <outlet property="primaryLabel" destination="bn8-Fu-Nhc" id="ZyK-2M-Vz7"/>
+                <outlet property="scoreLabel" destination="X7R-Rr-sgt" id="jPU-qG-v8X"/>
+                <outlet property="scoreView" destination="BGF-Ae-cGb" id="Lm5-DY-0Gt"/>
+                <outlet property="secondaryLabel" destination="rDm-uX-ugn" id="xy2-lc-0RP"/>
+                <outlet property="tertiaryLabel" destination="S13-Sw-Rqu" id="knG-yF-GRq"/>
+            </connections>
+            <point key="canvasLocation" x="112.97709923664122" y="33.450704225352112"/>
+        </collectionViewCell>
+    </objects>
+    <designables>
+        <designable name="BGF-Ae-cGb">
+            <size key="intrinsicContentSize" width="92" height="16"/>
+        </designable>
+    </designables>
+    <resources>
+        <image name="Placeholders/Show Poster" width="680" height="1000"/>
+        <image name="book_texture_overlay" width="160" height="240"/>
+    </resources>
+</document>
