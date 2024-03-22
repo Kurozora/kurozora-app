@@ -24,10 +24,10 @@ class ProfileTableViewController: KTableViewController {
 	@IBOutlet weak var followButton: KTintedButton!
 
 	@IBOutlet weak var buttonsStackView: UIStackView!
-	@IBOutlet weak var reputationButton: KButton!
 	@IBOutlet weak var achievementsButton: KButton!
 	@IBOutlet weak var followingButton: KButton!
 	@IBOutlet weak var followersButton: KButton!
+	@IBOutlet weak var reviewsButton: KButton!
 
 	@IBOutlet weak var selectBannerImageButton: KButton!
 	@IBOutlet weak var selectProfileImageButton: KButton!
@@ -366,17 +366,6 @@ class ProfileTableViewController: KTableViewController {
 	fileprivate func configureCountButtons() {
 		guard let user = self.user else { return }
 
-		// Configure reputation count
-		let reputationCount = user.attributes.reputationCount
-		let reputationCountString = NSAttributedString(string: reputationCount.kkFormatted, attributes: self.countValueAttributes)
-		let reputationTitleString = NSAttributedString(string: "\nReputation", attributes: self.countTitleAttributes)
-		let reputationButtonTitle = NSMutableAttributedString()
-		reputationButtonTitle.append(reputationCountString)
-		reputationButtonTitle.append(reputationTitleString)
-
-		self.reputationButton.setAttributedTitle(reputationButtonTitle, for: .normal)
-		self.reputationButton.isHidden = false
-
 		// Configure achievements button
 		var achievementsCount = 0
 		if let achievements = user.relationships?.badges?.data {
@@ -412,6 +401,17 @@ class ProfileTableViewController: KTableViewController {
 
 		self.followersButton.setAttributedTitle(followersButtonTitle, for: .normal)
 		self.followersButton.isHidden = false
+
+		// Configure reviews count
+		let reviewsCount = user.attributes.ratingsCount
+		let reviewsCountString = NSAttributedString(string: reviewsCount.kkFormatted, attributes: self.countValueAttributes)
+		let reviewsTitleString = NSAttributedString(string: "\nReviews", attributes: self.countTitleAttributes)
+		let reviewsButtonTitle = NSMutableAttributedString()
+		reviewsButtonTitle.append(reviewsCountString)
+		reviewsButtonTitle.append(reviewsTitleString)
+
+		self.reviewsButton.setAttributedTitle(reviewsButtonTitle, for: .normal)
+		self.reviewsButton.isHidden = false
 	}
 
 	/// Configure the profile view with the details of the user whose page is being viewed.
@@ -763,6 +763,9 @@ class ProfileTableViewController: KTableViewController {
 			followTableViewController.user = self.user
 			followTableViewController.usersListType = .followers
 			followTableViewController.usersListFetchType = .follow
+		case R.segue.profileTableViewController.reviewsSegue.identifier:
+			guard let reviewsListCollectionViewController = segue.destination as? ReviewsListCollectionViewController else { return }
+			reviewsListCollectionViewController.user = self.user
 		case R.segue.profileTableViewController.feedMessageDetailsSegue.identifier:
 			guard let fmDetailsTableViewController = segue.destination as? FMDetailsTableViewController else { return }
 			guard let feedMessageID = sender as? String else { return }
