@@ -184,6 +184,8 @@ class CharacterDetailsCollectionViewController: KCollectionViewController {
 		} catch {
 			print("-----", error.localizedDescription)
 		}
+
+		self.updateDataSource()
 	}
 
 	// MARK: - Segue
