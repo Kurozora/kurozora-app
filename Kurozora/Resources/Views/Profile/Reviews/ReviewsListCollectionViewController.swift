@@ -13,8 +13,15 @@ import Alamofire
 class ReviewsListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var user: User? = nil
-	var reviews: [IndexPath: Review] = [:]
-	var reviewIdentities: [Review] = []
+	var characters: [IndexPath: Character] = [:]
+	var episodes: [IndexPath: Episode] = [:]
+	var games: [IndexPath: Game] = [:]
+	var literatures: [IndexPath: Literature] = [:]
+	var people: [IndexPath: Person] = [:]
+	var shows: [IndexPath: Show] = [:]
+	var songs: [IndexPath: Song] = [:]
+	var studios: [IndexPath: Studio] = [:]
+	var reviews: [Review] = []
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Review>! = nil
 	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
 
@@ -68,7 +75,7 @@ class ReviewsListCollectionViewController: KCollectionViewController {
 		self.configureDataSource()
 
 		// Fetch follow list.
-		if !self.reviewIdentities.isEmpty {
+		if !self.reviews.isEmpty {
 			self.endFetch()
 		} else {
 			Task { [weak self] in
@@ -142,17 +149,17 @@ class ReviewsListCollectionViewController: KCollectionViewController {
 		let userIdentity = UserIdentity(id: user.id)
 
 		do {
-			let reviewIdentityResponse = try await KService.getReviewsList(forUser: userIdentity, next: self.nextPageURL).value
+			let reviewResponse = try await KService.getReviewsList(forUser: userIdentity, next: self.nextPageURL).value
 
 			// Reset data if necessary
 			if self.nextPageURL == nil {
-				self.reviewIdentities = []
+				self.reviews = []
 			}
 
 			// Save next page url and append new data
-			self.nextPageURL = reviewIdentityResponse.next
-			self.reviewIdentities.append(contentsOf: reviewIdentityResponse.data)
-			self.reviewIdentities.removeDuplicates()
+			self.nextPageURL = reviewResponse.next
+			self.reviews.append(contentsOf: reviewResponse.data)
+			self.reviews.removeDuplicates()
 		} catch {
 			print(error.localizedDescription)
 		}
