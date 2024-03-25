@@ -15,7 +15,7 @@ protocol MusicReviewLockupCollectionViewCellDelegate: AnyObject {
 	func playButtonPressed(_ sender: UIButton, cell: MusicReviewLockupCollectionViewCell)
 }
 
-class MusicReviewLockupCollectionViewCell: SmallReviewLockupCollectionViewCell {
+class MusicReviewLockupCollectionViewCell: BaseReviewLockupCollectionViewCell {
 	// MARK: - IBOutlets
 	/// A button representing the state of the music.
 	@IBOutlet weak var playButton: KButton!
@@ -28,10 +28,8 @@ class MusicReviewLockupCollectionViewCell: SmallReviewLockupCollectionViewCell {
 	weak var delegate: MusicReviewLockupCollectionViewCellDelegate?
 
 	// MARK: - Functions
-	override func configure(using review: Review?) {
-		super.configure(using: review)
-		guard let song = review?.relationships?.songs?.data.first else { return }
-
+	override func configure(using review: Review?, for song: KKSong?) {
+		super.configure(using: review, for: song)
 		self.configure(using: song)
 	}
 

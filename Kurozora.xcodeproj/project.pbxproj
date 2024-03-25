@@ -99,7 +99,7 @@
 		662151992BAA0C2400ECF522 /* ReviewsListCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662151982BAA0C2400ECF522 /* ReviewsListCollectionViewController.swift */; };
 		6621519B2BAA392500ECF522 /* Reviews.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6621519A2BAA392500ECF522 /* Reviews.storyboard */; };
 		6621519D2BAA3BDE00ECF522 /* ReviewsListCollectionViewController+KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6621519C2BAA3BDE00ECF522 /* ReviewsListCollectionViewController+KCollectionViewDataSource.swift */; };
-		662151A12BAA442200ECF522 /* SmallReviewLockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662151A02BAA442200ECF522 /* SmallReviewLockupCollectionViewCell.swift */; };
+		662151A12BAA442200ECF522 /* BaseReviewLockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662151A02BAA442200ECF522 /* BaseReviewLockupCollectionViewCell.swift */; };
 		662151A32BAA4A9D00ECF522 /* ReviewsListCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662151A22BAA4A9D00ECF522 /* ReviewsListCollectionViewController+KCollectionViewDelegateLayout.swift */; };
 		662151A52BAA4ACC00ECF522 /* ReviewsListCollectionViewController+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662151A42BAA4ACC00ECF522 /* ReviewsListCollectionViewController+UICollectionViewDelegate.swift */; };
 		66232CDB2310055900C45B5A /* BaseFeedMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66232CDA2310055900C45B5A /* BaseFeedMessageCell.swift */; };
@@ -566,7 +566,7 @@
 		66D921642BAE3A210068C685 /* MusicReviewLockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D921632BAE3A210068C685 /* MusicReviewLockupCollectionViewCell.swift */; };
 		66D921652BAE3A680068C685 /* MusicReviewLockupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66D921622BAE38A10068C685 /* MusicReviewLockupCollectionViewCell.xib */; };
 		66D921662BAE3A8C0068C685 /* EpisodeReviewLockupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66D921612BAE38740068C685 /* EpisodeReviewLockupCollectionViewCell.xib */; };
-		66D921672BAE3A900068C685 /* SmallReviewLockupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6621519E2BAA3D8F00ECF522 /* SmallReviewLockupCollectionViewCell.xib */; };
+		66D921672BAE3A900068C685 /* BaseReviewLockupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6621519E2BAA3D8F00ECF522 /* BaseReviewLockupCollectionViewCell.xib */; };
 		66D9216A2BAE3D320068C685 /* PersonReviewLockupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66D921692BAE3D060068C685 /* PersonReviewLockupCollectionViewCell.xib */; };
 		66D9216B2BAE3D3B0068C685 /* GameReviewLockupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66D921682BAE3CF50068C685 /* GameReviewLockupCollectionViewCell.xib */; };
 		66DB11D024E6103900C99754 /* Shows.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66DB11CF24E6103900C99754 /* Shows.storyboard */; };
@@ -813,8 +813,8 @@
 		662151982BAA0C2400ECF522 /* ReviewsListCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsListCollectionViewController.swift; sourceTree = "<group>"; };
 		6621519A2BAA392500ECF522 /* Reviews.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Reviews.storyboard; sourceTree = "<group>"; };
 		6621519C2BAA3BDE00ECF522 /* ReviewsListCollectionViewController+KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReviewsListCollectionViewController+KCollectionViewDataSource.swift"; sourceTree = "<group>"; };
-		6621519E2BAA3D8F00ECF522 /* SmallReviewLockupCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SmallReviewLockupCollectionViewCell.xib; sourceTree = "<group>"; };
-		662151A02BAA442200ECF522 /* SmallReviewLockupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallReviewLockupCollectionViewCell.swift; sourceTree = "<group>"; };
+		6621519E2BAA3D8F00ECF522 /* BaseReviewLockupCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BaseReviewLockupCollectionViewCell.xib; sourceTree = "<group>"; };
+		662151A02BAA442200ECF522 /* BaseReviewLockupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseReviewLockupCollectionViewCell.swift; sourceTree = "<group>"; };
 		662151A22BAA4A9D00ECF522 /* ReviewsListCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReviewsListCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
 		662151A42BAA4ACC00ECF522 /* ReviewsListCollectionViewController+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReviewsListCollectionViewController+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
 		66232CDA2310055900C45B5A /* BaseFeedMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseFeedMessageCell.swift; sourceTree = "<group>"; };
@@ -3480,13 +3480,13 @@
 		66D921602BAE372F0068C685 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				662151A02BAA442200ECF522 /* BaseReviewLockupCollectionViewCell.swift */,
 				66D921632BAE3A210068C685 /* MusicReviewLockupCollectionViewCell.swift */,
-				662151A02BAA442200ECF522 /* SmallReviewLockupCollectionViewCell.swift */,
+				6621519E2BAA3D8F00ECF522 /* BaseReviewLockupCollectionViewCell.xib */,
 				66D921612BAE38740068C685 /* EpisodeReviewLockupCollectionViewCell.xib */,
 				66D921682BAE3CF50068C685 /* GameReviewLockupCollectionViewCell.xib */,
 				66D921622BAE38A10068C685 /* MusicReviewLockupCollectionViewCell.xib */,
 				66D921692BAE3D060068C685 /* PersonReviewLockupCollectionViewCell.xib */,
-				6621519E2BAA3D8F00ECF522 /* SmallReviewLockupCollectionViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -4067,7 +4067,7 @@
 				669EA9A222C1491600784181 /* Purchase.storyboard in Resources */,
 				66A4FD19270F6CD100E7C702 /* App Icons.plist in Resources */,
 				661B1DD82B646522000C9C0E /* ReCap.storyboard in Resources */,
-				66D921672BAE3A900068C685 /* SmallReviewLockupCollectionViewCell.xib in Resources */,
+				66D921672BAE3A900068C685 /* BaseReviewLockupCollectionViewCell.xib in Resources */,
 				66C34FC327DCDBC900298C81 /* UpcomingLockupCollectionViewCell.xib in Resources */,
 				66AE01292594018400308636 /* Genre.storyboard in Resources */,
 				661B1DCF2B61C148000C9C0E /* oh_my_gah.m4a in Resources */,
@@ -4581,7 +4581,7 @@
 				66EA1DC225B366CF00FCD07A /* NotificationsViewController+TouchBar.swift in Sources */,
 				6647236D245DB602008E5111 /* KTintedButton.swift in Sources */,
 				666004A729DE1B3B00871801 /* KUnderlinedLabel.swift in Sources */,
-				662151A12BAA442200ECF522 /* SmallReviewLockupCollectionViewCell.swift in Sources */,
+				662151A12BAA442200ECF522 /* BaseReviewLockupCollectionViewCell.swift in Sources */,
 				66CAE6892337D04C00991E59 /* OnboardingOptionsTableViewCell.swift in Sources */,
 				6632C3E72985611700702F7C /* LibraryImportService+Kurozora.swift in Sources */,
 				66BB93ED2735FD1600649338 /* KSelectableTextView.swift in Sources */,
