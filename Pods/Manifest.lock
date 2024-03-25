@@ -1,52 +1,52 @@
 PODS:
-  - Alamofire (5.8.1)
+  - Alamofire (5.9.0)
   - Cosmos (25.0.1)
   - ESTabBarController-swift (2.8.0)
   - FLEX (5.22.10)
-  - IQKeyboardManagerSwift (7.0.1)
+  - IQKeyboardManagerSwift (7.0.2)
   - KeychainAccess (4.2.2)
   - Kingfisher (7.11.0)
-  - KurozoraKit (1.11.1):
+  - KurozoraKit (1.12.0):
     - KeychainAccess
     - TRON (= 5.5.0-beta.1)
   - Pageboy (4.0.2)
   - R.swift (7.3.2)
-  - ReachabilitySwift (5.0.0)
+  - ReachabilitySwift (5.2.1)
   - Solar (2.1.0)
   - SPConfetti (1.4.0)
-  - SwifterSwift (6.0.0):
-    - SwifterSwift/AppKit (= 6.0.0)
-    - SwifterSwift/Combine (= 6.0.0)
-    - SwifterSwift/CoreAnimation (= 6.0.0)
-    - SwifterSwift/CoreGraphics (= 6.0.0)
-    - SwifterSwift/CoreLocation (= 6.0.0)
-    - SwifterSwift/CryptoKit (= 6.0.0)
-    - SwifterSwift/Dispatch (= 6.0.0)
-    - SwifterSwift/Foundation (= 6.0.0)
-    - SwifterSwift/HealthKit (= 6.0.0)
-    - SwifterSwift/MapKit (= 6.0.0)
-    - SwifterSwift/SceneKit (= 6.0.0)
-    - SwifterSwift/SpriteKit (= 6.0.0)
-    - SwifterSwift/StoreKit (= 6.0.0)
-    - SwifterSwift/SwiftStdlib (= 6.0.0)
-    - SwifterSwift/UIKit (= 6.0.0)
-    - SwifterSwift/WebKit (= 6.0.0)
-  - SwifterSwift/AppKit (6.0.0)
-  - SwifterSwift/Combine (6.0.0)
-  - SwifterSwift/CoreAnimation (6.0.0)
-  - SwifterSwift/CoreGraphics (6.0.0)
-  - SwifterSwift/CoreLocation (6.0.0)
-  - SwifterSwift/CryptoKit (6.0.0)
-  - SwifterSwift/Dispatch (6.0.0)
-  - SwifterSwift/Foundation (6.0.0)
-  - SwifterSwift/HealthKit (6.0.0)
-  - SwifterSwift/MapKit (6.0.0)
-  - SwifterSwift/SceneKit (6.0.0)
-  - SwifterSwift/SpriteKit (6.0.0)
-  - SwifterSwift/StoreKit (6.0.0)
-  - SwifterSwift/SwiftStdlib (6.0.0)
-  - SwifterSwift/UIKit (6.0.0)
-  - SwifterSwift/WebKit (6.0.0)
+  - SwifterSwift (6.1.1):
+    - SwifterSwift/AppKit (= 6.1.1)
+    - SwifterSwift/Combine (= 6.1.1)
+    - SwifterSwift/CoreAnimation (= 6.1.1)
+    - SwifterSwift/CoreGraphics (= 6.1.1)
+    - SwifterSwift/CoreLocation (= 6.1.1)
+    - SwifterSwift/CryptoKit (= 6.1.1)
+    - SwifterSwift/Dispatch (= 6.1.1)
+    - SwifterSwift/Foundation (= 6.1.1)
+    - SwifterSwift/HealthKit (= 6.1.1)
+    - SwifterSwift/MapKit (= 6.1.1)
+    - SwifterSwift/SceneKit (= 6.1.1)
+    - SwifterSwift/SpriteKit (= 6.1.1)
+    - SwifterSwift/StoreKit (= 6.1.1)
+    - SwifterSwift/SwiftStdlib (= 6.1.1)
+    - SwifterSwift/UIKit (= 6.1.1)
+    - SwifterSwift/WebKit (= 6.1.1)
+  - SwifterSwift/AppKit (6.1.1)
+  - SwifterSwift/Combine (6.1.1)
+  - SwifterSwift/CoreAnimation (6.1.1)
+  - SwifterSwift/CoreGraphics (6.1.1)
+  - SwifterSwift/CoreLocation (6.1.1)
+  - SwifterSwift/CryptoKit (6.1.1)
+  - SwifterSwift/Dispatch (6.1.1)
+  - SwifterSwift/Foundation (6.1.1)
+  - SwifterSwift/HealthKit (6.1.1)
+  - SwifterSwift/MapKit (6.1.1)
+  - SwifterSwift/SceneKit (6.1.1)
+  - SwifterSwift/SpriteKit (6.1.1)
+  - SwifterSwift/StoreKit (6.1.1)
+  - SwifterSwift/SwiftStdlib (6.1.1)
+  - SwifterSwift/UIKit (6.1.1)
+  - SwifterSwift/WebKit (6.1.1)
   - SwiftTheme (0.6.4)
   - SwiftyJSON (5.0.1)
   - Tabman (3.0.2):
@@ -117,20 +117,20 @@ CHECKOUT OPTIONS:
     :git: https://github.com/armendh/XCDYouTubeKit
 
 SPEC CHECKSUMS:
-  Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
+  Alamofire: 02b772c9910e8eba1a079227c32fbd9e46c90a24
   Cosmos: 02db0a1c953107049bfd2d7af19ceef55ecb7e98
   ESTabBarController-swift: 05593a6ad64700b03c0eb60ff625916370aa4136
   FLEX: f21ee4f498eed3f8a1eded66b21939fd3b7a22ce
-  IQKeyboardManagerSwift: 7f6b1b1d1497855d2beea7f2f10ffcc6978525b1
+  IQKeyboardManagerSwift: d338c11a896e9f29603443700c4567e32f830c22
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   Kingfisher: b9c985d864d43515f404f1ef4a8ce7d802ace3ac
-  KurozoraKit: e4311e08d5b8d5dc1bf1eb3baf24eb7d7e90a229
+  KurozoraKit: bfd2a7b98893048dfa35e4f3b4b1e29ec55f9823
   Pageboy: 34ff11e8d1041b81769d5bcde9b19a0cb7218bd9
   R.swift: 0af0d882f49f03711415cb4e5215daa977d8a480
-  ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
+  ReachabilitySwift: 5ae15e16814b5f9ef568963fb2c87aeb49158c66
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
   SPConfetti: 4ba720ff652d960f59c3e4eadee2c0c3ef6ce9a4
-  SwifterSwift: 66843dc594f8fb890f5543c22545921d44acc004
+  SwifterSwift: 6fda88d11d5076fabd816fa95d00b1b1eeba5f71
   SwiftTheme: 007cbaf1f9e171caf6448a4657533e54c682b285
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
   Tabman: 6326ec3a792da1c2a6e79c7eddb56af7b591c9d6

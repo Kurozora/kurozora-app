@@ -57,11 +57,41 @@ extension KurozoraKit {
 
 		// Prepare parameters
 		var parameters: [String: Any] = [:]
-		parameters["limi"] = limit
+		parameters["limit"] = limit
 
 		// Prepare request
 		let songShows = next ?? KKEndpoint.Songs.shows(songIdentity).endpointValue
 		let request: APIRequest<ShowIdentityResponse, KKAPIError> = tron.codable.request(songShows).buildURL(.relativeToBaseURL)
+			.method(.get)
+			.parameters(parameters)
+			.headers(headers)
+
+		// Send request
+		return request.sender()
+	}
+
+	///	Fetch the games for the given song identity.
+	///
+	/// - Parameters:
+	///    - songIdentity: The song identity object for which the games should be fetched.
+	///	   - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+	///	   - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the get song games response.
+	public func getGames(forSong songIdentity: SongIdentity, next: String? = nil, limit: Int = 25) -> RequestSender<GameIdentityResponse, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
+		if !self.authenticationKey.isEmpty {
+			headers.add(.authorization(bearerToken: self.authenticationKey))
+		}
+
+		// Prepare parameters
+		var parameters: [String: Any] = [:]
+		parameters["limit"] = limit
+
+		// Prepare request
+		let songGames = next ?? KKEndpoint.Songs.games(songIdentity).endpointValue
+		let request: APIRequest<GameIdentityResponse, KKAPIError> = tron.codable.request(songGames).buildURL(.relativeToBaseURL)
 			.method(.get)
 			.parameters(parameters)
 			.headers(headers)

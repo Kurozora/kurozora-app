@@ -79,6 +79,9 @@ extension User {
 		/// The reputation count of the user.
 		public let reputationCount: Int
 
+		/// The ratings count of the user.
+		public let ratingsCount: Int
+
 		/// The preferred language of the user.
 		public var preferredLanguage: String?
 

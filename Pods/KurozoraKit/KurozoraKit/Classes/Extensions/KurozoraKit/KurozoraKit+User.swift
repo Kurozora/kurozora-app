@@ -241,7 +241,36 @@ extension KurozoraKit {
 		return request.sender()
 	}
 
-	/// Fetch the profile details of the given user user identity.
+	/// Fetch the reviews list for the given user identity.
+	///
+	/// - Parameters:
+	///    - userIdentity: The identity of the user whose reviews list will be fetched.
+	///    - libraryKind: From which library to get the reviews
+	///    - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the get reviews response.
+	public func getReviewsList(forUser userIdentity: UserIdentity, next: String? = nil, limit: Int = 25) -> RequestSender<ReviewResponse, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
+		if !self.authenticationKey.isEmpty {
+			headers.add(.authorization(bearerToken: self.authenticationKey))
+		}
+
+		// Prepare request
+		let usersReviews = next ?? KKEndpoint.Users.reviews(userIdentity).endpointValue
+		let request: APIRequest<ReviewResponse, KKAPIError> = tron.codable.request(usersReviews).buildURL(.relativeToBaseURL)
+			.method(.get)
+			.parameters([
+				"limit": limit
+			])
+			.headers(headers)
+
+		// Send request
+		return request.sender()
+	}
+
+	/// Fetch the profile details of the given user identity.
 	///
 	/// - Parameters:
 	///    - userIdentity: The identity of the user whose profile details should be fetched.

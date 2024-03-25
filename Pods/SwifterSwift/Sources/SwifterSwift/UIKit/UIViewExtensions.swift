@@ -1,4 +1,4 @@
-// UIViewExtensions.swift - Copyright 2023 SwifterSwift
+// UIViewExtensions.swift - Copyright 2024 SwifterSwift
 
 #if canImport(UIKit) && !os(watchOS)
 import UIKit
@@ -52,17 +52,22 @@ public extension UIView {
 
     /// SwifterSwift: Add gradient directions
     struct GradientDirection {
-        static let topToBottom = GradientDirection(startPoint: CGPoint(x: 0.5, y: 0.0),
-                                                   endPoint: CGPoint(x: 0.5, y: 1.0))
-        static let bottomToTop = GradientDirection(startPoint: CGPoint(x: 0.5, y: 1.0),
-                                                   endPoint: CGPoint(x: 0.5, y: 0.0))
-        static let leftToRight = GradientDirection(startPoint: CGPoint(x: 0.0, y: 0.5),
-                                                   endPoint: CGPoint(x: 1.0, y: 0.5))
-        static let rightToLeft = GradientDirection(startPoint: CGPoint(x: 1.0, y: 0.5),
-                                                   endPoint: CGPoint(x: 0.0, y: 0.5))
+        public static let topToBottom = GradientDirection(startPoint: CGPoint(x: 0.5, y: 0.0),
+                                                          endPoint: CGPoint(x: 0.5, y: 1.0))
+        public static let bottomToTop = GradientDirection(startPoint: CGPoint(x: 0.5, y: 1.0),
+                                                          endPoint: CGPoint(x: 0.5, y: 0.0))
+        public static let leftToRight = GradientDirection(startPoint: CGPoint(x: 0.0, y: 0.5),
+                                                          endPoint: CGPoint(x: 1.0, y: 0.5))
+        public static let rightToLeft = GradientDirection(startPoint: CGPoint(x: 1.0, y: 0.5),
+                                                          endPoint: CGPoint(x: 0.0, y: 0.5))
 
-        let startPoint: CGPoint
-        let endPoint: CGPoint
+        public let startPoint: CGPoint
+        public let endPoint: CGPoint
+
+        public init(startPoint: CGPoint, endPoint: CGPoint) {
+            self.startPoint = startPoint
+            self.endPoint = endPoint
+        }
     }
 }
 
@@ -270,6 +275,16 @@ public extension UIView {
         layer.mask = shape
     }
 
+    /// SwifterSwift: Make the view circular.
+    ///
+    /// - Parameter diameter: This value will be set as the width and height of the view.
+    func makeCircle(diameter: CGFloat) {
+        clipsToBounds = true
+        bounds.size.height = diameter
+        bounds.size.width = diameter
+        layer.cornerRadius = diameter / 2
+    }
+
     /// SwifterSwift: Add shadow to view.
     ///
     /// - Note: This method only works with non-clear background color, or if the view has a `shadowPath` set.
@@ -297,6 +312,18 @@ public extension UIView {
     /// - Parameter subviews: array of subviews to add to self.
     func addSubviews(_ subviews: [UIView]) {
         subviews.forEach { addSubview($0) }
+    }
+
+    /// SwifterSwift: Make the view blurry.
+    ///
+    /// - Parameter style: UIBlurEffectStyle (default is .light).
+    func blur(withStyle style: UIBlurEffect.Style = .light) {
+        let blurEffect = UIBlurEffect(style: style)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight] // for supporting device rotation
+        addSubview(blurEffectView)
+        clipsToBounds = true
     }
 
     /// SwifterSwift: Fade in view.
@@ -507,6 +534,15 @@ public extension UIView {
         gradientLayer.startPoint = direction.startPoint
         gradientLayer.endPoint = direction.endPoint
         layer.addSublayer(gradientLayer)
+    }
+
+    /// SwifterSwift: Removes the applied blur effect from the `UIView`.
+    func removeBlur() {
+        subviews
+            .lazy
+            .compactMap { $0 as? UIVisualEffectView }
+            .filter { $0.effect is UIBlurEffect }
+            .forEach { $0.removeFromSuperview() }
     }
 
     /// SwifterSwift: Add Visual Format constraints.

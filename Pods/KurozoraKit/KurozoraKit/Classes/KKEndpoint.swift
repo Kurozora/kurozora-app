@@ -490,6 +490,9 @@ extension KKEndpoint {
 		/// The endpoint to the shows of a song.
 		case shows(_ songIdentity: SongIdentity)
 
+		/// The endpoint to the games of a song.
+		case games(_ songIdentity: SongIdentity)
+
 		// MARK: - Properties
 		/// The endpoint value of the Songs API type.
 		var endpointValue: String {
@@ -498,6 +501,8 @@ extension KKEndpoint {
 				return "songs/\(songIdentity.id)"
 			case .shows(let songIdentity):
 				return "songs/\(songIdentity.id)/anime"
+			case .games(let songIdentity):
+				return "songs/\(songIdentity.id)/games"
 			}
 		}
 	}
@@ -668,6 +673,9 @@ extension KKEndpoint {
 		/// The endpoint to a user's profile.
 		case profile(_ userIdentity: UserIdentity)
 
+		/// The endpoint to view a user's reviews.
+		case reviews(_ userIdentity: UserIdentity)
+
 		/// The endpoint to search for a user.
 		case search(_ username: String)
 
@@ -698,6 +706,8 @@ extension KKEndpoint {
 				return "users/\(userIdentity.id)/favorites"
 			case .profile(let userIdentity):
 				return "users/\(userIdentity.id)/profile"
+			case .reviews(let userIdentity):
+				return "users/\(userIdentity.id)/reviews"
 			case .search(let username):
 				return "users/search/\(username)"
 			case .delete:

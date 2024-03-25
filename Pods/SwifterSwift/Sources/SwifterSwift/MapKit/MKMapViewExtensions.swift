@@ -1,4 +1,4 @@
-// MKMapViewExtensions.swift - Copyright 2023 SwifterSwift
+// MKMapViewExtensions.swift - Copyright 2024 SwifterSwift
 
 #if canImport(MapKit) && !os(watchOS)
 import MapKit
@@ -27,7 +27,7 @@ public extension MKMapView {
     ///   - annotation: annotation of the mapView.
     /// - Returns: optional MKAnnotationView object.
     func dequeueReusableAnnotationView<T: MKAnnotationView>(withClass name: T.Type,
-                                                            for annotation: MKAnnotation) -> T? {
+                                                            for annotation: any MKAnnotation) -> T? {
         guard let annotationView = dequeueReusableAnnotationView(
             withIdentifier: String(describing: name),
             for: annotation) as? T else {

@@ -1,4 +1,4 @@
-// StringExtensions.swift - Copyright 2023 SwifterSwift
+// StringExtensions.swift - Copyright 2024 SwifterSwift
 
 #if canImport(Foundation)
 import Foundation
@@ -535,7 +535,7 @@ public extension String {
     ///   - comment: Optional comment for translators.
     ///   - arguments: Arguments used by format.
     /// - Returns: Format localized string.
-    func formatLocalized(comment: String = "", _ arguments: CVarArg...) -> String {
+    func formatLocalized(comment: String = "", _ arguments: (any CVarArg)...) -> String {
         let format = NSLocalizedString(self, comment: comment)
         return String(format: format, arguments: arguments)
     }

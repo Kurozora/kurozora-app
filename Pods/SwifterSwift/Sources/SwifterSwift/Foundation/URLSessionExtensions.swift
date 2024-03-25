@@ -1,4 +1,4 @@
-// URLSessionExtensions.swift - Copyright 2023 SwifterSwift
+// URLSessionExtensions.swift - Copyright 2024 SwifterSwift
 
 #if canImport(Foundation)
 import Foundation
@@ -19,7 +19,7 @@ public extension URLSession {
     func dataSync(with request: URLRequest) throws -> (Data, URLResponse) {
         var data: Data!
         var response: URLResponse!
-        var error: Error?
+        var error: (any Error)?
         let semaphore = DispatchSemaphore(value: 0)
         dataTask(with: request) { receivedData, receivedResponse, receivedError in
             data = receivedData

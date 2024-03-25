@@ -1,4 +1,4 @@
-// UIViewControllerExtensions.swift - Copyright 2023 SwifterSwift
+// UIViewControllerExtensions.swift - Copyright 2024 SwifterSwift
 
 #if canImport(UIKit) && !os(watchOS)
 import UIKit
@@ -131,7 +131,7 @@ public extension UIViewController {
         _ popoverContent: UIViewController,
         sourcePoint: CGPoint,
         size: CGSize? = nil,
-        delegate: UIPopoverPresentationControllerDelegate? = nil,
+        delegate: (any UIPopoverPresentationControllerDelegate)? = nil,
         animated: Bool = true,
         completion: (() -> Void)? = nil) {
         popoverContent.modalPresentationStyle = .popover
