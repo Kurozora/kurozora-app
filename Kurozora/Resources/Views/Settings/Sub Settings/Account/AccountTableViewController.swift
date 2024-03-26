@@ -50,7 +50,8 @@ class AccountTableViewController: SubSettingsViewController {
 		// just to make sure underaged users, who are more likely to be using the app than the website,
 		// don't have access to those options. Adults will figure out how to change it on the website...
 		// probably...
-		if User.current?.attributes.preferredTVRating != 5 || User.current == nil {
+		if (User.current?.attributes.preferredTVRating != 5 && User.current?.attributes.preferredTVRating != -1)
+			|| User.current == nil {
 			self.tvRatings.removeValue(forKey: "-1") // All
 			self.tvRatings.removeValue(forKey: "5") // R18+
 		}
