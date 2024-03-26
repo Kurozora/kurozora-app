@@ -145,6 +145,16 @@ extension HomeCollectionViewController {
 	}
 
 	override func updateDataSource() {
+		self.shows = [:]
+		self.literatures = [:]
+		self.games = [:]
+		self.episodes = [:]
+		self.characters = [:]
+		self.genres = [:]
+		self.people = [:]
+		self.showSongs = [:]
+		self.themes = [:]
+		self.recaps = [:]
 		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 
 		// Add explore categories
