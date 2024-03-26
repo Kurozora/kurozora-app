@@ -109,7 +109,7 @@ extension ServiceTableViewController {
 	override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
 		switch Section(rawValue: section) {
 		case .preview:
-			return CGFloat.leastNormalMagnitude
+			return .leastNormalMagnitude
 		default:
 			return 28
 		}

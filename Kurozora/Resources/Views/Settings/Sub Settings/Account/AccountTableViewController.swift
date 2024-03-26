@@ -77,8 +77,16 @@ class AccountTableViewController: SubSettingsViewController {
 		self.selectedTVRating = self.tvRatings.first(where: { $0.key == user.attributes.preferredTVRating?.string })?.value ?? self.selectedTVRating
 		self.selectedTimezone = self.timezones.first(where: { $0.key == user.attributes.preferredTimezone })?.value ?? self.selectedTimezone
 
+		self.languageButton.titleLabel?.numberOfLines = 0
+		self.languageButton.contentHorizontalAlignment = .trailing
 		self.languageButton.menu = self.configureMenu(accountSetting: .language, options: self.languages.map({ $0.value }), selected: self.selectedLanguage)
+
+		self.tvRatingButton.titleLabel?.numberOfLines = 0
+		self.tvRatingButton.contentHorizontalAlignment = .trailing
 		self.tvRatingButton.menu = self.configureMenu(accountSetting: .tvRating, options: self.tvRatings.map({ $0.value }), selected: self.selectedTVRating)
+
+		self.timezoneButton.titleLabel?.numberOfLines = 0
+		self.timezoneButton.contentHorizontalAlignment = .trailing
 		self.timezoneButton.menu = self.configureMenu(accountSetting: .timezone, options: self.timezones.map({ $0.value }), selected: self.selectedTimezone)
 	}
 
@@ -134,12 +142,12 @@ class AccountTableViewController: SubSettingsViewController {
 // MARK: - UITableViewDataSource
 extension AccountTableViewController {
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if section == 0 {
-			guard let user = User.current else { return 0 }
-
-			if user.attributes.siwaIsEnabled ?? false {
-				return 1
+		switch Section(rawValue: section) {
+		case .signInWithApple:
+			if User.current?.attributes.siwaIsEnabled ?? false {
+				return 0
 			}
+		default: break
 		}
 
 		return super.tableView(tableView, numberOfRowsInSection: section)
@@ -148,37 +156,100 @@ extension AccountTableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath as IndexPath, animated: true)
 
-		switch (indexPath.section, indexPath.row) {
-//		case (0, 0): break
-//		case (1, 0): break
-		case (2, 0):
-			let alertController = self.presentAlertController(title: "Sign Out", message: "Are you sure you want to sign out?", defaultActionButtonTitle: "No, keep me signed in 😆")
-			alertController.addAction(UIAlertAction(title: "Yes, sign me out 🤨", style: .destructive) { [weak self] _ in
-				guard let self = self else { return }
+		switch Section(rawValue: indexPath.section) {
+		case .danger:
+			switch indexPath.row {
+			case 0:
+				let alertController = self.presentAlertController(title: "Sign Out", message: "Are you sure you want to sign out?", defaultActionButtonTitle: "No, keep me signed in 😅")
+				alertController.addAction(UIAlertAction(title: "Yes, sign me out 🤨", style: .destructive) { [weak self] _ in
+					guard let self = self else { return }
 
-				Task {
-					await WorkflowController.shared.signOut()
-					self.dismiss(animated: true, completion: nil)
-				}
-			})
-		case (2, 1):
-			let alertController = self.presentAlertController(title: "Delete Account", message: "Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account. ", defaultActionButtonTitle: Trans.cancel)
-			alertController.addTextField { textField in
-				textField.textType = .password
-				textField.placeholder = Trans.password
-			}
-			alertController.addAction(UIAlertAction(title: "Delete Permanently", style: .destructive) { [weak self] _ in
-				guard let self = self else { return }
-				guard let passwordTextField = alertController.textFields?.first else { return }
-				guard let password = passwordTextField.text else { return }
-
-				Task {
-					if await WorkflowController.shared.deleteUser(password: password) {
+					Task {
+						await WorkflowController.shared.signOut()
 						self.dismiss(animated: true, completion: nil)
 					}
+				})
+			case 1:
+				let alertController = self.presentAlertController(title: "Delete Account", message: "Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account. ", defaultActionButtonTitle: Trans.cancel)
+				alertController.addTextField { textField in
+					textField.textType = .password
+					textField.placeholder = Trans.password
 				}
-			})
+				alertController.addAction(UIAlertAction(title: "Delete Permanently", style: .destructive) { [weak self] _ in
+					guard let self = self else { return }
+					guard let passwordTextField = alertController.textFields?.first else { return }
+					guard let password = passwordTextField.text else { return }
+
+					Task {
+						if await WorkflowController.shared.deleteUser(password: password) {
+							self.dismiss(animated: true, completion: nil)
+						}
+					}
+				})
+			default: break
+			}
 		default: break
 		}
+	}
+}
+
+// MARK: - UITableViewDelegate
+extension AccountTableViewController {
+	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		switch Section(rawValue: section) {
+		case .signInWithApple:
+			if User.current?.attributes.siwaIsEnabled ?? false {
+				return .leastNormalMagnitude
+			}
+		default: break
+		}
+
+		return super.tableView(tableView, heightForHeaderInSection: section)
+	}
+
+	override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+		switch Section(rawValue: section) {
+		case .signInWithApple:
+			if User.current?.attributes.siwaIsEnabled ?? false {
+				return .leastNormalMagnitude
+			}
+		default: break
+		}
+
+		return super.tableView(tableView, heightForFooterInSection: section)
+	}
+}
+
+extension AccountTableViewController {
+	/// List of account table section layout kind.
+	enum Section: Int, CaseIterable {
+		/// The section for account settings.
+		case account
+
+		/// The section for Sign in with Apple.
+		case signInWithApple
+
+		/// The section for the session view..
+		case session
+
+		/// The section for dangerous actions.
+		case danger
+	}
+
+	enum Rows: Int, CaseIterable {
+		/// The row for the language settings.
+		case language
+		/// The row for the tv rating settings.
+		case tvRating
+		/// The row for the timezone settings.
+		case timezone
+		/// The row for the import library settings.
+		case importLibrary
+		/// The row for the Sign in with Apple settings.
+		case signInWithApple
+		/// The row for the sign out settings.
+		case signOut
+		/// The row for the delete account settings.
+		case deleteAccount
 	}
 }
