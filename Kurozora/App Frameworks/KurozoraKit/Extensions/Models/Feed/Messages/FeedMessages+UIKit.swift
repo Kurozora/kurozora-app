@@ -51,7 +51,10 @@ extension FeedMessage {
 			menuElements.append(reShareAction)
 
 			// Edit and delete
-			if let currentUserID = User.current?.id, let messageUserID = self.relationships.users.data.first?.id, currentUserID == messageUserID {
+			let messageUserID = self.relationships.users.data.first?.id
+			if User.current?.attributes.role == .superAdmin ||
+			   User.current?.attributes.role == .admin ||
+			   User.current?.id == messageUserID {
 				// Edit action
 				let editAction = UIAction(title: "Edit", image: UIImage(systemName: "pencil.circle.fill")) { [weak self] _ in
 					guard let self = self else { return }
