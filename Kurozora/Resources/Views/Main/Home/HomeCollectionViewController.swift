@@ -133,11 +133,11 @@ class HomeCollectionViewController: KCollectionViewController {
 		// Determing whether to show confetti
 		let date = Date()
 
-		if date >= Date(unixTimestamp: 1710374400)
-			&& date <= Date(unixTimestamp: 1710460799)
+		if date >= Date(unixTimestamp: 1711843200)
+			&& date <= Date(unixTimestamp: 1711929599)
 			&& WhatsNew.shouldPresent(with: .always) {
-			SPConfettiConfiguration.particlesConfig.colors = [.white, .systemBrown, .brown, .systemCyan, .cyan]
-			SPConfetti.startAnimating(.fullWidthToDown, particles: [.custom(UIImage(systemName: "heart.fill")!)])
+			SPConfettiConfiguration.particlesConfig.colors = [.hummingbird, .kLightRed, .kYellow, .other, .aozora]
+			SPConfetti.startAnimating(.fullWidthToDown, particles: [.custom(UIImage(systemName: "basket.fill")!), .custom(UIImage(systemName: "camera.macro")!), .custom(UIImage(systemName: "carrot.fill")!), .custom(UIImage(systemName: "carrot")!)])
 		}
 
 		// Configurations
