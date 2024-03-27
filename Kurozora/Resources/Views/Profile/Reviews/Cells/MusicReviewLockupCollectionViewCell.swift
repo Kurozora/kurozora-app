@@ -46,9 +46,6 @@ class MusicReviewLockupCollectionViewCell: BaseReviewLockupCollectionViewCell {
 		// Configure title
 		self.primaryLabel.text = song.attributes.title
 
-		// Configure artist
-		self.secondaryLabel.text = song.attributes.artist
-
 		// Configure play button
 		self.playButton.isHidden = true
 		self.playButton.layerCornerRadius = self.playButton.height / 2

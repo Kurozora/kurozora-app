@@ -161,7 +161,6 @@ class BaseReviewLockupCollectionViewCell: KCollectionViewCell {
 
 		// Configure artwork
 		song.attributes.artworkImage(imageView: self.posterImageView)
-		self.posterImageView.applyCornerRadius(18.0)
 		self.posterImageView.layer.mask = nil
 		self.posterImageOverlayView?.isHidden = true
 	}

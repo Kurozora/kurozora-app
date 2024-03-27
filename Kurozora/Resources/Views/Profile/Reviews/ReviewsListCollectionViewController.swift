@@ -9,6 +9,7 @@
 import UIKit
 import KurozoraKit
 import Alamofire
+import AVFoundation
 
 class ReviewsListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
@@ -24,6 +25,12 @@ class ReviewsListCollectionViewController: KCollectionViewController {
 	var reviews: [Review] = []
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Review>! = nil
 	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
+
+	/// The object that provides the interface to control the player’s transport behavior.
+	var player: AVPlayer?
+
+	/// The index path of the song that's currently playing.
+	var currentPlayerIndexPath: IndexPath?
 
 	/// The next page url of the pagination.
 	var nextPageURL: String?
@@ -83,6 +90,12 @@ class ReviewsListCollectionViewController: KCollectionViewController {
 				await self.fetchReviews()
 			}
 		}
+	}
+
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+
+		self.player?.pause()
 	}
 
 	// MARK: - Functions
@@ -210,6 +223,48 @@ class ReviewsListCollectionViewController: KCollectionViewController {
 			guard let studio = sender as? Studio else { return }
 			studioDetailsCollectionViewController.studio = studio
 		default: break
+		}
+	}
+}
+
+// MARK: - MusicLockupCollectionViewCellDelegate
+extension ReviewsListCollectionViewController: MusicReviewLockupCollectionViewCellDelegate {
+	func playButtonPressed(_ sender: UIButton, cell: MusicReviewLockupCollectionViewCell) {
+		guard let song = cell.song else { return }
+		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+
+		if let songURL = song.previewAssets?.first?.url {
+			let playerItem = AVPlayerItem(url: songURL)
+
+			if (self.player?.currentItem?.asset as? AVURLAsset)?.url == (playerItem.asset as? AVURLAsset)?.url {
+				switch self.player?.timeControlStatus {
+				case .playing:
+					cell.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+					self.player?.pause()
+				case .paused:
+					cell.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+					self.player?.play()
+				default: break
+				}
+			} else {
+				if let indexPath = self.currentPlayerIndexPath {
+					if let cell = self.collectionView.cellForItem(at: indexPath) as? MusicReviewLockupCollectionViewCell {
+						cell.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+					}
+				}
+
+				self.currentPlayerIndexPath = indexPath
+				self.player = AVPlayer(playerItem: playerItem)
+				self.player?.actionAtItemEnd = .none
+				self.player?.play()
+				cell.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+
+				NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: nil, queue: .current, using: { [weak self] _ in
+					guard let self = self else { return }
+					self.player = nil
+					cell.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+				})
+			}
 		}
 	}
 }
