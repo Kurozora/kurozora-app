@@ -11,8 +11,20 @@ import WhatsNew
 class KWhatsNew {
 	/// Features of the current version of the app. Don't forget to change
 	static var current: [WhatsNewItem] {
-		return v16
+		return v17
 	}
+
+	/// Features of version 1.7.0 of the app.
+	static var v17: [WhatsNewItem] = [
+		.image(title: "Egg Hunt", subtitle: "Embark on an Easter egg hunt with the new『Eggstein』app icon and『Pastel Paradise』theme.", image: R.image.icons.gift()!),
+		.image(title: "Review List", subtitle: "Like reading reviews? Easily view your own and others' reviews directly from the profile page.", image: R.image.icons.rating()!),
+		.image(title: "TV Rating", subtitle: "Enjoy more control over your content with the ability to change TV ratings", image: R.image.icons.tvRating()!),
+		.image(title: "Timezone", subtitle: "View schedules, broadcasts and in your timezone.", image: R.image.icons.globe()!),
+		.image(title: "Localization", subtitle: "Tailor your experience by selecting your preferred localization. English will be used as fallback where this feature isn't available yet.", image: R.image.icons.language()!),
+		.image(title: "Tip Jar", subtitle: "Now you can view a list of unlockable features when you tip in the Tip Jar.", image: R.image.icons.tipJar()!),
+		.image(title: "Kurozora+", subtitle: "A revamped Kurozora+ page, with new features listed for your convenience.", image: R.image.icons.unlock()!),
+		.image(title: "Sounds & Haptics", subtitle: "A harmonious blend of serene chimes and iconic anime sounds. Whether you seek tranquility or a touch of nostalgia, find the perfect ambiance to accompany your journey.", image: R.image.icons.sound()!)
+	]
 
 	/// Features of version 1.6.0 of the app.
 	static var v16: [WhatsNewItem] = [
