@@ -161,8 +161,8 @@ extension ReviewsListCollectionViewController {
 		}
 	}
 
-	func getConfiguredMusicReviewCell() -> UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, Review> {
-		return UICollectionView.CellRegistration<BaseReviewLockupCollectionViewCell, Review>(cellNib: UINib(resource: R.nib.musicReviewLockupCollectionViewCell)) { [weak self] baseReviewLockupCollectionViewCell, indexPath, review in
+	func getConfiguredMusicReviewCell() -> UICollectionView.CellRegistration<MusicReviewLockupCollectionViewCell, Review> {
+		return UICollectionView.CellRegistration<MusicReviewLockupCollectionViewCell, Review>(cellNib: UINib(resource: R.nib.musicReviewLockupCollectionViewCell)) { [weak self] baseReviewLockupCollectionViewCell, indexPath, review in
 			guard let self = self else { return }
 			let songIdentity = review.relationships?.songs?.data.first
 			let song = self.fetchSong(at: indexPath)
@@ -180,6 +180,7 @@ extension ReviewsListCollectionViewController {
 				}
 			}
 
+			baseReviewLockupCollectionViewCell.delegate = self
 			baseReviewLockupCollectionViewCell.configure(using: review, for: song)
 		}
 	}
@@ -246,7 +247,7 @@ extension ReviewsListCollectionViewController {
 
 				baseReviewLockupCollectionViewCell.configure(using: review, for: person)
 			} else if let studioIdentity = review.relationships?.studios?.data.first {
-				let studio = self.fetchPerson(at: indexPath)
+				let studio = self.fetchStudio(at: indexPath)
 
 				if studio == nil {
 					Task {
