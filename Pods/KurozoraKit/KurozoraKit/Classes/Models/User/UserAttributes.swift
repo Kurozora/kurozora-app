@@ -9,9 +9,6 @@ extension User {
 	/// A root object that stores information about a single user, such as the user's username, bio, and profile image.
 	public struct Attributes: Codable {
 		// MARK: - Properties
-		/// The role of the user.
-		public let role: Int?
-
 		/// The slug of the user.
 		public var slug: String
 
@@ -83,16 +80,29 @@ extension User {
 		public let ratingsCount: Int
 
 		/// The preferred language of the user.
+		///
+		/// Included only for the currently signed in user.
 		public var preferredLanguage: String?
 
 		/// The preferred TV rating of the user.
+		///
+		/// Included only for the currently signed in user.
 		public var preferredTVRating: Int?
 
 		/// The preferred timezone of the user.
+		///
+		/// Included only for the currently signed in user.
 		public var preferredTimezone: String?
 
 		/// Whether the user can change their username.
+		///
+		/// Included only for the currently signed in user.
 		public let canChangeUsername: Bool?
+
+		/// The role of the user.
+		///
+		/// Included only for the currently signed in user.
+		public let role: UserRole?
 
 		/// Whether the user is followed by the current user.
 		fileprivate var isFollowed: Bool?

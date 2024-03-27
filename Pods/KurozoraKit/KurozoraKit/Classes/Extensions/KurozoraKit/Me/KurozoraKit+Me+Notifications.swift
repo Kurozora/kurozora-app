@@ -19,8 +19,8 @@ extension KurozoraKit {
 		// Prepare request
 		let meNotificationsIndex = KKEndpoint.Me.Notifications.index.endpointValue
 		let request: APIRequest<UserNotificationResponse, KKAPIError> = tron.codable.request(meNotificationsIndex)
-			.headers(headers)
 			.method(.get)
+			.headers(headers)
 
 		// Send request
 		return request.sender()
@@ -36,8 +36,8 @@ extension KurozoraKit {
 		// Prepare request
 		let notificationsDetail = KKEndpoint.Me.Notifications.details(notificationID).endpointValue
 		let request: APIRequest<UserNotificationResponse, KKAPIError> = tron.codable.request(notificationsDetail)
-			.headers(self.headers)
 			.method(.get)
+			.headers(self.headers)
 
 		// Send request
 		return request.sender()
@@ -87,6 +87,7 @@ extension KurozoraKit {
 		let meNotificationsDelete = KKEndpoint.Me.Notifications.delete(notificationID).endpointValue
 		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(meNotificationsDelete)
 			.method(.post)
+			.headers(headers)
 
 		// Send request
 		return request.sender()
