@@ -458,7 +458,6 @@
 		66B4F1DB223D2CA5007C5048 /* SearchBaseResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B4F1DA223D2CA5007C5048 /* SearchBaseResultsCell.swift */; };
 		66B4F1DD223D334D007C5048 /* KKSearchScope+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B4F1DC223D334D007C5048 /* KKSearchScope+Kurozora.swift */; };
 		66B69BD6214544DB007154BD /* LegalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B69BD5214544DB007154BD /* LegalViewController.swift */; };
-		66B7450F2B7D63B000DC0F90 /* OptionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B7450E2B7D63B000DC0F90 /* OptionsTableViewController.swift */; };
 		66B853F0269EE3D8006DD34E /* RatingBadgeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B853EF269EE3D8006DD34E /* RatingBadgeCollectionViewCell.swift */; };
 		66B9BB9724FB1AC7004953C9 /* KFeedMessageReShareTextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B9BB9624FB1AC7004953C9 /* KFeedMessageReShareTextEditorView.swift */; };
 		66B9BB9924FC5CC3004953C9 /* KFMReplyTextEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B9BB9824FC5CC3004953C9 /* KFMReplyTextEditorViewController.swift */; };
@@ -664,6 +663,9 @@
 		66EDBA652944A8E300FF1A2E /* WarningType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EDBA642944A8E300FF1A2E /* WarningType.swift */; };
 		66EDBA6C2946943700FF1A2E /* Launch Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 66EDBA6A2946943700FF1A2E /* Launch Icon.png */; };
 		66EDBA6D2946943700FF1A2E /* Launch Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 66EDBA6B2946943700FF1A2E /* Launch Background.png */; };
+		66EDDFFD2BBA0E8600B5B4EE /* shamisen.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 66EDDFFC2BBA0E8600B5B4EE /* shamisen.m4a */; };
+		66EDDFFF2BBA14AA00B5B4EE /* den_den_mushi.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 66EDDFFE2BBA14AA00B5B4EE /* den_den_mushi.m4a */; };
+		66EDE0012BBA182900B5B4EE /* biwa.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 66EDE0002BBA182600B5B4EE /* biwa.m4a */; };
 		66EF26C6215F960A00FB2B19 /* UIImage+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EF26C5215F960A00FB2B19 /* UIImage+Kurozora.swift */; };
 		66F199AE2B931F45004D7C91 /* RichLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F199AD2B931F45004D7C91 /* RichLink.swift */; };
 		66F27EB7283A68F500CC2277 /* StudioLockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F27EB6283A68F500CC2277 /* StudioLockupCollectionViewCell.swift */; };
@@ -1165,7 +1167,6 @@
 		66B4F1DA223D2CA5007C5048 /* SearchBaseResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBaseResultsCell.swift; sourceTree = "<group>"; };
 		66B4F1DC223D334D007C5048 /* KKSearchScope+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KKSearchScope+Kurozora.swift"; sourceTree = "<group>"; };
 		66B69BD5214544DB007154BD /* LegalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalViewController.swift; sourceTree = "<group>"; };
-		66B7450E2B7D63B000DC0F90 /* OptionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsTableViewController.swift; sourceTree = "<group>"; };
 		66B853EF269EE3D8006DD34E /* RatingBadgeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingBadgeCollectionViewCell.swift; sourceTree = "<group>"; };
 		66B9BB9624FB1AC7004953C9 /* KFeedMessageReShareTextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KFeedMessageReShareTextEditorView.swift; sourceTree = "<group>"; };
 		66B9BB9824FC5CC3004953C9 /* KFMReplyTextEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KFMReplyTextEditorViewController.swift; sourceTree = "<group>"; };
@@ -1378,6 +1379,9 @@
 		66EDBA642944A8E300FF1A2E /* WarningType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningType.swift; sourceTree = "<group>"; };
 		66EDBA6A2946943700FF1A2E /* Launch Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Launch Icon.png"; sourceTree = "<group>"; };
 		66EDBA6B2946943700FF1A2E /* Launch Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Launch Background.png"; sourceTree = "<group>"; };
+		66EDDFFC2BBA0E8600B5B4EE /* shamisen.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = shamisen.m4a; sourceTree = "<group>"; };
+		66EDDFFE2BBA14AA00B5B4EE /* den_den_mushi.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = den_den_mushi.m4a; sourceTree = "<group>"; };
+		66EDE0002BBA182600B5B4EE /* biwa.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = biwa.m4a; sourceTree = "<group>"; };
 		66EF26C5215F960A00FB2B19 /* UIImage+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Kurozora.swift"; sourceTree = "<group>"; };
 		66F199AD2B931F45004D7C91 /* RichLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RichLink.swift; path = Chime/RichLink.swift; sourceTree = "<group>"; };
 		66F27EB6283A68F500CC2277 /* StudioLockupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioLockupCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -2925,7 +2929,6 @@
 				66B4DBF32450EF2C0097135A /* Library Import */,
 				66B4DBF42450EF3E0097135A /* Manage Active Sessions */,
 				66B4DBED2450E55E0097135A /* Sign in with Apple */,
-				66B7450E2B7D63B000DC0F90 /* OptionsTableViewController.swift */,
 			);
 			path = "Sub Settings";
 			sourceTree = "<group>";
@@ -3840,8 +3843,10 @@
 		66FE68F929D2646A00C9AD8E /* Audios */ = {
 			isa = PBXGroup;
 			children = (
+				66EDE0002BBA182600B5B4EE /* biwa.m4a */,
 				661B1DD02B61C1D7000C9C0E /* bonk.m4a */,
 				6675E2022B4836620050F98C /* boosto.m4a */,
+				66EDDFFE2BBA14AA00B5B4EE /* den_den_mushi.m4a */,
 				661B1DD22B61C77C000C9C0E /* explosion.m4a */,
 				66FE68FC29D26AE300C9AD8E /* furin.m4a */,
 				66631B502B408D790006F02B /* jeb_.m4a */,
@@ -3853,6 +3858,7 @@
 				66631B5D2B40C8420006F02B /* plus_ultra-v3.m4a */,
 				66631B5B2B4092D00006F02B /* plus_ultra.m4a */,
 				66631B572B408DBB0006F02B /* ryoiki_tenkai.m4a */,
+				66EDDFFC2BBA0E8600B5B4EE /* shamisen.m4a */,
 				6675E20A2B4868120050F98C /* shishi_odoshi.m4a */,
 				66631B4E2B407A2B0006F02B /* tutturu.m4a */,
 				6675E2042B48366B0050F98C /* upupupu.m4a */,
@@ -3971,6 +3977,7 @@
 				664E2CDF289B37140002F886 /* IconNotificationCell.xib in Resources */,
 				66FA97EA281F07AE0054FC2E /* BannerLockupCollectionViewCell.xib in Resources */,
 				66AE01242593D4E200308636 /* Achievement.storyboard in Resources */,
+				66EDDFFD2BBA0E8600B5B4EE /* shamisen.m4a in Resources */,
 				66F27EC0283A805800CC2277 /* SearchSuggestionResultCell.xib in Resources */,
 				664D0F542B841B2F00CF5E91 /* App Languages.plist in Resources */,
 				66C5797B22A86435001B8F51 /* DebugSettings.storyboard in Resources */,
@@ -4004,6 +4011,7 @@
 				66500D13295FD5180098D59D /* PurchaseHeaderCollectionViewCell.xib in Resources */,
 				6623CB1E2724C7F800050EAA /* SelectableSettingsCell.xib in Resources */,
 				664AAF8124EE8E2F00FF4AA5 /* Characters.storyboard in Resources */,
+				66EDDFFF2BBA14AA00B5B4EE /* den_den_mushi.m4a in Resources */,
 				6684225025967A65000A09F8 /* TitleHeaderTableReusableView.xib in Resources */,
 				66CE8118246093DE00DB0C49 /* ServiceHeaderTableViewCell.xib in Resources */,
 				66E077D82A636242005385F8 /* Badge.storyboard in Resources */,
@@ -4045,6 +4053,7 @@
 				6640E18922AD633500D0F575 /* Authentication.storyboard in Resources */,
 				66EDBA6D2946943700FF1A2E /* Launch Background.png in Resources */,
 				661F186024AB5C6F00542AFB /* SosumiCollectionViewCell.xib in Resources */,
+				66EDE0012BBA182900B5B4EE /* biwa.m4a in Resources */,
 				665A457F24660D9500154F41 /* RatingCollectionViewCell.xib in Resources */,
 				6675E2052B48366B0050F98C /* upupupu.m4a in Resources */,
 				664D0F562B84226B00CF5E91 /* App Timezones.plist in Resources */,
@@ -4357,7 +4366,6 @@
 				66E1216829B0025B0051C4ED /* Game+UIKit.swift in Sources */,
 				6699A1C323779E9B00517C2C /* LibraryListCollectionViewCell.swift in Sources */,
 				6617C82C2A0FE0830091EFAC /* SearchResults.swift in Sources */,
-				66B7450F2B7D63B000DC0F90 /* OptionsTableViewController.swift in Sources */,
 				66CFE5C9282FDACE00E3B2DF /* SkeletonDisplayable.swift in Sources */,
 				66500D0F295FCE2E0098D59D /* ProductFeature.swift in Sources */,
 				6640E19B22AE808C00D0F575 /* AuthenticationOptionsViewController.swift in Sources */,

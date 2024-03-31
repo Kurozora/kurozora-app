@@ -18,6 +18,22 @@
 			<array>
 				<dict>
 					<key>name</key>
+					<string>Biwa</string>
+					<key>file</key>
+					<string>biwa.m4a</string>
+				</dict>
+			</array>
+			<array>
+				<dict>
+					<key>name</key>
+					<string>Shamisen</string>
+					<key>file</key>
+					<string>shamisen.m4a</string>
+				</dict>
+			</array>
+			<array>
+				<dict>
+					<key>name</key>
 					<string>Shishi-Odoshi</string>
 					<key>file</key>
 					<string>shishi_odoshi.m4a</string>
@@ -52,6 +68,14 @@
 					<string>Boosto!</string>
 					<key>file</key>
 					<string>boosto.m4a</string>
+				</dict>
+			</array>
+			<array>
+				<dict>
+					<key>name</key>
+					<string>Den Den Mushi</string>
+					<key>file</key>
+					<string>den_den_mushi.m4a</string>
 				</dict>
 			</array>
 			<array>
