@@ -152,6 +152,28 @@ extension Game {
 		}
 	}
 
+	func toggleReminder(on viewController: UIViewController? = nil) {
+		WorkflowController.shared.isSignedIn { [weak self] in
+			guard let self = self else { return }
+			let viewController = viewController ?? UIApplication.topViewController
+
+			Task {
+				if await WorkflowController.shared.isSubscribed(on: viewController) {
+					do {
+						let updateReminderResponse = try await KService.updateReminderStatus(inLibrary: .games, modelID: self.id).value
+
+						self.attributes.library?.reminderStatus = updateReminderResponse.data.reminderStatus
+						NotificationCenter.default.post(name: .KModelReminderIsToggled, object: nil, userInfo: [
+							"reminderStatus": updateReminderResponse.data.reminderStatus
+						])
+					} catch {
+						print(error.localizedDescription)
+					}
+				}
+			}
+		}
+	}
+
 	/// Rate the game with the given rating.
 	///
 	/// - Parameters:

@@ -272,59 +272,51 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 
 	/// Builds and presents an action sheet.
 	fileprivate func showActionList(_ sender: AnyObject) {
-		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
+		var menuElements: [UIMenuElement] = []
+		let visibleIndexPath = collectionView.indexPathsForVisibleItems
+
+		if !visibleIndexPath.contains(IndexPath(item: 0, section: 0)) {
+			// Go to first episode
+			let goToFirstEpisode = UIAction(title: "Go to first episode", image: nil) { [weak self] _ in
+				guard let self = self else { return }
+				self.goToFirstEpisode()
+			}
+			menuElements.append(goToFirstEpisode)
+		} else {
+			// Go to last episode
+			let goToLastEpisode = UIAction(title: "Go to last episode", image: nil) { [weak self] _ in
+				guard let self = self else { return }
+				self.goToLastEpisode()
+			}
+			menuElements.append(goToLastEpisode)
+		}
+
+		// Go to last watched episode
+		let goToLastWatchedEpisode = UIAction(title: "Go to last watched episode", image: nil) { [weak self] _ in
 			guard let self = self else { return }
-			let visibleIndexPath = collectionView.indexPathsForVisibleItems
-
-			if !visibleIndexPath.contains(IndexPath(item: 0, section: 0)) {
-				// Go to first episode
-				let goToFirstEpisode = UIAlertAction(title: "Go to first episode", style: .default) { _ in
-					self.goToFirstEpisode()
-				}
-				actionSheetAlertController.addAction(goToFirstEpisode)
-			} else {
-				// Go to last episode
-				let goToLastEpisode = UIAlertAction(title: "Go to last episode", style: .default) { _ in
-					self.goToLastEpisode()
-				}
-				actionSheetAlertController.addAction(goToLastEpisode)
-			}
-
-			// Go to last watched episode
-			let goToLastWatchedEpisode = UIAlertAction(title: "Go to last watched episode", style: .default) { _ in
-				self.goToLastWatchedEpisode()
-			}
-			actionSheetAlertController.addAction(goToLastWatchedEpisode)
+			self.goToLastWatchedEpisode()
 		}
+		menuElements.append(goToLastWatchedEpisode)
 
-		// Present the controller
-		if let popoverController = actionSheetAlertController.popoverPresentationController {
-			popoverController.barButtonItem = sender as? UIBarButtonItem
-		}
-
-		self.present(actionSheetAlertController, animated: true, completion: nil)
+		// Create and return a UIMenu with the share action
+		self.goToButton.menu = UIMenu(title: "", children: menuElements)
 	}
 
 	/// Builds and presents the filter action sheet.
 	fileprivate func showFilterActionList(_ sender: AnyObject) {
-		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
+		var menuElements: [UIMenuElement] = []
+
+		// Create "Show fillers" element
+		let title = self.shouldHideFillers ? "Show fillers" : "Hide fillers"
+		let toggleFillers = UIAction(title: title, image: nil) { [weak self] _ in
 			guard let self = self else { return }
-			// Toggle fillers
-			let title = self.shouldHideFillers ? "Show fillers" : "Hide fillers"
-
-			let toggleFillers = UIAlertAction(title: title, style: .default) { _ in
-				self.shouldHideFillers = !self.shouldHideFillers
-				self.updateDataSource()
-			}
-			actionSheetAlertController.addAction(toggleFillers)
+			self.shouldHideFillers = !self.shouldHideFillers
+			self.updateDataSource()
 		}
+		menuElements.append(toggleFillers)
 
-		// Present the controller
-		if let popoverController = actionSheetAlertController.popoverPresentationController {
-			popoverController.barButtonItem = sender as? UIBarButtonItem
-		}
-
-		self.present(actionSheetAlertController, animated: true, completion: nil)
+		// Create and return a UIMenu with the share action
+		self.filterButton.menu = UIMenu(title: "", children: menuElements)
 	}
 
 	// MARK: - IBActions

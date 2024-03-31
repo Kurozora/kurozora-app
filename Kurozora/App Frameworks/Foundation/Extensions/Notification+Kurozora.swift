@@ -44,6 +44,11 @@ extension Notification.Name {
 		return Notification.Name(#function)
 	}
 
+	/// A notification posted when the reminders list changes.
+	static var KReminderModelsListDidChange: NSNotification.Name {
+		return Notification.Name(#function)
+	}
+
 	/// A notification posted when the reminder button is toggled.
 	static var KModelReminderIsToggled: NSNotification.Name {
 		return Notification.Name(#function)

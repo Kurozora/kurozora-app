@@ -28,13 +28,6 @@ class FavoritesCollectionViewController: KCollectionViewController {
 			self._user = newValue
 		}
 	}
-	var dismissButtonIsEnabled: Bool = false {
-		didSet {
-			if dismissButtonIsEnabled {
-				enableDismissButton()
-			}
-		}
-	}
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
 
@@ -117,17 +110,6 @@ class FavoritesCollectionViewController: KCollectionViewController {
 			guard let self = self else { return }
 			await self.fetchFavoritesList()
 		}
-	}
-
-	/// Enable and show the dismiss button.
-	func enableDismissButton() {
-		let leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(dismissButtonPressed))
-		self.navigationItem.setLeftBarButton(leftBarButtonItem, animated: true)
-	}
-
-	/// Dismiss the view. Used by the dismiss button when viewing other users' profile.
-	@objc fileprivate func dismissButtonPressed() {
-		dismiss(animated: true, completion: nil)
 	}
 
 	override func handleRefreshControl() {
@@ -226,6 +208,7 @@ class FavoritesCollectionViewController: KCollectionViewController {
 			guard let self = self else { return }
 			self.updateDataSource()
 			self._prefersActivityIndicatorHidden = true
+			self.configureEmptyDataView()
 			self.toggleEmptyDataView()
 
 			#if !targetEnvironment(macCatalyst)

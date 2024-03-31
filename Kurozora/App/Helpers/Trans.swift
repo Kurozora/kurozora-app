@@ -1267,6 +1267,16 @@ struct Trans {
 	/// - Tag: Trans-whatsNew
 	static let whatsNew: String = String(localized: "What’s New in Kurozora",
 										 comment: "The string for the word 'What’s New'.")
+	/// The string for the word 'Favorites'.
+	///
+	/// - Tag: Trans-favorites
+	static let favorites: String = String(localized: "Favorites",
+										  comment: "The string for the word 'Favorites'")
+	/// The string for the word 'Reminders'.
+	///
+	/// - Tag: Trans-reminders
+	static let reminders: String = String(localized: "Reminders",
+										  comment: "The string for the word 'Reminders'")
 
 	// MARK: - Ratings
 	/// The string for the word 'ratings'.
