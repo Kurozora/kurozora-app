@@ -17,14 +17,20 @@ extension User {
 		return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
 			return ProfileTableViewController.`init`(with: self.id)
 		}, actionProvider: { _ in
-			return self.makeContextMenu(in: viewController)
+			return self.makeContextMenu(in: viewController, userInfo: userInfo)
 		})
 	}
 
-	private func makeContextMenu(in viewController: UIViewController) -> UIMenu {
+	func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?) -> UIMenu {
 		var menuElements: [UIMenuElement] = []
 
-		// Create "share" element
+		// Create "Favorites" element
+		let favoritesAction = UIAction(title: Trans.favorites, image: UIImage(systemName: "heart.circle")) { _ in
+			self.openFavorites(on: viewController)
+		}
+		menuElements.append(favoritesAction)
+
+		// Create "Share" element
 		let shareAction = UIAction(title: Trans.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
 			self.openShareSheet(on: viewController)
 		}
@@ -62,5 +68,27 @@ extension User {
 		}
 
 		viewController?.present(activityViewController, animated: true, completion: nil)
+	}
+
+	/// Performs segue to `FavoritesCollectionViewController` with `FavoritesSegue` as the identifier.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller presenting the share sheet.
+	fileprivate func openFavorites(on viewController: UIViewController? = UIApplication.topViewController) {
+		if let favoritesCollectionViewController = R.storyboard.favorites.favoritesCollectionViewController() {
+			favoritesCollectionViewController.user = self
+
+			viewController?.show(favoritesCollectionViewController, sender: nil)
+		}
+	}
+
+	/// Performs segue to `RemindersCollectionViewController` with `RemindersSegue` as the identifier.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller presenting the share sheet.
+	fileprivate func openReminders(on viewController: UIViewController? = UIApplication.topViewController) {
+		if let remindersCollectionViewController = R.storyboard.reminders.remindersCollectionViewController() {
+			viewController?.show(remindersCollectionViewController, sender: nil)
+		}
 	}
 }

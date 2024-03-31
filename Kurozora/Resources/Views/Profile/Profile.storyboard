@@ -410,11 +410,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Profile" id="yJS-kC-jrS">
-                        <barButtonItem key="rightBarButtonItem" title="More" image="ellipsis.circle" catalog="system" id="7V8-8E-uOa">
-                            <connections>
-                                <action selector="moreBarButtonPressed:" destination="zlF-Vo-yv3" id="XYk-qO-cP7"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="More" image="ellipsis.circle" catalog="system" id="7V8-8E-uOa"/>
                     </navigationItem>
                     <connections>
                         <outlet property="achievementsButton" destination="E2w-Ry-UIw" id="iFf-UH-1dR"/>
@@ -425,6 +421,7 @@
                         <outlet property="followButton" destination="bkn-1Z-yJM" id="13G-xZ-1KA"/>
                         <outlet property="followersButton" destination="ggb-4z-Awv" id="0tj-jo-lQ8"/>
                         <outlet property="followingButton" destination="T5J-l1-I4p" id="AzJ-6a-vDQ"/>
+                        <outlet property="moreBarButtonItem" destination="7V8-8E-uOa" id="Pje-4v-OD8"/>
                         <outlet property="onlineIndicatorContainerView" destination="IvN-D6-AVe" id="k1b-86-JqY"/>
                         <outlet property="onlineIndicatorView" destination="P4i-DJ-cm7" id="fKP-bx-typ"/>
                         <outlet property="profileBadgeStackView" destination="r4X-ZG-tb5" id="VeD-bF-T3D"/>

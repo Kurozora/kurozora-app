@@ -12,6 +12,7 @@ import KurozoraKit
 class ProfileTableViewController: KTableViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var profileNavigationItem: UINavigationItem!
+	@IBOutlet weak var moreBarButtonItem: UIBarButtonItem!
 
 	@IBOutlet weak var profileImageView: ProfileImageView!
 	@IBOutlet weak var usernameLabel: KLabel!
@@ -55,13 +56,6 @@ class ProfileTableViewController: KTableViewController {
 		}
 	}
 
-	var dismissButtonIsEnabled: Bool = false {
-		didSet {
-			if self.dismissButtonIsEnabled {
-				self.enableDismissButton()
-			}
-		}
-	}
 	var feedMessages: [FeedMessage] = [] {
 		didSet {
 			self.tableView.reloadData {
@@ -317,6 +311,10 @@ class ProfileTableViewController: KTableViewController {
 		}
 	}
 
+	func configureNavBarButtons() {
+		self.moreBarButtonItem.menu = self.user?.makeContextMenu(in: self, userInfo: [:])
+	}
+
 	/// Fetches user detail.
 	@MainActor
 	private func fetchUserDetails() async {
@@ -331,6 +329,9 @@ class ProfileTableViewController: KTableViewController {
 
 			self.user = userResponse.data.first
 			self.configureProfile()
+
+			// Donate suggestion to Siri
+			self.userActivity = self.user.openDetailUserActivity
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -417,6 +418,7 @@ class ProfileTableViewController: KTableViewController {
 	/// Configure the profile view with the details of the user whose page is being viewed.
 	private func configureProfile() {
 		guard let user = self.user else { return }
+		self.configureNavBarButtons()
 
 		// Configure username
 		self.usernameLabel.text = user.attributes.username
@@ -643,59 +645,6 @@ class ProfileTableViewController: KTableViewController {
 		self.updateProfileDetails()
 	}
 
-	/// Enable and show the dismiss button.
-	func enableDismissButton() {
-		// Save old actions
-		self.oldLeftBarItems = self.profileNavigationItem.leftBarButtonItems
-
-		// Remove old actions
-		self.profileNavigationItem.setLeftBarButton(nil, animated: true)
-
-		// Set new actions
-		let leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(dismissButtonPressed))
-		self.profileNavigationItem.setLeftBarButton(leftBarButtonItem, animated: true)
-	}
-
-	/// Dismiss the view. Used by the dismiss button when viewing other users' profile.
-	@objc fileprivate func dismissButtonPressed() {
-		dismiss(animated: true, completion: nil)
-	}
-
-	/// Performs segue to `FavoritesCollectionViewController` with `FavoritesSegue` as the identifier.
-	fileprivate func showFavoritesList() {
-		if let favoritesCollectionViewController = R.storyboard.favorites.favoritesCollectionViewController() {
-			favoritesCollectionViewController.user = self.user
-			favoritesCollectionViewController.dismissButtonIsEnabled = true
-
-			let kNavigationViewController = KNavigationController(rootViewController: favoritesCollectionViewController)
-			self.present(kNavigationViewController, animated: true)
-		}
-	}
-
-	/// Builds and presents an action sheet.
-	fileprivate func showActionList(_ sender: UIBarButtonItem) {
-		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: nil) { [weak self] actionSheetAlertController in
-			guard let self = self else { return }
-
-			// Go to last watched episode
-			if User.isSignedIn {
-				let showFavoritesList = UIAlertAction(title: "Favorites", style: .default) { _ in
-					self.showFavoritesList()
-				}
-				showFavoritesList.setValue(UIImage(systemName: "heart.circle"), forKey: "image")
-				showFavoritesList.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-				actionSheetAlertController.addAction(showFavoritesList)
-			}
-		}
-
-		// Present the controller
-		if let popoverController = actionSheetAlertController.popoverPresentationController {
-			popoverController.barButtonItem = sender
-		}
-
-		self.present(actionSheetAlertController, animated: true, completion: nil)
-	}
-
 	/// Updated the `followButton` with the follow status of the user.
 	fileprivate func updateFollowButton() {
 		let followStatus = self.user?.attributes.followStatus ?? .disabled
@@ -741,10 +690,6 @@ class ProfileTableViewController: KTableViewController {
 				}
 			}
 		}
-	}
-
-	@IBAction func moreBarButtonPressed(_ sender: UIBarButtonItem) {
-		self.showActionList(sender)
 	}
 
 	// MARK: - Segue

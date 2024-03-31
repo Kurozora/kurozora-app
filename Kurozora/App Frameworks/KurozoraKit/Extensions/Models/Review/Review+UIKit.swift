@@ -67,12 +67,9 @@ extension Review {
 	/// - Parameter viewController: The view controller initiaing the segue.
 	func visitOriginalPosterProfile(from viewController: UIViewController? = UIApplication.topViewController) {
 		guard let user = self.relationships?.users?.data.first else { return }
-
 		let profileTableViewController = ProfileTableViewController.`init`(with: user)
-		profileTableViewController.dismissButtonIsEnabled = true
 
-		let kurozoraNavigationController = KNavigationController(rootViewController: profileTableViewController)
-		viewController?.present(kurozoraNavigationController, animated: true)
+		viewController?.show(profileTableViewController, sender: nil)
 	}
 
 	/// Present share sheet for the review.
