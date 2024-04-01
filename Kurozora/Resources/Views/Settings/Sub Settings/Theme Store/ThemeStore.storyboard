@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19150" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xyg-hs-K1N">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xyg-hs-K1N">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19134"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
@@ -17,7 +18,7 @@
                 <navigationController storyboardIdentifier="ManageThemesKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="xyg-hs-K1N" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" id="kHM-1M-zT8">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <viewLayoutGuide key="safeArea" id="Wev-0r-puT"/>
                         <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -60,16 +61,16 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Flh-im-hxi">
-                                            <rect key="frame" x="0.0" y="0.0" width="101" height="41"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="107.5" height="41"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V1G-XE-mf3" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="101" height="20.5"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="107.5" height="20.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="923 Downloads" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a1t-LD-S7J" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="20.5" width="101" height="20.5"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <rect key="frame" x="0.0" y="20.5" width="107.5" height="20.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <color key="textColor" systemColor="secondaryLabelColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -91,9 +92,6 @@
                                                     </state>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <integer key="value" value="15"/>
-                                                        </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                     <connections>
                                                         <action selector="getThemeButtonPressed:" destination="bQz-fY-pzW" eventType="touchUpInside" id="qcI-le-fw7"/>
@@ -101,22 +99,17 @@
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XbC-xQ-W08" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="58" y="0.0" width="30" height="30"/>
-                                                    <color key="backgroundColor" systemColor="placeholderTextColor"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="XbC-xQ-W08" secondAttribute="height" multiplier="1:1" id="aan-E2-OzU"/>
                                                         <constraint firstAttribute="height" constant="30" id="hFG-i0-Glf"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="tintColor" systemColor="secondaryLabelColor"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <state key="normal">
                                                         <imageReference key="image" image="ellipsis" catalog="system"/>
                                                     </state>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <integer key="value" value="15"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
                                                     <connections>
                                                         <action selector="moreButtonPressed:" destination="bQz-fY-pzW" eventType="touchUpInside" id="LuZ-tC-bP9"/>
                                                     </connections>
@@ -129,41 +122,18 @@
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gtK-gS-sgf" customClass="ScreenshotView" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="115.5" height="250"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="44L-HG-JCJ">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="44L-HG-JCJ" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="115.5" height="250"/>
                                                             <imageReference key="image" image="Themes/Default/Screenshot_1"/>
                                                         </imageView>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9LQ-PB-W3l" userLabel="Border View">
-                                                            <rect key="frame" x="0.0" y="0.0" width="115.5" height="250"/>
-                                                            <userDefinedRuntimeAttributes>
-                                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                    <real key="value" value="15"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                                    <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                    <real key="value" value="1"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                            </userDefinedRuntimeAttributes>
-                                                        </view>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="9LQ-PB-W3l" firstAttribute="trailing" secondItem="44L-HG-JCJ" secondAttribute="trailing" id="A3e-Bi-8uc"/>
                                                         <constraint firstAttribute="trailing" secondItem="44L-HG-JCJ" secondAttribute="trailing" id="JTM-fc-wd1"/>
-                                                        <constraint firstItem="9LQ-PB-W3l" firstAttribute="top" secondItem="44L-HG-JCJ" secondAttribute="top" id="Pna-rW-3KG"/>
                                                         <constraint firstAttribute="width" secondItem="gtK-gS-sgf" secondAttribute="height" multiplier="195:422" id="gl0-Y7-jxM"/>
                                                         <constraint firstItem="44L-HG-JCJ" firstAttribute="top" secondItem="gtK-gS-sgf" secondAttribute="top" id="oBb-4L-kg0"/>
                                                         <constraint firstItem="44L-HG-JCJ" firstAttribute="leading" secondItem="gtK-gS-sgf" secondAttribute="leading" id="qOb-8L-Llx"/>
                                                         <constraint firstAttribute="bottom" secondItem="44L-HG-JCJ" secondAttribute="bottom" id="sFZ-cR-P93"/>
-                                                        <constraint firstItem="9LQ-PB-W3l" firstAttribute="bottom" secondItem="44L-HG-JCJ" secondAttribute="bottom" id="w1J-Bz-ks6"/>
-                                                        <constraint firstItem="9LQ-PB-W3l" firstAttribute="leading" secondItem="44L-HG-JCJ" secondAttribute="leading" id="zkY-IR-xxo"/>
                                                     </constraints>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <real key="value" value="15"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
                                                     <connections>
                                                         <outlet property="screenshotImageView" destination="44L-HG-JCJ" id="tnG-3f-juO"/>
                                                     </connections>
@@ -171,41 +141,19 @@
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W52-H6-ojS" customClass="ScreenshotView" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="123.5" y="0.0" width="115.5" height="250"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6EB-af-cqE">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6EB-af-cqE" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="115.5" height="250"/>
                                                             <imageReference key="image" image="Themes/Default/Screenshot_2"/>
                                                         </imageView>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U4z-GF-Bsx" userLabel="Border View">
-                                                            <rect key="frame" x="0.0" y="0.0" width="115.5" height="250"/>
-                                                            <userDefinedRuntimeAttributes>
-                                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                    <real key="value" value="15"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                                    <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                    <real key="value" value="1"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                            </userDefinedRuntimeAttributes>
-                                                        </view>
                                                     </subviews>
                                                     <constraints>
+                                                        <constraint firstAttribute="width" secondItem="W52-H6-ojS" secondAttribute="height" multiplier="195:422" id="3as-uS-eo2"/>
                                                         <constraint firstItem="6EB-af-cqE" firstAttribute="top" secondItem="W52-H6-ojS" secondAttribute="top" id="IUG-r7-eIa"/>
-                                                        <constraint firstItem="U4z-GF-Bsx" firstAttribute="top" secondItem="6EB-af-cqE" secondAttribute="top" id="R9h-Mr-3rY"/>
                                                         <constraint firstAttribute="width" secondItem="W52-H6-ojS" secondAttribute="height" multiplier="195:422" id="TiJ-1h-0zN"/>
                                                         <constraint firstItem="6EB-af-cqE" firstAttribute="leading" secondItem="W52-H6-ojS" secondAttribute="leading" id="WF3-Kc-8wr"/>
-                                                        <constraint firstItem="U4z-GF-Bsx" firstAttribute="bottom" secondItem="6EB-af-cqE" secondAttribute="bottom" id="Wx6-IY-ynA"/>
-                                                        <constraint firstItem="U4z-GF-Bsx" firstAttribute="leading" secondItem="6EB-af-cqE" secondAttribute="leading" id="YVL-fw-mdt"/>
                                                         <constraint firstAttribute="trailing" secondItem="6EB-af-cqE" secondAttribute="trailing" id="bIy-BF-LXf"/>
-                                                        <constraint firstItem="U4z-GF-Bsx" firstAttribute="trailing" secondItem="6EB-af-cqE" secondAttribute="trailing" id="nde-qO-cS6"/>
                                                         <constraint firstAttribute="bottom" secondItem="6EB-af-cqE" secondAttribute="bottom" id="o6g-hc-vxR"/>
                                                     </constraints>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <real key="value" value="15"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
                                                     <connections>
                                                         <outlet property="screenshotImageView" destination="6EB-af-cqE" id="3bg-rr-Uw3"/>
                                                     </connections>
@@ -213,41 +161,19 @@
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eGc-A8-Qh4" customClass="ScreenshotView" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="247" y="0.0" width="115.5" height="250"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Bvy-Bt-rVl">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Bvy-Bt-rVl" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="115.5" height="250"/>
                                                             <imageReference key="image" image="Themes/Default/Screenshot_3"/>
                                                         </imageView>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bvo-7b-CPm" userLabel="Border View">
-                                                            <rect key="frame" x="0.0" y="0.0" width="115.5" height="250"/>
-                                                            <userDefinedRuntimeAttributes>
-                                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                    <real key="value" value="15"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                                    <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                    <real key="value" value="1"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                            </userDefinedRuntimeAttributes>
-                                                        </view>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="Bvo-7b-CPm" firstAttribute="bottom" secondItem="Bvy-Bt-rVl" secondAttribute="bottom" id="26Y-At-6AV"/>
-                                                        <constraint firstItem="Bvo-7b-CPm" firstAttribute="top" secondItem="Bvy-Bt-rVl" secondAttribute="top" id="2dw-GB-lcJ"/>
                                                         <constraint firstItem="Bvy-Bt-rVl" firstAttribute="leading" secondItem="eGc-A8-Qh4" secondAttribute="leading" id="67b-i7-8If"/>
+                                                        <constraint firstAttribute="width" secondItem="eGc-A8-Qh4" secondAttribute="height" multiplier="195:422" id="Nl5-re-SGy"/>
                                                         <constraint firstAttribute="trailing" secondItem="Bvy-Bt-rVl" secondAttribute="trailing" id="Q8C-ed-EdN"/>
                                                         <constraint firstAttribute="width" secondItem="eGc-A8-Qh4" secondAttribute="height" multiplier="195:422" id="RDs-wy-svv"/>
                                                         <constraint firstAttribute="bottom" secondItem="Bvy-Bt-rVl" secondAttribute="bottom" id="SAR-VP-cjA"/>
-                                                        <constraint firstItem="Bvo-7b-CPm" firstAttribute="trailing" secondItem="Bvy-Bt-rVl" secondAttribute="trailing" id="dyh-Y9-MY0"/>
-                                                        <constraint firstItem="Bvo-7b-CPm" firstAttribute="leading" secondItem="Bvy-Bt-rVl" secondAttribute="leading" id="rdt-A5-Mng"/>
                                                         <constraint firstItem="Bvy-Bt-rVl" firstAttribute="top" secondItem="eGc-A8-Qh4" secondAttribute="top" id="zhw-Fu-lkQ"/>
                                                     </constraints>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <real key="value" value="15"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
                                                     <connections>
                                                         <outlet property="screenshotImageView" destination="Bvy-Bt-rVl" id="vxA-qS-JyY"/>
                                                     </connections>
@@ -255,8 +181,6 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="lessThanOrEqual" constant="250" id="1Fw-2y-MqE"/>
-                                                <constraint firstItem="W52-H6-ojS" firstAttribute="width" secondItem="W52-H6-ojS" secondAttribute="height" multiplier="195:422" id="3as-uS-eo2"/>
-                                                <constraint firstItem="eGc-A8-Qh4" firstAttribute="width" secondItem="eGc-A8-Qh4" secondAttribute="height" multiplier="195:422" id="Nl5-re-SGy"/>
                                             </constraints>
                                         </stackView>
                                     </subviews>
@@ -303,9 +227,6 @@
         <image name="Themes/Default/Screenshot_2" width="1170" height="2532"/>
         <image name="Themes/Default/Screenshot_3" width="1170" height="2532"/>
         <image name="ellipsis" catalog="system" width="128" height="37"/>
-        <systemColor name="placeholderTextColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

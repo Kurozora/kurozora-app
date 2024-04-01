@@ -10,7 +10,7 @@ import UIKit
 import KurozoraKit
 
 class ScreenshotView: UIView {
-	@IBOutlet weak var screenshotImageView: UIImageView!
+	@IBOutlet weak var screenshotImageView: PosterImageView!
 }
 
 class ThemesCollectionViewCell: UICollectionViewCell {
@@ -40,25 +40,30 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 		self.titleLabel.text = self.kTheme.stringValue
 		self.downloadCountLabel.text = self.kTheme.descriptionValue
 
+		// Configure more button
+		self.moreButton.layerCornerRadius = self.moreButton.height / 2
+		self.moreButton.addBlurEffect()
+		self.moreButton.theme_tintColor = KThemePicker.textColor.rawValue
+
 		switch self.kTheme {
 		case .other(let theme):
 			let screenshots = theme.attributes.screenshots
 			for (index, screenshot) in screenshots.enumerated() {
 				switch screenshots.count {
 				case 1:
-					self.screenshotViews.enumerated().forEachReversed { index, screenshotView in
+					self.screenshotViews.enumerated().reversed().forEach { index, screenshotView in
 						if index < 2 {
 							screenshotView.isHidden = true
 						}
 					}
 				case 2:
-					self.screenshotViews.enumerated().forEachReversed { index, screenshotView in
+					self.screenshotViews.enumerated().reversed().forEach { index, screenshotView in
 						if index < 1 {
 							screenshotView.isHidden = true
 						}
 					}
 				default:
-					self.screenshotViews.forEachReversed { screenshotView in
+					self.screenshotViews.reversed().forEach { screenshotView in
 						screenshotView.isHidden = false
 					}
 				}
@@ -81,8 +86,8 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 			}
 		}
 
-		shouldHideMoreButton()
-		updateGetThemeButton()
+		self.shouldHideMoreButton()
+		self.updateGetThemeButton()
 	}
 
 	/// Checks whether to hide or unhide the more button for the current cell.
@@ -90,9 +95,9 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 		switch self.kTheme {
 		case .other(let theme):
 			// More button hidden by the default case. If theme exists then unhide.
-			moreButton.isHidden = !KThemeStyle.themeExist(for: theme)
+			self.moreButton.isHidden = !KThemeStyle.themeExist(for: theme)
 		default:
-			moreButton.isHidden = true
+			self.moreButton.isHidden = true
 		}
 	}
 
