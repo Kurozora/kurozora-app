@@ -44,7 +44,14 @@ class SidebarViewController: KCollectionViewController {
 	override func themeWillReload() {
 		super.themeWillReload()
 
-		self.listConfiguration.backgroundColor = KThemePicker.backgroundColor.colorValue
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			if let colllectionViewLayout = self.createLayout() {
+				self.collectionView.collectionViewLayout = colllectionViewLayout
+			}
+
+			self.reloadDataSource()
+		}
 	}
 
 	override func viewDidLoad() {
@@ -175,6 +182,12 @@ extension SidebarViewController {
 			self.collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
 			self.collectionView(self.collectionView, didSelectItemAt: indexPath)
 		}
+	}
+
+	private func reloadDataSource() {
+		var snapshot = self.dataSource.snapshot()
+		snapshot.reloadSections([.main])
+		self.dataSource.apply(snapshot, animatingDifferences: false)
 	}
 }
 
