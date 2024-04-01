@@ -17,9 +17,9 @@ enum EpisodesListFetchType {
 
 class EpisodesListCollectionViewController: KCollectionViewController {
 	// MARK: - IBOutlets
-	@IBOutlet weak var goToButton: UIBarButtonItem!
 	@IBOutlet weak var moreBarButtonItem: UIBarButtonItem!
-	@IBOutlet weak var filterButton: UIBarButtonItem!
+	@IBOutlet weak var fillerBarButtonItem: UIBarButtonItem!
+	@IBOutlet weak var goToBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Properties
 	var season: Season? = nil
@@ -86,7 +86,8 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		NotificationCenter.default.addObserver(self, selector: #selector(self.updateEpisodes(_:)), name: .KEpisodeWatchStatusDidUpdate, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleSeasonWatchStatusDidUpdate(_:)), name: .KSeasonWatchStatusDidUpdate, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleEpisodeWatchStatusDidUpdate(_:)), name: .KEpisodeWatchStatusDidUpdate, object: nil)
 
 		#if DEBUG
 		self._prefersRefreshControlDisabled = false
@@ -149,6 +150,8 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 
 	func configureNavBarButtons() {
 		self.moreBarButtonItem.menu = self.season?.makeContextMenu(in: self, userInfo: [:])
+		self.goToBarButtonItem.menu = self.createGoToEpisodeMenu()
+		self.fillerBarButtonItem.menu = self.createShowFillersMenu()
 	}
 
 	func endFetch() {
@@ -233,10 +236,19 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 		#endif
 	}
 
-	/// Update the episodes list.
+	/// Handles the season watch status update notification.
 	///
-	/// - Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
-	@objc func updateEpisodes(_ notification: NSNotification) {
+	/// - Parameters:
+	///    - notification: An object containing information broadcast to registered observers that bridges to Notification.
+	@objc func handleSeasonWatchStatusDidUpdate(_ notification: NSNotification) {
+		self.configureNavBarButtons()
+	}
+
+	/// Handles the episode watch status update notification.
+	///
+	/// - Parameters:
+	///    - notification: An object containing information broadcast to registered observers that bridges to Notification.
+	@objc func handleEpisodeWatchStatusDidUpdate(_ notification: NSNotification) {
 		guard let indexPath = notification.userInfo?["indexPath"] as? IndexPath, let selectedEpisode = self.dataSource.itemIdentifier(for: indexPath) else { return }
 
 		var newSnapshot = self.dataSource.snapshot()
@@ -247,13 +259,15 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 	/// Goes to the first item in the presented collection view.
 	fileprivate func goToFirstEpisode() {
 		self.collectionView.safeScrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredVertically, animated: true)
-		self.goToButton.image = UIImage(systemName: "chevron.down.circle")
+		self.goToBarButtonItem.image = UIImage(systemName: "chevron.down.circle")
+		self.configureNavBarButtons()
 	}
 
 	/// Goes to the last item in the presented collection view.
 	fileprivate func goToLastEpisode() {
 		self.collectionView.safeScrollToItem(at: IndexPath(row: dataSource.snapshot().numberOfItems - 1, section: 0), at: .centeredVertically, animated: true)
-		self.goToButton.image = UIImage(systemName: "chevron.up.circle")
+		self.goToBarButtonItem.image = UIImage(systemName: "chevron.up.circle")
+		self.configureNavBarButtons()
 	}
 
 	/// Goes to the last watched episode in the presented collection view.
@@ -265,13 +279,14 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 			return false
 		}) {
 			self.collectionView.safeScrollToItem(at: lastWatchedEpisode.key, at: .centeredVertically, animated: true)
+			self.configureNavBarButtons()
 		} else {
 			self.goToLastEpisode()
 		}
 	}
 
-	/// Builds and presents an action sheet.
-	fileprivate func showActionList(_ sender: AnyObject) {
+	/// Builds the "go to episode" menu.
+	fileprivate func createGoToEpisodeMenu() -> UIMenu {
 		var menuElements: [UIMenuElement] = []
 		let visibleIndexPath = collectionView.indexPathsForVisibleItems
 
@@ -298,12 +313,12 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 		}
 		menuElements.append(goToLastWatchedEpisode)
 
-		// Create and return a UIMenu with the share action
-		self.goToButton.menu = UIMenu(title: "", children: menuElements)
+		// Create and return a UIMenu
+		return UIMenu(title: "", children: menuElements)
 	}
 
-	/// Builds and presents the filter action sheet.
-	fileprivate func showFilterActionList(_ sender: AnyObject) {
+	/// Builds the "show fillers" menu.
+	fileprivate func createShowFillersMenu() -> UIMenu {
 		var menuElements: [UIMenuElement] = []
 
 		// Create "Show fillers" element
@@ -312,20 +327,12 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 			guard let self = self else { return }
 			self.shouldHideFillers = !self.shouldHideFillers
 			self.updateDataSource()
+			self.configureNavBarButtons()
 		}
 		menuElements.append(toggleFillers)
 
-		// Create and return a UIMenu with the share action
-		self.filterButton.menu = UIMenu(title: "", children: menuElements)
-	}
-
-	// MARK: - IBActions
-	@IBAction func goToButtonPressed(_ sender: UIBarButtonItem) {
-		self.showActionList(sender)
-	}
-
-	@IBAction func filterButtonPressed(_ sender: UIBarButtonItem) {
-		self.showFilterActionList(sender)
+		// Create and return a UIMenu
+		return UIMenu(title: "", children: menuElements)
 	}
 
 	// MARK: - Segue

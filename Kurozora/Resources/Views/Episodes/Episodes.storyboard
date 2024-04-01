@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3U2-4Z-cqf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3U2-4Z-cqf">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -33,22 +33,14 @@
                     <navigationItem key="navigationItem" title="Episodes" id="jkQ-Jp-mFu">
                         <rightBarButtonItems>
                             <barButtonItem title="More" image="ellipsis.circle" catalog="system" id="crX-mN-Ueb"/>
-                            <barButtonItem title="Filter" image="line.3.horizontal.decrease.circle" catalog="system" id="9sC-Ml-ISR">
-                                <connections>
-                                    <action selector="filterButtonPressed:" destination="0cA-m7-5sS" id="0qj-tk-x36"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem title="Go To" image="chevron.down.circle" catalog="system" id="JHc-4N-4gk">
-                                <connections>
-                                    <action selector="goToButtonPressed:" destination="0cA-m7-5sS" id="ZId-8p-cFd"/>
-                                </connections>
-                            </barButtonItem>
+                            <barButtonItem title="Filter" image="line.3.horizontal.decrease.circle" catalog="system" id="9sC-Ml-ISR"/>
+                            <barButtonItem title="Go To" image="chevron.down.circle" catalog="system" id="JHc-4N-4gk"/>
                         </rightBarButtonItems>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="filterButton" destination="9sC-Ml-ISR" id="6yI-V9-5bR"/>
-                        <outlet property="goToButton" destination="JHc-4N-4gk" id="c3x-l8-Ppb"/>
+                        <outlet property="fillerBarButtonItem" destination="9sC-Ml-ISR" id="pOf-2s-qwa"/>
+                        <outlet property="goToBarButtonItem" destination="JHc-4N-4gk" id="yqT-kh-FpK"/>
                         <outlet property="moreBarButtonItem" destination="crX-mN-Ueb" id="xSB-x6-j98"/>
                         <segue destination="W7w-EE-TzB" kind="show" identifier="EpisodeDetailsSegue" id="3RX-8T-Ezs"/>
                         <segue destination="2Zb-yS-ryX" kind="show" identifier="ShowDetailsSegue" id="fad-aB-AWU"/>

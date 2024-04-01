@@ -484,6 +484,7 @@ extension LiteratureDetailsCollectionViewController: BaseLockupCollectionViewCel
 
 						let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
 						NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
+						self.configureNavBarButtons()
 					} catch let error as KKAPIError {
 						self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
 						print("----- Add to library failed", error.message)
@@ -512,6 +513,7 @@ extension LiteratureDetailsCollectionViewController: BaseLockupCollectionViewCel
 
 							let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
 							NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
+							self.configureNavBarButtons()
 						} catch let error as KKAPIError {
 							self.presentAlertController(title: "Can't Remove From Your Library 😔", message: error.message)
 							print("----- Remove from library failed", error.message)
