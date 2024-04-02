@@ -1,12 +1,12 @@
 PODS:
-  - Alamofire (5.9.0)
+  - Alamofire (5.9.1)
   - Cosmos (25.0.1)
   - ESTabBarController-swift (2.8.0)
   - FLEX (5.22.10)
   - IQKeyboardManagerSwift (7.0.2)
   - KeychainAccess (4.2.2)
   - Kingfisher (7.11.0)
-  - KurozoraKit (1.12.1):
+  - KurozoraKit (1.12.2):
     - KeychainAccess
     - TRON (= 5.5.0-beta.1)
   - Pageboy (4.0.2)
@@ -117,14 +117,14 @@ CHECKOUT OPTIONS:
     :git: https://github.com/armendh/XCDYouTubeKit
 
 SPEC CHECKSUMS:
-  Alamofire: 02b772c9910e8eba1a079227c32fbd9e46c90a24
+  Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
   Cosmos: 02db0a1c953107049bfd2d7af19ceef55ecb7e98
   ESTabBarController-swift: 05593a6ad64700b03c0eb60ff625916370aa4136
   FLEX: f21ee4f498eed3f8a1eded66b21939fd3b7a22ce
   IQKeyboardManagerSwift: d338c11a896e9f29603443700c4567e32f830c22
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   Kingfisher: b9c985d864d43515f404f1ef4a8ce7d802ace3ac
-  KurozoraKit: 0e0dd0d81ff7df36ab6e5764084e9e85198610a3
+  KurozoraKit: 7d5181d36e4edc1e8f2a3ef576491876701b1d83
   Pageboy: 34ff11e8d1041b81769d5bcde9b19a0cb7218bd9
   R.swift: 0af0d882f49f03711415cb4e5215daa977d8a480
   ReachabilitySwift: 5ae15e16814b5f9ef568963fb2c87aeb49158c66

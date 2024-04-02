@@ -112,7 +112,8 @@ extension KurozoraKit {
 		headers.add(.authorization(bearerToken: self.authenticationKey))
 
 		// Prepare request
-		let meAccessTokensDelete = KKEndpoint.Me.AccessTokens.delete(self.authenticationKey).endpointValue
+		let tokenID = self.authenticationKey.components(separatedBy: "|")[0]
+		let meAccessTokensDelete = KKEndpoint.Me.AccessTokens.delete(tokenID).endpointValue
 		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(meAccessTokensDelete)
 			.method(.post)
 			.headers(headers)
