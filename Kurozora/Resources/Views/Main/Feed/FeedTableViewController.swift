@@ -183,7 +183,7 @@ class FeedTableViewController: KTableViewController {
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
 			if !User.isSignedIn {
-				if let barButtonItem = self.navigationItem.rightBarButtonItems?[1] {
+				if let barButtonItem = self.navigationItem.rightBarButtonItems?[safe: 1] {
 					self.rightBarButtonItems = [barButtonItem]
 
 					self.navigationItem.rightBarButtonItems?.remove(at: 1)
