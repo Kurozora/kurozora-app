@@ -81,6 +81,7 @@ class BaseFeedMessageCell: KTableViewCell {
 		}
 
 		// Configure body
+		self.postTextView.setAttributedText(feedMessage.attributes.contentMarkdown.markdownAttributedString())
 		if let url = feedMessage.attributes.content.extractURLs().last {
 			if let metadata = RichLink.cachedMetadata(for: url) {
 				self.displayMetadata(metadata)
@@ -95,8 +96,6 @@ class BaseFeedMessageCell: KTableViewCell {
 					}
 				}
 			}
-		} else {
-			self.postTextView.setAttributedText(feedMessage.attributes.contentMarkdown.markdownAttributedString())
 		}
 		self.postTextView.delegate = self
 
