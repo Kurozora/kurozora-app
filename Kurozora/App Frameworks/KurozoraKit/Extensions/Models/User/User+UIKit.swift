@@ -30,6 +30,14 @@ extension User {
 		}
 		menuElements.append(favoritesAction)
 
+		if User.current?.id == self.id {
+			// Create "Reminders" element
+			let remindersAction = UIAction(title: Trans.reminders, image: UIImage(systemName: "bell.circle")) { _ in
+				self.openReminders(on: viewController)
+			}
+			menuElements.append(remindersAction)
+		}
+
 		// Create "Share" element
 		let shareAction = UIAction(title: Trans.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
 			self.openShareSheet(on: viewController)
