@@ -91,6 +91,9 @@
                                                         <color key="titleColor" red="0.88217000000000001" green="0.88534999999999997" blue="0.90427000000000002" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                     </state>
                                                     <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <integer key="value" value="15"/>
+                                                        </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
                                                     </userDefinedRuntimeAttributes>
                                                     <connections>
