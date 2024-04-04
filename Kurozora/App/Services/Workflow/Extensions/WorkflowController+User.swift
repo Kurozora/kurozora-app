@@ -47,7 +47,7 @@ extension WorkflowController {
 	@MainActor
 	func isProOrSubscribed(on viewController: UIViewController? = nil) async -> Bool {
 		// Perform action if everything is ok, otherwise prompt for subscription.
-		if User.current?.attributes.isSubscribed ?? false || User.current?.attributes.isPro ?? false {
+		if User.isSubscribed || User.isPro {
 			return true
 		}
 
