@@ -847,6 +847,16 @@ struct Trans {
 	/// - Tag: Trans-follower
 	static let follower: String = String(localized: "Follower",
 										 comment: "The string for the word 'follower'.")
+	/// The string for the word 'follow'.
+	///
+	/// - Tag: Trans-follow
+	static let follow: String = String(localized: "Follow",
+									   comment: "The string for the word 'follow'.")
+	/// The string for the word 'following'.
+	///
+	/// - Tag: Trans-following
+	static let following: String = String(localized: "Following",
+										  comment: "The string for the word 'following'.")
 	/// The string for the word 'message'.
 	///
 	/// - Tag: Trans-message

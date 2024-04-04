@@ -12,6 +12,7 @@ import KurozoraKit
 class ProfileTableViewController: KTableViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var profileNavigationItem: UINavigationItem!
+	@IBOutlet weak var postMessageButton: UIBarButtonItem!
 	@IBOutlet weak var moreBarButtonItem: UIBarButtonItem!
 
 	@IBOutlet weak var profileImageView: ProfileImageView!
@@ -650,17 +651,38 @@ class ProfileTableViewController: KTableViewController {
 		let followStatus = self.user?.attributes.followStatus ?? .disabled
 		switch followStatus {
 		case .followed:
-			self.followButton.setTitle("Following", for: .normal)
+			self.followButton.setTitle(Trans.following, for: .normal)
 			self.followButton.isHidden = false
 			self.followButton.isUserInteractionEnabled = true
 		case .notFollowed:
-			self.followButton.setTitle("Follow", for: .normal)
+			self.followButton.setTitle(Trans.follow, for: .normal)
 			self.followButton.isHidden = false
 			self.followButton.isUserInteractionEnabled = true
 		case .disabled:
-			self.followButton.setTitle("Follow", for: .normal)
+			self.followButton.setTitle(Trans.follow, for: .normal)
 			self.followButton.isHidden = true
 			self.followButton.isUserInteractionEnabled = false
+		}
+	}
+
+	/// Shows the text editor for posintg a new message.
+	@objc func postNewMessage() {
+		WorkflowController.shared.isSignedIn { [weak self] in
+			guard let self = self else { return }
+
+			if let kFeedMessageTextEditorViewController = R.storyboard.textEditor.kFeedMessageTextEditorViewController() {
+				kFeedMessageTextEditorViewController.delegate = self
+				kFeedMessageTextEditorViewController.dmToUser = self.user
+
+				let kurozoraNavigationController = KNavigationController(rootViewController: kFeedMessageTextEditorViewController)
+				kurozoraNavigationController.presentationController?.delegate = kFeedMessageTextEditorViewController
+				kurozoraNavigationController.navigationBar.prefersLargeTitles = false
+				kurozoraNavigationController.sheetPresentationController?.detents = [.medium(), .large()]
+				kurozoraNavigationController.sheetPresentationController?.selectedDetentIdentifier = .large
+				kurozoraNavigationController.sheetPresentationController?.prefersEdgeAttachedInCompactHeight = true
+				kurozoraNavigationController.sheetPresentationController?.prefersGrabberVisible = true
+				self.present(kurozoraNavigationController, animated: true)
+			}
 		}
 	}
 
@@ -690,6 +712,10 @@ class ProfileTableViewController: KTableViewController {
 				}
 			}
 		}
+	}
+
+	@IBAction func postMessageButton(_ sender: UIBarButtonItem) {
+		self.postNewMessage()
 	}
 
 	// MARK: - Segue
@@ -785,7 +811,12 @@ extension ProfileTableViewController: BaseFeedMessageCellDelegate {
 
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressUserName sender: AnyObject) {
 		if let indexPath = self.tableView.indexPath(for: cell) {
-			self.feedMessages[indexPath.section].visitOriginalPosterProfile(from: self)
+			let feedMessage = self.feedMessages[indexPath.section]
+
+			guard let feedMessageUser = feedMessage.relationships.users.data.first else { return }
+			guard feedMessageUser != self.user else { return }
+
+			feedMessage.visitOriginalPosterProfile(from: self)
 		}
 	}
 

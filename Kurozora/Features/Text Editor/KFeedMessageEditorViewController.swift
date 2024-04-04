@@ -66,6 +66,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 		return self.originalText != self.editedText
 	}
 	var editingFeedMessage: FeedMessage?
+	var dmToUser: User?
 	var userInfo: [AnyHashable: Any] = [:]
 	weak var delegate: KFeedMessageTextEditorViewDelegate?
 
@@ -97,6 +98,10 @@ class KFeedMessageTextEditorViewController: KViewController {
 			self.originalNSFW = feedMessage.attributes.isNSFW
 			self.isSpoilerSwitch?.isOn = feedMessage.attributes.isSpoiler
 			self.originalSpoiler = feedMessage.attributes.isSpoiler
+		} else if let dmToUser = self.dmToUser, dmToUser != User.current {
+			self.commentTextView.text = nil
+			self.commentTextView.insertText("@\(dmToUser.attributes.slug) ")
+			self.originalText = "@\(dmToUser.attributes.slug) "
 		} else {
 			self.commentTextView.text = self.placeholderText
 			self.commentTextView.theme_textColor = KThemePicker.textFieldPlaceholderTextColor.rawValue

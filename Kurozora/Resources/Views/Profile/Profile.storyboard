@@ -409,9 +409,18 @@
                             <outlet property="delegate" destination="zlF-Vo-yv3" id="rx6-yb-JDr"/>
                         </connections>
                     </tableView>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" title="Profile" id="yJS-kC-jrS">
-                        <barButtonItem key="rightBarButtonItem" title="More" image="ellipsis.circle" catalog="system" id="7V8-8E-uOa"/>
+                        <rightBarButtonItems>
+                            <barButtonItem title="More" image="ellipsis.circle" catalog="system" id="7V8-8E-uOa"/>
+                            <barButtonItem title="Post message" image="pencil.circle" catalog="system" id="7dS-3F-kJw">
+                                <connections>
+                                    <action selector="postMessageButton:" destination="zlF-Vo-yv3" id="XVS-Dc-E56"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="achievementsButton" destination="E2w-Ry-UIw" id="iFf-UH-1dR"/>
                         <outlet property="bannerImageView" destination="zl8-rJ-jxV" id="59M-1e-QfB"/>
@@ -424,6 +433,7 @@
                         <outlet property="moreBarButtonItem" destination="7V8-8E-uOa" id="Pje-4v-OD8"/>
                         <outlet property="onlineIndicatorContainerView" destination="IvN-D6-AVe" id="k1b-86-JqY"/>
                         <outlet property="onlineIndicatorView" destination="P4i-DJ-cm7" id="fKP-bx-typ"/>
+                        <outlet property="postMessageButton" destination="7dS-3F-kJw" id="OhT-AW-TQ3"/>
                         <outlet property="profileBadgeStackView" destination="r4X-ZG-tb5" id="VeD-bF-T3D"/>
                         <outlet property="profileImageView" destination="NzS-ZZ-Ald" id="FNo-NK-Uze"/>
                         <outlet property="profileNavigationItem" destination="yJS-kC-jrS" id="V2w-eF-nJ2"/>
@@ -526,6 +536,7 @@
         <image name="Placeholders/User Banner" width="1130" height="706"/>
         <image name="Placeholders/User Profile" width="300" height="300"/>
         <image name="ellipsis.circle" catalog="system" width="128" height="123"/>
+        <image name="pencil.circle" catalog="system" width="128" height="123"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

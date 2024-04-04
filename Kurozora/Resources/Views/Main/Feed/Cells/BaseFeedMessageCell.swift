@@ -146,7 +146,7 @@ class BaseFeedMessageCell: KTableViewCell {
 
 		// Remove the URL from the end of the full text
 		if text.hasSuffix(urlString) {
-			return String(text.dropLast(urlString.count)).trimmed
+			return String(text.dropLast(urlString.count)).trimmingCharacters(in: .whitespacesAndNewlines)
 		}
 
 		return text
