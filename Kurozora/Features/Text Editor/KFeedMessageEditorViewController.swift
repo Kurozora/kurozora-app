@@ -25,7 +25,6 @@ class KFeedMessageTextEditorViewController: KViewController {
 	@IBOutlet weak var sendButton: UIBarButtonItem!
 
 	// MARK: - Properties
-	let characterLimit = 240
 	var placeholderText: String {
 		return Trans.whatsOnYourMind
 	}
@@ -88,7 +87,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 			user.attributes.profileImage(imageView: self.profileImageView)
 		}
 
-		self.characterCountLabel.text = "\(self.characterLimit)"
+		self.characterCountLabel.text = "\(FeedMessage.maxCharacterLimit)"
 
 		if let feedMessage = self.editingFeedMessage {
 			self.commentTextView.text = nil
@@ -227,7 +226,7 @@ extension KFeedMessageTextEditorViewController: UIAdaptivePresentationController
 // MARK: - UITextViewDelegate
 extension KFeedMessageTextEditorViewController: UITextViewDelegate {
 	func textViewDidChange(_ textView: UITextView) {
-		self.characterCountLabel.text = "\(self.characterLimit - textView.text.count)"
+		self.characterCountLabel.text = "\(FeedMessage.maxCharacterLimit - textView.text.count)"
 		self.editedText = textView.text
 	}
 
