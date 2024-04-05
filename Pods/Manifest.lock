@@ -14,39 +14,39 @@ PODS:
   - ReachabilitySwift (5.2.1)
   - Solar (2.1.0)
   - SPConfetti (1.4.0)
-  - SwifterSwift (6.1.1):
-    - SwifterSwift/AppKit (= 6.1.1)
-    - SwifterSwift/Combine (= 6.1.1)
-    - SwifterSwift/CoreAnimation (= 6.1.1)
-    - SwifterSwift/CoreGraphics (= 6.1.1)
-    - SwifterSwift/CoreLocation (= 6.1.1)
-    - SwifterSwift/CryptoKit (= 6.1.1)
-    - SwifterSwift/Dispatch (= 6.1.1)
-    - SwifterSwift/Foundation (= 6.1.1)
-    - SwifterSwift/HealthKit (= 6.1.1)
-    - SwifterSwift/MapKit (= 6.1.1)
-    - SwifterSwift/SceneKit (= 6.1.1)
-    - SwifterSwift/SpriteKit (= 6.1.1)
-    - SwifterSwift/StoreKit (= 6.1.1)
-    - SwifterSwift/SwiftStdlib (= 6.1.1)
-    - SwifterSwift/UIKit (= 6.1.1)
-    - SwifterSwift/WebKit (= 6.1.1)
-  - SwifterSwift/AppKit (6.1.1)
-  - SwifterSwift/Combine (6.1.1)
-  - SwifterSwift/CoreAnimation (6.1.1)
-  - SwifterSwift/CoreGraphics (6.1.1)
-  - SwifterSwift/CoreLocation (6.1.1)
-  - SwifterSwift/CryptoKit (6.1.1)
-  - SwifterSwift/Dispatch (6.1.1)
-  - SwifterSwift/Foundation (6.1.1)
-  - SwifterSwift/HealthKit (6.1.1)
-  - SwifterSwift/MapKit (6.1.1)
-  - SwifterSwift/SceneKit (6.1.1)
-  - SwifterSwift/SpriteKit (6.1.1)
-  - SwifterSwift/StoreKit (6.1.1)
-  - SwifterSwift/SwiftStdlib (6.1.1)
-  - SwifterSwift/UIKit (6.1.1)
-  - SwifterSwift/WebKit (6.1.1)
+  - SwifterSwift (6.2.0):
+    - SwifterSwift/AppKit (= 6.2.0)
+    - SwifterSwift/Combine (= 6.2.0)
+    - SwifterSwift/CoreAnimation (= 6.2.0)
+    - SwifterSwift/CoreGraphics (= 6.2.0)
+    - SwifterSwift/CoreLocation (= 6.2.0)
+    - SwifterSwift/CryptoKit (= 6.2.0)
+    - SwifterSwift/Dispatch (= 6.2.0)
+    - SwifterSwift/Foundation (= 6.2.0)
+    - SwifterSwift/HealthKit (= 6.2.0)
+    - SwifterSwift/MapKit (= 6.2.0)
+    - SwifterSwift/SceneKit (= 6.2.0)
+    - SwifterSwift/SpriteKit (= 6.2.0)
+    - SwifterSwift/StoreKit (= 6.2.0)
+    - SwifterSwift/SwiftStdlib (= 6.2.0)
+    - SwifterSwift/UIKit (= 6.2.0)
+    - SwifterSwift/WebKit (= 6.2.0)
+  - SwifterSwift/AppKit (6.2.0)
+  - SwifterSwift/Combine (6.2.0)
+  - SwifterSwift/CoreAnimation (6.2.0)
+  - SwifterSwift/CoreGraphics (6.2.0)
+  - SwifterSwift/CoreLocation (6.2.0)
+  - SwifterSwift/CryptoKit (6.2.0)
+  - SwifterSwift/Dispatch (6.2.0)
+  - SwifterSwift/Foundation (6.2.0)
+  - SwifterSwift/HealthKit (6.2.0)
+  - SwifterSwift/MapKit (6.2.0)
+  - SwifterSwift/SceneKit (6.2.0)
+  - SwifterSwift/SpriteKit (6.2.0)
+  - SwifterSwift/StoreKit (6.2.0)
+  - SwifterSwift/SwiftStdlib (6.2.0)
+  - SwifterSwift/UIKit (6.2.0)
+  - SwifterSwift/WebKit (6.2.0)
   - SwiftTheme (0.6.4)
   - SwiftyJSON (5.0.1)
   - Tabman (3.0.2):
@@ -75,7 +75,7 @@ DEPENDENCIES:
   - ReachabilitySwift
   - Solar
   - SPConfetti
-  - SwifterSwift
+  - SwifterSwift (from `https://github.com/SwifterSwift/SwifterSwift`, branch `master`)
   - SwiftTheme
   - Tabman
   - TRON (= 5.5.0-beta.1)
@@ -98,7 +98,6 @@ SPEC REPOS:
     - ReachabilitySwift
     - Solar
     - SPConfetti
-    - SwifterSwift
     - SwiftTheme
     - SwiftyJSON
     - Tabman
@@ -106,12 +105,18 @@ SPEC REPOS:
     - WhatsNew
 
 EXTERNAL SOURCES:
+  SwifterSwift:
+    :branch: master
+    :git: https://github.com/SwifterSwift/SwifterSwift
   XCDYouTubeKit:
     :branch: master
     :commit: 651a6a51c695c5819eb51ba2f98d0b64094315b9
     :git: https://github.com/armendh/XCDYouTubeKit
 
 CHECKOUT OPTIONS:
+  SwifterSwift:
+    :commit: 39fa28c90a3ebe3d53f80289304fd880cf2c42d0
+    :git: https://github.com/SwifterSwift/SwifterSwift
   XCDYouTubeKit:
     :commit: 651a6a51c695c5819eb51ba2f98d0b64094315b9
     :git: https://github.com/armendh/XCDYouTubeKit
@@ -130,7 +135,7 @@ SPEC CHECKSUMS:
   ReachabilitySwift: 5ae15e16814b5f9ef568963fb2c87aeb49158c66
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
   SPConfetti: 4ba720ff652d960f59c3e4eadee2c0c3ef6ce9a4
-  SwifterSwift: 6fda88d11d5076fabd816fa95d00b1b1eeba5f71
+  SwifterSwift: dd00873fb09cde19da88bdb2878f9fe70fe27b0f
   SwiftTheme: 007cbaf1f9e171caf6448a4657533e54c682b285
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
   Tabman: 6326ec3a792da1c2a6e79c7eddb56af7b591c9d6
@@ -138,6 +143,6 @@ SPEC CHECKSUMS:
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
   XCDYouTubeKit: b120aced3d8638ffb570c5450cddb5a1dac448c7
 
-PODFILE CHECKSUM: f25ad8a68ff6dc8ff6e9ce2a65264937c5a60e16
+PODFILE CHECKSUM: 95308bb1d44fd332997454de017f3e78e9239205
 
 COCOAPODS: 1.15.2
