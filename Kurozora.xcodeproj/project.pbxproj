@@ -86,7 +86,7 @@
 		661B26B42351E71B00840AF5 /* UIImageView+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661B26B22351E5A100840AF5 /* UIImageView+Kurozora.swift */; };
 		661D646C25C387EA00822D01 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661D646B25C387EA00822D01 /* MenuController.swift */; };
 		661DBC4F234947D7009292DF /* SKProduct+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DBC4E234947D7009292DF /* SKProduct+Kurozora.swift */; };
-		661DBC51234A4E00009292DF /* TipJarTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DBC50234A4E00009292DF /* TipJarTableViewController.swift */; };
+		661DBC51234A4E00009292DF /* TipJarCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DBC50234A4E00009292DF /* TipJarCollectionViewController.swift */; };
 		661F184524A5594C00542AFB /* KCopyableTintedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661F184424A5594C00542AFB /* KCopyableTintedLabel.swift */; };
 		661F185E24AAA03700542AFB /* SectionBackgroundDecorationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661F185C24AA9F6700542AFB /* SectionBackgroundDecorationView.swift */; };
 		661F186024AB5C6F00542AFB /* SosumiCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 661F185F24AB5C6E00542AFB /* SosumiCollectionViewCell.xib */; };
@@ -809,7 +809,7 @@
 		661B26B22351E5A100840AF5 /* UIImageView+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Kurozora.swift"; sourceTree = "<group>"; };
 		661D646B25C387EA00822D01 /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 		661DBC4E234947D7009292DF /* SKProduct+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKProduct+Kurozora.swift"; sourceTree = "<group>"; };
-		661DBC50234A4E00009292DF /* TipJarTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipJarTableViewController.swift; sourceTree = "<group>"; };
+		661DBC50234A4E00009292DF /* TipJarCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipJarCollectionViewController.swift; sourceTree = "<group>"; };
 		661F184424A5594C00542AFB /* KCopyableTintedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCopyableTintedLabel.swift; sourceTree = "<group>"; };
 		661F185C24AA9F6700542AFB /* SectionBackgroundDecorationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionBackgroundDecorationView.swift; sourceTree = "<group>"; };
 		661F185F24AB5C6E00542AFB /* SosumiCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SosumiCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -2165,7 +2165,7 @@
 		66500D1429605DF70098D59D /* Tip Jar */ = {
 			isa = PBXGroup;
 			children = (
-				661DBC50234A4E00009292DF /* TipJarTableViewController.swift */,
+				661DBC50234A4E00009292DF /* TipJarCollectionViewController.swift */,
 				66CB5D252B8169140028A2AC /* TipJarCollectionViewController+KCollectionViewDataSource.swift */,
 				66CB5D272B8178E70028A2AC /* TipJarCollectionViewController+KCollectionViewDelegateLayout.swift */,
 			);
@@ -4335,7 +4335,7 @@
 				66E1215029AFEE090051C4ED /* GamesListCollectionViewController.swift in Sources */,
 				6619378E2A6EEB8E00447084 /* ReviewTextEditorView.swift in Sources */,
 				661A002A27C28F7A00DC646C /* KTrailerPlayerView.swift in Sources */,
-				661DBC51234A4E00009292DF /* TipJarTableViewController.swift in Sources */,
+				661DBC51234A4E00009292DF /* TipJarCollectionViewController.swift in Sources */,
 				663C95B923084FAC003720A4 /* SceneDelegate.swift in Sources */,
 				661A002527BA9FDE00DC646C /* KImageView.swift in Sources */,
 				6671F28327A4DD5F005D3A0D /* Theme+UIKit.swift in Sources */,
