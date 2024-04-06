@@ -179,7 +179,7 @@ extension SettingsTableViewController {
 
 		/// An array containing all account section settings rows.
 		static var allAccount: [Row] {
-			if User.isSignedIn || !KurozoraDelegate.shared.keychain.allKeys().isEmpty {
+			if User.isSignedIn || !SharedDelegate.shared.keychain.allKeys().isEmpty {
 				return [.account, .switchAccount]
 			}
 

@@ -52,7 +52,7 @@ class SignInTableViewController: AccountOnboardingTableViewController {
 			case .success(let authenticationToken):
 				// Save user in keychain.
 				if let slug = User.current?.attributes.slug {
-					try? KurozoraDelegate.shared.keychain.set(authenticationToken, key: slug)
+					try? SharedDelegate.shared.keychain.set(authenticationToken, key: slug)
 					UserSettings.set(slug, forKey: .selectedAccount)
 				}
 
@@ -129,7 +129,7 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 					case .signIn:
 						// Save user in keychain.
 						if let slug = User.current?.attributes.slug {
-							try? KurozoraDelegate.shared.keychain.set(oAuthResponse.authenticationToken, key: slug)
+							try? SharedDelegate.shared.keychain.set(oAuthResponse.authenticationToken, key: slug)
 							UserSettings.set(slug, forKey: .selectedAccount)
 						}
 

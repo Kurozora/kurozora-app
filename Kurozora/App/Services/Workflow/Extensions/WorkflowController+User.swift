@@ -97,7 +97,7 @@ extension WorkflowController {
 	@discardableResult
 	func restoreCurrentUserSession() async -> Bool {
 		let accountKey = UserSettings.selectedAccount
-		if let authenticationKey = KurozoraDelegate.shared.keychain[accountKey] {
+		if let authenticationKey = SharedDelegate.shared.keychain[accountKey] {
 			KService.authenticationKey = authenticationKey
 
 			do {
@@ -152,7 +152,7 @@ extension WorkflowController {
 			_ = try await KService.signOut().value
 			User.current = nil
 			KService.authenticationKey = ""
-			try? KurozoraDelegate.shared.keychain.remove(slug)
+			try? SharedDelegate.shared.keychain.remove(slug)
 			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
 		} catch let error as KKAPIError {
 			await UIApplication.topViewController?.presentAlertController(title: "Can't Sign Out 😔", message: error.message)
@@ -176,7 +176,7 @@ extension WorkflowController {
 			_ = try await KService.deleteUser(password: password).value
 			User.current = nil
 			KService.authenticationKey = ""
-			try? KurozoraDelegate.shared.keychain.remove(slug)
+			try? SharedDelegate.shared.keychain.remove(slug)
 			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
 			return true
 		} catch let error as KKAPIError {

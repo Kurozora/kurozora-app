@@ -12,12 +12,6 @@ import IQKeyboardManagerSwift
 import Kingfisher
 import SwifterSwift
 
-/// A root object that stores information about a song resource.
-typealias KKSong = Song
-
-// MARK: - KurozoraKit
-let KService = KurozoraKit().services(KurozoraDelegate.shared.services)
-var KSettings: Settings?
 var store: Store! = nil
 
 // MARK: - Kurozora

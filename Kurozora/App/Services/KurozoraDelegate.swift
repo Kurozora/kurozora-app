@@ -9,7 +9,6 @@
 import UIKit
 import KurozoraKit
 import ESTabBarController_swift
-import KeychainAccess
 import LocalAuthentication
 import XCDYouTubeKit
 
@@ -33,30 +32,12 @@ class KurozoraDelegate {
 	/// The interval used to determine whether the app should ask the user for authentication.
 	var authenticationInterval: Int = 0
 
-	/// Returns the singleton Kurozora instance.
+	/// Returns the singleton `KurozoraDelegate` instance.
 	static let shared: KurozoraDelegate = KurozoraDelegate()
 
-	// KurozoraKit
-	/// The app's identifier prefix.
-	private let appIdentifierPrefix: String = Bundle.main.infoDictionary?["AppIdentifierPrefix"] as! String
-
-	/// The app's base keychain service.
-	let keychain: Keychain
-
-	/// KurozoraKit's enabled services
-	let services: KKServices
-
 	// MARK: - Initializers
-	/// Initializes an instance of `Kurozora` with `Keychain` and `KKService` objects.
+	/// Initializes an instance of `KurozoraDelegate`.
 	private init() {
-		#if DEBUG
-		let accessGroup = "\(self.appIdentifierPrefix)app.kurozora.shared.debug"
-		#else
-		let accessGroup = "\(self.appIdentifierPrefix)app.kurozora.shared"
-		#endif
-		self.keychain = Keychain(service: "Kurozora", accessGroup: "\(accessGroup)").synchronizable(true).accessibility(.afterFirstUnlock)
-		self.services = KKServices(keychain: self.keychain, showAlerts: true)
-
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleSubscriptionStatusDidUpdate(_:)), name: .KSubscriptionStatusDidUpdate, object: nil)
 	}
 

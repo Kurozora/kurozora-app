@@ -64,7 +64,7 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 
 			// Save user in keychain.
 			if let slug = User.current?.attributes.slug {
-				try? KurozoraDelegate.shared.keychain.set(KService.authenticationKey, key: slug)
+				try? SharedDelegate.shared.keychain.set(KService.authenticationKey, key: slug)
 				UserSettings.set(slug, forKey: .selectedAccount)
 			}
 		} catch {

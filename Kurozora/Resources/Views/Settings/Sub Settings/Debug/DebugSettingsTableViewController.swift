@@ -13,8 +13,8 @@ class DebugSettingsTableViewController: KTableViewController {
 	@IBOutlet weak var warningLabel: KLabel!
 
 	// MARK: - Properties
-	let kDefaultItems = KurozoraDelegate.shared.keychain.allItems()
-	var kDefaultCount = KurozoraDelegate.shared.keychain.allItems().count
+	let kDefaultItems = SharedDelegate.shared.keychain.allItems()
+	var kDefaultCount = SharedDelegate.shared.keychain.allItems().count
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
@@ -92,7 +92,7 @@ extension DebugSettingsTableViewController {
 			guard let key = kDefaultsTableViewCell.primaryLabel?.text else {return}
 
 			self.tableView.beginUpdates()
-			try? KurozoraDelegate.shared.keychain.remove(key)
+			try? SharedDelegate.shared.keychain.remove(key)
 			self.kDefaultCount = kDefaultCount - 1
 			self.tableView.deleteRows(at: [indexPath], with: .automatic)
 			self.toggleEmptyDataView()
