@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E7E9BCBF9A52A8E8F560219 /* Pods_KurozoraWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D126E524B2938236D39BCF3 /* Pods_KurozoraWidgetExtension.framework */; };
 		6601C3A023BBB98000466BA3 /* ShowDetailHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6601C39F23BBB98000466BA3 /* ShowDetailHeaderCollectionViewCell.swift */; };
 		6601F1AC2118488D0074C1DD /* IconNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6601F1AB2118488D0074C1DD /* IconNotificationCell.swift */; };
 		66036EB42B967B2400DD36CC /* GIFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66036EB32B967B2400DD36CC /* GIFView.swift */; };
@@ -118,6 +119,9 @@
 		662F118224E60F1C0000375A /* SeasonAttributes+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662F118124E60F1C0000375A /* SeasonAttributes+UIImage.swift */; };
 		662F706D22A45C2A00C3599D /* TitleHeaderTableReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662F706C22A45C2A00C3599D /* TitleHeaderTableReusableView.swift */; };
 		662F706F22A45D0F00C3599D /* BasicNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662F706E22A45D0F00C3599D /* BasicNotificationCell.swift */; };
+		662F96C92BC347A800DD8EA6 /* KurozoraKit+KurozoraWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662F96C82BC347A800DD8EA6 /* KurozoraKit+KurozoraWidget.swift */; };
+		662F96CC2BC3481200DD8EA6 /* ImageFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662F96CB2BC3481200DD8EA6 /* ImageFetcher.swift */; };
+		662F96CE2BC34B9200DD8EA6 /* UIColor+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662F96CD2BC34B9200DD8EA6 /* UIColor+SwiftUI.swift */; };
 		66319DAD27C82EAD0063DE7F /* MusicLockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66319DAC27C82EAD0063DE7F /* MusicLockupCollectionViewCell.swift */; };
 		66319DAF27C858CD0063DE7F /* MusicLockupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66319DAE27C858CD0063DE7F /* MusicLockupCollectionViewCell.xib */; };
 		66319DCD27C9A6A90063DE7F /* ShowSongsListCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66319DCB27C9A5EE0063DE7F /* ShowSongsListCollectionViewController.swift */; };
@@ -190,6 +194,14 @@
 		66472374245E164B008E5111 /* ProfileImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66472373245E164B008E5111 /* ProfileImageButton.swift */; };
 		6647237824601707008E5111 /* ServiceFooterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6647237724601707008E5111 /* ServiceFooterTableViewCell.xib */; };
 		6647B72B2BBE0ACE006BC91C /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6647B72A2BBE0ACE006BC91C /* PrivacyInfo.xcprivacy */; };
+		6647B7322BC0A6DE006BC91C /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6647B7312BC0A6DE006BC91C /* WidgetKit.framework */; };
+		6647B7342BC0A6DE006BC91C /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6647B7332BC0A6DE006BC91C /* SwiftUI.framework */; };
+		6647B7372BC0A6DE006BC91C /* KurozoraWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6647B7362BC0A6DE006BC91C /* KurozoraWidgetBundle.swift */; };
+		6647B7392BC0A6DE006BC91C /* DateWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6647B7382BC0A6DE006BC91C /* DateWidget.swift */; };
+		6647B73B2BC0A6E2006BC91C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6647B73A2BC0A6E2006BC91C /* Assets.xcassets */; };
+		6647B7402BC0A6E2006BC91C /* KurozoraWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6647B7302BC0A6DD006BC91C /* KurozoraWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		6647B7472BC0B1E9006BC91C /* SharedDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6647B7462BC0B1E9006BC91C /* SharedDelegate.swift */; };
+		6647B7482BC0B1E9006BC91C /* SharedDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6647B7462BC0B1E9006BC91C /* SharedDelegate.swift */; };
 		6648ED6C22A4630200E1BE18 /* KNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6648ED6B22A4630200E1BE18 /* KNotification.swift */; };
 		6648ED7022A4636E00E1BE18 /* GroupedNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6648ED6F22A4636E00E1BE18 /* GroupedNotifications.swift */; };
 		664A065E21EA1BA7008CF4A6 /* GenresCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664A065D21EA1BA7008CF4A6 /* GenresCollectionViewController.swift */; };
@@ -357,6 +369,8 @@
 		667943632273933400E2D0D0 /* TextViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667943622273933400E2D0D0 /* TextViewCollectionViewCell.swift */; };
 		667943652273A33D00E2D0D0 /* EpisodeDetailsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667943642273A33D00E2D0D0 /* EpisodeDetailsCollectionViewController.swift */; };
 		667B38432361CE6500786EF6 /* KWhatsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667B38422361CE6500786EF6 /* KWhatsNew.swift */; };
+		667B8BAF2BC1F2BE00DA79CD /* EnvironmentValues+KurozoraWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667B8BAD2BC1F26A00DA79CD /* EnvironmentValues+KurozoraWidget.swift */; };
+		667B8BB42BC1FCCA00DA79CD /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 667B8BB32BC1FCCA00DA79CD /* Intents.intentdefinition */; };
 		667F9AD421B47E6D003F6629 /* AchievementTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9AD321B47E6D003F6629 /* AchievementTableViewCell.swift */; };
 		667F9AD921B47FA4003F6629 /* AchievementsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9AD821B47FA4003F6629 /* AchievementsTableViewController.swift */; };
 		667F9ADB21B57D5C003F6629 /* Date+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9ADA21B57D5C003F6629 /* Date+Kurozora.swift */; };
@@ -712,6 +726,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		6647B73E2BC0A6E2006BC91C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 66647B482084995500CF624F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6647B72F2BC0A6DD006BC91C;
+			remoteInfo = BannerWidgetExtension;
+		};
 		66C6A54D23FB05C2000A6617 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 66647B482084995500CF624F /* Project object */;
@@ -721,9 +742,25 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		6647B7412BC0A6E3006BC91C /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				6647B7402BC0A6E2006BC91C /* KurozoraWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		01C3B6E180B1386C434F51B8 /* Pods-KurozoraKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KurozoraKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KurozoraKit/Pods-KurozoraKit.debug.xcconfig"; sourceTree = "<group>"; };
 		268B0B9B5A247314B6D3FBD6 /* Pods-Kurozora.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kurozora.release.xcconfig"; path = "Pods/Target Support Files/Pods-Kurozora/Pods-Kurozora.release.xcconfig"; sourceTree = "<group>"; };
+		32DFEC9DB9F042A044F6CD30 /* Pods-KurozoraWidgetExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KurozoraWidgetExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-KurozoraWidgetExtension/Pods-KurozoraWidgetExtension.release.xcconfig"; sourceTree = "<group>"; };
+		33B9B6FC2A5B273980E1D63B /* Pods-BannerWidgetExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BannerWidgetExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-BannerWidgetExtension/Pods-BannerWidgetExtension.release.xcconfig"; sourceTree = "<group>"; };
 		5FE9A09CBD4469DF87F4CD20 /* Pods_KurozoraKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KurozoraKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6601C39F23BBB98000466BA3 /* ShowDetailHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetailHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
 		6601F1AB2118488D0074C1DD /* IconNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconNotificationCell.swift; sourceTree = "<group>"; };
@@ -842,6 +879,9 @@
 		662F118124E60F1C0000375A /* SeasonAttributes+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SeasonAttributes+UIImage.swift"; sourceTree = "<group>"; };
 		662F706C22A45C2A00C3599D /* TitleHeaderTableReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleHeaderTableReusableView.swift; sourceTree = "<group>"; };
 		662F706E22A45D0F00C3599D /* BasicNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicNotificationCell.swift; sourceTree = "<group>"; };
+		662F96C82BC347A800DD8EA6 /* KurozoraKit+KurozoraWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KurozoraKit+KurozoraWidget.swift"; sourceTree = "<group>"; };
+		662F96CB2BC3481200DD8EA6 /* ImageFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFetcher.swift; sourceTree = "<group>"; };
+		662F96CD2BC34B9200DD8EA6 /* UIColor+SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+SwiftUI.swift"; sourceTree = "<group>"; };
 		66319DAC27C82EAD0063DE7F /* MusicLockupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicLockupCollectionViewCell.swift; sourceTree = "<group>"; };
 		66319DAE27C858CD0063DE7F /* MusicLockupCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MusicLockupCollectionViewCell.xib; sourceTree = "<group>"; };
 		66319DCB27C9A5EE0063DE7F /* ShowSongsListCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowSongsListCollectionViewController.swift; sourceTree = "<group>"; };
@@ -915,6 +955,15 @@
 		66472373245E164B008E5111 /* ProfileImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageButton.swift; sourceTree = "<group>"; };
 		6647237724601707008E5111 /* ServiceFooterTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServiceFooterTableViewCell.xib; sourceTree = "<group>"; };
 		6647B72A2BBE0ACE006BC91C /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		6647B7302BC0A6DD006BC91C /* KurozoraWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = KurozoraWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		6647B7312BC0A6DE006BC91C /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = /System/Library/Frameworks/WidgetKit.framework; sourceTree = "<absolute>"; };
+		6647B7332BC0A6DE006BC91C /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = /System/Library/Frameworks/SwiftUI.framework; sourceTree = "<absolute>"; };
+		6647B7362BC0A6DE006BC91C /* KurozoraWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KurozoraWidgetBundle.swift; sourceTree = "<group>"; };
+		6647B7382BC0A6DE006BC91C /* DateWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateWidget.swift; sourceTree = "<group>"; };
+		6647B73A2BC0A6E2006BC91C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6647B73C2BC0A6E2006BC91C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6647B73D2BC0A6E2006BC91C /* KurozoraWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KurozoraWidget.entitlements; sourceTree = "<group>"; };
+		6647B7462BC0B1E9006BC91C /* SharedDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDelegate.swift; sourceTree = "<group>"; };
 		6648ED6B22A4630200E1BE18 /* KNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KNotification.swift; sourceTree = "<group>"; };
 		6648ED6F22A4636E00E1BE18 /* GroupedNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupedNotifications.swift; sourceTree = "<group>"; };
 		664940992308B22E00C2565C /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -1073,6 +1122,9 @@
 		667943622273933400E2D0D0 /* TextViewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewCollectionViewCell.swift; sourceTree = "<group>"; };
 		667943642273A33D00E2D0D0 /* EpisodeDetailsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDetailsCollectionViewController.swift; sourceTree = "<group>"; };
 		667B38422361CE6500786EF6 /* KWhatsNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KWhatsNew.swift; sourceTree = "<group>"; };
+		667B8BAC2BC1F04800DA79CD /* BannerWidgetExtension copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "BannerWidgetExtension copy-Info.plist"; path = "/Users/kirito/Developer/kurozora-app/BannerWidgetExtension copy-Info.plist"; sourceTree = "<absolute>"; };
+		667B8BAD2BC1F26A00DA79CD /* EnvironmentValues+KurozoraWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+KurozoraWidget.swift"; sourceTree = "<group>"; };
+		667B8BB32BC1FCCA00DA79CD /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		667F9AD321B47E6D003F6629 /* AchievementTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementTableViewCell.swift; sourceTree = "<group>"; };
 		667F9AD821B47FA4003F6629 /* AchievementsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsTableViewController.swift; sourceTree = "<group>"; };
 		667F9ADA21B57D5C003F6629 /* Date+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Kurozora.swift"; sourceTree = "<group>"; };
@@ -1433,10 +1485,23 @@
 		66FE5D00215B739D00E2844A /* KDefaultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KDefaultsCell.swift; sourceTree = "<group>"; };
 		66FE68FC29D26AE300C9AD8E /* furin.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = furin.m4a; sourceTree = "<group>"; };
 		737689E9E0DAAABD1B6489DE /* Pods-KurozoraKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KurozoraKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-KurozoraKit/Pods-KurozoraKit.release.xcconfig"; sourceTree = "<group>"; };
+		7D126E524B2938236D39BCF3 /* Pods_KurozoraWidgetExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KurozoraWidgetExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2919E1397B42DDBF23AE252 /* Pods-BannerWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BannerWidgetExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BannerWidgetExtension/Pods-BannerWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		C5957B9810A82C1CFE580DE6 /* Pods-KurozoraWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KurozoraWidgetExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KurozoraWidgetExtension/Pods-KurozoraWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		E06CAB22F87FA1B89AE618FB /* Pods_Kurozora.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kurozora.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		6647B72D2BC0A6DD006BC91C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6647B7342BC0A6DE006BC91C /* SwiftUI.framework in Frameworks */,
+				6647B7322BC0A6DE006BC91C /* WidgetKit.framework in Frameworks */,
+				3E7E9BCBF9A52A8E8F560219 /* Pods_KurozoraWidgetExtension.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		66647B4D2084995500CF624F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1466,6 +1531,9 @@
 				66A254DD22AAEF5D002A0E34 /* MapKit.framework */,
 				E06CAB22F87FA1B89AE618FB /* Pods_Kurozora.framework */,
 				5FE9A09CBD4469DF87F4CD20 /* Pods_KurozoraKit.framework */,
+				6647B7312BC0A6DE006BC91C /* WidgetKit.framework */,
+				6647B7332BC0A6DE006BC91C /* SwiftUI.framework */,
+				7D126E524B2938236D39BCF3 /* Pods_KurozoraWidgetExtension.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1861,6 +1929,14 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		662F96CA2BC3480400DD8EA6 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				662F96CB2BC3481200DD8EA6 /* ImageFetcher.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		66319DC927C9A1FA0063DE7F /* Songs */ = {
 			isa = PBXGroup;
 			children = (
@@ -2057,6 +2133,19 @@
 			path = "Table Views";
 			sourceTree = "<group>";
 		};
+		6647B7352BC0A6DE006BC91C /* KurozoraWidget */ = {
+			isa = PBXGroup;
+			children = (
+				6647B73D2BC0A6E2006BC91C /* KurozoraWidget.entitlements */,
+				6647B7382BC0A6DE006BC91C /* DateWidget.swift */,
+				6647B7362BC0A6DE006BC91C /* KurozoraWidgetBundle.swift */,
+				667B8B9B2BC1F01700DA79CD /* Extensions */,
+				662F96CA2BC3480400DD8EA6 /* Helpers */,
+				667B8BB22BC1F58800DA79CD /* Supporting Files */,
+			);
+			path = KurozoraWidget;
+			sourceTree = "<group>";
+		};
 		6648ED7122A4749500E1BE18 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -2229,9 +2318,11 @@
 			isa = PBXGroup;
 			children = (
 				66647B522084995500CF624F /* Kurozora */,
+				6647B7352BC0A6DE006BC91C /* KurozoraWidget */,
 				66647B512084995500CF624F /* Products */,
 				D4A795E40A9FE3FA76278C67 /* Pods */,
 				08E5591EE4C9B9016ACCB5C6 /* Frameworks */,
+				667B8BAC2BC1F04800DA79CD /* BannerWidgetExtension copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -2239,6 +2330,7 @@
 			isa = PBXGroup;
 			children = (
 				66647B502084995500CF624F /* Kurozora.app */,
+				6647B7302BC0A6DD006BC91C /* KurozoraWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2249,6 +2341,7 @@
 				660E9FC8214BC6FB00F6813C /* Kurozora.entitlements */,
 				66647B532084995500CF624F /* AppDelegate.swift */,
 				663C95B823084FAC003720A4 /* SceneDelegate.swift */,
+				6647B7462BC0B1E9006BC91C /* SharedDelegate.swift */,
 				66707821208B1C6800471FBC /* LaunchScreen.xib */,
 				66FA97B4281A098A0054FC2E /* App */,
 				66FA97D2281A169F0054FC2E /* Lang */,
@@ -2473,6 +2566,26 @@
 				667904352959A6310006EE01 /* OnboardingSwiftUIView.swift */,
 			);
 			path = Experiments;
+			sourceTree = "<group>";
+		};
+		667B8B9B2BC1F01700DA79CD /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				667B8BAD2BC1F26A00DA79CD /* EnvironmentValues+KurozoraWidget.swift */,
+				662F96C82BC347A800DD8EA6 /* KurozoraKit+KurozoraWidget.swift */,
+				662F96CD2BC34B9200DD8EA6 /* UIColor+SwiftUI.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		667B8BB22BC1F58800DA79CD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				667B8BB32BC1FCCA00DA79CD /* Intents.intentdefinition */,
+				6647B73C2BC0A6E2006BC91C /* Info.plist */,
+				6647B73A2BC0A6E2006BC91C /* Assets.xcassets */,
+			);
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		667F9AD521B47E8B003F6629 /* Achievements */ = {
@@ -3904,6 +4017,10 @@
 				268B0B9B5A247314B6D3FBD6 /* Pods-Kurozora.release.xcconfig */,
 				01C3B6E180B1386C434F51B8 /* Pods-KurozoraKit.debug.xcconfig */,
 				737689E9E0DAAABD1B6489DE /* Pods-KurozoraKit.release.xcconfig */,
+				A2919E1397B42DDBF23AE252 /* Pods-BannerWidgetExtension.debug.xcconfig */,
+				33B9B6FC2A5B273980E1D63B /* Pods-BannerWidgetExtension.release.xcconfig */,
+				C5957B9810A82C1CFE580DE6 /* Pods-KurozoraWidgetExtension.debug.xcconfig */,
+				32DFEC9DB9F042A044F6CD30 /* Pods-KurozoraWidgetExtension.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -3911,6 +4028,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		6647B72F2BC0A6DD006BC91C /* KurozoraWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6647B7442BC0A6E3006BC91C /* Build configuration list for PBXNativeTarget "KurozoraWidgetExtension" */;
+			buildPhases = (
+				6E1997A7E287A9521B4563F2 /* [CP] Check Pods Manifest.lock */,
+				6647B72C2BC0A6DD006BC91C /* Sources */,
+				6647B72D2BC0A6DD006BC91C /* Frameworks */,
+				6647B72E2BC0A6DD006BC91C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KurozoraWidgetExtension;
+			productName = BannerWidgetExtension;
+			productReference = 6647B7302BC0A6DD006BC91C /* KurozoraWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		66647B4F2084995500CF624F /* Kurozora */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 66647B7A2084995E00CF624F /* Build configuration list for PBXNativeTarget "Kurozora" */;
@@ -3925,11 +4060,13 @@
 				66022EAE238B287900B5286A /* Add Acknowledgements */,
 				66B4DC40245A20390097135A /* Add version to Settings.bundle */,
 				6666F88320BF4A4C0003A72F /* Run Build Bump Script */,
+				6647B7412BC0A6E3006BC91C /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				66C6A54E23FB05C2000A6617 /* PBXTargetDependency */,
+				6647B73F2BC0A6E2006BC91C /* PBXTargetDependency */,
 			);
 			name = Kurozora;
 			productName = Aozora;
@@ -3943,10 +4080,13 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastSwiftUpdateCheck = 1130;
+				LastSwiftUpdateCheck = 1530;
 				LastUpgradeCheck = 1500;
 				ORGANIZATIONNAME = Kurozora;
 				TargetAttributes = {
+					6647B72F2BC0A6DD006BC91C = {
+						CreatedOnToolsVersion = 15.3;
+					};
 					66647B4F2084995500CF624F = {
 						CreatedOnToolsVersion = 9.3;
 						ProvisioningStyle = Automatic;
@@ -3981,11 +4121,20 @@
 			projectRoot = "";
 			targets = (
 				66647B4F2084995500CF624F /* Kurozora */,
+				6647B72F2BC0A6DD006BC91C /* KurozoraWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		6647B72E2BC0A6DD006BC91C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6647B73B2BC0A6E2006BC91C /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		66647B4E2084995500CF624F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -4174,7 +4323,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\nPODPATH=\"${PODS_ROOT}/Target Support Files/Pods-Kurozora/Pods-Kurozora-acknowledgements.plist\"\nPROJECTPATH=\"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/Acknowledgements.plist\"\n\ncp \"${PODPATH}\" \"${PROJECTPATH}\"\n\nPLISTBUDDY=\"/usr/libexec/PlistBuddy -c\"\n\ni=0\nwhile true ; do\n   # If an item is printable then it exists, otherwise exit loop\n   $PLISTBUDDY \"Print PreferenceSpecifiers:$i\" \"${PROJECTPATH}\" >/dev/null 2>/dev/null\n   if [ $? -ne 0 ]; then\n\t  break\n   fi\n   i=$(($i + 1))\ndone\n\n# Get last item in array\ni=$(($i - 1))\n\n# Delete last item in array\n$PLISTBUDDY \"Delete PreferenceSpecifiers:$i\" \"${PROJECTPATH}\" >/dev/null 2>/dev/null\n";
+			shellScript = "\n#PODPATH=\"${PODS_ROOT}/Target Support Files/Pods-Kurozora/Pods-Kurozora-acknowledgements.plist\"\n#PROJECTPATH=\"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/Acknowledgements.plist\"\n#\n#cp \"${PODPATH}\" \"${PROJECTPATH}\"\n#\n#PLISTBUDDY=\"/usr/libexec/PlistBuddy -c\"\n#\n#i=0\n#while true ; do\n#   # If an item is printable then it exists, otherwise exit loop\n#   $PLISTBUDDY \"Print PreferenceSpecifiers:$i\" \"${PROJECTPATH}\" >/dev/null 2>/dev/null\n#   if [ $? -ne 0 ]; then\n#\t  break\n#   fi\n#   i=$(($i + 1))\n#done\n#\n## Get last item in array\n#i=$(($i - 1))\n#\n## Delete last item in array\n#$PLISTBUDDY \"Delete PreferenceSpecifiers:$i\" \"${PROJECTPATH}\" >/dev/null 2>/dev/null\n#\n";
 		};
 		6666F88320BF4A4C0003A72F /* Run Build Bump Script */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -4244,7 +4393,29 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Add pod 'R.swift' to your Podfile and run pod install\n# In Xcode: Click on your project in the file list, choose your target under TARGETS, click the Build Phases tab and add a New Run Script Phase by clicking the little plus icon in the top left\n# Drag the new Run Script phase above the Compile Sources phase and below Check Pods Manifest.lock, expand it and paste the following script: \"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/R.generated.swift\"\n# Add $TEMP_DIR/rswift-lastrun to the \"Input Files\" and $SRCROOT/R.generated.swift to the \"Output Files\" of the Build Phase\n# Build your project, in Finder you will now see a R.generated.swift in the $SRCROOT-folder, drag the R.generated.swift files into your project and uncheck Copy items if needed\n\n\"${PODS_ROOT}/R.swift/rswift\" generate \"${SRCROOT}/Kurozora/Supporting Files/R.generated.swift\"\n";
+			shellScript = "# Add pod 'R.swift' to your Podfile and run pod install\n# In Xcode: Click on your project in the file list, choose your target under TARGETS, click the Build Phases tab and add a New Run Script Phase by clicking the little plus icon in the top left\n# Drag the new Run Script phase above the Compile Sources phase and below Check Pods Manifest.lock, expand it and paste the following script: \"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/R.generated.swift\"\n# Add $TEMP_DIR/rswift-lastrun to the \"Input Files\" and $SRCROOT/R.generated.swift to the \"Output Files\" of the Build Phase\n# Build your project, in Finder you will now see a R.generated.swift in the $SRCROOT-folder, drag the R.generated.swift files into your project and uncheck Copy items if needed\n\n#\"${PODS_ROOT}/R.swift/rswift\" generate \"${SRCROOT}/Kurozora/Supporting Files/R.generated.swift\"\n";
+		};
+		6E1997A7E287A9521B4563F2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-KurozoraWidgetExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 		C4D3519F59E49E683C3D0828 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -4284,6 +4455,21 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		6647B72C2BC0A6DD006BC91C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				667B8BB42BC1FCCA00DA79CD /* Intents.intentdefinition in Sources */,
+				662F96C92BC347A800DD8EA6 /* KurozoraKit+KurozoraWidget.swift in Sources */,
+				6647B7482BC0B1E9006BC91C /* SharedDelegate.swift in Sources */,
+				662F96CE2BC34B9200DD8EA6 /* UIColor+SwiftUI.swift in Sources */,
+				6647B7372BC0A6DE006BC91C /* KurozoraWidgetBundle.swift in Sources */,
+				662F96CC2BC3481200DD8EA6 /* ImageFetcher.swift in Sources */,
+				667B8BAF2BC1F2BE00DA79CD /* EnvironmentValues+KurozoraWidget.swift in Sources */,
+				6647B7392BC0A6DE006BC91C /* DateWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		66647B4C2084995500CF624F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -4783,6 +4969,7 @@
 				66C86404216DFB850054EE16 /* SeasonLockupCollectionViewCell.swift in Sources */,
 				66CDC090234A9704009E799C /* ActionButtonTableViewCell.swift in Sources */,
 				666C898829FF25BB0075B5D6 /* SourceType.swift in Sources */,
+				6647B7472BC0B1E9006BC91C /* SharedDelegate.swift in Sources */,
 				66BEC133231711DD0039D683 /* KWhatsNewViewController.swift in Sources */,
 				6646A26E236A54A700DCC0A4 /* URL+Kurozora.swift in Sources */,
 				664B6D78230F45F400F9C726 /* DarkThemeOption.swift in Sources */,
@@ -4827,6 +5014,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		6647B73F2BC0A6E2006BC91C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6647B72F2BC0A6DD006BC91C /* KurozoraWidgetExtension */;
+			targetProxy = 6647B73E2BC0A6E2006BC91C /* PBXContainerItemProxy */;
+		};
 		66C6A54E23FB05C2000A6617 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			targetProxy = 66C6A54D23FB05C2000A6617 /* PBXContainerItemProxy */;
@@ -4845,6 +5037,96 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		6647B7422BC0A6E3006BC91C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C5957B9810A82C1CFE580DE6 /* Pods-KurozoraWidgetExtension.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = KurozoraWidget/KurozoraWidget.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 47ZEU5J4BF;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "KurozoraWidget/Supporting Files/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = KurozoraWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Kurozora. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.tracker.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6647B7432BC0A6E3006BC91C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 32DFEC9DB9F042A044F6CD30 /* Pods-KurozoraWidgetExtension.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = KurozoraWidget/KurozoraWidget.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 47ZEU5J4BF;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "KurozoraWidget/Supporting Files/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = KurozoraWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Kurozora. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.tracker.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		66647B782084995E00CF624F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -4974,6 +5256,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 66BB58088C9F6DB65EAAC0DD /* Pods-Kurozora.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon Staging";
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Kurozora/Kurozora.entitlements;
@@ -4982,6 +5265,7 @@
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				INFOPLIST_FILE = "Kurozora/Supporting Files/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Kurozora. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5001,6 +5285,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 268B0B9B5A247314B6D3FBD6 /* Pods-Kurozora.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Kurozora/Kurozora.entitlements;
@@ -5009,6 +5294,7 @@
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				INFOPLIST_FILE = "Kurozora/Supporting Files/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Kurozora. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5027,6 +5313,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		6647B7442BC0A6E3006BC91C /* Build configuration list for PBXNativeTarget "KurozoraWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6647B7422BC0A6E3006BC91C /* Debug */,
+				6647B7432BC0A6E3006BC91C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		66647B4B2084995500CF624F /* Build configuration list for PBXProject "Kurozora" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

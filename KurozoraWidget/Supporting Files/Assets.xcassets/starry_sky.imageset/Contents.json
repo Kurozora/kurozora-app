@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "starry_sky.jpg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
