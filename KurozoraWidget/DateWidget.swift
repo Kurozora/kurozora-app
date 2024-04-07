@@ -19,11 +19,7 @@ struct Provider: IntentTimelineProvider {
 				url: nil,
 				height: 1080,
 				width: 1920,
-				backgroundColor: UIColor(hexString: "#1e1731")?.color,
-				textColor1: UIColor(hexString: "#140f29")?.color,
-				textColor2: UIColor(hexString: "#c06145")?.color,
-				textColor3: UIColor(hexString: "#69353e")?.color,
-				textColor4: UIColor(hexString: "#232d51")?.color
+				backgroundColor: UIColor(hexString: "#1e1731")?.color
 			),
 			showDate: true
 		)
@@ -89,28 +85,16 @@ struct Banner {
 
 	/// The background color of the media.
 	public let backgroundColor: Color?
-
-	/// The primary text color of the media.
-	public let textColor1: Color?
-
-	/// The secondary text color of the media.
-	public let textColor2: Color?
-
-	/// The tertiary text color of the media.
-	public let textColor3: Color?
-
-	/// The quaternary text color of the media.
-	public let textColor4: Color?
 }
 
 struct DateWidgetEntryView: View {
-	@Environment(\.widgetFamily) var family: WidgetFamily
+	@Environment(\.widgetFamily) var family
 	@Environment(\.widgetContentMarginsWithFallback) var margins
 
     var entry: Provider.Entry
 
     var body: some View {
-		switch family {
+		switch self.family {
 		default:
 			ZStack {
 				if let image = self.entry.banner.image {
@@ -141,13 +125,13 @@ struct DateWidgetEntryView: View {
 							Text(self.entry.date, format: .dateTime.weekday(.wide))
 								.font(.headline)
 								.fontWeight(.bold)
-								.foregroundColor(.white)
+								.foregroundColor(self.entry.banner.backgroundColor?.adaptedTextColor())
 								.frame(maxWidth: .infinity, alignment: .leading)
 
 							Text(self.entry.date, format: .dateTime.day())
 								.font(.largeTitle)
 								.fontWeight(.bold)
-								.foregroundColor(.white)
+								.foregroundColor(self.entry.banner.backgroundColor?.adaptedTextColor())
 								.frame(maxWidth: .infinity, alignment: .leading)
 						}
 
@@ -184,21 +168,13 @@ struct DateWidget: Widget {
 #Preview("System Small", as: .systemSmall) {
 	DateWidget()
 } timeline: {
-	let date: Date = .now
-
-	DateEntry(date: date, banner: Banner(image: UIImage(named: "starry_sky"), url: nil, height: nil, width: nil, backgroundColor: nil, textColor1: nil, textColor2: nil, textColor3: nil, textColor4: nil), showDate: true)
-	DateEntry(date: date.adding(.second, value: 5), banner: Banner(image: UIImage(named: "starry_sky"), url: nil, height: nil, width: nil, backgroundColor: nil, textColor1: nil, textColor2: nil, textColor3: nil, textColor4: nil), showDate: true)
-	DateEntry(date: date.adding(.second, value: 10), banner: Banner(image: UIImage(named: "starry_sky"), url: nil, height: nil, width: nil, backgroundColor: nil, textColor1: nil, textColor2: nil, textColor3: nil, textColor4: nil), showDate: true)
+	DateEntry(date: .now, banner: Banner(image: UIImage(named: "starry_sky"), url: nil, height: nil, width: nil, backgroundColor: nil), showDate: true)
 }
 
 @available(iOS 17, macOS 14, *)
 #Preview("System Extra Large", as: .systemExtraLarge) {
 	DateWidget()
 } timeline: {
-	let date: Date = .now
-
-	DateEntry(date: date, banner: Banner(image: UIImage(named: "starry_sky"), url: nil, height: nil, width: nil, backgroundColor: nil, textColor1: nil, textColor2: nil, textColor3: nil, textColor4: nil), showDate: false)
-	DateEntry(date: date.adding(.second, value: 5), banner: Banner(image: UIImage(named: "starry_sky"), url: nil, height: nil, width: nil, backgroundColor: nil, textColor1: nil, textColor2: nil, textColor3: nil, textColor4: nil), showDate: false)
-	DateEntry(date: date.adding(.second, value: 10), banner: Banner(image: UIImage(named: "starry_sky"), url: nil, height: nil, width: nil, backgroundColor: nil, textColor1: nil, textColor2: nil, textColor3: nil, textColor4: nil), showDate: false)
+	DateEntry(date: .now, banner: Banner(image: UIImage(named: "starry_sky"), url: nil, height: nil, width: nil, backgroundColor: nil), showDate: false)
 }
 #endif

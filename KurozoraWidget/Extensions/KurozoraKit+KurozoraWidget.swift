@@ -18,8 +18,6 @@ extension IntentMediaCollection {
 			return .banner
 		case .poster:
 			return .poster
-		case .screenshot:
-			return .screenshot
 		}
 	}
 }
@@ -50,11 +48,7 @@ extension Media {
 			url: await ImageFetcher.fetchImage(from: URL(string: self.url)),
 			height: self.height,
 			width: self.width,
-			backgroundColor: UIColor(hexString: self.backgroundColor ?? "")?.color,
-			textColor1: UIColor(hexString: self.textColor1 ?? "")?.color,
-			textColor2: UIColor(hexString: self.textColor2 ?? "")?.color,
-			textColor3: UIColor(hexString: self.textColor3 ?? "")?.color,
-			textColor4: UIColor(hexString: self.textColor4 ?? "")?.color
+			backgroundColor: UIColor(hexString: self.backgroundColor ?? "")?.color
 		)
 	}
 }

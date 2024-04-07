@@ -45,16 +45,6 @@
 					<key>INEnumValueName</key>
 					<string>poster</string>
 				</dict>
-				<dict>
-					<key>INEnumValueDisplayName</key>
-					<string>Screenshot</string>
-					<key>INEnumValueDisplayNameID</key>
-					<string>4FSBQ7</string>
-					<key>INEnumValueIndex</key>
-					<integer>6</integer>
-					<key>INEnumValueName</key>
-					<string>screenshot</string>
-				</dict>
 			</array>
 		</dict>
 		<dict>
