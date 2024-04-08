@@ -6,10 +6,10 @@ PODS:
   - IQKeyboardManagerSwift (7.0.2)
   - KeychainAccess (4.2.2)
   - Kingfisher (7.11.0)
-  - KurozoraKit (1.12.2):
+  - KurozoraKit (1.13.0):
     - KeychainAccess
     - TRON (= 5.5.0-beta.1)
-  - Pageboy (4.0.2)
+  - Pageboy (4.1.0)
   - R.swift (7.3.2)
   - ReachabilitySwift (5.2.1)
   - Solar (2.1.0)
@@ -49,8 +49,8 @@ PODS:
   - SwifterSwift/WebKit (6.2.0)
   - SwiftTheme (0.6.4)
   - SwiftyJSON (5.0.1)
-  - Tabman (3.0.2):
-    - Pageboy (~> 4.0.2)
+  - Tabman (3.1.0):
+    - Pageboy (~> 4.1.0)
   - TRON (5.5.0-beta.1):
     - Alamofire (~> 5.0)
     - TRON/Core (= 5.5.0-beta.1)
@@ -75,7 +75,7 @@ DEPENDENCIES:
   - ReachabilitySwift
   - Solar
   - SPConfetti
-  - SwifterSwift (from `https://github.com/SwifterSwift/SwifterSwift`, branch `master`)
+  - SwifterSwift
   - SwiftTheme
   - Tabman
   - TRON (= 5.5.0-beta.1)
@@ -98,6 +98,7 @@ SPEC REPOS:
     - ReachabilitySwift
     - Solar
     - SPConfetti
+    - SwifterSwift
     - SwiftTheme
     - SwiftyJSON
     - Tabman
@@ -105,18 +106,12 @@ SPEC REPOS:
     - WhatsNew
 
 EXTERNAL SOURCES:
-  SwifterSwift:
-    :branch: master
-    :git: https://github.com/SwifterSwift/SwifterSwift
   XCDYouTubeKit:
     :branch: master
     :commit: 651a6a51c695c5819eb51ba2f98d0b64094315b9
     :git: https://github.com/armendh/XCDYouTubeKit
 
 CHECKOUT OPTIONS:
-  SwifterSwift:
-    :commit: 39fa28c90a3ebe3d53f80289304fd880cf2c42d0
-    :git: https://github.com/SwifterSwift/SwifterSwift
   XCDYouTubeKit:
     :commit: 651a6a51c695c5819eb51ba2f98d0b64094315b9
     :git: https://github.com/armendh/XCDYouTubeKit
@@ -129,8 +124,8 @@ SPEC CHECKSUMS:
   IQKeyboardManagerSwift: d338c11a896e9f29603443700c4567e32f830c22
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   Kingfisher: b9c985d864d43515f404f1ef4a8ce7d802ace3ac
-  KurozoraKit: 7d5181d36e4edc1e8f2a3ef576491876701b1d83
-  Pageboy: 34ff11e8d1041b81769d5bcde9b19a0cb7218bd9
+  KurozoraKit: 0c85437c109954ebc972555c44e661116974233c
+  Pageboy: e1c494f866874697493da9528777c5006fee613c
   R.swift: 0af0d882f49f03711415cb4e5215daa977d8a480
   ReachabilitySwift: 5ae15e16814b5f9ef568963fb2c87aeb49158c66
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
@@ -138,11 +133,11 @@ SPEC CHECKSUMS:
   SwifterSwift: dd00873fb09cde19da88bdb2878f9fe70fe27b0f
   SwiftTheme: 007cbaf1f9e171caf6448a4657533e54c682b285
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
-  Tabman: 6326ec3a792da1c2a6e79c7eddb56af7b591c9d6
+  Tabman: b4211db1d33b7e993015e2e7c6746e6003c02725
   TRON: 722c4dcb33b98722b567153a436ec0db26c50d14
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
   XCDYouTubeKit: b120aced3d8638ffb570c5450cddb5a1dac448c7
 
-PODFILE CHECKSUM: 95308bb1d44fd332997454de017f3e78e9239205
+PODFILE CHECKSUM: 3dbca7b68543bad194e5e1123b9d4b78c254c6c4
 
 COCOAPODS: 1.15.2

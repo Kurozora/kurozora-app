@@ -537,6 +537,25 @@ extension KKEndpoint {
 	}
 }
 
+// MARK: - Image
+extension KKEndpoint {
+	/// The set of available Image API endpoints types.
+	internal enum Images {
+		// MARK: - Cases
+		/// The endpoint to random images.
+		case random
+
+		// MARK: - Properties
+		/// The endpoint value of the Image API type.
+		var endpointValue: String {
+			switch self {
+			case .random:
+				return "images/random"
+			}
+		}
+	}
+}
+
 // MARK: - Search
 extension KKEndpoint {
 	/// The set of available Search API endpoint types.

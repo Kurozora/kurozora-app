@@ -9,5 +9,5 @@
 public struct MetaResponse: Codable {
 	// MARK: - Properties
 	/// The object containing the meta attributes.
-	public var meta: Meta
+	public let meta: Meta
 }

@@ -1122,7 +1122,6 @@
 		667943622273933400E2D0D0 /* TextViewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewCollectionViewCell.swift; sourceTree = "<group>"; };
 		667943642273A33D00E2D0D0 /* EpisodeDetailsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDetailsCollectionViewController.swift; sourceTree = "<group>"; };
 		667B38422361CE6500786EF6 /* KWhatsNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KWhatsNew.swift; sourceTree = "<group>"; };
-		667B8BAC2BC1F04800DA79CD /* BannerWidgetExtension copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "BannerWidgetExtension copy-Info.plist"; path = "/Users/kirito/Developer/kurozora-app/BannerWidgetExtension copy-Info.plist"; sourceTree = "<absolute>"; };
 		667B8BAD2BC1F26A00DA79CD /* EnvironmentValues+KurozoraWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+KurozoraWidget.swift"; sourceTree = "<group>"; };
 		667B8BB32BC1FCCA00DA79CD /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		667F9AD321B47E6D003F6629 /* AchievementTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementTableViewCell.swift; sourceTree = "<group>"; };
@@ -2322,7 +2321,6 @@
 				66647B512084995500CF624F /* Products */,
 				D4A795E40A9FE3FA76278C67 /* Pods */,
 				08E5591EE4C9B9016ACCB5C6 /* Frameworks */,
-				667B8BAC2BC1F04800DA79CD /* BannerWidgetExtension copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};

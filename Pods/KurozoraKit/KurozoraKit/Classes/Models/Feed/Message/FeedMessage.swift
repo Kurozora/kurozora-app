@@ -34,3 +34,23 @@ public class FeedMessage: IdentityResource, Hashable {
 		hasher.combine(self.id)
 	}
 }
+
+// MARK: - Helpers
+extension FeedMessage {
+	/// The maximum character limit for a feed message.
+	///
+	/// The character limit is determined by the user's account status.
+	/// The character limit is as follows:
+	/// - 280 characters for normal users.
+	/// - 500 characters for pro users.
+	/// - 1000 characters for subscribed users.
+	public static var maxCharacterLimit: Int {
+		if User.isSubscribed {
+			return 1000
+		} else if User.isPro {
+			return 500
+		}
+
+		return 280
+	}
+}
