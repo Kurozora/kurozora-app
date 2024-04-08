@@ -4057,7 +4057,6 @@
 				66CF0BBC231AEE8A00EEF947 /* SwiftLint */,
 				66022EAE238B287900B5286A /* Add Acknowledgements */,
 				66B4DC40245A20390097135A /* Add version to Settings.bundle */,
-				6666F88320BF4A4C0003A72F /* Run Build Bump Script */,
 				6647B7412BC0A6E3006BC91C /* Embed Foundation Extensions */,
 			);
 			buildRules = (
@@ -4322,20 +4321,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\n#PODPATH=\"${PODS_ROOT}/Target Support Files/Pods-Kurozora/Pods-Kurozora-acknowledgements.plist\"\n#PROJECTPATH=\"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/Acknowledgements.plist\"\n#\n#cp \"${PODPATH}\" \"${PROJECTPATH}\"\n#\n#PLISTBUDDY=\"/usr/libexec/PlistBuddy -c\"\n#\n#i=0\n#while true ; do\n#   # If an item is printable then it exists, otherwise exit loop\n#   $PLISTBUDDY \"Print PreferenceSpecifiers:$i\" \"${PROJECTPATH}\" >/dev/null 2>/dev/null\n#   if [ $? -ne 0 ]; then\n#\t  break\n#   fi\n#   i=$(($i + 1))\n#done\n#\n## Get last item in array\n#i=$(($i - 1))\n#\n## Delete last item in array\n#$PLISTBUDDY \"Delete PreferenceSpecifiers:$i\" \"${PROJECTPATH}\" >/dev/null 2>/dev/null\n#\n";
-		};
-		6666F88320BF4A4C0003A72F /* Run Build Bump Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Run Build Bump Script";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#agvtool next-version -all\n";
 		};
 		66B4DC40245A20390097135A /* Add version to Settings.bundle */ = {
 			isa = PBXShellScriptBuildPhase;

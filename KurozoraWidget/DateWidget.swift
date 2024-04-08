@@ -34,7 +34,7 @@ struct Provider: IntentTimelineProvider {
 			let entry: DateEntry
 
 			if context.isPreview {
-				entry = DateEntry(date: date, banner: await media.asBanner(), showDate: configuration.showDate == true)
+				entry = self.placeholder(in: context)
 			} else {
 				entry = DateEntry(date: date, banner: await media.asBanner(), showDate: configuration.showDate == true)
 			}
@@ -125,13 +125,13 @@ struct DateWidgetEntryView: View {
 							Text(self.entry.date, format: .dateTime.weekday(.wide))
 								.font(.headline)
 								.fontWeight(.bold)
-								.foregroundColor(self.entry.banner.backgroundColor?.adaptedTextColor())
+								.foregroundColor(self.entry.banner.backgroundColor?.accessibleFontColor)
 								.frame(maxWidth: .infinity, alignment: .leading)
 
 							Text(self.entry.date, format: .dateTime.day())
 								.font(.largeTitle)
 								.fontWeight(.bold)
-								.foregroundColor(self.entry.banner.backgroundColor?.adaptedTextColor())
+								.foregroundColor(self.entry.banner.backgroundColor?.accessibleFontColor)
 								.frame(maxWidth: .infinity, alignment: .leading)
 						}
 
@@ -157,24 +157,44 @@ struct DateWidget: Widget {
 					.background()
 			}
 		}
-        .configurationDisplayName("Anime Date")
-        .description("Track the current date with a random anime image every hour.")
+        .configurationDisplayName("Date")
+        .description("Track the current date with random anime, manga or game images every hour.")
 		.contentMarginsDisabled()
     }
 }
 
 #if DEBUG
-@available(iOS 17, macOS 14, *)
-#Preview("System Small", as: .systemSmall) {
+@available(iOS 17.0, macOS 14.0, *)
+#Preview("System Small", as: .systemMedium) {
 	DateWidget()
 } timeline: {
-	DateEntry(date: .now, banner: Banner(image: UIImage(named: "starry_sky"), url: nil, height: nil, width: nil, backgroundColor: nil), showDate: true)
+	DateEntry(
+		date: Date(),
+		banner: Banner(
+			image: UIImage(named: "starry_sky"),
+			url: nil,
+			height: 1080,
+			width: 1920,
+			backgroundColor: UIColor(hexString: "#1e1731")?.color
+		),
+		showDate: true
+	)
 }
 
 @available(iOS 17, macOS 14, *)
 #Preview("System Extra Large", as: .systemExtraLarge) {
 	DateWidget()
 } timeline: {
-	DateEntry(date: .now, banner: Banner(image: UIImage(named: "starry_sky"), url: nil, height: nil, width: nil, backgroundColor: nil), showDate: false)
+	DateEntry(
+		date: Date(),
+		banner: Banner(
+			image: UIImage(named: "starry_sky"),
+			url: nil,
+			height: 1080,
+			width: 1920,
+			backgroundColor: UIColor(hexString: "#1e1731")?.color
+		),
+		showDate: false
+	)
 }
 #endif

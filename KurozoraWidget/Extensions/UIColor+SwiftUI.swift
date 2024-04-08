@@ -17,25 +17,30 @@ extension UIColor {
 }
 
 extension Color {
-	func luminance() -> Double {
-		// Convert SwiftUI Color to UIColor
-		let uiColor = UIColor(self)
-
-		// Extract RGB values
+	// MARK: - font colors
+	/// This color is either black or white, whichever is more accessible when viewed against the current color.
+	var accessibleFontColor: Color {
 		var red: CGFloat = 0
 		var green: CGFloat = 0
 		var blue: CGFloat = 0
-		uiColor.getRed(&red, green: &green, blue: &blue, alpha: nil)
-
-		// Compute luminance.
-		return 0.2126 * Double(red) + 0.7152 * Double(green) + 0.0722 * Double(blue)
+		UIColor(self).getRed(&red, green: &green, blue: &blue, alpha: nil)
+		return isLightColor(red: red, green: green, blue: blue) ? .black : .white
 	}
 
-	func isLight() -> Bool {
-		return self.luminance() > 0.5
-	}
+	/// Determine whether the given red, green, and blue values represent a light color.
+	///
+	/// - Parameters:
+	///    - red: The red value.
+	///    - green: The green value.
+	///    - blue: The blue value.
+	///
+	/// - Returns: `true` if the color is light, `false` otherwise.
+	private func isLightColor(red: CGFloat, green: CGFloat, blue: CGFloat) -> Bool {
+		let lightRed = red > 0.65
+		let lightGreen = green > 0.65
+		let lightBlue = blue > 0.65
 
-	func adaptedTextColor() -> Color {
-		return self.isLight() ? Color.black : Color.white
+		let lightness = [lightRed, lightGreen, lightBlue].reduce(0) { $1 ? $0 + 1 : $0 }
+		return lightness >= 2
 	}
 }
