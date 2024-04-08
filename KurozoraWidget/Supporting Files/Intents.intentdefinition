@@ -197,6 +197,11 @@
 					<string>IntentMediaKind</string>
 					<key>INIntentParameterEnumTypeNamespace</key>
 					<string>eDUA72</string>
+					<key>INIntentParameterMetadata</key>
+					<dict>
+						<key>INIntentParameterMetadataDefaultValue</key>
+						<string>shows</string>
+					</dict>
 					<key>INIntentParameterName</key>
 					<string>kind</string>
 					<key>INIntentParameterPromptDialogs</key>
@@ -252,6 +257,11 @@
 					<string>IntentMediaCollection</string>
 					<key>INIntentParameterEnumTypeNamespace</key>
 					<string>eDUA72</string>
+					<key>INIntentParameterMetadata</key>
+					<dict>
+						<key>INIntentParameterMetadataDefaultValue</key>
+						<string>banner</string>
+					</dict>
 					<key>INIntentParameterName</key>
 					<string>collection</string>
 					<key>INIntentParameterPromptDialogs</key>
