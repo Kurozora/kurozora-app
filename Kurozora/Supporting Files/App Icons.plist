@@ -8,6 +8,7 @@
 		<key>icons</key>
 		<array>
 			<string>Kurozora</string>
+			<string>Kuro-chan</string>
 			<string>Day</string>
 			<string>Night</string>
 		</array>
@@ -16,10 +17,7 @@
 		<key>title</key>
 		<string>Events</string>
 		<key>icons</key>
-		<array>
-			<string>Eggstein</string>
-			<string>Eggatha</string>
-		</array>
+		<array/>
 	</dict>
 	<dict>
 		<key>title</key>
