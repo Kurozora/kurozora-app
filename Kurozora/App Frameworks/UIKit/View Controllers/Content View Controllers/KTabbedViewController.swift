@@ -83,9 +83,11 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 	override func viewWillReload() {
 		super.viewWillReload()
 
-		self.configureViewControllers()
-		self.reloadData()
-		self.configureTabBarViewVisibility()
+		DispatchQueue.main.async {
+			self.configureViewControllers()
+			self.reloadData()
+			self.configureTabBarViewVisibility()
+		}
 	}
 
 	override func viewDidLoad() {
