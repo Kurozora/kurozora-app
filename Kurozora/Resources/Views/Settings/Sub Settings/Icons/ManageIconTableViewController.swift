@@ -106,6 +106,22 @@ extension ManageIconTableViewController {
 		NotificationCenter.default.post(name: .KSAppIconDidChange, object: nil)
 		tableView.reloadData()
 	}
+
+	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		if self.alternativeIcons[section].icons.isEmpty {
+			return .leastNormalMagnitude
+		}
+
+		return UITableView.automaticDimension
+	}
+
+	override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+		if self.alternativeIcons[section].icons.isEmpty {
+			return .leastNormalMagnitude
+		}
+
+		return UITableView.automaticDimension
+	}
 }
 
 // MARK: - KTableViewDataSource
