@@ -9,7 +9,7 @@ import Alamofire
 import TRON
 
 extension KurozoraKit {
-	/// Fetch the list of shows with the given show status in the authenticated user's library.
+	/// Fetch the library entries with the given status in the authenticated user's library.
 	///
 	/// - Parameters:
 	///    - libraryKind: In which library the item should be added.

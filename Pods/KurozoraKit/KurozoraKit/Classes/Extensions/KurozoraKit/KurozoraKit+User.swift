@@ -241,6 +241,46 @@ extension KurozoraKit {
 		return request.sender()
 	}
 
+	/// Fetch the library entries with the given status in the given user identity library.
+	///
+	/// - Parameters:
+	///    - userIdentity: The identity of the user whose favorites list will be fetched.
+	///    - libraryKind: In which library the item should be added.
+	///    - libraryStatus: The library status to retrieve the library items for.
+	///    - sortType: The sort value by which the retrived items should be sorted.
+	///    - sortOption: The sort option value by which the retrived items should be sorted.
+	///    - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the get library response.
+	public func getLibrary(forUser userIdentity: UserIdentity, libraryKind: KKLibrary.Kind, withLibraryStatus libraryStatus: KKLibrary.Status, withSortType sortType: KKLibrary.SortType, withSortOption sortOption: KKLibrary.SortType.Options, next: String? = nil, limit: Int = 25) -> RequestSender<LibraryResponse, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
+		if !self.authenticationKey.isEmpty {
+			headers.add(.authorization(bearerToken: self.authenticationKey))
+		}
+
+		// Prepare parameters
+		var parameters: [String: Any] = [
+			"library": libraryKind.rawValue,
+			"status": libraryStatus.sectionValue,
+			"limit": limit
+		]
+		if sortType != .none {
+			parameters["sort"] = "\(sortType.parameterValue)\(sortOption.parameterValue)"
+		}
+
+		// Prepare request
+		let usersLibraryIndex = next ?? KKEndpoint.Users.library(userIdentity).endpointValue
+		let request: APIRequest<LibraryResponse, KKAPIError> = tron.codable.request(usersLibraryIndex).buildURL(.relativeToBaseURL)
+			.method(.get)
+			.headers(headers)
+			.parameters(parameters)
+
+		// Send request
+		return request.sender()
+	}
+
 	/// Fetch the reviews list for the given user identity.
 	///
 	/// - Parameters:

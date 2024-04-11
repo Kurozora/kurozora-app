@@ -689,6 +689,9 @@ extension KKEndpoint {
 		/// The endpoint to view a user's favorites.
 		case favorites(_ userIdentity: UserIdentity)
 
+		/// The endpoint to view a user's library.
+		case library(_ userIdentity: UserIdentity)
+
 		/// The endpoint to a user's profile.
 		case profile(_ userIdentity: UserIdentity)
 
@@ -723,6 +726,8 @@ extension KKEndpoint {
 				return "users/\(userIdentity.id)/following"
 			case .favorites(let userIdentity):
 				return "users/\(userIdentity.id)/favorites"
+			case .library(let userIdentity):
+				return "users/\(userIdentity.id)/library"
 			case .profile(let userIdentity):
 				return "users/\(userIdentity.id)/profile"
 			case .reviews(let userIdentity):
