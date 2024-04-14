@@ -104,4 +104,9 @@ extension URL {
 			"bmp", "tiff"
 		].contains(self.pathExtension)
 	}
+
+	/// Returns true if the scheme is `HTTP` or `HTTPS`
+	public var isWebURL: Bool {
+		return self.scheme?.starts(with: "http") ?? false
+	}
 }

@@ -66,7 +66,7 @@ class FeedMessageReShareCell: FeedMessageCell {
 		}
 
 		// Configure body
-		if let url = opMessage.attributes.content.extractURLs().last {
+		if let url = opMessage.attributes.content.extractURLs().last, url.isWebURL {
 			if let metadata = RichLink.cachedMetadata(for: url) {
 				self.displayMetadata(metadata)
 				self.configurePostTextView(for: opMessage, byRemovingURL: url)

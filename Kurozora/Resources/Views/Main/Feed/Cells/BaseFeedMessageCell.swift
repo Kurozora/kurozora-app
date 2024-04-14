@@ -82,7 +82,7 @@ class BaseFeedMessageCell: KTableViewCell {
 
 		// Configure body
 		self.postTextView.setAttributedText(feedMessage.attributes.contentMarkdown.markdownAttributedString())
-		if let url = feedMessage.attributes.content.extractURLs().last {
+		if let url = feedMessage.attributes.content.extractURLs().last, url.isWebURL {
 			if let metadata = RichLink.cachedMetadata(for: url) {
 				self.displayMetadata(metadata)
 				self.configurePostTextView(for: feedMessage, byRemovingURL: url)
