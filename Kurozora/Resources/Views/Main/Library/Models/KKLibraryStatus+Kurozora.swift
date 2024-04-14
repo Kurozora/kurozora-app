@@ -9,10 +9,22 @@
 import KurozoraKit
 
 extension KKLibrary.Kind {
-	/// An array containing the string value of all search scopes.
+	/// An array containing the string value of all library kinds.
 	static var allString: [String] {
 		return self.allCases.map { libraryKind in
 			return libraryKind.stringValue
+		}
+	}
+
+	/// The url path name of a library kind.
+	var urlPathName: String {
+		switch self {
+		case .shows:
+			return "anime"
+		case .literatures:
+			return "manga"
+		case .games:
+			return "games"
 		}
 	}
 }

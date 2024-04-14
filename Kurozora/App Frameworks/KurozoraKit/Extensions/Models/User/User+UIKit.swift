@@ -24,9 +24,16 @@ extension User {
 	func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?) -> UIMenu {
 		var menuElements: [UIMenuElement] = []
 
+		// Create "Library" element
+		let libraryAction = UIAction(title: Trans.library, image: UIImage(systemName: "rectangle.stack")) { _ in
+			self.openLibrary(on: viewController)
+		}
+		menuElements.append(libraryAction)
+
 		// Create "Favorites" element
+		let includeUser = userInfo?["includeUser"] as? Bool ?? true
 		let favoritesAction = UIAction(title: Trans.favorites, image: UIImage(systemName: "heart.circle")) { _ in
-			self.openFavorites(on: viewController)
+			self.openFavorites(on: viewController, includeUser: includeUser)
 		}
 		menuElements.append(favoritesAction)
 
@@ -40,7 +47,7 @@ extension User {
 
 		// Create "Share" element
 		let shareAction = UIAction(title: Trans.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
-			self.openShareSheet(on: viewController)
+			self.openShareSheet(on: viewController, shareText: "https://kurozora.app/profile/\(self.attributes.slug)\nFollow \(self.attributes.username) via @KurozoraApp")
 		}
 		menuElements.append(shareAction)
 
@@ -56,8 +63,7 @@ extension User {
 	///    - viewController: The view controller presenting the share sheet.
 	///    - view: The `UIView` sending the request.
 	///    - barButtonItem: The `UIBarButtonItem` sending the request.
-	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
-		let shareText = "https://kurozora.app/profile/\(self.attributes.slug)\nFollow \(self.attributes.username) via @KurozoraApp"
+	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, shareText: String, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
 		var activityItems: [Any] = [shareText]
 
 		if let personalImage = self.attributes.profileImageView.image {
@@ -78,13 +84,28 @@ extension User {
 		viewController?.present(activityViewController, animated: true, completion: nil)
 	}
 
+	/// Performs segue to `LibraryViewController` with `LibrarySegue` as the identifier.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller presenting the share sheet.
+	fileprivate func openLibrary(on viewController: UIViewController? = UIApplication.topViewController) {
+		if let libraryViewController = R.storyboard.library.libraryViewController() {
+			libraryViewController.user = self
+
+			viewController?.show(libraryViewController, sender: nil)
+		}
+	}
+
 	/// Performs segue to `FavoritesCollectionViewController` with `FavoritesSegue` as the identifier.
 	///
 	/// - Parameters:
 	///    - viewController: The view controller presenting the share sheet.
-	fileprivate func openFavorites(on viewController: UIViewController? = UIApplication.topViewController) {
+	///    - includeUser: A boolean value indicating whether to pass the user to `FavoritesCollectionViewController`.
+	fileprivate func openFavorites(on viewController: UIViewController? = UIApplication.topViewController, includeUser: Bool) {
 		if let favoritesCollectionViewController = R.storyboard.favorites.favoritesCollectionViewController() {
-			favoritesCollectionViewController.user = self
+			if includeUser {
+				favoritesCollectionViewController.user = self
+			}
 
 			viewController?.show(favoritesCollectionViewController, sender: nil)
 		}
@@ -98,5 +119,41 @@ extension User {
 		if let remindersCollectionViewController = R.storyboard.reminders.remindersCollectionViewController() {
 			viewController?.show(remindersCollectionViewController, sender: nil)
 		}
+	}
+}
+
+// MARK: - Library
+extension User {
+	func makeLibraryContextMenu(in viewController: LibraryViewController, userInfo: [AnyHashable: Any]?) -> UIMenu {
+		var menuElements: [UIMenuElement] = []
+
+		// Create "Layout" element
+		let index = userInfo?["index"] as? Int ?? -1
+		let libraryStatus = KKLibrary.Status.all[index]
+		let libraryCellStyles = UserSettings.libraryCellStyles[libraryStatus.sectionValue] ?? 1
+		let layoutActions = KKLibrary.CellStyle.all.map { style in
+			let action = UIAction(title: style.stringValue, image: style.imageValue, state: style.rawValue == libraryCellStyles ? .on : .off) { _ in
+				viewController.changeLayout(to: style)
+			}
+			return action
+		}
+		let subMenu = UIMenu(title: "", options: .displayInline, children: layoutActions)
+		menuElements.append(subMenu)
+
+		// Create "Favorites" element
+		let includeUser = userInfo?["includeUser"] as? Bool ?? true
+		let favoritesAction = UIAction(title: Trans.favorites, image: UIImage(systemName: "heart.circle")) { _ in
+			self.openFavorites(on: viewController, includeUser: includeUser)
+		}
+		menuElements.append(favoritesAction)
+
+		// Create "Share" element
+		let shareAction = UIAction(title: Trans.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
+			self.openShareSheet(on: viewController, shareText: "https://kurozora.app/profile/\(self.attributes.slug)/\(UserSettings.libraryKind.urlPathName)\nCheck out \(self.attributes.username)’s library via @KurozoraApp")
+		}
+		menuElements.append(shareAction)
+
+		// Create and return a UIMenu with the share action
+		return UIMenu(title: "", children: menuElements)
 	}
 }
