@@ -19,15 +19,13 @@ class FavoritesCollectionViewController: KCollectionViewController {
 	var games: [Game] = []
 	var nextPageURL: String?
 	var libraryKind: KKLibrary.Kind = UserSettings.libraryKind
-	var _user: User? = User.current
-	var user: User? {
-		get {
-			return self._user
-		}
-		set {
-			self._user = newValue
-		}
+	var user: User?
+	private var viewedUser: User? {
+		return self.user ?? User.current
 	}
+
+	var fetchInProgress: Bool = false
+
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
 
@@ -42,10 +40,21 @@ class FavoritesCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - Views
+	override func viewWillReload() {
+		super.viewWillReload()
+
+		if self.user == nil {
+			Task { [weak self] in
+				guard let self = self else { return }
+				await self.fetchFavoritesList()
+			}
+		}
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Observe NotificationCenter for an update.
-		if self.user?.id == User.current?.id {
+		if self.viewedUser?.id == User.current?.id {
 			NotificationCenter.default.addObserver(self, selector: #selector(self.fetchFavoritesList), name: .KFavoriteModelsListDidChange, object: nil)
 		}
 
@@ -76,7 +85,7 @@ class FavoritesCollectionViewController: KCollectionViewController {
 	func configureLibraryKindSegmentedControl() {
 		self.libraryKindSegmentedControl.segmentTitles = KKLibrary.Kind.allString
 		self.libraryKindSegmentedControl.selectedSegmentIndex = self.libraryKind.rawValue
-		self.libraryKindSegmentedControl.addTarget(self, action: #selector(self.libraryKindSegmentdControlDidChange(_:)), for: .valueChanged)
+		self.libraryKindSegmentedControl.addTarget(self, action: #selector(self.libraryKindSegmentedControlDidChange(_:)), for: .valueChanged)
 	}
 
 	func configureToolbar() {
@@ -102,7 +111,7 @@ class FavoritesCollectionViewController: KCollectionViewController {
 	}
 
 	@objc
-	func libraryKindSegmentdControlDidChange(_ sender: UISegmentedControl) {
+	func libraryKindSegmentedControlDidChange(_ sender: UISegmentedControl) {
 		guard let libraryKind = KKLibrary.Kind(rawValue: sender.selectedSegmentIndex) else { return }
 		self.libraryKind = libraryKind
 
@@ -122,7 +131,7 @@ class FavoritesCollectionViewController: KCollectionViewController {
 	override func configureEmptyDataView() {
 		var detailString: String
 
-		if self.user?.id == User.current?.id {
+		if self.viewedUser?.id == User.current?.id {
 			switch self.libraryKind {
 			case .shows:
 				detailString = "Favorited shows will show up on this page!"
@@ -134,11 +143,11 @@ class FavoritesCollectionViewController: KCollectionViewController {
 		} else {
 			switch self.libraryKind {
 			case .shows:
-				detailString = "\(self.user?.attributes.username ?? "This user") hasn't favorited shows yet."
+				detailString = "\(self.viewedUser?.attributes.username ?? "This user") hasn't favorited shows yet."
 			case .literatures:
-				detailString = "\(self.user?.attributes.username ?? "This user") hasn't favorited literatures yet."
+				detailString = "\(self.viewedUser?.attributes.username ?? "This user") hasn't favorited literatures yet."
 			case .games:
-				detailString = "\(self.user?.attributes.username ?? "This user") hasn't favorited games yet."
+				detailString = "\(self.viewedUser?.attributes.username ?? "This user") hasn't favorited games yet."
 			}
 		}
 
@@ -158,7 +167,6 @@ class FavoritesCollectionViewController: KCollectionViewController {
 	}
 
 	/// Fetches the user's favorite list.
-	var fetchInProgress: Bool = false
 	@objc func fetchFavoritesList() async {
 		if self.fetchInProgress {
 			return
@@ -176,7 +184,7 @@ class FavoritesCollectionViewController: KCollectionViewController {
 			#endif
 		}
 
-		guard let userID = self.user?.id else { return }
+		guard let userID = self.viewedUser?.id else { return }
 		let userIdentity = UserIdentity(id: userID)
 
 		do {

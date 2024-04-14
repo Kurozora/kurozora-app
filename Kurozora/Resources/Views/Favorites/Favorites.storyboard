@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="8NB-r7-Zt3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="8NB-r7-Zt3">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,7 +18,7 @@
             </objects>
             <point key="canvasLocation" x="981" y="115"/>
         </scene>
-        <!--My Favorites-->
+        <!--Favorites-->
         <scene sceneID="ws2-75-oPq">
             <objects>
                 <collectionViewController storyboardIdentifier="FavoritesCollectionViewController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="WBh-vK-AHK" customClass="FavoritesCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
@@ -77,7 +77,7 @@
                             <outlet property="delegate" destination="WBh-vK-AHK" id="7r9-xe-QGa"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="My Favorites" id="NFd-7S-oCL"/>
+                    <navigationItem key="navigationItem" title="Favorites" id="NFd-7S-oCL"/>
                     <connections>
                         <segue destination="l9G-KJ-lhF" kind="show" identifier="ShowDetailsSegue" id="jq7-tr-0gm"/>
                         <segue destination="Eoi-uv-foo" kind="show" identifier="LiteratureDetailsSegue" id="yQ3-a8-bij"/>
