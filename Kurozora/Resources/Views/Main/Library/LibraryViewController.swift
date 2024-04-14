@@ -110,9 +110,11 @@ class LibraryViewController: KTabbedViewController {
 	private func enableActions() {
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
+			guard let index = self.currentIndex else { return }
 
 			self.moreBarButtonItem.menu = self.viewedUser?.makeLibraryContextMenu(in: self, userInfo: [
-				"includeUser": self.user != nil
+				"includeUser": self.user != nil,
+				"index": index
 			])
 			self.populateSortActions()
 			self.libraryKindSegmentedControl.segmentTitles = KKLibrary.Kind.allString

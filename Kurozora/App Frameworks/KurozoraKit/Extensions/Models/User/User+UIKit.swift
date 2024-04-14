@@ -128,9 +128,9 @@ extension User {
 		var menuElements: [UIMenuElement] = []
 
 		// Create "Layout" element
-		let index = userInfo?["index"] as? Int ?? -1
+		let index = userInfo?["index"] as? Int ?? 0
 		let libraryStatus = KKLibrary.Status.all[index]
-		let libraryCellStyles = UserSettings.libraryCellStyles[libraryStatus.sectionValue] ?? 1
+		let libraryCellStyles = UserSettings.libraryCellStyles[libraryStatus.sectionValue] ?? 0
 		let layoutActions = KKLibrary.CellStyle.all.map { style in
 			let action = UIAction(title: style.stringValue, image: style.imageValue, state: style.rawValue == libraryCellStyles ? .on : .off) { _ in
 				viewController.changeLayout(to: style)
