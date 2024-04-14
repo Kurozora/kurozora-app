@@ -13,7 +13,7 @@ import UIKit
 /// - [Kind](x-source-tag://KKL-Kind) enum for managing a specific user library.
 /// - [Status](x-source-tag://KKL-Status) enum for managing an item's status as well as populate a library view.
 /// - [SortType](x-source-tag://KKL-SortType) enum for managing the way items are sorted.
-///     - This in turn offers the [Options](x-source-tag://KKL-ST-Options) enum for managing the sorting order.
+///     - This in turn offers the [Option](x-source-tag://KKL-ST-Option) enum for managing the sorting order.
 public enum KKLibrary {
 	/// The set of available library types.
 	///
@@ -124,37 +124,40 @@ public enum KKLibrary {
 
 	/// The set of available library sorting types.
 	///
-	/// ```
-	/// case none = 0
-	/// case alphabetically = 1
-	/// ...
-	/// ```
+	/// - `none`: sorts by no specific type
+	/// - `alphabetically`: sorts by alphabetical order
+	/// - `popularity`: sorts by popularity
+	/// - `date`: sorts by date
+	/// - `rating`: sorts by global rating
+	/// - `myRating`: sorts by user's rating
 	///
 	/// - Tag: KKL-SortType
-	public enum SortType: Int {
+	public enum SortType: Int, CaseIterable {
 		// MARK: - Cases
 		/// Sorted by no specific type.
 		case none = 0
 
 		/// Sorted by alphabetical order.
-		case alphabetically = 1
+		case alphabetically
 
-//		case popularity = 2
-//		case nextAiringEpisode = 3
-//		case nextEpisodeToWatch = 4
+		/// Sorted by popularity.
+		case popularity
+
+//		case nextAiringEpisode
+//		case nextEpisodeToWatch
 
 		/// Sorted by date.
-		case date = 5
+		case date
 
 		/// Sorted by global rating.
-		case rating = 6
+		case rating
 
 		/// Sorted by user's rating.
-		case myRating = 7
+		case myRating
 
 		// MARK: - Properties
 		/// An array containing all sort types.
-		public static let all: [KKLibrary.SortType] = [.alphabetically, /*.popularity, .nextAiringEpisode, .nextEpisodeToWatch,*/ .date, .rating, .myRating]
+		public static let all: [KKLibrary.SortType] = [.alphabetically, .popularity, /*.nextAiringEpisode, .nextEpisodeToWatch,*/ .date, .rating, .myRating]
 
 		/// The string value of a sort type.
 		public var stringValue: String {
@@ -163,8 +166,8 @@ public enum KKLibrary {
 				return "None"
 			case .alphabetically:
 				return "Alphabetically"
-//			case .popularity:
-//				return "Popularity"
+			case .popularity:
+				return "Popularity"
 //			case .nextAiringEpisode:
 //				return "Next Episode to Air"
 //			case .nextEpisodeToWatch:
@@ -185,8 +188,10 @@ public enum KKLibrary {
 				return ""
 			case .alphabetically:
 				return "title"
+			case .popularity:
+				return "popularity"
 			case .date:
-				return "age"
+				return "date"
 			case .rating:
 				return "rating"
 			case .myRating:
@@ -195,12 +200,14 @@ public enum KKLibrary {
 		}
 
 		/// An array containing all library sort type sub-options string value and its equivalent raw value.
-		public var optionValue: [KKLibrary.SortType.Options] {
+		public var optionValue: [KKLibrary.SortType.Option] {
 			switch self {
 			case .none:
 				return []
 			case .alphabetically:
 				return [.ascending, .descending]
+			case .popularity:
+				return [.most, .least]
 			case .date:
 				return [.newest, .oldest]
 			case .rating:
@@ -218,12 +225,13 @@ extension KKLibrary.SortType {
 	/// ```
 	/// case none = 0
 	/// case ascending, descending
+	/// case most, least
 	/// case newest, oldest
 	/// case worst, best
 	/// ```
 	///
-	/// - Tag: KKL-ST-Options
-	public enum Options: Int {
+	/// - Tag: KKL-ST-Option
+	public enum Option: Int {
 		// MARK: - Cases
 		/// Sorted by no options.
 		case none = 0
@@ -233,6 +241,12 @@ extension KKLibrary.SortType {
 
 		/// Sorted in descending order.
 		case descending
+
+		/// Sorted in ascending order.
+		case most
+
+		/// Sorted in descending order.
+		case least
 
 		/// Sorted by newest first.
 		case newest
@@ -248,7 +262,7 @@ extension KKLibrary.SortType {
 
 		// MARK: - Properties
 		/// An array containing all sort type option types.
-		public static let all: [KKLibrary.SortType.Options] = [.ascending, .descending, .newest, .oldest, .worst, .best]
+		public static let all: [KKLibrary.SortType.Option] = [.ascending, .descending, .newest, .oldest, .worst, .best]
 
 		/// The string value of a sort type option.
 		public var stringValue: String {
@@ -259,6 +273,10 @@ extension KKLibrary.SortType {
 				return "A-Z"
 			case .descending:
 				return "Z-A"
+			case .most:
+				return "Most"
+			case .least:
+				return "Least"
 			case .newest:
 				return "Newest"
 			case .oldest:
@@ -279,6 +297,10 @@ extension KKLibrary.SortType {
 				return "(asc)"
 			case .descending:
 				return "(desc)"
+			case .most:
+				return "(most)"
+			case .least:
+				return "(least)"
 			case .newest:
 				return "(newest)"
 			case .oldest:
