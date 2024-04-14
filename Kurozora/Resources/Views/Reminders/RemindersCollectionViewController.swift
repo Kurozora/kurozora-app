@@ -16,15 +16,7 @@ class RemindersCollectionViewController: KCollectionViewController {
 	var games: [Game] = []
 	var nextPageURL: String?
 	var libraryKind: KKLibrary.Kind = .shows
-	var _user: User? = User.current
-	var user: User? {
-		get {
-			return self._user
-		}
-		set {
-			self._user = newValue
-		}
-	}
+
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
 
@@ -39,12 +31,19 @@ class RemindersCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - Views
+	override func viewWillReload() {
+		super.viewWillReload()
+
+		self.handleRefreshControl()
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Observe NotificationCenter for an update.
-		if self.user?.id == User.current?.id {
-			NotificationCenter.default.addObserver(self, selector: #selector(self.fetchRemindersList), name: .KReminderModelsListDidChange, object: nil)
-		}
+		NotificationCenter.default.addObserver(self, selector: #selector(self.fetchRemindersList), name: .KReminderModelsListDidChange, object: nil)
+
+		self.collectionView.contentInset.top = 20
+		self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset
 
 		self.configureDataSource()
 
