@@ -11,7 +11,7 @@ import UIKit
 extension LibraryListCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
-		switch libraryCellStyle {
+		switch self.libraryCellStyle {
 		case .compact:
 			var columnCount = (width / 105).rounded().int
 			if columnCount < 0 {
