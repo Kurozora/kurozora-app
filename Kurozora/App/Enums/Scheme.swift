@@ -20,6 +20,7 @@ import Foundation
 /// case search
 /// ```
 enum Scheme: String, CaseIterable {
+	// MARK: - Cases
 	case anime, show
 	case profile, user
 	case explore, home
@@ -27,4 +28,9 @@ enum Scheme: String, CaseIterable {
 	case feed, timeline
 	case notification, notifications
 	case search
+
+	// MARK: - Properties
+	var urlValue: URL {
+		return URL(string: "kurozora://\(self.rawValue)")!
+	}
 }

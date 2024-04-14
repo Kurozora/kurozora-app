@@ -495,42 +495,24 @@ extension KurozoraDelegate {
 
 // MARK: - Quick Actions
 extension KurozoraDelegate {
-	/// Performs an action for the specified shortcut item.
-	///
-	/// - Parameter shortcutItem: The action selected by the user. Your app defines the actions that it supports, and the user chooses from among those actions. For information about how to create and configure shortcut items for your app, see [UIApplicationShortcutItem](apple-reference-documentation://hsTvcCjEDQ).
-	fileprivate func performAction(for shortcutItem: UIApplicationShortcutItem) {
-		switch shortcutItem.type {
-		case R.info.uiApplicationShortcutItems.libraryShortcut.uiApplicationShortcutItemType:
-			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
-				tabBarController.selectedIndex = 1
-			}
-		case R.info.uiApplicationShortcutItems.profileShortcut.uiApplicationShortcutItemType:
-			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
-				tabBarController.selectedIndex = 2
-				WorkflowController.shared.isSignedIn {
-					if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
-						tabBarController.navigationController?.show(profileTableViewController, sender: nil)
-					}
-				}
-			}
-		case R.info.uiApplicationShortcutItems.notificationShortcut.uiApplicationShortcutItemType:
-			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
-				tabBarController.selectedIndex = 3
-			}
-		case R.info.uiApplicationShortcutItems.searchShortcut.uiApplicationShortcutItemType:
-			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
-				tabBarController.selectedIndex = 4
-			}
-		default: break
-		}
-	}
-
 	/// Handle the selected quick action.
 	///
 	/// - Parameters:
 	///    - windowScene: The window scene object receiving the shortcut item.
-	///    - shortcutItem: The application's shortcut item.
+	///    - shortcutItem: The action selected by the user. Your app defines the actions that it supports, and the user chooses from among those actions. For information about how to create and configure shortcut items for your app, see [UIApplicationShortcutItem](apple-reference-documentation://hsTvcCjEDQ).
 	func shortcutHandler(_ windowScene: UIWindowScene, performActionFor shortcutItem: UIApplicationShortcutItem) {
-		performAction(for: shortcutItem)
+		switch shortcutItem.type {
+		case R.info.uiApplicationShortcutItems.libraryShortcut.uiApplicationShortcutItemType:
+			self.schemeHandler(windowScene, open: Scheme.library.urlValue)
+		case R.info.uiApplicationShortcutItems.profileShortcut.uiApplicationShortcutItemType:
+			WorkflowController.shared.isSignedIn {
+				self.schemeHandler(windowScene, open: Scheme.profile.urlValue)
+			}
+		case R.info.uiApplicationShortcutItems.notificationShortcut.uiApplicationShortcutItemType:
+			self.schemeHandler(windowScene, open: Scheme.notifications.urlValue)
+		case R.info.uiApplicationShortcutItems.searchShortcut.uiApplicationShortcutItemType:
+			self.schemeHandler(windowScene, open: Scheme.search.urlValue)
+		default: break
+		}
 	}
 }
