@@ -334,7 +334,6 @@
 		666D9EE825B35D1B00EDDC9E /* HomeCollectionViewController+TouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666D9EE725B35D1B00EDDC9E /* HomeCollectionViewController+TouchBar.swift */; };
 		666D9EEA25B35DED00EDDC9E /* LibraryListCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666D9EE925B35DED00EDDC9E /* LibraryListCollectionViewController+KCollectionViewDelegateLayout.swift */; };
 		666D9EEC25B35E9E00EDDC9E /* LibraryListCollectionViewController+KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666D9EEB25B35E9E00EDDC9E /* LibraryListCollectionViewController+KCollectionViewDataSource.swift */; };
-		666D9EF025B35FF400EDDC9E /* LibraryListViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666D9EEF25B35FF400EDDC9E /* LibraryListViewControllerDelegate.swift */; };
 		666D9EF325B3607600EDDC9E /* LibraryList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 666D9EF225B3607600EDDC9E /* LibraryList.storyboard */; };
 		666E0D2122888B2300AA8BA4 /* KNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666E0D1F22888B2300AA8BA4 /* KNavigationController.swift */; };
 		666FBD9022C4E170007DB5D8 /* Black.plist in Resources */ = {isa = PBXBuildFile; fileRef = 666FBD8F22C4E16F007DB5D8 /* Black.plist */; };
@@ -1088,7 +1087,6 @@
 		666D9EE725B35D1B00EDDC9E /* HomeCollectionViewController+TouchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeCollectionViewController+TouchBar.swift"; sourceTree = "<group>"; };
 		666D9EE925B35DED00EDDC9E /* LibraryListCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LibraryListCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
 		666D9EEB25B35E9E00EDDC9E /* LibraryListCollectionViewController+KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LibraryListCollectionViewController+KCollectionViewDataSource.swift"; sourceTree = "<group>"; };
-		666D9EEF25B35FF400EDDC9E /* LibraryListViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryListViewControllerDelegate.swift; sourceTree = "<group>"; };
 		666D9EF225B3607600EDDC9E /* LibraryList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LibraryList.storyboard; sourceTree = "<group>"; };
 		666E0D1F22888B2300AA8BA4 /* KNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KNavigationController.swift; sourceTree = "<group>"; };
 		666FBD8F22C4E16F007DB5D8 /* Black.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Black.plist; sourceTree = "<group>"; };
@@ -2504,7 +2502,6 @@
 				666D9EEB25B35E9E00EDDC9E /* LibraryListCollectionViewController+KCollectionViewDataSource.swift */,
 				666D9EE925B35DED00EDDC9E /* LibraryListCollectionViewController+KCollectionViewDelegateLayout.swift */,
 				66BA99FA25E4022200CE4480 /* LibraryListCollectionViewController+UICollectionViewDelegate.swift */,
-				666D9EEF25B35FF400EDDC9E /* LibraryListViewControllerDelegate.swift */,
 			);
 			path = "Library List";
 			sourceTree = "<group>";
@@ -4630,7 +4627,6 @@
 				66232CDB2310055900C45B5A /* BaseFeedMessageCell.swift in Sources */,
 				6646A272236A5D8400DCC0A4 /* BrowserSettingsTableViewController.swift in Sources */,
 				662B925F233E50FA001D49B7 /* SearchShowResultsCell.swift in Sources */,
-				666D9EF025B35FF400EDDC9E /* LibraryListViewControllerDelegate.swift in Sources */,
 				66FA97B7281A09E90054FC2E /* ImageFormat.swift in Sources */,
 				66E201FF273760820081C84C /* FMDetailsTableViewControllerDelegate.swift in Sources */,
 				665385BD23D3CD3C008ADEF3 /* KCollectionViewController.swift in Sources */,

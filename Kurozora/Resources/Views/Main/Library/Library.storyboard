@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="38B-e3-pz3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="38B-e3-pz3">
     <device id="retina6_5" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -32,16 +32,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9vL-CK-tr0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1645" y="865"/>
-        </scene>
-        <!--FavoritesCollectionViewController-->
-        <scene sceneID="09n-N4-pM0">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Favorites" referencedIdentifier="FavoritesCollectionViewController" id="AKf-6J-kDy" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="Pw6-DQ-A9X"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dOT-Nk-9Fq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-164" y="865"/>
         </scene>
         <!--Library-->
         <scene sceneID="HTe-q8-fSw">
@@ -85,7 +75,7 @@
                                                 <segment title="Games"/>
                                             </segments>
                                             <connections>
-                                                <action selector="libraryKindSegmentdControlDidChange:" destination="B4w-wJ-4Cf" eventType="valueChanged" id="X9K-sC-e24"/>
+                                                <action selector="libraryKindSegmentedControlDidChange:" destination="B4w-wJ-4Cf" eventType="valueChanged" id="YeU-7X-Byd"/>
                                             </connections>
                                         </segmentedControl>
                                     </barButtonItem>
@@ -110,20 +100,10 @@
                             <constraint firstAttribute="trailingMargin" secondItem="JeV-PO-okM" secondAttribute="trailing" id="y1E-ur-s5u"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Library" id="Aja-xv-l4D">
-                        <leftBarButtonItems>
-                            <barButtonItem title="Detailed" image="rectangle.fill.on.rectangle.fill" catalog="system" id="Dnc-bs-5ES">
-                                <connections>
-                                    <action selector="changeLayoutBarButtonItemPressed:" destination="B4w-wJ-4Cf" id="QVS-dG-vWc"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem title="Filter" id="0uS-C2-wld">
-                                <imageReference key="image" image="line.3.horizontal.decrease.circle.fill" catalog="system"/>
-                                <connections>
-                                    <action selector="sortTypeBarButtonItemPressed:" destination="B4w-wJ-4Cf" id="iLY-kv-BBQ"/>
-                                </connections>
-                            </barButtonItem>
-                        </leftBarButtonItems>
+                    <navigationItem key="navigationItem" title="Library" leftItemsSupplementBackButton="YES" id="Aja-xv-l4D">
+                        <barButtonItem key="leftBarButtonItem" title="Filter" id="0uS-C2-wld">
+                            <imageReference key="image" image="line.3.horizontal.decrease.circle" catalog="system"/>
+                        </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem title="Profile" id="wda-zg-EBM">
                                 <button key="customView" opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mrO-Jg-FaX" customClass="ProfileImageButton" customModule="Kurozora" customModuleProvider="target">
@@ -141,17 +121,13 @@
                                     </connections>
                                 </button>
                             </barButtonItem>
-                            <barButtonItem title="Favourites" image="heart.circle" catalog="system" id="bHY-lK-ES7">
-                                <connections>
-                                    <segue destination="AKf-6J-kDy" kind="show" identifier="FavoritesSegue" id="BtH-Vl-yCX"/>
-                                </connections>
-                            </barButtonItem>
+                            <barButtonItem title="More" image="ellipsis.circle" catalog="system" id="g5C-MO-gs3"/>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="bottomBarView" destination="JeV-PO-okM" id="87a-eg-BSy"/>
-                        <outlet property="changeLayoutBarButtonItem" destination="Dnc-bs-5ES" id="SnK-kE-RhL"/>
                         <outlet property="libraryKindSegmentedControl" destination="YLm-jv-Iqy" id="CEV-5D-OgT"/>
+                        <outlet property="moreBarButtonItem" destination="g5C-MO-gs3" id="zha-GH-Edy"/>
                         <outlet property="profileImageButton" destination="mrO-Jg-FaX" id="Rja-Zn-Mn2"/>
                         <outlet property="scrollView" destination="tcz-X9-dwb" id="6gt-P2-2yy"/>
                         <outlet property="scrollViewHeightConstraint" destination="vcV-WQ-WIv" id="lqY-zo-25h"/>
@@ -166,8 +142,7 @@
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
-        <image name="heart.circle" catalog="system" width="128" height="123"/>
-        <image name="line.3.horizontal.decrease.circle.fill" catalog="system" width="128" height="123"/>
-        <image name="rectangle.fill.on.rectangle.fill" catalog="system" width="128" height="98"/>
+        <image name="ellipsis.circle" catalog="system" width="128" height="123"/>
+        <image name="line.3.horizontal.decrease.circle" catalog="system" width="128" height="123"/>
     </resources>
 </document>

@@ -68,30 +68,6 @@ extension KKLibrary {
 			}
 		}
 
-		/// The next cell style.
-		var next: CellStyle {
-			var cellValue = self.rawValue
-			cellValue += 1
-
-			if cellValue > CellStyle.all.count-1 {
-				cellValue = 0
-			}
-
-			return CellStyle(rawValue: cellValue) ?? .detailed
-		}
-
-		/// The previous cell style.
-		var previous: CellStyle {
-			var cellValue = self.rawValue
-			cellValue -= 1
-
-			if cellValue < 0 {
-				cellValue = CellStyle.all.count-1
-			}
-
-			return CellStyle(rawValue: cellValue) ?? .detailed
-		}
-
 		// TODO: - A better way to implement this mess
 		var sizeValue: CGSize {
 			var cgSize: CGSize = .zero
