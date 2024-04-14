@@ -215,7 +215,8 @@ class KurozoraDelegate {
 				UIApplication.topViewController?.show(showDetailsCollectionViewController, sender: nil)
 			}
 		case .profile, .user:
-			let userID = url.lastPathComponent
+			let lastPathComponent = url.lastPathComponent
+			guard let userID = lastPathComponent.isEmpty ? User.current?.id : lastPathComponent else { return }
 			let profileTableViewController = ProfileTableViewController.`init`(with: userID)
 
 			if UIDevice.isPhone {
