@@ -220,73 +220,100 @@ class KurozoraDelegate {
 
 			if UIDevice.isPhone {
 				guard let splitViewController = UIApplication.topSplitViewController else { return }
-				let tabBarController = splitViewController.viewController(for: .compact) as? UITabBarController
-				tabBarController?.selectedViewController?.show(profileTableViewController, sender: nil)
+				guard let tabBarController = splitViewController.viewController(for: .compact) as? KTabBarController else { return }
+				tabBarController.selectedViewController?.show(profileTableViewController, sender: nil)
 			} else {
 				UIApplication.topViewController?.show(profileTableViewController, sender: nil)
 			}
 		case .explore, .home:
 			if UIDevice.isPhone {
 				guard let splitViewController = UIApplication.topSplitViewController else { return }
-				let tabBarController = splitViewController.viewController(for: .compact) as? UITabBarController
-				tabBarController?.selectedIndex = 0
+				guard let tabBarController = splitViewController.viewController(for: .compact) as? KTabBarController else { return }
+				tabBarController.selectedIndex = 0
 			}
 		case .library, .myLibrary, .list:
 			if UIDevice.isPhone {
 				guard let splitViewController = UIApplication.topSplitViewController else { return }
-				let tabBarController = splitViewController.viewController(for: .compact) as? UITabBarController
-				tabBarController?.selectedIndex = 1
+				guard let tabBarController = splitViewController.viewController(for: .compact) as? KTabBarController else { return }
+				tabBarController.selectedIndex = 1
 			}
 		case .feed, .timeline:
 			if UIDevice.isPhone {
 				guard let splitViewController = UIApplication.topSplitViewController else { return }
-				let tabBarController = splitViewController.viewController(for: .compact) as? UITabBarController
-				tabBarController?.selectedIndex = 2
+				guard let tabBarController = splitViewController.viewController(for: .compact) as? KTabBarController else { return }
+				tabBarController.selectedIndex = 2
 			}
 		case .notification, .notifications:
 			if UIDevice.isPhone {
 				guard let splitViewController = UIApplication.topSplitViewController else { return }
-				let tabBarController = splitViewController.viewController(for: .compact) as? UITabBarController
-				tabBarController?.selectedIndex = 3
+				guard let tabBarController = splitViewController.viewController(for: .compact) as? KTabBarController else { return }
+				tabBarController.selectedIndex = 3
 			}
 		case .search:
 			if UIDevice.isPhone {
 				guard let splitViewController = UIApplication.topSplitViewController else { return }
-				let tabBarController = splitViewController.viewController(for: .compact) as? UITabBarController
-				tabBarController?.selectedIndex = 4
+				guard let kTabBarController = splitViewController.viewController(for: .compact) as? KTabBarController else { return }
+				guard let kNavigationController = kTabBarController.viewControllers?[safe: 4] as? KNavigationController else { return }
+				guard let searchResultsCollectionViewController = kNavigationController.topViewController as? SearchResultsCollectionViewController else { return }
+
+				kTabBarController.selectedIndex = 4
+				self.handleSearchDeeplink(
+					on: searchResultsCollectionViewController,
+					searchController: searchResultsCollectionViewController.kSearchController,
+					parameters: parameters
+				)
 			} else {
 				DispatchQueue.main.async {
 					guard let splitViewController = UIApplication.topViewController?.splitViewController else { return }
 					guard let navigationController = splitViewController.viewController(for: .primary) as? KNavigationController else { return }
 					guard let sidebarViewController = navigationController.topViewController as? SidebarViewController else { return }
-					let queryString = parameters["q"] ?? ""
-					let scopeString = Int(parameters["scope"] ?? "0")
-					let typeString = parameters["type"] ?? KKSearchType.shows.rawValue
-					let scope: KKSearchScope = if let scopeString = scopeString {
-						KKSearchScope(rawValue: scopeString) ?? .kurozora
-					} else {
-						.kurozora
-					}
-					let type: KKSearchType = KKSearchType(rawValue: typeString) ?? .shows
 
-					if parameters.isEmpty {
-						sidebarViewController.kSearchController.searchBar.textField?.becomeFirstResponder()
-					} else if !queryString.isEmpty {
-						sidebarViewController.searchResultsCollectionViewController.searachQuery = queryString
-						sidebarViewController.searchResultsCollectionViewController.currentScope = scope
-						sidebarViewController.searchResultsCollectionViewController.currentTypes = [type]
-						sidebarViewController.kSearchController.searchBar.textField?.text = queryString
-						sidebarViewController.kSearchController.searchBar.selectedScopeButtonIndex = scope.rawValue
-
-						if sidebarViewController.searchResultsCollectionViewController.dataSource == nil {
-							sidebarViewController.searchResultsCollectionViewController.isDeepLinked = true
-							sidebarViewController.kSearchController.searchBar.textField?.resignFirstResponder()
-							sidebarViewController.kSearchController.searchBar.textField?.resignFirstResponder()
-						} else {
-							sidebarViewController.searchResultsCollectionViewController.performSearch(with: queryString, in: scope, for: [type], with: nil, next: nil, resettingResults: true)
-						}
-					}
+					self.handleSearchDeeplink(
+						on: sidebarViewController.searchResultsCollectionViewController,
+						searchController: sidebarViewController.kSearchController,
+						parameters: parameters
+					)
 				}
+			}
+		}
+	}
+
+	/// Handles deeplinking to the search view.
+	///
+	/// - Parameters:
+	///    - viewController: An instance of `SearchResultsCollectionViewController` to deeplink to.
+	///    - searchController: An instance of `KSearchController` to perform the search if required.
+	///    - parameters: The parameters used for performing the search.
+	fileprivate func handleSearchDeeplink(
+		on viewController: SearchResultsCollectionViewController,
+		searchController: KSearchController,
+		parameters: [String: String]
+	) {
+		let queryString = parameters["q"] ?? ""
+		let scopeString = Int(parameters["scope"] ?? "0")
+		let typeString = parameters["type"] ?? KKSearchType.shows.rawValue
+		let scope: KKSearchScope = if let scopeString = scopeString {
+			KKSearchScope(rawValue: scopeString) ?? .kurozora
+		} else {
+			.kurozora
+		}
+		let type: KKSearchType = KKSearchType(rawValue: typeString) ?? .shows
+
+		if parameters.isEmpty {
+			searchController.searchBar.textField?.becomeFirstResponder()
+		} else if !queryString.isEmpty {
+			viewController.searachQuery = queryString
+			viewController.currentScope = scope
+			viewController.currentTypes = [type]
+			searchController.searchBar.textField?.text = queryString
+			searchController.searchBar.selectedScopeButtonIndex = scope.rawValue
+
+			if viewController.dataSource == nil {
+				viewController.isDeepLinked = true
+				searchController.searchBar.textField?.resignFirstResponder()
+				searchController.searchBar.textField?.resignFirstResponder()
+			} else {
+				viewController.performSearch(with: queryString, in: scope, for: [type], with: nil, next: nil, resettingResults: true)
 			}
 		}
 	}
@@ -297,7 +324,10 @@ class KurozoraDelegate {
 	///    - scene: The object that represents one instance of the app's user interface.
 	///    - url: The URL resource to open. This resource can be a network resource or a file. For information about the Apple-registered URL schemes, see Apple URL Scheme Reference.
 	func schemeHandler(_ scene: UIScene, open url: URL) {
-		routeScheme(with: url)
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			self.routeScheme(with: url)
+		}
 	}
 }
 
