@@ -505,7 +505,7 @@
 		66C45843259A88ED00886374 /* Sky.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66C45840259A88ED00886374 /* Sky.plist */; };
 		66C4DADD243BE4AA00C4B90A /* KKLibraryStatus+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4DADC243BE4AA00C4B90A /* KKLibraryStatus+Kurozora.swift */; };
 		66C4DADF243BE4CF00C4B90A /* KKLibrarySortType+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4DADE243BE4CF00C4B90A /* KKLibrarySortType+Kurozora.swift */; };
-		66C4DAE1243BE52900C4B90A /* KKLibrarySortTypeOptions+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4DAE0243BE52900C4B90A /* KKLibrarySortTypeOptions+Kurozora.swift */; };
+		66C4DAE1243BE52900C4B90A /* KKLibrarySortTypeOption+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4DAE0243BE52900C4B90A /* KKLibrarySortTypeOption+Kurozora.swift */; };
 		66C4DAE6243E133F00C4B90A /* KTabbedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4DAE5243E133F00C4B90A /* KTabbedViewController.swift */; };
 		66C5797922A83726001B8F51 /* ThemeStore.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66C5797822A83726001B8F51 /* ThemeStore.storyboard */; };
 		66C5797B22A86435001B8F51 /* DebugSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66C5797A22A86435001B8F51 /* DebugSettings.storyboard */; };
@@ -1261,7 +1261,7 @@
 		66C45840259A88ED00886374 /* Sky.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Sky.plist; sourceTree = "<group>"; };
 		66C4DADC243BE4AA00C4B90A /* KKLibraryStatus+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KKLibraryStatus+Kurozora.swift"; sourceTree = "<group>"; };
 		66C4DADE243BE4CF00C4B90A /* KKLibrarySortType+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KKLibrarySortType+Kurozora.swift"; sourceTree = "<group>"; };
-		66C4DAE0243BE52900C4B90A /* KKLibrarySortTypeOptions+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KKLibrarySortTypeOptions+Kurozora.swift"; sourceTree = "<group>"; };
+		66C4DAE0243BE52900C4B90A /* KKLibrarySortTypeOption+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KKLibrarySortTypeOption+Kurozora.swift"; sourceTree = "<group>"; };
 		66C4DAE5243E133F00C4B90A /* KTabbedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KTabbedViewController.swift; sourceTree = "<group>"; };
 		66C5797822A83726001B8F51 /* ThemeStore.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ThemeStore.storyboard; sourceTree = "<group>"; };
 		66C5797A22A86435001B8F51 /* DebugSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DebugSettings.storyboard; sourceTree = "<group>"; };
@@ -3162,7 +3162,7 @@
 			isa = PBXGroup;
 			children = (
 				66C4DADE243BE4CF00C4B90A /* KKLibrarySortType+Kurozora.swift */,
-				66C4DAE0243BE52900C4B90A /* KKLibrarySortTypeOptions+Kurozora.swift */,
+				66C4DAE0243BE52900C4B90A /* KKLibrarySortTypeOption+Kurozora.swift */,
 				66C4DADC243BE4AA00C4B90A /* KKLibraryStatus+Kurozora.swift */,
 			);
 			path = Models;
@@ -4306,7 +4306,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		66022EAE238B287900B5286A /* Add Acknowledgements */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputFileListPaths = (
@@ -4320,7 +4320,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\n#PODPATH=\"${PODS_ROOT}/Target Support Files/Pods-Kurozora/Pods-Kurozora-acknowledgements.plist\"\n#PROJECTPATH=\"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/Acknowledgements.plist\"\n#\n#cp \"${PODPATH}\" \"${PROJECTPATH}\"\n#\n#PLISTBUDDY=\"/usr/libexec/PlistBuddy -c\"\n#\n#i=0\n#while true ; do\n#   # If an item is printable then it exists, otherwise exit loop\n#   $PLISTBUDDY \"Print PreferenceSpecifiers:$i\" \"${PROJECTPATH}\" >/dev/null 2>/dev/null\n#   if [ $? -ne 0 ]; then\n#\t  break\n#   fi\n#   i=$(($i + 1))\n#done\n#\n## Get last item in array\n#i=$(($i - 1))\n#\n## Delete last item in array\n#$PLISTBUDDY \"Delete PreferenceSpecifiers:$i\" \"${PROJECTPATH}\" >/dev/null 2>/dev/null\n#\n";
+			shellScript = "PODPATH=\"${PODS_ROOT}/Target Support Files/Pods-Kurozora/Pods-Kurozora-acknowledgements.plist\"\nPROJECTPATH=\"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/Acknowledgements.plist\"\n\ncp \"${PODPATH}\" \"${PROJECTPATH}\"\n\nPLISTBUDDY=\"/usr/libexec/PlistBuddy -c\"\n\ni=0\nwhile true ; do\n   # If an item is printable then it exists, otherwise exit loop\n   $PLISTBUDDY \"Print PreferenceSpecifiers:$i\" \"${PROJECTPATH}\" >/dev/null 2>/dev/null\n   if [ $? -ne 0 ]; then\n\t  break\n   fi\n   i=$(($i + 1))\ndone\n\n# Get last item in array\ni=$(($i - 1))\n\n# Delete last item in array\n$PLISTBUDDY \"Delete PreferenceSpecifiers:$i\" \"${PROJECTPATH}\" >/dev/null 2>/dev/null\n\n";
 		};
 		66B4DC40245A20390097135A /* Add version to Settings.bundle */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -4338,7 +4338,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#version=\"${MARKETING_VERSION}\"\n#/usr/libexec/PlistBuddy \"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/Root.plist\" -c \"set PreferenceSpecifiers:2:DefaultValue $version\"\n";
+			shellScript = "version=\"${MARKETING_VERSION}\"\n/usr/libexec/PlistBuddy \"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/Root.plist\" -c \"set PreferenceSpecifiers:2:DefaultValue $version\"\n";
 		};
 		66CF0BBC231AEE8A00EEF947 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -4865,7 +4865,7 @@
 				666D3E8C244DE7240068A103 /* UserAttributes+UIImage.swift in Sources */,
 				667F9AD421B47E6D003F6629 /* AchievementTableViewCell.swift in Sources */,
 				668142D3245B4804008FC7BE /* ProfileImageView.swift in Sources */,
-				66C4DAE1243BE52900C4B90A /* KKLibrarySortTypeOptions+Kurozora.swift in Sources */,
+				66C4DAE1243BE52900C4B90A /* KKLibrarySortTypeOption+Kurozora.swift in Sources */,
 				666E0D2122888B2300AA8BA4 /* KNavigationController.swift in Sources */,
 				66B4F1DD223D334D007C5048 /* KKSearchScope+Kurozora.swift in Sources */,
 				66CDC08F234A95B8009E799C /* RedeemTableViewController.swift in Sources */,
