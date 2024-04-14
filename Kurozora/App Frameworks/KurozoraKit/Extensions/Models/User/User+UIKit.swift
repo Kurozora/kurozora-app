@@ -88,7 +88,7 @@ extension User {
 	///
 	/// - Parameters:
 	///    - viewController: The view controller presenting the share sheet.
-	fileprivate func openLibrary(on viewController: UIViewController? = UIApplication.topViewController) {
+	func openLibrary(on viewController: UIViewController? = UIApplication.topViewController) {
 		if let libraryViewController = R.storyboard.library.libraryViewController() {
 			libraryViewController.user = self
 
@@ -101,7 +101,7 @@ extension User {
 	/// - Parameters:
 	///    - viewController: The view controller presenting the share sheet.
 	///    - includeUser: A boolean value indicating whether to pass the user to `FavoritesCollectionViewController`.
-	fileprivate func openFavorites(on viewController: UIViewController? = UIApplication.topViewController, includeUser: Bool) {
+	func openFavorites(on viewController: UIViewController? = UIApplication.topViewController, includeUser: Bool) {
 		if let favoritesCollectionViewController = R.storyboard.favorites.favoritesCollectionViewController() {
 			if includeUser {
 				favoritesCollectionViewController.user = self
@@ -115,7 +115,7 @@ extension User {
 	///
 	/// - Parameters:
 	///    - viewController: The view controller presenting the share sheet.
-	fileprivate func openReminders(on viewController: UIViewController? = UIApplication.topViewController) {
+	func openReminders(on viewController: UIViewController? = UIApplication.topViewController) {
 		if let remindersCollectionViewController = R.storyboard.reminders.remindersCollectionViewController() {
 			viewController?.show(remindersCollectionViewController, sender: nil)
 		}

@@ -57,5 +57,10 @@ extension LibraryViewController: NSTouchBarDelegate {
 		}
 		return touchBarItem
 	}
+
+	@objc func segueToFavorites() {
+		let includeUser = self.user != nil
+		self.viewedUser?.openFavorites(on: self, includeUser: includeUser)
+	}
 }
 #endif

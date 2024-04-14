@@ -26,7 +26,7 @@ class LibraryViewController: KTabbedViewController {
 	var leftBarButtonItems: [UIBarButtonItem]? = nil
 	var libraryKind: KKLibrary.Kind = UserSettings.libraryKind
 	var user: User?
-	private var viewedUser: User? {
+	var viewedUser: User? {
 		return self.user ?? User.current
 	}
 
