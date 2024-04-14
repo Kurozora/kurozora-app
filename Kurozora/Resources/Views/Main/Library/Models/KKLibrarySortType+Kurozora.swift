@@ -17,8 +17,8 @@ extension KKLibrary.SortType {
 			return UIImage(systemName: "line.3.horizontal.decrease.circle.fill")!
 		case .alphabetically:
 			return UIImage(systemName: "textformat.abc")!
-//			case .popularity:
-//				return UIImage(UIImage(systemName: "flame.fill")!
+		case .popularity:
+			return UIImage(systemName: "flame.fill")!
 //			case .nextAiringEpisode:
 //				return UIImage(named: "arrowshape.turn.up.forward.tv.fill")!
 //			case .nextEpisodeToWatch:
@@ -30,23 +30,5 @@ extension KKLibrary.SortType {
 		case .myRating:
 			return UIImage(named: "Symbols/person.crop.circle.fill.badge.star")!
 		}
-	}
-
-	/// An array containing all library sort type string value and its equivalent raw value.
-	static var alertControllerItems: [(String, KKLibrary.SortType, UIImage)] {
-		var items = [(String, KKLibrary.SortType, UIImage)]()
-		for sortType in KKLibrary.SortType.all {
-			items.append((sortType.stringValue, sortType, sortType.imageValue))
-		}
-		return items
-	}
-
-	/// An array containing all library sort type string value and its equivalent raw value.
-	var subAlertControllerItems: [(String, KKLibrary.SortType.Options, UIImage)] {
-		var items = [(String, KKLibrary.SortType.Options, UIImage)]()
-		for option in self.optionValue {
-			items.append((option.stringValue, option, option.imageValue))
-		}
-		return items
 	}
 }

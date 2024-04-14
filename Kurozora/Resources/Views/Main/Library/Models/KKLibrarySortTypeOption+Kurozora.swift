@@ -1,5 +1,5 @@
 //
-//  KKLibrarySortTypeOptions+Kurozora.swift
+//  KKLibrarySortTypeOption+Kurozora.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 07/04/2020.
@@ -9,7 +9,7 @@
 import UIKit
 import KurozoraKit
 
-extension KKLibrary.SortType.Options {
+extension KKLibrary.SortType.Option {
 	/// The image value of a sort type option.
 	var imageValue: UIImage {
 		switch self {
@@ -19,6 +19,10 @@ extension KKLibrary.SortType.Options {
 			return UIImage(systemName: "line.3.horizontal.decrease")!
 		case .descending:
 			return R.image.symbols.line3HorizontalIncrease()!
+		case .most:
+			return UIImage(systemName: "chart.line.uptrend.xyaxis")!
+		case .least:
+			return UIImage(systemName: "chart.line.downtrend.xyaxis")!
 		case .newest:
 			return R.image.symbols.calendarBadgeArrowshapeTurnUpRight()!
 		case .oldest:
