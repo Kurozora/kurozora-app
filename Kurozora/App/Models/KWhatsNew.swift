@@ -11,8 +11,26 @@ import WhatsNew
 class KWhatsNew {
 	/// Features of the current version of the app. Don't forget to change
 	static var current: [WhatsNewItem] {
-		return v17
+		return v18
 	}
+
+	/// Features of version 1.8.0 of the app.
+	static var v18: [WhatsNewItem] = [
+		.image(title: "6 Years of Kurozora", subtitle: "Celebrate this special occasion with the new『Kuro-chan』app icon, available for all users.", image: R.image.icons.kuroChan()!),
+		.image(title: "Date Widget", subtitle: "Personalize your home screen with the new Kurozora Date widget, cycling through episode, anime, manga, and game images. Customize options by tapping on the widget while in wiggle mode.", image: R.image.icons.widget()!),
+		.image(title: "Search from Anywhere", subtitle: "Expand your search capabilities with the new『Find on Kurozora』Shortcuts app action, enabling convenient access to Kurozora from anywhere you want.", image: R.image.icons.shortcuts()!),
+		.image(title: "Quick Access", subtitle: "Quickly access any tab you want with the app shortcuts feature. Simply long-press the app on your home screen to access them, allowing you to navigate through Kurozora's tabs without even opening the app!", image: R.image.icons.bunny()!),
+		.image(title: "User Libraries", subtitle: "Explore other users' libraries directly from their profile pages.", image: R.image.icons.libraryPerson3()!),
+		.image(title: "Hidden Entries", subtitle: "Mark library entries as hidden to keep them private from your public-facing library and favorites list.", image: R.image.icons.libraryEyeSquareSlash()!),
+		.image(title: "Revamped Library", subtitle: "Enjoy an improved library experience with a reorganized navigation bar for increased clarity.", image: R.image.icons.librarySparkles()!),
+		.image(title: "Library Sharing", subtitle: "Share your library easily with others through a new menu option in your library.", image: R.image.icons.libraryShare()!),
+		.image(title: "Sort by Popularity", subtitle: "Sort your library by trending titles to help you decide what to watch next.", image: R.image.icons.flame()!),
+		.image(title: "Reminder Management", subtitle: "Stay organized by conveniently managing your reminders through a new menu option on your profile page and library.", image: R.image.icons.reminder()!),
+		.image(title: "Message Limit", subtitle: "Express yourself freely with an expanded feed message limit—now increased from 240 to 280 characters for all users, 500 characters for Pro members and a whopping 1000 characters for Kurozora+ members.", image: R.image.icons.message()!),
+		.image(title: "Direct Engagement", subtitle: "Engage directly with other users by mentioning them in messages composed on their profile pages.", image: R.image.icons.messagePerson2()!),
+		.image(title: "Updated Feature Lists", subtitle: "Stay informed about the latest features with updated feature lists for Pro and Kurozora+ members.", image: R.image.icons.unlock()!),
+		.image(title: "Bug Fixes", subtitle: "Experience smoother navigation with fixes to theme store button roundness and crashes when switching accounts using the Account Switcher feature (long hold tab bar for quick access).", image: R.image.icons.bug()!)
+	]
 
 	/// Features of version 1.7.0 of the app.
 	static var v17: [WhatsNewItem] = [
