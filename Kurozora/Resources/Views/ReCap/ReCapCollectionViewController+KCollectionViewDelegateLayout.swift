@@ -15,13 +15,7 @@ extension ReCapCollectionViewController {
 		var columnCount = 0
 
 		switch section {
-		case .topShows, .topGames, .topLiteratures:
-			if width >= 414 {
-				columnCount = (width / 562).rounded().int
-			} else {
-				columnCount = (width / 374).rounded().int
-			}
-		case .topGenres, .topThemes, .milestones:
+		case .topShows, .topGames, .topLiteratures, .topGenres, .topThemes, .milestones:
 			if width >= 414 {
 				columnCount = (width / 384).rounded().int
 			} else {
