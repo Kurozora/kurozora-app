@@ -32,6 +32,10 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
+	///
+	/// - Parameters:
+	///    - episode: The `Episode` object used to configure the cell.
+	///    - rank: The rank of the episode in a ranked list.
 	func configure(using episode: Episode?, rank: Int? = nil) {
 		guard let episode = episode else {
 			self.showSkeleton()
@@ -50,6 +54,7 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 			self.rankLabel.isHidden = false
 		} else {
 			self.rankLabel.text = nil
+			self.rankLabel.isHidden = true
 		}
 
 		// Configure secondary label

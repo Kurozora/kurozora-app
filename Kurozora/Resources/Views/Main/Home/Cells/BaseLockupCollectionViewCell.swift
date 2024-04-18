@@ -19,6 +19,7 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 	@IBOutlet weak var primaryLabel: UILabel?
 	@IBOutlet weak var secondaryLabel: UILabel?
 	@IBOutlet weak var ternaryLabel: UILabel?
+	@IBOutlet weak var rankLabel: KLabel?
 	@IBOutlet weak var bannerImageView: BannerImageView?
 	@IBOutlet weak var posterImageView: PosterImageView?
 	@IBOutlet weak var shadowImageView: UIImageView?
@@ -33,8 +34,10 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the `Show` object.
 	///
-	/// - Parameter show: The `Show` object used to configure the cell.
-	func configure(using show: Show?) {
+	/// - Parameters:
+	///    - show: The `Show` object used to configure the cell.
+	///    - rank: The rank of the show in a ranked list.
+	func configure(using show: Show?, rank: Int? = nil) {
 		self.libraryKind = .shows
 		guard let show = show else {
 			self.showSkeleton()
@@ -46,6 +49,9 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 
 		// Configure genres
 		self.secondaryLabel?.text = (show.attributes.tagline ?? "").isEmpty ? show.attributes.genres?.localizedJoined() : show.attributes.tagline
+
+		// Configure rank
+		self.configureRank(rank)
 
 		// Configure banner
 		if let bannerBackgroundColor = show.attributes.banner?.backgroundColor {
@@ -69,8 +75,10 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 
 	/// Configure the cell with the `Literature` object.
 	///
-	/// - Parameter literature: The `Literature` object used to configure the cell.
-	func configure(using literature: Literature?) {
+	/// - Parameters:
+	///    - literature: The `Literature` object used to configure the cell.
+	///    - rank: The rank of the literature in a ranked list.
+	func configure(using literature: Literature?, rank: Int? = nil) {
 		self.libraryKind = .literatures
 		guard let literature = literature else {
 			self.showSkeleton()
@@ -82,6 +90,9 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 
 		// Configure genres
 		self.secondaryLabel?.text = (literature.attributes.tagline ?? "").isEmpty ? literature.attributes.genres?.localizedJoined() : literature.attributes.tagline
+
+		// Configure rank
+		self.configureRank(rank)
 
 		// Configure banner
 		if let bannerBackgroundColor = literature.attributes.banner?.backgroundColor {
@@ -105,8 +116,10 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 
 	/// Configure the cell with the `Game` object.
 	///
-	/// - Parameter game: The `Game` object used to configure the cell.
-	func configure(using game: Game?) {
+	/// - Parameters:
+	///    - game: The `Game` object used to configure the cell.
+	///    - rank: The rank of the game in a ranked list.
+	func configure(using game: Game?, rank: Int? = nil) {
 		self.libraryKind = .games
 		guard let game = game else {
 			self.showSkeleton()
@@ -118,6 +131,9 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 
 		// Configure genres
 		self.secondaryLabel?.text = (game.attributes.tagline ?? "").isEmpty ? game.attributes.genres?.localizedJoined() : game.attributes.tagline
+
+		// Configure rank
+		self.configureRank(rank)
 
 		// Configure banner
 		if let bannerBackgroundColor = game.attributes.banner?.backgroundColor {
@@ -137,6 +153,19 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 
 		// Configure library status
 		self.configureLibraryStatus(with: game.attributes.library?.status ?? .none)
+	}
+
+	func configureRank(_ rank: Int?) {
+		self.rankLabel?.theme_textColor = KThemePicker.textColor.rawValue
+
+		// Configure rank
+		if let rank = rank {
+			self.rankLabel?.text = "# \(rank)"
+			self.rankLabel?.isHidden = false
+		} else {
+			self.rankLabel?.text = nil
+			self.rankLabel?.isHidden = true
+		}
 	}
 
 	func configureLibraryStatus(with libraryStatus: KKLibrary.Status) {

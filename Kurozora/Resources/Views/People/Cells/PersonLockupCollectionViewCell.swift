@@ -14,12 +14,16 @@ class PersonLockupCollectionViewCell: KCollectionViewCell {
 	@IBOutlet weak var personImageView: PersonImageView!
 	@IBOutlet weak var primaryLabel: KLabel!
 	@IBOutlet weak var secondaryLabel: KSecondaryLabel!
+	@IBOutlet weak var rankLabel: KLabel!
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	///
-	/// - Parameter person: The person object used to configure the cell.
-	func configure(using person: Person?, role: StaffRole? = nil) {
+	/// - Parameters:
+	///    - person: The person object used to configure the cell.
+	///    - role: The role of the person in the series.
+	///    - rank: The rank of the person in a ranked list.
+	func configure(using person: Person?, role: StaffRole? = nil, rank: Int? = nil) {
 		guard let person = person else {
 			self.showSkeleton()
 			return
@@ -32,6 +36,15 @@ class PersonLockupCollectionViewCell: KCollectionViewCell {
 		// Configure secondary label
 		self.secondaryLabel.text = role?.name
 		self.secondaryLabel.isHidden = role == nil
+
+		// Configure rank
+		if let rank = rank {
+			self.rankLabel.text = "#\(rank)"
+			self.rankLabel.isHidden = false
+		} else {
+			self.rankLabel.text = nil
+			self.rankLabel.isHidden = true
+		}
 
 		// Configure image view
 		self.personImageView.setImage(with: person.attributes.profile?.url ?? "", placeholder: person.attributes.placeholderImage)

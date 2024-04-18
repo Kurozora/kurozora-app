@@ -15,8 +15,8 @@ class GameLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	@IBOutlet weak var scoreView: KCosmosView!
 
 	// MARK: - Functions
-	override func configure(using game: Game?) {
-		super.configure(using: game)
+	override func configure(using game: Game?, rank: Int? = nil) {
+		super.configure(using: game, rank: rank)
 
 		// Configure tagline
 		self.ternaryLabel?.text = nil

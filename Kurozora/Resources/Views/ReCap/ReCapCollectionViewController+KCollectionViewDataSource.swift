@@ -168,7 +168,7 @@ extension ReCapCollectionViewController {
 					}
 				}
 
-				smallLockupCollectionViewCell.configure(using: show)
+				smallLockupCollectionViewCell.configure(using: show, rank: indexPath.item + 1)
 			case .literatureIdentity(let literatureIdentity, _):
 				let literature = self.fetchLiterature(at: indexPath)
 
@@ -185,7 +185,7 @@ extension ReCapCollectionViewController {
 					}
 				}
 
-				smallLockupCollectionViewCell.configure(using: literature)
+				smallLockupCollectionViewCell.configure(using: literature, rank: indexPath.item + 1)
 			default: break
 			}
 		}
@@ -212,7 +212,7 @@ extension ReCapCollectionViewController {
 					}
 				}
 
-				gameLockupCollectionViewCell.configure(using: game)
+				gameLockupCollectionViewCell.configure(using: game, rank: indexPath.item + 1)
 			default: break
 			}
 		}

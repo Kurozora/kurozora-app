@@ -24,8 +24,8 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	}()
 
 	// MARK: - Functions
-	override func configure(using show: Show?) {
-		super.configure(using: show)
+	override func configure(using show: Show?, rank: Int? = nil) {
+		super.configure(using: show, rank: rank)
 
 		// Configure tagline
 		self.ternaryLabel?.text = nil
@@ -42,8 +42,8 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.posterImageOverlay.isHidden = true
 	}
 
-	override func configure(using literature: Literature?) {
-		super.configure(using: literature)
+	override func configure(using literature: Literature?, rank: Int? = nil) {
+		super.configure(using: literature, rank: rank)
 
 		// Configure tagline
 		self.ternaryLabel?.text = nil

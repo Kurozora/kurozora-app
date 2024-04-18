@@ -14,12 +14,16 @@ class CharacterLockupCollectionViewCell: KCollectionViewCell {
 	@IBOutlet weak var characterImageView: CharacterImageView!
 	@IBOutlet weak var primaryLabel: KLabel!
 	@IBOutlet weak var secondaryLabel: KSecondaryLabel!
+	@IBOutlet weak var rankLabel: KLabel!
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	///
-	/// - Parameter character: The character object used to configure the cell.
-	func configure(using character: Character?, role: CastRole? = nil) {
+	/// - Parameters:
+	///    - character: The character object used to configure the cell.
+	///    - role: The role of the character in the series.
+	///    - rank: The rank of the character in a ranked list.
+	func configure(using character: Character?, role: CastRole? = nil, rank: Int? = nil) {
 		guard let character = character else {
 			self.showSkeleton()
 			return
@@ -32,6 +36,15 @@ class CharacterLockupCollectionViewCell: KCollectionViewCell {
 		// Configure secondary label
 		self.secondaryLabel.text = role?.name
 		self.secondaryLabel.isHidden = role == nil
+
+		// Configure rank
+		if let rank = rank {
+			self.rankLabel.text = "#\(rank)"
+			self.rankLabel.isHidden = false
+		} else {
+			self.rankLabel.text = nil
+			self.rankLabel.isHidden = true
+		}
 
 		// Configure image view
 		self.characterImageView.setImage(with: character.attributes.profile?.url ?? "", placeholder: character.attributes.placeholderImage)

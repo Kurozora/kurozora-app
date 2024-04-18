@@ -15,8 +15,8 @@ class UpcomingLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	@IBOutlet weak var reminderButton: KTintedButton!
 
 	// MARK: - Functions
-	override func configure(using show: Show?) {
-		super.configure(using: show)
+	override func configure(using show: Show?, rank: Int? = nil) {
+		super.configure(using: show, rank: rank)
 		guard let show = show else { return }
 
 		if let startedAt = show.attributes.startedAt {
