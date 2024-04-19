@@ -13,12 +13,18 @@ class StudioLockupCollectionViewCell: KCollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var primaryLabel: KLabel!
 	@IBOutlet weak var secondaryLabel: KSecondaryLabel!
+	@IBOutlet weak var rankLabel: KLabel!
 	@IBOutlet weak var primaryImageView: BannerImageView!
 	@IBOutlet weak var secondaryImageView: StudioLogoImageView!
 	@IBOutlet weak var profileImageContainer: UIView!
 
 	// MARK: - Functions
-	func configure(using studio: Studio?) {
+	/// Configure the cell with the given details.
+	///
+	/// - Parameters:
+	///    - studio: The `Studio` object used to configure the cell.
+	///    - rank: The rank of the cell within the collection view.
+	func configure(using studio: Studio?, rank: Int? = nil) {
 		guard let studio = studio else {
 			self.showSkeleton()
 			return
@@ -33,6 +39,15 @@ class StudioLockupCollectionViewCell: KCollectionViewCell {
 			self.secondaryLabel.text = "\(Trans.founded) \(foundedDate)"
 		} else {
 			self.secondaryLabel.text = nil
+		}
+
+		// Configure rank
+		if let rank = rank {
+			self.rankLabel.text = "#\(rank)"
+			self.rankLabel.isHidden = false
+		} else {
+			self.rankLabel.text = nil
+			self.rankLabel.isHidden = true
 		}
 
 		// Configure banner image

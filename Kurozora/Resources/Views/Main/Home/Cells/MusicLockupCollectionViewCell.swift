@@ -27,6 +27,9 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 	/// The tertiary lable of the cell.
 	@IBOutlet weak var tertiaryLable: KSecondaryLabel!
 
+	/// The rank lable of the cell.
+	@IBOutlet weak var rankLable: KLabel!
+
 	/// A button representing the state of the music.
 	@IBOutlet weak var albumImageView: UIImageView!
 
@@ -52,11 +55,13 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 	// MARK: - Functions
 	/// Configures the cell with the given `ShowSong` object.
 	///
-	/// - Parameter showSong: The `ShowSong` object used to configure the cell.
-	/// - Parameter indexPath: The index path of the cell within the collection view.
-	/// - Parameter showEpisodes: Whether to show which episodes this song played in.
-	/// - Parameter showShow: Whether to show which show this song belongs to.
-	func configure(using showSong: ShowSong?, at indexPath: IndexPath, showEpisodes: Bool = true, showShow: Bool = false) {
+	/// - Parameters:
+	///    - showSong: The `ShowSong` object used to configure the cell.
+	///    - indexPath: The index path of the cell within the collection view.
+	///    - rank: The rank of the song in a ranked list.
+	///    - showEpisodes: Whether to show which episodes this song played in.
+	///    - showShow: Whether to show which show this song belongs to.
+	func configure(using showSong: ShowSong?, at indexPath: IndexPath, rank: Int? = nil, showEpisodes: Bool = true, showShow: Bool = false) {
 		guard let showSong = showSong else {
 			self.resetShowSong()
 			self.showSkeleton()
@@ -67,6 +72,15 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 		// Configure episodes
 		self.tertiaryLable.isHidden = !showEpisodes
 		self.tertiaryLable.text = "Episode: \(showSong.attributes.episodes)"
+
+		// Configure rank
+		if let rank = rank {
+			self.rankLable.text = "#\(rank)"
+			self.rankLable.isHidden = false
+		} else {
+			self.rankLable.text = nil
+			self.rankLable.isHidden = true
+		}
 
 		// Confgiure type button
 		self.typeButton.isHidden = false

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,10 +12,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="a8b-UB-J09" customClass="MusicLockupCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="374" height="477.5"/>
+            <rect key="frame" x="0.0" y="0.0" width="374" height="496.5"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="1pO-cN-qZF">
-                <rect key="frame" x="0.0" y="0.0" width="374" height="477.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="374" height="496.5"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fmf-at-mZU">
@@ -62,16 +62,27 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bcf-Ej-vcv">
-                        <rect key="frame" x="0.0" y="382" width="374" height="95.5"/>
+                        <rect key="frame" x="0.0" y="382" width="374" height="114.5"/>
                         <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="owt-pb-61U">
+                                <rect key="frame" x="0.0" y="0.0" width="374" height="20.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#0" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cZj-UG-YTV" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="20.5"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Strike It Out" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gpf-VE-M9t" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="90.5" height="24"/>
+                                <rect key="frame" x="0.0" y="20.5" width="90.5" height="22.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KJq-zE-6q3">
-                                <rect key="frame" x="312" y="0.0" width="62" height="24"/>
+                                <rect key="frame" x="312" y="19" width="62" height="24"/>
                                 <color key="backgroundColor" systemColor="linkColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="24" id="AOa-hj-Uc7"/>
@@ -81,7 +92,7 @@
                                 <state key="normal" title="OP #1"/>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="dvd-U4-smK">
-                                <rect key="frame" x="0.0" y="24" width="374" height="71.5"/>
+                                <rect key="frame" x="0.0" y="43" width="374" height="71.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="249" text="MIYAVI" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YFU-A7-Z5l" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="23.5"/>
@@ -114,15 +125,18 @@
                         <constraints>
                             <constraint firstItem="gpf-VE-M9t" firstAttribute="leading" secondItem="Bcf-Ej-vcv" secondAttribute="leading" id="1Kf-c7-CfD"/>
                             <constraint firstItem="dvd-U4-smK" firstAttribute="leading" secondItem="Bcf-Ej-vcv" secondAttribute="leading" id="1OE-wm-eh8"/>
+                            <constraint firstItem="owt-pb-61U" firstAttribute="bottom" secondItem="gpf-VE-M9t" secondAttribute="top" id="7aZ-Sv-rUc"/>
                             <constraint firstItem="dvd-U4-smK" firstAttribute="top" secondItem="gpf-VE-M9t" secondAttribute="bottom" id="CCF-o1-Wem"/>
                             <constraint firstItem="KJq-zE-6q3" firstAttribute="firstBaseline" secondItem="gpf-VE-M9t" secondAttribute="firstBaseline" id="D3E-ye-Nh2"/>
-                            <constraint firstItem="gpf-VE-M9t" firstAttribute="top" secondItem="Bcf-Ej-vcv" secondAttribute="top" id="EEU-NL-lHC"/>
                             <constraint firstAttribute="bottom" secondItem="dvd-U4-smK" secondAttribute="bottom" id="N4a-gn-sVJ"/>
                             <constraint firstAttribute="trailing" secondItem="dvd-U4-smK" secondAttribute="trailing" id="Pig-m8-TML"/>
+                            <constraint firstItem="owt-pb-61U" firstAttribute="top" secondItem="Bcf-Ej-vcv" secondAttribute="top" id="QQ7-B3-I4y"/>
+                            <constraint firstAttribute="trailing" secondItem="owt-pb-61U" secondAttribute="trailing" id="RTD-pO-1T4"/>
                             <constraint firstItem="dvd-U4-smK" firstAttribute="top" relation="greaterThanOrEqual" secondItem="KJq-zE-6q3" secondAttribute="bottom" id="ZB5-I7-IC3"/>
                             <constraint firstItem="KJq-zE-6q3" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gpf-VE-M9t" secondAttribute="trailing" constant="8" symbolic="YES" id="fnH-Bk-ENE"/>
                             <constraint firstItem="KJq-zE-6q3" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Bcf-Ej-vcv" secondAttribute="top" id="pj8-2G-tRi"/>
                             <constraint firstAttribute="trailing" secondItem="KJq-zE-6q3" secondAttribute="trailing" id="qIT-id-20X"/>
+                            <constraint firstItem="owt-pb-61U" firstAttribute="leading" secondItem="Bcf-Ej-vcv" secondAttribute="leading" id="uvP-4j-Ctu"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -141,6 +155,7 @@
                 <outlet property="albumImageView" destination="uNn-wj-mpw" id="eEc-cS-XO6"/>
                 <outlet property="playButton" destination="H0p-jL-Bv1" id="J5v-lg-5fQ"/>
                 <outlet property="primaryLabel" destination="gpf-VE-M9t" id="B9d-uX-wgT"/>
+                <outlet property="rankLable" destination="cZj-UG-YTV" id="F2Y-hX-qFn"/>
                 <outlet property="secondaryLabel" destination="YFU-A7-Z5l" id="dn6-VS-pJu"/>
                 <outlet property="showButton" destination="wt4-st-Vs0" id="aJU-01-bVc"/>
                 <outlet property="tertiaryLable" destination="gWs-7B-j0f" id="a9T-Sr-fg1"/>
@@ -153,10 +168,10 @@
         <image name="Placeholders/Music Album" width="1080" height="1080"/>
         <image name="play.fill" catalog="system" width="117" height="128"/>
         <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="secondaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

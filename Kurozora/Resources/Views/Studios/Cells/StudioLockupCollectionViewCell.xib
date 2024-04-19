@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,10 +12,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="5FL-cO-dPh" customClass="StudioLockupCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="250"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="278"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="wV1-x6-CfA">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="250"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="278"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Show Banner" translatesAutoresizingMaskIntoConstraints="NO" id="br2-r6-Rm3" customClass="BannerImageView" customModule="Kurozora" customModuleProvider="target">
@@ -44,33 +45,41 @@
                             <constraint firstItem="gG1-ru-aE9" firstAttribute="centerY" secondItem="jhC-Kh-3ho" secondAttribute="centerY" id="yho-p0-8VP"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D0b-25-g1e" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="219" width="33" height="16.5"/>
-                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yZK-cP-P9h" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="235.5" width="29" height="14.5"/>
-                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                        <color key="textColor" systemColor="secondaryLabelColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="1Cm-xu-Uok">
+                        <rect key="frame" x="0.0" y="219" width="375" height="59"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qpI-cR-eeq" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="20.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D0b-25-g1e" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="20.5" width="375" height="20.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yZK-cP-P9h" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="41" width="375" height="18"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                <color key="textColor" systemColor="secondaryLabelColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" secondItem="1Cm-xu-Uok" secondAttribute="trailing" id="0Ju-J7-iRB"/>
+                    <constraint firstAttribute="bottom" secondItem="1Cm-xu-Uok" secondAttribute="bottom" id="5ug-M1-ICM"/>
                     <constraint firstItem="jhC-Kh-3ho" firstAttribute="trailing" secondItem="br2-r6-Rm3" secondAttribute="trailing" id="7V7-i0-o9S"/>
-                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="yZK-cP-P9h" secondAttribute="trailing" id="Ov1-O6-eYY"/>
-                    <constraint firstAttribute="bottom" secondItem="yZK-cP-P9h" secondAttribute="bottom" id="QoC-Pq-gxq"/>
+                    <constraint firstItem="1Cm-xu-Uok" firstAttribute="leading" secondItem="wV1-x6-CfA" secondAttribute="leading" id="7nZ-0h-dn9"/>
+                    <constraint firstItem="1Cm-xu-Uok" firstAttribute="top" secondItem="jhC-Kh-3ho" secondAttribute="bottom" constant="8" symbolic="YES" id="Ghq-Yx-6XK"/>
                     <constraint firstItem="jhC-Kh-3ho" firstAttribute="leading" secondItem="br2-r6-Rm3" secondAttribute="leading" id="UWa-3n-Q5r"/>
-                    <constraint firstItem="D0b-25-g1e" firstAttribute="top" secondItem="br2-r6-Rm3" secondAttribute="bottom" constant="8" id="VRc-fo-Tnu"/>
                     <constraint firstItem="jhC-Kh-3ho" firstAttribute="top" secondItem="br2-r6-Rm3" secondAttribute="top" id="aH3-of-bgE"/>
-                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="D0b-25-g1e" secondAttribute="trailing" id="b20-j9-F6w"/>
-                    <constraint firstItem="D0b-25-g1e" firstAttribute="leading" secondItem="wV1-x6-CfA" secondAttribute="leading" id="c1z-um-3oQ"/>
                     <constraint firstItem="jhC-Kh-3ho" firstAttribute="bottom" secondItem="br2-r6-Rm3" secondAttribute="bottom" id="dd9-lp-QAN"/>
-                    <constraint firstItem="yZK-cP-P9h" firstAttribute="top" secondItem="D0b-25-g1e" secondAttribute="bottom" id="kkN-G5-RCe"/>
                     <constraint firstItem="br2-r6-Rm3" firstAttribute="top" secondItem="wV1-x6-CfA" secondAttribute="top" id="s78-1L-Aoc"/>
                     <constraint firstItem="br2-r6-Rm3" firstAttribute="leading" secondItem="wV1-x6-CfA" secondAttribute="leading" id="tVg-Xy-ahJ"/>
-                    <constraint firstItem="yZK-cP-P9h" firstAttribute="leading" secondItem="wV1-x6-CfA" secondAttribute="leading" id="vkG-le-c3N"/>
                     <constraint firstAttribute="trailing" secondItem="br2-r6-Rm3" secondAttribute="trailing" id="yjI-nk-zyL"/>
                 </constraints>
             </collectionViewCellContentView>
@@ -81,6 +90,7 @@
                 <outlet property="primaryImageView" destination="br2-r6-Rm3" id="W8W-xc-5eN"/>
                 <outlet property="primaryLabel" destination="D0b-25-g1e" id="WD4-Iw-2Yx"/>
                 <outlet property="profileImageContainer" destination="jhC-Kh-3ho" id="b56-Ua-fv2"/>
+                <outlet property="rankLabel" destination="qpI-cR-eeq" id="ohw-BU-RRA"/>
                 <outlet property="secondaryImageView" destination="gG1-ru-aE9" id="C3x-Wk-m8k"/>
                 <outlet property="secondaryLabel" destination="yZK-cP-P9h" id="9Sn-nV-TQu"/>
             </connections>
@@ -91,7 +101,7 @@
         <image name="Placeholders/Show Banner" width="1920" height="1080"/>
         <image name="Placeholders/Studio Profile" width="300" height="300"/>
         <systemColor name="secondaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
