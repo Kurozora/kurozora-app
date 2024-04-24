@@ -275,36 +275,7 @@ extension SongDetailsCollectionViewController: SongHeaderCollectionViewCellDeleg
 	func playButtonPressed(_ sender: UIButton, cell: SongHeaderCollectionViewCell) {
 		guard let song = cell.song else { return }
 
-		if let songURL = song.previewAssets?.first?.url {
-			let playerItem = AVPlayerItem(url: songURL)
-
-			if (self.player?.currentItem?.asset as? AVURLAsset)?.url == (playerItem.asset as? AVURLAsset)?.url {
-				switch self.player?.timeControlStatus {
-				case .playing:
-					cell.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
-					cell.playButton.setTitle(Trans.preview.uppercased(), for: .normal)
-					self.player?.pause()
-				case .paused:
-					cell.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-					cell.playButton.setTitle(Trans.stop.uppercased(), for: .normal)
-					self.player?.play()
-				default: break
-				}
-			} else {
-				self.player = AVPlayer(playerItem: playerItem)
-				self.player?.actionAtItemEnd = .none
-				self.player?.play()
-				cell.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-				cell.playButton.setTitle(Trans.stop.uppercased(), for: .normal)
-
-				NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: nil, queue: .current, using: { [weak self] _ in
-					guard let self = self else { return }
-					self.player = nil
-					cell.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
-					cell.playButton.setTitle(Trans.preview.uppercased(), for: .normal)
-				})
-			}
-		}
+		MusicManager.shared.play(song: song, playButton: sender)
 	}
 }
 

@@ -38,70 +38,30 @@ class SongHeaderCollectionViewCell: UICollectionViewCell {
 		self.primaryLabel.text = song.attributes.title
 		self.secondaryLabel.text = song.attributes.artist
 
-		if let appleMusicID = song.attributes.amID {
-			switch MusicAuthorization.currentStatus {
-			case .authorized:
-				self.authorizedMusicRequest(for: appleMusicID)
-//			case .denied, .restricted, .notDetermined:
-			default:
-				self.unauthorizedMusicrequest(for: appleMusicID)
-			}
-		} else {
-			self.resetArtwork()
-		}
-	}
-
-	/// Sends a request to Apple Music when the user authorized the app to use MusicKit.
-	///
-	/// - Parameters:
-	///    - appleMusicID: The id of the music for which the data should be fetched.
-	func authorizedMusicRequest(for appleMusicID: Int) {
 		Task { [weak self] in
 			guard let self = self else { return }
-			guard let urlRequest = URLRequest(urlString: "https://api.music.apple.com/v1/catalog/us/songs/\(appleMusicID)") else { return }
-			let musicDataRequest = MusicDataRequest(urlRequest: urlRequest)
-			let response = try? await musicDataRequest.response()
-			self.handleMusicResponseData(response?.data)
-		}
-	}
 
-	/// Sends a request to Apple Music when the user hasn't authorized the app to use MusicKit.
-	///
-	/// - Parameters:
-	///    - appleMusicID: The id of the music for which the data should be fetched.
-	func unauthorizedMusicrequest(for appleMusicID: Int) {
-		if var urlRequest = URLRequest(urlString: "https://api.music.apple.com/v1/catalog/us/songs/\(appleMusicID)"), let appleMusicDeveloperToken = KSettings?.appleMusicDeveloperToken {
-			urlRequest.httpMethod = "GET"
-			urlRequest.addValue("Bearer \(appleMusicDeveloperToken)", forHTTPHeaderField: "Authorization")
-
-			URLSession.shared.dataTask(with: urlRequest) { [weak self] data, _, error in
-				guard let self = self else { return }
-				guard error == nil else { return }
-				self.handleMusicResponseData(data)
-			}.resume()
-		}
-	}
-
-	/// Handles the data received from the music request.
-	///
-	/// - Parameters:
-	///    - data: The object containing the data of the music request.
-	func handleMusicResponseData(_ data: Data?) {
-		var song: MusicKit.Song?
-
-		if let data = data,
-		   let songJson = try? JSON(data: data) {
-			do {
-				let songJsonString = songJson["data"][0]
-				let songJsonData = try songJsonString.rawData()
-				song = MusicKit.Song(from: songJsonData)
-			} catch {
+			if let appleMusicID = song.attributes.amID {
+				let song = await MusicManager.shared.getSong(for: appleMusicID)
+				self.delegate?.saveAppleMusicSong(song)
+				self.updatePlayButton(using: song)
+				self.updateArtwork(using: song)
+			} else {
 				self.resetArtwork()
 			}
 		}
+	}
 
-		self.delegate?.saveAppleMusicSong(song)
-		self.updateArtwork(using: song)
+	/// Updates the play button using the given song.
+	///
+	/// - Parameters:
+	///    - song: A music item that represents a song.
+	func updatePlayButton(using song: MusicKit.Song?) {
+		if MusicManager.shared.playingSong == song {
+			self.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+		} else {
+			self.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+		}
 	}
 
 	/// Updates the artwork using the given song.
@@ -115,6 +75,7 @@ class SongHeaderCollectionViewCell: UICollectionViewCell {
 			return
 		}
 		guard let artworkURL = song.artwork?.url(width: 320, height: 320)?.absoluteString else { return }
+
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
 			self.playButton.isHidden = false

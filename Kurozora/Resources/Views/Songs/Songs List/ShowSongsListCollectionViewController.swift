@@ -183,40 +183,7 @@ extension ShowSongsListCollectionViewController: MusicLockupCollectionViewCellDe
 	func playButtonPressed(_ sender: UIButton, cell: MusicLockupCollectionViewCell) {
 		guard let song = cell.song else { return }
 
-		if let songURL = song.previewAssets?.first?.url {
-			let playerItem = AVPlayerItem(url: songURL)
-
-			if (self.player?.currentItem?.asset as? AVURLAsset)?.url == (playerItem.asset as? AVURLAsset)?.url {
-				switch self.player?.timeControlStatus {
-				case .playing:
-					cell.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
-					self.player?.pause()
-				case .paused:
-					cell.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-					self.player?.play()
-				default: break
-				}
-			} else {
-				if let indexPath = self.currentPlayerIndexPath {
-					if let cell = collectionView.cellForItem(at: indexPath) as? MusicLockupCollectionViewCell {
-						cell.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
-					}
-				}
-
-				self.currentPlayerIndexPath = cell.indexPath
-				self.player = AVPlayer(playerItem: playerItem)
-				self.player?.actionAtItemEnd = .none
-				self.player?.play()
-				cell.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-
-				NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: nil, queue: .current, using: { [weak self] _ in
-					guard let self = self else { return }
-
-					self.player = nil
-					cell.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
-				})
-			}
-		}
+		MusicManager.shared.play(song: song, playButton: sender)
 	}
 
 	func showButtonPressed(_ sender: UIButton, indexPath: IndexPath) {
