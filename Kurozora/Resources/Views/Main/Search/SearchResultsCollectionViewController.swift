@@ -468,6 +468,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 				self.users = [:]
 			}
 		} else {
+			self.currentIndex = 0
 			self.searchResults = nil
 
 			self.characterIdentities = []

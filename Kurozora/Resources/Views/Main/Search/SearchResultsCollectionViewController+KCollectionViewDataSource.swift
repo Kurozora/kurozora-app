@@ -167,7 +167,7 @@ extension SearchResultsCollectionViewController {
 		if !self.searchTypes.isEmpty {
 			switch self.currentScope {
 			case .kurozora:
-				switch self.searchTypes[self.currentIndex] {
+				switch self.searchTypes[safe: self.currentIndex] ?? .shows {
 				case .shows:
 					if !self.showIdentities.isEmpty {
 						let showItems: [SearchResults.Item] = self.showIdentities.map { showIdentity in
@@ -251,7 +251,7 @@ extension SearchResultsCollectionViewController {
 					}
 				}
 			case .library:
-				switch self.searchTypes[self.currentIndex] {
+				switch self.searchTypes[safe: self.currentIndex] ?? .shows {
 				case .shows:
 					if !self.showIdentities.isEmpty {
 						let showItems: [SearchResults.Item] = self.showIdentities.map { showIdentity in
