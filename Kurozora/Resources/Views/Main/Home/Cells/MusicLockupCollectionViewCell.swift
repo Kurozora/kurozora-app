@@ -83,7 +83,7 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 			self.rankLable.isHidden = true
 		}
 
-		// Confgiure type button
+		// Configure type button
 		self.typeButton.isHidden = false
 		self.typeButton.layerCornerRadius = 12.0
 		self.typeButton.titleLabel?.font = .systemFont(ofSize: 12.0, weight: .semibold)
@@ -91,7 +91,7 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 		self.typeButton.backgroundColor = showSong.attributes.type.backgroundColorValue
 		self.typeButton.setTitleColor(.white, for: .normal)
 
-		// Confgiure type button
+		// Configure type button
 		self.showButton.isHidden = !showShow
 		self.showButton.setTitle(showSong.show?.attributes.title, for: .normal)
 
@@ -101,7 +101,7 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 
 	/// Resets showSong related views.
 	func resetShowSong() {
-		self.tertiaryLable.isHidden = true
+		self.tertiaryLabel.isHidden = true
 		self.typeButton.isHidden = true
 		self.showButton.isHidden = true
 	}
@@ -111,11 +111,12 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 	/// - Parameters:
 	///    - song: The `Song` object used to configure the cell.
 	///    - indexPath: The index path of the cell within the collection view.
+	///    - rank: The rank of the song in a ranked list.
 	///    - fromShowSong: A boolean indicating if the method was called from `configure(using: ShowSong)` method.
-	func configure(using song: KKSong?, at indexPath: IndexPath, fromShowSong: Bool = false) {
+	func configure(using song: KKSong?, at indexPath: IndexPath, rank: Int? = nil, fromShowSong: Bool = false) {
 		if !fromShowSong {
-			// Confgiure showSong views.
-			self.configure(using: nil, at: indexPath, showEpisodes: false, showShow: false)
+			// Configure showSong views.
+			self.configure(using: nil, at: indexPath, rank: rank, showEpisodes: false, showShow: false)
 		}
 
 		guard let song = song else {
@@ -130,6 +131,15 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 
 		// Configure artist
 		self.secondaryLabel.text = song.attributes.artist
+
+		// Configure rank
+		if let rank = rank {
+			self.rankLabel.text = "#\(rank)"
+			self.rankLabel.isHidden = false
+		} else {
+			self.rankLabel.text = nil
+			self.rankLabel.isHidden = true
+		}
 
 		// Configure play button
 		self.playButton.isHidden = true
