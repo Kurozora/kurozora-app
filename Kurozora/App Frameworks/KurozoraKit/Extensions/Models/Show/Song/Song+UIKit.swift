@@ -8,8 +8,9 @@
 
 import UIKit
 import KurozoraKit
+import MusicKit
 
-extension Song {
+extension KKSong {
 	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any?])
 	-> UIContextMenuConfiguration? {
 		let identifier = userInfo["indexPath"] as? NSCopying
@@ -24,20 +25,33 @@ extension Song {
 	func makeContextMenu(in viewController: UIViewController?, userInfo: [AnyHashable: Any?]) -> UIMenu {
 		var menuElements: [UIMenuElement] = []
 
-		// Create "View on Amazon Music" elemtn
+		// Create "Play" element
+		if let song = userInfo["song"] as? MusicKit.Song {
+			let isPlaying = MusicManager.shared.currentSong == song && MusicManager.shared.isPlaying
+			let title = isPlaying ? "Pause" : "Play"
+			let image = isPlaying ? UIImage(systemName: "pause.fill") : UIImage(systemName: "play.fill")
+			let playAction = UIAction(title: title, image: image) { _ in
+				self.playSong(song: song)
+			}
+			menuElements.append(playAction)
+		}
+
+		var viewOnElements: [UIMenuElement] = []
+		// Create "View on Amazon Music" element
 		if let amazonID = self.attributes.amazonID, let amazonMusicLink = URL.amazonMusicURL(amazonID: amazonID) {
 			let amazonMusicAction = UIAction(title: Trans.viewOnAmazonMusic, image: R.image.symbols.musicSmileCircleFill()) { _ in
 				UIApplication.shared.kOpen(amazonMusicLink)
 			}
-			menuElements.append(amazonMusicAction)
+			viewOnElements.append(amazonMusicAction)
 		}
 
 		// Create "View on Apple Music" element
-		if let appleMusicLink = userInfo["appleMusicLink"] as? URL {
+		if let song = userInfo["song"] as? MusicKit.Song,
+		   let appleMusicLink = song.url {
 			let amAction = UIAction(title: Trans.viewOnAppleMusic, image: R.image.symbols.musicNoteCircleFill()) { _ in
 				UIApplication.shared.kOpen(appleMusicLink)
 			}
-			menuElements.append(amAction)
+			viewOnElements.append(amAction)
 		}
 
 		// Create "View on Deezer" element
@@ -45,7 +59,7 @@ extension Song {
 			let deezerAction = UIAction(title: Trans.viewOnDeezer, image: R.image.symbols.musicWaveformCircleFill()) { _ in
 				UIApplication.shared.kOpen(deezerLink)
 			}
-			menuElements.append(deezerAction)
+			viewOnElements.append(deezerAction)
 		}
 
 		// Create "View on Spotify" element
@@ -53,7 +67,7 @@ extension Song {
 			let spotifyAction = UIAction(title: Trans.viewOnSpotify, image: R.image.symbols.wave3UpCircleFill()) { _ in
 				UIApplication.shared.kOpen(spotifyLink)
 			}
-			menuElements.append(spotifyAction)
+			viewOnElements.append(spotifyAction)
 		}
 
 		// Create "View on YouTube Music" element
@@ -61,8 +75,9 @@ extension Song {
 			let spotifyAction = UIAction(title: Trans.viewOnYouTube, image: R.image.symbols.playCircleCircleFill()) { _ in
 				UIApplication.shared.kOpen(youtubeLink)
 			}
-			menuElements.append(spotifyAction)
+			viewOnElements.append(spotifyAction)
 		}
+		menuElements.append(UIMenu(title: "", options: .displayInline, children: viewOnElements))
 
 		// Create "share" element
 		let shareAction = UIAction(title: Trans.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
@@ -96,5 +111,13 @@ extension Song {
 		}
 
 		viewController?.present(activityViewController, animated: true, completion: nil)
+	}
+
+	/// Play the given song.
+	///
+	/// - Parameters:
+	///    - song: The song to play.
+	func playSong(song: MusicKit.Song) {
+		MusicManager.shared.play(song: song, playButton: nil)
 	}
 }
