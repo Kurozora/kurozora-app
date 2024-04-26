@@ -36,6 +36,7 @@ extension UIView {
 	}
 
 	/// Fade in view.
+	///
 	/// - Parameters:
 	///    - duration: animation duration in seconds (default is 0.80 second).
 	///    - completion: optional completion handler to run with animation finishes (default is nil)

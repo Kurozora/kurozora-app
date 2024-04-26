@@ -66,7 +66,11 @@ extension HomeCollectionViewController {
 			case .episodes:
 				return self.episodes[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 			case .songs:
-				return self.showSongs[indexPath]?.song.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+				guard let cell = collectionView.cellForItem(at: indexPath) as? MusicLockupCollectionViewCell else { return nil }
+				return self.showSongs[indexPath]?.song.contextMenuConfiguration(in: self, userInfo: [
+					"indexPath": indexPath,
+					"song": cell.song
+				])
 			case .genres:
 				return self.genres[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 			case .themes:

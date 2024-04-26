@@ -9,8 +9,6 @@
 import UIKit
 import KurozoraKit
 import Alamofire
-import AVFoundation
-import MediaPlayer
 import SPConfetti
 import WhatsNew
 
@@ -41,9 +39,6 @@ class HomeCollectionViewController: KCollectionViewController {
 			#endif
 		}
 	}
-
-	/// The index path of the song that's currently playing.
-	var currentPlayerIndexPath: IndexPath?
 
 	/// Which is used? This or exploreCategories?
 	var shows: [IndexPath: Show] = [:]
@@ -231,7 +226,7 @@ class HomeCollectionViewController: KCollectionViewController {
 				}
 			}
 		} catch {
-			print(error.localizedDescription)
+			print("----- Error fetchExplore:", String(describing: error))
 		}
 	}
 
@@ -478,12 +473,6 @@ extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 
 // MARK: - MusicLockupCollectionViewCellDelegate
 extension HomeCollectionViewController: MusicLockupCollectionViewCellDelegate {
-	func playButtonPressed(_ sender: UIButton, cell: MusicLockupCollectionViewCell) {
-		guard let song = cell.song else { return }
-
-		MusicManager.shared.play(song: song, playButton: sender)
-	}
-
 	func showButtonPressed(_ sender: UIButton, indexPath: IndexPath) {
 		let show = self.exploreCategories[indexPath.section].relationships.showSongs?.data[indexPath.item].show
 		self.performSegue(withIdentifier: R.segue.homeCollectionViewController.showDetailsSegue.identifier, sender: show)

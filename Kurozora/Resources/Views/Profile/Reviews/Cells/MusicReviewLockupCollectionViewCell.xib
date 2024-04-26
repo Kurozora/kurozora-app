@@ -24,10 +24,11 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Music Album" translatesAutoresizingMaskIntoConstraints="NO" id="A6J-B2-cz1" customClass="AlbumImageView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="keX-uy-f5W" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="keX-uy-f5W" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="33" y="33" width="34" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="34" id="3pF-px-7Ru"/>
+                                    <constraint firstAttribute="width" secondItem="keX-uy-f5W" secondAttribute="height" multiplier="1:1" id="Y0m-3C-4Om"/>
                                     <constraint firstAttribute="width" secondItem="keX-uy-f5W" secondAttribute="height" multiplier="1:1" id="xIh-ps-NuH"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
@@ -37,9 +38,6 @@
                                 <state key="normal" image="play.fill" catalog="system">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="15"/>
                                 </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
-                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="playButtonPressed:" destination="Kbv-VF-Tu1" eventType="touchUpInside" id="H8l-0F-EdU"/>
                                 </connections>
@@ -49,7 +47,6 @@
                             <constraint firstAttribute="trailing" secondItem="A6J-B2-cz1" secondAttribute="trailing" id="0PW-Ec-ntK"/>
                             <constraint firstAttribute="width" constant="100" id="BeK-wV-QpO"/>
                             <constraint firstItem="A6J-B2-cz1" firstAttribute="leading" secondItem="E0g-j2-6fU" secondAttribute="leading" id="Mav-jD-Zfg"/>
-                            <constraint firstItem="keX-uy-f5W" firstAttribute="width" secondItem="keX-uy-f5W" secondAttribute="height" multiplier="1:1" id="Y0m-3C-4Om"/>
                             <constraint firstAttribute="bottom" secondItem="A6J-B2-cz1" secondAttribute="bottom" id="Zod-IC-n2l"/>
                             <constraint firstItem="keX-uy-f5W" firstAttribute="centerY" secondItem="A6J-B2-cz1" secondAttribute="centerY" id="a8A-kg-QvD"/>
                             <constraint firstItem="keX-uy-f5W" firstAttribute="centerX" secondItem="A6J-B2-cz1" secondAttribute="centerX" id="dY7-pN-6wg"/>
@@ -167,7 +164,7 @@
         <image name="Placeholders/Music Album" width="1080" height="1080"/>
         <image name="play.fill" catalog="system" width="117" height="128"/>
         <systemColor name="secondaryLabelColor">
-            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color white="0.0" alpha="0.49803921568627452" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

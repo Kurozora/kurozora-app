@@ -10,26 +10,25 @@ import UIKit
 import KurozoraKit
 import MusicKit
 import SwiftyJSON
-import MediaPlayer
+import Combine
 
 protocol MusicLockupCollectionViewCellDelegate: AnyObject {
-	func playButtonPressed(_ sender: UIButton, cell: MusicLockupCollectionViewCell)
 	func showButtonPressed(_ sender: UIButton, indexPath: IndexPath)
 }
 
 class MusicLockupCollectionViewCell: KCollectionViewCell {
 	// MARK: - IBOutlets
-	/// The primary lable of the cell.
+	/// The primary label of the cell.
 	@IBOutlet weak var primaryLabel: UILabel!
 
-	/// The secondary lable of the cell.
+	/// The secondary label of the cell.
 	@IBOutlet weak var secondaryLabel: UILabel!
 
-	/// The tertiary lable of the cell.
-	@IBOutlet weak var tertiaryLable: KSecondaryLabel!
+	/// The tertiary label of the cell.
+	@IBOutlet weak var tertiaryLabel: KSecondaryLabel!
 
-	/// The rank lable of the cell.
-	@IBOutlet weak var rankLable: KLabel!
+	/// The rank label of the cell.
+	@IBOutlet weak var rankLabel: KLabel!
 
 	/// A button representing the state of the music.
 	@IBOutlet weak var albumImageView: UIImageView!
@@ -43,12 +42,14 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 	/// A button representing the type of the music.
 	@IBOutlet weak var typeButton: UIButton!
 
+	private var subscriptions = Set<AnyCancellable>()
+
 	// MARK: - Properties
 	/// The index path of the cell within the parent collection view.
 	var indexPath: IndexPath?
 
 	/// A single music item.
-	var song: MusicItemCollection<MusicKit.Song>.Element?
+	var song: MusicKit.Song?
 
 	/// The `MusicLockupCollectionViewCellDelegate` object responsible for delegating actions.
 	weak var delegate: MusicLockupCollectionViewCellDelegate?
@@ -71,16 +72,16 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 		self.hideSkeleton()
 
 		// Configure episodes
-		self.tertiaryLable.isHidden = !showEpisodes
-		self.tertiaryLable.text = "Episode: \(showSong.attributes.episodes)"
+		self.tertiaryLabel.isHidden = !showEpisodes
+		self.tertiaryLabel.text = "Episode: \(showSong.attributes.episodes)"
 
 		// Configure rank
 		if let rank = rank {
-			self.rankLable.text = "#\(rank)"
-			self.rankLable.isHidden = false
+			self.rankLabel.text = "#\(rank)"
+			self.rankLabel.isHidden = false
 		} else {
-			self.rankLable.text = nil
-			self.rankLable.isHidden = true
+			self.rankLabel.text = nil
+			self.rankLabel.isHidden = true
 		}
 
 		// Configure type button
@@ -142,43 +143,45 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 		}
 
 		// Configure play button
+		self.playButton.highlightBackgroundColorEnabled = false
+		self.playButton.bounceEnabled = true
 		self.playButton.isHidden = true
 		self.playButton.layerCornerRadius = self.playButton.height / 2
 		self.playButton.addBlurEffect()
 		self.playButton.theme_tintColor = KThemePicker.textColor.rawValue
 
+		MusicManager.shared.$isPlaying.handleEvents()
+			.receive(on: DispatchQueue.main)
+			.sink { [weak self] _ in
+				guard let self = self else { return }
+				self.updatePlayButton()
+			}
+			.store(in: &self.subscriptions)
+
 		Task { [weak self] in
 			guard let self = self else { return }
 
 			if let appleMusicID = song.attributes.amID {
-				let song = await MusicManager.shared.getSong(for: appleMusicID)
-				self.updatePlayButton(using: song)
-				self.updateArtwork(using: song)
+				self.song = await MusicManager.shared.getSong(for: appleMusicID)
+				self.updatePlayButton()
+				self.updateArtwork()
 			} else {
 				self.resetArtwork()
 			}
 		}
 	}
 
-	/// Updates the play button using the given song.
-	///
-	/// - Parameters:
-	///    - song: A music item that represents a song.
-	func updatePlayButton(using song: MusicKit.Song?) {
-		if MusicManager.shared.playingSong == song {
+	/// Updates the play button status.
+	func updatePlayButton() {
+		if MusicManager.shared.currentSong == self.song && MusicManager.shared.isPlaying {
 			self.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
 		} else {
 			self.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
 		}
 	}
 
-	/// Updates the artwork using the given song.
-	///
-	/// - Parameters:
-	///    - song: A music item that represents a song.
-	func updateArtwork(using song: MusicKit.Song?) {
-		self.song = song
-
+	/// Updates the album image view.
+	func updateArtwork() {
 		guard let song = song else {
 			self.resetArtwork()
 			return
@@ -207,7 +210,8 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 
 	// MARK: - IBActions
 	@IBAction func playButtonPressed(_ sender: UIButton) {
-		self.delegate?.playButtonPressed(sender, cell: self)
+		guard let song = self.song else { return }
+		MusicManager.shared.play(song: song, playButton: sender)
 	}
 
 	@IBAction func showButtonPressed(_ sender: UIButton) {

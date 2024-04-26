@@ -227,15 +227,6 @@ class ReviewsListCollectionViewController: KCollectionViewController {
 	}
 }
 
-// MARK: - MusicLockupCollectionViewCellDelegate
-extension ReviewsListCollectionViewController: MusicReviewLockupCollectionViewCellDelegate {
-	func playButtonPressed(_ sender: UIButton, cell: MusicReviewLockupCollectionViewCell) {
-		guard let song = cell.song else { return }
-
-		MusicManager.shared.play(song: song, playButton: sender)
-	}
-}
-
 // MARK: - SectionLayoutKind
 extension ReviewsListCollectionViewController {
 	/// List of section layout kind.

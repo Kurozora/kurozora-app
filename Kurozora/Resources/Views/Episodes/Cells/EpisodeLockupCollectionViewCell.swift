@@ -48,7 +48,7 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 		// Configure image view
 		self.episodeImageView.setImage(with: episode.attributes.banner?.url ?? "", placeholder: R.image.placeholders.episodeBanner()!)
 
-		// Confgiure rank
+		// Configure rank
 		if let rank = rank {
 			self.rankLabel.text = "#\(rank)"
 			self.rankLabel.isHidden = false

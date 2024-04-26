@@ -74,7 +74,7 @@ extension ShowDetailHeaderCollectionViewCell {
 		self.statusButton.setTitle(show.attributes.status.name, for: .normal)
 		self.statusButton.backgroundColor = UIColor(hexString: show.attributes.status.color)
 
-		// Confgiure rank button
+		// Configure rank button
 		let rank = show.attributes.stats?.rankTotal ?? 0
 		let rankLabel = rank > 0 ? "Rank #\(rank)" : "Rank -"
 		self.rankButton.setTitle(rankLabel, for: .normal)
@@ -129,7 +129,7 @@ extension ShowDetailHeaderCollectionViewCell {
 		self.statusButton.setTitle(literature.attributes.status.name, for: .normal)
 		self.statusButton.backgroundColor = UIColor(hexString: literature.attributes.status.color)
 
-		// Confgiure rank button
+		// Configure rank button
 		let rank = literature.attributes.stats?.rankTotal ?? 0
 		let rankLabel = rank > 0 ? "Rank #\(rank)" : "Rank -"
 		self.rankButton.setTitle(rankLabel, for: .normal)
@@ -184,7 +184,7 @@ extension ShowDetailHeaderCollectionViewCell {
 		self.statusButton.setTitle(game.attributes.status.name, for: .normal)
 		self.statusButton.backgroundColor = UIColor(hexString: game.attributes.status.color)
 
-		// Confgiure rank button
+		// Configure rank button
 		let rank = game.attributes.stats?.rankTotal ?? 0
 		let rankLabel = rank > 0 ? "Rank #\(rank)" : "Rank -"
 		self.rankButton.setTitle(rankLabel, for: .normal)

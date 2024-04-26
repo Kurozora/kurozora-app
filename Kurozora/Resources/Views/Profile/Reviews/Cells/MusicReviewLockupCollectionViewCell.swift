@@ -11,10 +11,6 @@ import KurozoraKit
 import MusicKit
 import SwiftyJSON
 
-protocol MusicReviewLockupCollectionViewCellDelegate: AnyObject {
-	func playButtonPressed(_ sender: UIButton, cell: MusicReviewLockupCollectionViewCell)
-}
-
 class MusicReviewLockupCollectionViewCell: BaseReviewLockupCollectionViewCell {
 	// MARK: - IBOutlets
 	/// A button representing the state of the music.
@@ -22,10 +18,7 @@ class MusicReviewLockupCollectionViewCell: BaseReviewLockupCollectionViewCell {
 
 	// MARK: - Properties
 	/// A single music item.
-	var song: MusicItemCollection<MusicKit.Song>.Element?
-
-	/// The `MusicReviewLockupCollectionViewCellDelegate` object responsible for delegating actions.
-	weak var delegate: MusicReviewLockupCollectionViewCellDelegate?
+	var song: MusicKit.Song?
 
 	// MARK: - Functions
 	override func configure(using review: Review?, for song: KKSong?) {
@@ -47,6 +40,8 @@ class MusicReviewLockupCollectionViewCell: BaseReviewLockupCollectionViewCell {
 		self.primaryLabel.text = song.attributes.title
 
 		// Configure play button
+		self.playButton.highlightBackgroundColorEnabled = false
+		self.playButton.bounceEnabled = true
 		self.playButton.isHidden = true
 		self.playButton.layerCornerRadius = self.playButton.height / 2
 		self.playButton.addBlurEffect()
@@ -56,33 +51,26 @@ class MusicReviewLockupCollectionViewCell: BaseReviewLockupCollectionViewCell {
 			guard let self = self else { return }
 
 			if let appleMusicID = song.attributes.amID {
-				let song = await MusicManager.shared.getSong(for: appleMusicID)
-				self.updatePlayButton(using: song)
-				self.updateArtwork(using: song)
+				self.song = await MusicManager.shared.getSong(for: appleMusicID)
+				self.updatePlayButton()
+				self.updateArtwork()
 			} else {
 				self.resetArtwork()
 			}
 		}
 	}
 
-	/// Updates the play button using the given song.
-	///
-	/// - Parameters:
-	///    - song: A music item that represents a song.
-	func updatePlayButton(using song: MusicKit.Song?) {
-		if MusicManager.shared.playingSong == song {
+	/// Updates the play button status.
+	func updatePlayButton() {
+		if MusicManager.shared.currentSong == self.song {
 			self.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
 		} else {
 			self.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
 		}
 	}
 
-	/// Updates the artwork using the given song.
-	///
-	/// - Parameters song: A music item that represents a song.
-	func updateArtwork(using song: MusicKit.Song?) {
-		self.song = song
-
+	/// Updates the artwork image view.
+	func updateArtwork() {
 		guard let song = song else {
 			self.resetArtwork()
 			return
@@ -110,6 +98,7 @@ class MusicReviewLockupCollectionViewCell: BaseReviewLockupCollectionViewCell {
 
 	// MARK: - IBActions
 	@IBAction func playButtonPressed(_ sender: UIButton) {
-		self.delegate?.playButtonPressed(sender, cell: self)
+		guard let song = self.song else { return }
+		MusicManager.shared.play(song: song, playButton: sender)
 	}
 }

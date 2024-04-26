@@ -180,7 +180,6 @@ extension ReviewsListCollectionViewController {
 				}
 			}
 
-			baseReviewLockupCollectionViewCell.delegate = self
 			baseReviewLockupCollectionViewCell.configure(using: review, for: song)
 		}
 	}

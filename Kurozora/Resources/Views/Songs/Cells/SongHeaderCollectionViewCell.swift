@@ -10,10 +10,10 @@ import UIKit
 import KurozoraKit
 import MusicKit
 import SwiftyJSON
+import Combine
 
 protocol SongHeaderCollectionViewCellDelegate: AnyObject {
-	func playButtonPressed(_ sender: UIButton, cell: SongHeaderCollectionViewCell)
-	func saveAppleMusicSong(_ song: MusicKit.Song?)
+	func playStateChanged(_ song: MusicKit.Song?)
 }
 
 class SongHeaderCollectionViewCell: UICollectionViewCell {
@@ -24,8 +24,10 @@ class SongHeaderCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var playButton: KTintedButton!
 
 	// MARK: - Properties
+	private var subscriptions = Set<AnyCancellable>()
+
 	/// A single music item.
-	var song: MusicItemCollection<MusicKit.Song>.Element?
+	var song: MusicKit.Song?
 
 	/// The `SongHeaderCollectionViewCellDelegate` object responsible for delegating actions.
 	weak var delegate: SongHeaderCollectionViewCellDelegate?
@@ -38,39 +40,41 @@ class SongHeaderCollectionViewCell: UICollectionViewCell {
 		self.primaryLabel.text = song.attributes.title
 		self.secondaryLabel.text = song.attributes.artist
 
+		MusicManager.shared.$isPlaying.handleEvents()
+			.receive(on: DispatchQueue.main)
+			.sink { [weak self] _ in
+				guard let self = self else { return }
+				self.updatePlayButton()
+				self.delegate?.playStateChanged(self.song)
+			}
+			.store(in: &self.subscriptions)
+
 		Task { [weak self] in
 			guard let self = self else { return }
 
 			if let appleMusicID = song.attributes.amID {
-				let song = await MusicManager.shared.getSong(for: appleMusicID)
-				self.delegate?.saveAppleMusicSong(song)
-				self.updatePlayButton(using: song)
-				self.updateArtwork(using: song)
+				self.song = await MusicManager.shared.getSong(for: appleMusicID)
+				self.delegate?.playStateChanged(self.song)
+				self.updatePlayButton()
+				self.updateArtwork()
 			} else {
 				self.resetArtwork()
 			}
 		}
 	}
 
-	/// Updates the play button using the given song.
-	///
-	/// - Parameters:
-	///    - song: A music item that represents a song.
-	func updatePlayButton(using song: MusicKit.Song?) {
-		if MusicManager.shared.playingSong == song {
+	/// Updates the play button status.
+	func updatePlayButton() {
+		if MusicManager.shared.currentSong == self.song && MusicManager.shared.isPlaying {
 			self.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
 		} else {
 			self.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
 		}
 	}
 
-	/// Updates the artwork using the given song.
-	///
-	/// - Parameters song: A music item that represents a song.
-	func updateArtwork(using song: MusicKit.Song?) {
-		self.song = song
-
-		guard let song = song else {
+	/// Updates the album image view.
+	func updateArtwork() {
+		guard let song = self.song else {
 			self.resetArtwork()
 			return
 		}
@@ -98,6 +102,8 @@ class SongHeaderCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - IBActions
 	@IBAction func playButtonPressed(_ sender: UIButton) {
-		self.delegate?.playButtonPressed(sender, cell: self)
+		guard let song = self.song else { return }
+		MusicManager.shared.play(song: song, playButton: sender)
+		self.delegate?.playStateChanged(song)
 	}
 }

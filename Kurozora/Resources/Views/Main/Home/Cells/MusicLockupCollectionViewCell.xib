@@ -24,7 +24,7 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Music Album" translatesAutoresizingMaskIntoConstraints="NO" id="uNn-wj-mpw" customClass="AlbumImageView" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="374" height="374"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H0p-jL-Bv1" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H0p-jL-Bv1" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="156" y="156" width="62" height="62"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="62" id="Wwg-28-Czf"/>
@@ -37,9 +37,6 @@
                                 <state key="normal" image="play.fill" catalog="system">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="30"/>
                                 </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
-                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="playButtonPressed:" destination="a8b-UB-J09" eventType="touchUpInside" id="biz-qj-pm1"/>
                                 </connections>
@@ -155,10 +152,10 @@
                 <outlet property="albumImageView" destination="uNn-wj-mpw" id="eEc-cS-XO6"/>
                 <outlet property="playButton" destination="H0p-jL-Bv1" id="J5v-lg-5fQ"/>
                 <outlet property="primaryLabel" destination="gpf-VE-M9t" id="B9d-uX-wgT"/>
-                <outlet property="rankLable" destination="cZj-UG-YTV" id="F2Y-hX-qFn"/>
+                <outlet property="rankLabel" destination="cZj-UG-YTV" id="F2Y-hX-qFn"/>
                 <outlet property="secondaryLabel" destination="YFU-A7-Z5l" id="dn6-VS-pJu"/>
                 <outlet property="showButton" destination="wt4-st-Vs0" id="aJU-01-bVc"/>
-                <outlet property="tertiaryLable" destination="gWs-7B-j0f" id="a9T-Sr-fg1"/>
+                <outlet property="tertiaryLabel" destination="gWs-7B-j0f" id="a9T-Sr-fg1"/>
                 <outlet property="typeButton" destination="KJq-zE-6q3" id="acO-PD-Q8n"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="164.73214285714286"/>
@@ -168,10 +165,10 @@
         <image name="Placeholders/Music Album" width="1080" height="1080"/>
         <image name="play.fill" catalog="system" width="117" height="128"/>
         <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="secondaryLabelColor">
-            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color white="0.0" alpha="0.49803921568627452" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

@@ -75,7 +75,11 @@ extension ShowDetailsCollectionViewController {
 		case .cast:
 			return self.cast[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .songs:
-			return self.showSongs[indexPath.item].song.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			guard let cell = collectionView.cellForItem(at: indexPath) as? MusicLockupCollectionViewCell else { return nil }
+			return self.showSongs[indexPath.item].song.contextMenuConfiguration(in: self, userInfo: [
+				"indexPath": indexPath,
+				"song": cell.song
+			])
 		case .studios:
 			return self.studios[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .moreByStudio:

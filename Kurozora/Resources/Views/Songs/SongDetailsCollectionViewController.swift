@@ -8,10 +8,8 @@
 
 import UIKit
 import KurozoraKit
-import MusicKit
 import Alamofire
-import AVFoundation
-import MediaPlayer
+import MusicKit
 
 class SongDetailsCollectionViewController: KCollectionViewController {
 	// MARK: - IBOutlets
@@ -46,9 +44,6 @@ class SongDetailsCollectionViewController: KCollectionViewController {
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
 	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
-
-	/// The object that provides the interface to control the player’s transport behavior.
-	var player: AVPlayer?
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
@@ -107,12 +102,6 @@ class SongDetailsCollectionViewController: KCollectionViewController {
 			guard let self = self else { return }
 			await self.fetchDetails()
 		}
-	}
-
-	override func viewWillDisappear(_ animated: Bool) {
-		super.viewWillDisappear(animated)
-
-		self.player?.pause()
 	}
 
 	// MARK: - Functions
@@ -265,17 +254,17 @@ extension SongDetailsCollectionViewController: BaseLockupCollectionViewCellDeleg
 
 // MARK: - SongHeaderCollectionViewCellDelegate
 extension SongDetailsCollectionViewController: SongHeaderCollectionViewCellDelegate {
-	func saveAppleMusicSong(_ song: MusicKit.Song?) {
-		DispatchQueue.main.async { [weak self] in
-			guard let self = self else { return }
-			self.moreButton.menu = self.song?.makeContextMenu(in: self, userInfo: ["appleMusicLink": song?.url])
-		}
+	func playStateChanged(_ song: MusicKit.Song?) {
+		self.updateMenu(with: song)
 	}
 
-	func playButtonPressed(_ sender: UIButton, cell: SongHeaderCollectionViewCell) {
-		guard let song = cell.song else { return }
-
-		MusicManager.shared.play(song: song, playButton: sender)
+	private func updateMenu(with song: MusicKit.Song?) {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			self.moreButton.menu = self.song?.makeContextMenu(in: self, userInfo: [
+				"song": song
+			])
+		}
 	}
 }
 

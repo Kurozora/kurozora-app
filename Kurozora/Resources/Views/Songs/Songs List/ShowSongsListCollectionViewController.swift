@@ -180,12 +180,6 @@ extension ShowSongsListCollectionViewController: TitleHeaderCollectionReusableVi
 
 // MARK: - MusicLockupCollectionViewCellDelegate
 extension ShowSongsListCollectionViewController: MusicLockupCollectionViewCellDelegate {
-	func playButtonPressed(_ sender: UIButton, cell: MusicLockupCollectionViewCell) {
-		guard let song = cell.song else { return }
-
-		MusicManager.shared.play(song: song, playButton: sender)
-	}
-
 	func showButtonPressed(_ sender: UIButton, indexPath: IndexPath) {
 		let show = self.showSongs[indexPath.item].show
 		self.performSegue(withIdentifier: R.segue.homeCollectionViewController.showDetailsSegue.identifier, sender: show)

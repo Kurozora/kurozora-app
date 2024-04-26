@@ -11,10 +11,10 @@ import KurozoraKit
 
 class RecapLockupCollectionViewCell: KCollectionViewCell {
 	// MARK: - IBOutlets
-	/// The primary lable of the cell.
+	/// The primary label of the cell.
 	@IBOutlet weak var primaryLabel: UILabel!
 
-	/// The lofo image of the cell.
+	/// The logo image of the cell.
 	@IBOutlet weak var logoImageView: UIImageView!
 
 	/// The album image of the cell.
