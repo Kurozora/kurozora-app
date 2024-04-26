@@ -36,15 +36,18 @@ class KButton: UIButton {
 	/// Storage to the background color of the button in a highlighted state.
 	var _highlightBackgroundColor: UIColor?
 
+	/// Indicates whether the bounce effect is enabled.
+	var springEnabled: Bool = false
+
 	// MARK: - Initializers
 	override init(frame: CGRect) {
 		super.init(frame: frame)
-		sharedInit()
+		self.sharedInit()
 	}
 
 	required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
-		sharedInit()
+		self.sharedInit()
 	}
 
 	// MARK: - Functions
@@ -56,37 +59,72 @@ class KButton: UIButton {
 		self.titleLabel?.font = .systemFont(ofSize: self.titleLabel?.font.pointSize ?? 18, weight: .semibold)
 
 		// Add targets
-		addTarget(self, action: #selector(touchDown), for: [.touchDown, .touchDragEnter])
-		addTarget(self, action: #selector(touchUp), for: [.touchUpInside, .touchDragExit, .touchCancel])
+		self.addTarget(self, action: #selector(self.touchDown), for: [.touchDown, .touchDragEnter])
+		self.addTarget(self, action: #selector(self.touchUp), for: [.touchUpInside, .touchDragExit, .touchCancel])
 	}
 
 	/// The actions performed when the user touches the button.
 	@objc private func touchDown() {
-		_highlightBackgroundColor = (backgroundColor != .white) ? backgroundColor?.lighten(by: 0.1) : backgroundColor?.darken(by: 0.15)
-		if highlightBackgroundColorEnabled || highlightBackgroundColor != nil {
-			normalBackgroundColor = backgroundColor
+		self._highlightBackgroundColor = (self.backgroundColor != .white) ? self.backgroundColor?.lighten(by: 0.1) : self.backgroundColor?.darken(by: 0.15)
+		if self.highlightBackgroundColorEnabled || self.highlightBackgroundColor != nil {
+			self.normalBackgroundColor = backgroundColor
 			UIViewPropertyAnimator().stopAnimation(true)
-			animator.stopAnimation(true)
-			backgroundColor = highlightBackgroundColor ?? _highlightBackgroundColor
+			self.animator.stopAnimation(true)
+			self.backgroundColor = self.highlightBackgroundColor ?? self._highlightBackgroundColor
 		}
 
-		if UserSettings.hapticsAllowed {
-			self.selectionFeedbackGenerator.selectionChanged()
+		if self.springEnabled {
+			UIView.animate(
+				withDuration: 0.4,
+				delay: 0,
+				usingSpringWithDamping: 0.8,
+				initialSpringVelocity: 1.75,
+				options: [.curveEaseIn, .beginFromCurrentState, .allowUserInteraction],
+				animations: { [weak self] in
+					guard let self = self else { return }
+					self.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+
+					if UserSettings.hapticsAllowed {
+						self.selectionFeedbackGenerator.selectionChanged()
+					}
+				}, completion: nil)
+		} else {
+			if UserSettings.hapticsAllowed {
+				self.selectionFeedbackGenerator.selectionChanged()
+			}
 		}
 	}
 
 	/// The actions performed when the user lets go of the button.
 	@objc private func touchUp() {
-		if highlightBackgroundColorEnabled || highlightBackgroundColor != nil {
-			animator = UIViewPropertyAnimator(duration: 0.5, curve: .easeOut, animations: {
+		if self.highlightBackgroundColorEnabled || self.highlightBackgroundColor != nil {
+			self.animator = UIViewPropertyAnimator(duration: 0.5, curve: .easeOut, animations: { [weak self] in
+				guard let self = self else { return }
 				self.backgroundColor = self.normalBackgroundColor
 			})
 		}
 
-		if UserSettings.hapticsAllowed {
-			self.selectionFeedbackGenerator.selectionChanged()
-		}
+		self.animator.startAnimation()
 
-		animator.startAnimation()
+		if self.springEnabled {
+			UIView.animate(
+				withDuration: 0.4,
+				delay: 0,
+				usingSpringWithDamping: 0.8,
+				initialSpringVelocity: 1.75,
+				options: [.curveEaseOut, .beginFromCurrentState, .allowUserInteraction],
+				animations: { [weak self] in
+					guard let self = self else { return }
+					self.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+
+					if UserSettings.hapticsAllowed {
+						self.selectionFeedbackGenerator.selectionChanged()
+					}
+				}, completion: nil)
+		} else {
+			if UserSettings.hapticsAllowed {
+				self.selectionFeedbackGenerator.selectionChanged()
+			}
+		}
 	}
 }

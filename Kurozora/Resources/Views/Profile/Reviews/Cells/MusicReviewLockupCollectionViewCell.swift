@@ -41,7 +41,7 @@ class MusicReviewLockupCollectionViewCell: BaseReviewLockupCollectionViewCell {
 
 		// Configure play button
 		self.playButton.highlightBackgroundColorEnabled = false
-		self.playButton.bounceEnabled = true
+		self.playButton.springEnabled = true
 		self.playButton.isHidden = true
 		self.playButton.layerCornerRadius = self.playButton.height / 2
 		self.playButton.addBlurEffect()
