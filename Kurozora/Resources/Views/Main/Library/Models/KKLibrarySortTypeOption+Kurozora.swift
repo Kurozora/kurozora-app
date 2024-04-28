@@ -22,7 +22,7 @@ extension KKLibrary.SortType.Option {
 		case .most:
 			return UIImage(systemName: "chart.line.uptrend.xyaxis")!
 		case .least:
-			return UIImage(systemName: "chart.line.downtrend.xyaxis")!
+			return R.image.symbols.chartLineDowntrendXyaxis()!
 		case .newest:
 			return R.image.symbols.calendarBadgeArrowshapeTurnUpRight()!
 		case .oldest:
