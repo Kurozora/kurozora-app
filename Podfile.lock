@@ -6,12 +6,12 @@ PODS:
   - IQKeyboardManagerSwift (7.0.2)
   - KeychainAccess (4.2.2)
   - Kingfisher (7.11.0)
-  - KurozoraKit (1.14.1):
+  - KurozoraKit (1.14.4):
     - KeychainAccess
     - TRON (= 5.5.0-beta.1)
-  - Pageboy (4.1.0)
+  - Pageboy (4.2.0)
   - R.swift (7.3.2)
-  - ReachabilitySwift (5.2.1)
+  - ReachabilitySwift (5.2.2)
   - Solar (2.1.0)
   - SPConfetti (1.4.0)
   - SwifterSwift (6.2.0):
@@ -49,8 +49,8 @@ PODS:
   - SwifterSwift/WebKit (6.2.0)
   - SwiftTheme (0.6.4)
   - SwiftyJSON (5.0.2)
-  - Tabman (3.1.0):
-    - Pageboy (~> 4.1.0)
+  - Tabman (3.2.0):
+    - Pageboy (~> 4.2.0)
   - TRON (5.5.0-beta.1):
     - Alamofire (~> 5.0)
     - TRON/Core (= 5.5.0-beta.1)
@@ -124,16 +124,16 @@ SPEC CHECKSUMS:
   IQKeyboardManagerSwift: d338c11a896e9f29603443700c4567e32f830c22
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   Kingfisher: b9c985d864d43515f404f1ef4a8ce7d802ace3ac
-  KurozoraKit: a6fbb4eb3d9fc19348d7b04c9865ba80d5a8dbc3
-  Pageboy: e1c494f866874697493da9528777c5006fee613c
+  KurozoraKit: 89878f1682181f0fea51a4279cc23236be8f775f
+  Pageboy: 7f7886f61c76633df635861bf7839caf2cabdb3e
   R.swift: 0af0d882f49f03711415cb4e5215daa977d8a480
-  ReachabilitySwift: 5ae15e16814b5f9ef568963fb2c87aeb49158c66
+  ReachabilitySwift: 2128f3a8c9107e1ad33574c6e58e8285d460b149
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
   SPConfetti: 4ba720ff652d960f59c3e4eadee2c0c3ef6ce9a4
   SwifterSwift: dd00873fb09cde19da88bdb2878f9fe70fe27b0f
   SwiftTheme: 007cbaf1f9e171caf6448a4657533e54c682b285
   SwiftyJSON: f5b1bf1cd8dd53cd25887ac0eabcfd92301c6a5a
-  Tabman: b4211db1d33b7e993015e2e7c6746e6003c02725
+  Tabman: 49f9181a2bfe5c29d002864dac2de8e0b7ea9180
   TRON: 722c4dcb33b98722b567153a436ec0db26c50d14
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
   XCDYouTubeKit: b120aced3d8638ffb570c5450cddb5a1dac448c7

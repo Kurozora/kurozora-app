@@ -8,7 +8,7 @@
 /// A root object that stores information about a collection of person identities.
 public struct PersonIdentityResponse: Codable {
 	// MARK: - Properties
-	/// The data included in the repsonse for a person identity object request.
+	/// The data included in the response for a person identity object request.
 	public let data: [PersonIdentity]
 
 	/// The realtive URL to the next page in the paginated response.

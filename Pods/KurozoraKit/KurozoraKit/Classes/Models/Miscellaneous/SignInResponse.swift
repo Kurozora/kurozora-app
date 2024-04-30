@@ -8,9 +8,9 @@
 /// A root object that stores information about a sign in object request.
 public struct SignInResponse: Codable {
 	// MARK: - Properties
-	/// The data included in the repsonse for a sign in object request.
+	/// The data included in the response for a sign in object request.
 	public let data: [User]
 
-	/// The authentication token included in the repsonse for a sign in object request.
+	/// The authentication token included in the response for a sign in object request.
 	public let authenticationToken: String
 }

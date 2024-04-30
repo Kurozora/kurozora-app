@@ -8,6 +8,6 @@
 /// A root object that stores information about a collection of badges.
 public struct BadgeResponse: Codable {
 	// MARK: - Properties
-	/// The data included in the repsonse for a badge object request.
+	/// The data included in the response for a badge object request.
 	public let data: [Badge]
 }

@@ -19,8 +19,8 @@ extension KurozoraKit {
 		}
 
 		// Prepare request
-		let metaRepsonse = KKEndpoint.Misc.info.endpointValue
-		let request: APIRequest<MetaResponse, KKAPIError> = tron.codable.request(metaRepsonse)
+		let metaResponse = KKEndpoint.Misc.info.endpointValue
+		let request: APIRequest<MetaResponse, KKAPIError> = tron.codable.request(metaResponse)
 			.method(.get)
 			.headers(headers)
 
@@ -39,8 +39,8 @@ extension KurozoraKit {
 		}
 
 		// Prepare request
-		let settingsRepsonse = KKEndpoint.Misc.settings.endpointValue
-		let request: APIRequest<SettingsResponse, KKAPIError> = tron.codable.request(settingsRepsonse)
+		let settingsResponse = KKEndpoint.Misc.settings.endpointValue
+		let request: APIRequest<SettingsResponse, KKAPIError> = tron.codable.request(settingsResponse)
 			.method(.get)
 			.headers(headers)
 

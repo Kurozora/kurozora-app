@@ -8,7 +8,7 @@
 /// A root object that stores information about a collection of game identities.
 public struct GameIdentityResponse: Codable {
 	// MARK: - Properties
-	/// The data included in the repsonse for a game identity object request.
+	/// The data included in the response for a game identity object request.
 	public let data: [GameIdentity]
 
 	/// The realtive URL to the next page in the paginated response.

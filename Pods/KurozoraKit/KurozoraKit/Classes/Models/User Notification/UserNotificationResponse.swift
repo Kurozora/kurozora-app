@@ -8,6 +8,6 @@
 /// A root object that stores information about a collection of user notifications.
 public struct UserNotificationResponse: Codable {
 	// MARK: - Properties
-	/// The data included in the repsonse for a user notification object request.
+	/// The data included in the response for a user notification object request.
 	public let data: [UserNotification]
 }

@@ -30,13 +30,28 @@ extension Song {
 		/// The link to a artwork image of the song.
 		public let artwork: Media?
 
-		/// The title of the song.
-		public let title: String
+		/// The original title of the song.
+		public let originalTitle: String
+
+		/// The localized title of the song.
+		public let title: String?
+
+		/// The original lyrics of the song.
+		public let originalLyrics: String?
+
+		/// The localized lyrics of the song.
+		public let lyrics: String?
 
 		/// The artist of the song.
 		public let artist: String
 
 		/// The stats of the song.
 		public let stats: MediaStat?
+
+		/// The copyright text of the song.
+		public let copyright: String?
+
+		/// The library attributes of the song.
+		public var library: LibraryAttributes?
 	}
 }

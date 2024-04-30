@@ -8,6 +8,6 @@
 /// A root object that stores information about a single legal object.
 public struct LegalResponse: Codable {
 	// MARK: - Properties
-	/// The data included in the repsonse for a legal object request.
+	/// The data included in the response for a legal object request.
 	public let data: Legal
 }

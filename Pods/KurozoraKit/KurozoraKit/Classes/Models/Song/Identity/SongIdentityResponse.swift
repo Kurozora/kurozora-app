@@ -8,7 +8,7 @@
 /// A root object that stores information about a collection of song identities.
 public struct SongIdentityResponse: Codable {
 	// MARK: - Properties
-	/// The data included in the repsonse for a song identity object request.
+	/// The data included in the response for a song identity object request.
 	public let data: [SongIdentity]
 
 	/// The realtive URL to the next page in the paginated response.

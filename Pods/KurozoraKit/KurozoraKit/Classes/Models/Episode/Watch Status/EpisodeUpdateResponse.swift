@@ -8,6 +8,6 @@
 /// A root object that stores information about an episode's update.
 public struct EpisodeUpdateResponse: Codable {
 	// MARK: - Properties
-	/// The data included in the repsonse for an episode update object request.
+	/// The data included in the response for an episode update object request.
 	public let data: EpisodeUpdate
 }

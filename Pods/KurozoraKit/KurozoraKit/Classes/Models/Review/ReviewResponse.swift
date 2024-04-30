@@ -8,7 +8,7 @@
 /// A root object that stores information about a collection of reviews.
 public struct ReviewResponse: Codable {
 	// MARK: - Properties
-	/// The data included in the repsonse for an review object request.
+	/// The data included in the response for an review object request.
 	public let data: [Review]
 
 	/// The realtive URL to the next page in the paginated response.

@@ -51,7 +51,7 @@ extension Episode {
 		/// Whether the episode details have been verified.
 		public let isVerified: Bool
 
-		// Authenticated Attirbutes
+		// Authenticated Attributes
 		/// The rating given by the authenticated user.
 		public var givenRating: Double?
 

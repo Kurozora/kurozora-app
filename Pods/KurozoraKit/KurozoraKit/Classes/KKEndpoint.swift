@@ -140,7 +140,7 @@ extension KKEndpoint {
 		/// The endpoint to leave a rating on an episode.
 		case rate(_ episodeIdentity: EpisodeIdentity)
 
-		/// The endpoint to the reviews belonging to a show.
+		/// The endpoint to the reviews belonging to an episode.
 		case reviews(_ episodeIdentity: EpisodeIdentity)
 
 		// MARK: - Properties
@@ -493,6 +493,12 @@ extension KKEndpoint {
 		/// The endpoint to the games of a song.
 		case games(_ songIdentity: SongIdentity)
 
+		/// The endpoint to leave a rating on a song.
+		case rate(_ episodeIdentity: SongIdentity)
+
+		/// The endpoint to the reviews belonging to a song.
+		case reviews(_ episodeIdentity: SongIdentity)
+
 		// MARK: - Properties
 		/// The endpoint value of the Songs API type.
 		var endpointValue: String {
@@ -503,6 +509,10 @@ extension KKEndpoint {
 				return "songs/\(songIdentity.id)/anime"
 			case .games(let songIdentity):
 				return "songs/\(songIdentity.id)/games"
+			case .rate(let songIdentity):
+				return "songs/\(songIdentity.id)/rate"
+			case .reviews(let songIdentity):
+				return "songs/\(songIdentity.id)/reviews"
 			}
 		}
 	}

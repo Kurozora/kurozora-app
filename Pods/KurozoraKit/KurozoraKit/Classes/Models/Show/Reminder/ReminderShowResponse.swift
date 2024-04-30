@@ -8,6 +8,6 @@
 /// A root object that stores information about a show's reminder status.
 public struct ReminderShowResponse: Codable {
 	// MARK: - Properties
-	/// The data included in the repsonse for a reminder show object request.
+	/// The data included in the response for a reminder show object request.
 	public let data: ReminderShow
 }

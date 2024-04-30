@@ -8,6 +8,6 @@
 /// A root object that stores information about a collection of app themes.
 public struct AppThemeResponse: Codable {
 	// MARK: - Properties
-	/// The data included in the repsonse for an app theme object request.
+	/// The data included in the response for an app theme object request.
 	public let data: [AppTheme]
 }

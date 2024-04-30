@@ -100,7 +100,7 @@ extension Game {
 		/// The copyright text of the game.
 		public let copyright: String?
 
-		/// The library attirbutes of the game.
+		/// The library attributes of the game.
 		public var library: LibraryAttributes?
 	}
 }

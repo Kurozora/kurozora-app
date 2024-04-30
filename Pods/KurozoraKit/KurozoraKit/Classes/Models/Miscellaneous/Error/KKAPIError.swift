@@ -10,7 +10,7 @@ import TRON
 /// An immutable object that stores information about a single failed request, such as the error message.
 public class KKAPIError: APIError {
 	// MARK: - Properties
-	/// The errors included in the repsonse.
+	/// The errors included in the response.
 	fileprivate var kkErrors: [KKError] = []
 
 	/// The message of a failed request.

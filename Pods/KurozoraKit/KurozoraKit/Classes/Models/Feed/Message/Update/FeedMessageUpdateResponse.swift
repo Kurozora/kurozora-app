@@ -8,6 +8,6 @@
 /// A root object that stores information about a feed message update.
 public struct FeedMessageUpdateResponse: Codable {
 	// MARK: - Properties
-	/// The data included in the repsonse for a feed message update object request.
+	/// The data included in the response for a feed message update object request.
 	public let data: FeedMessageUpdate
 }

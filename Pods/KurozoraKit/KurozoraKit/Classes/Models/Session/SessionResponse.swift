@@ -8,7 +8,7 @@
 /// A root object that stores information about a session response.
 public struct SessionResponse: Codable {
 	// MARK: - Properties
-	/// The data included in the repsonse for a session object request.
+	/// The data included in the response for a session object request.
 	public let data: [Session]
 
 	/// The realtive URL to the next page in the paginated response.

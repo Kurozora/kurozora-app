@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a song resource.
-public struct Song: IdentityResource, Hashable {
+public class Song: IdentityResource, Hashable {
 	// MARK: - Enums
 	public enum CodingKeys : String, CodingKey {
 		case id = "uuid", type, href, attributes, relationships

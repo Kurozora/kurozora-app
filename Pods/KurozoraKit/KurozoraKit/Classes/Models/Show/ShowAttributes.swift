@@ -133,7 +133,7 @@ extension Show {
 		/// The copyright text of the show.
 		public let copyright: String?
 
-		/// The library attirbutes of the show.
+		/// The library attributes of the show.
 		public var library: LibraryAttributes?
 	}
 }

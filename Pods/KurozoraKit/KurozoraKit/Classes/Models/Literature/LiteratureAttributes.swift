@@ -118,7 +118,7 @@ extension Literature {
 		/// The copyright text of the literature.
 		public let copyright: String?
 
-		/// The library attirbutes of the literature.
+		/// The library attributes of the literature.
 		public var library: LibraryAttributes?
 	}
 }

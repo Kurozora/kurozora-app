@@ -8,6 +8,6 @@
 /// A root object that stores information about an season's update.
 public struct SeasonUpdateResponse: Codable {
 	// MARK: - Properties
-	/// The data included in the repsonse for an season update object request.
+	/// The data included in the response for an season update object request.
 	public let data: SeasonUpdate
 }

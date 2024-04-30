@@ -8,7 +8,7 @@
 /// A root object that stores information about a collection of staff.
 public struct StaffResponse: Codable {
 	// MARK: - Properties
-	/// The data included in the repsonse for a staff object request.
+	/// The data included in the response for a staff object request.
 	public let data: [Staff]
 
 	/// The realtive URL to the next page in the paginated response.
