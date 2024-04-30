@@ -1107,6 +1107,11 @@ struct Trans {
 	/// - Tag: Trans-reconnect
 	static let reconnect: String = String(localized: "Reconnect!",
 										  comment: "The string for the word 'reconnect'.")
+	/// The string for the word 'Lyrics'.
+	///
+	/// - Tag: Trans-lyrics
+	static let lyrics: String = String(localized: "Lyrics",
+									   comment: "The string for the word 'Lyrics'.")
 	/// The string for the word 'asHeardOn'.
 	///
 	/// - Tag: Trans-asHeardOn

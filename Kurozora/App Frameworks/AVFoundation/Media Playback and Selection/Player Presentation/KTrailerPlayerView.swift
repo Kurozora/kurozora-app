@@ -16,9 +16,15 @@ class KTrailerPlayerView: UIView {
 
 	// The associated player object.
 	var player: AVPlayer? {
-		get { playerLayer.player }
-		set { playerLayer.player = newValue }
+		get {
+			self.playerLayer.player
+		}
+		set {
+			self.playerLayer.player = newValue
+		}
 	}
 
-	var playerLayer: AVPlayerLayer { layer as! AVPlayerLayer }
+	var playerLayer: AVPlayerLayer {
+		self.layer as! AVPlayerLayer
+	}
 }

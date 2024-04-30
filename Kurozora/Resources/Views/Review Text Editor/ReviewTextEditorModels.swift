@@ -110,9 +110,10 @@ enum ReviewTextEditor {
 // MARK: - Models
 extension ReviewTextEditor {
 	enum Kind {
-		case show(_ show: Show)
-		case literature(_ literature: Literature)
-		case game(_ game: Game)
 		case episode(_ episode: Episode)
+		case game(_ game: Game)
+		case literature(_ literature: Literature)
+		case show(_ show: Show)
+		case song(_ song: Song)
 	}
 }

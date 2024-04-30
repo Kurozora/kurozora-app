@@ -89,7 +89,7 @@ extension KKSong {
 		return UIMenu(title: "", children: menuElements)
 	}
 
-	/// Present share sheet for the show.
+	/// Present share sheet for the song.
 	///
 	/// Make sure to send either the view or the bar button item that's sending the request.
 	///
@@ -98,7 +98,7 @@ extension KKSong {
 	///    - view: The `UIView` sending the request.
 	///    - barButtonItem: The `UIBarButtonItem` sending the request.
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
-		let shareText = "https://kurozora.app/songs/\(self.id)\nListen to \"\(self.attributes.title)\" by \"\(self.attributes.artist)\" on @KurozoraApp"
+		let shareText = "https://kurozora.app/songs/\(self.id)\nListen to \"\(self.attributes.originalTitle)\" by \"\(self.attributes.artist)\" on @KurozoraApp"
 		let activityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
 
 		if let popoverController = activityViewController.popoverPresentationController {
@@ -119,5 +119,33 @@ extension KKSong {
 	///    - song: The song to play.
 	func playSong(song: MusicKit.Song) {
 		MusicManager.shared.play(song: song, playButton: nil)
+	}
+
+	/// Rate the song with the given rating.
+	///
+	/// - Parameters:
+	///    - rating: The rating given by the user.
+	///    - description: The review given by the user.
+	///
+	/// - Returns: the rating applied to the song if rated successfully.
+	func rate(using rating: Double, description: String?) async -> Double? {
+		let songIdentity = SongIdentity(id: self.id)
+
+		do {
+			_ = try await KService.rateSong(songIdentity, with: rating, description: description).value
+
+			// Update current rating for the user.
+			self.attributes.library?.rating = rating
+
+			// Update review only if the user removes it explicitly.
+			if description != nil {
+				self.attributes.library?.review = description
+			}
+
+			return rating
+		} catch {
+			print(error.localizedDescription)
+			return nil
+		}
 	}
 }

@@ -41,6 +41,9 @@ class SongDetailsCollectionViewController: KCollectionViewController {
 		}
 	}
 
+	/// Review properties.
+	var reviews: [Review] = []
+
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
 	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
@@ -150,6 +153,24 @@ class SongDetailsCollectionViewController: KCollectionViewController {
 		} catch {
 			print(error.localizedDescription)
 		}
+
+		do {
+			let reviewIdentityResponse = try await KService.getReviews(forSong: songIdentity, next: nil, limit: 10).value
+			self.reviews = reviewIdentityResponse.data
+			self.updateDataSource()
+		} catch {
+			print(error.localizedDescription)
+		}
+
+	}
+
+	/// Show a success alert thanking the user for rating.
+	private func showRatingSuccessAlert() {
+		let alertController = UIApplication.topViewController?.presentAlertController(title: Trans.ratingSubmitted, message: Trans.thankYouForRating)
+
+		DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+			alertController?.dismiss(animated: true, completion: nil)
+		}
 	}
 
 	// MARK: - Segue
@@ -172,6 +193,20 @@ extension SongDetailsCollectionViewController {
 		titleHeaderCollectionReusableView.delegate = self
 		titleHeaderCollectionReusableView.configure(withTitle: songDetailSection.stringValue, indexPath: indexPath, segueID: songDetailSection.segueIdentifier)
 		return titleHeaderCollectionReusableView
+	}
+}
+
+// MARK: - TextViewCollectionViewCellDelegate
+extension SongDetailsCollectionViewController: TextViewCollectionViewCellDelegate {
+	func textViewCollectionViewCell(_ cell: TextViewCollectionViewCell, didPressButton button: UIButton) {
+		if let synopsisKNavigationController = R.storyboard.synopsis.instantiateInitialViewController() {
+			if let synopsisViewController = synopsisKNavigationController.viewControllers.first as? SynopsisViewController {
+				synopsisViewController.title = cell.textViewCollectionViewCellType.stringValue
+				synopsisViewController.synopsis = self.song.attributes.lyrics
+			}
+			synopsisKNavigationController.modalPresentationStyle = .formSheet
+			self.present(synopsisKNavigationController, animated: true)
+		}
 	}
 }
 
@@ -268,14 +303,88 @@ extension SongDetailsCollectionViewController: SongHeaderCollectionViewCellDeleg
 	}
 }
 
+// MARK: - ReviewCollectionViewCellDelegate
+extension SongDetailsCollectionViewController: ReviewCollectionViewCellDelegate {
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressUserName sender: AnyObject) {
+		guard let indexPath = collectionView.indexPath(for: cell) else { return }
+		self.reviews[indexPath.item].visitOriginalPosterProfile(from: self)
+	}
+
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) {
+		if let badgeViewController = R.storyboard.badge.instantiateInitialViewController() {
+			badgeViewController.profileBadge = profileBadge
+			badgeViewController.popoverPresentationController?.sourceView = button
+			badgeViewController.popoverPresentationController?.sourceRect = button.bounds
+
+			self.present(badgeViewController, animated: true, completion: nil)
+		}
+	}
+}
+
+// MARK: - TapToRateCollectionViewCellDelegate
+extension SongDetailsCollectionViewController: TapToRateCollectionViewCellDelegate {
+	func tapToRateCollectionViewCell(_ cell: TapToRateCollectionViewCell, rateWith rating: Double) {
+		Task { [weak self] in
+			guard let self = self else { return }
+			let rating = await self.song.rate(using: rating, description: nil)
+			cell.configure(using: rating)
+
+			if rating != nil {
+				self.showRatingSuccessAlert()
+			}
+		}
+	}
+}
+
+// MARK: - WriteAReviewCollectionViewCellDelegate
+extension SongDetailsCollectionViewController: WriteAReviewCollectionViewCellDelegate {
+	func writeAReviewCollectionViewCell(_ cell: WriteAReviewCollectionViewCell, didPress button: UIButton) {
+		WorkflowController.shared.isSignedIn { [weak self] in
+			guard let self = self else { return }
+
+			let reviewTextEditorViewController = ReviewTextEditorViewController()
+			reviewTextEditorViewController.delegate = self
+			reviewTextEditorViewController.router?.dataStore?.kind = .song(self.song)
+			reviewTextEditorViewController.router?.dataStore?.rating = self.song.attributes.library?.rating
+			reviewTextEditorViewController.router?.dataStore?.review = self.song.attributes.library?.review
+
+			let navigationController = KNavigationController(rootViewController: reviewTextEditorViewController)
+			navigationController.presentationController?.delegate = reviewTextEditorViewController
+			self.present(navigationController, animated: true)
+		}
+	}
+}
+
+// MARK: - ReviewTextEditorViewControllerDelegate
+extension SongDetailsCollectionViewController: ReviewTextEditorViewControllerDelegate {
+	func reviewTextEditorViewControllerDidSubmitReview() {
+		self.showRatingSuccessAlert()
+	}
+}
+
 extension SongDetailsCollectionViewController {
 	enum SectionLayoutKind: Int, CaseIterable {
 		// MARK: - Cases
 		/// Indicates a header section layout type.
 		case header = 0
 
+		/// Indicates a lyrics section layout type.
+		case lyrics
+
+		/// Indicates a rating section layout type.
+		case rating
+
+		/// Indicates a rate and review section layout type.
+		case rateAndReview
+
+		/// Indicates a reviews section layout type.
+		case reviews
+
 		/// Indicates shows section layout type.
 		case shows
+
+		/// Indicates a copyright section layout type.
+		case sosumi
 
 		// MARK: - Properties
 		/// The string value of a song section type.
@@ -283,8 +392,18 @@ extension SongDetailsCollectionViewController {
 			switch self {
 			case .header:
 				return Trans.header
+			case .lyrics:
+				return Trans.lyrics
+			case .rating:
+				return Trans.ratingsAndReviews
+			case .rateAndReview:
+				return ""
+			case .reviews:
+				return ""
 			case .shows:
 				return Trans.asHeardOn
+			case .sosumi:
+				return Trans.copyright
 			}
 		}
 
@@ -293,7 +412,17 @@ extension SongDetailsCollectionViewController {
 			switch self {
 			case .header:
 				return ""
+			case .lyrics:
+				return ""
+			case .rating:
+				return ""
+			case .rateAndReview:
+				return ""
+			case .reviews:
+				return ""
 			case .shows:
+				return ""
+			case .sosumi:
 				return ""
 			}
 		}
@@ -305,6 +434,9 @@ extension SongDetailsCollectionViewController {
 		/// Indicates the item kind contains a `Song` object.
 		case song(_: KKSong, id: UUID = UUID())
 
+		/// Indicates the item kind contains a `Review` object.
+		case review(_: Review, id: UUID = UUID())
+
 		/// Indicates the item kind contains a `ShowIdentity` object.
 		case showIdentity(_: ShowIdentity, id: UUID = UUID())
 
@@ -313,6 +445,9 @@ extension SongDetailsCollectionViewController {
 			switch self {
 			case .song(let song, let id):
 				hasher.combine(song)
+				hasher.combine(id)
+			case .review(let review, let id):
+				hasher.combine(review)
 				hasher.combine(id)
 			case .showIdentity(let showIdentity, let id):
 				hasher.combine(showIdentity)
@@ -324,6 +459,8 @@ extension SongDetailsCollectionViewController {
 			switch (lhs, rhs) {
 			case (.song(let song1, let id1), .song(let song2, let id2)):
 				return song1 == song2 && id1 == id2
+			case (.review(let review1, let id1), .review(let review2, let id2)):
+				return review1 == review2 && id1 == id2
 			case (.showIdentity(let showIdentity1, let id1), .showIdentity(let showIdentity2, let id2)):
 				return showIdentity1 == showIdentity2 && id1 == id2
 			default:
