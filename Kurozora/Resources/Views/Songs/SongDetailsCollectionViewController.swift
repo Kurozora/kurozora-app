@@ -161,7 +161,6 @@ class SongDetailsCollectionViewController: KCollectionViewController {
 		} catch {
 			print(error.localizedDescription)
 		}
-
 	}
 
 	/// Show a success alert thanking the user for rating.
