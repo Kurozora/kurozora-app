@@ -126,7 +126,11 @@ extension SearchResultsCollectionViewController {
 			guard let game = self.games[indexPath] else { return nil }
 			return game.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .songIdentity:
-			return self.songs[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			guard let cell = collectionView.cellForItem(at: indexPath) as? MusicLockupCollectionViewCell else { return nil }
+			return self.songs[indexPath]?.contextMenuConfiguration(in: self, userInfo: [
+				"indexPath": indexPath,
+				"song": cell.song
+			])
 		case .studioIdentity:
 			return self.studios[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .userIdentity:
