@@ -29,8 +29,14 @@ struct Provider: IntentTimelineProvider {
 		Task {
 			// Fetch a random anime image from server
 			let date = Date()
-			guard let mediaResponse = try? await KService.getRandomImages(of: configuration.kind.kkMediaKind, from: configuration.collection.kkMediaCollection).value else { return }
-			guard let media = mediaResponse.data.first else { return }
+			guard let mediaResponse = try? await KService.getRandomImages(of: configuration.kind.kkMediaKind, from: configuration.collection.kkMediaCollection).value else {
+				completion(self.placeholder(in: context))
+				return
+			}
+			guard let media = mediaResponse.data.first else {
+				completion(self.placeholder(in: context))
+				return
+			}
 			let entry: DateEntry
 
 			if context.isPreview {
@@ -47,7 +53,14 @@ struct Provider: IntentTimelineProvider {
 		Task {
 			// Fetch a random anime images from server
 			let limit = 3
-			guard let mediaResponse = try? await KService.getRandomImages(of: configuration.kind.kkMediaKind, from: configuration.collection.kkMediaCollection, limit: limit).value else { return }
+			guard let mediaResponse = try? await KService.getRandomImages(of: configuration.kind.kkMediaKind, from: configuration.collection.kkMediaCollection, limit: limit).value else {
+				let date = Date()
+				let nextUpdate = Calendar.current.date(byAdding: DateComponents(hour: 1), to: date)!
+				let entry = self.placeholder(in: context)
+				let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
+				completion(timeline)
+				return
+			}
 			let date = Date()
 			var entries: [DateEntry] = []
 
