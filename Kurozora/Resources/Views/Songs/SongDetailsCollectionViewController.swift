@@ -288,11 +288,11 @@ extension SongDetailsCollectionViewController: BaseLockupCollectionViewCellDeleg
 
 // MARK: - SongHeaderCollectionViewCellDelegate
 extension SongDetailsCollectionViewController: SongHeaderCollectionViewCellDelegate {
-	func playStateChanged(_ song: MusicKit.Song?) {
+	func playStateChanged(_ song: MKSong?) {
 		self.updateMenu(with: song)
 	}
 
-	private func updateMenu(with song: MusicKit.Song?) {
+	private func updateMenu(with song: MKSong?) {
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
 			self.moreButton.menu = self.song?.makeContextMenu(in: self, userInfo: [

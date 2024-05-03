@@ -65,9 +65,17 @@ class SongHeaderCollectionViewCell: UICollectionViewCell {
 
 	/// Updates the play button status.
 	func updatePlayButton() {
+		let title = if MusicManager.shared.authrizationState == .authorized && MusicManager.shared.hasAMSubscription {
+			MusicManager.shared.isPlaying ? Trans.pauze : Trans.play
+		} else {
+			Trans.preview
+		}
+
 		if MusicManager.shared.currentSong == self.song && MusicManager.shared.isPlaying {
+			self.playButton.setTitle(title, for: .normal)
 			self.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
 		} else {
+			self.playButton.setTitle(title, for: .normal)
 			self.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
 		}
 	}

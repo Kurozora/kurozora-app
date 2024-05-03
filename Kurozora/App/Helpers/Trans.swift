@@ -1147,6 +1147,16 @@ struct Trans {
 	/// - Tag: Trans-preview
 	static let preview: String = String(localized: "Previw",
 									 comment: "The string for the word 'preview'.")
+	/// The string for the word 'play'.
+	///
+	/// - Tag: Trans-play
+	static let play: String = String(localized: "Play",
+									 comment: "The string for the word 'play'.")
+	/// The string for the word 'pauze'.
+	///
+	/// - Tag: Trans-pauze
+	static let pauze: String = String(localized: "Pauze",
+									  comment: "The string for the word 'pauze'.")
 	/// The string for the word 'stop'.
 	///
 	/// - Tag: Trans-stop

@@ -26,7 +26,7 @@ extension KKSong {
 		var menuElements: [UIMenuElement] = []
 
 		// Create "Play" element
-		if let song = userInfo["song"] as? MusicKit.Song {
+		if let song = userInfo["song"] as? MKSong {
 			let isPlaying = MusicManager.shared.currentSong == song && MusicManager.shared.isPlaying
 			let title = isPlaying ? "Pause" : "Play"
 			let image = isPlaying ? UIImage(systemName: "pause.fill") : UIImage(systemName: "play.fill")
@@ -46,8 +46,8 @@ extension KKSong {
 		}
 
 		// Create "View on Apple Music" element
-		if let song = userInfo["song"] as? MusicKit.Song,
-		   let appleMusicLink = song.url {
+		if let song = userInfo["song"] as? MKSong,
+		   let appleMusicLink = song.song.url {
 			let amAction = UIAction(title: Trans.viewOnAppleMusic, image: R.image.symbols.musicNoteCircleFill()) { _ in
 				UIApplication.shared.kOpen(appleMusicLink)
 			}
@@ -117,7 +117,7 @@ extension KKSong {
 	///
 	/// - Parameters:
 	///    - song: The song to play.
-	func playSong(song: MusicKit.Song) {
+	func playSong(song: MKSong) {
 		MusicManager.shared.play(song: song, playButton: nil)
 	}
 

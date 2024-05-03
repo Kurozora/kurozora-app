@@ -18,7 +18,7 @@ class MusicReviewLockupCollectionViewCell: BaseReviewLockupCollectionViewCell {
 
 	// MARK: - Properties
 	/// A single music item.
-	var song: MusicKit.Song?
+	var song: MKSong?
 
 	// MARK: - Functions
 	override func configure(using review: Review?, for song: KKSong?) {
@@ -75,11 +75,11 @@ class MusicReviewLockupCollectionViewCell: BaseReviewLockupCollectionViewCell {
 			self.resetArtwork()
 			return
 		}
-		guard let artworkURL = song.artwork?.url(width: 320, height: 320)?.absoluteString else { return }
+		guard let artworkURL = song.song.artwork?.url(width: 320, height: 320)?.absoluteString else { return }
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
 			self.playButton.isHidden = false
-			self.posterImageView.backgroundColor = song.artwork?.backgroundColor?.uiColor
+			self.posterImageView.backgroundColor = song.song.artwork?.backgroundColor?.uiColor
 			self.posterImageView.setImage(with: artworkURL, placeholder: #imageLiteral(resourceName: "Placeholders/Music Album"))
 		}
 	}

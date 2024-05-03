@@ -49,7 +49,7 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 	var indexPath: IndexPath?
 
 	/// A single music item.
-	var song: MusicKit.Song?
+	var song: MKSong?
 
 	/// The `MusicLockupCollectionViewCellDelegate` object responsible for delegating actions.
 	weak var delegate: MusicLockupCollectionViewCellDelegate?
@@ -186,12 +186,12 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 			self.resetArtwork()
 			return
 		}
-		guard let artworkURL = song.artwork?.url(width: 320, height: 320)?.absoluteString else { return }
+		guard let artworkURL = song.song.artwork?.url(width: 320, height: 320)?.absoluteString else { return }
 
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
 			self.playButton.isHidden = false
-			self.albumImageView?.backgroundColor = song.artwork?.backgroundColor?.uiColor
+			self.albumImageView?.backgroundColor = song.song.artwork?.backgroundColor?.uiColor
 			self.albumImageView?.setImage(with: artworkURL, placeholder: #imageLiteral(resourceName: "Placeholders/Music Album"))
 		}
 	}

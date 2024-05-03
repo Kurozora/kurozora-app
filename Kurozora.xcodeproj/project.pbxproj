@@ -172,6 +172,7 @@
 		6640E19D22AE895A00D0F575 /* AuthenticationInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6640E19C22AE895A00D0F575 /* AuthenticationInterval.swift */; };
 		664133E521DA8E5F00CE823A /* NotificationsGroupingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664133E421DA8E5F00CE823A /* NotificationsGroupingCell.swift */; };
 		664133E821DB828E00CE823A /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664133E721DB828E00CE823A /* UserSettings.swift */; };
+		66427C7B2BE43E2000D1CA89 /* MKSong.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66427C7A2BE43E2000D1CA89 /* MKSong.swift */; };
 		664540792821EDFE0001E5B2 /* AlbumImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664540782821EDFE0001E5B2 /* AlbumImageView.swift */; };
 		6645407B2821EE2B0001E5B2 /* BannerImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6645407A2821EE2B0001E5B2 /* BannerImageView.swift */; };
 		6645407D2821EEC60001E5B2 /* PosterImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6645407C2821EEC60001E5B2 /* PosterImageView.swift */; };
@@ -932,6 +933,7 @@
 		6640E19C22AE895A00D0F575 /* AuthenticationInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationInterval.swift; sourceTree = "<group>"; };
 		664133E421DA8E5F00CE823A /* NotificationsGroupingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsGroupingCell.swift; sourceTree = "<group>"; };
 		664133E721DB828E00CE823A /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
+		66427C7A2BE43E2000D1CA89 /* MKSong.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKSong.swift; sourceTree = "<group>"; };
 		664540782821EDFE0001E5B2 /* AlbumImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumImageView.swift; sourceTree = "<group>"; };
 		6645407A2821EE2B0001E5B2 /* BannerImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerImageView.swift; sourceTree = "<group>"; };
 		6645407C2821EEC60001E5B2 /* PosterImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterImageView.swift; sourceTree = "<group>"; };
@@ -2159,6 +2161,7 @@
 				66FA97E4281EC9DC0054FC2E /* QuickLink.swift */,
 				66DF091226C7C1FA005AED93 /* Store.swift */,
 				664133E721DB828E00CE823A /* UserSettings.swift */,
+				66427C7A2BE43E2000D1CA89 /* MKSong.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -4901,6 +4904,7 @@
 				669A36BB24F1AD500045D04A /* OnboardingFooterTableViewCell.swift in Sources */,
 				666C899D2A005F9C0075B5D6 /* SearchFilterCollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				66EA1DD825B5BB7700FCD07A /* CastListCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
+				66427C7B2BE43E2000D1CA89 /* MKSong.swift in Sources */,
 				66CBFB6221217F60006A5E4F /* InformationCollectionViewCell.swift in Sources */,
 				66EA1E0D25B6287000FCD07A /* Episode+UIKit.swift in Sources */,
 				666938B221B1D4DF00BA9620 /* WriteACommentCell.swift in Sources */,
