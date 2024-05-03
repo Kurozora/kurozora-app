@@ -36,6 +36,26 @@ extension KKSong {
 			menuElements.append(playAction)
 		}
 
+		if MusicManager.shared.hasAMSubscription {
+			var addElements: [UIMenuElement] = []
+			// Create "Add to Apple Music" element
+			if let song = userInfo["song"] as? MKSong {
+				let title = song.isInLibrary ? "In Apple Music Library" : "Add to Apple Music"
+				let image = song.isInLibrary ? UIImage(systemName: "checkmark") : UIImage(systemName: "plus")
+				let addAction = UIAction(title: title, image: image) { _ in
+					if song.isInLibrary {
+						self.showRemoveFromLibraryAlert(for: song, on: viewController)
+					} else {
+						Task {
+							_ = await self.addToLibrary(song: song)
+						}
+					}
+				}
+				addElements.append(addAction)
+			}
+			menuElements.append(UIMenu(title: "", options: .displayInline, children: addElements))
+		}
+
 		var viewOnElements: [UIMenuElement] = []
 		// Create "View on Amazon Music" element
 		if let amazonID = self.attributes.amazonID, let amazonMusicLink = URL.amazonMusicURL(amazonID: amazonID) {
@@ -147,5 +167,30 @@ extension KKSong {
 			print(error.localizedDescription)
 			return nil
 		}
+	}
+
+	/// Add song to Apple Music Library.
+	///
+	/// - Parameters:
+	///    - song: The song to add.
+	func addToLibrary(song: MKSong) async -> Bool {
+		return await MusicManager.shared.add(song: song)
+	}
+
+	/// Present an alert to the user that the song cannot be removed from the library.
+	///
+	/// - Parameters:
+	///   - viewController: The view controller to present the alert on.
+	private func showRemoveFromLibraryAlert(for song: MKSong, on viewController: UIViewController?) {
+		var actions: [UIAlertAction] = []
+
+		if let libraryID = song.relationship?.library?.data.first?.id {
+			actions.append(UIAlertAction(title: "Show in Library", style: .default, handler: { _ in
+				guard let url = URL(string: "music://music.apple.com/library/songs/\(libraryID)") else { return }
+				UIApplication.shared.kOpen(nil, deepLink: url)
+			}))
+		}
+
+		viewController?.presentAlertController(title: "How to Remove", message: "Songs added to your Apple Music Library cannot be removed from Kurozora due to API limitations. Please remove the song from your library manually in the Music app.", actions: actions)
 	}
 }

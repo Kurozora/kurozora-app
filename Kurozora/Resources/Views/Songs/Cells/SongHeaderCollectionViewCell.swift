@@ -13,7 +13,7 @@ import SwiftyJSON
 import Combine
 
 protocol SongHeaderCollectionViewCellDelegate: AnyObject {
-	func playStateChanged(_ song: MusicKit.Song?)
+	func playStateChanged(_ song: MKSong?)
 }
 
 class SongHeaderCollectionViewCell: UICollectionViewCell {
@@ -27,7 +27,7 @@ class SongHeaderCollectionViewCell: UICollectionViewCell {
 	private var subscriptions = Set<AnyCancellable>()
 
 	/// A single music item.
-	var song: MusicKit.Song?
+	var song: MKSong?
 
 	/// The `SongHeaderCollectionViewCellDelegate` object responsible for delegating actions.
 	weak var delegate: SongHeaderCollectionViewCellDelegate?
@@ -86,12 +86,12 @@ class SongHeaderCollectionViewCell: UICollectionViewCell {
 			self.resetArtwork()
 			return
 		}
-		guard let artworkURL = song.artwork?.url(width: 320, height: 320)?.absoluteString else { return }
+		guard let artworkURL = song.song.artwork?.url(width: 320, height: 320)?.absoluteString else { return }
 
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
 			self.playButton.isHidden = false
-			self.albumImageView?.backgroundColor = song.artwork?.backgroundColor?.uiColor
+			self.albumImageView?.backgroundColor = song.song.artwork?.backgroundColor?.uiColor
 			self.albumImageView?.setImage(with: artworkURL, placeholder: #imageLiteral(resourceName: "Placeholders/Music Album"))
 		}
 	}
