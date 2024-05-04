@@ -184,12 +184,11 @@ extension KKSong {
 	private func showRemoveFromLibraryAlert(for song: MKSong, on viewController: UIViewController?) {
 		var actions: [UIAlertAction] = []
 
-		if let libraryID = song.relationship?.library?.data.first?.id {
-			actions.append(UIAlertAction(title: "Show in Library", style: .default, handler: { _ in
-				guard let url = URL(string: "music://music.apple.com/library/songs/\(libraryID)") else { return }
-				UIApplication.shared.kOpen(nil, deepLink: url)
-			}))
-		}
+		// Add "Open Apple Music Library" action
+		actions.append(UIAlertAction(title: "Open Apple Music Library", style: .default, handler: { _ in
+			guard let url = URL(string: "music://music.apple.com/library") else { return }
+			UIApplication.shared.kOpen(nil, deepLink: url)
+		}))
 
 		viewController?.presentAlertController(title: "How to Remove", message: "Songs added to your Apple Music Library cannot be removed from Kurozora due to API limitations. Please remove the song from your library manually in the Music app.", actions: actions)
 	}

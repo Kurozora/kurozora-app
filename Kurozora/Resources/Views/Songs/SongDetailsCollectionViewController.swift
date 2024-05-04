@@ -35,7 +35,7 @@ class SongDetailsCollectionViewController: KCollectionViewController {
 	var showIdentities: [ShowIdentity] = []
 	var responseCount: Int = 0 {
 		didSet {
-			if self.responseCount == 2 {
+			if self.responseCount == 3 {
 				self.updateDataSource()
 			}
 		}
@@ -157,7 +157,7 @@ class SongDetailsCollectionViewController: KCollectionViewController {
 		do {
 			let reviewIdentityResponse = try await KService.getReviews(forSong: songIdentity, next: nil, limit: 10).value
 			self.reviews = reviewIdentityResponse.data
-			self.updateDataSource()
+			self.responseCount += 1
 		} catch {
 			print(error.localizedDescription)
 		}
