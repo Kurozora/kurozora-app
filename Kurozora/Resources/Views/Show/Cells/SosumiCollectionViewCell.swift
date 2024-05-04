@@ -22,6 +22,7 @@ class SosumiCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - Functions
 	private func configureCell() {
+		self.copyrightLabel.numberOfLines = 0
 		self.copyrightLabel.text = copyrightText
 	}
 }
