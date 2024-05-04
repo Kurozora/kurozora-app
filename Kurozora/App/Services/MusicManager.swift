@@ -271,7 +271,7 @@ class MusicManager: NSObject {
 		guard let urlRequest = URLRequest(urlString: "https://api.music.apple.com/v1/me/library/songs/\(libraryID)") else { return false }
 
 		let musicDataRequest = MusicDataRequest(urlRequest: urlRequest)
-		guard let response = try? await musicDataRequest.response() else { return false }
+		guard (try? await musicDataRequest.response()) != nil else { return false }
 
 		return true
 	}
