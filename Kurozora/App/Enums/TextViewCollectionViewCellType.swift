@@ -15,6 +15,8 @@ enum TextViewCollectionViewCellType {
 	case synopsis
 	/// Indicates the cell is of about type.
 	case about
+	/// Indicates the cell is of lyrics type.
+	case lyrics
 
 	// MARK: - Properties
 	/// Returns the string value of a text view collection view cell type.
@@ -24,6 +26,8 @@ enum TextViewCollectionViewCellType {
 			return Trans.synopsis
 		case .about:
 			return Trans.about
+		case .lyrics:
+			return Trans.lyrics
 		}
 	}
 
@@ -36,7 +40,7 @@ enum TextViewCollectionViewCellType {
 			#else
 			return 5
 			#endif
-		case .about:
+		case .about, .lyrics:
 			#if targetEnvironment(macCatalyst)
 			return 15
 			#else

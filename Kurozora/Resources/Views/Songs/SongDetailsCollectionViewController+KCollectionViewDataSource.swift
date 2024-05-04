@@ -47,7 +47,7 @@ extension SongDetailsCollectionViewController {
 			case .lyrics:
 				let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.textViewCollectionViewCell, for: indexPath)
 				textViewCollectionViewCell?.delegate = self
-				textViewCollectionViewCell?.textViewCollectionViewCellType = .synopsis
+				textViewCollectionViewCell?.textViewCollectionViewCellType = .lyrics
 				textViewCollectionViewCell?.textViewContent = self.song.attributes.originalLyrics
 				return textViewCollectionViewCell
 			case .rating:

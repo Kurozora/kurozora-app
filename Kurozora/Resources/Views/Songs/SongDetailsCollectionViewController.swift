@@ -201,7 +201,7 @@ extension SongDetailsCollectionViewController: TextViewCollectionViewCellDelegat
 		if let synopsisKNavigationController = R.storyboard.synopsis.instantiateInitialViewController() {
 			if let synopsisViewController = synopsisKNavigationController.viewControllers.first as? SynopsisViewController {
 				synopsisViewController.title = cell.textViewCollectionViewCellType.stringValue
-				synopsisViewController.synopsis = self.song.attributes.lyrics
+				synopsisViewController.synopsis = self.song.attributes.originalLyrics
 			}
 			synopsisKNavigationController.modalPresentationStyle = .formSheet
 			self.present(synopsisKNavigationController, animated: true)

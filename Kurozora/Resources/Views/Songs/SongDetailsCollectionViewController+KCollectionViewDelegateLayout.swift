@@ -77,7 +77,7 @@ extension SongDetailsCollectionViewController {
 				let fullSection = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				sectionLayout = fullSection
 			case .lyrics:
-				if let lyrics = self.song.attributes.lyrics, !lyrics.isEmpty {
+				if let lyrics = self.song.attributes.originalLyrics, !lyrics.isEmpty {
 					let fullSection = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 					sectionLayout = fullSection
 					hasSectionHeader = true
@@ -124,6 +124,7 @@ extension SongDetailsCollectionViewController {
 
 			return sectionLayout
 		}
+		layout.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: SectionBackgroundDecorationView.elementKindSectionBackground)
 		return layout
 	}
 }
