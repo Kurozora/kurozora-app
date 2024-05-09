@@ -67,59 +67,5 @@ extension KKLibrary {
 				return UIImage(systemName: "rectangle.grid.1x2.fill")!
 			}
 		}
-
-		// TODO: - A better way to implement this mess
-		var sizeValue: CGSize {
-			var cgSize: CGSize = .zero
-
-			switch self {
-			case .detailed:
-				let screenWidth = UIScreen.main.bounds.width - 20
-				let screenHeight = UIScreen.main.bounds.height - 20
-
-				if UIDevice.isLandscape {
-					switch UIDevice.type {
-					case .iPhone5SSE, .iPhone66S78, .iPhone66S78PLUS:
-						return CGSize(width: screenWidth / 2.08, height: screenHeight / 2.0)
-					case .iPhoneXr, .iPhoneXXs, .iPhoneXsMax:
-						return CGSize(width: screenWidth / 2.32, height: screenHeight / 1.8)
-					case .iPad, .iPadAir3, .iPadPro11, .iPadPro12:
-						return CGSize(width: screenWidth / 3.06, height: screenHeight / 3.8)
-					}
-				} else {
-					switch UIDevice.type {
-					case .iPhone5SSE:
-						return CGSize(width: screenWidth, height: screenHeight / 3.2)
-					case .iPhone66S78, .iPhone66S78PLUS:
-						return CGSize(width: screenWidth, height: screenHeight / 3.2)
-					case .iPhoneXr, .iPhoneXXs, .iPhoneXsMax:
-						return CGSize(width: screenWidth, height: screenHeight / 3.8)
-					case .iPad, .iPadAir3, .iPadPro11, .iPadPro12:
-						return CGSize(width: screenWidth / 2, height: screenHeight / 4.8)
-					}
-				}
-			case .compact:
-				cgSize = CGSize(width: 150, height: 210)
-			case .list:
-				let screenWidth = UIScreen.main.bounds.width - 20
-				cgSize.height = 160
-
-				if UIDevice.isPhone {
-					if UIDevice.isLandscape {
-						cgSize.width = screenWidth / 2
-					} else {
-						cgSize.width = screenWidth
-					}
-				} else {
-					if UIDevice.isLandscape {
-						cgSize.width = 320
-					} else {
-						cgSize.width = screenWidth / 2
-					}
-				}
-			}
-
-			return cgSize
-		}
 	}
 }
