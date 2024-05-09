@@ -89,7 +89,11 @@ extension SignInWithAppleTableViewController: ASAuthorizationControllerDelegate 
 						self.dismiss(animated: true, completion: nil)
 					default: break
 					}
-				case .failure: break
+				case .failure(let error):
+					DispatchQueue.main.async {
+						self.view.endEditing(true)
+						self.presentAlertController(title: "Can't Sign In 😔", message: error.message)
+					}
 				}
 			}
 			print("----------- Ended authorizationController() -----------")

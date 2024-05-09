@@ -61,9 +61,12 @@ class SignInTableViewController: AccountOnboardingTableViewController {
 					UserSettings.shared.removeObject(forKey: UserSettingsKey.lastNotificationRegistrationRequest.rawValue)
 					WorkflowController.shared.registerForPushNotifications()
 				}
-			case .failure:
-				// Re-enable user interaction.
-				self.disableUserInteraction(false)
+			case .failure(let error):
+				DispatchQueue.main.async {
+					// Re-enable user interaction.
+					self.disableUserInteraction(false)
+					self.presentAlertController(title: "Can't Sign In 😔", message: error.message)
+				}
 			}
 		}
 	}
@@ -144,12 +147,17 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 							self.show(signUpTableViewController, sender: nil)
 						}
 					default:
+						DispatchQueue.main.async {
+							// Re-enable user interaction.
+							self.disableUserInteraction(false)
+						}
+					}
+				case .failure(let error):
+					DispatchQueue.main.async {
 						// Re-enable user interaction.
 						self.disableUserInteraction(false)
+						self.presentAlertController(title: "Can't Sign In 😔", message: error.message)
 					}
-				case .failure:
-					// Re-enable user interaction.
-					self.disableUserInteraction(false)
 				}
 			}
 		case let passwordCredential as ASPasswordCredential:

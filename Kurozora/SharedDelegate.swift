@@ -46,6 +46,6 @@ class SharedDelegate {
 		let accessGroup = "\(self.appIdentifierPrefix)app.kurozora.shared"
 		#endif
 		self.keychain = Keychain(service: "Kurozora", accessGroup: "\(accessGroup)").synchronizable(true).accessibility(.afterFirstUnlock)
-		self.services = KKServices(keychain: self.keychain, showAlerts: true)
+		self.services = KKServices(keychain: self.keychain)
 	}
 }
