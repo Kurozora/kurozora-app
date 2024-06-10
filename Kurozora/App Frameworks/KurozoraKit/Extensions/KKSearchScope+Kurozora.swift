@@ -10,7 +10,7 @@ import Foundation
 import KurozoraKit
 
 extension KKSearchScope {
-	// MARK: - Variables
+	// MARK: - Properties
 	/// An array containing the string value of all search scopes.
 	static var allString: [String] {
 		return self.allCases.map { searchScope in

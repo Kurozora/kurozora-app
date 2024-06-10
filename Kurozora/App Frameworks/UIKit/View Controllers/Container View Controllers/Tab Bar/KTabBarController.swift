@@ -25,6 +25,12 @@ class KTabBarController: ESTabBarController {
 		self.sharedInit()
 	}
 
+	@available(iOS 18.0, *)
+	override init(tabs: [UITab]) {
+		super.init(tabs: tabs)
+		self.sharedInit()
+	}
+
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
