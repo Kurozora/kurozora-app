@@ -732,6 +732,11 @@ struct Trans {
 	/// - Tag: Trans-discover
 	static let discover: String = String(localized: "Discover",
 										 comment: "The string for the word 'discover'.")
+	/// The string for the word 'browse'.
+	///
+	/// - Tag: Trans-browse
+	static let browse: String = String(localized: "Browse",
+									   comment: "The string for the word 'browse'.")
 	/// The string for the word 'header'.
 	///
 	/// - Tag: Trans-header
