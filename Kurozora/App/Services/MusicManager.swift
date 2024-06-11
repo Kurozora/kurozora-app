@@ -176,7 +176,7 @@ class MusicManager: NSObject {
 				if let songURL = song.song.previewAssets?.first?.url {
 					let playerItem = AVPlayerItem(url: songURL)
 
-					if (self.player?.currentItem?.asset as? AVURLAsset)?.url == (playerItem.asset as? AVURLAsset)?.url {
+					if await (self.player?.currentItem?.asset as? AVURLAsset)?.url == (playerItem.asset as? AVURLAsset)?.url {
 						switch self.player?.timeControlStatus {
 						case .playing:
 							await playButton?.setImage(UIImage(systemName: "play.fill"), for: .normal)
