@@ -57,7 +57,7 @@ struct SearchIntent: AppIntent, CustomIntentMigratedAppIntent, PredictableIntent
 		else {
 			return .result()
 		}
-		KurozoraDelegate.shared.schemeHandler(scene, open: url)
+		await NavigationManager.shared.schemeHandler(scene, open: url)
 		return .result()
 	}
 }
