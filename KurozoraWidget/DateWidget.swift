@@ -158,7 +158,7 @@ struct DateWidgetEntryView: View {
 }
 
 struct DateWidget: Widget {
-    let kind: String = "DateWidget"
+    let kind: String = "app.kurozora.tracker.dateWidget"
 
     var body: some WidgetConfiguration {
 		IntentConfiguration(kind: self.kind, intent: ToggleDateIntent.self, provider: Provider()) { entry in
