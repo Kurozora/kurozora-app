@@ -64,6 +64,27 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>INAlternativeAppNames</key>
+	<array>
+		<dict>
+			<key>INAlternativeAppName</key>
+			<string>Kurozora</string>
+			<key>INAlternativeAppNamePronunciationHint</key>
+			<string>queue ro zo ra</string>
+		</dict>
+		<dict>
+			<key>INAlternativeAppName</key>
+			<string>Kurozora</string>
+			<key>INAlternativeAppNamePronunciationHint</key>
+			<string>queue row zow ra</string>
+		</dict>
+		<dict>
+			<key>INAlternativeAppName</key>
+			<string>Kurozora</string>
+			<key>INAlternativeAppNamePronunciationHint</key>
+			<string>anime</string>
+		</dict>
+	</array>
 	<key>INIntentsSupported</key>
 	<array>
 		<string>SearchIntent</string>
@@ -106,7 +127,7 @@
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2018-present Kurozora Kurozora. All rights reserved.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>$(PRODUCT_NAME) uses your location to show you where a sign in has come from on the map in the settings. Your location is also used to allow automatic switching between light and dark themes. Please note that the "Always" option is not necessary for $(PRODUCT_NAME) to work and will reduce your battery life.</string>
+	<string>$(PRODUCT_NAME) uses your location to show you where a sign in has come from on the map in the settings. Your location is also used to allow automatic switching between light and dark themes. Please note that the &quot;Always&quot; option is not necessary for $(PRODUCT_NAME) to work and will reduce your battery life.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>$(PRODUCT_NAME) uses your location to show you where a sign in has come from on the map in the settings. Your location is also used to allow automatic switching between light and dark themes. Please note that the "Always" option is not necessary for $(PRODUCT_NAME) to work and will reduce your battery life.</string>
 	<key>NSLocationUsageDescription</key>
