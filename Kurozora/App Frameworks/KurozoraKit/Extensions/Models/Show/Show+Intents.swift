@@ -6,7 +6,9 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
+import CoreSpotlight
 import Intents
+import MobileCoreServices
 import KurozoraKit
 
 extension Show {
@@ -15,11 +17,34 @@ extension Show {
 	public var openDetailUserActivity: NSUserActivity {
 		let userActivity = NSUserActivity(activityType: "OpenShowIntent")
 		let title = "Open \(self.attributes.title)"
-		userActivity.title = title
+		userActivity.contentAttributeSet = self.contentAttributeSet
+		userActivity.title = self.attributes.title
 		userActivity.userInfo = ["showID": self.id]
 		userActivity.suggestedInvocationPhrase = title
 		userActivity.isEligibleForPrediction = true
 		userActivity.isEligibleForSearch = true
+		userActivity.isEligibleForHandoff = true
+		userActivity.isEligibleForPublicIndexing = true
+		userActivity.persistentIdentifier = "\(self.type):\(self.id)"
 		return userActivity
+	}
+
+	/// The detailed metadata for making the selected show searchable.
+	public var contentAttributeSet: CSSearchableItemAttributeSet {
+		let attributeSet = CSSearchableItemAttributeSet(contentType: .content)
+		attributeSet.title = self.attributes.title
+		attributeSet.alternateNames = self.attributes.synonymTitles
+		attributeSet.contentDescription = self.attributes.synopsis
+		attributeSet.thumbnailURL = URL(string: self.attributes.poster?.url)
+		attributeSet.genre = self.attributes.genres?.joined(separator: ", ")
+		attributeSet.rating = self.attributes.stats?.ratingAverage as? NSNumber
+		if let ratingDescription = self.attributes.stats?.ratingCount {
+			attributeSet.ratingDescription = "\(ratingDescription.kkFormatted) Ratings"
+		}
+		attributeSet.startDate = self.attributes.startedAt
+		attributeSet.endDate = self.attributes.endedAt
+		attributeSet.copyright = self.attributes.copyright
+		attributeSet.url = URL(string: "https://kurozora.app/anime/\(self.attributes.slug)")
+		return attributeSet
 	}
 }

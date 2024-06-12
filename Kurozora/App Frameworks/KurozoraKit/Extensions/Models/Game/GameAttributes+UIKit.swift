@@ -60,7 +60,7 @@ extension Game.Attributes {
 
 	/// Returns the date the game will be published on.
 	var publicationDate: Date? {
-		guard let publicationDay = self.publicationDay, let publicationTime = publicationTime else { return nil }
+		guard let publicationDay = self.publicationDay, let publicationTime = self.publicationTime else { return nil }
 		return Date(from: "\(publicationDay) at \(publicationTime)")
 	}
 
