@@ -58,6 +58,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		self.window?.rootViewController = SplashscreenViewController()
 		KurozoraDelegate.shared.initiateApp(window: self.window)
 
+		/// Call `updateAppShortcutParameters` on `ShortcutsProvider` so that the system updates the App Shortcut phrases with any changes to
+		/// the app's intent parameters. The app needs to call this function during its launch, in addition to any time the parameter values for
+		/// the shortcut phrases change.
+		if #available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *) {
+			ShortcutsProvider.updateAppShortcutParameters()
+		}
+
 		// Configure window or resotre previous activity.
 		if let userActivity = connectionOptions.userActivities.first ?? session.stateRestorationActivity {
 			if !self.configure(window: self.window, with: userActivity) {
