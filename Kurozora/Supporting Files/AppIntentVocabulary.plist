@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IntentPhrases</key>
+	<array>
+		<dict>
+			<key>IntentName</key>
+			<string>LaunchAppIntent</string>
+			<key>IntentExamples</key>
+			<array>
+				<string>Siri, open my library in Kurozora</string>
+				<string>Siri. open Kurozora notifications</string>
+				<string>Siri, show Kurozora feed</string>
+			</array>
+		</dict>
+		<dict>
+			<key>IntentName</key>
+			<string>SearchIntent</string>
+			<key>IntentExamples</key>
+			<array>
+				<string>Siri, search for One Piece on Kurozora</string>
+				<string>Siri. find ReZero in Kurozora</string>
+				<string>Siri, find The Dangers in My Heart in library</string>
+			</array>
+		</dict>
+	</array>
+	<key>ParameterVocabularies</key>
+	<array>
+		<dict>
+			<key>ParameterNames</key>
+			<array>
+				<string>SearchIntent.scope</string>
+			</array>
+			<key>ParameterVocabulary</key>
+			<array>
+				<dict>
+					<key>VocabularyItemIdentifier</key>
+					<string>kurozora</string>
+					<key>VocabularyItemSynonyms</key>
+					<array>
+						<dict>
+							<key>VocabularyItemPhrase</key>
+							<string>Kurozora</string>
+							<key>VocabularyItemPronunciation</key>
+							<string>queue row zow ra</string>
+							<key>VocabularyItemExamples</key>
+							<array>
+								<string>search for One Piece on Kurozora</string>
+								<string>find ReZero in Kurozora</string>
+								<string>find The Dangers in My Heart in Kurozora anime</string>
+							</array>
+						</dict>
+						<dict>
+							<key>VocabularyItemPhrase</key>
+							<string>Kurozora</string>
+							<key>VocabularyItemPronunciation</key>
+							<string>coo row zow ra</string>
+							<key>VocabularyItemExamples</key>
+							<array>
+								<string>search for One Piece on Kurozora</string>
+								<string>find ReZero in Kurozora</string>
+								<string>find The Dangers in My Heart in Kurozora anime</string>
+							</array>
+						</dict>
+					</array>
+				</dict>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>
