@@ -20,7 +20,7 @@ struct LaunchAppControl: ControlWidget {
 			intent: LaunchAppIntent.self
 		) { configuration in
 			ControlWidgetButton(action: configuration) {
-				Image("Symbols/kurozora.circle.fill")
+				Image("Symbols/kurozora")
 
 				Text(configuration.target.name)
 					.frame(maxWidth: .infinity)
