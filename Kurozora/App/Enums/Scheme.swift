@@ -11,7 +11,9 @@ import Foundation
 /// List of supported schemes.
 ///
 /// ```
-/// case anime, show
+/// case anime, show, shows
+/// case game, games
+/// case manga, literature, literatures
 /// case profile, user
 /// case explore, home
 /// case library, myLibrary, list
@@ -21,7 +23,9 @@ import Foundation
 /// ```
 enum Scheme: String, CaseIterable {
 	// MARK: - Cases
-	case anime, show
+	case anime, show, shows
+	case game, games
+	case manga, literature, literatures
 	case profile, user
 	case explore, home
 	case library, myLibrary, list

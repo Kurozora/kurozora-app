@@ -64,11 +64,23 @@ class NavigationManager: NSObject {
 		let parameters: [String: String] = url.queryParameters ?? [:]
 
 		switch scheme {
-		case .anime, .show:
+		case .anime, .show, .shows:
 			let showID = url.lastPathComponent
 			if !showID.isEmpty {
 				let showDetailsCollectionViewController = ShowDetailsCollectionViewController.`init`(with: showID)
 				UIApplication.topViewController?.show(showDetailsCollectionViewController, sender: nil)
+			}
+		case .game, .games:
+			let gameID = url.lastPathComponent
+			if !gameID.isEmpty {
+				let gameDetailsCollectionViewController = GameDetailsCollectionViewController.`init`(with: gameID)
+				UIApplication.topViewController?.show(gameDetailsCollectionViewController, sender: nil)
+			}
+		case .manga, .literature, .literatures:
+			let literatureID = url.lastPathComponent
+			if !literatureID.isEmpty {
+				let literatureDetailsCollectionViewController = LiteratureDetailsCollectionViewController.`init`(with: literatureID)
+				UIApplication.topViewController?.show(literatureDetailsCollectionViewController, sender: nil)
 			}
 		case .profile, .user:
 			let lastPathComponent = url.lastPathComponent
