@@ -48,7 +48,7 @@ class MusicManager: NSObject {
 	private override init() {
 		super.init()
 
-		self.applicationPlayer.state.objectWillChange.sink { [weak self] in
+		self.applicationPlayer.state.objectWillChange.receive(on: RunLoop.main).sink { [weak self] in
 			guard let self = self else { return }
 			self.isPlaying = ApplicationMusicPlayer.shared.state.playbackStatus == .playing
 		}
