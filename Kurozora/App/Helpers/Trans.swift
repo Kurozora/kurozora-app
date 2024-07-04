@@ -48,13 +48,13 @@ struct Trans {
 	/// The headline string for signing in.
 	///
 	/// - Tag: Trans-signInHeadline
-	static let signInHeadline: String = String(localized: "Kurozora ID",
+	static let signInHeadline: String = String(localized: "Kurozora Account",
 											   table: "Onboarding",
 											   comment: "The headline string for signing in.")
 	/// The subheadline string for signing in.
 	///
 	/// - Tag: Trans-signInSubheadline
-	static let signInSubheadline: String = String(localized: "Sign in with your Kurozora ID to use the library and other Kurozora services.",
+	static let signInSubheadline: String = String(localized: "Sign in with your Kurozora Account to use the library and other Kurozora services.",
 												  table: "Onboarding",
 												  comment: "The subheadline string for signing in.")
 	/// The button string for signing in.
@@ -90,7 +90,7 @@ struct Trans {
 	/// The subheadline string for resetting password.
 	///
 	/// - Tag: Trans-forgotPasswordSubheadline
-	static let forgotPasswordSubheadline: String = String(localized: "Enter your Kurozora ID to continue.",
+	static let forgotPasswordSubheadline: String = String(localized: "Enter your Kurozora Account to continue.",
 														  table: "Onboarding",
 														  comment: "The subheadline string for resetting password.")
 	/// The button string for resetting password.
@@ -107,7 +107,7 @@ struct Trans {
 	/// The subheadline string for resetting password alert.
 	///
 	/// - Tag: Trans-forgotPasswordAlertSubheadline
-	static let forgotPasswordAlertSubheadline: String = String(localized: "If an account exists with this Kurozora ID, you should receive an email with your reset link shortly.",
+	static let forgotPasswordAlertSubheadline: String = String(localized: "If an account exists with this Kurozora Account, you should receive an email with your reset link shortly.",
 															   comment: "The subheadline string for resetting password alert.")
 	/// The headline string for resetting password alert.
 	///
@@ -117,7 +117,7 @@ struct Trans {
 	/// The subheadline string for resetting password alert.
 	///
 	/// - Tag: Trans-forgotPasswordErrorAlertSubheadline
-	static let forgotPasswordErrorAlertSubheadline: String = String(localized: "Please type a valid Kurozora ID 😣",
+	static let forgotPasswordErrorAlertSubheadline: String = String(localized: "Please type a valid Kurozora Account 😣",
 																	comment: "The subheadline string for resetting password alert.")
 
 	// MARK: - Library Import
@@ -566,13 +566,13 @@ struct Trans {
 	/// The sub-headline string for the account settings option when not signed in.
 	///
 	/// - Tag: Trans-accountSignedInSubheadline
-	static let accountSubheadline: String = String(localized: "Setup Kurozora ID and more.",
+	static let accountSubheadline: String = String(localized: "Setup Kurozora Account and more.",
 												   table: "Settings",
 												   comment: "The sub-headline string for the account settings option when not signed in.")
 	/// The sub-headline string for the account settings option when signed in.
 	///
 	/// - Tag: Trans-accountSignedInSubheadline
-	static let accountSignedInSubheadline: String = String(localized: "Kurozora ID, Sign in with Apple & MAL Import",
+	static let accountSignedInSubheadline: String = String(localized: "Kurozora Account, Sign in with Apple & Library Import",
 														   table: "Settings",
 														   comment: "The sub-headline string for the account settings option when signed in.")
 	/// The string for the 'Switch Account' settings option.
