@@ -737,6 +737,9 @@ extension HomeCollectionViewController {
 			switch itemKind {
 			case .quickLink(let quickLink, _):
 				actionLinkExploreCollectionViewCell.delegate = self
+				#if !targetEnvironment(macCatalyst)
+				actionLinkExploreCollectionViewCell.separatorIsHidden = self.quickLinks.last == quickLink
+				#endif
 				actionLinkExploreCollectionViewCell.configure(using: quickLink)
 			default: break
 			}

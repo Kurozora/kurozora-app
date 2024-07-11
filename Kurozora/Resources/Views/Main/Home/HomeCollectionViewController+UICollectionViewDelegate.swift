@@ -53,43 +53,40 @@ extension HomeCollectionViewController {
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		if indexPath.section <= self.exploreCategories.count {
-			let exploreCategory = self.exploreCategories[indexPath.section]
+		guard let exploreCategory = self.exploreCategories[safe: indexPath.section] else { return nil }
 
-			switch exploreCategory.attributes.exploreCategoryType {
-			case .shows, .upcomingShows, .mostPopularShows, .newShows:
-				return self.shows[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-			case .literatures, .upcomingLiteratures, .mostPopularLiteratures, .newLiteratures:
-				return self.literatures[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-			case .games, .upcomingGames, .mostPopularGames, .newGames:
-				return self.games[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-			case .episodes:
-				return self.episodes[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-			case .songs:
-				guard let cell = collectionView.cellForItem(at: indexPath) as? MusicLockupCollectionViewCell else { return nil }
-				return self.showSongs[indexPath]?.song.contextMenuConfiguration(in: self, userInfo: [
-					"indexPath": indexPath,
-					"song": cell.song
-				])
-			case .genres:
-				return self.genres[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-			case .themes:
-				return self.themes[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-			case .characters:
-				return self.characters[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-			case .people:
-				return self.people[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-			case .recap:
-				guard let recap = self.recaps[indexPath] else { return nil }
-				let identifier = indexPath as NSCopying
+		switch exploreCategory.attributes.exploreCategoryType {
+		case .shows, .upcomingShows, .mostPopularShows, .newShows:
+			return self.shows[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		case .literatures, .upcomingLiteratures, .mostPopularLiteratures, .newLiteratures:
+			return self.literatures[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		case .games, .upcomingGames, .mostPopularGames, .newGames:
+			return self.games[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		case .episodes:
+			return self.episodes[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		case .songs:
+			guard let cell = collectionView.cellForItem(at: indexPath) as? MusicLockupCollectionViewCell else { return nil }
+			return self.showSongs[indexPath]?.song.contextMenuConfiguration(in: self, userInfo: [
+				"indexPath": indexPath,
+				"song": cell.song
+			])
+		case .genres:
+			return self.genres[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		case .themes:
+			return self.themes[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		case .characters:
+			return self.characters[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		case .people:
+			return self.people[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+		case .recap:
+			guard let recap = self.recaps[indexPath] else { return nil }
+			let identifier = indexPath as NSCopying
 
-				return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
-					guard let reCapCollectionViewController = R.storyboard.reCap.reCapCollectionViewController() else { return nil }
-					reCapCollectionViewController.year = recap.attributes.year
-					return reCapCollectionViewController
-				})
-			}
+			return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
+				guard let reCapCollectionViewController = R.storyboard.reCap.reCapCollectionViewController() else { return nil }
+				reCapCollectionViewController.year = recap.attributes.year
+				return reCapCollectionViewController
+			})
 		}
-		return nil
 	}
 }
