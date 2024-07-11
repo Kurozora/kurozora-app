@@ -113,16 +113,26 @@ class RemindersCollectionViewController: KCollectionViewController {
 		}
 
 		do {
-			let reminderLibraryResponse = try await KService.getReminders(from: self.libraryKind, next: self.nextPageURL).value
+			let reminderLibraryResponse = try await KService.getReminders(for: self.libraryKind, next: self.nextPageURL).value
 
 			// Reset data if necessary
 			if self.nextPageURL == nil {
 				self.shows = []
+				self.literatures = []
+				self.games = []
 			}
 
 			// Save next page url and append new data
 			self.nextPageURL = reminderLibraryResponse.next
-			self.shows.append(contentsOf: reminderLibraryResponse.data)
+			if let shows = reminderLibraryResponse.data.shows {
+				self.shows.append(contentsOf: shows)
+			}
+			if let literatures = reminderLibraryResponse.data.literatures {
+				self.literatures.append(contentsOf: literatures)
+			}
+			if let games = reminderLibraryResponse.data.games {
+				self.games.append(contentsOf: games)
+			}
 		} catch {
 			print("-----", error.localizedDescription)
 		}
