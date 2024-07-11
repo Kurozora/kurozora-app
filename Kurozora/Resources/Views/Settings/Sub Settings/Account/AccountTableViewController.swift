@@ -42,7 +42,7 @@ class AccountTableViewController: SubSettingsViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = "Kurozora ID"
+		self.title = "Kurozora Account"
 
 		self.languages = self.loadOptions(from: "App Languages")
 		self.tvRatings = self.loadOptions(from: "App TV Ratings")

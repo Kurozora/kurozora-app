@@ -43,10 +43,10 @@ class SignInTableViewController: AccountOnboardingTableViewController {
 	///    - email: The email address of the user.
 	///    - password: The password of the user.
 	func signInWithKurozora(email: String? = nil, password: String? = nil) {
-		guard let kurozoraID = email ?? self.textFieldArray.first??.trimmedText else { return }
+		guard let email = email ?? self.textFieldArray.first??.trimmedText else { return }
 		guard let password = password ?? self.textFieldArray.last??.text else { return }
 
-		KService.signIn(kurozoraID, password) { [weak self] result in
+		KService.signIn(email, password) { [weak self] result in
 			guard let self = self else { return }
 			switch result {
 			case .success(let authenticationToken):

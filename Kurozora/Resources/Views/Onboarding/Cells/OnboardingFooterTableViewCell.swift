@@ -24,7 +24,7 @@ class OnboardingFooterTableViewCell: OnboardingBaseTableViewCell {
 		paragraphStyle.alignment = .center
 
 		// Normal state
-		let attributedString = NSMutableAttributedString(string: "Your Kurozora ID information is used to enable Kurozora services when you sign in. Kurozora services includes the library where you can keep track of the shows you are interested in. \n", attributes: [.foregroundColor: KThemePicker.subTextColor.colorValue, .paragraphStyle: paragraphStyle])
+		let attributedString = NSMutableAttributedString(string: "Your Kurozora Account information is used to enable Kurozora services when you sign in. Kurozora services includes the library where you can keep track of the shows you are interested in. \n", attributes: [.foregroundColor: KThemePicker.subTextColor.colorValue, .paragraphStyle: paragraphStyle])
 		attributedString.append(NSAttributedString(string: "See how your data is managed...", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue, .paragraphStyle: paragraphStyle]))
 		legalButton?.setAttributedTitle(attributedString, for: .normal)
 	}

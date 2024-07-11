@@ -20,9 +20,9 @@ class OnboardingTextFieldTableViewCell: OnboardingBaseTableViewCell {
 		case .signUp:
 			switch self.textField.textType {
 			case .username:
-				self.textField.placeholder = "Username: pick a cool one 🙉"
+				self.textField.placeholder = "Username: pick a cool one 🙈"
 			case .emailAddress:
-				self.textField.placeholder = "Email: we all forget our passwords 🙈"
+				self.textField.placeholder = "Email: we all forget our passwords 🙉"
 			case .password:
 				self.textField.placeholder = "Password: make it super secret 🙊"
 			default: break
@@ -30,13 +30,13 @@ class OnboardingTextFieldTableViewCell: OnboardingBaseTableViewCell {
 		case .siwa:
 			switch self.textField.textType {
 			case .username:
-				self.textField.placeholder = "Username: pick a cool one 🙉"
+				self.textField.placeholder = "Username: pick a cool one 🙈"
 			default: break
 			}
 		case .signIn:
 			switch self.textField.textType {
 			case .emailAddress:
-				self.textField.placeholder = "The cool Kurozora ID you claimed 🙌"
+				self.textField.placeholder = "Your cool email address 🙌"
 			case .password:
 				self.textField.placeholder = "Your super secret password 👀"
 			default: break
