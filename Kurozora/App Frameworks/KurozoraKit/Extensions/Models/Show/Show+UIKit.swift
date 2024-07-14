@@ -115,24 +115,30 @@ extension Show {
 			menuElements.append(UIAction(title: actionLibraryStatus.showStringValue, image: selectedLibraryStatus ? UIImage(systemName: "checkmark") : nil, handler: { _ in
 				WorkflowController.shared.isSignedIn {
 					Task {
-						do {
-							let libraryUpdateResponse = try await KService.addToLibrary(.shows, withLibraryStatus: actionLibraryStatus, modelID: String(self.id)).value
-
-							// Update entry in library
-							self.attributes.library?.update(using: libraryUpdateResponse.data)
-
-							let libraryAddToNotificationName = Notification.Name("AddTo\(actionLibraryStatus.sectionValue)Section")
-							NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
-						} catch let error as KKAPIError {
-							//						self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
-							print("----- Add to library failed", error.message)
-						}
+						await self.addToLibrary(status: actionLibraryStatus)
 					}
 				}
 			}))
 		}
 
 		return UIMenu(title: addToLibraryMenuTitle, image: addToLibraryMenuImage, children: menuElements)
+	}
+
+	fileprivate func addToLibrary(status: KKLibrary.Status) async {
+		do {
+			let libraryUpdateResponse = try await KService.addToLibrary(.shows, withLibraryStatus: status, modelID: String(self.id)).value
+
+			// Update entry in library
+			self.attributes.library?.update(using: libraryUpdateResponse.data)
+
+			let libraryAddToNotificationName = Notification.Name("AddTo\(status.sectionValue)Section")
+			NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
+		} catch let error as KKAPIError {
+			//			self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
+			print("----- Add to library failed:", error.message)
+		} catch {
+			print("----- Add to library failed with generic error:", error.localizedDescription)
+		}
 	}
 
 	func removeFromLibrary() async {
@@ -153,7 +159,7 @@ extension Show {
 		}
 	}
 
-	func toggleFavorite() {
+	func toggleFavorite(on viewController: UIViewController? = nil) {
 		WorkflowController.shared.isSignedIn { [weak self] in
 			guard let self = self else { return }
 
@@ -165,8 +171,9 @@ extension Show {
 					NotificationCenter.default.post(name: .KModelFavoriteIsToggled, object: nil, userInfo: [
 						"favoriteStatus": favoriteResponse.data.favoriteStatus
 					])
-				} catch {
-					print(error.localizedDescription)
+				} catch let error as KKAPIError {
+					await viewController?.presentAlertController(title: "Can't Favorite", message: error.message)
+					print("----- Toggle favorite failed:", error.message)
 				}
 			}
 		}
@@ -180,14 +187,19 @@ extension Show {
 			Task {
 				if await WorkflowController.shared.isSubscribed(on: viewController) {
 					do {
-						let updateReminderResponse = try await KService.updateReminderStatus(inLibrary: .shows, modelID: String(self.id)).value
+						if self.attributes.library?.status == nil {
+							await self.addToLibrary(status: .planning)
+						}
+
+						let updateReminderResponse = try await KService.updateReminderStatus(inLibrary: .shows, modelID: self.id).value
 
 						self.attributes.library?.reminderStatus = updateReminderResponse.data.reminderStatus
 						NotificationCenter.default.post(name: .KModelReminderIsToggled, object: nil, userInfo: [
 							"reminderStatus": updateReminderResponse.data.reminderStatus
 						])
-					} catch {
-						print(error.localizedDescription)
+					} catch let error as KKAPIError {
+						await viewController?.presentAlertController(title: "Can't Add Reminder", message: error.message)
+						print("----- Toggle reminder failed:", error.localizedDescription)
 					}
 				}
 			}
