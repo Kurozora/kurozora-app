@@ -6,19 +6,28 @@
 //  Copyright © 2022 Kurozora. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct QuickAction: Hashable {
-	let id: UUID = UUID()
+	// MARK: - Properties
 	let title: String
+	let image: UIImage?
 	let segueID: String
 
-	// MARK: - Functions
-	public static func == (lhs: QuickAction, rhs: QuickAction) -> Bool {
-		lhs.id == rhs.id
+	// MARK: - Initializers
+	init(title: String, image: UIImage? = nil, segueID: String) {
+		self.title = title
+		self.image = image
+		self.segueID = segueID
 	}
 
-	public func hash(into hasher: inout Hasher) {
-		hasher.combine(self.id)
+	// MARK: - Functions
+	static func == (lhs: QuickAction, rhs: QuickAction) -> Bool {
+		lhs.title == rhs.title && lhs.segueID == rhs.segueID
+	}
+
+	func hash(into hasher: inout Hasher) {
+		hasher.combine(self.title)
+		hasher.combine(self.segueID)
 	}
 }
