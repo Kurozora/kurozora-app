@@ -150,8 +150,8 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 		self.playButton.addBlurEffect()
 		self.playButton.theme_tintColor = KThemePicker.textColor.rawValue
 
-		MusicManager.shared.$isPlaying.handleEvents()
-			.receive(on: DispatchQueue.main)
+		MusicManager.shared.$isPlaying
+			.receive(on: RunLoop.main)
 			.sink { [weak self] _ in
 				guard let self = self else { return }
 				self.updatePlayButton()

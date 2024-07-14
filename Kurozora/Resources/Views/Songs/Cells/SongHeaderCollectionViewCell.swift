@@ -40,8 +40,8 @@ class SongHeaderCollectionViewCell: UICollectionViewCell {
 		self.primaryLabel.text = song.attributes.title
 		self.secondaryLabel.text = song.attributes.artist
 
-		MusicManager.shared.$isPlaying.handleEvents()
-			.receive(on: DispatchQueue.main)
+		MusicManager.shared.$isPlaying
+			.receive(on: RunLoop.main)
 			.sink { [weak self] _ in
 				guard let self = self else { return }
 				self.updatePlayButton()

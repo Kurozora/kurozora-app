@@ -48,11 +48,12 @@ class MusicManager: NSObject {
 	private override init() {
 		super.init()
 
-		self.applicationPlayer.state.objectWillChange.receive(on: RunLoop.main).sink { [weak self] in
-			guard let self = self else { return }
-			self.isPlaying = ApplicationMusicPlayer.shared.state.playbackStatus == .playing
-		}
-		.store(in: &self.subscriptions)
+		self.applicationPlayer.state.objectWillChange
+			.receive(on: RunLoop.main).sink { [weak self] in
+				guard let self = self else { return }
+				self.isPlaying = ApplicationMusicPlayer.shared.state.playbackStatus == .playing
+			}
+			.store(in: &self.subscriptions)
 
 		Task {
 			do {
@@ -155,20 +156,16 @@ class MusicManager: NSObject {
 				do {
 					if self.currentSong == song {
 						if self.applicationPlayer.state.playbackStatus == .playing {
-							await playButton?.setImage(UIImage(systemName: "play.fill"), for: .normal)
 							self.applicationPlayer.pause()
 						} else {
-							await playButton?.setImage(UIImage(systemName: "pause.fill"), for: .normal)
 							try await self.applicationPlayer.play()
 						}
 					} else {
 						self.applicationPlayer.queue = [song.song]
-						await playButton?.setImage(UIImage(systemName: "pause.fill"), for: .normal)
 						self.currentSong = song
 						try await self.applicationPlayer.play()
 					}
 				} catch {
-					await playButton?.setImage(UIImage(systemName: "play.fill"), for: .normal)
 					self.currentSong = nil
 					print("----- Error play", String(describing: error))
 				}
