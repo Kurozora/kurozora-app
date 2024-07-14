@@ -66,7 +66,7 @@ class SongHeaderCollectionViewCell: UICollectionViewCell {
 	/// Updates the play button status.
 	func updatePlayButton() {
 		let title = if MusicManager.shared.authrizationState == .authorized && MusicManager.shared.hasAMSubscription {
-			MusicManager.shared.isPlaying ? Trans.pauze : Trans.play
+			Trans.play
 		} else {
 			Trans.preview
 		}
