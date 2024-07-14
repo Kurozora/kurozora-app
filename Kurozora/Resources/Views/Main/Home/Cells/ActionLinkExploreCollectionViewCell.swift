@@ -19,8 +19,17 @@ class ActionLinkExploreCollectionViewCell: ActionBaseExploreCollectionViewCell {
 	/// Configure the cell with the given details.
 	override func configure(using quickLink: QuickLink) {
 		super.configure(using: quickLink)
+
 		self.separatorView?.isHidden = self.separatorIsHidden
+
 		self.actionButton?.highlightBackgroundColorEnabled = true
 		self.actionButton?.highlightBackgroundColor = KThemePicker.backgroundColor.colorValue.lighten()
+		self.actionButton?.titleLabel?.numberOfLines = 0
+
+		var configuration = UIButton.Configuration.plain()
+		configuration.contentInsets = .zero
+		configuration.image = quickLink.image
+		configuration.imagePadding = 8.0
+		self.actionButton?.configuration = configuration
 	}
 }
