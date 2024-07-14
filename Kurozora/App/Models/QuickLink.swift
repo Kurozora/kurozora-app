@@ -6,19 +6,28 @@
 //  Copyright © 2022 Kurozora. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct QuickLink: Hashable {
-	let id: UUID = UUID()
+	// MARK: - Properties
 	let title: String
+	let image: UIImage?
 	let url: String
 
-	// MARK: - Functions
-	public static func == (lhs: QuickLink, rhs: QuickLink) -> Bool {
-		lhs.id == rhs.id
+	// MARK: - Initializers
+	init(title: String, image: UIImage? = nil, url: String) {
+		self.title = title
+		self.image = image
+		self.url = url
 	}
 
-	public func hash(into hasher: inout Hasher) {
-		hasher.combine(self.id)
+	// MARK: - Functions
+	static func == (lhs: QuickLink, rhs: QuickLink) -> Bool {
+		lhs.title == rhs.title && lhs.url == rhs.url
+	}
+
+	func hash(into hasher: inout Hasher) {
+		hasher.combine(self.title)
+		hasher.combine(self.url)
 	}
 }
