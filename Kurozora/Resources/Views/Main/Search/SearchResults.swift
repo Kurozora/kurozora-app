@@ -12,8 +12,11 @@ struct SearchResults {
 	/// List of character section layout.
 	enum Section: Int, CaseIterable {
 		// MARK: - Cases
-		/// Indicates a discover section.
+		/// Indicates the discover section.
 		case discover
+
+		/// Indicates the browse section.
+		case browse
 
 		/// Indicates the characters' section.
 		case characters
@@ -47,7 +50,10 @@ struct SearchResults {
 	enum Item: Hashable {
 		// MARK: - Cases
 		/// Indicates the item contains a discover suggestion.
-		case discoverSuggestion(_: String)
+		case discoverSuggestion(_: QuickLink)
+
+		/// Indicates the item contains a browse identifier.
+		case browseCategory(_: QuickAction)
 
 		/// Indicates the item contains a `Show` object.
 		case show(_: Show)
@@ -90,6 +96,8 @@ struct SearchResults {
 			switch self {
 			case .discoverSuggestion(let discoverSuggestion):
 				hasher.combine(discoverSuggestion)
+			case .browseCategory(let browseCategory):
+				hasher.combine(browseCategory)
 			case .show(let show):
 				hasher.combine(show)
 			case .literature(let literature):
@@ -130,6 +138,8 @@ struct SearchResults {
 			switch (lhs, rhs) {
 			case (.discoverSuggestion(let discoverSuggestion1), .discoverSuggestion(let discoverSuggestion2)):
 				return discoverSuggestion1 == discoverSuggestion2
+			case (.browseCategory(let browseCategory1), .browseCategory(let browseCategory2)):
+				return browseCategory1 == browseCategory2
 			case (.show(let show1), .show(let show2)):
 				return show1 == show2
 			case (.literature(let literature1), .literature(let literature2)):
