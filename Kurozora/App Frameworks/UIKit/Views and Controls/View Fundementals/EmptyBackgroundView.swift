@@ -15,7 +15,7 @@ class EmptyBackgroundView: UIView {
 	lazy var contentView: UIView = {
 		let contentView = UIView()
 		contentView.translatesAutoresizingMaskIntoConstraints = false
-		contentView.backgroundColor = UIColor.clear
+		contentView.backgroundColor = .clear
 		contentView.isUserInteractionEnabled = true
 		return contentView
 	}()
@@ -25,7 +25,7 @@ class EmptyBackgroundView: UIView {
 		let imageView = UIImageView()
 		imageView.accessibilityIdentifier = "empty view image"
 		imageView.translatesAutoresizingMaskIntoConstraints = false
-		imageView.backgroundColor = UIColor.clear
+		imageView.backgroundColor = .clear
 		imageView.theme_tintColor = KThemePicker.subTextColor.rawValue
 		imageView.contentMode = .scaleAspectFit
 		imageView.isUserInteractionEnabled = false
@@ -38,7 +38,7 @@ class EmptyBackgroundView: UIView {
 		let titleLabel = KLabel()
 		titleLabel.accessibilityIdentifier = "empty view title"
 		titleLabel.translatesAutoresizingMaskIntoConstraints = false
-		titleLabel.backgroundColor = UIColor.clear
+		titleLabel.backgroundColor = .clear
 		titleLabel.font = .preferredFont(forTextStyle: .headline)
 		titleLabel.textAlignment = .center
 		titleLabel.lineBreakMode = .byWordWrapping
@@ -52,7 +52,7 @@ class EmptyBackgroundView: UIView {
 		let detailLabel = KSecondaryLabel()
 		detailLabel.accessibilityIdentifier = "empty view detail"
 		detailLabel.translatesAutoresizingMaskIntoConstraints = false
-		detailLabel.backgroundColor = UIColor.clear
+		detailLabel.backgroundColor = .clear
 		detailLabel.font = .preferredFont(forTextStyle: .subheadline)
 		detailLabel.textAlignment = .center
 		detailLabel.lineBreakMode = .byWordWrapping
@@ -69,7 +69,7 @@ class EmptyBackgroundView: UIView {
 		button.contentHorizontalAlignment = .center
 		button.contentVerticalAlignment = .center
 		button.isHidden = true
-		button.backgroundColor = UIColor.clear
+		button.backgroundColor = .clear
 		button.highlightBackgroundColorEnabled = true
 		self.contentView.addSubview(button)
 		return button
@@ -230,7 +230,7 @@ class EmptyBackgroundView: UIView {
 			self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[contentView]|", options: [], metrics: nil, views: ["contentView": self.contentView]))
 
 			let width = frame.width > 0 ? frame.width : UIScreen.main.bounds.width
-			let padding = roundf(Float(width/16.0))
+			let padding = roundf(Float(width / 16.0))
 
 			var subviewStrings: [String] = []
 			var views: [String: UIView] = [:]

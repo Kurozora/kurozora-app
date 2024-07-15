@@ -12,6 +12,8 @@
 	<dict>
 		<key>backgroundColor</key>
 		<string>#E5EFAC</string>
+		<key>backgroundColors</key>
+		<array/>
 		<key>barTintColor</key>
 		<string>#E5EFAC</string>
 		<key>barTitleTextColor</key>

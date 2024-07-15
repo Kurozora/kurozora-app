@@ -30,6 +30,14 @@ import UIKit
 /// - Tag: KCollectionViewController
 class KCollectionViewController: UICollectionViewController {
 	// MARK: - Properties
+	/// The gradient view object of the view controller.
+	private lazy var gradientView: GradientView = {
+		let gradientView = GradientView()
+		gradientView.translatesAutoresizingMaskIntoConstraints = false
+		gradientView.gradientLayer?.theme_colors = KThemePicker.backgroundColors.gradientPicker
+		return gradientView
+	}()
+
 	/// The activity indicator view object of the view controller.
 	private lazy var activityIndicatorView: KActivityIndicatorView = {
 		return KActivityIndicatorView()
@@ -93,29 +101,45 @@ class KCollectionViewController: UICollectionViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		// Set background color.
-		self.view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-
 		// Observe user sign-in status.
-		NotificationCenter.default.addObserver(self, selector: #selector(viewWillReload), name: .KUserIsSignedInDidChange, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.viewWillReload), name: .KUserIsSignedInDidChange, object: nil)
 
 		// Observe theme update notification.
-		NotificationCenter.default.addObserver(self, selector: #selector(themeWillReload), name: .ThemeUpdateNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.themeWillReload), name: .ThemeUpdateNotification, object: nil)
+
+		// Set collection view theme.
+		self.view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+
+		// Configure the gradient view.
+		self.configureGradientView()
 
 		// Configure collection view.
-		configureCollectionView()
+		self.configureCollectionView()
 
 		// Configure refresh control.
-		configureRefreshControl()
+		self.configureRefreshControl()
 
 		// Configure activity indicator.
-		configureActivityIndicator()
+		self.configureActivityIndicator()
 
 		// Configure empty data view.
-		configureEmptyDataView()
+		self.configureEmptyDataView()
 	}
 
 	// MARK: - Functions
+	/// Configures the gradient view with default values.
+	fileprivate func configureGradientView() {
+		self.view.addSubview(self.gradientView)
+		self.view.sendSubviewToBack(self.gradientView)
+
+		NSLayoutConstraint.activate([
+			self.gradientView.topAnchor.constraint(equalTo: self.view.topAnchor),
+			self.gradientView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+			self.gradientView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+			self.gradientView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+		])
+	}
+
 	/// Configures the collection view with default values.
 	///
 	/// Cells can also be registered during the configuration by using [registerCells(for collectionView: UICollectionView)](x-source-tag://KCollectionViewDataSource-registerCellsForCollectionView).

@@ -27,6 +27,7 @@ enum KThemePicker: ThemeColorPicker {
 
 	// Global
 	case backgroundColor = "Global.backgroundColor"
+	case backgroundColors = "Global.backgroundColors"
 	case tintedBackgroundColor = "Global.tintedBackgroundColor"
 	case barTintColor = "Global.barTintColor"
 	case barTitleTextColor = "Global.barTitleTextColor"
@@ -66,6 +67,8 @@ enum KThemePicker: ThemeColorPicker {
 		// Global
 		case .backgroundColor:
 			return "Global.backgroundColor"
+		case .backgroundColors:
+			return "Global.backgroundColors"
 		case .tintedBackgroundColor:
 			return "Global.tintedBackgroundColor"
 		case .barTintColor:

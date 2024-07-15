@@ -30,6 +30,14 @@ import UIKit
 /// - Tag: KTableViewController
 class KTableViewController: UITableViewController {
 	// MARK: - Properties
+	/// The gradient view object of the view controller.
+	private var gradientView: GradientView = {
+		let gradientView = GradientView()
+		gradientView.translatesAutoresizingMaskIntoConstraints = false
+		gradientView.gradientLayer?.theme_colors = KThemePicker.backgroundColors.gradientPicker
+		return gradientView
+	}()
+
 	/// The activity indicator view object of the view controller.
 	private lazy var activityIndicatorView: KActivityIndicatorView = {
 		return KActivityIndicatorView()
@@ -76,54 +84,69 @@ class KTableViewController: UITableViewController {
 		super.viewDidLoad()
 
 		// Observe user sign-in status.
-		NotificationCenter.default.addObserver(self, selector: #selector(viewWillReload), name: .KUserIsSignedInDidChange, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.viewWillReload), name: .KUserIsSignedInDidChange, object: nil)
 
 		// Observe theme update notification.
-		NotificationCenter.default.addObserver(self, selector: #selector(themeWillReload), name: .ThemeUpdateNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.themeWillReload), name: .ThemeUpdateNotification, object: nil)
 
 		// Set table view theme.
 		self.view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		self.tableView.theme_separatorColor = KThemePicker.separatorColorLight.rawValue
 
 		// Configure table view.
-		configureTableView()
+		self.configureTableView()
 
 		// Configure refresh control.
-		configureRefreshControl()
+		self.configureRefreshControl()
 
 		// Configure activity indicator.
-		configureActivityIndicator()
+		self.configureActivityIndicator()
 
 		// Configure empty view.
-		configureEmptyDataView()
+		self.configureEmptyDataView()
+
+		// Configure the gradient view.
+		self.configureGradientView()
 	}
 
 	// MARK: - Functions
+	/// Configures the gradient view with default values.
+	fileprivate func configureGradientView() {
+		self.view.addSubview(self.gradientView)
+		self.view.sendSubviewToBack(self.gradientView)
+
+		NSLayoutConstraint.activate([
+			self.gradientView.topAnchor.constraint(equalTo: self.view.topAnchor),
+			self.gradientView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+			self.gradientView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+			self.gradientView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+		])
+	}
+
 	/// Configures the table view with default values.
 	///
 	/// Cells can also be registered during the configuration by using [registerCells(for tableView: UITableView)](x-source-tag://KTableViewController-registerCellsForTableView).
 	fileprivate func configureTableView() {
-		tableView.prefetchDataSource = self
-		tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-		tableView.backgroundView = emptyBackgroundView
+		self.tableView.prefetchDataSource = self
+		self.tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+		self.tableView.backgroundView = self.emptyBackgroundView
 
 		// Register cells with the table view.
-		registerCells()
-
-		registerNibs()
+		self.registerCells()
+		self.registerNibs()
 	}
 
 	/// Registers cells returned by [registerCells(for tableView: UITableView)](x-source-tag://KTableViewController-registerCellsForTableView).
 	fileprivate func registerCells() {
-		for cell in registerCells(for: tableView) {
-			tableView.register(nibWithCellClass: cell)
+		for cell in registerCells(for: self.tableView) {
+			self.tableView.register(nibWithCellClass: cell)
 		}
 	}
 
 	/// Registers nibs returned by [registerNibs(for tableView: UITableView)](x-source-tag://KTableViewController-registerNibsForTableView).
 	fileprivate func registerNibs() {
-		for nib in registerNibs(for: tableView) {
-			tableView.register(nib: UINib(nibName: String(describing: nib), bundle: nil), withHeaderFooterViewClass: nib)
+		for nib in registerNibs(for: self.tableView) {
+			self.tableView.register(nib: UINib(nibName: String(describing: nib), bundle: nil), withHeaderFooterViewClass: nib)
 		}
 	}
 }
@@ -139,8 +162,8 @@ extension KTableViewController {
 	private func configureRefreshControl() {
 		#if targetEnvironment(macCatalyst)
 		#else
-		tableView.refreshControl = KRefreshControl()
-		refreshControl?.addTarget(self, action: #selector(self.handleRefreshControl), for: .valueChanged)
+		self.tableView.refreshControl = KRefreshControl()
+		self.refreshControl?.addTarget(self, action: #selector(self.handleRefreshControl), for: .valueChanged)
 		#endif
 	}
 
