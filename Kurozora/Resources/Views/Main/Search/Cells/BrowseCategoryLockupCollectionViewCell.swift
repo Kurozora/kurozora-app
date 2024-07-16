@@ -15,16 +15,16 @@ class BrowseCategoryLockupCollectionViewCell: KCollectionViewCell {
 	@IBOutlet weak var primaryImageView: UIImageView!
 
 	// MARK: - Functions
-	/// Configures the cell with the given `QuickAction` obejct.
+	/// Configures the cell with the given `BrowseCategory` obejct.
 	///
 	/// - Parameters:
-	///    - quickAction: The `QuickAction` object used to configure the cell.
-	func configure(using quickAction: QuickAction) {
+	///    - browseCategory: The `BrowseCategory` object used to configure the cell.
+	func configure(using browseCategory: BrowseCategory) {
 		self.hideSkeleton()
 
 		self.contentView.layerCornerRadius = 10.0
 
-		self.primaryLabel.text = quickAction.title
-		self.primaryImageView.image = quickAction.image
+		self.primaryLabel.text = browseCategory.title
+		self.primaryImageView.image = browseCategory.image
 	}
 }
