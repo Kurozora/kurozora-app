@@ -57,6 +57,14 @@
 			<array>
 				<dict>
 					<key>name</key>
+					<string>Ara Ara</string>
+					<key>file</key>
+					<string>ara_ara.m4a</string>
+				</dict>
+			</array>
+			<array>
+				<dict>
+					<key>name</key>
 					<string>Bonk</string>
 					<key>file</key>
 					<string>bonk.m4a</string>
@@ -164,6 +172,14 @@
 					<string>Ryoiki Tenkai</string>
 					<key>file</key>
 					<string>ryoiki_tenkai.m4a</string>
+				</dict>
+			</array>
+			<array>
+				<dict>
+					<key>name</key>
+					<string>Shika? 🦌</string>
+					<key>file</key>
+					<string>shika?.m4a</string>
 				</dict>
 			</array>
 			<array>
