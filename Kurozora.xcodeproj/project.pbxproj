@@ -591,6 +591,9 @@
 		66D9216A2BAE3D320068C685 /* PersonReviewLockupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66D921692BAE3D060068C685 /* PersonReviewLockupCollectionViewCell.xib */; };
 		66D9216B2BAE3D3B0068C685 /* GameReviewLockupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66D921682BAE3CF50068C685 /* GameReviewLockupCollectionViewCell.xib */; };
 		66DB11D024E6103900C99754 /* Shows.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66DB11CF24E6103900C99754 /* Shows.storyboard */; };
+		66DB1C112C470C6C006D1780 /* shika?.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 66DB1C102C470C6C006D1780 /* shika?.m4a */; };
+		66DB1C132C470E68006D1780 /* ara_ara.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 66DB1C122C470E68006D1780 /* ara_ara.m4a */; };
+		66DB1C152C47139D006D1780 /* BrowseCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DB1C142C471397006D1780 /* BrowseCategory.swift */; };
 		66DB2546245C667A000AA6DB /* KCopyableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DB2545245C667A000AA6DB /* KCopyableLabel.swift */; };
 		66DB2548245D6B1D000AA6DB /* KTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DB2547245D6B1D000AA6DB /* KTextView.swift */; };
 		66DB254A245D72ED000AA6DB /* KActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DB2549245D72ED000AA6DB /* KActivityIndicatorView.swift */; };
@@ -1359,6 +1362,9 @@
 		66D921682BAE3CF50068C685 /* GameReviewLockupCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameReviewLockupCollectionViewCell.xib; sourceTree = "<group>"; };
 		66D921692BAE3D060068C685 /* PersonReviewLockupCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PersonReviewLockupCollectionViewCell.xib; sourceTree = "<group>"; };
 		66DB11CF24E6103900C99754 /* Shows.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Shows.storyboard; sourceTree = "<group>"; };
+		66DB1C102C470C6C006D1780 /* shika?.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "shika?.m4a"; sourceTree = "<group>"; };
+		66DB1C122C470E68006D1780 /* ara_ara.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = ara_ara.m4a; sourceTree = "<group>"; };
+		66DB1C142C471397006D1780 /* BrowseCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseCategory.swift; sourceTree = "<group>"; };
 		66DB2545245C667A000AA6DB /* KCopyableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCopyableLabel.swift; sourceTree = "<group>"; };
 		66DB2547245D6B1D000AA6DB /* KTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KTextView.swift; sourceTree = "<group>"; };
 		66DB2549245D72ED000AA6DB /* KActivityIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KActivityIndicatorView.swift; sourceTree = "<group>"; };
@@ -2166,6 +2172,7 @@
 		6648ED7122A4749500E1BE18 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				66DB1C142C471397006D1780 /* BrowseCategory.swift */,
 				66A254D422AABC29002A0E34 /* AlternativeIcons.swift */,
 				66631B602B40D1070006F02B /* AppChimeGroup.swift */,
 				6648ED6F22A4636E00E1BE18 /* GroupedNotifications.swift */,
@@ -4019,6 +4026,7 @@
 		66FE68F929D2646A00C9AD8E /* Audios */ = {
 			isa = PBXGroup;
 			children = (
+				66DB1C122C470E68006D1780 /* ara_ara.m4a */,
 				66EDE0002BBA182600B5B4EE /* biwa.m4a */,
 				661B1DD02B61C1D7000C9C0E /* bonk.m4a */,
 				6675E2022B4836620050F98C /* boosto.m4a */,
@@ -4035,6 +4043,7 @@
 				66631B5B2B4092D00006F02B /* plus_ultra.m4a */,
 				66631B572B408DBB0006F02B /* ryoiki_tenkai.m4a */,
 				66EDDFFC2BBA0E8600B5B4EE /* shamisen.m4a */,
+				66DB1C102C470C6C006D1780 /* shika?.m4a */,
 				6675E20A2B4868120050F98C /* shishi_odoshi.m4a */,
 				66631B4E2B407A2B0006F02B /* tutturu.m4a */,
 				6675E2042B48366B0050F98C /* upupupu.m4a */,
@@ -4231,6 +4240,7 @@
 				66E077D82A636242005385F8 /* Badge.storyboard in Resources */,
 				66707823208B1C6800471FBC /* LaunchScreen.xib in Resources */,
 				66AA35BE24030F570006EC5B /* Seasons.storyboard in Resources */,
+				66DB1C112C470C6C006D1780 /* shika?.m4a in Resources */,
 				66CBDD9A24647B3500CA5F83 /* EpisodeLockupCollectionViewCell.xib in Resources */,
 				666C89B52A007CD10075B5D6 /* SearchFilterTextCollectionViewCell.xib in Resources */,
 				66AC260622F0E58A0064541B /* WebBrowser.storyboard in Resources */,
@@ -4279,6 +4289,7 @@
 				66C5797D22A864CB001B8F51 /* Legal.storyboard in Resources */,
 				6675E2032B4836620050F98C /* boosto.m4a in Resources */,
 				66EDBA6C2946943700FF1A2E /* Launch Icon.png in Resources */,
+				66DB1C132C470E68006D1780 /* ara_ara.m4a in Resources */,
 				666C89A92A00768F0075B5D6 /* SearchFilterSwitchCollectionViewCell.xib in Resources */,
 				66631B5E2B40C8430006F02B /* plus_ultra-v3.m4a in Resources */,
 				66EAB5BA28591C0100D81C06 /* UserLockupCollectionViewCell.xib in Resources */,
@@ -5011,6 +5022,7 @@
 				66B2C73F232F95680042AB12 /* BaseNotificationCell.swift in Sources */,
 				66500D1629605E840098D59D /* SubscriptionCollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				661F185E24AAA03700542AFB /* SectionBackgroundDecorationView.swift in Sources */,
+				66DB1C152C47139D006D1780 /* BrowseCategory.swift in Sources */,
 				66160C3B215C04B900D0D722 /* AccountTableViewController.swift in Sources */,
 				663E341A235F7CCC003386D1 /* ActionBaseExploreCollectionViewCell.swift in Sources */,
 				660E3A0525E5D7BB00A46EB0 /* StudioDetailsCollectionViewController+UICollectionViewDelegate.swift in Sources */,
