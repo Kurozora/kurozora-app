@@ -23,20 +23,15 @@ extension SearchResultsCollectionViewController {
 		let showCellConfiguration = self.getConfiguredShowCell()
 		let studioCellConfiguration = self.getConfiguredStudioCell()
 		let userCellConfiguration = self.getConfiguredUserCell()
-		let discoverSuggestionCellConfiguration = UICollectionView.CellRegistration<ActionLinkExploreCollectionViewCell, SearchResults.Item>(cellNib: UINib(resource: R.nib.actionLinkExploreCollectionViewCell)) { [weak self] actionLinkExploreCollectionViewCell, _, itemKind in
-			guard let self = self else { return }
-
-			switch itemKind {
-			case .discoverSuggestion(let discoverSuggestion):
-				let quickLink = QuickLink(title: discoverSuggestion, url: "")
-				actionLinkExploreCollectionViewCell.delegate = self
-				actionLinkExploreCollectionViewCell.configure(using: quickLink)
-			default: break
-			}
-		}
+		let discoverSuggestionCellConfiguration = self.getConfiguredActionLinkCell()
+		let browseCellConfiguration = self.getConfiguredBrowseCell()
 
 		self.dataSource = UICollectionViewDiffableDataSource<SearchResults.Section, SearchResults.Item>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, itemKind: SearchResults.Item) -> UICollectionViewCell? in
 			switch itemKind {
+			case .discoverSuggestion:
+				return collectionView.dequeueConfiguredReusableCell(using: discoverSuggestionCellConfiguration, for: indexPath, item: itemKind)
+			case .browseCategory:
+				return collectionView.dequeueConfiguredReusableCell(using: browseCellConfiguration, for: indexPath, item: itemKind)
 			case .show:
 				return collectionView.dequeueConfiguredReusableCell(using: characterCellConfiguration, for: indexPath, item: itemKind)
 			case .literature:
@@ -59,8 +54,6 @@ extension SearchResultsCollectionViewController {
 				return collectionView.dequeueConfiguredReusableCell(using: studioCellConfiguration, for: indexPath, item: itemKind)
 			case .userIdentity:
 				return collectionView.dequeueConfiguredReusableCell(using: userCellConfiguration, for: indexPath, item: itemKind)
-			case .discoverSuggestion:
-				return collectionView.dequeueConfiguredReusableCell(using: discoverSuggestionCellConfiguration, for: indexPath, item: itemKind)
 			}
 		}
 		self.dataSource.supplementaryViewProvider = { [weak self] (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
@@ -73,6 +66,10 @@ extension SearchResultsCollectionViewController {
 			exploreSectionTitleCell.delegate = self
 
 			switch sectionLayoutKind {
+			case .discover:
+				exploreSectionTitleCell.configure(withTitle: Trans.discover, indexPath: indexPath, segueID: segueID)
+			case .browse:
+				exploreSectionTitleCell.configure(withTitle: Trans.browse, indexPath: indexPath, segueID: segueID)
 			case .characters:
 				segueID = R.segue.searchResultsCollectionViewController.charactersListSegue.identifier
 				exploreSectionTitleCell.configure(withTitle: Trans.characters, indexPath: indexPath, segueID: segueID)
@@ -100,8 +97,6 @@ extension SearchResultsCollectionViewController {
 			case .users:
 				segueID = R.segue.searchResultsCollectionViewController.usersListSegue.identifier
 				exploreSectionTitleCell.configure(withTitle: Trans.users, indexPath: indexPath, segueID: segueID)
-			case .discover:
-				exploreSectionTitleCell.configure(withTitle: Trans.discover, indexPath: indexPath, segueID: segueID)
 			}
 
 			// Return the view.
@@ -284,12 +279,27 @@ extension SearchResultsCollectionViewController {
 			}
 		}
 
-		if snapshot.numberOfSections == 0 {
-			let discoverSuggestionItems: [SearchResults.Item] = self.discoverSuggestions.map { discoverSuggestions in
-				return .discoverSuggestion(discoverSuggestions)
+		switch self.searchViewKind {
+		case .single:
+			break
+		case .multiple:
+			if snapshot.numberOfSections == 0 {
+				if self.discoverSuggestions.count != 0 {
+					let discoverSuggestionItems: [SearchResults.Item] = self.discoverSuggestions.map { discoverSuggestion in
+						return .discoverSuggestion(discoverSuggestion)
+					}
+					snapshot.appendSections([.discover])
+					snapshot.appendItems(discoverSuggestionItems, toSection: .discover)
+				}
+
+				if self.browseCategories.count != 0 {
+					let browseCategoryItems: [SearchResults.Item] = self.browseCategories.map { browseCategory in
+						return .browseCategory(browseCategory)
+					}
+					snapshot.appendSections([.browse])
+					snapshot.appendItems(browseCategoryItems, toSection: .browse)
+				}
 			}
-			snapshot.appendSections([.discover])
-			snapshot.appendItems(discoverSuggestionItems, toSection: .discover)
 		}
 
 		self.dataSource.apply(snapshot)
@@ -528,6 +538,30 @@ extension SearchResultsCollectionViewController {
 
 				userLockupCollectionViewCell.delegate = self
 				userLockupCollectionViewCell.configure(using: user)
+			default: break
+			}
+		}
+	}
+
+	func getConfiguredActionLinkCell() -> UICollectionView.CellRegistration<ActionLinkExploreCollectionViewCell, SearchResults.Item> {
+		return UICollectionView.CellRegistration<ActionLinkExploreCollectionViewCell, SearchResults.Item>(cellNib: UINib(resource: R.nib.actionLinkExploreCollectionViewCell)) { [weak self] actionLinkExploreCollectionViewCell, _, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .discoverSuggestion(let quickLink):
+				actionLinkExploreCollectionViewCell.delegate = self
+				actionLinkExploreCollectionViewCell.separatorIsHidden = self.discoverSuggestions.last == quickLink
+				actionLinkExploreCollectionViewCell.configure(using: quickLink)
+			default: break
+			}
+		}
+	}
+
+	func getConfiguredBrowseCell() -> UICollectionView.CellRegistration<BrowseCategoryLockupCollectionViewCell, SearchResults.Item> {
+		return UICollectionView.CellRegistration<BrowseCategoryLockupCollectionViewCell, SearchResults.Item>(cellNib: UINib(resource: R.nib.browseCategoryLockupCollectionViewCell)) { browseCategoryLockupCollectionViewCell, _, itemKind in
+			switch itemKind {
+			case .browseCategory(let browseCategory):
+				browseCategoryLockupCollectionViewCell.configure(using: browseCategory)
 			default: break
 			}
 		}

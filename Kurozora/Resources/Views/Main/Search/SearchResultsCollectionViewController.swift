@@ -10,8 +10,12 @@ import UIKit
 import Tabman
 import KurozoraKit
 import Alamofire
-import AVFoundation
-import MediaPlayer
+
+/// The list of available search view types.
+enum SearchViewKind {
+	case single(_ type: KKSearchType)
+	case multiple
+}
 
 /// The collection view controller in charge of providing the necessary functionalities for searching shows, threads and users.
 class SearchResultsCollectionViewController: KCollectionViewController {
@@ -21,6 +25,9 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	let tabBarView = TMBar.KBar()
 	var currentTopContentInset: CGFloat = 0
 	var currentIndex: Int = 0
+
+	/// The search view to be
+	var searchViewKind: SearchViewKind = .multiple
 
 	/// The collection of results fetched by the search request.
 	var searchResults: Search?
@@ -35,7 +42,18 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	var searachQuery: String = ""
 
 	/// The collection of discover suggestions.
-	var discoverSuggestions: [String] = []
+	var discoverSuggestions: [QuickLink] = []
+
+	/// The collection of browse categories.
+	let browseCategories: [BrowseCategory] = [
+		BrowseCategory(title: Trans.shows, image: R.image.browse.shows(), searchType: .shows),
+		BrowseCategory(title: Trans.literatures, image: R.image.browse.literatures(), searchType: .literatures),
+		BrowseCategory(title: Trans.games, image: R.image.browse.games(), searchType: .games),
+		BrowseCategory(title: Trans.songs, image: R.image.browse.songs(), searchType: .songs),
+		BrowseCategory(title: Trans.characters, image: R.image.browse.characters(), searchType: .characters),
+		BrowseCategory(title: Trans.people, image: R.image.browse.people(), searchType: .people),
+		BrowseCategory(title: Trans.studio, image: R.image.browse.studios(), searchType: .studios)
+	]
 
 	/// The collection of search types in the current search request
 	var searchTypes: [KKSearchType] = [] {
@@ -76,12 +94,6 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	var songNextPageURL: String? = nil
 	var studioNextPageURL: String? = nil
 	var userNextPageURL: String? = nil
-
-	/// The object that provides the interface to control the player’s transport behavior.
-	var player: AVPlayer?
-
-	/// The index path of the song that's currently playing.
-	var currentPlayerIndexPath: IndexPath?
 
 	var dataSource: UICollectionViewDiffableDataSource<SearchResults.Section, SearchResults.Item>! = nil
 	var snapshot: NSDiffableDataSourceSnapshot<SearchResults.Section, SearchResults.Item>! = nil
@@ -145,17 +157,23 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		self.configureToolbar()
 		self.configureViewHierarchy()
 		self.configureViewConstraints()
+		self.configureDataSource()
 
-		// Fetch discover elements
-		Task { [weak self] in
-			guard let self = self else { return }
-			await self.fetchSearchSuggestions()
+		switch self.searchViewKind {
+		case .single(let type):
+			// Fetch index
+			self.performSearch(with: "", in: .kurozora, for: [type], with: self.searchFilters[type] as? KKSearchFilter, next: nil)
+		case .multiple:
+			// Fetch discover elements
+			Task { [weak self] in
+				guard let self = self else { return }
+				await self.fetchSearchSuggestions()
+				self.updateDataSource()
+			}
+
+			// Update data source
 			self.updateDataSource()
 		}
-
-		// Update data source
-		self.configureDataSource()
-		self.updateDataSource()
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -165,12 +183,6 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 			self.isDeepLinked = false
 			self.performSearch(with: self.searachQuery, in: self.currentScope, for: self.currentTypes, with: nil, next: nil)
 		}
-	}
-
-	override func viewWillDisappear(_ animated: Bool) {
-		super.viewWillDisappear(animated)
-
-		self.player?.pause()
 	}
 
 	// MARK: - Functions
@@ -284,8 +296,17 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		case .kurozora:
 			Task { [weak self] in
 				guard let self = self else { return }
-				let types: [KKSearchType] = self.searchResults != nil ? types : [.shows, .literatures, .games, .episodes, .characters, .people, .songs, .studios, .users]
-				await self.search(scope: searchScope, types: types, query: query, next: next, filter: filter)
+				let searchTypes: [KKSearchType]
+
+				switch self.searchViewKind {
+				case .single(let type):
+					searchTypes = [type]
+					self.searchTypes = searchTypes
+				case .multiple:
+					searchTypes = self.searchResults != nil ? types : [.shows, .literatures, .games, .episodes, .characters, .people, .songs, .studios, .users]
+				}
+
+				await self.search(scope: searchScope, types: searchTypes, query: query, next: next, filter: filter)
 			}
 		case .library:
 			WorkflowController.shared.isSignedIn { [weak self] in
@@ -510,7 +531,9 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 			let alphabet = "abcdefghijklmnopqrstuvwxyz"
 			let suggestionStirng = String(alphabet.randomElement() ?? "o")
 			let searchSuggestionResponse = try await KService.getSearchSuggestions(.kurozora, of: [.shows], for: suggestionStirng).value
-			self.discoverSuggestions = searchSuggestionResponse.data
+			self.discoverSuggestions = searchSuggestionResponse.data.map { searchSuggestion in
+				QuickLink(title: searchSuggestion, image: UIImage(systemName: "magnifyingglass"), url: "")
+			}
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -549,6 +572,12 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
+		case R.segue.searchResultsCollectionViewController.searchSegue.identifier:
+			// Segue to character details
+			guard let searchResultsCollectionViewController = segue.destination as? SearchResultsCollectionViewController else { return }
+			guard let browseCategory = sender as? BrowseCategory else { return }
+			searchResultsCollectionViewController.title = browseCategory.title
+			searchResultsCollectionViewController.searchViewKind = .single(browseCategory.searchType)
 		case R.segue.searchResultsCollectionViewController.characterDetailsSegue.identifier:
 			// Segue to character details
 			guard let characterDetailCollectionViewController = segue.destination as? CharacterDetailsCollectionViewController else { return }
@@ -932,7 +961,7 @@ extension SearchResultsCollectionViewController: ActionBaseExploreCollectionView
 		switch cell.self {
 		case is ActionLinkExploreCollectionViewCell:
 			let discoverSuggestion = self.discoverSuggestions[indexPath.item]
-			self.kSearchController.searchBar.text = discoverSuggestion
+			self.kSearchController.searchBar.text = discoverSuggestion.title
 			self.kSearchController.searchBar.becomeFirstResponder()
 			self.kSearchController.searchBar.resignFirstResponder()
 			self.searchBarSearchButtonClicked(self.kSearchController.searchBar)

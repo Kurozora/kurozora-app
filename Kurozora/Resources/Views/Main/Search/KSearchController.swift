@@ -36,13 +36,23 @@ class KSearchController: UISearchController {
 		super.viewDidLoad()
 
 		self.searchBar.delegate = self.viewController
-		#if targetEnvironment(macCatalyst)
-		self.searchBar.placeholder = Trans.search
-		#else
-		self.searchBar.placeholder = "Anime, Manga, Games and More"
-		self.searchBar.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle"), for: .bookmark, state: .normal)
-		#endif
-		self.searchBar.scopeButtonTitles = KKSearchScope.allString
+
+		switch self.viewController!.searchViewKind {
+		case .single:
+			self.searchBar.placeholder = Trans.search
+			self.searchBar.showsScopeBar = false
+			self.searchBar.scopeButtonTitles = [KKSearchScope.kurozora.stringValue]
+		case .multiple:
+			#if targetEnvironment(macCatalyst)
+			self.searchBar.placeholder = Trans.search
+			#else
+			self.searchBar.placeholder = "Anime, Manga, Games and More"
+			self.searchBar.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle"), for: .bookmark, state: .normal)
+
+			#endif
+			self.searchBar.scopeButtonTitles = KKSearchScope.allString
+		}
+
 		self.searchBar.selectedScopeButtonIndex = self.searchScope.rawValue
 		self.searchBar.searchTextField.theme_textColor = KThemePicker.textColor.rawValue
 	}
@@ -55,15 +65,25 @@ extension KSearchController: UISearchControllerDelegate {
 			self.searchBar.showsCancelButton = true
 		}
 
-		if #available(iOS 16.0, *) {
-			#if targetEnvironment(macCatalyst)
-			self.scopeBarActivation = .manual
-			self.searchBar.showsScopeBar = true
-			#else
-			self.scopeBarActivation = .onSearchActivation
-			#endif
-		} else {
-			self.automaticallyShowsScopeBar = true
+		switch self.viewController!.searchViewKind {
+		case .single:
+			if #available(iOS 16.0, *) {
+				self.scopeBarActivation = .manual
+				self.searchBar.showsScopeBar = false
+			} else {
+				self.automaticallyShowsScopeBar = false
+			}
+		case .multiple:
+			if #available(iOS 16.0, *) {
+				#if targetEnvironment(macCatalyst)
+				self.scopeBarActivation = .manual
+				self.searchBar.showsScopeBar = true
+				#else
+				self.scopeBarActivation = .onSearchActivation
+				#endif
+			} else {
+				self.automaticallyShowsScopeBar = true
+			}
 		}
 	}
 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ufF-h3-VBA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ufF-h3-VBA">
     <device id="retina6_5" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -47,6 +47,7 @@
                         <segue destination="72A-m4-h2J" kind="show" identifier="LiteratureDetailsSegue" id="6Tu-q8-8JC"/>
                         <segue destination="Iuf-To-QEl" kind="show" identifier="GameDetailsSegue" id="BdW-OU-toQ"/>
                         <segue destination="c9g-hy-12f" kind="show" identifier="GamesListSegue" id="s0d-WA-ukU"/>
+                        <segue destination="m8V-ho-2Px" kind="show" identifier="SearchSegue" id="Qew-sZ-bkn"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bIZ-Ff-stf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -238,6 +239,16 @@
             </objects>
             <point key="canvasLocation" x="3362" y="206"/>
         </scene>
+        <!--SearchResultsCollectionViewController-->
+        <scene sceneID="xHM-1M-rom">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Search" referencedIdentifier="SearchResultsCollectionViewController" id="m8V-ho-2Px" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="aaP-Be-p5g"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="etc-on-5ol" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3362" y="-141"/>
+        </scene>
         <!--GameDetailsCollectionViewController-->
         <scene sceneID="rF3-1X-TKq">
             <objects>
@@ -246,7 +257,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e17-7y-pAS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3357" y="-100"/>
+            <point key="canvasLocation" x="3358" y="-100"/>
         </scene>
         <!--GamesListCollectionViewController-->
         <scene sceneID="96S-Aq-7AN">

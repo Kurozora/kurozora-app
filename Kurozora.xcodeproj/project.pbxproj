@@ -377,6 +377,8 @@
 		667B38432361CE6500786EF6 /* KWhatsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667B38422361CE6500786EF6 /* KWhatsNew.swift */; };
 		667B8BAF2BC1F2BE00DA79CD /* EnvironmentValues+KurozoraWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667B8BAD2BC1F26A00DA79CD /* EnvironmentValues+KurozoraWidget.swift */; };
 		667B8BB42BC1FCCA00DA79CD /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 667B8BB32BC1FCCA00DA79CD /* Intents.intentdefinition */; };
+		667C53AE2BEED382002DEC79 /* BrowseCategoryLockupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 667C53AD2BEED36C002DEC79 /* BrowseCategoryLockupCollectionViewCell.xib */; };
+		667C53AF2BEED38B002DEC79 /* BrowseCategoryLockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667C53AB2BEED1E5002DEC79 /* BrowseCategoryLockupCollectionViewCell.swift */; };
 		667F9AD421B47E6D003F6629 /* AchievementTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9AD321B47E6D003F6629 /* AchievementTableViewCell.swift */; };
 		667F9AD921B47FA4003F6629 /* AchievementsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9AD821B47FA4003F6629 /* AchievementsTableViewController.swift */; };
 		667F9ADB21B57D5C003F6629 /* Date+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9ADA21B57D5C003F6629 /* Date+Kurozora.swift */; };
@@ -1141,6 +1143,8 @@
 		667B38422361CE6500786EF6 /* KWhatsNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KWhatsNew.swift; sourceTree = "<group>"; };
 		667B8BAD2BC1F26A00DA79CD /* EnvironmentValues+KurozoraWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+KurozoraWidget.swift"; sourceTree = "<group>"; };
 		667B8BB32BC1FCCA00DA79CD /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
+		667C53AB2BEED1E5002DEC79 /* BrowseCategoryLockupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseCategoryLockupCollectionViewCell.swift; sourceTree = "<group>"; };
+		667C53AD2BEED36C002DEC79 /* BrowseCategoryLockupCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BrowseCategoryLockupCollectionViewCell.xib; sourceTree = "<group>"; };
 		667F9AD321B47E6D003F6629 /* AchievementTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementTableViewCell.swift; sourceTree = "<group>"; };
 		667F9AD821B47FA4003F6629 /* AchievementsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsTableViewController.swift; sourceTree = "<group>"; };
 		667F9ADA21B57D5C003F6629 /* Date+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Kurozora.swift"; sourceTree = "<group>"; };
@@ -3669,10 +3673,12 @@
 		66DEB4AE21D28B6A0093725F /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				667C53AB2BEED1E5002DEC79 /* BrowseCategoryLockupCollectionViewCell.swift */,
+				667C53AD2BEED36C002DEC79 /* BrowseCategoryLockupCollectionViewCell.xib */,
 				66B4F1DA223D2CA5007C5048 /* SearchBaseResultsCell.swift */,
 				662B925E233E50FA001D49B7 /* SearchShowResultsCell.swift */,
-				665099D422FC2B6A0053C2FD /* SearchSuggestionResultCell.swift */,
 				66F27EC3283A81AE00CC2277 /* SearchShowResultsCell.xib */,
+				665099D422FC2B6A0053C2FD /* SearchSuggestionResultCell.swift */,
 				66F27EBF283A805800CC2277 /* SearchSuggestionResultCell.xib */,
 			);
 			path = Cells;
@@ -4314,6 +4320,7 @@
 				6698394227493A2E0083C479 /* Debug Products.plist in Resources */,
 				6646A275236A5F7600DCC0A4 /* BrowserSettings.storyboard in Resources */,
 				6632C3E32983468900702F7C /* SelectTableViewCell.xib in Resources */,
+				667C53AE2BEED382002DEC79 /* BrowseCategoryLockupCollectionViewCell.xib in Resources */,
 				66500D08295FC82F0098D59D /* PurchaseButtonCollectionViewCell.xib in Resources */,
 				66631B4F2B407A2C0006F02B /* tutturu.m4a in Resources */,
 				660C043023D14F760040C749 /* SmallLockupCollectionViewCell.xib in Resources */,
@@ -4894,6 +4901,7 @@
 				66C457FC2598DA4500886374 /* StudioDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				6674A0C320A45E6D00AAB527 /* LinkCollectionViewCell.swift in Sources */,
 				66EC939A2274B90100D584F7 /* ShowDetail.swift in Sources */,
+				667C53AF2BEED38B002DEC79 /* BrowseCategoryLockupCollectionViewCell.swift in Sources */,
 				6632C440298B0CC200702F7C /* LiteratureDetailsCollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				6632C441298B0CC200702F7C /* LiteratureDetailsCollectionViewController+UICollectionViewDelegate.swift in Sources */,
 				66513E37276FCA3B000FBC42 /* EpisodeDetailHeaderCollectionViewCell.swift in Sources */,

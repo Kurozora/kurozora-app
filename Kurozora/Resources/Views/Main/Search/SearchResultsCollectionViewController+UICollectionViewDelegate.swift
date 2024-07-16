@@ -15,6 +15,9 @@ extension SearchResultsCollectionViewController {
 		guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return }
 
 		switch itemKind {
+		case .discoverSuggestion: break
+		case .browseCategory(let browseCategory):
+			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.searchSegue, sender: browseCategory)
 		case .characterIdentity:
 			let character = self.characters[indexPath]
 			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.characterDetailsSegue, sender: character)
@@ -42,7 +45,6 @@ extension SearchResultsCollectionViewController {
 		case .userIdentity:
 			let user = self.users[indexPath]
 			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.userDetailsSegue, sender: user)
-		case .discoverSuggestion: break
 		case .show: break
 		case .literature: break
 		case .game: break
@@ -56,6 +58,8 @@ extension SearchResultsCollectionViewController {
 		var nextPageURL: String? = nil
 
 		switch itemKind {
+		case .discoverSuggestion: break
+		case .browseCategory: break
 		case .characterIdentity:
 			identitiesCount = self.characterIdentities.count
 			type = .characters
@@ -92,7 +96,6 @@ extension SearchResultsCollectionViewController {
 			identitiesCount = self.userIdentities.count
 			nextPageURL = self.userNextPageURL
 			type = .users
-		case .discoverSuggestion: break
 		case .show: break
 		case .literature: break
 		case .game: break
@@ -109,7 +112,22 @@ extension SearchResultsCollectionViewController {
 
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		switch self.dataSource.itemIdentifier(for: indexPath) {
+		guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return nil }
+
+		switch itemKind {
+		case .discoverSuggestion:
+			return nil
+		case .browseCategory:
+			let browseCategory = self.browseCategories[indexPath.item]
+			let identifier = indexPath as NSCopying
+
+			return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
+				let searchResultsCollectionViewController =
+				R.storyboard.search.searchResultsCollectionViewController()
+				searchResultsCollectionViewController?.title = browseCategory.title
+				searchResultsCollectionViewController?.searchViewKind = .single(browseCategory.searchType)
+				return searchResultsCollectionViewController
+			}, actionProvider: nil)
 		case .characterIdentity:
 			return self.characters[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .episodeIdentity:
@@ -135,7 +153,12 @@ extension SearchResultsCollectionViewController {
 			return self.studios[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .userIdentity:
 			return self.users[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-		default: return nil
+		case .show:
+			return nil
+		case .literature:
+			return nil
+		case .game:
+			return nil
 		}
 	}
 }

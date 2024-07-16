@@ -53,7 +53,7 @@ struct SearchResults {
 		case discoverSuggestion(_: QuickLink)
 
 		/// Indicates the item contains a browse identifier.
-		case browseCategory(_: QuickAction)
+		case browseCategory(_: BrowseCategory)
 
 		/// Indicates the item contains a `Show` object.
 		case show(_: Show)

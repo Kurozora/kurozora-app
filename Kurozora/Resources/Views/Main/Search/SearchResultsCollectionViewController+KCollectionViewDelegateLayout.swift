@@ -14,6 +14,14 @@ extension SearchResultsCollectionViewController {
 		var columnCount = 0
 
 		switch section {
+		case .discover:
+			if width >= 414.0 {
+				columnCount = (width / 384.0).rounded().int
+			} else {
+				columnCount = (width / 284.0).rounded().int
+			}
+		case .browse:
+			columnCount = (width / 250.0).rounded().int
 		case .characters, .people:
 			columnCount = (width / 140.0).rounded().int
 		case .episodes:
@@ -37,12 +45,6 @@ extension SearchResultsCollectionViewController {
 				columnCount = (width / 284.0).rounded().int
 			}
 		case .users:
-			if width >= 414.0 {
-				columnCount = (width / 384.0).rounded().int
-			} else {
-				columnCount = (width / 284.0).rounded().int
-			}
-		case .discover:
 			if width >= 414.0 {
 				columnCount = (width / 384.0).rounded().int
 			} else {
@@ -83,6 +85,12 @@ extension SearchResultsCollectionViewController {
 			var hasHeader: Bool = false
 
 			switch searchResultSection {
+			case .discover:
+				hasHeader = true
+				sectionLayout = Layouts.usersSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
+			case .browse:
+				hasHeader = true
+				sectionLayout = Layouts.gridSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 			case .characters:
 				hasHeader = false
 				sectionLayout = Layouts.charactersSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
@@ -103,9 +111,6 @@ extension SearchResultsCollectionViewController {
 				sectionLayout = Layouts.studiosSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
 			case .users:
 				hasHeader = false
-				sectionLayout = Layouts.usersSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
-			case .discover:
-				hasHeader = true
 				sectionLayout = Layouts.usersSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
 			}
 
