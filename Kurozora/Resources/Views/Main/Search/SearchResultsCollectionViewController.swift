@@ -50,6 +50,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		BrowseCategory(title: Trans.literatures, image: R.image.browse.literatures(), searchType: .literatures),
 		BrowseCategory(title: Trans.games, image: R.image.browse.games(), searchType: .games),
 		BrowseCategory(title: Trans.songs, image: R.image.browse.songs(), searchType: .songs),
+		BrowseCategory(title: Trans.episodes, image: R.image.browse.episodes(), searchType: .episodes),
 		BrowseCategory(title: Trans.characters, image: R.image.browse.characters(), searchType: .characters),
 		BrowseCategory(title: Trans.people, image: R.image.browse.people(), searchType: .people),
 		BrowseCategory(title: Trans.studio, image: R.image.browse.studios(), searchType: .studios)
@@ -150,9 +151,20 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		}
 
 		// Configurations
-		#if targetEnvironment(macCatalyst)
-		self.configureFilterBarButtonItem()
-		#endif
+		switch self.searchViewKind {
+		case .single(let searchType):
+			self.kSearchController.hidesNavigationBarDuringPresentation = false
+
+			self.configureFilterBarButtonItem()
+
+			if searchType != .songs {
+				self.navigationItem.rightBarButtonItems = [self.filterBarButtonItem]
+			}
+		case .multiple:
+			#if targetEnvironment(macCatalyst)
+			self.configureFilterBarButtonItem()
+			#endif
+		}
 		self.configureTabBarView()
 		self.configureToolbar()
 		self.configureViewHierarchy()
@@ -737,13 +749,18 @@ extension TMBarUpdateDirection {
 // MARK: - UISearchBarDelegate
 extension SearchResultsCollectionViewController: UISearchBarDelegate {
 	func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-		#if targetEnvironment(macCatalyst)
-		self.navigationItem.rightBarButtonItems = []
-		#else
-		searchBar.setShowsScope(true, animated: true)
-		searchBar.showsBookmarkButton = false
-		#endif
-		self.setShowToolbar(false)
+		switch self.searchViewKind {
+		case .single:
+			break
+		case .multiple:
+			#if targetEnvironment(macCatalyst)
+			self.navigationItem.rightBarButtonItems = []
+			#else
+			searchBar.setShowsScope(true, animated: true)
+			searchBar.showsBookmarkButton = false
+			#endif
+			self.setShowToolbar(false)
+		}
 	}
 
 	func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
@@ -752,12 +769,17 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 		#endif
 
 		if self.searchResults != nil {
-			#if targetEnvironment(macCatalyst)
-			self.navigationItem.rightBarButtonItems = [self.filterBarButtonItem]
-			#else
-			searchBar.showsBookmarkButton = true
-			#endif
-			self.setShowToolbar(true)
+			switch self.searchViewKind {
+			case .single:
+				break
+			case .multiple:
+				#if targetEnvironment(macCatalyst)
+				self.navigationItem.rightBarButtonItems = [self.filterBarButtonItem]
+				#else
+				searchBar.showsBookmarkButton = true
+				#endif
+				self.setShowToolbar(true)
+			}
 		}
 	}
 
@@ -792,13 +814,18 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 	}
 
 	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-		#if targetEnvironment(macCatalyst)
-		self.navigationItem.rightBarButtonItems = []
-		#else
-		searchBar.showsBookmarkButton = false
-		#endif
-		self.setShowToolbar(false)
-		self.resetSearchResults(for: nil)
+		switch self.searchViewKind {
+		case .single(let type):
+			self.performSearch(with: "", in: .kurozora, for: [type], with: self.searchFilters[type] as? KKSearchFilter, next: nil)
+		case .multiple:
+			#if targetEnvironment(macCatalyst)
+			self.navigationItem.rightBarButtonItems = []
+			#else
+			searchBar.showsBookmarkButton = false
+			#endif
+			self.setShowToolbar(false)
+			self.resetSearchResults(for: nil)
+		}
 	}
 }
 

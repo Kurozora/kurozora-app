@@ -37,20 +37,21 @@ class KSearchController: UISearchController {
 
 		self.searchBar.delegate = self.viewController
 
-		switch self.viewController!.searchViewKind {
-		case .single:
-			self.searchBar.placeholder = Trans.search
-			self.searchBar.showsScopeBar = false
-			self.searchBar.scopeButtonTitles = [KKSearchScope.kurozora.stringValue]
-		case .multiple:
-			#if targetEnvironment(macCatalyst)
-			self.searchBar.placeholder = Trans.search
-			#else
-			self.searchBar.placeholder = "Anime, Manga, Games and More"
-			self.searchBar.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle"), for: .bookmark, state: .normal)
-
-			#endif
-			self.searchBar.scopeButtonTitles = KKSearchScope.allString
+		if let viewController = self.viewController {
+			switch viewController.searchViewKind {
+			case .single:
+				self.searchBar.placeholder = Trans.search
+				self.searchBar.showsScopeBar = false
+				self.searchBar.scopeButtonTitles = [KKSearchScope.kurozora.stringValue]
+			case .multiple:
+				#if targetEnvironment(macCatalyst)
+				self.searchBar.placeholder = Trans.search
+				#else
+				self.searchBar.placeholder = "Anime, Manga, Games and More"
+				self.searchBar.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle"), for: .bookmark, state: .normal)
+				#endif
+				self.searchBar.scopeButtonTitles = KKSearchScope.allString
+			}
 		}
 
 		self.searchBar.selectedScopeButtonIndex = self.searchScope.rawValue
@@ -65,7 +66,9 @@ extension KSearchController: UISearchControllerDelegate {
 			self.searchBar.showsCancelButton = true
 		}
 
-		switch self.viewController!.searchViewKind {
+		guard let viewController = self.viewController else { return }
+
+		switch viewController.searchViewKind {
 		case .single:
 			if #available(iOS 16.0, *) {
 				self.scopeBarActivation = .manual
