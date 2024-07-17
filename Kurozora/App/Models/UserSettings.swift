@@ -49,7 +49,7 @@ extension UserSettings {
 	static var appIcon: String {
 		let primaryIcon = "AppIcon60x60"
 		guard let appIcon = shared.string(forKey: #function) else { return primaryIcon }
-		return (UIImage(named: appIcon) != nil) ? appIcon : primaryIcon
+		return UIImage(named: appIcon) != nil ? appIcon : primaryIcon
 	}
 
 	/// Returns a `KBrowser` type indicating the preferred default browser.

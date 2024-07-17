@@ -306,7 +306,10 @@ final class Store: NSObject, ObservableObject {
 	///
 	/// - Returns: The product's title.
 	func title(for productId: String) -> String {
-		return self.products[productId]!
+		guard let product = self.products[productId] else {
+			return ""
+		}
+		return product
 	}
 
 	/// Returns the image of a product.

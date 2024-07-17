@@ -862,11 +862,11 @@ extension ProfileTableViewController: KFeedMessageTextEditorViewDelegate {
 extension ProfileTableViewController: UIImagePickerControllerDelegate {
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
 		if self.currentImageView == "profile" {
-			if let originalImage = info[.originalImage] as? UIImage {
+			if let originalImage = info[.originalImage] as? UIImage, let user = User.current {
 				self.editedProfileImage = originalImage
 
 				if let imageURL = info[.imageURL] as? URL {
-					self.profileImageView.setImage(with: imageURL.absoluteString, placeholder: User.current!.attributes.profilePlaceholderImage)
+					self.profileImageView.setImage(with: imageURL.absoluteString, placeholder: user.attributes.profilePlaceholderImage)
 					self.editedProfileImageURL = imageURL
 				} else {
 					// Create a temporary image path
@@ -878,16 +878,16 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate {
 					try? data?.write(to: imageURL, options: [.atomic])
 
 					// Save the image path
-					self.profileImageView.setImage(with: imageURL.absoluteString, placeholder: User.current!.attributes.profilePlaceholderImage)
+					self.profileImageView.setImage(with: imageURL.absoluteString, placeholder: user.attributes.profilePlaceholderImage)
 					self.editedProfileImageURL = imageURL
 				}
 			}
 		} else if self.currentImageView == "banner" {
-			if let originalImage = info[.originalImage] as? UIImage {
+			if let originalImage = info[.originalImage] as? UIImage, let user = User.current {
 				self.editedBannerImage = originalImage
 
 				if let imageURL = info[.imageURL] as? URL {
-					self.bannerImageView.setImage(with: imageURL.absoluteString, placeholder: User.current!.attributes.bannerPlaceholderImage)
+					self.bannerImageView.setImage(with: imageURL.absoluteString, placeholder: user.attributes.bannerPlaceholderImage)
 					self.editedBannerImageURL = imageURL
 				} else {
 					// Create a temporary image path
@@ -899,7 +899,7 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate {
 					try? data?.write(to: imageURL, options: [.atomic])
 
 					// Save the image path
-					self.bannerImageView.setImage(with: imageURL.absoluteString, placeholder: User.current!.attributes.bannerPlaceholderImage)
+					self.bannerImageView.setImage(with: imageURL.absoluteString, placeholder: user.attributes.bannerPlaceholderImage)
 					self.editedBannerImageURL = imageURL
 				}
 			}

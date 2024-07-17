@@ -41,7 +41,8 @@ extension UIViewController {
 
 		DispatchQueue.main.async {
 			self.present(playerViewController, animated: true) {
-				playerViewController.player!.play()
+				guard let player = playerViewController.player else { return }
+				player.play()
 			}
 		}
 	}

@@ -10,64 +10,58 @@ import UIKit
 import Reachability
 
 class KNetworkManager: NSObject {
+	/// An instance object of `Reachability` to monitor the network status.
 	var reachability: Reachability!
 
-	// Create a singleton instance
-	static let shared: KNetworkManager = { return KNetworkManager() }()
+	/// Shared instance of the network manager.
+	static let shared: KNetworkManager = KNetworkManager()
 
 	override private init() {
 		super.init()
 
 		// Initialise reachability
-		reachability = try? Reachability()
+		self.reachability = try? Reachability()
 
 		// Register an observer for the network status
-		NotificationCenter.default.addObserver(
-			self,
-			selector: #selector(networkStatusChanged(_:)),
-			name: .reachabilityChanged,
-			object: reachability
-		)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.networkStatusChanged(_:)), name: .reachabilityChanged, object: self.reachability)
 
 		do {
 			// Start the network status notifier
-			try reachability.startNotifier()
+			try self.reachability.startNotifier()
 		} catch {
 			print("Unable to start notifier")
 		}
 	}
 
+	/// A method to handle the network status change.
 	@objc func networkStatusChanged(_ notification: Notification) {
 		// Do something globally here!
 	}
 
+	/// Stop the network status notifier.
 	static func stopNotifier() {
 		do {
-			// Stop the network status notifier
-			try (KNetworkManager.shared.reachability).startNotifier()
+			try KNetworkManager.self.shared.reachability.startNotifier()
 		} catch {
 			print("Error stopping notifier")
 		}
 	}
 
-	// Network is reachable
+	/// A closure to execute when the network is reachable.
 	static func isReachable(completed: @escaping (KNetworkManager) -> Void) {
-		if (shared.reachability).connection != .unavailable {
-			completed(shared)
-		}
+		guard self.shared.reachability.connection != .unavailable else { return }
+		completed(self.shared)
 	}
 
-	// Network is unreachable
+	/// A closure to execute when the network is unreachable
 	static func isUnreachable(completed: @escaping (KNetworkManager) -> Void) {
-		if (shared.reachability).connection == .unavailable {
-			completed(shared)
-		}
+		guard self.shared.reachability.connection == .unavailable else { return }
+		completed(self.shared)
 	}
 
-	// Network is reachable via WWAN/Cellular
+	/// A closure to execute when the network is reachable via WWAN/Cellular.
 	static func isReachableViaWWAN(completed: @escaping (KNetworkManager) -> Void) {
-		if (shared.reachability).connection == .cellular {
-			completed(shared)
-		}
+		guard self.shared.reachability.connection == .cellular else { return }
+		completed(self.shared)
 	}
 }
