@@ -17,7 +17,34 @@
 		<key>title</key>
 		<string>Events</string>
 		<key>icons</key>
-		<array/>
+		<array>
+			<string>Pink Lemonade</string>
+			<string>Watermelon</string>
+		</array>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>Apple</string>
+		<key>icons</key>
+		<array>
+			<string>6 Colors</string>
+			<string>6 Colors Inverted</string>
+			<string>iOS 6</string>
+			<string>iOS 18</string>
+			<string>Kurozora Connect</string>
+			<string>Kurozora Support</string>
+			<string>Kurozora Support Inverted</string>
+		</array>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>Desserts</string>
+		<key>icons</key>
+		<array>
+			<string>Cookiezora</string>
+			<string>Kurolicious</string>
+			<string>Kùro Caramel</string>
+		</array>
 	</dict>
 	<dict>
 		<key>title</key>
@@ -66,11 +93,10 @@
 		<string>Special Edition</string>
 		<key>icons</key>
 		<array>
-			<string>Cookiezora</string>
 			<string>Kurogram</string>
-			<string>Kurolicious</string>
 			<string>Monozora</string>
 			<string>Product(RED)</string>
+			<string>Strikeout</string>
 		</array>
 	</dict>
 </array>
