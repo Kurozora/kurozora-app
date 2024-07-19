@@ -49,7 +49,7 @@ let appIdentifierPrefix = Bundle.main.infoDictionary?["AppIdentifierPrefix"] as!
 let keychain = Keychain(service: "AppName", accessGroup: "\(appIdentifierPrefix)com.company.shared").synchronizable(true).accessibility(.afterFirstUnlock)
 
 // Pass the keychain object and enable built-in alerts.
-let services = KKServices(keychain: keychain, showAlerts: true)
+let services = KKServices(keychain: keychain)
 
 // Pass KKService
 let kurozoraKit = KurozoraKit(authenticationKey: "bearer-token").services(services)
@@ -58,7 +58,7 @@ let kurozoraKit = KurozoraKit(authenticationKey: "bearer-token").services(servic
 You can also be chain desired methods instead of passing data as parameter.
 
 ```swift
-let services = KKServices().showAlerts(false).keychainDefaults(keychain)
+let services = KKServices().keychainDefaults(keychain)
 let kurozoraKit = KurozoraKit().authenticationKey("bearer-token").services(services)
 ```
 

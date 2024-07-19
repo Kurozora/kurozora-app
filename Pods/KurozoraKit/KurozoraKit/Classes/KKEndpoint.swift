@@ -92,6 +92,9 @@ extension KKEndpoint {
 	/// The set of available Charactes API endpoints.
 	internal enum Characters {
 		// MARK: - Cases
+		/// The endpoint to the index of characters.
+		case index
+
 		/// The endpoint to the details of a character.
 		case details(_ characterIdentity: CharacterIdentity)
 
@@ -111,6 +114,8 @@ extension KKEndpoint {
 		/// The endpoint value of the Charactes API type.
 		var endpointValue: String {
 			switch self {
+			case .index:
+				return "characters"
 			case .details(let characterIdentity):
 				return "characters/\(characterIdentity.id)"
 			case .people(let characterIdentity):
@@ -189,6 +194,9 @@ extension KKEndpoint {
 	/// The set of available People API endpoints.
 	internal enum People {
 		// MARK: - Cases
+		/// The endpoint to the index of people.
+		case index
+
 		/// The endpoint to the details of a person.
 		case details(_ personIdentity: PersonIdentity)
 
@@ -208,6 +216,8 @@ extension KKEndpoint {
 		/// The endpoint value of the People API type.
 		var endpointValue: String {
 			switch self {
+			case .index:
+				return "people"
 			case .details(let personIdentity):
 				return "people/\(personIdentity.id)"
 			case .characters(let personIdentity):
@@ -228,6 +238,9 @@ extension KKEndpoint {
 	/// The set of available Shows API endpoints types.
 	internal enum Shows {
 		// MARK: - Cases
+		/// The endpoint to the index of shows.
+		case index
+
 		/// The endpoint to the details of a show.
 		case details(_ showIdentity: ShowIdentity)
 
@@ -274,6 +287,8 @@ extension KKEndpoint {
 		/// The endpoint value of the Shows API type.
 		var endpointValue: String {
 			switch self {
+			case .index:
+				return "anime"
 			case .details(let showIdentity):
 				return "anime/\(showIdentity.id)"
 			case .cast(let showIdentity):
@@ -336,6 +351,9 @@ extension KKEndpoint {
 	/// The set of available Literature API endpoints types.
 	internal enum Literatures {
 		// MARK: - Cases
+		/// The endpoint to the index of literatures.
+		case index
+
 		/// The endpoint to the details of a literature.
 		case details(_ literatureIdentity: LiteratureIdentity)
 
@@ -376,6 +394,8 @@ extension KKEndpoint {
 		/// The endpoint value of the Literatures API type.
 		var endpointValue: String {
 			switch self {
+			case .index:
+				return "manga"
 			case .details(let literatureIdentity):
 				return "manga/\(literatureIdentity.id)"
 			case .cast(let literatureIdentity):
@@ -410,6 +430,9 @@ extension KKEndpoint {
 	/// The set of available Games API endpoints types.
 	internal enum Games {
 		// MARK: - Cases
+		/// The endpoint to the index of games.
+		case index
+
 		/// The endpoint to the details of a game.
 		case details(_ gameIdentity: GameIdentity)
 
@@ -450,6 +473,8 @@ extension KKEndpoint {
 		/// The endpoint value of the Games API type.
 		var endpointValue: String {
 			switch self {
+			case .index:
+				return "games"
 			case .details(let gameIdentity):
 				return "games/\(gameIdentity.id)"
 			case .cast(let gameIdentity):
@@ -484,6 +509,9 @@ extension KKEndpoint {
 	/// The set of available Songs API endpoints.
 	internal enum Songs {
 		// MARK: - Cases
+		/// The endpoint to the index of songs.
+		case index
+
 		/// The endpoint to the details of a song.
 		case details(_ songIdentity: SongIdentity)
 
@@ -503,6 +531,8 @@ extension KKEndpoint {
 		/// The endpoint value of the Songs API type.
 		var endpointValue: String {
 			switch self {
+			case .index:
+				return "songs"
 			case .details(let songIdentity):
 				return "songs/\(songIdentity.id)"
 			case .shows(let songIdentity):
@@ -614,6 +644,9 @@ extension KKEndpoint {
 	/// The set of available Studios API endpoints.
 	internal enum Studios {
 		// MARK: - Cases
+		/// The endpoint to the index of studios.
+		case index
+
 		/// The endpoint to the details of a studio.
 		case details(_ studioIdentity: StudioIdentity)
 
@@ -630,6 +663,8 @@ extension KKEndpoint {
 		/// The endpoint value of the Studios API type.
 		var endpointValue: String {
 			switch self {
+			case .index:
+				return "studios"
 			case .details(let studioIdentity):
 				return "studios/\(studioIdentity.id)"
 			case .games(let studioIdentity):

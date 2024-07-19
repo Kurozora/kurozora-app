@@ -7,11 +7,6 @@
 
 /// A root object that stores information about a show resource.
 public class Show: IdentityResource, Hashable {
-	// MARK: - Enums
-	public enum CodingKeys : String, CodingKey {
-		case id = "uuid", type, href, attributes, relationships
-	}
-
 	// MARK: - Properties
 	public let id: String
 

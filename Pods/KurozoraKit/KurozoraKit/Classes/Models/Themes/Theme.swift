@@ -7,11 +7,6 @@
 
 /// A root object that stores information about a theme resource.
 public struct Theme: IdentityResource, Hashable {
-	// MARK: - Enums
-	public enum CodingKeys : String, CodingKey {
-		case id = "uuid", type, href, attributes
-	}
-
 	// MARK: - Properties
 	public let id: String
 

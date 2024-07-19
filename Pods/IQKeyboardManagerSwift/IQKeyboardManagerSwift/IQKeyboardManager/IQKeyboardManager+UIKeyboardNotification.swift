@@ -103,7 +103,7 @@ internal extension IQKeyboardManager {
         }
 
         if keyboardConfiguration.overrideAppearance,
-           let textInput: UITextInput = textFieldView as? UITextInput,
+           let textInput: any UITextInput = textFieldView as? (any UITextInput),
             textInput.keyboardAppearance != keyboardConfiguration.appearance {
             // Setting textField keyboard appearance and reloading inputViews.
             if let textFieldView: UITextField = textFieldView as? UITextField {
@@ -129,7 +129,7 @@ internal extension IQKeyboardManager {
 
         // Removing gesture recognizer   (Enhancement ID: #14)
         textFieldView.window?.removeGestureRecognizer(resignFirstResponderGesture)
-
+        removeToolbarIfRequired()
         do {
             if let startingConfiguration = startingTextViewConfiguration,
                startingConfiguration.hasChanged {

@@ -7,11 +7,6 @@
 
 /// A root object that stores information about a season identity resource.
 public struct SeasonIdentity: IdentityResource, Hashable {
-	// MARK: - Enums
-	public enum CodingKeys : String, CodingKey {
-		case id = "uuid", type, href
-	}
-
 	// MARK: - Properties
 	public let id: String
 

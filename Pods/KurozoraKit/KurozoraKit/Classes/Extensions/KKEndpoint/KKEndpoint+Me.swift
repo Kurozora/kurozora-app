@@ -181,18 +181,18 @@ extension KKEndpoint.Me {
 	}
 }
 
-// MARK: - Reminder Show
+// MARK: - Reminders
 extension KKEndpoint.Me {
-	/// The set of available Reminder Show API endpoint types.
-	internal enum ReminderShow {
+	/// The set of available Reminders API endpoint types.
+	internal enum Reminders {
 		// MARK: - Cases
-		/// The endpoint to the authenticated user's reminder shows list.
+		/// The endpoint to the authenticated user's reminders list.
 		case index
 
-		/// The endpoint to add or remove shows from the authenticated user's reminder shows list.
+		/// The endpoint to add or remove shows from the authenticated user's reminders list.
 		case update
 
-		/// The endpoint to download the authenticated user's reminder shows list calendar.
+		/// The endpoint to download the authenticated user's reminders list calendar.
 		case download
 
 		// MARK: - Properties
@@ -200,11 +200,11 @@ extension KKEndpoint.Me {
 		var endpointValue: String {
 			switch self {
 			case .index:
-				return "me/reminder-anime"
+				return "me/reminders"
 			case .update:
-				return "me/reminder-anime"
+				return "me/reminders"
 			case .download:
-				return "me/reminder-anime/download"
+				return "me/reminders/download"
 			}
 		}
 	}

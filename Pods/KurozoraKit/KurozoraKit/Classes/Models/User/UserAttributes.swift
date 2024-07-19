@@ -15,7 +15,7 @@ extension User {
 		/// The username of the user.
 		public var username: String
 
-		/// The Kurozora ID (email address) of the user.
+		/// The email address of the user.
 		///
 		/// Included only for the currently signed in user.
 		public let email: String?

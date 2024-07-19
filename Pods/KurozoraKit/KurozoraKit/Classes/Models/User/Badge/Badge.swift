@@ -7,11 +7,6 @@
 
 /// A root object that stores information about a badge resource.
 public struct Badge: Codable, Hashable {
-	// MARK: - Enums
-	public enum CodingKeys : String, CodingKey {
-		case id = "uuid", type, attributes
-	}
-
 	// MARK: - Properties
 	/// The id of the resource.
 	public let id: String

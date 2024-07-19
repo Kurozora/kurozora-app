@@ -7,11 +7,6 @@
 
 /// A root object that stores information about an explore category resource.
 public struct ExploreCategory: IdentityResource, Hashable {
-	// MARK: - Enums
-	public enum CodingKeys : String, CodingKey {
-		case id = "uuid", type, href, attributes, relationships
-	}
-
 	// MARK: - Properties
 	public let id: String
 

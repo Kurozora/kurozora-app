@@ -7,11 +7,6 @@
 
 /// A root object that stores information about a episode identity resource.
 public struct EpisodeIdentity: IdentityResource, Hashable {
-	// MARK: - Enums
-	public enum CodingKeys : String, CodingKey {
-		case id = "uuid", type, href
-	}
-
 	// MARK: - Properties
 	public let id: String
 

@@ -8,6 +8,53 @@
 import TRON
 
 extension KurozoraKit {
+	/// Fetch the literatures index.
+	///
+	/// - Parameters:
+	///	   - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 5 and the maximum value is 25.
+	///    - filter: The filters to apply on the index list.
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the literatures index response.
+	public func literaturesIndex(next: String? = nil, limit: Int = 5, filter: LiteratureFilter?) -> RequestSender<LiteratureIdentityResponse, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
+		if !self.authenticationKey.isEmpty {
+			headers.add(.authorization(bearerToken: self.authenticationKey))
+		}
+
+		// Prepare parameters
+		var parameters: [String: Any] = [:]
+		if next == nil {
+			parameters = [
+				"limit": limit
+			]
+
+			if let filter = filter {
+				let filters: [String: Any] = filter.toFilterArray().compactMapValues { value in
+					return value
+				}
+
+				do {
+					let filterData = try JSONSerialization.data(withJSONObject: filters, options: [])
+					parameters["filter"] = filterData.base64EncodedString()
+				} catch {
+					print("❌ Encode error: Could not make base64 string from filter data", filters)
+				}
+			}
+		}
+
+		// Prepare request
+		let searchIndex = next ?? KKEndpoint.Literatures.index.endpointValue
+		let request: APIRequest<LiteratureIdentityResponse, KKAPIError> = tron.codable.request(searchIndex).buildURL(.relativeToBaseURL)
+			.method(.get)
+			.parameters(parameters)
+			.headers(headers)
+
+		// Send request
+		return request.sender()
+	}
+
 	///	Fetch the literature details for the given literature identity.
 	///
 	///	- Parameters:

@@ -7,11 +7,6 @@
 
 /// A root object that stores information about a character identity resource.
 public struct CharacterIdentity: IdentityResource, Hashable {
-	// MARK: - Enums
-	public enum CodingKeys : String, CodingKey {
-		case id = "uuid", type, href
-	}
-
 	// MARK: - Properties
 	public let id: String
 

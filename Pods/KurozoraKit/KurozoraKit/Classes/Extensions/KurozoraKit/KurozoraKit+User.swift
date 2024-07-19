@@ -46,23 +46,23 @@ extension KurozoraKit {
 		return request.sender()
 	}
 
-	/// Sign in with the given `kurozoraID` and `password`.
+	/// Sign in with the given `email` and `password`.
 	///
 	/// This endpoint is used for signing in a user to their account. If the sign in was successful then a Kurozora authentication token is returned in the success closure.
 	///
 	/// - Parameters:
-	///    - kurozoraID: The Kurozora id of the user to be signed in.
+	///    - email: The email address of the user to be signed in.
 	///    - password: The password of the user to be signed in.
 	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 	///    - result: A value that represents either a success or a failure, including an associated value in each case.
 	@discardableResult
-	public func signIn(_ kurozoraID: String, _ password: String, completion completionHandler: @escaping (_ result: Result<String, KKAPIError>) -> Void) -> DataRequest {
+	public func signIn(_ email: String, _ password: String, completion completionHandler: @escaping (_ result: Result<String, KKAPIError>) -> Void) -> DataRequest {
 		let usersSignIn = KKEndpoint.Users.signIn.endpointValue
 		let request: APIRequest<SignInResponse, KKAPIError> = tron.codable.request(usersSignIn)
 		request.headers = headers
 		request.method = .post
 		request.parameters = [
-			"email": kurozoraID,
+			"email": email,
 			"password": password,
 			"platform": UIDevice.commonSystemName,
 			"platform_version": UIDevice.current.systemVersion,
@@ -78,9 +78,6 @@ extension KurozoraKit {
 			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
-			if self.services.showAlerts {
-				UIApplication.topViewController?.presentAlertController(title: "Can't Sign In 😔", message: error.message)
-			}
 			print("❌ Received sign in error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message)
 			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
@@ -121,10 +118,6 @@ extension KurozoraKit {
 			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
 		}, failure: { [weak self] error in
 			guard let self = self else { return }
-			UIView().endEditing(true)
-			if self.services.showAlerts {
-				UIApplication.topViewController?.presentAlertController(title: "Can't Sign In 😔", message: error.message)
-			}
 			print("❌ Received sign in with SIWA error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message)
 			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
@@ -215,7 +208,7 @@ extension KurozoraKit {
 	///
 	/// - Parameters:
 	///    - userIdentity: The identity of the user whose favorites list will be fetched.
-	///    - libraryKind: From which library to get the favorites
+	///    - libraryKind: From which library to get the favorites.
 	///    - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
 	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
 	///
@@ -227,14 +220,17 @@ extension KurozoraKit {
 			headers.add(.authorization(bearerToken: self.authenticationKey))
 		}
 
+		// Prepare parameters
+		let parameters: [String: Any] = [
+			"library": libraryKind.rawValue,
+			"limit": limit
+		]
+
 		// Prepare request
 		let usersFavorites = next ?? KKEndpoint.Users.favorites(userIdentity).endpointValue
 		let request: APIRequest<FavoriteLibraryResponse, KKAPIError> = tron.codable.request(usersFavorites).buildURL(.relativeToBaseURL)
 			.method(.get)
-			.parameters([
-				"library": libraryKind.rawValue,
-				"limit": limit
-			])
+			.parameters(parameters)
 			.headers(headers)
 
 		// Send request

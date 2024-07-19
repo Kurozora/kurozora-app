@@ -9,7 +9,7 @@
 public struct Favorite: Codable {
 	// MARK: - Properties
 	/// Whether the model is favorited.
-	public let isFavorited: Bool
+	internal let isFavorited: Bool
 }
 
 // MARK: - Helpers

@@ -1,5 +1,5 @@
 //
-//  KurozoraKit+Favorite.swift
+//  KurozoraKit+Me+Favorite.swift
 //  KurozoraKit
 //
 //  Created by Khoren Katklian on 18/08/2020.

@@ -1,19 +1,19 @@
 //
-//  ReminderShow.swift
+//  Reminder.swift
 //  KurozoraKit
 //
 //  Created by Khoren Katklian on 31/01/2020.
 //
 
 /// A root object that stores information about a reminder show resource.
-public struct ReminderShow: Codable {
+public struct Reminder: Codable {
 	// MARK: - Properties
 	/// Whether the show is reminded.
-	public let isReminded: Bool
+	internal let isReminded: Bool
 }
 
 // MARK: - Helpers
-extension ReminderShow {
+extension Reminder {
 	// MARK: - Properties
 	/// The reminder status of the show.
 	public var reminderStatus: ReminderStatus {
