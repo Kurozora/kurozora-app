@@ -18,6 +18,7 @@
 		<string>Events</string>
 		<key>icons</key>
 		<array>
+			<string>Hanabi</string>
 			<string>Pink Lemonade</string>
 			<string>Shio Suika</string>
 		</array>
@@ -43,7 +44,7 @@
 		<array>
 			<string>Cookiezora</string>
 			<string>Kurolicious</string>
-			<string>Kùro Caramel</string>
+			<string>Kuro Caramel</string>
 		</array>
 	</dict>
 	<dict>
