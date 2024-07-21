@@ -17,10 +17,10 @@ class KWhatsNew {
 	/// Features of version 1.9.0 of the app.
 	static var v19: [WhatsNewItem] = [
 		.image(title: "Natsu Matsuri", subtitle: "Celebrate and make fond memories this summer with the new『Hanabi』,『Pink Lemonade』and『Shio Suika』app icons.", image: R.image.icons.gift()!),
-		.image(title: "Lyrics", subtitle: "Want to sing along with your favorite anime songs? You can now with the yrics on the details page of a song!", image: R.image.icons.music()!),
+		.image(title: "Lyrics", subtitle: "Want to sing along with your favorite anime songs? You can now with the lyrics on the details page of a song!", image: R.image.icons.music()!),
 		.image(title: "Browse More", subtitle: "Is the Explore page and search bar not enough? It wasn’t for me either. Now you can browse everything Kurozora has to offer through the new \"Browse\" section on the Search page.", image: R.image.icons.browser()!),
 		.image(title: "Date Widget", subtitle: "Personalize your home screen with the new Kurozora Date widget, cycling through episode, anime, manga, and game images. Customize options by tapping on the widget while in wiggle mode.", image: R.image.icons.widget()!),
-		.image(title: "Quick Reminde", subtitle: "Quickly add titles to your plannnig list and get reminded when they’re available by simply pressing on the \"REMINDE\" button :D", image: R.image.icons.reminder()!),
+		.image(title: "Quick Remind", subtitle: "Quickly add titles to your planning list and get reminded when they’re available by simply pressing on the \"Remind Me\" button :D", image: R.image.icons.reminder()!),
 		.image(title: "Deeplinks", subtitle: "URLs redirecting to the app are now more reliable. You'll always land on the page you intended from now on!", image: R.image.icons.link()!),
 		.image(title: "Spotlight Shortcuts", subtitle: "With Spotlight shortcuts, you can quickly visit the page you want in Kurozora right from your Home Screen!", image: R.image.icons.shortcuts()!),
 		.image(title: "Spotlight Search", subtitle: "Frequently visited titles will now appear directly in Spotlight, allowing you to find information quicker. Click on the result to be directed to the details page in Kurozora!", image: R.image.icons.search()!),
