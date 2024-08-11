@@ -158,11 +158,9 @@ class NotificationsTableViewController: KTableViewController {
 		self.updateDataSource()
 		self._prefersActivityIndicatorHidden = true
 		self.toggleEmptyDataView()
-		#if DEBUG
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.endRefreshing()
 		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your notifications.")
-		#endif
 		#endif
 	}
 
@@ -312,29 +310,29 @@ extension NotificationsTableViewController {
 	func groupNotifications(_ userNotifications: [UserNotification]) {
 		switch self.grouping {
 		case .automatic:
-			self.groupedNotifications = []
-
 			// Group notifications by date and assign a group title as key (Recent, Last Week, Yesterday etc.)
-			let groupedNotifications = userNotifications.reduce(into: [String: [UserNotification]](), { (result, userNotification) in
+			let groupedNotificationsArray = userNotifications.reduce(into: [String: [UserNotification]]()) { result, userNotification in
 				let creationDate = userNotification.attributes.createdAt
 				let timeKey = creationDate.groupTime
 
 				result[timeKey, default: []].append(userNotification)
-			})
+			}
 
 			// Append the grouped elements to the grouped notifications array
-			let groupedNotificationsArray = groupedNotifications
+			var groupedNotifications: [GroupedNotifications] = []
 			for (key, value) in groupedNotificationsArray {
-				self.groupedNotifications.append(GroupedNotifications(sectionTitle: key, sectionNotifications: value))
+				groupedNotifications.append(GroupedNotifications(sectionTitle: key, sectionNotifications: value))
 			}
 
 			// Reorder grouped notifiactions so the recent one is at the top (Recent, Earlier Today, Yesterday, etc.)
-			self.groupedNotifications.sort(by: { $0.sectionNotifications.first?.attributes.createdAt ?? Date() > $1.sectionNotifications.first?.attributes.createdAt ?? Date() })
-		case .byType:
-			self.groupedNotifications = []
+			groupedNotifications.sort {
+				$0.sectionNotifications.first?.attributes.createdAt ?? Date() > $1.sectionNotifications.first?.attributes.createdAt ?? Date()
+			}
 
+			self.groupedNotifications = groupedNotifications
+		case .byType:
 			// Group notifications by type and assign a group title as key (Sessions, Messages etc.)
-			let groupedNotifications = userNotifications.reduce(into: [String: [UserNotification]](), { (result, userNotification) in
+			let groupedNotificationsArray = userNotifications.reduce(into: [String: [UserNotification]](), { (result, userNotification) in
 				let userNotificationType = userNotification.attributes.type
 				let timeKey = userNotificationType.stringValue
 
@@ -342,13 +340,17 @@ extension NotificationsTableViewController {
 			})
 
 			// Append the grouped elements to the grouped notifications array
-			let groupedNotificationsArray = groupedNotifications
+			var groupedNotifications: [GroupedNotifications] = []
 			for (key, value) in groupedNotificationsArray {
-				self.groupedNotifications.append(GroupedNotifications(sectionTitle: key, sectionNotifications: value))
+				groupedNotifications.append(GroupedNotifications(sectionTitle: key, sectionNotifications: value))
 			}
 
 			// Reorder grouped notifiactions so it's in alphabetical order
-			self.groupedNotifications.sort(by: { $0.sectionTitle < $1.sectionTitle })
+			groupedNotifications.sort {
+				$0.sectionTitle < $1.sectionTitle
+			}
+
+			self.groupedNotifications = groupedNotifications
 		case .off:
 			self.groupedNotifications = []
 		}
@@ -415,29 +417,29 @@ extension NotificationsTableViewController: TitleHeaderTableReusableViewDelegate
 extension NotificationsTableViewController {
 	/// List of notification section layout kind.
 	///
-	/// - `main`: a `main` notification section.
-	/// - `grouped`: a `grouped` notification section.
+	/// - `main`: a `main` notifications section.
+	/// - `grouped`: a `grouped` notifications section.
 	enum SectionLayoutKind: Hashable {
 		// MARK: - Cases
-		/// Indicates a main notification section.
+		/// Indicates a main notifications section.
 		case main
 
-		/// Indicates a grouped notification section.
+		/// Indicates a grouped notifications section.
 		case grouped(_ groupedNotifications: GroupedNotifications)
 
 		// MARK: - Functions
 		func hash(into hasher: inout Hasher) {
 			switch self {
-			case .grouped(let groupedNotification):
-				hasher.combine(groupedNotification)
+			case .grouped(let groupedNotifications):
+				hasher.combine(groupedNotifications)
 			case .main: break
 			}
 		}
 
 		static func == (lhs: SectionLayoutKind, rhs: SectionLayoutKind) -> Bool {
 			switch (lhs, rhs) {
-			case (.grouped(let groupedNotification1), .grouped(let groupedNotification2)):
-				return groupedNotification1 == groupedNotification2
+			case (.grouped(let groupedNotifications1), .grouped(let groupedNotifications2)):
+				return groupedNotifications1 == groupedNotifications2
 			case (.main, .main):
 				return true
 			default:
