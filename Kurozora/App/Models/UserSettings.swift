@@ -10,7 +10,7 @@ import UIKit
 import KurozoraKit
 
 class UserSettings: UserDefaults {
-	/// The base UserDefaults suit of the Kurozora apps.
+	/// The base `UserDefaults` suit of the Kurozora apps.
 	static var shared: UserDefaults {
 		let combined = UserDefaults.standard
 		combined.addSuite(named: "group.settings.app.kurozora.anime")
@@ -22,7 +22,7 @@ class UserSettings: UserDefaults {
 		return combined
 	}
 
-	/// Set value for key in shared UserDefaults.
+	/// Set value for key in shared `UserDefaults`.
 	static func set(_ value: Any?, forKey key: UserSettingsKey) {
 		self.shared.set(value, forKey: key.rawValue)
 	}
@@ -34,6 +34,21 @@ extension UserSettings {
 	static var selectedAccount: String {
 		guard let selectedAccount = shared.string(forKey: #function) else { return "" }
 		return selectedAccount
+	}
+}
+
+// MARK: - API
+extension UserSettings {
+	/// Returns a `KurozoraAPI` type indicating the preferred API endpoint.
+	static var apiEndpoint: KurozoraAPI? {
+		#if DEBUG
+		guard let baseURL = shared.string(forKey: #function) else { return nil }
+		return KurozoraAPI.allCases.first { apiEndpoint in
+			apiEndpoint.baseURL == baseURL
+		} ?? .custom(baseURL)
+		#else
+		return nil
+		#endif
 	}
 }
 

@@ -14,6 +14,10 @@ enum UserSettingsKey: String {
 	/// The key to the selected account.
 	case selectedAccount
 
+	// API keys
+	/// The key to the selected API endpoint.
+	case apiEndpoint
+
 	// App customization keys
 	/// The key to the selected theme.
 	case currentTheme

@@ -52,6 +52,11 @@ class HomeCollectionViewController: KCollectionViewController {
 	var themes: [IndexPath: Theme] = [:]
 	var recaps: [IndexPath: Recap] = [:]
 
+	#if DEBUG
+	// Views
+	var apiBarButtonItem: UIBarButtonItem!
+	#endif
+
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
 		didSet {
@@ -136,6 +141,9 @@ class HomeCollectionViewController: KCollectionViewController {
 		self.configureQuickActions()
 		self.configureDataSource()
 		self.configureUserDetails()
+		#if DEBUG
+		self.configureNavigationItems()
+		#endif
 
 		// Fetch explore details.
 		Task { [weak self] in
@@ -169,6 +177,46 @@ class HomeCollectionViewController: KCollectionViewController {
 			await self.fetchExplore()
 		}
 	}
+
+	#if DEBUG
+	/// Configures the navigation items.
+	fileprivate func configureNavigationItems() {
+		self.apiBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "globe"))
+		self.populateAPIEndpoints()
+
+		self.navigationItem.leftBarButtonItem = self.apiBarButtonItem
+	}
+
+	/// Builds and presents the API endpoints in an action sheet.
+	fileprivate func populateAPIEndpoints() {
+		var menuItems: [UIMenuElement] = []
+
+		APIEndpoints.forEach { apiEndpoint in
+			let actionIsOn = apiEndpoint.baseURL == KService.apiEndpoint.baseURL
+
+			let action = UIAction(title: apiEndpoint.baseURL, state: actionIsOn ? .on : .off) { _ in
+				self.changeAPIEndpoint(to: apiEndpoint)
+			}
+			menuItems.append(action)
+		}
+
+		self.apiBarButtonItem.menu = UIMenu(title: "", children: [UIDeferredMenuElement.uncached { [weak self] completion in
+			guard let self = self else { return }
+			completion(menuItems)
+			self.populateAPIEndpoints()
+		}])
+	}
+
+	/// Changes the API endpoint to the given one.
+	///
+	/// - Parameters:
+	///    - apiEndpoint: The desired API endpoint to be used.
+	fileprivate func changeAPIEndpoint(to apiEndpoint: KurozoraAPI) {
+		UserSettings.set(apiEndpoint.baseURL, forKey: .apiEndpoint)
+		KService.apiEndpoint(apiEndpoint)
+		NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
+	}
+	#endif
 
 	/// Configure the data source of the quick actions shown to the user.
 	fileprivate func configureQuickActions() {
@@ -209,7 +257,7 @@ class HomeCollectionViewController: KCollectionViewController {
 					return !(exploreCategory.relationships.literatures?.data.isEmpty ?? false)
 				case .games, .upcomingGames, .mostPopularGames, .newGames:
 					return !(exploreCategory.relationships.games?.data.isEmpty ?? false)
-				case .episodes:
+				case .episodes, .upNextEpisodes:
 					return !(exploreCategory.relationships.episodes?.data.isEmpty ?? false)
 				case .songs:
 					return !(exploreCategory.relationships.showSongs?.data.isEmpty ?? false)
@@ -468,6 +516,34 @@ extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 				self.present(actionSheetAlertController, animated: true, completion: nil)
 			}
 		}
+	}
+}
+
+// MARK: - EpisodeLockupCollectionViewCellDelegate
+extension HomeCollectionViewController: EpisodeLockupCollectionViewCellDelegate {
+	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressWatchStatusButton button: UIButton) {
+		WorkflowController.shared.isSignedIn { [weak self] in
+			guard let self = self else { return }
+			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+
+			Task {
+				await self.episodes[indexPath]?.updateWatchStatus(userInfo: ["indexPath": indexPath])
+			}
+		}
+	}
+
+	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressShowButton button: UIButton) {
+		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+		guard let show = self.episodes[indexPath]?.relationships?.shows?.data.first else { return }
+
+		self.performSegue(withIdentifier: R.segue.homeCollectionViewController.showDetailsSegue, sender: show)
+	}
+
+	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressSeasonButton button: UIButton) {
+		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+		guard let season = self.episodes[indexPath]?.relationships?.seasons?.data.first else { return }
+
+		self.performSegue(withIdentifier: R.segue.homeCollectionViewController.episodesListSegue, sender: season)
 	}
 }
 

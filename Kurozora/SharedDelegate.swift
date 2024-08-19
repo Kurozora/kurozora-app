@@ -13,8 +13,12 @@ import KurozoraKit
 typealias KKSong = Song
 
 // MARK: - KurozoraKit
-let KService = KurozoraKit().services(SharedDelegate.shared.services)
+let KService = KurozoraKit(apiEndpoint: UserSettings.apiEndpoint).services(SharedDelegate.shared.services)
 var KSettings: Settings?
+
+#if DEBUG
+let APIEndpoints: [KurozoraAPI] = KurozoraAPI.allCases
+#endif
 
 class SharedDelegate {
 	// MARK: - Properties
