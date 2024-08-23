@@ -19,7 +19,7 @@ class SynopsisViewController: KViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		synopsisTextView.text = synopsis
+		self.synopsisTextView.text = self.synopsis
 	}
 
 	// MARK: - IBActions
