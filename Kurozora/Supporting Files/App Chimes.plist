@@ -145,6 +145,14 @@
 			<array>
 				<dict>
 					<key>name</key>
+					<string>Pine!</string>
+					<key>file</key>
+					<string>pine.m4a</string>
+				</dict>
+			</array>
+			<array>
+				<dict>
+					<key>name</key>
 					<string>PLUS ULTRA!</string>
 					<key>file</key>
 					<string>plus_ultra.m4a</string>
