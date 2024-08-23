@@ -50,6 +50,6 @@ class SeasonLockupCollectionViewCell: KCollectionViewCell {
 		self.episodeCountLabel.text = "\(season.attributes.episodeCount)"
 
 		// Configure rating
-		self.ratingLabel.text = "0.00"
+		self.ratingLabel.text = "\(season.attributes.ratingAverage)"
 	}
 }
