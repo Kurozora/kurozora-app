@@ -9,10 +9,6 @@
 import UIKit
 
 extension ManageThemesCollectionViewController {
-	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
-		return []
-	}
-
 	override func registerNibs(for collectionView: UICollectionView) -> [UICollectionReusableView.Type] {
 		return [TitleHeaderCollectionReusableView.self]
 	}
@@ -32,7 +28,7 @@ extension ManageThemesCollectionViewController {
 				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.themesCollectionViewCell.identifier)")
 			}
 		}
-		dataSource.supplementaryViewProvider = { (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
+		self.dataSource.supplementaryViewProvider = { (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
 			// Get a supplementary view of the desired kind.
 			let titleHeaderCollectionReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
 			titleHeaderCollectionReusableView.configure(withTitle: indexPath.section == 0 ? "Default" : "Premium", indexPath: indexPath, segueID: "")
@@ -47,13 +43,24 @@ extension ManageThemesCollectionViewController {
 		var identifierOffset = 0
 		var itemsPerSection = 0
 
-		SectionLayoutKind.allCases.forEach {
-			itemsPerSection = $0 == .def ? KTheme.defaultCases.count : self.appThemes.count
-			snapshot.appendSections([$0])
-			let maxIdentifier = identifierOffset + itemsPerSection
-			snapshot.appendItems(Array(identifierOffset..<maxIdentifier), toSection: $0)
+		SectionLayoutKind.allCases.forEach { section in
+			switch section {
+			case .default:
+				itemsPerSection = KTheme.defaultCases.count
+				snapshot.appendSections([section])
+				let maxIdentifier = identifierOffset + itemsPerSection
+				snapshot.appendItems(Array(identifierOffset..<maxIdentifier), toSection: section)
+			case .premium:
+				itemsPerSection = self.appThemes.count
+				if itemsPerSection > 0 {
+					snapshot.appendSections([section])
+					let maxIdentifier = identifierOffset + itemsPerSection
+					snapshot.appendItems(Array(identifierOffset..<maxIdentifier), toSection: section)
+				}
+			}
+
 			identifierOffset += itemsPerSection
 		}
-		dataSource.apply(snapshot)
+		self.dataSource.apply(snapshot)
 	}
 }

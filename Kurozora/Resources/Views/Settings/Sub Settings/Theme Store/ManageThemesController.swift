@@ -73,6 +73,7 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 		super.viewDidLoad()
 
 		self.configureDataSource()
+		self.updateDataSource()
 	}
 
 	// MARK: - Functions
@@ -108,6 +109,7 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 			let appThemeResponse = try await KService.getThemeStore().value
 			self.appThemes = appThemeResponse.data
 		} catch {
+			self._prefersActivityIndicatorHidden = true
 			print(error.localizedDescription)
 		}
 	}
@@ -266,11 +268,11 @@ extension ManageThemesCollectionViewController {
 	/// List of theme section layout kind.
 	///
 	/// ```
-	/// case def = 0
-	/// case main = 1
+	/// case default = 0
+	/// case premium = 1
 	/// ```
 	enum SectionLayoutKind: Int, CaseIterable {
-		case def = 0
-		case main = 1
+		case `default` = 0
+		case premium = 1
 	}
 }
