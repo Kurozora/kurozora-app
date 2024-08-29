@@ -174,7 +174,7 @@ extension SettingsTableViewController {
 		case .browser: break
 		case .biometrics: break
 		case .cache:
-			let alertController = self.presentAlertController(title: "Clear all Cache?", message: "All of your caches will be cleared.", defaultActionButtonTitle: Trans.cancel)
+			let alertController = self.presentAlertController(title: "Clear all Cache?", message: "The number you see in Kurozora might not match the one in the Settings app. That’s because caches on your disk and in RAM are counted together here. Wiping both clean might make the app a bit slower at first, but things will speed up once the caches are built up again.", defaultActionButtonTitle: Trans.cancel)
 			alertController.addAction(UIAlertAction(title: "Clear 🗑", style: .destructive) { _ in
 				// Clear memory cache right away.
 				KingfisherManager.shared.cache.clearMemoryCache()
