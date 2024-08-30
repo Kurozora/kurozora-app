@@ -126,6 +126,9 @@ class LibraryListCollectionViewController: KCollectionViewController {
 		// Save current page index
 		UserSettings.set(self.sectionIndex, forKey: .libraryPage)
 
+		// Update empty state view
+		self.configureEmptyDataView()
+
 		// Setup library view controller delegate
 		(tabmanParent as? LibraryViewController)?.libraryViewControllerDelegate = self
 		(tabmanParent as? LibraryViewController)?.libraryViewControllerDataSource = self
@@ -138,6 +141,16 @@ class LibraryListCollectionViewController: KCollectionViewController {
 		// Update sort type button to reflect user settings
 		self.delegate?.libraryListViewController(updateSortWith: self.librarySortType, sortOption: self.librarySortTypeOption)
 		self.delegate?.libraryListViewController(updateTotalCount: totalLibraryItemsCount)
+
+		if self.libraryKind != UserSettings.libraryKind {
+			// Fetch library if user is signed in
+			DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+				guard let self = self else { return }
+				Task {
+					await self.fetchLibrary()
+				}
+			}
+		}
 	}
 
 	// MARK: - Functions
@@ -254,11 +267,14 @@ class LibraryListCollectionViewController: KCollectionViewController {
 			do {
 				let libraryResponse = try await KService.getLibrary(forUser: userIdentity, libraryKind: UserSettings.libraryKind, withLibraryStatus: self.libraryStatus, withSortType: self.librarySortType, withSortOption: self.librarySortTypeOption, next: self.nextPageURL).value
 
-				// Reset data if necessary
-				if self.nextPageURL == nil {
 			// Update total library items count
 			self.totalLibraryItemsCount = libraryResponse.total ?? 0
 			self.delegate?.libraryListViewController(updateTotalCount: self.totalLibraryItemsCount)
+
+			// Reset data if necessary
+			if self.nextPageURL == nil {
+				switch UserSettings.libraryKind {
+				case .shows:
 					self.shows = []
 					self.literatures = []
 					self.games = []
