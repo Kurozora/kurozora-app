@@ -239,33 +239,45 @@ class LibraryListCollectionViewController: KCollectionViewController {
 
 	/// Fetch the library items for the current user.
 	func fetchLibrary() async {
-		if let user = self.viewedUser {
-			let libraryStatus: String
-
-			switch UserSettings.libraryKind {
-			case .shows:
-				libraryStatus = self.libraryStatus.showStringValue
-			case .literatures:
-				libraryStatus = self.libraryStatus.literatureStringValue
-			case .games:
-				libraryStatus = self.libraryStatus.gameStringValue
-			}
-
+		guard let user = self.viewedUser else {
 			DispatchQueue.main.async { [weak self] in
 				guard let self = self else { return }
-				self.collectionView.backgroundView?.alpha = 0
-
-				self._prefersActivityIndicatorHidden = false
-
-				#if !targetEnvironment(macCatalyst)
-				self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing \(libraryStatus.lowercased()) list...")
-				#endif
+				self.shows.removeAll()
+				self.literatures.removeAll()
+				self.games.removeAll()
+				self.collectionView.reloadData {
+					self.toggleEmptyDataView()
+				}
 			}
+			return
+		}
 
-			let userIdentity = UserIdentity(id: user.id)
+		let libraryStatus: String
 
-			do {
-				let libraryResponse = try await KService.getLibrary(forUser: userIdentity, libraryKind: UserSettings.libraryKind, withLibraryStatus: self.libraryStatus, withSortType: self.librarySortType, withSortOption: self.librarySortTypeOption, next: self.nextPageURL).value
+		switch UserSettings.libraryKind {
+		case .shows:
+			libraryStatus = self.libraryStatus.showStringValue
+		case .literatures:
+			libraryStatus = self.libraryStatus.literatureStringValue
+		case .games:
+			libraryStatus = self.libraryStatus.gameStringValue
+		}
+
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			self.collectionView.backgroundView?.alpha = 0
+
+			self._prefersActivityIndicatorHidden = false
+
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing \(libraryStatus.lowercased()) list...")
+			#endif
+		}
+
+		let userIdentity = UserIdentity(id: user.id)
+
+		do {
+			let libraryResponse = try await KService.getLibrary(forUser: userIdentity, libraryKind: UserSettings.libraryKind, withLibraryStatus: self.libraryStatus, withSortType: self.librarySortType, withSortOption: self.librarySortTypeOption, next: self.nextPageURL).value
 
 			// Update total library items count
 			self.totalLibraryItemsCount = libraryResponse.total ?? 0
@@ -276,51 +288,43 @@ class LibraryListCollectionViewController: KCollectionViewController {
 				switch UserSettings.libraryKind {
 				case .shows:
 					self.shows = []
+				case .literatures:
 					self.literatures = []
+				case .games:
 					self.games = []
 				}
-
-				// Save next page url and append new data
-				self.nextPageURL = libraryResponse.next
-				if let shows = libraryResponse.data.shows {
-					self.shows.append(contentsOf: shows)
-				}
-				if let literatures = libraryResponse.data.literatures {
-					self.literatures.append(contentsOf: literatures)
-				}
-				if let games = libraryResponse.data.games {
-					self.games.append(contentsOf: games)
-				}
-			} catch {
-				print(error.localizedDescription)
 			}
 
-			DispatchQueue.main.async { [weak self] in
-				guard let self = self else { return }
-				self.updateDataSource()
-				self._prefersActivityIndicatorHidden = true
-				self.toggleEmptyDataView()
-
-				#if !targetEnvironment(macCatalyst)
-				self.refreshControl?.endRefreshing()
-				#endif
+			// Save next page url and append new data
+			self.nextPageURL = libraryResponse.next
+			if let shows = libraryResponse.data.shows {
+				self.shows.append(contentsOf: shows)
 			}
-
-			// Reset refresh controller title
-			#if !targetEnvironment(macCatalyst)
-			self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh \(libraryStatus.lowercased()) list.")
-			#endif
-		} else {
-			DispatchQueue.main.async { [weak self] in
-				guard let self = self else { return }
-				self.shows.removeAll()
-				self.literatures.removeAll()
-				self.games.removeAll()
-				self.collectionView.reloadData {
-					self.toggleEmptyDataView()
-				}
+			if let literatures = libraryResponse.data.literatures {
+				self.literatures.append(contentsOf: literatures)
 			}
+			if let games = libraryResponse.data.games {
+				self.games.append(contentsOf: games)
+			}
+		} catch {
+			print(error.localizedDescription)
 		}
+
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			self.updateDataSource()
+			self._prefersActivityIndicatorHidden = true
+			self.toggleEmptyDataView()
+
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.endRefreshing()
+			#endif
+		}
+
+		// Reset refresh controller title
+		#if !targetEnvironment(macCatalyst)
+		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh \(libraryStatus.lowercased()) list.")
+		#endif
 	}
 
 	/// Add the given show to the library.
