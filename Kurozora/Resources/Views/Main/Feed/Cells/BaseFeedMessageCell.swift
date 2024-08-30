@@ -83,12 +83,12 @@ class BaseFeedMessageCell: KTableViewCell {
 		// Configure body
 		self.postTextView.setAttributedText(feedMessage.attributes.contentMarkdown.markdownAttributedString())
 		if let url = feedMessage.attributes.content.extractURLs().last, url.isWebURL {
-			if let metadata = RichLink.cachedMetadata(for: url) {
+			if let metadata = RichLink.shared.cachedMetadata(for: url) {
 				self.displayMetadata(metadata)
 				self.configurePostTextView(for: feedMessage, byRemovingURL: url)
 			} else {
 				Task(priority: .background) {
-					if let metadata = await RichLink.fetchMetadata(for: url) {
+					if let metadata = await RichLink.shared.fetchMetadata(for: url) {
 						DispatchQueue.main.async {
 							self.displayMetadata(metadata)
 							self.configurePostTextView(for: feedMessage, byRemovingURL: url)
