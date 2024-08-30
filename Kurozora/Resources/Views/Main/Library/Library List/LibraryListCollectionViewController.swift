@@ -12,6 +12,7 @@ import KurozoraKit
 protocol LibraryListViewControllerDelegate: AnyObject {
 	func libraryListViewController(willScrollTo index: Int)
 	func libraryListViewController(updateSortWith sortType: KKLibrary.SortType, sortOption: KKLibrary.SortType.Option)
+	func libraryListViewController(updateTotalCount totalCount: Int)
 }
 
 class LibraryListCollectionViewController: KCollectionViewController {
@@ -20,6 +21,8 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	var literatures: [Literature] = []
 	var games: [Game] = []
 	var nextPageURL: String?
+	var libraryKind: KKLibrary.Kind = UserSettings.libraryKind
+	var totalLibraryItemsCount: Int = 0
 	var libraryStatus: KKLibrary.Status = .planning
 	var sectionIndex: Int?
 	var librarySortType: KKLibrary.SortType = .none
@@ -30,8 +33,10 @@ class LibraryListCollectionViewController: KCollectionViewController {
 		}
 	}
 	var libraryCellStyle: KKLibrary.CellStyle = .detailed
+
 	weak var delegate: LibraryListViewControllerDelegate?
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
+
 	var user: User?
 	private var viewedUser: User? {
 		return self.user ?? User.current
@@ -132,6 +137,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 
 		// Update sort type button to reflect user settings
 		self.delegate?.libraryListViewController(updateSortWith: self.librarySortType, sortOption: self.librarySortTypeOption)
+		self.delegate?.libraryListViewController(updateTotalCount: totalLibraryItemsCount)
 	}
 
 	// MARK: - Functions
@@ -250,6 +256,9 @@ class LibraryListCollectionViewController: KCollectionViewController {
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
+			// Update total library items count
+			self.totalLibraryItemsCount = libraryResponse.total ?? 0
+			self.delegate?.libraryListViewController(updateTotalCount: self.totalLibraryItemsCount)
 					self.shows = []
 					self.literatures = []
 					self.games = []

@@ -301,6 +301,10 @@ extension LibraryViewController: LibraryListViewControllerDelegate {
 	func libraryListViewController(updateSortWith sortType: KKLibrary.SortType, sortOption: KKLibrary.SortType.Option) {
 		self.updateSortTypeBarButtonItem(sortType: sortType, option: sortOption)
 	}
+
+	func libraryListViewController(updateTotalCount totalCount: Int) {
+		self.navigationItem.title = "\(Trans.library)\(totalCount > 0 ? " (\(totalCount))" : "")"
+	}
 }
 
 // MARK: - KTabbedViewControllerDataSource
