@@ -83,15 +83,21 @@ class SettingsCell: KTableViewCell {
 	///    - cacheString: The string representing the amount of data that is cached by the app.
 	fileprivate func calculateCache(withSuccess successHandler: @escaping (_ cacheString: String) -> Void) {
 		ImageCache.default.calculateDiskStorageSize { result in
+			let rickLinkCacheSize = RichLink.shared.cacheSize()
+			let totalCacheSize: UInt
+
 			switch result {
-			case .success(let size):
-				// Convert from bytes to mebibytes (2^20)
-				let sizeInMiB = Double(size) / 1024 / 1024
-				successHandler(String(format: "%.2f", sizeInMiB) + "MiB")
+			case .success(let imageCacheSize):
+				totalCacheSize = rickLinkCacheSize + imageCacheSize
+
 			case .failure(let error):
-				print("Cache size calculation error: \(error)")
-				successHandler("0.00MiB")
+				print("----- Cache size calculation error: \(error)")
+				totalCacheSize = rickLinkCacheSize
 			}
+
+			// Convert from bytes to mebibytes (2^20)
+			let sizeInMiB = Double(totalCacheSize) / 1024 / 1024
+			successHandler(String(format: "%.2f", sizeInMiB) + "MiB")
 		}
 	}
 
