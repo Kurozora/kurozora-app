@@ -7,6 +7,7 @@
 //
 
 import KeychainAccess
+import Kingfisher
 import KurozoraKit
 
 /// A root object that stores information about a song resource.
@@ -38,6 +39,9 @@ class SharedDelegate {
 	// MARK: - Initializers
 	/// Initializes an instance of `SharedDelegate` with `Keychain` and `KKService` objects.
 	private init() {
+		// Max disk cache size
+		ImageCache.default.diskStorage.config.sizeLimit = 100 * 1024 * 1024
+
 		if let appIdentifierPrefix = Bundle.main.infoDictionary?["AppIdentifierPrefix"] as? String {
 			self.appIdentifierPrefix = appIdentifierPrefix
 		} else {
