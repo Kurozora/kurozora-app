@@ -43,6 +43,6 @@ class ProfileImageView: CircularImageView {
 
 		self.theme_backgroundColor = KThemePicker.tableViewCellSubTextColor.rawValue
 		self.layer.borderWidth = 2
-		self.layerBorderColor = UIColor.white.withAlphaComponent(0.20)
+		self.layerBorderColor = UIColor.gray.withAlphaComponent(0.20)
 	}
 }
