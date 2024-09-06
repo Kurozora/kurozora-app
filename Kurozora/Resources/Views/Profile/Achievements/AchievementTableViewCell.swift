@@ -32,6 +32,9 @@ class AchievementTableViewCell: UITableViewCell, SkeletonDisplayable {
 		self.secondaryLabel.text = achievement.attributes.description
 		self.secondaryLabel.textColor = UIColor(hexString: achievement.attributes.textColor)
 
+		// Configure symbol image view.
+		self.symbolImageView.layer.borderColor = UIColor(hexString: achievement.attributes.textColor)?.cgColor
+
 		// Configure background color.
 		self.contentView.backgroundColor = UIColor(hexString: achievement.attributes.backgroundColor)
 
