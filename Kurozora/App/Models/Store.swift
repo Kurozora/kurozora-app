@@ -166,11 +166,11 @@ final class Store: NSObject, ObservableObject {
 		await self.updatePurchasedIdentifiers(transaction)
 		print("----- Deliver content for \(transaction.productID).")
 
-		self.verifyReceipt()
+		await self.verifyReceipt()
 	}
 
 	/// Verifies the receipt using Kurozora API.
-	func verifyReceipt() {
+	func verifyReceipt() async {
 		self.refreshReceipt()
 
 		// Get the receipt if it's available
@@ -181,7 +181,7 @@ final class Store: NSObject, ObservableObject {
 				let receiptString = receiptData.base64EncodedString(options: [])
 				print("----- Receipt string:", receiptString)
 
-				_ = KService.verifyReceipt(receiptString)
+				let verifyResponse = try await KService.verifyReceipt(receiptString).value
 
 				NotificationCenter.default.post(name: .KSubscriptionStatusDidUpdate, object: nil)
 
@@ -233,7 +233,7 @@ final class Store: NSObject, ObservableObject {
 		do {
 			try await AppStore.sync()
 
-			self.verifyReceipt()
+			await self.verifyReceipt()
 		} catch let error as KKAPIError {
 			print("----- Restore failed", error.message)
 		} catch {
@@ -415,12 +415,16 @@ extension Store: SKPaymentTransactionObserver {
 			case .purchased:
 				// The purchase was successful.
 				print("----- Transaction purchased: \(transaction)")
-				self.verifyReceipt()
-				queue.finishTransaction(transaction)
+				Task {
+					await self.verifyReceipt()
+					queue.finishTransaction(transaction)
+				}
 			case .restored:
 				print("----- Transaction restore: \(transaction)")
-				self.verifyReceipt()
-				queue.finishTransaction(transaction)
+				Task {
+					await self.verifyReceipt()
+					queue.finishTransaction(transaction)
+				}
 			case .failed:
 				print("----- Transaction failed: \(transaction)")
 				queue.finishTransaction(transaction)
