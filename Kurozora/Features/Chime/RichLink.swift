@@ -19,13 +19,13 @@ class RichLink {
 		let notifications: [(Notification.Name, Selector)]
 		#if !os(macOS) && !os(watchOS)
 		notifications = [
-			(UIApplication.didReceiveMemoryWarningNotification, #selector(clearCache)),
-			(UIApplication.willTerminateNotification, #selector(clearCache)),
-			(UIApplication.didEnterBackgroundNotification, #selector(backgroundCleanExpiredDiskCache))
+			(UIApplication.didReceiveMemoryWarningNotification, #selector(self.clearCache)),
+			(UIApplication.willTerminateNotification, #selector(self.clearCache)),
+			(UIApplication.didEnterBackgroundNotification, #selector(self.backgroundCleanExpiredDiskCache))
 		]
 		#elseif os(macOS)
 		notifications = [
-			(NSApplication.willResignActiveNotification, #selector(cleanExpiredCache))
+			(NSApplication.willResignActiveNotification, #selector(self.cleanExpiredCache))
 		]
 		#else
 		notifications = []
