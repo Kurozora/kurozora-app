@@ -598,6 +598,7 @@
 		66DB2546245C667A000AA6DB /* KCopyableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DB2545245C667A000AA6DB /* KCopyableLabel.swift */; };
 		66DB2548245D6B1D000AA6DB /* KTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DB2547245D6B1D000AA6DB /* KTextView.swift */; };
 		66DB254A245D72ED000AA6DB /* KActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DB2549245D72ED000AA6DB /* KActivityIndicatorView.swift */; };
+		66DC7D3D2C787C4000F4B27B /* pine.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 66DC7D3C2C787C3F00F4B27B /* pine.m4a */; };
 		66DE65282401AEDB001C2773 /* FilterSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DE65272401AEDB001C2773 /* FilterSection.swift */; };
 		66DE652A2401B0A8001C2773 /* BrowseType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DE65292401B0A8001C2773 /* BrowseType.swift */; };
 		66DEB4A821D248710093725F /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66DEB4A721D248710093725F /* Search.storyboard */; };
@@ -1370,6 +1371,7 @@
 		66DB2545245C667A000AA6DB /* KCopyableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCopyableLabel.swift; sourceTree = "<group>"; };
 		66DB2547245D6B1D000AA6DB /* KTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KTextView.swift; sourceTree = "<group>"; };
 		66DB2549245D72ED000AA6DB /* KActivityIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KActivityIndicatorView.swift; sourceTree = "<group>"; };
+		66DC7D3C2C787C3F00F4B27B /* pine.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = pine.m4a; sourceTree = "<group>"; };
 		66DE65272401AEDB001C2773 /* FilterSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSection.swift; sourceTree = "<group>"; };
 		66DE65292401B0A8001C2773 /* BrowseType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseType.swift; sourceTree = "<group>"; };
 		66DEB4A421D247810093725F /* SearchResultsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsCollectionViewController.swift; sourceTree = "<group>"; };
@@ -4033,6 +4035,7 @@
 				6675E2062B4836740050F98C /* nyanpasu.m4a */,
 				661B1DCE2B61C148000C9C0E /* oh_my_gah.m4a */,
 				6675E2002B48365A0050F98C /* padoru_padoru.m4a */,
+				66DC7D3C2C787C3F00F4B27B /* pine.m4a */,
 				66631B542B408DA70006F02B /* plus_ultra-v2.m4a */,
 				66631B5D2B40C8420006F02B /* plus_ultra-v3.m4a */,
 				66631B5B2B4092D00006F02B /* plus_ultra.m4a */,
@@ -4339,6 +4342,7 @@
 				66D921652BAE3A680068C685 /* MusicReviewLockupCollectionViewCell.xib in Resources */,
 				66DB11D024E6103900C99754 /* Shows.storyboard in Resources */,
 				669A36C124F1BFFA0045D04A /* OnboardingTextFieldTableViewCell.xib in Resources */,
+				66DC7D3D2C787C4000F4B27B /* pine.m4a in Resources */,
 				66C45843259A88ED00886374 /* Sky.plist in Resources */,
 				66F27EBE283A7FF500CC2277 /* StudioLockupCollectionViewCell.xib in Resources */,
 				66F27EC4283A81AE00CC2277 /* SearchShowResultsCell.xib in Resources */,
