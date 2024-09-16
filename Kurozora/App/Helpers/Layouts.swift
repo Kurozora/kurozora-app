@@ -9,6 +9,31 @@
 import UIKit
 
 enum Layouts {
+	static func badgeSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+		let width = layoutEnvironment.container.effectiveContentSize.width
+		var item: NSCollectionLayoutItem!
+		var layoutGroup: NSCollectionLayoutGroup!
+
+		if width > 828 {
+			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0))
+			item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0))
+			layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+		} else {
+			let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(100.0), heightDimension: .estimated(50.0))
+			let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+			let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(100.0), heightDimension: .estimated(50.0))
+			layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+		}
+
+		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+		layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 40.0, trailing: 10)
+		return layoutSection
+	}
+
 	static func fullSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
 		let widthDimension: NSCollectionLayoutDimension = .fractionalWidth(1.0)
 		let bottomInset: CGFloat = 20.0

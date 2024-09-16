@@ -97,7 +97,7 @@ extension GameDetailsCollectionViewController {
 				let headerSection = self.headerSection(for: section, layoutEnvironment: layoutEnvironment)
 				sectionLayout = headerSection
 			case .badge:
-				let badgeSection = self.badgeSection(for: section, layoutEnvironment: layoutEnvironment)
+				let badgeSection = Layouts.badgeSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				sectionLayout = badgeSection
 			case .synopsis:
 				if let synopsis = self.game.attributes.synopsis, !synopsis.isEmpty {
@@ -191,32 +191,6 @@ extension GameDetailsCollectionViewController {
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
 
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
-		return layoutSection
-	}
-
-	func badgeSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-		let width = layoutEnvironment.container.effectiveContentSize.width
-		var item: NSCollectionLayoutItem!
-		var layoutGroup: NSCollectionLayoutGroup!
-
-		if width > 828 {
-			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0))
-			item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0))
-			layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-		} else {
-			let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(100.0), heightDimension: .estimated(50.0))
-			let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-			let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(100.0), heightDimension: .estimated(50.0))
-			layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-		}
-
-		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-		layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
 		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
 		return layoutSection
 	}
