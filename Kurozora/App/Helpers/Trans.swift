@@ -817,6 +817,11 @@ struct Trans {
 	/// - Tag: Trans-aliases
 	static let aliases: String = String(localized: "Aliases",
 										comment: "The string for the word 'aliases'.")
+	/// The string for the word 'socials'.
+	///
+	/// - Tag: Trans-socials
+	static let socials: String = String(localized: "Socials",
+										comment: "The string for the word 'socials'.")
 	/// The string for the word 'websites'.
 	///
 	/// - Tag: Trans-websites
@@ -1032,6 +1037,11 @@ struct Trans {
 	/// - Tag: Trans-founded
 	static let founded: String = String(localized: "Founded",
 										comment: "The string for the word 'founded'.")
+	/// The string for the word 'defunct'.
+	///
+	/// - Tag: Trans-defunct
+	static let defunct: String = String(localized: "Defunct",
+										comment: "The string for the word 'defunct'.")
 	/// The string for the word 'headquarters'.
 	///
 	/// - Tag: Trans-headquarters
@@ -1232,6 +1242,11 @@ struct Trans {
 	/// - Tag: Trans-studio
 	static let studio: String = String(localized: "Studio",
 									   comment: "The string for the word 'studio'.")
+	/// The string for the word 'successor'.
+	///
+	/// - Tag: Trans-successor
+	static let successor: String = String(localized: "Successor",
+									   comment: "The string for the word 'successor'.")
 	/// The string for the word 'cast'.
 	///
 	/// - Tag: Trans-cast

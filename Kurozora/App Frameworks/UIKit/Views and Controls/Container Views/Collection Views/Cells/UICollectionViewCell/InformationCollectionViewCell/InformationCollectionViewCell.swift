@@ -154,7 +154,7 @@ class InformationCollectionViewCell: UICollectionViewCell {
 	}
 
 	/// Configure the cell with the given studio details.
-	func configure(using studio: Studio, for studioDetailInformation: StudioInformation) {
+	func configure(using studio: Studio, for studioDetailInformation: StudioDetail.Information) {
 		self.typeImageView.image = studioDetailInformation.imageValue
 		self.typeLabel.text = studioDetailInformation.stringValue
 		self.headlineLabel.text = studioDetailInformation.information(from: studio)

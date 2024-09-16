@@ -15,6 +15,8 @@ extension StudioDetailsCollectionViewController {
 		switch self.snapshot.sectionIdentifiers[section] {
 		case .header, .about:
 			return 1
+		case .badges:
+			return width > 414 ? StudioDetail.Badge.allCases.count : (width / 132).rounded().int
 		case .shows, .literatures, .games:
 			let columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
 			return columnCount > 0 ? columnCount : 1
@@ -27,11 +29,13 @@ extension StudioDetailsCollectionViewController {
 	func heightDimension(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutDimension {
 		switch self.snapshot.sectionIdentifiers[section] {
 		case .header:
-			return .estimated(230)
+			return .fractionalHeight(1.0)
+		case .badges:
+			return .estimated(50)
 		case .about:
-			return .estimated(20)
+			return .estimated(100)
 		case .information:
-			return .estimated(55)
+			return .fractionalHeight(1.0)
 		default:
 			return .fractionalWidth(.zero)
 		}
@@ -61,6 +65,9 @@ extension StudioDetailsCollectionViewController {
 			case .header:
 				let fullSection = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				sectionLayout = fullSection
+			case .badges:
+				let badgeSection = Layouts.badgeSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				sectionLayout = badgeSection
 			case .about:
 				if let about = self.studio.attributes.about, !about.isEmpty {
 					let fullSection = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)

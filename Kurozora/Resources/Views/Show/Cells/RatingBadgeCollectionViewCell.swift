@@ -36,6 +36,13 @@ class RatingBadgeCollectionViewCell: BadgeCollectionViewCell {
 		self.configureCell(using: stats)
 	}
 
+	override func configureCell(with studio: Studio?, studioDetailBadge: StudioDetail.Badge) {
+		super.configureCell(with: studio, studioDetailBadge: studioDetailBadge)
+		guard let stats = studio?.attributes.stats else { return }
+
+		self.configureCell(using: stats)
+	}
+
 	private func configureCell(using stats: MediaStat) {
 		self.cosmosView.rating = stats.ratingAverage
 		self.ratingScoreLabel.text = "\(stats.ratingAverage)"

@@ -12,6 +12,8 @@ import KurozoraKit
 extension StudioDetailsCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
 		return [
+			BadgeCollectionViewCell.self,
+			RatingBadgeCollectionViewCell.self,
 			TextViewCollectionViewCell.self,
 			InformationCollectionViewCell.self,
 			InformationButtonCollectionViewCell.self
@@ -39,6 +41,15 @@ extension StudioDetailsCollectionViewController {
 				default: break
 				}
 				return studioHeaderCollectionViewCell
+			case .badges:
+				let studioDetailBadge = StudioDetail.Badge(rawValue: indexPath.item) ?? .tvRating
+				let badgeCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: studioDetailBadge.identifierString, for: indexPath) as? BadgeCollectionViewCell
+				switch itemKind {
+				case .studio(let studio, _):
+					badgeCollectionViewCell?.configureCell(with: studio, studioDetailBadge: studioDetailBadge)
+				default: break
+				}
+				return badgeCollectionViewCell
 			case .about:
 				let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.textViewCollectionViewCell, for: indexPath)
 				textViewCollectionViewCell?.delegate = self
@@ -53,7 +64,7 @@ extension StudioDetailsCollectionViewController {
 				let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.informationCollectionViewCell, for: indexPath)
 				switch itemKind {
 				case .studio(let studio, _):
-					informationCollectionViewCell?.configure(using: studio, for: StudioInformation(rawValue: indexPath.item) ?? .website)
+					informationCollectionViewCell?.configure(using: studio, for: StudioDetail.Information(rawValue: indexPath.item) ?? .websites)
 				default: break
 				}
 				return informationCollectionViewCell
@@ -84,6 +95,16 @@ extension StudioDetailsCollectionViewController {
 			case .header:
 				self.snapshot.appendSections([studioDetailSection])
 				self.snapshot.appendItems([.studio(self.studio)], toSection: studioDetailSection)
+			case .badges:
+				self.snapshot.appendSections([studioDetailSection])
+				StudioDetail.Badge.allCases.forEach { studioDetailBadge in
+					switch studioDetailBadge {
+//					case .rating:
+//						return
+					default:
+						self.snapshot.appendItems([.studio(self.studio)], toSection: studioDetailSection)
+					}
+				}
 			case .about:
 				if let about = self.studio.attributes.about, !about.isEmpty {
 					self.snapshot.appendSections([studioDetailSection])
@@ -91,7 +112,7 @@ extension StudioDetailsCollectionViewController {
 				}
 			case .information:
 				self.snapshot.appendSections([studioDetailSection])
-				StudioInformation.allCases.forEach { _ in
+				StudioDetail.Information.allCases.forEach { _ in
 					self.snapshot.appendItems([.studio(self.studio)], toSection: studioDetailSection)
 				}
 			case .shows:

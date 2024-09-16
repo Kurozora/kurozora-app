@@ -334,6 +334,9 @@ extension StudioDetailsCollectionViewController {
 		/// Indicates a header section layout type.
 		case header = 0
 
+		/// Indicates badges section layout type.
+		case badges
+
 		/// Indicates an about section layout type.
 		case about
 
@@ -355,6 +358,8 @@ extension StudioDetailsCollectionViewController {
 			switch self {
 			case .header:
 				return Trans.header
+			case .badges:
+				return Trans.badges
 			case .about:
 				return Trans.about
 			case .information:
@@ -372,6 +377,8 @@ extension StudioDetailsCollectionViewController {
 		var segueIdentifier: String {
 			switch self {
 			case .header:
+				return ""
+			case .badges:
 				return ""
 			case .about:
 				return ""
