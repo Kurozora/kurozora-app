@@ -14,7 +14,7 @@ enum PersonInformation: Int, CaseIterable {
 	// MARK: - Cases
 	case aliases = 0
 	case age
-	case website
+	case websites
 
 	// MARK: - Properties
 	/// The string value of a person infromation type.
@@ -24,7 +24,7 @@ enum PersonInformation: Int, CaseIterable {
 			return Trans.aliases
 		case .age:
 			return Trans.age
-		case .website:
+		case .websites:
 			return Trans.websites
 		}
 	}
@@ -36,7 +36,7 @@ enum PersonInformation: Int, CaseIterable {
 			return UIImage(systemName: "person")
 		case .age:
 			return UIImage(systemName: "calendar")
-		case .website:
+		case .websites:
 			return UIImage(systemName: "safari")
 		}
 	}
@@ -48,8 +48,8 @@ enum PersonInformation: Int, CaseIterable {
 			return R.reuseIdentifier.informationCollectionViewCell.identifier
 		case .age:
 			return R.reuseIdentifier.informationCollectionViewCell.identifier
-		case .website:
-			return R.reuseIdentifier.informationCollectionViewCell.identifier
+		case .websites:
+			return R.reuseIdentifier.informationButtonCollectionViewCell.identifier
 		}
 	}
 
@@ -67,7 +67,7 @@ enum PersonInformation: Int, CaseIterable {
 				aliases += "\nGiven Name: \(givenName)"
 			}
 
-			if let alternativeNames = person.attributes.alternativeNames, !alternativeNames.isEmpty {
+			if let alternativeNames = person.attributes.alternativeNames?.filter({ !$0.isEmpty }), !alternativeNames.isEmpty {
 				aliases += "\nNicknames: \(alternativeNames.joined(separator: ", "))"
 			}
 			return aliases
@@ -75,7 +75,7 @@ enum PersonInformation: Int, CaseIterable {
 			if let age = person.attributes.age, !age.isEmpty {
 				return age
 			}
-		case .website:
+		case .websites:
 			return person.attributes.websiteURLs?.joined(separator: ", ") ?? "-"
 		}
 		return nil
