@@ -12,14 +12,27 @@ import SwifterSwift
 
 @main
 struct KurozoraWidgetBundle: WidgetBundle {
-    var body: some Widget {
-        DateWidget()
+	var body: some Widget {
+		if #available(iOS 18.0, *) {
+			return iOS18WidgetBundle().body
+		} else {
+			return iOS16WidgetBundle().body
+		}
+	}
+}
 
-		self.launchAppControl()
-    }
+struct iOS16WidgetBundle: WidgetBundle {
+	@WidgetBundleBuilder
+	var body: some Widget {
+		DateWidget()
+	}
+}
 
-	@WidgetBundleBuilder @MainActor
-	func launchAppControl() -> some Widget {
+struct iOS18WidgetBundle: WidgetBundle {
+	@WidgetBundleBuilder
+	var body: some Widget {
+		DateWidget()
+
 		if #available(iOS 18.0, *) {
 			LaunchAppControl()
 		}
