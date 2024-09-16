@@ -22,12 +22,16 @@ class StudioHeaderCollectionViewCell: UICollectionViewCell {
 	func configure(using studio: Studio) {
 		self.nameLabel.text = studio.attributes.name
 
-		if let foundingYear = studio.attributes.founded {
+		if let foundingYear = studio.attributes.foundedAt {
 			self.foundedLabel.text = "Founded on " + foundingYear.formatted(date: .abbreviated, time: .omitted)
 		} else {
 			self.foundedLabel.text = nil
 		}
 
-		studio.attributes.logoImage(imageView: self.logoImageView)
+		if studio.attributes.profile != nil {
+			studio.attributes.profileImage(imageView: self.logoImageView)
+		} else {
+			studio.attributes.logoImage(imageView: self.logoImageView)
+		}
 	}
 }

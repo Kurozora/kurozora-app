@@ -54,7 +54,14 @@ class StudioLockupCollectionViewCell: KCollectionViewCell {
 		studio.attributes.bannerImage(imageView: self.primaryImageView)
 
 		// Configure profile image
-		self.profileImageContainer.isHidden = studio.attributes.logo == nil
-		studio.attributes.logoImage(imageView: self.secondaryImageView)
+		if studio.attributes.logo != nil {
+			studio.attributes.logoImage(imageView: self.secondaryImageView)
+			self.profileImageContainer.isHidden = false
+		} else if studio.attributes.profile != nil {
+			studio.attributes.profileImage(imageView: self.secondaryImageView)
+			self.profileImageContainer.isHidden = false
+		} else {
+			self.profileImageContainer.isHidden = true
+		}
 	}
 }
