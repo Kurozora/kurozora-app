@@ -49,6 +49,7 @@
 		660E3A0E25E5DE7800A46EB0 /* GenresCollectionViewController+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660E3A0D25E5DE7800A46EB0 /* GenresCollectionViewController+UICollectionViewDelegate.swift */; };
 		660E3A1025E5E09C00A46EB0 /* SearchResultsCollectionViewController+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660E3A0F25E5E09C00A46EB0 /* SearchResultsCollectionViewController+UICollectionViewDelegate.swift */; };
 		660E3A1325E5E1EE00A46EB0 /* User+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660E3A1225E5E1EE00A46EB0 /* User+UIKit.swift */; };
+		6610394F2C98B81700F5026F /* RichLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6610394E2C98B81700F5026F /* RichLink.swift */; };
 		661049C022C0E42B00A2A354 /* DisplayTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661049BF22C0E42B00A2A354 /* DisplayTableViewController.swift */; };
 		6611234E208F70CB00E6033A /* UIViewController+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6611234D208F70CB00E6033A /* UIViewController+Kurozora.swift */; };
 		66112350208F70D200E6033A /* UIApplication+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6611234F208F70D200E6033A /* UIApplication+Navigation.swift */; };
@@ -458,7 +459,7 @@
 		66AE01292594018400308636 /* Genre.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66AE01282594018400308636 /* Genre.storyboard */; };
 		66AE1E0B24A0C41300FD3FFC /* StudioDetailsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AE1E0A24A0C41300FD3FFC /* StudioDetailsCollectionViewController.swift */; };
 		66AE1E0D24A0C42600FD3FFC /* Studios.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66AE1E0C24A0C42600FD3FFC /* Studios.storyboard */; };
-		66AE1E1024A0DB9200FD3FFC /* StudioInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AE1E0F24A0DB9200FD3FFC /* StudioInformation.swift */; };
+		66AE1E1024A0DB9200FD3FFC /* StudioDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AE1E0F24A0DB9200FD3FFC /* StudioDetail.swift */; };
 		66AE1E1324A0EA1800FD3FFC /* StudioHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AE1E1224A0EA1800FD3FFC /* StudioHeaderCollectionViewCell.swift */; };
 		66AE1E1524A0EE1D00FD3FFC /* CircularImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AE1E1424A0EE1D00FD3FFC /* CircularImageView.swift */; };
 		66AE1E1724A0F74900FD3FFC /* InformationButtonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AE1E1624A0F74900FD3FFC /* InformationButtonCollectionViewCell.swift */; };
@@ -700,7 +701,6 @@
 		66EDDFFF2BBA14AA00B5B4EE /* den_den_mushi.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 66EDDFFE2BBA14AA00B5B4EE /* den_den_mushi.m4a */; };
 		66EDE0012BBA182900B5B4EE /* biwa.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 66EDE0002BBA182600B5B4EE /* biwa.m4a */; };
 		66EF26C6215F960A00FB2B19 /* UIImage+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EF26C5215F960A00FB2B19 /* UIImage+Kurozora.swift */; };
-		66F199AE2B931F45004D7C91 /* RichLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F199AD2B931F45004D7C91 /* RichLink.swift */; };
 		66F27EB7283A68F500CC2277 /* StudioLockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F27EB6283A68F500CC2277 /* StudioLockupCollectionViewCell.swift */; };
 		66F27EBC283A7BF900CC2277 /* StudioAttributes+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F27EBB283A7BF900CC2277 /* StudioAttributes+UIImage.swift */; };
 		66F27EBE283A7FF500CC2277 /* StudioLockupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66F27EBD283A7FF400CC2277 /* StudioLockupCollectionViewCell.xib */; };
@@ -818,6 +818,7 @@
 		660E3A0F25E5E09C00A46EB0 /* SearchResultsCollectionViewController+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchResultsCollectionViewController+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
 		660E3A1225E5E1EE00A46EB0 /* User+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+UIKit.swift"; sourceTree = "<group>"; };
 		660E9FC8214BC6FB00F6813C /* Kurozora.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Kurozora.entitlements; sourceTree = "<group>"; };
+		6610394E2C98B81700F5026F /* RichLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichLink.swift; sourceTree = "<group>"; };
 		661049BF22C0E42B00A2A354 /* DisplayTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayTableViewController.swift; sourceTree = "<group>"; };
 		66112348208F6ACE00E6033A /* WorkflowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowController.swift; sourceTree = "<group>"; };
 		6611234D208F70CB00E6033A /* UIViewController+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Kurozora.swift"; sourceTree = "<group>"; };
@@ -1223,7 +1224,7 @@
 		66AE01282594018400308636 /* Genre.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Genre.storyboard; sourceTree = "<group>"; };
 		66AE1E0A24A0C41300FD3FFC /* StudioDetailsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioDetailsCollectionViewController.swift; sourceTree = "<group>"; };
 		66AE1E0C24A0C42600FD3FFC /* Studios.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Studios.storyboard; sourceTree = "<group>"; };
-		66AE1E0F24A0DB9200FD3FFC /* StudioInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioInformation.swift; sourceTree = "<group>"; };
+		66AE1E0F24A0DB9200FD3FFC /* StudioDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioDetail.swift; sourceTree = "<group>"; };
 		66AE1E1224A0EA1800FD3FFC /* StudioHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
 		66AE1E1424A0EE1D00FD3FFC /* CircularImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularImageView.swift; sourceTree = "<group>"; };
 		66AE1E1624A0F74900FD3FFC /* InformationButtonCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationButtonCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1471,7 +1472,6 @@
 		66EDDFFE2BBA14AA00B5B4EE /* den_den_mushi.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = den_den_mushi.m4a; sourceTree = "<group>"; };
 		66EDE0002BBA182600B5B4EE /* biwa.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = biwa.m4a; sourceTree = "<group>"; };
 		66EF26C5215F960A00FB2B19 /* UIImage+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Kurozora.swift"; sourceTree = "<group>"; };
-		66F199AD2B931F45004D7C91 /* RichLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RichLink.swift; path = Chime/RichLink.swift; sourceTree = "<group>"; };
 		66F27EB6283A68F500CC2277 /* StudioLockupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioLockupCollectionViewCell.swift; sourceTree = "<group>"; };
 		66F27EBB283A7BF900CC2277 /* StudioAttributes+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StudioAttributes+UIImage.swift"; sourceTree = "<group>"; };
 		66F27EBD283A7FF400CC2277 /* StudioLockupCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StudioLockupCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -3145,6 +3145,7 @@
 		66B4F1D1223BC8EB007C5048 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				6610394E2C98B81700F5026F /* RichLink.swift */,
 				66BFF4EA25FFF879009EBA30 /* SidebarViewController.swift */,
 				6640E18722AD631F00D0F575 /* Authentication */,
 				66AD1A032B3CD52100694BF7 /* Chime */,
@@ -3154,7 +3155,6 @@
 				66EDBA52294420DA00FF1A2E /* Warning */,
 				66D8AA7522F0DDFE00456E75 /* Web Browser */,
 				66BEC131231711C40039D683 /* WhatsNew */,
-				66F199AD2B931F45004D7C91 /* RichLink.swift */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -3912,7 +3912,7 @@
 				6675E1FE2B48101B0050F98C /* Sound.swift */,
 				666C898729FF25BB0075B5D6 /* SourceType.swift */,
 				66FA97C5281A118E0054FC2E /* StoreError.swift */,
-				66AE1E0F24A0DB9200FD3FFC /* StudioInformation.swift */,
+				66AE1E0F24A0DB9200FD3FFC /* StudioDetail.swift */,
 				666C898F29FF2A640075B5D6 /* StudioType.swift */,
 				66FA97C3281A11720054FC2E /* SubscriptionTier.swift */,
 				66FA97BF281A10120054FC2E /* TabBarItem.swift */,
@@ -4840,6 +4840,7 @@
 				660E3A0925E5DA2100A46EB0 /* SeasonsListCollectionViewController+UICollectionViewDelegate.swift in Sources */,
 				66ED9D8B22AC15E600C7A45C /* ImageAnnotation.swift in Sources */,
 				666D9EE625B35CE300EDDC9E /* HomeCollectionViewController+KCollectionViewDataSource.swift in Sources */,
+				6610394F2C98B81700F5026F /* RichLink.swift in Sources */,
 				6638CE6126BF42CE00A1A6A9 /* GenresCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				6621519D2BAA3BDE00ECF522 /* ReviewsListCollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				66EA1DC225B366CF00FCD07A /* NotificationsViewController+TouchBar.swift in Sources */,
@@ -4883,7 +4884,7 @@
 				66192D7327CEA3720041D102 /* MusicManager.swift in Sources */,
 				66E1215129AFEE090051C4ED /* GamesListCollectionViewController+UICollectionViewDelegate.swift in Sources */,
 				66FC6DD12340014500A454DD /* SettingsSection.swift in Sources */,
-				66AE1E1024A0DB9200FD3FFC /* StudioInformation.swift in Sources */,
+				66AE1E1024A0DB9200FD3FFC /* StudioDetail.swift in Sources */,
 				660E39F525E5BE4000A46EB0 /* Person+UIKit.swift in Sources */,
 				66F27EB7283A68F500CC2277 /* StudioLockupCollectionViewCell.swift in Sources */,
 				66C457FC2598DA4500886374 /* StudioDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
@@ -4894,7 +4895,6 @@
 				6632C441298B0CC200702F7C /* LiteratureDetailsCollectionViewController+UICollectionViewDelegate.swift in Sources */,
 				66513E37276FCA3B000FBC42 /* EpisodeDetailHeaderCollectionViewCell.swift in Sources */,
 				669C8D562107B7D80014EB7A /* BounceAnimation.swift in Sources */,
-				66F199AE2B931F45004D7C91 /* RichLink.swift in Sources */,
 				66EA1DFC25B6199B00FCD07A /* ManageThemesController+KCollectionViewDataSource.swift in Sources */,
 				6634735E23343D55006B7F99 /* String+Kurozora.swift in Sources */,
 				6663985B2366298100713B8B /* UICollectionViewCell+Kurozora.swift in Sources */,
