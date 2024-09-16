@@ -1,0 +1,47 @@
+{
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "grid-size" : "regular"
+  },
+  "stickers" : [
+    {
+      "filename" : "Kuro-chan heart.sticker"
+    },
+    {
+      "filename" : "Kuro-chan angry.sticker"
+    },
+    {
+      "filename" : "Kuro-chan pout.sticker"
+    },
+    {
+      "filename" : "Kuro-chan excited.sticker"
+    },
+    {
+      "filename" : "Kuro-chan kawaii.sticker"
+    },
+    {
+      "filename" : "Kuro-chan flop.sticker"
+    },
+    {
+      "filename" : "Kuro-chan thumbs up.sticker"
+    },
+    {
+      "filename" : "Kuro-chan tehe.sticker"
+    },
+    {
+      "filename" : "Kuro-chan hehe.sticker"
+    },
+    {
+      "filename" : "Kuro-chan wow.sticker"
+    },
+    {
+      "filename" : "Kuro-chan confused.sticker"
+    },
+    {
+      "filename" : "Kuro-chan sob.sticker"
+    }
+  ]
+}

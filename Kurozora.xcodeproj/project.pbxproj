@@ -112,6 +112,8 @@
 		662A17F7288A1F5D009D4A0D /* SessionLockupCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 662A17F6288A1F5D009D4A0D /* SessionLockupCell.xib */; };
 		662A1800288C57AC009D4A0D /* PlatformAttributes+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662A17FF288C57AC009D4A0D /* PlatformAttributes+UIKit.swift */; };
 		662A1802288C737F009D4A0D /* ManageActiveSessionsController+KTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662A1801288C737E009D4A0D /* ManageActiveSessionsController+KTableViewDataSource.swift */; };
+		662A3D372C92433F006F6EDD /* KuroChan.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 662A3D302C92433B006F6EDD /* KuroChan.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		662A3D422C9243E6006F6EDD /* Stickers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 662A3D3F2C9243E6006F6EDD /* Stickers.xcassets */; };
 		662B925F233E50FA001D49B7 /* SearchShowResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662B925E233E50FA001D49B7 /* SearchShowResultsCell.swift */; };
 		662CAD68257594E00045236C /* EmptyBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662CAD67257594E00045236C /* EmptyBackgroundView.swift */; };
 		662DB4DB237EF3CC00B7FE7E /* KFillBarIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662DB4DA237EF3CC00B7FE7E /* KFillBarIndicator.swift */; };
@@ -739,6 +741,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		662A3D352C92433F006F6EDD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 66647B482084995500CF624F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 662A3D2F2C92433B006F6EDD;
+			remoteInfo = KuroChan;
+		};
 		6647B73E2BC0A6E2006BC91C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 66647B482084995500CF624F /* Project object */;
@@ -763,6 +772,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				6647B7402BC0A6E2006BC91C /* KurozoraWidgetExtension.appex in Embed Foundation Extensions */,
+				662A3D372C92433F006F6EDD /* KuroChan.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -885,6 +895,10 @@
 		662A17F6288A1F5D009D4A0D /* SessionLockupCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SessionLockupCell.xib; sourceTree = "<group>"; };
 		662A17FF288C57AC009D4A0D /* PlatformAttributes+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlatformAttributes+UIKit.swift"; sourceTree = "<group>"; };
 		662A1801288C737E009D4A0D /* ManageActiveSessionsController+KTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManageActiveSessionsController+KTableViewDataSource.swift"; sourceTree = "<group>"; };
+		662A3D302C92433B006F6EDD /* KuroChan.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = KuroChan.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		662A3D3D2C9243E6006F6EDD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		662A3D3E2C9243E6006F6EDD /* KuroChan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KuroChan.entitlements; sourceTree = "<group>"; };
+		662A3D3F2C9243E6006F6EDD /* Stickers.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Stickers.xcassets; sourceTree = "<group>"; };
 		662B925E233E50FA001D49B7 /* SearchShowResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchShowResultsCell.swift; sourceTree = "<group>"; };
 		662CAD67257594E00045236C /* EmptyBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyBackgroundView.swift; sourceTree = "<group>"; };
 		662DB4DA237EF3CC00B7FE7E /* KFillBarIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KFillBarIndicator.swift; sourceTree = "<group>"; };
@@ -1926,6 +1940,16 @@
 			path = Platform;
 			sourceTree = "<group>";
 		};
+		662A3D402C9243E6006F6EDD /* KuroChan */ = {
+			isa = PBXGroup;
+			children = (
+				662A3D3D2C9243E6006F6EDD /* Info.plist */,
+				662A3D3E2C9243E6006F6EDD /* KuroChan.entitlements */,
+				662A3D3F2C9243E6006F6EDD /* Stickers.xcassets */,
+			);
+			path = KuroChan;
+			sourceTree = "<group>";
+		};
 		662EDB47257C3787005AA29E /* Table Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -2358,6 +2382,7 @@
 			children = (
 				66647B522084995500CF624F /* Kurozora */,
 				6647B7352BC0A6DE006BC91C /* KurozoraWidget */,
+				662A3D402C9243E6006F6EDD /* KuroChan */,
 				66647B512084995500CF624F /* Products */,
 				D4A795E40A9FE3FA76278C67 /* Pods */,
 				08E5591EE4C9B9016ACCB5C6 /* Frameworks */,
@@ -2369,6 +2394,7 @@
 			children = (
 				66647B502084995500CF624F /* Kurozora.app */,
 				6647B7302BC0A6DD006BC91C /* KurozoraWidgetExtension.appex */,
+				662A3D302C92433B006F6EDD /* KuroChan.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4069,6 +4095,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		662A3D2F2C92433B006F6EDD /* KuroChan */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 662A3D3B2C92433F006F6EDD /* Build configuration list for PBXNativeTarget "KuroChan" */;
+			buildPhases = (
+				662A3D2E2C92433B006F6EDD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KuroChan;
+			packageProductDependencies = (
+			);
+			productName = KuroChan;
+			productReference = 662A3D302C92433B006F6EDD /* KuroChan.appex */;
+			productType = "com.apple.product-type.app-extension.messages-sticker-pack";
+		};
 		6647B72F2BC0A6DD006BC91C /* KurozoraWidgetExtension */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6647B7442BC0A6E3006BC91C /* Build configuration list for PBXNativeTarget "KurozoraWidgetExtension" */;
@@ -4107,6 +4150,7 @@
 			dependencies = (
 				66C6A54E23FB05C2000A6617 /* PBXTargetDependency */,
 				6647B73F2BC0A6E2006BC91C /* PBXTargetDependency */,
+				662A3D362C92433F006F6EDD /* PBXTargetDependency */,
 			);
 			name = Kurozora;
 			productName = Aozora;
@@ -4124,6 +4168,9 @@
 				LastUpgradeCheck = 1600;
 				ORGANIZATIONNAME = Kurozora;
 				TargetAttributes = {
+					662A3D2F2C92433B006F6EDD = {
+						CreatedOnToolsVersion = 16.0;
+					};
 					6647B72F2BC0A6DD006BC91C = {
 						CreatedOnToolsVersion = 15.3;
 					};
@@ -4162,15 +4209,25 @@
 			targets = (
 				66647B4F2084995500CF624F /* Kurozora */,
 				6647B72F2BC0A6DD006BC91C /* KurozoraWidgetExtension */,
+				662A3D2F2C92433B006F6EDD /* KuroChan */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		662A3D2E2C92433B006F6EDD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				662A3D422C9243E6006F6EDD /* Stickers.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6647B72E2BC0A6DD006BC91C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66F7D1B62C7210C0002A09CE /* Assets.xcassets in Resources */,
 				6647B73B2BC0A6E2006BC91C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5053,6 +5110,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		662A3D362C92433F006F6EDD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 662A3D2F2C92433B006F6EDD /* KuroChan */;
+			targetProxy = 662A3D352C92433F006F6EDD /* PBXContainerItemProxy */;
+		};
 		6647B73F2BC0A6E2006BC91C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 6647B72F2BC0A6DD006BC91C /* KurozoraWidgetExtension */;
@@ -5076,6 +5138,59 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		662A3D382C92433F006F6EDD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = KuroChan/KuroChan.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 47ZEU5J4BF;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = KuroChan/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Kurozora;
+				INFOPLIST_KEY_NSStickerSharingLevel = OS;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				PRODUCT_BUNDLE_IDENTIFIER = "app.kurozora.tracker.stickers.kuro-chan";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		662A3D392C92433F006F6EDD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = KuroChan/KuroChan.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 47ZEU5J4BF;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = KuroChan/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Kurozora;
+				INFOPLIST_KEY_NSStickerSharingLevel = OS;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "app.kurozora.tracker.stickers.kuro-chan";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		6647B7422BC0A6E3006BC91C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C5957B9810A82C1CFE580DE6 /* Pods-KurozoraWidgetExtension.debug.xcconfig */;
@@ -5091,7 +5206,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "KurozoraWidget/Supporting Files/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = KurozoraWidget;
+				INFOPLIST_KEY_CFBundleDisplayName = Kurozora;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Kurozora. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -5136,7 +5251,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "KurozoraWidget/Supporting Files/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = KurozoraWidget;
+				INFOPLIST_KEY_CFBundleDisplayName = Kurozora;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Kurozora. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -5354,6 +5469,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		662A3D3B2C92433F006F6EDD /* Build configuration list for PBXNativeTarget "KuroChan" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				662A3D382C92433F006F6EDD /* Debug */,
+				662A3D392C92433F006F6EDD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		6647B7442BC0A6E3006BC91C /* Build configuration list for PBXNativeTarget "KurozoraWidgetExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
