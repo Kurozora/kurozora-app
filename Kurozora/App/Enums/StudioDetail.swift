@@ -1,0 +1,297 @@
+//
+//  StudioDetail.swift
+//  Kurozora
+//
+//  Created by Khoren Katklian on 22/06/2020.
+//  Copyright © 2020 Kurozora. All rights reserved.
+//
+
+import UIKit
+import KurozoraKit
+
+enum StudioDetail {}
+
+// MARK: - Badge
+extension StudioDetail {
+	/// List of available studio badge types.
+	enum Badge: Int, CaseIterable {
+//		case rating = 0
+//		case rank
+		case tvRating
+		case successor
+
+		// MARK: - Properties
+		/// The string value of a badge type.
+		var stringValue: String {
+			switch self {
+//			case .rating:
+//				return Trans.rating
+//			case .rank:
+//				return Trans.rank
+			case .tvRating:
+				return Trans.tvRating
+			case .successor:
+				return Trans.successor
+			}
+		}
+
+		/// The cell identifier string of a studio information section.
+		var identifierString: String {
+			switch self {
+//			case .rating:
+//				return R.reuseIdentifier.ratingBadgeCollectionViewCell.identifier
+			default:
+				return R.reuseIdentifier.badgeCollectionViewCell.identifier
+			}
+		}
+
+		// MARK: - Functions
+		/// Returns the required primary information from the given object.
+		///
+		/// - Parameter studio: The object used to extract the infromation from.
+		///
+		/// - Returns: the required primary information from the given object.
+		func primaryInformation(from studio: Studio) -> String? {
+			switch self {
+//			case .rating:
+//				return nil
+//			case .rank:
+//				let rank = studio.attributes.stats?.rankTotal ?? 0
+//				return rank > 0 ? "#\(rank)" : "-"
+			case .tvRating:
+				return studio.attributes.tvRating.name
+			case .successor:
+				return studio.attributes.successor ?? "-"
+			}
+		}
+
+		/// Returns the required secondary information from the given object.
+		///
+		/// - Parameter studio: The object used to extract the infromation from.
+		///
+		/// - Returns: the required secondary information from the given object.
+		func secondaryInformation(from studio: Studio? = nil) -> String? {
+			switch self {
+//			case .rating:
+//				let ratingCount = studio?.attributes.stats?.ratingCount ?? 0
+//				return ratingCount != 0 ? "\(ratingCount.kkFormatted) Ratings" : "Not enough ratings"
+//			case .rank:
+//				return "Chart"
+			case .tvRating:
+				return "Rated"
+			case .successor:
+				return Trans.successor
+			}
+		}
+
+		/// Returns the required primary image from the given object.
+		///
+		/// - Parameter studio: The object used to extract the infromation from.
+		///
+		/// - Returns: the required primary image from the given object.
+		func primaryImage(from studio: Studio? = nil) -> UIImage? {
+			switch self {
+//			case .rating:
+//				return nil
+//			case .rank:
+//				return UIImage(systemName: "chart.bar.fill")
+			case .tvRating:
+				switch studio?.attributes.tvRating.name.lowercased() {
+				default:
+					return UIImage(systemName: "tv.fill")
+				}
+			case .successor:
+				return UIImage(systemName: "building.2.fill")
+			}
+		}
+	}
+}
+
+// MARK: - Information
+extension StudioDetail {
+	/// List of available studio information types.
+	enum Information: Int, CaseIterable {
+		// MARK: - Cases
+		/// The aliases of the studio.
+		case aliases = 0
+
+		/// The date in which the studio was founded.
+		case founded
+
+		/// The date in which the studio is defunct.
+		case defunct
+
+		/// The headquarters of the studio.
+		case headquarters
+
+		/// The rating of the studio.
+		case rating
+
+		/// The socials of the studio.
+		case socials
+
+		/// The website of the studio.
+		case websites
+
+		// MARK: - Properties
+		/// The string value of a studio information type.
+		var stringValue: String {
+			switch self {
+			case .aliases:
+				return Trans.aliases
+			case .founded:
+				return Trans.founded
+			case .defunct:
+				return Trans.defunct
+			case .headquarters:
+				return Trans.headquarters
+			case .rating:
+				return Trans.rating
+			case .socials:
+				return Trans.socials
+			case .websites:
+				return Trans.websites
+			}
+		}
+
+		/// The image value of a studio infomration type.
+		var imageValue: UIImage? {
+			switch self {
+			case .aliases:
+				return UIImage(systemName: "person")
+			case .founded:
+				return UIImage(systemName: "calendar")
+			case .defunct:
+				return UIImage(systemName: "calendar.badge.exclamationmark")
+			case .headquarters:
+				return UIImage(systemName: "building.2")
+			case .rating:
+				return R.image.symbols.pgTv()
+			case .socials:
+				return UIImage(systemName: "globe")
+			case .websites:
+				return UIImage(systemName: "safari")
+			}
+		}
+
+		/// The cell identifier string of a studio information type.
+		var identifierString: String {
+			switch self {
+			case .aliases:
+				return R.reuseIdentifier.informationCollectionViewCell.identifier
+			case .founded:
+				return R.reuseIdentifier.informationCollectionViewCell.identifier
+			case .defunct:
+				return R.reuseIdentifier.informationCollectionViewCell.identifier
+			case .headquarters:
+				return R.reuseIdentifier.informationCollectionViewCell.identifier
+			case .rating:
+				return R.reuseIdentifier.informationCollectionViewCell.identifier
+			case .socials:
+				return R.reuseIdentifier.informationCollectionViewCell.identifier
+			case .websites:
+				return R.reuseIdentifier.informationCollectionViewCell.identifier
+			}
+		}
+
+		// MARK: - Functions
+		/// Returns the required information from the given object.
+		///
+		/// - Parameter studio: The object used to extract the infromation from.
+		///
+		/// - Returns: the required information from the given object.
+		func information(from studio: Studio) -> String {
+			switch self {
+			case .aliases:
+				var aliases: String?
+
+				if let givenName = studio.attributes.japaneseName {
+					aliases = "Japanese: \(givenName)"
+				}
+
+				if let alternativeNames = studio.attributes.alternativeNames?.filter({ !$0.isEmpty }), !alternativeNames.isEmpty {
+					if let unwrappedAliases = aliases {
+						aliases = "\(unwrappedAliases)\nSynonyms: \(alternativeNames.joined(separator: ", "))"
+					} else {
+						aliases = "Synonyms: \(alternativeNames.joined(separator: ", "))"
+					}
+				}
+
+				return aliases ?? "-"
+			case .founded:
+				return studio.attributes.foundedAt?.formatted(date: .abbreviated, time: .omitted) ?? "-"
+			case .defunct:
+				return studio.attributes.defunctAt?.formatted(date: .abbreviated, time: .omitted) ?? "-"
+			case .headquarters:
+				return studio.attributes.address ?? "-"
+			case .rating:
+				return studio.attributes.tvRating.name
+			case .socials:
+				return studio.attributes.socialURLs?.joined(separator: ", ") ?? "-"
+			case .websites:
+				return studio.attributes.websiteURLs?.joined(separator: ", ") ?? "-"
+			}
+		}
+
+		/// Returns the required primary information from the given object.
+		///
+		/// - Parameter studio: The object used to extract the infromation from.
+		///
+		/// - Returns: the required primary information from the given object.
+		func primaryInformation(from studio: Studio) -> String? {
+			switch self {
+			default: return nil
+			}
+		}
+
+		/// Returns the required secondary information from the given object.
+		///
+		/// - Parameter studio: The object used to extract the infromation from.
+		///
+		/// - Returns: the required secondary information from the given object.
+		func secondaryInformation(from studio: Studio) -> String? {
+			switch self {
+			default: return nil
+			}
+		}
+
+		/// Returns the required primary image from the given object.
+		///
+		/// - Parameter studio: The object used to extract the infromation from.
+		///
+		/// - Returns: the required primary image from the given object.
+		func primaryImage(from studio: Studio) -> UIImage? {
+			switch self {
+			default: return nil
+			}
+		}
+
+		/// Returns the footnote from the given object.
+		///
+		/// - Parameter studio: The object used to extract the footnote from.
+		///
+		/// - Returns: the footnote from the given object.
+		func footnote(from studio: Studio) -> String? {
+			switch self {
+			case .founded:
+				guard let foundedAt = studio.attributes.foundedAt else { return nil }
+
+				let calendar = Calendar.current
+				guard let years = calendar.dateComponents([.year], from: foundedAt, to: .now).year else { return nil }
+				
+				return "The studio was founded \(years) years ago."
+			case .defunct:
+				guard let defunctAt = studio.attributes.defunctAt else { return nil }
+
+				let calendar = Calendar.current
+				guard let years = calendar.dateComponents([.year], from: defunctAt, to: .now).year else { return nil }
+
+				return "The studio has been defunct for \(years) years."
+			case .rating:
+				return studio.attributes.tvRating.description
+			default:
+				return nil
+			}
+		}
+	}
+}
