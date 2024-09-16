@@ -53,7 +53,7 @@ extension ShowDetailsCollectionViewController {
 				default: break
 				}
 				return showDetailHeaderCollectionViewCell
-			case .badge:
+			case .badges:
 				let showDetailBadge = ShowDetail.Badge(rawValue: indexPath.item) ?? .rating
 				let badgeCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: showDetailBadge.identifierString, for: indexPath) as? BadgeCollectionViewCell
 				switch itemKind {
@@ -168,7 +168,7 @@ extension ShowDetailsCollectionViewController {
 			case .header:
 				self.snapshot.appendSections([showDetailSection])
 				self.snapshot.appendItems([.show(self.show)], toSection: showDetailSection)
-			case .badge:
+			case .badges:
 				self.snapshot.appendSections([showDetailSection])
 				ShowDetail.Badge.allCases.forEach { showDetailBadge in
 					switch showDetailBadge {

@@ -11,7 +11,7 @@ import UIKit
 extension ShowDetailsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		switch self.snapshot.sectionIdentifiers[indexPath.section] {
-		case .badge:
+		case .badges:
 			guard let showDetailBadge = ShowDetail.Badge(rawValue: indexPath.item) else { return }
 			switch showDetailBadge {
 			case .rating:

@@ -215,15 +215,15 @@ extension ShowDetail {
 			case .themes:
 				return "Themes"
 			case .episodes:
-				return "Episodes"
+				return Trans.episodes
 			case .duration:
-				return "Duration"
+				return Trans.duration
 			case .broadcast:
 				return "Broadcast"
 			case .airDates:
-				return "Aired"
+				return Trans.aired
 			case .rating:
-				return "Rating"
+				return Trans.rating
 			case .languages:
 				return "Languages"
 //			case .studio:

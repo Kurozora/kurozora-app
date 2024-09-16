@@ -657,20 +657,50 @@ extension ShowDetailsCollectionViewController {
 		// MARK: - Cases
 		/// Indicates a header section layout type.
 		case header = 0
-		case badge
+
+		/// Indicates badges section layout type.
+		case badges
+
+		/// Indicates a synopsis section layout type.
 		case synopsis
+
+		/// Indicates rating section layout type.
 		case rating
+
+		/// Indicates rate and review section layout type.
 		case rateAndReview
+
+		/// Indicates reviews section layout type.
 		case reviews
+
+		/// Indicates information section layout type.
 		case information
+
+		/// Indicates seasons section layout type.
 		case seasons
+
+		/// Indicates cast section layout type.
 		case cast
+
+		/// Indicates songs section layout type.
 		case songs
+
+		/// Indicates studios section layout type.
 		case studios
+
+		/// Indicates more by studio section layout type.
 		case moreByStudio
+
+		/// Indicates related shows section layout type.
 		case relatedShows
+
+		/// Indicates related literatures section layout type.
 		case relatedLiteratures
+
+		/// Indicates related games section layout
 		case relatedGames
+
+		/// Indicates copyright section layout type
 		case sosumi
 
 		// MARK: - Properties
@@ -679,7 +709,7 @@ extension ShowDetailsCollectionViewController {
 			switch self {
 			case .header:
 				return Trans.header
-			case .badge:
+			case .badges:
 				return Trans.badges
 			case .synopsis:
 				return Trans.synopsis
@@ -717,7 +747,7 @@ extension ShowDetailsCollectionViewController {
 			switch self {
 			case .header:
 				return ""
-			case .badge:
+			case .badges:
 				return ""
 			case .synopsis:
 				return ""

@@ -17,7 +17,7 @@ extension ShowDetailsCollectionViewController {
 		switch self.snapshot.sectionIdentifiers[section] {
 		case .header, .synopsis, .sosumi:
 			return 1
-		case .badge:
+		case .badges:
 			return width > 414 ? ShowDetail.Badge.allCases.count : (width / 132).rounded().int
 		case .rating:
 			let columnCount = (width / 250).rounded().int
@@ -63,7 +63,7 @@ extension ShowDetailsCollectionViewController {
 		switch self.snapshot.sectionIdentifiers[section] {
 		case .header:
 			return .fractionalHeight(1.0)
-		case .badge:
+		case .badges:
 			return .estimated(50)
 		case .synopsis:
 			return .estimated(100)
@@ -95,17 +95,18 @@ extension ShowDetailsCollectionViewController {
 		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
 			guard self.show != nil else { return nil }
+			let showDetailSection = self.snapshot.sectionIdentifiers[section]
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 			var sectionLayout: NSCollectionLayoutSection? = nil
 			var hasSectionHeader = false
 			var hasBackgroundDecoration = false
 
-			switch self.snapshot.sectionIdentifiers[section] {
+			switch showDetailSection {
 			case .header:
 				let headerSection = self.headerSection(for: section, layoutEnvironment: layoutEnvironment)
 				sectionLayout = headerSection
-			case .badge:
-				let badgeSection = self.badgeSection(for: section, layoutEnvironment: layoutEnvironment)
+			case .badges:
+				let badgeSection = Layouts.badgeSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				sectionLayout = badgeSection
 			case .synopsis:
 				if let synopsis = self.show.attributes.synopsis, !synopsis.isEmpty {
@@ -209,32 +210,6 @@ extension ShowDetailsCollectionViewController {
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
 
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
-		return layoutSection
-	}
-
-	func badgeSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-		let width = layoutEnvironment.container.effectiveContentSize.width
-		var item: NSCollectionLayoutItem!
-		var layoutGroup: NSCollectionLayoutGroup!
-
-		if width > 828 {
-			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0))
-			item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0))
-			layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-		} else {
-			let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(100.0), heightDimension: .estimated(50.0))
-			let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-			let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(100.0), heightDimension: .estimated(50.0))
-			layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-		}
-
-		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-		layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
 		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
 		return layoutSection
 	}
