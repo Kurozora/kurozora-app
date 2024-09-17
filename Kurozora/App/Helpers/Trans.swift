@@ -992,6 +992,11 @@ struct Trans {
 	/// - Tag: Trans-notifications
 	static let notifications: String = String(localized: "Notifications",
 											  comment: "The string for the word 'notifications'.")
+	/// The string for the word 'stickers'.
+	///
+	/// - Tag: Trans-stickers
+	static let stickers: String = String(localized: "Stickers",
+										 comment: "The string for the word 'stickers'.")
 	/// The string for the word 'support us'.
 	///
 	/// - Tag: Trans-supportUs

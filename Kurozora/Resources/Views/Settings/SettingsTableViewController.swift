@@ -193,6 +193,16 @@ extension SettingsTableViewController {
 			})
 			return
 		case .privacy: break
+		case .signalSticker:
+			if let signalStickerURL = URL.signalStickerURL {
+				UIApplication.shared.open(signalStickerURL)
+			}
+			return
+		case .telegramSticker:
+			if let telegramStickerURL = URL.telegramStickerURL {
+				UIApplication.shared.open(telegramStickerURL)
+			}
+			return
 		case .rate:
 			if let rateURL = URL.rateURL {
 				UIApplication.shared.open(rateURL)

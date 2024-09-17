@@ -34,6 +34,9 @@ extension SettingsTableViewController {
 		/// The section representing the general group of cells.
 		case general
 
+		/// The section representing the stickers group of cells.
+		case stickers
+
 		/// The section representing the support group of cells.
 		case support
 
@@ -52,7 +55,7 @@ extension SettingsTableViewController {
 			sections.append(.debug)
 			#endif
 
-			sections.append(contentsOf: [.alerts, .general, .support, .social, .about])
+			sections.append(contentsOf: [.alerts, .general, .support, .stickers, .social, .about])
 			return sections
 		}
 
@@ -67,6 +70,8 @@ extension SettingsTableViewController {
 				return Row.allAlerts
 			case .general:
 				return Row.allGeneral
+			case .stickers:
+				return Row.allStickers
 			case .support:
 				return Row.allSupport
 			case .social:
@@ -87,6 +92,8 @@ extension SettingsTableViewController {
 				return Trans.alerts
 			case .general:
 				return Trans.general
+			case .stickers:
+				return Trans.stickers
 			case .support:
 				return Trans.supportUs
 			case .social:
@@ -139,6 +146,15 @@ extension SettingsTableViewController {
 		/// The row representing the privacy cell.
 		case privacy
 
+		/// The row representing the Signal sticker cell.
+		case signalSticker
+
+		/// The row representing the Telegram sticker cell.
+		case telegramSticker
+
+//		/// The row representing the WhatsApp sticker cell.
+//		case whatsAppSticker
+
 		/// The row representing the unlock features cell.
 		case unlockFeatures
 
@@ -171,10 +187,10 @@ extension SettingsTableViewController {
 
 		#if DEBUG
 		/// An array containing all settings rows.
-		static let all: [Row] = [.account, .switchAccount, .keychain, .notifications, .soundsAndHaptics, .reminder, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .unlockFeatures, .tipjar, .restoreFeatures, .rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter]
+		static let all: [Row] = [.account, .switchAccount, .keychain, .notifications, .soundsAndHaptics, .reminder, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .signalSticker, .telegramSticker, .unlockFeatures, .tipjar, .restoreFeatures, .rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter]
 		#else
 		/// An array containing all normal user settings rows.
-		static let all: [Row] = [.account, .switchAccount, .notifications, .soundsAndHaptics, .reminder, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .unlockFeatures, .tipjar, .restoreFeatures, .rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter]
+		static let all: [Row] = [.account, .switchAccount, .notifications, .soundsAndHaptics, .reminder, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .signalSticker, .telegramSticker, .unlockFeatures, .tipjar, .restoreFeatures, .rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter]
 		#endif
 
 		/// An array containing all account section settings rows.
@@ -198,6 +214,15 @@ extension SettingsTableViewController {
 			return [.displayBlindness, .theme, .biometrics, .cache, .privacy]
 			#else
 			return [.displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy]
+			#endif
+		}
+
+		/// An array containing all general section settings rows.
+		static var allStickers: [Row] {
+			#if targetEnvironment(macCatalyst)
+			return [.signalSticker, .telegramSticker]
+			#else
+			return [.signalSticker, .telegramSticker]
 			#endif
 		}
 
@@ -249,6 +274,12 @@ extension SettingsTableViewController {
 				return ""
 			case .privacy:
 				return R.segue.settingsTableViewController.privacySegue.identifier
+			case .signalSticker:
+				return ""
+			case .telegramSticker:
+				return ""
+//			case .whatsAppSticker:
+//				return ""
 			case .unlockFeatures:
 				return R.segue.settingsTableViewController.subscriptionSegue.identifier
 			case .tipjar:
@@ -301,6 +332,12 @@ extension SettingsTableViewController {
 				return .label
 			case .privacy:
 				return .chevron
+			case .signalSticker:
+				return .none
+			case .telegramSticker:
+				return .none
+//			case .whatsAppSticker:
+//				return .none
 			case .unlockFeatures:
 				return .chevron
 			case .tipjar:
@@ -366,6 +403,12 @@ extension SettingsTableViewController {
 				return Trans.cache
 			case .privacy:
 				return Trans.privacy
+			case .signalSticker:
+				return "Add Sticker to Signal"
+			case .telegramSticker:
+				return "Add Sticker to Telegram"
+//			case .whatsAppStickers:
+//				return "Add Sticker to WhatsApp"
 			case .unlockFeatures:
 				return Trans.unlockFeatures
 			case .tipjar:
@@ -435,6 +478,12 @@ extension SettingsTableViewController {
 				return R.image.icons.clearCache()
 			case .privacy:
 				return R.image.icons.privacy()
+			case .signalSticker:
+				return R.image.icons.kuroChanStickerSignal()
+			case .telegramSticker:
+				return R.image.icons.kuroChanStickerTelegram()
+//			case .whatsAppSticker:
+//				return R.image.icons.kuroChanStickerWhatsApp()
 			case .unlockFeatures:
 				return R.image.icons.unlock()
 			case .tipjar:
