@@ -15,8 +15,8 @@ enum StudioDetail {}
 extension StudioDetail {
 	/// List of available studio badge types.
 	enum Badge: Int, CaseIterable {
-//		case rating = 0
-//		case rank
+		case rating = 0
+		case rank
 		case tvRating
 		case successor
 
@@ -24,10 +24,10 @@ extension StudioDetail {
 		/// The string value of a badge type.
 		var stringValue: String {
 			switch self {
-//			case .rating:
-//				return Trans.rating
-//			case .rank:
-//				return Trans.rank
+			case .rating:
+				return Trans.rating
+			case .rank:
+				return Trans.rank
 			case .tvRating:
 				return Trans.tvRating
 			case .successor:
@@ -38,8 +38,8 @@ extension StudioDetail {
 		/// The cell identifier string of a studio information section.
 		var identifierString: String {
 			switch self {
-//			case .rating:
-//				return R.reuseIdentifier.ratingBadgeCollectionViewCell.identifier
+			case .rating:
+				return R.reuseIdentifier.ratingBadgeCollectionViewCell.identifier
 			default:
 				return R.reuseIdentifier.badgeCollectionViewCell.identifier
 			}
@@ -53,11 +53,11 @@ extension StudioDetail {
 		/// - Returns: the required primary information from the given object.
 		func primaryInformation(from studio: Studio) -> String? {
 			switch self {
-//			case .rating:
-//				return nil
-//			case .rank:
-//				let rank = studio.attributes.stats?.rankTotal ?? 0
-//				return rank > 0 ? "#\(rank)" : "-"
+			case .rating:
+				return nil
+			case .rank:
+				let rank = studio.attributes.stats?.rankTotal ?? 0
+				return rank > 0 ? "#\(rank)" : "-"
 			case .tvRating:
 				return studio.attributes.tvRating.name
 			case .successor:
@@ -72,11 +72,11 @@ extension StudioDetail {
 		/// - Returns: the required secondary information from the given object.
 		func secondaryInformation(from studio: Studio? = nil) -> String? {
 			switch self {
-//			case .rating:
-//				let ratingCount = studio?.attributes.stats?.ratingCount ?? 0
-//				return ratingCount != 0 ? "\(ratingCount.kkFormatted) Ratings" : "Not enough ratings"
-//			case .rank:
-//				return "Chart"
+			case .rating:
+				let ratingCount = studio?.attributes.stats?.ratingCount ?? 0
+				return ratingCount != 0 ? "\(ratingCount.kkFormatted) Ratings" : "Not enough ratings"
+			case .rank:
+				return "Chart"
 			case .tvRating:
 				return "Rated"
 			case .successor:
@@ -91,10 +91,10 @@ extension StudioDetail {
 		/// - Returns: the required primary image from the given object.
 		func primaryImage(from studio: Studio? = nil) -> UIImage? {
 			switch self {
-//			case .rating:
-//				return nil
-//			case .rank:
-//				return UIImage(systemName: "chart.bar.fill")
+			case .rating:
+				return nil
+			case .rank:
+				return UIImage(systemName: "chart.bar.fill")
 			case .tvRating:
 				switch studio?.attributes.tvRating.name.lowercased() {
 				default:
@@ -102,6 +102,49 @@ extension StudioDetail {
 				}
 			case .successor:
 				return UIImage(systemName: "building.2.fill")
+			}
+		}
+	}
+}
+
+// MARK: - Ratings
+extension StudioDetail {
+	/// List of available studio rating types.
+	enum Rating: Int, CaseIterable {
+		case average = 0
+		case sentiment
+		case bar
+
+		// MARK: - Properties
+		/// The cell identifier string of a studio rating section.
+		var identifierString: String {
+			switch self {
+			case .average:
+				return R.reuseIdentifier.ratingCollectionViewCell.identifier
+			case .sentiment:
+				return R.reuseIdentifier.ratingSentimentCollectionViewCell.identifier
+			case .bar:
+				return R.reuseIdentifier.ratingBarCollectionViewCell.identifier
+			}
+		}
+	}
+}
+
+// MARK: - Rating & Review
+extension StudioDetail {
+	/// List of available studio rate & review types.
+	enum RateAndReview: Int, CaseIterable {
+		case tapToRate = 0
+		case writeAReview
+
+		// MARK: - Properties
+		/// The cell identifier string of a studio rate & review section.
+		var identifierString: String {
+			switch self {
+			case .tapToRate:
+				return R.reuseIdentifier.tapToRateCollectionViewCell.identifier
+			case .writeAReview:
+				return R.reuseIdentifier.writeAReviewCollectionViewCell.identifier
 			}
 		}
 	}
