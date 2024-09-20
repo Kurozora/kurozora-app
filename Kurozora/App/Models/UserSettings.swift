@@ -62,7 +62,7 @@ extension UserSettings {
 
 	/// Returns a string indicating the currently used app icon.
 	static var appIcon: String {
-		let primaryIcon = "AppIcon60x60"
+		let primaryIcon = "Kurozora"
 		guard var appIcon = shared.string(forKey: #function) else { return primaryIcon }
 
 		if #available(iOS 18.0, *) {
