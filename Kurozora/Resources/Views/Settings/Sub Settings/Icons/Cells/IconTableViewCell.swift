@@ -55,7 +55,7 @@ class IconTableViewCell: SelectableSettingsCell {
 		self.iconImageView?.image = image
 		self.iconImageView?.preferredSymbolConfiguration = nil
 		self.iconImageView?.contentMode = .scaleAspectFit
-		self.iconImageView?.layerCornerRadius = 10.0
+		self.iconImageView?.layerCornerRadius = 12.0
 	}
 
 	func configureCell(using browser: KBrowser?) {
