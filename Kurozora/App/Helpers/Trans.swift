@@ -653,6 +653,18 @@ struct Trans {
 	static let requestRefund: String = String(localized: "Request Refund",
 											  table: "Settings",
 											  comment: "The string for the 'Request Refund' settings option.")
+	/// The string for the 'Add Sticker to Signal' settings option.
+	///
+	/// - Tag: Trans-addStickerToSignal
+	static let addStickerToSignal: String = String(localized: "Add Sticker to Signal",
+												   table: "Settings",
+												   comment: "The string for the 'Add Sticker to Signal' settings option.")
+	/// The string for the 'Add Sticker to Telegram' settings option.
+	///
+	/// - Tag: Trans-addStickerToTelegram
+	static let addStickerToTelegram: String = String(localized: "Add Sticker to Telegram",
+													 table: "Settings",
+													 comment: "The string for the 'Add Sticker to Telegram' settings option.")
 	/// The string for the 'Rate us on App Store' settings option.
 	///
 	/// - Tag: Trans-rateAppStore

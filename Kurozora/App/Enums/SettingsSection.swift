@@ -333,11 +333,11 @@ extension SettingsTableViewController {
 			case .privacy:
 				return .chevron
 			case .signalSticker:
-				return .none
+				return .chevron
 			case .telegramSticker:
-				return .none
+				return .chevron
 //			case .whatsAppSticker:
-//				return .none
+//				return .chevron
 			case .unlockFeatures:
 				return .chevron
 			case .tipjar:
@@ -404,9 +404,9 @@ extension SettingsTableViewController {
 			case .privacy:
 				return Trans.privacy
 			case .signalSticker:
-				return "Add Sticker to Signal"
+				return Trans.addStickerToSignal
 			case .telegramSticker:
-				return "Add Sticker to Telegram"
+				return Trans.addStickerToTelegram
 //			case .whatsAppStickers:
 //				return "Add Sticker to WhatsApp"
 			case .unlockFeatures:

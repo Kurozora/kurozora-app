@@ -321,7 +321,7 @@ extension StudioDetail {
 
 				let calendar = Calendar.current
 				guard let years = calendar.dateComponents([.year], from: foundedAt, to: .now).year else { return nil }
-				
+
 				return "The studio was founded \(years) years ago."
 			case .defunct:
 				guard let defunctAt = studio.attributes.defunctAt else { return nil }
