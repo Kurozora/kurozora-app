@@ -38,10 +38,10 @@ extension URL {
 	/// The Twitter page URL of Kurozora.
 	static let twitterPageURL = URL(string: "https://www.twitter.com/KurozoraApp")
 
-	/// The Signal sticker URL of Kuro-chan.
+	/// Kuro-chan's Signal sticker pack URL.
 	static let signalStickerURL = URL(string: "https://signal.art/addstickers/#pack_id=3fc173cd8f028c47523f1917f11c5925&pack_key=2d9508edc1568dc85cd67f3cd2c92e11a7499f800f264de223a56b6299a6c984")
 
-	/// The Telegram sticker URL of Kuro-chan.
+	/// Kuro-chan's Telegram sticker pack URL.
 	static let telegramStickerURL = URL(string: "https://t.me/addstickers/KuroChanVT")
 
 	// MARK: - Functions
