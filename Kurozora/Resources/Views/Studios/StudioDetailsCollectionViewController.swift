@@ -28,12 +28,18 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 		}
 	}
 
+	/// Review properties.
+	var reviews: [Review] = []
+
+	/// Show properties.
 	var shows: [IndexPath: Show] = [:]
 	var showIdentities: [ShowIdentity] = []
 
+	/// Literature properties.
 	var literatures: [IndexPath: Literature] = [:]
 	var literatureIdentities: [LiteratureIdentity] = []
 
+	/// Game properties.
 	var games: [IndexPath: Game] = [:]
 	var gameIdentities: [GameIdentity] = []
 
@@ -159,6 +165,15 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 		self.updateDataSource()
 	}
 
+	/// Show a success alert thanking the user for rating.
+	private func showRatingSuccessAlert() {
+		let alertController = UIApplication.topViewController?.presentAlertController(title: Trans.ratingSubmitted, message: Trans.thankYouForRating)
+
+		DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+			alertController?.dismiss(animated: true, completion: nil)
+		}
+	}
+
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
@@ -205,9 +220,9 @@ extension StudioDetailsCollectionViewController {
 // MARK: - InformationButtonCollectionViewCellDelegate
 extension StudioDetailsCollectionViewController: InformationButtonCollectionViewCellDelegate {
 	func informationButtonCollectionViewCell(_ cell: InformationButtonCollectionViewCell, didPressButton button: UIButton) {
-		guard cell.studioInformation == .website else { return }
-		guard let websiteURL = self.studio.attributes.websiteUrl?.url else { return }
-		UIApplication.shared.kOpen(websiteURL)
+		guard cell.studioInformation == .socials || cell.studioInformation == .websites else { return }
+//		guard let websiteURL = self.studio.attributes.websiteURLs?.url else { return }
+//		UIApplication.shared.kOpen(websiteURL)
 	}
 }
 
@@ -328,6 +343,65 @@ extension StudioDetailsCollectionViewController: BaseLockupCollectionViewCellDel
 	}
 }
 
+// MARK: - ReviewCollectionViewCellDelegate
+extension StudioDetailsCollectionViewController: ReviewCollectionViewCellDelegate {
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressUserName sender: AnyObject) {
+		guard let indexPath = collectionView.indexPath(for: cell) else { return }
+		self.reviews[indexPath.item].visitOriginalPosterProfile(from: self)
+	}
+
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) {
+		if let badgeViewController = R.storyboard.badge.instantiateInitialViewController() {
+			badgeViewController.profileBadge = profileBadge
+			badgeViewController.popoverPresentationController?.sourceView = button
+			badgeViewController.popoverPresentationController?.sourceRect = button.bounds
+
+			self.present(badgeViewController, animated: true, completion: nil)
+		}
+	}
+}
+
+// MARK: - TapToRateCollectionViewCellDelegate
+extension StudioDetailsCollectionViewController: TapToRateCollectionViewCellDelegate {
+	func tapToRateCollectionViewCell(_ cell: TapToRateCollectionViewCell, rateWith rating: Double) {
+		Task { [weak self] in
+			guard let self = self else { return }
+			let rating = await self.studio.rate(using: rating, description: nil)
+			cell.configure(using: rating)
+
+			if rating != nil {
+				self.showRatingSuccessAlert()
+			}
+		}
+	}
+}
+
+// MARK: - WriteAReviewCollectionViewCellDelegate
+extension StudioDetailsCollectionViewController: WriteAReviewCollectionViewCellDelegate {
+	func writeAReviewCollectionViewCell(_ cell: WriteAReviewCollectionViewCell, didPress button: UIButton) {
+		WorkflowController.shared.isSignedIn { [weak self] in
+			guard let self = self else { return }
+
+			let reviewTextEditorViewController = ReviewTextEditorViewController()
+			reviewTextEditorViewController.delegate = self
+			reviewTextEditorViewController.router?.dataStore?.kind = .studio(self.studio)
+			reviewTextEditorViewController.router?.dataStore?.rating = self.studio.attributes.library?.rating
+			reviewTextEditorViewController.router?.dataStore?.review = self.studio.attributes.library?.review
+
+			let navigationController = KNavigationController(rootViewController: reviewTextEditorViewController)
+			navigationController.presentationController?.delegate = reviewTextEditorViewController
+			self.present(navigationController, animated: true)
+		}
+	}
+}
+
+// MARK: - ReviewTextEditorViewControllerDelegate
+extension StudioDetailsCollectionViewController: ReviewTextEditorViewControllerDelegate {
+	func reviewTextEditorViewControllerDidSubmitReview() {
+		self.showRatingSuccessAlert()
+	}
+}
+
 extension StudioDetailsCollectionViewController {
 	enum SectionLayoutKind: Int, CaseIterable {
 		// MARK: - Cases
@@ -339,6 +413,15 @@ extension StudioDetailsCollectionViewController {
 
 		/// Indicates an about section layout type.
 		case about
+
+		/// Indicates rating section layout type.
+		case rating
+
+		/// Indicates rate and review section layout type.
+		case rateAndReview
+
+		/// Indicates reviews section layout type.
+		case reviews
 
 		/// Indicates an information section layout type.
 		case information
@@ -362,6 +445,12 @@ extension StudioDetailsCollectionViewController {
 				return Trans.badges
 			case .about:
 				return Trans.about
+			case .rating:
+				return Trans.ratingsAndReviews
+			case .rateAndReview:
+				return ""
+			case .reviews:
+				return ""
 			case .information:
 				return Trans.information
 			case .shows:
@@ -382,6 +471,12 @@ extension StudioDetailsCollectionViewController {
 				return ""
 			case .about:
 				return ""
+			case .rating:
+				return ""
+			case .rateAndReview:
+				return ""
+			case .reviews:
+				return ""
 			case .information:
 				return ""
 			case .shows:
@@ -400,6 +495,9 @@ extension StudioDetailsCollectionViewController {
 		/// Indicates the item kind contains a `Studio` object.
 		case studio(_: Studio, id: UUID = UUID())
 
+		/// Indicates the item kind contains a `Review` object.
+		case review(_: Review, id: UUID = UUID())
+
 		/// Indicates the item kind contains a `ShowIdentity` object.
 		case showIdentity(_: ShowIdentity, id: UUID = UUID())
 
@@ -414,6 +512,9 @@ extension StudioDetailsCollectionViewController {
 			switch self {
 			case .studio(let studio, let id):
 				hasher.combine(studio)
+				hasher.combine(id)
+			case .review(let review, let id):
+				hasher.combine(review)
 				hasher.combine(id)
 			case .showIdentity(let showIdentity, let id):
 				hasher.combine(showIdentity)
@@ -431,6 +532,8 @@ extension StudioDetailsCollectionViewController {
 			switch (lhs, rhs) {
 			case (.studio(let studio1, let id1), .studio(let studio2, let id2)):
 				return studio1 == studio2 && id1 == id2
+			case (.review(let review1, let id1), .review(let review2, let id2)):
+				return review1 == review2 && id1 == id2
 			case (.showIdentity(let showIdentity1, let id1), .showIdentity(let showIdentity2, let id2)):
 				return showIdentity1 == showIdentity2 && id1 == id2
 			case (.literatureIdentity(let literatureIdentity1, let id1), .literatureIdentity(let literatureIdentity2, let id2)):

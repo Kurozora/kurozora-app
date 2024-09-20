@@ -15,6 +15,12 @@ extension StudioDetailsCollectionViewController {
 			BadgeCollectionViewCell.self,
 			RatingBadgeCollectionViewCell.self,
 			TextViewCollectionViewCell.self,
+			RatingCollectionViewCell.self,
+			RatingSentimentCollectionViewCell.self,
+			RatingBarCollectionViewCell.self,
+			ReviewCollectionViewCell.self,
+			TapToRateCollectionViewCell.self,
+			WriteAReviewCollectionViewCell.self,
 			InformationCollectionViewCell.self,
 			InformationButtonCollectionViewCell.self
 		]
@@ -60,6 +66,50 @@ extension StudioDetailsCollectionViewController {
 				default: break
 				}
 				return textViewCollectionViewCell
+			case .rating:
+				let studioDetailRating = StudioDetail.Rating(rawValue: indexPath.item) ?? .average
+				let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: studioDetailRating.identifierString, for: indexPath)
+
+				switch itemKind {
+				case .studio(let studio, _):
+					if let stats = studio.attributes.stats {
+						switch studioDetailRating {
+						case .average:
+							(ratingCollectionViewCell as? RatingCollectionViewCell)?.configure(using: stats)
+						case .sentiment:
+							(ratingCollectionViewCell as? RatingSentimentCollectionViewCell)?.configure(using: stats)
+						case .bar:
+							(ratingCollectionViewCell as? RatingBarCollectionViewCell)?.configure(using: stats)
+						}
+					}
+				default: break
+				}
+				return ratingCollectionViewCell
+			case .rateAndReview:
+				let studioDetailRateAndReview = StudioDetail.RateAndReview(rawValue: indexPath.item) ?? .tapToRate
+				let rateAndReviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: studioDetailRateAndReview.identifierString, for: indexPath)
+
+				switch studioDetailRateAndReview {
+				case .tapToRate:
+					switch itemKind {
+					case .studio(let studio, _):
+						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.delegate = self
+						(rateAndReviewCollectionViewCell as? TapToRateCollectionViewCell)?.configure(using: studio.attributes.library?.rating)
+					default: break
+					}
+				case .writeAReview:
+					(rateAndReviewCollectionViewCell as? WriteAReviewCollectionViewCell)?.delegate = self
+				}
+				return rateAndReviewCollectionViewCell
+			case .reviews:
+				let reviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.reviewCollectionViewCell, for: indexPath)
+				switch itemKind {
+				case .review(let review, _):
+					reviewCollectionViewCell?.delegate = self
+					reviewCollectionViewCell?.configureCell(using: review)
+				default: break
+				}
+				return reviewCollectionViewCell
 			case .information:
 				let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.informationCollectionViewCell, for: indexPath)
 				switch itemKind {
@@ -109,6 +159,24 @@ extension StudioDetailsCollectionViewController {
 				if let about = self.studio.attributes.about, !about.isEmpty {
 					self.snapshot.appendSections([studioDetailSection])
 					self.snapshot.appendItems([.studio(self.studio)], toSection: studioDetailSection)
+				}
+			case .rating:
+				self.snapshot.appendSections([studioDetailSection])
+				StudioDetail.Rating.allCases.forEach { _ in
+					self.snapshot.appendItems([.studio(self.studio)], toSection: studioDetailSection)
+				}
+			case .rateAndReview:
+				self.snapshot.appendSections([studioDetailSection])
+				StudioDetail.RateAndReview.allCases.forEach { _ in
+					self.snapshot.appendItems([.studio(self.studio)], toSection: studioDetailSection)
+				}
+			case .reviews:
+				if !self.reviews.isEmpty {
+					self.snapshot.appendSections([studioDetailSection])
+					let reviewItems: [ItemKind] = self.reviews.map { review in
+						return .review(review)
+					}
+					self.snapshot.appendItems(reviewItems, toSection: studioDetailSection)
 				}
 			case .information:
 				self.snapshot.appendSections([studioDetailSection])

@@ -64,4 +64,32 @@ extension Studio {
 
 		viewController?.present(activityViewController, animated: true, completion: nil)
 	}
+
+	/// Rate the studio with the given rating.
+	///
+	/// - Parameters:
+	///    - rating: The rating given by the user.
+	///    - description: The review given by the user.
+	///
+	/// - Returns: the rating applied to the studio if rated successfully.
+	func rate(using rating: Double, description: String?) async -> Double? {
+		let studioIdentity = StudioIdentity(id: self.id)
+
+		do {
+			_ = try await KService.rateStudio(studioIdentity, with: rating, description: description).value
+
+			// Update current rating for the user.
+			self.attributes.library?.rating = rating
+
+			// Update review only if the user removes it explicitly.
+			if description != nil {
+				self.attributes.library?.review = description
+			}
+
+			return rating
+		} catch {
+			print(error.localizedDescription)
+			return nil
+		}
+	}
 }

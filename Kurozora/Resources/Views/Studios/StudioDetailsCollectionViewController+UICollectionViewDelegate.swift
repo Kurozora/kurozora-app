@@ -14,6 +14,14 @@ extension StudioDetailsCollectionViewController {
 		case .badges:
 			guard let studioDetailBadge = StudioDetail.Badge(rawValue: indexPath.item) else { return }
 			switch studioDetailBadge {
+			case .rating:
+				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.rating) else { return }
+				collectionView.safeScrollToItem(at: IndexPath(row: 0, section: sectionIndex), at: .centeredVertically, animated: true)
+				return
+			case .rank:
+				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }
+				collectionView.safeScrollToItem(at: IndexPath(row: StudioDetail.Information.rating.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
+				return
 			case .tvRating:
 				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }
 				collectionView.safeScrollToItem(at: IndexPath(row: StudioDetail.Information.rating.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
@@ -39,6 +47,8 @@ extension StudioDetailsCollectionViewController {
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
 		switch self.snapshot.sectionIdentifiers[indexPath.section] {
+		case .reviews:
+			return self.reviews[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .shows:
 			return self.shows[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .literatures:

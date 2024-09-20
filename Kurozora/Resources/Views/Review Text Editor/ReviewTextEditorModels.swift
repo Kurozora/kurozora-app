@@ -115,5 +115,6 @@ extension ReviewTextEditor {
 		case literature(_ literature: Literature)
 		case show(_ show: Show)
 		case song(_ song: Song)
+		case studio(_ studio: Studio)
 	}
 }

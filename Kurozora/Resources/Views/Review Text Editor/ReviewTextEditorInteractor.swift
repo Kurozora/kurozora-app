@@ -96,6 +96,9 @@ extension ReviewTextEditorInteractor: ReviewTextEditorBusinessLogic {
 		case .song(let song):
 			let rating = await song.rate(using: rating, description: self.review)
 			isSuccess = rating != nil
+		case .studio(let studio):
+			let rating = await studio.rate(using: rating, description: self.review)
+			isSuccess = rating != nil
 		case .none:
 			isSuccess = false
 			message = "No review kind was specified. Bad developer :O"
