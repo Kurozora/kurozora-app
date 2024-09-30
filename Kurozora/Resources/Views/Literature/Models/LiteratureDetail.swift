@@ -20,6 +20,7 @@ extension LiteratureDetail {
 		case rank
 		case tvRating
 		case studio
+		case country
 		case language
 
 		// MARK: - Properties
@@ -36,6 +37,8 @@ extension LiteratureDetail {
 				return Trans.tvRating
 			case .studio:
 				return Trans.studio
+			case .country:
+				return Trans.country
 			case .language:
 				return Trans.language
 			}
@@ -70,8 +73,10 @@ extension LiteratureDetail {
 				return literature.attributes.tvRating.name
 			case .studio:
 				return literature.attributes.studio ?? "-"
+			case .country:
+				return literature.attributes.countryOfOrigin?.code.uppercased() ?? "-"
 			case .language:
-				return literature.attributes.languages.first?.attributes.code.uppercased()
+				return literature.attributes.languages.first?.code.uppercased() ?? "-"
 			}
 		}
 
@@ -93,6 +98,8 @@ extension LiteratureDetail {
 				return "Rated"
 			case .studio:
 				return Trans.studio
+			case .country:
+				return Trans.country
 			case .language:
 				let languages = literature?.attributes.languages ?? []
 				switch languages.count - 1 {
@@ -135,6 +142,8 @@ extension LiteratureDetail {
 				}
 			case .studio:
 				return UIImage(systemName: "building.2.fill")
+			case .country:
+				return UIImage(systemName: "globe")
 			case .language:
 				return UIImage(systemName: "character.bubble.fill")
 			}
@@ -198,6 +207,7 @@ extension LiteratureDetail {
 		case publication
 		case publicationDates
 		case rating
+		case countryOfOrigin
 		case languages
 //		case studio
 //		case network
@@ -223,7 +233,9 @@ extension LiteratureDetail {
 			case .publicationDates:
 				return "Published"
 			case .rating:
-				return "Rating"
+				return Trans.rating
+			case .countryOfOrigin:
+				return "Country of Origin"
 			case .languages:
 				return "Languages"
 //			case .studio:
@@ -254,8 +266,10 @@ extension LiteratureDetail {
 				return UIImage(systemName: "calendar")
 			case .rating:
 				return R.image.symbols.pgTv()
-			case .languages:
+			case .countryOfOrigin:
 				return UIImage(systemName: "globe")
+			case .languages:
+				return UIImage(systemName: "charcater.bubble")
 //			case .studio:
 //				return UIImage(systemName: "building.2")
 //			case .network:
@@ -266,30 +280,8 @@ extension LiteratureDetail {
 		/// The cell identifier string of a literature information section.
 		var identifierString: String {
 			switch self {
-			case .type:
+			default:
 				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .source:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .genres:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .themes:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .chapters:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .duration:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .publication:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .publicationDates:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .rating:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .languages:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-//			case .studio:
-//				return R.reuseIdentifier.informationCollectionViewCell.identifier
-//			case .network:
-//				return R.reuseIdentifier.informationCollectionViewCell.identifier
 			}
 		}
 
@@ -324,9 +316,11 @@ extension LiteratureDetail {
 				return "🚀 \(startedAt)"
 			case .rating:
 				return literature.attributes.tvRating.name
+			case .countryOfOrigin:
+				return literature.attributes.countryOfOrigin?.name ?? "Unknown"
 			case .languages:
 				let languages = literature.attributes.languages.compactMap {
-					$0.attributes.name
+					$0.name
 				}
 				return languages.localizedJoined()
 //			case .studio:
@@ -406,14 +400,12 @@ extension LiteratureDetail {
 				return literature.attributes.type.description
 			case .source:
 				return literature.attributes.source.description
-			case .genres:
-				return nil
-			case .themes:
+			case .genres, .themes:
 				return nil
 			case .chapters:
-				let volumeCount = literature.attributes.volumeCount <= 1 ? "one" : "\(literature.attributes.volumeCount)"
-				let volumeString = literature.attributes.volumeCount > 1 ? "chapters" : "volume"
-				return "Across \(volumeCount) \(volumeString)."
+				let chapterCount = literature.attributes.volumeCount <= 1 ? "one" : "\(literature.attributes.volumeCount)"
+				let volumeString = literature.attributes.volumeCount > 1 ? "volumes" : "volume"
+				return "Across \(chapterCount) \(volumeString)."
 			case .duration:
 				return "With a total of \(literature.attributes.durationTotal)."
 			case .publication:
@@ -425,7 +417,7 @@ extension LiteratureDetail {
 				return literature.attributes.status.description
 			case .rating:
 				return literature.attributes.tvRating.description
-			case .languages:
+			case .countryOfOrigin, .languages:
 				return nil
 //			case .studio:
 //				if let studios = literature.relationships?.studios?.data, studios.count != 0 {

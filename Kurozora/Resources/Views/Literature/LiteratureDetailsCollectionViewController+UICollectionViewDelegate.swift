@@ -35,6 +35,10 @@ extension LiteratureDetailsCollectionViewController {
 				let indexPath = IndexPath(row: 0, section: sectionIndex)
 				self.performSegue(withIdentifier: R.segue.literatureDetailsCollectionViewController.literaturesListSegue.identifier, sender: indexPath)
 				return
+			case .country:
+				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }
+				collectionView.safeScrollToItem(at: IndexPath(row: LiteratureDetail.Information.countryOfOrigin.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
+				return
 			case .language:
 				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }
 				collectionView.safeScrollToItem(at: IndexPath(row: LiteratureDetail.Information.languages.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
