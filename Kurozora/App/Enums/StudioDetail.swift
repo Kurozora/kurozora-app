@@ -220,19 +220,9 @@ extension StudioDetail {
 		/// The cell identifier string of a studio information type.
 		var identifierString: String {
 			switch self {
-			case .aliases:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .founded:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .defunct:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .headquarters:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .rating:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .socials:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .websites:
+			case .socials, .websites:
+				return R.reuseIdentifier.informationButtonCollectionViewCell.identifier
+			default:
 				return R.reuseIdentifier.informationCollectionViewCell.identifier
 			}
 		}
@@ -270,9 +260,9 @@ extension StudioDetail {
 			case .rating:
 				return studio.attributes.tvRating.name
 			case .socials:
-				return studio.attributes.socialURLs?.joined(separator: ", ") ?? "-"
+				return studio.attributes.socialURLs?.joined(separator: "\n") ?? "-"
 			case .websites:
-				return studio.attributes.websiteURLs?.joined(separator: ", ") ?? "-"
+				return studio.attributes.websiteURLs?.joined(separator: "\n") ?? "-"
 			}
 		}
 
@@ -282,9 +272,7 @@ extension StudioDetail {
 		///
 		/// - Returns: the required primary information from the given object.
 		func primaryInformation(from studio: Studio) -> String? {
-			switch self {
-			default: return nil
-			}
+			return nil
 		}
 
 		/// Returns the required secondary information from the given object.
@@ -293,9 +281,7 @@ extension StudioDetail {
 		///
 		/// - Returns: the required secondary information from the given object.
 		func secondaryInformation(from studio: Studio) -> String? {
-			switch self {
-			default: return nil
-			}
+			return nil
 		}
 
 		/// Returns the required primary image from the given object.
@@ -304,9 +290,7 @@ extension StudioDetail {
 		///
 		/// - Returns: the required primary image from the given object.
 		func primaryImage(from studio: Studio) -> UIImage? {
-			switch self {
-			default: return nil
-			}
+			return nil
 		}
 
 		/// Returns the footnote from the given object.

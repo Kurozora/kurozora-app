@@ -134,9 +134,21 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 	func fetchDetails() async {
 		guard let studioIdentity = self.studioIdentity else { return }
 
+		if self.studio == nil {
+			do {
+				let studioResponse = try await KService.getDetails(forStudio: studioIdentity).value
+				self.studio = studioResponse.data.first
+			} catch {
+				print(error.localizedDescription)
+			}
+		} else {
+			self.updateDataSource()
+		}
+
 		do {
-			let studioResponse = try await KService.getDetails(forStudio: studioIdentity).value
-			self.studio = studioResponse.data.first
+			let reviewIdentityResponse = try await KService.getReviews(forStudio: studioIdentity, next: nil, limit: 10).value
+			self.reviews = reviewIdentityResponse.data
+			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -144,6 +156,7 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 		do {
 			let showIdentityResponse = try await KService.getShows(forStudio: studioIdentity, limit: 10).value
 			self.showIdentities = showIdentityResponse.data
+			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -151,6 +164,7 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 		do {
 			let literatureIdentityResponse = try await KService.getLiteratures(forStudio: studioIdentity, limit: 10).value
 			self.literatureIdentities = literatureIdentityResponse.data
+			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -158,11 +172,10 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 		do {
 			let gameIdentityResponse = try await KService.getGames(forStudio: studioIdentity, limit: 10).value
 			self.gameIdentities = gameIdentityResponse.data
+			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
 		}
-
-		self.updateDataSource()
 	}
 
 	/// Show a success alert thanking the user for rating.
