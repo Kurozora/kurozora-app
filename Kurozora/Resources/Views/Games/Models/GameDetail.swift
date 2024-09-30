@@ -20,6 +20,7 @@ extension GameDetail {
 		case rank
 		case tvRating
 		case studio
+		case country
 		case language
 
 		// MARK: - Properties
@@ -36,6 +37,8 @@ extension GameDetail {
 				return Trans.tvRating
 			case .studio:
 				return Trans.studio
+			case .country:
+				return Trans.country
 			case .language:
 				return Trans.language
 			}
@@ -70,8 +73,10 @@ extension GameDetail {
 				return game.attributes.tvRating.name
 			case .studio:
 				return game.attributes.studio ?? "-"
+			case .country:
+				return game.attributes.countryOfOrigin?.code.uppercased() ?? "-"
 			case .language:
-				return game.attributes.languages.first?.attributes.code.uppercased()
+				return game.attributes.languages.first?.code.uppercased() ?? "-"
 			}
 		}
 
@@ -93,6 +98,8 @@ extension GameDetail {
 				return "Rated"
 			case .studio:
 				return Trans.studio
+			case .country:
+				return Trans.country
 			case .language:
 				let languages = game?.attributes.languages ?? []
 				switch languages.count - 1 {
@@ -135,6 +142,8 @@ extension GameDetail {
 				}
 			case .studio:
 				return UIImage(systemName: "building.2.fill")
+			case .country:
+				return UIImage(systemName: "globe")
 			case .language:
 				return UIImage(systemName: "character.bubble.fill")
 			}
@@ -198,6 +207,7 @@ extension GameDetail {
 		case publication
 		case publicationDates
 		case rating
+		case countryOfOrigin
 		case languages
 //		case studio
 //		case network
@@ -224,6 +234,8 @@ extension GameDetail {
 				return "Published"
 			case .rating:
 				return "Rating"
+			case .countryOfOrigin:
+				return "Country of Origin"
 			case .languages:
 				return "Languages"
 //			case .studio:
@@ -254,8 +266,10 @@ extension GameDetail {
 				return UIImage(systemName: "calendar")
 			case .rating:
 				return R.image.symbols.pgTv()
-			case .languages:
+			case .countryOfOrigin:
 				return UIImage(systemName: "globe")
+			case .languages:
+				return UIImage(systemName: "character.bubble")
 //			case .studio:
 //				return UIImage(systemName: "building.2")
 //			case .network:
@@ -266,25 +280,7 @@ extension GameDetail {
 		/// The cell identifier string of a game information section.
 		var identifierString: String {
 			switch self {
-			case .type:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .source:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .genres:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .themes:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .editions:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .duration:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .publication:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .publicationDates:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .rating:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .languages:
+			default:
 				return R.reuseIdentifier.informationCollectionViewCell.identifier
 //			case .studio:
 //				return R.reuseIdentifier.informationCollectionViewCell.identifier
@@ -324,9 +320,11 @@ extension GameDetail {
 				return "🚀 \(startedAt)"
 			case .rating:
 				return game.attributes.tvRating.name
+			case .countryOfOrigin:
+				return game.attributes.countryOfOrigin?.name ?? "Unknown"
 			case .languages:
 				let languages = game.attributes.languages.compactMap {
-					$0.attributes.name
+					$0.name
 				}
 				return languages.localizedJoined()
 //			case .studio:
@@ -406,9 +404,7 @@ extension GameDetail {
 				return game.attributes.type.description
 			case .source:
 				return game.attributes.source.description
-			case .genres:
-				return nil
-			case .themes:
+			case .genres, .themes:
 				return nil
 			case .editions:
 				let editionCount = game.attributes.editionCount <= 1 ? "one" : "\(game.attributes.editionCount)"
@@ -425,7 +421,7 @@ extension GameDetail {
 				return game.attributes.status.description
 			case .rating:
 				return game.attributes.tvRating.description
-			case .languages:
+			case .countryOfOrigin, .languages:
 				return nil
 //			case .studio:
 //				if let studios = game.relationships?.studios?.data, studios.count != 0 {

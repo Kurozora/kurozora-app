@@ -35,6 +35,10 @@ extension GameDetailsCollectionViewController {
 				let indexPath = IndexPath(row: 0, section: sectionIndex)
 				self.performSegue(withIdentifier: R.segue.gameDetailsCollectionViewController.gamesListSegue.identifier, sender: indexPath)
 				return
+			case .country:
+				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }
+				collectionView.safeScrollToItem(at: IndexPath(row: GameDetail.Information.countryOfOrigin.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
+				return
 			case .language:
 				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }
 				collectionView.safeScrollToItem(at: IndexPath(row: GameDetail.Information.languages.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)

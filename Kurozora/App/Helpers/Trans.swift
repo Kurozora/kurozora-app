@@ -1234,6 +1234,11 @@ struct Trans {
 	/// - Tag: Trans-language
 	static let language: String = String(localized: "Languages",
 										 comment: "The string for the word 'language'.")
+	/// The string for the word 'country'.
+	///
+	/// - Tag: Trans-country
+	static let country: String = String(localized: "Country",
+										 comment: "The string for the word 'country'.")
 	/// The string for the word 'tv rating'.
 	///
 	/// - Tag: Trans-tvRating
