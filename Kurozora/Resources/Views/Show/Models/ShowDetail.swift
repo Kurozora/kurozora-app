@@ -20,6 +20,7 @@ extension ShowDetail {
 		case rank
 		case tvRating
 		case studio
+		case country
 		case language
 
 		// MARK: - Properties
@@ -36,6 +37,8 @@ extension ShowDetail {
 				return Trans.tvRating
 			case .studio:
 				return Trans.studio
+			case .country:
+				return Trans.country
 			case .language:
 				return Trans.language
 			}
@@ -70,8 +73,10 @@ extension ShowDetail {
 				return show.attributes.tvRating.name
 			case .studio:
 				return show.attributes.studio ?? "-"
+			case .country:
+				return show.attributes.countryOfOrigin?.code.uppercased() ?? "-"
 			case .language:
-				return show.attributes.languages.first?.attributes.code.uppercased()
+				return show.attributes.languages.first?.code.uppercased() ?? "-"
 			}
 		}
 
@@ -86,13 +91,15 @@ extension ShowDetail {
 				let ratingCount = show?.attributes.stats?.ratingCount ?? 0
 				return ratingCount != 0 ? "\(ratingCount.kkFormatted) Ratings" : "Not enough ratings"
 			case .season:
-				return "Season"
+				return Trans.season
 			case .rank:
 				return "Chart" // e.g. Thriller — show.attributes.popularity.genre
 			case .tvRating:
 				return "Rated"
 			case .studio:
-				return "Studio"
+				return Trans.studio
+			case .country:
+				return Trans.country
 			case .language:
 				let languages = show?.attributes.languages ?? []
 				switch languages.count - 1 {
@@ -135,6 +142,8 @@ extension ShowDetail {
 				}
 			case .studio:
 				return UIImage(systemName: "building.2.fill")
+			case .country:
+				return UIImage(systemName: "globe")
 			case .language:
 				return UIImage(systemName: "character.bubble.fill")
 			}
@@ -198,6 +207,7 @@ extension ShowDetail {
 		case broadcast
 		case airDates
 		case rating
+		case countryOfOrigin
 		case languages
 //		case studio
 //		case network
@@ -224,6 +234,8 @@ extension ShowDetail {
 				return Trans.aired
 			case .rating:
 				return Trans.rating
+			case .countryOfOrigin:
+				return "Country of Origin"
 			case .languages:
 				return "Languages"
 //			case .studio:
@@ -254,8 +266,10 @@ extension ShowDetail {
 				return UIImage(systemName: "calendar")
 			case .rating:
 				return R.image.symbols.pgTv()
-			case .languages:
+			case .countryOfOrigin:
 				return UIImage(systemName: "globe")
+			case .languages:
+				return UIImage(systemName: "character.bubble")
 //			case .studio:
 //				return UIImage(systemName: "building.2")
 //			case .network:
@@ -266,25 +280,7 @@ extension ShowDetail {
 		/// The cell identifier string of a show information section.
 		var identifierString: String {
 			switch self {
-			case .type:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .source:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .genres:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .themes:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .episodes:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .duration:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .broadcast:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .airDates:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .rating:
-				return R.reuseIdentifier.informationCollectionViewCell.identifier
-			case .languages:
+			default:
 				return R.reuseIdentifier.informationCollectionViewCell.identifier
 //			case .studio:
 //				return R.reuseIdentifier.informationCollectionViewCell.identifier
@@ -324,9 +320,11 @@ extension ShowDetail {
 				return "🚀 \(startedAt)"
 			case .rating:
 				return show.attributes.tvRating.name
+			case .countryOfOrigin:
+				return show.attributes.countryOfOrigin?.name ?? "Unknown"
 			case .languages:
 				let languages = show.attributes.languages.compactMap {
-					$0.attributes.name
+					$0.name
 				}
 				return languages.localizedJoined()
 //			case .studio:
@@ -406,14 +404,12 @@ extension ShowDetail {
 				return show.attributes.type.description
 			case .source:
 				return show.attributes.source.description
-			case .genres:
-				return nil
-			case .themes:
+			case .genres, .themes:
 				return nil
 			case .episodes:
-				let episodeCount = show.attributes.seasonCount <= 1 ? "one" : "\(show.attributes.seasonCount)"
-				let seasonString = show.attributes.seasonCount > 1 ? "seasons" : "season"
-				return "Across \(episodeCount) \(seasonString)."
+				let seasonCount = show.attributes.seasonCount <= 1 ? "one" : "\(show.attributes.seasonCount)"
+				let seasonString = show.attributes.seasonCount > 1 ? Trans.seasons : Trans.season
+				return "Across \(seasonCount) \(seasonString.lowercased())."
 			case .duration:
 				return "With a total of \(show.attributes.durationTotal)."
 			case .broadcast:
@@ -425,7 +421,7 @@ extension ShowDetail {
 				return show.attributes.status.description
 			case .rating:
 				return show.attributes.tvRating.description
-			case .languages:
+			case .countryOfOrigin, .languages:
 				return nil
 //			case .studio:
 //				if let studios = show.relationships?.studios?.data, studios.count != 0 {
