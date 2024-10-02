@@ -120,6 +120,26 @@ struct Trans {
 	static let forgotPasswordErrorAlertSubheadline: String = String(localized: "Please type a valid Kurozora Account 😣",
 																	comment: "The subheadline string for resetting password alert.")
 
+	// MARK: - Library Delete
+	/// The headline string for the Library Delete view.
+	///
+	/// - Tag: Trans-libraryDeleteHeadline
+	static let libraryDeleteHeadline: String = String(localized: "Delete Library",
+													  table: "Services",
+													  comment: "The headline string for the Library Delete view")
+	/// The subheadline string for the Library Delete view.
+	///
+	/// - Tag: Trans-libraryDeleteSubheadline
+	static let libraryDeleteSubheadline: String = String(localized: "Permanently delete your library.",
+														 table: "Services",
+														 comment: "The subheadline string for the Library Delete view.")
+	/// The footer string for the Library Delete view.
+	///
+	/// - Tag: Trans-libraryDeleteFooter
+	static let libraryDeleteFooter: String = String(localized: "Once your library is deleted, all of its resources and data will be permanently deleted. This includes ratings, favorites, reminders, watched episodes, and You will be asked for your password to confirm the deletion.",
+													table: "Services",
+													comment: "The footer string for the Library Delete view.")
+
 	// MARK: - Library Import
 	/// The headline string for the Library Import view.
 	///

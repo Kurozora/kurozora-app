@@ -12,6 +12,9 @@ import SwiftTheme
 /// The set of available service types.
 enum ServiceType {
 	// MARK: - Cases
+	/// Used to display information related to deleting a library.
+	case libraryDelete
+
 	/// Used to display information related to importing from other services.
 	case libraryImport
 
@@ -34,6 +37,8 @@ enum ServiceType {
 	/// The headline string value of a service type.
 	var headlineStringValue: String {
 		switch self {
+		case .libraryDelete:
+			return Trans.libraryDeleteHeadline
 		case .libraryImport:
 			return Trans.libraryImportHeadline
 		case .redeem:
@@ -48,6 +53,8 @@ enum ServiceType {
 	/// The subhead string value of a service type.
 	var subheadStringValue: String {
 		switch self {
+		case .libraryDelete:
+			return Trans.libraryDeleteSubheadline
 		case .libraryImport:
 			return Trans.libraryImportSubheadline
 		case .redeem:
@@ -62,6 +69,8 @@ enum ServiceType {
 	/// The footer string value of a service type.
 	var footerStringValue: String {
 		switch self {
+		case .libraryDelete:
+			return Trans.libraryDeleteFooter
 		case .libraryImport:
 			return Trans.libraryImportFooter
 		case .redeem:

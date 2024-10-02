@@ -171,7 +171,7 @@ extension AccountTableViewController {
 					}
 				})
 			case 1:
-				let alertController = self.presentAlertController(title: "Delete Account", message: "Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account. ", defaultActionButtonTitle: Trans.cancel)
+				let alertController = self.presentAlertController(title: "Delete Account", message: "Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.", defaultActionButtonTitle: Trans.cancel)
 				alertController.addTextField { textField in
 					textField.textType = .password
 					textField.placeholder = Trans.password
@@ -227,10 +227,13 @@ extension AccountTableViewController {
 		/// The section for account settings.
 		case account
 
+		/// The section for library settings.
+		case library
+
 		/// The section for Sign in with Apple.
 		case signInWithApple
 
-		/// The section for the session view..
+		/// The section for the session view.
 		case session
 
 		/// The section for dangerous actions.
@@ -246,6 +249,8 @@ extension AccountTableViewController {
 		case timezone
 		/// The row for the import library settings.
 		case importLibrary
+		/// The row for the delete library settings.
+		case deleteLibrary
 		/// The row for the Sign in with Apple settings.
 		case signInWithApple
 		/// The row for the sign out settings.

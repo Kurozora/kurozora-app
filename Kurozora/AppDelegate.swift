@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Override point for customization after application launch.
 		store = Store()
 
-		// Configure kyrboard
+		// Configure keyboard
 		IQKeyboardManager.shared.enable = true
 		IQKeyboardManager.shared.resignOnTouchOutside = true
 

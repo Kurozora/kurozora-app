@@ -89,6 +89,8 @@
 		661D646C25C387EA00822D01 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661D646B25C387EA00822D01 /* MenuController.swift */; };
 		661DBC4F234947D7009292DF /* SKProduct+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DBC4E234947D7009292DF /* SKProduct+Kurozora.swift */; };
 		661DBC51234A4E00009292DF /* TipJarCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DBC50234A4E00009292DF /* TipJarCollectionViewController.swift */; };
+		661F07802CADED4F00DD8744 /* LibraryDeleteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661F077F2CADED4F00DD8744 /* LibraryDeleteTableViewController.swift */; };
+		661F07822CADEDD100DD8744 /* KKLibrary+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661F07812CADEDD100DD8744 /* KKLibrary+Kurozora.swift */; };
 		661F184524A5594C00542AFB /* KCopyableTintedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661F184424A5594C00542AFB /* KCopyableTintedLabel.swift */; };
 		661F185E24AAA03700542AFB /* SectionBackgroundDecorationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661F185C24AA9F6700542AFB /* SectionBackgroundDecorationView.swift */; };
 		661F186024AB5C6F00542AFB /* SosumiCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 661F185F24AB5C6E00542AFB /* SosumiCollectionViewCell.xib */; };
@@ -871,6 +873,8 @@
 		661D646B25C387EA00822D01 /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 		661DBC4E234947D7009292DF /* SKProduct+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKProduct+Kurozora.swift"; sourceTree = "<group>"; };
 		661DBC50234A4E00009292DF /* TipJarCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipJarCollectionViewController.swift; sourceTree = "<group>"; };
+		661F077F2CADED4F00DD8744 /* LibraryDeleteTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryDeleteTableViewController.swift; sourceTree = "<group>"; };
+		661F07812CADEDD100DD8744 /* KKLibrary+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KKLibrary+Kurozora.swift"; sourceTree = "<group>"; };
 		661F184424A5594C00542AFB /* KCopyableTintedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCopyableTintedLabel.swift; sourceTree = "<group>"; };
 		661F185C24AA9F6700542AFB /* SectionBackgroundDecorationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionBackgroundDecorationView.swift; sourceTree = "<group>"; };
 		661F185F24AB5C6E00542AFB /* SosumiCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SosumiCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -1895,6 +1899,14 @@
 				66D17C802B65BA0700373D3D /* ReCapCollectionViewController+UICollectionViewDelegate.swift */,
 			);
 			path = ReCap;
+			sourceTree = "<group>";
+		};
+		661F077E2CADED2500DD8744 /* Library Delete */ = {
+			isa = PBXGroup;
+			children = (
+				661F077F2CADED4F00DD8744 /* LibraryDeleteTableViewController.swift */,
+			);
+			path = "Library Delete";
 			sourceTree = "<group>";
 		};
 		661F9F872087383500CF4153 /* Onboarding */ = {
@@ -3107,6 +3119,7 @@
 		66B4DBEC2450E5470097135A /* Sub Settings */ = {
 			isa = PBXGroup;
 			children = (
+				661F077E2CADED2500DD8744 /* Library Delete */,
 				66B4DBF32450EF2C0097135A /* Library Import */,
 				66B4DBF42450EF3E0097135A /* Manage Active Sessions */,
 				66B4DBED2450E55E0097135A /* Sign in with Apple */,
@@ -3985,6 +3998,7 @@
 			isa = PBXGroup;
 			children = (
 				6697DB2225744B9A0054FEFD /* Global+Kurozora.swift */,
+				661F07812CADEDD100DD8744 /* KKLibrary+Kurozora.swift */,
 				6632C3E82985612C00702F7C /* LibraryImportBehavior+Kurozora.swift */,
 				6632C3E62985611700702F7C /* LibraryImportService+Kurozora.swift */,
 				66DF091726C94A47005AED93 /* StoreKit+Kurozora.swift */,
@@ -4865,6 +4879,7 @@
 				66C4DADD243BE4AA00C4B90A /* KKLibraryStatus+Kurozora.swift in Sources */,
 				66E1215429AFEE0C0051C4ED /* GameDetailsCollectionViewController+UICollectionViewDelegate.swift in Sources */,
 				66B2C73D232D0F350042AB12 /* PostType.swift in Sources */,
+				661F07802CADED4F00DD8744 /* LibraryDeleteTableViewController.swift in Sources */,
 				6632C3E529834AB400702F7C /* SelectTableViewCell.swift in Sources */,
 				66EAB5C02859209100D81C06 /* UsersListCollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				66856E882931AF730083160D /* SongDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
@@ -4932,6 +4947,7 @@
 				6632C43E298B0CC200702F7C /* LiteratureDetailsCollectionViewController+TouchBar.swift in Sources */,
 				660E3A0325E5D40100A46EB0 /* CastListCollectionViewController+UICollectionViewDelegate.swift in Sources */,
 				6640E19D22AE895A00D0F575 /* AuthenticationInterval.swift in Sources */,
+				661F07822CADEDD100DD8744 /* KKLibrary+Kurozora.swift in Sources */,
 				66593123259CE689006732C8 /* TouchBar+Kurozora.swift in Sources */,
 				660E39DB25E4451300A46EB0 /* NotificationsViewController+UITableViewDelegate.swift in Sources */,
 				66CAE6852337CFB000991E59 /* OnboardingTextFieldTableViewCell.swift in Sources */,
