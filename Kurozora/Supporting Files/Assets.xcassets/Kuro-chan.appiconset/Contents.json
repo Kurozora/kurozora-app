@@ -1,7 +1,31 @@
 {
   "images" : [
     {
-      "filename" : "Kuro-chan.png",
+      "filename" : "Kuro-chan Halloween Light.png",
+      "idiom" : "universal",
+      "platform" : "ios",
+      "size" : "1024x1024"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "Kuro-chan Halloween Dark.png",
+      "idiom" : "universal",
+      "platform" : "ios",
+      "size" : "1024x1024"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "tinted"
+        }
+      ],
+      "filename" : "Kuro-chan Halloween Tinted.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"

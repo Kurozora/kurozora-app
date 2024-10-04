@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "John 1.png",
+      "filename" : "John.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -13,7 +13,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "John.png",
+      "filename" : "John Dark.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
