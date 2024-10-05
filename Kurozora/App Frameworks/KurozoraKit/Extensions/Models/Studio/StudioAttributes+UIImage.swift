@@ -82,7 +82,8 @@ extension Studio.Attributes {
 	///
 	/// - Parameter imageView: The image view on which to set the banner image.
 	func bannerImage(imageView: UIImageView) {
-		imageView.setImage(with: self.banner?.url ?? "", placeholder: self.bannerPlaceholderImage)
+		let imageURL = self.banner?.url ?? self.profile?.url ?? self.logo?.url ?? ""
+		imageView.setImage(with: imageURL, placeholder: self.bannerPlaceholderImage)
 	}
 
 	/// Set the current signed in studio's banner image.
