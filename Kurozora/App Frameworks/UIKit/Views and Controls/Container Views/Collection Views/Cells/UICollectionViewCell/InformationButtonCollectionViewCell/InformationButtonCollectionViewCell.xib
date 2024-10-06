@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,75 +12,150 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="InformationButtonCollectionViewCell" id="q4Q-Pg-HCx" customClass="InformationButtonCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="374" height="42"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="InformationButtonCollectionViewCell" id="Tft-xn-11b" customClass="InformationButtonCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="300" height="241"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="6Ab-Ah-A1l">
-                <rect key="frame" x="0.0" y="0.0" width="374" height="42"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="XQE-xz-1uN">
+                <rect key="frame" x="0.0" y="0.0" width="300" height="241"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Studio Website" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l0b-aR-vVP" customClass="KTintedLabel" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="342" height="34"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ziB-OA-DCD">
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="58.5"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5OJ-4K-nXR">
+                                <rect key="frame" x="8" y="8" width="284" height="22"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eoc-mg-9RO">
+                                        <rect key="frame" x="0.0" y="0.5" width="22" height="23"/>
+                                        <color key="tintColor" systemColor="secondaryLabelColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="22" id="ILh-gJ-cii"/>
+                                            <constraint firstAttribute="height" constant="22" id="aYW-AZ-cRA"/>
+                                        </constraints>
+                                        <imageReference key="image" image="tv.and.mediabox" catalog="system"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PXZ-j2-Mi2" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="30" y="0.0" width="35" height="22"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                        <color key="textColor" systemColor="secondaryLabelColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="eoc-mg-9RO" secondAttribute="bottom" id="9Od-Ox-X1n"/>
+                                    <constraint firstItem="eoc-mg-9RO" firstAttribute="leading" secondItem="5OJ-4K-nXR" secondAttribute="leading" id="TOy-jK-1a9"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="PXZ-j2-Mi2" secondAttribute="trailing" id="eaO-gb-ji8"/>
+                                    <constraint firstItem="eoc-mg-9RO" firstAttribute="top" secondItem="5OJ-4K-nXR" secondAttribute="top" id="h0P-7W-4jc"/>
+                                    <constraint firstItem="PXZ-j2-Mi2" firstAttribute="top" secondItem="5OJ-4K-nXR" secondAttribute="top" id="pQ0-G5-MNK"/>
+                                    <constraint firstAttribute="bottom" secondItem="PXZ-j2-Mi2" secondAttribute="bottom" id="ucW-g2-LLc"/>
+                                    <constraint firstItem="PXZ-j2-Mi2" firstAttribute="leading" secondItem="eoc-mg-9RO" secondAttribute="trailing" constant="8" symbolic="YES" id="xmv-YR-ayh"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hqv-xf-ey4" customClass="KTappableLabel" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="8" y="38" width="41" height="20.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <constraints>
-                            <constraint firstAttribute="height" constant="34" id="0Pj-xV-20q"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                        <color key="textColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="safari" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="eei-jo-YZh">
-                        <rect key="frame" x="350" y="5.5" width="24" height="23"/>
-                        <constraints>
-                            <constraint firstAttribute="width" secondItem="eei-jo-YZh" secondAttribute="height" multiplier="1:1" id="Oyr-9e-nln"/>
-                            <constraint firstAttribute="width" constant="24" id="yJE-hf-xF6"/>
-                        </constraints>
-                    </imageView>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kR0-TI-PeJ" userLabel="Separator View" customClass="SecondarySeparatorView" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="42" width="374" height="1"/>
-                        <color key="backgroundColor" systemColor="separatorColor"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="1" id="dbI-39-ZmN"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hqv-xf-ey4" secondAttribute="trailing" constant="8" id="4Ei-rj-WMD"/>
+                            <constraint firstAttribute="trailing" secondItem="5OJ-4K-nXR" secondAttribute="trailing" constant="8" id="FwV-CB-gQu"/>
+                            <constraint firstItem="hqv-xf-ey4" firstAttribute="leading" secondItem="ziB-OA-DCD" secondAttribute="leading" constant="8" id="MEf-Jl-Bed"/>
+                            <constraint firstItem="5OJ-4K-nXR" firstAttribute="top" secondItem="ziB-OA-DCD" secondAttribute="top" constant="8" id="S81-LT-URT"/>
+                            <constraint firstItem="hqv-xf-ey4" firstAttribute="top" secondItem="5OJ-4K-nXR" secondAttribute="bottom" constant="8" symbolic="YES" id="ZMN-5s-wDr"/>
+                            <constraint firstItem="5OJ-4K-nXR" firstAttribute="leading" secondItem="ziB-OA-DCD" secondAttribute="leading" constant="8" id="s6G-yb-Q5G"/>
+                            <constraint firstAttribute="bottom" secondItem="hqv-xf-ey4" secondAttribute="bottom" id="skO-jH-MyN"/>
                         </constraints>
                     </view>
-                    <button contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ubm-It-TEK" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="374" height="34"/>
-                        <state key="normal">
-                            <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </state>
-                        <connections>
-                            <action selector="actionButtonPressed:" destination="q4Q-Pg-HCx" eventType="touchUpInside" id="m8C-ar-h5R"/>
-                        </connections>
-                    </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gp9-nE-gVS">
+                        <rect key="frame" x="0.0" y="58.5" width="300" height="174.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1TL-ot-Xde" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="8" y="8" width="0.0" height="0.0"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1" verticalHuggingPriority="1" horizontalCompressionResistancePriority="1" verticalCompressionResistancePriority="1" translatesAutoresizingMaskIntoConstraints="NO" id="h2R-wW-swD">
+                                <rect key="frame" x="8" y="16" width="284" height="81"/>
+                                <color key="tintColor" systemColor="labelColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="h2R-wW-swD" secondAttribute="height" multiplier="7:2" id="Nug-BC-t03"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ztS-Sd-0S0" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="8" y="166.5" width="284" height="0.0"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="ztS-Sd-0S0" firstAttribute="leading" secondItem="gp9-nE-gVS" secondAttribute="leading" constant="8" id="8H6-Xt-KKi"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1TL-ot-Xde" secondAttribute="trailing" constant="8" id="AsE-lV-OHH"/>
+                            <constraint firstAttribute="trailing" secondItem="h2R-wW-swD" secondAttribute="trailing" constant="8" id="Bey-Gh-b48"/>
+                            <constraint firstItem="h2R-wW-swD" firstAttribute="leading" secondItem="gp9-nE-gVS" secondAttribute="leading" constant="8" id="GVk-X0-vSh"/>
+                            <constraint firstItem="h2R-wW-swD" firstAttribute="top" secondItem="1TL-ot-Xde" secondAttribute="bottom" constant="8" symbolic="YES" id="LLl-KQ-UpX"/>
+                            <constraint firstItem="1TL-ot-Xde" firstAttribute="leading" secondItem="gp9-nE-gVS" secondAttribute="leading" constant="8" id="O3Q-la-kh1"/>
+                            <constraint firstAttribute="trailing" secondItem="ztS-Sd-0S0" secondAttribute="trailing" constant="8" id="Q43-3A-e8O"/>
+                            <constraint firstAttribute="bottom" secondItem="ztS-Sd-0S0" secondAttribute="bottom" constant="8" id="Zie-9Q-aex"/>
+                            <constraint firstItem="ztS-Sd-0S0" firstAttribute="top" relation="greaterThanOrEqual" secondItem="h2R-wW-swD" secondAttribute="bottom" constant="8" symbolic="YES" id="lE6-um-Yh0"/>
+                            <constraint firstItem="1TL-ot-Xde" firstAttribute="top" secondItem="gp9-nE-gVS" secondAttribute="top" constant="8" id="p4H-nP-YDw"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IuM-ut-b2P">
+                        <rect key="frame" x="0.0" y="233" width="300" height="8"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YRM-i5-OgC" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="8" y="0.0" width="0.0" height="0.0"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                <color key="textColor" systemColor="secondaryLabelColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="YRM-i5-OgC" firstAttribute="leading" secondItem="IuM-ut-b2P" secondAttribute="leading" constant="8" id="7uS-3T-8tT"/>
+                            <constraint firstItem="YRM-i5-OgC" firstAttribute="top" secondItem="IuM-ut-b2P" secondAttribute="top" id="EK9-nH-hUd"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="YRM-i5-OgC" secondAttribute="trailing" constant="8" id="kfk-PL-vaA"/>
+                            <constraint firstAttribute="bottom" secondItem="YRM-i5-OgC" secondAttribute="bottom" constant="8" id="qQf-vz-kiA"/>
+                        </constraints>
+                    </view>
                 </subviews>
-                <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
-                    <constraint firstItem="l0b-aR-vVP" firstAttribute="centerY" secondItem="eei-jo-YZh" secondAttribute="centerY" id="0Yp-Sx-V3q"/>
-                    <constraint firstItem="kR0-TI-PeJ" firstAttribute="top" secondItem="l0b-aR-vVP" secondAttribute="bottom" constant="8" symbolic="YES" id="6x7-7M-VFV"/>
-                    <constraint firstItem="ubm-It-TEK" firstAttribute="top" secondItem="6Ab-Ah-A1l" secondAttribute="top" id="8e0-vo-Nd3"/>
-                    <constraint firstItem="l0b-aR-vVP" firstAttribute="top" secondItem="6Ab-Ah-A1l" secondAttribute="top" id="A3d-xp-DrN"/>
-                    <constraint firstItem="kR0-TI-PeJ" firstAttribute="leading" secondItem="6Ab-Ah-A1l" secondAttribute="leading" id="Od0-Ob-ZvG"/>
-                    <constraint firstAttribute="bottom" secondItem="kR0-TI-PeJ" secondAttribute="bottom" id="Qeh-de-gcK"/>
-                    <constraint firstItem="eei-jo-YZh" firstAttribute="trailing" secondItem="kR0-TI-PeJ" secondAttribute="trailing" id="XnK-Ie-bjI"/>
-                    <constraint firstAttribute="trailing" secondItem="kR0-TI-PeJ" secondAttribute="trailing" id="bdC-sW-3pp"/>
-                    <constraint firstItem="ubm-It-TEK" firstAttribute="leading" secondItem="6Ab-Ah-A1l" secondAttribute="leading" id="dka-ot-ZsX"/>
-                    <constraint firstAttribute="trailing" secondItem="ubm-It-TEK" secondAttribute="trailing" id="k5T-A8-kHa"/>
-                    <constraint firstItem="eei-jo-YZh" firstAttribute="leading" secondItem="l0b-aR-vVP" secondAttribute="trailing" constant="8" symbolic="YES" id="uFx-8d-4L4"/>
-                    <constraint firstItem="l0b-aR-vVP" firstAttribute="leading" secondItem="kR0-TI-PeJ" secondAttribute="leading" id="vNe-ha-7Ru"/>
-                    <constraint firstAttribute="bottom" secondItem="ubm-It-TEK" secondAttribute="bottom" id="zjw-LW-a6Q"/>
+                    <constraint firstAttribute="trailing" secondItem="ziB-OA-DCD" secondAttribute="trailing" id="4q2-G6-Oqe"/>
+                    <constraint firstItem="gp9-nE-gVS" firstAttribute="top" secondItem="ziB-OA-DCD" secondAttribute="bottom" id="FL2-b8-TXs"/>
+                    <constraint firstItem="gp9-nE-gVS" firstAttribute="leading" secondItem="XQE-xz-1uN" secondAttribute="leading" id="GxH-hT-MnX"/>
+                    <constraint firstItem="IuM-ut-b2P" firstAttribute="leading" secondItem="XQE-xz-1uN" secondAttribute="leading" id="Hjl-G8-6Pu"/>
+                    <constraint firstItem="ziB-OA-DCD" firstAttribute="top" secondItem="XQE-xz-1uN" secondAttribute="top" id="QEi-eg-D6E"/>
+                    <constraint firstAttribute="trailing" secondItem="IuM-ut-b2P" secondAttribute="trailing" id="RXi-4c-zRO"/>
+                    <constraint firstItem="ziB-OA-DCD" firstAttribute="leading" secondItem="XQE-xz-1uN" secondAttribute="leading" id="TDu-Gg-DoF"/>
+                    <constraint firstAttribute="bottom" secondItem="IuM-ut-b2P" secondAttribute="bottom" id="dDd-hY-GlP"/>
+                    <constraint firstItem="IuM-ut-b2P" firstAttribute="top" secondItem="gp9-nE-gVS" secondAttribute="bottom" id="gdM-sq-1UK"/>
+                    <constraint firstAttribute="trailing" secondItem="gp9-nE-gVS" secondAttribute="trailing" id="jeF-TQ-Uzd"/>
                 </constraints>
             </collectionViewCellContentView>
+            <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
+            <size key="customSize" width="303" height="252"/>
             <connections>
-                <outlet property="iconImageView" destination="eei-jo-YZh" id="58y-8M-lcv"/>
-                <outlet property="separatorView" destination="kR0-TI-PeJ" id="B3B-OL-Xl8"/>
-                <outlet property="titleLabel" destination="l0b-aR-vVP" id="WTW-OL-m5I"/>
+                <outlet property="primaryImageViewHeightConstraint" destination="Nug-BC-t03" id="QFs-H8-M9Q"/>
+                <outlet property="primaryLabel" destination="hqv-xf-ey4" id="xdb-do-ObH"/>
+                <outlet property="typeImageView" destination="eoc-mg-9RO" id="kbt-EA-RVb"/>
+                <outlet property="typeLabel" destination="PXZ-j2-Mi2" id="Jg1-NU-2RH"/>
             </connections>
-            <point key="canvasLocation" x="137.68115942028987" y="152.67857142857142"/>
+            <point key="canvasLocation" x="-13" y="100"/>
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="safari" catalog="system" width="128" height="121"/>
-        <systemColor name="separatorColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        <image name="tv.and.mediabox" catalog="system" width="128" height="96"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

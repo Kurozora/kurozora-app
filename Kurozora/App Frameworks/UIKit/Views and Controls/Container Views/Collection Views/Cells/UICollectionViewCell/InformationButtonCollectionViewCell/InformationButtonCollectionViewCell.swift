@@ -9,31 +9,59 @@
 import UIKit
 import KurozoraKit
 
-protocol InformationButtonCollectionViewCellDelegate: AnyObject {
-	func informationButtonCollectionViewCell(_ cell: InformationButtonCollectionViewCell, didPressButton button: UIButton)
-}
-
 class InformationButtonCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var titleLabel: KTintedLabel!
-	@IBOutlet weak var iconImageView: UIImageView!
-	@IBOutlet weak var separatorView: SecondarySeparatorView!
+	@IBOutlet weak var typeImageView: UIImageView!
+	@IBOutlet weak var typeLabel: KSecondaryLabel!
+	@IBOutlet weak var primaryLabel: KTappableLabel!
+	@IBOutlet weak var primaryImageViewHeightConstraint: NSLayoutConstraint?
 
-	// MARK: - Properties
-	weak var delegate: InformationButtonCollectionViewCellDelegate?
-	private(set) var studioInformation: StudioDetail.Information = .websites
-
-	// MARK: - Functions
-	/// Configure the cell with the given studio information.
-	func configure(using studioInformation: StudioDetail.Information) {
-		self.studioInformation = studioInformation
-		self.titleLabel.text = studioInformation.stringValue
-		self.iconImageView.image = studioInformation.imageValue
-		self.separatorView.isHidden = studioInformation == .websites
+	// MARK: - Initializers
+	override init(frame: CGRect) {
+		super.init(frame: frame)
+		self.sharedInit()
 	}
 
-	// MARK: - IBActions
-	@IBAction func actionButtonPressed(_ sender: KButton) {
-		self.delegate?.informationButtonCollectionViewCell(self, didPressButton: sender)
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
+		self.sharedInit()
+	}
+
+	override func awakeFromNib() {
+		super.awakeFromNib()
+
+		self.typeImageView?.theme_tintColor = KThemePicker.subTextColor.rawValue
+	}
+
+	// MARK: - Functions
+	/// The shared settings used to initialize the cell.
+	fileprivate func sharedInit() {
+		self.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+		self.layerCornerRadius = 8
+	}
+
+	/// Configure the cell with the given studio information.
+	func configure(for studio: Studio, using studioDetailInformation: StudioDetail.Information) {
+		self.primaryImageViewHeightConstraint?.isActive = false
+		self.typeImageView.image = studioDetailInformation.imageValue
+		self.typeLabel.text = studioDetailInformation.stringValue
+
+		let information = studioDetailInformation.information(from: studio)
+
+		if information == "-" {
+			self.primaryLabel.theme_textColor = KThemePicker.textColor.rawValue
+			self.primaryLabel.text = information
+		} else {
+			let urls = information.trimmingCharacters(in: .whitespacesAndNewlines)
+				.components(separatedBy: "\n")
+				.compactMap {
+					let url = URL(string: $0)
+					let domain = url?.rootDomain ?? $0
+
+					return (domain, $0)
+				}
+
+			self.primaryLabel.setLinks(with: urls)
+		}
 	}
 }
