@@ -143,6 +143,35 @@ extension KurozoraKit {
 		return request.sender()
 	}
 
+	/// Clear all items from the authenticated user's library.
+	///
+	/// - Parameters:
+	///    - libraryKind: The library to clear the items from.
+	///    - password: The authenticated user's password.
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the library clear response.
+	public func clearLibrary(_ libraryKind: KKLibrary.Kind, password: String) -> RequestSender<KKSuccess, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
+		headers.add(.authorization(bearerToken: self.authenticationKey))
+
+		// Prepare parameters
+		let parameters: [String: Any] = [
+			"library": libraryKind.rawValue,
+			"password": password
+		]
+
+		// Prepare request
+		let meLibraryClear = KKEndpoint.Me.Library.clear.endpointValue
+		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(meLibraryClear)
+			.method(.delete)
+			.headers(headers)
+			.parameters(parameters)
+
+		// Send request
+		return request.sender()
+	}
+
 	/// Import an exported library file into the authenticated user's library.
 	///
 	/// - Parameters:

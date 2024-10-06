@@ -24,6 +24,9 @@ extension Season {
 		/// The episode count of the season.
 		public let episodeCount: Int
 
+		/// The average of all episode ratings.
+		public let ratingAverage: Double
+
 		/// The premiere date of the season.
 		public let startedAt: Date?
 

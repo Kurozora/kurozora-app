@@ -33,6 +33,7 @@ extension LibraryImport {
 			}
 		}
 	}
+
 	/// The set of available Library import behavior types.
 	public enum Behavior: Int, CaseIterable {
 		/// The import will overwrite any existing shows in the library.

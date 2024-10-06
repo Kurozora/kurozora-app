@@ -6,23 +6,23 @@
 //
 
 /// A root object that stores information about a language resource.
-public struct Language: IdentityResource, Hashable {
+public struct Language: Codable, Hashable {
 	// MARK: - Properties
-	public let id: String
+	/// The language's name.
+	public let name: String
 
-	public let type: String
+	/// The language's ISO 639-2 code.
+	public let code: String
 
-	public let href: String
-
-	/// The attributes belonging to the language.
-	public let attributes: Language.Attributes
+	/// The language's ISO 639-3 code.
+	public let iso6393: String
 
 	// MARK: - Functions
 	public static func == (lhs: Language, rhs: Language) -> Bool {
-		return lhs.id == rhs.id
+		return lhs.code == rhs.code
 	}
 
 	public func hash(into hasher: inout Hasher) {
-		hasher.combine(self.id)
+		hasher.combine(self.code)
 	}
 }

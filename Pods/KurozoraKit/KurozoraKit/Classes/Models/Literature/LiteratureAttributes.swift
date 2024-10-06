@@ -10,97 +10,100 @@ extension Literature {
 	public struct Attributes: Codable {
 		// MARK: - Properties
 		// General
-		/// The AniDB id of the literature.
+		/// The literature's AniDB ID.
 		public let anidbID: Int?
 
-		/// The AniList id of the literature.
+		/// The literature's AniList ID.
 		public let anilistID: Int?
 
-		/// The Anime-Planet id of the literature.
+		/// The literature's Anime-Planet ID.
 		public let animePlanetID: String?
 
-		/// The AnimeSearch id of the literature.
+		/// The literature's AnimeSearch ID.
 		public let anisearchID: Int?
 
-		/// The Kitsu id of the literature.
+		/// The literature's Kitsu ID.
 		public let kitsuID: Int?
 
-		/// The MyAnimeList id of the literature.
+		/// The literature's MyAnimeList ID.
 		public let malID: Int?
 
-		/// The slug of the literature.
+		/// The literature's slug.
 		public let slug: String
 
-		/// The media object of the poster of the literature.
+		/// The literature's poster's media object.
 		public let poster: Media?
 
-		/// The media object of the banner of the literature.
+		/// The literature's banner's media object.
 		public let banner: Media?
 
-		/// The media object of the logo of the literature.
+		/// The literature's logo's media object.
 		public let logo: Media?
 
-		/// The original title in the original language of the literature.
+		/// The literature's original title in the original language.
 		public let originalTitle: String?
 
-		/// The localized title of the literature.
+		/// The literature's localized title.
 		public let title: String
 
-		/// The synonym titles of the literature.
+		/// The literature's synonym titles.
 		public let synonymTitles: [String]?
 
-		/// The localized tagline of the literature.
+		/// The literature's localized tagline.
 		public let tagline: String?
 
-		/// The localized synopsis of the literature.
+		/// The literature's localized synopsis.
 		public let synopsis: String?
 
-		/// The genres of the literature.
+		/// The literature's genres.
 		public let genres: [String]?
 
-		/// The themes of the literature.
+		/// The literature's themes.
 		public let themes: [String]?
 
-		/// The studio of the literature.
+		/// The literature's studio.
 		public let studio: String?
 
-		/// The languages of the literature.
+		/// The literature's languages.
 		public let languages: [Language]
 
-		/// The tv rating of the literature.
+		/// The literature's country of origin.
+		public let countryOfOrigin: Country?
+
+		/// The literature's tv rating.
 		public let tvRating: TVRating
 
-		/// The type of the literature.
+		/// The literature's type.
 		public let type: MediaType
 
-		/// The adaptation source of the literature.
+		/// The literature's adaptation source.
 		public let source: AdaptationSource
 
-		/// The airing status of the literature.
+		/// The literature's airing status.
 		public let status: AiringStatus
 
-		/// The number of volumes in the literature.
+		/// The literature's number of volumes.
 		public let volumeCount: Int
 
-		/// The number of chapters in the literature.
+		/// The literature's number of chapters.
 		public let chapterCount: Int
 
-		/// The number of pages in the literature.
+		/// The literature's number of pages.
 		public let pageCount: Int
 
-		/// The stats of the literature.
+		/// The literature's stats.
 		public let stats: MediaStat?
 
-		/// The first publication date of the literature.
+		/// The literature's first publication date.
 		public let startedAt: Date?
 
-		/// The last publication date of the literature.
+		/// The literature's last publication date.
 		public let endedAt: Date?
 
-		/// The duration of the literature.
+		/// The literature's duration.
 		public let duration: String
 
-		/// The calculated total duration of the literature.
+		/// The literature's calculated total duration.
 		public let durationTotal: String
 
 		/// The season the literature has published in.
@@ -115,10 +118,10 @@ extension Literature {
 		/// Whether the literature is Not Safe For Work.
 		public let isNSFW: Bool
 
-		/// The copyright text of the literature.
+		/// The literature's copyright text.
 		public let copyright: String?
 
-		/// The library attributes of the literature.
+		/// The literature's library attributes.
 		public var library: LibraryAttributes?
 	}
 }

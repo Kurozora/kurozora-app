@@ -13,4 +13,7 @@ public struct LibraryResponse: Codable {
 
 	/// The realtive URL to the next page in the paginated response.
 	public let next: String?
+
+	/// The total number of available library items.
+	public let total: Int?
 }

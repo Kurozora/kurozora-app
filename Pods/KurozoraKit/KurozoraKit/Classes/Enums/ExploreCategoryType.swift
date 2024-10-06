@@ -44,6 +44,9 @@ public enum ExploreCategoryType: String, Codable {
 	/// Indicates that the explore category is of the `games` type.
 	case games
 
+	/// Indicates that the explore category is of the `upNextEpisodes` type.
+	case upNextEpisodes = "up-next-episodes"
+
 	/// Indicates that the explore category is of the `episodes` type.
 	case episodes
 

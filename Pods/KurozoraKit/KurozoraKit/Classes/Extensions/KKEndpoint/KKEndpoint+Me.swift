@@ -98,6 +98,9 @@ extension KKEndpoint.Me {
 		/// The endpoint to delete a model from the authenticated user's library.
 		case delete
 
+		/// The endpoint to clear the authenticated user's library.
+		case clear
+
 		/// The endpoint to import an exported MyAnimeList file into the  authenticated user's library.
 		case malImport
 
@@ -114,6 +117,8 @@ extension KKEndpoint.Me {
 				return "me/library/update"
 			case .delete:
 				return "me/library/delete"
+			case .clear:
+				return "me/library/clear"
 			case .malImport:
 				return "me/library/mal-import"
 			case .`import`:

@@ -9,80 +9,82 @@ extension Game {
 	/// A root object that stores information about a single game, such as the game's title, episode count, and air date.
 	public struct Attributes: Codable {
 		// MARK: - Properties
-		// General
-		/// The IGDB id of the game.
+		/// The game's IGDB ID.
 		public let igdbID: Int?
 
-		/// The IGDB slug of the game.
+		/// The game's IGDB slug.
 		public let igdbSlug: String?
 
-		/// The slug of the game.
+		/// The game's slug.
 		public let slug: String
 
-		/// The media object of the poster of the game.
+		/// The game's poster's media object.
 		public let poster: Media?
 
-		/// The media object of the banner of the game.
+		/// The game's banner's media object.
 		public let banner: Media?
 
-		/// The media object of the logo of the game.
+		/// The game's logo's media object.
 		public let logo: Media?
 
-		/// The original title in the original language of the game.
+		/// The game's original title in the original language.
 		public let originalTitle: String?
 
-		/// The localized title of the game.
+		/// The game's localized title.
 		public let title: String
 
-		/// The synonym titles of the game.
+		/// The game's synonym titles.
 		public let synonymTitles: [String]?
 
-		/// The localized tagline of the game.
+		/// The game's localized tagline.
 		public let tagline: String?
 
-		/// The localized synopsis of the game.
+		/// The game's localized synopsis.
 		public let synopsis: String?
 
-		/// The genres of the game.
+		/// The game's genres.
 		public let genres: [String]?
 
-		/// The themes of the game.
+		/// The game's themes.
 		public let themes: [String]?
 
-		/// The studio of the game.
+		/// The game's studio.
 		public let studio: String?
 
-		/// The languages of the game.
+		/// The game's languages.
 		public let languages: [Language]
 
-		/// The tv rating of the game.
+		/// The game's country of origin.
+		public let countryOfOrigin: Country?
+
+		/// The game's tv rating.
 		public let tvRating: TVRating
 
-		/// The type of the game.
+		/// The game's type.
 		public let type: MediaType
 
-		/// The adaptation source of the game.
+		/// The game's adaptation source.
 		public let source: AdaptationSource
 
-		/// The airing status of the game.
+		/// The game's airing status.
 		public let status: AiringStatus
 
 		/// The number of editions in the game.
 		public let editionCount: Int
 
-		/// The stats of the game.
+		/// The game's stats.
 		public let stats: MediaStat?
 
-		/// The first publication date of the game.
+		/// The game's first publication date.
 		public let startedAt: Date?
 
-		/// The last publication date of the game.
+		/// The game's last publication date.
 		public let endedAt: Date?
 
-		/// The duration of the game.
+		/// The game's duration.
 		public let duration: String
 
-		/// The calculated total duration of the game.
+		/// The game's calculated total duration.
 		public let durationTotal: String
 
 		/// The season the game has published in.
@@ -97,10 +99,10 @@ extension Game {
 		/// Whether the game is Not Safe For Work.
 		public let isNSFW: Bool
 
-		/// The copyright text of the game.
+		/// The game's copyright text.
 		public let copyright: String?
 
-		/// The library attributes of the game.
+		/// The game's library attributes.
 		public var library: LibraryAttributes?
 	}
 }

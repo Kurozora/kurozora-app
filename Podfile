@@ -13,6 +13,7 @@ def shared_pods
 	pod 'KurozoraKit'#, path: '../KurozoraKit'
 	pod 'R.swift'
 	pod 'SwifterSwift'
+	pod 'SwiftTheme'
 	pod 'TRON', '5.5.0-beta.1'
 	pod 'TRON/SwiftyJSON'
 end
@@ -27,7 +28,6 @@ def kurozora_pods
 	pod 'ReachabilitySwift'
 	pod 'Solar'
 	pod 'SPConfetti'
-	pod 'SwiftTheme'
 	pod 'Tabman'
 	pod 'WhatsNew'
 	pod 'XCDYouTubeKit', :git => 'https://github.com/armendh/XCDYouTubeKit', :branch => 'master', :commit => '651a6a51c695c5819eb51ba2f98d0b64094315b9'

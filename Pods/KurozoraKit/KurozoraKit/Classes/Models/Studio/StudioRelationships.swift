@@ -9,6 +9,12 @@ extension Studio {
 	/// A root object that stores information about studio relationships, such as the shows that belong to it.
 	public struct Relationships: Codable {
 		// MARK: - Properties
+		/// The studio' predecessors.
+		public let predecessors: StudioIdentityResponse?
+
+		/// The studio's successors.
+		public let successors: StudioIdentityResponse?
+
 		/// The shows created by the studio.
 		public let shows: ShowIdentityResponse?
 

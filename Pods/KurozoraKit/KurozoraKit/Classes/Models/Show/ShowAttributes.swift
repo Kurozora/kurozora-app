@@ -9,92 +9,94 @@ extension Show {
 	/// A root object that stores information about a single show, such as the show's title, episode count, and air date.
 	public struct Attributes: Codable {
 		// MARK: - Properties
-		// General
-		/// The AniDB id of the show.
+		/// The show's AniDB ID.
 		public let anidbID: Int?
 
-		/// The AniList id of the show.
+		/// The show's AniList ID.
 		public let anilistID: Int?
 
-		/// The Anime-Planet id of the show.
+		/// The show's Anime-Planet ID.
 		public let animePlanetID: String?
 
-		/// The AniSearch id of the show.
+		/// The show's AniSearch ID.
 		public let anisearchID: Int?
 
-		/// The IMDB id of the show.
+		/// The show's IMDB ID.
 		public let imdbID: String?
 
-		/// The Kitsu id of the show.
+		/// The show's Kitsu ID.
 		public let kitsuID: Int?
 
-		/// The MyAnimeList id of the show.
+		/// The show's MyAnimeList ID.
 		public let malID: Int?
 
-		/// The Notify id of the show.
+		/// The show's Notify ID.
 		public let notifyID: String?
 
-		/// The Syoboi id of the show.
+		/// The show's Syoboi ID.
 		public let syoboiID: Int?
 
-		/// The Trakt id of the show.
+		/// The show's Trakt ID.
 		public let traktID: Int?
 
-		/// The TVDB id of the show.
+		/// The show's TVDB ID.
 		public let tvdbID: Int?
 
-		/// The slug of the show.
+		/// The show's slug.
 		public let slug: String
 
-		/// The video url of the show.
+		/// The show's video url.
 		public let videoUrl: String?
 
-		/// The media object of the poster of the show.
+		/// The show's poster's media object.
 		public let poster: Media?
 
-		/// The media object of the banner of the show.
+		/// The show's banner's media object.
 		public let banner: Media?
 
-		/// The media object of the logo of the show.
+		/// The show's logo's media object.
 		public let logo: Media?
 
-		/// The original title in the original language of the show.
+		/// The show's original title in the original language.
 		public let originalTitle: String?
 
-		/// The localized title of the show.
+		/// The show's localized title.
 		public let title: String
 
-		/// The synonym titles of the show.
+		/// The show's synonym titles.
 		public let synonymTitles: [String]?
 
-		/// The localized tagline of the show.
+		/// The show's localized tagline.
 		public let tagline: String?
 
-		/// The localized synopsis of the show.
+		/// The show's localized synopsis.
 		public let synopsis: String?
 
-		/// The genres of the show.
+		/// The show's genres.
 		public let genres: [String]?
 
-		/// The themes of the show.
+		/// The show's themes.
 		public let themes: [String]?
 
-		/// The studio of the show.
+		/// The show's studio.
 		public let studio: String?
 
-		/// The languages of the show.
+		/// The show's languages.
 		public let languages: [Language]
 
-		/// The tv rating of the show.
+		/// The show's country of origin.
+		public let countryOfOrigin: Country?
+
+		/// The show's tv rating.
 		public let tvRating: TVRating
 
-		/// The type of the show.
+		/// The show's type.
 		public let type: MediaType
 
-		/// The adaptation source of the show.
+		/// The show's adaptation source.
 		public let source: AdaptationSource
 
-		/// The airing status of the show.
+		/// The show's airing status.
 		public let status: AiringStatus
 
 		/// The number of episodes in the show.
@@ -103,19 +105,19 @@ extension Show {
 		/// The number of seasons in the show.
 		public let seasonCount: Int
 
-		/// The stats of the show.
+		/// The show's stats.
 		public let stats: MediaStat?
 
-		/// The first air date of the show.
+		/// The show's first air date.
 		public let startedAt: Date?
 
-		/// The last air date of the show.
+		/// The show's last air date.
 		public let endedAt: Date?
 
-		/// The duration of the show.
+		/// The show's duration.
 		public let duration: String
 
-		/// The calculated total duration of the show.
+		/// The show's calculated total duration.
 		public let durationTotal: String
 
 		/// The season the show has aired in.
@@ -130,10 +132,10 @@ extension Show {
 		/// Whether the show is Not Safe For Work.
 		public let isNSFW: Bool
 
-		/// The copyright text of the show.
+		/// The show's copyright text.
 		public let copyright: String?
 
-		/// The library attributes of the show.
+		/// The show's library attributes.
 		public var library: LibraryAttributes?
 	}
 }

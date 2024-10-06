@@ -10,13 +10,14 @@ import TRON
 
 /// `KurozoraKit` is a root object that serves as a provider for single API endpoint. It is used to send and get data from [Kurozora](https://kurozora.app).
 ///
-/// For more flexibility when using `KurozoraKit` you can provide your own [KKServices](x-source-tag://KKServices). This enables you to provide extra functionality such as storing sensetive information in `Keychain` and showing success/error alerts.
+/// For more flexibility when using `KurozoraKit` you can provide your own endpoint using [KurozoraAPI](x-source-tag://KurozoraAPI).
+/// You can also provide your own [KKServices](x-source-tag://KKServices). This enables you to provide extra functionality such as storing sensetive information in `Keychain`.
 /// For further control over the information saved in `Keychain`, you can provide your own `Keychain` object with your specified properties.
 ///
 /// - Tag: KurozoraKit
 public class KurozoraKit {
 	// MARK: - Properties
-	/// Storage to the current user's authentication key.
+	/// Storage of the current user's authentication key.
 	internal var _authenticationKey: String = ""
 	/// The current user's authentication key.
 	public var authenticationKey: String {
@@ -25,6 +26,18 @@ public class KurozoraKit {
 		}
 		set {
 			self._authenticationKey = newValue
+		}
+	}
+
+	/// Storage of the current API endpoint.
+	internal var _apiEndpoint: KurozoraAPI = .v1
+	/// The current API Endpoint.
+	public var apiEndpoint: KurozoraAPI {
+		get {
+			return self._apiEndpoint
+		}
+		set {
+			self._apiEndpoint = newValue
 		}
 	}
 
@@ -41,33 +54,52 @@ public class KurozoraKit {
 	]
 
 	/// The TRON singleton used to perform API requests.
-	internal let tron: TRON!
+	internal var tron: TRON!
 
 	/// The [KKServices](x-source-tag://KKServices) object used to perform API requests.
 	public var services: KKServices!
 
 	// MARK: - Initializers
-	/// Initializes `KurozoraKit` with the given user authentication key and services.
+	/// Initializes `KurozoraKit` with the given API endpoint, user authentication key and services.
 	///
 	/// - Parameters:
-	///    - debugURL: The backend API URL used for debugging.
+	///    - apiEndpoint: The [KurozoraAPI](x-source-tag://KurozoraAPI) endpoint to be used.
 	///    - authenticationKey: The current signed in user's authentication key.
 	///    - services: The desired [KKServices](x-source-tag://KKServices) to be used.
-	public init(debugURL: String? = nil, authenticationKey: String = "", services: KKServices = KKServices()) {
-		let plugins: [Plugin] = debugURL != nil ? [NetworkLoggerPlugin()] : []
-
-		self.tron = TRON(baseURL: debugURL ?? "https://api.kurozora.app/v1/", plugins: plugins)
-		self.tron.codable.modelDecoder.dateDecodingStrategy = .secondsSince1970
-		self.authenticationKey = authenticationKey
-		self.services = services
+	public init(apiEndpoint: KurozoraAPI? = nil, authenticationKey: String = "", services: KKServices = KKServices()) {
+		self.apiEndpoint(apiEndpoint ?? .v1)
+			.authenticationKey(authenticationKey)
+			.services(services)
 	}
 
 	// MARK: - Functions
+	/// Sets the API endpoint for the Kurozora API.
+	///
+	/// - Parameter apiEndpoint: The desired [KurozoraAPI](x-source-tag://KurozoraAPI) endpoint to be used.
+	///
+	/// - Returns: Reference to `self`.
+	@discardableResult
+	public func apiEndpoint(_ apiEndpoint: KurozoraAPI) -> Self {
+		let plugins: [Plugin] = switch apiEndpoint {
+		case .v1:
+			[]
+		case .custom(_, let plugin):
+			plugin ?? [NetworkLoggerPlugin()]
+		}
+
+		self.apiEndpoint = apiEndpoint
+		self.tron = TRON(baseURL: apiEndpoint.baseURL, plugins: plugins)
+		self.tron.codable.modelDecoder.dateDecodingStrategy = .secondsSince1970
+
+		return self
+	}
+
 	/// Sets the `authenticationKey` property with the given auth key.
 	///
 	/// - Parameter authenticationKey: The current user's authentication key.
 	///
 	/// - Returns: Reference to `self`.
+	@discardableResult
 	public func authenticationKey(_ authenticationKey: String) -> Self {
 		self.authenticationKey = authenticationKey
 		return self
@@ -78,6 +110,7 @@ public class KurozoraKit {
 	/// - Parameter services: The [KKServices](x-source-tag://KKServices) object to be used when performin API requests.
 	///
 	/// - Returns: Reference to `self`.
+	@discardableResult
 	public func services(_ services: KKServices) -> Self {
 		self.services = services
 		return self

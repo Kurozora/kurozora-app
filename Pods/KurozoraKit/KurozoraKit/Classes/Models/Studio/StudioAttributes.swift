@@ -24,17 +24,35 @@ extension Studio {
 		/// The name of the studio.
 		public let name: String
 
+		/// The Japanese name of the studio.
+		public let japaneseName: String?
+
+		/// The alternative names of the studio.
+		public let alternativeNames: [String]?
+
+		/// The predecessor names of the studio.
+		public let predecessors: [String]
+
+		/// The successor of the studio.
+		public let successor: String?
+
 		/// The about text of the studio.
 		public let about: String?
 
 		/// The address of the studio.
 		public let address: String?
 
-		/// The date the studio was founded.
-		public let founded: Date?
+		/// The tv rating of the studio.
+		public let tvRating: TVRating
+
+		/// The stats of the studio.
+		public let stats: MediaStat?
 
 		/// The link to the website of the studio.
-		public let websiteUrl: String?
+		public let socialURLs: [String]?
+
+		/// The link to the website of the studio.
+		public let websiteURLs: [String]?
 
 		/// Whether the studio is the producer of an anime.
 		public let isProducer: Bool?
@@ -44,5 +62,17 @@ extension Studio {
 
 		/// Whether the studio is the licensor of an anime.
 		public let isLicensor: Bool?
+
+		/// Whether the studio is NSFW.
+		public let isNSFW: Bool
+
+		/// The date the studio was founded.
+		public let foundedAt: Date?
+
+		/// The date the studio was defunct.
+		public let defunctAt: Date?
+
+		/// The library attributes of the song.
+		public var library: LibraryAttributes?
 	}
 }

@@ -18,7 +18,7 @@ public enum KKLibrary {
 	/// The set of available library types.
 	///
 	/// ```
-	/// case anime = 0
+	/// case shows = 0
 	/// case literature = 1
 	/// case game = 2
 	/// ```
@@ -58,6 +58,7 @@ public enum KKLibrary {
 	/// case completed = 3
 	/// case onHold = 4
 	/// case dropped = 1
+	/// case interested = 6
 	/// case ignored = 5
 	/// ```
 	///
@@ -82,12 +83,15 @@ public enum KKLibrary {
 		/// The library's dropped list.
 		case dropped = 1
 
+		/// The library's interested list.
+		case interested = 6
+
 		/// The library's ignored list.
 		case ignored = 5
 
 		// MARK: - Properties
 		/// An array containing all library status types.
-		public static let all: [Status] = [.inProgress, .planning, .completed, .onHold, .dropped, .ignored]
+		public static let all: [Status] = [.inProgress, .planning, .completed, .onHold, .dropped, .interested, .ignored]
 
 		/// The string value of a library status type.
 		public var stringValue: String {
@@ -104,6 +108,8 @@ public enum KKLibrary {
 				return "On-Hold"
 			case .dropped:
 				return "Dropped"
+			case .interested:
+				return "Interested"
 			case .ignored:
 				return "Ignored"
 			}
