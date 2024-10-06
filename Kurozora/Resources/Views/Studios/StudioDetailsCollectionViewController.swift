@@ -230,15 +230,6 @@ extension StudioDetailsCollectionViewController {
 	}
 }
 
-// MARK: - InformationButtonCollectionViewCellDelegate
-extension StudioDetailsCollectionViewController: InformationButtonCollectionViewCellDelegate {
-	func informationButtonCollectionViewCell(_ cell: InformationButtonCollectionViewCell, didPressButton button: UIButton) {
-		guard cell.studioInformation == .socials || cell.studioInformation == .websites else { return }
-//		guard let websiteURL = self.studio.attributes.websiteURLs?.url else { return }
-//		UIApplication.shared.kOpen(websiteURL)
-	}
-}
-
 // MARK: - TextViewCollectionViewCellDelegate
 extension StudioDetailsCollectionViewController: TextViewCollectionViewCellDelegate {
 	func textViewCollectionViewCell(_ cell: TextViewCollectionViewCell, didPressButton button: UIButton) {

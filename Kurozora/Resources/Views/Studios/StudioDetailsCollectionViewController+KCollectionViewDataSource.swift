@@ -112,11 +112,16 @@ extension StudioDetailsCollectionViewController {
 				return reviewCollectionViewCell
 			case .information:
 				let studioDetailInformation = StudioDetail.Information(rawValue: indexPath.item) ?? .websites
-				let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: studioDetailInformation.identifierString, for: indexPath) as? InformationButtonCollectionViewCell
+				let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: studioDetailInformation.identifierString, for: indexPath)
 
 				switch itemKind {
 				case .studio(let studio, _):
-					informationCollectionViewCell?.configure(using: studioDetailInformation)
+					switch studioDetailInformation {
+					case .socials, .websites:
+						(informationCollectionViewCell as? InformationButtonCollectionViewCell)?.configure(for: studio, using: studioDetailInformation)
+					default:
+						(informationCollectionViewCell as? InformationCollectionViewCell)?.configure(using: studio, for: studioDetailInformation)
+					}
 				default: break
 				}
 				return informationCollectionViewCell
