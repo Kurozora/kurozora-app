@@ -81,6 +81,11 @@ extension URL {
 		return URL(string: "https://music.youtube.com/watch?v=\(youtubeID)")
 	}
 
+	/// The root domain of the URL or domain name.
+	var rootDomain: String? {
+		return self.host?.replacingOccurrences(of: "www.", with: "")
+	}
+
 	/// Returns the preferred `URL` to open by the app.
 	///
 	/// Replaces the scheme of the url with ther user's preferred scheme if the scheme can be opened by the system, otherwise the url is returned as is.
