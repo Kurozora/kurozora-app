@@ -224,7 +224,18 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 				}
 			}
 
-			let characterFilter = CharacterFilter(age: age, astrologicalSign: astrologicalSign, birthDay: birthDay, birthMonth: birthMonth, bust: bust, height: height, hip: hip, status: status, waist: waist, weight: weight)
+			let characterFilter = CharacterFilter(
+				age: age,
+				astrologicalSign: astrologicalSign,
+				birthDay: birthDay,
+				birthMonth: birthMonth,
+				bust: bust,
+				height: height,
+				hip: hip,
+				status: status,
+				waist: waist,
+				weight: weight
+			)
 			return .character(characterFilter)
 		} else if let episodeFilter = searchFilter as? EpisodeFilter {
 			var duration: Int? = episodeFilter.duration
@@ -284,7 +295,20 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 				}
 			}
 
-			let episodeFilter = EpisodeFilter(duration: duration, isFiller: isFiller, isNSFW: isNSFW, isSpecial: isSpecial, isPremiere: isPremiere, isFinale: isFinale, number: number, numberTotal: numberTotal, season: season, tvRating: tvRating, startedAt: startedAt, endedAt: endedAt)
+			let episodeFilter = EpisodeFilter(
+				duration: duration,
+				isFiller: isFiller,
+				isNSFW: isNSFW,
+				isSpecial: isSpecial,
+				isPremiere: isPremiere,
+				isFinale: isFinale,
+				number: number,
+				numberTotal: numberTotal,
+				season: season,
+				tvRating: tvRating,
+				startedAt: startedAt,
+				endedAt: endedAt
+			)
 			return .episode(episodeFilter)
 		} else if let gameFilter = searchFilter as? GameFilter {
 			var publicationDay: Int? = gameFilter.publicationDay
@@ -296,6 +320,7 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 			var source: Int? = gameFilter.source
 			var status: Int? = gameFilter.status
 			var tvRating: Int? = gameFilter.tvRating
+			var countryOfOrigin: String? = gameFilter.countryOfOrigin
 			var editionCount: Int? = gameFilter.editionCount
 
 			self.filterableAttributes.forEach { key, value in
@@ -334,13 +359,29 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 					tvRating = value.options?.first { key, _ in
 						key == value.selected as? String
 					}?.value
+				case .countryOfOrigin:
+					countryOfOrigin = CountryOfOrigin.allCases.first { countryOfOrigin in
+						countryOfOrigin.name == value.selected as? String
+					}?.value
 				case .editionCount:
 					editionCount = (value.selected as? Double)?.int
 				default: break
 				}
 			}
 
-			let gameFilter = GameFilter(publicationDay: publicationDay, publicationSeason: publicationSeason, duration: duration, publishedAt: publishedAt, isNSFW: isNSFW, mediaType: mediaType, source: source, status: status, tvRating: tvRating, editionCount: editionCount)
+			let gameFilter = GameFilter(
+				publicationDay: publicationDay,
+				publicationSeason: publicationSeason,
+				countryOfOrigin: countryOfOrigin,
+				duration: duration,
+				publishedAt: publishedAt,
+				isNSFW: isNSFW,
+				mediaType: mediaType,
+				source: source,
+				status: status,
+				tvRating: tvRating,
+				editionCount: editionCount
+			)
 			return .game(gameFilter)
 		} else if let literatureFilter = searchFilter as? LiteratureFilter {
 			var publicationDay: Int? = literatureFilter.publicationDay
@@ -354,6 +395,7 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 			var source: Int? = literatureFilter.source
 			var status: Int? = literatureFilter.status
 			var tvRating: Int? = literatureFilter.tvRating
+			var countryOfOrigin: String? = literatureFilter.countryOfOrigin
 			var volumeCount: Int? = literatureFilter.volumeCount
 			var chapterCount: Int? = literatureFilter.chapterCount
 			var pageCount: Int? = literatureFilter.pageCount
@@ -398,6 +440,10 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 					tvRating = value.options?.first { key, _ in
 						key == value.selected as? String
 					}?.value
+				case .countryOfOrigin:
+					countryOfOrigin = CountryOfOrigin.allCases.first { countryOfOrigin in
+						countryOfOrigin.name == value.selected as? String
+					}?.value
 				case .volumeCount:
 					volumeCount = (value.selected as? Double)?.int
 				case .chapterCount:
@@ -408,7 +454,23 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 				}
 			}
 
-			let literatureFilter = LiteratureFilter(publicationDay: publicationDay, publicationSeason: publicationSeason, publicationTime: publicationTime, duration: duration, startedAt: startedAt, endedAt: endedAt, isNSFW: isNSFW, mediaType: mediaType, source: source, status: status, tvRating: tvRating, volumeCount: volumeCount, chapterCount: chapterCount, pageCount: pageCount)
+			let literatureFilter = LiteratureFilter(
+				publicationDay: publicationDay,
+				publicationSeason: publicationSeason,
+				publicationTime: publicationTime,
+				countryOfOrigin: countryOfOrigin,
+				duration: duration,
+				startedAt: startedAt,
+				endedAt: endedAt,
+				isNSFW: isNSFW,
+				mediaType: mediaType,
+				source: source,
+				status: status,
+				tvRating: tvRating,
+				volumeCount: volumeCount,
+				chapterCount: chapterCount,
+				pageCount: pageCount
+			)
 			return .literature(literatureFilter)
 		} else if let personFilter = searchFilter as? PersonFilter {
 			var astrologicalSign: Int? = personFilter.astrologicalSign
@@ -443,6 +505,7 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 			var source: Int? = showFilter.source
 			var status: Int? = showFilter.status
 			var tvRating: Int? = showFilter.tvRating
+			var countryOfOrigin: String? = showFilter.countryOfOrigin
 			var seasonCount: Int? = showFilter.seasonCount
 			var episodeCount: Int? = showFilter.episodeCount
 
@@ -486,6 +549,10 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 					tvRating = value.options?.first { key, _ in
 						key == value.selected as? String
 					}?.value
+				case .countryOfOrigin:
+					countryOfOrigin = CountryOfOrigin.allCases.first { countryOfOrigin in
+						countryOfOrigin.name == value.selected as? String
+					}?.value
 				case .seasonCount:
 					seasonCount = (value.selected as? Double)?.int
 				case .episodeCount:
@@ -494,7 +561,22 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 				}
 			}
 
-			let showFilter = ShowFilter(airDay: airDay, airSeason: airSeason, airTime: airTime, duration: duration, isNSFW: isNSFW, startedAt: startedAt, endedAt: endedAt, mediaType: mediaType, source: source, status: status, tvRating: tvRating, seasonCount: seasonCount, episodeCount: episodeCount)
+			let showFilter = ShowFilter(
+				airDay: airDay,
+				airSeason: airSeason,
+				airTime: airTime,
+				countryOfOrigin: countryOfOrigin,
+				duration: duration,
+				isNSFW: isNSFW,
+				startedAt: startedAt,
+				endedAt: endedAt,
+				mediaType: mediaType,
+				source: source,
+				status: status,
+				tvRating: tvRating,
+				seasonCount: seasonCount,
+				episodeCount: episodeCount
+			)
 			return .show(showFilter)
 		} else if searchFilter is SongFilter {
 			self.filterableAttributes.forEach { key, _ in
@@ -507,16 +589,20 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 			return .song(songFilter)
 		} else if let studioFilter = searchFilter as? StudioFilter {
 			var address: String? = studioFilter.address
-			var founded: TimeInterval? = studioFilter.founded
+			var foundedAt: TimeInterval? = studioFilter.foundedAt
+			var defunctAt: TimeInterval? = studioFilter.defunctAt
 			var isNSFW: Bool? = studioFilter.isNSFW
 			var type: Int? = studioFilter.type
+			var tvRating: Int? = studioFilter.tvRating
 
 			self.filterableAttributes.forEach { key, value in
 				switch key {
 				case .address:
 					address = value.selected as? String
-				case .founded:
-					founded = (value.selected as? Date)?.timeIntervalSince1970
+				case .foundedAt:
+					foundedAt = (value.selected as? Date)?.timeIntervalSince1970
+				case .defunctAt:
+					defunctAt = (value.selected as? Date)?.timeIntervalSince1970
 				case .isNSFW:
 					isNSFW = (value.options?.first { key, _ in
 						key == value.selected as? String
@@ -525,11 +611,22 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 					type = value.options?.first { key, _ in
 						key == value.selected as? String
 					}?.value
+				case .tvRating:
+					tvRating = value.options?.first { key, _ in
+						key == value.selected as? String
+					}?.value
 				default: break
 				}
 			}
 
-			let studioFilter = StudioFilter(address: address, founded: founded, isNSFW: isNSFW, type: type)
+			let studioFilter = StudioFilter(
+				type: type,
+				tvRating: tvRating,
+				address: address,
+				foundedAt: foundedAt,
+				defunctAt: defunctAt,
+				isNSFW: isNSFW
+			)
 			return .studio(studioFilter)
 		} else if searchFilter is UserFilter {
 			self.filterableAttributes.forEach { key, _ in

@@ -13,7 +13,12 @@ class FilterableAttribute {
 	let options: [(key: String, value: Int)]?
 	var selected: AnyHashable?
 
-	init(name: String, type: FilterableType, options: [(key: String, value: Int)]?, selected: AnyHashable? = nil) {
+	init(
+		name: String,
+		type: FilterableType,
+		options: [(key: String, value: Int)]?,
+		selected: AnyHashable? = nil
+	) {
 		self.name = name
 		self.type = type
 		self.options = options
@@ -26,6 +31,7 @@ enum FilterableType {
 	case text
 	case stepper
 	case singleSelection
+	case multiSelection
 	case date
 	case time
 	case dateTime
@@ -46,6 +52,7 @@ enum FilterKey {
 	case waist
 	case weight
 
+	case countryOfOrigin
 	case duration
 	case isFiller
 	case isNSFW
@@ -82,6 +89,7 @@ enum FilterKey {
 	case episodeCount
 
 	case address
-	case founded
+	case foundedAt
+	case defunctAt
 	case type
 }

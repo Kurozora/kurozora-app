@@ -114,6 +114,9 @@ extension KKSearchType {
 				(key: .tvRating, value: FilterableAttribute(name: "TV Rating", type: .singleSelection, options: TVRating.allCases.map { tvRating in
 					return (tvRating.name, tvRating.rawValue)
 				})),
+				(key: .countryOfOrigin, value: FilterableAttribute(name: "Country of Origin", type: .singleSelection, options: CountryOfOrigin.allCases.map { countryOfOrigin in
+					return (countryOfOrigin.name, countryOfOrigin.rawValue)
+				})),
 				(key: .editionCount, value: FilterableAttribute(name: "Editions", type: .stepper, options: nil)),
 				(key: .publicationSeason, value: FilterableAttribute(name: "Publication Season", type: .singleSelection, options: SeasonOfYear.allCases.map { seasonOfYear in
 					return (seasonOfYear.name, seasonOfYear.rawValue)
@@ -146,6 +149,9 @@ extension KKSearchType {
 				})),
 				(key: .tvRating, value: FilterableAttribute(name: "TV Rating", type: .singleSelection, options: TVRating.allCases.map { tvRating in
 					return (tvRating.name, tvRating.rawValue)
+				})),
+				(key: .countryOfOrigin, value: FilterableAttribute(name: "Country of Origin", type: .singleSelection, options: CountryOfOrigin.allCases.map { countryOfOrigin in
+					return (countryOfOrigin.name, countryOfOrigin.rawValue)
 				})),
 				(key: .volumeCount, value: FilterableAttribute(name: "Volumes", type: .stepper, options: nil)),
 				(key: .chapterCount, value: FilterableAttribute(name: "Chapters", type: .stepper, options: nil)),
@@ -189,6 +195,9 @@ extension KKSearchType {
 				(key: .tvRating, value: FilterableAttribute(name: "TV Rating", type: .singleSelection, options: TVRating.allCases.map { tvRating in
 					return (tvRating.name, tvRating.rawValue)
 				})),
+				(key: .countryOfOrigin, value: FilterableAttribute(name: "Country of Origin", type: .singleSelection, options: CountryOfOrigin.allCases.map { countryOfOrigin in
+					return (countryOfOrigin.name, countryOfOrigin.rawValue)
+				})),
 				(key: .seasonCount, value: FilterableAttribute(name: Trans.seasons, type: .stepper, options: nil)),
 				(key: .episodeCount, value: FilterableAttribute(name: Trans.episodes, type: .stepper, options: nil)),
 				(key: .airDay, value: FilterableAttribute(name: "Air Day", type: .singleSelection, options: DayOfWeek.allCases.map { dayOfWeek in
@@ -221,8 +230,12 @@ extension KKSearchType {
 				(key: .type, value: FilterableAttribute(name: "Type", type: .singleSelection, options: StudioType.allCases.map { studioType in
 					return (studioType.name, studioType.rawValue)
 				})),
+				(key: .tvRating, value: FilterableAttribute(name: "TV Rating", type: .singleSelection, options: TVRating.allCases.map { tvRating in
+					return (tvRating.name, tvRating.rawValue)
+				})),
 				(key: .address, value: FilterableAttribute(name: "Address", type: .text, options: nil)),
-				(key: .founded, value: FilterableAttribute(name: "Founded", type: .date, options: nil))
+				(key: .foundedAt, value: FilterableAttribute(name: "Founded", type: .date, options: nil)),
+				(key: .defunctAt, value: FilterableAttribute(name: "Defunct", type: .date, options: nil))
 			]
 
 			if self.includeNSFW() {

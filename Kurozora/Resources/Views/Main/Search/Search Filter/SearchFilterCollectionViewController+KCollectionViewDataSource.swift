@@ -27,6 +27,8 @@ extension SearchFilterCollectionViewController {
 				switch attribute.type {
 				case .singleSelection:
 					return collectionView.dequeueConfiguredReusableCell(using: selectCellRegistration, for: indexPath, item: item)
+				case .multiSelection:
+					return collectionView.dequeueConfiguredReusableCell(using: selectCellRegistration, for: indexPath, item: item)
 				case .date:
 					return collectionView.dequeueConfiguredReusableCell(using: dateCellRegistration, for: indexPath, item: item)
 				case .time:
@@ -163,6 +165,12 @@ extension SearchFilterCollectionViewController {
 					if let tvRating = gameFilter.tvRating {
 						value = TVRating(rawValue: tvRating)?.name
 					}
+				case .countryOfOrigin:
+					if let countryOfOrigin = gameFilter.countryOfOrigin {
+						value = CountryOfOrigin.allCases.first { countryOfOriginCase in
+							countryOfOriginCase.name == countryOfOrigin
+						}?.name
+					}
 				case .editionCount:
 					value = gameFilter.editionCount
 				case .publicationSeason:
@@ -212,6 +220,12 @@ extension SearchFilterCollectionViewController {
 				case .tvRating:
 					if let tvRating = literatureFilter.tvRating {
 						value = TVRating(rawValue: tvRating)?.name
+					}
+				case .countryOfOrigin:
+					if let countryOfOrigin = literatureFilter.countryOfOrigin {
+						value = CountryOfOrigin.allCases.first { countryOfOriginCase in
+							countryOfOriginCase.name == countryOfOrigin
+						}?.name
 					}
 				case .volumeCount:
 					value = literatureFilter.volumeCount
@@ -295,6 +309,12 @@ extension SearchFilterCollectionViewController {
 					if let tvRating = showFilter.tvRating {
 						value = TVRating(rawValue: tvRating)?.name
 					}
+				case .countryOfOrigin:
+					if let countryOfOrigin = showFilter.countryOfOrigin {
+						value = CountryOfOrigin.allCases.first { countryOfOriginCase in
+							countryOfOriginCase.name == countryOfOrigin
+						}?.name
+					}
 				case .seasonCount:
 					value = showFilter.seasonCount
 				case .episodeCount:
@@ -347,11 +367,19 @@ extension SearchFilterCollectionViewController {
 					if let type = studioFilter.type {
 						value = StudioType(rawValue: type)?.name
 					}
+				case .tvRating:
+					if let tvRating = studioFilter.tvRating {
+						value = TVRating(rawValue: tvRating)?.name
+					}
 				case .address:
 					value = studioFilter.address
-				case .founded:
-					if let founded = studioFilter.founded {
-						value = Date(timeIntervalSince1970: founded)
+				case .foundedAt:
+					if let foundedAt = studioFilter.foundedAt {
+						value = Date(timeIntervalSince1970: foundedAt)
+					}
+				case .defunctAt:
+					if let defunctAt = studioFilter.defunctAt {
+						value = Date(timeIntervalSince1970: defunctAt)
 					}
 				case .isNSFW:
 					if let isNSFW = studioFilter.isNSFW {
