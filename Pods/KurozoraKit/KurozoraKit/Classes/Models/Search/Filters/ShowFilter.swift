@@ -10,6 +10,7 @@ public struct ShowFilter {
 	public let airDay: Int?
 	public let airSeason: Int?
 	public let airTime: String?
+	public let countryOfOrigin: String?
 	public let duration: Int?
 	public let isNSFW: Bool?
 	public let startedAt: TimeInterval?
@@ -22,10 +23,26 @@ public struct ShowFilter {
 	public let episodeCount: Int?
 
 	// MARK: - Initializers
-	public init(airDay: Int? = nil, airSeason: Int? = nil, airTime: String? = nil, duration: Int? = nil, isNSFW: Bool? = nil, startedAt: TimeInterval? = nil, endedAt: TimeInterval? = nil, mediaType: Int? = nil, source: Int? = nil, status: Int? = nil, tvRating: Int? = nil, seasonCount: Int? = nil, episodeCount: Int? = nil) {
+	public init(
+		airDay: Int? = nil,
+		airSeason: Int? = nil,
+		airTime: String? = nil,
+		countryOfOrigin: String? = nil,
+		duration: Int? = nil,
+		isNSFW: Bool? = nil,
+		startedAt: TimeInterval? = nil,
+		endedAt: TimeInterval? = nil,
+		mediaType: Int? = nil,
+		source: Int? = nil,
+		status: Int? = nil,
+		tvRating: Int? = nil,
+		seasonCount: Int? = nil,
+		episodeCount: Int? = nil
+	) {
 		self.airDay = airDay
 		self.airSeason = airSeason
 		self.airTime = airTime
+		self.countryOfOrigin = countryOfOrigin
 		self.duration = duration
 		self.isNSFW = isNSFW
 		self.startedAt = startedAt
@@ -46,6 +63,7 @@ extension ShowFilter: Filterable {
 			"air_day": self.airDay,
 			"air_season": self.airSeason,
 			"air_time": self.airTime,
+			"country_id": self.countryOfOrigin,
 			"duration": self.duration,
 			"started_at": self.startedAt,
 			"is_nsfw": self.isNSFW,

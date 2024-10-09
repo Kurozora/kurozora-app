@@ -7,17 +7,28 @@
 
 public struct StudioFilter {
 	// MARK: - Properties
-	public let address: String?
-	public let founded: TimeInterval?
-	public let isNSFW: Bool?
 	public let type: Int?
+	public let tvRating: Int?
+	public let address: String?
+	public let foundedAt: TimeInterval?
+	public let defunctAt: TimeInterval?
+	public let isNSFW: Bool?
 
 	// MARK: - Initializers
-	public init(address: String? = nil, founded: TimeInterval? = nil, isNSFW: Bool? = nil, type: Int? = nil) {
-		self.address = address
-		self.founded = founded
-		self.isNSFW = isNSFW
+	public init(
+		type: Int? = nil,
+		tvRating: Int? = nil,
+		address: String? = nil,
+		foundedAt: TimeInterval? = nil,
+		defunctAt: TimeInterval? = nil,
+		isNSFW: Bool? = nil
+	) {
 		self.type = type
+		self.tvRating = tvRating
+		self.address = address
+		self.foundedAt = foundedAt
+		self.defunctAt = defunctAt
+		self.isNSFW = isNSFW
 	}
 }
 
@@ -25,10 +36,12 @@ public struct StudioFilter {
 extension StudioFilter: Filterable {
 	func toFilterArray() -> [String: Any?] {
 		return [
+			"type": self.type,
+			"tv_rating_id": self.tvRating,
 			"address": self.address,
-			"founded": self.founded,
-			"is_nsfw": self.isNSFW,
-			"type": self.type
+			"founded_at": self.foundedAt,
+			"defunct_at": self.defunctAt,
+			"is_nsfw": self.isNSFW
 		]
 	}
 }

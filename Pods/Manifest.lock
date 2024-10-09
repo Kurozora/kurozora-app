@@ -6,7 +6,7 @@ PODS:
   - IQKeyboardManagerSwift (7.1.1)
   - KeychainAccess (4.2.2)
   - Kingfisher (7.12.0)
-  - KurozoraKit (1.16.0):
+  - KurozoraKit (1.16.1):
     - KeychainAccess
     - TRON (= 5.5.0-beta.1)
   - Pageboy (4.2.0)
@@ -124,7 +124,7 @@ SPEC CHECKSUMS:
   IQKeyboardManagerSwift: d7f3d3a562c237a0e7335e657cd598c452f57f1b
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   Kingfisher: 53a10ea35051a436b5fb626ca2dd8f3144d755e9
-  KurozoraKit: 1e16fb8ff0876013b051e1c62736cd95428ba73a
+  KurozoraKit: 3f375de345d7618dc1f154a7afdae9400d8f16e1
   Pageboy: 7f7886f61c76633df635861bf7839caf2cabdb3e
   R.swift: 2fd2894ece48472e161d036414d956af6006c82b
   ReachabilitySwift: 32793e867593cfc1177f5d16491e3a197d2fccda

@@ -10,6 +10,7 @@ public struct LiteratureFilter {
 	public let publicationDay: Int?
 	public let publicationSeason: Int?
 	public let publicationTime: String?
+	public let countryOfOrigin: String?
 	public let duration: Int?
 	public let startedAt: TimeInterval?
 	public let endedAt: TimeInterval?
@@ -23,10 +24,27 @@ public struct LiteratureFilter {
 	public let pageCount: Int?
 
 	// MARK: - Initializers
-	public init(publicationDay: Int? = nil, publicationSeason: Int? = nil, publicationTime: String? = nil, duration: Int? = nil, startedAt: TimeInterval? = nil, endedAt: TimeInterval? = nil, isNSFW: Bool? = nil, mediaType: Int? = nil, source: Int? = nil, status: Int? = nil, tvRating: Int? = nil, volumeCount: Int? = nil, chapterCount: Int? = nil, pageCount: Int? = nil) {
+	public init(
+		publicationDay: Int? = nil,
+		publicationSeason: Int? = nil,
+		publicationTime: String? = nil,
+		countryOfOrigin: String? = nil,
+		duration: Int? = nil,
+		startedAt: TimeInterval? = nil,
+		endedAt: TimeInterval? = nil,
+		isNSFW: Bool? = nil,
+		mediaType: Int? = nil,
+		source: Int? = nil,
+		status: Int? = nil,
+		tvRating: Int? = nil,
+		volumeCount: Int? = nil,
+		chapterCount: Int? = nil,
+		pageCount: Int? = nil
+	) {
 		self.publicationDay = publicationDay
 		self.publicationSeason = publicationSeason
 		self.publicationTime = publicationTime
+		self.countryOfOrigin = countryOfOrigin
 		self.duration = duration
 		self.startedAt = startedAt
 		self.endedAt = endedAt
@@ -48,6 +66,7 @@ extension LiteratureFilter: Filterable {
 			"publication_day": self.publicationDay,
 			"publication_season": self.publicationSeason,
 			"publication_time": self.publicationTime,
+			"country_id": self.countryOfOrigin,
 			"duration": self.duration,
 			"started_at": self.startedAt,
 			"ended_at": self.endedAt,

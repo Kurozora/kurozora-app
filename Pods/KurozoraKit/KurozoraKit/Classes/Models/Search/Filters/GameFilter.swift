@@ -9,6 +9,7 @@ public struct GameFilter {
 	// MARK: - Properties
 	public let publicationDay: Int?
 	public let publicationSeason: Int?
+	public let countryOfOrigin: String?
 	public let duration: Int?
 	public let publishedAt: TimeInterval?
 	public let isNSFW: Bool?
@@ -19,9 +20,22 @@ public struct GameFilter {
 	public let editionCount: Int?
 
 	// MARK: - Initializers
-	public init(publicationDay: Int? = nil, publicationSeason: Int? = nil, duration: Int? = nil, publishedAt: TimeInterval? = nil, isNSFW: Bool? = nil, mediaType: Int? = nil, source: Int? = nil, status: Int? = nil, tvRating: Int? = nil, editionCount: Int? = nil) {
+	public init(
+		publicationDay: Int? = nil,
+		publicationSeason: Int? = nil,
+		countryOfOrigin: String? = nil,
+		duration: Int? = nil,
+		publishedAt: TimeInterval? = nil,
+		isNSFW: Bool? = nil,
+		mediaType: Int? = nil,
+		source: Int? = nil,
+		status: Int? = nil,
+		tvRating: Int? = nil,
+		editionCount: Int? = nil
+	) {
 		self.publicationDay = publicationDay
 		self.publicationSeason = publicationSeason
+		self.countryOfOrigin = countryOfOrigin
 		self.duration = duration
 		self.publishedAt = publishedAt
 		self.isNSFW = isNSFW
@@ -39,6 +53,7 @@ extension GameFilter: Filterable {
 		return [
 			"publication_day": self.publicationDay,
 			"publication_season": self.publicationSeason,
+			"country_id": self.countryOfOrigin,
 			"duration": self.duration,
 			"published_at": self.publishedAt,
 			"is_nsfw": self.isNSFW,
