@@ -714,6 +714,16 @@
 		66F27EC4283A81AE00CC2277 /* SearchShowResultsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66F27EC3283A81AE00CC2277 /* SearchShowResultsCell.xib */; };
 		66F27ECF283ACEBB00CC2277 /* SearchResultsCollectionViewController+KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F27ECE283ACEBB00CC2277 /* SearchResultsCollectionViewController+KCollectionViewDataSource.swift */; };
 		66F7CE782BDFD673009B1D33 /* SongDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F7CE772BDFD673009B1D33 /* SongDetail.swift */; };
+		66F7D1A92C72066D002A09CE /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664133E721DB828E00CE823A /* UserSettings.swift */; };
+		66F7D1AA2C720706002A09CE /* UserSettingsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66973DFC231202AF0097A9F8 /* UserSettingsKey.swift */; };
+		66F7D1AC2C72075F002A09CE /* KBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6646A277236B8AE600DCC0A4 /* KBrowser.swift */; };
+		66F7D1AD2C720779002A09CE /* AuthenticationInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6640E19C22AE895A00D0F575 /* AuthenticationInterval.swift */; };
+		66F7D1AE2C7207A8002A09CE /* Trans.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FA97E0281BD37A0054FC2E /* Trans.swift */; };
+		66F7D1AF2C720899002A09CE /* KThemePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AEABD922987A4D00949FD8 /* KThemePicker.swift */; };
+		66F7D1B32C720E5F002A09CE /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F7D1B22C720E5F002A09CE /* R.generated.swift */; };
+		66F7D1B42C720FB2002A09CE /* UIStatusBarStyle+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DF32342B79000A454DD /* UIStatusBarStyle+Theme.swift */; };
+		66F7D1B52C720FCC002A09CE /* UIColor+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66347355232FB51E006B7F99 /* UIColor+Kurozora.swift */; };
+		66F7D1B62C7210C0002A09CE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66A4FCFC270EFDCA00E7C702 /* Assets.xcassets */; };
 		66F9449F22F0BF57009F1FE2 /* ActionLinkExploreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F9449E22F0BF57009F1FE2 /* ActionLinkExploreCollectionViewCell.swift */; };
 		66F944AC22F0C08E009F1FE2 /* TitleHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F944A822F0C08E009F1FE2 /* TitleHeaderCollectionReusableView.swift */; };
 		66F944AE22F0C08E009F1FE2 /* BaseLockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F944AA22F0C08E009F1FE2 /* BaseLockupCollectionViewCell.swift */; };
@@ -1501,6 +1511,7 @@
 		66F27EC3283A81AE00CC2277 /* SearchShowResultsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchShowResultsCell.xib; sourceTree = "<group>"; };
 		66F27ECE283ACEBB00CC2277 /* SearchResultsCollectionViewController+KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchResultsCollectionViewController+KCollectionViewDataSource.swift"; sourceTree = "<group>"; };
 		66F7CE772BDFD673009B1D33 /* SongDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongDetail.swift; sourceTree = "<group>"; };
+		66F7D1B22C720E5F002A09CE /* R.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = "<group>"; };
 		66F9449E22F0BF57009F1FE2 /* ActionLinkExploreCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionLinkExploreCollectionViewCell.swift; sourceTree = "<group>"; };
 		66F944A822F0C08E009F1FE2 /* TitleHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		66F944AA22F0C08E009F1FE2 /* BaseLockupCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseLockupCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -2654,6 +2665,7 @@
 			children = (
 				667B8BB32BC1FCCA00DA79CD /* Intents.intentdefinition */,
 				6647B73C2BC0A6E2006BC91C /* Info.plist */,
+				66F7D1B22C720E5F002A09CE /* R.generated.swift */,
 				6647B73A2BC0A6E2006BC91C /* Assets.xcassets */,
 			);
 			path = "Supporting Files";
@@ -4137,6 +4149,7 @@
 			buildConfigurationList = 6647B7442BC0A6E3006BC91C /* Build configuration list for PBXNativeTarget "KurozoraWidgetExtension" */;
 			buildPhases = (
 				6E1997A7E287A9521B4563F2 /* [CP] Check Pods Manifest.lock */,
+				66F7D1B12C720E3D002A09CE /* R.swift */,
 				6647B72C2BC0A6DD006BC91C /* Sources */,
 				6647B72D2BC0A6DD006BC91C /* Frameworks */,
 				6647B72E2BC0A6DD006BC91C /* Resources */,
@@ -4503,6 +4516,26 @@
 			shellPath = /bin/sh;
 			shellScript = "# Add pod 'R.swift' to your Podfile and run pod install\n# In Xcode: Click on your project in the file list, choose your target under TARGETS, click the Build Phases tab and add a New Run Script Phase by clicking the little plus icon in the top left\n# Drag the new Run Script phase above the Compile Sources phase and below Check Pods Manifest.lock, expand it and paste the following script: \"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/R.generated.swift\"\n# Add $TEMP_DIR/rswift-lastrun to the \"Input Files\" and $SRCROOT/R.generated.swift to the \"Output Files\" of the Build Phase\n# Build your project, in Finder you will now see a R.generated.swift in the $SRCROOT-folder, drag the R.generated.swift files into your project and uncheck Copy items if needed\n\n\"${PODS_ROOT}/R.swift/rswift\" generate \"${SRCROOT}/Kurozora/Supporting Files/R.generated.swift\"\n";
 		};
+		66F7D1B12C720E3D002A09CE /* R.swift */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = R.swift;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$SRCROOT/KurozoraWidget/Supporting Files/R.generated.swift",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Add pod 'R.swift' to your Podfile and run pod install\n# In Xcode: Click on your project in the file list, choose your target under TARGETS, click the Build Phases tab and add a New Run Script Phase by clicking the little plus icon in the top left\n# Drag the new Run Script phase above the Compile Sources phase and below Check Pods Manifest.lock, expand it and paste the following script: \"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/R.generated.swift\"\n# Add $TEMP_DIR/rswift-lastrun to the \"Input Files\" and $SRCROOT/R.generated.swift to the \"Output Files\" of the Build Phase\n# Build your project, in Finder you will now see a R.generated.swift in the $SRCROOT-folder, drag the R.generated.swift files into your project and uncheck Copy items if needed\n\n\"${PODS_ROOT}/R.swift/rswift\" generate \"${SRCROOT}/KurozoraWidget/Supporting Files/R.generated.swift\"\n";
+		};
 		6E1997A7E287A9521B4563F2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -4567,16 +4600,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66F7D1AD2C720779002A09CE /* AuthenticationInterval.swift in Sources */,
+				66F7D1B42C720FB2002A09CE /* UIStatusBarStyle+Theme.swift in Sources */,
 				66533C3B2C18FA260019E37A /* LaunchAppIntent.swift in Sources */,
 				667B8BB42BC1FCCA00DA79CD /* Intents.intentdefinition in Sources */,
+				66F7D1AC2C72075F002A09CE /* KBrowser.swift in Sources */,
 				662F96C92BC347A800DD8EA6 /* KurozoraKit+KurozoraWidget.swift in Sources */,
 				6647B7482BC0B1E9006BC91C /* SharedDelegate.swift in Sources */,
+				66F7D1B52C720FCC002A09CE /* UIColor+Kurozora.swift in Sources */,
 				662F96CE2BC34B9200DD8EA6 /* UIColor+SwiftUI.swift in Sources */,
 				6647B7372BC0A6DE006BC91C /* KurozoraWidgetBundle.swift in Sources */,
+				66F7D1B32C720E5F002A09CE /* R.generated.swift in Sources */,
 				669898212C17C8460065FE65 /* LaunchAppControl.swift in Sources */,
+				66F7D1AF2C720899002A09CE /* KThemePicker.swift in Sources */,
 				662F96CC2BC3481200DD8EA6 /* ImageFetcher.swift in Sources */,
 				667B8BAF2BC1F2BE00DA79CD /* EnvironmentValues+KurozoraWidget.swift in Sources */,
+				66F7D1AA2C720706002A09CE /* UserSettingsKey.swift in Sources */,
+				66F7D1AE2C7207A8002A09CE /* Trans.swift in Sources */,
 				6647B7392BC0A6DE006BC91C /* DateWidget.swift in Sources */,
+				66F7D1A92C72066D002A09CE /* UserSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
