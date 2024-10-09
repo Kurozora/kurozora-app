@@ -71,7 +71,6 @@ class KTappableLabel: UILabel {
 	///
 	/// - Parameter gesture: The tap gesture.
 	@objc private func handleTap(_ gesture: UITapGestureRecognizer) {
-		guard let labelText = self.text else { return }
 		// Get the location of the tap in the label's bounds
 		let tapLocation = gesture.location(in: self)
 
@@ -97,7 +96,6 @@ class KTappableLabel: UILabel {
 		guard let labelText = self.text, let font = self.font else { return 0 }
 
 		// Get the full text size and split into lines
-		let textStorage = labelText as NSString
 		let textRect = CGRect(origin: .zero, size: CGSize(width: bounds.width, height: CGFloat.greatestFiniteMagnitude))
 		let attributes: [NSAttributedString.Key: Any] = [.font: font]
 
