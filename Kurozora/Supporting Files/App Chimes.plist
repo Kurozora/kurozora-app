@@ -51,7 +51,7 @@
 	</dict>
 	<dict>
 		<key>title</key>
-		<string>Premium</string>
+		<string>Anime</string>
 		<key>chimes</key>
 		<array>
 			<array>
@@ -76,14 +76,6 @@
 					<string>Boosto!</string>
 					<key>file</key>
 					<string>boosto.m4a</string>
-				</dict>
-			</array>
-			<array>
-				<dict>
-					<key>name</key>
-					<string>Den Den Mushi</string>
-					<key>file</key>
-					<string>den_den_mushi.m4a</string>
 				</dict>
 			</array>
 			<array>
@@ -220,6 +212,68 @@
 					<string>Yare Yare Daze</string>
 					<key>file</key>
 					<string>yare_yare_daze.m4a</string>
+				</dict>
+			</array>
+			<array>
+				<dict>
+					<key>name</key>
+					<string>Youkoso!</string>
+					<key>file</key>
+					<string>youkoso.m4a</string>
+				</dict>
+			</array>
+		</array>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>One Piece</string>
+		<key>chimes</key>
+		<array>
+			<array>
+				<dict>
+					<key>name</key>
+					<string>Den Den Mushi</string>
+					<key>file</key>
+					<string>den_den_mushi.m4a</string>
+				</dict>
+			</array>
+			<array>
+				<dict>
+					<key>name</key>
+					<string>Worororo</string>
+					<key>file</key>
+					<string>worororo.m4a</string>
+				</dict>
+			</array>
+		</array>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>Re:Zero</string>
+		<key>chimes</key>
+		<array>
+			<array>
+				<dict>
+					<key>name</key>
+					<string>Ferris Bite</string>
+					<key>file</key>
+					<string>ferris_biting_ear.m4a</string>
+				</dict>
+			</array>
+			<array>
+				<dict>
+					<key>name</key>
+					<string>Pachi Pachi</string>
+					<key>file</key>
+					<string>pachi_pachi.m4a</string>
+				</dict>
+			</array>
+			<array>
+				<dict>
+					<key>name</key>
+					<string>Return by Death</string>
+					<key>file</key>
+					<string>return_by_death.m4a</string>
 				</dict>
 			</array>
 		</array>
