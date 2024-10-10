@@ -11,8 +11,25 @@ import WhatsNew
 class KWhatsNew {
 	/// Features of the current version of the app. Don't forget to change
 	static var current: [WhatsNewItem] {
-		return v19
+		return v110
 	}
+
+	/// Features of version 1.10.0 of the app.
+	static var v110: [WhatsNewItem] = [
+		.image(title: "Boo!", subtitle: "Celebrate Halloween with the『Kur O' Zora』and『John』app icons.", image: R.image.icons.gift()!),
+		.image(title: "Kuro-chan Stickers", subtitle: "Use them in Messages, FaceTime, and any app that supports attachments via the emoji keyboard. They’re also available on Telegram, Signal, and WhatsApp!", image: R.image.icons.kuroChanStickerSignal()!),
+		.image(title: "Widgets", subtitle: "Added support for Control Center and Lock Screen widgets on iOS 18.", image: R.image.icons.widget()!),
+		.image(title: "Chime", subtitle: "『Return by Death』,『Pine!』,『Youkoso!』and more chimes added to the collection!", image: R.image.icons.sound()!),
+		.image(title: "Family Sharing", subtitle: "Share your 6-month or 12-month Kurozora+ subscription with up to 5 family members for free!", image: R.image.icons.familySharing()!),
+		.image(title: "Studio Details", subtitle: "Now includes popularity ranking, defunct date, parent company, social links, successor, and predecessor studios. You can also rate and review studios now!", image: R.image.icons.studio()!),
+		.image(title: "Country of Origin", subtitle: "Anime, manga, and games now have a country of origin detail.", image: R.image.icons.globe()!),
+		.image(title: "Season Ratings", subtitle: "Season ratings reflect the average rating of all the episodes in a season to help you decide what to watch next. Don't forget to rate your favorite episodes!", image: R.image.icons.rating()!),
+		.image(title: "Library Count", subtitle: "Easily view total counts from the navigation bar.", image: R.image.icons.libraryCount()!),
+		.image(title: "Delete Library", subtitle: "A new big red button to empty your library with a single tap... kind of... provide the secret code just to be safe :D", image: R.image.icons.libraryTrash()!),
+		.image(title: "In-app Purchase", subtitle: "Updated In-App Purchase process ensures smoother server verification and fewer errors.", image: R.image.icons.kurozoraPlus()!),
+		.image(title: "Cache", subtitle: "Cache size now includes rich link data, with a detailed description explaining discrepancies between Kurozora and the Settings app.", image: R.image.icons.clearCache()!),
+		.image(title: "Bug Fixes", subtitle: "Empties two cans of premium bug spray to fix minor issues such as default themes not loading when not connected to the internet, pull-to-refresh not completing the refresh action correctly, and Re:CAP showing multiple months worth of statistics.", image: R.image.icons.bug()!)
+	]
 
 	/// Features of version 1.9.0 of the app.
 	static var v19: [WhatsNewItem] = [
