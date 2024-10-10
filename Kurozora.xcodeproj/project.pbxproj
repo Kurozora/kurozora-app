@@ -91,6 +91,11 @@
 		661D646C25C387EA00822D01 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661D646B25C387EA00822D01 /* MenuController.swift */; };
 		661DBC4F234947D7009292DF /* SKProduct+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DBC4E234947D7009292DF /* SKProduct+Kurozora.swift */; };
 		661DBC51234A4E00009292DF /* TipJarCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DBC50234A4E00009292DF /* TipJarCollectionViewController.swift */; };
+		661E0CE12CB87F0700715DCE /* ferris_biting_ear.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 661E0CE02CB87F0700715DCE /* ferris_biting_ear.m4a */; };
+		661E0CE32CB87F6D00715DCE /* youkoso.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 661E0CE22CB87F6D00715DCE /* youkoso.m4a */; };
+		661E0CE52CB87F9A00715DCE /* pachi_pachi.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 661E0CE42CB87F9A00715DCE /* pachi_pachi.m4a */; };
+		661E0CE72CB87FCE00715DCE /* return_by_death.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 661E0CE62CB87FCE00715DCE /* return_by_death.m4a */; };
+		661E0CEB2CB882D900715DCE /* wororor.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 661E0CEA2CB882D900715DCE /* wororor.m4a */; };
 		661F07802CADED4F00DD8744 /* LibraryDeleteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661F077F2CADED4F00DD8744 /* LibraryDeleteTableViewController.swift */; };
 		661F07822CADEDD100DD8744 /* KKLibrary+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661F07812CADEDD100DD8744 /* KKLibrary+Kurozora.swift */; };
 		661F184524A5594C00542AFB /* KCopyableTintedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661F184424A5594C00542AFB /* KCopyableTintedLabel.swift */; };
@@ -887,6 +892,11 @@
 		661D646B25C387EA00822D01 /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 		661DBC4E234947D7009292DF /* SKProduct+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKProduct+Kurozora.swift"; sourceTree = "<group>"; };
 		661DBC50234A4E00009292DF /* TipJarCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipJarCollectionViewController.swift; sourceTree = "<group>"; };
+		661E0CE02CB87F0700715DCE /* ferris_biting_ear.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = ferris_biting_ear.m4a; sourceTree = "<group>"; };
+		661E0CE22CB87F6D00715DCE /* youkoso.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = youkoso.m4a; sourceTree = "<group>"; };
+		661E0CE42CB87F9A00715DCE /* pachi_pachi.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = pachi_pachi.m4a; sourceTree = "<group>"; };
+		661E0CE62CB87FCE00715DCE /* return_by_death.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = return_by_death.m4a; sourceTree = "<group>"; };
+		661E0CEA2CB882D900715DCE /* wororor.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = wororor.m4a; sourceTree = "<group>"; };
 		661F077F2CADED4F00DD8744 /* LibraryDeleteTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryDeleteTableViewController.swift; sourceTree = "<group>"; };
 		661F07812CADEDD100DD8744 /* KKLibrary+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KKLibrary+Kurozora.swift"; sourceTree = "<group>"; };
 		661F184424A5594C00542AFB /* KCopyableTintedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCopyableTintedLabel.swift; sourceTree = "<group>"; };
@@ -4086,17 +4096,20 @@
 				6675E2022B4836620050F98C /* boosto.m4a */,
 				66EDDFFE2BBA14AA00B5B4EE /* den_den_mushi.m4a */,
 				661B1DD22B61C77C000C9C0E /* explosion.m4a */,
+				661E0CE02CB87F0700715DCE /* ferris_biting_ear.m4a */,
 				66FE68FC29D26AE300C9AD8E /* furin.m4a */,
 				66631B502B408D790006F02B /* jeb_.m4a */,
 				662068382C4C01B400CB27A9 /* kuma_shock.m4a */,
 				66631B522B408D970006F02B /* nya.m4a */,
 				6675E2062B4836740050F98C /* nyanpasu.m4a */,
 				661B1DCE2B61C148000C9C0E /* oh_my_gah.m4a */,
+				661E0CE42CB87F9A00715DCE /* pachi_pachi.m4a */,
 				6675E2002B48365A0050F98C /* padoru_padoru.m4a */,
 				66DC7D3C2C787C3F00F4B27B /* pine.m4a */,
 				66631B542B408DA70006F02B /* plus_ultra-v2.m4a */,
 				66631B5D2B40C8420006F02B /* plus_ultra-v3.m4a */,
 				66631B5B2B4092D00006F02B /* plus_ultra.m4a */,
+				661E0CE62CB87FCE00715DCE /* return_by_death.m4a */,
 				66631B572B408DBB0006F02B /* ryoiki_tenkai.m4a */,
 				66EDDFFC2BBA0E8600B5B4EE /* shamisen.m4a */,
 				66DB1C102C470C6C006D1780 /* shika?.m4a */,
@@ -4104,7 +4117,9 @@
 				66631B4E2B407A2B0006F02B /* tutturu.m4a */,
 				6675E2042B48366B0050F98C /* upupupu.m4a */,
 				6675E2082B48680C0050F98C /* wadodon.m4a */,
+				661E0CEA2CB882D900715DCE /* wororor.m4a */,
 				66631B652B40E5D20006F02B /* yare_yare_daze.m4a */,
+				661E0CE22CB87F6D00715DCE /* youkoso.m4a */,
 			);
 			path = Audios;
 			sourceTree = "<group>";
@@ -4360,6 +4375,7 @@
 				666C89B92A007EA60075B5D6 /* SearchFilterStepperCollectionViewCell.xib in Resources */,
 				66AA35C024030FA60006EC5B /* Episodes.storyboard in Resources */,
 				660C043223D1500A0040C749 /* MediumLockupCollectionViewCell.xib in Resources */,
+				661E0CE12CB87F0700715DCE /* ferris_biting_ear.m4a in Resources */,
 				66FE68FD29D26AE300C9AD8E /* furin.m4a in Resources */,
 				6621519B2BAA392500ECF522 /* Reviews.storyboard in Resources */,
 				6640E18922AD633500D0F575 /* Authentication.storyboard in Resources */,
@@ -4398,8 +4414,10 @@
 				6675E2012B48365A0050F98C /* padoru_padoru.m4a in Resources */,
 				6698394227493A2E0083C479 /* Debug Products.plist in Resources */,
 				6646A275236A5F7600DCC0A4 /* BrowserSettings.storyboard in Resources */,
+				661E0CE32CB87F6D00715DCE /* youkoso.m4a in Resources */,
 				6632C3E32983468900702F7C /* SelectTableViewCell.xib in Resources */,
 				667C53AE2BEED382002DEC79 /* BrowseCategoryLockupCollectionViewCell.xib in Resources */,
+				661E0CEB2CB882D900715DCE /* wororor.m4a in Resources */,
 				66500D08295FC82F0098D59D /* PurchaseButtonCollectionViewCell.xib in Resources */,
 				66631B4F2B407A2C0006F02B /* tutturu.m4a in Resources */,
 				660C043023D14F760040C749 /* SmallLockupCollectionViewCell.xib in Resources */,
@@ -4425,6 +4443,7 @@
 				6675263022280ACB007C1617 /* Day.plist in Resources */,
 				66CBDDA124649CB300CA5F83 /* Synopsis.storyboard in Resources */,
 				664E2CE3289B39180002F886 /* BaseNotificationCell.xib in Resources */,
+				661E0CE52CB87F9A00715DCE /* pachi_pachi.m4a in Resources */,
 				66C1E7ED295A16AD00C7C44C /* SplashscreenView.xib in Resources */,
 				66C45841259A88ED00886374 /* Grass.plist in Resources */,
 				66EDBA622944212B00FF1A2E /* WarningView.xib in Resources */,
@@ -4434,6 +4453,7 @@
 				669A36C124F1BFFA0045D04A /* OnboardingTextFieldTableViewCell.xib in Resources */,
 				66DC7D3D2C787C4000F4B27B /* pine.m4a in Resources */,
 				66C45843259A88ED00886374 /* Sky.plist in Resources */,
+				661E0CE72CB87FCE00715DCE /* return_by_death.m4a in Resources */,
 				66F27EBE283A7FF500CC2277 /* StudioLockupCollectionViewCell.xib in Resources */,
 				66F27EC4283A81AE00CC2277 /* SearchShowResultsCell.xib in Resources */,
 			);
