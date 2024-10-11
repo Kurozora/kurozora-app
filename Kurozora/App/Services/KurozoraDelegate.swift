@@ -131,7 +131,7 @@ class KurozoraDelegate {
 
 				if meta.isMaintenanceModeEnabled {
 					warningDataStore.warningType = .maintenance
-				} else if meta.minimumAppVersion.compare(currentAppVersion) == .orderedDescending {
+				} else if meta.minimumAppVersion.compare(currentAppVersion, options: .numeric) == .orderedDescending {
 					warningDataStore.warningType = .forceUpdate
 				} else {
 					return false
