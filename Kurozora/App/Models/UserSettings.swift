@@ -17,7 +17,8 @@ class UserSettings: UserDefaults {
 		combined.register(defaults: [
 			UserSettingsKey.startupSoundAllowed.rawValue: true,
 			UserSettingsKey.uiSoundsAllowed.rawValue: true,
-			UserSettingsKey.hapticsAllowed.rawValue: true
+			UserSettingsKey.hapticsAllowed.rawValue: true,
+			UserSettingsKey.confettiLastSeenAt.rawValue: Date.distantPast
 		])
 		return combined
 	}
@@ -138,6 +139,15 @@ extension UserSettings {
 	static var authenticationInterval: AuthenticationInterval {
 		guard let authenticationInterval = AuthenticationInterval(rawValue: shared.integer(forKey: #function)) else { return .immediately }
 		return authenticationInterval
+	}
+}
+
+// MARK: - Confetti
+extension UserSettings {
+	/// Returns a boolean indicating when the confetti was last seen at.
+	static var confettiLastSeenAt: Date {
+		guard let confettiLastSeenAt = shared.object(forKey: #function) as? Date else { return Date.distantPast }
+		return confettiLastSeenAt
 	}
 }
 

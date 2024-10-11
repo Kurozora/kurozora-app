@@ -127,14 +127,16 @@ class HomeCollectionViewController: KCollectionViewController {
 		self._prefersRefreshControlDisabled = true
 		#endif
 
-		// Determing whether to show confetti
-		let date = Date()
+		// Determine whether to show confetti
+		let date = Date.now
 
-		if date >= Date(unixTimestamp: 1713398400)
-			&& date <= Date(unixTimestamp: 1714003200)
-			&& WhatsNew.shouldPresent(with: .always) {
-			SPConfettiConfiguration.particlesConfig.colors = [.systemOrange, .systemYellow, .systemRed, .systemGreen, .systemBlue, .systemPurple, .systemPink, .systemMint, .systemTeal]
-			SPConfetti.startAnimating(.fullWidthToDown, particles: [.star, .arc, .triangle, .polygon, .heart, .circle])
+		if date >= Date(unixTimestamp: 1730332800)
+			&& date <= Date(unixTimestamp: 1730419199)
+			&& !UserSettings.confettiLastSeenAt.isInToday {
+			UserSettings.set(date, forKey: .confettiLastSeenAt)
+
+			SPConfettiConfiguration.particlesConfig.colors = [.systemOrange, .systemYellow, .systemRed, .black, .systemPurple]
+			SPConfetti.startAnimating(.fullWidthToDown, particles: [.arc, .custom(R.image.spider_web()!), .custom(R.image.witch_on_broom()!), .custom(R.image.pumpkin()!)])
 		}
 
 		// Configurations

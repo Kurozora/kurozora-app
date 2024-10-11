@@ -50,6 +50,10 @@ enum UserSettingsKey: String {
 	/// The key to the authentication interval option.
 	case authenticationInterval
 
+	// Confetti
+	/// The key to the last time confetti was seen at.
+	case confettiLastSeenAt
+
 	// Forums keys
 	/// The key to the last selected forums page.
 	case forumsPage
