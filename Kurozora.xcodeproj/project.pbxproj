@@ -95,7 +95,7 @@
 		661E0CE32CB87F6D00715DCE /* youkoso.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 661E0CE22CB87F6D00715DCE /* youkoso.m4a */; };
 		661E0CE52CB87F9A00715DCE /* pachi_pachi.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 661E0CE42CB87F9A00715DCE /* pachi_pachi.m4a */; };
 		661E0CE72CB87FCE00715DCE /* return_by_death.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 661E0CE62CB87FCE00715DCE /* return_by_death.m4a */; };
-		661E0CEB2CB882D900715DCE /* wororor.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 661E0CEA2CB882D900715DCE /* wororor.m4a */; };
+		661E0CEB2CB882D900715DCE /* worororo.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 661E0CEA2CB882D900715DCE /* worororo.m4a */; };
 		661F07802CADED4F00DD8744 /* LibraryDeleteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661F077F2CADED4F00DD8744 /* LibraryDeleteTableViewController.swift */; };
 		661F07822CADEDD100DD8744 /* KKLibrary+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661F07812CADEDD100DD8744 /* KKLibrary+Kurozora.swift */; };
 		661F184524A5594C00542AFB /* KCopyableTintedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661F184424A5594C00542AFB /* KCopyableTintedLabel.swift */; };
@@ -896,7 +896,7 @@
 		661E0CE22CB87F6D00715DCE /* youkoso.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = youkoso.m4a; sourceTree = "<group>"; };
 		661E0CE42CB87F9A00715DCE /* pachi_pachi.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = pachi_pachi.m4a; sourceTree = "<group>"; };
 		661E0CE62CB87FCE00715DCE /* return_by_death.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = return_by_death.m4a; sourceTree = "<group>"; };
-		661E0CEA2CB882D900715DCE /* wororor.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = wororor.m4a; sourceTree = "<group>"; };
+		661E0CEA2CB882D900715DCE /* worororo.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = worororo.m4a; sourceTree = "<group>"; };
 		661F077F2CADED4F00DD8744 /* LibraryDeleteTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryDeleteTableViewController.swift; sourceTree = "<group>"; };
 		661F07812CADEDD100DD8744 /* KKLibrary+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KKLibrary+Kurozora.swift"; sourceTree = "<group>"; };
 		661F184424A5594C00542AFB /* KCopyableTintedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCopyableTintedLabel.swift; sourceTree = "<group>"; };
@@ -4117,7 +4117,7 @@
 				66631B4E2B407A2B0006F02B /* tutturu.m4a */,
 				6675E2042B48366B0050F98C /* upupupu.m4a */,
 				6675E2082B48680C0050F98C /* wadodon.m4a */,
-				661E0CEA2CB882D900715DCE /* wororor.m4a */,
+				661E0CEA2CB882D900715DCE /* worororo.m4a */,
 				66631B652B40E5D20006F02B /* yare_yare_daze.m4a */,
 				661E0CE22CB87F6D00715DCE /* youkoso.m4a */,
 			);
@@ -4417,7 +4417,7 @@
 				661E0CE32CB87F6D00715DCE /* youkoso.m4a in Resources */,
 				6632C3E32983468900702F7C /* SelectTableViewCell.xib in Resources */,
 				667C53AE2BEED382002DEC79 /* BrowseCategoryLockupCollectionViewCell.xib in Resources */,
-				661E0CEB2CB882D900715DCE /* wororor.m4a in Resources */,
+				661E0CEB2CB882D900715DCE /* worororo.m4a in Resources */,
 				66500D08295FC82F0098D59D /* PurchaseButtonCollectionViewCell.xib in Resources */,
 				66631B4F2B407A2C0006F02B /* tutturu.m4a in Resources */,
 				660C043023D14F760040C749 /* SmallLockupCollectionViewCell.xib in Resources */,
@@ -5398,7 +5398,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1238;
+				CURRENT_PROJECT_VERSION = 1240;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -5417,7 +5417,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.9.0;
+				MARKETING_VERSION = 1.10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -5467,7 +5467,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1238;
+				CURRENT_PROJECT_VERSION = 1240;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -5480,7 +5480,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.9.0;
+				MARKETING_VERSION = 1.10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
