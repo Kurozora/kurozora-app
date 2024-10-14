@@ -20,15 +20,15 @@ extension FavoritesCollectionViewController {
 	override func configureDataSource() {
 		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: ItemKind) -> UICollectionViewCell? in
 			switch item {
-			case .show(let show, _):
+			case .show(let show):
 				let smallLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: SmallLockupCollectionViewCell.self, for: indexPath)
 				smallLockupCollectionViewCell.configure(using: show)
 				return smallLockupCollectionViewCell
-			case .literature(let literature, _):
+			case .literature(let literature):
 				let smallLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: SmallLockupCollectionViewCell.self, for: indexPath)
 				smallLockupCollectionViewCell.configure(using: literature)
 				return smallLockupCollectionViewCell
-			case .game(let game, _):
+			case .game(let game):
 				let gameLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: GameLockupCollectionViewCell.self, for: indexPath)
 				gameLockupCollectionViewCell.configure(using: game)
 				return gameLockupCollectionViewCell
