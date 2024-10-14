@@ -28,7 +28,7 @@ class KWhatsNew {
 		.image(title: "Delete Library", subtitle: "A new big red button to empty your library with a single tap... kind of... provide the secret code just to be safe :D", image: R.image.icons.libraryTrash()!),
 		.image(title: "In-app Purchase", subtitle: "Updated In-App Purchase process ensures smoother server verification and fewer errors.", image: R.image.icons.kurozoraPlus()!),
 		.image(title: "Cache", subtitle: "Cache size now includes rich link data, with a detailed description explaining discrepancies between Kurozora and the Settings app.", image: R.image.icons.clearCache()!),
-		.image(title: "Bug Fixes", subtitle: "Empties two cans of premium bug spray to fix minor issues such as default themes not loading when not connected to the internet, pull-to-refresh not completing the refresh action correctly, and Re:CAP showing multiple months worth of statistics.", image: R.image.icons.bug()!)
+		.image(title: "Bug Fixes", subtitle: "Emptied two cans of premium bug spray to fix minor issues such as default themes not loading when not connected to the internet, pull-to-refresh not completing the refresh action correctly, and Re:CAP showing multiple months worth of statistics.", image: R.image.icons.bug()!)
 	]
 
 	/// Features of version 1.9.0 of the app.
