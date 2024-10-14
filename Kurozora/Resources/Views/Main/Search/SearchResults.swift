@@ -65,31 +65,31 @@ struct SearchResults {
 		case game(_: Game)
 
 		/// Indicates the item contains a `CharacterIdentity` object.
-		case characterIdentity(_: CharacterIdentity, _: UUID = UUID())
+		case characterIdentity(_: CharacterIdentity)
 
 		/// Indicates the item contains a `EpisodeIdentity` object.
-		case episodeIdentity(_: EpisodeIdentity, _: UUID = UUID())
+		case episodeIdentity(_: EpisodeIdentity)
 
 		/// Indicates the item contains a `GameIdentity` object.
-		case gameIdentity(_: GameIdentity, _: UUID = UUID())
+		case gameIdentity(_: GameIdentity)
 
 		/// Indicates the item contains a `LiteratureIdentity` object.
-		case literatureIdentity(_: LiteratureIdentity, _: UUID = UUID())
+		case literatureIdentity(_: LiteratureIdentity)
 
 		/// Indicates the item contains a `PersonIdentity` object.
-		case personIdentity(_: PersonIdentity, _: UUID = UUID())
+		case personIdentity(_: PersonIdentity)
 
 		/// Indicates the item contains a `ShowIdentity` object.
-		case showIdentity(_: ShowIdentity, _: UUID = UUID())
+		case showIdentity(_: ShowIdentity)
 
 		/// Indicates the item contains a `SongIdentity` object.
-		case songIdentity(_: SongIdentity, _: UUID = UUID())
+		case songIdentity(_: SongIdentity)
 
 		/// Indicates the item contains a `StudioIdentity` object.
-		case studioIdentity(_: StudioIdentity, _: UUID = UUID())
+		case studioIdentity(_: StudioIdentity)
 
 		/// Indicates the item contains a `UserIdentity` object.
-		case userIdentity(_: UserIdentity, _: UUID = UUID())
+		case userIdentity(_: UserIdentity)
 
 		// MARK: - Functions
 		func hash(into hasher: inout Hasher) {
@@ -104,33 +104,24 @@ struct SearchResults {
 				hasher.combine(literature)
 			case .game(let game):
 				hasher.combine(game)
-			case .characterIdentity(let characterIdentity, let uuid):
+			case .characterIdentity(let characterIdentity):
 				hasher.combine(characterIdentity)
-				hasher.combine(uuid)
-			case .episodeIdentity(let episodeIdentity, let uuid):
+			case .episodeIdentity(let episodeIdentity):
 				hasher.combine(episodeIdentity)
-				hasher.combine(uuid)
-			case .gameIdentity(let gameIdentity, let uuid):
+			case .gameIdentity(let gameIdentity):
 				hasher.combine(gameIdentity)
-				hasher.combine(uuid)
-			case .literatureIdentity(let literatureIdentity, let uuid):
+			case .literatureIdentity(let literatureIdentity):
 				hasher.combine(literatureIdentity)
-				hasher.combine(uuid)
-			case .personIdentity(let personIdentity, let uuid):
+			case .personIdentity(let personIdentity):
 				hasher.combine(personIdentity)
-				hasher.combine(uuid)
-			case .showIdentity(let showIdentity, let uuid):
+			case .showIdentity(let showIdentity):
 				hasher.combine(showIdentity)
-				hasher.combine(uuid)
-			case .songIdentity(let songIdentity, let uuid):
+			case .songIdentity(let songIdentity):
 				hasher.combine(songIdentity)
-				hasher.combine(uuid)
-			case .studioIdentity(let studioIdentity, let uuid):
+			case .studioIdentity(let studioIdentity):
 				hasher.combine(studioIdentity)
-				hasher.combine(uuid)
-			case .userIdentity(let userIdentity, let uuid):
+			case .userIdentity(let userIdentity):
 				hasher.combine(userIdentity)
-				hasher.combine(uuid)
 			}
 		}
 
@@ -146,24 +137,24 @@ struct SearchResults {
 				return literature1 == literature2
 			case (.game(let game1), .game(let game2)):
 				return game1 == game2
-			case (.characterIdentity(let characterIdentity1, let uuid1), .characterIdentity(let characterIdentity2, let uuid2)):
-				return characterIdentity1 == characterIdentity2 && uuid1 == uuid2
-			case (.episodeIdentity(let episodeIdentity1, let uuid1), .episodeIdentity(let episodeIdentity2, let uuid2)):
-				return episodeIdentity1 == episodeIdentity2 && uuid1 == uuid2
-			case (.gameIdentity(let gameIdentity1, let uuid1), .gameIdentity(let gameIdentity2, let uuid2)):
-				return gameIdentity1 == gameIdentity2 && uuid1 == uuid2
-			case (.literatureIdentity(let literatureIdentity1, let uuid1), .literatureIdentity(let literatureIdentity2, let uuid2)):
-				return literatureIdentity1 == literatureIdentity2 && uuid1 == uuid2
-			case (.personIdentity(let personIdentity1, let uuid1), .personIdentity(let personIdentity2, let uuid2)):
-				return personIdentity1 == personIdentity2 && uuid1 == uuid2
-			case (.showIdentity(let showIdentity1, let uuid1), .showIdentity(let showIdentity2, let uuid2)):
-				return showIdentity1 == showIdentity2 && uuid1 == uuid2
-			case (.songIdentity(let songIdentity1, let uuid1), .songIdentity(let songIdentity2, let uuid2)):
-				return songIdentity1 == songIdentity2 && uuid1 == uuid2
-			case (.studioIdentity(let studioIdentity1, let uuid1), .studioIdentity(let studioIdentity2, let uuid2)):
-				return studioIdentity1 == studioIdentity2 && uuid1 == uuid2
-			case (.userIdentity(let userIdentity1, let uuid1), .userIdentity(let userIdentity2, let uuid2)):
-				return userIdentity1 == userIdentity2 && uuid1 == uuid2
+			case (.characterIdentity(let characterIdentity1), .characterIdentity(let characterIdentity2)):
+				return characterIdentity1 == characterIdentity2
+			case (.episodeIdentity(let episodeIdentity1), .episodeIdentity(let episodeIdentity2)):
+				return episodeIdentity1 == episodeIdentity2
+			case (.gameIdentity(let gameIdentity1), .gameIdentity(let gameIdentity2)):
+				return gameIdentity1 == gameIdentity2
+			case (.literatureIdentity(let literatureIdentity1), .literatureIdentity(let literatureIdentity2)):
+				return literatureIdentity1 == literatureIdentity2
+			case (.personIdentity(let personIdentity1), .personIdentity(let personIdentity2)):
+				return personIdentity1 == personIdentity2
+			case (.showIdentity(let showIdentity1), .showIdentity(let showIdentity2)):
+				return showIdentity1 == showIdentity2
+			case (.songIdentity(let songIdentity1), .songIdentity(let songIdentity2)):
+				return songIdentity1 == songIdentity2
+			case (.studioIdentity(let studioIdentity1), .studioIdentity(let studioIdentity2)):
+				return studioIdentity1 == studioIdentity2
+			case (.userIdentity(let userIdentity1), .userIdentity(let userIdentity2)):
+				return userIdentity1 == userIdentity2
 			default:
 				return false
 			}

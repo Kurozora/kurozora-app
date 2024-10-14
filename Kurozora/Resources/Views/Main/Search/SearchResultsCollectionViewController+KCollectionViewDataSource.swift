@@ -312,7 +312,7 @@ extension SearchResultsCollectionViewController {
 			guard let self = self else { return }
 
 			switch itemKind {
-			case .characterIdentity(let characterIdentity, _):
+			case .characterIdentity(let characterIdentity):
 				let character = self.fetchCharacter(at: indexPath)
 
 				if character == nil {
@@ -339,7 +339,7 @@ extension SearchResultsCollectionViewController {
 			guard let self = self else { return }
 
 			switch itemKind {
-			case .episodeIdentity(let episodeIdentity, _):
+			case .episodeIdentity(let episodeIdentity):
 				let episode = self.fetchEpisode(at: indexPath)
 
 				if episode == nil {
@@ -366,7 +366,7 @@ extension SearchResultsCollectionViewController {
 			guard let self = self else { return }
 
 			switch itemKind {
-			case .gameIdentity(let gameIdentity, _):
+			case .gameIdentity(let gameIdentity):
 				let game = self.fetchGame(at: indexPath)
 
 				if game == nil {
@@ -393,7 +393,7 @@ extension SearchResultsCollectionViewController {
 			guard let self = self else { return }
 
 			switch itemKind {
-			case .personIdentity(let personIdentity, _):
+			case .personIdentity(let personIdentity):
 				let person = self.fetchPerson(at: indexPath)
 
 				if person == nil {
@@ -420,7 +420,7 @@ extension SearchResultsCollectionViewController {
 			guard let self = self else { return }
 
 			switch itemKind {
-			case .songIdentity(let songIdentity, _):
+			case .songIdentity(let songIdentity):
 				let song = self.fetchSong(at: indexPath)
 
 				if song == nil {
@@ -448,7 +448,7 @@ extension SearchResultsCollectionViewController {
 			guard let self = self else { return }
 
 			switch itemKind {
-			case .showIdentity(let showIdentity, _):
+			case .showIdentity(let showIdentity):
 				let show = self.fetchShow(at: indexPath)
 
 				if show == nil {
@@ -466,7 +466,7 @@ extension SearchResultsCollectionViewController {
 
 				smallLockupCollectionViewCell.delegate = self
 				smallLockupCollectionViewCell.configure(using: show)
-			case .literatureIdentity(let literatureIdentity, _):
+			case .literatureIdentity(let literatureIdentity):
 				let literature = self.fetchLiterature(at: indexPath)
 
 				if literature == nil {
@@ -494,7 +494,7 @@ extension SearchResultsCollectionViewController {
 			guard let self = self else { return }
 
 			switch itemKind {
-			case .studioIdentity(let studioIdentity, _):
+			case .studioIdentity(let studioIdentity):
 				let studio = self.fetchStudio(at: indexPath)
 
 				if studio == nil {
@@ -520,7 +520,7 @@ extension SearchResultsCollectionViewController {
 			guard let self = self else { return }
 
 			switch itemKind {
-			case .userIdentity(let userIdentity, _):
+			case .userIdentity(let userIdentity):
 				let user = self.fetchUser(at: indexPath)
 
 				if user == nil {
