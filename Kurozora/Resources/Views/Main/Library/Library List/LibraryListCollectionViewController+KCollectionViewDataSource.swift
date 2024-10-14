@@ -17,11 +17,11 @@ extension LibraryListCollectionViewController {
 				fatalError("Cannot dequeue reusable cell with identifier \(self.libraryCellStyle.identifierString)")
 			}
 			switch item {
-			case .show(let show, _):
+			case .show(let show):
 				libraryBaseCollectionViewCell.configure(using: show)
-			case .literature(let literature, _):
+			case .literature(let literature):
 				libraryBaseCollectionViewCell.configure(using: literature)
-			case .game(let game, _):
+			case .game(let game):
 				libraryBaseCollectionViewCell.configure(using: game)
 			}
 			return libraryBaseCollectionViewCell

@@ -472,37 +472,34 @@ extension LibraryListCollectionViewController {
 	enum ItemKind: Hashable {
 		// MARK: - Cases
 		/// Indicates the item kind contains a `Show` object.
-		case show(_: Show, id: UUID = UUID())
+		case show(_: Show)
 
 		/// Indicates the item kind contains a `Literature` object.
-		case literature(_: Literature, id: UUID = UUID())
+		case literature(_: Literature)
 
 		/// Indicates the item kind contains a `Game` object.
-		case game(_: Game, id: UUID = UUID())
+		case game(_: Game)
 
 		// MARK: - Functions
 		func hash(into hasher: inout Hasher) {
 			switch self {
-			case .show(let show, let id):
+			case .show(let show):
 				hasher.combine(show)
-				hasher.combine(id)
-			case .literature(let literature, let id):
+			case .literature(let literature):
 				hasher.combine(literature)
-				hasher.combine(id)
-			case .game(let game, let id):
+			case .game(let game):
 				hasher.combine(game)
-				hasher.combine(id)
 			}
 		}
 
 		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
 			switch (lhs, rhs) {
-			case (.show(let show1, let id1), .show(let show2, let id2)):
-				return show1 == show2 && id1 == id2
-			case (.literature(let literature1, let id1), .literature(let literature2, let id2)):
-				return literature1 == literature2 && id1 == id2
-			case (.game(let game1, let id1), .game(let game2, let id2)):
-				return game1 == game2 && id1 == id2
+			case (.show(let show1), .show(let show2)):
+				return show1 == show2
+			case (.literature(let literature1), .literature(let literature2)):
+				return literature1 == literature2
+			case (.game(let game1), .game(let game2)):
+				return game1 == game2
 			default:
 				return false
 			}
