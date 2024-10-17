@@ -31,8 +31,6 @@ class ProfileTableViewController: KTableViewController {
 	@IBOutlet weak var followersButton: KButton!
 	@IBOutlet weak var reviewsButton: KButton!
 
-	@IBOutlet weak var selectBannerImageButton: KButton!
-	@IBOutlet weak var selectProfileImageButton: KButton!
 	@IBOutlet weak var editProfileButton: KTintedButton!
 
 	@IBOutlet weak var separatorView: SeparatorView!
@@ -427,10 +425,10 @@ class ProfileTableViewController: KTableViewController {
 
 		// Configure online status
 		self.onlineIndicatorContainerView.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		self.onlineIndicatorContainerView.roundCorners(.allCorners, radius: 12.5)
+		self.onlineIndicatorContainerView.layerCornerRadius = self.onlineIndicatorContainerView.height / 2
 
 		self.onlineIndicatorView.backgroundColor = user.attributes.activityStatus.colorValue
-		self.onlineIndicatorView.roundCorners(.allCorners, radius: 7.5)
+		self.onlineIndicatorView.layerCornerRadius = self.onlineIndicatorView.height / 2
 
 		self.onlineIndicatorContainerView.isHidden = false
 		self.onlineIndicatorView.isHidden = false
@@ -439,6 +437,7 @@ class ProfileTableViewController: KTableViewController {
 		user.attributes.profileImage(imageView: self.profileImageView)
 
 		// Configure banner image
+		self.bannerImageView.theme_backgroundColor = KThemePicker.tintColor.rawValue
 		user.attributes.bannerImage(imageView: self.bannerImageView)
 
 		// Configure user bio
@@ -489,10 +488,6 @@ class ProfileTableViewController: KTableViewController {
 				self.profileNavigationItem.setLeftBarButton(leftBarButtonItem, animated: true)
 				self.profileNavigationItem.setRightBarButton(rightBarButtonItem, animated: true)
 
-				// Enable other relevant actions
-				self.selectProfileImageButton.alpha = 1
-				self.selectBannerImageButton.alpha = 1
-
 				// Stop scrolling
 				self.tableView.isScrollEnabled = false
 				self.tableView.visibleCells.forEach {
@@ -513,10 +508,6 @@ class ProfileTableViewController: KTableViewController {
 
 				// Unhide edit button
 				self.editProfileButton.alpha = 1
-
-				// Hide select buttons
-				self.selectProfileImageButton.alpha = 0
-				self.selectBannerImageButton.alpha = 0
 
 				// Show relevant actions
 				self.profileNavigationItem.setLeftBarButton(nil, animated: true)
@@ -741,6 +732,10 @@ class ProfileTableViewController: KTableViewController {
 			guard let fmDetailsTableViewController = segue.destination as? FMDetailsTableViewController else { return }
 			guard let feedMessageID = sender as? String else { return }
 			fmDetailsTableViewController.feedMessageID = feedMessageID
+		case R.segue.profileTableViewController.editProileSegue.identifier:
+			guard let kNavigationController = segue.destination as? KNavigationController else { return }
+			guard let editProfileViewController = kNavigationController.viewControllers.first as? EditProfileViewController else { return }
+			editProfileViewController.user = self.user
 		default: break
 		}
 	}
