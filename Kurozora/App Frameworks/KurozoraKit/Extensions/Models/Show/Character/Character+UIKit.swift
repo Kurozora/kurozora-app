@@ -10,6 +10,11 @@ import UIKit
 import KurozoraKit
 
 extension Character {
+	/// The webpage URL of the character.
+	var webpageURLString: String {
+		return "https://kurozora.app/characters/\(self.attributes.slug)"
+	}
+
 	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?)
 	-> UIContextMenuConfiguration? {
 		let identifier = userInfo?["indexPath"] as? NSCopying
@@ -24,11 +29,23 @@ extension Character {
 	private func makeContextMenu(in viewController: UIViewController) -> UIMenu {
 		var menuElements: [UIMenuElement] = []
 
-		// Create "share" element
+		// Create "share" menu
+		var shareMenuChildren: [UIMenuElement] = []
+		let copyTitleAction = UIAction(title: "Copy Name", image: UIImage(systemName: "document.on.document.fill")) { _ in
+			UIPasteboard.general.string = self.attributes.name
+		}
+		let copyLinkAction = UIAction(title: "Copy Link", image: UIImage(systemName: "document.on.document.fill")) { _ in
+			UIPasteboard.general.string = self.webpageURLString
+		}
 		let shareAction = UIAction(title: Trans.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
 			self.openShareSheet(on: viewController)
 		}
-		menuElements.append(shareAction)
+		shareMenuChildren.append(copyTitleAction)
+		shareMenuChildren.append(copyLinkAction)
+		shareMenuChildren.append(shareAction)
+
+		let shareMenu = UIMenu(title: "", options: .displayInline, children: shareMenuChildren)
+		menuElements.append(shareMenu)
 
 		// Create and return a UIMenu with the share action
 		return UIMenu(title: "", children: menuElements)
@@ -44,7 +61,7 @@ extension Character {
 	///    - barButtonItem: The `UIBarButtonItem` sending the request.
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
 		var activityItems: [Any] = []
-		let shareText = "https://kurozora.app/characters/\(self.attributes.slug)\nYou should check out \"\(self.attributes.name)\" via @KurozoraApp"
+		let shareText = "\(self.webpageURLString)\nYou should check out \"\(self.attributes.name)\" via @KurozoraApp"
 		activityItems.append(shareText)
 
 		if let personalImage = self.attributes.personalImage.image {

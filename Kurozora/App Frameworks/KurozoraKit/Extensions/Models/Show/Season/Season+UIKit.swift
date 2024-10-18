@@ -10,6 +10,11 @@ import UIKit
 import KurozoraKit
 
 extension Season {
+	/// The webpage URL of the season.
+	var webpageURLString: String {
+		return "https://kurozora.app/seasons/\(self.id)"
+	}
+
 	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?)
 	-> UIContextMenuConfiguration? {
 		let identifier = userInfo?["indexPath"] as? NSCopying
@@ -45,12 +50,26 @@ extension Season {
 			}
 		}
 
-		// Create "share" element
+		// Create "share" menu
+		var shareMenuChildren: [UIMenuElement] = []
+		let copyTitleAction = UIAction(title: "Copy Title", image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
+			guard let self = self else { return }
+			UIPasteboard.general.string = self.attributes.title
+		}
+		let copyLinkAction = UIAction(title: "Copy Link", image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
+			guard let self = self else { return }
+			UIPasteboard.general.string = self.webpageURLString
+		}
 		let shareAction = UIAction(title: Trans.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
 			guard let self = self else { return }
 			self.openShareSheet(on: viewController)
 		}
-		menuElements.append(shareAction)
+		shareMenuChildren.append(copyTitleAction)
+		shareMenuChildren.append(copyLinkAction)
+		shareMenuChildren.append(shareAction)
+
+		let shareMenu = UIMenu(title: "", options: .displayInline, children: shareMenuChildren)
+		menuElements.append(shareMenu)
 
 		// Create and return a UIMenu with the share action
 		return UIMenu(title: "", children: menuElements)
@@ -83,7 +102,7 @@ extension Season {
 	///    - view: The `UIView` sending the request.
 	///    - barButtonItem: The `UIBarButtonItem` sending the request.
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
-		let shareText = "https://kurozora.app/seasons/\(self.id)/episodes\nYou should watch \"\(self.attributes.title)\" season via @KurozoraApp"
+		let shareText = "\(self.webpageURLString)/episodes\nYou should watch \"\(self.attributes.title)\" season via @KurozoraApp"
 		let activityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
 
 		if let popoverController = activityViewController.popoverPresentationController {

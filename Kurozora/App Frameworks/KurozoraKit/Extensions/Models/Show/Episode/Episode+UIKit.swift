@@ -10,6 +10,11 @@ import UIKit
 import KurozoraKit
 
 extension Episode {
+	/// The webpage URL of the episode.
+	var webpageURLString: String {
+		return "https://kurozora.app/episodes/\(self.id)"
+	}
+
 	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?)
 	-> UIContextMenuConfiguration? {
 		let identifier = userInfo?["indexPath"] as? NSCopying
@@ -45,12 +50,26 @@ extension Episode {
 			}
 		}
 
-		// Create "share" element
+		// Create "share" menu
+		var shareMenuChildren: [UIMenuElement] = []
+		let copyTitleAction = UIAction(title: "Copy Title", image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
+			guard let self = self else { return }
+			UIPasteboard.general.string = self.attributes.title
+		}
+		let copyLinkAction = UIAction(title: "Copy Link", image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
+			guard let self = self else { return }
+			UIPasteboard.general.string = self.webpageURLString
+		}
 		let shareAction = UIAction(title: Trans.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
 			guard let self = self else { return }
 			self.openShareSheet(on: viewController)
 		}
-		menuElements.append(shareAction)
+		shareMenuChildren.append(copyTitleAction)
+		shareMenuChildren.append(copyLinkAction)
+		shareMenuChildren.append(shareAction)
+
+		let shareMenu = UIMenu(title: "", options: .displayInline, children: shareMenuChildren)
+		menuElements.append(shareMenu)
 
 		// Create and return a UIMenu with the share action
 		return UIMenu(title: "", children: menuElements)
@@ -86,7 +105,7 @@ extension Episode {
 	///    - view: The `UIView` sending the request.
 	///    - barButtonItem: The `UIBarButtonItem` sending the request.
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
-		let shareText = "https://kurozora.app/episodes/\(self.id)\nYou should watch \"\(self.attributes.title)\" via @KurozoraApp"
+		let shareText = "\(self.webpageURLString)\nYou should watch \"\(self.attributes.title)\" via @KurozoraApp"
 
 		var activityItems: [Any] = []
 		activityItems.append(shareText)

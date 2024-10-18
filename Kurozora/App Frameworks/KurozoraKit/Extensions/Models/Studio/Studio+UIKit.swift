@@ -10,6 +10,11 @@ import UIKit
 import KurozoraKit
 
 extension Studio {
+	/// The webpage URL of the studio.
+	var webpageURLString: String {
+		return "https://kurozora.app/studios/\(self.attributes.slug)"
+	}
+
 	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?)
 	-> UIContextMenuConfiguration? {
 		let identifier = userInfo?["indexPath"] as? NSCopying
@@ -24,11 +29,26 @@ extension Studio {
 	private func makeContextMenu(in viewController: UIViewController) -> UIMenu {
 		var menuElements: [UIMenuElement] = []
 
-		// Create "share" element
-		let shareAction = UIAction(title: Trans.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
+		// Create "share" menu
+		var shareMenuChildren: [UIMenuElement] = []
+		let copyTitleAction = UIAction(title: "Copy Name", image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
+			guard let self = self else { return }
+			UIPasteboard.general.string = self.attributes.name
+		}
+		let copyLinkAction = UIAction(title: "Copy Link", image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
+			guard let self = self else { return }
+			UIPasteboard.general.string = self.webpageURLString
+		}
+		let shareAction = UIAction(title: Trans.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
+			guard let self = self else { return }
 			self.openShareSheet(on: viewController)
 		}
-		menuElements.append(shareAction)
+		shareMenuChildren.append(copyTitleAction)
+		shareMenuChildren.append(copyLinkAction)
+		shareMenuChildren.append(shareAction)
+
+		let shareMenu = UIMenu(title: "", options: .displayInline, children: shareMenuChildren)
+		menuElements.append(shareMenu)
 
 		// Create and return a UIMenu with the share action
 		return UIMenu(title: "", children: menuElements)
@@ -44,7 +64,7 @@ extension Studio {
 	///    - barButtonItem: The `UIBarButtonItem` sending the request.
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
 		var activityItems: [Any] = []
-	let shareText = "https://kurozora.app/studios/\(self.attributes.slug)\nYou should check out shows made by \"\(self.attributes.name)\" via @KurozoraApp"
+		let shareText = "\(self.webpageURLString)\nYou should check out shows made by \"\(self.attributes.name)\" via @KurozoraApp"
 		activityItems.append(shareText)
 
 		if let personalImage = self.attributes.profileImageView.image {

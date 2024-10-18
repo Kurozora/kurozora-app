@@ -10,6 +10,11 @@ import UIKit
 import KurozoraKit
 
 extension Show {
+	/// The webpage URL of the show.
+	var webpageURLString: String {
+		return "https://kurozora.app/anime/\(self.attributes.slug)"
+	}
+
 	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?)
 	-> UIContextMenuConfiguration? {
 		let identifier = userInfo?["indexPath"] as? NSCopying
@@ -53,13 +58,28 @@ extension Show {
 			}
 		}
 
-		// Create "share" element
+		// Create "share" menu
+		var shareMenuChildren: [UIMenuElement] = []
+		let copyTitleAction = UIAction(title: "Copy Title", image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
+			guard let self = self else { return }
+			UIPasteboard.general.string = self.attributes.title
+		}
+		let copyLinkAction = UIAction(title: "Copy Link", image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
+			guard let self = self else { return }
+			UIPasteboard.general.string = self.webpageURLString
+		}
 		let shareAction = UIAction(title: Trans.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
 			guard let self = self else { return }
 			self.openShareSheet(on: viewController)
 		}
-		menuElements.append(shareAction)
+		shareMenuChildren.append(copyTitleAction)
+		shareMenuChildren.append(copyLinkAction)
+		shareMenuChildren.append(shareAction)
 
+		let shareMenu = UIMenu(title: "", options: .displayInline, children: shareMenuChildren)
+		menuElements.append(shareMenu)
+
+		// Create "remove from library" menu
 		if User.isSignedIn {
 			if libraryStatus != .none {
 				let removeFromLibraryAction = UIAction(title: Trans.removeFromLibrary, image: UIImage(systemName: "minus.circle"), attributes: .destructive) { [weak self] _ in
@@ -87,7 +107,7 @@ extension Show {
 	///    - view: The `UIView` sending the request.
 	///    - barButtonItem: The `UIBarButtonItem` sending the request.
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
-		let shareText = "https://kurozora.app/anime/\(self.attributes.slug)\nYou should watch \"\(self.attributes.title)\" via @KurozoraApp"
+		let shareText = "\(self.webpageURLString)\nYou should watch \"\(self.attributes.title)\" via @KurozoraApp"
 		let activityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
 
 		if let popoverController = activityViewController.popoverPresentationController {
