@@ -12,8 +12,7 @@ import KurozoraKit
 enum TextFieldTag: Int {
 	case username
 	case nickname
-	case biography
-}
+U}
 
 class EditProfileViewController: KViewController {
 	// MARK: - IBOutlets
@@ -22,8 +21,8 @@ class EditProfileViewController: KViewController {
 	@IBOutlet weak var bannerImageView: UIImageView!
 	@IBOutlet weak var bioTextView: KTextView!
 
-	@IBOutlet weak var usernameTextView: KTextView!
-	@IBOutlet weak var displayNameTextView: KTextView!
+	@IBOutlet weak var usernameTextField: KTextField!
+	@IBOutlet weak var displayNameTextField: KTextField!
 
 	@IBOutlet weak var selectBannerImageButton: KButton!
 	@IBOutlet weak var placeholderBannerImageEditButton: UIButton!
@@ -123,13 +122,14 @@ class EditProfileViewController: KViewController {
 		self.usernameLabel.text = user.attributes.username
 		self.usernameLabel.isHidden = false
 
-		self.usernameTextView.text = user.attributes.slug
-		self.usernameTextView.isEditable = user.attributes.canChangeUsername ?? (user.attributes.isPro || user.attributes.isSubscribed)
-		self.usernameTextView.delegate = self
+		self.usernameTextField.text = user.attributes.slug
+		self.usernameTextField.placeholder = user.attributes.slug
+		self.usernameTextField.isEnabled = user.attributes.canChangeUsername ?? (user.attributes.isPro || user.attributes.isSubscribed)
+		self.usernameTextField.delegate = self
 
-		self.displayNameTextView.text = user.attributes.username
-		self.displayNameTextView.isEditable = true
-		self.displayNameTextView.delegate = self
+		self.displayNameTextField.text = user.attributes.username
+		self.displayNameTextField.placeholder = user.attributes.username
+		self.displayNameTextField.delegate = self
 
 		// Configure profile image
 		user.attributes.profileImage(imageView: self.profileImageView)
@@ -147,8 +147,8 @@ class EditProfileViewController: KViewController {
 		self.profileBadgeStackView.configure(for: user)
 
 		// Set the original values
-		self.originalUsernameText = self.usernameTextView.text
-		self.originalNicknameText = self.displayNameTextView.text
+		self.originalUsernameText = self.usernameTextField.text
+		self.originalNicknameText = self.displayNameTextField.text
 		self.originalBioText = self.bioTextView.text
 		self.originalProfileImage = self.profileImageView.image
 		self.originalBannerImage = self.bannerImageView.image
@@ -454,19 +454,26 @@ extension EditProfileViewController: UIAdaptivePresentationControllerDelegate {
 	}
 }
 
-// MARK: - UITextViewDelegate
-extension EditProfileViewController: UITextViewDelegate {
-	func textViewDidChange(_ textView: UITextView) {
-		guard let textFieldTag = TextFieldTag(rawValue: textView.tag) else { return }
+extension EditProfileViewController: UITextFieldDelegate {
+	func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+		guard let textFieldTag = TextFieldTag(rawValue: textField.tag) else { return true }
 
 		switch textFieldTag {
 		case .username:
-			self.editedUsernameText = textView.text
+			self.editedUsernameText = textField.text
 		case .nickname:
-			self.editedNicknameText = textView.text
-		case .biography:
-			self.editedBioText = textView.text
+			self.editedNicknameText = textField.text
 		}
+		return true
+	}
+
+
+}
+
+// MARK: - UITextViewDelegate
+extension EditProfileViewController: UITextViewDelegate {
+	func textViewDidChange(_ textView: UITextView) {
+		self.editedBioText = textView.text
 	}
 
 	func getUserIdentity(username: String) async -> UserIdentity? {

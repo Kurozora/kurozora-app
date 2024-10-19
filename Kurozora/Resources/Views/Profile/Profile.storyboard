@@ -600,66 +600,58 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="343" height="78.333333333333329"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="USERNAME" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3em-32-OZw">
-                                                                <rect key="frame" x="8" y="7.9999999999999982" width="66.333333333333329" height="24.333333333333329"/>
+                                                                <rect key="frame" x="8" y="7.9999999999999982" width="66.333333333333329" height="20.333333333333329"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="INI-fh-gQw" customClass="KTextView" customModule="Kurozora" customModuleProvider="target">
-                                                                <rect key="frame" x="8" y="40.333333333333314" width="327" height="34"/>
+                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="JFw-PB-tdp" customClass="KTextField" customModule="Kurozora" customModuleProvider="target">
+                                                                <rect key="frame" x="8" y="36.333333333333314" width="327" height="34"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="height" constant="34" id="cKo-wF-auY"/>
+                                                                    <constraint firstAttribute="height" constant="34" id="Eli-R0-1gd"/>
                                                                 </constraints>
-                                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                                <textInputTraits key="textInputTraits" returnKeyType="done" textContentType="username"/>
-                                                                <connections>
-                                                                    <outlet property="delegate" destination="zlF-Vo-yv3" id="Ar9-2h-TVW"/>
-                                                                </connections>
-                                                            </textView>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                <textInputTraits key="textInputTraits" textContentType="username"/>
+                                                            </textField>
                                                         </subviews>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="trailing" secondItem="INI-fh-gQw" secondAttribute="trailing" constant="8" id="Cau-Xs-N6g"/>
-                                                            <constraint firstItem="INI-fh-gQw" firstAttribute="top" secondItem="3em-32-OZw" secondAttribute="bottom" constant="8" id="EfA-Ex-vQJ"/>
                                                             <constraint firstItem="3em-32-OZw" firstAttribute="leading" secondItem="Qvc-wN-u8H" secondAttribute="leading" constant="8" id="Xwh-BP-aVJ"/>
+                                                            <constraint firstItem="JFw-PB-tdp" firstAttribute="top" secondItem="3em-32-OZw" secondAttribute="bottom" constant="8" id="e65-Sa-FgE"/>
+                                                            <constraint firstItem="JFw-PB-tdp" firstAttribute="leading" secondItem="Qvc-wN-u8H" secondAttribute="leading" constant="8" id="gYt-TY-0XG"/>
+                                                            <constraint firstAttribute="trailing" secondItem="JFw-PB-tdp" secondAttribute="trailing" constant="8" id="hzH-Jq-gCj"/>
                                                             <constraint firstItem="3em-32-OZw" firstAttribute="top" secondItem="Qvc-wN-u8H" secondAttribute="top" constant="8" id="iO1-9p-XWK"/>
                                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="3em-32-OZw" secondAttribute="trailing" id="lUv-lW-rrd"/>
-                                                            <constraint firstAttribute="bottom" secondItem="INI-fh-gQw" secondAttribute="bottom" constant="4" id="oTt-1w-mo9"/>
-                                                            <constraint firstItem="INI-fh-gQw" firstAttribute="leading" secondItem="Qvc-wN-u8H" secondAttribute="leading" constant="8" id="x3b-6R-SGq"/>
+                                                            <constraint firstAttribute="bottom" secondItem="JFw-PB-tdp" secondAttribute="bottom" constant="8" id="njT-MH-c4e"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LiD-io-yEl">
                                                         <rect key="frame" x="0.0" y="86.333333333333314" width="343" height="78.333333333333314"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DISPLAY NAME" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FDB-ra-gLh">
-                                                                <rect key="frame" x="8" y="7.9999999999999982" width="87.333333333333329" height="24.333333333333329"/>
+                                                                <rect key="frame" x="8" y="7.9999999999999982" width="87.333333333333329" height="20.333333333333329"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rqW-vr-U6N" customClass="KTextView" customModule="Kurozora" customModuleProvider="target">
-                                                                <rect key="frame" x="8" y="40.333333333333371" width="327" height="34"/>
+                                                            <textField opaque="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="JxC-x4-7Lf" customClass="KTextField" customModule="Kurozora" customModuleProvider="target">
+                                                                <rect key="frame" x="8" y="36.333333333333371" width="327" height="34"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="height" constant="34" id="y6g-EZ-noj"/>
+                                                                    <constraint firstAttribute="height" constant="34" id="6y2-rB-8CL"/>
                                                                 </constraints>
-                                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                                <textInputTraits key="textInputTraits" returnKeyType="done" textContentType="username"/>
-                                                                <connections>
-                                                                    <outlet property="delegate" destination="zlF-Vo-yv3" id="CSn-Sa-GeX"/>
-                                                                </connections>
-                                                            </textView>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                <textInputTraits key="textInputTraits" textContentType="username"/>
+                                                            </textField>
                                                         </subviews>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
-                                                            <constraint firstItem="rqW-vr-U6N" firstAttribute="leading" secondItem="LiD-io-yEl" secondAttribute="leading" constant="8" id="0fh-5Q-iuB"/>
                                                             <constraint firstItem="FDB-ra-gLh" firstAttribute="top" secondItem="LiD-io-yEl" secondAttribute="top" constant="8" id="72X-l2-Xcf"/>
-                                                            <constraint firstItem="rqW-vr-U6N" firstAttribute="top" secondItem="FDB-ra-gLh" secondAttribute="bottom" constant="8" id="Gdk-o4-K0z"/>
+                                                            <constraint firstAttribute="trailing" secondItem="JxC-x4-7Lf" secondAttribute="trailing" constant="8" id="DGl-Fo-Jtj"/>
                                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="FDB-ra-gLh" secondAttribute="trailing" id="QLi-Kb-UTz"/>
                                                             <constraint firstItem="FDB-ra-gLh" firstAttribute="leading" secondItem="LiD-io-yEl" secondAttribute="leading" constant="8" id="Sva-lx-ufY"/>
-                                                            <constraint firstAttribute="trailing" secondItem="rqW-vr-U6N" secondAttribute="trailing" constant="8" id="Y1L-2C-Goa"/>
-                                                            <constraint firstAttribute="bottom" secondItem="rqW-vr-U6N" secondAttribute="bottom" constant="4" id="sfa-V4-Ee8"/>
+                                                            <constraint firstItem="JxC-x4-7Lf" firstAttribute="top" secondItem="FDB-ra-gLh" secondAttribute="bottom" constant="8" id="i0v-Du-LAP"/>
+                                                            <constraint firstAttribute="bottom" secondItem="JxC-x4-7Lf" secondAttribute="bottom" constant="8" id="kpd-bz-5LU"/>
+                                                            <constraint firstItem="JxC-x4-7Lf" firstAttribute="leading" secondItem="LiD-io-yEl" secondAttribute="leading" constant="8" id="o53-i2-41g"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a3D-J0-tig">
@@ -679,7 +671,6 @@
                                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                                <dataDetectorType key="dataDetectorTypes" link="YES" address="YES" calendarEvent="YES" lookupSuggestion="YES"/>
                                                                 <connections>
                                                                     <outlet property="delegate" destination="zlF-Vo-yv3" id="GA7-ro-Yh2"/>
                                                                 </connections>
@@ -735,12 +726,12 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Profile" id="b3N-EU-uwb">
-                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="stop" id="3dq-sZ-sL1">
+                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="3dq-sZ-sL1">
                             <connections>
                                 <action selector="cancelButtonPressed:" destination="gDk-s7-DM9" id="hYu-9D-qmY"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="DFZ-05-vNG">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="DFZ-05-vNG">
                             <connections>
                                 <action selector="saveButtonPressed:" destination="gDk-s7-DM9" id="SOW-GZ-KCt"/>
                             </connections>
@@ -749,7 +740,7 @@
                     <connections>
                         <outlet property="bannerImageView" destination="smD-85-4IP" id="b8h-5n-SL8"/>
                         <outlet property="bioTextView" destination="9ec-fb-hS5" id="X4G-Pe-NcH"/>
-                        <outlet property="displayNameTextView" destination="rqW-vr-U6N" id="q69-fO-fPk"/>
+                        <outlet property="displayNameTextField" destination="JxC-x4-7Lf" id="djh-L5-PIU"/>
                         <outlet property="placeholderBannerImageEditButton" destination="lW6-AT-jU1" id="A9B-fR-WhU"/>
                         <outlet property="placeholderProfileImageEditButton" destination="Hee-35-wGT" id="0LR-k7-ST8"/>
                         <outlet property="profileBadgeStackView" destination="yOS-gc-0Kx" id="Boa-eh-rcT"/>
@@ -757,7 +748,7 @@
                         <outlet property="selectBannerImageButton" destination="kVx-uA-euu" id="9Id-up-xwe"/>
                         <outlet property="selectProfileImageButton" destination="IOw-nj-Qcn" id="7j2-s0-61P"/>
                         <outlet property="usernameLabel" destination="aae-lT-o4J" id="XQJ-lb-IZl"/>
-                        <outlet property="usernameTextView" destination="INI-fh-gQw" id="wgM-ed-ar9"/>
+                        <outlet property="usernameTextField" destination="JFw-PB-tdp" id="I1g-Wc-kDb"/>
                         <outletCollection property="containerViews" destination="a3D-J0-tig" collectionClass="NSMutableArray" id="CrH-QV-gm1"/>
                         <outletCollection property="containerViews" destination="LiD-io-yEl" collectionClass="NSMutableArray" id="SuG-WY-JJM"/>
                         <outletCollection property="containerViews" destination="Qvc-wN-u8H" collectionClass="NSMutableArray" id="pwB-Ja-F20"/>
