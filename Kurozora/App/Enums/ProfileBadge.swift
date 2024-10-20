@@ -10,17 +10,20 @@ import UIKit
 
 enum ProfileBadge {
 	// MARK: - Cases
-	case developer
-	case earlySupporter
-	case staff
-	case pro
-	case subscriber(sinceDate: Date)
-	case verified
+	case newUser(username: String, isCurrentUser: Bool)
+	case developer(username: String)
+	case earlySupporter(username: String)
+	case staff(username: String)
+	case pro(username: String)
+	case subscriber(username: String, subscribedAt: Date)
+	case verified(username: String)
 
 	// MARK: - Properties
 	/// The title value of a profile badge.
 	var title: String {
 		switch self {
+		case .newUser:
+			return "I'm new here!"
 		case .developer:
 			return "Active Developer"
 		case .earlySupporter:
@@ -39,24 +42,28 @@ enum ProfileBadge {
 	/// The description value of a profile badge.
 	var description: String {
 		switch self {
-		case .developer:
-			return "This account is an active developer."
-		case .earlySupporter:
-			return "This account is an early supporter of Kurozora."
-		case .staff:
-			return "This account is a staff member."
-		case .pro:
-			return "This account is a Pro user."
-		case .subscriber(let sinceDate):
-			return "This account is a Kurozora+ subscriber since \(sinceDate.formatted(date: .abbreviated, time: .omitted))."
-		case .verified:
-			return "This account is verified because it’s notable in animators, voice actors, entertainment studios, or another designated category."
+		case .newUser(let username, let isCurrentUser):
+			return isCurrentUser ? "Welcome to Kurozora! Introduce youself to get started (^_^)/" : "\(username) is new to Kurozora. Say hi to them (^o^)/"
+		case .developer(let username):
+			return "\(username) is an active developer."
+		case .earlySupporter(let username):
+			return "\(username) is an early supporter of Kurozora."
+		case .staff(let username):
+			return "\(username) is a staff member."
+		case .pro(let username):
+			return "\(username) is a Pro user."
+		case .subscriber(let username, let subscribedAt):
+			return "\(username) is a Kurozora+ subscriber since \(subscribedAt.formatted(date: .abbreviated, time: .omitted))."
+		case .verified(let username):
+			return "\(username) is verified because it’s notable in animators, voice actors, entertainment studios, or another designated category."
 		}
 	}
 
 	/// The button title value of a profile badge.
 	var buttonTitle: String? {
 		switch self {
+		case .newUser(_, let isCurrentUser):
+			return isCurrentUser ? nil : "Mention User"
 		case .developer:
 			return "Become a Developer"
 		case .earlySupporter:
@@ -75,6 +82,8 @@ enum ProfileBadge {
 	/// The image value of a profile badge.
 	var image: UIImage? {
 		switch self {
+		case .newUser:
+			return R.image.badges.beginner_shield()
 		case .developer:
 			return R.image.badges.hammer_app()
 		case .earlySupporter:
@@ -83,8 +92,8 @@ enum ProfileBadge {
 			return R.image.badges.sakura_shield()
 		case .pro:
 			return R.image.badges.rocket_circle()
-		case .subscriber(let sinceDate):
-			let numberOfMonths = Date().months(from: sinceDate)
+		case .subscriber(_, let subscribedAt):
+			let numberOfMonths = Date().months(from: subscribedAt)
 
 			if numberOfMonths >= 24 {
 				return R.image.badges.twenty_four_months()

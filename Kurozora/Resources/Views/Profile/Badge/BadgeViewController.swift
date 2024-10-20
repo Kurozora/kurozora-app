@@ -108,9 +108,17 @@ class BadgeViewController: KViewController {
 		}
 	}
 
+	private func goToMentionUser(username: String) {
+		self.dismiss(animated: true) {
+			print("----- Mentioning", username)
+		}
+	}
+
 	// MARK: - IBActions
 	@IBAction func primaryButtonPressed(_ sender: UIButton) {
 		switch self.profileBadge {
+		case .newUser(let username, _):
+			self.goToMentionUser(username: username)
 		case .developer:
 			self.goToGitHub()
 		case .earlySupporter: break

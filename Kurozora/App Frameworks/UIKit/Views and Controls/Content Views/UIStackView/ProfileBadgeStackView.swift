@@ -43,7 +43,7 @@ class ProfileBadgeStackView: UIStackView {
 	func configure(for user: User) {
 		self.profileBadges = self.getProfileBadges(for: user)
 
-		for view in arrangedSubviews {
+		for view in self.arrangedSubviews {
 			view.removeFromSuperview()
 		}
 
@@ -69,23 +69,27 @@ class ProfileBadgeStackView: UIStackView {
 	private func getProfileBadges(for user: User) -> [ProfileBadge] {
 		var profileBadges: [ProfileBadge] = []
 
+		if user.attributes.joinedAt.isInCurrentWeek {
+			profileBadges.append(.newUser(username: user.attributes.username, isCurrentUser: User.current == user))
+		}
+
 		if user.attributes.isVerified {
-			profileBadges.append(.verified)
+			profileBadges.append(.verified(username: user.attributes.username))
 		}
 		if user.attributes.isStaff {
-			profileBadges.append(.staff)
+			profileBadges.append(.staff(username: user.attributes.username))
 		}
 		if user.attributes.isDeveloper {
-			profileBadges.append(.developer)
+			profileBadges.append(.developer(username: user.attributes.username))
 		}
 		if user.attributes.isEarlySupporter {
-			profileBadges.append(.earlySupporter)
+			profileBadges.append(.earlySupporter(username: user.attributes.username))
 		}
-		if user.attributes.isPro {
-			profileBadges.append(.pro)
+		if user.attributes.isPro && !user.attributes.isSubscribed {
+			profileBadges.append(.pro(username: user.attributes.username))
 		}
 		if user.attributes.isSubscribed, let subscribedAt = user.attributes.subscribedAt {
-			profileBadges.append(.subscriber(sinceDate: subscribedAt))
+			profileBadges.append(.subscriber(username: user.attributes.username, subscribedAt: subscribedAt))
 		}
 
 		return profileBadges
