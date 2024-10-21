@@ -178,7 +178,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="29" height="44"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <color key="tintColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <state key="normal" title="0" image="Symbols/message.left.and.message.right.fill">
+                                        <state key="normal" title="0" image="Symbols/bubble.left.and.bubble.right">
                                             <color key="titleColor" red="0.58823529409999997" green="0.61568627450000002" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
@@ -316,9 +316,9 @@
     </objects>
     <resources>
         <image name="Placeholders/User Profile" width="300" height="300"/>
-        <image name="Symbols/message.left.and.message.right.fill" width="18" height="15"/>
-        <image name="ellipsis" catalog="system" width="128" height="37"/>
-        <image name="heart.fill" catalog="system" width="128" height="107"/>
-        <image name="square.and.arrow.up.on.square.fill" catalog="system" width="121" height="128"/>
+        <image name="Symbols/bubble.left.and.bubble.right" width="19" height="15"/>
+        <image name="arrow.2.squarepath" catalog="system" width="32" height="32"/>
+        <image name="ellipsis" catalog="system" width="32" height="32"/>
+        <image name="heart" catalog="system" width="32" height="32"/>
     </resources>
 </document>

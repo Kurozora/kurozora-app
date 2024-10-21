@@ -37,7 +37,7 @@ extension FeedMessage {
 					self.heartMessage(via: viewController, userInfo: userInfo)
 				}
 			}
-			let replyAction = UIAction(title: "Reply", image: #imageLiteral(resourceName: "Symbols/message.left.and.message.right.fill")) { [weak self] _ in
+			let replyAction = UIAction(title: "Reply", image: #imageLiteral(resourceName: "Symbols/bubble.left.and.bubble.right")) { [weak self] _ in
 				guard let self = self else { return }
 				self.replyToMessage(via: viewController, userInfo: userInfo)
 			}
@@ -80,7 +80,7 @@ extension FeedMessage {
 
 		var userMenuElements: [UIMenuElement] = []
 		// Replies action
-		let showRepliesAction = UIAction(title: "Show Replies", image: #imageLiteral(resourceName: "Symbols/message.left.and.message.right.fill")) { [weak self] _ in
+		let showRepliesAction = UIAction(title: "Show Replies", image: #imageLiteral(resourceName: "Symbols/bubble.left.and.bubble.right")) { [weak self] _ in
 			guard let self = self else { return }
 			self.visitRepliesView(from: viewController)
 		}
