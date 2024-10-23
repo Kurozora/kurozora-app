@@ -27,21 +27,21 @@ extension FeedMessage {
 			// Heart, reply and reshare
 			var heartAction: UIAction
 			if self.attributes.isHearted ?? false {
-				heartAction = UIAction(title: "Unlike", image: UIImage(systemName: "heart.slash.fill")) { [weak self] _ in
+				heartAction = UIAction(title: "Unlike", image: UIImage(systemName: "heart.slash")) { [weak self] _ in
 					guard let self = self else { return }
 					self.heartMessage(via: viewController, userInfo: userInfo)
 				}
 			} else {
-				heartAction = UIAction(title: "Like", image: UIImage(systemName: "heart.fill")) { [weak self] _ in
+				heartAction = UIAction(title: "Like", image: UIImage(systemName: "heart")) { [weak self] _ in
 					guard let self = self else { return }
 					self.heartMessage(via: viewController, userInfo: userInfo)
 				}
 			}
-			let replyAction = UIAction(title: "Reply", image: #imageLiteral(resourceName: "Symbols/bubble.left.and.bubble.right")) { [weak self] _ in
+			let replyAction = UIAction(title: "Reply", image: #imageLiteral(resourceName: "Symbols/message.left.and.message.right")) { [weak self] _ in
 				guard let self = self else { return }
 				self.replyToMessage(via: viewController, userInfo: userInfo)
 			}
-			let reShareAction = UIAction(title: "Re-share", image: UIImage(systemName: "square.and.arrow.up.on.square.fill")) { [weak self] _ in
+			let reShareAction = UIAction(title: "Re-share", image: UIImage(systemName: "arrow.2.squarepath")) { [weak self] _ in
 				guard let self = self else { return }
 				self.reShareMessage(via: viewController, userInfo: userInfo)
 			}
@@ -56,7 +56,7 @@ extension FeedMessage {
 			   User.current?.attributes.role == .admin ||
 			   User.current?.id == messageUserID {
 				// Edit action
-				let editAction = UIAction(title: "Edit", image: UIImage(systemName: "pencil.circle.fill")) { [weak self] _ in
+				let editAction = UIAction(title: "Edit", image: UIImage(systemName: "pencil.circle")) { [weak self] _ in
 					guard let self = self else { return }
 					self.editMessage(via: viewController, userInfo: userInfo)
 				}
@@ -74,13 +74,13 @@ extension FeedMessage {
 				}
 				deleteMenuElements.append(deleteAction)
 
-				menuElements.append(UIMenu(title: "Delete", image: UIImage(systemName: "trash.fill"), children: deleteMenuElements))
+				menuElements.append(UIMenu(title: "Delete", image: UIImage(systemName: "trash"), children: deleteMenuElements))
 			}
 		}
 
 		var userMenuElements: [UIMenuElement] = []
 		// Replies action
-		let showRepliesAction = UIAction(title: "Show Replies", image: #imageLiteral(resourceName: "Symbols/bubble.left.and.bubble.right")) { [weak self] _ in
+		let showRepliesAction = UIAction(title: "Show Replies", image: #imageLiteral(resourceName: "Symbols/message.left.and.message.right")) { [weak self] _ in
 			guard let self = self else { return }
 			self.visitRepliesView(from: viewController)
 		}
@@ -89,7 +89,7 @@ extension FeedMessage {
 		// Username action
 		if let user = self.relationships.users.data.first {
 			let username = user.attributes.username
-			let userAction = UIAction(title: "Show " + username + "'s Profile", image: UIImage(systemName: "person.crop.circle.fill")) { [weak self] _ in
+			let userAction = UIAction(title: "Show " + username + "'s Profile", image: UIImage(systemName: "person.crop.circle")) { [weak self] _ in
 				guard let self = self else { return }
 				self.visitOriginalPosterProfile(from: viewController)
 			}
@@ -97,7 +97,7 @@ extension FeedMessage {
 		}
 
 		// Create "share" element
-		let shareAction = UIAction(title: "Share Message", image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
+		let shareAction = UIAction(title: "Share Message", image: UIImage(systemName: "square.and.arrow.up")) { [weak self] _ in
 			guard let self = self else { return }
 			self.openShareSheet(on: viewController)
 		}
@@ -116,7 +116,7 @@ extension FeedMessage {
 			reportMenuElements.append(reportAction)
 
 			// Append report menu
-			menuElements.append(UIMenu(title: "Report", image: UIImage(systemName: "exclamationmark.circle.fill"), children: reportMenuElements))
+			menuElements.append(UIMenu(title: "Report", image: UIImage(systemName: "exclamationmark.circle"), children: reportMenuElements))
 		}
 
 		// Create and return a UIMenu
@@ -298,7 +298,7 @@ extension FeedMessage {
 					}
 				}
 			}
-			deleteAction.setValue(UIImage(systemName: "trash.fill"), forKey: "image")
+			deleteAction.setValue(UIImage(systemName: "trash"), forKey: "image")
 			deleteAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 			actionSheetAlertController.addAction(deleteAction)
 		}

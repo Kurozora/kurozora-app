@@ -217,9 +217,11 @@ class BaseFeedMessageCell: KTableViewCell {
 	/// Update the heart status of the message.
 	fileprivate func updateHeartStatus(for feedMessage: FeedMessage) {
 		if feedMessage.attributes.isHearted ?? false {
+			self.heartButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
 			self.heartButton.theme_setTitleColor(KThemePicker.tintColor.rawValue, forState: .normal)
 			self.heartButton.theme_tintColor = KThemePicker.tintColor.rawValue
 		} else {
+			self.heartButton.setImage(UIImage(systemName: "heart"), for: .normal)
 			self.heartButton.theme_setTitleColor(KThemePicker.tableViewCellActionDefaultColor.rawValue, forState: .normal)
 			self.heartButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
 		}
