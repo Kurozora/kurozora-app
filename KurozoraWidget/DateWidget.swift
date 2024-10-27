@@ -15,11 +15,12 @@ struct Provider: IntentTimelineProvider {
 		return DateEntry(
 			date: Date(),
 			banner: Banner(
-				image: UIImage(named: "starry_sky"),
+				image: UIImage(named: "starry_sky")?.resized(toWidth: context.displaySize.width),
 				url: nil,
 				height: 1080,
 				width: 1920,
-				backgroundColor: UIColor(hexString: "#1e1731")?.color
+				backgroundColor: UIColor(hexString: "#1e1731")?.color,
+				deeplinkURL: nil
 			),
 			showDate: true
 		)
@@ -129,13 +130,15 @@ struct DateWidgetEntryView: View {
 					}
 				} else if let url = self.entry.banner.url, let image = try? UIImage(url: url) {
 					GeometryReader { geometry in
-						Image(uiImage: image)
-							.resizable()
-							.scaledToFill()
-							.overlay {
-								self.entry.banner.backgroundColor?.opacity(0.25)
-							}
-							.frame(maxWidth: geometry.size.width, maxHeight: geometry.size.height)
+						if let image = image.resized(toWidth: geometry.size.width) {
+							Image(uiImage: image)
+								.resizable()
+								.scaledToFill()
+								.overlay {
+									self.entry.banner.backgroundColor?.opacity(0.25)
+								}
+								.frame(maxWidth: geometry.size.width, maxHeight: geometry.size.height)
+						}
 					}
 				}
 
@@ -196,7 +199,8 @@ struct DateWidget: Widget {
 			url: nil,
 			height: 1080,
 			width: 1920,
-			backgroundColor: UIColor(hexString: "#1e1731")?.color
+			backgroundColor: UIColor(hexString: "#1e1731")?.color,
+			deeplinkURL: nil
 		),
 		showDate: true
 	)
@@ -213,7 +217,8 @@ struct DateWidget: Widget {
 			url: nil,
 			height: 1080,
 			width: 1920,
-			backgroundColor: UIColor(hexString: "#1e1731")?.color
+			backgroundColor: UIColor(hexString: "#1e1731")?.color,
+			deeplinkURL: nil
 		),
 		showDate: false
 	)
