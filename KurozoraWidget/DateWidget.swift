@@ -79,7 +79,11 @@ struct Provider: IntentTimelineProvider {
 
 struct DateEntry: TimelineEntry {
     let date: Date
-    let banner: Banner
+
+	/// The banner to display.
+	let banner: Banner
+
+	/// Specifies whether to show the date.
 	let showDate: Bool
 }
 
@@ -98,6 +102,9 @@ struct Banner {
 
 	/// The background color of the media.
 	public let backgroundColor: Color?
+
+	/// The deeplink URL of the media.
+	public let deeplinkURL: URL?
 }
 
 struct DateWidgetEntryView: View {
@@ -153,6 +160,7 @@ struct DateWidgetEntryView: View {
 					.padding(self.margins)
 				}
 			}
+			.widgetURL(self.entry.banner.deeplinkURL)
 		}
     }
 }

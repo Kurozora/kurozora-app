@@ -48,7 +48,28 @@ extension Media {
 			url: await ImageFetcher.fetchImage(from: URL(string: self.url)),
 			height: self.height,
 			width: self.width,
-			backgroundColor: UIColor(hexString: self.backgroundColor ?? "")?.color
+			backgroundColor: UIColor(hexString: self.backgroundColor ?? "")?.color,
+			deeplinkURL: self.deeplinkURL
 		)
+	}
+
+	/// The deeplink URL to the relationship of the media.
+	var deeplinkURL: URL? {
+		if let relationships = self.relationships {
+			if let episodes = relationships.episodes?.data.first {
+				return URL(string: "kurozora://episodes/\(episodes.id)")
+			}
+			if let shows = relationships.shows?.data.first {
+				return URL(string: "kurozora://shows/\(shows.id)")
+			}
+			if let games = relationships.games?.data.first {
+				return URL(string: "kurozora://games/\(games.id)")
+			}
+			if let literatures = relationships.literatures?.data.first {
+				return URL(string: "kurozora://literatures/\(literatures.id)")
+			}
+		}
+
+		return nil
 	}
 }
