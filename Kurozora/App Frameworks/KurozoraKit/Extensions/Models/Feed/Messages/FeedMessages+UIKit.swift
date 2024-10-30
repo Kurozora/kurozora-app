@@ -23,6 +23,50 @@ extension FeedMessage {
 	func makeContextMenu(in viewController: UIViewController?, userInfo: [AnyHashable: Any?]) -> UIMenu {
 		var menuElements: [UIMenuElement] = []
 
+		// User actions
+		if let user = self.relationships.users.data.first {
+			var profileElements: [UIMenuElement] = []
+
+			// Follow action
+			if user != User.current {
+				let followActionTitle: String
+				let followActionImage: UIImage?
+
+				switch user.attributes.followStatus {
+				case .followed:
+					followActionTitle = "Unfollow"
+					followActionImage = UIImage(systemName: "person.badge.minus")
+				case .notFollowed, .disabled:
+					followActionTitle = "Follow"
+					followActionImage = UIImage(systemName: "person.badge.plus")
+				}
+
+				let followAction = UIAction(title: followActionTitle, image: followActionImage) { [weak self] _ in
+					guard let self = self else { return }
+					self.relationships.users.data.first?.follow(on: viewController)
+				}
+				profileElements.append(followAction)
+			}
+
+			// Show profile action
+			let showProfileAction = UIAction(title: "Show Profile", image: UIImage(systemName: "person.crop.circle")) { [weak self] _ in
+				guard let self = self else { return }
+				self.visitOriginalPosterProfile(from: viewController)
+			}
+			profileElements.append(showProfileAction)
+
+//			// Block action
+//			if User.isSignedIn, user != User.current {
+//				let blockAction = UIAction(title: "Block", image: UIImage(systemName: "xmark.shield")) { [weak self] _ in
+//					guard let self = self else { return }
+//					self.relationships.users.data.first?.block()
+//				}
+//				profileElements.append(blockAction)
+//			}
+
+			menuElements.append(UIMenu(title: "@\(user.attributes.slug)", children: profileElements))
+		}
+
 		if User.isSignedIn {
 			// Heart, reply and reshare
 			var heartAction: UIAction
@@ -85,16 +129,6 @@ extension FeedMessage {
 			self.visitRepliesView(from: viewController)
 		}
 		userMenuElements.append(showRepliesAction)
-
-		// Username action
-		if let user = self.relationships.users.data.first {
-			let username = user.attributes.username
-			let userAction = UIAction(title: "Show " + username + "'s Profile", image: UIImage(systemName: "person.crop.circle")) { [weak self] _ in
-				guard let self = self else { return }
-				self.visitOriginalPosterProfile(from: viewController)
-			}
-			userMenuElements.append(userAction)
-		}
 
 		// Create "share" element
 		let shareAction = UIAction(title: "Share Message", image: UIImage(systemName: "square.and.arrow.up")) { [weak self] _ in
