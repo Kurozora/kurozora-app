@@ -84,6 +84,21 @@ extension User {
 		viewController?.present(activityViewController, animated: true, completion: nil)
 	}
 
+	func follow(on viewController: UIViewController? = UIApplication.topViewController) {
+		let userIdentity = UserIdentity(id: self.id)
+
+		WorkflowController.shared.isSignedIn {
+			Task {
+				do {
+					let followUpdateResponse = try await KService.updateFollowStatus(forUser: userIdentity).value
+					self.attributes.update(using: followUpdateResponse.data)
+				} catch {
+					print("-----", error.localizedDescription)
+				}
+			}
+		}
+	}
+
 	/// Performs segue to `LibraryViewController` with `LibrarySegue` as the identifier.
 	///
 	/// - Parameters:
