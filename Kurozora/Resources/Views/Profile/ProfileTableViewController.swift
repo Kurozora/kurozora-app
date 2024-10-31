@@ -16,7 +16,8 @@ class ProfileTableViewController: KTableViewController {
 	@IBOutlet weak var moreBarButtonItem: UIBarButtonItem!
 
 	@IBOutlet weak var profileImageView: ProfileImageView!
-	@IBOutlet weak var usernameLabel: KLabel!
+	@IBOutlet weak var displayNameLabel: KLabel!
+	@IBOutlet weak var usernameLabel: KSecondaryLabel!
 	@IBOutlet weak var onlineIndicatorView: UIView!
 	@IBOutlet weak var onlineIndicatorContainerView: UIView!
 	@IBOutlet weak var bannerImageView: UIImageView!
@@ -419,8 +420,12 @@ class ProfileTableViewController: KTableViewController {
 		guard let user = self.user else { return }
 		self.configureNavBarButtons()
 
+		// Configure display name
+		self.displayNameLabel.text = user.attributes.username
+		self.displayNameLabel.isHidden = false
+
 		// Configure username
-		self.usernameLabel.text = user.attributes.username
+		self.usernameLabel.text = "@\(user.attributes.slug)"
 		self.usernameLabel.isHidden = false
 
 		// Configure online status

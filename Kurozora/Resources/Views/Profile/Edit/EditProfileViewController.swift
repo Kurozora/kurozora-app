@@ -12,7 +12,7 @@ import KurozoraKit
 enum TextFieldTag: Int {
 	case username
 	case nickname
-U}
+}
 
 class EditProfileViewController: KViewController {
 	// MARK: - IBOutlets
