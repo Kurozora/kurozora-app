@@ -31,6 +31,12 @@
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="@kurozora" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PxJ-QG-FpG" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="60" y="32" width="65" height="16"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                     <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="iwK-VE-5g4" customClass="ProfileBadgeStackView" customModule="Kurozora" customModuleProvider="target">
                         <rect key="frame" x="133.5" y="12" width="209.5" height="20"/>
                         <constraints>
@@ -43,14 +49,14 @@
                         <color key="textColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="LuX-8s-I8C">
-                        <rect key="frame" x="60" y="36" width="306" height="66"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="LuX-8s-I8C">
+                        <rect key="frame" x="60" y="52.5" width="306" height="50"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aFz-ci-0el">
-                                <rect key="frame" x="0.0" y="0.0" width="306" height="66"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aFz-ci-0el">
+                                <rect key="frame" x="0.0" y="0.0" width="306" height="50"/>
                                 <subviews>
-                                    <textView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="_test" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="I35-Go-4sT" customClass="KSelectableTextView" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="306" height="66"/>
+                                    <textView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="_test" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="I35-Go-4sT" customClass="KSelectableTextView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="306" height="50"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -66,14 +72,14 @@
                             </view>
                         </subviews>
                     </stackView>
-                    <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cfl-Ds-ElJ" customClass="KVisualEffectView" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="60" y="36" width="306" height="66"/>
-                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="tiF-e9-Zs7">
-                            <rect key="frame" x="0.0" y="0.0" width="306" height="66"/>
+                    <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cfl-Ds-ElJ" customClass="KVisualEffectView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="60" y="52.5" width="306" height="50"/>
+                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="tiF-e9-Zs7">
+                            <rect key="frame" x="0.0" y="0.0" width="306" height="50"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZDW-d9-wqu" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                    <rect key="frame" x="134.5" y="23.5" width="37" height="19.5"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZDW-d9-wqu" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                    <rect key="frame" x="134.5" y="15.5" width="37" height="19.5"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -171,11 +177,11 @@
                     <constraint firstAttribute="trailing" secondItem="Yad-DN-7du" secondAttribute="trailing" constant="8" id="4eD-Bc-NGu"/>
                     <constraint firstItem="Yad-DN-7du" firstAttribute="centerY" secondItem="27X-h2-WMd" secondAttribute="centerY" id="9ei-BF-Jld"/>
                     <constraint firstItem="LuX-8s-I8C" firstAttribute="trailing" secondItem="Yad-DN-7du" secondAttribute="trailing" id="Btf-Gg-EmP"/>
+                    <constraint firstItem="PxJ-QG-FpG" firstAttribute="leading" secondItem="27X-h2-WMd" secondAttribute="leading" id="Cfh-gH-0uZ"/>
                     <constraint firstItem="U8F-at-A0g" firstAttribute="trailing" secondItem="LuX-8s-I8C" secondAttribute="trailing" id="E0K-FE-d7d"/>
                     <constraint firstAttribute="bottom" secondItem="U8F-at-A0g" secondAttribute="bottom" constant="12" id="Ef8-Jg-KCU"/>
                     <constraint firstItem="Cfl-Ds-ElJ" firstAttribute="top" secondItem="LuX-8s-I8C" secondAttribute="top" id="FWT-a4-Laz"/>
                     <constraint firstItem="qEa-CS-cR6" firstAttribute="top" secondItem="792-bS-aOJ" secondAttribute="top" constant="12" id="GF1-Lk-BjX"/>
-                    <constraint firstItem="LuX-8s-I8C" firstAttribute="top" secondItem="27X-h2-WMd" secondAttribute="bottom" constant="4" id="MeI-pu-ngh"/>
                     <constraint firstItem="Cfl-Ds-ElJ" firstAttribute="leading" secondItem="LuX-8s-I8C" secondAttribute="leading" id="Ppt-H1-tPD"/>
                     <constraint firstItem="U8F-at-A0g" firstAttribute="leading" secondItem="LuX-8s-I8C" secondAttribute="leading" id="QRo-cc-O9t"/>
                     <constraint firstItem="iwK-VE-5g4" firstAttribute="top" secondItem="27X-h2-WMd" secondAttribute="top" id="S1Q-1z-KSM"/>
@@ -183,12 +189,15 @@
                     <constraint firstItem="Yad-DN-7du" firstAttribute="top" secondItem="27X-h2-WMd" secondAttribute="top" id="Z9D-Ud-ebt"/>
                     <constraint firstItem="iwK-VE-5g4" firstAttribute="bottom" secondItem="27X-h2-WMd" secondAttribute="bottom" id="ZTx-bk-XPW"/>
                     <constraint firstItem="LuX-8s-I8C" firstAttribute="leading" secondItem="27X-h2-WMd" secondAttribute="leading" id="bNe-gv-Aka"/>
+                    <constraint firstItem="PxJ-QG-FpG" firstAttribute="top" secondItem="27X-h2-WMd" secondAttribute="bottom" id="dOP-hg-nKB"/>
                     <constraint firstItem="iwK-VE-5g4" firstAttribute="leading" secondItem="27X-h2-WMd" secondAttribute="trailing" constant="2" id="fGp-jG-1fi"/>
+                    <constraint firstItem="LuX-8s-I8C" firstAttribute="top" secondItem="PxJ-QG-FpG" secondAttribute="bottom" constant="4" id="gUt-I6-3zS"/>
                     <constraint firstItem="Cfl-Ds-ElJ" firstAttribute="bottom" secondItem="LuX-8s-I8C" secondAttribute="bottom" id="loI-7G-wWd"/>
                     <constraint firstItem="27X-h2-WMd" firstAttribute="top" secondItem="qEa-CS-cR6" secondAttribute="top" id="oGS-UM-qhD"/>
                     <constraint firstItem="Yad-DN-7du" firstAttribute="leading" secondItem="iwK-VE-5g4" secondAttribute="trailing" constant="8" symbolic="YES" id="ps6-eB-Opy"/>
                     <constraint firstItem="27X-h2-WMd" firstAttribute="leading" secondItem="qEa-CS-cR6" secondAttribute="trailing" constant="8" symbolic="YES" id="uY0-s2-DHX"/>
                     <constraint firstItem="Cfl-Ds-ElJ" firstAttribute="trailing" secondItem="LuX-8s-I8C" secondAttribute="trailing" id="vis-CT-V6p"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="PxJ-QG-FpG" secondAttribute="trailing" constant="8" id="wvz-tU-LEF"/>
                     <constraint firstItem="qEa-CS-cR6" firstAttribute="leading" secondItem="792-bS-aOJ" secondAttribute="leading" constant="8" id="xF4-KN-csH"/>
                 </constraints>
             </tableViewCellContentView>
@@ -197,6 +206,7 @@
             <connections>
                 <outlet property="commentButton" destination="ZRS-WP-vqK" id="ZAU-oa-ewb"/>
                 <outlet property="dateTimeLabel" destination="Yad-DN-7du" id="0aO-Xm-b11"/>
+                <outlet property="displayNameLabel" destination="27X-h2-WMd" id="VEx-pe-dbJ"/>
                 <outlet property="heartButton" destination="7eR-Hg-lR6" id="5nR-ot-cVo"/>
                 <outlet property="moreButton" destination="jiI-CD-mWg" id="7Z7-Cb-jiE"/>
                 <outlet property="postTextView" destination="I35-Go-4sT" id="2NN-Yo-Rwj"/>
@@ -205,11 +215,11 @@
                 <outlet property="profileImageView" destination="qEa-CS-cR6" id="y0z-IG-ZnW"/>
                 <outlet property="richLinkStackView" destination="LuX-8s-I8C" id="l3W-od-QHZ"/>
                 <outlet property="shareButton" destination="Wjh-je-WtR" id="nPb-tM-GGT"/>
-                <outlet property="usernameLabel" destination="27X-h2-WMd" id="eDx-vg-PZV"/>
+                <outlet property="usernameLabel" destination="PxJ-QG-FpG" id="iH4-XE-XWx"/>
                 <outlet property="warningTranscriptLabel" destination="ZDW-d9-wqu" id="Fqt-6z-Asm"/>
                 <outlet property="warningVisualEffectView" destination="Cfl-Ds-ElJ" id="wT1-O7-MAl"/>
             </connections>
-            <point key="canvasLocation" x="-255" y="19"/>
+            <point key="canvasLocation" x="-255.07246376811597" y="18.75"/>
         </tableViewCell>
     </objects>
     <resources>

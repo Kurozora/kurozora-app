@@ -16,7 +16,8 @@ class BaseFeedMessageCell: KTableViewCell {
 	@IBOutlet weak var warningVisualEffectView: KVisualEffectView?
 
 	@IBOutlet weak var profileImageView: ProfileImageView!
-	@IBOutlet weak var usernameLabel: KLabel!
+	@IBOutlet weak var displayNameLabel: KLabel!
+	@IBOutlet weak var usernameLabel: KSecondaryLabel!
 	@IBOutlet weak var profileBadgeStackView: ProfileBadgeStackView!
 	@IBOutlet weak var dateTimeLabel: KSecondaryLabel!
 	@IBOutlet weak var postTextView: KSelectableTextView!
@@ -49,6 +50,11 @@ class BaseFeedMessageCell: KTableViewCell {
 	}
 
 	// MARK: - Functions
+	override func sharedInit() {
+		self.separatorInset = .zero
+		self.contentView.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+	}
+
 	func configureCell(using feedMessage: FeedMessage?) {
 		guard !self.warningIsHidden else {
 			self.hideSkeleton()
@@ -68,11 +74,12 @@ class BaseFeedMessageCell: KTableViewCell {
 
 		// Configure poster details
 		if let user = feedMessage.relationships.users.data.first {
-			self.usernameLabel.text = user.attributes.username
+			self.displayNameLabel.text = user.attributes.username
+			self.usernameLabel.text = "@\(user.attributes.slug)"
 			user.attributes.profileImage(imageView: self.profileImageView)
 
 			// Attach gestures
-			self.configureProfilePageGesture(for: self.usernameLabel)
+			self.configureProfilePageGesture(for: self.displayNameLabel)
 			self.configureProfilePageGesture(for: self.profileImageView)
 
 			// Badges
