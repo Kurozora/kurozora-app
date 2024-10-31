@@ -12,6 +12,8 @@ import LinkPresentation
 
 class FeedMessageReShareCell: FeedMessageCell {
 	// MARK: - IBOutlets
+	@IBOutlet weak var reShareImageView: UIImageView!
+	@IBOutlet weak var reShareLabel: KSecondaryLabel!
 	@IBOutlet weak var opProfileImageView: ProfileImageView!
 	@IBOutlet weak var opUsernameLabel: KLabel!
 	@IBOutlet weak var opPostTextView: KSelectableTextView!
@@ -45,8 +47,19 @@ class FeedMessageReShareCell: FeedMessageCell {
 		guard let opMessage = feedMessage.relationships.parent?.data.first else { return }
 		self.opDateTimeLabel.text = opMessage.attributes.createdAt.relativeToNow
 
+		// Configure re-share label
+		self.reShareImageView.theme_tintColor = KThemePicker.subTextColor.rawValue
+
 		if let opUser = opMessage.relationships.users.data.first {
 			opUser.attributes.profileImage(imageView: self.opProfileImageView)
+
+			// Configure re-share label
+			self.reShareLabel.text = if opUser.attributes.username == User.current?.attributes.username {
+				"You reposted this"
+			} else {
+				"\(opUser.attributes.username) reposted this"
+			}
+
 			// Configure username
 			self.opUsernameLabel.font = UIFont.preferredFont(forTextStyle: .subheadline).bold
 			self.opUsernameLabel.text = opUser.attributes.username
