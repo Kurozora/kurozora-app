@@ -26,16 +26,18 @@ extension ProfileTableViewController {
 		if let baseFeedMessageCell = tableView.cellForRow(at: indexPath) as? BaseFeedMessageCell {
 			baseFeedMessageCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
 
-			baseFeedMessageCell.usernameLabel.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+			baseFeedMessageCell.displayNameLabel.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+			baseFeedMessageCell.usernameLabel.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
 			baseFeedMessageCell.postTextView.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
 		}
 	}
 
 	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
 		if let baseFeedMessageCell = tableView.cellForRow(at: indexPath) as? BaseFeedMessageCell {
-			baseFeedMessageCell.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+			baseFeedMessageCell.contentView.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
-			baseFeedMessageCell.usernameLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			baseFeedMessageCell.displayNameLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			baseFeedMessageCell.usernameLabel.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
 			baseFeedMessageCell.postTextView.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
 		}
 	}
