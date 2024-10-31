@@ -753,7 +753,7 @@ extension ProfileTableViewController {
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let feedMessageCell: BaseFeedMessageCell?
-		let feedMessage = self.feedMessages[indexPath.section]
+		let feedMessage = self.feedMessages[indexPath.row]
 
 		if feedMessage.attributes.isReShare {
 			feedMessageCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedMessageReShareCell, for: indexPath)
@@ -788,25 +788,25 @@ extension ProfileTableViewController {
 extension ProfileTableViewController: BaseFeedMessageCellDelegate {
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressHeartButton button: UIButton) {
 		if let indexPath = self.tableView.indexPath(for: cell) {
-			self.feedMessages[indexPath.section].heartMessage(via: self, userInfo: ["indexPath": indexPath])
+			self.feedMessages[indexPath.row].heartMessage(via: self, userInfo: ["indexPath": indexPath])
 		}
 	}
 
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressReplyButton button: UIButton) {
 		if let indexPath = self.tableView.indexPath(for: cell) {
-			self.feedMessages[indexPath.section].replyToMessage(via: self, userInfo: ["liveReplyEnabled": cell.liveReplyEnabled])
+			self.feedMessages[indexPath.row].replyToMessage(via: self, userInfo: ["liveReplyEnabled": cell.liveReplyEnabled])
 		}
 	}
 
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressReShareButton button: UIButton) {
 		if let indexPath = self.tableView.indexPath(for: cell) {
-			self.feedMessages[indexPath.section].reShareMessage(via: self, userInfo: ["liveReShareEnabled": cell.liveReShareEnabled])
+			self.feedMessages[indexPath.row].reShareMessage(via: self, userInfo: ["liveReShareEnabled": cell.liveReShareEnabled])
 		}
 	}
 
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressUserName sender: AnyObject) {
 		if let indexPath = self.tableView.indexPath(for: cell) {
-			let feedMessage = self.feedMessages[indexPath.section]
+			let feedMessage = self.feedMessages[indexPath.row]
 
 			guard let feedMessageUser = feedMessage.relationships.users.data.first else { return }
 			guard feedMessageUser != self.user else { return }
@@ -827,13 +827,13 @@ extension ProfileTableViewController: BaseFeedMessageCellDelegate {
 
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressUserName sender: AnyObject) {
 		if let indexPath = self.tableView.indexPath(for: cell) {
-			self.feedMessages[indexPath.section].relationships.parent?.data.first?.visitOriginalPosterProfile(from: self)
+			self.feedMessages[indexPath.row].relationships.parent?.data.first?.visitOriginalPosterProfile(from: self)
 		}
 	}
 
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressOPMessage sender: AnyObject) {
 		if let indexPath = self.tableView.indexPath(for: cell) {
-			self.performSegue(withIdentifier: R.segue.profileTableViewController.feedMessageDetailsSegue.identifier, sender: self.feedMessages[indexPath.section].relationships.parent?.data.first?.id)
+			self.performSegue(withIdentifier: R.segue.profileTableViewController.feedMessageDetailsSegue.identifier, sender: self.feedMessages[indexPath.row].relationships.parent?.data.first?.id)
 		}
 	}
 }

@@ -257,16 +257,16 @@ class FeedTableViewController: KTableViewController {
 // MARK: - UITableViewDataSource
 extension FeedTableViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return self.feedMessages.count
+		return 1
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 1
+		return self.feedMessages.count
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let feedMessageCell: BaseFeedMessageCell?
-		let feedMessage = self.feedMessages[indexPath.section]
+		let feedMessage = self.feedMessages[indexPath.row]
 
 		if feedMessage.attributes.isReShare {
 			feedMessageCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedMessageReShareCell, for: indexPath)
@@ -301,25 +301,25 @@ extension FeedTableViewController {
 extension FeedTableViewController: BaseFeedMessageCellDelegate {
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressHeartButton button: UIButton) {
 		if let indexPath = self.tableView.indexPath(for: cell) {
-			self.feedMessages[indexPath.section].heartMessage(via: self, userInfo: ["indexPath": indexPath])
+			self.feedMessages[indexPath.row].heartMessage(via: self, userInfo: ["indexPath": indexPath])
 		}
 	}
 
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressReplyButton button: UIButton) {
 		if let indexPath = self.tableView.indexPath(for: cell) {
-			self.feedMessages[indexPath.section].replyToMessage(via: self, userInfo: ["liveReplyEnabled": cell.liveReplyEnabled])
+			self.feedMessages[indexPath.row].replyToMessage(via: self, userInfo: ["liveReplyEnabled": cell.liveReplyEnabled])
 		}
 	}
 
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressReShareButton button: UIButton) {
 		if let indexPath = self.tableView.indexPath(for: cell) {
-			self.feedMessages[indexPath.section].reShareMessage(via: self, userInfo: ["liveReShareEnabled": cell.liveReShareEnabled])
+			self.feedMessages[indexPath.row].reShareMessage(via: self, userInfo: ["liveReShareEnabled": cell.liveReShareEnabled])
 		}
 	}
 
 	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressUserName sender: AnyObject) {
 		if let indexPath = self.tableView.indexPath(for: cell) {
-			self.feedMessages[indexPath.section].visitOriginalPosterProfile(from: self)
+			self.feedMessages[indexPath.row].visitOriginalPosterProfile(from: self)
 		}
 	}
 
@@ -335,13 +335,13 @@ extension FeedTableViewController: BaseFeedMessageCellDelegate {
 
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressUserName sender: AnyObject) {
 		if let indexPath = self.tableView.indexPath(for: cell) {
-			self.feedMessages[indexPath.section].relationships.parent?.data.first?.visitOriginalPosterProfile(from: self)
+			self.feedMessages[indexPath.row].relationships.parent?.data.first?.visitOriginalPosterProfile(from: self)
 		}
 	}
 
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressOPMessage sender: AnyObject) {
 		if let indexPath = self.tableView.indexPath(for: cell) {
-			self.performSegue(withIdentifier: R.segue.feedTableViewController.feedMessageDetailsSegue.identifier, sender: self.feedMessages[indexPath.section].relationships.parent?.data.first?.id)
+			self.performSegue(withIdentifier: R.segue.feedTableViewController.feedMessageDetailsSegue.identifier, sender: self.feedMessages[indexPath.row].relationships.parent?.data.first?.id)
 		}
 	}
 }
