@@ -273,10 +273,7 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 	/// Goes to the last watched episode in the presented collection view.
 	fileprivate func goToLastWatchedEpisode() {
 		if let lastWatchedEpisode = self.episodes.first(where: { _, episode in
-			if let episodeWatchStatus = episode.attributes.watchStatus {
-				return episodeWatchStatus == .notWatched
-			}
-			return false
+			return episode.attributes.watchStatus == .notWatched
 		}) {
 			self.collectionView.safeScrollToItem(at: lastWatchedEpisode.key, at: .centeredVertically, animated: true)
 			self.configureNavBarButtons()
@@ -370,7 +367,9 @@ extension EpisodesListCollectionViewController: EpisodeLockupCollectionViewCellD
 			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 
 			Task {
+				cell.watchStatusButton.isEnabled = false
 				await self.episodes[indexPath]?.updateWatchStatus(userInfo: ["indexPath": indexPath])
+				cell.watchStatusButton.isEnabled = true
 			}
 		}
 	}

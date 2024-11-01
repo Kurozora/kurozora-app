@@ -955,7 +955,9 @@ extension SearchResultsCollectionViewController: EpisodeLockupCollectionViewCell
 			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 
 			Task {
+				cell.watchStatusButton.isEnabled = false
 				await self.episodes[indexPath]?.updateWatchStatus(userInfo: ["indexPath": indexPath])
+				cell.watchStatusButton.isEnabled = true
 			}
 		}
 	}
