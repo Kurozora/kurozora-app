@@ -19,7 +19,7 @@ extension WorkflowController {
 			completion?()
 			return true
 		} else {
-			self.presentSignInView(on: viewController)
+			self.presentSignInView(on: viewController)?.onSignIn = completion
 			return false
 		}
 	}
@@ -115,12 +115,16 @@ extension WorkflowController {
 	/// Presents the user with the sign in view
 	///
 	///	- Parameter viewController: The view controller on which the sign in flow is presented if necessary.
-	func presentSignInView(on viewController: UIViewController? = nil) {
+	func presentSignInView(on viewController: UIViewController? = nil) -> SignInTableViewController? {
 		if let signInTableViewController = R.storyboard.onboarding.signInTableViewController() {
 			let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
 			let viewController = viewController ?? UIApplication.topViewController
 			viewController?.present(kNavigationController, animated: true)
+
+			return signInTableViewController
 		}
+
+		return nil
 	}
 
 	/// Presents the user with the subscribe view.

@@ -91,7 +91,9 @@ extension EpisodeDetailHeaderCollectionViewCell {
 			guard let self = self else { return }
 
 			Task {
+				sender.isEnabled = false
 				await self.episode.updateWatchStatus(userInfo: ["indexPath": self.indexPath])
+				sender.isEnabled = true
 			}
 		}
 	}

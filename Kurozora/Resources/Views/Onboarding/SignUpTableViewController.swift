@@ -28,6 +28,7 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 	}
 	var editedProfileImageURL: URL? = nil
 	var isSIWA = false
+	var onSignUp: (() -> Void)?
 
 	// MARK: - View
 	override func viewDidLoad() {
@@ -78,7 +79,9 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 
 			self.presentAlertController(title: Trans.signUpAlertHeadline, message: Trans.signUpAlertSubheadline, defaultActionButtonTitle: Trans.done) { [weak self] _ in
 				guard let self = self else { return }
-				self.dismiss(animated: true, completion: nil)
+				self.dismiss(animated: true) {
+					self.onSignUp?()
+				}
 			}
 		} catch let error as KKAPIError {
 			self.presentAlertController(title: Trans.signUpErrorAlertHeadline, message: error.message)
@@ -133,8 +136,11 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 					await self.getProfileDetails()
 
 					// Present welcome message.
-					self.presentAlertController(title: "Hooray!", message: "Your account was successfully created!", defaultActionButtonTitle: Trans.done) { _ in
-						self.dismiss(animated: true, completion: nil)
+					self.presentAlertController(title: "Hooray!", message: "Your account was successfully created!", defaultActionButtonTitle: Trans.done) { [weak self] _ in
+						guard let self = self else { return }
+						self.dismiss(animated: true) {
+							self.onSignUp?()
+						}
 					}
 				} catch {
 					print(error.localizedDescription)

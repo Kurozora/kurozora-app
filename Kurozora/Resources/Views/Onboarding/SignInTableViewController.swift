@@ -11,6 +11,9 @@ import KurozoraKit
 import AuthenticationServices
 
 class SignInTableViewController: AccountOnboardingTableViewController {
+	// MARK: - Properties
+	var onSignIn: (() -> Void)?
+
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -60,6 +63,7 @@ class SignInTableViewController: AccountOnboardingTableViewController {
 				self.dismiss(animated: true) {
 					UserSettings.shared.removeObject(forKey: UserSettingsKey.lastNotificationRegistrationRequest.rawValue)
 					WorkflowController.shared.registerForPushNotifications()
+					self.onSignIn?()
 				}
 			case .failure(let error):
 				DispatchQueue.main.async {
@@ -140,10 +144,12 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 						self.dismiss(animated: true) {
 							UserSettings.shared.removeObject(forKey: UserSettingsKey.lastNotificationRegistrationRequest.rawValue)
 							WorkflowController.shared.registerForPushNotifications()
+							self.onSignIn?()
 						}
 					case .setupAccount:
 						if let signUpTableViewController = R.storyboard.onboarding.signUpTableViewController() {
 							signUpTableViewController.isSIWA = true
+							signUpTableViewController.onSignUp = self.onSignIn
 							self.show(signUpTableViewController, sender: nil)
 						}
 					default:
