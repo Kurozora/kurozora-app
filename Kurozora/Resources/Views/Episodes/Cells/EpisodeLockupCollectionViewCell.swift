@@ -58,7 +58,7 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 		}
 
 		// Configure secondary label
-		self.secondaryLabel.text = "S\(episode.attributes.seasonNumber) · E\(episode.attributes.number)"
+		self.secondaryLabel.text = "S\(episode.attributes.seasonNumber) · E\(episode.attributes.number) (E\(episode.attributes.numberTotal))"
 
 		// Configure primary label
 		self.primaryLabel.text = episode.attributes.title
