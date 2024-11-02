@@ -104,7 +104,7 @@ class KTextView: UITextView {
 	}
 }
 
-// MARK: - Confgiuration
+// MARK: - Configuration
 private extension KTextView {
 	func configureView() {
 		self.configureTextView()
