@@ -39,7 +39,7 @@ extension URL {
 	static let twitterPageURL = URL(string: "https://www.twitter.com/KurozoraApp")
 
 	/// Kuro-chan's Signal sticker pack URL.
-	static let signalStickerURL = URL(string: "https://signal.art/addstickers/#pack_id=3fc173cd8f028c47523f1917f11c5925&pack_key=2d9508edc1568dc85cd67f3cd2c92e11a7499f800f264de223a56b6299a6c984")
+	static let signalStickerURL = URL(string: "https://signal.art/addstickers/#pack_id=a132f9a6b200d8978a5f5396decefdde&pack_key=db8680ea74e6f0fcb294bbad8dee75b9f27735a3cf81eb98f9c362a322df3177")
 
 	/// Kuro-chan's Telegram sticker pack URL.
 	static let telegramStickerURL = URL(string: "https://t.me/addstickers/KuroChanVT")
