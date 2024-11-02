@@ -115,6 +115,7 @@ extension WorkflowController {
 	/// Presents the user with the sign in view
 	///
 	///	- Parameter viewController: The view controller on which the sign in flow is presented if necessary.
+	@discardableResult
 	func presentSignInView(on viewController: UIViewController? = nil) -> SignInTableViewController? {
 		if let signInTableViewController = R.storyboard.onboarding.signInTableViewController() {
 			let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
