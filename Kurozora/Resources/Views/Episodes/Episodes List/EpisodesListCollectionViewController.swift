@@ -272,7 +272,7 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 
 	/// Goes to the last watched episode in the presented collection view.
 	fileprivate func goToLastWatchedEpisode() {
-		if let lastWatchedEpisode = self.episodes.first(where: { _, episode in
+		if let lastWatchedEpisode = self.episodes.sorted(by: { $0.value.attributes.number < $1.value.attributes.number }).first(where: { _, episode in
 			return episode.attributes.watchStatus == .notWatched
 		}) {
 			self.collectionView.safeScrollToItem(at: lastWatchedEpisode.key, at: .centeredVertically, animated: true)
