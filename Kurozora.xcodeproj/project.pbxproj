@@ -304,6 +304,7 @@
 		6663985B2366298100713B8B /* UICollectionViewCell+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6663985A2366298100713B8B /* UICollectionViewCell+Kurozora.swift */; };
 		66647B542084995500CF624F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66647B532084995500CF624F /* AppDelegate.swift */; };
 		6664B81324A403C700E73728 /* TextViewCollectionViewCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6664B81224A403C700E73728 /* TextViewCollectionViewCellType.swift */; };
+		6666301D2CCEBDB3002930D9 /* UIImage+Kurozorawidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6666301C2CCEBDB3002930D9 /* UIImage+Kurozorawidget.swift */; };
 		666938AF21B1D4D200BA9620 /* FeedMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6669387121AFF87900BA9620 /* FeedMessageCell.swift */; };
 		666938B121B1D4DC00BA9620 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE1AFD209B59600007A4DE /* CommentCell.swift */; };
 		666938B221B1D4DF00BA9620 /* WriteACommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE1B01209BAB350007A4DE /* WriteACommentCell.swift */; };
@@ -403,6 +404,7 @@
 		6684224825966F97000A09F8 /* UpcomingLockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6684224725966F97000A09F8 /* UpcomingLockupCollectionViewCell.swift */; };
 		6684225025967A65000A09F8 /* TitleHeaderTableReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6684224F25967A65000A09F8 /* TitleHeaderTableReusableView.xib */; };
 		66842253259760F4000A09F8 /* Favorites.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66842252259760F4000A09F8 /* Favorites.storyboard */; };
+		6684D7912CBF098E00635A1C /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6684D7902CBF098E00635A1C /* EditProfileViewController.swift */; };
 		66856E842931AE430083160D /* SongDetailsCollectionViewController+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66856E832931AE430083160D /* SongDetailsCollectionViewController+UICollectionViewDelegate.swift */; };
 		66856E862931AF0B0083160D /* SongDetailsCollectionViewController+KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66856E852931AF0B0083160D /* SongDetailsCollectionViewController+KCollectionViewDataSource.swift */; };
 		66856E882931AF730083160D /* SongDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66856E872931AF730083160D /* SongDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */; };
@@ -1109,6 +1111,7 @@
 		66647B502084995500CF624F /* Kurozora.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kurozora.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66647B532084995500CF624F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6664B81224A403C700E73728 /* TextViewCollectionViewCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewCollectionViewCellType.swift; sourceTree = "<group>"; };
+		6666301C2CCEBDB3002930D9 /* UIImage+Kurozorawidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Kurozorawidget.swift"; sourceTree = "<group>"; };
 		6669387121AFF87900BA9620 /* FeedMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedMessageCell.swift; sourceTree = "<group>"; };
 		666938AC21B19E3800BA9620 /* TextEditor.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TextEditor.storyboard; sourceTree = "<group>"; };
 		666C82572162898400C93A70 /* CastListCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastListCollectionViewController.swift; sourceTree = "<group>"; };
@@ -1198,6 +1201,7 @@
 		6684224725966F97000A09F8 /* UpcomingLockupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingLockupCollectionViewCell.swift; sourceTree = "<group>"; };
 		6684224F25967A65000A09F8 /* TitleHeaderTableReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TitleHeaderTableReusableView.xib; sourceTree = "<group>"; };
 		66842252259760F4000A09F8 /* Favorites.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Favorites.storyboard; sourceTree = "<group>"; };
+		6684D7902CBF098E00635A1C /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		66856E832931AE430083160D /* SongDetailsCollectionViewController+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SongDetailsCollectionViewController+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
 		66856E852931AF0B0083160D /* SongDetailsCollectionViewController+KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SongDetailsCollectionViewController+KCollectionViewDataSource.swift"; sourceTree = "<group>"; };
 		66856E872931AF730083160D /* SongDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SongDetailsCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
@@ -2666,6 +2670,7 @@
 				667B8BAD2BC1F26A00DA79CD /* EnvironmentValues+KurozoraWidget.swift */,
 				662F96C82BC347A800DD8EA6 /* KurozoraKit+KurozoraWidget.swift */,
 				662F96CD2BC34B9200DD8EA6 /* UIColor+SwiftUI.swift */,
+				6666301C2CCEBDB3002930D9 /* UIImage+Kurozorawidget.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2878,6 +2883,14 @@
 				66148D6425E5E625000F2E0A /* FavoriteShowsCollectionViewController+UICollectionViewDelegate.swift */,
 			);
 			path = Favorites;
+			sourceTree = "<group>";
+		};
+		6684D7922CBF09AB00635A1C /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				6684D7902CBF098E00635A1C /* EditProfileViewController.swift */,
+			);
+			path = Edit;
 			sourceTree = "<group>";
 		};
 		66856E892931B05F0083160D /* Cells */ = {
@@ -3522,6 +3535,7 @@
 				667F9AD521B47E8B003F6629 /* Achievements */,
 				66E077D42A6349A8005385F8 /* Badge */,
 				66232CD7231004EE00C45B5A /* Cells */,
+				6684D7922CBF09AB00635A1C /* Edit */,
 				66AE01252593D5C000308636 /* Follow */,
 				662151972BAA0C0000ECF522 /* Reviews */,
 			);
@@ -4625,6 +4639,7 @@
 				66533C3B2C18FA260019E37A /* LaunchAppIntent.swift in Sources */,
 				667B8BB42BC1FCCA00DA79CD /* Intents.intentdefinition in Sources */,
 				66F7D1AC2C72075F002A09CE /* KBrowser.swift in Sources */,
+				6666301D2CCEBDB3002930D9 /* UIImage+Kurozorawidget.swift in Sources */,
 				662F96C92BC347A800DD8EA6 /* KurozoraKit+KurozoraWidget.swift in Sources */,
 				6647B7482BC0B1E9006BC91C /* SharedDelegate.swift in Sources */,
 				66F7D1B52C720FCC002A09CE /* UIColor+Kurozora.swift in Sources */,
@@ -4826,6 +4841,7 @@
 				6697DB2325744B9A0054FEFD /* Global+Kurozora.swift in Sources */,
 				6614AD412580033500039BFB /* ShowDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				666C898429FF223F0075B5D6 /* TVRating.swift in Sources */,
+				6684D7912CBF098E00635A1C /* EditProfileViewController.swift in Sources */,
 				66B9BB9724FB1AC7004953C9 /* KFeedMessageReShareTextEditorView.swift in Sources */,
 				66FE5D01215B739D00E2844A /* KDefaultsCell.swift in Sources */,
 				661ACC9B25ADA41B002407A7 /* ShowDetailsCollectionViewController+TouchBar.swift in Sources */,
