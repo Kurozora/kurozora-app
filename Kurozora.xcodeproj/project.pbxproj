@@ -584,6 +584,7 @@
 		66CF6D7120A9934F00F98375 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66CF6D7020A9934F00F98375 /* Profile.storyboard */; };
 		66CFE5C9282FDACE00E3B2DF /* SkeletonDisplayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CFE5C8282FDACE00E3B2DF /* SkeletonDisplayable.swift */; };
 		66D083DD2CE40E7300A1EF6A /* wow.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 66D083DC2CE40E7300A1EF6A /* wow.m4a */; };
+		66D083DF2CE4101100A1EF6A /* ganbare_ganbare.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 66D083DE2CE4101100A1EF6A /* ganbare_ganbare.m4a */; };
 		66D0BF8125613E29000AB7BF /* Show+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D0BF8025613E29000AB7BF /* Show+UIKit.swift */; };
 		66D1358D228087920079438C /* KButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D1358C228087920079438C /* KButton.swift */; };
 		66D17C7B2B65B19C00373D3D /* ReCapCollectionViewController+KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D17C7A2B65B19C00373D3D /* ReCapCollectionViewController+KCollectionViewDataSource.swift */; };
@@ -1392,6 +1393,7 @@
 		66CF6D7020A9934F00F98375 /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		66CFE5C8282FDACE00E3B2DF /* SkeletonDisplayable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonDisplayable.swift; sourceTree = "<group>"; };
 		66D083DC2CE40E7300A1EF6A /* wow.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = wow.m4a; sourceTree = "<group>"; };
+		66D083DE2CE4101100A1EF6A /* ganbare_ganbare.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = ganbare_ganbare.m4a; sourceTree = "<group>"; };
 		66D0BF8025613E29000AB7BF /* Show+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Show+UIKit.swift"; sourceTree = "<group>"; };
 		66D1358C228087920079438C /* KButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KButton.swift; sourceTree = "<group>"; };
 		66D17C7A2B65B19C00373D3D /* ReCapCollectionViewController+KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReCapCollectionViewController+KCollectionViewDataSource.swift"; sourceTree = "<group>"; };
@@ -4114,6 +4116,7 @@
 				661B1DD22B61C77C000C9C0E /* explosion.m4a */,
 				661E0CE02CB87F0700715DCE /* ferris_biting_ear.m4a */,
 				66FE68FC29D26AE300C9AD8E /* furin.m4a */,
+				66D083DE2CE4101100A1EF6A /* ganbare_ganbare.m4a */,
 				66631B502B408D790006F02B /* jeb_.m4a */,
 				662068382C4C01B400CB27A9 /* kuma_shock.m4a */,
 				66631B522B408D970006F02B /* nya.m4a */,
@@ -4327,6 +4330,7 @@
 				66E54D5A2A6D218F00F9F8AA /* RatingSentimentCollectionViewCell.xib in Resources */,
 				66631B582B408DBB0006F02B /* ryoiki_tenkai.m4a in Resources */,
 				66AA35BC24030E420006EC5B /* Cast.storyboard in Resources */,
+				66D083DF2CE4101100A1EF6A /* ganbare_ganbare.m4a in Resources */,
 				6619377A2A6ED23A00447084 /* RatingBadgeCollectionViewCell.xib in Resources */,
 				6623CB202724D27600050EAA /* IconTableViewCell.xib in Resources */,
 				6675262F22280ACB007C1617 /* Default.plist in Resources */,
