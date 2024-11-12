@@ -585,6 +585,7 @@
 		66CFE5C9282FDACE00E3B2DF /* SkeletonDisplayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CFE5C8282FDACE00E3B2DF /* SkeletonDisplayable.swift */; };
 		66D083DD2CE40E7300A1EF6A /* wow.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 66D083DC2CE40E7300A1EF6A /* wow.m4a */; };
 		66D083DF2CE4101100A1EF6A /* ganbare_ganbare.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 66D083DE2CE4101100A1EF6A /* ganbare_ganbare.m4a */; };
+		66D083E12CE411C100A1EF6A /* waku_waku.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 66D083E02CE411C100A1EF6A /* waku_waku.m4a */; };
 		66D0BF8125613E29000AB7BF /* Show+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D0BF8025613E29000AB7BF /* Show+UIKit.swift */; };
 		66D1358D228087920079438C /* KButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D1358C228087920079438C /* KButton.swift */; };
 		66D17C7B2B65B19C00373D3D /* ReCapCollectionViewController+KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D17C7A2B65B19C00373D3D /* ReCapCollectionViewController+KCollectionViewDataSource.swift */; };
@@ -1394,6 +1395,7 @@
 		66CFE5C8282FDACE00E3B2DF /* SkeletonDisplayable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonDisplayable.swift; sourceTree = "<group>"; };
 		66D083DC2CE40E7300A1EF6A /* wow.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = wow.m4a; sourceTree = "<group>"; };
 		66D083DE2CE4101100A1EF6A /* ganbare_ganbare.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = ganbare_ganbare.m4a; sourceTree = "<group>"; };
+		66D083E02CE411C100A1EF6A /* waku_waku.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = waku_waku.m4a; sourceTree = "<group>"; };
 		66D0BF8025613E29000AB7BF /* Show+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Show+UIKit.swift"; sourceTree = "<group>"; };
 		66D1358C228087920079438C /* KButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KButton.swift; sourceTree = "<group>"; };
 		66D17C7A2B65B19C00373D3D /* ReCapCollectionViewController+KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReCapCollectionViewController+KCollectionViewDataSource.swift"; sourceTree = "<group>"; };
@@ -4136,6 +4138,7 @@
 				66631B4E2B407A2B0006F02B /* tutturu.m4a */,
 				6675E2042B48366B0050F98C /* upupupu.m4a */,
 				6675E2082B48680C0050F98C /* wadodon.m4a */,
+				66D083E02CE411C100A1EF6A /* waku_waku.m4a */,
 				661E0CEA2CB882D900715DCE /* worororo.m4a */,
 				66D083DC2CE40E7300A1EF6A /* wow.m4a */,
 				66631B652B40E5D20006F02B /* yare_yare_daze.m4a */,
@@ -4475,6 +4478,7 @@
 				669A36C124F1BFFA0045D04A /* OnboardingTextFieldTableViewCell.xib in Resources */,
 				66DC7D3D2C787C4000F4B27B /* pine.m4a in Resources */,
 				66C45843259A88ED00886374 /* Sky.plist in Resources */,
+				66D083E12CE411C100A1EF6A /* waku_waku.m4a in Resources */,
 				661E0CE72CB87FCE00715DCE /* return_by_death.m4a in Resources */,
 				66F27EBE283A7FF500CC2277 /* StudioLockupCollectionViewCell.xib in Resources */,
 				66F27EC4283A81AE00CC2277 /* SearchShowResultsCell.xib in Resources */,

@@ -177,6 +177,14 @@
 			<array>
 				<dict>
 					<key>name</key>
+					<string>Shika? 🦌</string>
+					<key>file</key>
+					<string>shika?.m4a</string>
+				</dict>
+			</array>
+			<array>
+				<dict>
+					<key>name</key>
 					<string>Tutturu~</string>
 					<key>file</key>
 					<string>tutturu.m4a</string>
@@ -188,6 +196,22 @@
 					<string>Upupupu...</string>
 					<key>file</key>
 					<string>upupupu.m4a</string>
+				</dict>
+			</array>
+			<array>
+				<dict>
+					<key>name</key>
+					<string>Waku waku ✨</string>
+					<key>file</key>
+					<string>waku_waku.m4a</string>
+				</dict>
+			</array>
+			<array>
+				<dict>
+					<key>name</key>
+					<string>Wow!</string>
+					<key>file</key>
+					<string>wow.m4a</string>
 				</dict>
 			</array>
 			<array>
