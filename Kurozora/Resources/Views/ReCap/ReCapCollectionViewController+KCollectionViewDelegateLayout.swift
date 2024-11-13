@@ -15,6 +15,8 @@ extension ReCapCollectionViewController {
 		var columnCount = 0
 
 		switch section {
+		case .header:
+			return 1
 		case .topShows, .topGames, .topLiteratures, .topGenres, .topThemes, .milestones:
 			if width >= 414 {
 				columnCount = (width / 384).rounded().int
@@ -43,6 +45,9 @@ extension ReCapCollectionViewController {
 			var sectionLayout: NSCollectionLayoutSection? = nil
 
 			switch exploreCategorySection {
+			case .header:
+				sectionLayout = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				return sectionLayout
 			case .topShows, .topGames, .topLiteratures:
 				sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 			case .topGenres, .topThemes, .milestones:

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="pfa-FW-J8a" customClass="ReCapHeaderCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="374" height="164"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="J4s-eD-Q4v">
+                <rect key="frame" x="0.0" y="0.0" width="374" height="164"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Series that defined your arc in October" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LVX-0m-OuV" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="20" y="48.333333333333336" width="334" height="67.666666666666657"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="334" id="eff-NV-YcV"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="LVX-0m-OuV" secondAttribute="trailing" constant="20" symbolic="YES" id="BNA-Qx-pkt"/>
+                    <constraint firstItem="LVX-0m-OuV" firstAttribute="top" relation="greaterThanOrEqual" secondItem="J4s-eD-Q4v" secondAttribute="top" constant="40" id="IbU-fI-H1b"/>
+                    <constraint firstItem="LVX-0m-OuV" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="J4s-eD-Q4v" secondAttribute="leading" constant="20" symbolic="YES" id="NhG-eM-CWo"/>
+                    <constraint firstItem="LVX-0m-OuV" firstAttribute="centerY" secondItem="J4s-eD-Q4v" secondAttribute="centerY" id="dbY-Zt-day"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="LVX-0m-OuV" secondAttribute="bottom" constant="40" id="j7X-tI-gkQ"/>
+                    <constraint firstItem="LVX-0m-OuV" firstAttribute="centerX" secondItem="J4s-eD-Q4v" secondAttribute="centerX" id="jeS-nP-L7R"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <size key="customSize" width="376" height="114"/>
+            <connections>
+                <outlet property="primaryLabel" destination="LVX-0m-OuV" id="e73-Fm-cW3"/>
+            </connections>
+            <point key="canvasLocation" x="206.10687022900763" y="33.802816901408455"/>
+        </collectionViewCell>
+    </objects>
+</document>

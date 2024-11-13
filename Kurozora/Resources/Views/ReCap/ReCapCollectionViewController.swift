@@ -12,9 +12,6 @@ import Alamofire
 import AVFoundation
 
 class ReCapCollectionViewController: KCollectionViewController {
-	// MARK: - IBOutlets
-	@IBOutlet weak var moreBarButtonItem: UIBarButtonItem!
-
 	// MARK: - Properties
 	var year: Int = 0
 	var recapItems: [RecapItem] = [] {
@@ -131,6 +128,7 @@ class ReCapCollectionViewController: KCollectionViewController {
 		self.present(activityViewController, animated: true)
 	}
 }
+
 // MARK: - UIScreenshotServiceDelegate
 extension ReCapCollectionViewController: UIScreenshotServiceDelegate {
 	func screenshotServiceGeneratePDFRepresentation(_ screenshotService: UIScreenshotService) async -> (Data?, Int, CGRect) {
@@ -166,6 +164,9 @@ extension ReCapCollectionViewController {
 	/// List of available Section Layout Kind types.
 	enum SectionLayoutKind: Hashable {
 		// MARK: - Cases
+		/// Indicates a header section layout type.
+		case header(_: String)
+
 		/// Indicates a top shows section layout type.
 		case topShows(_: RecapItem)
 
@@ -187,6 +188,8 @@ extension ReCapCollectionViewController {
 		// MARK: - Functions
 		func hash(into hasher: inout Hasher) {
 			switch self {
+			case .header(let title):
+				hasher.combine(title)
 			case .topShows(let recapItem):
 				hasher.combine(recapItem)
 			case .topLiteratures(let recapItem):
@@ -204,6 +207,8 @@ extension ReCapCollectionViewController {
 
 		static func == (lhs: SectionLayoutKind, rhs: SectionLayoutKind) -> Bool {
 			switch (lhs, rhs) {
+			case (.header(let title1), .header(let title2)):
+				return title1 == title2
 			case (.topShows(let recapItem1), .topShows(let recapItem2)):
 				return recapItem1 == recapItem2
 			case (.topLiteratures(let recapItem1), .topLiteratures(let recapItem2)):
@@ -227,54 +232,62 @@ extension ReCapCollectionViewController {
 	/// List of available Item Kind types.
 	enum ItemKind: Hashable {
 		// MARK: - Cases
+		/// Indicates the item kind contains a `String` object.
+		case string(_: String, section: SectionLayoutKind)
+
 		/// Indicates the item kind contains a `ShowIdentity` object.
-		case showIdentity(_: ShowIdentity, id: UUID = UUID())
+		case showIdentity(_: ShowIdentity, section: SectionLayoutKind)
 
 		/// Indicates the item kind contains a `LiteratureIdentity` object.
-		case literatureIdentity(_: LiteratureIdentity, id: UUID = UUID())
+		case literatureIdentity(_: LiteratureIdentity, section: SectionLayoutKind)
 
 		/// Indicates the item kind contains a `GameIdentity` object.
-		case gameIdentity(_: GameIdentity, id: UUID = UUID())
+		case gameIdentity(_: GameIdentity, section: SectionLayoutKind)
 
 		/// Indicates the item kind contains a `GenreIdentity` object.
-		case genreIdentity(_: GenreIdentity, id: UUID = UUID())
+		case genreIdentity(_: GenreIdentity, section: SectionLayoutKind)
 
 		/// Indicates the item kind contains a `ThemeIdentity` object.
-		case themeIdentity(_: ThemeIdentity, id: UUID = UUID())
+		case themeIdentity(_: ThemeIdentity, section: SectionLayoutKind)
 
 		// MARK: - Functions
 		func hash(into hasher: inout Hasher) {
 			switch self {
-			case .showIdentity(let showIdentity, let id):
+			case .string(let string, let section):
+				hasher.combine(string)
+				hasher.combine(section)
+			case .showIdentity(let showIdentity, let section):
 				hasher.combine(showIdentity)
-				hasher.combine(id)
-			case .literatureIdentity(let literatureIdentity, let id):
+				hasher.combine(section)
+			case .literatureIdentity(let literatureIdentity, let section):
 				hasher.combine(literatureIdentity)
-				hasher.combine(id)
-			case .gameIdentity(let gameIdentity, let id):
+				hasher.combine(section)
+			case .gameIdentity(let gameIdentity, let section):
 				hasher.combine(gameIdentity)
-				hasher.combine(id)
-			case .genreIdentity(let genreIdentity, let id):
+				hasher.combine(section)
+			case .genreIdentity(let genreIdentity, let section):
 				hasher.combine(genreIdentity)
-				hasher.combine(id)
-			case .themeIdentity(let themeIdentity, let id):
+				hasher.combine(section)
+			case .themeIdentity(let themeIdentity, let section):
 				hasher.combine(themeIdentity)
-				hasher.combine(id)
+				hasher.combine(section)
 			}
 		}
 
 		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
 			switch (lhs, rhs) {
-			case (.showIdentity(let showIdentity1, let id1), .showIdentity(let showIdentity2, let id2)):
-				return showIdentity1 == showIdentity2 && id1 == id2
-			case (.literatureIdentity(let literatureIdentity1, let id1), .literatureIdentity(let literatureIdentity2, let id2)):
-				return literatureIdentity1 == literatureIdentity2 && id1 == id2
-			case (.gameIdentity(let gameIdentity1, let id1), .gameIdentity(let gameIdentity2, let id2)):
-				return gameIdentity1 == gameIdentity2 && id1 == id2
-			case (.genreIdentity(let genreIdentity1, let id1), .genreIdentity(let genreIdentity2, let id2)):
-				return genreIdentity1 == genreIdentity2 && id1 == id2
-			case (.themeIdentity(let themeIdentity1, let id1), .themeIdentity(let themeIdentity2, let id2)):
-				return themeIdentity1 == themeIdentity2 && id1 == id2
+			case (.string(let string1, let section1), .string(let string2, let section2)):
+				return string1 == string2 && section1 == section2
+			case (.showIdentity(let showIdentity1, let section1), .showIdentity(let showIdentity2, let section2)):
+				return showIdentity1 == showIdentity2 && section1 == section2
+			case (.literatureIdentity(let literatureIdentity1, let section1), .literatureIdentity(let literatureIdentity2, let section2)):
+				return literatureIdentity1 == literatureIdentity2 && section1 == section2
+			case (.gameIdentity(let gameIdentity1, let section1), .gameIdentity(let gameIdentity2, let section2)):
+				return gameIdentity1 == gameIdentity2 && section1 == section2
+			case (.genreIdentity(let genreIdentity1, let section1), .genreIdentity(let genreIdentity2, let section2)):
+				return genreIdentity1 == genreIdentity2 && section1 == section2
+			case (.themeIdentity(let themeIdentity1, let section1), .themeIdentity(let themeIdentity2, let section2)):
+				return themeIdentity1 == themeIdentity2 && section1 == section2
 			default:
 				return false
 			}

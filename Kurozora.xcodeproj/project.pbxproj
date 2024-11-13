@@ -586,6 +586,8 @@
 		66D083DD2CE40E7300A1EF6A /* wow.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 66D083DC2CE40E7300A1EF6A /* wow.m4a */; };
 		66D083DF2CE4101100A1EF6A /* ganbare_ganbare.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 66D083DE2CE4101100A1EF6A /* ganbare_ganbare.m4a */; };
 		66D083E12CE411C100A1EF6A /* waku_waku.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 66D083E02CE411C100A1EF6A /* waku_waku.m4a */; };
+		66D083E92CE4340800A1EF6A /* ReCapHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66D083E82CE4340800A1EF6A /* ReCapHeaderCollectionViewCell.xib */; };
+		66D083EA2CE4340800A1EF6A /* ReCapHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D083E72CE4340800A1EF6A /* ReCapHeaderCollectionViewCell.swift */; };
 		66D0BF8125613E29000AB7BF /* Show+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D0BF8025613E29000AB7BF /* Show+UIKit.swift */; };
 		66D1358D228087920079438C /* KButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D1358C228087920079438C /* KButton.swift */; };
 		66D17C7B2B65B19C00373D3D /* ReCapCollectionViewController+KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D17C7A2B65B19C00373D3D /* ReCapCollectionViewController+KCollectionViewDataSource.swift */; };
@@ -1396,6 +1398,8 @@
 		66D083DC2CE40E7300A1EF6A /* wow.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = wow.m4a; sourceTree = "<group>"; };
 		66D083DE2CE4101100A1EF6A /* ganbare_ganbare.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = ganbare_ganbare.m4a; sourceTree = "<group>"; };
 		66D083E02CE411C100A1EF6A /* waku_waku.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = waku_waku.m4a; sourceTree = "<group>"; };
+		66D083E72CE4340800A1EF6A /* ReCapHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReCapHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
+		66D083E82CE4340800A1EF6A /* ReCapHeaderCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReCapHeaderCollectionViewCell.xib; sourceTree = "<group>"; };
 		66D0BF8025613E29000AB7BF /* Show+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Show+UIKit.swift"; sourceTree = "<group>"; };
 		66D1358C228087920079438C /* KButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KButton.swift; sourceTree = "<group>"; };
 		66D17C7A2B65B19C00373D3D /* ReCapCollectionViewController+KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReCapCollectionViewController+KCollectionViewDataSource.swift"; sourceTree = "<group>"; };
@@ -3556,6 +3560,15 @@
 			path = Traits;
 			sourceTree = "<group>";
 		};
+		66D083E22CE4298F00A1EF6A /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				66D083E72CE4340800A1EF6A /* ReCapHeaderCollectionViewCell.swift */,
+				66D083E82CE4340800A1EF6A /* ReCapHeaderCollectionViewCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		66D0BF7E25613DE0000AB7BF /* Show */ = {
 			isa = PBXGroup;
 			children = (
@@ -4475,6 +4488,7 @@
 				66842253259760F4000A09F8 /* Favorites.storyboard in Resources */,
 				66D921652BAE3A680068C685 /* MusicReviewLockupCollectionViewCell.xib in Resources */,
 				66DB11D024E6103900C99754 /* Shows.storyboard in Resources */,
+				66D083E92CE4340800A1EF6A /* ReCapHeaderCollectionViewCell.xib in Resources */,
 				669A36C124F1BFFA0045D04A /* OnboardingTextFieldTableViewCell.xib in Resources */,
 				66DC7D3D2C787C4000F4B27B /* pine.m4a in Resources */,
 				66C45843259A88ED00886374 /* Sky.plist in Resources */,
@@ -4930,6 +4944,7 @@
 				66208AC22A12C42F00783FD1 /* KStepper.swift in Sources */,
 				66752633222815C2007C1617 /* KThemeStyle.swift in Sources */,
 				6671F28E27A58753005D3A0D /* ThemesCollectionViewController+UICollectionViewDelegate.swift in Sources */,
+				66D083EA2CE4340800A1EF6A /* ReCapHeaderCollectionViewCell.swift in Sources */,
 				666D9EEC25B35E9E00EDDC9E /* LibraryListCollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				66CBDD96246352E900CA5F83 /* SeparatorView.swift in Sources */,
 				66B4DC3E245797770097135A /* SwitchAccountsTableViewController.swift in Sources */,

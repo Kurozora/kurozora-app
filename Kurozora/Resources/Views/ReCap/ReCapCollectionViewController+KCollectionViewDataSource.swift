@@ -15,6 +15,7 @@ extension ReCapCollectionViewController {
 	}
 
 	override func configureDataSource() {
+		let headerCellConfiguration = self.getConfiguredHeaderCell()
 		let gameCellConfiguration = self.getConfiguredGameCell()
 		let mediumCellConfiguration = self.getConfiguredMediumCell()
 		let smallCellConfiguration = self.getConfiguredSmallCell()
@@ -24,6 +25,8 @@ extension ReCapCollectionViewController {
 			guard let recapSection = self.snapshot.sectionIdentifier(containingItem: itemKind) else { return nil }
 
 			switch recapSection {
+			case .header:
+				return collectionView.dequeueConfiguredReusableCell(using: headerCellConfiguration, for: indexPath, item: itemKind)
 			case .topShows, .topLiteratures:
 				return collectionView.dequeueConfiguredReusableCell(using: smallCellConfiguration, for: indexPath, item: itemKind)
 			case .topGames:
@@ -42,6 +45,8 @@ extension ReCapCollectionViewController {
 			let subtitle: String?
 
 			switch sectionLayoutKind {
+			case .header:
+				return nil
 			case .topShows(let recap), .topGames(let recap), .topLiteratures(let recap):
 				title = Trans.top(recap.attributes.type)
 				subtitle = Trans.totalSeries("\(recap.attributes.totalSeriesCount)")
@@ -63,7 +68,15 @@ extension ReCapCollectionViewController {
 	override func updateDataSource() {
 		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 
-		// Add explore categories
+		if let month = Month(rawValue: self.month) {
+			let title = "Series that defined your arc in \(month.name)"
+			let sectionHeader = SectionLayoutKind.header(title)
+
+			self.snapshot.appendSections([sectionHeader])
+			self.snapshot.appendItems([.string(title, section: sectionHeader)], toSection: sectionHeader)
+		}
+
+		// Add Re:CAP categories
 		self.recapItems.forEach { recapItem in
 			var sectionHeader: SectionLayoutKind
 			var itemKinds: [ItemKind] = []
@@ -73,35 +86,35 @@ extension ReCapCollectionViewController {
 				sectionHeader = .topShows(recapItem)
 				if let shows = recapItem.relationships?.shows?.data {
 					itemKinds = shows.map { showIdentity in
-						return .showIdentity(showIdentity)
+						return .showIdentity(showIdentity, section: sectionHeader)
 					}
 				}
 			case .literatures:
 				sectionHeader = .topLiteratures(recapItem)
 				if let literature = recapItem.relationships?.literatures?.data {
 					itemKinds = literature.map { literatureIdentity in
-						return .literatureIdentity(literatureIdentity)
+						return .literatureIdentity(literatureIdentity, section: sectionHeader)
 					}
 				}
 			case .games:
 				sectionHeader = .topGames(recapItem)
 				if let games = recapItem.relationships?.games?.data {
 					itemKinds = games.map { gameIdentity in
-						return .gameIdentity(gameIdentity)
+						return .gameIdentity(gameIdentity, section: sectionHeader)
 					}
 				}
 			case .genres:
 				sectionHeader = .topGenres(recapItem)
 				if let genres = recapItem.relationships?.genres?.data {
 					itemKinds = genres.map { genre in
-						return .genreIdentity(genre)
+						return .genreIdentity(genre, section: sectionHeader)
 					}
 				}
 			case .themes:
 				sectionHeader = .topThemes(recapItem)
 				if let themes = recapItem.relationships?.themes?.data {
 					itemKinds = themes.map { theme in
-						return .themeIdentity(theme)
+						return .themeIdentity(theme, section: sectionHeader)
 					}
 				}
 			}
@@ -186,6 +199,17 @@ extension ReCapCollectionViewController {
 				}
 
 				smallLockupCollectionViewCell.configure(using: literature, rank: indexPath.item + 1)
+			default: break
+			}
+		}
+	}
+
+	func getConfiguredHeaderCell() -> UICollectionView.CellRegistration<ReCapHeaderCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<ReCapHeaderCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.reCapHeaderCollectionViewCell)) { reCapHeaderCollectionViewCell, indexPath, itemKind in
+
+			switch itemKind {
+			case .string(let title, _):
+				reCapHeaderCollectionViewCell.configure(using: title)
 			default: break
 			}
 		}
