@@ -14,6 +14,7 @@ import AVFoundation
 class ReCapCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var year: Int = 0
+	var month: Int = 0
 	var recapItems: [RecapItem] = [] {
 		didSet {
 			self._prefersActivityIndicatorHidden = true
@@ -105,8 +106,18 @@ class ReCapCollectionViewController: KCollectionViewController {
 	}
 
 	func fetchDetails() async {
+		guard var month = Date().components.month else { return }
+
+		if Date.now.components.year == self.year, month != 12 {
+			month -= 1
+		} else {
+			month = 12
+		}
+
+		self.month = month
+
 		do {
-			let recapResponse = try await KService.getRecap(for: "\(self.year)").value
+			let recapResponse = try await KService.getRecap(for: "\(self.year)", month: "\(month)").value
 			self.recapItems = recapResponse.data
 			self.updateDataSource()
 		} catch {
