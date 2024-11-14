@@ -33,7 +33,13 @@ class TitleHeaderCollectionReusableView: UICollectionReusableView {
 	///  - subtitle: The subtitle of the section.
 	///  - indexPath: The `IndexPath` of the section.
 	///  - segueID: The ID that should be used for the segue when pressing the header button.
-	func configure(withTitle title: String? = nil, _ subtitle: String? = nil, indexPath: IndexPath? = nil, segueID: String = "") {
+	func configure(
+		withTitle title: String? = nil,
+		_ subtitle: String? = nil,
+		indexPath: IndexPath? = nil,
+		segueID: String = "",
+		separatorIsHidden: Bool = false
+	) {
 		self.segueID = segueID
 		self.indexPath = indexPath
 
@@ -43,6 +49,9 @@ class TitleHeaderCollectionReusableView: UICollectionReusableView {
 
 		// Show or hide see all button
 		self.headerButton.isHidden = segueID.isEmpty
+
+		// Show or hide separator
+		self.separatorView.isHidden = separatorIsHidden
 	}
 
 	// MARK: - IBActions
