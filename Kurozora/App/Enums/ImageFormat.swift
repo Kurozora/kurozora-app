@@ -12,7 +12,9 @@ import CoreGraphics
 ///
 /// ```
 /// case png
-/// case jpeg(CGFloat)
+/// case jpeg(_ compressionQuality:)
+/// case heic
+/// case pdf
 /// ```
 public enum ImageFormat {
 	// MARK: - Cases
@@ -20,5 +22,11 @@ public enum ImageFormat {
 	case png
 
 	/// Indicates the image has a `jpeg` format. This option also takes a compression value.
-	case jpeg(CGFloat)
+	case jpeg(_ compressionQuality: CGFloat)
+
+	/// Indicates the image has a `hec` format.
+	case heic
+
+	/// Indicates the image has a `PDF` format. Uses `png` format for the image.
+	case pdf
 }
