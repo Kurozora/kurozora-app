@@ -156,9 +156,6 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 	}
 
 	func configureRank(_ rank: Int?) {
-		self.rankLabel?.theme_textColor = KThemePicker.textColor.rawValue
-
-		// Configure rank
 		if let rank = rank {
 			self.rankLabel?.text = "# \(rank)"
 			self.rankLabel?.isHidden = false

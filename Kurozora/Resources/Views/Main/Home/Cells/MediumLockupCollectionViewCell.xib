@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,10 +11,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="yY4-Gg-TsP" customClass="MediumLockupCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="284" height="190"/>
+            <rect key="frame" x="0.0" y="0.0" width="284" height="214"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="6WG-5O-kCh">
-                <rect key="frame" x="0.0" y="0.0" width="284" height="190"/>
+                <rect key="frame" x="0.0" y="0.0" width="284" height="214"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ni9-Cf-IrR" customClass="GradientView" customModule="Kurozora" customModuleProvider="target">
@@ -72,20 +72,30 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" text="Adventure" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uWC-M2-fx0" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="168" width="284" height="22"/>
-                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
-                        <color key="textColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Okd-mu-YDE">
+                        <rect key="frame" x="0.0" y="168" width="284" height="46"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="#0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OkU-DY-ywW" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="284" height="22"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" text="Adventure" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uWC-M2-fx0" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="22" width="284" height="24"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                <color key="textColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="Okd-mu-YDE" firstAttribute="leading" secondItem="6WG-5O-kCh" secondAttribute="leading" id="1xA-Ty-7gh"/>
                     <constraint firstItem="ni9-Cf-IrR" firstAttribute="leading" secondItem="6WG-5O-kCh" secondAttribute="leading" id="Mju-20-HBL"/>
                     <constraint firstItem="ni9-Cf-IrR" firstAttribute="top" secondItem="6WG-5O-kCh" secondAttribute="top" id="PyT-hh-wES"/>
-                    <constraint firstAttribute="bottom" secondItem="uWC-M2-fx0" secondAttribute="bottom" id="RRG-iL-32p"/>
-                    <constraint firstAttribute="trailing" secondItem="uWC-M2-fx0" secondAttribute="trailing" id="ifI-K9-Yfm"/>
-                    <constraint firstItem="uWC-M2-fx0" firstAttribute="leading" secondItem="ni9-Cf-IrR" secondAttribute="leading" id="ueG-5g-o6E"/>
-                    <constraint firstItem="uWC-M2-fx0" firstAttribute="top" secondItem="ni9-Cf-IrR" secondAttribute="bottom" constant="8" symbolic="YES" id="ugY-Ry-NJ7"/>
+                    <constraint firstAttribute="bottom" secondItem="Okd-mu-YDE" secondAttribute="bottom" id="UPV-Tp-9Ja"/>
+                    <constraint firstAttribute="trailing" secondItem="Okd-mu-YDE" secondAttribute="trailing" id="Xn1-XV-cDe"/>
+                    <constraint firstItem="Okd-mu-YDE" firstAttribute="top" secondItem="ni9-Cf-IrR" secondAttribute="bottom" constant="8" symbolic="YES" id="nxx-50-0zy"/>
                     <constraint firstAttribute="trailing" secondItem="ni9-Cf-IrR" secondAttribute="trailing" id="uiT-iC-vPY"/>
                 </constraints>
             </collectionViewCellContentView>
@@ -94,6 +104,7 @@
             <connections>
                 <outlet property="backgroundColorView" destination="ni9-Cf-IrR" id="S1G-Y9-IfZ"/>
                 <outlet property="primaryLabel" destination="uWC-M2-fx0" id="hv4-eZ-tjw"/>
+                <outlet property="rankLabel" destination="OkU-DY-ywW" id="rDx-9q-9Cn"/>
                 <outlet property="symbolImageView" destination="hQ3-se-UId" id="vXi-51-wEA"/>
             </connections>
             <point key="canvasLocation" x="740.57971014492762" y="152.67857142857142"/>

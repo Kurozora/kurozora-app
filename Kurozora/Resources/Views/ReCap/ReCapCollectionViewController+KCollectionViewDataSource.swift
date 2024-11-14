@@ -262,7 +262,7 @@ extension ReCapCollectionViewController {
 					}
 				}
 
-				mediumLockupCollectionViewCell.configure(using: genre)
+				mediumLockupCollectionViewCell.configure(using: genre, rank: indexPath.item + 1)
 			case .themeIdentity(let themeIdentity, _):
 				let theme = self.fetchTheme(at: indexPath)
 
@@ -278,7 +278,7 @@ extension ReCapCollectionViewController {
 					}
 				}
 
-				mediumLockupCollectionViewCell.configure(using: theme)
+				mediumLockupCollectionViewCell.configure(using: theme, rank: indexPath.item + 1)
 			default: break
 			}
 		}
