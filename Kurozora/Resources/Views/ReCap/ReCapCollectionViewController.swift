@@ -128,7 +128,7 @@ class ReCapCollectionViewController: KCollectionViewController {
 	@IBAction func shareBarButtonItemPressed(_ sender: UIBarButtonItem) {
 		// Share Re:CAP view as screenshot.
 		self.collectionView.backgroundColor = KThemePicker.backgroundColor.colorValue
-		guard let image = self.collectionView.screenshot() else {
+		guard let image = self.collectionView.screenshot(fullScreen: true) else {
 			self.collectionView.backgroundColor = nil
 			return
 		}
@@ -143,30 +143,13 @@ class ReCapCollectionViewController: KCollectionViewController {
 // MARK: - UIScreenshotServiceDelegate
 extension ReCapCollectionViewController: UIScreenshotServiceDelegate {
 	func screenshotServiceGeneratePDFRepresentation(_ screenshotService: UIScreenshotService) async -> (Data?, Int, CGRect) {
-		let data = NSMutableData()
-		UIGraphicsBeginPDFContextToData(data, .zero, nil)
-		UIGraphicsBeginPDFPageWithInfo(.init(origin: .zero, size: self.collectionView.contentSize), nil)
-		if let context = UIGraphicsGetCurrentContext() {
-			let frame = self.collectionView.frame
-			let contentOffset = self.collectionView.contentOffset
-			let contentInset = self.collectionView.contentInset
-
-			self.collectionView.contentOffset = .zero
-			self.collectionView.contentInset = .zero
-			self.collectionView.frame = .init(origin: .zero, size: self.collectionView.contentSize)
-			self.collectionView.backgroundColor = KThemePicker.backgroundColor.colorValue
-			self.collectionView.layer.render(in: context)
-
-			self.collectionView.frame = frame
-			self.collectionView.contentOffset = contentOffset
-			self.collectionView.contentInset = contentInset
-			self.collectionView.backgroundColor = nil
-		}
-		UIGraphicsEndPDFContext()
+		self.collectionView.backgroundColor = KThemePicker.backgroundColor.colorValue
+		let data = self.collectionView.screenshot(fullScreen: true, format: .pdf)
+		self.collectionView.backgroundColor = nil
 
 		let y = self.collectionView.contentSize.height - self.collectionView.contentOffset.y - self.collectionView.frame.height
 
-		return (data as Data, 0, .init(origin: CGPoint(x: 0, y: y), size: self.view.frame.size))
+		return (data, 0, .init(origin: CGPoint(x: 0, y: y), size: self.view.frame.size))
 	}
 }
 
