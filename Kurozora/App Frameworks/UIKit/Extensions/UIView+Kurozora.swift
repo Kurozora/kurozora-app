@@ -104,18 +104,3 @@ extension UIView {
 		self.layer.rasterizationScale = shouldRasterize ? UIScreen.main.scale : 1.0
 	}
 }
-
-extension UICollectionView {
-	/// Take a screenshot of the view and return it as a `UIImage`.
-	func screenshot() -> UIImage? {
-		let targetSize = self.contentSize // to capture entire scroll content
-		if targetSize.width <= 0 || targetSize.height <= 0 { return nil }
-
-		let bounds = CGRect(origin: .zero, size: targetSize)
-
-		let renderer = UIGraphicsImageRenderer(size: targetSize)
-		return renderer.image { _ in
-			self.drawHierarchy(in: bounds, afterScreenUpdates: true)
-		}
-	}
-}

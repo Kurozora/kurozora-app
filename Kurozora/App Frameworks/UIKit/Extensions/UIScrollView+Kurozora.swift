@@ -34,4 +34,47 @@ extension UIScrollView {
 		let scrollViewBottomOffset = scrollContentSizeHeight + bottomInset - scrollViewHeight
 		return scrollViewBottomOffset
 	}
+
+	/// Take a screenshot of the view and return it as a `UIImage`.
+	///
+	/// - Parameter fullScreen: A boolean value to indicate whether the screenshot should be taken of the entire scroll content or just the visible part.
+	/// - Parameter format: A `ScreenshotFormat` value to indicate the format of the screenshot. Default value is `.png`. `.heic` format defaults to `.png` pre iOS 17.0.
+	///
+	/// - Returns: A `UIImage` of the view's content.
+	func screenshot(fullScreen: Bool, format: ImageFormat = .png) -> Data? {
+		let size = fullScreen ? self.contentSize : self.bounds.size
+
+		// Save the current state of content offset and frame
+		let savedContentOffset = self.contentOffset
+		let savedFrame = self.frame
+
+		// Adjust the view for rendering
+		self.contentOffset = .zero
+		self.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+
+		// Use UIGraphicsImageRenderer with the provided CGContext
+		let renderer = UIGraphicsImageRenderer(size: size)
+		let image = renderer.image { context in
+			self.layer.render(in: context.cgContext)
+		}
+
+		// Restore the original state
+		self.contentOffset = savedContentOffset
+		self.frame = savedFrame
+
+		switch format {
+		case .png:
+			return image.pngData()
+		case .jpeg(let compressionQuality):
+			return image.jpegData(compressionQuality: compressionQuality)
+		case .heic:
+			if #available(iOS 17.0, *) {
+				return image.heicData()
+			} else {
+				return image.pngData()
+			}
+		case .pdf:
+			return image.pdfData()
+		}
+	}
 }
