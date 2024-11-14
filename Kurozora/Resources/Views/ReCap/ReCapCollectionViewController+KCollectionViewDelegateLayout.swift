@@ -37,6 +37,23 @@ extension ReCapCollectionViewController {
 		return columnCount > 0 ? columnCount : 1
 	}
 
+	override func contentInset(forSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
+		let width = collectionViewLayout.container.effectiveContentSize.width
+
+		switch self.snapshot.sectionIdentifiers[section] {
+		case .header:
+			return NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0)
+		default:
+			let bottom: CGFloat = if width >= 414 {
+				144.0
+			} else {
+				40.0
+			}
+
+			return NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: bottom, trailing: 10)
+		}
+	}
+
 	override func createLayout() -> UICollectionViewLayout? {
 		return UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
@@ -60,6 +77,7 @@ extension ReCapCollectionViewController {
 				layoutSize: headerFooterSize,
 				elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
 			sectionLayout?.boundarySupplementaryItems = [sectionHeader]
+			sectionLayout?.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
 			return sectionLayout
 		}
 	}
