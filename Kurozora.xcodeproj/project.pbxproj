@@ -531,6 +531,7 @@
 		66C4DADF243BE4CF00C4B90A /* KKLibrarySortType+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4DADE243BE4CF00C4B90A /* KKLibrarySortType+Kurozora.swift */; };
 		66C4DAE1243BE52900C4B90A /* KKLibrarySortTypeOption+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4DAE0243BE52900C4B90A /* KKLibrarySortTypeOption+Kurozora.swift */; };
 		66C4DAE6243E133F00C4B90A /* KTabbedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4DAE5243E133F00C4B90A /* KTabbedViewController.swift */; };
+		66C52C9C2CE8036E0081707D /* KCircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C52C9B2CE8036E0081707D /* KCircularProgressView.swift */; };
 		66C5797922A83726001B8F51 /* ThemeStore.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66C5797822A83726001B8F51 /* ThemeStore.storyboard */; };
 		66C5797B22A86435001B8F51 /* DebugSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66C5797A22A86435001B8F51 /* DebugSettings.storyboard */; };
 		66C5797D22A864CB001B8F51 /* Legal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66C5797C22A864CB001B8F51 /* Legal.storyboard */; };
@@ -1337,6 +1338,7 @@
 		66C4DADE243BE4CF00C4B90A /* KKLibrarySortType+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KKLibrarySortType+Kurozora.swift"; sourceTree = "<group>"; };
 		66C4DAE0243BE52900C4B90A /* KKLibrarySortTypeOption+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KKLibrarySortTypeOption+Kurozora.swift"; sourceTree = "<group>"; };
 		66C4DAE5243E133F00C4B90A /* KTabbedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KTabbedViewController.swift; sourceTree = "<group>"; };
+		66C52C9B2CE8036E0081707D /* KCircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCircularProgressView.swift; sourceTree = "<group>"; };
 		66C5797822A83726001B8F51 /* ThemeStore.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ThemeStore.storyboard; sourceTree = "<group>"; };
 		66C5797A22A86435001B8F51 /* DebugSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DebugSettings.storyboard; sourceTree = "<group>"; };
 		66C5797C22A864CB001B8F51 /* Legal.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Legal.storyboard; sourceTree = "<group>"; };
@@ -2754,9 +2756,10 @@
 		668142D8245B49E4008FC7BE /* Content Views */ = {
 			isa = PBXGroup;
 			children = (
-				66D4C8E92A62FC6200971206 /* UIStackView */,
 				66DB2549245D72ED000AA6DB /* KActivityIndicatorView.swift */,
+				66C52C9B2CE8036E0081707D /* KCircularProgressView.swift */,
 				664AAF8624EE901800FF4AA5 /* UIImageView */,
+				66D4C8E92A62FC6200971206 /* UIStackView */,
 			);
 			path = "Content Views";
 			sourceTree = "<group>";
@@ -4829,6 +4832,7 @@
 				66EDBA652944A8E300FF1A2E /* WarningType.swift in Sources */,
 				66E1517A2711C478007966A9 /* R.generated.swift in Sources */,
 				66CF6D6F20A9921000F98375 /* NotificationsTableViewController.swift in Sources */,
+				66C52C9C2CE8036E0081707D /* KCircularProgressView.swift in Sources */,
 				66EA1DD625B5BB3100FCD07A /* PersonDetailsCollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				66825BFA21B3E2A700A2F602 /* WorkflowController.swift in Sources */,
 				66856E842931AE430083160D /* SongDetailsCollectionViewController+UICollectionViewDelegate.swift in Sources */,
