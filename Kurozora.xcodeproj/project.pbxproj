@@ -458,6 +458,7 @@
 		66A4FD17270F62D300E7C702 /* Products.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66A4FD12270F62D300E7C702 /* Products.plist */; };
 		66A4FD19270F6CD100E7C702 /* App Icons.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66A4FD18270F6CD100E7C702 /* App Icons.plist */; };
 		66A4FD1A270F7B3900E7C702 /* Icons.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 668DBE6B26BCB00300399BEB /* Icons.storyboard */; };
+		66A83DA22CE95A450002A2EE /* MilestoneKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A83DA12CE95A450002A2EE /* MilestoneKind.swift */; };
 		66AA35BC24030E420006EC5B /* Cast.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66AA35BB24030E420006EC5B /* Cast.storyboard */; };
 		66AA35BE24030F570006EC5B /* Seasons.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66AA35BD24030F570006EC5B /* Seasons.storyboard */; };
 		66AA35C024030FA60006EC5B /* Episodes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66AA35BF24030FA60006EC5B /* Episodes.storyboard */; };
@@ -1262,6 +1263,7 @@
 		66A4FD11270F62D300E7C702 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		66A4FD12270F62D300E7C702 /* Products.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Products.plist; sourceTree = "<group>"; };
 		66A4FD18270F6CD100E7C702 /* App Icons.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "App Icons.plist"; sourceTree = "<group>"; };
+		66A83DA12CE95A450002A2EE /* MilestoneKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneKind.swift; sourceTree = "<group>"; };
 		66AA35BB24030E420006EC5B /* Cast.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Cast.storyboard; sourceTree = "<group>"; };
 		66AA35BD24030F570006EC5B /* Seasons.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Seasons.storyboard; sourceTree = "<group>"; };
 		66AA35BF24030FA60006EC5B /* Episodes.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Episodes.storyboard; sourceTree = "<group>"; };
@@ -1339,6 +1341,8 @@
 		66C4DAE0243BE52900C4B90A /* KKLibrarySortTypeOption+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KKLibrarySortTypeOption+Kurozora.swift"; sourceTree = "<group>"; };
 		66C4DAE5243E133F00C4B90A /* KTabbedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KTabbedViewController.swift; sourceTree = "<group>"; };
 		66C52C9B2CE8036E0081707D /* KCircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCircularProgressView.swift; sourceTree = "<group>"; };
+		66C52C9D2CE804BA0081707D /* ReCapMilestoneCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReCapMilestoneCollectionViewCell.swift; sourceTree = "<group>"; };
+		66C52CA12CE807B30081707D /* ReCapMilestoneCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReCapMilestoneCollectionViewCell.xib; sourceTree = "<group>"; };
 		66C5797822A83726001B8F51 /* ThemeStore.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ThemeStore.storyboard; sourceTree = "<group>"; };
 		66C5797A22A86435001B8F51 /* DebugSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DebugSettings.storyboard; sourceTree = "<group>"; };
 		66C5797C22A864CB001B8F51 /* Legal.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Legal.storyboard; sourceTree = "<group>"; };
@@ -3566,8 +3570,10 @@
 		66D083E22CE4298F00A1EF6A /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				66C52C9D2CE804BA0081707D /* ReCapMilestoneCollectionViewCell.swift */,
 				66D083E72CE4340800A1EF6A /* ReCapHeaderCollectionViewCell.swift */,
 				66D083E82CE4340800A1EF6A /* ReCapHeaderCollectionViewCell.xib */,
+				66C52CA12CE807B30081707D /* ReCapMilestoneCollectionViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -3999,6 +4005,7 @@
 				66FA97C1281A11150054FC2E /* LayoutType.swift */,
 				666C898B29FF283A0075B5D6 /* LiteratureStatus.swift */,
 				666C898D29FF28F50075B5D6 /* LiteratureType.swift */,
+				66A83DA12CE95A450002A2EE /* MilestoneKind.swift */,
 				6617C8262A08710B0091EFAC /* Month.swift */,
 				66DF090D26C673CF005AED93 /* NotificationKind.swift */,
 				66ABF5F9233835FF00795750 /* OnboardingType.swift */,
@@ -4334,6 +4341,7 @@
 				66A4FD13270F62D300E7C702 /* Configuration.storekit in Resources */,
 				66FC6DD32340028D00A454DD /* AccountSettings.storyboard in Resources */,
 				66D6237F20A1CC1D00304914 /* Library.storyboard in Resources */,
+				66C52CA22CE807B30081707D /* ReCapMilestoneCollectionViewCell.xib in Resources */,
 				66CBDD9E24649C4C00CA5F83 /* TextViewCollectionViewCell.xib in Resources */,
 				666938B821B1D50500BA9620 /* CommentImageCell.xib in Resources */,
 				666938B921B1D50E00BA9620 /* WriteACommentCell.xib in Resources */,
@@ -4698,6 +4706,7 @@
 				666C899629FF2EEB0075B5D6 /* DayOfWeek.swift in Sources */,
 				66472370245DC531008E5111 /* CircularView.swift in Sources */,
 				662CAD68257594E00045236C /* EmptyBackgroundView.swift in Sources */,
+				66A83DA22CE95A450002A2EE /* MilestoneKind.swift in Sources */,
 				66CF6D6920A98CAA00F98375 /* UsersListCollectionViewController.swift in Sources */,
 				666938B421B1D4E500BA9620 /* PostLinkCell.swift in Sources */,
 				663C65D9226AA60100825F89 /* EpisodesListCollectionViewController.swift in Sources */,
@@ -4918,6 +4927,7 @@
 				66FA97C4281A11720054FC2E /* SubscriptionTier.swift in Sources */,
 				666C899029FF2A640075B5D6 /* StudioType.swift in Sources */,
 				66F27EBC283A7BF900CC2277 /* StudioAttributes+UIImage.swift in Sources */,
+				66C52C9E2CE804C60081707D /* ReCapMilestoneCollectionViewCell.swift in Sources */,
 				66B13A572403CA4F00CD732B /* UICollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				665A0B7620CC72F20024E2E2 /* ManageActiveSessionsController.swift in Sources */,
 				66FA97E5281EC9DC0054FC2E /* QuickLink.swift in Sources */,
