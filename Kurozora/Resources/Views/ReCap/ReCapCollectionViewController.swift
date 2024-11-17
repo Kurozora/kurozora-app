@@ -125,14 +125,24 @@ class ReCapCollectionViewController: KCollectionViewController {
 		}
 	}
 
+	/// Toggles the view between a state ready for screenshotting and the default state.
+	///
+	/// - Parameters:
+	///    - isScreenshotting: A boolean value indicating whether the view is in screenshotting state.
+	private func toggleScreenshotState(isScreenshotting: Bool) {
+		self.collectionView.backgroundColor = isScreenshotting ? KThemePicker.backgroundColor.colorValue : nil
+		self.collectionView.showsVerticalScrollIndicator = !isScreenshotting
+	}
+
+	// MARK: - IBActions
 	@IBAction func shareBarButtonItemPressed(_ sender: UIBarButtonItem) {
 		// Share Re:CAP view as screenshot.
-		self.collectionView.backgroundColor = KThemePicker.backgroundColor.colorValue
+		self.toggleScreenshotState(isScreenshotting: true)
 		guard let image = self.collectionView.screenshot(fullScreen: true) else {
-			self.collectionView.backgroundColor = nil
+			self.toggleScreenshotState(isScreenshotting: false)
 			return
 		}
-		self.collectionView.backgroundColor = nil
+		self.toggleScreenshotState(isScreenshotting: false)
 
 		let activityViewController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
 		activityViewController.popoverPresentationController?.barButtonItem = sender
@@ -143,9 +153,9 @@ class ReCapCollectionViewController: KCollectionViewController {
 // MARK: - UIScreenshotServiceDelegate
 extension ReCapCollectionViewController: UIScreenshotServiceDelegate {
 	func screenshotServiceGeneratePDFRepresentation(_ screenshotService: UIScreenshotService) async -> (Data?, Int, CGRect) {
-		self.collectionView.backgroundColor = KThemePicker.backgroundColor.colorValue
+		self.toggleScreenshotState(isScreenshotting: true)
 		let data = self.collectionView.screenshot(fullScreen: true, format: .pdf)
-		self.collectionView.backgroundColor = nil
+		self.toggleScreenshotState(isScreenshotting: false)
 
 		let y = self.collectionView.contentSize.height - self.collectionView.contentOffset.y - self.collectionView.frame.height
 
