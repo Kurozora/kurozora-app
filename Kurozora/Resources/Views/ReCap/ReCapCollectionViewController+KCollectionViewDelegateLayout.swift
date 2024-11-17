@@ -17,8 +17,16 @@ extension ReCapCollectionViewController {
 		switch section {
 		case .header:
 			return 1
-		case .topShows, .topGames, .topLiteratures, .topGenres, .topThemes, .milestones:
+		case .topShows, .topGames, .topLiteratures, .topGenres, .topThemes:
 			if width >= 414 {
+				columnCount = (width / 384).rounded().int
+			} else {
+				columnCount = (width / 284).rounded().int
+			}
+		case .milestones(let isFullSection):
+			if isFullSection {
+				columnCount = 1
+			} else if width >= 414 {
 				columnCount = (width / 384).rounded().int
 			} else {
 				columnCount = (width / 284).rounded().int
@@ -67,8 +75,15 @@ extension ReCapCollectionViewController {
 				return sectionLayout
 			case .topShows, .topGames, .topLiteratures:
 				sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
-			case .topGenres, .topThemes, .milestones:
+			case .topGenres, .topThemes:
 				sectionLayout = Layouts.mediumSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+			case .milestones(let isFullSection):
+				if isFullSection {
+					sectionLayout = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				} else {
+					sectionLayout = Layouts.mediumSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				}
+				return sectionLayout
 			}
 
 			// Add header supplementary view.

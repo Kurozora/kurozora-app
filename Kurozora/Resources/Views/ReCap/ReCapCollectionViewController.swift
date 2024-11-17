@@ -177,7 +177,7 @@ extension ReCapCollectionViewController {
 		case topThemes(_: RecapItem)
 
 		/// Indicates a milestones section layout type.
-		case milestones(_: RecapItem)
+		case milestones(_ isFullSection: Bool)
 
 		// MARK: - Functions
 		func hash(into hasher: inout Hasher) {
@@ -194,8 +194,8 @@ extension ReCapCollectionViewController {
 				hasher.combine(recapItem)
 			case .topThemes(let recapItem):
 				hasher.combine(recapItem)
-			case .milestones(let recapItem):
-				hasher.combine(recapItem)
+			case .milestones(let isFullSection):
+				hasher.combine(isFullSection)
 			}
 		}
 
@@ -213,8 +213,8 @@ extension ReCapCollectionViewController {
 				return recapItem1 == recapItem2
 			case (.topThemes(let recapItem1), .topThemes(let recapItem2)):
 				return recapItem1 == recapItem2
-			case (.milestones(let recapItem1), .milestones(let recapItem2)):
-				return recapItem1 == recapItem2
+			case (.milestones(let isFullSection1), .milestones(let isFullSection2)):
+				return isFullSection1 == isFullSection2
 			default: return false
 			}
 		}
@@ -244,6 +244,9 @@ extension ReCapCollectionViewController {
 		/// Indicates the item kind contains a `ThemeIdentity` object.
 		case themeIdentity(_: ThemeIdentity, section: SectionLayoutKind)
 
+		/// Indicates the item kind contains a `RecapItem` object.
+		case recapItem(_: RecapItem, milestoneKind: MilestoneKind)
+
 		// MARK: - Functions
 		func hash(into hasher: inout Hasher) {
 			switch self {
@@ -265,6 +268,9 @@ extension ReCapCollectionViewController {
 			case .themeIdentity(let themeIdentity, let section):
 				hasher.combine(themeIdentity)
 				hasher.combine(section)
+			case .recapItem(let recapItem, let milestoneKind):
+				hasher.combine(recapItem)
+				hasher.combine(milestoneKind)
 			}
 		}
 
@@ -282,6 +288,8 @@ extension ReCapCollectionViewController {
 				return genreIdentity1 == genreIdentity2 && section1 == section2
 			case (.themeIdentity(let themeIdentity1, let section1), .themeIdentity(let themeIdentity2, let section2)):
 				return themeIdentity1 == themeIdentity2 && section1 == section2
+			case (.recapItem(let recapItem1, let milestoneKind1), .recapItem(let recapItem2, let milestoneKind2)):
+				return recapItem1 == recapItem2 && milestoneKind1 == milestoneKind2
 			default:
 				return false
 			}

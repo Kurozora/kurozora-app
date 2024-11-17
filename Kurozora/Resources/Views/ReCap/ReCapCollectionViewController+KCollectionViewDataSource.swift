@@ -19,6 +19,7 @@ extension ReCapCollectionViewController {
 		let gameCellConfiguration = self.getConfiguredGameCell()
 		let mediumCellConfiguration = self.getConfiguredMediumCell()
 		let smallCellConfiguration = self.getConfiguredSmallCell()
+		let milestoneCellConfiguration = self.getConfiguredMilestoneCell()
 
 		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, itemKind: ItemKind) -> UICollectionViewCell? in
 			guard let self = self else { return nil }
@@ -34,7 +35,7 @@ extension ReCapCollectionViewController {
 			case .topGenres, .topThemes:
 				return collectionView.dequeueConfiguredReusableCell(using: mediumCellConfiguration, for: indexPath, item: itemKind)
 			case .milestones:
-				return collectionView.dequeueConfiguredReusableCell(using: gameCellConfiguration, for: indexPath, item: itemKind)
+				return collectionView.dequeueConfiguredReusableCell(using: milestoneCellConfiguration, for: indexPath, item: itemKind)
 			}
 		}
 		self.dataSource.supplementaryViewProvider = { [weak self] (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
@@ -54,8 +55,7 @@ extension ReCapCollectionViewController {
 				title = Trans.top(recap.attributes.type)
 				subtitle = nil
 			case .milestones:
-				title = Trans.milestones
-				subtitle = nil
+				return nil
 			}
 
 			exploreSectionTitleCell.configure(withTitle: title, subtitle, segueID: "", separatorIsHidden: true)
@@ -121,6 +121,65 @@ extension ReCapCollectionViewController {
 
 			self.snapshot.appendSections([sectionHeader])
 			self.snapshot.appendItems(itemKinds, toSection: sectionHeader)
+		}
+
+		// Add milestones
+		let title = "These milestones marked your season finale"
+		let sectionHeader = SectionLayoutKind.header(title)
+
+		self.snapshot.appendSections([sectionHeader])
+		self.snapshot.appendItems([.string(title, section: sectionHeader)], toSection: sectionHeader)
+
+		var milestoneItems: [ItemKind] = []
+		self.recapItems.forEach { recapItem in
+			switch recapItem.attributes.recapItemType {
+			case .shows:
+				if recapItem.attributes.totalPartsDuration > 0 {
+					let itemKind: ItemKind = .recapItem(recapItem, milestoneKind: .minuetsWatched)
+					milestoneItems.append(itemKind)
+				}
+
+				if recapItem.attributes.totalPartsCount > 0 {
+					let itemKind: ItemKind = .recapItem(recapItem, milestoneKind: .episodesWatched)
+					milestoneItems.append(itemKind)
+				}
+			case .literatures:
+				if recapItem.attributes.totalPartsDuration > 0 {
+					let itemKind: ItemKind = .recapItem(recapItem, milestoneKind: .minuetsRead)
+					milestoneItems.append(itemKind)
+				}
+
+				if recapItem.attributes.totalPartsCount > 0 {
+					let itemKind: ItemKind = .recapItem(recapItem, milestoneKind: .chaptersRead)
+					milestoneItems.append(itemKind)
+				}
+			case .games:
+				if recapItem.attributes.totalPartsDuration > 0 {
+					let itemKind: ItemKind = .recapItem(recapItem, milestoneKind: .minutesPlayed)
+					milestoneItems.append(itemKind)
+				}
+
+				if recapItem.attributes.totalPartsCount > 0 {
+					let itemKind: ItemKind = .recapItem(recapItem, milestoneKind: .gamesPlayed)
+					milestoneItems.append(itemKind)
+				}
+			case .genres, .themes: break
+			}
+		}
+
+		self.snapshot.appendSections([.milestones(false)])
+		self.snapshot.appendItems(milestoneItems, toSection: .milestones(false))
+
+		// Add top percentile milestone
+		if let recapItem = self.recapItems.filter({
+			$0.attributes.topPercentile > 0.0
+		})
+		.sorted(by: \RecapItem.attributes.topPercentile)
+		.first {
+			let itemKind: ItemKind = .recapItem(recapItem, milestoneKind: .topPercentile)
+
+			self.snapshot.appendSections([.milestones(true)])
+			self.snapshot.appendItems([itemKind], toSection: .milestones(true))
 		}
 
 		self.dataSource.apply(self.snapshot)
@@ -205,11 +264,22 @@ extension ReCapCollectionViewController {
 	}
 
 	func getConfiguredHeaderCell() -> UICollectionView.CellRegistration<ReCapHeaderCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<ReCapHeaderCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.reCapHeaderCollectionViewCell)) { reCapHeaderCollectionViewCell, indexPath, itemKind in
+		return UICollectionView.CellRegistration<ReCapHeaderCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.reCapHeaderCollectionViewCell)) { reCapHeaderCollectionViewCell, _, itemKind in
 
 			switch itemKind {
 			case .string(let title, _):
 				reCapHeaderCollectionViewCell.configure(using: title)
+			default: break
+			}
+		}
+	}
+
+	func getConfiguredMilestoneCell() -> UICollectionView.CellRegistration<ReCapMilestoneCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<ReCapMilestoneCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.reCapMilestoneCollectionViewCell)) { reCapMilestoneCollectionViewCell, _, itemKind in
+
+			switch itemKind {
+			case .recapItem(let recapItem, let milestoneKind):
+				reCapMilestoneCollectionViewCell.configure(using: recapItem, milestoneKind: milestoneKind)
 			default: break
 			}
 		}
