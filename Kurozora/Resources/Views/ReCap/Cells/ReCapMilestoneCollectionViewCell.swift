@@ -56,10 +56,20 @@ class ReCapMilestoneCollectionViewCell: KCollectionViewCell {
 			self.tertiaryLabel.text = "\(recapItem.attributes.totalPartsCount)"
 		case .topPercentile:
 			let topPercentile = String(format: "%.2f", recapItem.attributes.topPercentile)
+			let recapItemTitle: String = switch recapItem.attributes.recapItemType {
+			case .shows:
+				"anime watchers"
+			case .games:
+				"game players"
+			case .literatures:
+				"manga readers"
+			case .genres, .themes:
+				""
+			}
 
-			self.secondaryLabel.text = "You were in the top \(topPercentile) of \(recapItem.attributes.type) watchers this year."
+			self.secondaryLabel.text = "You were in the top \(topPercentile)% of \(recapItemTitle) this year."
 			self.tertiaryLabel.text = "\(topPercentile)%"
-			self.quaternaryLabel.text = "Top \(recapItem.attributes.type) Watcher"
+			self.quaternaryLabel.text = "Top \(recapItemTitle.capitalized.dropLast())"
 		}
 
 		self.progressView.lineWidth = 16.0
