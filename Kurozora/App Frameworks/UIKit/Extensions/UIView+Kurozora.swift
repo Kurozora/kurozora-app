@@ -38,8 +38,8 @@ extension UIView {
 	/// Fade in view.
 	///
 	/// - Parameters:
-	///    - duration: animation duration in seconds (default is 0.80 second).
-	///    - completion: optional completion handler to run with animation finishes (default is nil)
+	///    - duration: Animation duration in seconds (default is 0.80 second).
+	///    - completion: Optional completion handler to run with animation finishes (default is `nil`).
 	func animateFadeIn(duration: TimeInterval = 0.80, completion: ((Bool) -> Void)? = nil) {
 		if self.alpha != 0.0 {
 			self.alpha = 0.0
@@ -53,8 +53,8 @@ extension UIView {
 	/// Fade out view.
 	///
 	///	- Parameters:
-	///    - duration: animation duration in seconds (default is 0.25 second).
-	///    - completion: optional completion handler to run with animation finishes (default is nil)
+	///    - duration: Animation duration in seconds (default is 0.25 second).
+	///    - completion: Optional completion handler to run with animation finishes (default is `nil`).
 	func animateFadeOut(duration: TimeInterval = 0.25, completion: ((Bool) -> Void)? = nil) {
 		UIView.animate(withDuration: duration, animations: { [weak self] in
 			guard let self = self else { return }
@@ -64,8 +64,10 @@ extension UIView {
 
 	/// Bounces the view with the given growth value.
 	///
-	/// - Parameter growth: The given float value used to bounce the view (default is `1.25`).
-	func animateBounce(growth: CGFloat = 1.25) {
+	/// - Parameters:
+	///    - growth: The given float value used to bounce the view (default is `1.25`).
+	///   - completion: The completion block that gets called after the animation finishes (default is `nil`).
+	func animateBounce(growth: CGFloat = 1.25, completion: ((Bool) -> Void)? = nil) {
 		transform = .identity
 		UIView.animate(withDuration: 0.2, animations: { [weak self] in
 			guard let self = self else { return }
@@ -74,7 +76,7 @@ extension UIView {
 			UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.4, options: [.curveEaseIn, .allowUserInteraction], animations: { [weak self] in
 				guard let self = self else { return }
 				self.transform = .identity
-			}, completion: nil)
+			}, completion: completion)
 		}
 	}
 
