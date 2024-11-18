@@ -46,25 +46,11 @@ class ReCapCollectionViewController: KCollectionViewController {
 	var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 
-	/// Show properties.
 	var shows: [IndexPath: Show] = [:]
-	var showIdentities: [ShowIdentity] = []
-
-	/// Literature properties.
 	var literatures: [IndexPath: Literature] = [:]
-	var literatureIdentities: [LiteratureIdentity] = []
-
-	/// Game properties.
 	var games: [IndexPath: Game] = [:]
-	var gameIdentities: [GameIdentity] = []
-
-	/// Genre properties.
 	var genres: [IndexPath: Genre] = [:]
-	var genreIdentities: [GenreIdentity] = []
-
-	/// Theme properties.
 	var themes: [IndexPath: Theme] = [:]
-	var themeIdentities: [ThemeIdentity] = []
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
