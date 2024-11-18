@@ -66,6 +66,11 @@ extension ReCapCollectionViewController {
 	}
 
 	override func updateDataSource() {
+		self.shows = [:]
+		self.literatures = [:]
+		self.games = [:]
+		self.genres = [:]
+		self.themes = [:]
 		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 
 		if let month = Month(rawValue: self.month) {
