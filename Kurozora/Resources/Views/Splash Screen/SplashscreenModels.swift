@@ -9,11 +9,17 @@
 import UIKit
 
 enum Splashscreen {
-	enum Something {
-		struct Request { }
+	enum AnimateLogo {
+		struct Request {
+			let completion: ((Bool) -> Void)?
+		}
 
-		struct Response { }
+		struct Response {
+			let completion: ((Bool) -> Void)?
+		}
 
-		struct ViewModel { }
+		struct ViewModel {
+			let completion: ((Bool) -> Void)?
+		}
 	}
 }

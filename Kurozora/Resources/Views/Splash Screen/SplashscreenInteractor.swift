@@ -9,26 +9,21 @@
 import UIKit
 
 protocol SplashscreenBusinessLogic {
-	func doSomething(request: Splashscreen.Something.Request)
+	func animateLogo(request: Splashscreen.AnimateLogo.Request)
 }
 
-protocol SplashscreenDataStore: AnyObject {
-//    var name: String { get set }
-}
+protocol SplashscreenDataStore: AnyObject {}
 
 // MARK: - DataStore
 final class SplashscreenInteractor: SplashscreenDataStore {
 	var presenter: SplashscreenPresentationLogic?
 	var worker: SplashscreenWorkerLogic?
-//	var name: String = ""
 }
 
 // MARK: - BusinessLogic
 extension SplashscreenInteractor: SplashscreenBusinessLogic {
-	func doSomething(request: Splashscreen.Something.Request) {
-		self.worker?.doSomeWork(completion: {
-			let response = Splashscreen.Something.Response()
-			self.presenter?.presentSomething(response: response)
-		})
+	func animateLogo(request: Splashscreen.AnimateLogo.Request) {
+		let response = Splashscreen.AnimateLogo.Response(completion: request.completion)
+		self.presenter?.presentAnimateLogo(response: response)
 	}
 }

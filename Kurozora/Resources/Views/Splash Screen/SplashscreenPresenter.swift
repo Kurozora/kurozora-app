@@ -9,15 +9,15 @@
 import UIKit
 
 protocol SplashscreenPresentationLogic {
-	func presentSomething(response: Splashscreen.Something.Response)
+	func presentAnimateLogo(response: Splashscreen.AnimateLogo.Response)
 }
 
 // MARK: - PresentationLogic
 final class SplashscreenPresenter: SplashscreenPresentationLogic {
 	weak var viewController: SplashscreenDisplayLogic?
 
-	func presentSomething(response: Splashscreen.Something.Response) {
-		let viewModel = Splashscreen.Something.ViewModel()
-		self.viewController?.displaySomething(viewModel: viewModel)
+	func presentAnimateLogo(response: Splashscreen.AnimateLogo.Response) {
+		let viewModel = Splashscreen.AnimateLogo.ViewModel(completion: response.completion)
+		self.viewController?.displayAnimateLogo(viewModel: viewModel)
 	}
 }

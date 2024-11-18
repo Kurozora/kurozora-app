@@ -9,7 +9,7 @@
 import UIKit
 
 protocol SplashscreenDisplayLogic: AnyObject {
-	func displaySomething(viewModel: Splashscreen.Something.ViewModel)
+	func displayAnimateLogo(viewModel: Splashscreen.AnimateLogo.ViewModel)
 }
 
 final class SplashscreenViewController: UIViewController {
@@ -52,27 +52,23 @@ final class SplashscreenViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		self.sceneView.viewDelegate = self
-
-		self.doSomething()
 	}
 }
 
 // MARK: - Requests
 extension SplashscreenViewController {
-	func doSomething() {
-		let request = Splashscreen.Something.Request()
-		self.interactor?.doSomething(request: request)
+	func animateLogo(completion: ((Bool) -> Void)?) {
+		let request = Splashscreen.AnimateLogo.Request(completion: completion)
+		self.interactor?.animateLogo(request: request)
 	}
 }
 
 // MARK: - Display
 extension SplashscreenViewController: SplashscreenDisplayLogic {
-	func displaySomething(viewModel: Splashscreen.Something.ViewModel) {
-		self.sceneView.setData()
+	func displayAnimateLogo(viewModel: Splashscreen.AnimateLogo.ViewModel) {
+		self.sceneView.animateLogo(completion: viewModel.completion)
 	}
 }
 
 // MARK: - ViewDelegate
-extension SplashscreenViewController: SplashscreenViewDelegate {
-//    func handleButtonPress() { }
-}
+extension SplashscreenViewController: SplashscreenViewDelegate {}

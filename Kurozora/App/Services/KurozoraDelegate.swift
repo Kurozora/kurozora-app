@@ -84,7 +84,13 @@ class KurozoraDelegate {
 			let splitViewController = await SceneDelegate.createTwoColumnSplitViewController()
 
 			DispatchQueue.main.async {
-				window?.rootViewController = splitViewController
+				if let splashViewController = window?.rootViewController as? SplashscreenViewController {
+					splashViewController.animateLogo { _ in
+						window?.rootViewController = splitViewController
+					}
+				} else {
+					window?.rootViewController = splitViewController
+				}
 			}
 
 			// Check if user should authenticate

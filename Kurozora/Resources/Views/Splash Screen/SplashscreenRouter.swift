@@ -8,9 +8,7 @@
 
 import UIKit
 
-protocol SplashscreenRoutingLogic {
-	func routeToSomewhere()
-}
+protocol SplashscreenRoutingLogic {}
 
 protocol SplashscreenDataPassing {
 	var dataStore: SplashscreenDataStore? { get }
@@ -23,21 +21,7 @@ final class SplashscreenRouter: SplashscreenDataPassing {
 }
 
 // MARK: - RoutingLogic
-extension SplashscreenRouter: SplashscreenRoutingLogic {
-	func routeToSomewhere() {
-//        let destinationVC = SplashscreenViewController()
-//		if let sourceDS = self.dataStore, let destinationDS = destinationVC.router?.dataStore {
-//            passData(from: sourceDS, to: destinationDS)
-//        }
-//
-//		self.viewController?.present(destinationVC, animated: true, completion: nil)
-	}
-}
+extension SplashscreenRouter: SplashscreenRoutingLogic {}
 
 // MARK: - PassData
-extension SplashscreenRouter {
-//	/// Provide the destination dataStore with data from the source dataStore.
-//	func passData(from source: SplashscreenDataStore, to destination: SplashscreenDataStore) {
-//		destination.name = source.name
-//	}
-}
+extension SplashscreenRouter {}

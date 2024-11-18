@@ -8,13 +8,7 @@
 
 import UIKit
 
-protocol SplashscreenWorkerLogic {
-	func doSomeWork(completion: (() -> Void)?)
-}
+protocol SplashscreenWorkerLogic {}
 
 // MARK: - WorkerLogic
-final class SplashscreenWorker: SplashscreenWorkerLogic {
-	func doSomeWork(completion: (() -> Void)?) {
-		completion?()
-	}
-}
+final class SplashscreenWorker: SplashscreenWorkerLogic {}
