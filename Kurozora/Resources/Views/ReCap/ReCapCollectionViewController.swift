@@ -95,7 +95,7 @@ class ReCapCollectionViewController: KCollectionViewController {
 		Task { [weak self] in
 			guard let self = self else { return }
 			await self.fetchMonths()
-			await self.fetchDetails()
+			self.bar(self.tabBarView, didRequestScrollTo: self.month)
 		}
 	}
 
@@ -200,6 +200,10 @@ class ReCapCollectionViewController: KCollectionViewController {
 	}
 
 	func fetchDetails() async {
+		if self.month == 0 {
+			self.month = self.recapTabItems.first?.month?.rawValue ?? 0
+		}
+
 		do {
 			let recapResponse = try await KService.getRecap(for: "\(self.year)", month: "\(self.month)").value
 			self.recapItems = recapResponse.data
@@ -259,7 +263,9 @@ extension ReCapCollectionViewController: TMBarDataSource {
 	}
 
 	func barItem(for bar: Tabman.TMBar, at index: Int) -> Tabman.TMBarItemable {
-		let recapTabItem = self.recapTabItems[index]
+		guard let recapTabItem = self.recapTabItems[safe: index] else {
+			return TMBarItem(title: "")
+		}
 		let title = recapTabItem.month?.name ?? "\(recapTabItem.year)"
 		return TMBarItem(title: title)
 	}
@@ -271,7 +277,8 @@ extension ReCapCollectionViewController: TMBarDelegate {
 		let direction = TMBarUpdateDirection.forPage(index, previousPage: self.month - 1)
 		self.updateBar(to: CGFloat(index), animated: true, direction: direction)
 
-		self.month = index + 1
+		guard let recapTabItem = self.recapTabItems[safe: index] else { return }
+		self.month = recapTabItem.month?.rawValue ?? 0
 
 		self.handleRefreshControl()
 	}
