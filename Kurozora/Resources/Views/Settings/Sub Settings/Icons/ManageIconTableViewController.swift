@@ -64,7 +64,15 @@ extension ManageIconTableViewController {
 		}
 		let alternativeIconsElement = self.alternativeIcons[indexPath.section].icons[indexPath.row]
 		iconTableViewCell.configureCell(using: alternativeIconsElement)
-		iconTableViewCell.setSelected(alternativeIconsElement.name == UserSettings.appIcon)
+
+		// Since iOS 18.0, the saved app icon name includes the " Preview" suffix,
+		// because alternative app icons are no longer accessible through UIImage.
+		var alternativeIconsElementName = alternativeIconsElement.name
+		if #available(iOS 18.0, *) {
+			alternativeIconsElementName += " Preview"
+		}
+
+		iconTableViewCell.setSelected(alternativeIconsElementName == UserSettings.appIcon)
 		return iconTableViewCell
 	}
 
