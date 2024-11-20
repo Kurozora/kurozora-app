@@ -73,118 +73,136 @@ extension ReCapCollectionViewController {
 		self.themes = [:]
 		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 
-		if let month = Month(rawValue: self.month) {
-			let title = "Series that defined your arc in \(month.name)"
+		if self.recapItems.isEmpty {
+			if self.year == Date.now.components.year && self.month == Date.now.components.month {
+				let title: String
+
+				if Date.now.components.month == 12 {
+					title = "December Re:CAP is still in progress. Check back in a week."
+				} else if let month = Month(rawValue: self.month) {
+					title = "\(month.name) Re:CAP is still in progress. Check back in early \(month.next.name)."
+				} else {
+					title = "Re:CAP is still in progress. Check back early next month."
+				}
+
+				let header: SectionLayoutKind = .header(title)
+				self.snapshot.appendSections([header])
+				self.snapshot.appendItems([.string(title, section: .header(title))], toSection: header)
+			}
+		} else {
+			if let month = Month(rawValue: self.month) {
+				let title = "Series that defined your arc in \(month.name)"
+				let sectionHeader = SectionLayoutKind.header(title)
+
+				self.snapshot.appendSections([sectionHeader])
+				self.snapshot.appendItems([.string(title, section: sectionHeader)], toSection: sectionHeader)
+			}
+
+			// Add Re:CAP categories
+			self.recapItems.forEach { recapItem in
+				var sectionHeader: SectionLayoutKind
+				var itemKinds: [ItemKind] = []
+
+				switch recapItem.attributes.recapItemType {
+				case .shows:
+					sectionHeader = .topShows(recapItem)
+					if let shows = recapItem.relationships?.shows?.data {
+						itemKinds = shows.map { showIdentity in
+							return .showIdentity(showIdentity, section: sectionHeader)
+						}
+					}
+				case .literatures:
+					sectionHeader = .topLiteratures(recapItem)
+					if let literature = recapItem.relationships?.literatures?.data {
+						itemKinds = literature.map { literatureIdentity in
+							return .literatureIdentity(literatureIdentity, section: sectionHeader)
+						}
+					}
+				case .games:
+					sectionHeader = .topGames(recapItem)
+					if let games = recapItem.relationships?.games?.data {
+						itemKinds = games.map { gameIdentity in
+							return .gameIdentity(gameIdentity, section: sectionHeader)
+						}
+					}
+				case .genres:
+					sectionHeader = .topGenres(recapItem)
+					if let genres = recapItem.relationships?.genres?.data {
+						itemKinds = genres.map { genre in
+							return .genreIdentity(genre, section: sectionHeader)
+						}
+					}
+				case .themes:
+					sectionHeader = .topThemes(recapItem)
+					if let themes = recapItem.relationships?.themes?.data {
+						itemKinds = themes.map { theme in
+							return .themeIdentity(theme, section: sectionHeader)
+						}
+					}
+				}
+
+				self.snapshot.appendSections([sectionHeader])
+				self.snapshot.appendItems(itemKinds, toSection: sectionHeader)
+			}
+
+			// Add milestones
+			let title = "These milestones marked your season finale"
 			let sectionHeader = SectionLayoutKind.header(title)
 
 			self.snapshot.appendSections([sectionHeader])
 			self.snapshot.appendItems([.string(title, section: sectionHeader)], toSection: sectionHeader)
-		}
 
-		// Add Re:CAP categories
-		self.recapItems.forEach { recapItem in
-			var sectionHeader: SectionLayoutKind
-			var itemKinds: [ItemKind] = []
+			var milestoneItems: [ItemKind] = []
+			self.recapItems.forEach { recapItem in
+				switch recapItem.attributes.recapItemType {
+				case .shows:
+					if recapItem.attributes.totalPartsDuration > 0 {
+						let itemKind: ItemKind = .recapItem(recapItem, milestoneKind: .minuetsWatched)
+						milestoneItems.append(itemKind)
+					}
 
-			switch recapItem.attributes.recapItemType {
-			case .shows:
-				sectionHeader = .topShows(recapItem)
-				if let shows = recapItem.relationships?.shows?.data {
-					itemKinds = shows.map { showIdentity in
-						return .showIdentity(showIdentity, section: sectionHeader)
+					if recapItem.attributes.totalPartsCount > 0 {
+						let itemKind: ItemKind = .recapItem(recapItem, milestoneKind: .episodesWatched)
+						milestoneItems.append(itemKind)
 					}
-				}
-			case .literatures:
-				sectionHeader = .topLiteratures(recapItem)
-				if let literature = recapItem.relationships?.literatures?.data {
-					itemKinds = literature.map { literatureIdentity in
-						return .literatureIdentity(literatureIdentity, section: sectionHeader)
+				case .literatures:
+					if recapItem.attributes.totalPartsDuration > 0 {
+						let itemKind: ItemKind = .recapItem(recapItem, milestoneKind: .minuetsRead)
+						milestoneItems.append(itemKind)
 					}
-				}
-			case .games:
-				sectionHeader = .topGames(recapItem)
-				if let games = recapItem.relationships?.games?.data {
-					itemKinds = games.map { gameIdentity in
-						return .gameIdentity(gameIdentity, section: sectionHeader)
+
+					if recapItem.attributes.totalPartsCount > 0 {
+						let itemKind: ItemKind = .recapItem(recapItem, milestoneKind: .chaptersRead)
+						milestoneItems.append(itemKind)
 					}
-				}
-			case .genres:
-				sectionHeader = .topGenres(recapItem)
-				if let genres = recapItem.relationships?.genres?.data {
-					itemKinds = genres.map { genre in
-						return .genreIdentity(genre, section: sectionHeader)
+				case .games:
+					if recapItem.attributes.totalPartsDuration > 0 {
+						let itemKind: ItemKind = .recapItem(recapItem, milestoneKind: .minutesPlayed)
+						milestoneItems.append(itemKind)
 					}
-				}
-			case .themes:
-				sectionHeader = .topThemes(recapItem)
-				if let themes = recapItem.relationships?.themes?.data {
-					itemKinds = themes.map { theme in
-						return .themeIdentity(theme, section: sectionHeader)
+
+					if recapItem.attributes.totalPartsCount > 0 {
+						let itemKind: ItemKind = .recapItem(recapItem, milestoneKind: .gamesPlayed)
+						milestoneItems.append(itemKind)
 					}
+				case .genres, .themes: break
 				}
 			}
 
-			self.snapshot.appendSections([sectionHeader])
-			self.snapshot.appendItems(itemKinds, toSection: sectionHeader)
-		}
+			self.snapshot.appendSections([.milestones(false)])
+			self.snapshot.appendItems(milestoneItems, toSection: .milestones(false))
 
-		// Add milestones
-		let title = "These milestones marked your season finale"
-		let sectionHeader = SectionLayoutKind.header(title)
+			// Add top percentile milestone
+			if let recapItem = self.recapItems.filter({
+				$0.attributes.topPercentile > 0.0
+			})
+				.sorted(by: \RecapItem.attributes.topPercentile)
+				.first {
+				let itemKind: ItemKind = .recapItem(recapItem, milestoneKind: .topPercentile)
 
-		self.snapshot.appendSections([sectionHeader])
-		self.snapshot.appendItems([.string(title, section: sectionHeader)], toSection: sectionHeader)
-
-		var milestoneItems: [ItemKind] = []
-		self.recapItems.forEach { recapItem in
-			switch recapItem.attributes.recapItemType {
-			case .shows:
-				if recapItem.attributes.totalPartsDuration > 0 {
-					let itemKind: ItemKind = .recapItem(recapItem, milestoneKind: .minuetsWatched)
-					milestoneItems.append(itemKind)
-				}
-
-				if recapItem.attributes.totalPartsCount > 0 {
-					let itemKind: ItemKind = .recapItem(recapItem, milestoneKind: .episodesWatched)
-					milestoneItems.append(itemKind)
-				}
-			case .literatures:
-				if recapItem.attributes.totalPartsDuration > 0 {
-					let itemKind: ItemKind = .recapItem(recapItem, milestoneKind: .minuetsRead)
-					milestoneItems.append(itemKind)
-				}
-
-				if recapItem.attributes.totalPartsCount > 0 {
-					let itemKind: ItemKind = .recapItem(recapItem, milestoneKind: .chaptersRead)
-					milestoneItems.append(itemKind)
-				}
-			case .games:
-				if recapItem.attributes.totalPartsDuration > 0 {
-					let itemKind: ItemKind = .recapItem(recapItem, milestoneKind: .minutesPlayed)
-					milestoneItems.append(itemKind)
-				}
-
-				if recapItem.attributes.totalPartsCount > 0 {
-					let itemKind: ItemKind = .recapItem(recapItem, milestoneKind: .gamesPlayed)
-					milestoneItems.append(itemKind)
-				}
-			case .genres, .themes: break
+				self.snapshot.appendSections([.milestones(true)])
+				self.snapshot.appendItems([itemKind], toSection: .milestones(true))
 			}
-		}
-
-		self.snapshot.appendSections([.milestones(false)])
-		self.snapshot.appendItems(milestoneItems, toSection: .milestones(false))
-
-		// Add top percentile milestone
-		if let recapItem = self.recapItems.filter({
-			$0.attributes.topPercentile > 0.0
-		})
-		.sorted(by: \RecapItem.attributes.topPercentile)
-		.first {
-			let itemKind: ItemKind = .recapItem(recapItem, milestoneKind: .topPercentile)
-
-			self.snapshot.appendSections([.milestones(true)])
-			self.snapshot.appendItems([itemKind], toSection: .milestones(true))
 		}
 
 		self.dataSource.apply(self.snapshot)
