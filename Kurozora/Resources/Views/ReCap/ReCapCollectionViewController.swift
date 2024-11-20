@@ -95,7 +95,10 @@ class ReCapCollectionViewController: KCollectionViewController {
 		Task { [weak self] in
 			guard let self = self else { return }
 			await self.fetchMonths()
-			self.bar(self.tabBarView, didRequestScrollTo: self.month)
+			let index = self.recapTabItems.firstIndex { recapTabItem in
+				recapTabItem.month?.rawValue == self.month
+			} ?? 0
+			self.bar(self.tabBarView, didRequestScrollTo: index)
 		}
 	}
 
