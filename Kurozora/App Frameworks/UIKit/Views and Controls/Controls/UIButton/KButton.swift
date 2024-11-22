@@ -58,6 +58,9 @@ class KButton: UIButton {
 		self.theme_tintColor = KThemePicker.tintColor.rawValue
 		self.titleLabel?.font = .systemFont(ofSize: self.titleLabel?.font.pointSize ?? 18, weight: .semibold)
 
+		self.setTitleColor(.systemGray3, for: .disabled)
+		self.setBackgroundColor(color: .systemGray5, forState: .disabled)
+
 		// Add targets
 		self.addTarget(self, action: #selector(self.touchDown), for: [.touchDown, .touchDragEnter])
 		self.addTarget(self, action: #selector(self.touchUp), for: [.touchUpInside, .touchDragExit, .touchCancel])
