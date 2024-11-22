@@ -53,4 +53,64 @@ enum Month: Int, CaseIterable {
 			return "December"
 		}
 	}
+
+	/// The next month.
+	var next: Month {
+		switch self {
+		case .january:
+			return .february
+		case .february:
+			return .march
+		case .march:
+			return .april
+		case .april:
+			return .may
+		case .may:
+			return .june
+		case .june:
+			return .july
+		case .july:
+			return .august
+		case .august:
+			return .september
+		case .september:
+			return .october
+		case .october:
+			return .november
+		case .november:
+			return .december
+		case .december:
+			return .january
+		}
+	}
+
+	/// The previous month.
+	var previous: Month {
+		switch self {
+		case .january:
+			return .december
+		case .february:
+			return .january
+		case .march:
+			return .february
+		case .april:
+			return .march
+		case .may:
+			return .april
+		case .june:
+			return .may
+		case .july:
+			return .june
+		case .august:
+			return .july
+		case .september:
+			return .august
+		case .october:
+			return .september
+		case .november:
+			return .october
+		case .december:
+			return .november
+		}
+	}
 }
