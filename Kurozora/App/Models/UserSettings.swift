@@ -53,6 +53,14 @@ extension UserSettings {
 	}
 }
 
+// MARK: - App
+extension UserSettings {
+	/// Returns the number of times the app has been launched.
+	static var sessionActionsCount: Int {
+		return self.shared.integer(forKey: #function)
+	}
+}
+
 // MARK: - App customization
 extension UserSettings {
 	/// Returns a string indicating the currently used theme.
@@ -82,6 +90,19 @@ extension UserSettings {
 	/// Returns a boolean indicating if the app has been launched once.
 	static var launchedOnce: Bool {
 		return self.shared.bool(forKey: #function)
+	}
+}
+
+// MARK: - App Review
+extension UserSettings {
+	/// Returns a boolean indicating if the user has been asked for a review.
+	static var lastReviewRequestDate: Date {
+		return self.shared.object(forKey: #function) as? Date ?? .distantPast
+	}
+
+	/// Returns an integer indicating the number of times the user has been asked for a review.
+	static var reviewRequestCount: Int {
+		return self.shared.integer(forKey: #function)
 	}
 }
 

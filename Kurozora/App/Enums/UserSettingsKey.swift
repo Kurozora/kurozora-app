@@ -18,6 +18,10 @@ enum UserSettingsKey: String {
 	/// The key to the selected API endpoint.
 	case apiEndpoint
 
+	// App
+	/// The key to the number of app launches.
+	case sessionActionsCount
+
 	// App customization keys
 	/// The key to the selected theme.
 	case currentTheme
@@ -27,6 +31,12 @@ enum UserSettingsKey: String {
 	case defaultBrowser
 	/// The key indicating the app was launched once.
 	case launchedOnce
+
+	// App Review
+	/// The key to the last time the app was reviewed.
+	case lastReviewRequestDate
+	/// The key to the app review request count.
+	case reviewRequestCount
 
 	// Appearence settings keys
 	/// The key to the selected appearance option.
