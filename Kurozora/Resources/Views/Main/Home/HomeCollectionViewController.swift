@@ -413,6 +413,7 @@ class HomeCollectionViewController: KCollectionViewController {
 			guard let reCapCollectionViewController = segue.destination as? ReCapCollectionViewController else { return }
 			guard let recap = sender as? Recap else { return }
 			reCapCollectionViewController.year = recap.attributes.year
+			reCapCollectionViewController.month = recap.attributes.month
 		default: break
 		}
 	}
