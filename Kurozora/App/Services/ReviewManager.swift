@@ -41,7 +41,7 @@ class ReviewManager {
 	///
 	/// - Parameters:
 	///    - action: The action that triggered the review request.
-	func requestReviewIfAppropriate(for action: ReviewAction) {
+	func requestReview(for action: ReviewAction) {
 		// Ensure this is a positive moment
 		guard self.isEligibleForReview(after: action) else { return }
 

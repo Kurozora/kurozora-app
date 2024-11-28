@@ -489,6 +489,9 @@ extension GameDetailsCollectionViewController: BaseLockupCollectionViewCellDeleg
 						let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
 						NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
 						self.configureNavBarButtons()
+
+						// Request review
+						ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
 					} catch let error as KKAPIError {
 						self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
 						print("----- Add to library failed", error.message)
