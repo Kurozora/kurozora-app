@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3Wd-6W-Or0">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Self Label View Controller-->
+        <scene sceneID="Sn7-1v-Gm9">
+            <objects>
+                <viewController storyboardIdentifier="SelfLabelViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="3Wd-6W-Or0" customClass="SelfLabelViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Dpn-Uq-Uih">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zLp-wA-oiC">
+                                <rect key="frame" x="0.0" y="59" width="329" height="759"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="2rJ-Uz-xjn">
+                                        <rect key="frame" x="20" y="20" width="289" height="719"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="lIz-qm-bzx">
+                                                <rect key="frame" x="0.0" y="0.0" width="289" height="31"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D4c-gd-WNy">
+                                                        <rect key="frame" x="0.0" y="0.0" width="289" height="31"/>
+                                                        <subviews>
+                                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Ivk-ZH-vK3">
+                                                                <rect key="frame" x="0.0" y="0.0" width="289" height="32"/>
+                                                                <segments>
+                                                                    <segment title="First"/>
+                                                                    <segment title="Second"/>
+                                                                </segments>
+                                                                <connections>
+                                                                    <action selector="segmentedControlChanged:" destination="3Wd-6W-Or0" eventType="valueChanged" id="ySc-cc-2E6"/>
+                                                                </connections>
+                                                            </segmentedControl>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstItem="Ivk-ZH-vK3" firstAttribute="top" secondItem="D4c-gd-WNy" secondAttribute="top" id="CwB-Kb-m4O"/>
+                                                            <constraint firstAttribute="trailing" secondItem="Ivk-ZH-vK3" secondAttribute="trailing" id="Rkc-JD-aS7"/>
+                                                            <constraint firstAttribute="bottom" secondItem="Ivk-ZH-vK3" secondAttribute="bottom" id="Z2f-5e-rfa"/>
+                                                            <constraint firstItem="Ivk-ZH-vK3" firstAttribute="leading" secondItem="D4c-gd-WNy" secondAttribute="leading" id="uaU-GF-Juf"/>
+                                                        </constraints>
+                                                    </view>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="NfJ-hh-pDZ">
+                                                <rect key="frame" x="0.0" y="47" width="289" height="616"/>
+                                            </stackView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T8D-od-2ab" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="679" width="289" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="nqN-TK-199"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Done"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="primaryButtonPressed:" destination="3Wd-6W-Or0" eventType="touchUpInside" id="lgo-QV-UYm"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="2rJ-Uz-xjn" secondAttribute="bottom" constant="20" symbolic="YES" id="OPL-mu-Xzx"/>
+                                    <constraint firstAttribute="width" constant="300" id="RYf-wx-ouQ"/>
+                                    <constraint firstItem="2rJ-Uz-xjn" firstAttribute="top" secondItem="zLp-wA-oiC" secondAttribute="top" constant="20" symbolic="YES" id="SlP-df-e94"/>
+                                    <constraint firstAttribute="trailing" secondItem="2rJ-Uz-xjn" secondAttribute="trailing" constant="20" symbolic="YES" id="iZu-lr-S4U"/>
+                                    <constraint firstItem="2rJ-Uz-xjn" firstAttribute="leading" secondItem="zLp-wA-oiC" secondAttribute="leading" constant="20" symbolic="YES" id="q0c-66-n6i"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="paE-ap-a3w"/>
+                        <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="zLp-wA-oiC" firstAttribute="bottom" secondItem="paE-ap-a3w" secondAttribute="bottom" id="04m-0e-n4d"/>
+                            <constraint firstItem="zLp-wA-oiC" firstAttribute="trailing" secondItem="paE-ap-a3w" secondAttribute="trailing" id="Byo-dT-OMy"/>
+                            <constraint firstItem="paE-ap-a3w" firstAttribute="leading" secondItem="zLp-wA-oiC" secondAttribute="leading" id="Jjd-1b-unt"/>
+                            <constraint firstItem="paE-ap-a3w" firstAttribute="top" secondItem="zLp-wA-oiC" secondAttribute="top" id="xAy-jH-JWZ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="primaryButton" destination="T8D-od-2ab" id="M6b-oc-7U4"/>
+                        <outlet property="segmentedControl" destination="Ivk-ZH-vK3" id="wC2-n4-YJd"/>
+                        <outlet property="viewWidthConstraint" destination="RYf-wx-ouQ" id="Ogc-Vn-4Jy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9a9-ZZ-hnR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7" y="-6"/>
+        </scene>
+    </scenes>
+</document>
