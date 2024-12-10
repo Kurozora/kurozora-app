@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		store = Store()
 
 		// Configure keyboard
-		IQKeyboardManager.shared.enable = true
+		IQKeyboardManager.shared.isEnabled = true
 		IQKeyboardManager.shared.resignOnTouchOutside = true
 
 		// Set UNUserNotificationCenterDelegate

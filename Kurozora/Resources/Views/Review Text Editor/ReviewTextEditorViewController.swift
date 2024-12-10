@@ -86,7 +86,7 @@ final class ReviewTextEditorViewController: KViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
-		IQKeyboardManager.shared.enable = false
+		IQKeyboardManager.shared.isEnabled = false
 	}
 
 	override func viewWillLayoutSubviews() {
@@ -98,7 +98,7 @@ final class ReviewTextEditorViewController: KViewController {
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 
-		IQKeyboardManager.shared.enable = true
+		IQKeyboardManager.shared.isEnabled = true
 	}
 
 	// MARK: - Functions
