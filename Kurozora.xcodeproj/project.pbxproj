@@ -251,6 +251,11 @@
 		664E2CE3289B39180002F886 /* BaseNotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 664E2CE2289B39180002F886 /* BaseNotificationCell.xib */; };
 		664E2CE5289BD1990002F886 /* NotificationsTableViewController+KTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664E2CE4289BD1990002F886 /* NotificationsTableViewController+KTableViewDataSource.swift */; };
 		664E2CEA289BEAF80002F886 /* UserNotificationType+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664E2CE9289BEAF80002F886 /* UserNotificationType+Kurozora.swift */; };
+		664F9B1F2D08F555000E5F8E /* Schedule.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 664F9B1E2D08F555000E5F8E /* Schedule.storyboard */; };
+		664F9B212D08F5CC000E5F8E /* ScheduleCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664F9B202D08F5C7000E5F8E /* ScheduleCollectionViewController.swift */; };
+		664F9B232D08FAF1000E5F8E /* ScheduleCollectionViewController+KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664F9B222D08FAEF000E5F8E /* ScheduleCollectionViewController+KCollectionViewDataSource.swift */; };
+		664F9B252D0907B6000E5F8E /* ScheduleCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664F9B242D0907B3000E5F8E /* ScheduleCollectionViewController+KCollectionViewDelegateLayout.swift */; };
+		664F9B272D09083A000E5F8E /* ScheduleCollectionViewController+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664F9B262D090838000E5F8E /* ScheduleCollectionViewController+UICollectionViewDelegate.swift */; };
 		66500D02295FC6170098D59D /* PurchaseStatusCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66500D01295FC6170098D59D /* PurchaseStatusCollectionViewCell.xib */; };
 		66500D04295FC67C0098D59D /* PurchaseStatusCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66500D03295FC67C0098D59D /* PurchaseStatusCollectionViewCell.swift */; };
 		66500D06295FC7AB0098D59D /* PurchaseButtonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66500D05295FC7AB0098D59D /* PurchaseButtonCollectionViewCell.swift */; };
@@ -1066,6 +1071,11 @@
 		664E2CE2289B39180002F886 /* BaseNotificationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BaseNotificationCell.xib; sourceTree = "<group>"; };
 		664E2CE4289BD1990002F886 /* NotificationsTableViewController+KTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationsTableViewController+KTableViewDataSource.swift"; sourceTree = "<group>"; };
 		664E2CE9289BEAF80002F886 /* UserNotificationType+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserNotificationType+Kurozora.swift"; sourceTree = "<group>"; };
+		664F9B1E2D08F555000E5F8E /* Schedule.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Schedule.storyboard; sourceTree = "<group>"; };
+		664F9B202D08F5C7000E5F8E /* ScheduleCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCollectionViewController.swift; sourceTree = "<group>"; };
+		664F9B222D08FAEF000E5F8E /* ScheduleCollectionViewController+KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScheduleCollectionViewController+KCollectionViewDataSource.swift"; sourceTree = "<group>"; };
+		664F9B242D0907B3000E5F8E /* ScheduleCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScheduleCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
+		664F9B262D090838000E5F8E /* ScheduleCollectionViewController+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScheduleCollectionViewController+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
 		66500D01295FC6170098D59D /* PurchaseStatusCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PurchaseStatusCollectionViewCell.xib; sourceTree = "<group>"; };
 		66500D03295FC67C0098D59D /* PurchaseStatusCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseStatusCollectionViewCell.swift; sourceTree = "<group>"; };
 		66500D05295FC7AB0098D59D /* PurchaseButtonCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseButtonCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -2330,6 +2340,18 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		664F9B1D2D08F540000E5F8E /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				664F9B1E2D08F555000E5F8E /* Schedule.storyboard */,
+				664F9B202D08F5C7000E5F8E /* ScheduleCollectionViewController.swift */,
+				664F9B222D08FAEF000E5F8E /* ScheduleCollectionViewController+KCollectionViewDataSource.swift */,
+				664F9B242D0907B3000E5F8E /* ScheduleCollectionViewController+KCollectionViewDelegateLayout.swift */,
+				664F9B262D090838000E5F8E /* ScheduleCollectionViewController+UICollectionViewDelegate.swift */,
+			);
+			path = Schedule;
+			sourceTree = "<group>";
+		};
 		66500CFF295FC11F0098D59D /* Subscriptions */ = {
 			isa = PBXGroup;
 			children = (
@@ -3056,6 +3078,7 @@
 		66ABBBFF240215BE00CE8A26 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				664F9B1D2D08F540000E5F8E /* Schedule */,
 				666C82562162895700C93A70 /* Cast */,
 				665B94A324E81C2B007E7A13 /* Character */,
 				66FA97D4281A174D0054FC2E /* Components */,
@@ -4340,6 +4363,7 @@
 				661B1DD12B61C1D7000C9C0E /* bonk.m4a in Resources */,
 				661B1DD32B61C77D000C9C0E /* explosion.m4a in Resources */,
 				66CB8D4E24F83ECD0047A2CF /* PostImageCell.xib in Resources */,
+				664F9B1F2D08F555000E5F8E /* Schedule.storyboard in Resources */,
 				6640E19722ADD30100D0F575 /* AuthenticationSettings.storyboard in Resources */,
 				66A4FD13270F62D300E7C702 /* Configuration.storekit in Resources */,
 				66FC6DD32340028D00A454DD /* AccountSettings.storyboard in Resources */,
@@ -5027,6 +5051,7 @@
 				66FDDB7323B95AF600364886 /* UICollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				666C899329FF2BDA0075B5D6 /* ShowStatus.swift in Sources */,
 				66BA740A223DB20800AEB8ED /* CellStyle.swift in Sources */,
+				664F9B232D08FAF1000E5F8E /* ScheduleCollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				66C1E7EC295A16AD00C7C44C /* SplashscreenView.swift in Sources */,
 				66B69BD6214544DB007154BD /* LegalViewController.swift in Sources */,
 				6632C44B298B110000702F7C /* LiteraturesListCollectionViewController.swift in Sources */,
@@ -5110,6 +5135,7 @@
 				662F706D22A45C2A00C3599D /* TitleHeaderTableReusableView.swift in Sources */,
 				66BA99FB25E4022200CE4480 /* LibraryListCollectionViewController+UICollectionViewDelegate.swift in Sources */,
 				66EDBA612944212B00FF1A2E /* WarningView.swift in Sources */,
+				664F9B272D09083A000E5F8E /* ScheduleCollectionViewController+UICollectionViewDelegate.swift in Sources */,
 				66D6237920A1BEAC00304914 /* LibraryListCollectionViewController.swift in Sources */,
 				66E46DFF25055FEA009938E1 /* Int+Kurozora.swift in Sources */,
 				66BEC13523191D090039D683 /* NSLayoutManager+Kurozora.swift in Sources */,
@@ -5132,6 +5158,7 @@
 				660E3A0125E5D38800A46EB0 /* CharactersListCollectionViewController+UICollectionViewDelegate.swift in Sources */,
 				660E39FB25E5D28800A46EB0 /* PersonDetailsCollectionViewController+UICollectionViewDelegate.swift in Sources */,
 				666C89B32A007C690075B5D6 /* SearchFilterSelectCollectionViewCell.swift in Sources */,
+				664F9B252D0907B6000E5F8E /* ScheduleCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				667943652273A33D00E2D0D0 /* EpisodeDetailsCollectionViewController.swift in Sources */,
 				6645407B2821EE2B0001E5B2 /* BannerImageView.swift in Sources */,
 				66647B542084995500CF624F /* AppDelegate.swift in Sources */,
@@ -5157,6 +5184,7 @@
 				667F9ADD21B5F354003F6629 /* SettingsSplitViewController.swift in Sources */,
 				668422462595F762000A09F8 /* CharacterDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				6619378D2A6EEB8E00447084 /* ReviewTextEditorInteractor.swift in Sources */,
+				664F9B212D08F5CC000E5F8E /* ScheduleCollectionViewController.swift in Sources */,
 				665CBBA222C2B139004D0D3E /* DateSettingsCell.swift in Sources */,
 				66A1C65C232B75360044EAD1 /* UserLockupCollectionViewCell.swift in Sources */,
 				66500D1829605F810098D59D /* PurchaseFooterCollectionViewCell.swift in Sources */,
