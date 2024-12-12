@@ -256,6 +256,7 @@
 		664F9B232D08FAF1000E5F8E /* ScheduleCollectionViewController+KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664F9B222D08FAEF000E5F8E /* ScheduleCollectionViewController+KCollectionViewDataSource.swift */; };
 		664F9B252D0907B6000E5F8E /* ScheduleCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664F9B242D0907B3000E5F8E /* ScheduleCollectionViewController+KCollectionViewDelegateLayout.swift */; };
 		664F9B272D09083A000E5F8E /* ScheduleCollectionViewController+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664F9B262D090838000E5F8E /* ScheduleCollectionViewController+UICollectionViewDelegate.swift */; };
+		664F9B292D0B9D00000E5F8E /* BroadcastLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664F9B282D0B9D00000E5F8E /* BroadcastLabel.swift */; };
 		66500D02295FC6170098D59D /* PurchaseStatusCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66500D01295FC6170098D59D /* PurchaseStatusCollectionViewCell.xib */; };
 		66500D04295FC67C0098D59D /* PurchaseStatusCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66500D03295FC67C0098D59D /* PurchaseStatusCollectionViewCell.swift */; };
 		66500D06295FC7AB0098D59D /* PurchaseButtonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66500D05295FC7AB0098D59D /* PurchaseButtonCollectionViewCell.swift */; };
@@ -1076,6 +1077,7 @@
 		664F9B222D08FAEF000E5F8E /* ScheduleCollectionViewController+KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScheduleCollectionViewController+KCollectionViewDataSource.swift"; sourceTree = "<group>"; };
 		664F9B242D0907B3000E5F8E /* ScheduleCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScheduleCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
 		664F9B262D090838000E5F8E /* ScheduleCollectionViewController+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScheduleCollectionViewController+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
+		664F9B282D0B9D00000E5F8E /* BroadcastLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastLabel.swift; sourceTree = "<group>"; };
 		66500D01295FC6170098D59D /* PurchaseStatusCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PurchaseStatusCollectionViewCell.xib; sourceTree = "<group>"; };
 		66500D03295FC67C0098D59D /* PurchaseStatusCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseStatusCollectionViewCell.swift; sourceTree = "<group>"; };
 		66500D05295FC7AB0098D59D /* PurchaseButtonCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseButtonCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -2805,6 +2807,7 @@
 		668142DA245B4A20008FC7BE /* Text Views */ = {
 			isa = PBXGroup;
 			children = (
+				664F9B282D0B9D00000E5F8E /* BroadcastLabel.swift */,
 				66DB2545245C667A000AA6DB /* KCopyableLabel.swift */,
 				661F184424A5594C00542AFB /* KCopyableTintedLabel.swift */,
 				6614ABE3215F65D100A3A0C9 /* KLabel.swift */,
@@ -4821,6 +4824,7 @@
 				664E2CEA289BEAF80002F886 /* UserNotificationType+Kurozora.swift in Sources */,
 				661049C022C0E42B00A2A354 /* DisplayTableViewController.swift in Sources */,
 				66AE1E1724A0F74900FD3FFC /* InformationButtonCollectionViewCell.swift in Sources */,
+				664F9B292D0B9D00000E5F8E /* BroadcastLabel.swift in Sources */,
 				667F9ADB21B57D5C003F6629 /* Date+Kurozora.swift in Sources */,
 				660B42A721259E300051EF66 /* ManageThemesController.swift in Sources */,
 				66E1215529AFEE0C0051C4ED /* GameDetailsCollectionViewController+KCollectionViewDataSource.swift in Sources */,
