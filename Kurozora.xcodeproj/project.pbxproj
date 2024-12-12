@@ -539,6 +539,8 @@
 		66C4DAE1243BE52900C4B90A /* KKLibrarySortTypeOption+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4DAE0243BE52900C4B90A /* KKLibrarySortTypeOption+Kurozora.swift */; };
 		66C4DAE6243E133F00C4B90A /* KTabbedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4DAE5243E133F00C4B90A /* KTabbedViewController.swift */; };
 		66C52C9C2CE8036E0081707D /* KCircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C52C9B2CE8036E0081707D /* KCircularProgressView.swift */; };
+		66C52C9E2CE804C60081707D /* ReCapMilestoneCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C52C9D2CE804BA0081707D /* ReCapMilestoneCollectionViewCell.swift */; };
+		66C52CA22CE807B30081707D /* ReCapMilestoneCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66C52CA12CE807B30081707D /* ReCapMilestoneCollectionViewCell.xib */; };
 		66C5797922A83726001B8F51 /* ThemeStore.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66C5797822A83726001B8F51 /* ThemeStore.storyboard */; };
 		66C5797B22A86435001B8F51 /* DebugSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66C5797A22A86435001B8F51 /* DebugSettings.storyboard */; };
 		66C5797D22A864CB001B8F51 /* Legal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66C5797C22A864CB001B8F51 /* Legal.storyboard */; };
@@ -1957,6 +1959,7 @@
 				66D17C7A2B65B19C00373D3D /* ReCapCollectionViewController+KCollectionViewDataSource.swift */,
 				66D17C7E2B65B90A00373D3D /* ReCapCollectionViewController+KCollectionViewDelegateLayout.swift */,
 				66D17C802B65BA0700373D3D /* ReCapCollectionViewController+UICollectionViewDelegate.swift */,
+				66D083E22CE4298F00A1EF6A /* Cells */,
 			);
 			path = ReCap;
 			sourceTree = "<group>";
