@@ -16,6 +16,14 @@ class ScheduleCollectionViewController: KCollectionViewController {
 	var schedules: [Schedule] = [] {
 		didSet {
 			self.reloadView()
+
+			self._prefersActivityIndicatorHidden = true
+
+			#if DEBUG
+			#if !targetEnvironment(macCatalyst)
+			self.refreshControl?.endRefreshing()
+			#endif
+			#endif
 		}
 	}
 
