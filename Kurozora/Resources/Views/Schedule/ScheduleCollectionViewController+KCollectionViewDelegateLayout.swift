@@ -34,6 +34,13 @@ extension ScheduleCollectionViewController {
 		return columnCount > 0 ? columnCount : 1
 	}
 
+	override func contentInset(forSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
+		switch self.snapshot.sectionIdentifiers[section] {
+		case .schedule:
+			return NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 40, trailing: 10)
+		}
+	}
+
 	override func createLayout() -> UICollectionViewLayout? {
 		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
@@ -61,6 +68,7 @@ extension ScheduleCollectionViewController {
 				sectionLayout?.decorationItems = [sectionBackgroundDecoration]
 			}
 
+			sectionLayout?.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
 			return sectionLayout
 		}
 		layout.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: SectionBackgroundDecorationView.elementKindSectionBackground)

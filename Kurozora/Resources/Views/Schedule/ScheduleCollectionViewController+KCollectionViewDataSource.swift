@@ -105,9 +105,9 @@ extension ScheduleCollectionViewController {
 		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.smallLockupCollectionViewCell)) { smallLockupCollectionViewCell, _, itemKind in
 			switch itemKind {
 			case .show(let show, _):
-				smallLockupCollectionViewCell.configure(using: show)
+				smallLockupCollectionViewCell.configure(using: show, scheduleIsShown: true)
 			case .literature(let literature, _):
-				smallLockupCollectionViewCell.configure(using: literature)
+				smallLockupCollectionViewCell.configure(using: literature, scheduleIsShown: true)
 			default: break
 			}
 		}
@@ -117,7 +117,7 @@ extension ScheduleCollectionViewController {
 		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.gameLockupCollectionViewCell)) { gameLockupCollectionViewCell, _, itemKind in
 			switch itemKind {
 			case .game(let game, _):
-				gameLockupCollectionViewCell.configure(using: game)
+				gameLockupCollectionViewCell.configure(using: game, scheduleIsShown: true)
 			default: break
 			}
 		}

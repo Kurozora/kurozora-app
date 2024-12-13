@@ -37,7 +37,8 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 	/// - Parameters:
 	///    - show: The `Show` object used to configure the cell.
 	///    - rank: The rank of the show in a ranked list.
-	func configure(using show: Show?, rank: Int? = nil) {
+	///    - scheduleIsShown: A boolean value that indicates if the schedule is shown.
+	func configure(using show: Show?, rank: Int? = nil, scheduleIsShown: Bool) {
 		self.libraryKind = .shows
 		guard let show = show else {
 			self.showSkeleton()
@@ -78,7 +79,8 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 	/// - Parameters:
 	///    - literature: The `Literature` object used to configure the cell.
 	///    - rank: The rank of the literature in a ranked list.
-	func configure(using literature: Literature?, rank: Int? = nil) {
+	///    - scheduleIsShown: A boolean value that indicates if the schedule is shown.
+	func configure(using literature: Literature?, rank: Int? = nil, scheduleIsShown: Bool = false) {
 		self.libraryKind = .literatures
 		guard let literature = literature else {
 			self.showSkeleton()
@@ -119,7 +121,8 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 	/// - Parameters:
 	///    - game: The `Game` object used to configure the cell.
 	///    - rank: The rank of the game in a ranked list.
-	func configure(using game: Game?, rank: Int? = nil) {
+	///    - scheduleIsShown: A boolean value that indicates if the schedule is shown.
+	func configure(using game: Game?, rank: Int? = nil, scheduleIsShown: Bool = false) {
 		self.libraryKind = .games
 		guard let game = game else {
 			self.showSkeleton()

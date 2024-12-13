@@ -11,6 +11,7 @@ import KurozoraKit
 
 class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	// MARK: - IBOutlets
+	@IBOutlet weak var broadcastLabel: BroadcastLabel!
 	@IBOutlet weak var scoreLabel: KTintedLabel!
 	@IBOutlet weak var scoreView: KCosmosView!
 	@IBOutlet weak var posterImageOverlay: UIImageView!
@@ -23,9 +24,17 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		return literatureMask
 	}()
 
+	// MARK: - View
+	override func prepareForReuse() {
+		super.prepareForReuse()
+
+		self.broadcastLabel.stopCountdown()
+		self.broadcastLabel.text = ""
+	}
+
 	// MARK: - Functions
-	override func configure(using show: Show?, rank: Int? = nil) {
-		super.configure(using: show, rank: rank)
+	override func configure(using show: Show?, rank: Int? = nil, scheduleIsShown: Bool = false) {
+		super.configure(using: show, rank: rank, scheduleIsShown: scheduleIsShown)
 
 		// Configure tagline
 		self.ternaryLabel?.text = nil
@@ -40,10 +49,20 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.posterImageView?.applyCornerRadius(10.0)
 		self.posterImageView?.layer.mask = nil
 		self.posterImageOverlay.isHidden = true
+
+		// Configure broadcast label
+		self.broadcastLabel.text = ""
+		if scheduleIsShown {
+			if show?.attributes.status.name == "Currently Airing",
+			   let broadcastDate = show?.attributes.broadcastDate {
+
+				self.broadcastLabel.startCountdown(to: broadcastDate, duration: show?.attributes.durationCount ?? 0)
+			}
+		}
 	}
 
-	override func configure(using literature: Literature?, rank: Int? = nil) {
-		super.configure(using: literature, rank: rank)
+	override func configure(using literature: Literature?, rank: Int? = nil, scheduleIsShown: Bool = false) {
+		super.configure(using: literature, rank: rank, scheduleIsShown: scheduleIsShown)
 
 		// Configure tagline
 		self.ternaryLabel?.text = nil
@@ -60,6 +79,16 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.posterImageView?.applyCornerRadius(0.0)
 		self.posterImageView?.layer.mask = self.literatureMask
 		self.posterImageOverlay.isHidden = false
+
+		// Configure broadcast label
+		self.broadcastLabel.text = ""
+		if scheduleIsShown {
+			if literature?.attributes.status.name == "Currently Publishing",
+			   let publicationDate = literature?.attributes.publicationDate {
+
+				self.broadcastLabel.startCountdown(to: publicationDate, duration: literature?.attributes.durationCount ?? 0)
+			}
+		}
 	}
 
 	/// Configures the cell using a `RelatedShow` object.
@@ -75,6 +104,9 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.posterImageView?.applyCornerRadius(10.0)
 		self.posterImageView?.layer.mask = nil
 		self.posterImageOverlay.isHidden = true
+
+		// Configure broadcast label
+		self.broadcastLabel.text = nil
 	}
 
 	/// Configures the cell using a `RelatedLiterature` object.
@@ -90,5 +122,8 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.posterImageView?.applyCornerRadius(0.0)
 		self.posterImageView?.layer.mask = self.literatureMask
 		self.posterImageOverlay.isHidden = false
+
+		// Configure broadcast label
+		self.broadcastLabel.text = nil
 	}
 }

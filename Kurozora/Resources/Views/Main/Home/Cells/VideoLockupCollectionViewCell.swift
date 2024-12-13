@@ -46,8 +46,8 @@ class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	}
 
 	// MARK: - Functions
-	override func configure(using show: Show?, rank: Int? = nil) {
-		super.configure(using: show, rank: rank)
+	override func configure(using show: Show?, rank: Int? = nil, scheduleIsShown: Bool = false) {
+		super.configure(using: show, rank: rank, scheduleIsShown: scheduleIsShown)
 		guard let show = show else { return }
 
 		// Configure genres

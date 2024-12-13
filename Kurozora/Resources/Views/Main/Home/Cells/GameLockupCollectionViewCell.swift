@@ -11,12 +11,21 @@ import KurozoraKit
 
 class GameLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	// MARK: - IBOutlets
+	@IBOutlet weak var broadcastLabel: BroadcastLabel!
 	@IBOutlet weak var scoreLabel: KTintedLabel!
 	@IBOutlet weak var scoreView: KCosmosView!
 
+	// MARK: - View
+	override func prepareForReuse() {
+		super.prepareForReuse()
+
+		self.broadcastLabel.stopCountdown()
+		self.broadcastLabel.text = ""
+	}
+
 	// MARK: - Functions
-	override func configure(using game: Game?, rank: Int? = nil) {
-		super.configure(using: game, rank: rank)
+	override func configure(using game: Game?, rank: Int? = nil, scheduleIsShown: Bool = false) {
+		super.configure(using: game, rank: rank, scheduleIsShown: scheduleIsShown)
 
 		// Configure tagline
 		self.ternaryLabel?.text = nil
@@ -29,6 +38,15 @@ class GameLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.scoreLabel.isHidden = ratingAverage == 0.0
 
 		self.posterImageView?.applyCornerRadius(18.0)
+
+		self.broadcastLabel.text = ""
+		if scheduleIsShown {
+			if game?.attributes.status.name == "Currently Publishing",
+			   let publicationDate = game?.attributes.publicationDate {
+
+				self.broadcastLabel.startCountdown(to: publicationDate, duration: game?.attributes.durationCount ?? 0)
+			}
+		}
 	}
 
 	/// Configures the cell using a `RelatedGame` object.
@@ -40,5 +58,7 @@ class GameLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.ternaryLabel?.text = relatedGame.attributes.relation.name
 
 		self.posterImageView?.applyCornerRadius(18.0)
+
+		self.broadcastLabel.text = nil
 	}
 }
