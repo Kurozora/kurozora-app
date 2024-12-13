@@ -32,8 +32,7 @@ class LibraryListCollectionViewCell: LibraryBaseCollectionViewCell {
 
 		if show.attributes.status.name == "Currently Airing",
 		   let broadcastDate = show.attributes.broadcastDate {
-
-			self.estimatedAiringLabel.startCountdown(to: Date.now + 120, duration: 60)
+			self.estimatedAiringLabel.startCountdown(to: broadcastDate, duration: show.attributes.durationCount)
 		}
 	}
 
@@ -45,7 +44,6 @@ class LibraryListCollectionViewCell: LibraryBaseCollectionViewCell {
 
 		if literature.attributes.status.name == "Currently Publishing",
 		   let publicationDate = literature.attributes.publicationDate {
-
 			self.estimatedAiringLabel.startCountdown(to: publicationDate, duration: literature.attributes.durationCount)
 		}
 	}
@@ -58,7 +56,6 @@ class LibraryListCollectionViewCell: LibraryBaseCollectionViewCell {
 
 		if game.attributes.status.name == "Currently Publishing",
 		   let publicationDate = game.attributes.publicationDate {
-
 			self.estimatedAiringLabel.startCountdown(to: publicationDate, duration: game.attributes.durationCount)
 		}
 	}
