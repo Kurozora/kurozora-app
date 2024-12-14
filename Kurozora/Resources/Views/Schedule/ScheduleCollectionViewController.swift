@@ -175,6 +175,25 @@ class ScheduleCollectionViewController: KCollectionViewController {
 			print(error.localizedDescription)
 		}
 	}
+
+	// MARK: - Segue
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		switch segue.identifier {
+		case R.segue.scheduleCollectionViewController.showDetailsSegue.identifier:
+			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
+			guard let show = sender as? Show else { return }
+			showDetailsCollectionViewController.show = show
+		case R.segue.scheduleCollectionViewController.literatureDetailsSegue.identifier:
+			guard let literatureDetailCollectionViewController = segue.destination as? LiteratureDetailsCollectionViewController else { return }
+			guard let literature = sender as? Literature else { return }
+			literatureDetailCollectionViewController.literature = literature
+		case R.segue.scheduleCollectionViewController.gameDetailsSegue.identifier:
+			guard let gameDetailCollectionViewController = segue.destination as? GameDetailsCollectionViewController else { return }
+			guard let game = sender as? Game else { return }
+			gameDetailCollectionViewController.game = game
+		default: break
+		}
+	}
 }
 
 // MARK: - TMBarDataSource
