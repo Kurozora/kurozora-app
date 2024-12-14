@@ -9,18 +9,30 @@
 import UIKit
 
 enum SelfLabel: String, CaseIterable {
-	case nsfw
 	case spoiler
+	case nsfw
 	case both
+
+	/// The string value of the self label.
+	var stringValue: String {
+		switch self {
+		case .spoiler:
+			return "Spoiler"
+		case .nsfw:
+			return "NSFW"
+		case .both:
+			return "Both"
+		}
+	}
 }
 
 protocol SelfLabelViewDelegate: AnyObject {
-	func selectedOptionChanged(_ option: SelfLabel)
+	func selectedOptionChanged(_ option: SelfLabel?)
 }
 
 class SelfLabelViewController: KViewController {
 	// MARK: - Views
-	@IBOutlet weak var segmentedControl: UISegmentedControl!
+	@IBOutlet weak var labelSegmentedControl: DeselectableSegmentedControl!
 	@IBOutlet weak var primaryButton: KTintedButton!
 	@IBOutlet weak var viewWidthConstraint: NSLayoutConstraint!
 
@@ -71,31 +83,37 @@ class SelfLabelViewController: KViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		self.labelSegmentedControl.segmentTitles = self.options.map { selfLabel in
+			selfLabel.stringValue
+		}
+
 		if let selectedOption = self.selectedOption,
 		   let selectedIndex = self.options.firstIndex(of: selectedOption) {
-			self.segmentedControl.selectedSegmentIndex = selectedIndex
+			self.labelSegmentedControl.selectedSegmentIndex = selectedIndex
 		} else {
-			self.segmentedControl.selectedSegmentIndex = UISegmentedControl.noSegment
+			self.labelSegmentedControl.selectedSegmentIndex = UISegmentedControl.noSegment
 		}
-		self.segmentedControl.theme_tintColor = KThemePicker.tintColor.rawValue
+		self.labelSegmentedControl.theme_tintColor = KThemePicker.tintColor.rawValue
 
 		if UIDevice.isPhone {
 			self.viewWidthConstraint.constant = self.view.width
-		} else if UIDevice.isPad {
+		} else {
 			// iPad seems to subtract 60 points from the specified width.
 			// By adding 60 points before we calculate the width,
 			// the total width ends up being 300 points just like on
 			// Macs.
-			self.viewWidthConstraint.constant = 360.0
-		} else {
-			self.viewWidthConstraint.constant = 300.0
+			self.viewWidthConstraint.constant = UIDevice.isPad ? 360.0 : 300.0
 		}
 	}
 
 	// MARK: Functions
 	@IBAction func segmentedControlChanged(_ sender: UISegmentedControl) {
-		guard let selectedOption = self.options[safe: sender.selectedSegmentIndex] else { return }
-		self.delegate?.selectedOptionChanged(selectedOption)
+		if sender.selectedSegmentIndex == UISegmentedControl.noSegment {
+			self.delegate?.selectedOptionChanged(nil)
+		} else {
+			guard let selectedOption = self.options[safe: sender.selectedSegmentIndex] else { return }
+			self.delegate?.selectedOptionChanged(selectedOption)
+		}
 	}
 
 	@objc func cancelButtonPressed(_ sender: UIButton) {

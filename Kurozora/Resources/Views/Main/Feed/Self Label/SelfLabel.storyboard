@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3Wd-6W-Or0">
-    <device id="retina6_12" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3Wd-6W-Or0">
+    <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,42 +18,61 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zLp-wA-oiC">
-                                <rect key="frame" x="0.0" y="59" width="329" height="759"/>
+                                <rect key="frame" x="0.0" y="59" width="906.33333333333337" height="759"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="2rJ-Uz-xjn">
-                                        <rect key="frame" x="20" y="20" width="289" height="719"/>
+                                        <rect key="frame" x="20" y="20" width="866.33333333333337" height="719"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="lIz-qm-bzx">
-                                                <rect key="frame" x="0.0" y="0.0" width="289" height="31"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="866.33333333333337" height="93.333333333333329"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D4c-gd-WNy">
-                                                        <rect key="frame" x="0.0" y="0.0" width="289" height="31"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="866.33333333333337" height="93.333333333333329"/>
                                                         <subviews>
-                                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Ivk-ZH-vK3">
-                                                                <rect key="frame" x="0.0" y="0.0" width="289" height="32"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add a content warning" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OmU-9d-aUL">
+                                                                <rect key="frame" x="0.0" y="0.0" width="179" height="20.333333333333332"/>
+                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iZD-Bg-0od">
+                                                                <rect key="frame" x="0.0" y="28.333333333333329" width="866.33333333333337" height="18"/>
+                                                                <string key="text">Choose self-labels that are applicable for the media you are posting. If none are selected, this post is suitable for all audiences.</string>
+                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Ivk-ZH-vK3" customClass="DeselectableSegmentedControl" customModule="Kurozora" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="62.333333333333343" width="866.33333333333337" height="32"/>
                                                                 <segments>
                                                                     <segment title="First"/>
                                                                     <segment title="Second"/>
                                                                 </segments>
                                                                 <connections>
-                                                                    <action selector="segmentedControlChanged:" destination="3Wd-6W-Or0" eventType="valueChanged" id="ySc-cc-2E6"/>
+                                                                    <action selector="segmentedControlChanged:" destination="3Wd-6W-Or0" eventType="valueChanged" id="duu-Cd-eEI"/>
                                                                 </connections>
                                                             </segmentedControl>
                                                         </subviews>
                                                         <constraints>
-                                                            <constraint firstItem="Ivk-ZH-vK3" firstAttribute="top" secondItem="D4c-gd-WNy" secondAttribute="top" id="CwB-Kb-m4O"/>
+                                                            <constraint firstItem="Ivk-ZH-vK3" firstAttribute="top" secondItem="iZD-Bg-0od" secondAttribute="bottom" constant="16" id="CwB-Kb-m4O"/>
+                                                            <constraint firstItem="iZD-Bg-0od" firstAttribute="leading" secondItem="D4c-gd-WNy" secondAttribute="leading" id="CyR-W4-HGd"/>
+                                                            <constraint firstAttribute="trailing" secondItem="iZD-Bg-0od" secondAttribute="trailing" id="Kda-i2-ZOz"/>
+                                                            <constraint firstItem="OmU-9d-aUL" firstAttribute="top" secondItem="D4c-gd-WNy" secondAttribute="top" id="NtS-RY-eZL"/>
                                                             <constraint firstAttribute="trailing" secondItem="Ivk-ZH-vK3" secondAttribute="trailing" id="Rkc-JD-aS7"/>
                                                             <constraint firstAttribute="bottom" secondItem="Ivk-ZH-vK3" secondAttribute="bottom" id="Z2f-5e-rfa"/>
+                                                            <constraint firstItem="iZD-Bg-0od" firstAttribute="top" secondItem="OmU-9d-aUL" secondAttribute="bottom" constant="8" symbolic="YES" id="hzK-Wm-3Ra"/>
+                                                            <constraint firstItem="OmU-9d-aUL" firstAttribute="leading" secondItem="D4c-gd-WNy" secondAttribute="leading" id="iN8-J5-EV1"/>
                                                             <constraint firstItem="Ivk-ZH-vK3" firstAttribute="leading" secondItem="D4c-gd-WNy" secondAttribute="leading" id="uaU-GF-Juf"/>
+                                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="OmU-9d-aUL" secondAttribute="trailing" id="yId-7X-kjz"/>
                                                         </constraints>
                                                     </view>
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="NfJ-hh-pDZ">
-                                                <rect key="frame" x="0.0" y="47" width="289" height="616"/>
+                                                <rect key="frame" x="0.0" y="109.33333333333331" width="866.33333333333337" height="553.66666666666674"/>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T8D-od-2ab" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="679" width="289" height="40"/>
+                                                <rect key="frame" x="0.0" y="679" width="866.33333333333337" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="nqN-TK-199"/>
                                                 </constraints>
@@ -89,8 +108,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="labelSegmentedControl" destination="Ivk-ZH-vK3" id="HyP-zC-C9v"/>
                         <outlet property="primaryButton" destination="T8D-od-2ab" id="M6b-oc-7U4"/>
-                        <outlet property="segmentedControl" destination="Ivk-ZH-vK3" id="wC2-n4-YJd"/>
                         <outlet property="viewWidthConstraint" destination="RYf-wx-ouQ" id="Ogc-Vn-4Jy"/>
                     </connections>
                 </viewController>

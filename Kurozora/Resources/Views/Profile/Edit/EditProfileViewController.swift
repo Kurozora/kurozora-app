@@ -466,8 +466,6 @@ extension EditProfileViewController: UITextFieldDelegate {
 		}
 		return true
 	}
-
-
 }
 
 // MARK: - UITextViewDelegate
