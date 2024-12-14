@@ -11,18 +11,14 @@ import KurozoraKit
 
 class KFeedMessageTextEditorViewController: KViewController {
 	// MARK: - IBOutlets
-	@IBOutlet weak var isSpoilerSwitch: KSwitch!
-	@IBOutlet weak var isNSFWSwitch: KSwitch!
 	@IBOutlet weak var profileImageView: ProfileImageView!
 	@IBOutlet weak var currentUsernameLabel: KLabel!
 	@IBOutlet weak var characterCountLabel: KSecondaryLabel!
 	@IBOutlet weak var commentTextView: KTextView!
-	@IBOutlet weak var commentPreviewContainer: UIView! {
-		didSet {
-			self.commentPreviewContainer.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-		}
-	}
+	@IBOutlet weak var commentPreviewContainer: UIView!
 	@IBOutlet weak var sendButton: UIBarButtonItem!
+	@IBOutlet weak var toolbar: UIToolbar!
+	@IBOutlet weak var labelsButton: UIButton!
 
 	// MARK: - Properties
 	var placeholderText: String {
@@ -68,7 +64,12 @@ class KFeedMessageTextEditorViewController: KViewController {
 	var editingFeedMessage: FeedMessage?
 	var dmToUser: User?
 	var userInfo: [AnyHashable: Any] = [:]
+
 	weak var delegate: KFeedMessageTextEditorViewDelegate?
+
+	var selectedSelfLabel: SelfLabel?
+	var isSpoiler: Bool = false
+	var isNSFW: Bool = false
 
 	// MARK: - View
 	override func viewWillLayoutSubviews() {
@@ -83,9 +84,12 @@ class KFeedMessageTextEditorViewController: KViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		self.configureToolbar()
+
 		if let user = User.current {
 			self.currentUsernameLabel.text = user.attributes.username
 			user.attributes.profileImage(imageView: self.profileImageView)
+			self.isNSFW = user.attributes.preferredTVRating ?? 4 > 4
 		}
 
 		self.characterCountLabel.text = "\(FeedMessage.maxCharacterLimit)"
@@ -94,9 +98,9 @@ class KFeedMessageTextEditorViewController: KViewController {
 			self.commentTextView.text = nil
 			self.commentTextView.insertText(feedMessage.attributes.content)
 			self.originalText = feedMessage.attributes.content
-			self.isNSFWSwitch?.isOn = feedMessage.attributes.isNSFW
+			self.isNSFW = feedMessage.attributes.isNSFW
 			self.originalNSFW = feedMessage.attributes.isNSFW
-			self.isSpoilerSwitch?.isOn = feedMessage.attributes.isSpoiler
+			self.isSpoiler = feedMessage.attributes.isSpoiler
 			self.originalSpoiler = feedMessage.attributes.isSpoiler
 		} else if let dmToUser = self.dmToUser, dmToUser != User.current {
 			self.commentTextView.text = nil
@@ -111,6 +115,16 @@ class KFeedMessageTextEditorViewController: KViewController {
 	}
 
 	// MARK: - Functions
+	func configureToolbar() {
+		self.toolbar.delegate = self
+		self.toolbar.isTranslucent = false
+		self.toolbar.backgroundColor = .clear
+		self.toolbar.barStyle = .default
+		self.toolbar.isUserInteractionEnabled = true
+		self.toolbar.theme_tintColor = KThemePicker.tintColor.rawValue
+		self.toolbar.theme_barTintColor = KThemePicker.barTintColor.rawValue
+	}
+
 	/// Confirm whether to cancel the message.
 	///
 	/// - Parameter showingSend: Indicates whether to show the send message option.
@@ -168,7 +182,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 		if let feedMessage = self.editingFeedMessage {
 			do {
 				let feedMessageIdentity = FeedMessageIdentity(id: feedMessage.id)
-				let feedMessageUpdateRequest = FeedMessageUpdateRequest(feedMessageIdentity: feedMessageIdentity, content: self.editedText, isNSFW: self.isNSFWSwitch.isOn, isSpoiler: self.isSpoilerSwitch.isOn)
+				let feedMessageUpdateRequest = FeedMessageUpdateRequest(feedMessageIdentity: feedMessageIdentity, content: self.editedText, isNSFW: self.isNSFW, isSpoiler: self.isSpoiler)
 				let feedMessageUpdateResponse = try await KService.updateMessage(feedMessageUpdateRequest).value
 				let feedMessageUpdate = feedMessageUpdateResponse.data
 
@@ -179,7 +193,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 			}
 		} else {
 			do {
-				let feedMessageRequest = FeedMessageRequest(content: self.editedText, parentIdentity: nil, isReply: nil, isReShare: nil, isNSFW: self.isNSFWSwitch.isOn, isSpoiler: self.isSpoilerSwitch.isOn)
+				let feedMessageRequest = FeedMessageRequest(content: self.editedText, parentIdentity: nil, isReply: nil, isReShare: nil, isNSFW: self.isNSFW, isSpoiler: self.isSpoiler)
 				let feedMessagesResponse = try await KService.postFeedMessage(feedMessageRequest).value
 				let feedMessages = feedMessagesResponse.data
 
@@ -217,6 +231,53 @@ class KFeedMessageTextEditorViewController: KViewController {
 	@IBAction func spoilertSwitchChanged(_ sender: UISwitch) {
 		self.editedSpoiler = sender.isOn
 	}
+
+	@IBAction func labelsButtonPressed(_ sender: UIButton) {
+		let bottomSheet = R.storyboard.selfLabel.selfLabelViewController()!
+		bottomSheet.selectedOption = self.selectedSelfLabel
+		bottomSheet.delegate = self
+		bottomSheet.modalPresentationStyle = .popover
+
+		// Present the controller
+		if let popoverController = bottomSheet.popoverPresentationController {
+			popoverController.sourceView = sender
+			popoverController.sourceRect = sender.bounds
+		}
+
+		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
+			self.present(bottomSheet, animated: true, completion: nil)
+		}
+	}
+}
+
+// MARK: - SelfLabelViewDelegate
+extension KFeedMessageTextEditorViewController: SelfLabelViewDelegate {
+	func selectedOptionChanged(_ option: SelfLabel?) {
+		self.selectedSelfLabel = option
+
+		switch option {
+		case .spoiler:
+			self.isSpoiler = true
+			self.isNSFW = false
+		case .nsfw:
+			self.isSpoiler = false
+			self.isNSFW = true
+		case .both:
+			self.isSpoiler = true
+			self.isNSFW = true
+		case nil:
+			self.isSpoiler = false
+			self.isNSFW = false
+		}
+
+		if self.isSpoiler || self.isNSFW {
+			self.labelsButton.setTitle("Labels Added", for: .normal)
+			self.labelsButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
+		} else {
+			self.labelsButton.setTitle("Lebels", for: .normal)
+			self.labelsButton.setImage(UIImage(systemName: "shield"), for: .normal)
+		}
+	}
 }
 
 // MARK: - UIAdaptivePresentationControllerDelegate
@@ -247,5 +308,12 @@ extension KFeedMessageTextEditorViewController: UITextViewDelegate {
 			textView.text = self.placeholderText
 			textView.theme_textColor = KThemePicker.textFieldPlaceholderTextColor.rawValue
 		}
+	}
+}
+
+// MARK: - UIToolbarDelegate
+extension KFeedMessageTextEditorViewController: UIToolbarDelegate {
+	func position(for bar: any UIBarPositioning) -> UIBarPosition {
+		return .bottom
 	}
 }

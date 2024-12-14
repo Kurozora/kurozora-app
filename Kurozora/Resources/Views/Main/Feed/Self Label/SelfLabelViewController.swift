@@ -116,10 +116,6 @@ class SelfLabelViewController: KViewController {
 		}
 	}
 
-	@objc func cancelButtonPressed(_ sender: UIButton) {
-		self.dismiss(animated: true, completion: nil)
-	}
-
 	@IBAction func primaryButtonPressed(_ sender: UIButton) {
 		self.dismiss(animated: true, completion: nil)
 	}
