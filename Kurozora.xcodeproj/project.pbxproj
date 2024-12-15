@@ -12,6 +12,7 @@
 		6601F1AC2118488D0074C1DD /* IconNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6601F1AB2118488D0074C1DD /* IconNotificationCell.swift */; };
 		66036EB42B967B2400DD36CC /* GIFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66036EB32B967B2400DD36CC /* GIFView.swift */; };
 		6603F6B92D0DF80800FBAC5C /* DeselectableSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6603F6B82D0DF80800FBAC5C /* DeselectableSegmentedControl.swift */; };
+		6603F6BB2D0E585500FBAC5C /* KView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6603F6BA2D0E585500FBAC5C /* KView.swift */; };
 		6604DEC22CB333BA007E01B5 /* KTappableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6604DEC12CB333BA007E01B5 /* KTappableLabel.swift */; };
 		6604DEC42CB47D5E007E01B5 /* CountryOfOrigin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6604DEC32CB47D5E007E01B5 /* CountryOfOrigin.swift */; };
 		660628BC2A62F79100D4A8BB /* ProfileBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660628BB2A62F79100D4A8BB /* ProfileBadge.swift */; };
@@ -829,6 +830,7 @@
 		6601F1AB2118488D0074C1DD /* IconNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconNotificationCell.swift; sourceTree = "<group>"; };
 		66036EB32B967B2400DD36CC /* GIFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFView.swift; sourceTree = "<group>"; };
 		6603F6B82D0DF80800FBAC5C /* DeselectableSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeselectableSegmentedControl.swift; sourceTree = "<group>"; };
+		6603F6BA2D0E585500FBAC5C /* KView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KView.swift; sourceTree = "<group>"; };
 		6604DEC12CB333BA007E01B5 /* KTappableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KTappableLabel.swift; sourceTree = "<group>"; };
 		6604DEC32CB47D5E007E01B5 /* CountryOfOrigin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryOfOrigin.swift; sourceTree = "<group>"; };
 		66058DB9212E97670084B79E /* ReviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -2242,6 +2244,7 @@
 				6647236F245DC531008E5111 /* CircularView.swift */,
 				662CAD67257594E00045236C /* EmptyBackgroundView.swift */,
 				6609005329DCE0AF0015FE9F /* GradientView.swift */,
+				6603F6BA2D0E585500FBAC5C /* KView.swift */,
 				66CBDD972464772200CA5F83 /* SecondarySeparatorView.swift */,
 				66CBDD95246352E900CA5F83 /* SeparatorView.swift */,
 			);
@@ -5165,6 +5168,7 @@
 				664F9B272D09083A000E5F8E /* ScheduleCollectionViewController+UICollectionViewDelegate.swift in Sources */,
 				66D6237920A1BEAC00304914 /* LibraryListCollectionViewController.swift in Sources */,
 				66E46DFF25055FEA009938E1 /* Int+Kurozora.swift in Sources */,
+				6603F6BB2D0E585500FBAC5C /* KView.swift in Sources */,
 				66BEC13523191D090039D683 /* NSLayoutManager+Kurozora.swift in Sources */,
 				66E1216A29B0025B0051C4ED /* Game+Intents.swift in Sources */,
 				662F706F22A45D0F00C3599D /* BasicNotificationCell.swift in Sources */,
