@@ -24,7 +24,7 @@ public enum ImageFormat {
 	/// Indicates the image has a `jpeg` format. This option also takes a compression value.
 	case jpeg(_ compressionQuality: CGFloat)
 
-	/// Indicates the image has a `hec` format.
+	/// Indicates the image has a `heic` format.
 	case heic
 
 	/// Indicates the image has a `PDF` format. Uses `png` format for the image.
