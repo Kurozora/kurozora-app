@@ -45,7 +45,7 @@ class KFMReplyTextEditorViewController: KFeedMessageTextEditorViewController {
 		if let feedMessage = self.editingFeedMessage {
 			do {
 				let feedMessageIdentity = FeedMessageIdentity(id: feedMessage.id)
-				let feedMessageUpdateRequest = FeedMessageUpdateRequest(feedMessageIdentity: feedMessageIdentity, content: self.editedText, isNSFW: self.isNSFWSwitch.isOn, isSpoiler: self.isSpoilerSwitch.isOn)
+				let feedMessageUpdateRequest = FeedMessageUpdateRequest(feedMessageIdentity: feedMessageIdentity, content: self.editedText, isNSFW: self.isNSFW, isSpoiler: self.isSpoiler)
 				let feedMessageUpdateResponse = try await KService.updateMessage(feedMessageUpdateRequest).value
 				let feedMessageUpdate = feedMessageUpdateResponse.data
 
@@ -58,7 +58,7 @@ class KFMReplyTextEditorViewController: KFeedMessageTextEditorViewController {
 		} else {
 			do {
 				let parentFeedMessageIdentity = FeedMessageIdentity(id: self.opFeedMessage.id)
-				let feedMessageRequest = FeedMessageRequest(content: self.editedText, parentIdentity: parentFeedMessageIdentity, isReply: true, isReShare: false, isNSFW: self.isNSFWSwitch.isOn, isSpoiler: self.isSpoilerSwitch.isOn)
+				let feedMessageRequest = FeedMessageRequest(content: self.editedText, parentIdentity: parentFeedMessageIdentity, isReply: true, isReShare: false, isNSFW: self.isNSFW, isSpoiler: self.isSpoiler)
 				let feedMessagesResponse = try await KService.postFeedMessage(feedMessageRequest).value
 				let feedMessages = feedMessagesResponse.data
 

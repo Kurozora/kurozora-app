@@ -38,12 +38,9 @@ class KFMReShareTextEditorViewController: KFeedMessageTextEditorViewController {
 	// MARK: - IBActions
 	override func performFeedMessageRequest() async {
 		if let feedMessage = self.editingFeedMessage {
-			let isNSFW = self.isNSFWSwitch?.isOn ?? feedMessage.attributes.isNSFW
-			let isSpoiler = self.isSpoilerSwitch?.isOn ?? feedMessage.attributes.isSpoiler
-
 			do {
 				let feedMessageIdentity = FeedMessageIdentity(id: feedMessage.id)
-				let feedMessageUpdateRequest = FeedMessageUpdateRequest(feedMessageIdentity: feedMessageIdentity, content: self.editedText, isNSFW: isNSFW, isSpoiler: isSpoiler)
+				let feedMessageUpdateRequest = FeedMessageUpdateRequest(feedMessageIdentity: feedMessageIdentity, content: self.editedText, isNSFW: self.isNSFW, isSpoiler: self.isSpoiler)
 				let feedMessageUpdateResponse = try await KService.updateMessage(feedMessageUpdateRequest).value
 				let feedMessageUpdate = feedMessageUpdateResponse.data
 

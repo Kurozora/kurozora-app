@@ -17,8 +17,7 @@ class KFeedMessageTextEditorViewController: KViewController {
 	@IBOutlet weak var commentTextView: KTextView!
 	@IBOutlet weak var commentPreviewContainer: UIView!
 	@IBOutlet weak var sendButton: UIBarButtonItem!
-	@IBOutlet weak var toolbar: UIToolbar!
-	@IBOutlet weak var labelsButton: UIButton!
+	@IBOutlet weak var labelsButton: KButton!
 
 	// MARK: - Properties
 	var placeholderText: String {
@@ -84,8 +83,6 @@ class KFeedMessageTextEditorViewController: KViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.configureToolbar()
-
 		if let user = User.current {
 			self.currentUsernameLabel.text = user.attributes.username
 			user.attributes.profileImage(imageView: self.profileImageView)
@@ -102,6 +99,16 @@ class KFeedMessageTextEditorViewController: KViewController {
 			self.originalNSFW = feedMessage.attributes.isNSFW
 			self.isSpoiler = feedMessage.attributes.isSpoiler
 			self.originalSpoiler = feedMessage.attributes.isSpoiler
+
+			if self.isNSFW || self.isSpoiler {
+				self.selectedOptionChanged(.both)
+			} else if self.isNSFW {
+				self.selectedOptionChanged(.nsfw)
+			} else if self.isSpoiler {
+				self.selectedOptionChanged(.spoiler)
+			} else {
+				self.selectedOptionChanged(nil)
+			}
 		} else if let dmToUser = self.dmToUser, dmToUser != User.current {
 			self.commentTextView.text = nil
 			self.commentTextView.insertText("@\(dmToUser.attributes.slug) ")
@@ -115,16 +122,6 @@ class KFeedMessageTextEditorViewController: KViewController {
 	}
 
 	// MARK: - Functions
-	func configureToolbar() {
-		self.toolbar.delegate = self
-		self.toolbar.isTranslucent = false
-		self.toolbar.backgroundColor = .clear
-		self.toolbar.barStyle = .default
-		self.toolbar.isUserInteractionEnabled = true
-		self.toolbar.theme_tintColor = KThemePicker.tintColor.rawValue
-		self.toolbar.theme_barTintColor = KThemePicker.barTintColor.rawValue
-	}
-
 	/// Confirm whether to cancel the message.
 	///
 	/// - Parameter showingSend: Indicates whether to show the send message option.
@@ -224,14 +221,6 @@ class KFeedMessageTextEditorViewController: KViewController {
 		}
 	}
 
-	@IBAction func nsfwSwitchChanged(_ sender: UISwitch) {
-		self.editedNSFW = sender.isOn
-	}
-
-	@IBAction func spoilertSwitchChanged(_ sender: UISwitch) {
-		self.editedSpoiler = sender.isOn
-	}
-
 	@IBAction func labelsButtonPressed(_ sender: UIButton) {
 		let bottomSheet = R.storyboard.selfLabel.selfLabelViewController()!
 		bottomSheet.selectedOption = self.selectedSelfLabel
@@ -269,6 +258,8 @@ extension KFeedMessageTextEditorViewController: SelfLabelViewDelegate {
 			self.isSpoiler = false
 			self.isNSFW = false
 		}
+
+		self.labelsButton.titleLabel?.font = .preferredFont(forTextStyle: .subheadline)
 
 		if self.isSpoiler || self.isNSFW {
 			self.labelsButton.setTitle("Labels Added", for: .normal)
