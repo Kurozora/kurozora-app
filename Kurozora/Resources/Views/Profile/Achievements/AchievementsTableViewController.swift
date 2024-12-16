@@ -54,7 +54,7 @@ class AchievementsTableViewController: KTableViewController {
 		var detailString: String
 
 		if self.user?.id == User.current?.id {
-			detailString = "achievements you earn show up here."
+			detailString = "Achievements you earn show up here."
 		} else {
 			detailString = "\(self.user.attributes.username) has not earned any achievements yet."
 		}
