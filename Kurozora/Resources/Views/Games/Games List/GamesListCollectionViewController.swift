@@ -44,7 +44,7 @@ class GamesListCollectionViewController: KCollectionViewController {
 
 	var relatedGames: [RelatedGame] = []
 
-	var searachQuery: String = ""
+	var searchQuery: String = ""
 	var gamesListFetchType: GamesListFetchType = .search
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
@@ -204,7 +204,7 @@ class GamesListCollectionViewController: KCollectionViewController {
 				self.gameIdentities.append(contentsOf: gameIdentityResponse.data)
 				self.gameIdentities.removeDuplicates()
 			case .search:
-				let searchResponse = try await KService.search(.kurozora, of: [.games], for: self.searachQuery, next: self.nextPageURL, limit: 25, filter: nil).value
+				let searchResponse = try await KService.search(.kurozora, of: [.games], for: self.searchQuery, next: self.nextPageURL, limit: 25, filter: nil).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {

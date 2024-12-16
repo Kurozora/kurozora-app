@@ -26,7 +26,7 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 	var seasonIdentity: SeasonIdentity? = nil
 	var episodes: [IndexPath: Episode] = [:]
 	var episodeIdentities: [EpisodeIdentity] = []
-	var searachQuery: String = ""
+	var searchQuery: String = ""
 	var episodesListFetchType: EpisodesListFetchType = .search
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, EpisodeIdentity>! = nil
 	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
@@ -212,7 +212,7 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 			}
 		case .search:
 			do {
-				let searchResponse = try await KService.search(.kurozora, of: [.episodes], for: self.searachQuery, next: self.nextPageURL, limit: 25, filter: nil).value
+				let searchResponse = try await KService.search(.kurozora, of: [.episodes], for: self.searchQuery, next: self.nextPageURL, limit: 25, filter: nil).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {

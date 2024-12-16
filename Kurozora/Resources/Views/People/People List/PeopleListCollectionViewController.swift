@@ -22,7 +22,7 @@ class PeopleListCollectionViewController: KCollectionViewController {
 	var people: [IndexPath: Person] = [:]
 	var personIdentities: [PersonIdentity] = []
 	var exploreCategoryIdentity: ExploreCategoryIdentity? = nil
-	var searachQuery: String = ""
+	var searchQuery: String = ""
 	var peopleListFetchType: PeopleListFetchType = .search
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, PersonIdentity>! = nil
 	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
@@ -174,7 +174,7 @@ class PeopleListCollectionViewController: KCollectionViewController {
 			}
 		case .search:
 			do {
-				let searchResponse = try await KService.search(.kurozora, of: [.people], for: self.searachQuery, next: self.nextPageURL, limit: 25, filter: nil).value
+				let searchResponse = try await KService.search(.kurozora, of: [.people], for: self.searchQuery, next: self.nextPageURL, limit: 25, filter: nil).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {

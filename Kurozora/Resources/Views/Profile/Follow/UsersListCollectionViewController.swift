@@ -20,7 +20,7 @@ class UsersListCollectionViewController: KCollectionViewController {
 	var user: User? = nil
 	var users: [IndexPath: User] = [:]
 	var userIdentities: [UserIdentity] = []
-	var searachQuery: String = ""
+	var searchQuery: String = ""
 	var usersListFetchType: UsersListFetchType = .search
 	var usersListType: UsersListType = .followers
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, UserIdentity>! = nil
@@ -228,7 +228,7 @@ class UsersListCollectionViewController: KCollectionViewController {
 			}
 		case .search:
 			do {
-				let searchResponse = try await KService.search(.kurozora, of: [.users], for: self.searachQuery, next: self.nextPageURL, limit: 25, filter: nil).value
+				let searchResponse = try await KService.search(.kurozora, of: [.users], for: self.searchQuery, next: self.nextPageURL, limit: 25, filter: nil).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {

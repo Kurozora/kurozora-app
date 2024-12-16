@@ -22,7 +22,7 @@ class CharactersListCollectionViewController: KCollectionViewController {
 	var characters: [IndexPath: Character] = [:]
 	var characterIdentities: [CharacterIdentity] = []
 	var exploreCategoryIdentity: ExploreCategoryIdentity? = nil
-	var searachQuery: String = ""
+	var searchQuery: String = ""
 	var charactersListFetchType: CharactersListFetchType = .search
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, CharacterIdentity>! = nil
 	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
@@ -175,7 +175,7 @@ class CharactersListCollectionViewController: KCollectionViewController {
 			}
 		case .search:
 			do {
-				let searchResponse = try await KService.search(.kurozora, of: [.characters], for: self.searachQuery, next: self.nextPageURL, limit: 25, filter: nil).value
+				let searchResponse = try await KService.search(.kurozora, of: [.characters], for: self.searchQuery, next: self.nextPageURL, limit: 25, filter: nil).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {

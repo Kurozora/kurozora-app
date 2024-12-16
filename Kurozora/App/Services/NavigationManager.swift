@@ -180,7 +180,7 @@ class NavigationManager: NSObject {
 		if parameters.isEmpty {
 			searchController.searchBar.textField?.becomeFirstResponder()
 		} else if !queryString.isEmpty {
-			viewController.searachQuery = queryString
+			viewController.searchQuery = queryString
 			viewController.currentScope = scope
 			viewController.currentTypes = [type]
 			searchController.searchBar.textField?.text = queryString

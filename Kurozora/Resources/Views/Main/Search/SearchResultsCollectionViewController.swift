@@ -39,7 +39,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	var currentTypes: [KKSearchType] = []
 
 	/// The search query that is performed.
-	var searachQuery: String = ""
+	var searchQuery: String = ""
 
 	/// The collection of discover suggestions.
 	var discoverSuggestions: [QuickLink] = []
@@ -194,7 +194,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 
 		if self.isDeepLinked {
 			self.isDeepLinked = false
-			self.performSearch(with: self.searachQuery, in: self.currentScope, for: self.currentTypes, with: nil, next: nil)
+			self.performSearch(with: self.searchQuery, in: self.currentScope, for: self.currentTypes, with: nil, next: nil)
 		}
 	}
 
@@ -341,7 +341,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		self.isRequestInProgress = true
 
 		// Store search query
-		self.searachQuery = query
+		self.searchQuery = query
 
 		do {
 			// Perform library search request.
@@ -643,7 +643,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		case R.segue.searchResultsCollectionViewController.charactersListSegue.identifier:
 			// Segue to characters list
 			guard let charactersListCollectionViewController = segue.destination as? CharactersListCollectionViewController else { return }
-			charactersListCollectionViewController.searachQuery = self.searachQuery
+			charactersListCollectionViewController.searchQuery = self.searchQuery
 			charactersListCollectionViewController.charactersListFetchType = .search
 		case R.segue.searchResultsCollectionViewController.episodesListSegue.identifier:
 			// Segue to episodes list
@@ -653,23 +653,23 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 				episodesListCollectionViewController.season = season
 				episodesListCollectionViewController.episodesListFetchType = .season
 			} else {
-				episodesListCollectionViewController.searachQuery = self.searachQuery
+				episodesListCollectionViewController.searchQuery = self.searchQuery
 				episodesListCollectionViewController.episodesListFetchType = .search
 			}
 		case R.segue.searchResultsCollectionViewController.literaturesListSegue.identifier:
 			// Segue to literatures list
 			guard let literaturesListCollectionViewController = segue.destination as? LiteraturesListCollectionViewController else { return }
-			literaturesListCollectionViewController.searachQuery = self.searachQuery
+			literaturesListCollectionViewController.searchQuery = self.searchQuery
 			literaturesListCollectionViewController.literaturesListFetchType = .search
 		case R.segue.searchResultsCollectionViewController.gamesListSegue.identifier:
 			// Segue to games list
 			guard let gamesListCollectionViewController = segue.destination as? GamesListCollectionViewController else { return }
-			gamesListCollectionViewController.searachQuery = self.searachQuery
+			gamesListCollectionViewController.searchQuery = self.searchQuery
 			gamesListCollectionViewController.gamesListFetchType = .search
 		case R.segue.searchResultsCollectionViewController.peopleListSegue.identifier:
 			// Segue to people list
 			guard let peopleListCollectionViewController = segue.destination as? PeopleListCollectionViewController else { return }
-			peopleListCollectionViewController.searachQuery = self.searachQuery
+			peopleListCollectionViewController.searchQuery = self.searchQuery
 			peopleListCollectionViewController.peopleListFetchType = .search
 		case R.segue.searchResultsCollectionViewController.songsListSegue.identifier:
 			// Segue to songs list
@@ -680,17 +680,17 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		case R.segue.searchResultsCollectionViewController.showsListSegue.identifier:
 			// Segue to shows list
 			guard let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController else { return }
-			showsListCollectionViewController.searachQuery = self.searachQuery
+			showsListCollectionViewController.searchQuery = self.searchQuery
 			showsListCollectionViewController.showsListFetchType = .search
 		case R.segue.searchResultsCollectionViewController.studiosListSegue.identifier:
 			// Segue to studios list
 			guard let studiosListCollectionViewController = segue.destination as? StudiosListCollectionViewController else { return }
-			studiosListCollectionViewController.searachQuery = self.searachQuery
+			studiosListCollectionViewController.searchQuery = self.searchQuery
 			studiosListCollectionViewController.studiosListFetchType = .search
 		case R.segue.searchResultsCollectionViewController.usersListSegue.identifier:
 			// Segue to users list
 			guard let usersListCollectionViewController = segue.destination as? UsersListCollectionViewController else { return }
-			usersListCollectionViewController.searachQuery = self.searachQuery
+			usersListCollectionViewController.searchQuery = self.searchQuery
 			usersListCollectionViewController.usersListFetchType = .search
 		default: break
 		}
@@ -1020,7 +1020,7 @@ extension SearchResultsCollectionViewController: SearchFilterCollectionViewContr
 
 		self.searchFilters[searchType] = filter
 
-		self.performSearch(with: self.searachQuery, in: searchScope, for: [searchType], with: filter, next: nil, resettingResults: true)
+		self.performSearch(with: self.searchQuery, in: searchScope, for: [searchType], with: filter, next: nil, resettingResults: true)
 
 		self.kSearchController.searchBar.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle.fill"), for: .bookmark, state: .normal)
 	}

@@ -105,7 +105,7 @@ extension SearchResultsCollectionViewController {
 			let itemsCount = identitiesCount - 1
 
 			if indexPath.item == itemsCount && nextPageURL != nil && !self.isRequestInProgress {
-				self.performSearch(with: self.searachQuery, in: self.currentScope, for: [type], with: nil, next: nextPageURL, resettingResults: false)
+				self.performSearch(with: self.searchQuery, in: self.currentScope, for: [type], with: nil, next: nextPageURL, resettingResults: false)
 			}
 		}
 	}

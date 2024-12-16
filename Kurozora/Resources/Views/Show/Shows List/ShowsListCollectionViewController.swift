@@ -44,7 +44,7 @@ class ShowsListCollectionViewController: KCollectionViewController {
 
 	var relatedShows: [RelatedShow] = []
 
-	var searachQuery: String = ""
+	var searchQuery: String = ""
 	var showsListFetchType: ShowsListFetchType = .search
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
@@ -204,7 +204,7 @@ class ShowsListCollectionViewController: KCollectionViewController {
 				self.showIdentities.append(contentsOf: showIdentityResponse.data)
 				self.showIdentities.removeDuplicates()
 			case .search:
-				let searchResponse = try await KService.search(.kurozora, of: [.shows], for: self.searachQuery, next: self.nextPageURL, limit: 25, filter: nil).value
+				let searchResponse = try await KService.search(.kurozora, of: [.shows], for: self.searchQuery, next: self.nextPageURL, limit: 25, filter: nil).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {

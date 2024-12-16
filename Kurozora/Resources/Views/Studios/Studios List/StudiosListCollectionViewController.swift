@@ -24,7 +24,7 @@ class StudiosListCollectionViewController: KCollectionViewController {
 	var showIdentity: ShowIdentity?
 	var studios: [IndexPath: Studio] = [:]
 	var studioIdentities: [StudioIdentity] = []
-	var searachQuery: String = ""
+	var searchQuery: String = ""
 	var studiosListFetchType: StudiosListFetchType = .search
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, StudioIdentity>! = nil
 	var prefetchingIndexPathOperations: [IndexPath: DataRequest] = [:]
@@ -190,7 +190,7 @@ class StudiosListCollectionViewController: KCollectionViewController {
 			}
 		case .search:
 			do {
-				let searchResponse = try await KService.search(.kurozora, of: [.studios], for: self.searachQuery, next: self.nextPageURL, limit: 25, filter: nil).value
+				let searchResponse = try await KService.search(.kurozora, of: [.studios], for: self.searchQuery, next: self.nextPageURL, limit: 25, filter: nil).value
 
 				// Reset data if necessary
 				if self.nextPageURL == nil {
