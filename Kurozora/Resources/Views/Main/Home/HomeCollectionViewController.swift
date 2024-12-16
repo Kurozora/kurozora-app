@@ -130,13 +130,22 @@ class HomeCollectionViewController: KCollectionViewController {
 		// Determine whether to show confetti
 		let date = Date.now
 
-		if date >= Date(unixTimestamp: 1730332800)
-			&& date <= Date(unixTimestamp: 1730419199)
+		if date >= Date(unixTimestamp: 1735084800)
+			&& date <= Date(unixTimestamp: 1735171199)
 			&& !UserSettings.confettiLastSeenAt.isInToday {
 			UserSettings.set(date, forKey: .confettiLastSeenAt)
 
-			SPConfettiConfiguration.particlesConfig.colors = [.systemOrange, .systemYellow, .systemRed, .black, .systemPurple]
-			SPConfetti.startAnimating(.fullWidthToDown, particles: [.arc, .custom(R.image.spider_web()!), .custom(R.image.witch_on_broom()!), .custom(R.image.pumpkin()!)])
+			SPConfettiConfiguration.particlesConfig.colors = [.systemGreen, .systemYellow, .systemRed, .white]
+			SPConfetti.startAnimating(.fullWidthToDown, particles: [.arc, .triangle, .circle, .custom(UIImage(systemName: "star.fill")!), .custom(UIImage(systemName: "snowflake")!), .custom(UIImage(systemName: "gift.fill")!)])
+		}
+
+		if date >= Date(unixTimestamp: 1735689600)
+			&& date <= Date(unixTimestamp: 1736121599)
+			&& !UserSettings.confettiLastSeenAt.isInToday {
+			UserSettings.set(date, forKey: .confettiLastSeenAt)
+
+			SPConfettiConfiguration.particlesConfig.colors = [.systemYellow, .systemRed, .systemBlue, .systemGreen, .systemPurple, .systemPink, .systemCyan, .black, .white]
+			SPConfetti.startAnimating(.fullWidthToDown, particles: [.arc, .triangle, .circle, .polygon, .star])
 		}
 
 		// Configurations
