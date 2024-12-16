@@ -1094,6 +1094,11 @@ struct Trans {
 	/// - Tag: Trans-explore
 	static let explore: String = String(localized: "Explore",
 										comment: "The string for the word 'explore'.")
+	/// The string for the word 'schedule'.
+	///
+	/// - Tag: Trans-schedule
+	static let schedule: String = String(localized: "Schedule",
+										comment: "The string for the word 'schedule'.")
 	/// The string for the word 'feed'.
 	///
 	/// - Tag: Trans-feed

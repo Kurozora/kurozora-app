@@ -14,6 +14,9 @@ enum TabBarItem: Int, CaseIterable {
 	/// Representing the home tab.
 	case home = 0
 
+	/// Representing the schedule tab.
+	case schedule
+
 	/// Representing the library tab.
 	case library
 
@@ -32,9 +35,9 @@ enum TabBarItem: Int, CaseIterable {
 	// MARK: - Properties
 	static var sideBarCases: [TabBarItem] {
 		#if targetEnvironment(macCatalyst)
-		return [.home, .library, .feed, .notifications, .settings]
+		return [.home, .schedule, .library, .feed, .notifications, .settings]
 		#else
-		return [.home, .library, .feed, .notifications, .search, .settings]
+		return [.home, .schedule, .library, .feed, .notifications, .search, .settings]
 		#endif
 	}
 
@@ -47,6 +50,9 @@ enum TabBarItem: Int, CaseIterable {
 	private struct RowIdentifier {
 		/// The unique identifier for the home tab.
 		static let home = UUID()
+
+		/// The unique identifier for the schedule tab.
+		static let schedule = UUID()
 
 		/// The unique identifier for the library tab.
 		static let library = UUID()
@@ -70,6 +76,8 @@ enum TabBarItem: Int, CaseIterable {
 		switch self {
 		case .home:
 			return Trans.explore
+		case .schedule:
+			return Trans.schedule
 		case .library:
 			return Trans.library
 		case .feed:
@@ -88,6 +96,8 @@ enum TabBarItem: Int, CaseIterable {
 		switch self {
 		case .home:
 			return UIImage(systemName: "house")!
+		case .schedule:
+			return UIImage(systemName: "calendar")!
 		case .library:
 			return UIImage(systemName: "rectangle.stack")!
 		case .feed:
@@ -106,6 +116,8 @@ enum TabBarItem: Int, CaseIterable {
 		switch self {
 		case .home:
 			return UIImage(systemName: "house.fill")!
+		case .schedule:
+			return #imageLiteral(resourceName: "Symbols/calendar.fill")
 		case .library:
 			return UIImage(systemName: "rectangle.stack.fill")!
 		case .feed:
@@ -124,6 +136,8 @@ enum TabBarItem: Int, CaseIterable {
 		switch self {
 		case .home:
 			return R.storyboard.home.homeCollectionViewController()!
+		case .schedule:
+			return R.storyboard.schedule.scheduleCollectionViewController()!
 		case .library:
 			return R.storyboard.library.libraryViewController()!
 		case .feed:
@@ -142,6 +156,8 @@ enum TabBarItem: Int, CaseIterable {
 		switch self {
 		case .home:
 			return R.storyboard.home.homeKNavigationController()!
+		case .schedule:
+			return R.storyboard.schedule.scheduleKNavigationController()!
 		case .library:
 			return R.storyboard.library.libraryKNavigationController()!
 		case .feed:
@@ -160,6 +176,8 @@ enum TabBarItem: Int, CaseIterable {
 		switch self {
 		case .home:
 			return RowIdentifier.home
+		case .schedule:
+			return RowIdentifier.schedule
 		case .library:
 			return RowIdentifier.library
 		case .feed:
