@@ -41,6 +41,7 @@ extension LaunchAppIntent: ControlConfigurationIntent { }
 @available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *)
 enum LaunchAppEnum: String, AppEnum {
 	case home
+	case schedule
 	case library
 	case feed
 	case notifications
@@ -50,6 +51,7 @@ enum LaunchAppEnum: String, AppEnum {
 
 	static var caseDisplayRepresentations = [
 		LaunchAppEnum.home: DisplayRepresentation("Home"),
+		LaunchAppEnum.schedule: DisplayRepresentation("Schedule"),
 		LaunchAppEnum.library: DisplayRepresentation("Library"),
 		LaunchAppEnum.feed: DisplayRepresentation("Feed"),
 		LaunchAppEnum.notifications: DisplayRepresentation("Notifications"),
@@ -64,6 +66,8 @@ enum LaunchAppEnum: String, AppEnum {
 		switch self {
 		case .home:
 			URL(string: "kurozora://home")
+		case .schedule:
+			URL(string: "kurozora://schedule")
 		case .library:
 			URL(string: "kurozora://library")
 		case .feed:
