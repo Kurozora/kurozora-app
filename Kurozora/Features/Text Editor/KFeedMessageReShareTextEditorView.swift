@@ -12,6 +12,11 @@ import KurozoraKit
 class KFMReShareTextEditorViewController: KFeedMessageTextEditorViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var dateLabel: KSecondaryLabel!
+	@IBOutlet weak var opCommentPreviewContainer: UIView! {
+		didSet {
+			self.opCommentPreviewContainer.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+		}
+	}
 	@IBOutlet weak var opProfileImageView: ProfileImageView!
 	@IBOutlet weak var opUsernameLabel: KLabel!
 	@IBOutlet weak var opMessageTextView: KSelectableTextView!

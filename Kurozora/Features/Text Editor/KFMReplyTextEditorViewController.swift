@@ -15,11 +15,7 @@ class KFMReplyTextEditorViewController: KFeedMessageTextEditorViewController {
 	@IBOutlet weak var opUsernameLabel: KLabel!
 	@IBOutlet weak var opMessageTextView: KSelectableTextView!
 	@IBOutlet weak var opDateTimeLabel: KSecondaryLabel!
-	@IBOutlet weak var opMessagePreviewContainer: UIView! {
-		didSet {
-			self.opMessagePreviewContainer.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-		}
-	}
+	@IBOutlet weak var opMessagePreviewContainer: UIView!
 
 	// MARK: - Properties
 	override var placeholderText: String {
