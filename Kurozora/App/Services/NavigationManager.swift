@@ -98,25 +98,34 @@ class NavigationManager: NSObject {
 			if UIDevice.isPhone {
 				guard let splitViewController = UIApplication.topSplitViewController else { return }
 				guard let tabBarController = splitViewController.viewController(for: .compact) as? KTabBarController else { return }
-				tabBarController.selectedIndex = 0
+				tabBarController.selectedIndex = TabBarItem.home.rawValue
+			}
+		case .schedule:
+			if UIDevice.isPhone {
+				guard let scheduleCollectionViewController = R.storyboard.schedule.scheduleCollectionViewController() else { return }
+				UIApplication.topViewController?.show(scheduleCollectionViewController, sender: nil)
+			} else {
+				guard let splitViewController = UIApplication.topSplitViewController else { return }
+				guard let tabBarController = splitViewController.viewController(for: .compact) as? KTabBarController else { return }
+				tabBarController.selectedIndex = TabBarItem.schedule.rawValue
 			}
 		case .library, .myLibrary, .list:
 			if UIDevice.isPhone {
 				guard let splitViewController = UIApplication.topSplitViewController else { return }
 				guard let tabBarController = splitViewController.viewController(for: .compact) as? KTabBarController else { return }
-				tabBarController.selectedIndex = 1
+				tabBarController.selectedIndex = TabBarItem.library.rawValue
 			}
 		case .feed, .timeline:
 			if UIDevice.isPhone {
 				guard let splitViewController = UIApplication.topSplitViewController else { return }
 				guard let tabBarController = splitViewController.viewController(for: .compact) as? KTabBarController else { return }
-				tabBarController.selectedIndex = 2
+				tabBarController.selectedIndex = TabBarItem.feed.rawValue
 			}
 		case .notification, .notifications:
 			if UIDevice.isPhone {
 				guard let splitViewController = UIApplication.topSplitViewController else { return }
 				guard let tabBarController = splitViewController.viewController(for: .compact) as? KTabBarController else { return }
-				tabBarController.selectedIndex = 3
+				tabBarController.selectedIndex = TabBarItem.notifications.rawValue
 			}
 		case .search:
 			if UIDevice.isPhone {
@@ -125,7 +134,7 @@ class NavigationManager: NSObject {
 				guard let kNavigationController = kTabBarController.viewControllers?[safe: 4] as? KNavigationController else { return }
 				guard let searchResultsCollectionViewController = kNavigationController.topViewController as? SearchResultsCollectionViewController else { return }
 
-				kTabBarController.selectedIndex = 4
+				kTabBarController.selectedIndex = TabBarItem.search.rawValue
 				self.handleSearchDeeplink(
 					on: searchResultsCollectionViewController,
 					searchController: searchResultsCollectionViewController.kSearchController,

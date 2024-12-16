@@ -19,6 +19,7 @@ import Foundation
 /// case library, myLibrary, list
 /// case feed, timeline
 /// case notification, notifications
+/// case schedule
 /// case search
 /// ```
 enum Scheme: String, CaseIterable {
@@ -31,6 +32,7 @@ enum Scheme: String, CaseIterable {
 	case library, myLibrary, list
 	case feed, timeline
 	case notification, notifications
+	case schedule
 	case search
 
 	// MARK: - Properties
