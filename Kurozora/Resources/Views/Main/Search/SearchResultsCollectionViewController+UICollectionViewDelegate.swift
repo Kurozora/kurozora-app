@@ -17,7 +17,7 @@ extension SearchResultsCollectionViewController {
 		switch itemKind {
 		case .discoverSuggestion: break
 		case .browseCategory(let browseCategory):
-			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.searchSegue, sender: browseCategory)
+			self.performSegue(withIdentifier: browseCategory.segueIdentifier ?? R.segue.searchResultsCollectionViewController.searchSegue.identifier, sender: browseCategory)
 		case .characterIdentity:
 			let character = self.characters[indexPath]
 			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.characterDetailsSegue, sender: character)
@@ -122,10 +122,11 @@ extension SearchResultsCollectionViewController {
 			let identifier = indexPath as NSCopying
 
 			return UIContextMenuConfiguration(identifier: identifier, previewProvider: {
+				guard let searchType = browseCategory.searchType else { return nil }
 				let searchResultsCollectionViewController =
 				R.storyboard.search.searchResultsCollectionViewController()
 				searchResultsCollectionViewController?.title = browseCategory.title
-				searchResultsCollectionViewController?.searchViewKind = .single(browseCategory.searchType)
+				searchResultsCollectionViewController?.searchViewKind = .single(searchType)
 				return searchResultsCollectionViewController
 			}, actionProvider: nil)
 		case .characterIdentity:
