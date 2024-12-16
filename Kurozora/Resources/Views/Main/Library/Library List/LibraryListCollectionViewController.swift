@@ -86,6 +86,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 		self.collectionView.contentInset.top = 50
 		self.collectionView.contentInset.bottom = 60
 		self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset
+		self.collectionView.allowsMultipleSelectionDuringEditing = true
 
 		// Hide activity indicator if user is not signed in.
 		if self.viewedUser == nil {

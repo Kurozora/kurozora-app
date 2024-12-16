@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="g0M-vX-pSL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="g0M-vX-pSL">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -75,6 +75,13 @@
                                                     <rect key="frame" x="0.0" y="112.5" width="400" height="112.5"/>
                                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </imageView>
+                                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="9VG-AC-j3v" customClass="KImageView" customModule="Kurozora" customModuleProvider="target">
+                                                    <rect key="frame" x="360" y="8.5" width="32" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="32" id="DIA-Hc-u8s"/>
+                                                        <constraint firstAttribute="width" constant="32" id="aCM-Pz-mBk"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
@@ -86,6 +93,8 @@
                                                 <constraint firstItem="idd-F4-WkK" firstAttribute="leading" secondItem="bFo-m7-mmy" secondAttribute="leading" id="fGx-jo-Zu2"/>
                                                 <constraint firstItem="idd-F4-WkK" firstAttribute="top" secondItem="bFo-m7-mmy" secondAttribute="top" id="g2l-GU-ufr"/>
                                                 <constraint firstItem="Xhf-NI-alx" firstAttribute="trailing" secondItem="idd-F4-WkK" secondAttribute="trailing" id="irp-rq-akA"/>
+                                                <constraint firstItem="9VG-AC-j3v" firstAttribute="top" secondItem="bFo-m7-mmy" secondAttribute="top" constant="8" id="ksU-EB-gL4"/>
+                                                <constraint firstAttribute="trailing" secondItem="9VG-AC-j3v" secondAttribute="trailing" constant="8" id="nhw-Dd-ygl"/>
                                                 <constraint firstItem="Xhf-NI-alx" firstAttribute="bottom" secondItem="idd-F4-WkK" secondAttribute="bottom" id="zO2-hf-X1o"/>
                                             </constraints>
                                         </view>
@@ -149,6 +158,7 @@
                                     <outlet property="posterImageOverlayView" destination="AEM-ez-9he" id="ban-RB-Ny4"/>
                                     <outlet property="posterImageView" destination="6GI-Jb-5fL" id="3Lg-OY-r44"/>
                                     <outlet property="posterShadowView" destination="jg5-R7-81q" id="gyH-GZ-uPD"/>
+                                    <outlet property="selectionImageOverlayView" destination="9VG-AC-j3v" id="YiB-wM-hrh"/>
                                     <outlet property="titleLabel" destination="SQi-P9-bcN" id="rUi-DY-f69"/>
                                     <outlet property="userProgressLabel" destination="A5H-Ef-BHb" id="c1r-4O-TsC"/>
                                 </connections>
@@ -170,6 +180,13 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book_texture_overlay" translatesAutoresizingMaskIntoConstraints="NO" id="1PX-FA-lW8">
                                                     <rect key="frame" x="0.0" y="0.0" width="100" height="150"/>
                                                 </imageView>
+                                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Eb0-Ne-SBO" customClass="KImageView" customModule="Kurozora" customModuleProvider="target">
+                                                    <rect key="frame" x="60" y="8.5" width="32" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="32" id="2nT-DO-Dn9"/>
+                                                        <constraint firstAttribute="height" constant="32" id="Bh9-c5-X1f"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="1PX-FA-lW8" firstAttribute="top" secondItem="dJ4-Px-xIz" secondAttribute="top" id="0A3-Xu-w8r"/>
@@ -177,11 +194,13 @@
                                                 <constraint firstAttribute="width" secondItem="Oko-rM-p6D" secondAttribute="height" multiplier="2:3" id="CRJ-6w-kLK"/>
                                                 <constraint firstItem="1PX-FA-lW8" firstAttribute="bottom" secondItem="dJ4-Px-xIz" secondAttribute="bottom" id="Ssj-tM-SvA"/>
                                                 <constraint firstItem="dJ4-Px-xIz" firstAttribute="leading" secondItem="Oko-rM-p6D" secondAttribute="leading" id="g3D-pE-H0A"/>
+                                                <constraint firstItem="Eb0-Ne-SBO" firstAttribute="top" secondItem="Oko-rM-p6D" secondAttribute="top" constant="8" id="gas-HY-AMA"/>
                                                 <constraint firstItem="dJ4-Px-xIz" firstAttribute="top" secondItem="Oko-rM-p6D" secondAttribute="top" id="hET-M9-iSo"/>
                                                 <constraint firstAttribute="width" constant="100" id="hUP-Dd-Yi8"/>
                                                 <constraint firstItem="1PX-FA-lW8" firstAttribute="trailing" secondItem="dJ4-Px-xIz" secondAttribute="trailing" id="rh4-Ui-hHZ"/>
                                                 <constraint firstAttribute="bottom" secondItem="dJ4-Px-xIz" secondAttribute="bottom" id="t9r-Nw-gDE"/>
                                                 <constraint firstItem="1PX-FA-lW8" firstAttribute="leading" secondItem="dJ4-Px-xIz" secondAttribute="leading" id="wfO-v2-OhA"/>
+                                                <constraint firstAttribute="trailing" secondItem="Eb0-Ne-SBO" secondAttribute="trailing" constant="8" id="yqq-Ex-RWL"/>
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Episode 1 - 1d, 19h, 8m, 30s" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" translatesAutoresizingMaskIntoConstraints="NO" id="JGA-WR-aAD" customClass="BroadcastLabel" customModule="Kurozora" customModuleProvider="target">
@@ -234,6 +253,7 @@
                                     <outlet property="informationLabel" destination="6Uy-DS-JYA" id="Yp9-Nr-488"/>
                                     <outlet property="posterImageOverlayView" destination="1PX-FA-lW8" id="KTL-5M-3zV"/>
                                     <outlet property="posterImageView" destination="dJ4-Px-xIz" id="TVR-hv-cFw"/>
+                                    <outlet property="selectionImageOverlayView" destination="Eb0-Ne-SBO" id="Kqz-1V-F0E"/>
                                     <outlet property="titleLabel" destination="kcq-VT-wfM" id="vkT-Mq-RjP"/>
                                 </connections>
                             </collectionViewCell>
@@ -254,9 +274,17 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book_texture_overlay" translatesAutoresizingMaskIntoConstraints="NO" id="oEo-sK-NpU">
                                                     <rect key="frame" x="0.0" y="0.0" width="133.5" height="200"/>
                                                 </imageView>
+                                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Kul-dx-MDS" customClass="KImageView" customModule="Kurozora" customModuleProvider="target">
+                                                    <rect key="frame" x="93.5" y="8.5" width="32" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="32" id="ZhR-KG-0mU"/>
+                                                        <constraint firstAttribute="height" constant="32" id="ijD-Mn-ZHW"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="QKT-op-oBI" firstAttribute="top" secondItem="6Rx-W6-qbb" secondAttribute="top" id="8WT-8U-A6R"/>
+                                                <constraint firstAttribute="trailing" secondItem="Kul-dx-MDS" secondAttribute="trailing" constant="8" id="FhS-b7-gLF"/>
                                                 <constraint firstItem="oEo-sK-NpU" firstAttribute="top" secondItem="QKT-op-oBI" secondAttribute="top" id="S9n-xH-ZA4"/>
                                                 <constraint firstItem="QKT-op-oBI" firstAttribute="leading" secondItem="6Rx-W6-qbb" secondAttribute="leading" id="VBb-b7-Rf8"/>
                                                 <constraint firstItem="oEo-sK-NpU" firstAttribute="trailing" secondItem="QKT-op-oBI" secondAttribute="trailing" id="g1e-Ws-2he"/>
@@ -264,6 +292,7 @@
                                                 <constraint firstAttribute="width" secondItem="6Rx-W6-qbb" secondAttribute="height" multiplier="2:3" id="kzU-jY-bT4"/>
                                                 <constraint firstItem="oEo-sK-NpU" firstAttribute="leading" secondItem="QKT-op-oBI" secondAttribute="leading" id="oaF-7s-Vsz"/>
                                                 <constraint firstAttribute="bottom" secondItem="QKT-op-oBI" secondAttribute="bottom" id="pbS-iE-gQc"/>
+                                                <constraint firstItem="Kul-dx-MDS" firstAttribute="top" secondItem="6Rx-W6-qbb" secondAttribute="top" constant="8" id="pbz-RY-TEl"/>
                                                 <constraint firstAttribute="trailing" secondItem="QKT-op-oBI" secondAttribute="trailing" id="sqk-54-9AV"/>
                                                 <constraint firstAttribute="height" constant="200" id="ubA-YQ-5Ut"/>
                                             </constraints>
@@ -289,6 +318,7 @@
                                 <connections>
                                     <outlet property="posterImageOverlayView" destination="oEo-sK-NpU" id="WvX-z8-d4j"/>
                                     <outlet property="posterImageView" destination="QKT-op-oBI" id="Tir-18-8ae"/>
+                                    <outlet property="selectionImageOverlayView" destination="Kul-dx-MDS" id="XWB-vc-nMK"/>
                                     <outlet property="titleLabel" destination="C2e-VZ-lQA" id="cIS-Ud-Nje"/>
                                 </connections>
                             </collectionViewCell>
@@ -336,12 +366,13 @@
         <image name="Placeholders/Show Banner" width="1920" height="1080"/>
         <image name="Placeholders/Show Poster" width="680" height="1000"/>
         <image name="book_texture_overlay" width="160" height="240"/>
+        <image name="circle" catalog="system" width="128" height="123"/>
         <image name="shadow" width="6" height="30"/>
         <systemColor name="secondaryLabelColor">
-            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemOrangeColor">
-            <color red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

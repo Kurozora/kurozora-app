@@ -24,8 +24,8 @@ class LibraryListCollectionViewCell: LibraryBaseCollectionViewCell {
 	}
 
 	// MARK: - Functions
-	override func configure(using show: Show) {
-		super.configure(using: show)
+	override func configure(using show: Show, showSelectionIcon: Bool) {
+		super.configure(using: show, showSelectionIcon: showSelectionIcon)
 
 		self.informationLabel.text = show.attributes.informationStringShort
 		self.estimatedAiringLabel.text = ""
@@ -36,8 +36,8 @@ class LibraryListCollectionViewCell: LibraryBaseCollectionViewCell {
 		}
 	}
 
-	override func configure(using literature: Literature) {
-		super.configure(using: literature)
+	override func configure(using literature: Literature, showSelectionIcon: Bool) {
+		super.configure(using: literature, showSelectionIcon: showSelectionIcon)
 
 		self.informationLabel.text = literature.attributes.informationStringShort
 		self.estimatedAiringLabel.text = ""
@@ -48,8 +48,8 @@ class LibraryListCollectionViewCell: LibraryBaseCollectionViewCell {
 		}
 	}
 
-	override func configure(using game: Game) {
-		super.configure(using: game)
+	override func configure(using game: Game, showSelectionIcon: Bool) {
+		super.configure(using: game, showSelectionIcon: showSelectionIcon)
 
 		self.informationLabel.text = game.attributes.informationStringShort
 		self.estimatedAiringLabel.text = ""

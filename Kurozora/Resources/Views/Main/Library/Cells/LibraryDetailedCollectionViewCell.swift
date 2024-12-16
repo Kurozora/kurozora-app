@@ -16,8 +16,8 @@ class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 	@IBOutlet weak var userProgressLabel: UILabel!
 
 	// MARK: - Functions
-	override func configure(using show: Show) {
-		super.configure(using: show)
+	override func configure(using show: Show, showSelectionIcon: Bool) {
+		super.configure(using: show, showSelectionIcon: showSelectionIcon)
 
 		// Configure banner container
 		self.bannerContainerView.layerCornerRadius = 10.0
@@ -38,8 +38,8 @@ class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 		self.posterShadowView?.applyShadow()
 	}
 
-	override func configure(using literature: Literature) {
-		super.configure(using: literature)
+	override func configure(using literature: Literature, showSelectionIcon: Bool) {
+		super.configure(using: literature, showSelectionIcon: showSelectionIcon)
 
 		// Configure banner container
 		self.bannerContainerView.layerCornerRadius = 10.0
@@ -60,8 +60,8 @@ class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 		self.posterShadowView?.applyShadow()
 	}
 
-	override func configure(using game: Game) {
-		super.configure(using: game)
+	override func configure(using game: Game, showSelectionIcon: Bool) {
+		super.configure(using: game, showSelectionIcon: showSelectionIcon)
 
 		// Configure banner container
 		self.bannerContainerView.layerCornerRadius = 10.0

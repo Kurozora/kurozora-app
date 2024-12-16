@@ -15,6 +15,7 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var posterShadowView: UIView?
 	@IBOutlet weak var posterImageView: PosterImageView!
 	@IBOutlet weak var posterImageOverlayView: UIImageView!
+	@IBOutlet weak var selectionImageOverlayView: UIImageView!
 
 	// MARK: - Properties
 	lazy var literatureMask: CALayer = {
@@ -24,9 +25,37 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 		return literatureMask
 	}()
 
+	/// Determines whether to show selection icon.
+	var showSelectionIcon: Bool = false
+
+	override var isSelected: Bool {
+		didSet {
+			self.setNeedsLayout()
+		}
+	}
+
+	// MARK: - View
+	override func prepareForReuse() {
+		super.prepareForReuse()
+
+		self.showSelectionIcon = false
+	}
+
+	override func layoutSubviews() {
+		self.selectionImageOverlayView.isHidden = !self.showSelectionIcon
+		self.selectionImageOverlayView.image = self.isSelected ? UIImage(systemName: "checkmark.circle.fill") : UIImage(systemName: "circle")
+	}
+
 	// MARK: - Functions
 	/// Configure the cell with the given show's details.
-	func configure(using show: Show) {
+	///
+	/// - Parameters:
+	///    - show: The show to configure the cell with.
+	///    - showSelectionIcon: A boolean value indicating whether to show selection icon.
+	func configure(using show: Show, showSelectionIcon: Bool) {
+		// Configure selection icon
+		self.showSelectionIcon = showSelectionIcon
+
 		// Configure title
 		self.titleLabel.text = show.attributes.title
 
@@ -42,7 +71,14 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 	}
 
 	/// Configure the cell with the given literature's details.
-	func configure(using literature: Literature) {
+	///
+	/// - Parameters:
+	///    - literature: The literature to configure the cell with.
+	///    - showSelectionIcon: A boolean value indicating whether to show selection icon.
+	func configure(using literature: Literature, showSelectionIcon: Bool) {
+		// Configure selection icon
+		self.showSelectionIcon = showSelectionIcon
+
 		// Configure title
 		self.titleLabel.text = literature.attributes.title
 
@@ -58,7 +94,14 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 	}
 
 	/// Configure the cell with the given game's details.
-	func configure(using game: Game) {
+	///
+	/// - Parameters:
+	///    - game: The game to configure the cell with.
+	///    - showSelectionIcon: A boolean value indicating whether to show selection icon.
+	func configure(using game: Game, showSelectionIcon: Bool) {
+		// Configure selection icon
+		self.showSelectionIcon = showSelectionIcon
+
 		// Configure title
 		self.titleLabel.text = game.attributes.title
 

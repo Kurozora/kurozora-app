@@ -18,11 +18,11 @@ extension LibraryListCollectionViewController {
 			}
 			switch item {
 			case .show(let show):
-				libraryBaseCollectionViewCell.configure(using: show)
+				libraryBaseCollectionViewCell.configure(using: show, showSelectionIcon: self.isEditing)
 			case .literature(let literature):
-				libraryBaseCollectionViewCell.configure(using: literature)
+				libraryBaseCollectionViewCell.configure(using: literature, showSelectionIcon: self.isEditing)
 			case .game(let game):
-				libraryBaseCollectionViewCell.configure(using: game)
+				libraryBaseCollectionViewCell.configure(using: game, showSelectionIcon: self.isEditing)
 			}
 			return libraryBaseCollectionViewCell
 		}
