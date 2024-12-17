@@ -15,7 +15,7 @@ class ScheduleCollectionViewController: KCollectionViewController {
 	var week: Int = 0
 	var schedules: [Schedule] = [] {
 		didSet {
-			self.reloadView()
+//			self.reloadView()
 
 			self._prefersActivityIndicatorHidden = true
 
@@ -69,10 +69,10 @@ class ScheduleCollectionViewController: KCollectionViewController {
 		self._prefersRefreshControlDisabled = true
 		#endif
 
-		self.configureTabBarView()
-		self.configureToolbar()
-		self.configureViewHierarchy()
-		self.configureViewConstraints()
+//		self.configureTabBarView()
+//		self.configureToolbar()
+//		self.configureViewHierarchy()
+//		self.configureViewConstraints()
 		self.configureDataSource()
 
 		// Fetch schedule details.
