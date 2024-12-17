@@ -52,12 +52,11 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 
 		// Configure broadcast label
 		self.broadcastLabel.text = ""
-		if scheduleIsShown {
 			if show?.attributes.status.name == "Currently Airing",
 			   let broadcastDate = show?.attributes.broadcastDate {
+		   let nextBroadcastAt = show?.attributes.nextBroadcastAt {
 
-				self.broadcastLabel.startCountdown(to: broadcastDate, duration: show?.attributes.durationCount ?? 0)
-			}
+			self.broadcastLabel.startCountdown(to: nextBroadcastAt, duration: show?.attributes.durationCount ?? 0)
 		}
 	}
 

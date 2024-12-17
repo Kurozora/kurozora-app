@@ -356,8 +356,8 @@ extension ShowDetail {
 			switch self {
 			case .broadcast:
 				guard show.attributes.endedAt == nil else { return nil }
-				guard let broadcastDate = show.attributes.broadcastDate else { return nil }
-				return broadcastDate.formatted(.relative(presentation: .named, unitsStyle: .abbreviated))
+				guard let nextBroadcastAt = show.attributes.nextBroadcastAt else { return nil }
+				return nextBroadcastAt.formatted(.relative(presentation: .named, unitsStyle: .abbreviated))
 			default: return nil
 			}
 		}
@@ -414,7 +414,7 @@ extension ShowDetail {
 				return "With a total of \(show.attributes.durationTotal)."
 			case .broadcast:
 				guard show.attributes.endedAt == nil else { return "The broadcasting of this series has ended." }
-				guard show.attributes.broadcastDate == nil else { return nil }
+				guard show.attributes.nextBroadcastAt == nil else { return nil }
 				return "No broadcast data available at the moment."
 			case .airDates:
 				guard self.secondaryInformation(from: show) == nil else { return nil }

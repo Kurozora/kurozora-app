@@ -31,8 +31,8 @@ class LibraryListCollectionViewCell: LibraryBaseCollectionViewCell {
 		self.estimatedAiringLabel.text = ""
 
 		if show.attributes.status.name == "Currently Airing",
-		   let broadcastDate = show.attributes.broadcastDate {
-			self.estimatedAiringLabel.startCountdown(to: broadcastDate, duration: show.attributes.durationCount)
+		   let nextBroadcastAt = show.attributes.nextBroadcastAt {
+			self.estimatedAiringLabel.startCountdown(to: nextBroadcastAt, duration: show.attributes.durationCount)
 		}
 	}
 
