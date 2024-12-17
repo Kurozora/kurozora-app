@@ -11,6 +11,7 @@ import KurozoraKit
 
 class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	// MARK: - IBOutlets
+	@IBOutlet weak var timeLabel: KSecondaryLabel!
 	@IBOutlet weak var broadcastLabel: BroadcastLabel!
 	@IBOutlet weak var scoreLabel: KTintedLabel!
 	@IBOutlet weak var scoreView: KCosmosView!
@@ -28,6 +29,7 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	override func prepareForReuse() {
 		super.prepareForReuse()
 
+		self.timeLabel.text = ""
 		self.broadcastLabel.stopCountdown()
 		self.broadcastLabel.text = ""
 	}
@@ -50,11 +52,17 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.posterImageView?.layer.mask = nil
 		self.posterImageOverlay.isHidden = true
 
-		// Configure broadcast label
+		// Configure time label
+		self.timeLabel.font = UIFont.preferredFont(forTextStyle: .footnote).bold
+
+		// Configure broadcast
+		self.timeLabel.text = ""
 		self.broadcastLabel.text = ""
-			if show?.attributes.status.name == "Currently Airing",
-			   let broadcastDate = show?.attributes.broadcastDate {
+		if scheduleIsShown,
 		   let nextBroadcastAt = show?.attributes.nextBroadcastAt {
+			let dateFormatter = DateFormatter()
+			dateFormatter.dateFormat = "HH:mm"
+			self.timeLabel.text = dateFormatter.string(from: nextBroadcastAt)
 
 			self.broadcastLabel.startCountdown(to: nextBroadcastAt, duration: show?.attributes.durationCount ?? 0)
 		}
@@ -79,14 +87,19 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.posterImageView?.layer.mask = self.literatureMask
 		self.posterImageOverlay.isHidden = false
 
-		// Configure broadcast label
-		self.broadcastLabel.text = ""
-		if scheduleIsShown {
-			if literature?.attributes.status.name == "Currently Publishing",
-			   let publicationDate = literature?.attributes.publicationDate {
+		// Configure time label
+		self.timeLabel.font = UIFont.preferredFont(forTextStyle: .footnote).bold
 
-				self.broadcastLabel.startCountdown(to: publicationDate, duration: literature?.attributes.durationCount ?? 0)
-			}
+		// Configure broadcast
+		self.timeLabel.text = ""
+		self.broadcastLabel.text = ""
+		if scheduleIsShown,
+		   let publicationDate = literature?.attributes.publicationDate {
+			let dateFormatter = DateFormatter()
+			dateFormatter.dateFormat = "HH:mm zzz"
+			self.timeLabel.text = dateFormatter.string(from: publicationDate)
+
+			self.broadcastLabel.startCountdown(to: publicationDate, duration: literature?.attributes.durationCount ?? 0)
 		}
 	}
 

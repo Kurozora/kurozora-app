@@ -11,6 +11,7 @@ import KurozoraKit
 
 class GameLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	// MARK: - IBOutlets
+	@IBOutlet weak var timeLabel: KSecondaryLabel!
 	@IBOutlet weak var broadcastLabel: BroadcastLabel!
 	@IBOutlet weak var scoreLabel: KTintedLabel!
 	@IBOutlet weak var scoreView: KCosmosView!
@@ -19,6 +20,7 @@ class GameLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	override func prepareForReuse() {
 		super.prepareForReuse()
 
+		self.timeLabel.text = ""
 		self.broadcastLabel.stopCountdown()
 		self.broadcastLabel.text = ""
 	}
@@ -39,13 +41,19 @@ class GameLockupCollectionViewCell: BaseLockupCollectionViewCell {
 
 		self.posterImageView?.applyCornerRadius(18.0)
 
-		self.broadcastLabel.text = ""
-		if scheduleIsShown {
-			if game?.attributes.status.name == "Currently Publishing",
-			   let publicationDate = game?.attributes.publicationDate {
+		// Configure time label
+		self.timeLabel.font = UIFont.preferredFont(forTextStyle: .footnote).bold
 
-				self.broadcastLabel.startCountdown(to: publicationDate, duration: game?.attributes.durationCount ?? 0)
-			}
+		// Configure broadcast
+		self.timeLabel.text = ""
+		self.broadcastLabel.text = ""
+		if scheduleIsShown,
+		   let publicationDate = game?.attributes.publicationDate {
+			let dateFormatter = DateFormatter()
+			dateFormatter.dateFormat = "HH:mm zzz"
+			self.timeLabel.text = dateFormatter.string(from: publicationDate)
+
+			self.broadcastLabel.startCountdown(to: publicationDate, duration: game?.attributes.durationCount ?? 0)
 		}
 	}
 
