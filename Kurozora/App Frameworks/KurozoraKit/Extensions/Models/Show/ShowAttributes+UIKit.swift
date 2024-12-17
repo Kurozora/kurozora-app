@@ -58,12 +58,6 @@ extension Show.Attributes {
 		return informationString
 	}
 
-	/// Returns the date the show will be broadcasted on.
-	var broadcastDate: Date? {
-		guard let airDay = self.airDay, let airTime = airTime else { return nil }
-		return Date(from: "\(airDay) at \(airTime)")
-	}
-
 	// MARK: - Functions
 	/// Set the poster.
 	///
