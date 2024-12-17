@@ -169,7 +169,9 @@ class ScheduleCollectionViewController: KCollectionViewController {
 	func fetchDetails() async {
 		do {
 			let scheduleResponse = try await KService.getSchedule(for: .shows, in: Date.now).value
-			self.schedules = scheduleResponse.data
+			self.schedules = scheduleResponse.data.sorted { schedule1, schedule2 in
+				schedule1.attributes.date < schedule2.attributes.date
+			}
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
