@@ -100,11 +100,20 @@ extension Literature {
 		/// The literature's last publication date.
 		public let endedAt: Date?
 
+		/// The literature's next publication date.
+		public let nextPublicationAt: Date?
+
 		/// The literature's duration.
 		public let duration: String
 
+		/// The literature's duration in seconds.
+		public let durationCount: Int
+
 		/// The literature's calculated total duration.
 		public let durationTotal: String
+
+		/// The literature's calculated total duration in seconds.
+		public let durationTotalCount: Int
 
 		/// The season the literature has published in.
 		public let publicationSeason: String?

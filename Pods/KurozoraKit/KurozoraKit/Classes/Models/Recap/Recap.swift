@@ -14,7 +14,6 @@ public class Recap: IdentityResource, Hashable {
 
 	public let href: String
 
-	// MARK: - Properties
 	/// The attributes belonging to the show.
 	public var attributes: Recap.Attributes
 

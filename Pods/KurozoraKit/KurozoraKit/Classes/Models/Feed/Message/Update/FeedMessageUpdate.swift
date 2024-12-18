@@ -23,6 +23,9 @@ public struct FeedMessageUpdate: Codable {
 	/// Whether the feed message is locked.
 	public let isNSFW: Bool?
 
+	/// Whether the feed message is pinned.
+	public let isPinned: Bool
+
 	/// Whether the feed message is spoiler.
 	public let isSpoiler: Bool?
 }

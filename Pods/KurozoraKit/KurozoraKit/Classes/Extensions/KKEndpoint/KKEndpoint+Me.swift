@@ -171,7 +171,7 @@ extension KKEndpoint.Me {
 		case index
 
 		/// The endpoint to the details of a recap page.
-		case details(_ year: String)
+		case details(_ year: String, _ month: String)
 
 		// MARK: - Properties
 		/// The endpoint value of the Recap API type.
@@ -179,8 +179,8 @@ extension KKEndpoint.Me {
 			switch self {
 			case .index:
 				return "me/recap"
-			case .details(let year):
-				return "me/recap/\(year)"
+			case .details(let year, let month):
+				return "me/recap/\(year)/\(month)"
 			}
 		}
 	}

@@ -31,4 +31,7 @@ public struct Media: Codable {
 
 	/// The quaternary text color of the media.
 	public let textColor4: String?
+
+	/// The relationships belonging to the media.
+	public let relationships: Media.Relationships?
 }

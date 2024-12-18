@@ -25,7 +25,7 @@ extension RecapItem {
 		public let totalPartsDuration: Int
 
 		/// The top percentile of the recap type.
-		public let topPercentile: String
+		public let topPercentile: Double
 	}
 }
 

@@ -114,11 +114,20 @@ extension Show {
 		/// The show's last air date.
 		public let endedAt: Date?
 
+		/// The show's next broadcast date.
+		public let nextBroadcastAt: Date?
+
 		/// The show's duration.
 		public let duration: String
 
+		/// The show's duration in seconds.
+		public let durationCount: Int
+
 		/// The show's calculated total duration.
 		public let durationTotal: String
+
+		/// The show's calculated total duration in seconds.
+		public let durationTotalCount: Int
 
 		/// The season the show has aired in.
 		public let airSeason: String?

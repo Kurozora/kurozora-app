@@ -31,10 +31,10 @@ extension Song {
 		public let artwork: Media?
 
 		/// The original title of the song.
-		public let originalTitle: String
+		public let originalTitle: String?
 
 		/// The localized title of the song.
-		public let title: String?
+		public let title: String
 
 		/// The original lyrics of the song.
 		public let originalLyrics: String?

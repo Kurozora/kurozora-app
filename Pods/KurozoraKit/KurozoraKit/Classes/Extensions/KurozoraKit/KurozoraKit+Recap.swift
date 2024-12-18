@@ -30,15 +30,16 @@ extension KurozoraKit {
 	///
 	/// - Parameters:
 	///    - year: The year for which the recaps are fetched.
+	///    - month: The month for which the recaps are fetched.
 	///
 	/// - Returns: An instance of `RequestSender` with the results of the get recap item response.
-	public func getRecap(for year: String) -> RequestSender<RecapItemResponse, KKAPIError> {
+	public func getRecap(for year: String, month: String) -> RequestSender<RecapItemResponse, KKAPIError> {
 		// Prepare headers
 		var headers = self.headers
 		headers.add(.authorization(bearerToken: self.authenticationKey))
 
 		// Prepare request
-		let recapDetails = KKEndpoint.Me.Recap.details(year).endpointValue
+		let recapDetails = KKEndpoint.Me.Recap.details(year, month).endpointValue
 		let request: APIRequest<RecapItemResponse, KKAPIError> = tron.codable.request(recapDetails).buildURL(.relativeToBaseURL)
 			.method(.get)
 			.headers(headers)

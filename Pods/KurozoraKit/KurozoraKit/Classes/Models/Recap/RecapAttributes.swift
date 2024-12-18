@@ -12,6 +12,9 @@ extension Recap {
 		/// The year of the recap.
 		public let year: Int
 
+		/// The month of the recap.
+		public let month: Int
+
 		/// The description of the recap.
 		public let description: String?
 

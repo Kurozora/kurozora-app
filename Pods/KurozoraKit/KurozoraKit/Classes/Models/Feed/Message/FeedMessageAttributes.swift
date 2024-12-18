@@ -24,6 +24,12 @@ extension FeedMessage {
 		/// Whether the feed message is hearted by the authenticated user.
 		public var isHearted: Bool?
 
+		/// Whether the feed message is NSFW.
+		public var isNSFW: Bool
+
+		/// Whether the feed message is pinned.
+		public var isPinned: Bool
+
 		/// Whether the feed message is a reply.
 		public let isReply: Bool
 
@@ -32,9 +38,6 @@ extension FeedMessage {
 
 		/// Whether the feed message is a re-shared by the authenticated user.
 		public let isReShared: Bool
-
-		/// Whether the feed message is NSFW.
-		public var isNSFW: Bool
 
 		/// Whether the feed message is spoiler.
 		public var isSpoiler: Bool
@@ -56,6 +59,7 @@ extension FeedMessage.Attributes {
 		self.contentMarkdown = feedMessageUpdate.contentMarkdown ?? self.contentMarkdown
 		self.isNSFW = feedMessageUpdate.isNSFW ?? self.isNSFW
 		self.isSpoiler = feedMessageUpdate.isSpoiler ?? self.isSpoiler
+		self.isPinned = feedMessageUpdate.isPinned ?? self.isPinned
 
 		if let isHearted = feedMessageUpdate.isHearted {
 			self.isHearted = isHearted

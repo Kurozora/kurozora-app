@@ -233,13 +233,32 @@ extension KKEndpoint {
 	}
 }
 
+// MARK: - Schedule
+extension KKEndpoint {
+	/// The set of available Schedule API endpoints types.
+	internal enum Schedule {
+		// MARK: - Cases
+		/// The endpoint to the schedule page.
+		case index
+
+		// MARK: - Properties
+		/// The endpoint value of the Schedule API type.
+		var endpointValue: String {
+			switch self {
+			case .index:
+				return "schedule"
+			}
+		}
+	}
+}
+
 // MARK: - Shows
 extension KKEndpoint {
 	/// The set of available Shows API endpoints types.
 	internal enum Shows {
 		// MARK: - Cases
 		/// The endpoint to the index of shows.
-		case index
+		case index(_ showIdentities: [ShowIdentity])
 
 		/// The endpoint to the details of a show.
 		case details(_ showIdentity: ShowIdentity)
@@ -287,8 +306,12 @@ extension KKEndpoint {
 		/// The endpoint value of the Shows API type.
 		var endpointValue: String {
 			switch self {
-			case .index:
-				return "anime"
+			case .index(let showIdentities):
+				if showIdentities.isEmpty {
+					return "anime"
+				} else {
+					return "anime/\(showIdentities.map { $0.id }.joined(separator: ","))"
+				}
 			case .details(let showIdentity):
 				return "anime/\(showIdentity.id)"
 			case .cast(let showIdentity):

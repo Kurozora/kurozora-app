@@ -45,7 +45,7 @@ extension KurozoraKit {
 		}
 
 		// Prepare request
-		let searchIndex = next ?? KKEndpoint.Shows.index.endpointValue
+		let searchIndex = next ?? KKEndpoint.Shows.index([]).endpointValue
 		let request: APIRequest<ShowIdentityResponse, KKAPIError> = tron.codable.request(searchIndex).buildURL(.relativeToBaseURL)
 			.method(.get)
 			.parameters(parameters)
@@ -77,6 +77,37 @@ extension KurozoraKit {
 
 		// Prepare request
 		let showsDetails = KKEndpoint.Shows.details(showIdentity).endpointValue
+		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(showsDetails)
+			.method(.get)
+			.parameters(parameters)
+			.headers(headers)
+
+		// Send request
+		return request.sender()
+	}
+
+	///	Fetch the show details for the given show identities.
+	///
+	///	- Parameters:
+	///	   - showIdentities: The identity of the show for which the details should be fetched.
+	///	   - relationships: The relationships to include in the response.
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the get show detail response.
+	public func getDetails(forShows showIdentities: [ShowIdentity], including relationships: [String] = []) -> RequestSender<ShowResponse, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
+		if !self.authenticationKey.isEmpty {
+			headers.add(.authorization(bearerToken: self.authenticationKey))
+		}
+
+		// Prepare parameters
+		var parameters: [String: Any] = [:]
+		if !relationships.isEmpty {
+			parameters["include"] = relationships.joined(separator: ",")
+		}
+
+		// Prepare request
+		let showsDetails = KKEndpoint.Shows.index(showIdentities).endpointValue
 		let request: APIRequest<ShowResponse, KKAPIError> = tron.codable.request(showsDetails)
 			.method(.get)
 			.parameters(parameters)

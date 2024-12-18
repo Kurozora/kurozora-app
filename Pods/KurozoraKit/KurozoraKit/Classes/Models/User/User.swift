@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a user resource.
-public struct User: IdentityResource, Hashable {
+public class User: IdentityResource, Hashable {
 	// MARK: - Properties
 	public let id: String
 
@@ -59,7 +59,7 @@ extension User {
 	/// Updates the user with the given details.
 	///
 	/// - Parameter userDetails: The details used to update the current user's details.
-	internal mutating func updateDetails(with userDetails: User) {
+	internal func updateDetails(with userDetails: User) {
 		self.attributes.profile = userDetails.attributes.profile
 		self.attributes.banner = userDetails.attributes.banner
 		self.attributes.biography = userDetails.attributes.biography
