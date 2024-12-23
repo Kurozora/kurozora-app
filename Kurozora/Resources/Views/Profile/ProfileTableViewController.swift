@@ -748,12 +748,8 @@ class ProfileTableViewController: KTableViewController {
 
 // MARK: - UITableViewDataSource
 extension ProfileTableViewController {
-	override func numberOfSections(in tableView: UITableView) -> Int {
-		return self.feedMessages.count
-	}
-
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 1
+		return self.feedMessages.count
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
