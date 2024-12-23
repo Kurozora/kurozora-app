@@ -114,8 +114,8 @@ class FeedTableViewController: KTableViewController {
 	/// - Parameter indexPath: The index path of the message to be deleted.
 	func deleteMessage(at indexPath: IndexPath) {
 		self.tableView.performBatchUpdates({
-			self.feedMessages.remove(at: indexPath.section)
-			self.tableView.deleteSections([indexPath.section], with: .automatic)
+			self.feedMessages.remove(at: indexPath.row)
+			self.tableView.deleteRows(at: [indexPath], with: .automatic)
 		}, completion: nil)
 	}
 

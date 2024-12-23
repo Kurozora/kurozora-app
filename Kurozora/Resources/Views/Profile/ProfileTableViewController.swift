@@ -304,8 +304,8 @@ class ProfileTableViewController: KTableViewController {
 			// Start delete process
 			self.tableView.performBatchUpdates({
 				if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
-					self.feedMessages.remove(at: indexPath.section)
-					self.tableView.deleteSections([indexPath.section], with: .automatic)
+					self.feedMessages.remove(at: indexPath.row)
+					self.tableView.deleteRows(at: [indexPath], with: .automatic)
 				}
 			}, completion: nil)
 		}
