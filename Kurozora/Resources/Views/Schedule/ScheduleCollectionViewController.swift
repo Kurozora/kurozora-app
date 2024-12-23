@@ -34,10 +34,6 @@ class ScheduleCollectionViewController: KCollectionViewController {
 	var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
 
-	var shows: [IndexPath: Show] = [:]
-	var literatures: [IndexPath: Literature] = [:]
-	var games: [IndexPath: Game] = [:]
-
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
 		didSet {
@@ -169,9 +165,7 @@ class ScheduleCollectionViewController: KCollectionViewController {
 	func fetchDetails() async {
 		do {
 			let scheduleResponse = try await KService.getSchedule(for: .shows, in: Date.now).value
-			self.schedules = scheduleResponse.data.sorted { schedule1, schedule2 in
-				schedule1.attributes.date < schedule2.attributes.date
-			}
+			self.schedules = scheduleResponse.data
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
