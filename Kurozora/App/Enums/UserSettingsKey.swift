@@ -23,6 +23,8 @@ enum UserSettingsKey: String {
 	case sessionActionsCount
 
 	// App customization keys
+	/// The key to the selected animation.
+	case currentAnimation
 	/// The key to the selected theme.
 	case currentTheme
 	/// The key to the selected app icon.
