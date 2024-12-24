@@ -16,14 +16,14 @@ class KWhatsNew {
 
 	/// Features of version 1.11.0 of the app.
 	static var v111: [WhatsNewItem] = [
-		.image(title: "Cozy Cocoa", subtitle: "Bring festive cheer to your home screen with the Christmas Kuro-chan app icon, and Can D. Cane premium theme.", image: R.image.icons.gift()!),
+		.image(title: "Cozy Cocoa", subtitle: "Bring festive cheer to your home screen with the Christmas『Kuro-chan』app icon, and『Can D. Cane』premium theme.", image: R.image.icons.gift()!),
 		.image(title: "Sticker Wonderland", subtitle: "Added 6 new Kuro-chan stickers for a total of 24. Spread joy while messaging!", image: R.image.icons.kuroChanStickerSignal()!),
 		.image(title: "New Re:CAP Design", subtitle: "A refreshed look to better reflect your year-end memories.", image: R.image.icons.session()!),
 		.image(title: "Your Schedule Awaits", subtitle: "Introducing the new Schedule view for quick access to daily episodes and releases.", image: R.image.icons.calendar()!),
 		.image(title: "Fresh Feed", subtitle: "A revamped feed design to keep your updates looking polished and sleek.", image: R.image.icons.personCropCircle()!),
 		.image(title: "Profile Makeover", subtitle: "Edit your username, bio, banner, and more with the redesigned Profile Edit page.", image: R.image.icons.personCropCircleGear()!),
 		.image(title: "Quick Access", subtitle: "Tapping the Date widget now takes you straight to the title’s details page.", image: R.image.icons.widget()!),
-		.image(title: "Seamless Sign-Ins", subtitle: "Actions requiring login are now performed automatically after you sign in.", image: R.image.icons.faceID()!),
+		.image(title: "Seamless Sign-Ins", subtitle: "Actions requiring login are now performed automatically after you sign in.", image: R.image.icons.faceid()!),
 		.image(title: "Bug Fixes", subtitle: "Poured a cup of hot cocoa on those pesky bugs, resolving issues like deep links opening without a close button, the 'Go to Last Watched' episode feature misbehaving, separator theming in badge sections, and more. Your experience should now be smoother than ever!", image: R.image.icons.bug()!)
 	]
 
