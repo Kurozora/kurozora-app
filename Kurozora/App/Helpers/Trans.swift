@@ -21,9 +21,9 @@ struct Trans {
 	/// The subheadline string for signing up.
 	///
 	/// - Tag: Trans-signUpSubheadline
-		static let signUpSubheadline: String = String(localized: "Create an account and join the community.",
-													  table: "Onboarding",
-													  comment: "")
+	static let signUpSubheadline: String = String(localized: "Create an account and join the community.",
+												  table: "Onboarding",
+												  comment: "")
 	/// The button string for signing up.
 	///
 	/// - Tag: Trans-signUpButton
@@ -44,7 +44,7 @@ struct Trans {
 	///
 	/// - Tag: Trans-signUpErrorAlertHeadline
 	static let signUpErrorAlertHeadline: String = String(localized: "Can't Sign Up 😔",
-																 comment: "The headline string for sign up alert.")
+														 comment: "The headline string for sign up alert.")
 	/// The headline string for signing in.
 	///
 	/// - Tag: Trans-signInHeadline
@@ -744,7 +744,7 @@ struct Trans {
 	/// The footer string for the haptics settings option.
 	///
 	/// - Tag: Trans-hapticsFooter
-	static let hapticsFooter: String = String(localized: "Turning off haptics will only affect custom haptics. Default system controls, like the switches above, will still have a haptic feedback. You can disable all haptics in the System app.",
+	static let hapticsFooter: String = String(localized: "Turning off haptics will only affect custom haptics. Default system controls, like the switches above, will still have a haptic feedback. You can disable all haptics in the Settings app.",
 											  table: "Sounds & Haptics",
 											  comment: "The footer string for the haptics settings option.")
 
@@ -1029,6 +1029,11 @@ struct Trans {
 	/// - Tag: Trans-stickers
 	static let stickers: String = String(localized: "Stickers",
 										 comment: "The string for the word 'stickers'.")
+	/// The string for the word 'security'.
+	///
+	/// - Tag: Trans-security
+	static let security: String = String(localized: "Security",
+										 comment: "The string for the word 'security'.")
 	/// The string for the word 'support us'.
 	///
 	/// - Tag: Trans-supportUs
@@ -1049,6 +1054,11 @@ struct Trans {
 	/// - Tag: Trans-icon
 	static let icon: String = String(localized: "Icon",
 									 comment: "The string for the word 'icon'.")
+	/// The string for the word 'motion'.
+	///
+	/// - Tag: Trans-motion
+	static let motion: String = String(localized: "Motion",
+									   comment: "The string for the word 'motion'.")
 	/// The string for the word 'browser'.
 	///
 	/// - Tag: Trans-browser
@@ -1098,7 +1108,7 @@ struct Trans {
 	///
 	/// - Tag: Trans-schedule
 	static let schedule: String = String(localized: "Schedule",
-										comment: "The string for the word 'schedule'.")
+										 comment: "The string for the word 'schedule'.")
 	/// The string for the word 'feed'.
 	///
 	/// - Tag: Trans-feed
@@ -1203,7 +1213,7 @@ struct Trans {
 	///
 	/// - Tag: Trans-preview
 	static let preview: String = String(localized: "Previw",
-									 comment: "The string for the word 'preview'.")
+										comment: "The string for the word 'preview'.")
 	/// The string for the word 'play'.
 	///
 	/// - Tag: Trans-play
@@ -1263,7 +1273,7 @@ struct Trans {
 	///
 	/// - Tag: Trans-country
 	static let country: String = String(localized: "Country",
-										 comment: "The string for the word 'country'.")
+										comment: "The string for the word 'country'.")
 	/// The string for the word 'tv rating'.
 	///
 	/// - Tag: Trans-tvRating
@@ -1293,7 +1303,7 @@ struct Trans {
 	///
 	/// - Tag: Trans-successor
 	static let successor: String = String(localized: "Successor",
-									   comment: "The string for the word 'successor'.")
+										  comment: "The string for the word 'successor'.")
 	/// The string for the word 'cast'.
 	///
 	/// - Tag: Trans-cast
