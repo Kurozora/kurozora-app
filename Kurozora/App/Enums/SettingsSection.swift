@@ -37,6 +37,9 @@ extension SettingsTableViewController {
 		/// The section representing the stickers group of cells.
 		case stickers
 
+		/// The section representing the security group of cells.
+		case security
+
 		/// The section representing the support group of cells.
 		case support
 
@@ -55,7 +58,7 @@ extension SettingsTableViewController {
 			sections.append(.debug)
 			#endif
 
-			sections.append(contentsOf: [.alerts, .general, .support, .stickers, .social, .about])
+			sections.append(contentsOf: [.general, .alerts, .stickers, .security, .support, .social, .about])
 			return sections
 		}
 
@@ -72,6 +75,8 @@ extension SettingsTableViewController {
 				return Row.allGeneral
 			case .stickers:
 				return Row.allStickers
+			case .security:
+				return Row.allSecurity
 			case .support:
 				return Row.allSupport
 			case .social:
@@ -94,6 +99,8 @@ extension SettingsTableViewController {
 				return Trans.general
 			case .stickers:
 				return Trans.stickers
+			case .security:
+				return Trans.security
 			case .support:
 				return Trans.supportUs
 			case .social:
@@ -116,35 +123,32 @@ extension SettingsTableViewController {
 		/// The row representing the keychain cell.
 		case keychain
 
-		/// The row representing the notifications cell.
-		case notifications
-
-		/// The row representing the sounds and haptics cell.
-		case soundsAndHaptics
-
-		/// The row representing the reminder cell.
-		case reminder
-
-		/// The row representing the display and blindness cell.
-		case displayBlindness
-
-		/// The row representing the theme cell.
-		case theme
-
-		/// The row representing the icon cell.
-		case icon
-
 		/// The row representing the browser cell.
 		case browser
-
-		/// The row representing the biometrics cell.
-		case biometrics
 
 		/// The row representing the cache cell.
 		case cache
 
-		/// The row representing the privacy cell.
-		case privacy
+		/// The row representing the display and blindness cell.
+		case displayBlindness
+
+		/// The row representing the icon cell.
+		case icon
+
+		/// The row representing the motion cell.
+		case motion
+
+		/// The row representing the theme cell.
+		case theme
+
+		/// The row representing the notifications cell.
+		case notifications
+
+		/// The row representing the reminder cell.
+		case reminder
+
+		/// The row representing the sounds and haptics cell.
+		case soundsAndHaptics
 
 		/// The row representing the Signal sticker cell.
 		case signalSticker
@@ -154,6 +158,12 @@ extension SettingsTableViewController {
 
 //		/// The row representing the WhatsApp sticker cell.
 //		case whatsAppSticker
+
+		/// The row representing the biometrics cell.
+		case biometrics
+
+		/// The row representing the privacy cell.
+		case privacy
 
 		/// The row representing the unlock features cell.
 		case unlockFeatures
@@ -187,10 +197,10 @@ extension SettingsTableViewController {
 
 		#if DEBUG
 		/// An array containing all settings rows.
-		static let all: [Row] = [.account, .switchAccount, .keychain, .notifications, .soundsAndHaptics, .reminder, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .signalSticker, .telegramSticker, .unlockFeatures, .tipjar, .restoreFeatures, .rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter]
+		static let all: [Row] = [.account, .switchAccount, .keychain, .notifications, .reminder, .soundsAndHaptics, .browser, .cache, .displayBlindness, .icon, .motion, .theme, .biometrics, .privacy, .signalSticker, .telegramSticker, .unlockFeatures, .tipjar, .restoreFeatures, .rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter]
 		#else
 		/// An array containing all normal user settings rows.
-		static let all: [Row] = [.account, .switchAccount, .notifications, .soundsAndHaptics, .reminder, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .signalSticker, .telegramSticker, .unlockFeatures, .tipjar, .restoreFeatures, .rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter]
+		static let all: [Row] = [.account, .switchAccount, .notifications, .reminder, .soundsAndHaptics, .browser, .cache, .displayBlindness, .icon, .motion, .theme, .biometrics, .privacy, .signalSticker, .telegramSticker, .unlockFeatures, .tipjar, .restoreFeatures, .rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter]
 		#endif
 
 		/// An array containing all account section settings rows.
@@ -206,25 +216,19 @@ extension SettingsTableViewController {
 		static let allDebug: [Row] = [.keychain]
 
 		/// An array containing all alerts section settings rows.
-		static var allAlerts: [Row] = [.notifications, .soundsAndHaptics, .reminder]
+		static var allAlerts: [Row] = [.notifications, .reminder, .soundsAndHaptics]
 
 		/// An array containing all general section settings rows.
 		static var allGeneral: [Row] {
 			#if targetEnvironment(macCatalyst)
-			return [.displayBlindness, .theme, .biometrics, .cache, .privacy]
+			return [.cache, .displayBlindness, .motion, .theme]
 			#else
-			return [.displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy]
+			return [.browser, .cache, .displayBlindness, .icon, .motion, .theme]
 			#endif
 		}
 
 		/// An array containing all general section settings rows.
-		static var allStickers: [Row] {
-			#if targetEnvironment(macCatalyst)
-			return [.signalSticker, .telegramSticker]
-			#else
-			return [.signalSticker, .telegramSticker]
-			#endif
-		}
+		static var allStickers: [Row] = [.signalSticker, .telegramSticker]
 
 		/// An array containing all support section settings rows.
 		static var allSupport: [Row] {
@@ -238,6 +242,9 @@ extension SettingsTableViewController {
 			}
 			#endif
 		}
+
+		/// An array containing all security section settings rows.
+		static let allSecurity: [Row] = [.biometrics, .privacy]
 
 		/// An array containing all social section settings rows.
 		static let allSocial: [Row] = [.rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter]
@@ -254,32 +261,34 @@ extension SettingsTableViewController {
 				return R.segue.settingsTableViewController.switchAccountSegue.identifier
 			case .keychain:
 				return R.segue.settingsTableViewController.keysSegue.identifier
-			case .notifications:
-				return R.segue.settingsTableViewController.notificationSegue.identifier
-			case .soundsAndHaptics:
-				return R.segue.settingsTableViewController.soundSegue.identifier
-			case .reminder:
+			case .browser:
+				return R.segue.settingsTableViewController.broswerSegue.identifier
+			case .cache:
 				return ""
 			case .displayBlindness:
 				return R.segue.settingsTableViewController.displaySegue.identifier
-			case .theme:
-				return R.segue.settingsTableViewController.themeSegue.identifier
 			case .icon:
 				return R.segue.settingsTableViewController.iconSegue.identifier
-			case .browser:
-				return R.segue.settingsTableViewController.broswerSegue.identifier
-			case .biometrics:
-				return R.segue.settingsTableViewController.biometricsSegue.identifier
-			case .cache:
+			case .motion:
+				return R.segue.settingsTableViewController.motionSegue.identifier
+			case .theme:
+				return R.segue.settingsTableViewController.themeSegue.identifier
+			case .notifications:
+				return R.segue.settingsTableViewController.notificationSegue.identifier
+			case .reminder:
 				return ""
-			case .privacy:
-				return R.segue.settingsTableViewController.privacySegue.identifier
+			case .soundsAndHaptics:
+				return R.segue.settingsTableViewController.soundSegue.identifier
 			case .signalSticker:
 				return ""
 			case .telegramSticker:
 				return ""
 //			case .whatsAppSticker:
 //				return ""
+			case .biometrics:
+				return R.segue.settingsTableViewController.biometricsSegue.identifier
+			case .privacy:
+				return R.segue.settingsTableViewController.privacySegue.identifier
 			case .unlockFeatures:
 				return R.segue.settingsTableViewController.subscriptionSegue.identifier
 			case .tipjar:
@@ -312,25 +321,23 @@ extension SettingsTableViewController {
 				return .chevron
 			case .keychain:
 				return .chevron
-			case .notifications:
-				return .chevron
-			case .soundsAndHaptics:
-				return .chevron
-			case .reminder:
-				return .none
-			case .displayBlindness:
-				return .chevron
-			case .theme:
-				return .chevron
-			case .icon:
-				return .chevron
 			case .browser:
-				return .chevron
-			case .biometrics:
 				return .chevron
 			case .cache:
 				return .label
-			case .privacy:
+			case .displayBlindness:
+				return .chevron
+			case .icon:
+				return .chevron
+			case .motion:
+				return .chevron
+			case .theme:
+				return .chevron
+			case .notifications:
+				return .chevron
+			case .reminder:
+				return .none
+			case .soundsAndHaptics:
 				return .chevron
 			case .signalSticker:
 				return .chevron
@@ -338,6 +345,10 @@ extension SettingsTableViewController {
 				return .chevron
 //			case .whatsAppSticker:
 //				return .chevron
+			case .biometrics:
+				return .chevron
+			case .privacy:
+				return .chevron
 			case .unlockFeatures:
 				return .chevron
 			case .tipjar:
@@ -370,45 +381,38 @@ extension SettingsTableViewController {
 				return Trans.switchAccount
 			case .keychain:
 				return Trans.keysManager
+			case .browser:
+				return Trans.browser
+			case .cache:
+				return Trans.cache
+			case .displayBlindness:
+				return Trans.displayBlindness
+			case .icon:
+				return Trans.icon
+			case .motion:
+				return Trans.motion
+			case .theme:
+				return Trans.theme
 			case .notifications:
 				return Trans.notifications
+			case .reminder:
+				return Trans.subscribeToReminders
 			case .soundsAndHaptics:
 				#if targetEnvironment(macCatalyst)
 				return Trans.sound
 				#else
 				return Trans.soundsAndHaptics
 				#endif
-			case .reminder:
-				return Trans.subscribeToReminders
-			case .displayBlindness:
-				return Trans.displayBlindness
-			case .theme:
-				return Trans.theme
-			case .icon:
-				return Trans.icon
-			case .browser:
-				return Trans.browser
-			case .biometrics:
-				switch UIDevice.supportedBiomtetric {
-				case .faceID:
-					return Trans.faceIDPasscode
-				case .touchID:
-					return Trans.touchIDPasscode
-				case .opticID:
-					return Trans.opticIDPasscode
-				default:
-					return Trans.passcode
-				}
-			case .cache:
-				return Trans.cache
-			case .privacy:
-				return Trans.privacy
 			case .signalSticker:
 				return Trans.addStickerToSignal
 			case .telegramSticker:
 				return Trans.addStickerToTelegram
 //			case .whatsAppStickers:
 //				return "Add Sticker to WhatsApp"
+			case .biometrics:
+				return UIDevice.supportedBiomtetric.localizedSettingsName
+			case .privacy:
+				return Trans.privacy
 			case .unlockFeatures:
 				return Trans.unlockFeatures
 			case .tipjar:
@@ -451,39 +455,34 @@ extension SettingsTableViewController {
 				return R.image.icons.accountSwitch()
 			case .keychain:
 				return R.image.icons.kDefaults()
-			case .notifications:
-				return R.image.icons.notifications()
-			case .soundsAndHaptics:
-				return R.image.icons.sound()
-			case .reminder:
-				return R.image.icons.reminder()
-			case .displayBlindness:
-				return R.image.icons.display()
-			case .theme:
-				return R.image.icons.theme()
-			case .icon:
-				return UIImage(named: UserSettings.appIcon)
 			case .browser:
 				return R.image.icons.browser()
-			case .biometrics:
-				switch UIDevice.supportedBiomtetric {
-				case .faceID:
-					return R.image.icons.faceID()
-				case .touchID:
-					return R.image.icons.touchID()
-				default:
-					return R.image.icons.lock()
-				}
 			case .cache:
 				return R.image.icons.clearCache()
-			case .privacy:
-				return R.image.icons.privacy()
+			case .displayBlindness:
+				return R.image.icons.display()
+			case .icon:
+				return UIImage(named: UserSettings.appIcon)
+			case .motion:
+				return R.image.icons.motion()
+			case .theme:
+				return R.image.icons.theme()
+			case .notifications:
+				return R.image.icons.notifications()
+			case .reminder:
+				return R.image.icons.reminder()
+			case .soundsAndHaptics:
+				return R.image.icons.sound()
 			case .signalSticker:
 				return R.image.icons.kuroChanStickerSignal()
 			case .telegramSticker:
 				return R.image.icons.kuroChanStickerTelegram()
 //			case .whatsAppSticker:
 //				return R.image.icons.kuroChanStickerWhatsApp()
+			case .biometrics:
+				return UIDevice.supportedBiomtetric.imageValue
+			case .privacy:
+				return R.image.icons.privacy()
 			case .unlockFeatures:
 				return R.image.icons.unlock()
 			case .tipjar:
