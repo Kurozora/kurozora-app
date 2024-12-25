@@ -92,6 +92,14 @@ class IconTableViewCell: SelectableSettingsCell {
 		}
 	}
 
+	func configureCell(using animation: SplashScreenAnimation) {
+		self.primaryLabel?.text = animation.titleValue
+		self.iconImageView?.image = UIImage(systemName: "play.circle")
+		self.iconImageView?.preferredSymbolConfiguration = nil
+		self.iconImageView?.contentMode = .center
+		self.iconImageView?.layerCornerRadius = 0.0
+	}
+
 	fileprivate func startColorCycling() {
 		self.colorCycleTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
 			guard let self = self else { return }
