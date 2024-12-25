@@ -220,7 +220,7 @@ extension UIDevice {
 extension UIDevice {
 	// MARK: - Properties
 	/// The type of biometric the current device supports.
-	static let supportedBiomtetric: LABiometryType = {
+	static let supportedBiometric: LABiometryType = {
 		let context = LAContext()
 		var error: NSError?
 

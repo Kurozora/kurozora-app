@@ -410,7 +410,7 @@ extension SettingsTableViewController {
 //			case .whatsAppStickers:
 //				return "Add Sticker to WhatsApp"
 			case .biometrics:
-				return UIDevice.supportedBiomtetric.localizedSettingsName
+				return UIDevice.supportedBiometric.localizedSettingsName
 			case .privacy:
 				return Trans.privacy
 			case .unlockFeatures:
@@ -480,7 +480,7 @@ extension SettingsTableViewController {
 //			case .whatsAppSticker:
 //				return R.image.icons.kuroChanStickerWhatsApp()
 			case .biometrics:
-				return UIDevice.supportedBiomtetric.imageValue
+				return UIDevice.supportedBiometric.imageValue
 			case .privacy:
 				return R.image.icons.privacy()
 			case .unlockFeatures:
