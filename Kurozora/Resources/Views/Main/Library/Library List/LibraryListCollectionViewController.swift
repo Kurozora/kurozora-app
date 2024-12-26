@@ -299,13 +299,13 @@ class LibraryListCollectionViewController: KCollectionViewController {
 			// Save next page url and append new data
 			self.nextPageURL = libraryResponse.next
 			if let shows = libraryResponse.data.shows {
-				self.shows.append(contentsOf: shows)
+				self.shows.appendDistinct(contentsOf: shows)
 			}
 			if let literatures = libraryResponse.data.literatures {
-				self.literatures.append(contentsOf: literatures)
+				self.literatures.appendDistinct(contentsOf: literatures)
 			}
 			if let games = libraryResponse.data.games {
-				self.games.append(contentsOf: games)
+				self.games.appendDistinct(contentsOf: games)
 			}
 		} catch {
 			print(error.localizedDescription)
