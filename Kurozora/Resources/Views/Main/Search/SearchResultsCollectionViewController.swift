@@ -384,31 +384,31 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 			} else if let searchType = types.first {
 				switch searchType {
 				case .characters:
-					self.characterNextPageURL = searchResponse.data.characters?.next ?? self.characterNextPageURL
+					self.characterNextPageURL = searchResponse.data.characters?.next
 					self.characterIdentities.appendDistinct(contentsOf: searchResponse.data.characters?.data ?? [])
 				case .episodes:
-					self.episodeNextPageURL = searchResponse.data.episodes?.next ?? self.episodeNextPageURL
+					self.episodeNextPageURL = searchResponse.data.episodes?.next
 					self.episodeIdentities.appendDistinct(contentsOf: searchResponse.data.episodes?.data ?? [])
 				case .games:
-					self.gameNextPageURL = searchResponse.data.games?.next ?? self.gameNextPageURL
+					self.gameNextPageURL = searchResponse.data.games?.next
 					self.gameIdentities.appendDistinct(contentsOf: searchResponse.data.games?.data ?? [])
 				case .literatures:
-					self.literatureNextPageURL = searchResponse.data.literatures?.next ?? self.literatureNextPageURL
+					self.literatureNextPageURL = searchResponse.data.literatures?.next
 					self.literatureIdentities.appendDistinct(contentsOf: searchResponse.data.literatures?.data ?? [])
 				case .people:
-					self.personNextPageURL = searchResponse.data.people?.next ?? self.personNextPageURL
+					self.personNextPageURL = searchResponse.data.people?.next
 					self.personIdentities.appendDistinct(contentsOf: searchResponse.data.people?.data ?? [])
 				case .shows:
-					self.showNextPageURL = searchResponse.data.shows?.next ?? self.showNextPageURL
+					self.showNextPageURL = searchResponse.data.shows?.next
 					self.showIdentities.appendDistinct(contentsOf: searchResponse.data.shows?.data ?? [])
 				case .songs:
-					self.songNextPageURL = searchResponse.data.songs?.next ?? self.songNextPageURL
+					self.songNextPageURL = searchResponse.data.songs?.next
 					self.songIdentities.appendDistinct(contentsOf: searchResponse.data.songs?.data ?? [])
 				case .studios:
-					self.studioNextPageURL = searchResponse.data.studios?.next ?? self.studioNextPageURL
+					self.studioNextPageURL = searchResponse.data.studios?.next
 					self.studioIdentities.appendDistinct(contentsOf: searchResponse.data.studios?.data ?? [])
 				case .users:
-					self.userNextPageURL = searchResponse.data.users?.next ?? self.userNextPageURL
+					self.userNextPageURL = searchResponse.data.users?.next
 					self.userIdentities.appendDistinct(contentsOf: searchResponse.data.users?.data ?? [])
 				}
 			}
