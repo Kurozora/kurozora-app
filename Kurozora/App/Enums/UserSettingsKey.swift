@@ -40,7 +40,7 @@ enum UserSettingsKey: String {
 	/// The key to the app review request count.
 	case reviewRequestCount
 
-	// Appearence settings keys
+	// Appearance settings keys
 	/// The key to the selected appearance option.
 	case appearanceOption
 	/// The key to the automatic dark theme option.
@@ -85,7 +85,7 @@ enum UserSettingsKey: String {
 	case notificationsGrouping
 	/// The key to the selected notification sound option.
 	case notificationsSound
-	/// The key to the selcted notification badge option.
+	/// The key to the selected notification badge option.
 	case notificationsBadge
 
 	// Sounds & Haptics settings keys
@@ -99,6 +99,6 @@ enum UserSettingsKey: String {
 	case hapticsAllowed
 
 	// Register for notification
-	/// The key to the last notifcation registration reuest time.
+	/// The key to the last notification registration reuest time.
 	case lastNotificationRegistrationRequest
 }
