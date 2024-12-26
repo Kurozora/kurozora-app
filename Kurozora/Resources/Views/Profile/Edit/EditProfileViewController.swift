@@ -122,9 +122,12 @@ class EditProfileViewController: KViewController {
 		self.usernameLabel.text = user.attributes.username
 		self.usernameLabel.isHidden = false
 
+		let canEditUsername = user.attributes.canChangeUsername ?? (user.attributes.isPro || user.attributes.isSubscribed)
 		self.usernameTextField.text = user.attributes.slug
 		self.usernameTextField.placeholder = user.attributes.slug
-		self.usernameTextField.isEnabled = user.attributes.canChangeUsername ?? (user.attributes.isPro || user.attributes.isSubscribed)
+		self.usernameTextField.isEnabled = canEditUsername
+		self.usernameTextField.clearButtonMode = canEditUsername ? .always : .never
+		self.usernameTextField.alpha = canEditUsername ? 1.0 : 0.5
 		self.usernameTextField.delegate = self
 
 		self.displayNameTextField.text = user.attributes.username
