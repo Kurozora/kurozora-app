@@ -106,7 +106,7 @@ extension UserSettings {
 	}
 }
 
-// MARK: - Appearence settings
+// MARK: - Appearance settings
 extension UserSettings {
 	/// Returns a boolean indicating if automatic dark theme is on.
 	static var appearanceOption: Int {
@@ -232,7 +232,7 @@ extension UserSettings {
 	}
 }
 
-// MARK: - Sounds & Haptcs Settings
+// MARK: - Sounds & Haptics Settings
 extension UserSettings {
 	/// Returns a string indicating the preferred chime sound.
 	static var selectedChime: String {
