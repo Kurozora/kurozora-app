@@ -63,6 +63,7 @@
 		6614AD412580033500039BFB /* ShowDetailsCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614AD402580033500039BFB /* ShowDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */; };
 		6614F57A2B93E0C300E8A895 /* KLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614F5792B93E0C300E8A895 /* KLinkView.swift */; };
 		66160C3B215C04B900D0D722 /* AccountTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66160C3A215C04B900D0D722 /* AccountTableViewController.swift */; };
+		6616C8362D1CCBE50015F627 /* Array+Element.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6616C8352D1CCBE50015F627 /* Array+Element.swift */; };
 		6617C8272A08710B0091EFAC /* Month.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6617C8262A08710B0091EFAC /* Month.swift */; };
 		6617C82A2A0C4BB60091EFAC /* SearchFilterModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6617C8292A0C4BB60091EFAC /* SearchFilterModels.swift */; };
 		6617C82C2A0FE0830091EFAC /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6617C82B2A0FE0830091EFAC /* SearchResults.swift */; };
@@ -884,6 +885,7 @@
 		6614AD402580033500039BFB /* ShowDetailsCollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShowDetailsCollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
 		6614F5792B93E0C300E8A895 /* KLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KLinkView.swift; sourceTree = "<group>"; };
 		66160C3A215C04B900D0D722 /* AccountTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTableViewController.swift; sourceTree = "<group>"; };
+		6616C8352D1CCBE50015F627 /* Array+Element.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Element.swift"; sourceTree = "<group>"; };
 		6617C8262A08710B0091EFAC /* Month.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Month.swift; sourceTree = "<group>"; };
 		6617C8292A0C4BB60091EFAC /* SearchFilterModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFilterModels.swift; sourceTree = "<group>"; };
 		6617C82B2A0FE0830091EFAC /* SearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResults.swift; sourceTree = "<group>"; };
@@ -2847,9 +2849,11 @@
 		668142DD245B4B7F008FC7BE /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				6616C8352D1CCBE50015F627 /* Array+Element.swift */,
 				66B2C740232F99440042AB12 /* Array+Kurozora.swift */,
 				66E54EC2244E1698007248EE /* Array+String.swift */,
 				667F9ADA21B57D5C003F6629 /* Date+Kurozora.swift */,
+				66208AC32A12E6C700783FD1 /* Double+Kurozora.swift */,
 				66E46DFE25055FEA009938E1 /* Int+Kurozora.swift */,
 				66973DF92311E4400097A9F8 /* Notification+Kurozora.swift */,
 				661DBC4E234947D7009292DF /* SKProduct+Kurozora.swift */,
@@ -2857,7 +2861,6 @@
 				6634735D23343D55006B7F99 /* String+Kurozora.swift */,
 				6699A1C023779E6800517C2C /* TimeInterval+String.swift */,
 				6646A26D236A54A700DCC0A4 /* URL+Kurozora.swift */,
-				66208AC32A12E6C700783FD1 /* Double+Kurozora.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -4846,6 +4849,7 @@
 				66AEABEF22993E9C00949FD8 /* NotificationsOptionsViewController.swift in Sources */,
 				66DF091326C7C1FB005AED93 /* Store.swift in Sources */,
 				66CBDD982464772200CA5F83 /* SecondarySeparatorView.swift in Sources */,
+				6616C8362D1CCBE50015F627 /* Array+Element.swift in Sources */,
 				664E2CEA289BEAF80002F886 /* UserNotificationType+Kurozora.swift in Sources */,
 				661049C022C0E42B00A2A354 /* DisplayTableViewController.swift in Sources */,
 				66AE1E1724A0F74900FD3FFC /* InformationButtonCollectionViewCell.swift in Sources */,
