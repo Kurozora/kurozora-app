@@ -360,15 +360,15 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 				self.studioNextPageURL = searchResponse.data.studios?.next ?? self.studioNextPageURL
 				self.userNextPageURL = searchResponse.data.users?.next ?? self.userNextPageURL
 
-				self.characterIdentities.append(contentsOf: searchResponse.data.characters?.data ?? [])
-				self.episodeIdentities.append(contentsOf: searchResponse.data.episodes?.data ?? [])
-				self.personIdentities.append(contentsOf: searchResponse.data.people?.data ?? [])
-				self.showIdentities.append(contentsOf: searchResponse.data.shows?.data ?? [])
-				self.literatureIdentities.append(contentsOf: searchResponse.data.literatures?.data ?? [])
-				self.gameIdentities.append(contentsOf: searchResponse.data.games?.data ?? [])
-				self.songIdentities.append(contentsOf: searchResponse.data.songs?.data ?? [])
-				self.studioIdentities.append(contentsOf: searchResponse.data.studios?.data ?? [])
-				self.userIdentities.append(contentsOf: searchResponse.data.users?.data ?? [])
+				self.characterIdentities.appendDistinct(contentsOf: searchResponse.data.characters?.data ?? [])
+				self.episodeIdentities.appendDistinct(contentsOf: searchResponse.data.episodes?.data ?? [])
+				self.personIdentities.appendDistinct(contentsOf: searchResponse.data.people?.data ?? [])
+				self.showIdentities.appendDistinct(contentsOf: searchResponse.data.shows?.data ?? [])
+				self.literatureIdentities.appendDistinct(contentsOf: searchResponse.data.literatures?.data ?? [])
+				self.gameIdentities.appendDistinct(contentsOf: searchResponse.data.games?.data ?? [])
+				self.songIdentities.appendDistinct(contentsOf: searchResponse.data.songs?.data ?? [])
+				self.studioIdentities.appendDistinct(contentsOf: searchResponse.data.studios?.data ?? [])
+				self.userIdentities.appendDistinct(contentsOf: searchResponse.data.users?.data ?? [])
 
 				// Determine search types
 				self.searchTypes = self.determineResultTypes()
@@ -385,31 +385,31 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 				switch searchType {
 				case .characters:
 					self.characterNextPageURL = searchResponse.data.characters?.next ?? self.characterNextPageURL
-					self.characterIdentities.append(contentsOf: searchResponse.data.characters?.data ?? [])
+					self.characterIdentities.appendDistinct(contentsOf: searchResponse.data.characters?.data ?? [])
 				case .episodes:
 					self.episodeNextPageURL = searchResponse.data.episodes?.next ?? self.episodeNextPageURL
-					self.episodeIdentities.append(contentsOf: searchResponse.data.episodes?.data ?? [])
+					self.episodeIdentities.appendDistinct(contentsOf: searchResponse.data.episodes?.data ?? [])
 				case .games:
 					self.gameNextPageURL = searchResponse.data.games?.next ?? self.gameNextPageURL
-					self.gameIdentities.append(contentsOf: searchResponse.data.games?.data ?? [])
+					self.gameIdentities.appendDistinct(contentsOf: searchResponse.data.games?.data ?? [])
 				case .literatures:
 					self.literatureNextPageURL = searchResponse.data.literatures?.next ?? self.literatureNextPageURL
-					self.literatureIdentities.append(contentsOf: searchResponse.data.literatures?.data ?? [])
+					self.literatureIdentities.appendDistinct(contentsOf: searchResponse.data.literatures?.data ?? [])
 				case .people:
 					self.personNextPageURL = searchResponse.data.people?.next ?? self.personNextPageURL
-					self.personIdentities.append(contentsOf: searchResponse.data.people?.data ?? [])
+					self.personIdentities.appendDistinct(contentsOf: searchResponse.data.people?.data ?? [])
 				case .shows:
 					self.showNextPageURL = searchResponse.data.shows?.next ?? self.showNextPageURL
-					self.showIdentities.append(contentsOf: searchResponse.data.shows?.data ?? [])
+					self.showIdentities.appendDistinct(contentsOf: searchResponse.data.shows?.data ?? [])
 				case .songs:
 					self.songNextPageURL = searchResponse.data.songs?.next ?? self.songNextPageURL
-					self.songIdentities.append(contentsOf: searchResponse.data.songs?.data ?? [])
+					self.songIdentities.appendDistinct(contentsOf: searchResponse.data.songs?.data ?? [])
 				case .studios:
 					self.studioNextPageURL = searchResponse.data.studios?.next ?? self.studioNextPageURL
-					self.studioIdentities.append(contentsOf: searchResponse.data.studios?.data ?? [])
+					self.studioIdentities.appendDistinct(contentsOf: searchResponse.data.studios?.data ?? [])
 				case .users:
 					self.userNextPageURL = searchResponse.data.users?.next ?? self.userNextPageURL
-					self.userIdentities.append(contentsOf: searchResponse.data.users?.data ?? [])
+					self.userIdentities.appendDistinct(contentsOf: searchResponse.data.users?.data ?? [])
 				}
 			}
 
@@ -542,8 +542,8 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 	func fetchSearchSuggestions() async {
 		do {
 			let alphabet = "abcdefghijklmnopqrstuvwxyz"
-			let suggestionStirng = String(alphabet.randomElement() ?? "o")
-			let searchSuggestionResponse = try await KService.getSearchSuggestions(.kurozora, of: [.shows], for: suggestionStirng).value
+			let suggestionString = String(alphabet.randomElement() ?? "o")
+			let searchSuggestionResponse = try await KService.getSearchSuggestions(.kurozora, of: [.shows], for: suggestionString).value
 			self.discoverSuggestions = searchSuggestionResponse.data.map { searchSuggestion in
 				QuickLink(title: searchSuggestion, image: UIImage(systemName: "magnifyingglass"), url: "")
 			}
