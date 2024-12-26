@@ -12,53 +12,34 @@ class AuthenticationSettingsCell: SettingsCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var authenticationTitleLabel: UILabel? {
 		didSet {
-			authenticationTitleLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			self.authenticationTitleLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
 
-			var title = "Lock with Passcode"
-			switch UIDevice.supportedBiomtetric {
-			case .faceID:
-				title = "Lock with Face ID & Passcode"
-			case .touchID:
-				title = "Lock with Touch ID & Passcode"
-			case .opticID:
-				title = "Lock with Optic ID & Passcode"
-			default: break
-			}
-			authenticationTitleLabel?.text = title
+			self.authenticationTitleLabel?.text = UIDevice.supportedBiometric.localizedSettingsName
 		}
 	}
 	@IBOutlet weak var authenticationImageView: UIImageView! {
 		didSet {
-			switch UIDevice.supportedBiomtetric {
-			case .faceID:
-				authenticationImageView.image = R.image.icons.faceID()
-			case .touchID:
-				authenticationImageView.image = R.image.icons.touchID()
-			case .opticID:
-				authenticationImageView.image = R.image.icons.opticID()
-			default:
-				authenticationImageView.image = R.image.icons.lock()
-			}
+			self.authenticationImageView.image = UIDevice.supportedBiometric.imageValue
 		}
 	}
 
 	@IBOutlet weak var enabledSwitch: KSwitch? {
 		didSet {
-			enabledSwitch?.isOn = UserSettings.authenticationEnabled
+			self.enabledSwitch?.isOn = UserSettings.authenticationEnabled
 		}
 	}
 
 	@IBOutlet weak var authenticationRequireValueLabel: UILabel? {
 		didSet {
-			authenticationRequireValueLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
-			authenticationRequireValueLabel?.text = UserSettings.authenticationInterval.stringValue
+			self.authenticationRequireValueLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+			self.authenticationRequireValueLabel?.text = UserSettings.authenticationInterval.stringValue
 			NotificationCenter.default.addObserver(self, selector: #selector(updateAuthenticationRequireValueLabel), name: .KSAuthenticationRequireTimeoutValueDidChange, object: nil)
 		}
 	}
 
 	// MARK: - Functions
 	@objc func updateAuthenticationRequireValueLabel() {
-		authenticationRequireValueLabel?.text = UserSettings.authenticationInterval.stringValue
+		self.authenticationRequireValueLabel?.text = UserSettings.authenticationInterval.stringValue
 	}
 
 	// MARK: - IBActions

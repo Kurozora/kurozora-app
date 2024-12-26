@@ -65,6 +65,7 @@
 		66160C3B215C04B900D0D722 /* AccountTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66160C3A215C04B900D0D722 /* AccountTableViewController.swift */; };
 		6616C8342D1C6DC30015F627 /* Motion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6616C8332D1C6DC00015F627 /* Motion.swift */; };
 		6616C8362D1CCBE50015F627 /* Array+Element.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6616C8352D1CCBE50015F627 /* Array+Element.swift */; };
+		6616C8382D1CDFC40015F627 /* LABiometryType+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6616C8372D1CDFC40015F627 /* LABiometryType+Kurozora.swift */; };
 		6617C8272A08710B0091EFAC /* Month.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6617C8262A08710B0091EFAC /* Month.swift */; };
 		6617C82A2A0C4BB60091EFAC /* SearchFilterModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6617C8292A0C4BB60091EFAC /* SearchFilterModels.swift */; };
 		6617C82C2A0FE0830091EFAC /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6617C82B2A0FE0830091EFAC /* SearchResults.swift */; };
@@ -888,6 +889,7 @@
 		66160C3A215C04B900D0D722 /* AccountTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTableViewController.swift; sourceTree = "<group>"; };
 		6616C8332D1C6DC00015F627 /* Motion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Motion.swift; sourceTree = "<group>"; };
 		6616C8352D1CCBE50015F627 /* Array+Element.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Element.swift"; sourceTree = "<group>"; };
+		6616C8372D1CDFC40015F627 /* LABiometryType+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LABiometryType+Kurozora.swift"; sourceTree = "<group>"; };
 		6617C8262A08710B0091EFAC /* Month.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Month.swift; sourceTree = "<group>"; };
 		6617C8292A0C4BB60091EFAC /* SearchFilterModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFilterModels.swift; sourceTree = "<group>"; };
 		6617C82B2A0FE0830091EFAC /* SearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResults.swift; sourceTree = "<group>"; };
@@ -2870,6 +2872,7 @@
 		668142E0245B4BBB008FC7BE /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				6616C8372D1CDFC40015F627 /* LABiometryType+Kurozora.swift */,
 				66BEC13423191D090039D683 /* NSLayoutManager+Kurozora.swift */,
 				66E54EBD244E1579007248EE /* String+UIImage.swift */,
 				66D4735121AB5FE300A894B7 /* UIAlertController+Extension.swift */,
@@ -5199,6 +5202,7 @@
 				664F9B252D0907B6000E5F8E /* ScheduleCollectionViewController+KCollectionViewDelegateLayout.swift in Sources */,
 				667943652273A33D00E2D0D0 /* EpisodeDetailsCollectionViewController.swift in Sources */,
 				6645407B2821EE2B0001E5B2 /* BannerImageView.swift in Sources */,
+				6616C8382D1CDFC40015F627 /* LABiometryType+Kurozora.swift in Sources */,
 				66647B542084995500CF624F /* AppDelegate.swift in Sources */,
 				662F117B24E5EEB40000375A /* StudioLogoImageView.swift in Sources */,
 				66B4F1DB223D2CA5007C5048 /* SearchBaseResultsCell.swift in Sources */,
