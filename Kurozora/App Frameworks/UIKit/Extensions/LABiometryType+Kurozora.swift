@@ -6,6 +6,7 @@
 //  Copyright © 2024 Kurozora. All rights reserved.
 //
 
+import UIKit
 import LocalAuthentication
 
 extension LABiometryType {

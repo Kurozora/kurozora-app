@@ -96,16 +96,16 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 		NotificationCenter.default.addObserver(self, selector: #selector(themeWillReload), name: .ThemeUpdateNotification, object: nil)
 
 		self.view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		navigationItem.hidesSearchBarWhenScrolling = false
+		self.navigationItem.hidesSearchBarWhenScrolling = false
 
 		// Configure view controllers.
-		configureViewControllers()
+		self.configureViewControllers()
 
 		// Tabman view controllers
 		self.dataSource = self
 
 		// Configure tabman bar
-		configureTabBarView()
+		self.configureTabBarView()
 	}
 
 	// MARK: - Functions
@@ -130,7 +130,7 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 		self.addBar(self.bar, dataSource: self, at: .custom(view: self.bottomBarView, layout: nil))
 
 		// Set corner raduis after the tab bar has been populated with data so it uses the correct height
-		self.bar.layerCornerRadius = bar.height / 2
+		self.bar.layerCornerRadius = self.bar.height / 2
 
 		self.configureTabBarViewVisibility()
 	}
@@ -156,7 +156,7 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 		// Layout
 		self.bar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 5.0, bottom: 0.0, right: 5.0)
 		self.bar.layout.interButtonSpacing = 0.0
-		self.bar.layout.contentMode = UIDevice.isPhone ? .intrinsic : .fit
+		self.bar.layout.contentMode = .intrinsic
 
 		// Style
 		self.bar.fadesContentEdges = true
