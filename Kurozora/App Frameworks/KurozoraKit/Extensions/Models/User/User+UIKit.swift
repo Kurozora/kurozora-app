@@ -43,6 +43,12 @@ extension User {
 				self.openReminders(on: viewController)
 			}
 			menuElements.append(remindersAction)
+
+			// Create "Settings" element
+			let settingsAction = UIAction(title: Trans.settings, image: UIImage(systemName: "gear")) { _ in
+				self.openSettings(on: viewController)
+			}
+			menuElements.append(settingsAction)
 		}
 
 		// Create "Share" element
@@ -99,7 +105,7 @@ extension User {
 		}
 	}
 
-	/// Performs segue to `LibraryViewController` with `LibrarySegue` as the identifier.
+	/// Performs segue to `LibraryViewController`.
 	///
 	/// - Parameters:
 	///    - viewController: The view controller presenting the share sheet.
@@ -111,7 +117,7 @@ extension User {
 		}
 	}
 
-	/// Performs segue to `FavoritesCollectionViewController` with `FavoritesSegue` as the identifier.
+	/// Performs segue to `FavoritesCollectionViewController`.
 	///
 	/// - Parameters:
 	///    - viewController: The view controller presenting the share sheet.
@@ -126,13 +132,24 @@ extension User {
 		}
 	}
 
-	/// Performs segue to `RemindersCollectionViewController` with `RemindersSegue` as the identifier.
+	/// Performs segue to `RemindersCollectionViewController`.
 	///
 	/// - Parameters:
 	///    - viewController: The view controller presenting the share sheet.
 	func openReminders(on viewController: UIViewController? = UIApplication.topViewController) {
 		if let remindersCollectionViewController = R.storyboard.reminders.remindersCollectionViewController() {
 			viewController?.show(remindersCollectionViewController, sender: nil)
+		}
+	}
+
+	/// Performs segue to `SettingsSplitViewController`.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller presenting the share sheet.
+	func openSettings(on viewController: UIViewController? = UIApplication.topViewController) {
+		if let settingsSplitViewController = R.storyboard.settings.instantiateInitialViewController() {
+			settingsSplitViewController.modalPresentationStyle = .fullScreen
+			viewController?.present(settingsSplitViewController, animated: true)
 		}
 	}
 }
