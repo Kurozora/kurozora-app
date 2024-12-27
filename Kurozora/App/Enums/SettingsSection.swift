@@ -264,7 +264,7 @@ extension SettingsTableViewController {
 			case .keychain:
 				return R.segue.settingsTableViewController.keysSegue.identifier
 			case .browser:
-				return R.segue.settingsTableViewController.broswerSegue.identifier
+				return R.segue.settingsTableViewController.browserSegue.identifier
 			case .cache:
 				return ""
 			case .displayBlindness:
