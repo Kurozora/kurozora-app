@@ -14,10 +14,12 @@ extension SettingsTableViewController {
 		// MARK: - Cases
 		/// Indicates the cell has no accessory views.
 		case none
-		/// Indicates the cell has a cheevron as accessory.
+		/// Indicates the cell has a chevron as accessory.
 		case chevron
 		/// Indicates the cell has a label as accessory.
 		case label
+		/// Indicates the cell has a label and a chevron as accessory.
+		case labelAndChevron
 	}
 
 	enum Section {
@@ -171,7 +173,7 @@ extension SettingsTableViewController {
 		/// The row representing the tip jar cell.
 		case tipjar
 
-		/// The row representing the manage subsctions cell.
+		/// The row representing the manage subscriptions cell.
 		case manageSubscriptions
 
 		/// The row representing the restore cell.
@@ -322,17 +324,17 @@ extension SettingsTableViewController {
 			case .keychain:
 				return .chevron
 			case .browser:
-				return .chevron
+				return .labelAndChevron
 			case .cache:
 				return .label
 			case .displayBlindness:
 				return .chevron
 			case .icon:
-				return .chevron
+				return .labelAndChevron
 			case .motion:
-				return .chevron
+				return .labelAndChevron
 			case .theme:
-				return .chevron
+				return .labelAndChevron
 			case .notifications:
 				return .chevron
 			case .reminder:
@@ -441,6 +443,14 @@ extension SettingsTableViewController {
 			switch self {
 			case .account:
 				return User.isSignedIn ? Trans.accountSignedInSubheadline : Trans.accountSubheadline
+			case .browser:
+				return UserSettings.defaultBrowser.shortStringValue
+			case .icon:
+				return UserSettings.appIcon.replacingOccurrences(of: " Preview", with: "")
+			case .motion:
+				return UserSettings.currentSplashScreenAnimation.titleValue
+			case .theme:
+				return UserSettings.currentTheme
 			default:
 				return ""
 			}
