@@ -193,6 +193,8 @@ extension KThemeStyle {
 		case .other:
 			UIApplication.sharedKeyWindow?.overrideUserInterfaceStyle = .unspecified
 		}
+
+		NotificationCenter.default.post(name: .KSAppAppearanceDidChange, object: nil)
 	}
 
 	/// Switch theme based on the passed theme name.
@@ -213,6 +215,8 @@ extension KThemeStyle {
 		default:
 			UIApplication.sharedKeyWindow?.overrideUserInterfaceStyle = .unspecified
 		}
+
+		NotificationCenter.default.post(name: .KSAppAppearanceDidChange, object: nil)
 	}
 
 	/// Switch theme based on the passed `AppTheme` object.
@@ -243,6 +247,7 @@ extension KThemeStyle {
 		guard let themesDirectoryUrl = self.themesDirectoryUrl else { return }
 		ThemeManager.setTheme(plistName: "theme-\(themeID)", path: .sandbox(themesDirectoryUrl))
 		UIApplication.sharedKeyWindow?.overrideUserInterfaceStyle = KThemePicker.statusBarStyle.userInterfaceStyleValue
+		NotificationCenter.default.post(name: .KSAppAppearanceDidChange, object: nil)
 	}
 }
 
