@@ -162,17 +162,7 @@ extension SettingsTableViewController {
 			shouldPerformSegue = WorkflowController.shared.isSignedIn(on: self)
 		case .switchAccount: break
 		case .keychain: break
-		case .notifications:
-			shouldPerformSegue = WorkflowController.shared.isSignedIn(on: self)
-		case .soundsAndHaptics: break
-		case .reminder:
-			WorkflowController.shared.subscribeToReminders(on: self)
-			return
-		case .displayBlindness: break
-		case .theme: break
-		case .icon: break
 		case .browser: break
-		case .biometrics: break
 		case .cache:
 			let alertController = self.presentAlertController(title: "Clear all Cache?", message: "The number you see in Kurozora might not match the one in the Settings app. That’s because caches on your disk and in RAM are counted together here. Wiping both clean might make the app a bit slower at first, but things will speed up once the caches are built up again.", defaultActionButtonTitle: Trans.cancel)
 			alertController.addAction(UIAlertAction(title: "Clear 🗑", style: .destructive) { _ in
@@ -192,7 +182,17 @@ extension SettingsTableViewController {
 				tableView.reloadData()
 			})
 			return
-		case .privacy: break
+		case .displayBlindness: break
+		case .icon: break
+		case .motion: break
+		case .theme: break
+		case .notifications:
+			shouldPerformSegue = WorkflowController.shared.isSignedIn(on: self)
+		case .reminder:
+			WorkflowController.shared.subscribeToReminders(on: self)
+			return
+		case .soundsAndHaptics:
+			break
 		case .signalSticker:
 			if let signalStickerURL = URL.signalStickerURL {
 				UIApplication.shared.open(signalStickerURL)
@@ -203,11 +203,9 @@ extension SettingsTableViewController {
 				UIApplication.shared.open(telegramStickerURL)
 			}
 			return
-		case .rate:
-			if let rateURL = URL.rateURL {
-				UIApplication.shared.open(rateURL)
-			}
-			return
+		case .biometrics: break
+		case .privacy: break
+		case .unlockFeatures: break
 		case .tipjar: break
 		case .manageSubscriptions:
 			Task { [weak self] in
@@ -220,7 +218,11 @@ extension SettingsTableViewController {
 				await store.restore()
 			}
 			return
-		case .unlockFeatures: break
+		case .rate:
+			if let rateURL = URL.rateURL {
+				UIApplication.shared.open(rateURL)
+			}
+			return
 		case .joinDiscord:
 			UIApplication.shared.kOpen(.discordPageURL)
 			return
