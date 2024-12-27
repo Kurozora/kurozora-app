@@ -4037,6 +4037,7 @@
 		66FA97B5281A09B90054FC2E /* Enums */ = {
 			isa = PBXGroup;
 			children = (
+				6616C8332D1C6DC00015F627 /* Motion.swift */,
 				66CAE68C2337D0FF00991E59 /* AccountOnboarding.swift */,
 				66FA97BA281A0C4B0054FC2E /* AlertType.swift */,
 				664B6D79230F469900F9C726 /* AppAppearanceOption.swift */,
@@ -4876,6 +4877,7 @@
 				66E54D5D2A6D352700F9F8AA /* RatingBarCollectionViewCell.swift in Sources */,
 				66E1216829B0025B0051C4ED /* Game+UIKit.swift in Sources */,
 				6699A1C323779E9B00517C2C /* LibraryListCollectionViewCell.swift in Sources */,
+				6616C8342D1C6DC30015F627 /* Motion.swift in Sources */,
 				6617C82C2A0FE0830091EFAC /* SearchResults.swift in Sources */,
 				66CFE5C9282FDACE00E3B2DF /* SkeletonDisplayable.swift in Sources */,
 				66500D0F295FCE2E0098D59D /* ProductFeature.swift in Sources */,
