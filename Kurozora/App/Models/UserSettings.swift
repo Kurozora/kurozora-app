@@ -18,7 +18,10 @@ class UserSettings: UserDefaults {
 			UserSettingsKey.startupSoundAllowed.rawValue: true,
 			UserSettingsKey.uiSoundsAllowed.rawValue: true,
 			UserSettingsKey.hapticsAllowed.rawValue: true,
-			UserSettingsKey.confettiLastSeenAt.rawValue: Date.distantPast
+			UserSettingsKey.confettiLastSeenAt.rawValue: Date.distantPast,
+			UserSettingsKey.currentSplashScreenAnimation.rawValue: SplashScreenAnimation.default.rawValue,
+			UserSettingsKey.isReduceMotionEnabled.rawValue: UIAccessibility.isReduceMotionEnabled,
+			UserSettingsKey.isReduceMotionSyncEnabled.rawValue: true
 		])
 		return combined
 	}
@@ -63,6 +66,12 @@ extension UserSettings {
 
 // MARK: - App customization
 extension UserSettings {
+	/// Returns a string indicating the currently used splash screen animation.
+	static var currentSplashScreenAnimation: SplashScreenAnimation {
+		guard let currentAnimation = SplashScreenAnimation(rawValue: shared.integer(forKey: #function)) else { return .default }
+		return currentAnimation
+	}
+
 	/// Returns a string indicating the currently used theme.
 	static var currentTheme: String {
 		guard let currentTheme = shared.string(forKey: #function) else { return "" }
@@ -228,6 +237,19 @@ extension UserSettings {
 
 	/// Returns a boolean indicating if notifications badge is allowed.
 	static var notificationsBadge: Bool {
+		return self.shared.bool(forKey: #function)
+	}
+}
+
+// MARK: - Motion Settings
+extension UserSettings {
+	/// Returns a boolean indicating if reduce motion is enabled.
+	static var isReduceMotionEnabled: Bool {
+		return self.shared.bool(forKey: #function)
+	}
+
+	/// Returns a boolean indicating if reduce motion's "Sync with Device Settings" is enabled.
+	static var isReduceMotionSyncEnabled: Bool {
 		return self.shared.bool(forKey: #function)
 	}
 }
