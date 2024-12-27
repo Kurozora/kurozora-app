@@ -32,7 +32,7 @@ class SettingsCell: KTableViewCell {
 	@IBOutlet weak var notificationGroupingValueLabel: KSecondaryLabel? {
 		didSet {
 			self.notificationGroupingValueLabel?.text = KNotification.GroupStyle(rawValue: UserSettings.notificationsGrouping)?.stringValue
-			NotificationCenter.default.addObserver(self, selector: #selector(updateNotificationValueLabels), name: .KSNotificationOptionsValueLabelsNotification, object: nil)
+			NotificationCenter.default.addObserver(self, selector: #selector(self.updateNotificationValueLabels), name: .KSNotificationOptionsValueLabelsNotification, object: nil)
 		}
 	}
 	@IBOutlet weak var popupButton: KButton?
@@ -50,8 +50,10 @@ class SettingsCell: KTableViewCell {
 		self.secondaryLabel?.text = sectionRow?.secondaryStringValue
 
 		switch sectionRow {
-		case .icon:
-			NotificationCenter.default.addObserver(self, selector: #selector(updateAppIcon), name: .KSAppIconDidChange, object: nil)
+		case .motion:
+			NotificationCenter.default.addObserver(self, selector: #selector(self.updateSplashScreenAnimation), name: .KSSplashScreenAnimationDidChange, object: nil)
+		case .browser:
+			NotificationCenter.default.addObserver(self, selector: #selector(self.updateAppBrowser), name: .KSAppBrowserDidChange, object: nil)
 		case .cache:
 			self.calculateCache(withSuccess: { [weak self] cacheSize in
 				guard let self = self else { return }
@@ -59,20 +61,31 @@ class SettingsCell: KTableViewCell {
 					self.secondaryLabel?.text = cacheSize
 				}
 			})
+		case .icon:
+			NotificationCenter.default.addObserver(self, selector: #selector(self.updateAppIcon), name: .KSAppIconDidChange, object: nil)
+		case .theme:
+			NotificationCenter.default.addObserver(self, selector: #selector(self.updateAppTheme), name: .KSAppAppearanceDidChange, object: nil)
 		default:
+			NotificationCenter.default.removeObserver(self, name: .KSSplashScreenAnimationDidChange, object: nil)
+			NotificationCenter.default.removeObserver(self, name: .KSAppBrowserDidChange, object: nil)
+			NotificationCenter.default.removeObserver(self, name: .KSAppAppearanceDidChange, object: nil)
 			NotificationCenter.default.removeObserver(self, name: .KSAppIconDidChange, object: nil)
 		}
 
 		switch sectionRow?.accessoryValue ?? .none {
 		case .none:
-			chevronImageView?.isHidden = true
-			secondaryLabel?.isHidden = reuseIdentifier == R.reuseIdentifier.settingsCell.identifier
+			self.chevronImageView?.isHidden = true
+			self.secondaryLabel?.isHidden = reuseIdentifier == R.reuseIdentifier.settingsCell.identifier
 		case .chevron:
-			secondaryLabel?.isHidden = reuseIdentifier == R.reuseIdentifier.settingsCell.identifier
-			chevronImageView?.isHidden = false
+			self.secondaryLabel?.isHidden = reuseIdentifier == R.reuseIdentifier.settingsCell.identifier
+			self.chevronImageView?.isHidden = false
 		case .label:
-			chevronImageView?.isHidden = true
-			secondaryLabel?.isHidden = false
+			self.chevronImageView?.isHidden = true
+			self.secondaryLabel?.isHidden = false
+		case .labelAndChevron:
+			self.secondaryLabel?.isHidden = reuseIdentifier == R.reuseIdentifier.settingsCell.identifier
+			self.chevronImageView?.isHidden = false
+			self.secondaryLabel?.isHidden = false
 		}
 	}
 
@@ -101,9 +114,25 @@ class SettingsCell: KTableViewCell {
 		}
 	}
 
+	/// Updates the app browser text with the one selected by the user.
+	@objc func updateAppBrowser() {
+		self.secondaryLabel?.text = UserSettings.defaultBrowser.shortStringValue
+	}
+
 	/// Updates the app icon image with the one selected by the user.
 	@objc func updateAppIcon() {
 		self.iconImageView?.image = UIImage(named: UserSettings.appIcon)
+		self.secondaryLabel?.text = UserSettings.appIcon.replacingOccurrences(of: " Preview", with: "")
+	}
+
+	/// Updates the app theme text with the one selected by the user.
+	@objc func updateAppTheme() {
+		self.secondaryLabel?.text = UserSettings.currentTheme
+	}
+
+	/// Updates the app theme text with the one selected by the user.
+	@objc func updateSplashScreenAnimation() {
+		self.secondaryLabel?.text = UserSettings.currentSplashScreenAnimation.titleValue
 	}
 
 	/// Updates the notification value labels with the respective options selected by the user.

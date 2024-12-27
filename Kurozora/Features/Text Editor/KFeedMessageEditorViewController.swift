@@ -179,7 +179,12 @@ class KFeedMessageTextEditorViewController: KViewController {
 		if let feedMessage = self.editingFeedMessage {
 			do {
 				let feedMessageIdentity = FeedMessageIdentity(id: feedMessage.id)
-				let feedMessageUpdateRequest = FeedMessageUpdateRequest(feedMessageIdentity: feedMessageIdentity, content: self.editedText, isNSFW: self.isNSFW, isSpoiler: self.isSpoiler)
+				let feedMessageUpdateRequest = FeedMessageUpdateRequest(
+					feedMessageIdentity: feedMessageIdentity,
+					content: self.editedText,
+					isNSFW: self.isNSFW,
+					isSpoiler: self.isSpoiler
+				)
 				let feedMessageUpdateResponse = try await KService.updateMessage(feedMessageUpdateRequest).value
 				let feedMessageUpdate = feedMessageUpdateResponse.data
 
