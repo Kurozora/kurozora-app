@@ -21,7 +21,7 @@ enum KBrowser: Int, CaseIterable {
 	case dolphin
 
 	// MARK: - Properties
-	/// The string value of a KBrowser type.
+	/// The string value of the browser.
 	var stringValue: String {
 		switch self {
 		case .kurozora:
@@ -33,7 +33,7 @@ enum KBrowser: Int, CaseIterable {
 		case .dolphin:
 			return "Dolphin"
 		case .duckduckgo:
-			return "DuckDuck Go"
+			return "DuckDuckGo"
 		case .firefox:
 			return "FireFox"
 		case .firefoxfocus:
@@ -45,7 +45,17 @@ enum KBrowser: Int, CaseIterable {
 		}
 	}
 
-	/// The image value of a KBrowser type.
+	/// The short string value of the browser.
+	var shortStringValue: String {
+		switch self {
+		case .kurozora:
+			return "Default"
+		default:
+			return self.stringValue
+		}
+	}
+
+	/// The image value of the browser.
 	var image: UIImage? {
 		switch self {
 		case .kurozora:
@@ -70,6 +80,11 @@ enum KBrowser: Int, CaseIterable {
 	}
 
 	// MARK: - Functions
+	/// Get the scheme value of the browser.
+	///
+	/// - Parameter urlScheme: The URL scheme.
+	///
+	/// - Returns: The scheme value of the browser.
 	func schemeValue(for urlScheme: String) -> String {
 		switch self {
 		case .kurozora:
@@ -97,6 +112,11 @@ enum KBrowser: Int, CaseIterable {
 		}
 	}
 
+	/// Get the short scheme value of the browser.
+	///
+	/// - Parameter urlScheme: The URL scheme.
+	///
+	/// - Returns: The short scheme value of the browser.
 	func shortSchemeValue(for urlScheme: String) -> String {
 		switch self {
 		case .kurozora:
@@ -124,6 +144,11 @@ enum KBrowser: Int, CaseIterable {
 		}
 	}
 
+	/// Get the short scheme URL value of the browser.
+	///
+	/// - Parameter urlScheme: The URL scheme.
+	///
+	/// - Returns: The short scheme URL value of the browser.
 	func shortSchemeUrlValue(for urlScheme: String) -> URL? {
 		return URL(string: self.shortSchemeValue(for: urlScheme))
 	}
