@@ -26,7 +26,7 @@ import Pageboy
 
 	/// Tells `KTabbedViewControllerDataSource` to fetch sections from an external source, such as from an API.
 	///
-	/// This method is called in `init(coder:)` when intializing the view from a storyboard.
+	/// This method is called in `init(coder:)` when initializing the view from a storyboard.
 	///
 	/// - Tag: KTabbedViewControllerDataSource-fetchSections
 	@objc optional func fetchSections()
@@ -38,9 +38,9 @@ import Pageboy
 /// - [KTabbedViewControllerDataSource](x-source-tag://KTabbedViewControllerDataSource) for managing the tab bar and its data.
 /// - [KBar](x-source-tag://KBar), the bar reminiscent of the Photos app bottom tab bar.
 ///
-/// Create a csutom subclass of `KTabbedViewController` for each tabbed view that you manage. You may only initialize a tabbed view controller through a storyboad. You must also override [initializeViewControllers(with:)](x-source-tag://KTabbedViewControllerDataSource-initializeViewControllersWithCount) method.
+/// Create a custom subclass of `KTabbedViewController` for each tabbed view that you manage. You may only initialize a tabbed view controller through a storyboard. You must also override [initializeViewControllers(with:)](x-source-tag://KTabbedViewControllerDataSource-initializeViewControllersWithCount) method.
 ///
-/// You may override [fetchSections()](x-source-tag://KTabbedViewControllerDataSource-fetchSections) method if your tabbar sections are accessed through an external source, such as an API. This method will be called when the view controller is initialized, so make sure to run it on a background thread to avoid freezing the app.
+/// You may override [fetchSections()](x-source-tag://KTabbedViewControllerDataSource-fetchSections) method if your tab bar sections are accessed through an external source, such as an API. This method will be called when the view controller is initialized, so make sure to run it on a background thread to avoid freezing the app.
 ///
 /// - Tag: KTabbedViewController
 class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewControllerDataSource {
@@ -129,7 +129,7 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 		self.styleTabBarView()
 		self.addBar(self.bar, dataSource: self, at: .custom(view: self.bottomBarView, layout: nil))
 
-		// Set corner raduis after the tab bar has been populated with data so it uses the correct height
+		// Set corner radius after the tab bar has been populated with data so it uses the correct height
 		self.bar.layerCornerRadius = self.bar.height / 2
 
 		self.configureTabBarViewVisibility()
@@ -235,6 +235,6 @@ extension KTabbedViewController: KTabbedViewControllerDataSource {
 
 	/// Tells `KTabbedViewControllerDataSource` to fetch sections from an external source, such as from an API.
 	///
-	/// This method is called in `init(coder:)` when intializing the view from a storyboard.
+	/// This method is called in `init(coder:)` when initializing the view from a storyboard.
 	func fetchSections() { }
 }
