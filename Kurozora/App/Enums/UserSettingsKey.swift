@@ -23,8 +23,8 @@ enum UserSettingsKey: String {
 	case sessionActionsCount
 
 	// App customization keys
-	/// The key to the selected animation.
-	case currentAnimation
+	/// The key to the selected splash screen animation.
+	case currentSplashScreenAnimation
 	/// The key to the selected theme.
 	case currentTheme
 	/// The key to the selected app icon.
@@ -77,6 +77,13 @@ enum UserSettingsKey: String {
 	case libraryCellStyles
 	/// The key to the last selected library kind.
 	case libraryKind
+
+	// Motion settings keys
+	/// The key to the selected reduce motion option.
+	case isReduceMotionEnabled
+
+	/// The key to the selected sync with device settings option.
+	case isReduceMotionSyncEnabled
 
 	// Notification settings keys
 	/// The key to the selected option for allowing notifications.
