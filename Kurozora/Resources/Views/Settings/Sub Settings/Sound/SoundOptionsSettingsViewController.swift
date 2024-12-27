@@ -22,6 +22,8 @@ class SoundOptionsViewController: SubSettingsViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		self.title = Trans.chimeSound
+
 		// Disable activity indicator
 		self._prefersActivityIndicatorHidden = true
 

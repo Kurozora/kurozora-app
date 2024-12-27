@@ -48,10 +48,8 @@ class SoundSettingsViewController: SubSettingsViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if let soundOptionsViewController = segue.destination as? SoundOptionsViewController {
-			soundOptionsViewController.title = Trans.chimeSound
-			soundOptionsViewController.delegate = self
-		}
+		guard let soundOptionsViewController = segue.destination as? SoundOptionsViewController else { return }
+		soundOptionsViewController.delegate = self
 	}
 }
 
