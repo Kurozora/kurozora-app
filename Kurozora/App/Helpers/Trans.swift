@@ -72,7 +72,7 @@ struct Trans {
 	/// The subheadline string for Sign in with Apple.
 	///
 	/// - Tag: Trans-siwaSubheadline
-	static let siwaSubheadline: String = String(localized: "Finish setting up your account and join the comminty.",
+	static let siwaSubheadline: String = String(localized: "Finish setting up your account and join the community.",
 												table: "Onboarding",
 												comment: "")
 	/// The button string for sign in with Apple.
@@ -144,7 +144,7 @@ struct Trans {
 	/// The headline string for the Library Import view.
 	///
 	/// - Tag: Trans-libraryImportHeadline
-	static let libraryImportHeadline: String = String(localized: "Move From Another Servic",
+	static let libraryImportHeadline: String = String(localized: "Move From Another Service",
 													  table: "Services",
 													  comment: "The headline string for the Library Import view")
 	/// The subheadline string for the Library Import view.
@@ -311,12 +311,12 @@ struct Trans {
 	}()
 
 	// MARK: - Authentication
-	/// The string for authenticating immediatly.
+	/// The string for authenticating immediately.
 	///
 	/// - Tag: Trans-immediately
 	static let immediately: String = String(localized: "Immediately",
 											table: "Authentication",
-											comment: "The string for authenticating immediatly.")
+											comment: "The string for authenticating immediately.")
 	/// The string for authenticating after 30 seconds.
 	///
 	/// - Tag: Trans-thirtySeconds
@@ -651,7 +651,7 @@ struct Trans {
 												comment: "The string for the 'Optic ID & Passcode' settings option.")
 	/// The string for the 'Unlock Features' settings option.
 	///
-	/// - Tag: Trans-unlockfeatures
+	/// - Tag: Trans-unlockFeatures
 	static let unlockFeatures: String = String(localized: "Unlock Features",
 											   table: "Settings",
 											   comment: "The string for the 'Unlock Features' settings option.")
@@ -715,6 +715,38 @@ struct Trans {
 	static let followTwitter: String = String(localized: "Follow us on Twitter",
 											  table: "Settings",
 											  comment: "The string for the 'Follow us on Twitter' settings option.")
+
+	// MARK: - Motion Settings
+	/// The string for the 'Animations' settings header.
+	///
+	/// - Tag: Trans-animations
+	static let animations: String = String(localized: "Animations",
+										   table: "Motion Settings",
+										   comment: "The string for the 'Animations' settings header.")
+	/// The string for the 'Splash Screen' settings option.
+	///
+	/// - Tag: Trans-splashScreen
+	static let splashScreen: String = String(localized: "Splash Screen",
+											 table: "Motion Settings",
+											 comment: "The string for the 'Splash Screen' settings option.")
+	/// The string for the 'Reduce Motion' settings option.
+	///
+	/// - Tag: Trans-reduceMotion
+	static let reduceMotion: String = String(localized: "Reduce Motion",
+											 table: "Motion Settings",
+											 comment: "The string for the 'Reduce Motion' settings option.")
+	/// The string for the 'Sync With Device Settings' settings option.
+	///
+	/// - Tag: Trans-syncWithDeviceSettings
+	static let syncWithDeviceSettings: String = String(localized: "Sync With Device Settings",
+													   table: "Motion Settings",
+													   comment: "The string for the 'Sync With Device Settings' settings option.")
+	/// The footer string for the 'Reduce Motion' settings option.
+	///
+	/// - Tag: Trans-reduceMotionFooter
+	static let reduceMotionFooter: String = String(localized: "Reduce the intensity of animations, and motion effects throughout Kurozora.",
+												   table: "Sounds & Haptics",
+												   comment: "The footer string for the 'Reduce Motion' settings option.")
 
 	// MARK: - Sounds & Haptics
 	/// The string for the 'Chime Sound' settings option.
@@ -834,11 +866,11 @@ struct Trans {
 	/// - Tag: Trans-age
 	static let age: String = String(localized: "Age",
 									comment: "The string for the word 'age'.")
-	/// The string for the word 'measurments'.
+	/// The string for the word 'measurements'.
 	///
-	/// - Tag: Trans-measurments
-	static let measurments: String = String(localized: "Measurments",
-											comment: "The string for the word 'measurments'.")
+	/// - Tag: Trans-measurements
+	static let measurements: String = String(localized: "Measurements",
+											 comment: "The string for the word 'measurements'.")
 	/// The string for the word 'characteristics'.
 	///
 	/// - Tag: Trans-characteristics
@@ -916,13 +948,13 @@ struct Trans {
 										comment: "The string for the word 'library'.")
 	/// The string for the word 'your library'.
 	///
-	/// - Tag: Trans-yourlibrary
-	static let yourlibrary: String = String(localized: "Your Library",
+	/// - Tag: Trans-yourLibrary
+	static let yourLibrary: String = String(localized: "Your Library",
 											comment: "The string for the word 'your library'.")
 	/// The string for the word 'add to library'.
 	///
-	/// - Tag: Trans-addTolibrary
-	static let addTolibrary: String = String(localized: "Add to Library",
+	/// - Tag: Trans-addToLibrary
+	static let addToLibrary: String = String(localized: "Add to Library",
 											 comment: "The string for the word 'add to library'.")
 	/// The string for the word 'update library status'.
 	///
@@ -931,7 +963,7 @@ struct Trans {
 													comment: "The string for the word 'update library status'.")
 	/// The string for the word 'remove from library'.
 	///
-	/// - Tag: Trans-removeFromlibrary
+	/// - Tag: Trans-removeFromLibrary
 	static let removeFromLibrary: String = String(localized: "Remove from Library",
 												  comment: "The string for the word 'remove from library'.")
 	/// The string for the phrase 'hide from public'.
@@ -1212,7 +1244,7 @@ struct Trans {
 	/// The string for the word 'preview'.
 	///
 	/// - Tag: Trans-preview
-	static let preview: String = String(localized: "Previw",
+	static let preview: String = String(localized: "Preview",
 										comment: "The string for the word 'preview'.")
 	/// The string for the word 'play'.
 	///
