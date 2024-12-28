@@ -104,7 +104,7 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
-		NotificationCenter.default.addObserver(self, selector: #selector(updateEpisodes(_:)), name: .KEpisodeWatchStatusDidUpdate, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.updateEpisodes(_:)), name: .KEpisodeWatchStatusDidUpdate, object: nil)
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
@@ -154,10 +154,9 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController {
 	///
 	/// - Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
 	@objc func updateEpisodes(_ notification: NSNotification) {
-		guard let indexPath = notification.userInfo?["indexPath"] as? IndexPath else { return }
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
-			self.collectionView.reloadItems(at: [indexPath])
+			self.collectionView.reloadItems(at: [IndexPath(row: 0, section: 0)])
 		}
 	}
 
