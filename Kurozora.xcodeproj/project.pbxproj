@@ -66,6 +66,7 @@
 		6616C8342D1C6DC30015F627 /* Motion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6616C8332D1C6DC00015F627 /* Motion.swift */; };
 		6616C8362D1CCBE50015F627 /* Array+Element.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6616C8352D1CCBE50015F627 /* Array+Element.swift */; };
 		6616C8382D1CDFC40015F627 /* LABiometryType+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6616C8372D1CDFC40015F627 /* LABiometryType+Kurozora.swift */; };
+		6616C8392D1CF0DA0015F627 /* Notification+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66973DF92311E4400097A9F8 /* Notification+Kurozora.swift */; };
 		6617C8272A08710B0091EFAC /* Month.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6617C8262A08710B0091EFAC /* Month.swift */; };
 		6617C82A2A0C4BB60091EFAC /* SearchFilterModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6617C8292A0C4BB60091EFAC /* SearchFilterModels.swift */; };
 		6617C82C2A0FE0830091EFAC /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6617C82B2A0FE0830091EFAC /* SearchResults.swift */; };
@@ -466,6 +467,11 @@
 		66A3488429B3EBD300ABF1FE /* GameLockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A3488329B3EBD200ABF1FE /* GameLockupCollectionViewCell.swift */; };
 		66A3488629B3FC1800ABF1FE /* GameLockupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66A3488529B3EC4D00ABF1FE /* GameLockupCollectionViewCell.xib */; };
 		66A48FE021A411A900F34085 /* Notifications.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66A48FDF21A411A900F34085 /* Notifications.storyboard */; };
+		66A4DD992D1A3DB8003A9977 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A4DD982D1A3DB8003A9977 /* Animation.swift */; };
+		66A4DD9C2D1AEECF003A9977 /* MotionSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66A4DD9B2D1AEECF003A9977 /* MotionSettings.storyboard */; };
+		66A4DD9E2D1AFC60003A9977 /* MotionSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A4DD9D2D1AFC5A003A9977 /* MotionSettingsViewController.swift */; };
+		66A4DDA02D1B223B003A9977 /* MotionOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A4DD9F2D1B2238003A9977 /* MotionOptionsViewController.swift */; };
+		66A4DDA12D1B251F003A9977 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A4DD982D1A3DB8003A9977 /* Animation.swift */; };
 		66A4FCFD270EFDCA00E7C702 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66A4FCFC270EFDCA00E7C702 /* Assets.xcassets */; };
 		66A4FD13270F62D300E7C702 /* Configuration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 66A4FD0E270F62D300E7C702 /* Configuration.storekit */; };
 		66A4FD16270F62D300E7C702 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 66A4FD11270F62D300E7C702 /* Settings.bundle */; };
@@ -1287,6 +1293,10 @@
 		66A3488329B3EBD200ABF1FE /* GameLockupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLockupCollectionViewCell.swift; sourceTree = "<group>"; };
 		66A3488529B3EC4D00ABF1FE /* GameLockupCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameLockupCollectionViewCell.xib; sourceTree = "<group>"; };
 		66A48FDF21A411A900F34085 /* Notifications.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Notifications.storyboard; sourceTree = "<group>"; };
+		66A4DD982D1A3DB8003A9977 /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
+		66A4DD9B2D1AEECF003A9977 /* MotionSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MotionSettings.storyboard; sourceTree = "<group>"; };
+		66A4DD9D2D1AFC5A003A9977 /* MotionSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionSettingsViewController.swift; sourceTree = "<group>"; };
+		66A4DD9F2D1B2238003A9977 /* MotionOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionOptionsViewController.swift; sourceTree = "<group>"; };
 		66A4FCFC270EFDCA00E7C702 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		66A4FD0E270F62D300E7C702 /* Configuration.storekit */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Configuration.storekit; sourceTree = "<group>"; };
 		66A4FD0F270F62D300E7C702 /* Intents.intentdefinition */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
@@ -3081,6 +3091,24 @@
 			path = "Self Label";
 			sourceTree = "<group>";
 		};
+		66A4DD972D1A3DA9003A9977 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				66A4DD982D1A3DB8003A9977 /* Animation.swift */,
+			);
+			path = Animation;
+			sourceTree = "<group>";
+		};
+		66A4DD9A2D1AEEAF003A9977 /* Motion */ = {
+			isa = PBXGroup;
+			children = (
+				66A4DD9B2D1AEECF003A9977 /* MotionSettings.storyboard */,
+				66A4DD9F2D1B2238003A9977 /* MotionOptionsViewController.swift */,
+				66A4DD9D2D1AFC5A003A9977 /* MotionSettingsViewController.swift */,
+			);
+			path = Motion;
+			sourceTree = "<group>";
+		};
 		66AA35C1240312210006EC5B /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -3304,6 +3332,7 @@
 			children = (
 				6610394E2C98B81700F5026F /* RichLink.swift */,
 				66BFF4EA25FFF879009EBA30 /* SidebarViewController.swift */,
+				66A4DD972D1A3DA9003A9977 /* Animation */,
 				6640E18722AD631F00D0F575 /* Authentication */,
 				66AD1A032B3CD52100694BF7 /* Chime */,
 				66A08C6B23E3A2DD007B6418 /* Legal */,
@@ -3410,6 +3439,7 @@
 				6614409121DA40F300E54915 /* Debug */,
 				661049BE22C0425800A2A354 /* Display */,
 				668DBE6826BCAFC800399BEB /* Icons */,
+				66A4DD9A2D1AEEAF003A9977 /* Motion */,
 				6614409021DA40AB00E54915 /* Notifications */,
 				66C27A7223E3A09E00BC09D3 /* Privacy */,
 				6659E03C2B3DB044007853F5 /* Sound */,
@@ -4039,7 +4069,6 @@
 		66FA97B5281A09B90054FC2E /* Enums */ = {
 			isa = PBXGroup;
 			children = (
-				6616C8332D1C6DC00015F627 /* Motion.swift */,
 				66CAE68C2337D0FF00991E59 /* AccountOnboarding.swift */,
 				66FA97BA281A0C4B0054FC2E /* AlertType.swift */,
 				664B6D79230F469900F9C726 /* AppAppearanceOption.swift */,
@@ -4070,6 +4099,7 @@
 				666C898D29FF28F50075B5D6 /* LiteratureType.swift */,
 				66A83DA12CE95A450002A2EE /* MilestoneKind.swift */,
 				6617C8262A08710B0091EFAC /* Month.swift */,
+				6616C8332D1C6DC00015F627 /* Motion.swift */,
 				66DF090D26C673CF005AED93 /* NotificationKind.swift */,
 				66ABF5F9233835FF00795750 /* OnboardingType.swift */,
 				664AAF9E24EEED0000FF4AA5 /* PersonInformation.swift */,
@@ -4441,6 +4471,7 @@
 				66E46E05250666AE009938E1 /* FeedMessageReShareCell.xib in Resources */,
 				66CE8114246092FF00DB0C49 /* ServicePreviewTableViewCell.xib in Resources */,
 				6633A52924A3DA11003C6390 /* InformationButtonCollectionViewCell.xib in Resources */,
+				66A4DD9C2D1AEECF003A9977 /* MotionSettings.storyboard in Resources */,
 				666C89B42A007CCA0075B5D6 /* SearchFilterSelectCollectionViewCell.xib in Resources */,
 				66319DCF27C9AF090063DE7F /* Songs.storyboard in Resources */,
 				666C89A32A006D4A0075B5D6 /* SearchFilterBaseCollectionViewCell.xib in Resources */,
@@ -4754,8 +4785,10 @@
 				662F96CC2BC3481200DD8EA6 /* ImageFetcher.swift in Sources */,
 				667B8BAF2BC1F2BE00DA79CD /* EnvironmentValues+KurozoraWidget.swift in Sources */,
 				66F7D1AA2C720706002A09CE /* UserSettingsKey.swift in Sources */,
+				6616C8392D1CF0DA0015F627 /* Notification+Kurozora.swift in Sources */,
 				66F7D1AE2C7207A8002A09CE /* Trans.swift in Sources */,
 				6647B7392BC0A6DE006BC91C /* DateWidget.swift in Sources */,
+				66A4DDA12D1B251F003A9977 /* Animation.swift in Sources */,
 				66F7D1A92C72066D002A09CE /* UserSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4930,6 +4963,7 @@
 				66319DAD27C82EAD0063DE7F /* MusicLockupCollectionViewCell.swift in Sources */,
 				660628BC2A62F79100D4A8BB /* ProfileBadge.swift in Sources */,
 				661F184524A5594C00542AFB /* KCopyableTintedLabel.swift in Sources */,
+				66A4DD992D1A3DB8003A9977 /* Animation.swift in Sources */,
 				664AAFA124EEEE9F00FF4AA5 /* PersonHeaderCollectionViewCell.swift in Sources */,
 				664AAFA724EEF3D600FF4AA5 /* CharacterLockupCollectionViewCell.swift in Sources */,
 				66A254D522AABC29002A0E34 /* AlternativeIcons.swift in Sources */,
@@ -5102,6 +5136,7 @@
 				66B69BD6214544DB007154BD /* LegalViewController.swift in Sources */,
 				6632C44B298B110000702F7C /* LiteraturesListCollectionViewController.swift in Sources */,
 				66B4DBEF2450E5780097135A /* SignInWithAppleTableViewController.swift in Sources */,
+				66A4DD9E2D1AFC60003A9977 /* MotionSettingsViewController.swift in Sources */,
 				66603AA82B77DE550083C7DD /* KKSearchTypeAppEnum.swift in Sources */,
 				6640E18B22AD634600D0F575 /* AuthenticationViewController.swift in Sources */,
 				660E3A1025E5E09C00A46EB0 /* SearchResultsCollectionViewController+UICollectionViewDelegate.swift in Sources */,
