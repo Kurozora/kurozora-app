@@ -10,6 +10,7 @@ import AVFoundation
 
 class Chime: NSObject {
 	// MARK: Properties
+	/// The shared instance of `Chime`.
 	static let shared: Chime = Chime()
 
 	/// List of available chime groups.
