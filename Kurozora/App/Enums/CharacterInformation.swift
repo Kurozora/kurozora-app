@@ -14,7 +14,7 @@ enum CharacterInformation: Int, CaseIterable {
 	// MARK: - Cases
 	case debut = 0
 	case age
-	case measurments
+	case measurements
 	case characteristics
 
 	// MARK: - Properties
@@ -25,8 +25,8 @@ enum CharacterInformation: Int, CaseIterable {
 			return Trans.debut
 		case .age:
 			return Trans.age
-		case .measurments:
-			return Trans.measurments
+		case .measurements:
+			return Trans.measurements
 		case .characteristics:
 			return Trans.characteristics
 		}
@@ -39,7 +39,7 @@ enum CharacterInformation: Int, CaseIterable {
 			return UIImage(systemName: "star")
 		case .age:
 			return UIImage(systemName: "calendar")
-		case .measurments:
+		case .measurements:
 			return UIImage(systemName: "ruler")
 		case .characteristics:
 			return UIImage(systemName: "list.bullet.rectangle")
@@ -53,7 +53,7 @@ enum CharacterInformation: Int, CaseIterable {
 			return R.reuseIdentifier.informationCollectionViewCell.identifier
 		case .age:
 			return R.reuseIdentifier.informationCollectionViewCell.identifier
-		case .measurments:
+		case .measurements:
 			return R.reuseIdentifier.informationCollectionViewCell.identifier
 		case .characteristics:
 			return R.reuseIdentifier.informationCollectionViewCell.identifier
@@ -63,7 +63,7 @@ enum CharacterInformation: Int, CaseIterable {
 	// MARK: - Functions
 	/// Returns the required information from the given object.
 	///
-	/// - Parameter character: The object used to extract the infromation from.
+	/// - Parameter character: The object used to extract the information from.
 	///
 	/// Returns: the required information from the given object.
 	func information(from character: Character) -> String? {
@@ -76,31 +76,31 @@ enum CharacterInformation: Int, CaseIterable {
 			if let age = character.attributes.age, !age.isEmpty {
 				return age
 			}
-		case .measurments:
-			var measurments = ""
+		case .measurements:
+			var measurements = ""
 			if let height = character.attributes.height {
-				measurments += "Height: \(height)"
+				measurements += "Height: \(height)"
 			}
 
 			if let weight = character.attributes.weight {
-				measurments += "Weight: \(weight)"
+				measurements += "Weight: \(weight)"
 			}
 
 			if let bustSize = character.attributes.bustSize, bustSize != 0 {
-				measurments +=  measurments.isEmpty ? "Bust: " : "\nBust: "
-				measurments += "\(bustSize)"
+				measurements +=  measurements.isEmpty ? "Bust: " : "\nBust: "
+				measurements += "\(bustSize)"
 			}
 
 			if let waistSize = character.attributes.waistSize, waistSize != 0 {
-				measurments +=  measurments.isEmpty ? "Waist: " : "\nWaist: "
-				measurments += "\(waistSize)"
+				measurements +=  measurements.isEmpty ? "Waist: " : "\nWaist: "
+				measurements += "\(waistSize)"
 			}
 
 			if let hipSize = character.attributes.hipSize, hipSize != 0 {
-				measurments +=  measurments.isEmpty ? "Hip: " : "\nHip: "
-				measurments += "\(hipSize)"
+				measurements +=  measurements.isEmpty ? "Hip: " : "\nHip: "
+				measurements += "\(hipSize)"
 			}
-			return measurments
+			return measurements
 		case .characteristics:
 			var characteristics = ""
 			if let bloodType = character.attributes.bloodType {
@@ -119,7 +119,7 @@ enum CharacterInformation: Int, CaseIterable {
 
 	/// Returns the required primary information from the given object.
 	///
-	/// - Parameter character: The object used to extract the infromation from.
+	/// - Parameter character: The object used to extract the information from.
 	///
 	/// - Returns: the required primary information from the given object.
 	func primaryInformation(from character: Character) -> String? {
@@ -130,7 +130,7 @@ enum CharacterInformation: Int, CaseIterable {
 
 	/// Returns the required secondary information from the given object.
 	///
-	/// - Parameter character: The object used to extract the infromation from.
+	/// - Parameter character: The object used to extract the information from.
 	///
 	/// - Returns: the required secondary information from the given object.
 	func secondaryInformation(from character: Character) -> String? {
@@ -141,7 +141,7 @@ enum CharacterInformation: Int, CaseIterable {
 
 	/// Returns the required primary image from the given object.
 	///
-	/// - Parameter character: The object used to extract the infromation from.
+	/// - Parameter character: The object used to extract the information from.
 	///
 	/// - Returns: the required primary image from the given object.
 	func primaryImage(from character: Character) -> UIImage? {
