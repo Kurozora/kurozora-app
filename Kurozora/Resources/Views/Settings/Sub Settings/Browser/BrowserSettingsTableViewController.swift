@@ -45,6 +45,7 @@ extension BrowserSettingsTableViewController {
 extension BrowserSettingsTableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		UserSettings.set(indexPath.item, forKey: .defaultBrowser)
+		NotificationCenter.default.post(name: .KSAppBrowserDidChange, object: nil)
 		tableView.reloadData()
 	}
 }
