@@ -89,7 +89,7 @@ extension Episode {
 
 			NotificationCenter.default.post(name: .KEpisodeWatchStatusDidUpdate, object: nil, userInfo: userInfo)
 		} catch let error as KKAPIError {
-			await UIApplication.topViewController?.presentAlertController(title: Trans.addTolibrary, message: error.message)
+			await UIApplication.topViewController?.presentAlertController(title: Trans.addToLibrary, message: error.message)
 			print("----- Update episode watch status failed", error.message)
 		} catch {
 			print(error.localizedDescription)
@@ -162,7 +162,7 @@ extension Episode {
 
 	private func validateIsWatched() async -> Bool {
 		if self.attributes.watchStatus == nil {
-			await UIApplication.topViewController?.presentAlertController(title: Trans.addTolibrary, message: "Please watch \(self.attributes.title) first.")
+			await UIApplication.topViewController?.presentAlertController(title: Trans.addToLibrary, message: "Please watch \(self.attributes.title) first.")
 
 			return false
 		}

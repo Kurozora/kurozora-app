@@ -124,7 +124,7 @@ extension Show {
 
 	func addToLibrary() -> UIMenu {
 		let libraryStatus = self.attributes.library?.status ?? .none
-		let addToLibraryMenuTitle = libraryStatus == .none ? Trans.addTolibrary : Trans.updateLibraryStatus
+		let addToLibraryMenuTitle = libraryStatus == .none ? Trans.addToLibrary : Trans.updateLibraryStatus
 		let addToLibraryMenuImage = libraryStatus == .none ? UIImage(systemName: "plus") : UIImage(systemName: "arrow.left.arrow.right")
 		var menuElements: [UIMenuElement] = []
 
@@ -294,7 +294,7 @@ extension Show {
 
 	private func validateIsInLibrary() async -> Bool {
 		if self.attributes.library?.status == nil {
-			await UIApplication.topViewController?.presentAlertController(title: Trans.addTolibrary, message: "Please add \"\(self.attributes.title)\" to your library first.")
+			await UIApplication.topViewController?.presentAlertController(title: Trans.addToLibrary, message: "Please add \"\(self.attributes.title)\" to your library first.")
 
 			return false
 		}
