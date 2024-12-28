@@ -102,7 +102,6 @@ class SettingsCell: KTableViewCell {
 			switch result {
 			case .success(let imageCacheSize):
 				totalCacheSize = rickLinkCacheSize + imageCacheSize
-
 			case .failure(let error):
 				print("----- Cache size calculation error: \(error)")
 				totalCacheSize = rickLinkCacheSize

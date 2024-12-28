@@ -309,6 +309,7 @@
                         <segue destination="B3o-ew-EQQ" kind="showDetail" identifier="BrowserSegue" id="EJd-Ik-boK"/>
                         <segue destination="rXI-hr-RBS" kind="showDetail" identifier="SwitchAccountSegue" id="RsV-c8-7Ym"/>
                         <segue destination="IOa-QJ-OWG" kind="showDetail" identifier="SoundSegue" id="gvC-fL-6dY"/>
+                        <segue destination="Rix-Ql-Mkr" kind="showDetail" identifier="MotionSegue" id="Bmi-Hv-ehH"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a4m-0q-T6w" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -358,6 +359,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cp5-K8-YlG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1872" y="-1052"/>
+        </scene>
+        <!--MotionSettings-->
+        <scene sceneID="hkC-6d-Hre">
+            <objects>
+                <viewControllerPlaceholder storyboardName="MotionSettings" id="Rix-Ql-Mkr" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="dvM-4L-sj2"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7Me-Vs-Kkc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1870" y="-948"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
