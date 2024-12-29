@@ -65,6 +65,23 @@ extension FeedMessage {
 //			}
 
 			menuElements.append(UIMenu(title: "@\(user.attributes.slug)", children: profileElements))
+
+			if User.isSignedIn, user == User.current {
+				// Pin
+				var pinAction: UIAction
+				if self.attributes.isPinned {
+					pinAction = UIAction(title: "Unpin", image: UIImage(systemName: "pin.slash")) { [weak self] _ in
+						guard let self = self else { return }
+						self.pinMessage(via: viewController, userInfo: userInfo)
+					}
+				} else {
+					pinAction = UIAction(title: "Pin", image: UIImage(systemName: "pin")) { [weak self] _ in
+						guard let self = self else { return }
+						self.pinMessage(via: viewController, userInfo: userInfo)
+					}
+				}
+				menuElements.append(pinAction)
+			}
 		}
 
 		if User.isSignedIn {
@@ -178,6 +195,27 @@ extension FeedMessage {
 				} catch {
 					print(error.localizedDescription)
 				}
+			}
+		}
+	}
+
+	/// Pin or un-pin the message.
+	///
+	/// - Parameters:
+	///    - viewController: The view controller initiating the action.
+	///    - userInfo: Any information passed by the user.
+	func pinMessage(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any?]) {
+		Task {
+			do {
+				let feedMessageUpdateResponse = try await KService.pinMessage(self.id).value
+
+				self.attributes.update(using: feedMessageUpdateResponse.data)
+
+				if let indexPath = userInfo["indexPath"] as? IndexPath {
+					NotificationCenter.default.post(name: .KFMDidUpdate, object: nil, userInfo: ["indexPath": indexPath])
+				}
+			} catch {
+				print(error.localizedDescription)
 			}
 		}
 	}
