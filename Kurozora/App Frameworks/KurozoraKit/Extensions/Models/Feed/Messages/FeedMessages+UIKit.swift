@@ -178,7 +178,7 @@ extension FeedMessage {
 	///
 	/// - Parameters:
 	///    - viewController: The view controller initiating the action.
-	///    - userInfo: Any infromation passed by the user.
+	///    - userInfo: Any information passed by the user.
 	func heartMessage(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any?]) {
 		WorkflowController.shared.isSignedIn { [weak self] in
 			guard let self = self else { return }
@@ -224,7 +224,7 @@ extension FeedMessage {
 	///
 	/// - Parameters:
 	///    - viewController: The view controller initiating the action.
-	///    - userInfo: Any infromation passed by the user.
+	///    - userInfo: Any information passed by the user.
 	func replyToMessage(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any?]) {
 		WorkflowController.shared.isSignedIn { [weak self] in
 			guard let self = self else { return }
@@ -236,7 +236,7 @@ extension FeedMessage {
 	///
 	/// - Parameters:
 	///    - viewController: The view controller initiating the action.
-	///    - userInfo: Any infromation passed by the user.
+	///    - userInfo: Any information passed by the user.
 	func reShareMessage(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any?]) {
 		WorkflowController.shared.isSignedIn { [weak self] in
 			guard let self = self else { return }
@@ -252,7 +252,7 @@ extension FeedMessage {
 	///
 	/// - Parameters:
 	///    - viewController: The view controller initiating the action.
-	///    - userInfo: Any infromation passed by the user.
+	///    - userInfo: Any information passed by the user.
 	///    - isEditingMessage: Whether the user is editing a message.
 	func openReplyTextEditor(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any?], isEditingMessage: Bool) {
 		if let kfmReplyTextEditorViewController = R.storyboard.textEditor.kfmReplyTextEditorViewController() {
@@ -281,7 +281,7 @@ extension FeedMessage {
 	///
 	/// - Parameters:
 	///    - viewController: The view controller initiating the action.
-	///    - userInfo: Any infromation passed by the user.
+	///    - userInfo: Any information passed by the user.
 	///    - isEditingMessage: Whether the user is editing a message.
 	func openReShareTextEditor(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any?], isEditingMessage: Bool) {
 		if let kfmReShareTextEditorViewController = R.storyboard.textEditor.kfmReShareTextEditorViewController() {
@@ -310,7 +310,7 @@ extension FeedMessage {
 	///
 	/// - Parameters:
 	///    - viewController: The view controller initiating the action.
-	///    - userInfo: Any infromation passed by the user.
+	///    - userInfo: Any information passed by the user.
 	///    - isEditingMessage: Whether the user is editing a message.
 	func openDefaultTextEditor(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any?], isEditingMessage: Bool) {
 		if let kFeedMessageTextEditorViewController = R.storyboard.textEditor.kFeedMessageTextEditorViewController() {
@@ -334,7 +334,7 @@ extension FeedMessage {
 	///
 	/// - Parameters:
 	///    - viewController: The view controller initiating the action.
-	///    - userInfo: Any infromation passed by the user.
+	///    - userInfo: Any information passed by the user.
 	func editMessage(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any?]) {
 		if self.attributes.isReply {
 			self.openReplyTextEditor(via: viewController, userInfo: userInfo, isEditingMessage: true)
@@ -387,7 +387,7 @@ extension FeedMessage {
 
 	/// Presents the details view of the message.
 	///
-	/// - Parameter viewController: The view controller initiaing the segue.
+	/// - Parameter viewController: The view controller initiating the segue.
 	func visitRepliesView(from viewController: UIViewController? = UIApplication.topViewController) {
 		if let fmDetailsTableViewController = R.storyboard.feed.fmDetailsTableViewController() {
 			fmDetailsTableViewController.feedMessageID = self.id
@@ -398,7 +398,7 @@ extension FeedMessage {
 
 	/// Presents the profile view for the message poster.
 	///
-	/// - Parameter viewController: The view controller initiaing the segue.
+	/// - Parameter viewController: The view controller initiating the segue.
 	func visitOriginalPosterProfile(from viewController: UIViewController? = UIApplication.topViewController) {
 		guard let user = self.relationships.users.data.first else { return }
 		let profileTableViewController = ProfileTableViewController.`init`(with: user)
