@@ -205,18 +205,42 @@ extension FeedMessage {
 	///    - viewController: The view controller initiating the action.
 	///    - userInfo: Any information passed by the user.
 	func pinMessage(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any?]) {
-		Task {
-			do {
-				let feedMessageUpdateResponse = try await KService.pinMessage(self.id).value
+		let title = self.attributes.isPinned ? Trans.unpinMessageHeadline : Trans.pinMessageHeadline
+		let message = self.attributes.isPinned ? Trans.unpinMessageSubheadline : Trans.pinMessageSubheadline
+		let primaryActionStyle: UIAlertAction.Style = self.attributes.isPinned ? .destructive : .default
 
-				self.attributes.update(using: feedMessageUpdateResponse.data)
+		let actionSheetAlertController = UIAlertController.alert(title: title, message: message) { [weak self] alertController in
+			guard let self = self else { return }
 
-				if let indexPath = userInfo["indexPath"] as? IndexPath {
-					NotificationCenter.default.post(name: .KFMDidUpdate, object: nil, userInfo: ["indexPath": indexPath])
+			let pinAction = UIAlertAction(title: self.attributes.isPinned ? Trans.unpin : Trans.pin, style: primaryActionStyle) { _ in
+				Task {
+					do {
+						let feedMessageUpdateResponse = try await KService.pinMessage(self.id).value
+
+						self.attributes.update(using: feedMessageUpdateResponse.data)
+
+						if let indexPath = userInfo["indexPath"] as? IndexPath {
+							NotificationCenter.default.post(name: .KFMDidUpdate, object: nil, userInfo: ["indexPath": indexPath])
+						}
+					} catch {
+						print(error.localizedDescription)
+					}
 				}
-			} catch {
-				print(error.localizedDescription)
 			}
+			alertController.addAction(pinAction)
+			alertController.preferredAction = pinAction
+		}
+
+		// Present the controller
+		if let popoverController = actionSheetAlertController.popoverPresentationController {
+			if let view = viewController?.view {
+				popoverController.sourceView = view
+				popoverController.sourceRect = view.bounds
+			}
+		}
+
+		if (viewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
+			viewController?.present(actionSheetAlertController, animated: true, completion: nil)
 		}
 	}
 
