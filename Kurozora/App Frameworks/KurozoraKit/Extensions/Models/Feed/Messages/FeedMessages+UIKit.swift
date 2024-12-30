@@ -34,10 +34,10 @@ extension FeedMessage {
 
 				switch user.attributes.followStatus {
 				case .followed:
-					followActionTitle = "Unfollow"
+					followActionTitle = Trans.unfollow
 					followActionImage = UIImage(systemName: "person.badge.minus")
 				case .notFollowed, .disabled:
-					followActionTitle = "Follow"
+					followActionTitle = Trans.follow
 					followActionImage = UIImage(systemName: "person.badge.plus")
 				}
 
@@ -49,7 +49,7 @@ extension FeedMessage {
 			}
 
 			// Show profile action
-			let showProfileAction = UIAction(title: "Show Profile", image: UIImage(systemName: "person.crop.circle")) { [weak self] _ in
+			let showProfileAction = UIAction(title: Trans.showProfile, image: UIImage(systemName: "person.crop.circle")) { [weak self] _ in
 				guard let self = self else { return }
 				self.visitOriginalPosterProfile(from: viewController)
 			}
@@ -57,7 +57,7 @@ extension FeedMessage {
 
 //			// Block action
 //			if User.isSignedIn, user != User.current {
-//				let blockAction = UIAction(title: "Block", image: UIImage(systemName: "xmark.shield")) { [weak self] _ in
+//				let blockAction = UIAction(title: Trans.block, image: UIImage(systemName: "xmark.shield")) { [weak self] _ in
 //					guard let self = self else { return }
 //					self.relationships.users.data.first?.block()
 //				}
@@ -70,12 +70,12 @@ extension FeedMessage {
 				// Pin
 				var pinAction: UIAction
 				if self.attributes.isPinned {
-					pinAction = UIAction(title: "Unpin", image: UIImage(systemName: "pin.slash")) { [weak self] _ in
+					pinAction = UIAction(title: Trans.unpin, image: UIImage(systemName: "pin.slash")) { [weak self] _ in
 						guard let self = self else { return }
 						self.pinMessage(via: viewController, userInfo: userInfo)
 					}
 				} else {
-					pinAction = UIAction(title: "Pin", image: UIImage(systemName: "pin")) { [weak self] _ in
+					pinAction = UIAction(title: Trans.pin, image: UIImage(systemName: "pin")) { [weak self] _ in
 						guard let self = self else { return }
 						self.pinMessage(via: viewController, userInfo: userInfo)
 					}
@@ -88,21 +88,21 @@ extension FeedMessage {
 			// Heart, reply and reshare
 			var heartAction: UIAction
 			if self.attributes.isHearted ?? false {
-				heartAction = UIAction(title: "Unlike", image: UIImage(systemName: "heart.slash")) { [weak self] _ in
+				heartAction = UIAction(title: Trans.unlike, image: UIImage(systemName: "heart.slash")) { [weak self] _ in
 					guard let self = self else { return }
 					self.heartMessage(via: viewController, userInfo: userInfo)
 				}
 			} else {
-				heartAction = UIAction(title: "Like", image: UIImage(systemName: "heart")) { [weak self] _ in
+				heartAction = UIAction(title: Trans.like, image: UIImage(systemName: "heart")) { [weak self] _ in
 					guard let self = self else { return }
 					self.heartMessage(via: viewController, userInfo: userInfo)
 				}
 			}
-			let replyAction = UIAction(title: "Reply", image: #imageLiteral(resourceName: "Symbols/message.left.and.message.right")) { [weak self] _ in
+			let replyAction = UIAction(title: Trans.reply, image: #imageLiteral(resourceName: "Symbols/message.left.and.message.right")) { [weak self] _ in
 				guard let self = self else { return }
 				self.replyToMessage(via: viewController, userInfo: userInfo)
 			}
-			let reShareAction = UIAction(title: "Re-share", image: UIImage(systemName: "arrow.2.squarepath")) { [weak self] _ in
+			let reShareAction = UIAction(title: Trans.reshare, image: UIImage(systemName: "arrow.2.squarepath")) { [weak self] _ in
 				guard let self = self else { return }
 				self.reShareMessage(via: viewController, userInfo: userInfo)
 			}
@@ -117,7 +117,7 @@ extension FeedMessage {
 			   User.current?.attributes.role == .admin ||
 			   User.current?.id == messageUserID {
 				// Edit action
-				let editAction = UIAction(title: "Edit", image: UIImage(systemName: "pencil.circle")) { [weak self] _ in
+				let editAction = UIAction(title: Trans.edit, image: UIImage(systemName: "pencil.circle")) { [weak self] _ in
 					guard let self = self else { return }
 					self.editMessage(via: viewController, userInfo: userInfo)
 				}
@@ -125,7 +125,7 @@ extension FeedMessage {
 
 				var deleteMenuElements: [UIMenuElement] = []
 				// Delete action
-				let deleteAction = UIAction(title: "Delete Message", attributes: .destructive) { [weak self] _ in
+				let deleteAction = UIAction(title: Trans.deleteMessage, attributes: .destructive) { [weak self] _ in
 					guard let self = self else { return }
 					if let indexPath = userInfo["indexPath"] as? IndexPath {
 						Task {
@@ -135,20 +135,20 @@ extension FeedMessage {
 				}
 				deleteMenuElements.append(deleteAction)
 
-				menuElements.append(UIMenu(title: "Delete", image: UIImage(systemName: "trash"), children: deleteMenuElements))
+				menuElements.append(UIMenu(title: Trans.delete, image: UIImage(systemName: "trash"), children: deleteMenuElements))
 			}
 		}
 
 		var userMenuElements: [UIMenuElement] = []
 		// Replies action
-		let showRepliesAction = UIAction(title: "Show Replies", image: #imageLiteral(resourceName: "Symbols/message.left.and.message.right")) { [weak self] _ in
+		let showRepliesAction = UIAction(title: Trans.showReplies, image: #imageLiteral(resourceName: "Symbols/message.left.and.message.right")) { [weak self] _ in
 			guard let self = self else { return }
 			self.visitRepliesView(from: viewController)
 		}
 		userMenuElements.append(showRepliesAction)
 
 		// Create "share" element
-		let shareAction = UIAction(title: "Share Message", image: UIImage(systemName: "square.and.arrow.up")) { [weak self] _ in
+		let shareAction = UIAction(title: Trans.shareMessage, image: UIImage(systemName: "square.and.arrow.up")) { [weak self] _ in
 			guard let self = self else { return }
 			self.openShareSheet(on: viewController)
 		}
@@ -160,14 +160,14 @@ extension FeedMessage {
 		if User.isSignedIn {
 			// Report message action
 			var reportMenuElements: [UIMenuElement] = []
-			let reportAction = UIAction(title: "Report Message", attributes: .destructive) { [weak self] _ in
+			let reportAction = UIAction(title: Trans.reportMessage, attributes: .destructive) { [weak self] _ in
 				guard let self = self else { return }
 				self.reportMessage()
 			}
 			reportMenuElements.append(reportAction)
 
 			// Append report menu
-			menuElements.append(UIMenu(title: "Report", image: UIImage(systemName: "exclamationmark.circle"), children: reportMenuElements))
+			menuElements.append(UIMenu(title: Trans.report, image: UIImage(systemName: "exclamationmark.circle"), children: reportMenuElements))
 		}
 
 		// Create and return a UIMenu
@@ -243,7 +243,7 @@ extension FeedMessage {
 			if !self.attributes.isReShared {
 				self.openReShareTextEditor(via: viewController, userInfo: userInfo, isEditingMessage: false)
 			} else {
-				viewController?.presentAlertController(title: "Can't Re-Share", message: "You are not allowed to re-share a message more than once.")
+				viewController?.presentAlertController(title: Trans.reshareMessageErrorHeadline, message: Trans.reshareMessageErrorSubheadline)
 			}
 		}
 	}
@@ -360,10 +360,10 @@ extension FeedMessage {
 
 	/// Confirm if the user wants to delete the message.
 	func confirmDelete(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any?]) {
-		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: "Message will be deleted permanently.") { [weak self] actionSheetAlertController in
+		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: Trans.deleteMessageSubheadline) { [weak self] actionSheetAlertController in
 			guard let self = self else { return }
 
-			let deleteAction = UIAlertAction(title: "Delete Message", style: .destructive) { _ in
+			let deleteAction = UIAlertAction(title: Trans.deleteMessage, style: .destructive) { _ in
 				if let indexPath = userInfo["indexPath"] as? IndexPath {
 					Task {
 						await self.remove(at: indexPath)
@@ -437,7 +437,7 @@ extension FeedMessage {
 	/// Sends a report of the selected message to the mods.
 	func reportMessage() {
 		WorkflowController.shared.isSignedIn {
-			UIApplication.topViewController?.presentAlertController(title: "Message Reported", message: "Thank you for helping keep the community safe.")
+			UIApplication.topViewController?.presentAlertController(title: Trans.messageReportedHeadline, message: Trans.messageReportedSubheadline)
 		}
 	}
 }

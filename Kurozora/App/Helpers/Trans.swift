@@ -379,6 +379,102 @@ struct Trans {
 	static let characterLimitReachedSubheadline: String = String(localized: "You have exceeded the character limit for a message.",
 																 table: "Feed",
 																 comment: "The subheadline string for the character limit reached error pop-up")
+	/// The headline string for the pin message pop-up.
+	///
+	/// - Tag: Trans-pinMessageHeadline
+	static let pinMessageHeadline: String = String(localized: "Pin this message",
+												   table: "Feed",
+												   comment: "The headline string for the pin message pop-up")
+	/// The subheadline string for the pin message pop-up.
+	///
+	/// - Tag: Trans-pinMessageSubheadline
+	static let pinMessageSubheadline: String = String(localized: "This will appear at the top of your profile and replace any previously pinned message. Are you sure?",
+													  table: "Feed",
+													  comment: "The subheadline string for the pin message pop-up")
+	/// The headline string for the unpin message pop-up.
+	///
+	/// - Tag: Trans-unpinMessageHeadline
+	static let unpinMessageHeadline: String = String(localized: "Unpin from your profile",
+													 table: "Feed",
+													 comment: "The headline string for the unpin message pop-up")
+	/// The subheadline string for the unpin message pop-up.
+	///
+	/// - Tag: Trans-unpinMessageSubheadline
+	static let unpinMessageSubheadline: String = String(localized: "Are you sure?",
+														table: "Feed",
+														comment: "The subheadline string for the unpin message pop-up")
+	/// The headline string for the reshare message error pop-up.
+	///
+	/// - Tag: Trans-reshareMessageErrorHeadline
+	static let reshareMessageErrorHeadline: String = String(localized: "Can't Re-Share",
+															table: "Feed",
+															comment: "The headline string for the reshare message error pop-up")
+	/// The subheadline string for the reshare message error pop-up.
+	///
+	/// - Tag: Trans-reshareMessageErrorSubheadline
+	static let reshareMessageErrorSubheadline: String = String(localized: "You are not allowed to re-share a message more than once.",
+															   table: "Feed",
+															   comment: "The subheadline string for the reshare message error pop-up")
+	/// The subheadline string for the delete message pop-up.
+	///
+	/// - Tag: Trans-deleteMessageSubheadline
+	static let deleteMessageSubheadline: String = String(localized: "Message will be deleted permanently.",
+														 table: "Feed",
+														 comment: "The subheadline string for the delete message pop-up")
+	/// The headline string for the report message pop-up.
+	///
+	/// - Tag: Trans-messageReportedHeadline
+	static let messageReportedHeadline: String = String(localized: "Message Reported",
+														table: "Feed",
+														comment: "The headline string for the report message pop-up")
+	/// The subheadline string for the report message pop-up.
+	///
+	/// - Tag: Trans-messageReportedSubheadline
+	static let messageReportedSubheadline: String = String(localized: "Thank you for helping keep the community safe.",
+														   table: "Feed",
+														   comment: "The subheadline string for the report message pop-up")
+	/// The string for the 'Show Profile' context menu option.
+	///
+	/// - Tag: Trans-showProfile
+	static let showProfile: String = String(localized: "Show Profile",
+											table: "Feed",
+											comment: "The string for the 'Show Profile' context menu option.")
+	/// The string for the 'Reply' context menu option.
+	///
+	/// - Tag: Trans-reply
+	static let reply: String = String(localized: "Reply",
+									  table: "Feed",
+									  comment: "The string for the 'Reply' context menu option.")
+	/// The string for the 'Re-share' context menu option.
+	///
+	/// - Tag: Trans-reshare
+	static let reshare: String = String(localized: "Re-share",
+										table: "Feed",
+										comment: "The string for the 'Re-share' context menu option.")
+	/// The string for the 'Delete Message' context menu option.
+	///
+	/// - Tag: Trans-deleteMessage
+	static let deleteMessage: String = String(localized: "Delete Message",
+											  table: "Feed",
+											  comment: "The string for the 'Delete Message' context menu option.")
+	/// The string for the 'Show Replies' context menu option.
+	///
+	/// - Tag: Trans-showReplies
+	static let showReplies: String = String(localized: "Show Replies",
+											table: "Feed",
+											comment: "The string for the 'Show Replies' context menu option.")
+	/// The string for the 'Share Message' context menu option.
+	///
+	/// - Tag: Trans-shareMessage
+	static let shareMessage: String = String(localized: "Share Message",
+											 table: "Feed",
+											 comment: "The string for the 'Share Message' context menu option.")
+	/// The string for the 'Report Message' context menu option.
+	///
+	/// - Tag: Trans-reportMessage
+	static let reportMessage: String = String(localized: "Report Message",
+											  table: "Feed",
+											  comment: "The string for the 'Report Message' context menu option.")
 
 	// MARK: - Theme
 	/// The string for default theme description.
@@ -921,16 +1017,70 @@ struct Trans {
 	/// - Tag: Trans-follower
 	static let follower: String = String(localized: "Follower",
 										 comment: "The string for the word 'follower'.")
-	/// The string for the word 'follow'.
-	///
-	/// - Tag: Trans-follow
-	static let follow: String = String(localized: "Follow",
-									   comment: "The string for the word 'follow'.")
 	/// The string for the word 'following'.
 	///
 	/// - Tag: Trans-following
 	static let following: String = String(localized: "Following",
 										  comment: "The string for the word 'following'.")
+	/// The string for the word 'follow'.
+	///
+	/// - Tag: Trans-follow
+	static let follow: String = String(localized: "Follow",
+									   comment: "The string for the word 'follow'.")
+	/// The string for the word 'unfollow'.
+	///
+	/// - Tag: Trans-unfollow
+	static let unfollow: String = String(localized: "Unfollow",
+										 table: "Feed",
+										 comment: "The string for the word 'unfollow'.")
+	/// The string for the word 'block'.
+	///
+	/// - Tag: Trans-block
+	static let block: String = String(localized: "Block",
+									  table: "Feed",
+									  comment: "The string for the word 'block'.")
+	/// The string for the word 'unpin'.
+	///
+	/// - Tag: Trans-unpin
+	static let unpin: String = String(localized: "Unpin",
+									  table: "Feed",
+									  comment: "The string for the word 'unpin'.")
+	/// The string for the word 'pin'.
+	///
+	/// - Tag: Trans-pin
+	static let pin: String = String(localized: "Pin",
+									table: "Feed",
+									comment: "The string for the word 'pin'.")
+	/// The string for the word 'unlike'.
+	///
+	/// - Tag: Trans-unlike
+	static let unlike: String = String(localized: "Unlike",
+									   table: "Feed",
+									   comment: "The string for the word 'unlike'.")
+	/// The string for the word 'like'.
+	///
+	/// - Tag: Trans-like
+	static let like: String = String(localized: "Like",
+									 table: "Feed",
+									 comment: "The string for the word 'like'.")
+	/// The string for the word 'edit'.
+	///
+	/// - Tag: Trans-edit
+	static let edit: String = String(localized: "Edit",
+									 table: "Feed",
+									 comment: "The string for the word 'edit'.")
+	/// The string for the word 'delete'.
+	///
+	/// - Tag: Trans-delete
+	static let delete: String = String(localized: "Delete",
+									   table: "Feed",
+									   comment: "The string for the word 'delete'.")
+	/// The string for the word 'report'.
+	///
+	/// - Tag: Trans-report
+	static let report: String = String(localized: "Report",
+									   table: "Feed",
+									   comment: "The string for the word 'report'.")
 	/// The string for the word 'message'.
 	///
 	/// - Tag: Trans-message
