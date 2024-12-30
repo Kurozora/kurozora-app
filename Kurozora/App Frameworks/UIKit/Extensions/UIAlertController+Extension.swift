@@ -87,4 +87,28 @@ extension UIAlertController {
 
 		return alertController
 	}
+
+	/// Return an alert with the default style and a default action button.
+	///
+	/// - Parameters:
+	///    - title: The title of the action sheet. Use this string to get the user’s attention and communicate the reason for the alert.
+	///    - message: Descriptive text that provides additional details about the reason for the alert.
+	///    - defaultActionButtonTitle: The text to use for the default button's title. The value you specify should be localized for the user’s current language.
+	///    - handler: A block to execute when the user selects the default action. This block has no return value and takes the selected action object as its only parameter.
+	///    - actions: Actions specified by the user to be added to the alert.
+	///    - actionSheetAlertController: The instantiated alert controller instance.
+	///
+	/// - Returns: an alert with the default style and a default action button.
+	static func alert(title: String?, message: String?, defaultActionButtonTitle: String = Trans.cancel, handler: ((UIAlertAction) -> Void)? = nil, actions: ((_ actionSheetAlertController: UIAlertController) -> Void)) -> UIAlertController {
+		let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+
+		// Add user specified actions
+		actions(alertController)
+
+		// Add the default action to the alert controller
+		let defaultAction = UIAlertAction(title: defaultActionButtonTitle, style: .cancel, handler: handler)
+		alertController.addAction(defaultAction)
+
+		return alertController
+	}
 }
