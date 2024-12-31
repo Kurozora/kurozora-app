@@ -12,8 +12,6 @@ import LinkPresentation
 
 class FeedMessageReShareCell: FeedMessageCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var reShareImageView: UIImageView!
-	@IBOutlet weak var reShareLabel: KSecondaryLabel!
 	@IBOutlet weak var opProfileImageView: ProfileImageView!
 	@IBOutlet weak var opUsernameLabel: KLabel!
 	@IBOutlet weak var opPostTextView: KSelectableTextView!
@@ -27,19 +25,12 @@ class FeedMessageReShareCell: FeedMessageCell {
 	override func prepareForReuse() {
 		super.prepareForReuse()
 
-		self.opPostTextView.text = ""
 		self.opPostTextViewContainer?.isHidden = false
-		self.opRichLinkStackView.arrangedSubviews.forEach { subview in
-			if subview != self.opPostTextViewContainer {
-				self.opRichLinkStackView.removeArrangedSubview(subview)
-				subview.removeFromSuperview()
-			}
-		}
 	}
 
 	// MARK: - Functions
-	override func configureCell(using feedMessage: FeedMessage?) {
-		super.configureCell(using: feedMessage)
+	override func configureCell(using feedMessage: FeedMessage?, isOnProfile: Bool) {
+		super.configureCell(using: feedMessage, isOnProfile: isOnProfile)
 		guard let feedMessage = feedMessage else {
 			return
 		}
@@ -47,17 +38,19 @@ class FeedMessageReShareCell: FeedMessageCell {
 		guard let opMessage = feedMessage.relationships.parent?.data.first else { return }
 		self.opDateTimeLabel.text = opMessage.attributes.createdAt.relativeToNow
 
-		// Configure re-share label
-		self.reShareImageView.theme_tintColor = KThemePicker.subTextColor.rawValue
-
 		if let opUser = opMessage.relationships.users.data.first {
 			opUser.attributes.profileImage(imageView: self.opProfileImageView)
 
-			// Configure re-share label
-			self.reShareLabel.text = if opUser.attributes.username == User.current?.attributes.username {
-				"You reposted this"
+			// Configure status label
+			if isOnProfile, feedMessage.attributes.isPinned {
 			} else {
-				"\(opUser.attributes.username) reposted this"
+				self.statusImageView.image = UIImage(systemName: "arrow.2.squarepath")
+				self.statusLabel.text = if opUser.attributes.username == User.current?.attributes.username {
+					"You reposted this"
+				} else {
+					"\(opUser.attributes.username) reposted this"
+				}
+				self.statusStackView.isHidden = false
 			}
 
 			// Configure username
@@ -79,6 +72,14 @@ class FeedMessageReShareCell: FeedMessageCell {
 		}
 
 		// Configure body
+		self.opPostTextView.text = ""
+		self.opRichLinkStackView.arrangedSubviews.forEach { subview in
+			if subview != self.opPostTextViewContainer {
+				self.opRichLinkStackView.removeArrangedSubview(subview)
+				subview.removeFromSuperview()
+			}
+		}
+
 		if let url = opMessage.attributes.content.extractURLs().last, url.isWebURL {
 			if let metadata = RichLink.shared.cachedMetadata(for: url) {
 				self.displayMetadata(metadata)

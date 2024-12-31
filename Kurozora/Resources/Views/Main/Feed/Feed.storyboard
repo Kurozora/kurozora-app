@@ -55,8 +55,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="7rU-XG-jEj"/>
-                        <viewLayoutGuide key="contentLayoutGuide" id="bMd-hk-eZA"/>
-                        <viewLayoutGuide key="frameLayoutGuide" id="mjV-mJ-MjQ"/>
+                        <viewLayoutGuide key="contentLayoutGuide" id="jNb-oV-TiJ"/>
+                        <viewLayoutGuide key="frameLayoutGuide" id="nzh-Bi-y5t"/>
                         <connections>
                             <outlet property="dataSource" destination="AtO-CH-0OW" id="8Rj-sb-T3d"/>
                             <outlet property="delegate" destination="AtO-CH-0OW" id="ztE-tZ-rjT"/>
@@ -70,7 +70,7 @@
                         </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem title="Profile" id="tt5-xx-9lS">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="egw-49-b9p" customClass="ProfileImageButton" customModule="Kurozora" customModuleProvider="target">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="egw-49-b9p" customClass="ProfileImageButton" customModule="Kurozora" customModuleProvider="target">
                                     <rect key="frame" x="342" y="5" width="52" height="34"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <constraints>

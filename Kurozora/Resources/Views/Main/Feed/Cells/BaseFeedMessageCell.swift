@@ -15,6 +15,10 @@ class BaseFeedMessageCell: KTableViewCell {
 	@IBOutlet weak var warningTranscriptLabel: UILabel?
 	@IBOutlet weak var warningVisualEffectView: KVisualEffectView?
 
+	@IBOutlet weak var statusStackView: UIStackView!
+	@IBOutlet weak var statusImageView: UIImageView!
+	@IBOutlet weak var statusLabel: KSecondaryLabel!
+
 	@IBOutlet weak var profileImageView: ProfileImageView!
 	@IBOutlet weak var displayNameLabel: KLabel!
 	@IBOutlet weak var usernameLabel: KSecondaryLabel!
@@ -39,14 +43,8 @@ class BaseFeedMessageCell: KTableViewCell {
 		super.prepareForReuse()
 
 		self.warningIsHidden = false
-		self.postTextView.text = ""
+		self.statusStackView.isHidden = true
 		self.postTextViewContainer?.isHidden = false
-		self.richLinkStackView.arrangedSubviews.forEach { subview in
-			if subview != self.postTextViewContainer {
-				self.richLinkStackView.removeArrangedSubview(subview)
-				subview.removeFromSuperview()
-			}
-		}
 	}
 
 	// MARK: - Functions
@@ -55,7 +53,7 @@ class BaseFeedMessageCell: KTableViewCell {
 		self.contentView.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 	}
 
-	func configureCell(using feedMessage: FeedMessage?) {
+	func configureCell(using feedMessage: FeedMessage?, isOnProfile: Bool) {
 		guard !self.warningIsHidden else {
 			self.hideSkeleton()
 			return
@@ -71,6 +69,18 @@ class BaseFeedMessageCell: KTableViewCell {
 
 		// Configure stack view
 		self.richLinkStackView.distribution = .fillProportionally
+
+		// Configure status image
+		self.statusImageView.theme_tintColor = KThemePicker.subTextColor.rawValue
+
+		// Configure status label
+		if isOnProfile, feedMessage.attributes.isPinned {
+			self.statusImageView.image = UIImage(systemName: "pin.fill")
+			self.statusLabel.text = "Pinned"
+			self.statusStackView.isHidden = false
+		} else {
+			self.statusStackView.isHidden = true
+		}
 
 		// Configure poster details
 		if let user = feedMessage.relationships.users.data.first {
@@ -88,7 +98,15 @@ class BaseFeedMessageCell: KTableViewCell {
 		}
 
 		// Configure body
+		self.postTextView.text = ""
 		self.postTextView.setAttributedText(feedMessage.attributes.contentMarkdown.markdownAttributedString())
+
+		self.richLinkStackView.arrangedSubviews.forEach { subview in
+			if subview != self.postTextViewContainer {
+				self.richLinkStackView.removeArrangedSubview(subview)
+				subview.removeFromSuperview()
+			}
+		}
 		if let url = feedMessage.attributes.content.extractURLs().last, url.isWebURL {
 			if let metadata = RichLink.shared.cachedMetadata(for: url) {
 				self.displayMetadata(metadata)
