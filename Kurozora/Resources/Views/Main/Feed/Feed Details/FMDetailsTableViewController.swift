@@ -265,7 +265,7 @@ extension FMDetailsTableViewController {
 			return feedMessageCell
 		default:
 			guard let feedMessageCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedMessageCell, for: indexPath) else {
-				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.feedMessageCell.identifier)")
+				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.feedMessageCell.identifier)")
 			}
 			feedMessageCell.delegate = self
 			feedMessageCell.liveReplyEnabled = false
