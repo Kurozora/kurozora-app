@@ -256,7 +256,7 @@ extension FMDetailsTableViewController {
 			feedMessageCell.delegate = self
 			feedMessageCell.liveReplyEnabled = true
 			feedMessageCell.liveReShareEnabled = false
-			feedMessageCell.configureCell(using: self.feedMessage)
+			feedMessageCell.configureCell(using: self.feedMessage, isOnProfile: false)
 			feedMessageCell.moreButton.menu = self.feedMessage.makeContextMenu(in: self, userInfo: [
 				"indexPath": indexPath,
 				"liveReplyEnabled": feedMessageCell.liveReplyEnabled,
@@ -270,7 +270,7 @@ extension FMDetailsTableViewController {
 			feedMessageCell.delegate = self
 			feedMessageCell.liveReplyEnabled = false
 			feedMessageCell.liveReShareEnabled = false
-			feedMessageCell.configureCell(using: self.feedMessageReplies[indexPath.row])
+			feedMessageCell.configureCell(using: self.feedMessageReplies[indexPath.row], isOnProfile: false)
 			feedMessageCell.moreButton.menu = self.feedMessageReplies[indexPath.row].makeContextMenu(in: self, userInfo: [
 				"indexPath": indexPath,
 				"liveReplyEnabled": feedMessageCell.liveReplyEnabled,

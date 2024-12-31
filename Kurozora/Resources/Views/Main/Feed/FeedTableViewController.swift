@@ -277,7 +277,7 @@ extension FeedTableViewController {
 		feedMessageCell?.delegate = self
 		feedMessageCell?.liveReplyEnabled = false
 		feedMessageCell?.liveReShareEnabled = true
-		feedMessageCell?.configureCell(using: feedMessage)
+		feedMessageCell?.configureCell(using: feedMessage, isOnProfile: false)
 		feedMessageCell?.moreButton.menu = feedMessage.makeContextMenu(in: self, userInfo: [
 			"indexPath": indexPath,
 			"liveReplyEnabled": feedMessageCell?.liveReplyEnabled,
