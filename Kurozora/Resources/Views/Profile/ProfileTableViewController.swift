@@ -765,7 +765,7 @@ extension ProfileTableViewController {
 		feedMessageCell?.delegate = self
 		feedMessageCell?.liveReplyEnabled = User.current?.id == self.userIdentity?.id
 		feedMessageCell?.liveReShareEnabled = User.current?.id == self.userIdentity?.id
-		feedMessageCell?.configureCell(using: feedMessage)
+		feedMessageCell?.configureCell(using: feedMessage, isOnProfile: true)
 		feedMessageCell?.moreButton.menu = feedMessage.makeContextMenu(in: self, userInfo: [
 			"indexPath": indexPath,
 			"liveReplyEnabled": feedMessageCell?.liveReplyEnabled,
