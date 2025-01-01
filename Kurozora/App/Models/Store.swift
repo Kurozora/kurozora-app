@@ -43,7 +43,7 @@ final class Store: NSObject, ObservableObject {
 	/// An array containing all `Non-Consumable` products.
 	@Published private(set) var nonConsumables: [Product] = []
 
-	/// The set of pruchased product identifiers.
+	/// The set of purchased product identifiers.
 	@Published private(set) var purchasedIdentifiers = Set<String>()
 
 	/// The transaction listener `Task` object.
@@ -99,7 +99,7 @@ final class Store: NSObject, ObservableObject {
 	// MARK: - Functions
 	/// Start listening for `StoreKit` transactions.
 	///
-	/// - Returns: a `Task` that listenes to `StoreKit` transaction requests.
+	/// - Returns: a `Task` that listens to `StoreKit` transaction requests.
 	func listenForTransactions() -> Task<Void, Error> {
 		return Task.detached {
 			// Iterate through any transactions which didn't come from a direct call to `purchase()`.
@@ -170,7 +170,7 @@ final class Store: NSObject, ObservableObject {
 	}
 
 	/// Verifies the receipt using Kurozora API.
-	func verifyReceipt() async {
+	private func verifyReceipt() async {
 		self.refreshReceipt()
 
 		// Get the receipt if it's available
@@ -252,7 +252,7 @@ final class Store: NSObject, ObservableObject {
 
 	/// Indicates whether a product is purchased.
 	///
-	/// - Parameter productIdentifier: The identifier used to determin the product to be checked.
+	/// - Parameter productIdentifier: The identifier used to determine the product to be checked.
 	///
 	/// - Returns: a boolean indicating whether a product is purchased.
 	func isPurchased(_ productIdentifier: String) async throws -> Bool {
@@ -272,7 +272,7 @@ final class Store: NSObject, ObservableObject {
 		return transaction.revocationDate == nil && !transaction.isUpgraded
 	}
 
-	/// Checks whether the transaction passses StoreKit verification.
+	/// Checks whether the transaction passes StoreKit verification.
 	///
 	/// - Parameter result: The verification result.
 	///
