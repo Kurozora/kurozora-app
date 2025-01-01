@@ -7,6 +7,7 @@
 
 // MARK: - Model
 internal extension UIDevice {
+	// MARK: - Properties
 	/// The device's model name in a readable form.
 	static let modelName: String = {
 		var systemInfo = utsname()
@@ -17,6 +18,11 @@ internal extension UIDevice {
 			return identifier + String(UnicodeScalar(UInt8(value)))
 		}
 
+		/// Maps the given identifier to a device name.
+		///
+		/// - Parameter identifier: The identifier used to map to a device name.
+		///
+		/// - Returns: the mapped device name. If no device with the given identifier is found then the `identifier` is returned.
 		func mapToDevice(identifier: String) -> String {
 			#if os(iOS)
 			switch identifier {
@@ -71,6 +77,10 @@ internal extension UIDevice {
 			case "iPhone15,5":											return "iPhone 15 Plus"
 			case "iPhone16,1":											return "iPhone 15 Pro"
 			case "iPhone16,2":											return "iPhone 15 Pro Max"
+			case "iPhone17,1": 											return "iPhone 16 Pro"
+			case "iPhone17,2": 											return "iPhone 16 Pro Max"
+			case "iPhone17,3":											return "iPhone 16"
+			case "iPhone17,4":											return "iPhone 16 Plus"
 				// iPad
 			case "iPad1,1", "iPad1,2":									return "iPad"
 			case "iPad2,1", "iPad2,2", "iPad2,3", "iPad2,4":			return "iPad 2"
@@ -103,6 +113,11 @@ internal extension UIDevice {
 			case "iPad14,1", "iPad14,2":								return "iPad mini (6th generation)"
 			case "iPad14,3", "iPad14,4":								return "iPad Pro (11-inch) (4th generation)"
 			case "iPad14,5", "iPad14,6":								return "iPad Pro (12.9-inch) (6th generation)"
+			case "iPad14,8", "iPad14,9":								return "iPad Air (11-inch) (M2)"
+			case "iPad14,10", "iPad14,11":								return "iPad Air (13-inch) (M2)"
+			case "iPad16,1", "iPad16,2":								return "iPad mini (A17 Pro)"
+			case "iPad16,3", "iPad16,4":								return "iPad Pro (11-inch) (M4)"
+			case "iPad16,5", "iPad16,6":								return "iPad Pro (13-inch) (M4)"
 				// Apple TV
 			case "AppleTV1,1":											return "Apple TV (1st generation)"
 			case "AppleTV2,1":											return "Apple TV (2nd generation)"
@@ -135,6 +150,8 @@ internal extension UIDevice {
 			case "Watch6,18":											return "Apple Watch Ultra"
 			case "Watch7,1", "Watch7,2", "Watch7,3", "Watch7,4":		return "Apple Watch Series 9"
 			case "Watch7,5":											return "Apple Watch Ultra 2"
+
+			case "Watch7,8", "Watch7,9", "Watch7,10", "Watch7,11":		return "Apple Watch Series 10"
 			case "i386", "x86_64":										return "Simulator \(mapToDevice(identifier: ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] ?? "watchOS"))"
 			default:													return identifier
 			}
@@ -143,6 +160,11 @@ internal extension UIDevice {
 			case "AppleTV5,3":											return "Apple TV 4"
 			case "AppleTV6,2":											return "Apple TV 4K"
 			case "i386", "x86_64":										return "Simulator \(mapToDevice(identifier: ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] ?? "tvOS"))"
+			default:													return identifier
+			}
+			#elseif os(visionOS)
+			switch identifier {
+			case "RealityDevice14,1":									return "Apple Vision Pro"
 			default:													return identifier
 			}
 			#endif

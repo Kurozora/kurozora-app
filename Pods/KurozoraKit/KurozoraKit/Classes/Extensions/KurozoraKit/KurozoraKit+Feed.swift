@@ -241,6 +241,27 @@ extension KurozoraKit {
 		return request.sender()
 	}
 
+	/// Pin or unpin a feed message.
+	///
+	/// - Parameters:
+	///    - messageID: The id of the message to pin or unpin.
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the pin message response.
+	public func pinMessage(_ messageID: String) ->  RequestSender<FeedMessageUpdateResponse, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
+		headers.add(.authorization(bearerToken: self.authenticationKey))
+
+		// Prepare request
+		let feedPost = KKEndpoint.Feed.Messages.pin(messageID).endpointValue
+		let request: APIRequest<FeedMessageUpdateResponse, KKAPIError> = tron.codable.request(feedPost)
+			.method(.post)
+			.headers(headers)
+
+		// Send request
+		return request.sender()
+	}
+
 	/// Delete the specified message ID from the user's messages.
 	///
 	/// - Parameters:

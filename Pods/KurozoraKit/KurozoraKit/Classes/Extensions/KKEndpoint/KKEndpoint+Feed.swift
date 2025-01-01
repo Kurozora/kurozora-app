@@ -19,6 +19,9 @@ extension KKEndpoint.Feed {
 		/// The endpoint to heart or unheart a feed message.
 		case heart(_ messageID: String)
 
+		/// The endpoint to pin or unpin a feed message.
+		case pin(_ messageID: String)
+
 		/// The endpoint to the replies of a feed message.
 		case replies(_ messageID: String)
 
@@ -35,6 +38,8 @@ extension KKEndpoint.Feed {
 				return "feed/messages/\(messageID)/update"
 			case .heart(let messageID):
 				return "feed/messages/\(messageID)/heart"
+			case .pin(let messageID):
+				return "feed/messages/\(messageID)/pin"
 			case .replies(let messageID):
 				return "feed/messages/\(messageID)/replies"
 			case .delete(let messageID):
