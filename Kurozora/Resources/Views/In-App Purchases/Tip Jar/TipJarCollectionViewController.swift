@@ -105,10 +105,12 @@ class TipJarCollectionViewController: KCollectionViewController {
 // MARK: - PurchaseButtonCollectionViewCellDelegate
 extension TipJarCollectionViewController: PurchaseButtonCollectionViewCellDelegate {
 	func purchaseButtonCollectionViewCell(_ cell: PurchaseButtonCollectionViewCell, didPressButton button: UIButton) {
-		guard WorkflowController.shared.isSignedIn() else { return }
-		Task { [weak self] in
+		WorkflowController.shared.isSignedIn(on: self) { [weak self] in
 			guard let self = self else { return }
-			await self.purchase(cell.product)
+
+			Task {
+				await self.purchase(cell.product)
+			}
 		}
 	}
 
@@ -133,6 +135,14 @@ extension TipJarCollectionViewController: PurchaseButtonCollectionViewCellDelega
 
 // MARK: - PurchaseFooterCollectionViewCellDelegate
 extension TipJarCollectionViewController: PurchaseFooterCollectionViewCellDelegate {
+	func purchaseFooterCollectionViewCell(_ cell: PurchaseFooterCollectionViewCell, didPressRestorePurchaseButton button: UIButton) {
+		WorkflowController.shared.isSignedIn(on: self) {
+			Task {
+				await store.restore()
+			}
+		}
+	}
+
 	func purchaseFooterCollectionViewCell(_ cell: PurchaseFooterCollectionViewCell, didPressTermsOfUseButton button: UIButton) {
 		UIApplication.shared.kOpen(URL.appStoreEULA)
 	}

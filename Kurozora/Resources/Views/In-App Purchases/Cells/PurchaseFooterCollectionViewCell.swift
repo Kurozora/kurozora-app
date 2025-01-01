@@ -10,6 +10,7 @@ import UIKit
 import SwiftTheme
 
 protocol PurchaseFooterCollectionViewCellDelegate: AnyObject {
+	func purchaseFooterCollectionViewCell(_ cell: PurchaseFooterCollectionViewCell, didPressRestorePurchaseButton button: UIButton)
 	func purchaseFooterCollectionViewCell(_ cell: PurchaseFooterCollectionViewCell, didPressPrivacyButton button: UIButton)
 	func purchaseFooterCollectionViewCell(_ cell: PurchaseFooterCollectionViewCell, didPressTermsOfUseButton button: UIButton)
 }
@@ -36,9 +37,7 @@ class PurchaseFooterCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - IBActions
 	@IBAction func restorePurchaseButtonPressed(_ sender: UIButton) {
-		Task {
-			await store.restore()
-		}
+		self.delegate?.purchaseFooterCollectionViewCell(self, didPressRestorePurchaseButton: sender)
 	}
 
 	@IBAction func termsOfUseButtonPressed(_ sender: UIButton) {

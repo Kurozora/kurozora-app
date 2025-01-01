@@ -214,8 +214,10 @@ extension SettingsTableViewController {
 			}
 			return
 		case .restoreFeatures:
-			Task {
-				await store.restore()
+			WorkflowController.shared.isSignedIn(on: self) {
+				Task {
+					await store.restore()
+				}
 			}
 			return
 		case .rate:
