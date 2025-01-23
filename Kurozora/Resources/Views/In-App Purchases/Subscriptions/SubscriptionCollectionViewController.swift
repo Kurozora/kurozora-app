@@ -30,6 +30,7 @@ class SubscriptionCollectionViewController: KCollectionViewController {
 		ProductFeature(title: "Stylish App Icons", description: "Make your home screen stand out with premium and limited time app icons.", image: R.image.promotional.inAppPurchases.icons()),
 		ProductFeature(title: "Startup Chimes", description: "Immerse yourself in the world of anime from the very start with serene chimes and iconic anime sounds.", image: R.image.promotional.inAppPurchases.chimes()),
 		ProductFeature(title: "Get Animated!", description: "Upgrade your profile with a gif image that captures your unique style.", image: R.image.promotional.inAppPurchases.gifs()),
+		ProductFeature(title: "Identity Change", description: "Switch things up every now an then with a fresh username that truly represents you.", image: R.image.promotional.inAppPurchases.username()),
 		ProductFeature(title: "Up to 1000 characters", description: "Dive even deeper into discussions with an extended 1000 character limit for your feed messages.", image: R.image.promotional.inAppPurchases.characterCount500()),
 		ProductFeature(title: "Subscriber Badge", description: "Stand out in the community with an exclusive subscription badge that evolves over time as you continue to support Kurozora!", image: R.image.promotional.inAppPurchases.subscriberBadge()),
 		ProductFeature(title: "Support the Community!", description: "Your contribution helps with maintaining the servers, paying for software licenses, and fund events and activities.", image: R.image.promotional.inAppPurchases.support())
