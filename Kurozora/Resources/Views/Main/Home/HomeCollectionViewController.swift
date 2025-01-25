@@ -127,26 +127,8 @@ class HomeCollectionViewController: KCollectionViewController {
 		self._prefersRefreshControlDisabled = true
 		#endif
 
-		// Determine whether to show confetti
-		let date = Date.now
-
-		if date >= Date(unixTimestamp: 1735084800)
-			&& date <= Date(unixTimestamp: 1735171199)
-			&& !UserSettings.confettiLastSeenAt.isInToday {
-			UserSettings.set(date, forKey: .confettiLastSeenAt)
-
-			SPConfettiConfiguration.particlesConfig.colors = [.systemGreen, .systemYellow, .systemRed, .white]
-			SPConfetti.startAnimating(.fullWidthToDown, particles: [.arc, .triangle, .circle, .custom(UIImage(systemName: "star.fill")!), .custom(UIImage(systemName: "snowflake")!), .custom(UIImage(systemName: "gift.fill")!)])
-		}
-
-		if date >= Date(unixTimestamp: 1735689600)
-			&& date <= Date(unixTimestamp: 1736121599)
-			&& !UserSettings.confettiLastSeenAt.isInToday {
-			UserSettings.set(date, forKey: .confettiLastSeenAt)
-
-			SPConfettiConfiguration.particlesConfig.colors = [.systemYellow, .systemRed, .systemBlue, .systemGreen, .systemPurple, .systemPink, .systemCyan, .black, .white]
-			SPConfetti.startAnimating(.fullWidthToDown, particles: [.arc, .triangle, .circle, .polygon, .star])
-		}
+		// Play confetti if it's a special day
+		ConfettiManager.shared.play()
 
 		// Configurations
 		self.configureQuickActions()
@@ -171,14 +153,15 @@ class HomeCollectionViewController: KCollectionViewController {
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 
-		// Show what's new in the app if necessary.
+		// Show what's new in the app if necessary
 		self.showWhatsNew()
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 
-		SPConfetti.stopAnimating()
+		// Stop confetti when user navigates away
+		ConfettiManager.shared.stop()
 	}
 
 	// MARK: - Functions
