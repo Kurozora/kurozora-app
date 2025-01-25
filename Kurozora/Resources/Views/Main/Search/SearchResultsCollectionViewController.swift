@@ -259,6 +259,7 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 
 		// Add search bar to navigation controller
 		self.navigationItem.searchController = self.kSearchController
+		self.navigationItem.hidesSearchBarWhenScrolling = false
 
 		#if !targetEnvironment(macCatalyst)
 		if #available(iOS 16.0, *) {
