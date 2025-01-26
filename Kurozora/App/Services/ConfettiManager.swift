@@ -9,7 +9,7 @@
 import Foundation
 import SPConfetti
 
-class ConfettiManager: NSObject {
+final class ConfettiManager: NSObject {
 	// MARK: - Properties
 	/// The shared instance of `ConfettiManager`.
     static let shared = ConfettiManager()

@@ -9,7 +9,7 @@
 import StoreKit
 import KurozoraKit
 
-class ReviewManager {
+final class ReviewManager {
 	// MARK: - Properties
 	/// The shared instance of the review manager.
 	static let shared = ReviewManager()

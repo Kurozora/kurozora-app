@@ -13,7 +13,7 @@ import SwiftyJSON
 import Combine
 import StoreKit
 
-class MusicManager: NSObject {
+final class MusicManager: NSObject {
 	// MARK: - Properties
 	/// The shared instance of `MusicManager`.
 	static let shared = MusicManager()

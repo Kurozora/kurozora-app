@@ -9,7 +9,7 @@
 import CoreSpotlight
 import MobileCoreServices
 
-class SpotlightManager: NSObject {
+final class SpotlightManager: NSObject {
 	// MARK: - Properties
 	static let shared = SpotlightManager()
 

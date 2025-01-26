@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WorkflowController: NSObject {
+final class WorkflowController: NSObject {
 	// MARK: - Properties
 	/// Returns the singleton WorkflowController instance.
 	static let shared = WorkflowController()

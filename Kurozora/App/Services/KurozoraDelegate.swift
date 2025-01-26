@@ -19,11 +19,11 @@ import XCDYouTubeKit
 /// - Ask the user for authentication before using the app.
 /// - Handle URL schemes supported by the app.
 /// - Initializing your app’s central data structures.
-/// - Present aproriate views when the devices reachability changes.
+/// - Present appropriate views when the devices reachability changes.
 /// - Registering for any required services at launch time, such as [KKServices](x-source-tag://KKServices).
 ///
 /// - Tag: Kurozora
-class KurozoraDelegate {
+final class KurozoraDelegate {
 	// MARK: - Properties
 	// Authentication
 	/// Indicates whether authentication has been enabled by the user.
@@ -123,16 +123,17 @@ class KurozoraDelegate {
 	/// - Parameter window: The window on which the warning view will be shown.
 	///
 	/// - Returns: a boolean indicating whether a warning view was presented.
+	@MainActor
 	func showWarningView(for window: UIWindow?) async -> Bool {
 		guard let currentAppVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String else { return false }
 
 		do {
 			let metaResponse = try await KService.getInfo().value
 			let meta = metaResponse.meta
-			let topViewController = await UIApplication.topViewController
-			let warningViewController = await WarningViewController()
+			let topViewController = UIApplication.topViewController
+			let warningViewController = WarningViewController()
 
-			if let warningDataStore = await warningViewController.router?.dataStore {
+			if let warningDataStore = warningViewController.router?.dataStore {
 				warningDataStore.window = window
 
 				if meta.isMaintenanceModeEnabled {
@@ -144,13 +145,11 @@ class KurozoraDelegate {
 				}
 			}
 
-			DispatchQueue.main.async {
-				if window != nil {
-					window?.rootViewController = warningViewController
-				} else {
-					warningViewController.modalPresentationStyle = .fullScreen
-					topViewController?.present(warningViewController, animated: true)
-				}
+			if window != nil {
+				window?.rootViewController = warningViewController
+			} else {
+				warningViewController.modalPresentationStyle = .fullScreen
+				topViewController?.present(warningViewController, animated: true)
 			}
 
 			return true
