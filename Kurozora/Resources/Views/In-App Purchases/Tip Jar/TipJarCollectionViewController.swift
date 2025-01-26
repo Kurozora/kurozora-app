@@ -17,7 +17,7 @@ class TipJarCollectionViewController: KCollectionViewController {
 
 	// MARK: - Properties
 	var products: [Product] {
-		return store.tips
+		return Store.shared.tips
 	}
 	var productFeatures: [ProductFeature] = [
 		ProductFeature(title: "Stylish App Icons", description: "Make your home screen stand out with premium and limited time app icons.", image: R.image.promotional.inAppPurchases.icons()),
@@ -117,7 +117,7 @@ extension TipJarCollectionViewController: PurchaseButtonCollectionViewCellDelega
 
 	func purchase(_ product: Product) async {
 		do {
-			guard try await store.purchase(product) != nil else { return }
+			guard try await Store.shared.purchase(product) != nil else { return }
 
 			DispatchQueue.main.async { [weak self] in
 				guard let self = self else { return }
@@ -139,7 +139,7 @@ extension TipJarCollectionViewController: PurchaseFooterCollectionViewCellDelega
 	func purchaseFooterCollectionViewCell(_ cell: PurchaseFooterCollectionViewCell, didPressRestorePurchaseButton button: UIButton) {
 		WorkflowController.shared.isSignedIn(on: self) {
 			Task {
-				await store.restore()
+				await Store.shared.restore()
 			}
 		}
 	}

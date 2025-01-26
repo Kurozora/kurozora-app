@@ -52,8 +52,11 @@ final class Store: NSObject, ObservableObject {
 	/// The dictionary containing all `StoreKit` products.
 	private var products: [String: String] = [:]
 
+    /// The shared instance of ``Store``.
+	static let shared: Store = Store()
+
 	// MARK: - Initializers
-	override init() {
+	private override init() {
 		super.init()
 		print("------ StoreKit 2 initialized.")
 		print("------ Add SKPaymentQueue observer.")
@@ -84,7 +87,7 @@ final class Store: NSObject, ObservableObject {
 		// Start a transaction listener as close to app launch as possible so you don't miss any transactions.
 		self.updateListenerTask = self.listenForTransactions()
 
-		Task { [weak self] in
+		Task { @MainActor [weak self] in
 			guard let self = self else { return }
 			// Initialize the store by starting a product request.
 			await self.requestProducts()
@@ -101,7 +104,7 @@ final class Store: NSObject, ObservableObject {
 	///
 	/// - Returns: a `Task` that listens to `StoreKit` transaction requests.
 	func listenForTransactions() -> Task<Void, Error> {
-		return Task.detached {
+		return Task.detached { @MainActor in
 			// Iterate through any transactions which didn't come from a direct call to `purchase()`.
 			for await result in Transaction.updates {
 				do {
@@ -289,14 +292,13 @@ final class Store: NSObject, ObservableObject {
 		}
 	}
 
-	@MainActor
 	func updatePurchasedIdentifiers(_ transaction: Transaction) async {
 		if transaction.revocationDate == nil {
 			// If the App Store has not revoked the transaction, add it to the list of `purchasedIdentifiers`.
-			purchasedIdentifiers.insert(transaction.productID)
+			self.purchasedIdentifiers.insert(transaction.productID)
 		} else {
 			// If the App Store has revoked this transaction, remove it from the list of `purchasedIdentifiers`.
-			purchasedIdentifiers.remove(transaction.productID)
+			self.purchasedIdentifiers.remove(transaction.productID)
 		}
 	}
 
@@ -329,7 +331,7 @@ final class Store: NSObject, ObservableObject {
 	/// - Returns: a string indicating how much money the user saves between tiers.
 	func saving(for product: Product) -> String {
 		guard let subscription = product.subscription,
-			  let firstProduct = store.subscriptions.first else {
+			  let firstProduct = Store.shared.subscriptions.first else {
 			return ""
 		}
 

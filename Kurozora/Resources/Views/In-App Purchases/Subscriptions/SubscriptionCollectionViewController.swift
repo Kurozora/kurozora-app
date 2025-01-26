@@ -17,7 +17,7 @@ class SubscriptionCollectionViewController: KCollectionViewController {
 
 	// MARK: - Properties
 	var products: [Product] {
-		return store.subscriptions.filter {
+		return Store.shared.subscriptions.filter {
 			return $0.id != self.currentSubscription?.id
 		}
 	}
@@ -114,7 +114,7 @@ class SubscriptionCollectionViewController: KCollectionViewController {
 	@MainActor
 	func purchase(_ product: Product) async {
 		do {
-			guard try await store.purchase(product) != nil else { return }
+			guard try await Store.shared.purchase(product) != nil else { return }
 
 			let success = await self.updateSubscriptionStatus()
 			self.updateDataSource()
@@ -135,7 +135,7 @@ class SubscriptionCollectionViewController: KCollectionViewController {
 			// This app has only one subscription group so products in the subscriptions
 			// array all belong to the same group. The statuses returned by
 			// `product.subscription.status` apply to the entire subscription group.
-			guard let product = store.subscriptions.first,
+			guard let product = Store.shared.subscriptions.first,
 				  let statuses = try await product.subscription?.status else {
 				return false
 			}
@@ -151,9 +151,9 @@ class SubscriptionCollectionViewController: KCollectionViewController {
 				case .expired, .revoked:
 					continue
 				default:
-					let renewalInfo = try store.checkVerified(status.renewalInfo)
+					let renewalInfo = try Store.shared.checkVerified(status.renewalInfo)
 
-					guard let newSubscription = store.subscriptions.first(where: { $0.id == renewalInfo.currentProductID }) else {
+					guard let newSubscription = Store.shared.subscriptions.first(where: { $0.id == renewalInfo.currentProductID }) else {
 						continue
 					}
 
@@ -163,8 +163,8 @@ class SubscriptionCollectionViewController: KCollectionViewController {
 						continue
 					}
 
-					let highestTier = store.tier(for: currentProduct.id)
-					let newTier = store.tier(for: renewalInfo.currentProductID)
+					let highestTier = Store.shared.tier(for: currentProduct.id)
+					let newTier = Store.shared.tier(for: renewalInfo.currentProductID)
 
 					if newTier > highestTier {
 						highestStatus = status
@@ -206,7 +206,7 @@ extension SubscriptionCollectionViewController: PurchaseFooterCollectionViewCell
 	func purchaseFooterCollectionViewCell(_ cell: PurchaseFooterCollectionViewCell, didPressRestorePurchaseButton button: UIButton) {
 		WorkflowController.shared.isSignedIn(on: self) {
 			Task {
-				await store.restore()
+				await Store.shared.restore()
 			}
 		}
 	}

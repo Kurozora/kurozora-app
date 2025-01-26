@@ -80,7 +80,7 @@ class PurchaseStatusCollectionViewCell: UICollectionViewCell {
 		var description = ""
 
 		if let newProductID = renewalInfo.autoRenewPreference {
-			if let newProduct = store.subscriptions.first(where: { $0.id == newProductID }) {
+			if let newProduct = Store.shared.subscriptions.first(where: { $0.id == newProductID }) {
 				description += "\nYour subscription to \(newProduct.displayName)"
 				description += " will begin when your current subscription expires on \(expirationDate.formatted(date: .abbreviated, time: .omitted))."
 			}
