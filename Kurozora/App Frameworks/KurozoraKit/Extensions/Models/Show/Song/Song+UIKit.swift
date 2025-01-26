@@ -48,7 +48,9 @@ extension KKSong {
 				let image = song.isInLibrary ? UIImage(systemName: "checkmark") : UIImage(systemName: "plus")
 				let addAction = UIAction(title: title, image: image) { _ in
 					if song.isInLibrary {
-						self.showRemoveFromLibraryAlert(for: song, on: viewController)
+						Task { @MainActor in
+							self.showRemoveFromLibraryAlert(for: song, on: viewController)
+						}
 					} else {
 						Task {
 							_ = await self.addToLibrary(song: song)
@@ -200,6 +202,7 @@ extension KKSong {
 	///
 	/// - Parameters:
 	///   - viewController: The view controller to present the alert on.
+	@MainActor
 	private func showRemoveFromLibraryAlert(for song: MKSong, on viewController: UIViewController?) {
 		var actions: [UIAlertAction] = []
 

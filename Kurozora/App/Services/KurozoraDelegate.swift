@@ -285,8 +285,11 @@ extension KurozoraDelegate {
 			}
 		} else {
 			guard let error = authError else { return }
-			// Show appropriate alert if biometry/TouchID/FaceID is locked out or not enrolled.
-			UIApplication.topViewController?.presentAlertController(title: "Error Authenticating", message: self.evaluateAuthenticationPolicyMessageForLA(errorCode: error.code))
+
+			Task { @MainActor in
+				// Show appropriate alert if biometry/TouchID/FaceID is locked out or not enrolled.
+				UIApplication.topViewController?.presentAlertController(title: "Error Authenticating", message: self.evaluateAuthenticationPolicyMessageForLA(errorCode: error.code))
+			}
 		}
 	}
 

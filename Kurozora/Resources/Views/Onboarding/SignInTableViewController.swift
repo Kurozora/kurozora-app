@@ -113,7 +113,7 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 	func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
 		switch authorization.credential {
 		case let appleIDCredential as ASAuthorizationAppleIDCredential:
-			print("----------- Statrted authorizationController() -----------")
+			print("----------- Started authorizationController() -----------")
 			print("User ID - \(appleIDCredential.user)")
 			print("User Name - \(appleIDCredential.fullName?.description ?? "N/A")")
 			print("User Email - \(appleIDCredential.email ?? "N/A")")

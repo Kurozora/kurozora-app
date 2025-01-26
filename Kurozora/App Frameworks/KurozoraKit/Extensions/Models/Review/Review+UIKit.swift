@@ -103,7 +103,9 @@ extension Review {
 	/// Sends a report of the selected review to the mods.
 	func reportReview() {
 		WorkflowController.shared.isSignedIn {
-			UIApplication.topViewController?.presentAlertController(title: "Review Reported", message: "Thank you for helping keep the community safe.")
+			Task { @MainActor in
+				UIApplication.topViewController?.presentAlertController(title: "Review Reported", message: "Thank you for helping keep the community safe.")
+			}
 		}
 	}
 }

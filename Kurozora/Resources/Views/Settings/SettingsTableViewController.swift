@@ -189,7 +189,9 @@ extension SettingsTableViewController {
 		case .notifications:
 			shouldPerformSegue = WorkflowController.shared.isSignedIn(on: self)
 		case .reminder:
-			WorkflowController.shared.subscribeToReminders(on: self)
+			Task { [weak self] in
+				await WorkflowController.shared.subscribeToReminders(on: self)
+			}
 			return
 		case .soundsAndHaptics:
 			break
@@ -209,14 +211,13 @@ extension SettingsTableViewController {
 		case .tipjar: break
 		case .manageSubscriptions:
 			Task { [weak self] in
-				guard let self = self else { return }
-				await store.manageSubscriptions(in: self.view.window?.windowScene)
+				await Store.shared.manageSubscriptions(in: self?.view.window?.windowScene)
 			}
 			return
 		case .restoreFeatures:
 			WorkflowController.shared.isSignedIn(on: self) {
 				Task {
-					await store.restore()
+					await Store.shared.restore()
 				}
 			}
 			return

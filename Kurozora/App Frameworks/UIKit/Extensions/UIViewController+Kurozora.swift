@@ -33,17 +33,16 @@ extension UIViewController {
 	/// Present an `AVPlayerViewController` for the given video URL.
 	///
 	/// - Parameter videoURLString: The URL string of the video.
+	@MainActor
 	func presentVideoViewController(videoURLString: String) {
 		let videoURL = URL(string: videoURLString)
 		let player = AVPlayer(url: videoURL!)
 		let playerViewController = AVPlayerViewController()
 		playerViewController.player = player
 
-		DispatchQueue.main.async {
-			self.present(playerViewController, animated: true) {
-				guard let player = playerViewController.player else { return }
-				player.play()
-			}
+		self.present(playerViewController, animated: true) {
+			guard let player = playerViewController.player else { return }
+			player.play()
 		}
 	}
 
@@ -57,6 +56,7 @@ extension UIViewController {
 	///    - actions: Other actions to add to the alert controller.
 	///
 	/// - Returns: the presented alert controller.
+	@MainActor
 	@discardableResult
 	func presentAlertController(title: String?, message: String?, defaultActionButtonTitle: String = "OK", handler: ((UIAlertAction) -> Void)? = nil, actions: [UIAlertAction] = []) -> UIAlertController {
 		let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -70,9 +70,7 @@ extension UIViewController {
 		let defaultAction = UIAlertAction(title: defaultActionButtonTitle, style: .cancel, handler: handler)
 		alertController.addAction(defaultAction)
 
-		DispatchQueue.main.async {
-			self.present(alertController, animated: true, completion: nil)
-		}
+		self.present(alertController, animated: true, completion: nil)
 		return alertController
 	}
 
@@ -83,6 +81,7 @@ extension UIViewController {
 	///    - message: Descriptive text that provides additional details about the reason for the alert.
 	///
 	/// - Returns: the presented alert controller.
+	@MainActor
 	@discardableResult
 	func presentActivityAlertController(title: String? = nil, message: String? = nil) -> UIAlertController {
 		let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -110,9 +109,7 @@ extension UIViewController {
 
 		activityIndicator.startAnimating()
 
-		DispatchQueue.main.async {
-			self.present(alertController, animated: true, completion: nil)
-		}
+		self.present(alertController, animated: true, completion: nil)
 		return alertController
 	}
 }

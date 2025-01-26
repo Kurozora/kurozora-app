@@ -261,6 +261,7 @@ extension FeedMessage {
 	/// - Parameters:
 	///    - viewController: The view controller initiating the action.
 	///    - userInfo: Any information passed by the user.
+	@MainActor
 	func reShareMessage(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any?]) {
 		WorkflowController.shared.isSignedIn { [weak self] in
 			guard let self = self else { return }
@@ -461,7 +462,9 @@ extension FeedMessage {
 	/// Sends a report of the selected message to the mods.
 	func reportMessage() {
 		WorkflowController.shared.isSignedIn {
-			UIApplication.topViewController?.presentAlertController(title: Trans.messageReportedHeadline, message: Trans.messageReportedSubheadline)
+			Task { @MainActor in
+				UIApplication.topViewController?.presentAlertController(title: Trans.messageReportedHeadline, message: Trans.messageReportedSubheadline)
+			}
 		}
 	}
 }
