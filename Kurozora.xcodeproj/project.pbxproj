@@ -4360,7 +4360,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1530;
-				LastUpgradeCheck = 1600;
+				LastUpgradeCheck = 1620;
 				ORGANIZATIONNAME = Kurozora;
 				TargetAttributes = {
 					662A3D2F2C92433B006F6EDD = {
