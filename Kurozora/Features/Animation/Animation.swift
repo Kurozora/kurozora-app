@@ -8,15 +8,14 @@
 
 import UIKit
 
-class Animation: NSObject {
+@MainActor
+struct Animation {
 	// MARK: Properties
 	/// The shared instance of `Animation`.
 	static let shared = Animation()
 
 	// MARK: Initializers
-	private override init() {
-		super.init()
-
+	private init() {
 		self.sharedInit()
 	}
 
