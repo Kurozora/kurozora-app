@@ -6,7 +6,7 @@
 //  Copyright © 2024 Kurozora. All rights reserved.
 //
 
-import AVFoundation
+@preconcurrency import AVFoundation
 import UIKit
 import MusicKit
 import SwiftyJSON
@@ -28,7 +28,7 @@ final class MusicManager: NSObject {
 	private var subscriptions = Set<AnyCancellable>()
 
 	/// The current authorization state.
-	var authrizationState: MusicAuthorization.Status {
+	var authorizationState: MusicAuthorization.Status {
 		return MusicAuthorization.currentStatus
 	}
 
@@ -78,7 +78,7 @@ final class MusicManager: NSObject {
 	///
 	/// - Returns: The fetched `MusicKit.Song` object.
 	func getSong(for appleMusicID: Int) async -> MKSong? {
-		switch (self.authrizationState, self.hasAMSubscription) {
+		switch (self.authorizationState, self.hasAMSubscription) {
 		case (.authorized, true):
 			return await MusicManager.shared.authorizedMusicRequest(for: appleMusicID)
 		default:

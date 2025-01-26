@@ -11,8 +11,8 @@ import SwiftUI
 
 @available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *)
 struct LaunchAppIntent: OpenIntent {
-	static var title: LocalizedStringResource = "Launch Kurozora"
-	static var description = IntentDescription("Open Kurozora to your preferred page.")
+	static let title: LocalizedStringResource = "Launch Kurozora"
+	static let description = IntentDescription("Open Kurozora to your preferred page.")
 
 	@Parameter(title: "Page", default: .home)
 	var target: LaunchAppEnum
@@ -47,9 +47,9 @@ enum LaunchAppEnum: String, AppEnum {
 	case notifications
 	case search
 
-	static var typeDisplayRepresentation = TypeDisplayRepresentation("Kurozora’s Screens")
+	static let typeDisplayRepresentation = TypeDisplayRepresentation("Kurozora’s Screens")
 
-	static var caseDisplayRepresentations = [
+	static let caseDisplayRepresentations = [
 		LaunchAppEnum.home: DisplayRepresentation("Home"),
 		LaunchAppEnum.schedule: DisplayRepresentation("Schedule"),
 		LaunchAppEnum.library: DisplayRepresentation("Library"),
