@@ -58,8 +58,8 @@ final class Store: NSObject, ObservableObject {
 	// MARK: - Initializers
 	private override init() {
 		super.init()
-		print("------ StoreKit 2 initialized.")
-		print("------ Add SKPaymentQueue observer.")
+		print("🧾 StoreKit 2 initialized.")
+		print("🧾 Add SKPaymentQueue observer.")
 
 		SKPaymentQueue.default().add(self)
 
@@ -94,8 +94,11 @@ final class Store: NSObject, ObservableObject {
 		}
 	}
 
+	/// Empty method to call so the static `shared` property is initialized.
+	func initialize() {}
+
 	deinit {
-		print("----- StoreKit 2 deinitialized.")
+		print("🧾 StoreKit 2 deinitialized.")
 		self.updateListenerTask?.cancel()
 	}
 
@@ -117,7 +120,7 @@ final class Store: NSObject, ObservableObject {
 					await transaction.finish()
 				} catch {
 					// StoreKit has a receipt it can read but it failed verification. Don't deliver content to the user.
-					print("----- Transaction failed verification")
+					print("🧾 Transaction failed verification")
 				}
 			}
 		}
@@ -145,7 +148,7 @@ final class Store: NSObject, ObservableObject {
 					newNonConsumables.append(product)
 				default:
 					// Ignore this product.
-					print("----- Unknown product", product)
+					print("🧾 Unknown product", product)
 				}
 			}
 
@@ -154,7 +157,7 @@ final class Store: NSObject, ObservableObject {
 			self.subscriptions = sortByPrice(newSubscriptions)
 			self.nonConsumables = sortByPrice(newNonConsumables)
 		} catch {
-			print("----- Failed product request: \(error)")
+			print("🧾 Failed product request: \(error)")
 		}
 	}
 
@@ -167,7 +170,7 @@ final class Store: NSObject, ObservableObject {
 	fileprivate func handleSuccess(_ transaction: Transaction) async {
 		// Deliver content to the user.
 		await self.updatePurchasedIdentifiers(transaction)
-		print("----- Deliver content for \(transaction.productID).")
+		print("🧾 Deliver content for \(transaction.productID).")
 
 		await self.verifyReceipt()
 	}
@@ -182,20 +185,20 @@ final class Store: NSObject, ObservableObject {
 			do {
 				let receiptData = try Data(contentsOf: appStoreReceiptURL, options: .alwaysMapped)
 				let receiptString = receiptData.base64EncodedString(options: [])
-				print("----- Receipt string:", receiptString)
+				print("🧾 Receipt string:", receiptString)
 
 				let verifyResponse = try await KService.verifyReceipt(receiptString).value
 
 				NotificationCenter.default.post(name: .KSubscriptionStatusDidUpdate, object: nil)
 
 				// Finish the successful transaction.
-				print("----- Transaction verified.")
+				print("🧾 Transaction verified.")
 			} catch {
-				print("----- Transaction NOT verified.")
-				print("----- Couldn't read receipt data with error: " + error.localizedDescription)
+				print("🧾 Transaction NOT verified.")
+				print("🧾 Couldn't read receipt data with error: " + error.localizedDescription)
 			}
 		} else {
-			print("----- Receipt verification failed: App Store receipt not found.")
+			print("🧾 Receipt verification failed: App Store receipt not found.")
 		}
 	}
 
@@ -238,9 +241,9 @@ final class Store: NSObject, ObservableObject {
 
 			await self.verifyReceipt()
 		} catch let error as KKAPIError {
-			print("----- Restore failed", error.message)
+			print("🧾 Restore failed", error.message)
 		} catch {
-			print("----- Restore failed", error.localizedDescription)
+			print("🧾 Restore failed", error.localizedDescription)
 		}
 	}
 
@@ -410,25 +413,25 @@ extension Store: SKPaymentTransactionObserver {
 			switch transaction.transactionState {
 			case .purchasing:
 				// Do not block your UI. Allow the user to continue using your app.
-				print("----- Transaction in progress: \(transaction)")
+				print("🧾 Transaction in progress: \(transaction)")
 			case .deferred:
 				// Do not block your UI. Allow the user to continue using your app.
-				print("----- Transaction deferred: \(transaction)")
+				print("🧾 Transaction deferred: \(transaction)")
 			case .purchased:
 				// The purchase was successful.
-				print("----- Transaction purchased: \(transaction)")
+				print("🧾 Transaction purchased: \(transaction)")
 				Task {
 					await self.verifyReceipt()
 					queue.finishTransaction(transaction)
 				}
 			case .restored:
-				print("----- Transaction restore: \(transaction)")
+				print("🧾 Transaction restore: \(transaction)")
 				Task {
 					await self.verifyReceipt()
 					queue.finishTransaction(transaction)
 				}
 			case .failed:
-				print("----- Transaction failed: \(transaction)")
+				print("🧾 Transaction failed: \(transaction)")
 				queue.finishTransaction(transaction)
 			@unknown default:
 				queue.finishTransaction(transaction)
@@ -438,7 +441,7 @@ extension Store: SKPaymentTransactionObserver {
 
 	func paymentQueue(_ queue: SKPaymentQueue, removedTransactions transactions: [SKPaymentTransaction]) {
 		for transaction in transactions {
-			print("----- \(transaction.payment.productIdentifier) was removed from the payment queue.")
+			print("🧾 \(transaction.payment.productIdentifier) was removed from the payment queue.")
 		}
 	}
 
