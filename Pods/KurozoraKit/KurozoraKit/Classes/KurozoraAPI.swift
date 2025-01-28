@@ -23,6 +23,7 @@ public enum KurozoraAPI: Equatable {
 
 	// MARK: - Properties
 	/// All cases of `KurozoraAPI`.
+	@MainActor
 	public static let allCases: [KurozoraAPI] = [.v1]
 
 	/// The base URL for the API.

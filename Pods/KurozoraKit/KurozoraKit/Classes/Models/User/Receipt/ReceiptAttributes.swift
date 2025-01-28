@@ -7,7 +7,7 @@
 
 extension Receipt {
 	/// A root object that stores information about a single receipt, such as the receipt's validity.
-	public struct Attributes: Codable {
+	public struct Attributes: Codable, Sendable {
 		/// Whether the receipt is valid.
 		public let isValid: Bool
 

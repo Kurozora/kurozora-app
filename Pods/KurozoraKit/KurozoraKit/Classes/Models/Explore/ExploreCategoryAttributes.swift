@@ -7,7 +7,7 @@
 
 extension ExploreCategory {
 	/// A root object that stores information about a single explore category, such as the category's title, size, and type.
-	public struct Attributes: Codable {
+	public struct Attributes: Codable, Sendable {
 		// MARK: - Properties
 		/// The slug of the resource.
 		public let slug: String

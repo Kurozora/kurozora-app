@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a collection of themes.
-public struct ThemeResponse: Codable {
+public struct ThemeResponse: Codable, Sendable {
 	// MARK: - Properties
 	/// The data included in the response for a theme object request.
 	public let data: [Theme]

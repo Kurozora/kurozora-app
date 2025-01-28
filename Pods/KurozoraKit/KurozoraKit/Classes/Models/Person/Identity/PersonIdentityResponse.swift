@@ -6,11 +6,11 @@
 //
 
 /// A root object that stores information about a collection of person identities.
-public struct PersonIdentityResponse: Codable {
+public struct PersonIdentityResponse: Codable, Sendable {
 	// MARK: - Properties
 	/// The data included in the response for a person identity object request.
 	public let data: [PersonIdentity]
 
-	/// The realtive URL to the next page in the paginated response.
+	/// The relative URL to the next page in the paginated response.
 	public let next: String?
 }

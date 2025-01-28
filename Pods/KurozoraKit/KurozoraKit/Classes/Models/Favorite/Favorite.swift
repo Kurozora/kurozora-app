@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a favorite model resource.
-public struct Favorite: Codable {
+public struct Favorite: Codable, Sendable {
 	// MARK: - Properties
 	/// Whether the model is favorited.
 	internal let isFavorited: Bool

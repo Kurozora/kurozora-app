@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a related show resource.
-public struct RelatedShow: Codable, Hashable {
+public struct RelatedShow: Codable, Hashable, Sendable {
 	// MARK: - Properties
 	/// The id of the related show.
 	public let id: UUID = UUID()
@@ -16,6 +16,12 @@ public struct RelatedShow: Codable, Hashable {
 
 	/// The attributes belonging to the related show.
 	public var attributes: RelatedShow.Attributes
+
+	// MARK: - CodingKeys
+	enum CodingKeys: String, CodingKey {
+		case show
+		case attributes
+	}
 
 	// MARK: - Functions
 	public static func == (lhs: RelatedShow, rhs: RelatedShow) -> Bool {

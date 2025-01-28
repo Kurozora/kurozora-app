@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about an adaptation source resource.
-public struct AdaptationSource: Codable, Hashable {
+public struct AdaptationSource: Codable, Hashable, Sendable {
 	// MARK: - Properties
 	/// The name of the adaptation source.
 	public let name: String

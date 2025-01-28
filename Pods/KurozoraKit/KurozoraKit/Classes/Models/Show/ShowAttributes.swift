@@ -7,7 +7,7 @@
 
 extension Show {
 	/// A root object that stores information about a single show, such as the show's title, episode count, and air date.
-	public struct Attributes: Codable {
+	public struct Attributes: Codable, Sendable {
 		// MARK: - Properties
 		/// The show's AniDB ID.
 		public let anidbID: Int?

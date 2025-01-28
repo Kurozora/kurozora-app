@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a recap resource.
-public class Recap: IdentityResource, Hashable {
+public struct Recap: IdentityResource, Hashable {
 	// MARK: - Properties
 	public let id: String
 
@@ -15,7 +15,7 @@ public class Recap: IdentityResource, Hashable {
 	public let href: String
 
 	/// The attributes belonging to the show.
-	public var attributes: Recap.Attributes
+	public let attributes: Recap.Attributes
 
 	// MARK: - Functions
 	public static func == (lhs: Recap, rhs: Recap) -> Bool {

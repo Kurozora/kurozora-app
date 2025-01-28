@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a show identity resource.
-public struct ShowIdentity: IdentityResource, Hashable {
+public struct ShowIdentity: IdentityResource, Hashable, Sendable {
 	// MARK: - Properties
 	public let id: String
 

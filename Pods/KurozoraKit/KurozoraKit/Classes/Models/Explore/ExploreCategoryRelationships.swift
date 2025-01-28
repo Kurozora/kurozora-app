@@ -7,7 +7,7 @@
 
 extension ExploreCategory {
 	/// A root object that stores information about explore category relationships, such as the shows, genres, and characters that belong to it.
-	public struct Relationships: Codable {
+	public struct Relationships: Codable, Sendable {
 		// MARK: - Properties
 		/// The shows belonging to the explore category.
 		public let shows: ShowIdentityResponse?

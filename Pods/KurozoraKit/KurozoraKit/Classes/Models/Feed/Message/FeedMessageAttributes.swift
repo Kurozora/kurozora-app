@@ -7,7 +7,7 @@
 
 extension FeedMessage {
 	/// A root object that stores information about a single feed message, such as the message's content, and whether it's a spoiler or NSFW.
-	public struct Attributes: Codable {
+	public struct Attributes: Codable, Sendable {
 		// MARK: - Properties
 		/// The content of the feed message.
 		public var content: String

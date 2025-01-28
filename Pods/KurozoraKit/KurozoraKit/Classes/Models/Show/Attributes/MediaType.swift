@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a media type resource.
-public struct MediaType: Codable, Hashable {
+public struct MediaType: Codable, Hashable, Sendable {
 	// MARK: - Properties
 	/// The name of the media type.
 	public let name: String

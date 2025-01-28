@@ -12,28 +12,8 @@ import UIKit
 extension KurozoraKit {
 	/// Fetches the authenticated user's profile details.
 	///
-	/// - Returns: An instance of `RequestSender` with the results of the profile details response.
-	public func getProfileDetails() -> RequestSender<UserResponse, KKAPIError> {
-		let profileDetailsRequest = self.sendGetProfileDetailsRequest()
-
-		Task {
-			do {
-				let userResponse = try await profileDetailsRequest.value
-
-				User.current = userResponse.data.first
-				NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
-			} catch {
-				print("Received validate receipt error: \(error.localizedDescription)")
-			}
-		}
-
-		return profileDetailsRequest
-	}
-
-	/// Fetches the authenticated user's profile details.
-	///
-	/// - Returns: An instance of `RequestSender` with the results of the profile details response.
-	private func sendGetProfileDetailsRequest() -> RequestSender<UserResponse, KKAPIError> {
+	/// - Returns: An instance of ``UserResponse`` with the results of the profile details response.
+	public func getProfileDetails() async throws -> UserResponse {
 		// Prepare headers
 		var headers = self.headers
 		headers.add(.authorization(bearerToken: self.authenticationKey))
@@ -45,12 +25,23 @@ extension KurozoraKit {
 			.headers(headers)
 
 		// Send request
-		return request.sender()
+		do {
+			let userResponse = try await request.sender().value
+
+			User.current = userResponse.data.first
+			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
+
+			return userResponse
+		} catch {
+			print("Received validate receipt error: \(error.localizedDescription)")
+
+			throw error
+		}
 	}
 
 	/// Updates the authenticated user's profile information.
 	///
-	/// Send `nil` if an infomration shouldn't be updated, otherwise send an empty instance to unset an information.
+	/// Send `nil` if an information shouldn't be updated, otherwise send an empty instance to unset an information.
 	///
 	/// - Parameters:
 	///    - profileUpdateRequest: An instance of `ProfileUpdateRequest` containing the new profile details.
@@ -150,7 +141,7 @@ extension KurozoraKit {
 	/// Fetch the followers or following list for the authenticated user.
 	///
 	/// - Parameters:
-	///    - followList: The follow list value indicating whather to fetch the followers or following list.
+	///    - followList: The follow list value indicating weather to fetch the followers or following list.
 	///    - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
 	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
 	///

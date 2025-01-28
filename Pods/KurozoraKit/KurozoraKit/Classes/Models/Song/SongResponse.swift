@@ -6,11 +6,11 @@
 //
 
 /// A root object that stores information about a collection of songs.
-public struct SongResponse: Codable {
+public struct SongResponse: Codable, Sendable {
 	// MARK: - Properties
 	/// The data included in the response for a song object request.
 	public let data: [Song]
 
-	/// The realtive URL to the next page in the paginated response.
+	/// The relative URL to the next page in the paginated response.
 	public let next: String?
 }

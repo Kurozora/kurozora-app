@@ -7,7 +7,7 @@
 
 extension Review {
 	/// A root object that stores information about a single review, such as the review's score, and description.
-	public struct Attributes: Codable {
+	public struct Attributes: Codable, Sendable {
 		// MARK: - Properties
 		/// The score of the review.
 		public let score: Double

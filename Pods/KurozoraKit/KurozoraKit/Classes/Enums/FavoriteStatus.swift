@@ -14,12 +14,12 @@ import Foundation
 /// case disabled = 0
 /// case favorite = 1
 /// ```
-public enum FavoriteStatus: Int, Codable {
+public enum FavoriteStatus: Int, Codable, Sendable {
 	// MARK: - Cases
 	/// The show is not favorited.
 	case notFavorited = -1
 
-	/// The show can't be favorited or unfavorited
+	/// The show can't be favorited or unfavorited.
 	case disabled = 0
 
 	/// The show is favorited.

@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a song resource.
-public class Song: IdentityResource, Hashable {
+public final class Song: IdentityResource, Hashable, @unchecked Sendable {
 	// MARK: - Properties
 	public let id: String
 

@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a country resource.
-public struct Country: Codable, Hashable {
+public struct Country: Codable, Hashable, Sendable {
 	// MARK: - Properties
 	/// The country's name.
 	public let name: String

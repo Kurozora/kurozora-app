@@ -7,7 +7,7 @@
 
 extension Studio {
 	/// A root object that stores information about studio relationships, such as the shows that belong to it.
-	public struct Relationships: Codable {
+	public struct Relationships: Codable, Sendable {
 		// MARK: - Properties
 		/// The studio' predecessors.
 		public let predecessors: StudioIdentityResponse?

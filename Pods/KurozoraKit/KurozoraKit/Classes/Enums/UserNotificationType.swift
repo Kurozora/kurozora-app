@@ -11,12 +11,12 @@
 /// - `follower`: the notification has a `follower` type and thus has the follower style.
 /// - `feedMessageReply`: the notification has a `feedMessageReply` type and thus has the message style.
 /// - `feedMessageReShare`: the notification has a `feedMessageReShare` type and thus has the message style.
-/// - `libraryImportFinished`: the notification has a `libraryImportFinished` type and thus thas the import style.
+/// - `libraryImportFinished`: the notification has a `libraryImportFinished` type and thus has the import style.
 /// - `subscriptionStatus`: the notification has a `subscriptionStatus` type and thus the subscription style.
 /// - `other`: the notification has no specific type and thus has the default style.
 ///
 /// - Tag: UserNotificationType
-public enum UserNotificationType: String, Codable {
+public enum UserNotificationType: String, Codable, Sendable {
 	// MARK: - Cases
 	/// Indicates that the notification has a `session` type and thus has the sessions style.
 	case session = "NewSession"

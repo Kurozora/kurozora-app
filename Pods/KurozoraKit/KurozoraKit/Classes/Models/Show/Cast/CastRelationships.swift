@@ -7,7 +7,7 @@
 
 extension Cast {
 	/// A root object that stores information about cast relationships, such as the people, and characters that belong to it.
-	public struct Relationships: Codable {
+	public struct Relationships: Codable, Sendable {
 		// MARK: - Properties
 		/// The people belonging to the cast.
 		public let people: PersonResponse?

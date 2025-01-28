@@ -7,7 +7,7 @@
 
 extension Game {
 	/// A root object that stores information about a single game, such as the game's title, episode count, and air date.
-	public struct Attributes: Codable {
+	public struct Attributes: Codable, Sendable {
 		// MARK: - Properties
 		/// The game's IGDB ID.
 		public let igdbID: Int?

@@ -8,7 +8,7 @@
 ///  List of available song types.
 ///
 /// - Tag: SongType
-public enum SongType: Int, CaseIterable, Codable {
+public enum SongType: Int, CaseIterable, Codable, Sendable {
 	// MARK: - Cases
 	/// Indicates that the song is of the `opening` type.
 	case opening = 0

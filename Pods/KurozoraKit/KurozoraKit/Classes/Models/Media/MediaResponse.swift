@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a collection of media.
-public struct MediaResponse: Codable {
+public struct MediaResponse: Codable, Sendable {
 	// MARK: - Properties
 	/// The data included in the response for a media object request.
 	public let data: [Media]

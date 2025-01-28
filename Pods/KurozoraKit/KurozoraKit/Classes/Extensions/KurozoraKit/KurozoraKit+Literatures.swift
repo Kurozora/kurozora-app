@@ -341,7 +341,7 @@ extension KurozoraKit {
 	/// Rate the literature with the given literature identity.
 	///
 	/// - Parameters:
-	///    - literatureID: The id of the literature which should be rated.
+	///    - literatureIdentity: The id of the literature which should be rated.
 	///	   - score: The rating to leave.
 	///	   - description: The description of the rating.
 	///

@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a collection of receipts.
-public struct ReceiptResponse: Codable {
+public struct ReceiptResponse: Codable, Sendable {
 	// MARK: - Properties
 	/// The data included in the response for a receipt object request.
 	public let data: [Receipt]

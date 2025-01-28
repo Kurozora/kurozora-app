@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a session identity resource.
-public struct SessionIdentity: Codable, Hashable {
+public struct SessionIdentity: Codable, Hashable, Sendable {
 	// MARK: - Properties
 	/// The id of the resource.
 	public let id: String

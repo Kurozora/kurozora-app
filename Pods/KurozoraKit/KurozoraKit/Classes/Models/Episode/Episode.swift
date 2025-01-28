@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about an episode resource.
-public class Episode: IdentityResource, Hashable {
+public final class Episode: IdentityResource, Hashable, @unchecked Sendable {
 	// MARK: - Properties
 	public let id: String
 

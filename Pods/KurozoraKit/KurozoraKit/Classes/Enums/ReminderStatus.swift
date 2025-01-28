@@ -14,7 +14,7 @@ import Foundation
 /// case disabled = 0
 /// case reminded = 1
 /// ```
-public enum ReminderStatus: Int, Codable {
+public enum ReminderStatus: Int, Codable, Sendable {
 	// MARK: - Cases
 	/// The user is not reminded.
 	case notReminded = -1

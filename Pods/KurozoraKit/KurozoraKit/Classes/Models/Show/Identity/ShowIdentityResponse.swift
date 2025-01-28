@@ -6,11 +6,11 @@
 //
 
 /// A root object that stores information about a collection of show identities.
-public struct ShowIdentityResponse: Codable {
+public struct ShowIdentityResponse: Codable, Sendable {
 	// MARK: - Properties
 	/// The data included in the response for a show identity object request.
 	public let data: [ShowIdentity]
 
-	/// The realtive URL to the next page in the paginated response.
+	/// The relative URL to the next page in the paginated response.
 	public let next: String?
 }

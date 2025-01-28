@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a settings response.
-public struct Settings: Codable {
+public struct Settings: Codable, Sendable {
 	// MARK: - Properties
 	/// The Apple Music developer token used to authorize `MusicKit` requests.
 	public var appleMusicDeveloperToken: String?

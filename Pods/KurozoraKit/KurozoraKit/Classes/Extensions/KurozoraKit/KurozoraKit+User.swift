@@ -48,20 +48,21 @@ extension KurozoraKit {
 
 	/// Sign in with the given `email` and `password`.
 	///
-	/// This endpoint is used for signing in a user to their account. If the sign in was successful then a Kurozora authentication token is returned in the success closure.
+	/// This endpoint is used for signing in a user to their account.
+	/// If the sign in was successful then a Kurozora authentication
+	/// token is returned in the success closure.
 	///
 	/// - Parameters:
 	///    - email: The email address of the user to be signed in.
 	///    - password: The password of the user to be signed in.
-	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-	///    - result: A value that represents either a success or a failure, including an associated value in each case.
-	@discardableResult
-	public func signIn(_ email: String, _ password: String, completion completionHandler: @escaping (_ result: Result<String, KKAPIError>) -> Void) -> DataRequest {
+	///
+	/// - Returns: An instance of ``SignInResponse`` with the results of the sign in response.
+	public func signIn(_ email: String, _ password: String) async throws -> SignInResponse {
 		let usersSignIn = KKEndpoint.Users.signIn.endpointValue
 		let request: APIRequest<SignInResponse, KKAPIError> = tron.codable.request(usersSignIn)
 		request.headers = headers
 		request.method = .post
-		request.parameters = [
+		request.parameters = await [
 			"email": email,
 			"password": password,
 			"platform": UIDevice.commonSystemName,
@@ -70,20 +71,24 @@ extension KurozoraKit {
 			"device_model": UIDevice.modelName
 		]
 
-		return request.perform(withSuccess: { [weak self] signInResponse in
-			guard let self = self else { return }
+		do {
+			let signInResponse = try await request.sender().value
+
 			self.authenticationKey = signInResponse.authenticationToken
 			User.current = signInResponse.data.first
-			completionHandler(.success(self.authenticationKey))
 			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
-		}, failure: { [weak self] error in
-			guard let self = self else { return }
+
+			return signInResponse
+		} catch let error as KKAPIError {
 			print("❌ Received sign in error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message)
 			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
 			print("└ Failure reason:", error.failureReason ?? "No reason available")
-			completionHandler(.failure(error))
-		})
+			throw error
+		} catch {
+			print("❌ Received sign in error:", error.localizedDescription)
+			throw error
+		}
 	}
 
 	/// Sign in or up an account using the details from Sign in with Apple.
@@ -95,35 +100,39 @@ extension KurozoraKit {
 	///
 	/// - Parameters:
 	///    - token: A JSON Web Token (JWT) that securely communicates information about the user to the server.
-	///    - completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
-	///    - result: A value that represents either a success or a failure, including an associated value in each case.
-	@discardableResult
-	public func signIn(withAppleID token: String, completion completionHandler: @escaping (_ result: Result<OAuthResponse, KKAPIError>) -> Void) -> DataRequest {
+	///
+	/// - Returns: An instance of ``OAuthResponse`` with the results of the sign in response.
+	public func signIn(withAppleID token: String) async throws -> OAuthResponse {
 		let siwaSignIn = KKEndpoint.Users.siwaSignIn.endpointValue
 		let request: APIRequest<OAuthResponse, KKAPIError> = tron.codable.request(siwaSignIn)
 		request.headers = headers
 		request.method = .post
-		request.parameters = [
+		request.parameters = await [
 			"token": token,
 			"platform": UIDevice.commonSystemName,
 			"platform_version": UIDevice.current.systemVersion,
 			"device_vendor": "Apple",
 			"device_model": UIDevice.modelName
 		]
-		return request.perform(withSuccess: { [weak self] oAuthResponse in
-			guard let self = self else { return }
+
+		do {
+			let oAuthResponse = try await request.sender().value
+
 			self.authenticationKey = oAuthResponse.authenticationToken
 			User.current = oAuthResponse.data?.first
-			completionHandler(.success(oAuthResponse))
 			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
-		}, failure: { [weak self] error in
-			guard let self = self else { return }
+
+			return oAuthResponse
+		} catch let error as KKAPIError {
 			print("❌ Received sign in with SIWA error:", error.errorDescription ?? "Unknown error")
 			print("┌ Server message:", error.message)
 			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
 			print("└ Failure reason:", error.failureReason ?? "No reason available")
-			completionHandler(.failure(error))
-		})
+			throw error
+		} catch {
+			print("❌ Received sign in with SIWA error:", error.localizedDescription)
+			throw error
+		}
 	}
 
 	/// Request a password reset link for the given email address.
@@ -156,7 +165,7 @@ extension KurozoraKit {
 	///
 	/// - Parameters:
 	///    - userIdentity: The identity of the user whose follower or following list should be fetched.
-	///    - followList: The follow list value indicating whather to fetch the followers or following list.
+	///    - followList: The follow list value indicating weather to fetch the followers or following list.
 	///    - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
 	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
 	///
@@ -243,8 +252,8 @@ extension KurozoraKit {
 	///    - userIdentity: The identity of the user whose favorites list will be fetched.
 	///    - libraryKind: In which library the item should be added.
 	///    - libraryStatus: The library status to retrieve the library items for.
-	///    - sortType: The sort value by which the retrived items should be sorted.
-	///    - sortOption: The sort option value by which the retrived items should be sorted.
+	///    - sortType: The sort value by which the retrieved items should be sorted.
+	///    - sortOption: The sort option value by which the retrieved items should be sorted.
 	///    - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
 	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
 	///
@@ -281,7 +290,6 @@ extension KurozoraKit {
 	///
 	/// - Parameters:
 	///    - userIdentity: The identity of the user whose reviews list will be fetched.
-	///    - libraryKind: From which library to get the reviews
 	///    - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
 	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
 	///
@@ -356,7 +364,7 @@ extension KurozoraKit {
 	///    - password: The authenticated user's password.
 	///
 	/// - Returns: An instance of `RequestSender` with the results of the delete user response.
-	public func deleteUser(password: String) -> RequestSender<KKSuccess, KKAPIError> {
+	public func deleteUser(password: String) async throws -> KKSuccess {
 		// Prepare headers
 		var headers = self.headers
 		headers.add(.authorization(bearerToken: self.authenticationKey))
@@ -374,6 +382,23 @@ extension KurozoraKit {
 			.headers(headers)
 
 		// Send request
-		return request.sender()
+		do {
+			let successResponse = try await request.sender().value
+
+			self.authenticationKey = ""
+			User.current = nil
+			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
+
+			return successResponse
+		} catch let error as KKAPIError {
+			print("❌ Received delete user error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message)
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
+			throw error
+		} catch {
+			print("❌ Received delete user error:", error.localizedDescription)
+			throw error
+		}
 	}
 }

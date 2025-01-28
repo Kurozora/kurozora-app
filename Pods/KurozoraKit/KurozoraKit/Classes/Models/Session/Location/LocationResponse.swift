@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a collection of locations.
-public struct LocationResponse: Codable {
+public struct LocationResponse: Codable, Sendable {
 	// MARK: - Properties
 	/// The data included in the response for a location object request.
 	public let data: [Location]

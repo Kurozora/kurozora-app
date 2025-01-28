@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a model's reminder status.
-public struct ReminderResponse: Codable {
+public struct ReminderResponse: Codable, Sendable {
 	// MARK: - Properties
 	/// The data included in the response for a reminder model object request.
 	public let data: Reminder

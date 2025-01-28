@@ -6,11 +6,11 @@
 //
 
 /// A root object that stores information about a collection of literature identities.
-public struct LiteratureIdentityResponse: Codable {
+public struct LiteratureIdentityResponse: Codable, Sendable {
 	// MARK: - Properties
 	/// The data included in the response for a literature identity object request.
 	public let data: [LiteratureIdentity]
 
-	/// The realtive URL to the next page in the paginated response.
+	/// The relative URL to the next page in the paginated response.
 	public let next: String?
 }

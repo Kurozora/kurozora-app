@@ -7,7 +7,7 @@
 
 extension Song {
 	/// A root object that stores information about a single song, such as the song's title, artist, and video url.
-	public struct Attributes: Codable {
+	public struct Attributes: Codable, Sendable {
 		// MARK: - Properties
 		/// The Amazon Music id of the song.
 		public let amazonID: String?

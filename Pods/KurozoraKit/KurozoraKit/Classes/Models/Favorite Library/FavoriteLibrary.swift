@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a favorite library resource.
-public struct FavoriteLibrary: Codable {
+public struct FavoriteLibrary: Codable, Sendable {
 	// MARK: - Properties
 	/// A collection of games.
 	public let games: [Game]?

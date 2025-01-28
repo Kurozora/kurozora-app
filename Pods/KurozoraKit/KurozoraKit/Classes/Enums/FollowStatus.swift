@@ -14,7 +14,7 @@ import Foundation
 /// case disabled = 0
 /// case follow = 1
 /// ```
-public enum FollowStatus: Int, Codable {
+public enum FollowStatus: Int, Codable, Sendable {
 	// MARK: - Cases
 	/// Unfollow another user.
 	case notFollowed = -1

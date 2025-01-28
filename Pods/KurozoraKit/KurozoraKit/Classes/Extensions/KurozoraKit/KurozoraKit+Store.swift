@@ -14,18 +14,16 @@ extension KurozoraKit {
 	///    - receipt: The Base64 encoded receipt data.
 	///
 	/// - Returns: An instance of `RequestSender` with the results of the auth token response.
-	public func verifyReceipt(_ receipt: String) -> RequestSender<ReceiptResponse, KKAPIError> {
+	public func verifyReceipt(_ receipt: String) async -> RequestSender<ReceiptResponse, KKAPIError> {
 		let receiptResponseRequest = self.sendVerifyReceiptRequest(receipt)
 
-		Task {
-			do {
-				let receiptResponse = try await receiptResponseRequest.value
-				if let receipt = receiptResponse.data.first {
-					User.current?.attributes.updateSubscription(from: receipt)
-				}
-			} catch {
-				print("Received validate receipt error: \(error.localizedDescription)")
+		do {
+			let receiptResponse = try await receiptResponseRequest.value
+			if let receipt = receiptResponse.data.first {
+				User.current?.attributes.updateSubscription(from: receipt)
 			}
+		} catch {
+			print("Received validate receipt error: \(error.localizedDescription)")
 		}
 
 		return receiptResponseRequest

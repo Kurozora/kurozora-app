@@ -7,7 +7,7 @@
 
 extension Song {
 	/// A root object that stores information about song relationships, such as the shows that belong to it.
-	public struct Relationships: Codable {
+	public struct Relationships: Codable, Sendable {
 		// MARK: - Properties
 		/// The shows belonging to the song.
 		public let shows: ShowIdentityResponse?

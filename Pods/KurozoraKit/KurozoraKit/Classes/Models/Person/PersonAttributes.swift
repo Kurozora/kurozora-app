@@ -7,7 +7,7 @@
 
 extension Person {
 	/// A root object that stores information about a single person, such as the person's name, role, and image.
-	public struct Attributes: Codable {
+	public struct Attributes: Codable, Sendable {
 		// MARK: - Properties
 		/// The slug of the person.
 		public let slug: String

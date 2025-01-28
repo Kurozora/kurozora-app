@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about an OAuth sign in object request.
-public struct OAuthResponse: Codable {
+public struct OAuthResponse: Codable, Sendable {
 	// MARK: - Properties
 	/// The data included in the response for a sign in object request.
 	public let data: [User]?

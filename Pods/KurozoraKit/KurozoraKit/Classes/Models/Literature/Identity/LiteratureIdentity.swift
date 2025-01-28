@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a literature identity resource.
-public struct LiteratureIdentity: IdentityResource, Hashable {
+public struct LiteratureIdentity: IdentityResource, Hashable, Sendable {
 	// MARK: - Properties
 	public let id: String
 

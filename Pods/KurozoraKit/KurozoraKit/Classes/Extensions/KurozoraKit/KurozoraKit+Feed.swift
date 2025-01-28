@@ -113,8 +113,7 @@ extension KurozoraKit {
 		headers.add(.authorization(bearerToken: self.authenticationKey))
 
 		// Prepare parameters
-		var parameters: [String: Any] = [:]
-		parameters = [
+		var parameters: [String: Any] = [
 			"content": feedMessageRequest.content,
 			"is_nsfw": feedMessageRequest.isNSFW,
 			"is_spoiler": feedMessageRequest.isSpoiler
@@ -202,8 +201,7 @@ extension KurozoraKit {
 		headers.add(.authorization(bearerToken: self.authenticationKey))
 
 		// Prepare parameters
-		var parameters: [String: Any] = [:]
-		parameters = [
+		let parameters: [String: Any] = [
 			"content": feedMessageUpdateRequest.content,
 			"is_nsfw": feedMessageUpdateRequest.isNSFW,
 			"is_spoiler": feedMessageUpdateRequest.isSpoiler

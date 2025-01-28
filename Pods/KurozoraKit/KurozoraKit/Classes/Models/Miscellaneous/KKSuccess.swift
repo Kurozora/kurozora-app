@@ -6,7 +6,7 @@
 //
 
 /// An immutable object that stores information about a single successful request, such as the success message.
-public struct KKSuccess: Codable {
+public struct KKSuccess: Codable, Sendable {
 	// MARK: - Properties
 	/// The message of a successful request.
 	public var message: String?

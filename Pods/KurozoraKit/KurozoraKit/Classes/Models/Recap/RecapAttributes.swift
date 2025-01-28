@@ -7,7 +7,7 @@
 
 extension Recap {
 	/// A root object that stores information about a single recap, such as the recap's year, and description.
-	public struct Attributes: Codable {
+	public struct Attributes: Codable, Sendable {
 		// MARK: - Properties
 		/// The year of the recap.
 		public let year: Int

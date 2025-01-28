@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a cast role resource.
-public struct CastRole: Codable, Hashable {
+public struct CastRole: Codable, Hashable, Sendable {
 	// MARK: - Properties
 	/// The name of the cast role.
 	public let name: String

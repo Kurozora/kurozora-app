@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a season resource.
-public class Season: IdentityResource, Hashable {
+public final class Season: IdentityResource, Hashable, @unchecked Sendable {
 	// MARK: - Properties
 	public let id: String
 

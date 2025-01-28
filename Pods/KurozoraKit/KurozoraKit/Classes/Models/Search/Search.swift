@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a search resource.
-public struct Search: Codable {
+public struct Search: Codable, Sendable {
 	// MARK: - Properties
 	/// A collection of characters.
 	public let characters: CharacterIdentityResponse?

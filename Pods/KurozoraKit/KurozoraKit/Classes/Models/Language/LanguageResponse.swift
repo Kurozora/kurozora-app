@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a collection of languages.
-public struct LanguageResponse: Codable {
+public struct LanguageResponse: Codable, Sendable {
 	// MARK: - Properties
 	/// The data included in the response for a language object request.
 	public let data: [Language]

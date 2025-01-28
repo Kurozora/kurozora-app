@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a collection of settings.
-public struct SettingsResponse: Codable {
+public struct SettingsResponse: Codable, Sendable {
 	// MARK: - Properties
 	/// The data included in the response for a settings object request.
 	public let data: Settings

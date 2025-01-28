@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a reminder show resource.
-public struct Reminder: Codable {
+public struct Reminder: Codable, Sendable {
 	// MARK: - Properties
 	/// Whether the show is reminded.
 	internal let isReminded: Bool

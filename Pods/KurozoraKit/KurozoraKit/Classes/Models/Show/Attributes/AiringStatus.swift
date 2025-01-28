@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about an airing status resource.
-public struct AiringStatus: Codable, Hashable {
+public struct AiringStatus: Codable, Hashable, Sendable {
 	// MARK: - Properties
 	/// The name of the airing status.
 	public let name: String

@@ -5,16 +5,16 @@
 //  Created by Khoren Katklian on 12/08/2020.
 //
 
-import TRON
+@preconcurrency import TRON
 
 /// An immutable object that stores information about a single failed request, such as the error message.
-public class KKAPIError: APIError {
+public final class KKAPIError: APIError {
 	// MARK: - Properties
 	/// The errors included in the response.
-	fileprivate var kkErrors: [KKError] = []
+	fileprivate nonisolated(unsafe) var kkErrors: [KKError] = []
 
 	/// The message of a failed request.
-	fileprivate var _message: String?
+	fileprivate nonisolated(unsafe) var _message: String?
 
 	// MARK: - Initializers
 	/// Initialize an error with the given `request` url, http `response`, `data` and `error`.

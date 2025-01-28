@@ -6,11 +6,11 @@
 //
 
 /// A root object that stores information about a collection of genre identities.
-public struct GenreIdentityResponse: Codable {
+public struct GenreIdentityResponse: Codable, Sendable {
 	// MARK: - Properties
 	/// The data included in the response for a episode identity object request.
 	public let data: [GenreIdentity]
 
-	/// The realtive URL to the next page in the paginated response.
+	/// The relative URL to the next page in the paginated response.
 	public let next: String?
 }

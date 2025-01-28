@@ -7,7 +7,7 @@
 
 extension Literature {
 	/// A root object that stores information about a single literature, such as the literature's title, episode count, and air date.
-	public struct Attributes: Codable {
+	public struct Attributes: Codable, Sendable {
 		// MARK: - Properties
 		// General
 		/// The literature's AniDB ID.

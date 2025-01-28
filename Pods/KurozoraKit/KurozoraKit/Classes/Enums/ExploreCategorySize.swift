@@ -6,7 +6,7 @@
 //
 
 /// List of available explore category size types.
-public enum ExploreCategorySize: String, Codable {
+public enum ExploreCategorySize: String, Codable, Sendable {
 	// MARK: - Cases
 	/// Indicates that the explore category has the `banner` size.
 	///

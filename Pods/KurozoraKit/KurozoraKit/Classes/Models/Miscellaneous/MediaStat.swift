@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a media stat resource.
-public struct MediaStat: Codable {
+public struct MediaStat: Codable, Sendable {
 	// MARK: - Properties
 	/// The count of ratings sorted from `0.5` to `5.0`.
 	public let ratingCountList: [Int]

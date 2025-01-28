@@ -11,7 +11,7 @@ extension KurozoraKit {
 	/// Fetch a collection of random images.
 	///
 	/// - Parameters:
-	///   - type: The type of the images.
+	///   - kind: The kind of the images.
 	///   - collection: The collection the images belong to.
 	///   - limit: The number of images to fetch. The default value is 1 and the maximum value is 25.
 	///

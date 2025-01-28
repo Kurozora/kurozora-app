@@ -6,7 +6,7 @@
 //
 
 /// List of available explore category type types.
-public enum ExploreCategoryType: String, Codable {
+public enum ExploreCategoryType: String, Codable, Sendable {
 	// MARK: - Cases
 	/// Indicates that the explore category is of the `mostPopularShows` type.
 	case mostPopularShows = "most-popular-shows"

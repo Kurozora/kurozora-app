@@ -424,7 +424,7 @@ extension KurozoraKit {
 	/// Rate the show with the given show identity.
 	///
 	/// - Parameters:
-	///    - showID: The id of the show which should be rated.
+	///    - showIdentity: The id of the show which should be rated.
 	///	   - score: The rating to leave.
 	///	   - description: The description of the rating.
 	///

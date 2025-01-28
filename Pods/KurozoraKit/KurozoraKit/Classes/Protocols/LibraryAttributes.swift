@@ -9,7 +9,7 @@
 public typealias LibraryUpdate = LibraryAttributes
 
 /// A root object that stores information about a single library item, such as the item's rating, favorite status, and library status.
-public struct LibraryAttributes: Codable {
+public struct LibraryAttributes: Codable, Sendable {
 	/// The rating given to the item.
 	public var rating: Double?
 

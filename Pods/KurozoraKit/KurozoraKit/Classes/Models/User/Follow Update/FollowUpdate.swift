@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a user follow update resource.
-public struct FollowUpdate: Codable {
+public struct FollowUpdate: Codable, Sendable {
 	// MARK: - Properties
 	/// Whether the user is followed or not.
 	fileprivate var isFollowed: Bool?

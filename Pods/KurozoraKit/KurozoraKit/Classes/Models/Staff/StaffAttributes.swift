@@ -7,7 +7,7 @@
 
 extension Staff {
 	/// A root object that stores information about a single staff, such as the staff's role.
-	public struct Attributes: Codable {
+	public struct Attributes: Codable, Sendable {
 		// MARK: - Properties
 		/// The role of the staff.
 		public let role: StaffRole

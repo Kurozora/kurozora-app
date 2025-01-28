@@ -16,6 +16,7 @@ extension KurozoraKit {
 	///    - query: The search query.
 	///	   - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
 	///    - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 5 and the maximum value is 25.
+	///    - filter: The filters to apply on the search.
 	///
 	/// - Returns: An instance of `RequestSender` with the results of the search response.
 	public func search(_ scope: KKSearchScope, of types: [KKSearchType], for query: String, next: String? = nil, limit: Int = 5, filter: KKSearchFilter?) -> RequestSender<SearchResponse, KKAPIError> {

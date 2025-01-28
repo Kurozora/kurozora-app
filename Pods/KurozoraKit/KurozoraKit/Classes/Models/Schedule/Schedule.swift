@@ -6,13 +6,13 @@
 //
 
 /// A root object that stores information about a schedule resource.
-public class Schedule: Codable, Hashable {
+public struct Schedule: Codable, Hashable, Sendable {
 	// MARK: - Properties
 	/// The type of the resource.
 	public let type: String
 
 	/// The attributes belonging to the schedule.
-	public var attributes: Schedule.Attributes
+	public let attributes: Schedule.Attributes
 
 	/// The relationships belonging to the schedule.
 	public let relationships: Schedule.Relationships

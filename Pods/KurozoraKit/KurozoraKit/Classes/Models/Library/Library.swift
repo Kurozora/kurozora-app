@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a library resource.
-public struct Library: Codable {
+public struct Library: Codable, Sendable {
 	// MARK: - Properties
 	/// A collection of games.
 	public let games: [Game]?

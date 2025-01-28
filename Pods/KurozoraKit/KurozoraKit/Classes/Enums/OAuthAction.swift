@@ -8,7 +8,7 @@
 import Foundation
 
 /// The set of available OAuth action types.
-public enum OAuthAction: String, Codable {
+public enum OAuthAction: String, Codable, Sendable {
 	// MARK: - Cases
 	/// The next action should be to sign in.
 	case signIn = "signIn"

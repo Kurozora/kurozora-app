@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a language resource.
-public struct Language: Codable, Hashable {
+public struct Language: Codable, Hashable, Sendable {
 	// MARK: - Properties
 	/// The language's name.
 	public let name: String

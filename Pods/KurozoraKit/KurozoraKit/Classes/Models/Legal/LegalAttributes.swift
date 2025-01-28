@@ -7,7 +7,7 @@
 
 extension Legal {
 	/// A root object that stores information about a single legal resource, such as the legal text.
-	public struct Attributes: Codable {
+	public struct Attributes: Codable, Sendable {
 		// MARK: - Properties
 		/// The text of the legal resource.
 		public let text: String

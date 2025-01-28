@@ -6,11 +6,11 @@
 //
 
 /// A root object that stores information about a collection of favorite libraries.
-public struct FavoriteLibraryResponse: Codable {
+public struct FavoriteLibraryResponse: Codable, Sendable {
 	// MARK: - Properties
 	/// The data included in the response for a favorite library object request.
 	public let data: FavoriteLibrary
 
-	/// The realtive URL to the next page in the paginated response.
+	/// The relative URL to the next page in the paginated response.
 	public let next: String?
 }

@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a review resource.
-public class Review: IdentityResource, Hashable {
+public struct Review: IdentityResource, Hashable {
 	// MARK: - Properties
 	public let id: String
 
@@ -15,7 +15,7 @@ public class Review: IdentityResource, Hashable {
 	public let href: String
 
 	/// The attributes belonging to the show.
-	public var attributes: Review.Attributes
+	public let attributes: Review.Attributes
 
 	/// The relationships belonging to the show.
 	public let relationships: Review.Relationships?

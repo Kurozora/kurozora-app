@@ -13,7 +13,7 @@ import Foundation
 /// case unread = 0
 /// case read = 1
 /// ```
-public enum ReadStatus: Int, Codable {
+public enum ReadStatus: Int, Codable, Sendable {
 	// MARK: - Cases
 	/// The notification is unread.
 	case unread = 0
@@ -30,7 +30,7 @@ public enum ReadStatus: Int, Codable {
 	}
 
 //	// MARK: - Properties
-//	/// The boolean value of a read status tpye.
+//	/// The boolean value of a read status type.
 //	public var boolValue: Bool {
 //		switch self {
 //		case .read:

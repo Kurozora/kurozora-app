@@ -7,7 +7,7 @@
 
 extension Show {
 	/// A root object that stores information about show relationships, such as the studios, and cast that belong to it.
-	public struct Relationships: Codable {
+	public struct Relationships: Codable, Sendable {
 		// MARK: - Properties
 		/// The cast belonging to the show.
 		public let cast: CastIdentityResponse?

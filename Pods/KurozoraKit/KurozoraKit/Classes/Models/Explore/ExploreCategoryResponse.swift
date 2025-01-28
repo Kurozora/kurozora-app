@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a collection of explore category.
-public struct ExploreCategoryResponse: Codable {
+public struct ExploreCategoryResponse: Codable, Sendable {
 	// MARK: - Properties
 	/// The data included in the response for an explore category object request.
 	public let data: [ExploreCategory]

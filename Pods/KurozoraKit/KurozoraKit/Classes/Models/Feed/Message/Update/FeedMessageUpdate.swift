@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a feed message update resource.
-public struct FeedMessageUpdate: Codable {
+public struct FeedMessageUpdate: Codable, Sendable {
 	// MARK: - Properties
 	/// The content of the feed message.
 	public let content: String?

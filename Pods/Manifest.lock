@@ -45,7 +45,7 @@ PODS:
     - IQKeyboardToolbar/Placeholderable
   - KeychainAccess (4.2.2)
   - Kingfisher (8.1.3)
-  - KurozoraKit (1.17.1):
+  - KurozoraKit (1.18.1):
     - KeychainAccess
     - TRON (= 5.5.0-beta.1)
   - Pageboy (4.2.0)
@@ -175,7 +175,7 @@ SPEC CHECKSUMS:
   IQTextView: ae13b4922f22e6f027f62c557d9f4f236b19d5c7
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   Kingfisher: f2af9028b16baf9dc6c07c570072bc41cbf009ef
-  KurozoraKit: 3deb710e1ac2d08d515427c890472aafda2d9058
+  KurozoraKit: 0cc1d62df0026260dcfa35268401a4369dbd7f1e
   Pageboy: 7f7886f61c76633df635861bf7839caf2cabdb3e
   R.swift: f573269ca45b2ab066c082e363dd4c2b297b0d71
   ReachabilitySwift: 32793e867593cfc1177f5d16491e3a197d2fccda
@@ -189,6 +189,6 @@ SPEC CHECKSUMS:
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
   XCDYouTubeKit: b120aced3d8638ffb570c5450cddb5a1dac448c7
 
-PODFILE CHECKSUM: f03d8684a536d9263c64c9c1501ab2c1802a8863
+PODFILE CHECKSUM: 6c553be6ac5c9bbbd7334f5bdbffe7442579463b
 
-COCOAPODS: 1.16.1
+COCOAPODS: 1.16.2

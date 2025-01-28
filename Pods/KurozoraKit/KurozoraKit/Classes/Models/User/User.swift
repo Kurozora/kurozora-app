@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a user resource.
-public class User: IdentityResource, Hashable {
+public final class User: IdentityResource, Hashable, @unchecked Sendable {
 	// MARK: - Properties
 	public let id: String
 
@@ -17,12 +17,12 @@ public class User: IdentityResource, Hashable {
 	public let href: String
 
 	/// An object which holds information about the current user.
-	public static var current: User? = nil
+	public internal(set) nonisolated(unsafe) static var current: User?
 
 	/// The attributes belonging to the user.
 	public var attributes: User.Attributes
 
-	/// The relationships blonging to yhe user.
+	/// The relationships belonging to yhe user.
 	public let relationships: User.Relationships?
 
 	// MARK: - Functions
@@ -49,7 +49,7 @@ extension User {
 		return currentUser.attributes.isPro
 	}
 
-	/// Returns a boolean indicating if the current signed in user has a Kurozra+ subscription.
+	/// Returns a boolean indicating if the current signed in user has a Kurozora+ subscription.
 	public static var isSubscribed: Bool {
 		guard let currentUser = User.current else { return false }
 		return currentUser.attributes.isSubscribed

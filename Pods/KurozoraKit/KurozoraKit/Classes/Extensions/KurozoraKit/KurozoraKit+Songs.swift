@@ -104,7 +104,11 @@ extension KurozoraKit {
 
 		// Prepare parameters
 		var parameters: [String: Any] = [:]
-		parameters["limit"] = limit
+		if next == nil {
+			parameters = [
+				"limit": limit
+			]
+		}
 
 		// Prepare request
 		let songShows = next ?? KKEndpoint.Songs.shows(songIdentity).endpointValue
@@ -134,7 +138,11 @@ extension KurozoraKit {
 
 		// Prepare parameters
 		var parameters: [String: Any] = [:]
-		parameters["limit"] = limit
+		if next == nil {
+			parameters = [
+				"limit": limit
+			]
+		}
 
 		// Prepare request
 		let songGames = next ?? KKEndpoint.Songs.games(songIdentity).endpointValue
@@ -150,7 +158,7 @@ extension KurozoraKit {
 	/// Rate the song with the given song identity.
 	///
 	/// - Parameters:
-	///    - songID: The id of the song which should be rated.
+	///    - songIdentity: The id of the song which should be rated.
 	///	   - score: The rating to leave.
 	///	   - description: The description of the rating.
 	///

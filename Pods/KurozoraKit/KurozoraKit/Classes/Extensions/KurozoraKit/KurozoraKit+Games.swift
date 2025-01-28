@@ -342,7 +342,7 @@ extension KurozoraKit {
 	/// Rate the game with the given game identity.
 	///
 	/// - Parameters:
-	///    - gameID: The id of the game which should be rated.
+	///    - gameIdentity: The id of the game which should be rated.
 	///	   - score: The rating to leave.
 	///	   - description: The description of the rating.
 	///

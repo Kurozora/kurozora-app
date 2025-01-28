@@ -6,7 +6,7 @@
 //
 
 /// Information about an error that occurred while processing a request.
-public struct KKError: Codable {
+public struct KKError: Codable, Sendable {
 	// MARK: - Properties
 	/// A unique identifier for this occurrence of the error.
 	let id: Int

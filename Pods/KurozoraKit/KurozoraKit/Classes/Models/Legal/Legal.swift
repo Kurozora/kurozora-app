@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a legal resource.
-public struct Legal: Codable {
+public struct Legal: Codable, Sendable {
 	// MARK: - Properties
 	/// The type of the legal resource.
 	public let type: String

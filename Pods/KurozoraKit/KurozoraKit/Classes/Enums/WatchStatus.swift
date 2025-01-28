@@ -12,7 +12,7 @@
 /// case disabled = 0
 /// case watched = 1
 /// ```
-public enum WatchStatus: Int, Codable {
+public enum WatchStatus: Int, Codable, Sendable {
 	// MARK: - Cases
 	/// The episode is not watched.
 	case notWatched = -1

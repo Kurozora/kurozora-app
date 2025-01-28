@@ -7,7 +7,7 @@
 
 extension User {
 	/// A root object that stores information about a single user, such as the user's username, bio, and profile image.
-	public struct Attributes: Codable {
+	public struct Attributes: Codable, Sendable {
 		// MARK: - Properties
 		/// The slug of the user.
 		public var slug: String

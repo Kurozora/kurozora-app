@@ -6,11 +6,11 @@
 //
 
 /// A root object that stores information about a collection of related games.
-public struct RelatedGameResponse: Codable {
+public struct RelatedGameResponse: Codable, Sendable {
 	// MARK: - Properties
 	/// The data included in the response for a related games object request.
 	public let data: [RelatedGame]
 
-	/// The realtive URL to the next page in the paginated response.
+	/// The relative URL to the next page in the paginated response.
 	public let next: String?
 }

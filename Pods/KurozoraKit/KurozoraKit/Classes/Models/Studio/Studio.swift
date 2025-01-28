@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a studio resource.
-public class Studio: IdentityResource, Hashable {
+public final class Studio: IdentityResource, Hashable, @unchecked Sendable {
 	// MARK: - Properties
 	public let id: String
 

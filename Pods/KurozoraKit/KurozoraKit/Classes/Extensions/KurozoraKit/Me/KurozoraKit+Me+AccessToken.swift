@@ -105,8 +105,8 @@ extension KurozoraKit {
 
 	/// Sign out the given user access token.
 	///
-	/// - Returns: An instance of `RequestSender` with the results of the sign out response.
-	public func signOut() -> RequestSender<KKSuccess, KKAPIError> {
+	/// - Returns: An instance of ``KKSuccess`` with the results of the sign out response.
+	public func signOut() async throws -> KKSuccess {
 		// Prepare headers
 		var headers = self.headers
 		headers.add(.authorization(bearerToken: self.authenticationKey))
@@ -119,6 +119,23 @@ extension KurozoraKit {
 			.headers(headers)
 
 		// Send request
-		return request.sender()
+		do {
+			let successResponse = try await request.sender().value
+
+			self.authenticationKey = ""
+			User.current = nil
+			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
+
+			return successResponse
+		} catch let error as KKAPIError {
+			print("❌ Received sign ot error:", error.errorDescription ?? "Unknown error")
+			print("┌ Server message:", error.message)
+			print("├ Recovery suggestion:", error.recoverySuggestion ?? "No suggestion available")
+			print("└ Failure reason:", error.failureReason ?? "No reason available")
+			throw error
+		} catch {
+			print("❌ Received sign out error:", error.localizedDescription)
+			throw error
+		}
 	}
 }

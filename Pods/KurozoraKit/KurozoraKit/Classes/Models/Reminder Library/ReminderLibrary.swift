@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a reminder library resource.
-public struct ReminderLibrary: Codable {
+public struct ReminderLibrary: Codable, Sendable {
 	// MARK: - Properties
 	/// A collection of games.
 	public let games: [Game]?

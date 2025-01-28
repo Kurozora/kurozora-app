@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a TV rating resource.
-public struct TVRating: Codable, Hashable {
+public struct TVRating: Codable, Hashable, Sendable {
 	// MARK: - Properties
 	/// The name of the TV rating.
 	public let name: String

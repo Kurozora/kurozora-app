@@ -60,6 +60,7 @@ extension KurozoraKit {
 	/// - Parameters:
 	///    - studioIdentity: The studio identity ibject of the studio for which the details should be fetched.
 	///    - relationships: The relationships to include in the response.
+	///	   - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
 	///
 	/// - Returns: An instance of `RequestSender` with the results of the get studio detail response.
 	public func getDetails(forStudio studioIdentity: StudioIdentity, including relationships: [String] = [], limit: Int? = nil) -> RequestSender<StudioResponse, KKAPIError> {
@@ -213,7 +214,7 @@ extension KurozoraKit {
 	/// Rate the studio with the given studio identity.
 	///
 	/// - Parameters:
-	///    - studioID: The id of the studio which should be rated.
+	///    - studioIdentity: The id of the studio which should be rated.
 	///	   - score: The rating to leave.
 	///	   - description: The description of the rating.
 	///

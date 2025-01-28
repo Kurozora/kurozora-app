@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a platform resource.
-public struct Platform: Codable {
+public struct Platform: Codable, Sendable {
 	// MARK: - Properties
 	/// The type of the resource.
 	public let type: String

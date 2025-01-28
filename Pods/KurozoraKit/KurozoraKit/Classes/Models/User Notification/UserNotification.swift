@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a user notification resource.
-public class UserNotification: IdentityResource, Hashable {
+public final class UserNotification: IdentityResource, Hashable, @unchecked Sendable {
 	// MARK: - Properties
 	public let id: String
 

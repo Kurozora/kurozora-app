@@ -6,11 +6,11 @@
 //
 
 /// A root object that stores information about a collection of studios.
-public struct StudioResponse: Codable {
+public struct StudioResponse: Codable, Sendable {
 	// MARK: - Properties
 	/// The data included in the response for a studio object request.
 	public let data: [Studio]
 
-	/// The realtive URL to the next page in the paginated response.
+	/// The relative URL to the next page in the paginated response.
 	public let next: String?
 }

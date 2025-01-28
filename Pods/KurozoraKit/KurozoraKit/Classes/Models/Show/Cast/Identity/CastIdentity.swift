@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a season identity resource.
-public struct CastIdentity: IdentityResource, Hashable {
+public struct CastIdentity: IdentityResource, Hashable, Sendable {
 	// MARK: - Properties
 	public let id: String
 

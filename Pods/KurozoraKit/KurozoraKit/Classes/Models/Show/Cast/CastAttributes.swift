@@ -8,7 +8,7 @@
 
 extension Cast {
 	/// A root object that stores information about a single cast, such as the role.
-	public class Attributes: Codable {
+	public struct Attributes: Codable, Sendable {
 		// MARK: - Properties
 		/// The object containing the cast role information.
 		public let role: CastRole

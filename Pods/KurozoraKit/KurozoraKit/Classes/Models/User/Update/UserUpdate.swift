@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a user update resource.
-public struct UserUpdate: Codable {
+public struct UserUpdate: Codable, Sendable {
 	// MARK: - Properties
 	/// The username of the user.
 	public var username: String

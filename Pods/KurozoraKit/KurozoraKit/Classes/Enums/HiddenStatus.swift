@@ -14,7 +14,7 @@ import Foundation
 /// case disabled = 0
 /// case hidden = 1
 /// ```
-public enum HiddenStatus: Int, Codable {
+public enum HiddenStatus: Int, Codable, Sendable {
 	// MARK: - Cases
 	/// The title is not hidden.
 	case notHidden = -1

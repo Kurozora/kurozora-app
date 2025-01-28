@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a media relation.
-public struct MediaRelation: Codable, Hashable {
+public struct MediaRelation: Codable, Hashable, Sendable {
 	// MARK: - Properties
 	/// The name of the relation with the parent show.
 	public let name: String

@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a related literature resource.
-public struct RelatedLiterature: Codable, Hashable {
+public struct RelatedLiterature: Codable, Hashable, Sendable {
 	// MARK: - Properties
 	/// The id of the related literature.
 	public let id: UUID = UUID()
@@ -16,6 +16,12 @@ public struct RelatedLiterature: Codable, Hashable {
 
 	/// The attributes belonging to the related literature.
 	public var attributes: RelatedLiterature.Attributes
+
+	// MARK: - CodingKeys
+	enum CodingKeys: String, CodingKey {
+		case literature
+		case attributes
+	}
 
 	// MARK: - Functions
 	public static func == (lhs: RelatedLiterature, rhs: RelatedLiterature) -> Bool {

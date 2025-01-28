@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a media resource.
-public struct Media: Codable {
+public struct Media: Codable, Sendable {
 	// MARK: - Properties
 	/// The url of the media.
 	public let url: String

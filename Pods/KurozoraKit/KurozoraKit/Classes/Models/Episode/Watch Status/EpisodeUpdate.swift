@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about an episode update resource.
-public struct EpisodeUpdate: Codable {
+public struct EpisodeUpdate: Codable, Sendable {
 	// MARK: - Properties
 	/// Whether the episode is watched.
 	public let isWatched: Bool

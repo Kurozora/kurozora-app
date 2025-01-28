@@ -7,7 +7,7 @@
 
 extension Media {
 	/// A root object that stores information about media relationships, such as the episodes, and games that belong to it.
-	public struct Relationships: Codable {
+	public struct Relationships: Codable, Sendable {
 		// MARK: - Properties
 		/// The episodes belonging to the media.
 		public let episodes: EpisodeIdentityResponse?

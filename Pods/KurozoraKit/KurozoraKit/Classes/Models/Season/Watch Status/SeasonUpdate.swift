@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about an season update resource.
-public struct SeasonUpdate: Codable {
+public struct SeasonUpdate: Codable, Sendable {
 	// MARK: - Properties
 	/// Whether the season is watched.
 	public let isWatched: Bool

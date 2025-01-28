@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a user notification update resource.
-public struct UserNotificationUpdate: Codable {
+public struct UserNotificationUpdate: Codable, Sendable {
 	// MARK: - Properties
 	/// Whether the user notification is read or not.
 	fileprivate let isRead: Bool

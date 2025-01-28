@@ -6,11 +6,11 @@
 //
 
 /// A root object that stores information about a collection of recap items.
-public struct RecapItemResponse: Codable {
+public struct RecapItemResponse: Codable, Sendable {
 	// MARK: - Properties
 	/// The data included in the response for an recap item object request.
 	public let data: [RecapItem]
 
-	/// The realtive URL to the next page in the paginated response.
+	/// The relative URL to the next page in the paginated response.
 	public let next: String?
 }

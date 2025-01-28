@@ -7,7 +7,7 @@
 
 extension Character {
 	/// A root object that stores information about a single character, such as the character's name, blood type, and hight.
-	public struct Attributes: Codable {
+	public struct Attributes: Codable, Sendable {
 		// MARK: - Properties
 		/// The slug of the character.
 		public let slug: String
@@ -18,7 +18,7 @@ extension Character {
 		/// The name of the character.
 		public let name: String
 
-		/// The biogrpahy of the character.
+		/// The biography of the character.
 		public let about: String?
 
 		/// The short description of the character.

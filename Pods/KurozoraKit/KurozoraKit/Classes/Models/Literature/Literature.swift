@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a literature resource.
-public class Literature: IdentityResource, Hashable {
+public final class Literature: IdentityResource, Hashable, @unchecked Sendable {
 	// MARK: - Properties
 	public let id: String
 

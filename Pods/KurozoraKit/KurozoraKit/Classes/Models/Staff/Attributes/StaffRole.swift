@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a staff role resource.
-public struct StaffRole: Codable, Hashable {
+public struct StaffRole: Codable, Hashable, Sendable {
 	// MARK: - Properties
 	/// The name of the staff role.
 	public let name: String

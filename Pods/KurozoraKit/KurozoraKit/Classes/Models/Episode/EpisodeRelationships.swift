@@ -7,7 +7,7 @@
 
 extension Episode {
 	/// A root object that stores information about episode relationships, such as the season, and show that belong to it.
-	public struct Relationships: Codable {
+	public struct Relationships: Codable, Sendable {
 		// MARK: - Properties
 		/// The seasons belonging to the episode.
 		public let seasons: SeasonIdentityResponse?

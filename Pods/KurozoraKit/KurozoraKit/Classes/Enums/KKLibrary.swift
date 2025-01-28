@@ -9,11 +9,11 @@ import UIKit
 
 /// The set of available enums for managing the user's library.
 ///
-/// `KKLibrary` offers:
-/// - [Kind](x-source-tag://KKL-Kind) enum for managing a specific user library.
-/// - [Status](x-source-tag://KKL-Status) enum for managing an item's status as well as populate a library view.
-/// - [SortType](x-source-tag://KKL-SortType) enum for managing the way items are sorted.
-///     - This in turn offers the [Option](x-source-tag://KKL-ST-Option) enum for managing the sorting order.
+/// ``KKLibrary`` offers:
+/// - ``KKLibrary/Kind`` enum for managing a specific user library.
+/// - ``KKLibrary/Status`` enum for managing an item's status as well as populate a library view.
+/// - ``KKLibrary/SortType`` enum for managing the way items are sorted.
+///     - This in turn offers the ``KKLibrary/SortType/Option`` enum for managing the sorting order.
 public enum KKLibrary {
 	/// The set of available library types.
 	///
@@ -63,7 +63,7 @@ public enum KKLibrary {
 	/// ```
 	///
 	/// - Tag: KKL-Status
-	public enum Status: Int, Codable {
+	public enum Status: Int, Codable, Sendable {
 		// MARK: - Cases
 		/// The library has no status.
 		case none = -1
@@ -138,7 +138,7 @@ public enum KKLibrary {
 	/// - `myRating`: sorts by user's rating
 	///
 	/// - Tag: KKL-SortType
-	public enum SortType: Int, CaseIterable {
+	public enum SortType: Int, CaseIterable, Sendable {
 		// MARK: - Cases
 		/// Sorted by no specific type.
 		case none = 0
@@ -237,7 +237,7 @@ extension KKLibrary.SortType {
 	/// ```
 	///
 	/// - Tag: KKL-ST-Option
-	public enum Option: Int {
+	public enum Option: Int, Sendable {
 		// MARK: - Cases
 		/// Sorted by no options.
 		case none = 0

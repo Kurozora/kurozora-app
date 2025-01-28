@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a location resource.
-public struct Location: Codable {
+public struct Location: Codable, Sendable {
 	// MARK: - Properties
 	/// The type of the resource.
 	public let type: String

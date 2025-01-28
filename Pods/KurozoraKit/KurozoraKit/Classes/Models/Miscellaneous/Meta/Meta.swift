@@ -6,7 +6,7 @@
 //
 
 /// An immutable object that stores meta information returned by the API.
-public struct Meta: Codable {
+public struct Meta: Codable, Sendable {
 	// MARK: - Properties
 	/// The version of the API.
 	public var version: String

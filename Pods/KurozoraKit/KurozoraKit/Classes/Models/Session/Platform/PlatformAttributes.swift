@@ -7,7 +7,7 @@
 
 extension Platform {
 	/// A root object that stores information about a single platform, such as the platform's system name, version, and device vendor.
-	public struct Attributes: Codable {
+	public struct Attributes: Codable, Sendable {
 		// MARK: - Properties
 		/// The description of the platform.
 		public let description: String?

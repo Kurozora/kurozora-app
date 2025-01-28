@@ -14,7 +14,7 @@ import Foundation
 /// case seenRecently
 /// case offline
 /// ```
-public enum ActivityStatus: String, Codable {
+public enum ActivityStatus: String, Codable, Sendable {
 	// MARK: - Cases
 	/// The user is currently online.
 	case online = "Online"

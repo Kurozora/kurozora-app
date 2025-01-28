@@ -7,7 +7,7 @@
 
 extension RecapItem {
 	/// A root object that stores information about recap item relationships, such as the shows, genres, and characters that belong to it.
-	public struct Relationships: Codable {
+	public struct Relationships: Codable, Sendable {
 		// MARK: - Properties
 		/// The shows belonging to the recap.
 		public let shows: ShowIdentityResponse?

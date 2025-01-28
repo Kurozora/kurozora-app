@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a feed message resource.
-public class FeedMessage: IdentityResource, Hashable {
+public final class FeedMessage: IdentityResource, Hashable, @unchecked Sendable {
 	// MARK: - Properties
 	public let id: String
 

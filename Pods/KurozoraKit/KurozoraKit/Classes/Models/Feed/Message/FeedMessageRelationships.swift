@@ -7,7 +7,7 @@
 
 extension FeedMessage {
 	/// A root object that stores information about feed message relationships, such as the user it belongs to.
-	public struct Relationships: Codable {
+	public struct Relationships: Codable, Sendable {
 		// MARK: - Properties
 		/// The user object the feed message belongs to.
 		public let users: UserResponse

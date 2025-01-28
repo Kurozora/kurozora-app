@@ -7,7 +7,7 @@
 
 extension Literature {
 	/// A root object that stores information about literature relationships, such as the studios, and cast that belong to it.
-	public struct Relationships: Codable {
+	public struct Relationships: Codable, Sendable {
 		// MARK: - Properties
 		/// The cast belonging to the literature.
 		public let cast: CastIdentityResponse?

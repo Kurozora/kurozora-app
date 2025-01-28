@@ -7,7 +7,7 @@
 
 extension Season {
 	/// A root object that stores information about a single season, such as the season's title, number, and episodes count.
-	public struct Attributes: Codable {
+	public struct Attributes: Codable, Sendable {
 		// MARK: - Properties
 		/// The link to a poster of the season.
 		public let poster: Media?

@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a single import request, such as the import's message status.
-public struct LibraryImport: Codable {
+public struct LibraryImport: Codable, Sendable {
 	// MARK: - Properties
 	/// The status message of an import request.
 	public var message: String?
@@ -15,7 +15,7 @@ public struct LibraryImport: Codable {
 // MARK: - Behavior
 extension LibraryImport {
 	/// The set of available Library import service types.
-	public enum Service: Int, CaseIterable {
+	public enum Service: Int, CaseIterable, Sendable {
 		/// Indicates the imported file is from MyAnimeList.
 		case mal = 0
 
@@ -35,7 +35,7 @@ extension LibraryImport {
 	}
 
 	/// The set of available Library import behavior types.
-	public enum Behavior: Int, CaseIterable {
+	public enum Behavior: Int, CaseIterable, Sendable {
 		/// The import will overwrite any existing shows in the library.
 		case overwrite = 0
 

@@ -7,16 +7,16 @@
 
 import KeychainAccess
 
-/// `KKServices` is the object that serves as a provider for [KurozoraKit](x-source-tag://KurozoraKit) services.
+/// `KKServices` is the object that serves as a provider for ``KurozoraKit/KurozoraKit`` services.
 ///
-/// `KKServices` is used together with [KurozoraKit](x-source-tag://KurozoraKit) to provide extra functionality such as storing sensetive information in `Keychain` and showing success/error alerts.
+/// `KKServices` is used together with ``KurozoraKit/KurozoraKit`` to provide extra functionality such as storing sensetive information in `Keychain` and showing success/error alerts.
 /// For further control over the information saved in `Keychain`, you can provide your own `Keychain` object with your specified properties.
 ///
 /// - Tag: KKServices
 public class KKServices {
-	/// Provides access to the `Keychain` service used by [KurozoraKit](x-source-tag://KurozoraKit).
+	/// Provides access to the `Keychain` service used by ``KurozoraKit/KurozoraKit``.
 	internal var _keychainDefaults: Keychain!
-	/// Provides access to the `Keychain` service used by [KurozoraKit](x-source-tag://KurozoraKit).
+	/// Provides access to the `Keychain` service used by ``KurozoraKit/KurozoraKit``.
 	var keychainDefaults: Keychain {
 		get {
 			return _keychainDefaults
@@ -24,7 +24,7 @@ public class KKServices {
 	}
 
 	// MARK: - Initializers
-	/// [KKServices](x-source-tag://KKServices) is a root object, that serves as a provider for KurozoraKit services.
+	/// ``KKServices`` is a root object, that serves as a provider for KurozoraKit services.
 	///
 	/// - Parameter keychain: The main `Keychain` service used for managing secrets.
 	public init(keychain: Keychain = Keychain()) {

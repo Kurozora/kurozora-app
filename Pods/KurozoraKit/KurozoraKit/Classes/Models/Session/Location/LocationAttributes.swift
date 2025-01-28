@@ -7,7 +7,7 @@
 
 extension Location {
 	/// A root object that stores information about a single location, such as the location's region, latitude, and longitude.
-	public struct Attributes: Codable {
+	public struct Attributes: Codable, Sendable {
 		// MARK: - Properties
 		/// The city's name of the location.
 		public let city: String?

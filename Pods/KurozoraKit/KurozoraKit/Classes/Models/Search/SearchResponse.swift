@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a collection of searches.
-public struct SearchResponse: Codable {
+public struct SearchResponse: Codable, Sendable {
 	// MARK: - Properties
 	/// The data included in the response for a search object request.
 	public let data: Search

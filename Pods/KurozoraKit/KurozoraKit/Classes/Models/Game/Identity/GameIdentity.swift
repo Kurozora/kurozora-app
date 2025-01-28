@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a game identity resource.
-public struct GameIdentity: IdentityResource, Hashable {
+public struct GameIdentity: IdentityResource, Hashable, Sendable {
 	// MARK: - Properties
 	public let id: String
 

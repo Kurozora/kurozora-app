@@ -6,11 +6,11 @@
 //
 
 /// A root object that stores information about a collection of feed messages.
-public struct FeedMessageResponse: Codable {
+public struct FeedMessageResponse: Codable, Sendable {
 	// MARK: - Properties
 	/// The data included in the response for a feed message object request.
 	public let data: [FeedMessage]
 
-	/// The realtive URL to the next page in the paginated response.
+	/// The relative URL to the next page in the paginated response.
 	public let next: String?
 }

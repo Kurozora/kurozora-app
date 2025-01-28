@@ -6,11 +6,11 @@
 //
 
 /// A root object that stores information about a collection of episodes.
-public struct EpisodeResponse: Codable {
+public struct EpisodeResponse: Codable, Sendable {
 	// MARK: - Properties
 	/// The data included in the response for an episode object request.
 	public let data: [Episode]
 
-	/// The realtive URL to the next page in the paginated response.
+	/// The relative URL to the next page in the paginated response.
 	public let next: String?
 }

@@ -7,7 +7,7 @@
 
 extension Person {
 	/// A root object that stores information about person relationships, such as the shows, and characters that belong to it.
-	public struct Relationships: Codable {
+	public struct Relationships: Codable, Sendable {
 		// MARK: - Properties
 		/// The characters belonging to the person.
 		public let characters: CharacterIdentityResponse?

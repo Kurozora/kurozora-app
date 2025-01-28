@@ -31,7 +31,7 @@ extension KurozoraKit {
 	/// Fetch the app theme details for the given app theme id.
 	///
 	/// - Parameters:
-	///    - themeID: The id of the theme for which the details should be fetched.
+	///    - appThemeID: The id of the theme for which the details should be fetched.
 	///
 	/// - Returns: An instance of `RequestSender` with the results of the get theme details response.
 	public func getDetails(forAppThemeID appThemeID: String) -> RequestSender<AppThemeResponse, KKAPIError> {

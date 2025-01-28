@@ -6,11 +6,11 @@
 //
 
 /// A root object that stores information about a collection of related shows.
-public struct RelatedShowResponse: Codable {
+public struct RelatedShowResponse: Codable, Sendable {
 	// MARK: - Properties
 	/// The data included in the response for a related show object request.
 	public let data: [RelatedShow]
 
-	/// The realtive URL to the next page in the paginated response.
+	/// The relative URL to the next page in the paginated response.
 	public let next: String?
 }
