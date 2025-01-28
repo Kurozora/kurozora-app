@@ -17,7 +17,7 @@ class AchievementTableViewCell: UITableViewCell, SkeletonDisplayable {
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
-	func configureCell(using achievement: Badge?) {
+	func configureCell(using achievement: Achievement?) {
 		guard let achievement = achievement else {
 			self.showSkeleton()
 			return

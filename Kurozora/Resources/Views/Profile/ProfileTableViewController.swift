@@ -369,7 +369,7 @@ class ProfileTableViewController: KTableViewController {
 
 		// Configure achievements button
 		var achievementsCount = 0
-		if let achievements = user.relationships?.badges?.data {
+		if let achievements = user.relationships?.achievements?.data {
 			achievementsCount = achievements.count
 		}
 

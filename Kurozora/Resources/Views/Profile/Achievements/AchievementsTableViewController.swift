@@ -11,7 +11,7 @@ import KurozoraKit
 
 class AchievementsTableViewController: KTableViewController {
 	// MARK: - Properties
-	var achievements: [Badge] = [] {
+	var achievements: [Achievement] = [] {
 		didSet {
 			self._prefersActivityIndicatorHidden = true
 			self.tableView.reloadData {
@@ -46,7 +46,7 @@ class AchievementsTableViewController: KTableViewController {
 		super.viewDidLoad()
 
 		self._prefersRefreshControlDisabled = true
-		self.achievements = self.user.relationships?.badges?.data ?? []
+		self.achievements = self.user.relationships?.achievements?.data ?? []
 	}
 
 	// MARK: - Functions
