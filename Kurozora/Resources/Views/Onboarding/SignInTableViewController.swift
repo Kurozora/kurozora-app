@@ -45,33 +45,34 @@ class SignInTableViewController: AccountOnboardingTableViewController {
 	/// - Parameters:
 	///    - email: The email address of the user.
 	///    - password: The password of the user.
-	func signInWithKurozora(email: String? = nil, password: String? = nil) {
+	func signInWithKurozora(email: String? = nil, password: String? = nil) async {
 		guard let email = email ?? self.textFieldArray.first??.trimmedText else { return }
 		guard let password = password ?? self.textFieldArray.last??.text else { return }
 
-		KService.signIn(email, password) { [weak self] result in
-			guard let self = self else { return }
-			switch result {
-			case .success(let authenticationToken):
-				// Save user in keychain.
-				if let slug = User.current?.attributes.slug {
-					try? SharedDelegate.shared.keychain.set(authenticationToken, key: slug)
-					UserSettings.set(slug, forKey: .selectedAccount)
-				}
+		do {
+			let signInResponse = try await KService.signIn(email, password)
+			let authenticationToken = signInResponse.authenticationToken
 
-				// Dismiss the view and register user for push notifications.
-				self.dismiss(animated: true) {
-					UserSettings.shared.removeObject(forKey: UserSettingsKey.lastNotificationRegistrationRequest.rawValue)
-					WorkflowController.shared.registerForPushNotifications()
-					self.onSignIn?()
-				}
-			case .failure(let error):
-				DispatchQueue.main.async {
-					// Re-enable user interaction.
-					self.disableUserInteraction(false)
-					self.presentAlertController(title: "Can't Sign In 😔", message: error.message)
-				}
+			// Save user in keychain.
+			if let slug = User.current?.attributes.slug {
+				try? SharedDelegate.shared.keychain.set(authenticationToken, key: slug)
+				UserSettings.set(slug, forKey: .selectedAccount)
 			}
+
+			// Dismiss the view and register user for push notifications.
+			self.dismiss(animated: true) {
+				UserSettings.shared.removeObject(forKey: UserSettingsKey.lastNotificationRegistrationRequest.rawValue)
+				WorkflowController.shared.registerForPushNotifications()
+				self.onSignIn?()
+			}
+		} catch let error as KKAPIError {
+			// Re-enable user interaction.
+			self.disableUserInteraction(false)
+			self.presentAlertController(title: "Can't Sign In 😔", message: error.message)
+		} catch {
+			// Re-enable user interaction.
+			self.disableUserInteraction(false)
+			self.presentAlertController(title: "Can't Sign In 😔", message: "An error occurred while trying to sign in. Please try again.")
 		}
 	}
 
@@ -79,7 +80,9 @@ class SignInTableViewController: AccountOnboardingTableViewController {
 	override func rightNavigationBarButtonPressed(sender: AnyObject) {
 		super.rightNavigationBarButtonPressed(sender: sender)
 
-		self.signInWithKurozora()
+		Task {
+			await self.signInWithKurozora()
+		}
 	}
 }
 
@@ -128,10 +131,10 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 			guard let identityTokenString = String(data: identityTokenData, encoding: .utf8) else { return }
 			print("Identity Token \(identityTokenString)")
 
-			KService.signIn(withAppleID: identityTokenString) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let oAuthResponse):
+			Task {
+				do {
+					let oAuthResponse = try await KService.signIn(withAppleID: identityTokenString)
+
 					switch oAuthResponse.action {
 					case .signIn:
 						// Save user in keychain.
@@ -158,12 +161,14 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 							self.disableUserInteraction(false)
 						}
 					}
-				case .failure(let error):
-					DispatchQueue.main.async {
-						// Re-enable user interaction.
-						self.disableUserInteraction(false)
-						self.presentAlertController(title: "Can't Sign In 😔", message: error.message)
-					}
+				} catch let error as KKAPIError {
+					// Re-enable user interaction.
+					self.disableUserInteraction(false)
+					self.presentAlertController(title: "Can't Sign In 😔", message: error.message)
+				} catch {
+					// Re-enable user interaction.
+					self.disableUserInteraction(false)
+					self.presentAlertController(title: "Can't Sign In 😔", message: "An error occurred while trying to sign in. Please try again.")
 				}
 			}
 		case let passwordCredential as ASPasswordCredential:
@@ -171,7 +176,9 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 			let email = passwordCredential.user
 			let password = passwordCredential.password
 
-			self.signInWithKurozora(email: email, password: password)
+			Task {
+				await self.signInWithKurozora(email: email, password: password)
+			}
 		default: break
 		}
 	}
@@ -186,7 +193,7 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 			case .invalidResponse:
 				message = "The app received an invalid response from Apple. Please try again."
 			case .notHandled:
-				message = "An error occured and the authentication was not handled by Apple. Please try again."
+				message = "An error occurred and the authentication was not handled by Apple. Please try again."
 			default: break
 			}
 		}

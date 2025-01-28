@@ -10,6 +10,7 @@ import UIKit
 import AuthenticationServices
 
 @objc protocol OnboardingOptionsTableViewCellDelegate: AnyObject {
+	@MainActor
 	func handleAuthorizationAppleIDButtonPress()
 }
 

@@ -26,7 +26,7 @@ extension SignInWithAppleTableViewController {
 		switch Section(rawValue: indexPath.section) {
 		case .body:
 			guard let siwaButtonTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.siwaButtonTableViewCell, for: indexPath) else {
-				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.siwaButtonTableViewCell.identifier)")
+				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.siwaButtonTableViewCell.identifier)")
 			}
 			siwaButtonTableViewCell.onboardingFooterTableViewCellDelegate = self
 			return siwaButtonTableViewCell
@@ -55,7 +55,7 @@ extension SignInWithAppleTableViewController: ASAuthorizationControllerDelegate 
 	func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
 		switch authorization.credential {
 		case let appleIDCredential as ASAuthorizationAppleIDCredential:
-			print("----------- Statrted authorizationController() -----------")
+			print("----------- Started authorizationController() -----------")
 			print("User ID - \(appleIDCredential.user)")
 			print("User Name - \(appleIDCredential.fullName?.description ?? "N/A")")
 			print("User Email - \(appleIDCredential.email ?? "N/A")")
@@ -70,10 +70,10 @@ extension SignInWithAppleTableViewController: ASAuthorizationControllerDelegate 
 			guard let identityTokenString = String(data: identityTokenData, encoding: .utf8) else { return }
 			print("Identity Token \(identityTokenString)")
 
-			KService.signIn(withAppleID: identityTokenString) { [weak self] result in
-				guard let self = self else { return }
-				switch result {
-				case .success(let oAuthResponse):
+			Task {
+				do {
+					let oAuthResponse = try await KService.signIn(withAppleID: identityTokenString)
+
 					switch oAuthResponse.action {
 					case .signIn:
 						// Save user in keychain.
@@ -89,13 +89,15 @@ extension SignInWithAppleTableViewController: ASAuthorizationControllerDelegate 
 						self.dismiss(animated: true, completion: nil)
 					default: break
 					}
-				case .failure(let error):
-					DispatchQueue.main.async {
-						self.view.endEditing(true)
-						self.presentAlertController(title: "Can't Sign In 😔", message: error.message)
-					}
+				} catch let error as KKAPIError {
+					self.view.endEditing(true)
+					self.presentAlertController(title: "Can't Sign In 😔", message: error.message)
+				} catch {
+					self.view.endEditing(true)
+					self.presentAlertController(title: "Can't Sign In 😔", message: "An error occured. Please try again.")
 				}
 			}
+
 			print("----------- Ended authorizationController() -----------")
 		default: break
 		}
@@ -111,7 +113,7 @@ extension SignInWithAppleTableViewController: ASAuthorizationControllerDelegate 
 			case .invalidResponse:
 				message = "The app received an invalid response from Apple. Please try again."
 			case .notHandled:
-				message = "An error occured and the authentication was not handled by Apple. Please try again."
+				message = "An error occurred and the authentication was not handled by Apple. Please try again."
 			default: break
 			}
 		}

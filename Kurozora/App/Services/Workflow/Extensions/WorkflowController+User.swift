@@ -101,7 +101,7 @@ extension WorkflowController {
 			KService.authenticationKey = authenticationKey
 
 			do {
-				_ = try await KService.getProfileDetails().value
+				_ = try await KService.getProfileDetails()
 				return true
 			} catch {
 				print("-----", error.localizedDescription)
@@ -178,11 +178,8 @@ extension WorkflowController {
 		let slug = User.current?.attributes.slug ?? ""
 
 		do {
-			_ = try await KService.deleteUser(password: password).value
-			User.current = nil
-			KService.authenticationKey = ""
+			_ = try await KService.deleteUser(password: password)
 			try? SharedDelegate.shared.keychain.remove(slug)
-			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
 			return true
 		} catch let error as KKAPIError {
 			await UIApplication.topViewController?.presentAlertController(title: "Can't Delete Account 😔", message: error.message)

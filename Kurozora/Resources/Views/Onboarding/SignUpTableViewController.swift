@@ -61,7 +61,7 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 	/// Fetches the user's profile details.
 	func getProfileDetails() async {
 		do {
-			_ = try await KService.getProfileDetails().value
+			_ = try await KService.getProfileDetails()
 
 			// Save user in keychain.
 			if let slug = User.current?.attributes.slug {
