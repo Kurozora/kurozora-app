@@ -139,7 +139,7 @@ extension KKSong {
 	///    - view: The `UIView` sending the request.
 	///    - barButtonItem: The `UIBarButtonItem` sending the request.
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
-		let shareText = "\(self.webpageURLString)\nListen to \"\(self.attributes.originalTitle)\" by \"\(self.attributes.artist)\" on @KurozoraApp"
+		let shareText = "\(self.webpageURLString)\nListen to \"\(self.attributes.title)\" by \"\(self.attributes.artist)\" on @KurozoraApp"
 		let activityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
 
 		if let popoverController = activityViewController.popoverPresentationController {
