@@ -15,5 +15,5 @@ import UIKit
 	@objc optional func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type]
 	@objc optional func registerNibs(for collectionView: UICollectionView) -> [UICollectionReusableView.Type]
 	@objc optional func updateDataSource()
-	@objc optional func configureDataSource()
+	@MainActor @objc optional func configureDataSource()
 }
