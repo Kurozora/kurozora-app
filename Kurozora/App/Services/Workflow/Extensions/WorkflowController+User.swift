@@ -67,15 +67,13 @@ extension WorkflowController {
 	}
 
 	/// Subscribes user with their reminders.
-	func subscribeToReminders(on viewController: UIViewController? = nil) {
-		Task {
-			if await WorkflowController.shared.isSubscribed(on: viewController) {
-				let reminderSubscriptionURL = KService.reminderSubscriptionURL
-				let reminderSubscriptionString = reminderSubscriptionURL.absoluteString.removingPrefix(reminderSubscriptionURL.scheme ?? "")
-				DispatchQueue.main.async {
-					UIApplication.shared.kOpen(nil, deepLink: URL(string: "webcal\(reminderSubscriptionString)"))
-				}
-			}
+	@MainActor
+	func subscribeToReminders(on viewController: UIViewController? = nil) async {
+		if await WorkflowController.shared.isSubscribed(on: viewController) {
+			let reminderSubscriptionURL = KService.reminderSubscriptionURL
+			let reminderSubscriptionString = reminderSubscriptionURL.absoluteString.removingPrefix(reminderSubscriptionURL.scheme ?? "")
+
+			UIApplication.shared.kOpen(nil, deepLink: URL(string: "webcal\(reminderSubscriptionString)"))
 		}
 	}
 
@@ -154,11 +152,8 @@ extension WorkflowController {
 		let slug = User.current?.attributes.slug ?? ""
 
 		do {
-			_ = try await KService.signOut().value
-			User.current = nil
-			KService.authenticationKey = ""
+			_ = try await KService.signOut()
 			try? SharedDelegate.shared.keychain.remove(slug)
-			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
 		} catch let error as KKAPIError {
 			await UIApplication.topViewController?.presentAlertController(title: "Can't Sign Out 😔", message: error.message)
 			print("-----", error.message)
