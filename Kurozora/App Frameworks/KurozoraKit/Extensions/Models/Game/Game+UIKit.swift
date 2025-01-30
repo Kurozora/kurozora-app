@@ -15,6 +15,7 @@ extension Game {
 		return "https://kurozora.app/games/\(self.attributes.slug)"
 	}
 
+	@MainActor
 	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?)
 	-> UIContextMenuConfiguration? {
 		let identifier = userInfo?["indexPath"] as? NSCopying
@@ -28,6 +29,7 @@ extension Game {
 		}
 	}
 
+	@MainActor
 	func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?) -> UIMenu {
 		var menuElements: [UIMenuElement] = []
 		let libraryStatus = self.attributes.library?.status ?? .none
@@ -102,6 +104,7 @@ extension Game {
 		viewController?.present(activityViewController, animated: true, completion: nil)
 	}
 
+	@MainActor
 	func addToLibrary() -> UIMenu {
 		let libraryStatus = self.attributes.library?.status ?? .none
 		let addToLibraryMenuTitle = libraryStatus == .none ? Trans.addToLibrary : Trans.updateLibraryStatus

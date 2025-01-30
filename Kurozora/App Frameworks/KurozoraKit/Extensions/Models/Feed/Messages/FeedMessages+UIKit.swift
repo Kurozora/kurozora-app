@@ -10,6 +10,7 @@ import UIKit
 import KurozoraKit
 
 extension FeedMessage {
+	@MainActor
 	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any?])
 	-> UIContextMenuConfiguration? {
 		let identifier = userInfo["identifier"] as? NSCopying
@@ -20,6 +21,7 @@ extension FeedMessage {
 		}
 	}
 
+	@MainActor
 	func makeContextMenu(in viewController: UIViewController?, userInfo: [AnyHashable: Any?]) -> UIMenu {
 		var menuElements: [UIMenuElement] = []
 
@@ -261,14 +263,15 @@ extension FeedMessage {
 	/// - Parameters:
 	///    - viewController: The view controller initiating the action.
 	///    - userInfo: Any information passed by the user.
-	@MainActor
 	func reShareMessage(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any?]) {
 		WorkflowController.shared.isSignedIn { [weak self] in
 			guard let self = self else { return }
 			if !self.attributes.isReShared {
 				self.openReShareTextEditor(via: viewController, userInfo: userInfo, isEditingMessage: false)
 			} else {
-				viewController?.presentAlertController(title: Trans.reshareMessageErrorHeadline, message: Trans.reshareMessageErrorSubheadline)
+				Task { @MainActor in
+					viewController?.presentAlertController(title: Trans.reshareMessageErrorHeadline, message: Trans.reshareMessageErrorSubheadline)
+				}
 			}
 		}
 	}
