@@ -14,8 +14,7 @@ extension Review {
 	-> UIContextMenuConfiguration? {
 		let identifier = userInfo["identifier"] as? NSCopying
 
-		return UIContextMenuConfiguration(identifier: identifier, previewProvider: nil) { [weak self] _ in
-			guard let self = self else { return nil }
+		return UIContextMenuConfiguration(identifier: identifier, previewProvider: nil) { _ in
 			return self.makeContextMenu(in: viewController, userInfo: userInfo)
 		}
 	}
@@ -28,16 +27,14 @@ extension Review {
 		// Username action
 		if let user = self.relationships?.users?.data.first {
 			let username = user.attributes.username
-			let userAction = UIAction(title: "Show " + username + "'s Profile", image: UIImage(systemName: "person.crop.circle.fill")) { [weak self] _ in
-				guard let self = self else { return }
+			let userAction = UIAction(title: "Show " + username + "'s Profile", image: UIImage(systemName: "person.crop.circle.fill")) { _ in
 				self.visitOriginalPosterProfile(from: viewController)
 			}
 			userMenuElements.append(userAction)
 		}
 
 		// Create "share" element
-		let shareAction = UIAction(title: "Share Review", image: UIImage(systemName: "square.and.arrow.up.fill")) { [weak self] _ in
-			guard let self = self else { return }
+		let shareAction = UIAction(title: "Share Review", image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
 			self.openShareSheet(on: viewController)
 		}
 		userMenuElements.append(shareAction)
@@ -48,8 +45,7 @@ extension Review {
 		if User.isSignedIn {
 			// Report review action
 			var reportMenuElements: [UIMenuElement] = []
-			let reportAction = UIAction(title: "Report Review", image: UIImage(systemName: "exclamationmark.circle.fill"), attributes: .destructive) { [weak self] _ in
-				guard let self = self else { return }
+			let reportAction = UIAction(title: "Report Review", image: UIImage(systemName: "exclamationmark.circle.fill"), attributes: .destructive) { _ in
 				self.reportReview()
 			}
 			reportMenuElements.append(reportAction)
@@ -64,7 +60,7 @@ extension Review {
 
 	/// Presents the profile view for the review poster.
 	///
-	/// - Parameter viewController: The view controller initiaing the segue.
+	/// - Parameter viewController: The view controller initialing the segue.
 	func visitOriginalPosterProfile(from viewController: UIViewController? = UIApplication.topViewController) {
 		guard let user = self.relationships?.users?.data.first else { return }
 		let profileTableViewController = ProfileTableViewController.`init`(with: user)
