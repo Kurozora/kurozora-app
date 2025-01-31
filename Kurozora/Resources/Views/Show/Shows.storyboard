@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ftf-WB-7ul">
-    <device id="retina6_72" orientation="portrait" appearance="dark"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ftf-WB-7ul">
+    <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -14,7 +14,7 @@
             <objects>
                 <collectionViewController storyboardIdentifier="ShowsListCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="8UW-hZ-RJr" customClass="ShowsListCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" id="kYY-E1-AQb">
-                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="0s6-nv-ugV">
@@ -45,7 +45,7 @@
                 <navigationController storyboardIdentifier="ShowsKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ftf-WB-7ul" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" backIndicatorImage="chevron.left.circle" catalog="system" backIndicatorTransitionMaskImage="chevron.left.circle" id="ESa-T6-GCe">
-                        <rect key="frame" x="0.0" y="59" width="430" height="44"/>
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -62,7 +62,7 @@
             <objects>
                 <collectionViewController storyboardIdentifier="ShowDetailsCollectionViewController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="A3e-GJ-UX5" customClass="ShowDetailsCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" bouncesZoom="NO" dataMode="prototypes" id="32t-Kh-jQa">
-                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="yH1-ih-AvY">
@@ -73,7 +73,7 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ShowDetailHeaderCollectionViewCell" id="qlh-aU-C2J" customClass="ShowDetailHeaderCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="28" y="0.0" width="374" height="387"/>
+                                <rect key="frame" x="9.6666666666666661" y="0.0" width="374" height="387"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="irJ-Ys-oGC">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="387"/>
@@ -239,7 +239,7 @@
                                                                                 <constraint firstAttribute="height" constant="30" id="1pk-1q-YBU"/>
                                                                                 <constraint firstAttribute="width" constant="30" id="bNa-Cw-gpg"/>
                                                                             </constraints>
-                                                                            <color key="tintColor" red="1" green="0.25490196079999999" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <state key="normal" image="heart" catalog="system">
                                                                                 <color key="titleColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             </state>
@@ -260,7 +260,7 @@
                                                                                 <constraint firstAttribute="height" constant="30" id="X1m-nr-oDU"/>
                                                                                 <constraint firstAttribute="width" constant="30" id="wPf-au-1zn"/>
                                                                             </constraints>
-                                                                            <color key="tintColor" red="1" green="0.80000000000000004" blue="0.070588235289999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                            <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <state key="normal" image="bell" catalog="system">
                                                                                 <color key="titleColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             </state>
@@ -366,7 +366,7 @@
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="lcH-Pn-zdh">
                         <nil key="title"/>
                         <view key="titleView" contentMode="scaleToFill" id="2Od-B7-0Nf">
-                            <rect key="frame" x="126.66666666666669" y="0.0" width="177" height="44"/>
+                            <rect key="frame" x="108" y="0.0" width="177" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nSg-hj-AjS">
@@ -577,10 +577,10 @@
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
-        <image name="bell" catalog="system" width="125" height="128"/>
+        <image name="bell" catalog="system" width="32" height="32"/>
         <image name="book_texture_overlay" width="160" height="240"/>
-        <image name="chevron.left.circle" catalog="system" width="128" height="123"/>
-        <image name="ellipsis.circle" catalog="system" width="128" height="123"/>
-        <image name="heart" catalog="system" width="128" height="107"/>
+        <image name="chevron.left.circle" catalog="system" width="32" height="32"/>
+        <image name="ellipsis.circle" catalog="system" width="32" height="32"/>
+        <image name="heart" catalog="system" width="32" height="32"/>
     </resources>
 </document>
