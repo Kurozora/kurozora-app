@@ -92,10 +92,7 @@ class KCollectionViewController: UICollectionViewController {
 	override func viewWillReload() {
 		super.viewWillReload()
 
-		DispatchQueue.main.async { [weak self] in
-			guard let self = self else { return }
-			self.configureEmptyDataView()
-		}
+		self.configureEmptyDataView()
 	}
 
 	override func viewDidLoad() {
@@ -268,7 +265,8 @@ extension KCollectionViewController {
 	/// Shows a view to indicate the collection view has no data to show.
 	///
 	/// Use this method to show a beautiful and informative view when the collection view is empty.
-	@objc func configureEmptyDataView() { }
+	@objc @MainActor
+	func configureEmptyDataView() { }
 }
 
 // MARK: - UINavigationControllerDelegate

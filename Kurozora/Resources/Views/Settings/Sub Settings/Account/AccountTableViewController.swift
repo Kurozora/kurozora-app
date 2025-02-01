@@ -176,7 +176,7 @@ extension AccountTableViewController {
 					textField.textType = .password
 					textField.placeholder = Trans.password
 				}
-				alertController.addAction(UIAlertAction(title: "Delete Permanently", style: .destructive) { [weak self] _ in
+				alertController.addAction(UIAlertAction(title: Trans.deletePermanently, style: .destructive) { [weak self] _ in
 					guard let self = self else { return }
 					guard let passwordTextField = alertController.textFields?.first else { return }
 					guard let password = passwordTextField.text else { return }

@@ -16,6 +16,7 @@ protocol ReviewTextEditorDisplayLogic: AnyObject {
 	func displaySaveReview(viewModel: ReviewTextEditor.SaveReview.ViewModel)
 	func displayCancel(viewModel: ReviewTextEditor.Cancel.ViewModel)
 	func displayConfirmCancel(viewModel: ReviewTextEditor.ConfirmCancel.ViewModel)
+	@MainActor
 	func displaySubmit(viewModel: ReviewTextEditor.Submit.ViewModel)
 	func displayAlert(viewModel: ReviewTextEditor.Alert.ViewModel)
 }

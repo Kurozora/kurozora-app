@@ -181,7 +181,7 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 			libraryStatusString = self.libraryStatus.gameStringValue
 		}
 
-		self.libraryStatusButton?.setTitle(self.libraryStatus != .none ? "\(libraryStatusString.capitalized) ▾" : "ADD", for: .normal)
+		self.libraryStatusButton?.setTitle(self.libraryStatus != .none ? "\(libraryStatusString.capitalized) ▾" : Trans.add.uppercased(), for: .normal)
 	}
 
 	// MARK: - IBActions

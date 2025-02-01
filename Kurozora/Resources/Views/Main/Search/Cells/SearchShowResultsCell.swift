@@ -42,8 +42,8 @@ class SearchShowResultsCell: KCollectionViewCell {
 		self.statusLabel.text = show.attributes.status.name
 
 		// Configure poster image
-		if let posterBackroundColor = show.attributes.poster?.backgroundColor {
-			self.posterImageView.backgroundColor = UIColor(hexString: posterBackroundColor)
+		if let posterBackgroundColor = show.attributes.poster?.backgroundColor {
+			self.posterImageView.backgroundColor = UIColor(hexString: posterBackgroundColor)
 		} else {
 			self.posterImageView.backgroundColor = .clear
 		}
@@ -63,9 +63,9 @@ class SearchShowResultsCell: KCollectionViewCell {
 			libraryStatus = self.libraryStatus.gameStringValue
 		}
 
-		self.actionButton.setTitle(self.libraryStatus != .none ? "\(libraryStatus.capitalized) ▾" : "ADD", for: .normal)
+		self.actionButton.setTitle(self.libraryStatus != .none ? "\(libraryStatus.capitalized) ▾" : Trans.add.uppercased(), for: .normal)
 
-		// Cinfigure rating
+		// Configure rating
 		self.showRatingLabel.text = show.attributes.tvRating.name
 		self.showRatingLabel.isHidden = false
 

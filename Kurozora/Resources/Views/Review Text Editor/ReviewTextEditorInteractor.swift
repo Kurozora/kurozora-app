@@ -106,7 +106,8 @@ extension ReviewTextEditorInteractor: ReviewTextEditorBusinessLogic {
 
 		if isSuccess == true {
 			let response = ReviewTextEditor.Submit.Response()
-			DispatchQueue.main.async {
+			Task { @MainActor [weak self] in
+			    guard let self = self else { return }
 				self.presenter?.presentSubmit(response: response)
 			}
 		} else {

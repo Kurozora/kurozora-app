@@ -314,7 +314,7 @@ extension LiteraturesListCollectionViewController: BaseLockupCollectionViewCellD
 			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value  in
 				Task {
 					do {
-						let libraryUpdateResponse = try await KService.addToLibrary(.literatures, withLibraryStatus: value, modelID: String(literature.id)).value
+						let libraryUpdateResponse = try await KService.addToLibrary(.literatures, withLibraryStatus: value, modelID: literature.id).value
 
 						literature.attributes.library?.update(using: libraryUpdateResponse.data)
 
@@ -338,13 +338,13 @@ extension LiteraturesListCollectionViewController: BaseLockupCollectionViewCellD
 				actionSheetAlertController.addAction(UIAlertAction(title: Trans.removeFromLibrary, style: .destructive) { _ in
 					Task {
 						do {
-							let libraryUpdateResponse = try await KService.removeFromLibrary(.literatures, modelID: String(literature.id)).value
+							let libraryUpdateResponse = try await KService.removeFromLibrary(.literatures, modelID: literature.id).value
 
 							literature.attributes.library?.update(using: libraryUpdateResponse.data)
 
 							// Update edntry in library
 							cell.libraryStatus = .none
-							button.setTitle("ADD", for: .normal)
+							button.setTitle(Trans.add.uppercased(), for: .normal)
 
 							let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
 							NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)

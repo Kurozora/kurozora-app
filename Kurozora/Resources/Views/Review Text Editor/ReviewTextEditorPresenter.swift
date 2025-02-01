@@ -15,6 +15,7 @@ protocol ReviewTextEditorPresentationLogic {
 	func presentSaveReview(response: ReviewTextEditor.SaveReview.Response)
 	func presentCancel(response: ReviewTextEditor.Cancel.Response)
 	func presentConfirmCancel(response: ReviewTextEditor.ConfirmCancel.Response)
+	@MainActor
 	func presentSubmit(response: ReviewTextEditor.Submit.Response)
 	func presentAlert(response: ReviewTextEditor.Alert.Response)
 }

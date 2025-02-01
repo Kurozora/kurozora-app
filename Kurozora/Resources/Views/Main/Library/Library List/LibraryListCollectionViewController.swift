@@ -114,11 +114,9 @@ class LibraryListCollectionViewController: KCollectionViewController {
 		self.configureDataSource()
 
 		// Fetch library if user is signed in
-		DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+		Task { [weak self] in
 			guard let self = self else { return }
-			Task {
-				await self.fetchLibrary()
-			}
+			await self.fetchLibrary()
 		}
 	}
 
@@ -145,11 +143,9 @@ class LibraryListCollectionViewController: KCollectionViewController {
 
 		if self.libraryKind != UserSettings.libraryKind {
 			// Fetch library if user is signed in
-			DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+			Task { [weak self] in
 				guard let self = self else { return }
-				Task {
-					await self.fetchLibrary()
-				}
+				await self.fetchLibrary()
 			}
 		}
 	}
@@ -166,11 +162,9 @@ class LibraryListCollectionViewController: KCollectionViewController {
 
 	override func handleRefreshControl() {
 		self.nextPageURL = nil
-		DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+		Task { [weak self] in
 			guard let self = self else { return }
-			Task {
-				await self.fetchLibrary()
-			}
+			await self.fetchLibrary()
 		}
 	}
 
@@ -332,11 +326,9 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	///
 	/// - Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
 	@objc func addToLibrary(_ notification: NSNotification) {
-		DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+		Task { [weak self] in
 			guard let self = self else { return }
-			Task {
-				await self.fetchLibrary()
-			}
+			await self.fetchLibrary()
 		}
 	}
 
@@ -344,11 +336,9 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	///
 	/// - Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
 	@objc func removeFromLibrary(_ notification: NSNotification) {
-		DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+		Task { [weak self] in
 			guard let self = self else { return }
-			Task {
-				await self.fetchLibrary()
-			}
+			await self.fetchLibrary()
 		}
 	}
 
@@ -419,15 +409,11 @@ extension LibraryListCollectionViewController: LibraryViewControllerDataSource {
 // MARK: - LibraryViewControllerDelegate
 extension LibraryListCollectionViewController: LibraryViewControllerDelegate {
 	func libraryViewController(_ view: LibraryViewController, didChange libraryKind: KKLibrary.Kind) {
-		DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-			guard let self = self else { return }
-			DispatchQueue.main.async {
-				self.configureEmptyDataView()
-			}
+		self.configureEmptyDataView()
 
-			Task {
-				await self.fetchLibrary()
-			}
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchLibrary()
 		}
 	}
 
@@ -435,11 +421,9 @@ extension LibraryListCollectionViewController: LibraryViewControllerDelegate {
 		self.librarySortType = sortType
 		self.librarySortTypeOption = option
 
-		DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+		Task { [weak self] in
 			guard let self = self else { return }
-			Task {
-				await self.fetchLibrary()
-			}
+			await self.fetchLibrary()
 		}
 	}
 }
