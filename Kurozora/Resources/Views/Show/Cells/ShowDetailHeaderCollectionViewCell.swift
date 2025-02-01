@@ -61,7 +61,6 @@ extension ShowDetailHeaderCollectionViewCell {
 		self.visualEffectView.layerCornerRadius = 10.0
 
 		// Configure library status
-		self.libraryStatus = show.attributes.library?.status ?? .none
 		self.updateLibraryActions(using: show)
 
 		// Configure title label
@@ -214,19 +213,22 @@ extension ShowDetailHeaderCollectionViewCell {
 		self.quickDetailsView.isHidden = false
 	}
 
-	func updateLibraryStatus() {
-		let libraryStatus: String
+	func updateLibraryStatus(_ libraryStatus: KKLibrary.Status?) {
+		let libraryStatus = libraryStatus ?? .none
+		self.libraryStatus = libraryStatus
+
+		let libraryStatusString: String
 
 		switch self.libraryKind {
 		case .shows:
-			libraryStatus = self.libraryStatus.showStringValue
+			libraryStatusString = libraryStatus.showStringValue
 		case .literatures:
-			libraryStatus = self.libraryStatus.literatureStringValue
+			libraryStatusString = libraryStatus.literatureStringValue
 		case .games:
-			libraryStatus = self.libraryStatus.gameStringValue
+			libraryStatusString = libraryStatus.gameStringValue
 		}
 
-		self.libraryStatusButton.setTitle(self.libraryStatus != .none ? "\(libraryStatus.capitalized) ▾" : "ADD", for: .normal)
+		self.libraryStatusButton.setTitle(libraryStatus != .none ? "\(libraryStatusString.capitalized) ▾" : Trans.add.uppercased(), for: .normal)
 	}
 
 	@objc func handleFavoriteToggle(_ notification: NSNotification) {
@@ -297,7 +299,7 @@ extension ShowDetailHeaderCollectionViewCell {
 	///    - show: The show object used to udpate the actions.
 	///    - animated: A boolean value indicating whether to update changes with animations.
 	func updateLibraryActions(using show: Show, animated: Bool = false) {
-		self.updateLibraryStatus()
+		self.updateLibraryStatus(show.attributes.library?.status)
 		self.updateFavoriteStatus(show.attributes.library?.favoriteStatus, animated: animated)
 		self.updateReminderStatus(show.attributes.library?.reminderStatus, animated: animated)
 	}
@@ -308,7 +310,7 @@ extension ShowDetailHeaderCollectionViewCell {
 	///    - literature: The literature object used to udpate the actions.
 	///    - animated: A boolean value indicating whether to update changes with animations.
 	func updateLibraryActions(using literature: Literature, animated: Bool = false) {
-		self.updateLibraryStatus()
+		self.updateLibraryStatus(literature.attributes.library?.status)
 		self.updateFavoriteStatus(literature.attributes.library?.favoriteStatus, animated: animated)
 		self.updateReminderStatus(literature.attributes.library?.reminderStatus, animated: animated)
 	}
@@ -319,7 +321,7 @@ extension ShowDetailHeaderCollectionViewCell {
 	///    - game: The game object used to udpate the actions.
 	///    - animated: A boolean value indicating whether to update changes with animations.
 	func updateLibraryActions(using game: Game, animated: Bool = false) {
-		self.updateLibraryStatus()
+		self.updateLibraryStatus(game.attributes.library?.status)
 		self.updateFavoriteStatus(game.attributes.library?.favoriteStatus, animated: animated)
 		self.updateReminderStatus(game.attributes.library?.reminderStatus, animated: animated)
 	}
@@ -336,7 +338,7 @@ extension ShowDetailHeaderCollectionViewCell {
 			switch self.libraryKind {
 			case .shows:
 				guard let show = self.show else { return }
-				modelID = String(show.id)
+				modelID = show.id
 			case .literatures:
 				guard let literature = self.literature else { return }
 				modelID = literature.id

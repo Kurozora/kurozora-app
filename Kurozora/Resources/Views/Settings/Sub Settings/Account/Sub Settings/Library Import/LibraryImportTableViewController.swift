@@ -49,25 +49,28 @@ class LibraryImportTableViewController: ServiceTableViewController {
 
 	// MARK: - IBActions
 	@IBAction func rightNavigationBarButtonPressed(sender: AnyObject) {
-		DispatchQueue.global(qos: .userInitiated).async {
-			guard let filePath = self.selectedFileURL else { return }
-
-			Task {
-				// Make sure you release the security-scoped resource when you finish.
-				defer {
-					filePath.stopAccessingSecurityScopedResource()
-				}
-
-				do {
-					_ = try await KService.importToLibrary(.shows, importService: .mal, importBehavior: .overwrite, filePath: filePath).value
-				} catch let error as KKAPIError {
-					await self.presentAlertController(title: "Can't Import To Library 😔", message: error.message)
-					print("----- Library import failed", error.message)
-				}
-			}
-		}
+		guard let filePath = self.selectedFileURL else { return }
 
 		self.rightNavigationBarButton.isEnabled = false
+
+		Task { [weak self] in
+			// Make sure you release the security-scoped resource when you finish.
+			defer {
+				filePath.stopAccessingSecurityScopedResource()
+			}
+
+			guard let self = self else { return }
+
+			do {
+				_ = try await KService.importToLibrary(.shows, importService: .mal, importBehavior: .overwrite, filePath: filePath).value
+			} catch let error as KKAPIError {
+				await MainActor.run {
+					self.presentAlertController(title: "Can't Import To Library 😔", message: error.message)
+				}
+
+				print("----- Library import failed", error.message)
+			}
+		}
 	}
 }
 

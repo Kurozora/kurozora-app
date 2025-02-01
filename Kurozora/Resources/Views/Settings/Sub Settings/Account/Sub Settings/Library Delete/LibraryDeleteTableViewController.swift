@@ -40,33 +40,36 @@ class LibraryDeleteTableViewController: ServiceTableViewController {
 	@IBAction func rightNavigationBarButtonPressed(sender: AnyObject) {
 		guard let selectedLibraryKind = self.selectedLibraryKind else { return }
 
-		let alertController = self.presentAlertController(title: Trans.libraryDeleteHeadline, message: Trans.libraryDeleteFooter, defaultActionButtonTitle: Trans.cancel)
+		let alertController = self.presentAlertController(
+			title: Trans.libraryDeleteHeadline,
+			message: Trans.libraryDeleteFooter,
+			defaultActionButtonTitle: Trans.cancel
+		)
+
 		alertController.addTextField { textField in
 			textField.textType = .password
 			textField.placeholder = Trans.password
 		}
-		alertController.addAction(UIAlertAction(title: "Delete Permanently", style: .destructive) { [weak self] _ in
+
+		alertController.addAction(UIAlertAction(title: Trans.deletePermanently, style: .destructive) { [weak self] _ in
 			guard let self = self else { return }
 			guard let passwordTextField = alertController.textFields?.first else { return }
 			guard let password = passwordTextField.text else { return }
 
-			DispatchQueue.global(qos: .userInitiated).async {
-				Task {
-					do {
-						_ = try await KService.clearLibrary(selectedLibraryKind, password: password).value
-					} catch let error as KKAPIError {
-						await self.presentAlertController(title: "Can't Delete Library 😔", message: error.message)
+			self.rightNavigationBarButton.isEnabled = false
 
-						DispatchQueue.main.async {
-							self.rightNavigationBarButton.isEnabled = false
-						}
-
-						print("----- Library delete failed", error.message)
+			Task {
+				do {
+					_ = try await KService.clearLibrary(selectedLibraryKind, password: password).value
+				} catch let error as KKAPIError {
+					await MainActor.run {
+						self.presentAlertController(title: Trans.cantDeleteLibrary, message: error.message)
+						self.rightNavigationBarButton.isEnabled = false
 					}
+
+					print("----- Library delete failed", error.message)
 				}
 			}
-
-			self.rightNavigationBarButton.isEnabled = false
 		})
 	}
 }
