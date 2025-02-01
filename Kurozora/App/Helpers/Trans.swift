@@ -877,6 +877,11 @@ struct Trans {
 											  comment: "The footer string for the haptics settings option.")
 
 	// MARK: - Misc
+	/// The string for the word 'add'.
+	///
+	/// - Tag: Trans-add
+	static let add: String = String(localized: "Add",
+									comment: "The string for the word 'add'.")
 	/// The string for the word 'apply'.
 	///
 	/// - Tag: Trans-apply
@@ -1116,6 +1121,16 @@ struct Trans {
 	/// - Tag: Trans-removeFromLibrary
 	static let removeFromLibrary: String = String(localized: "Remove from Library",
 												  comment: "The string for the word 'remove from library'.")
+	/// The string for the word 'Can’t delete library 😔'.
+	///
+	/// - Tag: Trans-removeFromLibrary
+	static let cantDeleteLibrary: String = String(localized: "Can’t delete library 😔",
+												  comment: "The string for the sentence 'Can’t delete library 😔'.")
+	/// The string for the phrase 'Delete Permanently'.
+	///
+	/// - Tag: Trans-deletePermanently
+	static let deletePermanently: String = String(localized: "Delete Permanently",
+												  comment: "The string for the phrase 'Delete Permanently'.")
 	/// The string for the phrase 'hide from public'.
 	///
 	/// - Tag: Trans-hideFromPublic
