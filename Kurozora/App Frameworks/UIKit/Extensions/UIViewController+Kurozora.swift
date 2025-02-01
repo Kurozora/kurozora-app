@@ -17,14 +17,16 @@ extension UIViewController {
 	/// This method is called when there has been a change in the user's sign in status. You can override this method to perform custom tasks associated with displaying the view. For example, you might use this method to change the data presented by the view or style of the view being presented. If you override this method, you must call super at some point in your implementation.
 	///
 	/// - Tag: UIViewController-viewWillReload
-	@objc func viewWillReload() { }
+	@objc @MainActor
+	func viewWillReload() { }
 
 	/// Notifies the view controller that the app's theme is about to be reloaded.
 	///
 	/// This method is called when there has been a change in the selected app theme. You can override this method to perform custom tasks associated with re-styling unthemeable views. For example, you might use this method to change the color of the view being presented. If you override this method, you must call super at some point in your implementation.
 	///
 	/// - Tag: UIViewController-themeWillReload
-	@objc func themeWillReload() { }
+	@objc @MainActor
+	func themeWillReload() { }
 }
 
 // MARK: - Present
@@ -56,8 +58,7 @@ extension UIViewController {
 	///    - actions: Other actions to add to the alert controller.
 	///
 	/// - Returns: the presented alert controller.
-	@MainActor
-	@discardableResult
+	@discardableResult @MainActor
 	func presentAlertController(title: String?, message: String?, defaultActionButtonTitle: String = "OK", handler: ((UIAlertAction) -> Void)? = nil, actions: [UIAlertAction] = []) -> UIAlertController {
 		let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
@@ -81,8 +82,7 @@ extension UIViewController {
 	///    - message: Descriptive text that provides additional details about the reason for the alert.
 	///
 	/// - Returns: the presented alert controller.
-	@MainActor
-	@discardableResult
+	@discardableResult @MainActor
 	func presentActivityAlertController(title: String? = nil, message: String? = nil) -> UIAlertController {
 		let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
