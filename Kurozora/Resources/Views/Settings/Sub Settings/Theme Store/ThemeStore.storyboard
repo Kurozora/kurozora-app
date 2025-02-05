@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xyg-hs-K1N">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xyg-hs-K1N">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
@@ -54,10 +54,10 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ThemesCollectionViewCell" id="bQz-fY-pzW" customClass="ThemesCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="26" y="0.0" width="362.5" height="301"/>
+                                <rect key="frame" x="26" y="0.0" width="362" height="301"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="tgR-zd-xZB">
-                                    <rect key="frame" x="0.0" y="0.0" width="362.5" height="301"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="362" height="301"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Flh-im-hxi">
@@ -77,7 +77,7 @@
                                             </subviews>
                                         </stackView>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Wma-35-8QW">
-                                            <rect key="frame" x="274.5" y="11" width="88" height="30"/>
+                                            <rect key="frame" x="274" y="11" width="88" height="30"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jWW-rO-nlC" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="50" height="30"/>
@@ -120,7 +120,7 @@
                                             </subviews>
                                         </stackView>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Y2a-W5-1K4">
-                                            <rect key="frame" x="0.0" y="51" width="362.5" height="250"/>
+                                            <rect key="frame" x="0.0" y="51" width="362" height="250"/>
                                             <subviews>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gtK-gS-sgf" customClass="ScreenshotView" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="115.5" height="250"/>
@@ -132,7 +132,7 @@
                                                     </subviews>
                                                     <constraints>
                                                         <constraint firstAttribute="trailing" secondItem="44L-HG-JCJ" secondAttribute="trailing" id="JTM-fc-wd1"/>
-                                                        <constraint firstAttribute="width" secondItem="gtK-gS-sgf" secondAttribute="height" multiplier="195:422" id="gl0-Y7-jxM"/>
+                                                        <constraint firstAttribute="width" secondItem="gtK-gS-sgf" secondAttribute="height" multiplier="9:19.5" id="gl0-Y7-jxM"/>
                                                         <constraint firstItem="44L-HG-JCJ" firstAttribute="top" secondItem="gtK-gS-sgf" secondAttribute="top" id="oBb-4L-kg0"/>
                                                         <constraint firstItem="44L-HG-JCJ" firstAttribute="leading" secondItem="gtK-gS-sgf" secondAttribute="leading" id="qOb-8L-Llx"/>
                                                         <constraint firstAttribute="bottom" secondItem="44L-HG-JCJ" secondAttribute="bottom" id="sFZ-cR-P93"/>
@@ -142,17 +142,16 @@
                                                     </connections>
                                                 </view>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W52-H6-ojS" customClass="ScreenshotView" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="123.5" y="0.0" width="115.5" height="250"/>
+                                                    <rect key="frame" x="123.5" y="0.0" width="115" height="250"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6EB-af-cqE" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="115.5" height="250"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="115" height="250"/>
                                                             <imageReference key="image" image="Themes/Default/Screenshot_2"/>
                                                         </imageView>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" secondItem="W52-H6-ojS" secondAttribute="height" multiplier="195:422" id="3as-uS-eo2"/>
                                                         <constraint firstItem="6EB-af-cqE" firstAttribute="top" secondItem="W52-H6-ojS" secondAttribute="top" id="IUG-r7-eIa"/>
-                                                        <constraint firstAttribute="width" secondItem="W52-H6-ojS" secondAttribute="height" multiplier="195:422" id="TiJ-1h-0zN"/>
+                                                        <constraint firstAttribute="width" secondItem="W52-H6-ojS" secondAttribute="height" multiplier="9:19.5" id="TiJ-1h-0zN"/>
                                                         <constraint firstItem="6EB-af-cqE" firstAttribute="leading" secondItem="W52-H6-ojS" secondAttribute="leading" id="WF3-Kc-8wr"/>
                                                         <constraint firstAttribute="trailing" secondItem="6EB-af-cqE" secondAttribute="trailing" id="bIy-BF-LXf"/>
                                                         <constraint firstAttribute="bottom" secondItem="6EB-af-cqE" secondAttribute="bottom" id="o6g-hc-vxR"/>
@@ -162,7 +161,7 @@
                                                     </connections>
                                                 </view>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eGc-A8-Qh4" customClass="ScreenshotView" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="247" y="0.0" width="115.5" height="250"/>
+                                                    <rect key="frame" x="246.5" y="0.0" width="115.5" height="250"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Bvy-Bt-rVl" customClass="PosterImageView" customModule="Kurozora" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="115.5" height="250"/>
@@ -171,9 +170,8 @@
                                                     </subviews>
                                                     <constraints>
                                                         <constraint firstItem="Bvy-Bt-rVl" firstAttribute="leading" secondItem="eGc-A8-Qh4" secondAttribute="leading" id="67b-i7-8If"/>
-                                                        <constraint firstAttribute="width" secondItem="eGc-A8-Qh4" secondAttribute="height" multiplier="195:422" id="Nl5-re-SGy"/>
                                                         <constraint firstAttribute="trailing" secondItem="Bvy-Bt-rVl" secondAttribute="trailing" id="Q8C-ed-EdN"/>
-                                                        <constraint firstAttribute="width" secondItem="eGc-A8-Qh4" secondAttribute="height" multiplier="195:422" id="RDs-wy-svv"/>
+                                                        <constraint firstAttribute="width" secondItem="eGc-A8-Qh4" secondAttribute="height" multiplier="9:19.5" id="RDs-wy-svv"/>
                                                         <constraint firstAttribute="bottom" secondItem="Bvy-Bt-rVl" secondAttribute="bottom" id="SAR-VP-cjA"/>
                                                         <constraint firstItem="Bvy-Bt-rVl" firstAttribute="top" secondItem="eGc-A8-Qh4" secondAttribute="top" id="zhw-Fu-lkQ"/>
                                                     </constraints>
@@ -231,7 +229,7 @@
         <image name="Themes/Default/Screenshot_3" width="1170" height="2532"/>
         <image name="ellipsis" catalog="system" width="128" height="37"/>
         <systemColor name="secondaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
