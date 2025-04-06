@@ -21,7 +21,7 @@ var KSettings: Settings?
 let APIEndpoints: [KurozoraAPI] = KurozoraAPI.allCases
 #endif
 
-class SharedDelegate {
+struct SharedDelegate {
 	// MARK: - Properties
 	/// Returns the singleton `SharedDelegate` instance.
 	static let shared = SharedDelegate()

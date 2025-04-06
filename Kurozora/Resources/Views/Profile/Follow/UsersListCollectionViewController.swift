@@ -273,7 +273,7 @@ class UsersListCollectionViewController: KCollectionViewController {
 extension UsersListCollectionViewController: UserLockupCollectionViewCellDelegate {
 	func userLockupCollectionViewCell(_ cell: UserLockupCollectionViewCell, didPressFollow button: UIButton) {
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		guard var user = self.users[indexPath] else { return }
+		guard let user = self.users[indexPath] else { return }
 		let userIdentity = UserIdentity(id: user.id)
 
 		Task {

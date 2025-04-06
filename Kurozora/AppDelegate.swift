@@ -201,7 +201,9 @@ extension AppDelegate {
 
 	/// User chose "Subscribe to Reminders..." from the Account menu.
 	@objc func handleSubscribeToReminders(_ sender: AnyObject) {
-		WorkflowController.shared.subscribeToReminders()
+		Task {
+			await WorkflowController.shared.subscribeToReminders()
+		}
 	}
 
 	/// User chose "Redeem" from the Account menu.
