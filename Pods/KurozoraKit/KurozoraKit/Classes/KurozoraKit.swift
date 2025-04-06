@@ -17,6 +17,18 @@ import TRON
 /// - Tag: KurozoraKit
 public class KurozoraKit {
 	// MARK: - Properties
+	/// Storage of the app's api key.
+	internal var _apiKey: String = ""
+	/// The current app's api key.
+	public var apiKey: String {
+		get {
+			return self._apiKey
+		}
+		set {
+			self._apiKey = newValue
+		}
+	}
+
 	/// Storage of the current user's authentication key.
 	internal var _authenticationKey: String = ""
 	/// The current user's authentication key.
@@ -48,10 +60,7 @@ public class KurozoraKit {
 	/// "Content-Type": "application/x-www-form-urlencoded",
 	/// "Accept": "application/json"
 	/// ```
-	internal let headers: HTTPHeaders = [
-		.contentType("application/x-www-form-urlencoded"),
-		.accept("application/json")
-	]
+	internal let headers: HTTPHeaders
 
 	/// The TRON singleton used to perform API requests.
 	internal var tron: TRON!
@@ -66,8 +75,15 @@ public class KurozoraKit {
 	///    - apiEndpoint: The ``KurozoraAPI`` endpoint to be used.
 	///    - authenticationKey: The current signed in user's authentication key.
 	///    - services: The desired ``KKServices`` to be used.
-	public init(apiEndpoint: KurozoraAPI? = nil, authenticationKey: String = "", services: KKServices = KKServices()) {
+	public init(apiEndpoint: KurozoraAPI? = nil, apiKey: String = "", authenticationKey: String = "", services: KKServices = KKServices()) {
+		self.headers = [
+			.contentType("application/x-www-form-urlencoded"),
+			.accept("application/json"),
+			.init(name: "X-API-Key", value: apiKey)
+		]
+
 		self.apiEndpoint(apiEndpoint ?? .v1)
+			.apiKey(apiKey)
 			.authenticationKey(authenticationKey)
 			.services(services)
 	}
@@ -93,6 +109,18 @@ public class KurozoraKit {
 
 		return self
 	}
+
+	/// Sets the `apiKey` property with the given auth key.
+	///
+	/// - Parameter apiKey: The current user's authentication key.
+	///
+	/// - Returns: Reference to `self`.
+	@discardableResult
+	public func apiKey(_ apiKey: String) -> Self {
+		self.apiKey = apiKey
+		return self
+	}
+
 
 	/// Sets the `authenticationKey` property with the given auth key.
 	///
