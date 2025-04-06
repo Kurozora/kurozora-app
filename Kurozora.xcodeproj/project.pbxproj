@@ -9,15 +9,10 @@
 /* Begin PBXBuildFile section */
 		3E7E9BCBF9A52A8E8F560219 /* Pods_KurozoraWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D126E524B2938236D39BCF3 /* Pods_KurozoraWidgetExtension.framework */; };
 		662A3D372C92433F006F6EDD /* KuroChan.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 662A3D302C92433B006F6EDD /* KuroChan.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		663C95B923084FAC003720A4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663C95B823084FAC003720A4 /* SceneDelegate.swift */; };
 		6647B7322BC0A6DE006BC91C /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6647B7312BC0A6DE006BC91C /* WidgetKit.framework */; };
 		6647B7342BC0A6DE006BC91C /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6647B7332BC0A6DE006BC91C /* SwiftUI.framework */; };
 		6647B7402BC0A6E2006BC91C /* KurozoraWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6647B7302BC0A6DD006BC91C /* KurozoraWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		6647B7472BC0B1E9006BC91C /* SharedDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6647B7462BC0B1E9006BC91C /* SharedDelegate.swift */; };
-		6647B7482BC0B1E9006BC91C /* SharedDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6647B7462BC0B1E9006BC91C /* SharedDelegate.swift */; };
 		664A4040234C922700D29DD5 /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 664A403F234C922700D29DD5 /* PassKit.framework */; };
-		66647B542084995500CF624F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66647B532084995500CF624F /* AppDelegate.swift */; };
-		66707823208B1C6800471FBC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66707821208B1C6800471FBC /* LaunchScreen.xib */; };
 		66A254DE22AAEF5D002A0E34 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A254DD22AAEF5D002A0E34 /* MapKit.framework */; };
 		66AC3D1F23D8FB0800D28EE6 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66AC3D1E23D8FB0800D28EE6 /* GameKit.framework */; };
 		66BA3B7023016BC600C2B11C /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66BA3B6F23016BC600C2B11C /* AuthenticationServices.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -71,18 +66,13 @@
 		32DFEC9DB9F042A044F6CD30 /* Pods-KurozoraWidgetExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KurozoraWidgetExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-KurozoraWidgetExtension/Pods-KurozoraWidgetExtension.release.xcconfig"; sourceTree = "<group>"; };
 		33B9B6FC2A5B273980E1D63B /* Pods-BannerWidgetExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BannerWidgetExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-BannerWidgetExtension/Pods-BannerWidgetExtension.release.xcconfig"; sourceTree = "<group>"; };
 		5FE9A09CBD4469DF87F4CD20 /* Pods_KurozoraKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KurozoraKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		660E9FC8214BC6FB00F6813C /* Kurozora.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Kurozora.entitlements; sourceTree = "<group>"; };
 		662A3D302C92433B006F6EDD /* KuroChan.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = KuroChan.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		663C95B823084FAC003720A4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		6647B7302BC0A6DD006BC91C /* KurozoraWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = KurozoraWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		6647B7312BC0A6DE006BC91C /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = /System/Library/Frameworks/WidgetKit.framework; sourceTree = "<absolute>"; };
 		6647B7332BC0A6DE006BC91C /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = /System/Library/Frameworks/SwiftUI.framework; sourceTree = "<absolute>"; };
-		6647B7462BC0B1E9006BC91C /* SharedDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDelegate.swift; sourceTree = "<group>"; };
 		664940992308B22E00C2565C /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework; sourceTree = DEVELOPER_DIR; };
 		664A403F234C922700D29DD5 /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
 		66647B502084995500CF624F /* Kurozora.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kurozora.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		66647B532084995500CF624F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		66707822208B1C6800471FBC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		66A254DD22AAEF5D002A0E34 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		66AC3D1E23D8FB0800D28EE6 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		66BA3B6F23016BC600C2B11C /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
@@ -118,48 +108,31 @@
 			);
 			target = 662A3D2F2C92433B006F6EDD /* KuroChan */;
 		};
-		6615A8732DA20C2E005DBB96 /* Exceptions for "App Frameworks" folder in "KurozoraWidgetExtension" target */ = {
+		6615BF0B2DA296B4005DBB96 /* Exceptions for "Kurozora" folder in "Kurozora" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				"Foundation/Extensions/Notification+Kurozora.swift",
-				"UIKit/Extensions/UIColor+Kurozora.swift",
-			);
-			target = 6647B72F2BC0A6DD006BC91C /* KurozoraWidgetExtension */;
-		};
-		6615A8CD2DA20C36005DBB96 /* Exceptions for "Features" folder in "KurozoraWidgetExtension" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Animation/Animation.swift,
-			);
-			target = 6647B72F2BC0A6DD006BC91C /* KurozoraWidgetExtension */;
-		};
-		6615A8EC2DA20C3B005DBB96 /* Exceptions for "Supporting Files" folder in "Kurozora" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-				Intents.intentdefinition,
+				"Supporting Files/Info.plist",
+				"Supporting Files/Intents.intentdefinition",
 			);
 			target = 66647B4F2084995500CF624F /* Kurozora */;
 		};
-		6615A8ED2DA20C3B005DBB96 /* Exceptions for "Supporting Files" folder in "KurozoraWidgetExtension" target */ = {
+		6615BF0C2DA296B4005DBB96 /* Exceptions for "Kurozora" folder in "KurozoraWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Assets.xcassets,
-			);
-			target = 6647B72F2BC0A6DD006BC91C /* KurozoraWidgetExtension */;
-		};
-		6615AA9E2DA20CC2005DBB96 /* Exceptions for "App" folder in "KurozoraWidgetExtension" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Enums/AuthenticationInterval.swift,
-				Enums/KBrowser.swift,
-				Enums/KThemePicker.swift,
-				Enums/SplashScreenAnimation.swift,
-				Enums/UserSettingsKey.swift,
-				"Extensions/UIStatusBarStyle+Theme.swift",
-				Helpers/Trans.swift,
-				Intents/LaunchAppIntent.swift,
-				Models/UserSettings.swift,
+				"App Frameworks/Foundation/Extensions/Notification+Kurozora.swift",
+				"App Frameworks/UIKit/Extensions/UIColor+Kurozora.swift",
+				App/Enums/AuthenticationInterval.swift,
+				App/Enums/KBrowser.swift,
+				App/Enums/KThemePicker.swift,
+				App/Enums/SplashScreenAnimation.swift,
+				App/Enums/UserSettingsKey.swift,
+				"App/Extensions/UIStatusBarStyle+Theme.swift",
+				App/Helpers/Trans.swift,
+				App/Intents/LaunchAppIntent.swift,
+				App/Models/UserSettings.swift,
+				Features/Animation/Animation.swift,
+				SharedDelegate.swift,
+				"Supporting Files/Assets.xcassets",
 			);
 			target = 6647B72F2BC0A6DD006BC91C /* KurozoraWidgetExtension */;
 		};
@@ -183,65 +156,13 @@
 			path = KuroChan;
 			sourceTree = "<group>";
 		};
-		6615A3042DA20B8D005DBB96 /* Lang */ = {
+		6615BC102DA296B2005DBB96 /* Kurozora */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
+				6615BF0B2DA296B4005DBB96 /* Exceptions for "Kurozora" folder in "Kurozora" target */,
+				6615BF0C2DA296B4005DBB96 /* Exceptions for "Kurozora" folder in "KurozoraWidgetExtension" target */,
 			);
-			path = Lang;
-			sourceTree = "<group>";
-		};
-		6615A53E2DA20C0C005DBB96 /* Resources */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
-		6615A7E42DA20C2D005DBB96 /* App Frameworks */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				6615A8732DA20C2E005DBB96 /* Exceptions for "App Frameworks" folder in "KurozoraWidgetExtension" target */,
-			);
-			path = "App Frameworks";
-			sourceTree = "<group>";
-		};
-		6615A8782DA20C32005DBB96 /* Web */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
-			path = Web;
-			sourceTree = "<group>";
-		};
-		6615A8A92DA20C36005DBB96 /* Features */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				6615A8CD2DA20C36005DBB96 /* Exceptions for "Features" folder in "KurozoraWidgetExtension" target */,
-			);
-			path = Features;
-			sourceTree = "<group>";
-		};
-		6615A8DC2DA20C3A005DBB96 /* Supporting Files */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				6615A8EC2DA20C3B005DBB96 /* Exceptions for "Supporting Files" folder in "Kurozora" target */,
-				6615A8ED2DA20C3B005DBB96 /* Exceptions for "Supporting Files" folder in "KurozoraWidgetExtension" target */,
-			);
-			path = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		6615A8F02DA20C3E005DBB96 /* Supporting Files Dev */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
-			path = "Supporting Files Dev";
-			sourceTree = "<group>";
-		};
-		6615AA372DA20CC1005DBB96 /* App */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				6615AA9E2DA20CC2005DBB96 /* Exceptions for "App" folder in "KurozoraWidgetExtension" target */,
-			);
-			path = App;
+			path = Kurozora;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -296,7 +217,7 @@
 		66647B472084995500CF624F = {
 			isa = PBXGroup;
 			children = (
-				66647B522084995500CF624F /* Kurozora */,
+				6615BC102DA296B2005DBB96 /* Kurozora */,
 				6615A2EE2DA20A5A005DBB96 /* KurozoraWidget */,
 				6615A3012DA20A61005DBB96 /* KuroChan */,
 				66647B512084995500CF624F /* Products */,
@@ -313,26 +234,6 @@
 				662A3D302C92433B006F6EDD /* KuroChan.appex */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		66647B522084995500CF624F /* Kurozora */ = {
-			isa = PBXGroup;
-			children = (
-				660E9FC8214BC6FB00F6813C /* Kurozora.entitlements */,
-				66647B532084995500CF624F /* AppDelegate.swift */,
-				663C95B823084FAC003720A4 /* SceneDelegate.swift */,
-				6647B7462BC0B1E9006BC91C /* SharedDelegate.swift */,
-				66707821208B1C6800471FBC /* LaunchScreen.xib */,
-				6615AA372DA20CC1005DBB96 /* App */,
-				6615A3042DA20B8D005DBB96 /* Lang */,
-				6615A53E2DA20C0C005DBB96 /* Resources */,
-				6615A7E42DA20C2D005DBB96 /* App Frameworks */,
-				6615A8782DA20C32005DBB96 /* Web */,
-				6615A8A92DA20C36005DBB96 /* Features */,
-				6615A8DC2DA20C3A005DBB96 /* Supporting Files */,
-				6615A8F02DA20C3E005DBB96 /* Supporting Files Dev */,
-			);
-			path = Kurozora;
 			sourceTree = "<group>";
 		};
 		D4A795E40A9FE3FA76278C67 /* Pods */ = {
@@ -413,13 +314,7 @@
 				662A3D362C92433F006F6EDD /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				6615A53E2DA20C0C005DBB96 /* Resources */,
-				6615A7E42DA20C2D005DBB96 /* App Frameworks */,
-				6615A8782DA20C32005DBB96 /* Web */,
-				6615A8A92DA20C36005DBB96 /* Features */,
-				6615A8DC2DA20C3A005DBB96 /* Supporting Files */,
-				6615A8F02DA20C3E005DBB96 /* Supporting Files Dev */,
-				6615AA372DA20CC1005DBB96 /* App */,
+				6615BC102DA296B2005DBB96 /* Kurozora */,
 			);
 			name = Kurozora;
 			productName = Aozora;
@@ -502,7 +397,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				66707823208B1C6800471FBC /* LaunchScreen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -651,9 +545,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Kurozora/Pods-Kurozora-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Kurozora/Pods-Kurozora-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -667,7 +565,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6647B7482BC0B1E9006BC91C /* SharedDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -675,9 +572,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				663C95B923084FAC003720A4 /* SceneDelegate.swift in Sources */,
-				66647B542084995500CF624F /* AppDelegate.swift in Sources */,
-				6647B7472BC0B1E9006BC91C /* SharedDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -699,17 +593,6 @@
 			targetProxy = 66C6A54D23FB05C2000A6617 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		66707821208B1C6800471FBC /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				66707822208B1C6800471FBC /* Base */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		662A3D382C92433F006F6EDD /* Debug */ = {
