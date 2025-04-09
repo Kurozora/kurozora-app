@@ -69,6 +69,8 @@ extension GameDetailsCollectionViewController {
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
 		switch self.snapshot.sectionIdentifiers[indexPath.section] {
+		case .header, .badge, .synopsis, .rateAndReview, .rating, .information, .sosumi:
+			return nil
 		case .reviews:
 			return self.reviews[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .cast:
@@ -83,9 +85,6 @@ extension GameDetailsCollectionViewController {
 			return self.relatedShows[indexPath.item].show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .relatedLiteratures:
 			return self.relatedLiteratures[indexPath.item].literature.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-		default: break
 		}
-
-		return nil
 	}
 }

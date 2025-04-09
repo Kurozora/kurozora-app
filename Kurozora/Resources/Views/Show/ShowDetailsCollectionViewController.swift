@@ -164,6 +164,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.deleteReview(_:)), name: .KReviewDidDelete, object: nil)
 
 		// Make the navigation bar background clear
 		self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
@@ -172,6 +173,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
+		NotificationCenter.default.removeObserver(self, name: .KReviewDidDelete, object: nil)
 
 		// Restore the navigation bar to default
 		self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
@@ -300,6 +302,25 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
+		}
+	}
+
+	/// Deletes the review with the received information.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers.
+	@objc func deleteReview(_ notification: NSNotification) {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+
+			if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
+				// Start delete process
+				self.reviews.remove(at: indexPath.item)
+			}
+
+			self.show.attributes.library?.rating = nil
+			self.show.attributes.library?.review = nil
+
+			self.updateDataSource()
 		}
 	}
 

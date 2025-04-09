@@ -106,6 +106,16 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 		}
 	}
 
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.deleteReview(_:)), name: .KReviewDidDelete, object: nil)
+	}
+
+	override func viewDidDisappear(_ animated: Bool) {
+		super.viewDidDisappear(animated)
+		NotificationCenter.default.removeObserver(self, name: .KReviewDidDelete, object: nil)
+	}
+
 	// MARK: - Functions
 	override func handleRefreshControl() {
 		Task { [weak self] in
@@ -175,6 +185,25 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
+		}
+	}
+
+	/// Deletes the review with the received information.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers.
+	@objc func deleteReview(_ notification: NSNotification) {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+
+			if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
+				// Start delete process
+				self.reviews.remove(at: indexPath.item)
+			}
+
+			self.studio.attributes.library?.rating = nil
+			self.studio.attributes.library?.review = nil
+
+			self.updateDataSource()
 		}
 	}
 
