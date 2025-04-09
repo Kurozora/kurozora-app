@@ -23,7 +23,14 @@ class BadgeCollectionViewCell: UICollectionViewCell {
 	}
 
 	// MARK: - Functions
-	/// Configure the cell with the given details.
+	func configureCell(with episode: Episode?, episodeDetailBadge: EpisodeDetail.Badge) {
+		guard let episode = episode else { return }
+
+		self.primaryLabel?.text = episodeDetailBadge.primaryInformation(from: episode)
+		self.primaryImageView?.image = episodeDetailBadge.primaryImage(from: episode)
+		self.secondaryLabel.text = episodeDetailBadge.secondaryInformation(from: episode)
+	}
+
 	func configureCell(with show: Show?, showDetailBadge: ShowDetail.Badge) {
 		guard let show = show else { return }
 
