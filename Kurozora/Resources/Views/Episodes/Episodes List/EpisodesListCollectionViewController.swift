@@ -353,9 +353,8 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 			episodeDetailsCollectionViewController.episode = episodeDict.value
 		case R.segue.episodesListCollectionViewController.episodesListSegue.identifier:
 			guard let episodesListCollectionViewController = segue.destination as? EpisodesListCollectionViewController else { return }
-			guard let season = sender as? Season else { return }
-			episodesListCollectionViewController.seasonIdentity = SeasonIdentity(id: season.id)
-			episodesListCollectionViewController.season = season
+			guard let seasonIdentity = sender as? SeasonIdentity else { return }
+			episodesListCollectionViewController.seasonIdentity = seasonIdentity
 			episodesListCollectionViewController.episodesListFetchType = .season
 		default: break
 		}
@@ -379,16 +378,16 @@ extension EpisodesListCollectionViewController: EpisodeLockupCollectionViewCellD
 
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressShowButton button: UIButton) {
 		guard let indexPath = collectionView.indexPath(for: cell) else { return }
-		guard let show = self.episodes[indexPath]?.relationships?.shows?.data.first else { return }
+		guard let showIdentity = self.episodes[indexPath]?.relationships?.shows?.data.first else { return }
 
-		self.performSegue(withIdentifier: R.segue.episodesListCollectionViewController.showDetailsSegue, sender: show)
+		self.performSegue(withIdentifier: R.segue.episodesListCollectionViewController.showDetailsSegue, sender: showIdentity)
 	}
 
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressSeasonButton button: UIButton) {
 		guard let indexPath = collectionView.indexPath(for: cell) else { return }
-		guard let season = self.episodes[indexPath]?.relationships?.seasons?.data.first else { return }
+		guard let seasonIdentity = self.episodes[indexPath]?.relationships?.seasons?.data.first else { return }
 
-		self.performSegue(withIdentifier: R.segue.episodesListCollectionViewController.episodesListSegue, sender: season)
+		self.performSegue(withIdentifier: R.segue.episodesListCollectionViewController.episodesListSegue, sender: seasonIdentity)
 	}
 }
 

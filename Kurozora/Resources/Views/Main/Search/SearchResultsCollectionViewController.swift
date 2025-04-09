@@ -649,14 +649,16 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 		case R.segue.searchResultsCollectionViewController.episodesListSegue.identifier:
 			// Segue to episodes list
 			guard let episodesListCollectionViewController = segue.destination as? EpisodesListCollectionViewController else { return }
+
 			if let season = sender as? Season {
-				episodesListCollectionViewController.seasonIdentity = SeasonIdentity(id: season.id)
 				episodesListCollectionViewController.season = season
-				episodesListCollectionViewController.episodesListFetchType = .season
+			} else if let seasonIdentity = sender as? SeasonIdentity {
+				episodesListCollectionViewController.seasonIdentity = seasonIdentity
 			} else {
 				episodesListCollectionViewController.searchQuery = self.searchQuery
-				episodesListCollectionViewController.episodesListFetchType = .search
 			}
+
+			episodesListCollectionViewController.episodesListFetchType = .season
 		case R.segue.searchResultsCollectionViewController.literaturesListSegue.identifier:
 			// Segue to literatures list
 			guard let literaturesListCollectionViewController = segue.destination as? LiteraturesListCollectionViewController else { return }
@@ -970,16 +972,16 @@ extension SearchResultsCollectionViewController: EpisodeLockupCollectionViewCell
 
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressShowButton button: UIButton) {
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		guard let show = self.episodes[indexPath]?.relationships?.shows?.data.first else { return }
+		guard let showIdentity = self.episodes[indexPath]?.relationships?.shows?.data.first else { return }
 
-		self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.showDetailsSegue, sender: show)
+		self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.showDetailsSegue, sender: showIdentity)
 	}
 
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressSeasonButton button: UIButton) {
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		guard let season = self.episodes[indexPath]?.relationships?.seasons?.data.first else { return }
+		guard let seasonIdentity = self.episodes[indexPath]?.relationships?.seasons?.data.first else { return }
 
-		self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.episodesListSegue, sender: season)
+		self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.episodesListSegue, sender: seasonIdentity)
 	}
 }
 
