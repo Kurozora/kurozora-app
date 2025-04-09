@@ -30,6 +30,8 @@ extension PersonDetailsCollectionViewController {
 	// MARK: - Managing Context Menus
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
 		switch self.snapshot.sectionIdentifiers[indexPath.section] {
+		case .reviews:
+			return self.reviews[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .shows:
 			return self.shows[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .literatures:
