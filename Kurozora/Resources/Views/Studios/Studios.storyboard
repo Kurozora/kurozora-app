@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="UE9-Fw-9dy">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="UE9-Fw-9dy">
     <device id="retina6_5" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23719.2"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -87,6 +87,7 @@
                         <segue destination="reT-hx-mhI" kind="show" identifier="GameDetailsSegue" id="npx-7s-rjg"/>
                         <segue destination="su2-MR-PaQ" kind="show" identifier="GamesListSegue" id="8SJ-Dm-GNo"/>
                         <segue destination="qxZ-84-4yw" kind="show" identifier="StudioDetailsSegue" id="NAu-2Y-2KP"/>
+                        <segue destination="LJJ-YW-flI" kind="show" identifier="ReviewsSegue" id="lup-fQ-sfK"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wgn-nr-wwb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -101,7 +102,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uLU-fd-mQi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4403" y="-899"/>
+            <point key="canvasLocation" x="4401" y="-899"/>
         </scene>
         <!--ShowsListCollectionViewController-->
         <scene sceneID="wfI-X8-Gj6">
@@ -119,7 +120,7 @@
                 <navigationController storyboardIdentifier="StudiosKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="UE9-Fw-9dy" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="DFx-aw-PN5">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="88" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -189,7 +190,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BkG-FG-UtE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4412" y="-741"/>
+            <point key="canvasLocation" x="4393" y="-741"/>
         </scene>
         <!--GameDetailsCollectionViewController-->
         <scene sceneID="tft-6I-gOg">
@@ -199,7 +200,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TY0-FH-712" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4421" y="-761"/>
+            <point key="canvasLocation" x="4404" y="-761"/>
         </scene>
         <!--StudioDetailsCollectionViewController-->
         <scene sceneID="CeO-ma-nfe">
@@ -209,7 +210,17 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zoq-9f-dka" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4404" y="-944"/>
+            <point key="canvasLocation" x="4407" y="-944"/>
+        </scene>
+        <!--ReviewsCollectionViewController-->
+        <scene sceneID="VPt-pY-jZv">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Reviews" referencedIdentifier="ReviewsCollectionViewController" id="LJJ-YW-flI" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="u76-OH-rBx"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lKr-rQ-EfM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4383" y="-692"/>
         </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

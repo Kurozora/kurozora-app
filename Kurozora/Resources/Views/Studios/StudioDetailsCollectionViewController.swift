@@ -219,6 +219,10 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
+		case R.segue.studioDetailsCollectionViewController.reviewsSegue.identifier:
+			// Segue to reviews list
+			guard let reviewsCollectionViewController = segue.destination as? ReviewsCollectionViewController else { return }
+			reviewsCollectionViewController.listType = .studio(self.studio)
 		case R.segue.studioDetailsCollectionViewController.showDetailsSegue.identifier:
 			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
@@ -508,7 +512,7 @@ extension StudioDetailsCollectionViewController {
 			case .about:
 				return ""
 			case .rating:
-				return ""
+				return R.segue.studioDetailsCollectionViewController.reviewsSegue.identifier
 			case .rateAndReview:
 				return ""
 			case .reviews:

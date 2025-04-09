@@ -333,6 +333,10 @@ class LiteratureDetailsCollectionViewController: KCollectionViewController {
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
+		case R.segue.literatureDetailsCollectionViewController.reviewsSegue.identifier:
+			// Segue to reviews list
+			guard let reviewsCollectionViewController = segue.destination as? ReviewsCollectionViewController else { return }
+			reviewsCollectionViewController.listType = .literature(self.literature)
 		case R.segue.literatureDetailsCollectionViewController.castListSegue.identifier:
 			// Segue to cast list
 			guard let castListCollectionViewController = segue.destination as? CastListCollectionViewController else { return }
@@ -682,7 +686,7 @@ extension LiteratureDetailsCollectionViewController {
 			case .synopsis:
 				return ""
 			case .rating:
-				return ""
+				return R.segue.literatureDetailsCollectionViewController.reviewsSegue.identifier
 			case .rateAndReview:
 				return ""
 			case .reviews:

@@ -333,6 +333,10 @@ class GameDetailsCollectionViewController: KCollectionViewController {
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
+		case R.segue.gameDetailsCollectionViewController.reviewsSegue.identifier:
+			// Segue to reviews list
+			guard let reviewsCollectionViewController = segue.destination as? ReviewsCollectionViewController else { return }
+			reviewsCollectionViewController.listType = .game(self.game)
 		case R.segue.gameDetailsCollectionViewController.castListSegue.identifier:
 			// Segue to cast list
 			guard let castListCollectionViewController = segue.destination as? CastListCollectionViewController else { return }
@@ -686,7 +690,7 @@ extension GameDetailsCollectionViewController {
 			case .synopsis:
 				return ""
 			case .rating:
-				return ""
+				return R.segue.gameDetailsCollectionViewController.reviewsSegue.identifier
 			case .rateAndReview:
 				return ""
 			case .reviews:

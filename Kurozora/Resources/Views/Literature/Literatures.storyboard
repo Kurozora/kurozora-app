@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ftf-WB-7ul">
-    <device id="retina6_72" orientation="portrait" appearance="dark"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ftf-WB-7ul">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23719.2"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -14,7 +14,7 @@
             <objects>
                 <collectionViewController storyboardIdentifier="LiteraturesListCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="8UW-hZ-RJr" customClass="LiteraturesListCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" id="kYY-E1-AQb">
-                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="0s6-nv-ugV">
@@ -45,7 +45,7 @@
                 <navigationController storyboardIdentifier="LiteratureKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ftf-WB-7ul" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" backIndicatorImage="chevron.left.circle" catalog="system" backIndicatorTransitionMaskImage="chevron.left.circle" id="ESa-T6-GCe">
-                        <rect key="frame" x="0.0" y="59" width="430" height="44"/>
+                        <rect key="frame" x="0.0" y="118" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -62,7 +62,7 @@
             <objects>
                 <collectionViewController storyboardIdentifier="LiteratureDetailsCollectionViewController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="A3e-GJ-UX5" customClass="LiteratureDetailsCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" bouncesZoom="NO" dataMode="prototypes" id="32t-Kh-jQa">
-                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="yH1-ih-AvY">
@@ -73,7 +73,7 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ShowDetailHeaderCollectionViewCell" id="qlh-aU-C2J" customClass="ShowDetailHeaderCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="28" y="0.0" width="374" height="387"/>
+                                <rect key="frame" x="9.6666666666666661" y="0.0" width="374" height="387"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="irJ-Ys-oGC">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="387"/>
@@ -105,7 +105,7 @@
                                                         <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sok-gv-7aN" customClass="KVisualEffectView" customModule="Kurozora" customModuleProvider="target">
                                                             <rect key="frame" x="8" y="0.0" width="358" height="172.33333333333334"/>
                                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="lNp-3S-JbC">
-                                                                <rect key="frame" x="0.0" y="0.0" width="358" height="172.33333333333334"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="358" height="172"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             </view>
                                                             <blurEffect style="regular"/>
@@ -366,7 +366,7 @@
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="lcH-Pn-zdh">
                         <nil key="title"/>
                         <view key="titleView" contentMode="scaleToFill" id="2Od-B7-0Nf">
-                            <rect key="frame" x="126.66666666666669" y="0.0" width="177" height="44"/>
+                            <rect key="frame" x="108" y="0.0" width="177" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nSg-hj-AjS">
@@ -403,6 +403,7 @@
                         <segue destination="tJl-Lr-7h2" kind="show" identifier="LiteraturesListSegue" id="9pg-a3-zao"/>
                         <segue destination="zhi-VP-bcU" kind="show" identifier="GameDetailsSegue" id="pqt-fn-wis"/>
                         <segue destination="Uxa-c6-YY0" kind="show" identifier="GamesListSegue" id="5Kd-wo-20e"/>
+                        <segue destination="XTS-xu-GzY" kind="show" identifier="ReviewsSegue" id="IZS-5Z-2wk"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NcP-g6-hAK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -518,6 +519,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aVg-yu-Fue" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3802" y="701"/>
+        </scene>
+        <!--ReviewsCollectionViewController-->
+        <scene sceneID="uEY-Xe-q3K">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Reviews" referencedIdentifier="ReviewsCollectionViewController" id="XTS-xu-GzY" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="aqV-Do-luH"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bVT-xg-YQ1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3787" y="753"/>
         </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

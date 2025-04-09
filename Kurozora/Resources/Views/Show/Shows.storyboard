@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ftf-WB-7ul">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ftf-WB-7ul">
     <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23719.2"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -45,7 +45,7 @@
                 <navigationController storyboardIdentifier="ShowsKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ftf-WB-7ul" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" backIndicatorImage="chevron.left.circle" catalog="system" backIndicatorTransitionMaskImage="chevron.left.circle" id="ESa-T6-GCe">
-                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <rect key="frame" x="0.0" y="118" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -408,6 +408,7 @@
                         <segue destination="bE1-bd-5X6" kind="show" identifier="LiteraturesListSegue" id="ozi-Lu-uSw"/>
                         <segue destination="Rrl-6T-ANd" kind="show" identifier="GameDetailsSegue" id="gn0-Fv-lcO"/>
                         <segue destination="eaM-6l-RGP" kind="show" identifier="GamesListSegue" id="j4J-S1-dLD"/>
+                        <segue destination="bcW-Oq-B67" kind="show" identifier="ReviewsSegue" id="RYo-u4-MrZ"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NcP-g6-hAK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -574,13 +575,23 @@
             </objects>
             <point key="canvasLocation" x="3803" y="461"/>
         </scene>
+        <!--ReviewsCollectionViewController-->
+        <scene sceneID="b4E-C4-SIK">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Reviews" referencedIdentifier="ReviewsCollectionViewController" id="bcW-Oq-B67" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="iOx-44-pgz"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hXu-G7-GsQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3781" y="579"/>
+        </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
-        <image name="bell" catalog="system" width="32" height="32"/>
+        <image name="bell" catalog="system" width="125" height="128"/>
         <image name="book_texture_overlay" width="160" height="240"/>
-        <image name="chevron.left.circle" catalog="system" width="32" height="32"/>
-        <image name="ellipsis.circle" catalog="system" width="32" height="32"/>
-        <image name="heart" catalog="system" width="32" height="32"/>
+        <image name="chevron.left.circle" catalog="system" width="128" height="123"/>
+        <image name="ellipsis.circle" catalog="system" width="128" height="123"/>
+        <image name="heart" catalog="system" width="128" height="107"/>
     </resources>
 </document>

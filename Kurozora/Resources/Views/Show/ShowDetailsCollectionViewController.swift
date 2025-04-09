@@ -362,6 +362,10 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
+		case R.segue.showDetailsCollectionViewController.reviewsSegue.identifier:
+			// Segue to reviews list
+			guard let reviewsCollectionViewController = segue.destination as? ReviewsCollectionViewController else { return }
+			reviewsCollectionViewController.listType = .show(self.show)
 		case R.segue.showDetailsCollectionViewController.seasonsListSegue.identifier:
 			// Segue to seasons list
 			guard let seasonsCollectionViewController = segue.destination as? SeasonsListCollectionViewController else { return }
@@ -776,7 +780,7 @@ extension ShowDetailsCollectionViewController {
 			case .synopsis:
 				return ""
 			case .rating:
-				return ""
+				return R.segue.showDetailsCollectionViewController.reviewsSegue.identifier
 			case .rateAndReview:
 				return ""
 			case .reviews:

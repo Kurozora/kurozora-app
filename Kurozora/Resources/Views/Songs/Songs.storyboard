@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Wbi-gb-YhQ">
-    <device id="retina6_72" orientation="portrait" appearance="dark"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Wbi-gb-YhQ">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23719.2"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,7 +24,7 @@
                 <navigationController storyboardIdentifier="ShowSongsKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Wbi-gb-YhQ" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="wwr-2N-aZ1">
-                        <rect key="frame" x="0.0" y="59" width="430" height="44"/>
+                        <rect key="frame" x="0.0" y="118" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -41,7 +41,7 @@
             <objects>
                 <collectionViewController storyboardIdentifier="SongsListCollectionViewController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="f0b-bi-yts" customClass="ShowSongsListCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" id="Wp1-sq-960">
-                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="fUq-Oq-Hc0">
@@ -72,7 +72,7 @@
             <objects>
                 <collectionViewController storyboardIdentifier="SongDetailsCollectionViewController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="IsD-SY-DpV" customClass="SongDetailsCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" id="ehh-bM-eMh">
-                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="JgP-DR-0mZ">
@@ -83,7 +83,7 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SongHeaderCollectionViewCell" id="Zyl-vG-bfy" customClass="SongHeaderCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="8" y="0.0" width="414" height="230"/>
+                                <rect key="frame" x="-10.666666666666666" y="0.0" width="414" height="230"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="iuV-pR-cP8">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="230"/>
@@ -178,6 +178,7 @@
                         <outlet property="moreButton" destination="xLx-bR-OAz" id="hSw-I6-bL0"/>
                         <segue destination="rma-UE-TIB" kind="show" identifier="ShowDetailsSegue" id="OpG-Vz-QyO"/>
                         <segue destination="1jI-ql-yXY" kind="show" identifier="ShowsListSegue" id="wzp-Xi-IjB"/>
+                        <segue destination="Dz2-OR-ppf" kind="show" identifier="ReviewsSegue" id="DiG-Ue-n9l"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zv1-tS-rP8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -204,10 +205,20 @@
             </objects>
             <point key="canvasLocation" x="3457" y="-706"/>
         </scene>
+        <!--ReviewsCollectionViewController-->
+        <scene sceneID="LnI-4C-Epf">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Reviews" referencedIdentifier="ReviewsCollectionViewController" id="Dz2-OR-ppf" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Kbw-ZC-nTV"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="h5s-TN-X04" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3445" y="-651"/>
+        </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
         <image name="ellipsis.circle" catalog="system" width="128" height="123"/>
-        <image name="play.fill" catalog="system" width="117" height="128"/>
+        <image name="play.fill" catalog="system" width="120" height="128"/>
     </resources>
 </document>
