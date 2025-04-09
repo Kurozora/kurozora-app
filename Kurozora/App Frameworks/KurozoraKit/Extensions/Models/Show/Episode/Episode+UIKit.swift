@@ -15,6 +15,7 @@ extension Episode {
 		return "https://kurozora.app/episodes/\(self.id)"
 	}
 
+	@MainActor
 	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?)
 	-> UIContextMenuConfiguration? {
 		let identifier = userInfo?["indexPath"] as? NSCopying
@@ -28,8 +29,8 @@ extension Episode {
 		})
 	}
 
-	private func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?) -> UIMenu {
-		var menuElements: [UIMenuElement] = []
+	@MainActor
+	func makeContextMenu(in viewController: UIViewController, userInfo: [AnyHashable: Any]?) -> UIMenu {		var menuElements: [UIMenuElement] = []
 
 		if User.isSignedIn {
 			// Create "update watch status" element
@@ -136,7 +137,7 @@ extension Episode {
 	///    - description: The review given by the user.
 	///
 	/// - Returns: the rating applied to the episode if rated successfully.
-	func rate(using rating: Double, description: String?) async -> Double? {
+	func rate(using rating: Double, description: String?) async throws(KKAPIError) -> Double? {
 		guard await self.validateIsWatched() else { return nil }
 		let episodeIdentity = EpisodeIdentity(id: self.id)
 
@@ -154,10 +155,14 @@ extension Episode {
 			}
 
 			return rating
+		} catch let error as KKAPIError {
+			print(error.localizedDescription)
+			throw error
 		} catch {
 			print(error.localizedDescription)
-			return nil
 		}
+
+		return nil
 	}
 
 	private func validateIsWatched() async -> Bool {

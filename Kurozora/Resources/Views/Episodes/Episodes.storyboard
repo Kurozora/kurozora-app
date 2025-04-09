@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3U2-4Z-cqf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3U2-4Z-cqf">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -331,12 +331,18 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="YiI-ms-8UP">
                         <nil key="title"/>
-                        <barButtonItem key="rightBarButtonItem" title="Share" image="ellipsis.circle" catalog="system" id="gis-4h-2YB">
-                            <connections>
-                                <action selector="moreButtonPressed:" destination="W7w-EE-TzB" id="1Gw-it-CtR"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Share" image="ellipsis.circle" catalog="system" id="gis-4h-2YB"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="moreBarButtonItem" destination="gis-4h-2YB" id="HzI-Nz-Jfz"/>
+                        <segue destination="Rrb-t9-3pN" kind="show" identifier="ReviewsSegue" id="3R8-By-e3a"/>
+                        <segue destination="Zcx-qT-vAM" kind="show" identifier="ShowDetailsSegue" id="XuW-ms-Kop"/>
+                        <segue destination="oFN-M4-3f6" kind="show" identifier="EpisodesListSegue" id="4aG-Iu-mhY"/>
+                        <segue destination="JuK-hS-Nhl" kind="show" identifier="CharacterDetailsSegue" id="6Tj-G8-XDa"/>
+                        <segue destination="Nez-cX-Olz" kind="show" identifier="PersonDetailsSegue" id="44w-9c-kuO"/>
+                        <segue destination="csV-7i-ZFF" kind="show" identifier="EpisodeDetailsSegue" id="vf4-bU-mHd"/>
+                        <segue destination="yhO-a7-eii" kind="show" identifier="SeasonsListSegue" id="61K-f4-i6T"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="veZ-5T-yYU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -359,7 +365,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="gZS-xN-jcD"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="dHj-Yl-oZM">
-                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="96" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
@@ -388,13 +394,83 @@
             </objects>
             <point key="canvasLocation" x="2991" y="-310"/>
         </scene>
+        <!--ReviewsCollectionViewController-->
+        <scene sceneID="CJ3-eK-2T2">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Reviews" referencedIdentifier="ReviewsCollectionViewController" id="Rrb-t9-3pN" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="ClX-h4-h9W"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XsS-Ux-f2i" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3725" y="-823"/>
+        </scene>
+        <!--ShowDetailsCollectionViewController-->
+        <scene sceneID="u0e-hE-cIe">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Shows" referencedIdentifier="ShowDetailsCollectionViewController" id="Zcx-qT-vAM" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="4hM-md-wmS"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rnt-cY-ZH5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3743" y="-787"/>
+        </scene>
+        <!--EpisodesListCollectionViewController-->
+        <scene sceneID="d0C-8E-VD3">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Episodes" referencedIdentifier="EpisodesListCollectionViewController" id="oFN-M4-3f6" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="bWL-Ml-WoS"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9SI-XX-ySm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3745" y="-718"/>
+        </scene>
+        <!--CharacterDetailsCollectionViewController-->
+        <scene sceneID="01M-yM-kZn">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Characters" referencedIdentifier="CharacterDetailsCollectionViewController" id="JuK-hS-Nhl" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="4gS-FB-NXu"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PhS-E6-P94" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3763" y="-680"/>
+        </scene>
+        <!--PersonDetailsCollectionViewController-->
+        <scene sceneID="WRe-Ie-N1x">
+            <objects>
+                <viewControllerPlaceholder storyboardName="People" referencedIdentifier="PersonDetailsCollectionViewController" id="Nez-cX-Olz" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="nVk-T3-o4T"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GTk-3O-7dz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3750" y="-643"/>
+        </scene>
+        <!--EpisodeDetailsCollectionViewController-->
+        <scene sceneID="NuK-aT-cHV">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Episodes" referencedIdentifier="EpisodeDetailsCollectionViewController" id="csV-7i-ZFF" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="HtP-iJ-CBP"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="11W-yl-HmK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3754" y="-603"/>
+        </scene>
+        <!--SeasonsListCollectionViewController-->
+        <scene sceneID="M8O-QY-6PS">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Seasons" referencedIdentifier="SeasonsListCollectionViewController" id="yhO-a7-eii" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="ntM-fo-L5x"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0dE-BN-vAk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3745" y="-749"/>
+        </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
         <image name="Symbols/message.left.and.message.right" width="18" height="15"/>
-        <image name="chevron.down.circle" catalog="system" width="32" height="32"/>
-        <image name="ellipsis.circle" catalog="system" width="32" height="32"/>
-        <image name="heart" catalog="system" width="32" height="32"/>
-        <image name="line.3.horizontal.decrease.circle" catalog="system" width="32" height="32"/>
+        <image name="chevron.down.circle" catalog="system" width="128" height="123"/>
+        <image name="ellipsis.circle" catalog="system" width="128" height="123"/>
+        <image name="heart" catalog="system" width="128" height="107"/>
+        <image name="line.3.horizontal.decrease.circle" catalog="system" width="128" height="123"/>
     </resources>
 </document>

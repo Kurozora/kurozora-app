@@ -34,7 +34,7 @@ extension Review {
 		}
 
 		// Create "share" element
-		let shareAction = UIAction(title: "Share Review", image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
+		let shareAction = UIAction(title: Trans.shareReview, image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
 			self.openShareSheet(on: viewController)
 		}
 		userMenuElements.append(shareAction)
@@ -44,14 +44,30 @@ extension Review {
 
 		if User.isSignedIn {
 			// Report review action
+			let reviewUserID = self.relationships?.users?.data.first?.id
+			if User.current?.attributes.role == .superAdmin ||
+				User.current?.attributes.role == .admin ||
+				User.current?.id == reviewUserID {
+				var deleteMenuElements: [UIMenuElement] = []
+				// Delete action
+				let deleteAction = UIAction(title: Trans.deleteReview, attributes: .destructive) { _ in
+					self.confirmDelete(via: viewController, userInfo: userInfo)
+				}
+				deleteMenuElements.append(deleteAction)
+
+				// Append report menu
+				menuElements.append(UIMenu(title: Trans.delete, image: UIImage(systemName: "trash"), children: deleteMenuElements))
+			}
+
+			// Report review action
 			var reportMenuElements: [UIMenuElement] = []
-			let reportAction = UIAction(title: "Report Review", image: UIImage(systemName: "exclamationmark.circle.fill"), attributes: .destructive) { _ in
+			let reportAction = UIAction(title: Trans.reportReview, attributes: .destructive) { _ in
 				self.reportReview()
 			}
 			reportMenuElements.append(reportAction)
 
 			// Append report menu
-			menuElements.append(UIMenu(title: "", options: .displayInline, children: reportMenuElements))
+			menuElements.append(UIMenu(title: Trans.report, image: UIImage(systemName: "exclamationmark.circle"), children: reportMenuElements))
 		}
 
 		// Create and return a UIMenu
@@ -100,8 +116,48 @@ extension Review {
 	func reportReview() {
 		WorkflowController.shared.isSignedIn {
 			Task { @MainActor in
-				UIApplication.topViewController?.presentAlertController(title: "Review Reported", message: "Thank you for helping keep the community safe.")
+				UIApplication.topViewController?.presentAlertController(title: Trans.reviewReportedHeadline, message: Trans.reviewReportedSubheadline)
 			}
+		}
+	}
+
+	/// Remove the review.
+	///
+	/// - Parameter indexPath: The index path of the review.
+	private func remove(at indexPath: IndexPath) async {
+		let reviewIdentity = ReviewIdentity(id: self.id)
+
+		do {
+			_ = try await KService.delete(reviewIdentity).value
+
+			NotificationCenter.default.post(name: .KReviewDidDelete, object: nil, userInfo: ["indexPath": indexPath])
+		} catch {
+			print(error.localizedDescription)
+		}
+	}
+
+	/// Confirm if the user wants to delete the review.
+	private func confirmDelete(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any?]) {
+		let actionSheetAlertController = UIAlertController.alert(title: nil, message: Trans.deleteReviewSubheadline) { alertController in
+			let deleteAction = UIAlertAction(title: Trans.deleteReview, style: .destructive) { _ in
+				if let indexPath = userInfo["indexPath"] as? IndexPath {
+					Task {
+						await self.remove(at: indexPath)
+					}
+				}
+			}
+			alertController.addAction(deleteAction)
+		}
+
+		if let popoverController = actionSheetAlertController.popoverPresentationController {
+			if let view = viewController?.view {
+				popoverController.sourceView = view
+				popoverController.sourceRect = view.frame
+			}
+		}
+
+		if (viewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
+			viewController?.present(actionSheetAlertController, animated: true, completion: nil)
 		}
 	}
 }

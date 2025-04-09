@@ -130,6 +130,19 @@ extension Notification.Name {
 	}
 }
 
+// MARK: - Review
+extension Notification.Name {
+	/// A notification posted when the review is updated.
+	static var KReviewDidUpdate: NSNotification.Name {
+		return NSNotification.Name(#function)
+	}
+
+	/// A notification posted when the review is deleted.
+	static var KReviewDidDelete: NSNotification.Name {
+		return NSNotification.Name(#function)
+	}
+}
+
 // MARK: - Session settings
 extension Notification.Name {
 	/// A notification posted after a session is deleted.

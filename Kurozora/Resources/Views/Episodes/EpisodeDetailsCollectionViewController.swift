@@ -10,6 +10,8 @@ import UIKit
 import KurozoraKit
 
 class EpisodeDetailsCollectionViewController: KCollectionViewController {
+	@IBOutlet weak var moreBarButtonItem: UIBarButtonItem!
+
 	// MARK: - Properties
 	var episodeIdentity: EpisodeIdentity? = nil
 	var episode: Episode! {
@@ -18,9 +20,10 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController {
 			self.episodeIdentity = EpisodeIdentity(id: self.episode.id)
 
 			self._prefersActivityIndicatorHidden = true
-			self.collectionView.reloadData {
-				self.toggleEmptyDataView()
-			}
+			#if targetEnvironment(macCatalyst)
+			self.touchBar = nil
+			#endif
+
 			#if DEBUG
 			#if !targetEnvironment(macCatalyst)
 			self.refreshControl?.endRefreshing()
@@ -29,6 +32,19 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController {
 		}
 	}
 	var indexPath = IndexPath()
+
+	// Review properties.
+	var reviews: [Review] = []
+
+	// Cast properties.
+	var cast: [IndexPath: Cast] = [:]
+	var castIdentities: [CastIdentity] = []
+
+	// Suggested episodes properties.
+	var suggestedEpisodes: [Episode] = []
+
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>! = nil
+	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>! = nil
 
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
@@ -95,6 +111,8 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController {
 		self._prefersRefreshControlDisabled = true
 		#endif
 
+		self.configureDataSource()
+
 		Task { [weak self] in
 			guard let self = self else { return }
 			await self.fetchDetails()
@@ -103,14 +121,14 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-
 		NotificationCenter.default.addObserver(self, selector: #selector(self.updateEpisodes(_:)), name: .KEpisodeWatchStatusDidUpdate, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.deleteReview(_:)), name: .KReviewDidDelete, object: nil)
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
-
 		NotificationCenter.default.removeObserver(self, name: .KEpisodeWatchStatusDidUpdate, object: nil)
+		NotificationCenter.default.removeObserver(self, name: .KReviewDidDelete, object: nil)
 	}
 
 	// MARK: - Functions
@@ -137,6 +155,10 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController {
 		}
 	}
 
+	func configureNavBarButtons() {
+		self.moreBarButtonItem.menu = self.episode?.makeContextMenu(in: self, userInfo: [:])
+	}
+
 	func fetchDetails() async {
 		guard let episodeIdentity = self.episodeIdentity else { return }
 
@@ -147,6 +169,27 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController {
 			} catch {
 				print("-----", error.localizedDescription)
 			}
+
+			self.configureNavBarButtons()
+		} else {
+			self.updateDataSource()
+			self.configureNavBarButtons()
+		}
+
+		do {
+			let reviewIdentityResponse = try await KService.getReviews(forEpisode: episodeIdentity, next: nil, limit: 10).value
+			self.reviews = reviewIdentityResponse.data
+			self.updateDataSource()
+		} catch {
+			print("-----", error.localizedDescription)
+		}
+
+		do {
+			let episodeResponse = try await KService.getSuggestions(forEpisode: episodeIdentity).value
+			self.suggestedEpisodes = episodeResponse.data
+			self.updateDataSource()
+		} catch {
+			print("-----", error.localizedDescription)
 		}
 	}
 
@@ -156,7 +199,8 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController {
 	@objc func updateEpisodes(_ notification: NSNotification) {
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
-			self.collectionView.reloadItems(at: [IndexPath(row: 0, section: 0)])
+			self.snapshot.reloadSections([.header])
+			self.configureNavBarButtons()
 		}
 	}
 
@@ -165,69 +209,122 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController {
 		self.episode?.openShareSheet(on: self)
 	}
 
-	// MARK: - IBActions
-	@IBAction func moreButtonPressed(_ sender: UIBarButtonItem) {
-		self.episode?.openShareSheet(on: self, barButtonItem: sender)
+	/// Deletes the review with the received information.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers.
+	@objc func deleteReview(_ notification: NSNotification) {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+
+			if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
+				// Start delete process
+				self.reviews.remove(at: indexPath.item)
+			}
+
+			self.episode.attributes.givenRating = nil
+			self.episode.attributes.givenReview = nil
+		}
+	}
+
+	/// Show a success alert thanking the user for rating.
+	private func showRatingSuccessAlert() {
+		let alertController = UIApplication.topViewController?.presentAlertController(title: Trans.ratingSubmitted, message: Trans.thankYouForRating)
+
+		DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+			alertController?.dismiss(animated: true, completion: nil)
+		}
+	}
+
+	/// Show an alert informing the user that the rating failed.
+	///
+	/// - Parameter message: The message to display in the alert.
+	private func showRatingFailedAlert(message: String) {
+		let alertController = UIApplication.topViewController?.presentAlertController(title: Trans.ratingFailed, message: message)
+
+		DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+			alertController?.dismiss(animated: true, completion: nil)
+		}
+	}
+
+	// MARK: - Segue
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		switch segue.identifier {
+		case R.segue.episodeDetailsCollectionViewController.reviewsSegue.identifier:
+			// Segue to reviews list
+			guard let reviewsCollectionViewController = segue.destination as? ReviewsCollectionViewController else { return }
+			reviewsCollectionViewController.listType = .episode(self.episode)
+		case R.segue.episodeDetailsCollectionViewController.showDetailsSegue.identifier:
+			// Segue to show details
+			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
+			if let showIdentity = sender as? ShowIdentity {
+				showDetailsCollectionViewController.showIdentity = showIdentity
+			} else if let show = sender as? Show {
+				showDetailsCollectionViewController.show = show
+			}
+		case R.segue.episodeDetailsCollectionViewController.seasonsListSegue.identifier:
+			// Segue to seasons list
+			guard let seasonsListCollectionViewController = segue.destination as? SeasonsListCollectionViewController else { return }
+			guard let show = sender as? Show else { return }
+			seasonsListCollectionViewController.showIdentity = ShowIdentity(id: show.id)
+		case R.segue.episodeDetailsCollectionViewController.episodeDetailsSegue.identifier:
+			// Segue to episode details
+			guard let episodeDetailsCollectionViewController = segue.destination as? EpisodeDetailsCollectionViewController else { return }
+			episodeDetailsCollectionViewController.episode = sender as? Episode
+		case R.segue.episodeDetailsCollectionViewController.episodesListSegue.identifier:
+			// Segue to episode details
+			guard let episodesListCollectionViewController = segue.destination as? EpisodesListCollectionViewController else { return }
+			guard let seasonIdentity = sender as? SeasonIdentity else { return }
+			episodesListCollectionViewController.seasonIdentity = seasonIdentity
+			episodesListCollectionViewController.episodesListFetchType = .season
+		default: break
+		}
 	}
 }
 
-// MARK: - UICollectionViewDataSource
-extension EpisodeDetailsCollectionViewController {
-	override func numberOfSections(in collectionView: UICollectionView) -> Int {
-		return self.episode != nil ? EpisodeDetail.Section.allCases.count : 0
+// MARK: - CastCollectionViewCellDelegate
+extension EpisodeDetailsCollectionViewController: CastCollectionViewCellDelegate {
+	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressPersonButton button: UIButton) {
+		self.performSegue(withIdentifier: R.segue.episodeDetailsCollectionViewController.personDetailsSegue.identifier, sender: cell)
 	}
 
-	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		var itemsPerSection = 0
-
-		switch EpisodeDetail.Section(rawValue: section) {
-		case .header:
-			itemsPerSection = 1
-		case .synopsis:
-			if let synopsis = self.episode.attributes.synopsis, !synopsis.isEmpty {
-				itemsPerSection = 1
-			}
-		case .rating:
-			itemsPerSection = 1
-		case .information:
-			itemsPerSection = EpisodeDetail.Information.allCases.count
-		default: break
-		}
-
-		return itemsPerSection
+	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressCharacterButton button: UIButton) {
+		self.performSegue(withIdentifier: R.segue.episodeDetailsCollectionViewController.characterDetailsSegue.identifier, sender: cell)
 	}
+}
 
-	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		guard let episodeDetailSection = EpisodeDetail.Section(rawValue: indexPath.section) else { fatalError("Can't determine cellForItemAt indexPath: \(indexPath)") }
+// MARK: - EpisodeLockupCollectionViewCellDelegate
+extension EpisodeDetailsCollectionViewController: EpisodeLockupCollectionViewCellDelegate {
+	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressWatchStatusButton button: UIButton) {
+		WorkflowController.shared.isSignedIn { [weak self] in
+			guard let self = self else { return }
+			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 
-		switch episodeDetailSection {
-		case .header:
-			let episodeDetailHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: episodeDetailSection.identifierString, for: indexPath) as! EpisodeDetailHeaderCollectionViewCell
-			episodeDetailHeaderCollectionViewCell.indexPath = self.indexPath
-			episodeDetailHeaderCollectionViewCell.episode = self.episode
-			return episodeDetailHeaderCollectionViewCell
-		case .synopsis:
-			let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: episodeDetailSection.identifierString, for: indexPath) as! TextViewCollectionViewCell
-			textViewCollectionViewCell.delegate = self
-			textViewCollectionViewCell.textViewCollectionViewCellType = .synopsis
-			textViewCollectionViewCell.textViewContent = self.episode.attributes.synopsis
-			return textViewCollectionViewCell
-		case .rating:
-			let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: episodeDetailSection.identifierString, for: indexPath) as! RatingCollectionViewCell
-			if let stats = self.episode.attributes.stats {
-				ratingCollectionViewCell.configure(using: stats)
+			Task {
+				cell.watchStatusButton.isEnabled = false
+				let suggestedEpisode = self.suggestedEpisodes[indexPath.item]
+				await suggestedEpisode.updateWatchStatus(userInfo: ["indexPath": indexPath])
+				cell.watchStatusButton.isEnabled = true
+
+				// Update the nav bar buttons if the suggested episode is the same as the current episode.
+				if suggestedEpisode.id == self.episode.id {
+					self.configureNavBarButtons()
+				}
 			}
-			return ratingCollectionViewCell
-		case .information:
-			let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: episodeDetailSection.identifierString, for: indexPath) as! InformationCollectionViewCell
-			informationCollectionViewCell.configure(using: self.episode, for: EpisodeDetail.Information(rawValue: indexPath.item) ?? .number)
-			return informationCollectionViewCell
 		}
 	}
 
-	override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-		let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
-		return supplementaryView
+	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressShowButton button: UIButton) {
+		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+		guard let showIdentity = self.suggestedEpisodes[indexPath.item].relationships?.shows?.data.first else { return }
+
+		self.performSegue(withIdentifier: R.segue.episodeDetailsCollectionViewController.showDetailsSegue, sender: showIdentity)
+	}
+
+	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressSeasonButton button: UIButton) {
+		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+		guard let seasonIdentity = self.suggestedEpisodes[indexPath.item].relationships?.seasons?.data.first else { return }
+
+		self.performSegue(withIdentifier: R.segue.episodeDetailsCollectionViewController.episodesListSegue, sender: seasonIdentity)
 	}
 }
 
@@ -252,12 +349,176 @@ extension EpisodeDetailsCollectionViewController: TitleHeaderCollectionReusableV
 	}
 }
 
+// MARK: - ReviewCollectionViewCellDelegate
+extension EpisodeDetailsCollectionViewController: ReviewCollectionViewCellDelegate {
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressUserName sender: AnyObject) {
+		guard let indexPath = collectionView.indexPath(for: cell) else { return }
+		self.reviews[indexPath.item].visitOriginalPosterProfile(from: self)
+	}
+
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) {
+		if let badgeViewController = R.storyboard.badge.instantiateInitialViewController() {
+			badgeViewController.profileBadge = profileBadge
+			badgeViewController.popoverPresentationController?.sourceView = button
+			badgeViewController.popoverPresentationController?.sourceRect = button.bounds
+
+			self.present(badgeViewController, animated: true, completion: nil)
+		}
+	}
+}
+
 // MARK: - TapToRateCollectionViewCellDelegate
 extension EpisodeDetailsCollectionViewController: TapToRateCollectionViewCellDelegate {
 	func tapToRateCollectionViewCell(_ cell: TapToRateCollectionViewCell, rateWith rating: Double) {
 		Task { [weak self] in
 			guard let self = self else { return }
-			cell.configure(using: await self.episode.rate(using: rating, description: nil))
+			do throws(KKAPIError) {
+				let rating = try await self.episode.rate(using: rating, description: nil)
+				cell.configure(using: rating)
+
+				if rating != nil {
+					self.showRatingSuccessAlert()
+				}
+			} catch {
+				self.showRatingFailedAlert(message: error.message)
+			}
+		}
+	}
+}
+
+// MARK: - WriteAReviewCollectionViewCellDelegate
+extension EpisodeDetailsCollectionViewController: WriteAReviewCollectionViewCellDelegate {
+	func writeAReviewCollectionViewCell(_ cell: WriteAReviewCollectionViewCell, didPress button: UIButton) {
+		WorkflowController.shared.isSignedIn { [weak self] in
+			guard let self = self else { return }
+
+			let reviewTextEditorViewController = ReviewTextEditorViewController()
+			reviewTextEditorViewController.delegate = self
+			reviewTextEditorViewController.router?.dataStore?.kind = .episode(self.episode)
+			reviewTextEditorViewController.router?.dataStore?.rating = self.episode.attributes.givenRating
+			reviewTextEditorViewController.router?.dataStore?.review = nil
+
+			let navigationController = KNavigationController(rootViewController: reviewTextEditorViewController)
+			navigationController.presentationController?.delegate = reviewTextEditorViewController
+			self.present(navigationController, animated: true)
+		}
+	}
+}
+
+// MARK: - ReviewTextEditorViewControllerDelegate
+extension EpisodeDetailsCollectionViewController: ReviewTextEditorViewControllerDelegate {
+	func reviewTextEditorViewControllerDidSubmitReview() {
+		self.showRatingSuccessAlert()
+	}
+}
+
+extension EpisodeDetailsCollectionViewController {
+	enum SectionLayoutKind: Int, CaseIterable {
+		// MARK: - Cases
+		/// Indicates a header section layout type.
+		case header = 0
+		case badge
+		case synopsis
+		case rating
+		case rateAndReview
+		case reviews
+		case information
+		case cast
+		case suggestedEpisodes
+		case sosumi
+
+		// MARK: - Properties
+		/// The string value of a section type.
+		var stringValue: String {
+			switch self {
+			case .header:
+				return Trans.header
+			case .badge:
+				return Trans.badges
+			case .synopsis:
+				return Trans.synopsis
+			case .rating:
+				return Trans.ratingsAndReviews
+			case .rateAndReview:
+				return ""
+			case .reviews:
+				return ""
+			case .information:
+				return Trans.information
+			case .cast:
+				return Trans.cast
+			case .suggestedEpisodes:
+				return Trans.seeAlso
+			case .sosumi:
+				return Trans.copyright
+			}
+		}
+
+		/// The string value of a section type segue identifier.
+		var segueIdentifier: String {
+			switch self {
+			case .header:
+				return ""
+			case .badge:
+				return ""
+			case .synopsis:
+				return ""
+			case .rating:
+				return R.segue.gameDetailsCollectionViewController.reviewsSegue.identifier
+			case .rateAndReview:
+				return ""
+			case .reviews:
+				return ""
+			case .information:
+				return ""
+			case .cast:
+				return R.segue.gameDetailsCollectionViewController.castListSegue.identifier
+			case .suggestedEpisodes:
+				return ""
+			case .sosumi:
+				return ""
+			}
+		}
+	}
+
+	/// List of available Item Kind types.
+	enum ItemKind: Hashable {
+		// MARK: - Cases
+		/// Indicates the item kind contains a `Episode` object.
+		case episode(_: Episode, id: UUID = UUID())
+
+		/// Indicates the item kind contains a `Review` object.
+		case review(_: Review, id: UUID = UUID())
+
+		/// Indicates the item kind contains a `CastIdentity` object.
+		case castIdentity(_: CastIdentity, id: UUID = UUID())
+
+		// MARK: - Functions
+		func hash(into hasher: inout Hasher) {
+			switch self {
+			case .episode(let episode, let id):
+				hasher.combine(episode)
+				hasher.combine(id)
+			case .review(let review, let id):
+				hasher.combine(review)
+				hasher.combine(id)
+			case .castIdentity(let castIdentity, let id):
+				hasher.combine(castIdentity)
+				hasher.combine(id)
+			}
+		}
+
+		static func == (lhs: ItemKind, rhs: ItemKind) -> Bool {
+			switch (lhs, rhs) {
+			case (.episode(let episode1, let id1), .episode(let episode2, let id2)):
+				return episode1 == episode2 && id1 == id2
+			case (.review(let review1, let id1), .review(let review2, let id2)):
+				return review1 == review2 && id1 == id2
+			case (.castIdentity(let castIdentity1, let id1), .castIdentity(let castIdentity2, let id2)):
+				return castIdentity1 == castIdentity2 && id1 == id2
+			default:
+				return false
+			}
 		}
 	}
 }
