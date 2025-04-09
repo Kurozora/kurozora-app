@@ -46,7 +46,7 @@ class InformationCollectionViewCell: UICollectionViewCell {
 	}
 
 	/// Configure the cell with the given person details.
-	func configure(using person: Person, for personDetailInformation: PersonInformation) {
+	func configure(using person: Person, for personDetailInformation: PersonDetail.Information) {
 		self.typeImageView.image = personDetailInformation.imageValue
 		self.typeLabel.text = personDetailInformation.stringValue
 		self.headlineLabel.text = personDetailInformation.information(from: person)
@@ -60,7 +60,7 @@ class InformationCollectionViewCell: UICollectionViewCell {
 	}
 
 	/// Configure the cell with the given character details.
-	func configure(using character: Character, for characterDetailInformation: CharacterInformation) {
+	func configure(using character: Character, for characterDetailInformation: CharacterDetail.Information) {
 		self.typeImageView.image = characterDetailInformation.imageValue
 		self.typeLabel.text = characterDetailInformation.stringValue
 		self.headlineLabel.text = characterDetailInformation.information(from: character)

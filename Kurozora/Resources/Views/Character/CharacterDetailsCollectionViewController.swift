@@ -30,15 +30,23 @@ class CharacterDetailsCollectionViewController: KCollectionViewController {
 			#endif
 		}
 	}
+
+	// Review properties.
+	var reviews: [Review] = []
+
+	// People properties
 	var people: [IndexPath: Person] = [:]
 	var personIdentities: [PersonIdentity] = []
 
+	// Show properties
 	var shows: [IndexPath: Show] = [:]
 	var showIdentities: [ShowIdentity] = []
 
+	// Literature properties
 	var literatures: [IndexPath: Literature] = [:]
 	var literatureIdentities: [LiteratureIdentity] = []
 
+	// Game properties
 	var games: [IndexPath: Game] = [:]
 	var gameIdentities: [GameIdentity] = []
 
@@ -119,6 +127,16 @@ class CharacterDetailsCollectionViewController: KCollectionViewController {
 		}
 	}
 
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.deleteReview(_:)), name: .KReviewDidDelete, object: nil)
+	}
+
+	override func viewDidDisappear(_ animated: Bool) {
+		super.viewDidDisappear(animated)
+		NotificationCenter.default.removeObserver(self, name: .KReviewDidDelete, object: nil)
+	}
+
 	// MARK: - Functions
 	override func handleRefreshControl() {
 		Task { [weak self] in
@@ -158,6 +176,14 @@ class CharacterDetailsCollectionViewController: KCollectionViewController {
 		}
 
 		do {
+			let reviewIdentityResponse = try await KService.getReviews(forCharacter: characterIdentity, next: nil, limit: 10).value
+			self.reviews = reviewIdentityResponse.data
+			self.updateDataSource()
+		} catch {
+			print(error.localizedDescription)
+		}
+
+		do {
 			let personIdentityResponse = try await KService.getPeople(forCharacter: characterIdentity, limit: 10).value
 			self.personIdentities = personIdentityResponse.data
 		} catch {
@@ -188,9 +214,41 @@ class CharacterDetailsCollectionViewController: KCollectionViewController {
 		self.updateDataSource()
 	}
 
+	/// Deletes the review with the received information.
+	///
+	/// - Parameter notification: An object containing information broadcast to registered observers.
+	@objc func deleteReview(_ notification: NSNotification) {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+
+			if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
+				// Start delete process
+				self.reviews.remove(at: indexPath.item)
+			}
+
+			self.character.attributes.givenRating = nil
+			self.character.attributes.givenReview = nil
+
+			self.updateDataSource()
+		}
+	}
+
+	/// Show a success alert thanking the user for rating.
+	private func showRatingSuccessAlert() {
+		let alertController = UIApplication.topViewController?.presentAlertController(title: Trans.ratingSubmitted, message: Trans.thankYouForRating)
+
+		DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+			alertController?.dismiss(animated: true, completion: nil)
+		}
+	}
+
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
+		case R.segue.characterDetailsCollectionViewController.reviewsSegue.identifier:
+			// Segue to reviews list
+			guard let reviewsCollectionViewController = segue.destination as? ReviewsCollectionViewController else { return }
+			reviewsCollectionViewController.listType = .character(self.character)
 		case R.segue.characterDetailsCollectionViewController.showsListSegue.identifier:
 			guard let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController else { return }
 			showsListCollectionViewController.characterIdentity = self.characterIdentity
@@ -359,30 +417,79 @@ extension CharacterDetailsCollectionViewController: BaseLockupCollectionViewCell
 	}
 }
 
+// MARK: - ReviewCollectionViewCellDelegate
+extension CharacterDetailsCollectionViewController: ReviewCollectionViewCellDelegate {
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressUserName sender: AnyObject) {
+		guard let indexPath = collectionView.indexPath(for: cell) else { return }
+		self.reviews[indexPath.item].visitOriginalPosterProfile(from: self)
+	}
+
+	func reviewCollectionViewCell(_ cell: ReviewCollectionViewCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) {
+		if let badgeViewController = R.storyboard.badge.instantiateInitialViewController() {
+			badgeViewController.profileBadge = profileBadge
+			badgeViewController.popoverPresentationController?.sourceView = button
+			badgeViewController.popoverPresentationController?.sourceRect = button.bounds
+
+			self.present(badgeViewController, animated: true, completion: nil)
+		}
+	}
+}
+
+// MARK: - TapToRateCollectionViewCellDelegate
+extension CharacterDetailsCollectionViewController: TapToRateCollectionViewCellDelegate {
+	func tapToRateCollectionViewCell(_ cell: TapToRateCollectionViewCell, rateWith rating: Double) {
+		Task { [weak self] in
+			guard let self = self else { return }
+			let rating = await self.character.rate(using: rating, description: nil)
+			cell.configure(using: rating)
+
+			if rating != nil {
+				self.showRatingSuccessAlert()
+			}
+		}
+	}
+}
+
+// MARK: - WriteAReviewCollectionViewCellDelegate
+extension CharacterDetailsCollectionViewController: WriteAReviewCollectionViewCellDelegate {
+	func writeAReviewCollectionViewCell(_ cell: WriteAReviewCollectionViewCell, didPress button: UIButton) {
+		WorkflowController.shared.isSignedIn { [weak self] in
+			guard let self = self else { return }
+
+			let reviewTextEditorViewController = ReviewTextEditorViewController()
+			reviewTextEditorViewController.delegate = self
+			reviewTextEditorViewController.router?.dataStore?.kind = .character(self.character)
+			reviewTextEditorViewController.router?.dataStore?.rating = self.character.attributes.givenRating
+			reviewTextEditorViewController.router?.dataStore?.review = nil
+
+			let navigationController = KNavigationController(rootViewController: reviewTextEditorViewController)
+			navigationController.presentationController?.delegate = reviewTextEditorViewController
+			self.present(navigationController, animated: true)
+		}
+	}
+}
+
+// MARK: - ReviewTextEditorViewControllerDelegate
+extension CharacterDetailsCollectionViewController: ReviewTextEditorViewControllerDelegate {
+	func reviewTextEditorViewControllerDidSubmitReview() {
+		self.showRatingSuccessAlert()
+	}
+}
+
 // MARK: - Enums
 extension CharacterDetailsCollectionViewController {
 	/// List of character section layout kind.
 	enum SectionLayoutKind: Int, CaseIterable {
 		// MARK: - Cases
-		/// Indicates a header section layout type.
 		case header = 0
-
-		/// Indicates an about section layout type.
 		case about
-
-		/// Indicates an information section layout type.
+		case rating
+		case rateAndReview
+		case reviews
 		case information
-
-		/// Indicates people section layout type.
 		case people
-
-		/// Indicates shows section layout type.
 		case shows
-
-		/// Indicates literatures section layout type.
 		case literatures
-
-		/// Indicates games section layout type.
 		case games
 
 		// MARK: - Properties
@@ -393,6 +500,12 @@ extension CharacterDetailsCollectionViewController {
 				return Trans.header
 			case .about:
 				return Trans.about
+			case .rating:
+				return Trans.ratingsAndReviews
+			case .rateAndReview:
+				return ""
+			case .reviews:
+				return ""
 			case .information:
 				return Trans.information
 			case .people:
@@ -412,6 +525,12 @@ extension CharacterDetailsCollectionViewController {
 			case .header:
 				return ""
 			case .about:
+				return ""
+			case .rating:
+				return R.segue.gameDetailsCollectionViewController.reviewsSegue.identifier
+			case .rateAndReview:
+				return ""
+			case .reviews:
 				return ""
 			case .information:
 				return ""
@@ -433,6 +552,9 @@ extension CharacterDetailsCollectionViewController {
 		/// Indicates the item kind contains a `Character` object.
 		case character(_: Character, id: UUID = UUID())
 
+		/// Indicates the item kind contains a `Review` object.
+		case review(_: Review, id: UUID = UUID())
+
 		/// Indicates the item kind contains a `PersonIdentity` object.
 		case personIdentity(_: PersonIdentity, id: UUID = UUID())
 
@@ -450,6 +572,9 @@ extension CharacterDetailsCollectionViewController {
 			switch self {
 			case .character(let character, let id):
 				hasher.combine(character)
+				hasher.combine(id)
+			case .review(let review, let id):
+				hasher.combine(review)
 				hasher.combine(id)
 			case .personIdentity(let personIdentity, let id):
 				hasher.combine(personIdentity)
@@ -470,6 +595,8 @@ extension CharacterDetailsCollectionViewController {
 			switch (lhs, rhs) {
 			case (.character(let character1, let id1), .character(let character2, let id2)):
 				return character1 == character2 && id1 == id2
+			case (.review(let review1, let id1), .review(let review2, let id2)):
+				return review1 == review2 && id1 == id2
 			case (.personIdentity(let personIdentity1, let id1), .personIdentity(let personIdentity2, let id2)):
 				return personIdentity1 == personIdentity2 && id1 == id2
 			case (.showIdentity(let showIdentity1, let id1), .showIdentity(let showIdentity2, let id2)):

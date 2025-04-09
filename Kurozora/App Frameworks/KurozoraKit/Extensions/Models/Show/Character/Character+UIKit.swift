@@ -81,4 +81,32 @@ extension Character {
 
 		viewController?.present(activityViewController, animated: true, completion: nil)
 	}
+
+	/// Rate the character with the given rating.
+	///
+	/// - Parameters:
+	///    - rating: The rating given by the user.
+	///    - description: The review given by the user.
+	///
+	/// - Returns: the rating applied to the character if rated successfully.
+	func rate(using rating: Double, description: String?) async -> Double? {
+		let characterIdentity = CharacterIdentity(id: self.id)
+
+		do {
+			_ = try await KService.rateCharacter(characterIdentity, with: rating, description: description).value
+
+			// Update current crating for the user.
+			self.attributes.givenRating = rating
+
+			// Update review only if the user removes it explicitly.
+			if description != nil {
+				self.attributes.givenReview = description
+			}
+
+			return rating
+		} catch {
+			print(error.localizedDescription)
+			return nil
+		}
+	}
 }

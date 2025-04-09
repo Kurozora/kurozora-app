@@ -11,20 +11,34 @@ import UIKit
 extension CharacterDetailsCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
+		var columnCount = 1
 
 		switch self.snapshot.sectionIdentifiers[section] {
 		case .header, .about:
 			return 1
+		case .rating:
+			let columnCount = (width / 250).rounded().int
+			return columnCount >= 3 ? 3 : 2
+		case .rateAndReview:
+			if UIDevice.isPhone {
+				return 1
+			}
+			return width > 414 ? 2 : 1
+		case .reviews:
+			columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
+		case .information:
+			columnCount = width >= 414 ? (width / 200).rounded().int : (width / 160).rounded().int
+			return columnCount > 0 ? columnCount : 2
 		case .shows, .literatures, .games:
-			let columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
-			return columnCount > 0 ? columnCount : 1
+			columnCount = width >= 414 ? (width / 384).rounded().int : (width / 284).rounded().int
+			if columnCount > 5 {
+				return 5
+			}
 		case .people:
-			let columnCount = (width / 140.0).rounded().int
-			return columnCount > 0 ? columnCount : 1
-		default:
-			let columnCount = (width / 374).rounded().int
-			return columnCount > 0 ? columnCount : 1
+			columnCount = (width / 140.0).rounded().int
 		}
+
+		return columnCount > 0 ? columnCount : 1
 	}
 
 	func heightDimension(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutDimension {
@@ -33,6 +47,8 @@ extension CharacterDetailsCollectionViewController {
 			return .estimated(230)
 		case .about:
 			return .estimated(20)
+		case .rating:
+			return .absolute(88)
 		case .information:
 			return .estimated(55)
 		default:
@@ -69,6 +85,18 @@ extension CharacterDetailsCollectionViewController {
 					let fullSection = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 					sectionLayout = fullSection
 					hasSectionHeader = true
+				}
+			case .rating:
+				let ratingSection = Layouts.ratingSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				sectionLayout = ratingSection
+				hasSectionHeader = true
+			case .rateAndReview:
+				let fullSection = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				sectionLayout = fullSection
+				hasSectionHeader = true
+			case .reviews:
+				if !self.reviews.isEmpty {
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				}
 			case .information:
 				let gridSection = Layouts.gridSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
