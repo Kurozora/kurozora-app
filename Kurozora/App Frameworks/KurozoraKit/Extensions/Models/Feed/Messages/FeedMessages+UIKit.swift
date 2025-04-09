@@ -129,11 +129,7 @@ extension FeedMessage {
 				// Delete action
 				let deleteAction = UIAction(title: Trans.deleteMessage, attributes: .destructive) { [weak self] _ in
 					guard let self = self else { return }
-					if let indexPath = userInfo["indexPath"] as? IndexPath {
-						Task {
-							await self.remove(at: indexPath)
-						}
-					}
+					self.confirmDelete(via: viewController, userInfo: userInfo)
 				}
 				deleteMenuElements.append(deleteAction)
 
@@ -376,7 +372,7 @@ extension FeedMessage {
 	/// Remove the feed message from the user's messages list.
 	///
 	/// - Parameter indexPath: The index path of the message.
-	func remove(at indexPath: IndexPath) async {
+	private func remove(at indexPath: IndexPath) async {
 		do {
 			_ = try await KService.deleteMessage(self.id).value
 
@@ -387,8 +383,8 @@ extension FeedMessage {
 	}
 
 	/// Confirm if the user wants to delete the message.
-	func confirmDelete(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any?]) {
-		let actionSheetAlertController = UIAlertController.actionSheet(title: nil, message: Trans.deleteMessageSubheadline) { [weak self] actionSheetAlertController in
+	private func confirmDelete(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any?]) {
+		let actionSheetAlertController = UIAlertController.alert(title: nil, message: Trans.deleteMessageSubheadline) { [weak self] alertController in
 			guard let self = self else { return }
 
 			let deleteAction = UIAlertAction(title: Trans.deleteMessage, style: .destructive) { _ in
@@ -398,9 +394,7 @@ extension FeedMessage {
 					}
 				}
 			}
-			deleteAction.setValue(UIImage(systemName: "trash"), forKey: "image")
-			deleteAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-			actionSheetAlertController.addAction(deleteAction)
+			alertController.addAction(deleteAction)
 		}
 
 		if let popoverController = actionSheetAlertController.popoverPresentationController {
@@ -410,7 +404,9 @@ extension FeedMessage {
 			}
 		}
 
-		viewController?.present(actionSheetAlertController, animated: true, completion: nil)
+		if (viewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
+			viewController?.present(actionSheetAlertController, animated: true, completion: nil)
+		}
 	}
 
 	/// Presents the details view of the message.
