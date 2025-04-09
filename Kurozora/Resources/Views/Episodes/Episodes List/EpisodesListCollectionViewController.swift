@@ -249,11 +249,14 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 	/// - Parameters:
 	///    - notification: An object containing information broadcast to registered observers that bridges to Notification.
 	@objc func handleEpisodeWatchStatusDidUpdate(_ notification: NSNotification) {
-		guard let indexPath = notification.userInfo?["indexPath"] as? IndexPath, let selectedEpisode = self.dataSource.itemIdentifier(for: indexPath) else { return }
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			guard let indexPath = notification.userInfo?["indexPath"] as? IndexPath, let selectedEpisode = self.dataSource.itemIdentifier(for: indexPath) else { return }
 
-		var newSnapshot = self.dataSource.snapshot()
-		newSnapshot.reloadItems([selectedEpisode])
-		self.dataSource.apply(newSnapshot)
+			var newSnapshot = self.dataSource.snapshot()
+			newSnapshot.reloadItems([selectedEpisode])
+			self.dataSource.apply(newSnapshot)
+		}
 	}
 
 	/// Goes to the first item in the presented collection view.
