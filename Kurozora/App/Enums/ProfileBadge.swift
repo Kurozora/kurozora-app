@@ -55,7 +55,7 @@ enum ProfileBadge {
 		case .subscriber(let username, let subscribedAt):
 			return "\(username) is a Kurozora+ subscriber since \(subscribedAt.formatted(date: .abbreviated, time: .omitted))."
 		case .verified(let username):
-			return "\(username) is verified because it’s notable in animators, voice actors, entertainment studios, or another designated category."
+			return "\(username) is verified because they are notable in animators, voice actors, entertainment studios, or another designated category."
 		}
 	}
 
