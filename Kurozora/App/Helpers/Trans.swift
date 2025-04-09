@@ -476,6 +476,44 @@ struct Trans {
 											  table: "Feed",
 											  comment: "The string for the 'Report Message' context menu option.")
 
+	// MARK: - Review
+	/// The headline string for the report review pop-up.
+	///
+	/// - Tag: Trans-reviewReportedHeadline
+	static let reviewReportedHeadline: String = String(localized: "Review Reported",
+													   table: "Review",
+													   comment: "The headline string for the report review pop-up")
+	/// The subheadline string for the report review pop-up.
+	///
+	/// - Tag: Trans-reviewReportedSubheadline
+	static let reviewReportedSubheadline: String = String(localized: "Thank you for helping keep the community safe.",
+														  table: "Review",
+														  comment: "The subheadline string for the report review pop-up")
+	/// The subheadline string for the delete review pop-up.
+	///
+	/// - Tag: Trans-deleteReviewSubheadline
+	static let deleteReviewSubheadline: String = String(localized: "Review will be deleted permanently.",
+														table: "Review",
+														comment: "The subheadline string for the delete review pop-up")
+	/// The string for the 'Delete Review' context menu option.
+	///
+	/// - Tag: Trans-deleteReview
+	static let deleteReview: String = String(localized: "Delete Review",
+											 table: "Review",
+											 comment: "The string for the 'Delete Review' context menu option.")
+	/// The string for the 'Share Review' context menu option.
+	///
+	/// - Tag: Trans-shareReview
+	static let shareReview: String = String(localized: "Share Review",
+											table: "Review",
+											comment: "The string for the 'Share Review' context menu option.")
+	/// The string for the 'Report Review' context menu option.
+	///
+	/// - Tag: Trans-reportReview
+	static let reportReview: String = String(localized: "Report Review",
+											 table: "Review",
+											 comment: "The string for the 'Report Review' context menu option.")
+
 	// MARK: - Theme
 	/// The string for default theme description.
 	///
@@ -576,6 +614,14 @@ struct Trans {
 											   table: "Browse",
 											   comment: "The string for the 'advanced search' browse option.")
 
+	// MARK: - Episode
+	/// The string for the 'see also' section.
+	///
+	/// - Tag: Trans-seeAlso
+	static let seeAlso: String = String(localized: "See Also",
+									 table: "Episode",
+									 comment: "The string for the 'see also' section.")
+
 	// MARK: - Notification
 	/// The string for the 'view sessions' notification action.
 	///
@@ -633,6 +679,18 @@ struct Trans {
 	static let ratingSubmitted: String = String(localized: "Rating Submitted",
 												table: "Rating",
 												comment: "The string for the 'rating submitted' section.")
+	/// The string for the rating failed title.
+	///
+	/// - Tag: Trans-ratingFailed
+	static let ratingFailed: String = String(localized: "Rating Failed",
+											 table: "Rating",
+											 comment: "The string for the 'rating failed' section.")
+	/// The string for can't save review description.
+	///
+	/// - Tag: Trans-cantSaveReview
+	static let cantSaveReview: String = String(localized: "Can’t Save Review 😔",
+											   table: "Rating",
+											   comment: "The string for can't save review description.")
 	/// The string for the rating submitted description.
 	///
 	/// - Tag: Trans-thankYouForRating
@@ -1166,6 +1224,21 @@ struct Trans {
 	/// - Tag: Trans-markAllUnwatched
 	static let markAllUnwatched: String = String(localized: "Mark All Unwatched",
 												 comment: "The string for the phrase 'mark all unwatched'.")
+	/// The string for the word 'next'.
+	///
+	/// - Tag: Trans-next
+	static let next: String = String(localized: "Next",
+									 comment: "The string for the word 'next'.")
+	/// The string for the word 'previous'.
+	///
+	/// - Tag: Trans-previous
+	static let previous: String = String(localized: "Previous",
+										 comment: "The string for the word 'previous'.")
+	/// The string for the word 'chart'.
+	///
+	/// - Tag: Trans-chart
+	static let chart: String = String(localized: "Chart",
+									  comment: "The string for the word 'chart'.")
 	/// The string for the word 'anime'.
 	///
 	/// - Tag: Trans-anime

@@ -93,7 +93,7 @@ extension LiteratureDetail {
 			case .season:
 				return Trans.season
 			case .rank:
-				return "Chart" // e.g. Thriller — literature.attributes.popularity.genre
+				return Trans.chart // e.g. Thriller — literature.attributes.popularity.genre
 			case .tvRating:
 				return "Rated"
 			case .studio:

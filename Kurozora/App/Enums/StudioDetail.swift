@@ -76,7 +76,7 @@ extension StudioDetail {
 				let ratingCount = studio?.attributes.stats?.ratingCount ?? 0
 				return ratingCount != 0 ? "\(ratingCount.kkFormatted) Ratings" : "Not enough ratings"
 			case .rank:
-				return "Chart"
+				return Trans.chart
 			case .tvRating:
 				return "Rated"
 			case .successor:

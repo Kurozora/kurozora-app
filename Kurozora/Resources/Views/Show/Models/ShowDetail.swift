@@ -93,7 +93,7 @@ extension ShowDetail {
 			case .season:
 				return Trans.season
 			case .rank:
-				return "Chart" // e.g. Thriller — show.attributes.popularity.genre
+				return Trans.chart // e.g. Thriller — show.attributes.popularity.genre
 			case .tvRating:
 				return "Rated"
 			case .studio:
