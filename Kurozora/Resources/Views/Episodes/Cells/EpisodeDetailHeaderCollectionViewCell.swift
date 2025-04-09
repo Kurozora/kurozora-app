@@ -40,6 +40,9 @@ extension EpisodeDetailHeaderCollectionViewCell {
 		NotificationCenter.default.removeObserver(self, name: .KEpisodeWatchStatusDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(handleWatchStatusUpdate(_:)), name: .KEpisodeWatchStatusDidUpdate, object: nil)
 
+		// Configure visual effect
+		self.visualEffectView.layerCornerRadius = 10.0
+
 		// Configure watch status button
 		self.configureWatchButton(with: self.episode.attributes.watchStatus)
 
