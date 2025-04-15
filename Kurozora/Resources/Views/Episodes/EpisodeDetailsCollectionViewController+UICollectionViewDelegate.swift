@@ -19,8 +19,8 @@ extension EpisodeDetailsCollectionViewController {
 				collectionView.safeScrollToItem(at: IndexPath(row: 0, section: sectionIndex), at: .centeredVertically, animated: true)
 				return
 			case .season:
-				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }
-				self.performSegue(withIdentifier: R.segue.episodeDetailsCollectionViewController.seasonsListSegue.identifier, sender: indexPath)
+				guard let seasonIdentity = self.episode.relationships?.seasons?.data.first else { return }
+				self.performSegue(withIdentifier: R.segue.episodeDetailsCollectionViewController.seasonsListSegue.identifier, sender: seasonIdentity)
 				return
 			case .rank:
 				guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }

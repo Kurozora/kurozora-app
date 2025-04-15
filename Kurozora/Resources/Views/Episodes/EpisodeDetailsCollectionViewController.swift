@@ -130,7 +130,7 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		NotificationCenter.default.addObserver(self, selector: #selector(self.updateEpisodes(_:)), name: .KEpisodeWatchStatusDidUpdate, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleEpisodeWatchStatusDidUpdate(_:)), name: .KEpisodeWatchStatusDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.deleteReview(_:)), name: .KReviewDidDelete, object: nil)
 	}
 
@@ -202,13 +202,22 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 		}
 	}
 
-	/// Update the episodes list.
+	/// Handles the episode watch status update notification.
 	///
-	/// - Parameter notification: An object containing information broadcast to registered observers that bridges to Notification.
-	@objc func updateEpisodes(_ notification: NSNotification) {
+	/// - Parameters:
+	///    - notification: An object containing information broadcast to registered observers that bridges to Notification.
+	@objc func handleEpisodeWatchStatusDidUpdate(_ notification: NSNotification) {
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
-			self.snapshot.reloadSections([.header])
+
+			if let indexPath = notification.userInfo?["indexPath"] as? IndexPath, let selectedEpisode = self.dataSource.itemIdentifier(for: indexPath) {
+				var newSnapshot = self.dataSource.snapshot()
+				newSnapshot.reloadItems([selectedEpisode])
+				self.dataSource.apply(newSnapshot)
+			} else {
+				self.snapshot.reloadSections([.header])
+			}
+
 			self.configureNavBarButtons()
 		}
 	}
