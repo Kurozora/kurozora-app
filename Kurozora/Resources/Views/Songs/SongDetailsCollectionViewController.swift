@@ -11,7 +11,7 @@ import KurozoraKit
 import Alamofire
 import MusicKit
 
-class SongDetailsCollectionViewController: KCollectionViewController {
+class SongDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable {
 	// MARK: - IBOutlets
 	@IBOutlet weak var moreButton: UIBarButtonItem!
 
@@ -192,15 +192,6 @@ class SongDetailsCollectionViewController: KCollectionViewController {
 		}
 	}
 
-	/// Show a success alert thanking the user for rating.
-	private func showRatingSuccessAlert() {
-		let alertController = UIApplication.topViewController?.presentAlertController(title: Trans.ratingSubmitted, message: Trans.thankYouForRating)
-
-		DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-			alertController?.dismiss(animated: true, completion: nil)
-		}
-	}
-
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
@@ -361,11 +352,17 @@ extension SongDetailsCollectionViewController: TapToRateCollectionViewCellDelega
 	func tapToRateCollectionViewCell(_ cell: TapToRateCollectionViewCell, rateWith rating: Double) {
 		Task { [weak self] in
 			guard let self = self else { return }
-			let rating = await self.song.rate(using: rating, description: nil)
-			cell.configure(using: rating)
 
-			if rating != nil {
-				self.showRatingSuccessAlert()
+			do throws(KKAPIError) {
+				let rating = try await self.song.rate(using: rating, description: nil)
+				cell.configure(using: rating)
+
+				if rating != nil {
+					self.showRatingSuccessAlert()
+				}
+			} catch {
+				print(error.localizedDescription)
+				self.showRatingFailureAlert(message: error.message)
 			}
 		}
 	}

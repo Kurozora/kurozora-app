@@ -10,7 +10,7 @@ import UIKit
 import KurozoraKit
 import Alamofire
 
-class PersonDetailsCollectionViewController: KCollectionViewController {
+class PersonDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable {
 	// MARK: - Properties
 	var personIdentity: PersonIdentity? = nil
 	var person: Person! {
@@ -234,15 +234,6 @@ class PersonDetailsCollectionViewController: KCollectionViewController {
 		}
 	}
 
-	/// Show a success alert thanking the user for rating.
-	private func showRatingSuccessAlert() {
-		let alertController = UIApplication.topViewController?.presentAlertController(title: Trans.ratingSubmitted, message: Trans.thankYouForRating)
-
-		DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-			alertController?.dismiss(animated: true, completion: nil)
-		}
-	}
-
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
@@ -430,11 +421,17 @@ extension PersonDetailsCollectionViewController: TapToRateCollectionViewCellDele
 	func tapToRateCollectionViewCell(_ cell: TapToRateCollectionViewCell, rateWith rating: Double) {
 		Task { [weak self] in
 			guard let self = self else { return }
-			let rating = await self.person.rate(using: rating, description: nil)
-			cell.configure(using: rating)
 
-			if rating != nil {
-				self.showRatingSuccessAlert()
+			do throws(KKAPIError) {
+				let rating = try await self.person.rate(using: rating, description: nil)
+				cell.configure(using: rating)
+
+				if rating != nil {
+					self.showRatingSuccessAlert()
+				}
+			} catch {
+				print(error.localizedDescription)
+				self.showRatingFailureAlert(message: error.message)
 			}
 		}
 	}

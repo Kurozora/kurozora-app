@@ -20,7 +20,7 @@ enum ReviewsListType {
 	case episode(_ episode: Episode)
 }
 
-class ReviewsCollectionViewController: KCollectionViewController {
+class ReviewsCollectionViewController: KCollectionViewController, RatingAlertPresentable {
 	// MARK: - Properties
 	var listType: ReviewsListType?
 	var reviews: [Review] = []
@@ -224,24 +224,6 @@ class ReviewsCollectionViewController: KCollectionViewController {
 			}
 
 			self.updateDataSource()
-		}
-	}
-
-	/// Show a success alert thanking the user for rating.
-	private func showRatingSuccessAlert() {
-		let alertController = UIApplication.topViewController?.presentAlertController(title: Trans.ratingSubmitted, message: Trans.thankYouForRating)
-
-		DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-			alertController?.dismiss(animated: true, completion: nil)
-		}
-	}
-
-	/// Show a failu
-	private func showRatingFailureAlert(message: String) {
-		let alertController = UIApplication.topViewController?.presentAlertController(title: Trans.ratingFailed, message: message)
-
-		DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-			alertController?.dismiss(animated: true, completion: nil)
 		}
 	}
 

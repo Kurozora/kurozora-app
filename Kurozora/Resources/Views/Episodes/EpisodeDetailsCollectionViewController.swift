@@ -9,7 +9,7 @@
 import UIKit
 import KurozoraKit
 
-class EpisodeDetailsCollectionViewController: KCollectionViewController {
+class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable {
 	@IBOutlet weak var moreBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Properties
@@ -226,26 +226,6 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController {
 		}
 	}
 
-	/// Show a success alert thanking the user for rating.
-	private func showRatingSuccessAlert() {
-		let alertController = UIApplication.topViewController?.presentAlertController(title: Trans.ratingSubmitted, message: Trans.thankYouForRating)
-
-		DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-			alertController?.dismiss(animated: true, completion: nil)
-		}
-	}
-
-	/// Show an alert informing the user that the rating failed.
-	///
-	/// - Parameter message: The message to display in the alert.
-	private func showRatingFailedAlert(message: String) {
-		let alertController = UIApplication.topViewController?.presentAlertController(title: Trans.ratingFailed, message: message)
-
-		DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-			alertController?.dismiss(animated: true, completion: nil)
-		}
-	}
-
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
@@ -372,6 +352,7 @@ extension EpisodeDetailsCollectionViewController: TapToRateCollectionViewCellDel
 	func tapToRateCollectionViewCell(_ cell: TapToRateCollectionViewCell, rateWith rating: Double) {
 		Task { [weak self] in
 			guard let self = self else { return }
+
 			do throws(KKAPIError) {
 				let rating = try await self.episode.rate(using: rating, description: nil)
 				cell.configure(using: rating)
@@ -380,7 +361,8 @@ extension EpisodeDetailsCollectionViewController: TapToRateCollectionViewCellDel
 					self.showRatingSuccessAlert()
 				}
 			} catch {
-				self.showRatingFailedAlert(message: error.message)
+				cell.configure(using: nil)
+				self.showRatingFailureAlert(message: error.message)
 			}
 		}
 	}

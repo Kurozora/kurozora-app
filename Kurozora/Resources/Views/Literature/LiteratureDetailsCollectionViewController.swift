@@ -13,7 +13,7 @@ import AVFoundation
 import Intents
 import IntentsUI
 
-class LiteratureDetailsCollectionViewController: KCollectionViewController {
+class LiteratureDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable {
 	// MARK: - IBOutlets
 	@IBOutlet weak var moreBarButtonItem: UIBarButtonItem!
 	@IBOutlet weak var navigationTitleView: UIView!
@@ -292,15 +292,6 @@ class LiteratureDetailsCollectionViewController: KCollectionViewController {
 			self.literature.attributes.library?.review = nil
 
 			self.updateDataSource()
-		}
-	}
-
-	/// Show a success alert thanking the user for rating.
-	private func showRatingSuccessAlert() {
-		let alertController = UIApplication.topViewController?.presentAlertController(title: Trans.ratingSubmitted, message: Trans.thankYouForRating)
-
-		DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-			alertController?.dismiss(animated: true, completion: nil)
 		}
 	}
 
@@ -586,11 +577,17 @@ extension LiteratureDetailsCollectionViewController: TapToRateCollectionViewCell
 	func tapToRateCollectionViewCell(_ cell: TapToRateCollectionViewCell, rateWith rating: Double) {
 		Task { [weak self] in
 			guard let self = self else { return }
-			let rating = await self.literature.rate(using: rating, description: nil)
-			cell.configure(using: rating)
 
-			if rating != nil {
-				self.showRatingSuccessAlert()
+			do throws(KKAPIError) {
+				let rating = try await self.literature.rate(using: rating, description: nil)
+				cell.configure(using: rating)
+
+				if rating != nil {
+					self.showRatingSuccessAlert()
+				}
+			} catch {
+				print(error.localizedDescription)
+				self.showRatingFailureAlert(message: error.message)
 			}
 		}
 	}

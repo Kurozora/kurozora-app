@@ -673,12 +673,6 @@ struct Trans {
 											  comment: "The string for the 'library import' notification type")
 
 	// MARK: - Rating
-	/// The string for the rating submitted title.
-	///
-	/// - Tag: Trans-ratingSubmitted
-	static let ratingSubmitted: String = String(localized: "Rating Submitted",
-												table: "Rating",
-												comment: "The string for the 'rating submitted' section.")
 	/// The string for the rating failed title.
 	///
 	/// - Tag: Trans-ratingFailed
@@ -935,6 +929,11 @@ struct Trans {
 											  comment: "The footer string for the haptics settings option.")
 
 	// MARK: - Misc
+	/// The string for the word 'submitted'.
+	///
+	/// - Tag: Trans-submitted
+	static let submitted: String = String(localized: "Submitted",
+										  comment: "The string for the word 'submitted'.")
 	/// The string for the word 'add'.
 	///
 	/// - Tag: Trans-add

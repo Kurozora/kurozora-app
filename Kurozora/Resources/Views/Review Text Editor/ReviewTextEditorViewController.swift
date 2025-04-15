@@ -230,7 +230,7 @@ extension ReviewTextEditorViewController: ReviewTextEditorDisplayLogic {
 	}
 
 	func displayAlert(viewModel: ReviewTextEditor.Alert.ViewModel) {
-		self.presentAlertController(title: "Can’t Save Review 😔", message: viewModel.message)
+		self.presentAlertController(title: Trans.cantSaveReview, message: viewModel.message)
 	}
 }
 

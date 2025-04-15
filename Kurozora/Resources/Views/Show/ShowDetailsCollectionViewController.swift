@@ -13,7 +13,7 @@ import AVFoundation
 import Intents
 import IntentsUI
 
-class ShowDetailsCollectionViewController: KCollectionViewController {
+class ShowDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable {
 	// MARK: - IBOutlets
 	@IBOutlet weak var moreBarButtonItem: UIBarButtonItem!
 	@IBOutlet weak var navigationTitleView: UIView!
@@ -324,15 +324,6 @@ class ShowDetailsCollectionViewController: KCollectionViewController {
 		}
 	}
 
-	/// Show a success alert thanking the user for rating.
-	private func showRatingSuccessAlert() {
-		let alertController = UIApplication.topViewController?.presentAlertController(title: Trans.ratingSubmitted, message: Trans.thankYouForRating)
-
-		DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-			alertController?.dismiss(animated: true, completion: nil)
-		}
-	}
-
 	@objc func toggleFavorite() {
 		self.show?.toggleFavorite()
 	}
@@ -639,11 +630,17 @@ extension ShowDetailsCollectionViewController: TapToRateCollectionViewCellDelega
 	func tapToRateCollectionViewCell(_ cell: TapToRateCollectionViewCell, rateWith rating: Double) {
 		Task { [weak self] in
 			guard let self = self else { return }
-			let rating = await self.show.rate(using: rating, description: nil)
-			cell.configure(using: rating)
 
-			if rating != nil {
-				self.showRatingSuccessAlert()
+			do throws(KKAPIError) {
+				let rating = try await self.show.rate(using: rating, description: nil)
+				cell.configure(using: rating)
+
+				if rating != nil {
+					self.showRatingSuccessAlert()
+				}
+			} catch {
+				print(error.localizedDescription)
+				self.showRatingFailureAlert(message: error.message)
 			}
 		}
 	}

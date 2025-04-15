@@ -10,7 +10,7 @@ import UIKit
 import KurozoraKit
 import Alamofire
 
-class StudioDetailsCollectionViewController: KCollectionViewController {
+class StudioDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable {
 	// MARK: - Properties
 	var studioIdentity: StudioIdentity? = nil
 	var studio: Studio! {
@@ -207,15 +207,6 @@ class StudioDetailsCollectionViewController: KCollectionViewController {
 		}
 	}
 
-	/// Show a success alert thanking the user for rating.
-	private func showRatingSuccessAlert() {
-		let alertController = UIApplication.topViewController?.presentAlertController(title: Trans.ratingSubmitted, message: Trans.thankYouForRating)
-
-		DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-			alertController?.dismiss(animated: true, completion: nil)
-		}
-	}
-
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		switch segue.identifier {
@@ -406,11 +397,17 @@ extension StudioDetailsCollectionViewController: TapToRateCollectionViewCellDele
 	func tapToRateCollectionViewCell(_ cell: TapToRateCollectionViewCell, rateWith rating: Double) {
 		Task { [weak self] in
 			guard let self = self else { return }
-			let rating = await self.studio.rate(using: rating, description: nil)
-			cell.configure(using: rating)
 
-			if rating != nil {
-				self.showRatingSuccessAlert()
+			do throws(KKAPIError) {
+				let rating = try await self.studio.rate(using: rating, description: nil)
+				cell.configure(using: rating)
+
+				if rating != nil {
+					self.showRatingSuccessAlert()
+				}
+			} catch {
+				print(error.localizedDescription)
+				self.showRatingFailureAlert(message: error.message)
 			}
 		}
 	}
