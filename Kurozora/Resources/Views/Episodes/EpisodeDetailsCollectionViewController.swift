@@ -11,12 +11,19 @@ import KurozoraKit
 
 class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingAlertPresentable {
 	@IBOutlet weak var moreBarButtonItem: UIBarButtonItem!
+	@IBOutlet weak var navigationTitleView: UIView!
+	@IBOutlet weak var navigationTitleLabel: UILabel! {
+		didSet {
+			self.navigationTitleLabel.theme_textColor = KThemePicker.barTitleTextColor.rawValue
+		}
+	}
 
 	// MARK: - Properties
 	var episodeIdentity: EpisodeIdentity? = nil
 	var episode: Episode! {
 		didSet {
 			self.title = self.episode.attributes.title
+			self.navigationTitleLabel.text = self.episode.attributes.title
 			self.episodeIdentity = EpisodeIdentity(id: self.episode.id)
 
 			self._prefersActivityIndicatorHidden = true
@@ -104,6 +111,8 @@ class EpisodeDetailsCollectionViewController: KCollectionViewController, RatingA
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		self.navigationTitleLabel.alpha = 0
 
 		#if DEBUG
 		self._prefersRefreshControlDisabled = false
@@ -326,6 +335,24 @@ extension EpisodeDetailsCollectionViewController: TextViewCollectionViewCellDele
 extension EpisodeDetailsCollectionViewController: TitleHeaderCollectionReusableViewDelegate {
 	func titleHeaderCollectionReusableView(_ reusableView: TitleHeaderCollectionReusableView, didPress button: UIButton) {
 		self.performSegue(withIdentifier: reusableView.segueID, sender: reusableView.indexPath)
+	}
+}
+
+// MARK: - UIScrollViewDelegate
+extension EpisodeDetailsCollectionViewController {
+	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		let navigationBar = self.navigationController?.navigationBar
+		let firstCell = self.collectionView.cellForItem(at: [0, 0])
+
+		let globalNavigationBarPositionY = navigationBar?.superview?.convert(navigationBar?.frame.origin ?? CGPoint(x: 0, y: 0), to: nil).y ?? .zero
+		let offset = scrollView.contentOffset.y
+		let firstCellHeight = firstCell?.frame.size.height ?? .zero
+
+		let percentage = offset / (firstCellHeight - globalNavigationBarPositionY)
+
+		if percentage.isFinite, percentage >= 0 {
+			self.navigationTitleLabel.alpha = percentage
+		}
 	}
 }
 
