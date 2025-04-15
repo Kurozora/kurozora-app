@@ -22,7 +22,11 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 	@IBOutlet weak var goToBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Properties
-	var season: Season? = nil
+	var season: Season? = nil {
+		didSet {
+			self.title = self.season?.attributes.title
+		}
+	}
 	var seasonIdentity: SeasonIdentity? = nil
 	var episodes: [IndexPath: Episode] = [:]
 	var episodeIdentities: [EpisodeIdentity] = []
