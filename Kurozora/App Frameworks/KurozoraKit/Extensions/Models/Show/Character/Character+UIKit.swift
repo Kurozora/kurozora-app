@@ -89,7 +89,7 @@ extension Character {
 	///    - description: The review given by the user.
 	///
 	/// - Returns: the rating applied to the character if rated successfully.
-	func rate(using rating: Double, description: String?) async -> Double? {
+	func rate(using rating: Double, description: String?) async throws(KKAPIError) -> Double? {
 		let characterIdentity = CharacterIdentity(id: self.id)
 
 		do {
@@ -104,6 +104,9 @@ extension Character {
 			}
 
 			return rating
+		} catch let error as KKAPIError {
+			print(error.localizedDescription)
+			throw error
 		} catch {
 			print(error.localizedDescription)
 			return nil

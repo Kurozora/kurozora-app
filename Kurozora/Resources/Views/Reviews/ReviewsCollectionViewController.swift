@@ -275,21 +275,21 @@ extension ReviewsCollectionViewController: TapToRateCollectionViewCellDelegate {
 			do throws(KKAPIError) {
 				switch self.listType {
 				case .character(let character):
-					newRating = await character.rate(using: rating, description: nil)
+					newRating = try await character.rate(using: rating, description: nil)
 				case .episode(let episode):
 					newRating = try await episode.rate(using: rating, description: nil)
 				case .game(let game):
-					newRating = await game.rate(using: rating, description: nil)
+					newRating = try await game.rate(using: rating, description: nil)
 				case .literature(let literature):
-					newRating = await literature.rate(using: rating, description: nil)
+					newRating = try await literature.rate(using: rating, description: nil)
 				case .person(let person):
-					newRating = await person.rate(using: rating, description: nil)
+					newRating = try await person.rate(using: rating, description: nil)
 				case .show(let show):
-					newRating = await show.rate(using: rating, description: nil)
+					newRating = try await show.rate(using: rating, description: nil)
 				case .song(let song):
-					newRating = await song.rate(using: rating, description: nil)
+					newRating = try await song.rate(using: rating, description: nil)
 				case .studio(let studio):
-					newRating = await studio.rate(using: rating, description: nil)
+					newRating = try await studio.rate(using: rating, description: nil)
 				case .none:
 					newRating = nil
 				}

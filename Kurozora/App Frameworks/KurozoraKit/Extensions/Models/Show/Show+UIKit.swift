@@ -236,7 +236,7 @@ extension Show {
 	///    - description: The review given by the user.
 	///
 	/// - Returns: the rating applied to the show if rated successfully.
-	func rate(using rating: Double, description: String?) async -> Double? {
+	func rate(using rating: Double, description: String?) async throws(KKAPIError) -> Double? {
 		guard await self.validateIsInLibrary() else { return nil }
 		let showIdentity = ShowIdentity(id: self.id)
 
@@ -252,6 +252,9 @@ extension Show {
 			}
 
 			return rating
+		} catch let error as KKAPIError {
+			print(error.localizedDescription)
+			throw error
 		} catch {
 			print(error.localizedDescription)
 			return nil

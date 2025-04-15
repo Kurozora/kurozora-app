@@ -80,28 +80,40 @@ extension ReviewTextEditorInteractor: ReviewTextEditorBusinessLogic {
 		var isSuccess: Bool = false
 		var message: String? = nil
 
-		switch self.kind {
-		case .episode(let episode):
-			let rating = await episode.rate(using: rating, description: self.review)
-			isSuccess = rating != nil
-		case .game(let game):
-			let rating = await game.rate(using: rating, description: self.review)
-			isSuccess = rating != nil
-		case .literature(let literature):
-			let rating = await literature.rate(using: rating, description: self.review)
-			isSuccess = rating != nil
-		case .show(let show):
-			let rating = await show.rate(using: rating, description: self.review)
-			isSuccess = rating != nil
-		case .song(let song):
-			let rating = await song.rate(using: rating, description: self.review)
-			isSuccess = rating != nil
-		case .studio(let studio):
-			let rating = await studio.rate(using: rating, description: self.review)
-			isSuccess = rating != nil
-		case .none:
+		do throws(KKAPIError) {
+			switch self.kind {
+			case .character(let character):
+				let rating = try await character.rate(using: rating, description: self.review)
+				isSuccess = rating != nil
+			case .episode(let episode):
+				let rating = try await episode.rate(using: rating, description: self.review)
+				isSuccess = rating != nil
+			case .game(let game):
+				let rating = try await game.rate(using: rating, description: self.review)
+				isSuccess = rating != nil
+			case .literature(let literature):
+				let rating = try await literature.rate(using: rating, description: self.review)
+				isSuccess = rating != nil
+			case .person(let person):
+				let rating = try await person.rate(using: rating, description: self.review)
+				isSuccess = rating != nil
+			case .show(let show):
+				let rating = try await show.rate(using: rating, description: self.review)
+				isSuccess = rating != nil
+			case .song(let song):
+				let rating = try await song.rate(using: rating, description: self.review)
+				isSuccess = rating != nil
+			case .studio(let studio):
+				let rating = try await studio.rate(using: rating, description: self.review)
+				isSuccess = rating != nil
+			case .none:
+				isSuccess = false
+				message = "No review kind was specified. Bad developer :O"
+			}
+		} catch {
+			print(error.localizedDescription)
 			isSuccess = false
-			message = "No review kind was specified. Bad developer :O"
+			message = error.message
 		}
 
 		if isSuccess == true {

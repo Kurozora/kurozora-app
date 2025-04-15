@@ -147,11 +147,9 @@ extension Episode {
 			// Update current rating for the user.
 			self.attributes.givenRating = rating
 
-			// Show a success alert thanking the user for rating.
-			let alertController = await UIApplication.topViewController?.presentAlertController(title: "Rating Submitted", message: "Thank you for rating.")
-
-			DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
-				alertController?.dismiss(animated: true, completion: nil)
+			// Update review only if the user removes it explicitly.
+			if description != nil {
+				self.attributes.givenReview = description
 			}
 
 			return rating
@@ -160,9 +158,8 @@ extension Episode {
 			throw error
 		} catch {
 			print(error.localizedDescription)
+			return nil
 		}
-
-		return nil
 	}
 
 	private func validateIsWatched() async -> Bool {
