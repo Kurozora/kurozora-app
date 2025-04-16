@@ -10,7 +10,7 @@ import AppIntents
 import SwiftUI
 
 @available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *)
-struct LaunchAppIntent: OpenIntent {
+struct LaunchAppIntent: OpenIntent, ControlConfigurationIntent {
 	static let title: LocalizedStringResource = "Launch Kurozora"
 	static let description = IntentDescription("Open Kurozora to your preferred page.")
 
@@ -34,9 +34,6 @@ struct LaunchAppIntent: OpenIntent {
 		return .result()
 	}
 }
-
-@available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *)
-extension LaunchAppIntent: ControlConfigurationIntent { }
 
 @available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *)
 enum LaunchAppEnum: String, AppEnum {

@@ -13,6 +13,7 @@ import Alamofire
 enum EpisodesListFetchType {
 	case season
 	case search
+	case upNext
 }
 
 class EpisodesListCollectionViewController: KCollectionViewController {
@@ -22,11 +23,7 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 	@IBOutlet weak var goToBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Properties
-	var season: Season? = nil {
-		didSet {
-			self.title = self.season?.attributes.title
-		}
-	}
+	var season: Season? = nil
 	var seasonIdentity: SeasonIdentity? = nil
 	var episodes: [IndexPath: Episode] = [:]
 	var episodeIdentities: [EpisodeIdentity] = []
@@ -103,6 +100,23 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 		#if !targetEnvironment(macCatalyst)
 		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh the episodes.")
 		#endif
+
+		// Configure title
+		switch self.episodesListFetchType {
+		case .season:
+			self.title = self.season?.attributes.title
+		case .search:
+			self.title = self.searchQuery
+		case .upNext:
+			self.title = "Up Next"
+		}
+
+		// Configure bar buttons
+		if #available(iOS 16.0, *) {
+			self.moreBarButtonItem.isHidden = self.episodesListFetchType != .season
+			self.fillerBarButtonItem.isHidden = self.episodesListFetchType != .season
+			self.goToBarButtonItem.isHidden = self.episodesListFetchType != .season
+		}
 
 		self.configureDataSource()
 
@@ -230,6 +244,22 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 			} catch {
 				print(error.localizedDescription)
 			}
+		case .upNext: break
+//			do {
+//				let upNextResponse = try await KService.getUpNextEpisodes(next: self.nextPageURL).value
+//
+//				// Reset data if necessary
+//				if self.nextPageURL == nil {
+//					self.episodeIdentities = []
+//				}
+//
+//				// Save next page url and append new data
+//				self.nextPageURL = upNextResponse.data.episodes?.next
+//				self.episodeIdentities.append(contentsOf: upNextResponse.data.episodes?.data ?? [])
+//				self.episodeIdentities.removeDuplicates()
+//			} catch {
+//				print(error.localizedDescription)
+//			}
 		}
 
 		self.endFetch()
