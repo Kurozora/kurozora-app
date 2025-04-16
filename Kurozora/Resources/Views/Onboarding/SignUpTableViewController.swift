@@ -15,7 +15,7 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 	@IBOutlet weak var selectButton: KButton!
 
 	// MARK: - Properties
-	lazy var imagePicker = UIImagePickerController()
+	private lazy var imagePickerManager = ImagePickerManager(presenter: self)
 	var originalProfileImage: UIImage! = UIImage() {
 		didSet {
 			self.editedProfileImage = self.originalProfileImage
@@ -35,29 +35,11 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 		super.viewDidLoad()
 
 		// Configure properties
-		self.originalProfileImage = #imageLiteral(resourceName: "Placeholders/User Profile")
+		self.originalProfileImage = self.placeholderImage()
 		self.accountOnboardingType = self.isSIWA ? .siwa : .signUp
 	}
 
 	// MARK: - Functions
-	/// Open the camera if the device has one, otherwise show a warning.
-	func openCamera() {
-		if UIImagePickerController.isSourceTypeAvailable(.camera) {
-			self.imagePicker.sourceType = .camera
-			self.imagePicker.delegate = self
-			self.present(self.imagePicker, animated: true, completion: nil)
-		} else {
-			self.presentAlertController(title: "Well, this is awkward.", message: "You don't seem to have a camera 😓")
-		}
-	}
-
-	/// Open the Photo Library so the user can choose an image.
-	func openPhotoLibrary() {
-		self.imagePicker.sourceType = .photoLibrary
-		self.imagePicker.delegate = self
-		self.present(self.imagePicker, animated: true, completion: nil)
-	}
-
 	/// Fetches the user's profile details.
 	func getProfileDetails() async {
 		do {
@@ -154,31 +136,7 @@ class SignUpTableViewController: AccountOnboardingTableViewController {
 	}
 
 	@IBAction func chooseImageButtonPressed(_ sender: UIButton) {
-		let actionSheetAlertController = UIAlertController.actionSheet(title: "Profile Photo", message: "Choose an awesome photo 😉") { [weak self] actionSheetAlertController in
-			guard let self = self else { return }
-			actionSheetAlertController.addAction(UIAlertAction(title: "Take a photo 📷", style: .default, handler: { _ in
-				self.openCamera()
-			}))
-
-			actionSheetAlertController.addAction(UIAlertAction(title: "Choose from Photo Library 🏛", style: .default, handler: { _ in
-				self.openPhotoLibrary()
-			}))
-
-			if !self.editedProfileImage.isEqual(to: #imageLiteral(resourceName: "Placeholders/User Profile")) {
-				actionSheetAlertController.addAction(UIAlertAction(title: Trans.remove, style: .destructive, handler: { _ in
-					self.profileImageView.image = #imageLiteral(resourceName: "Placeholders/User Profile")
-					self.editedProfileImage = self.profileImageView.image
-				}))
-			}
-
-			if let popoverController = actionSheetAlertController.popoverPresentationController {
-				popoverController.sourceView = sender
-				popoverController.sourceRect = sender.bounds
-				popoverController.permittedArrowDirections = .up
-			}
-		}
-
-		self.present(actionSheetAlertController, animated: true, completion: nil)
+		self.imagePickerManager.chooseImageButtonPressed(sender, showingRemoveAction: !self.editedProfileImage.isEqual(to: self.placeholderImage()))
 	}
 }
 
@@ -192,20 +150,33 @@ extension SignUpTableViewController {
 	}
 }
 
-// MARK: - UIImagePickerControllerDelegate
-extension SignUpTableViewController: UIImagePickerControllerDelegate {
-	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-		if let imageURL = info[.imageURL] as? URL, let originalImage = info[.originalImage] as? UIImage {
-			self.profileImageView.setImage(with: imageURL.absoluteString, placeholder: R.image.placeholders.userProfile()!)
-			self.editedProfileImage = originalImage
-			self.editedProfileImageURL = imageURL
-		}
-
-		// Dismiss the UIImagePicker after selection
-		picker.dismiss(animated: true, completion: nil)
+// MARK: - ImagePickerManagerDataSource
+extension SignUpTableViewController: ImagePickerManagerDataSource {
+	func imagePickerManagerTitle() -> String {
+		return "Profile Photo"
 	}
 
-	func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-		picker.dismiss(animated: true, completion: nil)
+	func imagePickerManagerSubtitle() -> String {
+		return "Choose a photo that represents you!"
+	}
+}
+
+// MARK: - ImagePickerManagerDelegate
+extension SignUpTableViewController: ImagePickerManagerDelegate {
+	func placeholderImage() -> UIImage {
+		#imageLiteral(resourceName: "Placeholders/User Profile")
+	}
+
+	func imagePickerManager(didFinishPicking imageURL: URL, image: UIImage) {
+		self.profileImageView.setImage(with: imageURL.absoluteString, placeholder: R.image.placeholders.userProfile()!)
+		self.editedProfileImage = image
+		self.editedProfileImageURL = imageURL
+	}
+
+	func imagePickerManagerDidRemovePickedImage() {
+		if !self.editedProfileImage.isEqual(to: self.placeholderImage()) {
+			self.profileImageView.image = self.placeholderImage()
+			self.editedProfileImage = self.profileImageView.image
+		}
 	}
 }

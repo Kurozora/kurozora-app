@@ -9,9 +9,22 @@
 import UIKit
 import KurozoraKit
 
+/// TextFieldTag is used to identify the text fields in the EditProfileViewController.
 enum TextFieldTag: Int {
+	/// Indicates the username text field.
 	case username
+	/// Indicates the nickname text field.
 	case nickname
+}
+
+/// ImageEditKind is used to determine which image view is currently being edited.
+enum ImageEditKind {
+	/// Indicates the profile image is being edited.
+	case profile
+	/// Indicates the banner image is being edited.
+	case banner
+	/// Indicates no image is being edited.
+	case none
 }
 
 class EditProfileViewController: KViewController {
@@ -36,7 +49,9 @@ class EditProfileViewController: KViewController {
 	// MARK: - Properties
 	var user: User! = User.current
 
-	var currentImageView: String = ""
+	private lazy var imagePickerManager = ImagePickerManager(presenter: self)
+
+	var imageEditKind: ImageEditKind = .none
 	var placeholderText = "Describe yourself!"
 
 	var originalUsernameText: String? = nil {
@@ -273,6 +288,22 @@ class EditProfileViewController: KViewController {
 	@IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
 		self.confirmCancel(showingUpdate: self.hasChanges)
 	}
+
+	/// Select the profile image.
+	///
+	/// - Parameter sender: The object requesting the selection of the profile image.
+	@IBAction func selectProfileImageButtonPressed(_ sender: UIButton) {
+		self.imageEditKind = .profile
+		self.imagePickerManager.chooseImageButtonPressed(sender, showingRemoveAction: !self.editedProfileImage.isEqual(to: self.placeholderImage()))
+	}
+
+	/// Select the banner image.
+	///
+	/// - Parameter sender: The object requesting the selection of the banner image.
+	@IBAction func selectBannerImageButtonPressed(_ sender: UIButton) {
+		self.imageEditKind = .banner
+		self.imagePickerManager.chooseImageButtonPressed(sender, showingRemoveAction: !self.editedBannerImage.isEqual(to: self.placeholderImage()))
+	}
 }
 
 // MARK: - Confgiure Views
@@ -305,146 +336,76 @@ extension EditProfileViewController {
 	}
 }
 
-// MARK: - UIImagePickerControllerDelegate
-extension EditProfileViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
-	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-		if self.currentImageView == "profile" {
-			if let originalImage = info[.originalImage] as? UIImage, let user = User.current {
-				self.editedProfileImage = originalImage
+// MARK: - ImagePickerManagerDataSource
+extension EditProfileViewController: ImagePickerManagerDataSource {
+	func imagePickerManagerTitle() -> String {
+		switch self.imageEditKind {
+		case .profile:
+			return "Profile Photo"
+		case .banner:
+			return "Banner Photo"
+		case .none:
+			return ""
+		}
+	}
 
-				if let imageURL = info[.imageURL] as? URL {
-					self.profileImageView.setImage(with: imageURL.absoluteString, placeholder: user.attributes.profilePlaceholderImage)
-					self.editedProfileImageURL = imageURL
-				} else {
-					// Create a temporary image path
-					let imageName = UUID().uuidString
-					let imageURL = FileManager.default.temporaryDirectory.appendingPathComponent(imageName, conformingTo: .image)
+	func imagePickerManagerSubtitle() -> String {
+		switch self.imageEditKind {
+		case .profile:
+			return "Choose a photo that represents you!"
+		case .banner:
+			return "Choose a breathtaking photo!"
+		case .none:
+			return ""
+		}
+	}
+}
 
-					// Save the image into the temporary path
-					let data = originalImage.jpegData(compressionQuality: 0.1)
-					try? data?.write(to: imageURL, options: [.atomic])
+// MARK: - ImagePickerManagerDelegate
+extension EditProfileViewController: ImagePickerManagerDelegate {
+	func placeholderImage() -> UIImage {
+		switch self.imageEditKind {
+		case .profile:
+			self.user.attributes.profilePlaceholderImage
+		case .banner:
+			self.user.attributes.bannerPlaceholderImage
+		case .none:
+			UIImage()
+		}
+	}
 
-					// Save the image path
-					self.profileImageView.setImage(with: imageURL.absoluteString, placeholder: user.attributes.profilePlaceholderImage)
-					self.editedProfileImageURL = imageURL
-				}
-			}
-		} else if self.currentImageView == "banner" {
-			if let originalImage = info[.originalImage] as? UIImage, let user = User.current {
-				self.editedBannerImage = originalImage
-
-				if let imageURL = info[.imageURL] as? URL {
-					self.bannerImageView.setImage(with: imageURL.absoluteString, placeholder: user.attributes.bannerPlaceholderImage)
-					self.editedBannerImageURL = imageURL
-				} else {
-					// Create a temporary image path
-					let imageName = UUID().uuidString
-					let imageURL = FileManager.default.temporaryDirectory.appendingPathComponent(imageName, conformingTo: .image)
-
-					// Save the image into the temporary path
-					let data = originalImage.jpegData(compressionQuality: 0.1)
-					try? data?.write(to: imageURL, options: [.atomic])
-
-					// Save the image path
-					self.bannerImageView.setImage(with: imageURL.absoluteString, placeholder: user.attributes.bannerPlaceholderImage)
-					self.editedBannerImageURL = imageURL
-				}
-			}
+	func imagePickerManager(didFinishPicking imageURL: URL, image: UIImage) {
+		switch self.imageEditKind {
+		case .profile:
+			self.profileImageView.setImage(with: imageURL.absoluteString, placeholder: self.user.attributes.profilePlaceholderImage)
+			self.editedProfileImageURL = imageURL
+		case .banner:
+			self.bannerImageView.setImage(with: imageURL.absoluteString, placeholder: self.user.attributes.bannerPlaceholderImage)
+			self.editedBannerImageURL = imageURL
+		case .none: break
 		}
 
 		// Reset selcted image view
-		self.currentImageView = ""
-
-		// Dismiss the UIImagePicker after selection
-		picker.dismiss(animated: true, completion: nil)
+		self.imageEditKind = .none
 	}
 
-	func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-		picker.dismiss(animated: true, completion: nil)
-	}
-
-	// MARK: - Functions
-	/// Open the camera if the device has one, otherwise show a warning.
-	func openCamera() {
-		if UIImagePickerController.isSourceTypeAvailable(.camera) {
-			let imagePicker = UIImagePickerController()
-			imagePicker.sourceType = .camera
-			imagePicker.delegate = self
-			self.present(imagePicker, animated: true, completion: nil)
-		} else {
-			self.presentAlertController(title: "Well, this is awkward.", message: "You don't seem to have a camera 😓")
-		}
-	}
-
-	/// Open the Photo Library so the user can choose an image.
-	func openPhotoLibrary() {
-		let imagePicker = UIImagePickerController()
-		imagePicker.sourceType = .photoLibrary
-		imagePicker.delegate = self
-		self.present(imagePicker, animated: true, completion: nil)
-	}
-
-	// MARK: - IBActions
-	@IBAction func selectProfileImageButtonPressed(_ sender: UIButton) {
-		self.currentImageView = "profile"
-
-		let actionSheetAlertController = UIAlertController.actionSheet(title: "Profile Photo", message: "Choose an awesome photo 😉") { [weak self] actionSheetAlertController in
-			guard let self = self else { return }
-			actionSheetAlertController.addAction(UIAlertAction(title: "Take a photo 📷", style: .default, handler: { _ in
-				self.openCamera()
-			}))
-
-			actionSheetAlertController.addAction(UIAlertAction(title: "Choose from Photo Library 🏛", style: .default, handler: { _ in
-				self.openPhotoLibrary()
-			}))
-
-			if !self.editedProfileImage.isEqual(to: self.user.attributes.profilePlaceholderImage) {
-				actionSheetAlertController.addAction(UIAlertAction(title: Trans.remove, style: .destructive, handler: { _ in
-					self.profileImageView.image = self.user.attributes.profilePlaceholderImage
-					self.editedProfileImage = self.profileImageView.image
-				}))
+	func imagePickerManagerDidRemovePickedImage() {
+		switch self.imageEditKind {
+		case .profile:
+			if !self.editedProfileImage.isEqual(to: self.placeholderImage()) {
+				self.profileImageView.image = self.placeholderImage()
+				self.editedProfileImage = self.profileImageView.image
 			}
-		}
-
-		// Present the controller
-		if let popoverController = actionSheetAlertController.popoverPresentationController {
-			popoverController.sourceView = sender
-			popoverController.sourceRect = sender.bounds
-			popoverController.permittedArrowDirections = .up
-		}
-
-		self.present(actionSheetAlertController, animated: true, completion: nil)
-	}
-
-	@IBAction func selectBannerImageButtonPressed(_ sender: UIButton) {
-		self.currentImageView = "banner"
-
-		let actionSheetAlertController = UIAlertController.actionSheet(title: "Banner Photo", message: "Choose a breathtaking photo 🌄") { [weak self] actionSheetAlertController in
-			guard let self = self else { return }
-			actionSheetAlertController.addAction(UIAlertAction(title: "Take a photo 📷", style: .default, handler: { _ in
-				self.openCamera()
-			}))
-
-			actionSheetAlertController.addAction(UIAlertAction(title: "Choose from Photo Library 🏛", style: .default, handler: { _ in
-				self.openPhotoLibrary()
-			}))
-
-			if !self.editedBannerImage.isEqual(to: self.user.attributes.bannerPlaceholderImage) {
-				actionSheetAlertController.addAction(UIAlertAction(title: Trans.remove, style: .destructive, handler: { _ in
-					self.bannerImageView.image = self.user.attributes.bannerPlaceholderImage
-					self.editedBannerImage = self.bannerImageView.image
-				}))
+		case .banner:
+			if !self.editedBannerImage.isEqual(to: self.placeholderImage()) {
+				self.bannerImageView.image = self.placeholderImage()
+				self.editedBannerImage = self.bannerImageView.image
 			}
+		case .none: break
 		}
 
-		// Present the controller
-		if let popoverController = actionSheetAlertController.popoverPresentationController {
-			popoverController.sourceView = sender
-			popoverController.sourceRect = sender.bounds
-			popoverController.permittedArrowDirections = .up
-		}
-
-		self.present(actionSheetAlertController, animated: true, completion: nil)
+		// Reset selcted image view
+		self.imageEditKind = .none
 	}
 }
 
