@@ -23,6 +23,7 @@ extension HomeCollectionViewController {
 	override func configureDataSource() {
 		let bannerCellConfiguration = self.getConfiguredBannerCell()
 		let characterCellConfiguration = self.getConfiguredCharacterCell()
+		let episodeCellConfiguration = self.getConfiguredEpisodeCell()
 		let gameCellConfiguration = self.getConfiguredGameCell()
 		let largeCellConfiguration = self.getConfiguredLargeCell()
 		let mediumCellConfiguration = self.getConfiguredMediumCell()
@@ -45,6 +46,8 @@ extension HomeCollectionViewController {
 				switch itemKind {
 				case .gameIdentity:
 					return collectionView.dequeueConfiguredReusableCell(using: gameCellConfiguration, for: indexPath, item: itemKind)
+				case .episodeIdentity:
+					return collectionView.dequeueConfiguredReusableCell(using: episodeCellConfiguration, for: indexPath, item: itemKind)
 				case .recap:
 					return collectionView.dequeueConfiguredReusableCell(using: recapCellConfiguration, for: indexPath, item: itemKind)
 				default:
@@ -67,8 +70,7 @@ extension HomeCollectionViewController {
 				default: return nil
 				}
 			case .episode:
-				return nil
-//				return collectionView.dequeueConfiguredReusableCell(using: episodCellConfiguration, for: indexPath, item: itemKind)
+				return collectionView.dequeueConfiguredReusableCell(using: episodeCellConfiguration, for: indexPath, item: itemKind)
 			case .music:
 				return collectionView.dequeueConfiguredReusableCell(using: musicCellConfiguration, for: indexPath, item: itemKind)
 			case .quickLinks:
@@ -253,7 +255,7 @@ extension HomeCollectionViewController {
 						return .gameIdentity(gameIdentity)
 					}
 				}
-			case .episodes:
+			case .episodes, .upNextEpisodes:
 				sectionHeader = .episode(exploreCategory)
 				if let episodes = exploreCategory.relationships.episodes?.data {
 					itemKinds = episodes.prefix(10).map { episodeIdentity in
@@ -340,6 +342,11 @@ extension HomeCollectionViewController {
 	func fetchLiterature(at indexPath: IndexPath) -> Literature? {
 		guard let literature = self.literatures[indexPath] else { return nil }
 		return literature
+	}
+
+	func fetchEpisode(at indexPath: IndexPath) -> Episode? {
+		guard let episode = self.episodes[indexPath] else { return nil }
+		return episode
 	}
 
 	func fetchGame(at indexPath: IndexPath) -> Game? {

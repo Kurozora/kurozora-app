@@ -12,7 +12,7 @@ import KurozoraKit
 extension HomeCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		switch self.dataSource.sectionIdentifier(for: indexPath.section) {
-		case .banner(let exploreCategory), .small(let exploreCategory), .medium(let exploreCategory), .large(let exploreCategory), .upcoming(let exploreCategory), .video(let exploreCategory), .profile(let exploreCategory), .music(let exploreCategory):
+		case .banner(let exploreCategory), .episode(let exploreCategory), .small(let exploreCategory), .medium(let exploreCategory), .large(let exploreCategory), .upcoming(let exploreCategory), .video(let exploreCategory), .profile(let exploreCategory), .music(let exploreCategory):
 			switch exploreCategory.attributes.exploreCategoryType {
 			case .shows, .mostPopularShows, .upcomingShows, .newShows:
 				let show = self.shows[indexPath]
@@ -23,9 +23,9 @@ extension HomeCollectionViewController {
 			case .games, .mostPopularGames, .upcomingGames, .newGames:
 				let game = self.games[indexPath]
 				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.gameDetailsSegue, sender: game)
-			case .episodes:
+			case .episodes, .upNextEpisodes:
 				let episode = self.episodes[indexPath]
-				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.episodeDetailsSegue, sender: episode)
+				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.episodeDetailsSegue, sender: [indexPath: episode])
 			case .genres:
 				let genre = self.genres[indexPath]
 				self.performSegue(withIdentifier: R.segue.homeCollectionViewController.exploreSegue, sender: genre)
@@ -62,7 +62,7 @@ extension HomeCollectionViewController {
 			return self.literatures[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .games, .upcomingGames, .mostPopularGames, .newGames:
 			return self.games[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
-		case .episodes:
+		case .episodes, .upNextEpisodes:
 			return self.episodes[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .songs:
 			guard let cell = collectionView.cellForItem(at: indexPath) as? MusicLockupCollectionViewCell else { return nil }

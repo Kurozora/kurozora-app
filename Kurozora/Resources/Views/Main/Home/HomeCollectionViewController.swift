@@ -120,6 +120,9 @@ class HomeCollectionViewController: KCollectionViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleEpisodeWatchStatusDidUpdate(_:)), name: .KEpisodeWatchStatusDidUpdate, object: nil)
+
 		// Add Refresh Control to Collection View
 		#if DEBUG
 		self._prefersRefreshControlDisabled = false
@@ -287,6 +290,22 @@ class HomeCollectionViewController: KCollectionViewController {
 		}
 	}
 
+	/// Handles the episode watch status update notification.
+	///
+	/// - Parameters:
+	///    - notification: An object containing information broadcast to registered observers that bridges to Notification.
+	@objc func handleEpisodeWatchStatusDidUpdate(_ notification: NSNotification) {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+
+			if let indexPath = notification.userInfo?["indexPath"] as? IndexPath, let selectedEpisode = self.dataSource.itemIdentifier(for: indexPath) {
+				var newSnapshot = self.dataSource.snapshot()
+				newSnapshot.reloadItems([selectedEpisode])
+				self.dataSource.apply(newSnapshot)
+			}
+		}
+	}
+
 	// MARK: - IBActions
 	@IBAction func profileButtonPressed(_ sender: UIButton) {
 		self.segueToProfile()
@@ -406,6 +425,21 @@ class HomeCollectionViewController: KCollectionViewController {
 			guard let recap = sender as? Recap else { return }
 			reCapCollectionViewController.year = recap.attributes.year
 			reCapCollectionViewController.month = recap.attributes.month
+		case R.segue.homeCollectionViewController.episodeDetailsSegue.identifier:
+			// Segue to episode details
+			guard let episodeDetailsCollectionViewController = segue.destination as? EpisodeDetailsCollectionViewController else { return }
+			guard let episodeDict = (sender as? [IndexPath: Episode])?.first else { return }
+			episodeDetailsCollectionViewController.indexPath = episodeDict.key
+			episodeDetailsCollectionViewController.episode = episodeDict.value
+		case R.segue.homeCollectionViewController.episodesListSegue.identifier:
+			// Segue to episodes list
+			guard let episodesListCollectionViewController = segue.destination as? EpisodesListCollectionViewController else { return }
+			if let seasonIdentity = sender as? SeasonIdentity {
+				episodesListCollectionViewController.seasonIdentity = seasonIdentity
+				episodesListCollectionViewController.episodesListFetchType = .season
+			} else {
+				episodesListCollectionViewController.episodesListFetchType = .upNext
+			}
 		default: break
 		}
 	}
@@ -490,9 +524,9 @@ extension HomeCollectionViewController: BaseLockupCollectionViewCellDelegate {
 								self.games[indexPath]?.attributes.library?.update(using: libraryUpdateResponse.data)
 							}
 
-							// Update edntry in library
+							// Update entry in library
 							cell.libraryStatus = .none
-							button.setTitle("ADD", for: .normal)
+							button.setTitle(Trans.add.uppercased(), for: .normal)
 
 							let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
 							NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
@@ -534,16 +568,16 @@ extension HomeCollectionViewController: EpisodeLockupCollectionViewCellDelegate 
 
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressShowButton button: UIButton) {
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		guard let show = self.episodes[indexPath]?.relationships?.shows?.data.first else { return }
+		guard let showIdentity = self.episodes[indexPath]?.relationships?.shows?.data.first else { return }
 
-		self.performSegue(withIdentifier: R.segue.homeCollectionViewController.showDetailsSegue, sender: show)
+		self.performSegue(withIdentifier: R.segue.homeCollectionViewController.showDetailsSegue, sender: showIdentity)
 	}
 
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressSeasonButton button: UIButton) {
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		guard let season = self.episodes[indexPath]?.relationships?.seasons?.data.first else { return }
+		guard let seasonIdentity = self.episodes[indexPath]?.relationships?.seasons?.data.first else { return }
 
-		self.performSegue(withIdentifier: R.segue.homeCollectionViewController.episodesListSegue, sender: season)
+		self.performSegue(withIdentifier: R.segue.homeCollectionViewController.episodesListSegue, sender: seasonIdentity)
 	}
 }
 
@@ -891,6 +925,34 @@ extension HomeCollectionViewController {
 
 				smallLockupCollectionViewCell.delegate = self
 				smallLockupCollectionViewCell.configure(using: literature)
+			default: break
+			}
+		}
+	}
+
+	func getConfiguredEpisodeCell() -> UICollectionView.CellRegistration<EpisodeLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<EpisodeLockupCollectionViewCell, ItemKind>(cellNib: UINib(resource: R.nib.episodeLockupCollectionViewCell)) { [weak self] episodeLockupCollectionViewCell, indexPath, itemKind in
+			guard let self = self else { return }
+
+			switch itemKind {
+			case .episodeIdentity(let episodeIdentity, _):
+				let episode = self.fetchEpisode(at: indexPath)
+
+				if episode == nil {
+					Task {
+						do {
+							let episodeResponse = try await KService.getDetails(forEpisode: episodeIdentity).value
+
+							self.episodes[indexPath] = episodeResponse.data.first
+							self.setItemKindNeedsUpdate(itemKind)
+						} catch {
+							print(error.localizedDescription)
+						}
+					}
+				}
+
+				episodeLockupCollectionViewCell.delegate = self
+				episodeLockupCollectionViewCell.configure(using: episode)
 			default: break
 			}
 		}
