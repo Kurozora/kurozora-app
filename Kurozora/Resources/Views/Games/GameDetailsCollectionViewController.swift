@@ -27,6 +27,7 @@ class GameDetailsCollectionViewController: KCollectionViewController, RatingAler
 	var gameIdentity: GameIdentity? = nil
 	var game: Game! {
 		didSet {
+			self.title = self.game.attributes.title
 			self.navigationTitleLabel.text = self.game.attributes.title
 			self.gameIdentity = GameIdentity(id: self.game.id)
 

@@ -27,6 +27,7 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 	var showIdentity: ShowIdentity? = nil
 	var show: Show! {
 		didSet {
+			self.title = self.show.attributes.title
 			self.navigationTitleLabel.text = self.show.attributes.title
 			self.showIdentity = ShowIdentity(id: self.show.id)
 

@@ -27,6 +27,7 @@ class LiteratureDetailsCollectionViewController: KCollectionViewController, Rati
 	var literatureIdentity: LiteratureIdentity? = nil
 	var literature: Literature! {
 		didSet {
+			self.title = self.literature.attributes.title
 			self.navigationTitleLabel.text = self.literature.attributes.title
 			self.literatureIdentity = LiteratureIdentity(id: self.literature.id)
 
