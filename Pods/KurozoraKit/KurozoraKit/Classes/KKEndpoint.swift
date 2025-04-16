@@ -89,7 +89,7 @@ extension KKEndpoint {
 
 // MARK: - Characters
 extension KKEndpoint {
-	/// The set of available Charactes API endpoints.
+	/// The set of available Characters API endpoints.
 	internal enum Characters {
 		// MARK: - Cases
 		/// The endpoint to the index of characters.
@@ -110,8 +110,17 @@ extension KKEndpoint {
 		/// The endpoint to the shows belonging to a character.
 		case shows(_ characterIdentity: CharacterIdentity)
 
+		/// The endpoint to the reviews belonging to a character.
+		case reviews(_ characterIdentity: CharacterIdentity)
+
+		/// The endpoint to leave a rating on a character.
+		case rate(_ characterIdentity: CharacterIdentity)
+
+		/// The endpoint to delete a character rating.
+		case deleteRating(_ characterIdentity: CharacterIdentity)
+
 		// MARK: - Properties
-		/// The endpoint value of the Charactes API type.
+		/// The endpoint value of the Characters API type.
 		var endpointValue: String {
 			switch self {
 			case .index:
@@ -126,6 +135,12 @@ extension KKEndpoint {
 				return "characters/\(characterIdentity.id)/literatures"
 			case .shows(let characterIdentity):
 				return "characters/\(characterIdentity.id)/anime"
+			case .reviews(let characterIdentity):
+				return "characters/\(characterIdentity.id)/reviews"
+			case .rate(let characterIdentity):
+				return "characters/\(characterIdentity.id)/rate"
+			case .deleteRating(let characterIdentity):
+				return "characters/\(characterIdentity.id)/rate"
 			}
 		}
 	}
@@ -136,8 +151,11 @@ extension KKEndpoint {
 	/// The set of available Episodes API endpoints.
 	internal enum Episodes {
 		// MARK: - Cases
-		/// The enpoint to the details of an episode.
+		/// The endpoint to the details of an episode.
 		case details(_ episodeIdentity: EpisodeIdentity)
+
+		/// The endpoint to the suggestions of an episode.
+		case suggestions(_ episodeIdentity: EpisodeIdentity)
 
 		/// The endpoint to update the watch status of an episode.
 		case watched(_ episodeIdentity: EpisodeIdentity)
@@ -154,6 +172,8 @@ extension KKEndpoint {
 			switch self {
 			case .details(let episodeIdentity):
 				return "episodes/\(episodeIdentity.id)"
+			case .suggestions(let episodeIdentity):
+				return "episodes/\(episodeIdentity.id)/suggestions"
 			case .watched(let episodeIdentity):
 				return "episodes/\(episodeIdentity.id)/watched"
 			case .rate(let episodeIdentity):
@@ -212,6 +232,12 @@ extension KKEndpoint {
 		/// The endpoint to the shows belonging to a person.
 		case shows(_ personIdentity: PersonIdentity)
 
+		/// The endpoint to the reviews belonging to a studio.
+		case reviews(_ personIdentity: PersonIdentity)
+
+		/// The endpoint to leave a rating on a person.
+		case rate(_ personIdentity: PersonIdentity)
+
 		// MARK: - Properties
 		/// The endpoint value of the People API type.
 		var endpointValue: String {
@@ -228,6 +254,29 @@ extension KKEndpoint {
 				return "people/\(personIdentity.id)/literatures"
 			case .shows(let personIdentity):
 				return "people/\(personIdentity.id)/anime"
+			case .reviews(let personIdentity):
+				return "people/\(personIdentity.id)/reviews"
+			case .rate(let personIdentity):
+				return "people/\(personIdentity.id)/rate"
+			}
+		}
+	}
+}
+
+// MARK: - Reviews
+extension KKEndpoint {
+	/// The set of available Reviews API endpoints types.
+	internal enum Reviews {
+		// MARK: - Cases
+		/// The endpoint to delete a review.
+		case delete(_ reviewIdentity: ReviewIdentity)
+
+		// MARK: - Properties
+		/// The endpoint value of the Reviews API type.
+		var endpointValue: String {
+			switch self {
+			case .delete(let reviewIdentity):
+				return "reviews/\(reviewIdentity.id)/delete"
 			}
 		}
 	}

@@ -30,6 +30,12 @@ extension Episode {
 		/// The synopsis text of the episode.
 		public let synopsis: String?
 
+		/// The title of the previous episode.
+		public let previousEpisodeTitle: String?
+
+		/// The title of the next episode.
+		public let nextEpisodeTitle: String?
+
 		/// The title of the show.
 		public let showTitle: String
 

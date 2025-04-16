@@ -5,7 +5,7 @@
 //  Created by Khoren Katklian on 17/08/2024.
 //
 
-import TRON
+@preconcurrency import TRON
 
 /// The set of possible API endpoints for the Kurozora API.
 ///
@@ -13,7 +13,7 @@ import TRON
 /// - `custom`: A custom URL for the Kurozora API.
 ///
 /// - Tag: KurozoraAPI
-public enum KurozoraAPI: Equatable {
+public enum KurozoraAPI: Equatable, Sendable {
 	// MARK: - Cases
 	/// The endpoint for the Kurozora API version 1.
 	case v1
@@ -23,7 +23,6 @@ public enum KurozoraAPI: Equatable {
 
 	// MARK: - Properties
 	/// All cases of `KurozoraAPI`.
-	@MainActor
 	public static let allCases: [KurozoraAPI] = [.v1]
 
 	/// The base URL for the API.

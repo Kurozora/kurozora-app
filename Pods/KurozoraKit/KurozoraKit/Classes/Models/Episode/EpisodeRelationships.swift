@@ -14,5 +14,11 @@ extension Episode {
 
 		/// The shows belonging to the episode.
 		public let shows: ShowIdentityResponse?
+
+		/// The previous episodes belonging to the episode.
+		public let previousEpisodes: EpisodeIdentityResponse?
+
+		/// The next episodes belonging to the episode.
+		public let nextEpisodes: EpisodeIdentityResponse?
 	}
 }

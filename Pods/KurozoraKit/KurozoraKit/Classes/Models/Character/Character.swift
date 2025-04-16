@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a character resource.
-public struct Character: IdentityResource, Hashable {
+public final class Character: IdentityResource, Hashable, @unchecked Sendable {
 	// MARK: - Properties
 	public let id: String
 
@@ -15,7 +15,7 @@ public struct Character: IdentityResource, Hashable {
 	public let href: String
 
 	/// The attributes belonging to the character.
-	public let attributes: Character.Attributes
+	public var attributes: Character.Attributes
 
 	/// The relationships belonging to the character.
 	public let relationships: Character.Relationships?

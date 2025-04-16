@@ -59,5 +59,15 @@ extension Character {
 
 		/// The astronomical sign of the character.
 		public let astrologicalSign: String?
+
+		/// The character's stats.
+		public let stats: MediaStat?
+
+		// Authenticated Attributes
+		/// The rating given by the authenticated user.
+		public var givenRating: Double?
+
+		/// The review given to the episode.
+		public var givenReview: String?
 	}
 }

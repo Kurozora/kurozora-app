@@ -204,4 +204,88 @@ extension KurozoraKit {
 		// Send request
 		return request.sender()
 	}
+
+	///	Fetch the reviews for a the given character identity.
+	///
+	///	- Parameters:
+	///	   - characterIdentity: The character identity object for which the reviews should be fetched.
+	///	   - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+	///	   - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the get reviews response.
+	public func getReviews(forCharacter characterIdentity: CharacterIdentity, next: String? = nil, limit: Int = 25) -> RequestSender<ReviewResponse, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
+		if !self.authenticationKey.isEmpty {
+			headers.add(.authorization(bearerToken: self.authenticationKey))
+		}
+
+		// Prepare parameters
+		let parameters: [String: Any] = [
+			"limit": limit
+		]
+
+		// Prepare request
+		let charactersReviews = next ?? KKEndpoint.Characters.reviews(characterIdentity).endpointValue
+		let request: APIRequest<ReviewResponse, KKAPIError> = tron.codable.request(charactersReviews).buildURL(.relativeToBaseURL)
+			.method(.get)
+			.parameters(parameters)
+			.headers(headers)
+
+		// Send request
+		return request.sender()
+	}
+
+	/// Rate the character with the given character identity.
+	///
+	/// - Parameters:
+	///    - characterIdentity: The id of the character which should be rated.
+	///	   - score: The rating to leave.
+	///	   - description: The description of the rating.
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the rate character response.
+	public func rateCharacter(_ characterIdentity: CharacterIdentity, with score: Double, description: String?) -> RequestSender<KKSuccess, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
+		headers.add(.authorization(bearerToken: self.authenticationKey))
+
+		// Prepare parameters
+		var parameters: [String: Any] = [
+			"rating": score
+		]
+		if let description = description {
+			parameters["description"] = description
+		}
+
+		// Prepare request
+		let charactersRate = KKEndpoint.Characters.rate(characterIdentity).endpointValue
+		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(charactersRate).buildURL(.relativeToBaseURL)
+			.method(.post)
+			.parameters(parameters)
+			.headers(headers)
+
+		// Send request
+		return request.sender()
+	}
+
+	/// Delete the authenticated user's rating of the specified character.
+	///
+	/// - Parameters:
+	///    - characterIdentity: The id of the character whose rating should be deleted.
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the delete rating response.
+	public func deleteRating(_ characterIdentity: CharacterIdentity) -> RequestSender<KKSuccess, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
+		headers.add(.authorization(bearerToken: self.authenticationKey))
+
+		// Prepare request
+		let charactersDelete = KKEndpoint.Characters.deleteRating(characterIdentity).endpointValue
+		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(charactersDelete).buildURL(.relativeToBaseURL)
+			.method(.delete)
+			.headers(headers)
+
+		// Send request
+		return request.sender()
+	}
 }

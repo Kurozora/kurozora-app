@@ -204,4 +204,67 @@ extension KurozoraKit {
 		// Send request
 		return request.sender()
 	}
+
+	///	Fetch the reviews for a the given person identity.
+	///
+	///	- Parameters:
+	///	   - personIdentity: The person identity object for which the reviews should be fetched.
+	///	   - next: The URL string of the next page in the paginated response. Use `nil` to get first page.
+	///	   - limit: The limit on the number of objects, or number of objects in the specified relationship, that are returned. The default value is 25 and the maximum value is 100.
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the get reviews response.
+	public func getReviews(forPerson personIdentity: PersonIdentity, next: String? = nil, limit: Int = 25) -> RequestSender<ReviewResponse, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
+		if !self.authenticationKey.isEmpty {
+			headers.add(.authorization(bearerToken: self.authenticationKey))
+		}
+
+		// Prepare parameters
+		let parameters: [String: Any] = [
+			"limit": limit
+		]
+
+		// Prepare request
+		let peopleReviews = next ?? KKEndpoint.People.reviews(personIdentity).endpointValue
+		let request: APIRequest<ReviewResponse, KKAPIError> = tron.codable.request(peopleReviews).buildURL(.relativeToBaseURL)
+			.method(.get)
+			.parameters(parameters)
+			.headers(headers)
+
+		// Send request
+		return request.sender()
+	}
+
+	/// Rate the person with the given person identity.
+	///
+	/// - Parameters:
+	///    - personIdentity: The id of the person which should be rated.
+	///	   - score: The rating to leave.
+	///	   - description: The description of the rating.
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the rate person response.
+	public func ratePerson(_ personIdentity: PersonIdentity, with score: Double, description: String?) -> RequestSender<KKSuccess, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
+		headers.add(.authorization(bearerToken: self.authenticationKey))
+
+		// Prepare parameters
+		var parameters: [String: Any] = [
+			"rating": score
+		]
+		if let description = description {
+			parameters["description"] = description
+		}
+
+		// Prepare request
+		let peopleRate = KKEndpoint.People.rate(personIdentity).endpointValue
+		let request: APIRequest<KKSuccess, KKAPIError> = tron.codable.request(peopleRate).buildURL(.relativeToBaseURL)
+			.method(.post)
+			.parameters(parameters)
+			.headers(headers)
+
+		// Send request
+		return request.sender()
+	}
 }

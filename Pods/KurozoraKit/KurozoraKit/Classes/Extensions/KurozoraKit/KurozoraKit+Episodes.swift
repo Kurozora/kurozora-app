@@ -39,6 +39,29 @@ extension KurozoraKit {
 		return request.sender()
 	}
 
+	/// Fetch the suggested episodes based on the given episode identity.
+	///
+	/// - Parameters:
+	///    - episodeIdentity: The episode identity object of the episode for which the suggestions should be fetched.
+	///
+	/// - Returns: An instance of `RequestSender` with the results of the get suggestions response.
+	public func getSuggestions(forEpisode episodeIdentity: EpisodeIdentity) -> RequestSender<EpisodeResponse, KKAPIError> {
+		// Prepare headers
+		var headers = self.headers
+		if !self.authenticationKey.isEmpty {
+			headers.add(.authorization(bearerToken: self.authenticationKey))
+		}
+
+		// Prepare request
+		let episodesSuggestions = KKEndpoint.Episodes.suggestions(episodeIdentity).endpointValue
+		let request: APIRequest<EpisodeResponse, KKAPIError> = tron.codable.request(episodesSuggestions)
+			.method(.get)
+			.headers(headers)
+
+		// Send request
+		return request.sender()
+	}
+
 	/// Update an episode's watch status.
 	///
 	///	- Parameter episodeIdentity: The episode identity object of the episode that should be marked as watched/unwatched.

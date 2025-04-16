@@ -6,7 +6,7 @@
 //
 
 /// A root object that stores information about a person resource.
-public struct Person: IdentityResource, Hashable {
+public final class Person: IdentityResource, Hashable, @unchecked Sendable {
 	// MARK: - Properties
 	public let id: String
 
@@ -15,7 +15,7 @@ public struct Person: IdentityResource, Hashable {
 	public let href: String
 
 	/// The attributes belonging to the person.
-	public let attributes: Person.Attributes
+	public var attributes: Person.Attributes
 
 	/// The relationships belonging to the person.
 	public let relationships: Person.Relationships?
