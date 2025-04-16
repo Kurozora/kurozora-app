@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_12" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,32 +13,161 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PurchaseStatusCollectionViewCell" id="d1C-xg-3iC" customClass="PurchaseStatusCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="374" height="37"/>
+            <rect key="frame" x="0.0" y="0.0" width="374" height="200"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="naS-p2-O0r">
-                <rect key="frame" x="0.0" y="0.0" width="374" height="37"/>
+                <rect key="frame" x="0.0" y="0.0" width="374" height="200"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UaA-jh-f82" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="8" y="8" width="358" height="21"/>
-                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TCv-qC-Gx0">
+                        <rect key="frame" x="8" y="8" width="50" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="2AD-PZ-ou2"/>
+                            <constraint firstAttribute="width" secondItem="TCv-qC-Gx0" secondAttribute="height" multiplier="1:1" id="3fL-GI-WNj"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="12"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jci-ak-qaa" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="8" y="66" width="358" height="20.333333333333329"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qNF-Xl-AzR" customClass="SeparatorView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="8" y="94.333333333333329" width="358" height="0.6666666666666714"/>
+                        <color key="backgroundColor" systemColor="separatorColor"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="4xB-RJ-nkC"/>
+                        </constraints>
+                    </view>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="xgt-it-2Rt">
+                        <rect key="frame" x="8" y="103" width="358" height="89"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i6M-8o-ykl">
+                                <rect key="frame" x="0.0" y="0.0" width="358" height="24"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="creditcard" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="WoI-m9-DTf">
+                                        <rect key="frame" x="0.0" y="1.9999999999999982" width="24" height="20"/>
+                                        <color key="tintColor" systemColor="labelColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="24" id="5YT-qo-k6O"/>
+                                            <constraint firstAttribute="width" constant="24" id="7Cx-L7-f17"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UaA-jh-f82" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="32" y="0.0" width="326" height="24"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="WoI-m9-DTf" firstAttribute="top" secondItem="i6M-8o-ykl" secondAttribute="top" id="1L3-wh-fRF"/>
+                                    <constraint firstItem="WoI-m9-DTf" firstAttribute="centerY" secondItem="UaA-jh-f82" secondAttribute="centerY" id="6Qe-T3-Cfu"/>
+                                    <constraint firstItem="UaA-jh-f82" firstAttribute="top" secondItem="i6M-8o-ykl" secondAttribute="top" id="B7b-o7-KpZ"/>
+                                    <constraint firstItem="WoI-m9-DTf" firstAttribute="leading" secondItem="i6M-8o-ykl" secondAttribute="leading" id="IKr-H9-3FM"/>
+                                    <constraint firstAttribute="bottom" secondItem="UaA-jh-f82" secondAttribute="bottom" id="Yv0-vP-asR"/>
+                                    <constraint firstAttribute="bottom" secondItem="WoI-m9-DTf" secondAttribute="bottom" id="b1m-5P-hOR"/>
+                                    <constraint firstAttribute="trailing" secondItem="UaA-jh-f82" secondAttribute="trailing" id="foh-p5-8u0"/>
+                                    <constraint firstItem="UaA-jh-f82" firstAttribute="leading" secondItem="WoI-m9-DTf" secondAttribute="trailing" constant="8" symbolic="YES" id="qGv-Wz-wza"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TYd-fT-4MO">
+                                <rect key="frame" x="0.0" y="32" width="358" height="24"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calendar" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="ede-Po-fcO">
+                                        <rect key="frame" x="0.0" y="1.6666666666666643" width="24" height="21.000000000000004"/>
+                                        <color key="tintColor" systemColor="labelColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="24" id="EsB-X7-H8j"/>
+                                            <constraint firstAttribute="width" constant="24" id="aRq-PL-EXx"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xyj-Kr-ofF" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="32" y="0.0" width="326" height="24"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="ede-Po-fcO" firstAttribute="top" secondItem="TYd-fT-4MO" secondAttribute="top" id="6oj-vT-8C2"/>
+                                    <constraint firstAttribute="bottom" secondItem="xyj-Kr-ofF" secondAttribute="bottom" id="Ala-eP-NiW"/>
+                                    <constraint firstItem="ede-Po-fcO" firstAttribute="centerY" secondItem="xyj-Kr-ofF" secondAttribute="centerY" id="St6-UT-oni"/>
+                                    <constraint firstAttribute="bottom" secondItem="ede-Po-fcO" secondAttribute="bottom" id="T6y-5o-FZ0"/>
+                                    <constraint firstItem="xyj-Kr-ofF" firstAttribute="leading" secondItem="ede-Po-fcO" secondAttribute="trailing" constant="8" symbolic="YES" id="UBb-5g-Tdb"/>
+                                    <constraint firstItem="xyj-Kr-ofF" firstAttribute="top" secondItem="TYd-fT-4MO" secondAttribute="top" id="VF9-qd-yIo"/>
+                                    <constraint firstAttribute="trailing" secondItem="xyj-Kr-ofF" secondAttribute="trailing" id="dA3-mF-tmy"/>
+                                    <constraint firstItem="ede-Po-fcO" firstAttribute="leading" secondItem="TYd-fT-4MO" secondAttribute="leading" id="do1-bz-Rwh"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GzZ-ZN-uUO">
+                                <rect key="frame" x="0.0" y="64" width="358" height="25"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_test" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Per-qp-fae" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="358" height="25"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Per-qp-fae" secondAttribute="trailing" id="Bx6-YF-lR0"/>
+                                    <constraint firstItem="Per-qp-fae" firstAttribute="top" secondItem="GzZ-ZN-uUO" secondAttribute="top" id="N0h-c7-dDZ"/>
+                                    <constraint firstItem="Per-qp-fae" firstAttribute="leading" secondItem="GzZ-ZN-uUO" secondAttribute="leading" id="fzV-e5-xmu"/>
+                                    <constraint firstAttribute="bottom" secondItem="Per-qp-fae" secondAttribute="bottom" id="ig6-C3-46b"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                    </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="UaA-jh-f82" firstAttribute="top" secondItem="naS-p2-O0r" secondAttribute="top" constant="8" id="FGg-jI-zcK"/>
-                    <constraint firstAttribute="bottom" secondItem="UaA-jh-f82" secondAttribute="bottom" constant="8" id="cFL-Xh-fVv"/>
-                    <constraint firstAttribute="trailing" secondItem="UaA-jh-f82" secondAttribute="trailing" constant="8" id="rqZ-3c-FmQ"/>
-                    <constraint firstItem="UaA-jh-f82" firstAttribute="leading" secondItem="naS-p2-O0r" secondAttribute="leading" constant="8" id="tsN-aN-XN4"/>
+                    <constraint firstItem="jci-ak-qaa" firstAttribute="leading" secondItem="naS-p2-O0r" secondAttribute="leading" constant="8" id="1iw-4B-4N7"/>
+                    <constraint firstItem="qNF-Xl-AzR" firstAttribute="top" secondItem="jci-ak-qaa" secondAttribute="bottom" constant="8" symbolic="YES" id="7uj-1A-ImI"/>
+                    <constraint firstAttribute="trailing" secondItem="xgt-it-2Rt" secondAttribute="trailing" constant="8" id="ILL-cL-cza"/>
+                    <constraint firstItem="TCv-qC-Gx0" firstAttribute="width" secondItem="TCv-qC-Gx0" secondAttribute="height" multiplier="1:1" id="IyR-A7-cZ9"/>
+                    <constraint firstAttribute="bottom" secondItem="xgt-it-2Rt" secondAttribute="bottom" constant="8" id="Ylb-IL-zDP"/>
+                    <constraint firstItem="xgt-it-2Rt" firstAttribute="top" secondItem="qNF-Xl-AzR" secondAttribute="bottom" constant="8" symbolic="YES" id="eeN-qR-FLe"/>
+                    <constraint firstItem="qNF-Xl-AzR" firstAttribute="leading" secondItem="naS-p2-O0r" secondAttribute="leading" constant="8" id="efO-M6-B53"/>
+                    <constraint firstItem="TCv-qC-Gx0" firstAttribute="leading" secondItem="naS-p2-O0r" secondAttribute="leading" constant="8" id="f6L-1J-x0K"/>
+                    <constraint firstItem="jci-ak-qaa" firstAttribute="top" secondItem="TCv-qC-Gx0" secondAttribute="bottom" constant="8" symbolic="YES" id="gfl-XK-Yel"/>
+                    <constraint firstItem="TCv-qC-Gx0" firstAttribute="top" secondItem="naS-p2-O0r" secondAttribute="top" constant="8" id="ipp-Jg-fho"/>
+                    <constraint firstAttribute="trailing" secondItem="jci-ak-qaa" secondAttribute="trailing" constant="8" id="jw6-KD-UHE"/>
+                    <constraint firstItem="xgt-it-2Rt" firstAttribute="leading" secondItem="naS-p2-O0r" secondAttribute="leading" constant="8" id="ky4-qe-SnP"/>
+                    <constraint firstAttribute="trailing" secondItem="qNF-Xl-AzR" secondAttribute="trailing" constant="8" id="uXY-eg-RD7"/>
                 </constraints>
+                <userDefinedRuntimeAttributes>
+                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                        <integer key="value" value="12"/>
+                    </userDefinedRuntimeAttribute>
+                </userDefinedRuntimeAttributes>
             </collectionViewCellContentView>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-            <size key="customSize" width="375" height="50"/>
+            <size key="customSize" width="375" height="174"/>
             <connections>
-                <outlet property="purchaseStatusLabel" destination="UaA-jh-f82" id="NoR-Hq-MBK"/>
+                <outlet property="priceImageView" destination="WoI-m9-DTf" id="OBj-6G-RaV"/>
+                <outlet property="priceLabel" destination="UaA-jh-f82" id="9vk-A2-QJL"/>
+                <outlet property="productImageView" destination="TCv-qC-Gx0" id="WGp-kA-fJk"/>
+                <outlet property="productNameLabel" destination="jci-ak-qaa" id="JjJ-F8-CGx"/>
+                <outlet property="purchaseStatusLabel" destination="Per-qp-fae" id="EVv-1e-qnY"/>
+                <outlet property="renewalStatusImageView" destination="ede-Po-fcO" id="Rzm-AB-3hW"/>
+                <outlet property="renewalStatusLabel" destination="xyj-Kr-ofF" id="boy-FN-dv2"/>
             </connections>
-            <point key="canvasLocation" x="-16.030534351145036" y="85.91549295774648"/>
+            <point key="canvasLocation" x="-16.793893129770993" y="79.577464788732399"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="calendar" catalog="system" width="128" height="107"/>
+        <image name="creditcard" catalog="system" width="128" height="88"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="separatorColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>

@@ -30,27 +30,14 @@ extension SubscriptionCollectionViewController {
 				purchaseHeaderCollectionViewCell?.configureCell(using: "Elevate your tracking with Kurozora+", secondaryText: "Take your tracking to the next level with Kurozora+. Get access to exclusive features like GIF profile images, premium app icons, customizable themes, and iCal reminders to never miss an episode. Upgrade to Kurozora+ and get the ultimate experience.")
 				return purchaseHeaderCollectionViewCell
 			case .currentSubscription:
-				switch indexPath.item {
-				case 0:
-					let purchaseButtonCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.purchaseButtonCollectionViewCell, for: indexPath)
-					purchaseButtonCollectionViewCell?.delegate = self
-					switch itemKind {
-					case .product(let product, _):
-						purchaseButtonCollectionViewCell?.configureCell(using: product, isPurchased: true)
-					default:
-						break
-					}
-					return purchaseButtonCollectionViewCell
+				let purchaseStatusCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.purchaseStatusCollectionViewCell, for: indexPath)
+				switch itemKind {
+				case .product(let product, _):
+					purchaseStatusCollectionViewCell?.configureCell(using: product, status: self.status)
 				default:
-					let purchaseStatusCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.purchaseStatusCollectionViewCell, for: indexPath)
-					switch itemKind {
-					case .product(let product, _):
-						purchaseStatusCollectionViewCell?.configureCell(using: product, status: self.status)
-					default:
-						break
-					}
-					return purchaseStatusCollectionViewCell
+					break
 				}
+				return purchaseStatusCollectionViewCell
 			case .subscriptions:
 				let purchaseButtonCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.purchaseButtonCollectionViewCell, for: indexPath)
 				purchaseButtonCollectionViewCell?.delegate = self
@@ -92,7 +79,6 @@ extension SubscriptionCollectionViewController {
 			case .currentSubscription:
 				if let currentSubscription = self.currentSubscription {
 					let itemKinds: [ItemKind] = [
-						.product(currentSubscription),
 						.product(currentSubscription)
 					]
 					self.snapshot.appendSections([sectionLayoutKind])

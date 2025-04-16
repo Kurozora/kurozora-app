@@ -11,29 +11,68 @@ import StoreKit
 
 class PurchaseStatusCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
+	@IBOutlet weak var productImageView: UIImageView!
+	@IBOutlet weak var productNameLabel: KLabel!
+	@IBOutlet weak var priceImageView: UIImageView!
+	@IBOutlet weak var priceLabel: KLabel!
+	@IBOutlet weak var renewalStatusImageView: UIImageView!
+	@IBOutlet weak var renewalStatusLabel: KLabel!
 	@IBOutlet weak var purchaseStatusLabel: KLabel!
 
 	// MARK: - Functions
 	func configureCell(using product: Product?, status: Product.SubscriptionInfo.Status?) {
-		guard let product = product, let status = status else {
-			return
+		// Configure cell
+		self.contentView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+
+		// Configure accessories
+		self.priceImageView.theme_tintColor = KThemePicker.textColor.rawValue
+		self.renewalStatusImageView.theme_tintColor = KThemePicker.textColor.rawValue
+
+		// Configure product details
+		if let product = product, let status = status, let subscription = product.subscription {
+			self.productImageView.image = #imageLiteral(resourceName: "Promotional/In App Purchases/Subscriptions/\(Store.shared.title(for: product.id))")
+			self.productNameLabel.text = product.displayName
+			self.priceLabel.text = "\(product.displayPrice) per \(subscription.subscriptionPeriod.displayUnit)"
+			self.renewalStatusLabel.text = self.renewalDescription(for: product, status: status)
+			self.purchaseStatusLabel.text = self.description(for: product, status: status)
+		} else {
+			self.productImageView.image = nil
+			self.productNameLabel.text = "Unknown"
+			self.priceLabel.text = "Unknown"
+			self.renewalStatusLabel.text = "Unknown"
+			self.purchaseStatusLabel.text = "Unknown"
+		}
+	}
+
+	/// Get the renewal info and transaction from the subscription status.
+	fileprivate func getRenewalInfoAndTransaction(from status: Product.SubscriptionInfo.Status) -> (Product.SubscriptionInfo.RenewalInfo, Transaction)? {
+		guard case .verified(let renewalInfo) = status.renewalInfo,
+			  case .verified(let transaction) = status.transaction else {
+			return nil
 		}
 
-		self.purchaseStatusLabel.text = self.description(for: product, status: status)
+		return (renewalInfo, transaction)
+	}
+
+	/// Build a string description of the renewal status to display to the user.
+	fileprivate func renewalDescription(for product: Product, status: Product.SubscriptionInfo.Status) -> String {
+		guard let (_, transaction) = self.getRenewalInfoAndTransaction(from: status), let expirationDate = transaction.expirationDate else {
+			return "Date unknown."
+		}
+
+		return "Renews \(expirationDate.formatted(date: .abbreviated, time: .omitted))"
 	}
 
 	/// Build a string description of the subscription status to display to the user.
 	fileprivate func description(for product: Product, status: Product.SubscriptionInfo.Status) -> String {
-		guard case .verified(let renewalInfo) = status.renewalInfo,
-			  case .verified(let transaction) = status.transaction else {
+		guard let (renewalInfo, transaction) = self.getRenewalInfoAndTransaction(from: status) else {
 			return "The App Store could not verify your subscription status."
 		}
 
 		var description = ""
 
 		switch status.state {
-		case .subscribed:
-			description = self.subscribedDescription(for: product)
+		case .subscribed: break
 		case .expired:
 			if let expirationDate = transaction.expirationDate,
 			   let expirationReason = renewalInfo.expirationReason {
@@ -47,13 +86,9 @@ class PurchaseStatusCollectionViewCell: UICollectionViewCell {
 			description = self.gracePeriodDescription(for: product, renewalInfo: renewalInfo)
 		case .inBillingRetryPeriod:
 			description = self.billingRetryDescription(for: product)
-		default:
-			break
+		default: break
 		}
 
-		if let expirationDate = transaction.expirationDate {
-			description += self.renewalDescription(renewalInfo, expirationDate)
-		}
 		return description
 	}
 
@@ -70,10 +105,6 @@ class PurchaseStatusCollectionViewCell: UICollectionViewCell {
 		}
 
 		return description
-	}
-
-	fileprivate func subscribedDescription(for product: Product) -> String {
-		return "You are currently subscribed to \(product.displayName)."
 	}
 
 	fileprivate func renewalDescription(_ renewalInfo: RenewalInfo, _ expirationDate: Date) -> String {
