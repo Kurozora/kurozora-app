@@ -20,10 +20,10 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 	@IBOutlet weak var episodeImageView: BannerImageView!
 	@IBOutlet weak var shadowView: UIView!
 	@IBOutlet weak var cornerView: UIView!
-	@IBOutlet weak var rankLabel: UILabel!
+	@IBOutlet weak var rankLabel: KLabel!
 	@IBOutlet weak var primaryLabel: KLabel!
 	@IBOutlet weak var secondaryLabel: KSecondaryLabel!
-	@IBOutlet weak var ternaryLabel: KSecondaryLabel!
+	@IBOutlet weak var seasonButton: KButton!
 	@IBOutlet weak var showButton: KButton!
 	@IBOutlet weak var watchStatusButton: KButton!
 
@@ -57,9 +57,6 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 			self.rankLabel.isHidden = true
 		}
 
-		// Configure secondary label
-		self.secondaryLabel.text = "S\(episode.attributes.seasonNumber) · E\(episode.attributes.number) (E\(episode.attributes.numberTotal))"
-
 		// Configure primary label
 		self.primaryLabel.text = episode.attributes.title
 
@@ -67,7 +64,13 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 		let viewCount = episode.attributes.viewCount
 		let viewCountText = viewCount == 1 ? "\(viewCount) view" : "\(viewCount) views"
 		let dateText = episode.attributes.startedAt?.formatted(date: .abbreviated, time: .omitted) ?? "TBA"
-		self.ternaryLabel.text = "\(viewCountText) · \(dateText)"
+		self.secondaryLabel.text = "\(viewCountText) · \(dateText)"
+
+		// Configure season button
+		self.seasonButton.theme_setTitleColor(KThemePicker.subTextColor.rawValue, forState: .normal)
+		self.seasonButton.theme_tintColor = KThemePicker.subTextColor.rawValue
+		self.seasonButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .callout)
+		self.seasonButton.setTitle( "S\(episode.attributes.seasonNumber) · E\(episode.attributes.number) (E\(episode.attributes.numberTotal))", for: .normal)
 
 		// Configure watch button
 		let watchStatusButtonTitle = episode.attributes.watchStatus == .watched ? "✓ \(Trans.watched)" : Trans.markAsWatched
@@ -87,5 +90,9 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 
 	@IBAction func watchStatusButtonPressed(_ sender: UIButton) {
 		self.delegate?.episodeLockupCollectionViewCell(self, didPressWatchStatusButton: sender)
+	}
+
+	@IBAction func seasonButtonPressed(_ sender: UIButton) {
+		self.delegate?.episodeLockupCollectionViewCell(self, didPressSeasonButton: sender)
 	}
 }

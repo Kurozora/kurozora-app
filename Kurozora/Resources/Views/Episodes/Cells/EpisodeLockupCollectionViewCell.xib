@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,10 +13,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="dUR-lC-qNQ" customClass="EpisodeLockupCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="421.5"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="412"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="rIF-v6-2n7">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="421.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="412"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3YY-qy-Rcf" userLabel="Shadow View">
@@ -47,30 +48,35 @@
                         </constraints>
                     </view>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="6Vr-3C-ooQ">
-                        <rect key="frame" x="0.0" y="219" width="375" height="202.5"/>
+                        <rect key="frame" x="0.0" y="219" width="375" height="193"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D4I-Ev-6Vb">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="#0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D4I-Ev-6Vb" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="22" height="20.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="S1 · E3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rS0-wl-dmb" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28.5" width="49" height="19.5"/>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9K6-Xt-6tO" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28.5" width="47" height="21"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The End of the Beginning and the Beginning of the End" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="doD-Ch-lqu" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="56" width="358" height="42.5"/>
+                                <color key="tintColor" systemColor="labelColor"/>
+                                <inset key="contentEdgeInsets" minX="0.0" minY="1" maxX="0.0" maxY="0.0"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="S1 · E1"/>
+                                <connections>
+                                    <action selector="seasonButtonPressed:" destination="dUR-lC-qNQ" eventType="touchUpInside" id="wWR-bU-Oqe"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="The End of the Beginning and the Beginning of the End" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="doD-Ch-lqu" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="57.5" width="358" height="42.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="RYh-Wy-jTi" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="106.5" width="41" height="32"/>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" contentHorizontalAlignment="leading" contentVerticalAlignment="fill" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RYh-Wy-jTi" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="108" width="375" height="21"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                <inset key="contentEdgeInsets" minX="0.0" minY="0.01" maxX="0.0" maxY="0.01"/>
+                                <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="0.01"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="_test">
                                     <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -79,14 +85,14 @@
                                     <action selector="showButtonPressed:" destination="dUR-lC-qNQ" eventType="touchUpInside" id="SfB-5H-ZgS"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2 views · Apr 2, 2016" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HVr-LC-Pih" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="146.5" width="143" height="18"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="2 views · Apr 2, 2016" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HVr-LC-Pih" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="137" width="143" height="18"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <color key="textColor" red="0.90065288200000004" green="0.89906244960000004" blue="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OBn-5g-t5i" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="172.5" width="142" height="30"/>
+                                <rect key="frame" x="0.0" y="163" width="142" height="30"/>
                                 <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="r5g-Xm-djd"/>
@@ -105,6 +111,9 @@
                                 </connections>
                             </button>
                         </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="RYh-Wy-jTi" secondAttribute="trailing" id="bOP-sf-7Ls"/>
+                        </constraints>
                     </stackView>
                 </subviews>
                 <constraints>
@@ -118,21 +127,25 @@
                 </constraints>
             </collectionViewCellContentView>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <size key="customSize" width="375" height="430"/>
             <connections>
                 <outlet property="cornerView" destination="Kso-7k-pdi" id="Tg9-FG-3c1"/>
                 <outlet property="episodeImageView" destination="Eyp-5T-Wke" id="1ic-Cz-tl9"/>
                 <outlet property="primaryLabel" destination="doD-Ch-lqu" id="UJG-Nk-za5"/>
                 <outlet property="rankLabel" destination="D4I-Ev-6Vb" id="ItD-2c-SYe"/>
-                <outlet property="secondaryLabel" destination="rS0-wl-dmb" id="IPR-eb-Tcj"/>
+                <outlet property="seasonButton" destination="9K6-Xt-6tO" id="fig-g9-qNa"/>
+                <outlet property="secondaryLabel" destination="HVr-LC-Pih" id="8Zp-Hx-hJW"/>
                 <outlet property="shadowView" destination="3YY-qy-Rcf" id="fHP-KG-bKG"/>
                 <outlet property="showButton" destination="RYh-Wy-jTi" id="QgC-VQ-uTb"/>
-                <outlet property="ternaryLabel" destination="HVr-LC-Pih" id="qgK-2Z-0ZO"/>
                 <outlet property="watchStatusButton" destination="OBn-5g-t5i" id="gni-27-aEW"/>
             </connections>
-            <point key="canvasLocation" x="-580" y="-187"/>
+            <point key="canvasLocation" x="-580.43478260869574" y="-184.82142857142856"/>
         </collectionViewCell>
     </objects>
     <resources>
         <image name="Placeholders/Episode Banner" width="1920" height="1080"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>
