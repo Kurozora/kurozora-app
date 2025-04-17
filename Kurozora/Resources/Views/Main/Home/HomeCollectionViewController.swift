@@ -24,6 +24,7 @@ class HomeCollectionViewController: KCollectionViewController {
 		QuickLink(title: "About Personalisation", url: "https://kurozora.app/kb/personalisation"),
 		QuickLink(title: "Welcome to Kurozora", url: "https://kurozora.app/welcome")
 	]
+	var upNextCategory: ExploreCategory?
 	var quickActions: [QuickAction] = []
 
 	var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
@@ -254,7 +255,10 @@ class HomeCollectionViewController: KCollectionViewController {
 					return !(exploreCategory.relationships.literatures?.data.isEmpty ?? false)
 				case .games, .upcomingGames, .mostPopularGames, .newGames:
 					return !(exploreCategory.relationships.games?.data.isEmpty ?? false)
-				case .episodes, .upNextEpisodes:
+				case .episodes:
+					return !(exploreCategory.relationships.episodes?.data.isEmpty ?? false)
+				case .upNextEpisodes:
+					self.upNextCategory = exploreCategory
 					return !(exploreCategory.relationships.episodes?.data.isEmpty ?? false)
 				case .songs:
 					return !(exploreCategory.relationships.showSongs?.data.isEmpty ?? false)
@@ -437,8 +441,8 @@ class HomeCollectionViewController: KCollectionViewController {
 			if let seasonIdentity = sender as? SeasonIdentity {
 				episodesListCollectionViewController.seasonIdentity = seasonIdentity
 				episodesListCollectionViewController.episodesListFetchType = .season
-			} else {
-				episodesListCollectionViewController.episodesListFetchType = .upNext
+			} else if let upNextCategory = self.upNextCategory {
+				episodesListCollectionViewController.episodesListFetchType = .upNext(exploreCategory: upNextCategory)
 			}
 		default: break
 		}

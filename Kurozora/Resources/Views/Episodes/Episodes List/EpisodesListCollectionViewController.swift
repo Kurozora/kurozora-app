@@ -10,10 +10,22 @@ import UIKit
 import KurozoraKit
 import Alamofire
 
-enum EpisodesListFetchType {
+enum EpisodesListFetchType: Equatable {
 	case season
 	case search
-	case upNext
+	case upNext(exploreCategory: ExploreCategory)
+
+	static func == (_ lhs: EpisodesListFetchType, _ rhs: EpisodesListFetchType) -> Bool {
+		switch (lhs, rhs) {
+		case (.season, .season),
+			(.search, .search):
+			return true
+		case (.upNext(let exploreCategory1), .upNext(exploreCategory: let exploreCategory2)):
+			return exploreCategory1 == exploreCategory2
+		default:
+			return false
+		}
+	}
 }
 
 class EpisodesListCollectionViewController: KCollectionViewController {
@@ -141,7 +153,16 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
-		if self.seasonIdentity != nil {
+		switch self.episodesListFetchType {
+		case .season, .search:
+			if self.seasonIdentity != nil {
+				self.nextPageURL = nil
+				Task { [weak self] in
+					guard let self = self else { return }
+					await self.fetchEpisodes()
+				}
+			}
+		case .upNext:
 			self.nextPageURL = nil
 			Task { [weak self] in
 				guard let self = self else { return }
@@ -244,22 +265,27 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 			} catch {
 				print(error.localizedDescription)
 			}
-		case .upNext: break
-//			do {
-//				let upNextResponse = try await KService.getUpNextEpisodes(next: self.nextPageURL).value
-//
-//				// Reset data if necessary
-//				if self.nextPageURL == nil {
-//					self.episodeIdentities = []
-//				}
-//
-//				// Save next page url and append new data
-//				self.nextPageURL = upNextResponse.data.episodes?.next
-//				self.episodeIdentities.append(contentsOf: upNextResponse.data.episodes?.data ?? [])
-//				self.episodeIdentities.removeDuplicates()
-//			} catch {
-//				print(error.localizedDescription)
-//			}
+		case .upNext(let exploreCategory):
+			do {
+				let exploreCategoryIdentity = ExploreCategoryIdentity(id: exploreCategory.id)
+				let upNextResponse = try await KService.getExplore(exploreCategoryIdentity, next: self.nextPageURL).value
+
+				// Reset data if necessary
+				if self.nextPageURL == nil {
+					self.episodeIdentities = []
+				}
+
+				// Save next page url and append new data
+				let episodeResponse = upNextResponse.data.first { exploreCategory in
+					return exploreCategory.relationships.episodes != nil
+				}
+
+				self.nextPageURL = episodeResponse?.relationships.episodes?.next
+				self.episodeIdentities.append(contentsOf: episodeResponse?.relationships.episodes?.data ?? [])
+				self.episodeIdentities.removeDuplicates()
+			} catch {
+				print(error.localizedDescription)
+			}
 		}
 
 		self.endFetch()
@@ -283,14 +309,31 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 	/// - Parameters:
 	///    - notification: An object containing information broadcast to registered observers that bridges to Notification.
 	@objc func handleEpisodeWatchStatusDidUpdate(_ notification: NSNotification) {
-		DispatchQueue.main.async { [weak self] in
-			guard let self = self else { return }
-			guard let indexPath = notification.userInfo?["indexPath"] as? IndexPath, let selectedEpisode = self.dataSource.itemIdentifier(for: indexPath) else { return }
+		switch self.episodesListFetchType {
+		case .season, .search:
+			DispatchQueue.main.async { [weak self] in
+				guard let self = self else { return }
+				guard let indexPath = notification.userInfo?["indexPath"] as? IndexPath, let selectedEpisode = self.dataSource.itemIdentifier(for: indexPath) else { return }
 
-			var newSnapshot = self.dataSource.snapshot()
-			newSnapshot.reloadItems([selectedEpisode])
-			self.dataSource.apply(newSnapshot)
+				var newSnapshot = self.dataSource.snapshot()
+				newSnapshot.reloadItems([selectedEpisode])
+				self.dataSource.apply(newSnapshot)
+			}
+		case .upNext:
+			guard let indexPath = notification.userInfo?["indexPath"] as? IndexPath else { return }
+			self.prepareUpNextRefresh(indexPath)
+			Task { @MainActor in
+				await self.fetchEpisodes()
+			}
 		}
+	}
+
+	/// Prepares for the Up Next list refresh by removing already watched episodes.
+	fileprivate func prepareUpNextRefresh(_ indexPath: IndexPath) {
+		guard let index = self.episodes.firstIndex(where: { episodeIndexPath, _ in
+			episodeIndexPath == indexPath
+		}) else { return }
+		self.episodes.remove(at: index)
 	}
 
 	/// Goes to the first item in the presented collection view.
@@ -404,7 +447,14 @@ extension EpisodesListCollectionViewController: EpisodeLockupCollectionViewCellD
 
 			Task {
 				cell.watchStatusButton.isEnabled = false
-				await self.episodes[indexPath]?.updateWatchStatus(userInfo: ["indexPath": indexPath])
+				switch self.episodesListFetchType {
+				case .season, .search:
+					await self.episodes[indexPath]?.updateWatchStatus(userInfo: ["indexPath": indexPath])
+				case .upNext:
+					await self.episodes[indexPath]?.updateWatchStatus(userInfo: [:])
+					self.prepareUpNextRefresh(indexPath)
+					await self.fetchEpisodes()
+				}
 				cell.watchStatusButton.isEnabled = true
 			}
 		}
