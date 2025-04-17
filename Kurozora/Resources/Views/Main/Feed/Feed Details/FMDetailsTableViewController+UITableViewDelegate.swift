@@ -13,7 +13,8 @@ extension FMDetailsTableViewController {
 		switch indexPath.section {
 		case 0: break
 		default:
-			self.performSegue(withIdentifier: R.segue.fmDetailsTableViewController.feedMessageDetailsSegue.identifier, sender: self.feedMessageReplies[indexPath.row].id)
+			guard let feedMessage = self.feedMessageReplies[safe: indexPath.row] else { return }
+			self.performSegue(withIdentifier: R.segue.fmDetailsTableViewController.feedMessageDetailsSegue.identifier, sender: feedMessage.id)
 		}
 	}
 

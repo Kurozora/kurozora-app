@@ -10,7 +10,7 @@ import UIKit
 
 extension StudiosListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		guard self.studios[indexPath] != nil else { return }
+		guard let studio = self.studios[indexPath] else { return }
 		let segueIdentifier = R.segue.studiosListCollectionViewController.studioDetailsSegue
 
 		self.performSegue(withIdentifier: segueIdentifier, sender: self.studios[indexPath])

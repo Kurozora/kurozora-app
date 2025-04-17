@@ -10,10 +10,10 @@ import UIKit
 
 extension CharactersListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		guard self.characters[indexPath] != nil else { return }
+		guard let character = self.characters[indexPath] else { return }
 		let segueIdentifier = R.segue.charactersListCollectionViewController.characterDetailsSegue
 
-		self.performSegue(withIdentifier: segueIdentifier, sender: self.characters[indexPath])
+		self.performSegue(withIdentifier: segueIdentifier, sender: character)
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

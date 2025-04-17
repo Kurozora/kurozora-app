@@ -412,14 +412,16 @@ extension EpisodesListCollectionViewController: EpisodeLockupCollectionViewCellD
 
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressShowButton button: UIButton) {
 		guard let indexPath = collectionView.indexPath(for: cell) else { return }
-		guard let showIdentity = self.episodes[indexPath]?.relationships?.shows?.data.first else { return }
+		guard let episode = self.episodes[indexPath] else { return }
+		guard let showIdentity = episode.relationships?.shows?.data.first else { return }
 
 		self.performSegue(withIdentifier: R.segue.episodesListCollectionViewController.showDetailsSegue, sender: showIdentity)
 	}
 
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressSeasonButton button: UIButton) {
 		guard let indexPath = collectionView.indexPath(for: cell) else { return }
-		guard let seasonIdentity = self.episodes[indexPath]?.relationships?.seasons?.data.first else { return }
+		guard let episode = self.episodes[indexPath] else { return }
+		guard let seasonIdentity = episode.relationships?.seasons?.data.first else { return }
 
 		self.performSegue(withIdentifier: R.segue.episodesListCollectionViewController.episodesListSegue, sender: seasonIdentity)
 	}

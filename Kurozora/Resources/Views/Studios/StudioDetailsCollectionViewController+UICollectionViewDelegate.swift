@@ -32,13 +32,13 @@ extension StudioDetailsCollectionViewController {
 				return
 			}
 		case .shows:
-			let show = self.shows[indexPath]
+			guard let show = self.shows[indexPath] else { return }
 			self.performSegue(withIdentifier: R.segue.studioDetailsCollectionViewController.showDetailsSegue, sender: show)
 		case .literatures:
-			let literature = self.literatures[indexPath]
+			guard let literature = self.literatures[indexPath] else { return }
 			self.performSegue(withIdentifier: R.segue.studioDetailsCollectionViewController.literatureDetailsSegue, sender: literature)
 		case .games:
-			let game = self.games[indexPath]
+			guard let game = self.games[indexPath] else { return }
 			self.performSegue(withIdentifier: R.segue.studioDetailsCollectionViewController.gameDetailsSegue, sender: game)
 		default: break
 		}

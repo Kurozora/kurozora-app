@@ -13,28 +13,28 @@ extension ReviewsListCollectionViewController {
 		guard let review = self.dataSource.itemIdentifier(for: indexPath) else { return }
 
 		if review.relationships?.literatures != nil {
-			let literature = self.fetchLiterature(at: indexPath)
+			guard let literature = self.fetchLiterature(at: indexPath) else { return }
 			self.performSegue(withIdentifier: R.segue.reviewsListCollectionViewController.literatureDetailsSegue, sender: literature)
 		} else if review.relationships?.characters != nil {
-			let character = self.fetchCharacter(at: indexPath)
+			guard let character = self.fetchCharacter(at: indexPath) else { return }
 			self.performSegue(withIdentifier: R.segue.reviewsListCollectionViewController.characterDetailsSegue, sender: character)
 		} else if review.relationships?.people != nil {
-			let person = self.fetchPerson(at: indexPath)
+			guard let person = self.fetchPerson(at: indexPath) else { return }
 			self.performSegue(withIdentifier: R.segue.reviewsListCollectionViewController.personDetailsSegue, sender: person)
 		} else if review.relationships?.episodes != nil {
-			let episode = self.fetchEpisode(at: indexPath)
+			guard let episode = self.fetchEpisode(at: indexPath) else { return }
 			self.performSegue(withIdentifier: R.segue.reviewsListCollectionViewController.episodeDetailsSegue, sender: episode)
 		} else if review.relationships?.games != nil {
-			let game = self.fetchGame(at: indexPath)
+			guard let game = self.fetchGame(at: indexPath) else { return }
 			self.performSegue(withIdentifier: R.segue.reviewsListCollectionViewController.gameDetailsSegue, sender: game)
 		} else if review.relationships?.shows != nil {
-			let show = self.fetchShow(at: indexPath)
+			guard let show = self.fetchShow(at: indexPath) else { return }
 			self.performSegue(withIdentifier: R.segue.reviewsListCollectionViewController.showDetailsSegue, sender: show)
 		} else if review.relationships?.songs != nil {
-			let song = self.fetchSong(at: indexPath)
+			guard let song = self.fetchSong(at: indexPath) else { return }
 			self.performSegue(withIdentifier: R.segue.reviewsListCollectionViewController.songDetailsSegue, sender: song)
 		} else if review.relationships?.studios != nil {
-			let studio = self.fetchStudio(at: indexPath)
+			guard let studio = self.fetchStudio(at: indexPath) else { return }
 			self.performSegue(withIdentifier: R.segue.reviewsListCollectionViewController.studioDetailsSegue, sender: studio)
 		}
 	}

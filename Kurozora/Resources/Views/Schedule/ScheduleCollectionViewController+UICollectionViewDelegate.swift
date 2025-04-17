@@ -14,13 +14,13 @@ extension ScheduleCollectionViewController {
 		switch self.dataSource.sectionIdentifier(for: indexPath.section) {
 		case .schedule(let schedule):
 			if let shows = schedule.relationships.shows?.data {
-				let show = shows[indexPath.item]
+				guard let show = shows[safe: indexPath.item] else { return }
 				self.performSegue(withIdentifier: R.segue.scheduleCollectionViewController.showDetailsSegue, sender: show)
 			} else if let literatures = schedule.relationships.literatures?.data {
-				let literature = literatures[indexPath.item]
+				guard let literature = literatures[safe: indexPath.item] else { return }
 				self.performSegue(withIdentifier: R.segue.scheduleCollectionViewController.literatureDetailsSegue, sender: literature)
 			} else if let games = schedule.relationships.games?.data {
-				let game = games[indexPath.item]
+				guard let game = games[safe: indexPath.item] else { return }
 				self.performSegue(withIdentifier: R.segue.scheduleCollectionViewController.gameDetailsSegue, sender: game)
 			}
 		default: break

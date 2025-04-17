@@ -589,9 +589,10 @@ extension ProfileTableViewController: BaseFeedMessageCellDelegate {
 	}
 
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressOPMessage sender: AnyObject) {
-		if let indexPath = self.tableView.indexPath(for: cell) {
-			self.performSegue(withIdentifier: R.segue.profileTableViewController.feedMessageDetailsSegue.identifier, sender: self.feedMessages[indexPath.row].relationships.parent?.data.first?.id)
-		}
+		guard let indexPath = self.tableView.indexPath(for: cell) else { return }
+		guard let feedMessage = self.feedMessages[indexPath.row].relationships.parent?.data.first else { return }
+
+		self.performSegue(withIdentifier: R.segue.profileTableViewController.feedMessageDetailsSegue.identifier, sender: feedMessage.id)
 	}
 }
 

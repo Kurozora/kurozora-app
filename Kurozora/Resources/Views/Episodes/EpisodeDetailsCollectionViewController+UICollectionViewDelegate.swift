@@ -40,7 +40,7 @@ extension EpisodeDetailsCollectionViewController {
 				return
 			}
 		case .cast:
-			let character = self.cast[indexPath]?.relationships.characters.data.first
+			guard let character = self.cast[indexPath]?.relationships.characters.data.first else { return }
 			self.performSegue(withIdentifier: R.segue.episodeDetailsCollectionViewController.characterDetailsSegue.identifier, sender: character)
 		case .suggestedEpisodes:
 			let suggestedEpisode = self.suggestedEpisodes[indexPath.item]

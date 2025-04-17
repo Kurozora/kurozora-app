@@ -14,8 +14,9 @@ extension CastListCollectionViewController {
 		case .show, .game:
 			break
 		case .literature:
-			guard self.cast[indexPath] != nil else { return }
-			let character = self.cast[indexPath]?.relationships.characters.data.first
+			guard let cast = self.cast[indexPath] else { return }
+			guard let character = cast.relationships.characters.data.first else { return }
+
 			self.performSegue(withIdentifier: R.segue.castListCollectionViewController.characterDetailsSegue, sender: character)
 		}
 	}

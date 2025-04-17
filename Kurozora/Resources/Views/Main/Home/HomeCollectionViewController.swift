@@ -584,7 +584,7 @@ extension HomeCollectionViewController: EpisodeLockupCollectionViewCellDelegate 
 // MARK: - MusicLockupCollectionViewCellDelegate
 extension HomeCollectionViewController: MusicLockupCollectionViewCellDelegate {
 	func showButtonPressed(_ sender: UIButton, indexPath: IndexPath) {
-		let show = self.exploreCategories[indexPath.section].relationships.showSongs?.data[indexPath.item].show
+		guard let show = self.exploreCategories[indexPath.section].relationships.showSongs?.data[indexPath.item].show else { return }
 		self.performSegue(withIdentifier: R.segue.homeCollectionViewController.showDetailsSegue.identifier, sender: show)
 	}
 }

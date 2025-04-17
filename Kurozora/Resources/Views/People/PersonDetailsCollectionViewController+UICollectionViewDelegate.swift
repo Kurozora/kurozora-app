@@ -12,16 +12,16 @@ extension PersonDetailsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		switch self.snapshot.sectionIdentifiers[indexPath.section] {
 		case .shows:
-			let show = self.shows[indexPath]
+			guard let show = self.shows[indexPath] else { return }
 			self.performSegue(withIdentifier: R.segue.personDetailsCollectionViewController.showDetailsSegue, sender: show)
 		case .literatures:
-			let literature = self.literatures[indexPath]
+			guard let literature = self.literatures[indexPath] else { return }
 			self.performSegue(withIdentifier: R.segue.personDetailsCollectionViewController.literatureDetailsSegue, sender: literature)
 		case .games:
-			let game = self.games[indexPath]
+			guard let game = self.games[indexPath] else { return }
 			self.performSegue(withIdentifier: R.segue.personDetailsCollectionViewController.gameDetailsSegue, sender: game)
 		case .characters:
-			let character = self.characters[indexPath]
+			guard let character = self.characters[indexPath] else { return }
 			self.performSegue(withIdentifier: R.segue.personDetailsCollectionViewController.characterDetailsSegue, sender: character)
 		default: break
 		}

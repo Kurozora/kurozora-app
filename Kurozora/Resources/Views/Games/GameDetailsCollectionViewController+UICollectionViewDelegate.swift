@@ -45,22 +45,22 @@ extension GameDetailsCollectionViewController {
 				return
 			}
 		case .cast:
-			let character = self.cast[indexPath]?.relationships.characters.data.first
+			guard let character = self.cast[indexPath]?.relationships.characters.data.first else { return }
 			self.performSegue(withIdentifier: R.segue.gameDetailsCollectionViewController.characterDetailsSegue.identifier, sender: character)
 		case .studios:
-			let studio = self.studios[indexPath]
+			guard let studio = self.studios[indexPath] else { return }
 			self.performSegue(withIdentifier: R.segue.gameDetailsCollectionViewController.studioDetailsSegue.identifier, sender: studio)
 		case .moreByStudio:
-			let game = self.studioGames[indexPath]
+			guard let game = self.studioGames[indexPath] else { return }
 			self.performSegue(withIdentifier: R.segue.gameDetailsCollectionViewController.gameDetailsSegue.identifier, sender: game)
 		case .relatedGames:
-			let game = self.relatedGames[indexPath.item].game
+			guard let game = self.relatedGames[safe: indexPath.item]?.game else { return }
 			self.performSegue(withIdentifier: R.segue.gameDetailsCollectionViewController.gameDetailsSegue.identifier, sender: game)
 		case .relatedShows:
-			let show = self.relatedShows[indexPath.item].show
+			guard let show = self.relatedShows[safe: indexPath.item]?.show else { return }
 			self.performSegue(withIdentifier: R.segue.gameDetailsCollectionViewController.showDetailsSegue.identifier, sender: show)
 		case .relatedLiteratures:
-			let literature = self.relatedLiteratures[indexPath.item].literature
+			guard let literature = self.relatedLiteratures[safe: indexPath.item]?.literature else { return }
 			self.performSegue(withIdentifier: R.segue.gameDetailsCollectionViewController.literatureDetailsSegue.identifier, sender: literature)
 		default: return
 		}

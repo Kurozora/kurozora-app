@@ -228,17 +228,17 @@ class CastListCollectionViewController: KCollectionViewController {
 extension CastListCollectionViewController: CastCollectionViewCellDelegate {
 	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressPersonButton button: UIButton) {
 		guard let indexPath = collectionView.indexPath(for: cell) else { return }
-		guard self.cast[indexPath] != nil else { return }
+		guard let cast = self.cast[indexPath] else { return }
+		guard let person = cast.relationships.people?.data.first else { return }
 
-		let person = self.cast[indexPath]?.relationships.people?.data.first
 		self.performSegue(withIdentifier: R.segue.castListCollectionViewController.personDetailsSegue.identifier, sender: person)
 	}
 
 	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressCharacterButton button: UIButton) {
 		guard let indexPath = collectionView.indexPath(for: cell) else { return }
-		guard self.cast[indexPath] != nil else { return }
+		guard let cast = self.cast[indexPath] else { return }
+		guard let character = self.cast[indexPath]?.relationships.characters.data.first else { return }
 
-		let character = self.cast[indexPath]?.relationships.characters.data.first
 		self.performSegue(withIdentifier: R.segue.castListCollectionViewController.characterDetailsSegue.identifier, sender: character)
 	}
 }

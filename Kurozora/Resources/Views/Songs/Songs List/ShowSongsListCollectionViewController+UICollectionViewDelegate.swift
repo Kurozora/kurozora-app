@@ -11,9 +11,11 @@ import UIKit
 extension ShowSongsListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if !self.showSongs.isEmpty {
-			self.performSegue(withIdentifier: R.segue.showSongsListCollectionViewController.songDetailsSegue, sender: self.showSongs[indexPath.item].song)
+			guard let showSong = self.showSongs[safe: indexPath.item] else { return }
+			self.performSegue(withIdentifier: R.segue.showSongsListCollectionViewController.songDetailsSegue, sender: showSong.song)
 		} else if !self.songs.isEmpty {
-			self.performSegue(withIdentifier: R.segue.showSongsListCollectionViewController.songDetailsSegue, sender: self.songs[indexPath.item])
+			guard let song = self.songs[safe: indexPath.item] else { return }
+			self.performSegue(withIdentifier: R.segue.showSongsListCollectionViewController.songDetailsSegue, sender: song)
 		}
 	}
 

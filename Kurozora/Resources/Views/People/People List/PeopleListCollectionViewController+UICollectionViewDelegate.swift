@@ -10,10 +10,10 @@ import UIKit
 
 extension PeopleListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		guard self.people[indexPath] != nil else { return }
+		guard let person = self.people[indexPath] else { return }
 		let segueIdentifier = R.segue.peopleListCollectionViewController.personDetailsSegue
 
-		self.performSegue(withIdentifier: segueIdentifier, sender: self.people[indexPath])
+		self.performSegue(withIdentifier: segueIdentifier, sender: person)
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

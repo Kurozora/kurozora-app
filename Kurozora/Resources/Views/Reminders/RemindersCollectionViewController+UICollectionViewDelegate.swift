@@ -12,13 +12,13 @@ extension RemindersCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		switch self.libraryKind {
 		case .shows:
-			let show = self.shows[safe: indexPath.item]
+			guard let show = self.shows[safe: indexPath.item] else { return }
 			self.performSegue(withIdentifier: R.segue.remindersCollectionViewController.showDetailsSegue, sender: show)
 		case .literatures:
-			let literature = self.literatures[safe: indexPath.item]
+			guard let literature = self.literatures[safe: indexPath.item] else { return }
 			self.performSegue(withIdentifier: R.segue.remindersCollectionViewController.literatureDetailsSegue, sender: literature)
 		case .games:
-			let game = self.games[safe: indexPath.item]
+			guard let game = self.games[safe: indexPath.item] else { return }
 			self.performSegue(withIdentifier: R.segue.remindersCollectionViewController.gameDetailsSegue, sender: game)
 		}
 	}

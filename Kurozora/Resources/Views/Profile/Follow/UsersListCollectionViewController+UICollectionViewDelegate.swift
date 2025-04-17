@@ -10,10 +10,10 @@ import UIKit
 
 extension UsersListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		guard self.users[indexPath] != nil else { return }
+		guard let user = self.users[indexPath] else { return }
 		let segueIdentifier = R.segue.usersListCollectionViewController.userDetailsSegue
 
-		self.performSegue(withIdentifier: segueIdentifier, sender: self.users[indexPath])
+		self.performSegue(withIdentifier: segueIdentifier, sender: user)
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

@@ -19,13 +19,13 @@ extension SearchResultsCollectionViewController {
 		case .browseCategory(let browseCategory):
 			self.performSegue(withIdentifier: browseCategory.segueIdentifier ?? R.segue.searchResultsCollectionViewController.searchSegue.identifier, sender: browseCategory)
 		case .characterIdentity:
-			let character = self.characters[indexPath]
+			guard let character = self.characters[indexPath] else { return }
 			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.characterDetailsSegue, sender: character)
 		case .episodeIdentity:
-			let episode = self.episodes[indexPath]
+			guard let episode = self.episodes[indexPath] else { return }
 			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.episodeDetailsSegue, sender: episode)
 		case .personIdentity:
-			let person = self.people[indexPath]
+			guard let person = self.people[indexPath] else { return }
 			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.personDetailsSegue, sender: person)
 		case .showIdentity:
 			guard let show = self.shows[indexPath] else { return }
@@ -37,13 +37,13 @@ extension SearchResultsCollectionViewController {
 			guard let game = self.games[indexPath] else { return }
 			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.gameDetailsSegue, sender: game)
 		case .songIdentity:
-			let song = self.songs[indexPath]
+			guard let song = self.songs[indexPath] else { return }
 			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.songDetailsSegue, sender: song)
 		case .studioIdentity:
-			let studio = self.studios[indexPath]
+			guard let studio = self.studios[indexPath] else { return }
 			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.studioDetailsSegue, sender: studio)
 		case .userIdentity:
-			let user = self.users[indexPath]
+			guard let user = self.users[indexPath] else { return }
 			self.performSegue(withIdentifier: R.segue.searchResultsCollectionViewController.userDetailsSegue, sender: user)
 		case .show: break
 		case .literature: break

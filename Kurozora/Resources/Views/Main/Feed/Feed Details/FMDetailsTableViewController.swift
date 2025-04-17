@@ -352,7 +352,8 @@ extension FMDetailsTableViewController: BaseFeedMessageCellDelegate {
 	}
 
 	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressOPMessage sender: AnyObject) {
-		self.performSegue(withIdentifier: R.segue.fmDetailsTableViewController.feedMessageDetailsSegue.identifier, sender: self.feedMessage.relationships.parent?.data.first?.id)
+		guard let feedMessage = self.feedMessage.relationships.parent?.data.first else { return }
+		self.performSegue(withIdentifier: R.segue.fmDetailsTableViewController.feedMessageDetailsSegue.identifier, sender: feedMessage.id)
 	}
 }
 

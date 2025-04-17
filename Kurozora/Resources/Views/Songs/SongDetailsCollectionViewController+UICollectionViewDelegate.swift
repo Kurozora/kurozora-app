@@ -12,7 +12,7 @@ extension SongDetailsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		switch self.snapshot.sectionIdentifiers[indexPath.section] {
 		case .shows:
-			let show = self.shows[indexPath]
+			guard let show = self.shows[indexPath] else { return }
 			self.performSegue(withIdentifier: R.segue.songDetailsCollectionViewController.showDetailsSegue, sender: show)
 		default: break
 		}
