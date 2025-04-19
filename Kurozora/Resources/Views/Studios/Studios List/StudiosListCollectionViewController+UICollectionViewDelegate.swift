@@ -13,7 +13,7 @@ extension StudiosListCollectionViewController {
 		guard let studio = self.studios[indexPath] else { return }
 		let segueIdentifier = R.segue.studiosListCollectionViewController.studioDetailsSegue
 
-		self.performSegue(withIdentifier: segueIdentifier, sender: self.studios[indexPath])
+		self.performSegue(withIdentifier: segueIdentifier, sender: studio)
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

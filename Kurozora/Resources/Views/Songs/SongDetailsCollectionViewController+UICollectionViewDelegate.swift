@@ -22,9 +22,11 @@ extension SongDetailsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
 		switch self.snapshot.sectionIdentifiers[indexPath.section] {
 		case .shows:
-			return self.shows[indexPath]?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			guard let show = self.shows[indexPath] else { return nil }
+			return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		case .reviews:
-			return self.reviews[indexPath.item].contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
+			guard let review = self.reviews[safe: indexPath.item] else { return nil }
+			return review.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
 		default: break
 		}
 

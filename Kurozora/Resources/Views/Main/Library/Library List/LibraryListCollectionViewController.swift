@@ -6,8 +6,8 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 protocol LibraryListViewControllerDelegate: AnyObject {
 	func libraryListViewController(willScrollTo index: Int)
@@ -21,10 +21,10 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	var literatures: [Literature] = []
 	var games: [Game] = []
 	var nextPageURL: String?
-	var libraryKind: KKLibrary.Kind = UserSettings.libraryKind
-	var totalLibraryItemsCount: Int = 0
-	var libraryStatus: KKLibrary.Status = .planning
 	var sectionIndex: Int?
+	var totalLibraryItemsCount: Int = 0
+	var libraryKind: KKLibrary.Kind = UserSettings.libraryKind
+	var libraryStatus: KKLibrary.Status = .none
 	var librarySortType: KKLibrary.SortType = .none
 	var librarySortTypeOption: KKLibrary.SortType.Option = .none {
 		didSet {
@@ -111,6 +111,12 @@ class LibraryListCollectionViewController: KCollectionViewController {
 		self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh \(libraryStatus.lowercased()) list.")
 		#endif
 
+		// Configure library options
+		if let (sortType, sortOption) = UserSettings.librarySortTypes[self.libraryKind]?[self.libraryStatus] {
+			self.librarySortType = sortType
+			self.librarySortTypeOption = sortOption
+		}
+
 		self.configureDataSource()
 
 		// Fetch library if user is signed in
@@ -127,6 +133,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 
 		// Update empty state view
 		self.configureEmptyDataView()
+		self.toggleEmptyDataView()
 
 		// Setup library view controller delegate
 		(tabmanParent as? LibraryViewController)?.libraryViewControllerDelegate = self
@@ -139,7 +146,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 
 		// Update sort type button to reflect user settings
 		self.delegate?.libraryListViewController(updateSortWith: self.librarySortType, sortOption: self.librarySortTypeOption)
-		self.delegate?.libraryListViewController(updateTotalCount: totalLibraryItemsCount)
+		self.delegate?.libraryListViewController(updateTotalCount: self.totalLibraryItemsCount)
 
 		if self.libraryKind != UserSettings.libraryKind {
 			// Fetch library if user is signed in
@@ -409,12 +416,10 @@ extension LibraryListCollectionViewController: LibraryViewControllerDataSource {
 // MARK: - LibraryViewControllerDelegate
 extension LibraryListCollectionViewController: LibraryViewControllerDelegate {
 	func libraryViewController(_ view: LibraryViewController, didChange libraryKind: KKLibrary.Kind) {
-		self.configureEmptyDataView()
+		let (sortType, sortOption) = UserSettings.librarySortTypes[libraryKind]?[self.libraryStatus] ?? (KKLibrary.SortType.none, KKLibrary.SortType.Option.none)
 
-		Task { [weak self] in
-			guard let self = self else { return }
-			await self.fetchLibrary()
-		}
+		self.sortLibrary(by: sortType, option: sortOption)
+		self.configureEmptyDataView()
 	}
 
 	func sortLibrary(by sortType: KKLibrary.SortType, option: KKLibrary.SortType.Option) {

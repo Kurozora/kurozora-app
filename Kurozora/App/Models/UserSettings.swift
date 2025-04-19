@@ -207,6 +207,42 @@ extension UserSettings {
 		guard let libraryKind = KKLibrary.Kind(rawValue: shared.integer(forKey: #function)) else { return .shows }
 		return libraryKind
 	}
+
+	/// Returns the default library sort types for each library kind and status.
+	static var librarySortTypes: [KKLibrary.Kind: [KKLibrary.Status: (sortType: KKLibrary.SortType, sortOption: KKLibrary.SortType.Option)]] {
+		let decoder = PropertyListDecoder()
+
+		guard let data = shared.data(forKey: #function),
+			  let rawLibrarySortTypes = try? decoder.decode([Int: [Int: Int]].self, from: data) else {
+			return [:]
+		}
+
+		var librarySortTypes: [KKLibrary.Kind: [KKLibrary.Status: (KKLibrary.SortType, KKLibrary.SortType.Option)]] = [:]
+
+		for (kindRaw, statusMap) in rawLibrarySortTypes {
+			guard let kind = KKLibrary.Kind(rawValue: kindRaw) else { continue }
+
+			var statusDict: [KKLibrary.Status: (KKLibrary.SortType, KKLibrary.SortType.Option)] = [:]
+
+			for (statusRaw, encodedValue) in statusMap {
+				guard let status = KKLibrary.Status(rawValue: statusRaw) else { continue }
+
+				let sortTypeRaw = encodedValue >> 8
+				let optionRaw = encodedValue & 0xFF
+
+				guard
+					let sortType = KKLibrary.SortType(rawValue: sortTypeRaw),
+					let option = KKLibrary.SortType.Option(rawValue: optionRaw)
+				else { continue }
+
+				statusDict[status] = (sortType, option)
+			}
+
+			librarySortTypes[kind] = statusDict
+		}
+
+		return librarySortTypes
+	}
 }
 
 // MARK: - Notification registration

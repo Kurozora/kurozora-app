@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FEY-7R-0UY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FEY-7R-0UY">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -12,7 +12,7 @@
             <objects>
                 <navigationController storyboardIdentifier="SettingsKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="j9b-id-9wy" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="Y0h-Co-3aP">
-                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="96" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
@@ -49,7 +49,7 @@
                 <viewControllerPlaceholder storyboardName="DebugSettings" id="ajC-l5-hFm" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BR6-vZ-0nY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1870" y="-1121"/>
+            <point key="canvasLocation" x="-1856" y="-1156"/>
         </scene>
         <!--PrivacySettings-->
         <scene sceneID="IwF-zp-Lsq">
@@ -59,7 +59,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xcs-zt-ku7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1867" y="-848"/>
+            <point key="canvasLocation" x="-1851" y="-883"/>
         </scene>
         <!--ThemeStore-->
         <scene sceneID="snc-re-vTw">
@@ -67,7 +67,7 @@
                 <viewControllerPlaceholder storyboardName="ThemeStore" id="Qbb-Nv-rmu" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ybs-tm-6iN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1884" y="-1015"/>
+            <point key="canvasLocation" x="-1867" y="-1049"/>
         </scene>
         <!--ManageIconKNavigationController-->
         <scene sceneID="pCk-tB-aID">
@@ -75,7 +75,7 @@
                 <viewControllerPlaceholder storyboardName="Icons" referencedIdentifier="ManageIconKNavigationController" id="4UV-W6-1yL" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xG6-sO-F3Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1787" y="-982"/>
+            <point key="canvasLocation" x="-1771" y="-1017"/>
         </scene>
         <!--NotificationSettings-->
         <scene sceneID="cL2-5n-9vs">
@@ -83,7 +83,7 @@
                 <viewControllerPlaceholder storyboardName="NotificationSettings" id="vBk-eI-Fsp" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="55C-FF-ltq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1849" y="-1086"/>
+            <point key="canvasLocation" x="-1832" y="-1120"/>
         </scene>
         <!--AuthenticationSettings-->
         <scene sceneID="EBP-ej-D5t">
@@ -91,7 +91,7 @@
                 <viewControllerPlaceholder storyboardName="AuthenticationSettings" id="Q1h-nG-Q6g" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cpI-Fa-DLk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1835" y="-883"/>
+            <point key="canvasLocation" x="-1819" y="-917"/>
         </scene>
         <!--DisplaySettings-->
         <scene sceneID="RdJ-ak-oTj">
@@ -109,7 +109,7 @@
                 <viewControllerPlaceholder storyboardName="Purchase" id="9mD-qe-ThA" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S6Q-5h-YRK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1895" y="-816"/>
+            <point key="canvasLocation" x="-1879" y="-850"/>
         </scene>
         <!--Settings-->
         <scene sceneID="Rdk-Mk-c4g">
@@ -310,6 +310,7 @@
                         <segue destination="rXI-hr-RBS" kind="showDetail" identifier="SwitchAccountSegue" id="RsV-c8-7Ym"/>
                         <segue destination="IOa-QJ-OWG" kind="showDetail" identifier="SoundSegue" id="gvC-fL-6dY"/>
                         <segue destination="Rix-Ql-Mkr" kind="showDetail" identifier="MotionSegue" id="Bmi-Hv-ehH"/>
+                        <segue destination="KzC-8n-L4v" kind="showDetail" identifier="LibrarySegue" id="0t0-0U-RbR"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a4m-0q-T6w" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -322,7 +323,7 @@
                 <viewControllerPlaceholder storyboardName="BrowserSettings" id="B3o-ew-EQQ" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NVr-Wp-8Sl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1862" y="-913"/>
+            <point key="canvasLocation" x="-1847" y="-948"/>
         </scene>
         <!--AccountSettings-->
         <scene sceneID="nbd-fu-5TH">
@@ -330,7 +331,7 @@
                 <viewControllerPlaceholder storyboardName="AccountSettings" id="41N-ao-yZL" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jRz-7w-VBC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1864" y="-1181"/>
+            <point key="canvasLocation" x="-1847" y="-1215"/>
         </scene>
         <!--SwitchAccountSettings-->
         <scene sceneID="xd8-H4-x5U">
@@ -338,7 +339,7 @@
                 <viewControllerPlaceholder storyboardName="SwitchAccountSettings" id="rXI-hr-RBS" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="my1-5u-UN1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1834" y="-1151"/>
+            <point key="canvasLocation" x="-1817" y="-1185"/>
         </scene>
         <!--TipJarKNavigationController-->
         <scene sceneID="71c-GG-QAR">
@@ -348,7 +349,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2C9-JS-U5q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1811" y="-781"/>
+            <point key="canvasLocation" x="-1795" y="-816"/>
         </scene>
         <!--SoundSettings-->
         <scene sceneID="MNO-Rw-Pnj">
@@ -358,7 +359,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cp5-K8-YlG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1872" y="-1052"/>
+            <point key="canvasLocation" x="-1855" y="-1086"/>
         </scene>
         <!--MotionSettings-->
         <scene sceneID="hkC-6d-Hre">
@@ -368,11 +369,21 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Me-Vs-Kkc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1870" y="-948"/>
+            <point key="canvasLocation" x="-1853" y="-982"/>
+        </scene>
+        <!--LibrarySettings-->
+        <scene sceneID="fe6-Ei-sZj">
+            <objects>
+                <viewControllerPlaceholder storyboardName="LibrarySettings" id="KzC-8n-L4v" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="PTG-tu-64c"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Z6x-yd-Mr1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1854" y="-781"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="JqT-i1-ECV"/>
+        <segue reference="CVK-QH-6Cy"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>

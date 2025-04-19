@@ -137,6 +137,9 @@ extension SettingsTableViewController {
 		/// The row representing the icon cell.
 		case icon
 
+		/// The row representing the library cell.
+		case library
+
 		/// The row representing the motion cell.
 		case motion
 
@@ -199,10 +202,10 @@ extension SettingsTableViewController {
 
 		#if DEBUG
 		/// An array containing all settings rows.
-		static let all: [Row] = [.account, .switchAccount, .keychain, .notifications, .reminder, .soundsAndHaptics, .browser, .cache, .displayBlindness, .icon, .motion, .theme, .biometrics, .privacy, .signalSticker, .telegramSticker, .unlockFeatures, .tipjar, .restoreFeatures, .rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter]
+		static let all: [Row] = [.account, .switchAccount, .keychain, .notifications, .reminder, .soundsAndHaptics, .browser, .cache, .displayBlindness, .icon, .library, .motion, .theme, .biometrics, .privacy, .signalSticker, .telegramSticker, .unlockFeatures, .tipjar, .restoreFeatures, .rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter]
 		#else
 		/// An array containing all normal user settings rows.
-		static let all: [Row] = [.account, .switchAccount, .notifications, .reminder, .soundsAndHaptics, .browser, .cache, .displayBlindness, .icon, .motion, .theme, .biometrics, .privacy, .signalSticker, .telegramSticker, .unlockFeatures, .tipjar, .restoreFeatures, .rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter]
+		static let all: [Row] = [.account, .switchAccount, .notifications, .reminder, .soundsAndHaptics, .browser, .cache, .displayBlindness, .icon, .library, .motion, .theme, .biometrics, .privacy, .signalSticker, .telegramSticker, .unlockFeatures, .tipjar, .restoreFeatures, .rate, .joinDiscord, .followGitHub, .followMastodon, .followTwitter]
 		#endif
 
 		/// An array containing all account section settings rows.
@@ -223,9 +226,9 @@ extension SettingsTableViewController {
 		/// An array containing all general section settings rows.
 		static var allGeneral: [Row] {
 			#if targetEnvironment(macCatalyst)
-			return [.cache, .displayBlindness, .motion, .theme]
+			return [.cache, .displayBlindness, .library, .motion, .theme]
 			#else
-			return [.browser, .cache, .displayBlindness, .icon, .motion, .theme]
+			return [.browser, .cache, .displayBlindness, .icon, .library, .motion, .theme]
 			#endif
 		}
 
@@ -271,6 +274,8 @@ extension SettingsTableViewController {
 				return R.segue.settingsTableViewController.displaySegue.identifier
 			case .icon:
 				return R.segue.settingsTableViewController.iconSegue.identifier
+			case .library:
+				return R.segue.settingsTableViewController.librarySegue.identifier
 			case .motion:
 				return R.segue.settingsTableViewController.motionSegue.identifier
 			case .theme:
@@ -331,6 +336,8 @@ extension SettingsTableViewController {
 				return .chevron
 			case .icon:
 				return .labelAndChevron
+			case .library:
+				return .chevron
 			case .motion:
 				return .labelAndChevron
 			case .theme:
@@ -391,6 +398,8 @@ extension SettingsTableViewController {
 				return Trans.displayBlindness
 			case .icon:
 				return Trans.icon
+			case .library:
+				return Trans.library
 			case .motion:
 				return Trans.motion
 			case .theme:
@@ -473,6 +482,8 @@ extension SettingsTableViewController {
 				return R.image.icons.display()
 			case .icon:
 				return UIImage(named: UserSettings.appIcon)
+			case .library:
+				return R.image.icons.library()
 			case .motion:
 				return R.image.icons.motion()
 			case .theme:

@@ -6,19 +6,19 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
-import Tabman
 import Pageboy
+import Tabman
+import UIKit
 
 class LibraryViewController: KTabbedViewController {
 	// MARK: - IBOutlets
-	@IBOutlet weak var profileImageButton: ProfileImageButton!
-	@IBOutlet weak var toolbar: UIToolbar!
-	@IBOutlet weak var scrollView: UIScrollView!
-	@IBOutlet weak var scrollViewHeightConstraint: NSLayoutConstraint!
+	@IBOutlet var profileImageButton: ProfileImageButton!
+	@IBOutlet var toolbar: UIToolbar!
+	@IBOutlet var scrollView: UIScrollView!
+	@IBOutlet var scrollViewHeightConstraint: NSLayoutConstraint!
 	@IBOutlet var sortTypeBarButtonItem: UIBarButtonItem!
-	@IBOutlet weak var libraryKindSegmentedControl: UISegmentedControl!
+	@IBOutlet var libraryKindSegmentedControl: UISegmentedControl!
 	@IBOutlet var moreBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Properties
@@ -132,7 +132,7 @@ class LibraryViewController: KTabbedViewController {
 				self.toolbar.isHidden = false
 
 				self.navigationItem.rightBarButtonItems = self.navigationItem.rightBarButtonItems?.filter { barButtonItem in
-					return barButtonItem.customView != self.profileImageButton
+					barButtonItem.customView != self.profileImageButton
 				}
 			} else {
 				self.toolbar.isHidden = false
@@ -167,9 +167,9 @@ class LibraryViewController: KTabbedViewController {
 	///    - option: The selected sort type option.
 	fileprivate func updateSortTypeBarButtonItem(sortType: KKLibrary.SortType, option: KKLibrary.SortType.Option) {
 		self.sortTypeBarButtonItem.title = "Sorting by \(sortType.stringValue) (\(option.stringValue))"
-		self.sortTypeBarButtonItem.image = sortType == .none ?
-		UIImage(systemName: "line.3.horizontal.decrease.circle") :
-		UIImage(systemName: "line.3.horizontal.decrease.circle.fill")
+		self.sortTypeBarButtonItem.image = sortType == .none
+			? UIImage(systemName: "line.3.horizontal.decrease.circle")
+			: UIImage(systemName: "line.3.horizontal.decrease.circle.fill") //		self.populateSortActions()
 	}
 
 	/// Changes the layout between the available library cell styles.
@@ -211,6 +211,7 @@ class LibraryViewController: KTabbedViewController {
 
 				let action = UIAction(title: option.stringValue, image: option.imageValue, state: actionIsOn ? .on : .off) { _ in
 					self.libraryViewControllerDelegate?.sortLibrary(by: sortType, option: option)
+					self.populateSortActions()
 				}
 				subMenuItems.append(action)
 			}
@@ -224,23 +225,21 @@ class LibraryViewController: KTabbedViewController {
 			let stopSortingAction = UIAction(title: "Stop sorting", image: UIImage(systemName: "xmark.circle.fill"), attributes: .destructive) { [weak self] _ in
 				guard let self = self else { return }
 				self.libraryViewControllerDelegate?.sortLibrary(by: .none, option: .none)
+				self.populateSortActions()
 			}
 			let stopSortingMenu = UIMenu(title: "", options: .displayInline, children: [stopSortingAction])
 
 			menuItems.append(stopSortingMenu)
 		}
 
-		self.sortTypeBarButtonItem.menu = UIMenu(title: "", children: [UIDeferredMenuElement.uncached { [weak self] completion in
-			guard let self = self else { return }
-			completion(menuItems)
-			self.populateSortActions()
-		}])
+		self.sortTypeBarButtonItem.menu = UIMenu(title: "", children: menuItems)
 	}
 
 	#if targetEnvironment(macCatalyst)
 	/// Goes to the selected view.
 	@objc func goToSelectedView(_ touchBarItem: NSPickerTouchBarItem) {
 		self.bar.delegate?.bar(self.bar, didRequestScrollTo: touchBarItem.selectedIndex)
+		self.populateSortActions()
 	}
 	#endif
 
@@ -249,8 +248,9 @@ class LibraryViewController: KTabbedViewController {
 		guard let libraryKind = KKLibrary.Kind(rawValue: sender.selectedSegmentIndex) else { return }
 		self.libraryKind = libraryKind
 		self.bar.reloadData(at: 0...KKLibrary.Status.all.count - 1, context: .full)
-		self.libraryViewControllerDelegate?.libraryViewController(self, didChange: libraryKind)
 		UserSettings.set(libraryKind.rawValue, forKey: .libraryKind)
+		self.libraryViewControllerDelegate?.libraryViewController(self, didChange: libraryKind)
+		self.populateSortActions()
 	}
 
 	@IBAction func profileButtonPressed(_ sender: UIButton) {
@@ -283,8 +283,7 @@ class LibraryViewController: KTabbedViewController {
 
 	// MARK: - PageboyViewControllerDataSource
 	override func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
-		let sectionsCount = self.viewedUser != nil ? KKLibrary.Status.all.count : 1
-		return sectionsCount
+		return self.viewedUser != nil ? KKLibrary.Status.all.count : 1
 	}
 
 	override func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {

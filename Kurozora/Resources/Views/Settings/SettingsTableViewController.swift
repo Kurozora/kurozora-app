@@ -76,7 +76,7 @@ class SettingsTableViewController: KTableViewController {
 // MARK: - UITableViewDataSource
 extension SettingsTableViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return settingsSection.count
+		return self.settingsSection.count
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -184,6 +184,7 @@ extension SettingsTableViewController {
 			return
 		case .displayBlindness: break
 		case .icon: break
+		case .library: break
 		case .motion: break
 		case .theme: break
 		case .notifications:
@@ -242,7 +243,7 @@ extension SettingsTableViewController {
 
 		let identifierString = sectionRows.segueIdentifier
 		if shouldPerformSegue && !identifierString.isEmpty {
-			performSegue(withIdentifier: identifierString, sender: nil)
+			self.performSegue(withIdentifier: identifierString, sender: nil)
 		}
 	}
 }

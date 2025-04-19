@@ -237,7 +237,7 @@ extension CastListCollectionViewController: CastCollectionViewCellDelegate {
 	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressCharacterButton button: UIButton) {
 		guard let indexPath = collectionView.indexPath(for: cell) else { return }
 		guard let cast = self.cast[indexPath] else { return }
-		guard let character = self.cast[indexPath]?.relationships.characters.data.first else { return }
+		guard let character = cast.relationships.characters.data.first else { return }
 
 		self.performSegue(withIdentifier: R.segue.castListCollectionViewController.characterDetailsSegue.identifier, sender: character)
 	}

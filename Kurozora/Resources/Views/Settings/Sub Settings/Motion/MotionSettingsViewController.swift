@@ -71,7 +71,7 @@ class MotionSettingsViewController: SubSettingsViewController {
 	}
 }
 
-// MARK: - SoundOptionsViewControllerDelegate
+// MARK: - MotionOptionsViewControllerDelegate
 extension MotionSettingsViewController: MotionOptionsViewControllerDelegate {
 	func motionOptionsViewController(_ vc: MotionOptionsViewController, didChangeAnimationTo animation: SplashScreenAnimation) {
 		self.selectedSplashScreenLabel.text = animation.titleValue

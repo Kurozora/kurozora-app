@@ -77,6 +77,8 @@ enum UserSettingsKey: String {
 	case libraryCellStyles
 	/// The key to the last selected library kind.
 	case libraryKind
+	/// The key to the default library sort types.
+	case librarySortTypes
 
 	// Motion settings keys
 	/// The key to the selected reduce motion option.
