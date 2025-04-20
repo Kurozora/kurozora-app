@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Kuro-chan Valentines.png",
+      "filename" : "Kuro-chan.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -13,7 +13,6 @@
           "value" : "dark"
         }
       ],
-      "filename" : "Kuro-chan Valentines Dark.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -25,7 +24,7 @@
           "value" : "tinted"
         }
       ],
-      "filename" : "Kuro-chan Valentines Tinted.png",
+      "filename" : "Kuro-chan~tinted.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"

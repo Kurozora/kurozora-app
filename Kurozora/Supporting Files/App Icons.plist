@@ -18,8 +18,27 @@
 		<string>Events</string>
 		<key>icons</key>
 		<array>
+			<string>Eco</string>
+			<string>Eggatha</string>
+			<string>Eggstein</string>
 			<string>Hanabi</string>
+			<string>John</string>
+			<string>Kur &apos;O Zora</string>
+			<string>Love Bug</string>
+			<string>Melting Kiss</string>
 			<string>Meri-Chri</string>
+			<string>Pink Lemonade</string>
+			<string>Shio Suika</string>
+			<string>Sweet Return</string>
+			<string>White of Crime</string>
+		</array>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>Anime</string>
+		<key>icons</key>
+		<array>
+			<string>Monokuro</string>
 		</array>
 	</dict>
 	<dict>
@@ -29,11 +48,11 @@
 		<array>
 			<string>6 Colors</string>
 			<string>6 Colors Inverted</string>
-			<string>iOS 6</string>
-			<string>iOS 18</string>
 			<string>Kurozora Connect</string>
 			<string>Kurozora Support</string>
 			<string>Kurozora Support Inverted</string>
+			<string>iOS 6</string>
+			<string>iOS 18</string>
 		</array>
 	</dict>
 	<dict>
@@ -42,8 +61,8 @@
 		<key>icons</key>
 		<array>
 			<string>Cookiezora</string>
-			<string>Kurolicious</string>
 			<string>Kuro Caramel</string>
+			<string>Kurolicious</string>
 		</array>
 	</dict>
 	<dict>
@@ -51,7 +70,9 @@
 		<string>Gems</string>
 		<key>icons</key>
 		<array>
+			<string>Amber</string>
 			<string>Amethyst</string>
+			<string>Emerald</string>
 			<string>Onyx</string>
 			<string>Ruby</string>
 			<string>Sapphire</string>
@@ -66,10 +87,10 @@
 			<string>Spring</string>
 			<string>Summer</string>
 			<string>Fall</string>
-			<string>Sakura</string>
 			<string>Flame</string>
-			<string>Wind</string>
+			<string>Sakura</string>
 			<string>Thunder</string>
+			<string>Wind</string>
 		</array>
 	</dict>
 	<dict>
@@ -94,9 +115,21 @@
 		<key>icons</key>
 		<array>
 			<string>Kurogram</string>
-			<string>Monozora</string>
+			<string>Kuromorphism</string>
 			<string>Product(RED)</string>
+			<string>Mini Kuroways</string>
+			<string>Monozora</string>
 			<string>Strikeout</string>
+		</array>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>Trends</string>
+		<key>icons</key>
+		<array>
+			<string>brat</string>
+			<string>Gen Z</string>
+			<string>Millenial</string>
 		</array>
 	</dict>
 </array>
