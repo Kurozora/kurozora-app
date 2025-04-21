@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="g0M-vX-pSL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="g0M-vX-pSL">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -14,7 +14,7 @@
             <objects>
                 <navigationController storyboardIdentifier="LibraryListKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="g0M-vX-pSL" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="dJO-ab-Vkr">
-                        <rect key="frame" x="0.0" y="48" width="414" height="96"/>
+                        <rect key="frame" x="0.0" y="96" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
@@ -158,8 +158,8 @@
                                     <outlet property="posterImageOverlayView" destination="AEM-ez-9he" id="ban-RB-Ny4"/>
                                     <outlet property="posterImageView" destination="6GI-Jb-5fL" id="3Lg-OY-r44"/>
                                     <outlet property="posterShadowView" destination="jg5-R7-81q" id="gyH-GZ-uPD"/>
+                                    <outlet property="primaryLabel" destination="SQi-P9-bcN" id="rag-mZ-xMB"/>
                                     <outlet property="selectionImageOverlayView" destination="9VG-AC-j3v" id="YiB-wM-hrh"/>
-                                    <outlet property="titleLabel" destination="SQi-P9-bcN" id="rUi-DY-f69"/>
                                     <outlet property="userProgressLabel" destination="A5H-Ef-BHb" id="c1r-4O-TsC"/>
                                 </connections>
                             </collectionViewCell>
@@ -249,12 +249,12 @@
                                 </collectionViewCellContentView>
                                 <connections>
                                     <outlet property="estimatedAiringLabel" destination="JGA-WR-aAD" id="bnZ-LO-FMe"/>
-                                    <outlet property="genresLabel" destination="ZCE-hc-XLF" id="GIp-z3-nMH"/>
                                     <outlet property="informationLabel" destination="6Uy-DS-JYA" id="Yp9-Nr-488"/>
                                     <outlet property="posterImageOverlayView" destination="1PX-FA-lW8" id="KTL-5M-3zV"/>
                                     <outlet property="posterImageView" destination="dJ4-Px-xIz" id="TVR-hv-cFw"/>
+                                    <outlet property="primaryLabel" destination="kcq-VT-wfM" id="uBG-ub-E6d"/>
+                                    <outlet property="secondaryLabel" destination="ZCE-hc-XLF" id="1Cp-Tj-ccf"/>
                                     <outlet property="selectionImageOverlayView" destination="Eb0-Ne-SBO" id="Kqz-1V-F0E"/>
-                                    <outlet property="titleLabel" destination="kcq-VT-wfM" id="vkT-Mq-RjP"/>
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="LibraryCompactCollectionViewCell" id="7rh-R8-9Vh" customClass="LibraryCompactCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
@@ -318,8 +318,8 @@
                                 <connections>
                                     <outlet property="posterImageOverlayView" destination="oEo-sK-NpU" id="WvX-z8-d4j"/>
                                     <outlet property="posterImageView" destination="QKT-op-oBI" id="Tir-18-8ae"/>
+                                    <outlet property="primaryLabel" destination="C2e-VZ-lQA" id="nOX-FH-kZT"/>
                                     <outlet property="selectionImageOverlayView" destination="Kul-dx-MDS" id="XWB-vc-nMK"/>
-                                    <outlet property="titleLabel" destination="C2e-VZ-lQA" id="cIS-Ud-Nje"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>

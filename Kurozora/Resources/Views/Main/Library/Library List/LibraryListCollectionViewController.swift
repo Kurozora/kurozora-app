@@ -392,7 +392,7 @@ extension LibraryListCollectionViewController: UICollectionViewDragDelegate {
 		}
 
 		let itemProvider = NSItemProvider(object: (libraryBaseCollectionViewCell as? LibraryDetailedCollectionViewCell)?.episodeImageView?.image ?? libraryBaseCollectionViewCell.posterImageView.image ?? R.image.placeholders.showPoster()!)
-		itemProvider.suggestedName = libraryBaseCollectionViewCell.titleLabel.text
+		itemProvider.suggestedName = libraryBaseCollectionViewCell.primaryLabel.text
 		itemProvider.registerObject(userActivity, visibility: .all)
 
 		let dragItem = UIDragItem(itemProvider: itemProvider)

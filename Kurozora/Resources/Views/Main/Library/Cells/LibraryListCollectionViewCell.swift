@@ -13,7 +13,7 @@ class LibraryListCollectionViewCell: LibraryBaseCollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var estimatedAiringLabel: BroadcastLabel!
 	@IBOutlet weak var informationLabel: KSecondaryLabel!
-	@IBOutlet weak var genresLabel: KSecondaryLabel!
+	@IBOutlet weak var secondaryLabel: KSecondaryLabel!
 
 	// MARK: - View
 	override func prepareForReuse() {
@@ -29,6 +29,7 @@ class LibraryListCollectionViewCell: LibraryBaseCollectionViewCell {
 
 		self.informationLabel.text = show.attributes.informationStringShort
 		self.estimatedAiringLabel.text = ""
+		self.secondaryLabel.text = (show.attributes.tagline ?? "").isEmpty ? show.attributes.genres?.localizedJoined() : show.attributes.tagline
 
 		if show.attributes.status.name == "Currently Airing",
 		   let nextBroadcastAt = show.attributes.nextBroadcastAt {
@@ -41,6 +42,7 @@ class LibraryListCollectionViewCell: LibraryBaseCollectionViewCell {
 
 		self.informationLabel.text = literature.attributes.informationStringShort
 		self.estimatedAiringLabel.text = ""
+		self.secondaryLabel.text = (literature.attributes.tagline ?? "").isEmpty ? literature.attributes.genres?.localizedJoined() : literature.attributes.tagline
 
 		if literature.attributes.status.name == "Currently Publishing",
 		   let publicationDate = literature.attributes.publicationDate {
@@ -53,6 +55,7 @@ class LibraryListCollectionViewCell: LibraryBaseCollectionViewCell {
 
 		self.informationLabel.text = game.attributes.informationStringShort
 		self.estimatedAiringLabel.text = ""
+		self.secondaryLabel.text = (game.attributes.tagline ?? "").isEmpty ? game.attributes.genres?.localizedJoined() : game.attributes.tagline
 
 		if game.attributes.status.name == "Currently Publishing",
 		   let publicationDate = game.attributes.publicationDate {

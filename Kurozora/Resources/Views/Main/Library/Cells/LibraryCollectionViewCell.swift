@@ -11,7 +11,7 @@ import KurozoraKit
 
 class LibraryBaseCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var titleLabel: KLabel!
+	@IBOutlet weak var primaryLabel: KLabel!
 	@IBOutlet weak var posterShadowView: UIView?
 	@IBOutlet weak var posterImageView: PosterImageView!
 	@IBOutlet weak var posterImageOverlayView: UIImageView!
@@ -57,7 +57,7 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 		self.showSelectionIcon = showSelectionIcon
 
 		// Configure title
-		self.titleLabel.text = show.attributes.title
+		self.primaryLabel.text = show.attributes.title
 
 		// Configure poster
 		if let backgroundColor = show.attributes.poster?.backgroundColor {
@@ -80,7 +80,7 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 		self.showSelectionIcon = showSelectionIcon
 
 		// Configure title
-		self.titleLabel.text = literature.attributes.title
+		self.primaryLabel.text = literature.attributes.title
 
 		// Configure poster
 		if let backgroundColor = literature.attributes.poster?.backgroundColor {
@@ -103,7 +103,7 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 		self.showSelectionIcon = showSelectionIcon
 
 		// Configure title
-		self.titleLabel.text = game.attributes.title
+		self.primaryLabel.text = game.attributes.title
 
 		// Configure poster
 		if let backgroundColor = game.attributes.poster?.backgroundColor {

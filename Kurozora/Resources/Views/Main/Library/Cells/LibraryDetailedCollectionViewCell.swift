@@ -23,7 +23,7 @@ class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 		self.bannerContainerView.layerCornerRadius = 10.0
 
 		// Configure title
-		self.titleLabel.textColor = .white
+		self.primaryLabel.textColor = .white
 
 		// Configure user progress
 		self.userProgressLabel.text = show.attributes.informationStringShort
@@ -45,7 +45,7 @@ class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 		self.bannerContainerView.layerCornerRadius = 10.0
 
 		// Configure title
-		self.titleLabel.textColor = .white
+		self.primaryLabel.textColor = .white
 
 		// Configure user progress
 		self.userProgressLabel.text = literature.attributes.informationStringShort
@@ -67,7 +67,7 @@ class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 		self.bannerContainerView.layerCornerRadius = 10.0
 
 		// Configure title
-		self.titleLabel.textColor = .white
+		self.primaryLabel.textColor = .white
 
 		// Configure user progress
 		self.userProgressLabel.text = game.attributes.informationStringShort
