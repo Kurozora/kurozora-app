@@ -479,7 +479,7 @@ extension SettingsTableViewController {
 			case .cache:
 				return R.image.icons.clearCache()
 			case .displayBlindness:
-				return R.image.icons.display()
+				return R.image.icons.textformatSize()
 			case .icon:
 				return UIImage(named: UserSettings.appIcon)
 			case .library:

@@ -63,7 +63,7 @@ enum WarningType {
 		case .forceUpdate:
 			return R.image.icons.appStore()
 		case .maintenance:
-			return R.image.icons.maintenance()
+			return R.image.icons.wrenchAndScrewdriverFill()
 		case .noSignal:
 			return R.image.icons.noSignal()
 		}
