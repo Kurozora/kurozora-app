@@ -6,9 +6,9 @@
 //  Copyright © 2024 Kurozora. All rights reserved.
 //
 
-import WidgetKit
-import SwiftUI
 import KurozoraKit
+import SwiftUI
+import WidgetKit
 
 struct Provider: IntentTimelineProvider {
 	func placeholder(in context: Context) -> DateEntry {
@@ -24,7 +24,7 @@ struct Provider: IntentTimelineProvider {
 			),
 			showDate: true
 		)
-    }
+	}
 
 	func getSnapshot(for configuration: ToggleDateIntent, in context: Context, completion: @escaping (DateEntry) -> Void) {
 		Task {
@@ -79,7 +79,7 @@ struct Provider: IntentTimelineProvider {
 }
 
 struct DateEntry: TimelineEntry {
-    let date: Date
+	let date: Date
 
 	/// The banner to display.
 	let banner: Banner
@@ -90,31 +90,31 @@ struct DateEntry: TimelineEntry {
 
 struct Banner {
 	/// The image of the media.
-	public let image: UIImage?
+	let image: UIImage?
 
 	/// The url of the media.
-	public let url: URL?
+	let url: URL?
 
 	/// The height of the media.
-	public let height: Int?
+	let height: Int?
 
 	/// The width of the media.
-	public let width: Int?
+	let width: Int?
 
 	/// The background color of the media.
-	public let backgroundColor: Color?
+	let backgroundColor: Color?
 
 	/// The deeplink URL of the media.
-	public let deeplinkURL: URL?
+	let deeplinkURL: URL?
 }
 
 struct DateWidgetEntryView: View {
 	@Environment(\.widgetFamily) var family
 	@Environment(\.widgetContentMarginsWithFallback) var margins
 
-    var entry: Provider.Entry
+	var entry: Provider.Entry
 
-    var body: some View {
+	var body: some View {
 		switch self.family {
 		default:
 			ZStack {
@@ -165,14 +165,18 @@ struct DateWidgetEntryView: View {
 			}
 			.widgetURL(self.entry.banner.deeplinkURL)
 		}
-    }
+	}
 }
 
 struct DateWidget: Widget {
-    let kind: String = "app.kurozora.tracker.dateWidget"
+	let kind: String = "app.kurozora.tracker.dateWidget"
 
-    var body: some WidgetConfiguration {
-		IntentConfiguration(kind: self.kind, intent: ToggleDateIntent.self, provider: Provider()) { entry in
+	var body: some WidgetConfiguration {
+		IntentConfiguration(
+			kind: self.kind,
+			intent: ToggleDateIntent.self,
+			provider: Provider()
+		) { entry in
 			if #available(macOS 14.0, iOS 17.0, *) {
 				DateWidgetEntryView(entry: entry)
 					.containerBackground(.fill.secondary, for: .widget)
@@ -181,10 +185,10 @@ struct DateWidget: Widget {
 					.background()
 			}
 		}
-        .configurationDisplayName("Date")
-        .description("Track the current date with random anime, manga or game images every hour.")
+		.configurationDisplayName("Date")
+		.description("Track the current date with random anime, manga or game images every hour.")
 		.contentMarginsDisabled()
-    }
+	}
 }
 
 #if DEBUG
