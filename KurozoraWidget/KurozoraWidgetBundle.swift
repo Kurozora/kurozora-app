@@ -6,9 +6,9 @@
 //  Copyright © 2024 Kurozora. All rights reserved.
 //
 
-import WidgetKit
-import SwiftUI
 import SwifterSwift
+import SwiftUI
+import WidgetKit
 
 @main
 struct KurozoraWidgetBundle: WidgetBundle {
@@ -25,6 +25,10 @@ struct iOS16WidgetBundle: WidgetBundle {
 	@WidgetBundleBuilder
 	var body: some Widget {
 		DateWidget()
+
+		if #available(iOS 17.0, *) {
+			LaunchAppAccessory()
+		}
 	}
 }
 
@@ -32,6 +36,10 @@ struct iOS18WidgetBundle: WidgetBundle {
 	@WidgetBundleBuilder
 	var body: some Widget {
 		DateWidget()
+
+		if #available(iOS 17.0, *) {
+			LaunchAppAccessory()
+		}
 
 		if #available(iOS 18.0, *) {
 			LaunchAppControl()
