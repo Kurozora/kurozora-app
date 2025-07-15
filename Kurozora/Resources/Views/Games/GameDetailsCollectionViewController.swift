@@ -177,10 +177,12 @@ class GameDetailsCollectionViewController: KCollectionViewController, RatingAler
 	}
 
 	override func configureEmptyDataView() {
-		self.emptyBackgroundView.configureImageView(image: R.image.empty.gameLibrary()!)
-		self.emptyBackgroundView.configureLabels(title: "No Details", detail: "This game doesn't have details yet. Please check back again later.")
+		DispatchQueue.main.async {
+			self.emptyBackgroundView.configureImageView(image: R.image.empty.gameLibrary()!)
+			self.emptyBackgroundView.configureLabels(title: "No Details", detail: "This game doesn't have details yet. Please check back again later.")
 
-		self.collectionView.backgroundView?.alpha = 0
+			self.collectionView.backgroundView?.alpha = 0
+		}
 	}
 
 	/// Fades in and out the empty data view according to the number of rows.
