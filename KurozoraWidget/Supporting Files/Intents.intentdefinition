@@ -116,11 +116,11 @@
 	<key>INIntentDefinitionNamespace</key>
 	<string>eDUA72</string>
 	<key>INIntentDefinitionSystemVersion</key>
-	<string>23E224</string>
+	<string>24G5074c</string>
 	<key>INIntentDefinitionToolsBuildVersion</key>
-	<string>15E204a</string>
+	<string>16F6</string>
 	<key>INIntentDefinitionToolsVersion</key>
-	<string>15.3</string>
+	<string>16.4</string>
 	<key>INIntents</key>
 	<array>
 		<dict>

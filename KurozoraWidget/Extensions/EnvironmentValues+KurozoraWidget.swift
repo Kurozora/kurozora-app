@@ -14,12 +14,10 @@ private struct _WidgetContentMargins: EnvironmentKey {
 
 extension EnvironmentValues {
 	var widgetContentMarginsWithFallback: EdgeInsets {
-		get {
-			if #available(iOSApplicationExtension 17.0, macOSApplicationExtension 14.0, *) {
-				self.widgetContentMargins
-			} else {
-				self[_WidgetContentMargins.self]
-			}
+		if #available(iOSApplicationExtension 17.0, macOSApplicationExtension 14.0, *) {
+			self.widgetContentMargins
+		} else {
+			self[_WidgetContentMargins.self]
 		}
 	}
 }

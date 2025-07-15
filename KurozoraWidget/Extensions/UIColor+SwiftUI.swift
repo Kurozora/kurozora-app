@@ -6,8 +6,8 @@
 //  Copyright © 2024 Kurozora. All rights reserved.
 //
 
-import UIKit
 import SwiftUI
+import UIKit
 
 extension UIColor {
 	/// Converts `UIColor` to `Color`.
@@ -24,7 +24,7 @@ extension Color {
 		var green: CGFloat = 0
 		var blue: CGFloat = 0
 		UIColor(self).getRed(&red, green: &green, blue: &blue, alpha: nil)
-		return isLightColor(red: red, green: green, blue: blue) ? .black : .white
+		return self.isLightColor(red: red, green: green, blue: blue) ? .black : .white
 	}
 
 	/// Determine whether the given red, green, and blue values represent a light color.
