@@ -10,7 +10,7 @@ import AppIntents
 import SwiftUI
 
 @available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *)
-struct LaunchAppIntent: OpenIntent, ControlConfigurationIntent {
+struct LaunchAppIntent: OpenIntent, ControlConfigurationIntent, WidgetConfigurationIntent {
 	static let title: LocalizedStringResource = "Launch Kurozora"
 	static let description = IntentDescription("Open Kurozora to your preferred page.")
 
