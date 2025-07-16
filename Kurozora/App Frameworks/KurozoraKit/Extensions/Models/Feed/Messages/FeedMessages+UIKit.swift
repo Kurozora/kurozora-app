@@ -11,9 +11,9 @@ import KurozoraKit
 
 extension FeedMessage {
 	@MainActor
-	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any?])
+	func contextMenuConfiguration(in viewController: UIViewController, userInfo: [AnyHashable: Any]?)
 	-> UIContextMenuConfiguration? {
-		let identifier = userInfo["identifier"] as? NSCopying
+		let identifier = userInfo?["identifier"] as? NSCopying
 
 		return UIContextMenuConfiguration(identifier: identifier, previewProvider: nil) { [weak self] _ in
 			guard let self = self else { return nil }
@@ -22,7 +22,7 @@ extension FeedMessage {
 	}
 
 	@MainActor
-	func makeContextMenu(in viewController: UIViewController?, userInfo: [AnyHashable: Any?]) -> UIMenu {
+	func makeContextMenu(in viewController: UIViewController?, userInfo: [AnyHashable: Any]?) -> UIMenu {
 		var menuElements: [UIMenuElement] = []
 
 		// User actions
@@ -57,14 +57,14 @@ extension FeedMessage {
 			}
 			profileElements.append(showProfileAction)
 
-//			// Block action
-//			if User.isSignedIn, user != User.current {
-//				let blockAction = UIAction(title: Trans.block, image: UIImage(systemName: "xmark.shield")) { [weak self] _ in
-//					guard let self = self else { return }
-//					self.relationships.users.data.first?.block()
-//				}
-//				profileElements.append(blockAction)
-//			}
+			// Block action
+			if User.isSignedIn, user != User.current {
+				let blockAction = UIAction(title: Trans.block, image: UIImage(systemName: "xmark.shield")) { [weak self] _ in
+					guard let self = self else { return }
+					self.relationships.users.data.first?.confirmBlock(via: viewController, userInfo: userInfo)
+				}
+				profileElements.append(blockAction)
+			}
 
 			menuElements.append(UIMenu(title: "@\(user.attributes.slug)", children: profileElements))
 
@@ -116,8 +116,8 @@ extension FeedMessage {
 			// Edit and delete
 			let messageUserID = self.relationships.users.data.first?.id
 			if User.current?.attributes.role == .superAdmin ||
-			   User.current?.attributes.role == .admin ||
-			   User.current?.id == messageUserID {
+				User.current?.attributes.role == .admin ||
+				User.current?.id == messageUserID {
 				// Edit action
 				let editAction = UIAction(title: Trans.edit, image: UIImage(systemName: "pencil.circle")) { [weak self] _ in
 					guard let self = self else { return }
@@ -177,7 +177,7 @@ extension FeedMessage {
 	/// - Parameters:
 	///    - viewController: The view controller initiating the action.
 	///    - userInfo: Any information passed by the user.
-	func heartMessage(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any?]) {
+	func heartMessage(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?) {
 		WorkflowController.shared.isSignedIn { [weak self] in
 			guard let self = self else { return }
 
@@ -187,7 +187,7 @@ extension FeedMessage {
 
 					self.attributes.update(using: feedMessageUpdateResponse.data)
 
-					if let indexPath = userInfo["indexPath"] as? IndexPath {
+					if let indexPath = userInfo?["indexPath"] as? IndexPath {
 						NotificationCenter.default.post(name: .KFMDidUpdate, object: nil, userInfo: ["indexPath": indexPath])
 					}
 				} catch {
@@ -202,7 +202,7 @@ extension FeedMessage {
 	/// - Parameters:
 	///    - viewController: The view controller initiating the action.
 	///    - userInfo: Any information passed by the user.
-	func pinMessage(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any?]) {
+	func pinMessage(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?) {
 		let title = self.attributes.isPinned ? Trans.unpinMessageHeadline : Trans.pinMessageHeadline
 		let message = self.attributes.isPinned ? Trans.unpinMessageSubheadline : Trans.pinMessageSubheadline
 		let primaryActionStyle: UIAlertAction.Style = self.attributes.isPinned ? .destructive : .default
@@ -217,7 +217,7 @@ extension FeedMessage {
 
 						self.attributes.update(using: feedMessageUpdateResponse.data)
 
-						if let indexPath = userInfo["indexPath"] as? IndexPath {
+						if let indexPath = userInfo?["indexPath"] as? IndexPath {
 							NotificationCenter.default.post(name: .KFMDidUpdate, object: nil, userInfo: ["indexPath": indexPath])
 						}
 					} catch {
@@ -247,7 +247,7 @@ extension FeedMessage {
 	/// - Parameters:
 	///    - viewController: The view controller initiating the action.
 	///    - userInfo: Any information passed by the user.
-	func replyToMessage(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any?]) {
+	func replyToMessage(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?) {
 		WorkflowController.shared.isSignedIn { [weak self] in
 			guard let self = self else { return }
 			self.openReplyTextEditor(via: viewController, userInfo: userInfo, isEditingMessage: false)
@@ -259,7 +259,7 @@ extension FeedMessage {
 	/// - Parameters:
 	///    - viewController: The view controller initiating the action.
 	///    - userInfo: Any information passed by the user.
-	func reShareMessage(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any?]) {
+	func reShareMessage(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?) {
 		WorkflowController.shared.isSignedIn { [weak self] in
 			guard let self = self else { return }
 			if !self.attributes.isReShared {
@@ -278,15 +278,15 @@ extension FeedMessage {
 	///    - viewController: The view controller initiating the action.
 	///    - userInfo: Any information passed by the user.
 	///    - isEditingMessage: Whether the user is editing a message.
-	func openReplyTextEditor(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any?], isEditingMessage: Bool) {
+	func openReplyTextEditor(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?, isEditingMessage: Bool) {
 		if let kfmReplyTextEditorViewController = R.storyboard.textEditor.kfmReplyTextEditorViewController() {
 			kfmReplyTextEditorViewController.delegate = viewController as? KFeedMessageTextEditorViewDelegate
 			if isEditingMessage {
 				kfmReplyTextEditorViewController.editingFeedMessage = self
 				kfmReplyTextEditorViewController.opFeedMessage = self.relationships.parent?.data.first
-				kfmReplyTextEditorViewController.userInfo = userInfo as [AnyHashable: Any]
+				kfmReplyTextEditorViewController.userInfo = userInfo ?? [:]
 			} else {
-				kfmReplyTextEditorViewController.segueToOPFeedDetails = !(userInfo["liveReplyEnabled"] as? Bool ?? false)
+				kfmReplyTextEditorViewController.segueToOPFeedDetails = !(userInfo?["liveReplyEnabled"] as? Bool ?? false)
 				kfmReplyTextEditorViewController.opFeedMessage = self
 			}
 
@@ -307,15 +307,15 @@ extension FeedMessage {
 	///    - viewController: The view controller initiating the action.
 	///    - userInfo: Any information passed by the user.
 	///    - isEditingMessage: Whether the user is editing a message.
-	func openReShareTextEditor(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any?], isEditingMessage: Bool) {
+	func openReShareTextEditor(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?, isEditingMessage: Bool) {
 		if let kfmReShareTextEditorViewController = R.storyboard.textEditor.kfmReShareTextEditorViewController() {
 			kfmReShareTextEditorViewController.delegate = viewController as? KFeedMessageTextEditorViewDelegate
 			if isEditingMessage {
 				kfmReShareTextEditorViewController.editingFeedMessage = self
 				kfmReShareTextEditorViewController.opFeedMessage = self.relationships.parent?.data.first
-				kfmReShareTextEditorViewController.userInfo = userInfo as [AnyHashable: Any]
+				kfmReShareTextEditorViewController.userInfo = userInfo ?? [:]
 			} else {
-				kfmReShareTextEditorViewController.segueToOPFeedDetails = !(userInfo["liveReShareEnabled"] as? Bool ?? false)
+				kfmReShareTextEditorViewController.segueToOPFeedDetails = !(userInfo?["liveReShareEnabled"] as? Bool ?? false)
 				kfmReShareTextEditorViewController.opFeedMessage = self
 			}
 
@@ -336,11 +336,11 @@ extension FeedMessage {
 	///    - viewController: The view controller initiating the action.
 	///    - userInfo: Any information passed by the user.
 	///    - isEditingMessage: Whether the user is editing a message.
-	func openDefaultTextEditor(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any?], isEditingMessage: Bool) {
+	func openDefaultTextEditor(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?, isEditingMessage: Bool) {
 		if let kFeedMessageTextEditorViewController = R.storyboard.textEditor.kFeedMessageTextEditorViewController() {
 			if isEditingMessage {
 				kFeedMessageTextEditorViewController.editingFeedMessage = self
-				kFeedMessageTextEditorViewController.userInfo = userInfo as [AnyHashable: Any]
+				kFeedMessageTextEditorViewController.userInfo = userInfo ?? [:]
 			}
 
 			let kurozoraNavigationController = KNavigationController(rootViewController: kFeedMessageTextEditorViewController)
@@ -359,7 +359,7 @@ extension FeedMessage {
 	/// - Parameters:
 	///    - viewController: The view controller initiating the action.
 	///    - userInfo: Any information passed by the user.
-	func editMessage(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any?]) {
+	func editMessage(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?) {
 		if self.attributes.isReply {
 			self.openReplyTextEditor(via: viewController, userInfo: userInfo, isEditingMessage: true)
 		} else if self.attributes.isReShare {
@@ -383,12 +383,12 @@ extension FeedMessage {
 	}
 
 	/// Confirm if the user wants to delete the message.
-	private func confirmDelete(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any?]) {
+	private func confirmDelete(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?) {
 		let actionSheetAlertController = UIAlertController.alert(title: nil, message: Trans.deleteMessageSubheadline) { [weak self] alertController in
 			guard let self = self else { return }
 
 			let deleteAction = UIAlertAction(title: Trans.deleteMessage, style: .destructive) { _ in
-				if let indexPath = userInfo["indexPath"] as? IndexPath {
+				if let indexPath = userInfo?["indexPath"] as? IndexPath {
 					Task {
 						await self.remove(at: indexPath)
 					}

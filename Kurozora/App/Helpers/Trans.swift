@@ -421,6 +421,12 @@ struct Trans {
 	static let deleteMessageSubheadline: String = String(localized: "Message will be deleted permanently.",
 														 table: "Feed",
 														 comment: "The subheadline string for the delete message pop-up")
+	/// The subheadline string for blocking a user.
+	///
+	/// - Tag: Trans-blockMessageSubheadline
+	static let blockMessageSubheadline: String = String(localized: "They will be able to see your public messages, but will no longer be able to engange with them. They will also not be able to follow or message you, and you wil not see notifications from them.",
+														table: "Feed",
+														comment: "The subheadline string for the blocing a user")
 	/// The headline string for the report message pop-up.
 	///
 	/// - Tag: Trans-messageReportedHeadline

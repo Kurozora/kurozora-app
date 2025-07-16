@@ -51,6 +51,15 @@ extension User {
 			menuElements.append(settingsAction)
 		}
 
+		// Block action
+		if User.isSignedIn, User.current?.id != self.id {
+			let blockAction = UIAction(title: Trans.block, image: UIImage(systemName: "xmark.shield")) { [weak self] _ in
+				guard let self = self else { return }
+				self.confirmBlock(via: viewController, userInfo: userInfo)
+			}
+			menuElements.append(blockAction)
+		}
+
 		// Create "Share" element
 		let shareAction = UIAction(title: Trans.share, image: UIImage(systemName: "square.and.arrow.up.fill")) { _ in
 			self.openShareSheet(on: viewController, shareText: "https://kurozora.app/profile/\(self.attributes.slug)\nFollow \(self.attributes.username) via @KurozoraApp")
@@ -102,6 +111,43 @@ extension User {
 					print("-----", error.localizedDescription)
 				}
 			}
+		}
+	}
+
+	private func block(on viewController: UIViewController? = UIApplication.topViewController) {
+		let userIdentity = UserIdentity(id: self.id)
+
+		WorkflowController.shared.isSignedIn {
+			Task {
+				do {
+					let blockUpdateResponse = try await KService.updateBlockStatus(forUser: userIdentity).value
+					self.attributes.update(using: blockUpdateResponse.data)
+				} catch {
+					print("-----", error.localizedDescription)
+				}
+			}
+		}
+	}
+
+	/// Confirm if the user wants to block the message.
+	func confirmBlock(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?) {
+		let actionSheetAlertController = UIAlertController.alert(title: "Block @\(self.attributes.username)", message: Trans.blockMessageSubheadline) { alertController in
+			let blockAction = UIAlertAction(title: Trans.block, style: .destructive) { [weak self] _ in
+				guard let self = self else { return }
+				self.block(on: viewController)
+			}
+			alertController.addAction(blockAction)
+		}
+
+		if let popoverController = actionSheetAlertController.popoverPresentationController {
+			if let view = viewController?.view {
+				popoverController.sourceView = view
+				popoverController.sourceRect = view.frame
+			}
+		}
+
+		if (viewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
+			viewController?.present(actionSheetAlertController, animated: true, completion: nil)
 		}
 	}
 
