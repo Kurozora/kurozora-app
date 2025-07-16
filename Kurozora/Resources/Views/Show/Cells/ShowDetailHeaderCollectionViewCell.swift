@@ -10,7 +10,7 @@ import UIKit
 import KurozoraKit
 
 class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
-	// MARK: - IBoutlet
+	// MARK: - IBOutlet
 	@IBOutlet weak var bannerImageView: UIImageView!
 	@IBOutlet weak var visualEffectView: KVisualEffectView!
 	@IBOutlet weak var bannerContainerView: UIView!
@@ -36,7 +36,7 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 
 	lazy var literatureMask: CALayer = {
 		let literatureMask = CALayer()
-		literatureMask.contents =  UIImage(named: "book_mask")?.cgImage
+		literatureMask.contents = UIImage(named: "book_mask")?.cgImage
 		literatureMask.frame = self.posterImageView.bounds
 		return literatureMask
 	}()
@@ -54,8 +54,8 @@ extension ShowDetailHeaderCollectionViewCell {
 		self.literature = nil
 		self.show = show
 		NotificationCenter.default.removeObserver(self)
-		NotificationCenter.default.addObserver(self, selector: #selector(handleFavoriteToggle(_:)), name: .KModelFavoriteIsToggled, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(handleReminderToggle(_:)), name: .KModelReminderIsToggled, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleFavoriteToggle(_:)), name: .KModelFavoriteIsToggled, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReminderToggle(_:)), name: .KModelReminderIsToggled, object: nil)
 
 		// Configure visual effect
 		self.visualEffectView.layerCornerRadius = 10.0
@@ -108,8 +108,8 @@ extension ShowDetailHeaderCollectionViewCell {
 		self.show = nil
 		self.literature = literature
 		NotificationCenter.default.removeObserver(self)
-		NotificationCenter.default.addObserver(self, selector: #selector(handleFavoriteToggle(_:)), name: .KModelFavoriteIsToggled, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(handleReminderToggle(_:)), name: .KModelReminderIsToggled, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleFavoriteToggle(_:)), name: .KModelFavoriteIsToggled, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReminderToggle(_:)), name: .KModelReminderIsToggled, object: nil)
 
 		// Configure visual effect
 		self.visualEffectView.layerCornerRadius = 10.0
@@ -163,8 +163,8 @@ extension ShowDetailHeaderCollectionViewCell {
 		self.show = nil
 		self.game = game
 		NotificationCenter.default.removeObserver(self)
-		NotificationCenter.default.addObserver(self, selector: #selector(handleFavoriteToggle(_:)), name: .KModelFavoriteIsToggled, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(handleReminderToggle(_:)), name: .KModelReminderIsToggled, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleFavoriteToggle(_:)), name: .KModelFavoriteIsToggled, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReminderToggle(_:)), name: .KModelReminderIsToggled, object: nil)
 
 		// Configure visual effect
 		self.visualEffectView.layerCornerRadius = 10.0
@@ -347,7 +347,7 @@ extension ShowDetailHeaderCollectionViewCell {
 				modelID = game.id
 			}
 
-			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: self.libraryKind), currentSelection: oldLibraryStatus, action: { [weak self] (_, value)  in
+			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: self.libraryKind), currentSelection: oldLibraryStatus, action: { [weak self] _, value in
 				guard let self = self else { return }
 
 				if oldLibraryStatus != value {
@@ -410,7 +410,7 @@ extension ShowDetailHeaderCollectionViewCell {
 								self.updateLibraryActions(using: game, animated: true)
 							}
 
-							// Update edntry in library
+							// Update entry in library
 							self.libraryStatus = .none
 
 							let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")

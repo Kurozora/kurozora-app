@@ -342,7 +342,7 @@ extension GamesListCollectionViewController: BaseLockupCollectionViewCellDelegat
 
 							game.attributes.library?.update(using: libraryUpdateResponse.data)
 
-							// Update edntry in library
+							// Update entry in library
 							cell.libraryStatus = .none
 							button.setTitle(Trans.add.uppercased(), for: .normal)
 

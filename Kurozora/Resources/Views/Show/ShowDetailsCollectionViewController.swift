@@ -190,10 +190,10 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 	}
 
 	override func configureEmptyDataView() {
-		emptyBackgroundView.configureImageView(image: R.image.empty.animeLibrary()!)
-		emptyBackgroundView.configureLabels(title: "No Details", detail: "This show doesn't have details yet. Please check back again later.")
+		self.emptyBackgroundView.configureImageView(image: R.image.empty.animeLibrary()!)
+		self.emptyBackgroundView.configureLabels(title: "No Details", detail: "This show doesn't have details yet. Please check back again later.")
 
-		collectionView.backgroundView?.alpha = 0
+		self.collectionView.backgroundView?.alpha = 0
 	}
 
 	/// Fades in and out the empty data view according to the number of rows.
