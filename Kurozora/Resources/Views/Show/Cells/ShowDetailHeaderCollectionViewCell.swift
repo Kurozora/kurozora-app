@@ -441,7 +441,7 @@ extension ShowDetailHeaderCollectionViewCell {
 		self.game?.toggleFavorite()
 	}
 
-	@IBAction func raminderButtonPressed(_ sender: UIButton) {
+	@IBAction func reminderButtonPressed(_ sender: UIButton) {
 		self.show?.toggleReminder()
 //		self.literature?.toggleReminder(on: self)
 //		self.game?.toggleReminder(on: self)

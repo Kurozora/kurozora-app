@@ -271,7 +271,7 @@
                                                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
                                                                             </userDefinedRuntimeAttributes>
                                                                             <connections>
-                                                                                <action selector="raminderButtonPressed:" destination="qlh-aU-C2J" eventType="touchUpInside" id="lto-B5-dkV"/>
+                                                                                <action selector="reminderButtonPressed:" destination="qlh-aU-C2J" eventType="touchUpInside" id="XZo-Dx-ixu"/>
                                                                             </connections>
                                                                         </button>
                                                                     </subviews>
