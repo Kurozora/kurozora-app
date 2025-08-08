@@ -279,12 +279,13 @@ class EditProfileViewController: KViewController {
 	///
 	/// - Parameter sender: The object requesting the changes to be applied.
 	@IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
+		self.view.endEditing(true)
 		self.updateProfileDetails()
 	}
 
 	/// Cancel profile changes.
 	///
-	/// - Parameter sender: The object requesting the cancelation of the edit mode.
+	/// - Parameter sender: The object requesting the cancellation of the edit mode.
 	@IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
 		self.confirmCancel(showingUpdate: self.hasChanges)
 	}
@@ -306,13 +307,13 @@ class EditProfileViewController: KViewController {
 	}
 }
 
-// MARK: - Confgiure Views
+// MARK: - Configure Views
 extension EditProfileViewController {
 	private func configureViews() {
 		self.configurePlaceholderViews()
 		self.configureBannerImageView()
 		self.configureContainerViews()
-		self.configureProileBadgeStackView()
+		self.configureProfileBadgeStackView()
 	}
 
 	private func configurePlaceholderViews() {
@@ -331,7 +332,7 @@ extension EditProfileViewController {
 		}
 	}
 
-	private func configureProileBadgeStackView() {
+	private func configureProfileBadgeStackView() {
 		self.profileBadgeStackView.delegate = self
 	}
 }
@@ -385,7 +386,7 @@ extension EditProfileViewController: ImagePickerManagerDelegate {
 		case .none: break
 		}
 
-		// Reset selcted image view
+		// Reset selected image view
 		self.imageEditKind = .none
 	}
 
@@ -404,7 +405,7 @@ extension EditProfileViewController: ImagePickerManagerDelegate {
 		case .none: break
 		}
 
-		// Reset selcted image view
+		// Reset selected image view
 		self.imageEditKind = .none
 	}
 }
@@ -419,8 +420,8 @@ extension EditProfileViewController: UIAdaptivePresentationControllerDelegate {
 }
 
 extension EditProfileViewController: UITextFieldDelegate {
-	func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-		guard let textFieldTag = TextFieldTag(rawValue: textField.tag) else { return true }
+	func textFieldDidEndEditing(_ textField: UITextField) {
+		guard let textFieldTag = TextFieldTag(rawValue: textField.tag) else { return }
 
 		switch textFieldTag {
 		case .username:
@@ -428,7 +429,6 @@ extension EditProfileViewController: UITextFieldDelegate {
 		case .nickname:
 			self.editedNicknameText = textField.text
 		}
-		return true
 	}
 }
 
