@@ -38,17 +38,17 @@ class FeedMessageReShareCell: FeedMessageCell {
 		guard let opMessage = feedMessage.relationships.parent?.data.first else { return }
 		self.opDateTimeLabel.text = opMessage.attributes.createdAt.relativeToNow
 
-		if let opUser = opMessage.relationships.users.data.first {
+		if let user = feedMessage.relationships.users.data.first, let opUser = opMessage.relationships.users.data.first {
 			opUser.attributes.profileImage(imageView: self.opProfileImageView)
 
 			// Configure status label
 			if isOnProfile, feedMessage.attributes.isPinned {
 			} else {
 				self.statusImageView.image = UIImage(systemName: "arrow.2.squarepath")
-				self.statusLabel.text = if opUser.attributes.username == User.current?.attributes.username {
+				self.statusLabel.text = if user.attributes.username == User.current?.attributes.username {
 					"You reposted this"
 				} else {
-					"\(opUser.attributes.username) reposted this"
+					"\(user.attributes.username) reposted this"
 				}
 				self.statusStackView.isHidden = false
 			}
