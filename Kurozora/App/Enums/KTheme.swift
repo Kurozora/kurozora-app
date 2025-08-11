@@ -92,7 +92,7 @@ enum KTheme {
 			case 1:
 				return "\(downloadCount) Download"
 			default:
-				return "\(downloadCount.kkFormatted) Downloads"
+				return "\(downloadCount.kkFormatted(precision: 0)) Downloads"
 			}
 		}
 	}

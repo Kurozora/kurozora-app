@@ -17,7 +17,7 @@ class FMDetailsTableViewController: KTableViewController {
 			self.feedMessageID = feedMessage?.id ?? ""
 
 			let repliesCount = feedMessage.attributes.metrics.replyCount
-			self.title = "\(repliesCount.kkFormatted) replies"
+			self.title = "\(repliesCount.kkFormatted(precision: 0)) replies"
 
 			#if !targetEnvironment(macCatalyst)
 			self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing message replies...")

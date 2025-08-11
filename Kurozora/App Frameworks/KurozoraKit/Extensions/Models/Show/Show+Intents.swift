@@ -39,7 +39,7 @@ extension Show {
 		attributeSet.genre = self.attributes.genres?.joined(separator: ", ")
 		attributeSet.rating = self.attributes.stats?.ratingAverage as? NSNumber
 		if let ratingDescription = self.attributes.stats?.ratingCount {
-			attributeSet.ratingDescription = "\(ratingDescription.kkFormatted) Ratings"
+			attributeSet.ratingDescription = "\(ratingDescription.kkFormatted(precision: 0)) Ratings"
 		}
 		attributeSet.startDate = self.attributes.startedAt
 		attributeSet.endDate = self.attributes.endedAt

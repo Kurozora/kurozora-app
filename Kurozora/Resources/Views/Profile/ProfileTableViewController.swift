@@ -323,7 +323,7 @@ class ProfileTableViewController: KTableViewController {
 
 		// Configure following & followers count
 		let followingCount = user.attributes.followingCount
-		let followingCountString = NSAttributedString(string: followingCount.kkFormatted, attributes: self.countValueAttributes)
+		let followingCountString = NSAttributedString(string: followingCount.kkFormatted(precision: 0), attributes: self.countValueAttributes)
 		let followingTitleString = NSAttributedString(string: "\nFollowing", attributes: self.countTitleAttributes)
 		let followingButtonTitle = NSMutableAttributedString()
 		followingButtonTitle.append(followingCountString)
@@ -333,7 +333,7 @@ class ProfileTableViewController: KTableViewController {
 		self.followingButton.isHidden = false
 
 		let followerCount = user.attributes.followerCount
-		let followerCountString = NSAttributedString(string: followerCount.kkFormatted, attributes: self.countValueAttributes)
+		let followerCountString = NSAttributedString(string: followerCount.kkFormatted(precision: 0), attributes: self.countValueAttributes)
 		let followerTitleString = NSAttributedString(string: "\nFollowers", attributes: self.countTitleAttributes)
 		let followersButtonTitle = NSMutableAttributedString()
 		followersButtonTitle.append(followerCountString)
@@ -344,7 +344,7 @@ class ProfileTableViewController: KTableViewController {
 
 		// Configure reviews count
 		let reviewsCount = user.attributes.ratingsCount
-		let reviewsCountString = NSAttributedString(string: reviewsCount.kkFormatted, attributes: self.countValueAttributes)
+		let reviewsCountString = NSAttributedString(string: reviewsCount.kkFormatted(precision: 0), attributes: self.countValueAttributes)
 		let reviewsTitleString = NSAttributedString(string: "\nReviews", attributes: self.countTitleAttributes)
 		let reviewsButtonTitle = NSMutableAttributedString()
 		reviewsButtonTitle.append(reviewsCountString)

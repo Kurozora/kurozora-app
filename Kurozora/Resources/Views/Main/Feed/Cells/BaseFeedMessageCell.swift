@@ -130,15 +130,15 @@ class BaseFeedMessageCell: KTableViewCell {
 		// Configure metrics
 		var heartsCount: Int? = feedMessage.attributes.metrics.heartCount
 		heartsCount = heartsCount == 0 ? nil : heartsCount
-		self.heartButton.setTitle(heartsCount?.kkFormatted, for: .normal)
+		self.heartButton.setTitle(heartsCount?.kkFormatted(precision: 0), for: .normal)
 
 		var replyCount: Int? = feedMessage.attributes.metrics.replyCount
 		replyCount = replyCount == 0 ? nil : replyCount
-		self.commentButton.setTitle(replyCount?.kkFormatted, for: .normal)
+		self.commentButton.setTitle(replyCount?.kkFormatted(precision: 0), for: .normal)
 
 		var reShareCount: Int? = feedMessage.attributes.metrics.reShareCount
 		reShareCount = reShareCount == 0 ? nil : reShareCount
-		self.shareButton.setTitle(reShareCount?.kkFormatted, for: .normal)
+		self.shareButton.setTitle(reShareCount?.kkFormatted(precision: 0), for: .normal)
 
 		// Configure more button
 		self.moreButton.showsMenuAsPrimaryAction = true
