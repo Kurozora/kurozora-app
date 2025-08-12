@@ -54,7 +54,7 @@ extension EpisodeDetail {
 		// MARK: - Functions
 		/// Returns the required primary information from the given object.
 		///
-		/// - Parameter episode: The object used to extract the infromation from.
+		/// - Parameter episode: The object used to extract the information from.
 		///
 		/// - Returns: the required primary information from the given object.
 		func primaryInformation(from episode: Episode) -> String? {
@@ -77,7 +77,7 @@ extension EpisodeDetail {
 
 		/// Returns the required secondary information from the given object.
 		///
-		/// - Parameter episode: The object used to extract the infromation from.
+		/// - Parameter episode: The object used to extract the information from.
 		///
 		/// - Returns: the required secondary information from the given object.
 		func secondaryInformation(from episode: Episode? = nil) -> String? {
@@ -100,7 +100,7 @@ extension EpisodeDetail {
 
 		/// Returns the required primary image from the given object.
 		///
-		/// - Parameter episode: The object used to extract the infromation from.
+		/// - Parameter episode: The object used to extract the information from.
 		///
 		/// - Returns: the required primary image from the given object.
 		func primaryImage(from episode: Episode? = nil) -> UIImage? {
@@ -192,7 +192,7 @@ extension EpisodeDetail {
 			}
 		}
 
-		/// The image value of a studio infomration type.
+		/// The image value of a studio information type.
 		var imageValue: UIImage? {
 			switch self {
 			case .number:
@@ -207,7 +207,7 @@ extension EpisodeDetail {
 		// MARK: - Functions
 		/// Returns the required information from the given object.
 		///
-		/// - Parameter episode: The object used to extract the infromation from.
+		/// - Parameter episode: The object used to extract the information from.
 		///
 		/// Returns: the required information from the given object.
 		func information(from episode: Episode) -> String? {
@@ -223,7 +223,7 @@ extension EpisodeDetail {
 
 		/// Returns the required primary information from the given object.
 		///
-		/// - Parameter episode: The object used to extract the infromation from.
+		/// - Parameter episode: The object used to extract the information from.
 		///
 		/// - Returns: the required primary information from the given object.
 		func primaryInformation(from episode: Episode) -> String? {
@@ -234,7 +234,7 @@ extension EpisodeDetail {
 
 		/// Returns the required secondary information from the given object.
 		///
-		/// - Parameter episode: The object used to extract the infromation from.
+		/// - Parameter episode: The object used to extract the information from.
 		///
 		/// - Returns: the required secondary information from the given object.
 		func secondaryInformation(from episode: Episode) -> String? {
@@ -245,7 +245,7 @@ extension EpisodeDetail {
 
 		/// Returns the required primary image from the given object.
 		///
-		/// - Parameter episode: The object used to extract the infromation from.
+		/// - Parameter episode: The object used to extract the information from.
 		///
 		/// - Returns: the required primary image from the given object.
 		func primaryImage(from episode: Episode) -> UIImage? {

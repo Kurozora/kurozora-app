@@ -57,7 +57,7 @@ extension LiteratureDetail {
 		// MARK: - Functions
 		/// Returns the required primary information from the given object.
 		///
-		/// - Parameter literature: The object used to extract the infromation from.
+		/// - Parameter literature: The object used to extract the information from.
 		///
 		/// - Returns: the required primary information from the given object.
 		func primaryInformation(from literature: Literature) -> String? {
@@ -82,7 +82,7 @@ extension LiteratureDetail {
 
 		/// Returns the required secondary information from the given object.
 		///
-		/// - Parameter literature: The object used to extract the infromation from.
+		/// - Parameter literature: The object used to extract the information from.
 		///
 		/// - Returns: the required secondary information from the given object.
 		func secondaryInformation(from literature: Literature? = nil) -> String? {
@@ -115,7 +115,7 @@ extension LiteratureDetail {
 
 		/// Returns the required primary image from the given object.
 		///
-		/// - Parameter literature: The object used to extract the infromation from.
+		/// - Parameter literature: The object used to extract the information from.
 		///
 		/// - Returns: the required primary image from the given object.
 		func primaryImage(from literature: Literature? = nil) -> UIImage? {
@@ -288,7 +288,7 @@ extension LiteratureDetail {
 		// MARK: - Functions
 		/// Returns the required information from the given object.
 		///
-		/// - Parameter literature: The object used to extract the infromation from.
+		/// - Parameter literature: The object used to extract the information from.
 		///
 		/// - Returns: the required information from the given object.
 		func information(from literature: Literature) -> String? {
@@ -345,7 +345,7 @@ extension LiteratureDetail {
 
 		/// Returns the required primary information from the given object.
 		///
-		/// - Parameter literature: The object used to extract the infromation from.
+		/// - Parameter literature: The object used to extract the information from.
 		///
 		/// - Returns: the required primary information from the given object.
 		func primaryInformation(from literature: Literature) -> String? {
@@ -360,7 +360,7 @@ extension LiteratureDetail {
 
 		/// Returns the required secondary information from the given object.
 		///
-		/// - Parameter literature: The object used to extract the infromation from.
+		/// - Parameter literature: The object used to extract the information from.
 		///
 		/// - Returns: the required secondary information from the given object.
 		func secondaryInformation(from literature: Literature) -> String? {
@@ -377,7 +377,7 @@ extension LiteratureDetail {
 
 		/// Returns the required primary image from the given object.
 		///
-		/// - Parameter literature: The object used to extract the infromation from.
+		/// - Parameter literature: The object used to extract the information from.
 		///
 		/// - Returns: the required primary image from the given object.
 		func primaryImage(from literature: Literature) -> UIImage? {

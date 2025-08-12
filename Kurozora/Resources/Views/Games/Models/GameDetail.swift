@@ -57,7 +57,7 @@ extension GameDetail {
 		// MARK: - Functions
 		/// Returns the required primary information from the given object.
 		///
-		/// - Parameter game: The object used to extract the infromation from.
+		/// - Parameter game: The object used to extract the information from.
 		///
 		/// - Returns: the required primary information from the given object.
 		func primaryInformation(from game: Game) -> String? {
@@ -82,7 +82,7 @@ extension GameDetail {
 
 		/// Returns the required secondary information from the given object.
 		///
-		/// - Parameter game: The object used to extract the infromation from.
+		/// - Parameter game: The object used to extract the information from.
 		///
 		/// - Returns: the required secondary information from the given object.
 		func secondaryInformation(from game: Game? = nil) -> String? {
@@ -115,7 +115,7 @@ extension GameDetail {
 
 		/// Returns the required primary image from the given object.
 		///
-		/// - Parameter game: The object used to extract the infromation from.
+		/// - Parameter game: The object used to extract the information from.
 		///
 		/// - Returns: the required primary image from the given object.
 		func primaryImage(from game: Game? = nil) -> UIImage? {
@@ -292,7 +292,7 @@ extension GameDetail {
 		// MARK: - Functions
 		/// Returns the required information from the given object.
 		///
-		/// - Parameter game: The object used to extract the infromation from.
+		/// - Parameter game: The object used to extract the information from.
 		///
 		/// - Returns: the required information from the given object.
 		func information(from game: Game) -> String? {
@@ -349,7 +349,7 @@ extension GameDetail {
 
 		/// Returns the required primary information from the given object.
 		///
-		/// - Parameter game: The object used to extract the infromation from.
+		/// - Parameter game: The object used to extract the information from.
 		///
 		/// - Returns: the required primary information from the given object.
 		func primaryInformation(from game: Game) -> String? {
@@ -364,7 +364,7 @@ extension GameDetail {
 
 		/// Returns the required secondary information from the given object.
 		///
-		/// - Parameter game: The object used to extract the infromation from.
+		/// - Parameter game: The object used to extract the information from.
 		///
 		/// - Returns: the required secondary information from the given object.
 		func secondaryInformation(from game: Game) -> String? {
@@ -381,7 +381,7 @@ extension GameDetail {
 
 		/// Returns the required primary image from the given object.
 		///
-		/// - Parameter game: The object used to extract the infromation from.
+		/// - Parameter game: The object used to extract the information from.
 		///
 		/// - Returns: the required primary image from the given object.
 		func primaryImage(from game: Game) -> UIImage? {

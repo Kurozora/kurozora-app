@@ -24,13 +24,13 @@ enum ServiceType {
 	/// Used to display information related to signing in with Apple.
 	case signInWithApple
 
-	/// Used to display infromation related to paying for subscriptions.
+	/// Used to display information related to paying for subscriptions.
 	case subscription
 
-	/// Used to display infromation related to tipping.
+	/// Used to display information related to tipping.
 	case tipJar
 
-	/// Used to display infomration related to visiting the privacy policy.
+	/// Used to display information related to visiting the privacy policy.
 	case visitPrivacyPolicy
 
 	// MARK: - Properties

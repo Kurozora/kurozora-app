@@ -48,7 +48,7 @@ extension StudioDetail {
 		// MARK: - Functions
 		/// Returns the required primary information from the given object.
 		///
-		/// - Parameter studio: The object used to extract the infromation from.
+		/// - Parameter studio: The object used to extract the information from.
 		///
 		/// - Returns: the required primary information from the given object.
 		func primaryInformation(from studio: Studio) -> String? {
@@ -67,7 +67,7 @@ extension StudioDetail {
 
 		/// Returns the required secondary information from the given object.
 		///
-		/// - Parameter studio: The object used to extract the infromation from.
+		/// - Parameter studio: The object used to extract the information from.
 		///
 		/// - Returns: the required secondary information from the given object.
 		func secondaryInformation(from studio: Studio? = nil) -> String? {
@@ -86,7 +86,7 @@ extension StudioDetail {
 
 		/// Returns the required primary image from the given object.
 		///
-		/// - Parameter studio: The object used to extract the infromation from.
+		/// - Parameter studio: The object used to extract the information from.
 		///
 		/// - Returns: the required primary image from the given object.
 		func primaryImage(from studio: Studio? = nil) -> UIImage? {
@@ -197,7 +197,7 @@ extension StudioDetail {
 			}
 		}
 
-		/// The image value of a studio infomration type.
+		/// The image value of a studio information type.
 		var imageValue: UIImage? {
 			switch self {
 			case .aliases:
@@ -230,7 +230,7 @@ extension StudioDetail {
 		// MARK: - Functions
 		/// Returns the required information from the given object.
 		///
-		/// - Parameter studio: The object used to extract the infromation from.
+		/// - Parameter studio: The object used to extract the information from.
 		///
 		/// - Returns: the required information from the given object.
 		func information(from studio: Studio) -> String {
@@ -268,7 +268,7 @@ extension StudioDetail {
 
 		/// Returns the required primary information from the given object.
 		///
-		/// - Parameter studio: The object used to extract the infromation from.
+		/// - Parameter studio: The object used to extract the information from.
 		///
 		/// - Returns: the required primary information from the given object.
 		func primaryInformation(from studio: Studio) -> String? {
@@ -277,7 +277,7 @@ extension StudioDetail {
 
 		/// Returns the required secondary information from the given object.
 		///
-		/// - Parameter studio: The object used to extract the infromation from.
+		/// - Parameter studio: The object used to extract the information from.
 		///
 		/// - Returns: the required secondary information from the given object.
 		func secondaryInformation(from studio: Studio) -> String? {
@@ -286,7 +286,7 @@ extension StudioDetail {
 
 		/// Returns the required primary image from the given object.
 		///
-		/// - Parameter studio: The object used to extract the infromation from.
+		/// - Parameter studio: The object used to extract the information from.
 		///
 		/// - Returns: the required primary image from the given object.
 		func primaryImage(from studio: Studio) -> UIImage? {
