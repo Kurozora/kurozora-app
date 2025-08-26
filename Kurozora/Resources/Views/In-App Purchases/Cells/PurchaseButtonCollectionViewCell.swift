@@ -10,7 +10,7 @@ import UIKit
 import StoreKit
 
 protocol PurchaseButtonCollectionViewCellDelegate: AnyObject {
-	func purchaseButtonCollectionViewCell(_ cell: PurchaseButtonCollectionViewCell, didPressButton button: UIButton)
+	func purchaseButtonCollectionViewCell(_ cell: PurchaseButtonCollectionViewCell, didPressButton button: UIButton) async
 }
 
 class PurchaseButtonCollectionViewCell: UICollectionViewCell {
@@ -73,6 +73,8 @@ class PurchaseButtonCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - IBActions
 	@IBAction func purchaseButtonPressed(_ sender: UIButton) {
-		self.delegate?.purchaseButtonCollectionViewCell(self, didPressButton: sender)
+		Task {
+			await self.delegate?.purchaseButtonCollectionViewCell(self, didPressButton: sender)
+		}
 	}
 }

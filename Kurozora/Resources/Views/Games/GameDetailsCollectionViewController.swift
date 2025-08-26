@@ -299,7 +299,9 @@ class GameDetailsCollectionViewController: KCollectionViewController, RatingAler
 	}
 
 	@objc func toggleFavorite() {
-		self.game?.toggleFavorite()
+		Task {
+			await self.game?.toggleFavorite()
+		}
 	}
 
 	@objc func toggleReminder() {
@@ -458,39 +460,71 @@ extension GameDetailsCollectionViewController {
 
 // MARK: - BaseLockupCollectionViewCellDelegate
 extension GameDetailsCollectionViewController: BaseLockupCollectionViewCellDelegate {
-	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressReminder button: UIButton) { }
+	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressReminder button: UIButton) async { }
 
-	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressStatus button: UIButton) {
-		WorkflowController.shared.isSignedIn { [weak self] in
-			guard let self = self else { return }
-			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-			let modelID: String
+	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressStatus button: UIButton) async {
+		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
+		guard signedIn else { return }
+		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+		let modelID: String
 
-			switch cell.libraryKind {
-			case .shows:
-				guard let show = self.relatedShows[safe: indexPath.item]?.show else { return }
-				modelID = show.id
-			case .literatures:
-				guard let literature = self.relatedLiteratures[safe: indexPath.item]?.literature else { return }
-				modelID = literature.id
-			case .games:
-				switch self.dataSource.sectionIdentifier(for: indexPath.section) {
-				case .moreByStudio:
-					guard let game = self.studioGames[indexPath] else { return }
-					modelID = game.id
-				case .relatedGames:
-					guard let game = self.relatedGames[safe: indexPath.item]?.game else { return }
-					modelID = game.id
-				default:
-					return
+		switch cell.libraryKind {
+		case .shows:
+			guard let show = self.relatedShows[safe: indexPath.item]?.show else { return }
+			modelID = show.id
+		case .literatures:
+			guard let literature = self.relatedLiteratures[safe: indexPath.item]?.literature else { return }
+			modelID = literature.id
+		case .games:
+			switch self.dataSource.sectionIdentifier(for: indexPath.section) {
+			case .moreByStudio:
+				guard let game = self.studioGames[indexPath] else { return }
+				modelID = game.id
+			case .relatedGames:
+				guard let game = self.relatedGames[safe: indexPath.item]?.game else { return }
+				modelID = game.id
+			default:
+				return
+			}
+		}
+
+		let oldLibraryStatus = cell.libraryStatus
+		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value  in
+			Task {
+				do {
+					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID).value
+
+					switch cell.libraryKind {
+					case .shows:
+						self.relatedShows[safe: indexPath.item]?.show.attributes.library?.update(using: libraryUpdateResponse.data)
+					case .literatures:
+						self.relatedLiteratures[safe: indexPath.item]?.literature.attributes.library?.update(using: libraryUpdateResponse.data)
+					case .games:
+						self.relatedGames[safe: indexPath.item]?.game.attributes.library?.update(using: libraryUpdateResponse.data)
+					}
+
+					// Update entry in library
+					cell.libraryStatus = value
+					button.setTitle("\(title) ▾", for: .normal)
+
+					let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
+					NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
+					self.configureNavBarButtons()
+
+					// Request review
+					ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
+				} catch let error as KKAPIError {
+					self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
+					print("----- Add to library failed", error.message)
 				}
 			}
+		})
 
-			let oldLibraryStatus = cell.libraryStatus
-			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value  in
+		if cell.libraryStatus != .none {
+			actionSheetAlertController.addAction(UIAlertAction(title: Trans.removeFromLibrary, style: .destructive, handler: { _ in
 				Task {
 					do {
-						let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID).value
+						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID).value
 
 						switch cell.libraryKind {
 						case .shows:
@@ -502,61 +536,28 @@ extension GameDetailsCollectionViewController: BaseLockupCollectionViewCellDeleg
 						}
 
 						// Update entry in library
-						cell.libraryStatus = value
-						button.setTitle("\(title) ▾", for: .normal)
+						cell.libraryStatus = .none
+						button.setTitle(Trans.add.uppercased(), for: .normal)
 
-						let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
-						NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
+						let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
+						NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
 						self.configureNavBarButtons()
-
-						// Request review
-						ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
 					} catch let error as KKAPIError {
-						self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
-						print("----- Add to library failed", error.message)
+						self.presentAlertController(title: "Can't Remove From Your Library 😔", message: error.message)
+						print("----- Remove from library failed", error.message)
 					}
 				}
-			})
+			}))
+		}
 
-			if cell.libraryStatus != .none {
-				actionSheetAlertController.addAction(UIAlertAction(title: Trans.removeFromLibrary, style: .destructive, handler: { _ in
-					Task {
-						do {
-							let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID).value
+		// Present the controller
+		if let popoverController = actionSheetAlertController.popoverPresentationController {
+			popoverController.sourceView = button
+			popoverController.sourceRect = button.bounds
+		}
 
-							switch cell.libraryKind {
-							case .shows:
-								self.relatedShows[safe: indexPath.item]?.show.attributes.library?.update(using: libraryUpdateResponse.data)
-							case .literatures:
-								self.relatedLiteratures[safe: indexPath.item]?.literature.attributes.library?.update(using: libraryUpdateResponse.data)
-							case .games:
-								self.relatedGames[safe: indexPath.item]?.game.attributes.library?.update(using: libraryUpdateResponse.data)
-							}
-
-							// Update entry in library
-							cell.libraryStatus = .none
-							button.setTitle(Trans.add.uppercased(), for: .normal)
-
-							let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
-							NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
-							self.configureNavBarButtons()
-						} catch let error as KKAPIError {
-							self.presentAlertController(title: "Can't Remove From Your Library 😔", message: error.message)
-							print("----- Remove from library failed", error.message)
-						}
-					}
-				}))
-			}
-
-			// Present the controller
-			if let popoverController = actionSheetAlertController.popoverPresentationController {
-				popoverController.sourceView = button
-				popoverController.sourceRect = button.bounds
-			}
-
-			if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
-				self.present(actionSheetAlertController, animated: true, completion: nil)
-			}
+		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
+			self.present(actionSheetAlertController, animated: true, completion: nil)
 		}
 	}
 }
@@ -602,20 +603,19 @@ extension GameDetailsCollectionViewController: TapToRateCollectionViewCellDelega
 
 // MARK: - WriteAReviewCollectionViewCellDelegate
 extension GameDetailsCollectionViewController: WriteAReviewCollectionViewCellDelegate {
-	func writeAReviewCollectionViewCell(_ cell: WriteAReviewCollectionViewCell, didPress button: UIButton) {
-		WorkflowController.shared.isSignedIn { [weak self] in
-			guard let self = self else { return }
+	func writeAReviewCollectionViewCell(_ cell: WriteAReviewCollectionViewCell, didPress button: UIButton) async {
+		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
+		guard signedIn else { return }
 
-			let reviewTextEditorViewController = ReviewTextEditorViewController()
-			reviewTextEditorViewController.delegate = self
-			reviewTextEditorViewController.router?.dataStore?.kind = .game(self.game)
-			reviewTextEditorViewController.router?.dataStore?.rating = self.game.attributes.library?.rating
-			reviewTextEditorViewController.router?.dataStore?.review = nil
+		let reviewTextEditorViewController = ReviewTextEditorViewController()
+		reviewTextEditorViewController.delegate = self
+		reviewTextEditorViewController.router?.dataStore?.kind = .game(self.game)
+		reviewTextEditorViewController.router?.dataStore?.rating = self.game.attributes.library?.rating
+		reviewTextEditorViewController.router?.dataStore?.review = nil
 
-			let navigationController = KNavigationController(rootViewController: reviewTextEditorViewController)
-			navigationController.presentationController?.delegate = reviewTextEditorViewController
-			self.present(navigationController, animated: true)
-		}
+		let navigationController = KNavigationController(rootViewController: reviewTextEditorViewController)
+		navigationController.presentationController?.delegate = reviewTextEditorViewController
+		self.present(navigationController, animated: true)
 	}
 }
 

@@ -65,7 +65,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 			ShortcutsProvider.updateAppShortcutParameters()
 		}
 
-		// Configure window or resotre previous activity.
+		// Configure window or restore previous activity.
 		if let userActivity = connectionOptions.userActivities.first ?? session.stateRestorationActivity {
 			if !self.configure(window: self.window, with: userActivity) {
 				print("----- Failed to restore from \(userActivity)")
@@ -75,11 +75,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
 		guard let url = URLContexts.first?.url else { return }
-		NavigationManager.shared.schemeHandler(scene, open: url)
+
+		Task {
+			await NavigationManager.shared.schemeHandler(scene, open: url)
+		}
 	}
 
-	func windowScene(_ windowScene: UIWindowScene, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-		KurozoraDelegate.shared.shortcutHandler(windowScene, performActionFor: shortcutItem)
+	func windowScene(_ windowScene: UIWindowScene, performActionFor shortcutItem: UIApplicationShortcutItem) async -> Bool {
+		await KurozoraDelegate.shared.shortcutHandler(windowScene, performActionFor: shortcutItem)
+		return true
 	}
 
 	func sceneDidEnterBackground(_ scene: UIScene) {
@@ -131,28 +135,36 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 				guard let showID = parameters["showID"], let url = URL(string: "kurozora://anime/\(showID)") else { return false }
 				guard let scene = window?.windowScene else { return false }
 
-				NavigationManager.shared.schemeHandler(scene, open: url)
+				Task {
+					await NavigationManager.shared.schemeHandler(scene, open: url)
+				}
 			}
 		case "OpenGameIntent":
 			if let parameters = activity.userInfo as? [String: String] {
 				guard let gameID = parameters["gameID"], let url = URL(string: "kurozora://game/\(gameID)") else { return false }
 				guard let scene = window?.windowScene else { return false }
 
-				NavigationManager.shared.schemeHandler(scene, open: url)
+				Task {
+					await NavigationManager.shared.schemeHandler(scene, open: url)
+				}
 			}
 		case "OpenLiteratureIntent":
 			if let parameters = activity.userInfo as? [String: String] {
 				guard let literatureID = parameters["literatureID"], let url = URL(string: "kurozora://literature/\(literatureID)") else { return false }
 				guard let scene = window?.windowScene else { return false }
 
-				NavigationManager.shared.schemeHandler(scene, open: url)
+				Task {
+					await NavigationManager.shared.schemeHandler(scene, open: url)
+				}
 			}
 		case "OpenUserIntent":
 			if let parameters = activity.userInfo as? [String: String] {
 				guard let userID = parameters["userID"], let url = URL(string: "kurozora://profile/\(userID)") else { return false }
 				guard let scene = window?.windowScene else { return false }
 
-				NavigationManager.shared.schemeHandler(scene, open: url)
+				Task {
+					await NavigationManager.shared.schemeHandler(scene, open: url)
+				}
 			}
 		default:
 			break

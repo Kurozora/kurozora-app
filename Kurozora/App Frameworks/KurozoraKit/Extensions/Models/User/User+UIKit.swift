@@ -99,42 +99,42 @@ extension User {
 		viewController?.present(activityViewController, animated: true, completion: nil)
 	}
 
-	func follow(on viewController: UIViewController? = UIApplication.topViewController) {
+	@MainActor
+	func follow(on viewController: UIViewController?) async {
 		let userIdentity = UserIdentity(id: self.id)
+		let signedIn = await WorkflowController.shared.isSignedIn(on: viewController)
+		guard signedIn else { return }
 
-		WorkflowController.shared.isSignedIn {
-			Task {
-				do {
-					let followUpdateResponse = try await KService.updateFollowStatus(forUser: userIdentity).value
-					self.attributes.update(using: followUpdateResponse.data)
-				} catch {
-					print("-----", error.localizedDescription)
-				}
-			}
+		do {
+			let followUpdateResponse = try await KService.updateFollowStatus(forUser: userIdentity).value
+			self.attributes.update(using: followUpdateResponse.data)
+		} catch {
+			print("-----", error.localizedDescription)
 		}
 	}
 
-	private func block(on viewController: UIViewController? = UIApplication.topViewController) {
+	@MainActor
+	private func block(on viewController: UIViewController?) async {
 		let userIdentity = UserIdentity(id: self.id)
+		let signedIn = await WorkflowController.shared.isSignedIn(on: viewController)
+		guard signedIn else { return }
 
-		WorkflowController.shared.isSignedIn {
-			Task {
-				do {
-					let blockUpdateResponse = try await KService.updateBlockStatus(forUser: userIdentity).value
-					self.attributes.update(using: blockUpdateResponse.data)
-				} catch {
-					print("-----", error.localizedDescription)
-				}
-			}
+		do {
+			let blockUpdateResponse = try await KService.updateBlockStatus(forUser: userIdentity).value
+			self.attributes.update(using: blockUpdateResponse.data)
+		} catch {
+			print("-----", error.localizedDescription)
 		}
 	}
 
 	/// Confirm if the user wants to block the message.
-	func confirmBlock(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?) {
+	func confirmBlock(via viewController: UIViewController? = nil, userInfo: [AnyHashable: Any]?) {
 		let actionSheetAlertController = UIAlertController.alert(title: "Block @\(self.attributes.username)", message: Trans.blockMessageSubheadline) { alertController in
 			let blockAction = UIAlertAction(title: Trans.block, style: .destructive) { [weak self] _ in
 				guard let self = self else { return }
-				self.block(on: viewController)
+				Task {
+					await self.block(on: viewController)
+				}
 			}
 			alertController.addAction(blockAction)
 		}

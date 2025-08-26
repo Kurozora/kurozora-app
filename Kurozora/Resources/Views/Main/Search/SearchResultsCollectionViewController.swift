@@ -323,12 +323,13 @@ class SearchResultsCollectionViewController: KCollectionViewController {
 				await self.search(scope: searchScope, types: searchTypes, query: query, next: next, filter: filter)
 			}
 		case .library:
-			WorkflowController.shared.isSignedIn { [weak self] in
-				Task {
-					guard let self = self else { return }
-					let types: [KKSearchType] = self.searchResults != nil ? types : [.shows, .literatures, .games]
-					await self.search(scope: searchScope, types: types, query: query, next: next, filter: filter)
-				}
+			Task { [weak self] in
+				guard let self = self else { return }
+				let signedIn = await WorkflowController.shared.isSignedIn(on: self)
+				guard signedIn else { return }
+
+				let types: [KKSearchType] = self.searchResults != nil ? types : [.shows, .literatures, .games]
+				await self.search(scope: searchScope, types: types, query: query, next: next, filter: filter)
 			}
 		}
 	}
@@ -796,10 +797,11 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 		case .kurozora:
 			self.performSearch(with: query, in: searchScope, for: [], with: nil, next: nil)
 		case .library:
-			WorkflowController.shared.isSignedIn { [weak self] in
+			Task { [weak self] in
 				guard let self = self else { return }
+				let signedIn = await WorkflowController.shared.isSignedIn(on: self)
+				guard signedIn else { return }
 				self.performSearch(with: query, in: searchScope, for: [], with: nil, next: nil)
-				return
 			}
 			searchBar.selectedScopeButtonIndex = self.currentScope.rawValue
 		}
@@ -836,31 +838,62 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 
 // MARK: - BaseLockupCollectionViewCellDelegate
 extension SearchResultsCollectionViewController: BaseLockupCollectionViewCellDelegate {
-	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressReminder button: UIButton) { }
+	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressReminder button: UIButton) async { }
 
-	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressStatus button: UIButton) {
-		WorkflowController.shared.isSignedIn { [weak self] in
-			guard let self = self else { return }
-			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-			let modelID: String
+	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressStatus button: UIButton) async {
+		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
+		guard signedIn else { return }
+		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+		let modelID: String
 
-			switch cell.libraryKind {
-			case .shows:
-				guard let show = self.shows[indexPath] else { return }
-				modelID = show.id
-			case .literatures:
-				guard let literature = self.literatures[indexPath] else { return }
-				modelID = literature.id
-			case .games:
-				guard let game = self.games[indexPath] else { return }
-				modelID = game.id
+		switch cell.libraryKind {
+		case .shows:
+			guard let show = self.shows[indexPath] else { return }
+			modelID = show.id
+		case .literatures:
+			guard let literature = self.literatures[indexPath] else { return }
+			modelID = literature.id
+		case .games:
+			guard let game = self.games[indexPath] else { return }
+			modelID = game.id
+		}
+
+		let oldLibraryStatus = cell.libraryStatus
+		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value  in
+			Task {
+				do {
+					let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID).value
+
+					switch cell.libraryKind {
+					case .shows:
+						self.shows[indexPath]?.attributes.library?.update(using: libraryUpdateResponse.data)
+					case .literatures:
+						self.literatures[indexPath]?.attributes.library?.update(using: libraryUpdateResponse.data)
+					case .games:
+						self.games[indexPath]?.attributes.library?.update(using: libraryUpdateResponse.data)
+					}
+
+					// Update entry in library
+					cell.libraryStatus = value
+					button.setTitle("\(title) ▾", for: .normal)
+
+					let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
+					NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
+
+					// Request review
+					ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
+				} catch let error as KKAPIError {
+					self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
+					print("----- Add to library failed", error.message)
+				}
 			}
+		})
 
-			let oldLibraryStatus = cell.libraryStatus
-			let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value  in
+		if cell.libraryStatus != .none {
+			actionSheetAlertController.addAction(UIAlertAction(title: Trans.removeFromLibrary, style: .destructive, handler: { _ in
 				Task {
 					do {
-						let libraryUpdateResponse = try await KService.addToLibrary(cell.libraryKind, withLibraryStatus: value, modelID: modelID).value
+						let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID).value
 
 						switch cell.libraryKind {
 						case .shows:
@@ -872,59 +905,27 @@ extension SearchResultsCollectionViewController: BaseLockupCollectionViewCellDel
 						}
 
 						// Update entry in library
-						cell.libraryStatus = value
-						button.setTitle("\(title) ▾", for: .normal)
+						cell.libraryStatus = .none
+						button.setTitle(Trans.add.uppercased(), for: .normal)
 
-						let libraryAddToNotificationName = Notification.Name("AddTo\(value.sectionValue)Section")
-						NotificationCenter.default.post(name: libraryAddToNotificationName, object: nil)
-
-						// Request review
-						ReviewManager.shared.requestReview(for: .itemAddedToLibrary(status: value))
+						let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
+						NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
 					} catch let error as KKAPIError {
-						self.presentAlertController(title: "Can't Add to Your Library 😔", message: error.message)
-						print("----- Add to library failed", error.message)
+						self.presentAlertController(title: "Can't Remove From Your Library 😔", message: error.message)
+						print("----- Remove from library failed", error.message)
 					}
 				}
-			})
+			}))
+		}
 
-			if cell.libraryStatus != .none {
-				actionSheetAlertController.addAction(UIAlertAction(title: Trans.removeFromLibrary, style: .destructive, handler: { _ in
-					Task {
-						do {
-							let libraryUpdateResponse = try await KService.removeFromLibrary(cell.libraryKind, modelID: modelID).value
+		// Present the controller
+		if let popoverController = actionSheetAlertController.popoverPresentationController {
+			popoverController.sourceView = button
+			popoverController.sourceRect = button.bounds
+		}
 
-							switch cell.libraryKind {
-							case .shows:
-								self.shows[indexPath]?.attributes.library?.update(using: libraryUpdateResponse.data)
-							case .literatures:
-								self.literatures[indexPath]?.attributes.library?.update(using: libraryUpdateResponse.data)
-							case .games:
-								self.games[indexPath]?.attributes.library?.update(using: libraryUpdateResponse.data)
-							}
-
-							// Update entry in library
-							cell.libraryStatus = .none
-							button.setTitle(Trans.add.uppercased(), for: .normal)
-
-							let libraryRemoveFromNotificationName = Notification.Name("RemoveFrom\(oldLibraryStatus.sectionValue)Section")
-							NotificationCenter.default.post(name: libraryRemoveFromNotificationName, object: nil)
-						} catch let error as KKAPIError {
-							self.presentAlertController(title: "Can't Remove From Your Library 😔", message: error.message)
-							print("----- Remove from library failed", error.message)
-						}
-					}
-				}))
-			}
-
-			// Present the controller
-			if let popoverController = actionSheetAlertController.popoverPresentationController {
-				popoverController.sourceView = button
-				popoverController.sourceRect = button.bounds
-			}
-
-			if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
-				self.present(actionSheetAlertController, animated: true, completion: nil)
-			}
+		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
+			self.present(actionSheetAlertController, animated: true, completion: nil)
 		}
 	}
 }
@@ -957,17 +958,14 @@ extension SearchResultsCollectionViewController: UserLockupCollectionViewCellDel
 
 // MARK: - EpisodeLockupCollectionViewCellDelegate
 extension SearchResultsCollectionViewController: EpisodeLockupCollectionViewCellDelegate {
-	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressWatchStatusButton button: UIButton) {
-		WorkflowController.shared.isSignedIn { [weak self] in
-			guard let self = self else { return }
-			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressWatchStatusButton button: UIButton) async {
+		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
+		guard signedIn else { return }
+		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 
-			Task {
-				cell.watchStatusButton.isEnabled = false
-				await self.episodes[indexPath]?.updateWatchStatus(userInfo: ["indexPath": indexPath])
-				cell.watchStatusButton.isEnabled = true
-			}
-		}
+		cell.watchStatusButton.isEnabled = false
+		await self.episodes[indexPath]?.updateWatchStatus(userInfo: ["indexPath": indexPath])
+		cell.watchStatusButton.isEnabled = true
 	}
 
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressShowButton button: UIButton) {

@@ -293,40 +293,40 @@ extension FMDetailsTableViewController {
 
 // MARK: - BaseFeedMessageCellDelegate
 extension FMDetailsTableViewController: BaseFeedMessageCellDelegate {
-	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressHeartButton button: UIButton) {
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressHeartButton button: UIButton) async {
 		if let indexPath = self.tableView.indexPath(for: cell) {
 			switch indexPath.section {
 			case 0:
-				self.feedMessage.heartMessage(via: self, userInfo: ["indexPath": indexPath])
+				await self.feedMessage.heartMessage(via: self, userInfo: ["indexPath": indexPath])
 			default:
-				self.feedMessageReplies[indexPath.row].heartMessage(via: self, userInfo: ["indexPath": indexPath])
+				await self.feedMessageReplies[indexPath.row].heartMessage(via: self, userInfo: ["indexPath": indexPath])
 			}
 		}
 	}
 
-	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressReplyButton button: UIButton) {
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressReplyButton button: UIButton) async {
 		if let indexPath = self.tableView.indexPath(for: cell) {
 			switch indexPath.section {
 			case 0:
-				self.feedMessage.replyToMessage(via: self, userInfo: ["liveReplyEnabled": cell.liveReplyEnabled])
+				await self.feedMessage.replyToMessage(via: self, userInfo: ["liveReplyEnabled": cell.liveReplyEnabled])
 			default:
-				self.feedMessageReplies[indexPath.row].replyToMessage(via: self, userInfo: ["liveReplyEnabled": cell.liveReplyEnabled])
+				await self.feedMessageReplies[indexPath.row].replyToMessage(via: self, userInfo: ["liveReplyEnabled": cell.liveReplyEnabled])
 			}
 		}
 	}
 
-	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressReShareButton button: UIButton) {
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressReShareButton button: UIButton) async {
 		if let indexPath = self.tableView.indexPath(for: cell) {
 			switch indexPath.section {
 			case 0:
-				self.feedMessage.reShareMessage(via: self, userInfo: ["liveReShareEnabled": cell.liveReShareEnabled])
+				await self.feedMessage.reShareMessage(via: self, userInfo: ["liveReShareEnabled": cell.liveReShareEnabled])
 			default:
-				self.feedMessageReplies[indexPath.row].reShareMessage(via: self, userInfo: ["liveReShareEnabled": cell.liveReShareEnabled])
+				await self.feedMessageReplies[indexPath.row].reShareMessage(via: self, userInfo: ["liveReShareEnabled": cell.liveReShareEnabled])
 			}
 		}
 	}
 
-	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressUserName sender: AnyObject) {
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressUserName sender: AnyObject) async {
 		if let indexPath = self.tableView.indexPath(for: cell) {
 			switch indexPath.section {
 			case 0:
@@ -337,7 +337,7 @@ extension FMDetailsTableViewController: BaseFeedMessageCellDelegate {
 		}
 	}
 
-	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) {
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) async {
 		if let badgeViewController = R.storyboard.badge.instantiateInitialViewController() {
 			badgeViewController.profileBadge = profileBadge
 			badgeViewController.popoverPresentationController?.sourceView = button
@@ -347,11 +347,11 @@ extension FMDetailsTableViewController: BaseFeedMessageCellDelegate {
 		}
 	}
 
-	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressUserName sender: AnyObject) {
+	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressUserName sender: AnyObject) async {
 		self.feedMessage.relationships.parent?.data.first?.visitOriginalPosterProfile(from: self)
 	}
 
-	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressOPMessage sender: AnyObject) {
+	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressOPMessage sender: AnyObject) async {
 		guard let feedMessage = self.feedMessage.relationships.parent?.data.first else { return }
 		self.performSegue(withIdentifier: R.segue.fmDetailsTableViewController.feedMessageDetailsSegue.identifier, sender: feedMessage.id)
 	}

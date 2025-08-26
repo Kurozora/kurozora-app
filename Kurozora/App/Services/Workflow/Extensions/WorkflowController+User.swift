@@ -10,17 +10,20 @@ import KurozoraKit
 
 // MARK: - User
 extension WorkflowController {
-	/// Checks whether the current user is signed in. If the user is signed in then a success block is run. Otherwise the user is asked to sign in.
+	/// Checks whether the current user is signed in.
+	/// If the user is not signed in, the method waits for the user to complete the sign in flow before returning.
 	///
 	///	- Parameter viewController: The view controller on which the sign in flow is presented if necessary.
-	/// - Parameter completion: Optional completion handler (default is `nil`).
-	@discardableResult func isSignedIn(on viewController: UIViewController? = nil, _ completion: (() -> Void)? = nil) -> Bool {
+	@MainActor
+	func isSignedIn(on viewController: UIViewController? = nil) async -> Bool {
 		if User.isSignedIn {
-			completion?()
 			return true
 		} else {
-			self.presentSignInView(on: viewController)?.onSignIn = completion
-			return false
+			return await withCheckedContinuation { continuation in
+				self.presentSignInView(on: viewController)?.onSignIn = {
+					continuation.resume(returning: true)
+				}
+			}
 		}
 	}
 

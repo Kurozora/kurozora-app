@@ -10,6 +10,19 @@ import UIKit
 import KurozoraKit
 import LinkPresentation
 
+protocol BaseFeedMessageCellDelegate: AnyObject {
+	// MARK: Feed Message Base
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressHeartButton button: UIButton) async
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressReplyButton button: UIButton) async
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressReShareButton button: UIButton) async
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressUserName sender: AnyObject) async
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) async
+
+	// MARK: Feed Message ReShare
+	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressUserName sender: AnyObject) async
+	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressOPMessage sender: AnyObject) async
+}
+
 class BaseFeedMessageCell: KTableViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var warningTranscriptLabel: UILabel?
@@ -264,22 +277,30 @@ class BaseFeedMessageCell: KTableViewCell {
 
 	// MARK: - IBActions
 	@objc func usernameLabelPressed(_ sender: AnyObject) {
-		self.delegate?.baseFeedMessageCell(self, didPressUserName: sender)
+		Task {
+			await self.delegate?.baseFeedMessageCell(self, didPressUserName: sender)
+		}
 	}
 
 	@IBAction func heartButtonPressed(_ sender: UIButton) {
-		self.delegate?.baseFeedMessageCell(self, didPressHeartButton: sender)
-		sender.animateBounce()
+		Task {
+			await self.delegate?.baseFeedMessageCell(self, didPressHeartButton: sender)
+			sender.animateBounce()
+		}
 	}
 
 	@IBAction func commentButtonPressed(_ sender: UIButton) {
-		self.delegate?.baseFeedMessageCell(self, didPressReplyButton: sender)
-		sender.animateBounce()
+		Task {
+			await self.delegate?.baseFeedMessageCell(self, didPressReplyButton: sender)
+			sender.animateBounce()
+		}
 	}
 
 	@IBAction func reShareButtonPressed(_ sender: UIButton) {
-		self.delegate?.baseFeedMessageCell(self, didPressReShareButton: sender)
-		sender.animateBounce()
+		Task {
+			await self.delegate?.baseFeedMessageCell(self, didPressReShareButton: sender)
+			sender.animateBounce()
+		}
 	}
 }
 
@@ -308,7 +329,7 @@ extension BaseFeedMessageCell: UITextViewDelegate {
 
 // MARK: - ProfileBadgeStackViewDelegate
 extension BaseFeedMessageCell: ProfileBadgeStackViewDelegate {
-	func profileBadgeStackView(_ view: ProfileBadgeStackView, didPress button: UIButton, for profileBadge: ProfileBadge) {
-		self.delegate?.baseFeedMessageCell(self, didPressProfileBadge: button, for: profileBadge)
+	func profileBadgeStackView(_ view: ProfileBadgeStackView, didPress button: UIButton, for profileBadge: ProfileBadge) async {
+		await self.delegate?.baseFeedMessageCell(self, didPressProfileBadge: button, for: profileBadge)
 	}
 }

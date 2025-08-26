@@ -33,12 +33,14 @@ class TapToRateCollectionViewCell: UICollectionViewCell {
 		self.cosmosView.didFinishTouchingCosmos = { [weak self] rating in
 			guard let self = self else { return }
 
-			WorkflowController.shared.isSignedIn {
-				self.delegate?.tapToRateCollectionViewCell(self, rateWith: rating)
-			}
+			Task {
+				let signedIn = await WorkflowController.shared.isSignedIn()
+				guard signedIn else {
+					self.cosmosView.rating = 0.0
+					return
+				}
 
-			if !User.isSignedIn {
-				self.cosmosView.rating = 0.0
+				self.delegate?.tapToRateCollectionViewCell(self, rateWith: rating)
 			}
 		}
 	}

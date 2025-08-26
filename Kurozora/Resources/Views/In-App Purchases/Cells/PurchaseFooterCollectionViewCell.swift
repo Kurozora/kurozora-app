@@ -10,9 +10,9 @@ import UIKit
 import SwiftTheme
 
 protocol PurchaseFooterCollectionViewCellDelegate: AnyObject {
-	func purchaseFooterCollectionViewCell(_ cell: PurchaseFooterCollectionViewCell, didPressRestorePurchaseButton button: UIButton)
-	func purchaseFooterCollectionViewCell(_ cell: PurchaseFooterCollectionViewCell, didPressPrivacyButton button: UIButton)
-	func purchaseFooterCollectionViewCell(_ cell: PurchaseFooterCollectionViewCell, didPressTermsOfUseButton button: UIButton)
+	func purchaseFooterCollectionViewCell(_ cell: PurchaseFooterCollectionViewCell, didPressRestorePurchaseButton button: UIButton) async
+	func purchaseFooterCollectionViewCell(_ cell: PurchaseFooterCollectionViewCell, didPressPrivacyButton button: UIButton) async
+	func purchaseFooterCollectionViewCell(_ cell: PurchaseFooterCollectionViewCell, didPressTermsOfUseButton button: UIButton) async
 }
 
 class PurchaseFooterCollectionViewCell: UICollectionViewCell {
@@ -37,14 +37,20 @@ class PurchaseFooterCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - IBActions
 	@IBAction func restorePurchaseButtonPressed(_ sender: UIButton) {
-		self.delegate?.purchaseFooterCollectionViewCell(self, didPressRestorePurchaseButton: sender)
+		Task {
+			await self.delegate?.purchaseFooterCollectionViewCell(self, didPressRestorePurchaseButton: sender)
+		}
 	}
 
 	@IBAction func termsOfUseButtonPressed(_ sender: UIButton) {
-		self.delegate?.purchaseFooterCollectionViewCell(self, didPressTermsOfUseButton: sender)
+		Task {
+			await self.delegate?.purchaseFooterCollectionViewCell(self, didPressTermsOfUseButton: sender)
+		}
 	}
 
 	@IBAction func privacyButtonPressed(_ sender: UIButton) {
-		self.delegate?.purchaseFooterCollectionViewCell(self, didPressPrivacyButton: sender)
+		Task {
+			await self.delegate?.purchaseFooterCollectionViewCell(self, didPressPrivacyButton: sender)
+		}
 	}
 }

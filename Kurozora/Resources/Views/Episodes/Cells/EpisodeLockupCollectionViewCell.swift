@@ -10,9 +10,9 @@ import UIKit
 import KurozoraKit
 
 protocol EpisodeLockupCollectionViewCellDelegate: AnyObject {
-	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressShowButton button: UIButton)
-	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressSeasonButton button: UIButton)
-	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressWatchStatusButton button: UIButton)
+	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressShowButton button: UIButton) async
+	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressSeasonButton button: UIButton) async
+	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressWatchStatusButton button: UIButton) async
 }
 
 class EpisodeLockupCollectionViewCell: KCollectionViewCell {
@@ -85,14 +85,20 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 
 	// MARK: - IBActions
 	@IBAction func showButtonPressed(_ sender: UIButton) {
-		self.delegate?.episodeLockupCollectionViewCell(self, didPressShowButton: sender)
+		Task {
+			await self.delegate?.episodeLockupCollectionViewCell(self, didPressShowButton: sender)
+		}
 	}
 
 	@IBAction func watchStatusButtonPressed(_ sender: UIButton) {
-		self.delegate?.episodeLockupCollectionViewCell(self, didPressWatchStatusButton: sender)
+		Task {
+			await self.delegate?.episodeLockupCollectionViewCell(self, didPressWatchStatusButton: sender)
+		}
 	}
 
 	@IBAction func seasonButtonPressed(_ sender: UIButton) {
-		self.delegate?.episodeLockupCollectionViewCell(self, didPressSeasonButton: sender)
+		Task {
+			await self.delegate?.episodeLockupCollectionViewCell(self, didPressSeasonButton: sender)
+		}
 	}
 }

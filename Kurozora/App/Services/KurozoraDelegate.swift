@@ -356,18 +356,18 @@ extension KurozoraDelegate {
 	///    - windowScene: The window scene object receiving the shortcut item.
 	///    - shortcutItem: The action selected by the user. Your app defines the actions that it supports, and the user chooses from among those actions. For information about how to create and configure shortcut items for your app, see [UIApplicationShortcutItem](apple-reference-documentation://hsTvcCjEDQ).
 	@MainActor
-	func shortcutHandler(_ windowScene: UIWindowScene, performActionFor shortcutItem: UIApplicationShortcutItem) {
+	func shortcutHandler(_ windowScene: UIWindowScene, performActionFor shortcutItem: UIApplicationShortcutItem) async {
 		switch shortcutItem.type {
 		case R.info.uiApplicationShortcutItems.libraryShortcut.uiApplicationShortcutItemType:
-			NavigationManager.shared.schemeHandler(windowScene, open: Scheme.library.urlValue)
+			await NavigationManager.shared.schemeHandler(windowScene, open: Scheme.library.urlValue)
 		case R.info.uiApplicationShortcutItems.profileShortcut.uiApplicationShortcutItemType:
-			WorkflowController.shared.isSignedIn {
-				NavigationManager.shared.schemeHandler(windowScene, open: Scheme.profile.urlValue)
-			}
+			let signedIn = await WorkflowController.shared.isSignedIn()
+			guard signedIn else { return }
+			await NavigationManager.shared.schemeHandler(windowScene, open: Scheme.profile.urlValue)
 		case R.info.uiApplicationShortcutItems.notificationShortcut.uiApplicationShortcutItemType:
-			NavigationManager.shared.schemeHandler(windowScene, open: Scheme.notifications.urlValue)
+			await NavigationManager.shared.schemeHandler(windowScene, open: Scheme.notifications.urlValue)
 		case R.info.uiApplicationShortcutItems.searchShortcut.uiApplicationShortcutItemType:
-			NavigationManager.shared.schemeHandler(windowScene, open: Scheme.search.urlValue)
+			await NavigationManager.shared.schemeHandler(windowScene, open: Scheme.search.urlValue)
 		default: break
 		}
 	}

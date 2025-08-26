@@ -28,7 +28,10 @@ class NavigationManager: NSObject {
 
 		self.$selectedDestination.sink { [weak self] url in
 			guard let self = self, let url = url else { return }
-			self.routeScheme(with: url)
+
+			Task {
+				await self.routeScheme(with: url)
+			}
 		}
 		.store(in: &self.subscriptions)
 	}
@@ -36,26 +39,27 @@ class NavigationManager: NSObject {
 	/// Routes the scheme with the specified url to an in app resource.
 	///
 	/// - Parameter url: The URL resource to open. This resource can be a network resource or a file. For information about the Apple-registered URL schemes, see Apple URL Scheme Reference.
-	fileprivate func routeScheme(with url: URL) {
+	fileprivate func routeScheme(with url: URL) async {
 		if url.pathExtension == "xml" {
-			WorkflowController.shared.isSignedIn {
-				let topViewController = UIApplication.topViewController
-				if let libraryImportTableViewController = topViewController as? LibraryImportTableViewController {
+			let signedIn = await WorkflowController.shared.isSignedIn()
+			guard signedIn else { return }
+
+			let topViewController = UIApplication.topViewController
+			if let libraryImportTableViewController = topViewController as? LibraryImportTableViewController {
+				libraryImportTableViewController.selectedFileURL = url
+			} else if let kNavigationController = (topViewController as? SettingsSplitViewController)?.viewControllers[1] as? KNavigationController {
+				if let libraryImportTableViewController = kNavigationController.topViewController as? LibraryImportTableViewController {
 					libraryImportTableViewController.selectedFileURL = url
-				} else if let kNavigationController = (topViewController as? SettingsSplitViewController)?.viewControllers[1] as? KNavigationController {
-					if let libraryImportTableViewController = kNavigationController.topViewController as? LibraryImportTableViewController {
-						libraryImportTableViewController.selectedFileURL = url
-					} else if let libraryImportTableViewController = R.storyboard.accountSettings.libraryImportTableViewController() {
-						libraryImportTableViewController.selectedFileURL = url
-						kNavigationController.show(libraryImportTableViewController, sender: nil)
-					}
 				} else if let libraryImportTableViewController = R.storyboard.accountSettings.libraryImportTableViewController() {
-					let closeBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: libraryImportTableViewController, action: #selector(libraryImportTableViewController.dismissButtonPressed))
-					libraryImportTableViewController.navigationItem.leftBarButtonItem = closeBarButtonItem
 					libraryImportTableViewController.selectedFileURL = url
-					let kNavigationController = KNavigationController(rootViewController: libraryImportTableViewController)
-					topViewController?.show(kNavigationController, sender: nil)
+					kNavigationController.show(libraryImportTableViewController, sender: nil)
 				}
+			} else if let libraryImportTableViewController = R.storyboard.accountSettings.libraryImportTableViewController() {
+				let closeBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: libraryImportTableViewController, action: #selector(libraryImportTableViewController.dismissButtonPressed))
+				libraryImportTableViewController.navigationItem.leftBarButtonItem = closeBarButtonItem
+				libraryImportTableViewController.selectedFileURL = url
+				let kNavigationController = KNavigationController(rootViewController: libraryImportTableViewController)
+				topViewController?.show(kNavigationController, sender: nil)
 			}
 		}
 
@@ -201,10 +205,7 @@ class NavigationManager: NSObject {
 	/// - Parameters:
 	///    - scene: The object that represents one instance of the app's user interface.
 	///    - url: The URL resource to open. This resource can be a network resource or a file. For information about the Apple-registered URL schemes, see Apple URL Scheme Reference.
-	func schemeHandler(_ scene: UIScene, open url: URL) {
-		DispatchQueue.main.async { [weak self] in
-			guard let self = self else { return }
-			self.routeScheme(with: url)
-		}
+	func schemeHandler(_ scene: UIScene, open url: URL) async {
+		await self.routeScheme(with: url)
 	}
 }

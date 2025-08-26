@@ -123,7 +123,9 @@ class UsersListCollectionViewController: KCollectionViewController {
 					detailString = "Be the first to follow \(username ?? "this user")!"
 					buttonTitle = "＋ Follow \(username ?? "User")"
 					buttonAction = {
-						self.followUser()
+						Task {
+							await self.followUser()
+						}
 					}
 				}
 			case .following:
@@ -167,24 +169,20 @@ class UsersListCollectionViewController: KCollectionViewController {
 	}
 
 	/// Sends a request to follow the user whose followers list is being viewed.
-	func followUser() {
+	func followUser() async {
 		guard let userID = self.user?.id else { return }
 		let userIdentity = UserIdentity(id: userID)
+		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
+		guard signedIn else { return }
 
-		WorkflowController.shared.isSignedIn { [weak self] in
-			guard let self = self else { return }
-
-			Task {
-				do {
-					let followUpdateResponse = try await KService.updateFollowStatus(forUser: userIdentity).value
-					DispatchQueue.main.async {
-						self.user?.attributes.update(using: followUpdateResponse.data)
-						self.handleRefreshControl()
-					}
-				} catch {
-					print("-----", error.localizedDescription)
-				}
+		do {
+			let followUpdateResponse = try await KService.updateFollowStatus(forUser: userIdentity).value
+			DispatchQueue.main.async {
+				self.user?.attributes.update(using: followUpdateResponse.data)
+				self.handleRefreshControl()
 			}
+		} catch {
+			print("-----", error.localizedDescription)
 		}
 	}
 

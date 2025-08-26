@@ -440,27 +440,24 @@ class EpisodesListCollectionViewController: KCollectionViewController {
 
 // MARK: - EpisodeLockupCollectionViewCellDelegate
 extension EpisodesListCollectionViewController: EpisodeLockupCollectionViewCellDelegate {
-	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressWatchStatusButton button: UIButton) {
-		WorkflowController.shared.isSignedIn { [weak self] in
-			guard let self = self else { return }
-			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressWatchStatusButton button: UIButton) async {
+		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
+		guard signedIn else { return }
+		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 
-			Task {
-				cell.watchStatusButton.isEnabled = false
-				switch self.episodesListFetchType {
-				case .season, .search:
-					await self.episodes[indexPath]?.updateWatchStatus(userInfo: ["indexPath": indexPath])
-				case .upNext:
-					await self.episodes[indexPath]?.updateWatchStatus(userInfo: [:])
-					self.prepareUpNextRefresh(indexPath)
-					await self.fetchEpisodes()
-				}
-				cell.watchStatusButton.isEnabled = true
-			}
+		cell.watchStatusButton.isEnabled = false
+		switch self.episodesListFetchType {
+		case .season, .search:
+			await self.episodes[indexPath]?.updateWatchStatus(userInfo: ["indexPath": indexPath])
+		case .upNext:
+			await self.episodes[indexPath]?.updateWatchStatus(userInfo: [:])
+			self.prepareUpNextRefresh(indexPath)
+			await self.fetchEpisodes()
 		}
+		cell.watchStatusButton.isEnabled = true
 	}
 
-	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressShowButton button: UIButton) {
+	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressShowButton button: UIButton) async {
 		guard let indexPath = collectionView.indexPath(for: cell) else { return }
 		guard let episode = self.episodes[indexPath] else { return }
 		guard let showIdentity = episode.relationships?.shows?.data.first else { return }
@@ -468,7 +465,7 @@ extension EpisodesListCollectionViewController: EpisodeLockupCollectionViewCellD
 		self.performSegue(withIdentifier: R.segue.episodesListCollectionViewController.showDetailsSegue, sender: showIdentity)
 	}
 
-	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressSeasonButton button: UIButton) {
+	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressSeasonButton button: UIButton) async {
 		guard let indexPath = collectionView.indexPath(for: cell) else { return }
 		guard let episode = self.episodes[indexPath] else { return }
 		guard let seasonIdentity = episode.relationships?.seasons?.data.first else { return }

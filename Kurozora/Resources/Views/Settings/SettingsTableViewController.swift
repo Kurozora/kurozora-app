@@ -155,11 +155,11 @@ extension SettingsTableViewController {
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let sectionRows = settingsSection[indexPath.section].rowsValue[indexPath.row]
-		var shouldPerformSegue = true
 
 		switch sectionRows {
 		case .account:
-			shouldPerformSegue = WorkflowController.shared.isSignedIn(on: self)
+			self.authAndSegue(to: sectionRows.segueIdentifier)
+			return
 		case .switchAccount: break
 		case .keychain: break
 		case .browser: break
@@ -188,7 +188,8 @@ extension SettingsTableViewController {
 		case .motion: break
 		case .theme: break
 		case .notifications:
-			shouldPerformSegue = WorkflowController.shared.isSignedIn(on: self)
+			self.authAndSegue(to: sectionRows.segueIdentifier)
+			return
 		case .reminder:
 			Task { [weak self] in
 				await WorkflowController.shared.subscribeToReminders(on: self)
@@ -216,10 +217,11 @@ extension SettingsTableViewController {
 			}
 			return
 		case .restoreFeatures:
-			WorkflowController.shared.isSignedIn(on: self) {
-				Task {
-					await Store.shared.restore()
-				}
+			Task {
+				let signedIn = await WorkflowController.shared.isSignedIn(on: self)
+				guard signedIn else { return }
+
+				await Store.shared.restore()
 			}
 			return
 		case .rate:
@@ -242,8 +244,20 @@ extension SettingsTableViewController {
 		}
 
 		let identifierString = sectionRows.segueIdentifier
-		if shouldPerformSegue && !identifierString.isEmpty {
+		if !identifierString.isEmpty {
 			self.performSegue(withIdentifier: identifierString, sender: nil)
+		}
+	}
+
+	/// Authenticate user and perform segue.
+	///
+	/// - Parameter identifier: The segue identifier.
+	private func authAndSegue(to identifier: String) {
+		Task {
+			let signedIn = await WorkflowController.shared.isSignedIn(on: self)
+			guard signedIn else { return }
+
+			self.performSegue(withIdentifier: identifier, sender: nil)
 		}
 	}
 }

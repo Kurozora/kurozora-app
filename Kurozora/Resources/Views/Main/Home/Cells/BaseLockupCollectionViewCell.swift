@@ -10,8 +10,8 @@ import UIKit
 import KurozoraKit
 
 protocol BaseLockupCollectionViewCellDelegate: AnyObject {
-	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressStatus button: UIButton)
-	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressReminder button: UIButton)
+	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressStatus button: UIButton) async
+	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressReminder button: UIButton) async
 }
 
 class BaseLockupCollectionViewCell: KCollectionViewCell {
@@ -186,6 +186,8 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 
 	// MARK: - IBActions
 	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
-		self.delegate?.baseLockupCollectionViewCell(self, didPressStatus: sender)
+		Task {
+			await self.delegate?.baseLockupCollectionViewCell(self, didPressStatus: sender)
+		}
 	}
 }

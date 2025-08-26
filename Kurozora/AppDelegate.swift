@@ -216,7 +216,10 @@ extension AppDelegate {
 
 	/// User chose "Favorites" from the Account menu.
 	@objc func handleFavorites(_ sender: AnyObject) {
-		WorkflowController.shared.isSignedIn {
+		Task {
+			let signedIn = await WorkflowController.shared.isSignedIn()
+			guard signedIn else { return }
+
 			if let favoritesCollectionViewController = R.storyboard.favorites.favoritesCollectionViewController() {
 				UIApplication.topViewController?.show(favoritesCollectionViewController, sender: nil)
 			}

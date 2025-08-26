@@ -141,11 +141,17 @@ class FeedMessageReShareCell: FeedMessageCell {
 
 	/// Segues to message details.
 	@objc func showOPMessage(_ sender: AnyObject) {
-		self.delegate?.feedMessageReShareCell(self, didPressOPMessage: sender)
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.delegate?.feedMessageReShareCell(self, didPressOPMessage: sender)
+		}
 	}
 
 	/// Presents the profile view for the feed message poster.
 	@objc fileprivate func opUsernameLabelPressed(_ sender: AnyObject) {
-		self.delegate?.feedMessageReShareCell(self, didPressUserName: sender)
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.delegate?.feedMessageReShareCell(self, didPressUserName: sender)
+		}
 	}
 }

@@ -9,7 +9,7 @@
 import UIKit
 
 protocol WriteAReviewCollectionViewCellDelegate: AnyObject {
-	func writeAReviewCollectionViewCell(_ cell: WriteAReviewCollectionViewCell, didPress button: UIButton)
+	func writeAReviewCollectionViewCell(_ cell: WriteAReviewCollectionViewCell, didPress button: UIButton) async
 }
 
 class WriteAReviewCollectionViewCell: UICollectionViewCell {
@@ -21,6 +21,8 @@ class WriteAReviewCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - IBActions
 	@IBAction func primaryButtonPressed(_ sender: UIButton) {
-		self.delegate?.writeAReviewCollectionViewCell(self, didPress: sender)
+		Task {
+			await self.delegate?.writeAReviewCollectionViewCell(self, didPress: sender)
+		}
 	}
 }

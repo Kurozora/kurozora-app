@@ -292,33 +292,30 @@ extension EpisodeDetailsCollectionViewController: CastCollectionViewCellDelegate
 
 // MARK: - EpisodeLockupCollectionViewCellDelegate
 extension EpisodeDetailsCollectionViewController: EpisodeLockupCollectionViewCellDelegate {
-	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressWatchStatusButton button: UIButton) {
-		WorkflowController.shared.isSignedIn { [weak self] in
-			guard let self = self else { return }
-			guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressWatchStatusButton button: UIButton) async {
+		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
+		guard signedIn else { return }
+		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 
-			Task {
-				cell.watchStatusButton.isEnabled = false
-				let suggestedEpisode = self.suggestedEpisodes[indexPath.item]
-				await suggestedEpisode.updateWatchStatus(userInfo: ["indexPath": indexPath])
-				cell.watchStatusButton.isEnabled = true
+		cell.watchStatusButton.isEnabled = false
+		let suggestedEpisode = self.suggestedEpisodes[indexPath.item]
+		await suggestedEpisode.updateWatchStatus(userInfo: ["indexPath": indexPath])
+		cell.watchStatusButton.isEnabled = true
 
-				// Update the nav bar buttons if the suggested episode is the same as the current episode.
-				if suggestedEpisode.id == self.episode.id {
-					self.configureNavBarButtons()
-				}
-			}
+		// Update the nav bar buttons if the suggested episode is the same as the current episode.
+		if suggestedEpisode.id == self.episode.id {
+			self.configureNavBarButtons()
 		}
 	}
 
-	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressShowButton button: UIButton) {
+	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressShowButton button: UIButton) async {
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 		guard let showIdentity = self.suggestedEpisodes[indexPath.item].relationships?.shows?.data.first else { return }
 
 		self.performSegue(withIdentifier: R.segue.episodeDetailsCollectionViewController.showDetailsSegue, sender: showIdentity)
 	}
 
-	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressSeasonButton button: UIButton) {
+	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressSeasonButton button: UIButton) async {
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 		guard let seasonIdentity = self.suggestedEpisodes[indexPath.item].relationships?.seasons?.data.first else { return }
 
@@ -406,20 +403,19 @@ extension EpisodeDetailsCollectionViewController: TapToRateCollectionViewCellDel
 
 // MARK: - WriteAReviewCollectionViewCellDelegate
 extension EpisodeDetailsCollectionViewController: WriteAReviewCollectionViewCellDelegate {
-	func writeAReviewCollectionViewCell(_ cell: WriteAReviewCollectionViewCell, didPress button: UIButton) {
-		WorkflowController.shared.isSignedIn { [weak self] in
-			guard let self = self else { return }
+	func writeAReviewCollectionViewCell(_ cell: WriteAReviewCollectionViewCell, didPress button: UIButton) async {
+		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
+		guard signedIn else { return }
 
-			let reviewTextEditorViewController = ReviewTextEditorViewController()
-			reviewTextEditorViewController.delegate = self
-			reviewTextEditorViewController.router?.dataStore?.kind = .episode(self.episode)
-			reviewTextEditorViewController.router?.dataStore?.rating = self.episode.attributes.givenRating
-			reviewTextEditorViewController.router?.dataStore?.review = nil
+		let reviewTextEditorViewController = ReviewTextEditorViewController()
+		reviewTextEditorViewController.delegate = self
+		reviewTextEditorViewController.router?.dataStore?.kind = .episode(self.episode)
+		reviewTextEditorViewController.router?.dataStore?.rating = self.episode.attributes.givenRating
+		reviewTextEditorViewController.router?.dataStore?.review = nil
 
-			let navigationController = KNavigationController(rootViewController: reviewTextEditorViewController)
-			navigationController.presentationController?.delegate = reviewTextEditorViewController
-			self.present(navigationController, animated: true)
-		}
+		let navigationController = KNavigationController(rootViewController: reviewTextEditorViewController)
+		navigationController.presentationController?.delegate = reviewTextEditorViewController
+		self.present(navigationController, animated: true)
 	}
 }
 

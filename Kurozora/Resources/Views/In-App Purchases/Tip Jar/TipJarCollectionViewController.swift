@@ -105,14 +105,11 @@ class TipJarCollectionViewController: KCollectionViewController {
 
 // MARK: - PurchaseButtonCollectionViewCellDelegate
 extension TipJarCollectionViewController: PurchaseButtonCollectionViewCellDelegate {
-	func purchaseButtonCollectionViewCell(_ cell: PurchaseButtonCollectionViewCell, didPressButton button: UIButton) {
-		WorkflowController.shared.isSignedIn(on: self) { [weak self] in
-			guard let self = self else { return }
+	func purchaseButtonCollectionViewCell(_ cell: PurchaseButtonCollectionViewCell, didPressButton button: UIButton) async {
+		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
+		guard signedIn else { return }
 
-			Task {
-				await self.purchase(cell.product)
-			}
-		}
+		await self.purchase(cell.product)
 	}
 
 	func purchase(_ product: Product) async {
@@ -136,19 +133,18 @@ extension TipJarCollectionViewController: PurchaseButtonCollectionViewCellDelega
 
 // MARK: - PurchaseFooterCollectionViewCellDelegate
 extension TipJarCollectionViewController: PurchaseFooterCollectionViewCellDelegate {
-	func purchaseFooterCollectionViewCell(_ cell: PurchaseFooterCollectionViewCell, didPressRestorePurchaseButton button: UIButton) {
-		WorkflowController.shared.isSignedIn(on: self) {
-			Task {
-				await Store.shared.restore()
-			}
-		}
+	func purchaseFooterCollectionViewCell(_ cell: PurchaseFooterCollectionViewCell, didPressRestorePurchaseButton button: UIButton) async {
+		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
+		guard signedIn else { return }
+
+		await Store.shared.restore()
 	}
 
-	func purchaseFooterCollectionViewCell(_ cell: PurchaseFooterCollectionViewCell, didPressTermsOfUseButton button: UIButton) {
+	func purchaseFooterCollectionViewCell(_ cell: PurchaseFooterCollectionViewCell, didPressTermsOfUseButton button: UIButton) async {
 		UIApplication.shared.kOpen(URL.appStoreEULA)
 	}
 
-	func purchaseFooterCollectionViewCell(_ cell: PurchaseFooterCollectionViewCell, didPressPrivacyButton button: UIButton) {
+	func purchaseFooterCollectionViewCell(_ cell: PurchaseFooterCollectionViewCell, didPressPrivacyButton button: UIButton) async {
 		guard let legalKNavigationViewController = R.storyboard.legal.instantiateInitialViewController() else { return }
 		self.present(legalKNavigationViewController, animated: true)
 	}

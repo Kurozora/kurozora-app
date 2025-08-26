@@ -62,7 +62,9 @@ extension Review {
 			// Report review action
 			var reportMenuElements: [UIMenuElement] = []
 			let reportAction = UIAction(title: Trans.reportReview, attributes: .destructive) { _ in
-				self.reportReview()
+				Task {
+					await self.reportReview(on: viewController)
+				}
 			}
 			reportMenuElements.append(reportAction)
 
@@ -113,12 +115,13 @@ extension Review {
 	}
 
 	/// Sends a report of the selected review to the mods.
-	func reportReview() {
-		WorkflowController.shared.isSignedIn {
-			Task { @MainActor in
-				UIApplication.topViewController?.presentAlertController(title: Trans.reviewReportedHeadline, message: Trans.reviewReportedSubheadline)
-			}
-		}
+	@MainActor
+	func reportReview(on viewController: UIViewController? = nil) async {
+		let signedIn = await WorkflowController.shared.isSignedIn(on: viewController)
+		guard signedIn else { return }
+
+		let viewController = viewController ?? UIApplication.topViewController
+		viewController?.presentAlertController(title: Trans.reviewReportedHeadline, message: Trans.reviewReportedSubheadline)
 	}
 
 	/// Remove the review.

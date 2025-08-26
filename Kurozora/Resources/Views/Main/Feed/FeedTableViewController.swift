@@ -204,18 +204,23 @@ class FeedTableViewController: KTableViewController {
 
 	/// Performs segue to the profile view.
 	@objc func segueToProfile() {
-		WorkflowController.shared.isSignedIn { [weak self] in
+		Task { [weak self] in
 			guard let self = self else { return }
+			let signedIn = await WorkflowController.shared.isSignedIn(on: self)
+			guard signedIn else { return }
+
 			if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
 				self.show(profileTableViewController, sender: nil)
 			}
 		}
 	}
 
-	/// Shows the text editor for posintg a new message.
+	/// Shows the text editor for posting a new message.
 	@objc func postNewMessage() {
-		WorkflowController.shared.isSignedIn { [weak self] in
+		Task { [weak self] in
 			guard let self = self else { return }
+			let signedIn = await WorkflowController.shared.isSignedIn(on: self)
+			guard signedIn else { return }
 
 			if let kFeedMessageTextEditorViewController = R.storyboard.textEditor.kFeedMessageTextEditorViewController() {
 				kFeedMessageTextEditorViewController.delegate = self
@@ -299,31 +304,31 @@ extension FeedTableViewController {
 
 // MARK: - BaseFeedMessageCellDelegate
 extension FeedTableViewController: BaseFeedMessageCellDelegate {
-	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressHeartButton button: UIButton) {
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressHeartButton button: UIButton) async {
 		if let indexPath = self.tableView.indexPath(for: cell) {
-			self.feedMessages[indexPath.row].heartMessage(via: self, userInfo: ["indexPath": indexPath])
+			await self.feedMessages[indexPath.row].heartMessage(via: self, userInfo: ["indexPath": indexPath])
 		}
 	}
 
-	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressReplyButton button: UIButton) {
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressReplyButton button: UIButton) async {
 		if let indexPath = self.tableView.indexPath(for: cell) {
-			self.feedMessages[indexPath.row].replyToMessage(via: self, userInfo: ["liveReplyEnabled": cell.liveReplyEnabled])
+			await self.feedMessages[indexPath.row].replyToMessage(via: self, userInfo: ["liveReplyEnabled": cell.liveReplyEnabled])
 		}
 	}
 
-	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressReShareButton button: UIButton) {
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressReShareButton button: UIButton) async {
 		if let indexPath = self.tableView.indexPath(for: cell) {
-			self.feedMessages[indexPath.row].reShareMessage(via: self, userInfo: ["liveReShareEnabled": cell.liveReShareEnabled])
+			await self.feedMessages[indexPath.row].reShareMessage(via: self, userInfo: ["liveReShareEnabled": cell.liveReShareEnabled])
 		}
 	}
 
-	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressUserName sender: AnyObject) {
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressUserName sender: AnyObject) async {
 		if let indexPath = self.tableView.indexPath(for: cell) {
 			self.feedMessages[indexPath.row].visitOriginalPosterProfile(from: self)
 		}
 	}
 
-	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) {
+	func baseFeedMessageCell(_ cell: BaseFeedMessageCell, didPressProfileBadge button: UIButton, for profileBadge: ProfileBadge) async {
 		if let badgeViewController = R.storyboard.badge.instantiateInitialViewController() {
 			badgeViewController.profileBadge = profileBadge
 			badgeViewController.popoverPresentationController?.sourceView = button
@@ -333,13 +338,13 @@ extension FeedTableViewController: BaseFeedMessageCellDelegate {
 		}
 	}
 
-	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressUserName sender: AnyObject) {
+	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressUserName sender: AnyObject) async {
 		if let indexPath = self.tableView.indexPath(for: cell) {
 			self.feedMessages[indexPath.row].relationships.parent?.data.first?.visitOriginalPosterProfile(from: self)
 		}
 	}
 
-	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressOPMessage sender: AnyObject) {
+	func feedMessageReShareCell(_ cell: FeedMessageReShareCell, didPressOPMessage sender: AnyObject) async {
 		guard let indexPath = self.tableView.indexPath(for: cell) else { return }
 		guard let feedMessage = self.feedMessages[indexPath.row].relationships.parent?.data.first else { return }
 		self.performSegue(withIdentifier: R.segue.feedTableViewController.feedMessageDetailsSegue.identifier, sender: feedMessage.id)

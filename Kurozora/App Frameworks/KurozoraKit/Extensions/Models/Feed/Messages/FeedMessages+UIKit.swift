@@ -45,7 +45,9 @@ extension FeedMessage {
 
 				let followAction = UIAction(title: followActionTitle, image: followActionImage) { [weak self] _ in
 					guard let self = self else { return }
-					self.relationships.users.data.first?.follow(on: viewController)
+					Task {
+						await self.relationships.users.data.first?.follow(on: viewController)
+					}
 				}
 				profileElements.append(followAction)
 			}
@@ -92,21 +94,29 @@ extension FeedMessage {
 			if self.attributes.isHearted ?? false {
 				heartAction = UIAction(title: Trans.unlike, image: UIImage(systemName: "heart.slash")) { [weak self] _ in
 					guard let self = self else { return }
-					self.heartMessage(via: viewController, userInfo: userInfo)
+					Task {
+						await self.heartMessage(via: viewController, userInfo: userInfo)
+					}
 				}
 			} else {
 				heartAction = UIAction(title: Trans.like, image: UIImage(systemName: "heart")) { [weak self] _ in
 					guard let self = self else { return }
-					self.heartMessage(via: viewController, userInfo: userInfo)
+					Task {
+						await self.heartMessage(via: viewController, userInfo: userInfo)
+					}
 				}
 			}
 			let replyAction = UIAction(title: Trans.reply, image: #imageLiteral(resourceName: "Symbols/message.left.and.message.right")) { [weak self] _ in
 				guard let self = self else { return }
-				self.replyToMessage(via: viewController, userInfo: userInfo)
+				Task {
+					await self.replyToMessage(via: viewController, userInfo: userInfo)
+				}
 			}
 			let reShareAction = UIAction(title: Trans.reshare, image: UIImage(systemName: "arrow.2.squarepath")) { [weak self] _ in
 				guard let self = self else { return }
-				self.reShareMessage(via: viewController, userInfo: userInfo)
+				Task {
+					await self.reShareMessage(via: viewController, userInfo: userInfo)
+				}
 			}
 
 			menuElements.append(heartAction)
@@ -160,7 +170,9 @@ extension FeedMessage {
 			var reportMenuElements: [UIMenuElement] = []
 			let reportAction = UIAction(title: Trans.reportMessage, attributes: .destructive) { [weak self] _ in
 				guard let self = self else { return }
-				self.reportMessage()
+				Task {
+					await self.reportMessage()
+				}
 			}
 			reportMenuElements.append(reportAction)
 
@@ -177,23 +189,21 @@ extension FeedMessage {
 	/// - Parameters:
 	///    - viewController: The view controller initiating the action.
 	///    - userInfo: Any information passed by the user.
-	func heartMessage(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?) {
-		WorkflowController.shared.isSignedIn { [weak self] in
-			guard let self = self else { return }
+	@MainActor
+	func heartMessage(via viewController: UIViewController? = nil, userInfo: [AnyHashable: Any]?) async {
+		let signedIn = await WorkflowController.shared.isSignedIn(on: viewController)
+		guard signedIn else { return }
 
-			Task {
-				do {
-					let feedMessageUpdateResponse = try await KService.heartMessage(self.id).value
+		do {
+			let feedMessageUpdateResponse = try await KService.heartMessage(self.id).value
 
-					self.attributes.update(using: feedMessageUpdateResponse.data)
+			self.attributes.update(using: feedMessageUpdateResponse.data)
 
-					if let indexPath = userInfo?["indexPath"] as? IndexPath {
-						NotificationCenter.default.post(name: .KFMDidUpdate, object: nil, userInfo: ["indexPath": indexPath])
-					}
-				} catch {
-					print(error.localizedDescription)
-				}
+			if let indexPath = userInfo?["indexPath"] as? IndexPath {
+				NotificationCenter.default.post(name: .KFMDidUpdate, object: nil, userInfo: ["indexPath": indexPath])
 			}
+		} catch {
+			print(error.localizedDescription)
 		}
 	}
 
@@ -247,11 +257,12 @@ extension FeedMessage {
 	/// - Parameters:
 	///    - viewController: The view controller initiating the action.
 	///    - userInfo: Any information passed by the user.
-	func replyToMessage(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?) {
-		WorkflowController.shared.isSignedIn { [weak self] in
-			guard let self = self else { return }
-			self.openReplyTextEditor(via: viewController, userInfo: userInfo, isEditingMessage: false)
-		}
+	@MainActor
+	func replyToMessage(via viewController: UIViewController? = nil, userInfo: [AnyHashable: Any]?) async {
+		let signedIn = await WorkflowController.shared.isSignedIn(on: viewController)
+		guard signedIn else { return }
+
+		self.openReplyTextEditor(via: viewController, userInfo: userInfo, isEditingMessage: false)
 	}
 
 	/// Presents the re-share view for the current message.
@@ -259,16 +270,16 @@ extension FeedMessage {
 	/// - Parameters:
 	///    - viewController: The view controller initiating the action.
 	///    - userInfo: Any information passed by the user.
-	func reShareMessage(via viewController: UIViewController? = UIApplication.topViewController, userInfo: [AnyHashable: Any]?) {
-		WorkflowController.shared.isSignedIn { [weak self] in
-			guard let self = self else { return }
-			if !self.attributes.isReShared {
-				self.openReShareTextEditor(via: viewController, userInfo: userInfo, isEditingMessage: false)
-			} else {
-				Task { @MainActor in
-					viewController?.presentAlertController(title: Trans.reshareMessageErrorHeadline, message: Trans.reshareMessageErrorSubheadline)
-				}
-			}
+	@MainActor
+	func reShareMessage(via viewController: UIViewController? = nil, userInfo: [AnyHashable: Any]?) async {
+		let signedIn = await WorkflowController.shared.isSignedIn(on: viewController)
+		guard signedIn else { return }
+
+		if !self.attributes.isReShared {
+			self.openReShareTextEditor(via: viewController, userInfo: userInfo, isEditingMessage: false)
+		} else {
+			let viewController = viewController ?? UIApplication.topViewController
+			viewController?.presentAlertController(title: Trans.reshareMessageErrorHeadline, message: Trans.reshareMessageErrorSubheadline)
 		}
 	}
 
@@ -438,7 +449,7 @@ extension FeedMessage {
 	///    - viewController: The view controller presenting the share sheet.
 	///    - view: The `UIView` sending the request.
 	///    - barButtonItem: The `UIBarButtonItem` sending the request.
-	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
+	func openShareSheet(on viewController: UIViewController? = nil, _ view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil) {
 		var shareText = "\"\(self.attributes.content)\""
 		if let user = self.relationships.users.data.first {
 			shareText += "-\(user.attributes.username)"
@@ -455,15 +466,21 @@ extension FeedMessage {
 				popoverController.barButtonItem = barButtonItem
 			}
 		}
+
+		let viewController = viewController ?? UIApplication.topViewController
 		viewController?.present(activityViewController, animated: true, completion: nil)
 	}
 
 	/// Sends a report of the selected message to the mods.
-	func reportMessage() {
-		WorkflowController.shared.isSignedIn {
-			Task { @MainActor in
-				UIApplication.topViewController?.presentAlertController(title: Trans.messageReportedHeadline, message: Trans.messageReportedSubheadline)
-			}
-		}
+	///
+	/// - Parameters:
+	///   - viewController: The view controller initiating the report.
+	@MainActor
+	func reportMessage(on viewController: UIViewController? = nil) async {
+		let signedIn = await WorkflowController.shared.isSignedIn(on: viewController)
+		guard signedIn else { return }
+
+		let viewController = viewController ?? UIApplication.topViewController
+		viewController?.presentAlertController(title: Trans.messageReportedHeadline, message: Trans.messageReportedSubheadline)
 	}
 }

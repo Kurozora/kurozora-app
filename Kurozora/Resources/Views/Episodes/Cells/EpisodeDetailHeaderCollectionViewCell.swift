@@ -10,7 +10,7 @@ import UIKit
 import KurozoraKit
 
 class EpisodeDetailHeaderCollectionViewCell: UICollectionViewCell {
-	// MARK: - IBoutlet
+	// MARK: - IBOutlet
 	@IBOutlet weak var bannerImageView: UIImageView!
 	@IBOutlet weak var visualEffectView: KVisualEffectView!
 	@IBOutlet weak var bannerContainerView: UIView!
@@ -31,10 +31,8 @@ class EpisodeDetailHeaderCollectionViewCell: UICollectionViewCell {
 		}
 	}
 	var indexPath: IndexPath = IndexPath()
-}
 
-// MARK: - Functions
-extension EpisodeDetailHeaderCollectionViewCell {
+    // MARK: - Functions
 	/// Configures the cell with the given details.
 	fileprivate func configureCell() {
 		NotificationCenter.default.removeObserver(self, name: .KEpisodeWatchStatusDidUpdate, object: nil)
@@ -85,19 +83,16 @@ extension EpisodeDetailHeaderCollectionViewCell {
 		let watchStatusButtonTitle = self.episode.attributes.watchStatus == .watched ? "✓ \(Trans.watched)" : Trans.markAsWatched
 		self.watchStatusButton.setTitle(watchStatusButtonTitle, for: .normal)
 	}
-}
 
-// MARK: - IBActions
-extension EpisodeDetailHeaderCollectionViewCell {
+    // MARK: - IBActions
 	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
-		WorkflowController.shared.isSignedIn { [weak self] in
-			guard let self = self else { return }
+		Task {
+			let signedIn = await WorkflowController.shared.isSignedIn()
+			guard signedIn else { return }
 
-			Task {
-				sender.isEnabled = false
-				await self.episode.updateWatchStatus(userInfo: ["indexPath": self.indexPath])
-				sender.isEnabled = true
-			}
+			sender.isEnabled = false
+			await self.episode.updateWatchStatus(userInfo: ["indexPath": self.indexPath])
+			sender.isEnabled = true
 		}
 	}
 }

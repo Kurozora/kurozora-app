@@ -296,7 +296,7 @@ extension ShowDetailHeaderCollectionViewCell {
 	/// Updates `favoriteButton`, `reminderButton` and `libraryStatusButton` with the attributes of the show.
 	///
 	/// - Parameters:
-	///    - show: The show object used to udpate the actions.
+	///    - show: The show object used to update the actions.
 	///    - animated: A boolean value indicating whether to update changes with animations.
 	func updateLibraryActions(using show: Show, animated: Bool = false) {
 		self.updateLibraryStatus(show.attributes.library?.status)
@@ -307,7 +307,7 @@ extension ShowDetailHeaderCollectionViewCell {
 	/// Updates `favoriteButton`, `reminderButton` and `libraryStatusButton` with the attributes of the literature.
 	///
 	/// - Parameters:
-	///    - literature: The literature object used to udpate the actions.
+	///    - literature: The literature object used to update the actions.
 	///    - animated: A boolean value indicating whether to update changes with animations.
 	func updateLibraryActions(using literature: Literature, animated: Bool = false) {
 		self.updateLibraryStatus(literature.attributes.library?.status)
@@ -318,7 +318,7 @@ extension ShowDetailHeaderCollectionViewCell {
 	/// Updates `favoriteButton`, `reminderButton` and `libraryStatusButton` with the attributes of the game.
 	///
 	/// - Parameters:
-	///    - game: The game object used to udpate the actions.
+	///    - game: The game object used to update the actions.
 	///    - animated: A boolean value indicating whether to update changes with animations.
 	func updateLibraryActions(using game: Game, animated: Bool = false) {
 		self.updateLibraryStatus(game.attributes.library?.status)
@@ -330,8 +330,10 @@ extension ShowDetailHeaderCollectionViewCell {
 // MARK: - IBActions
 extension ShowDetailHeaderCollectionViewCell {
 	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
-		WorkflowController.shared.isSignedIn { [weak self] in
+		Task { [weak self] in
 			guard let self = self else { return }
+			let signedIn = await WorkflowController.shared.isSignedIn()
+			guard signedIn else { return }
 			let oldLibraryStatus = self.libraryStatus
 			let modelID: String
 
@@ -436,14 +438,20 @@ extension ShowDetailHeaderCollectionViewCell {
 	}
 
 	@IBAction func favoriteButtonPressed(_ sender: UIButton) {
-		self.show?.toggleFavorite()
-		self.literature?.toggleFavorite()
-		self.game?.toggleFavorite()
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.show?.toggleFavorite()
+			await self.literature?.toggleFavorite()
+			await self.game?.toggleFavorite()
+		}
 	}
 
 	@IBAction func reminderButtonPressed(_ sender: UIButton) {
-		self.show?.toggleReminder()
-//		self.literature?.toggleReminder(on: self)
-//		self.game?.toggleReminder(on: self)
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.show?.toggleReminder()
+//			await self.literature?.toggleReminder(on: self)
+//			await self.game?.toggleReminder(on: self)
+		}
 	}
 }
