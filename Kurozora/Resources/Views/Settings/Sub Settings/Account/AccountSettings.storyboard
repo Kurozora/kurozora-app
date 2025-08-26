@@ -73,7 +73,7 @@
                                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UhS-M9-sVb">
                                                             <rect key="frame" x="8" y="10" width="30" height="30.5"/>
                                                             <subviews>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icons/Language" translatesAutoresizingMaskIntoConstraints="NO" id="mQM-LJ-LGX">
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icons/language" translatesAutoresizingMaskIntoConstraints="NO" id="mQM-LJ-LGX">
                                                                     <rect key="frame" x="0.0" y="0.0" width="30" height="30.5"/>
                                                                 </imageView>
                                                             </subviews>
@@ -275,7 +275,7 @@
                                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3RN-gG-76i">
                                                             <rect key="frame" x="8" y="10" width="30" height="30.5"/>
                                                             <subviews>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icons/Globe" translatesAutoresizingMaskIntoConstraints="NO" id="jfH-vG-WgE">
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icons/globe" translatesAutoresizingMaskIntoConstraints="NO" id="jfH-vG-WgE">
                                                                     <rect key="frame" x="0.0" y="0.0" width="30" height="30.5"/>
                                                                 </imageView>
                                                             </subviews>
@@ -466,7 +466,7 @@
                                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XIL-gd-e0I">
                                                             <rect key="frame" x="8" y="10" width="30" height="30.5"/>
                                                             <subviews>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icons/Library Trash" translatesAutoresizingMaskIntoConstraints="NO" id="SVN-MY-As1">
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icons/library.trash" translatesAutoresizingMaskIntoConstraints="NO" id="SVN-MY-As1">
                                                                     <rect key="frame" x="0.0" y="0.0" width="30" height="30.5"/>
                                                                 </imageView>
                                                             </subviews>
@@ -1065,11 +1065,11 @@
     <resources>
         <image name="Icons/Brands/Apple" width="130" height="130"/>
         <image name="Icons/Brands/MyAnimeList" width="128" height="128"/>
-        <image name="Icons/Globe" width="128" height="128"/>
-        <image name="Icons/Language" width="128" height="128"/>
-        <image name="Icons/Library Trash" width="128" height="128"/>
         <image name="Icons/Session" width="128" height="128"/>
         <image name="Icons/Tv Rating" width="128" height="128"/>
+        <image name="Icons/globe" width="128" height="128"/>
+        <image name="Icons/language" width="128" height="128"/>
+        <image name="Icons/library.trash" width="128" height="128"/>
         <image name="chevron.right" catalog="system" width="97" height="128"/>
     </resources>
 </document>
