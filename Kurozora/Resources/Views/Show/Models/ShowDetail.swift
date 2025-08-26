@@ -57,7 +57,7 @@ extension ShowDetail {
 		// MARK: - Functions
 		/// Returns the required primary information from the given object.
 		///
-		/// - Parameter show: The object used to extract the infromation from.
+		/// - Parameter show: The object used to extract the information from.
 		///
 		/// - Returns: the required primary information from the given object.
 		func primaryInformation(from show: Show) -> String? {
@@ -82,7 +82,7 @@ extension ShowDetail {
 
 		/// Returns the required secondary information from the given object.
 		///
-		/// - Parameter show: The object used to extract the infromation from.
+		/// - Parameter show: The object used to extract the information from.
 		///
 		/// - Returns: the required secondary information from the given object.
 		func secondaryInformation(from show: Show? = nil) -> String? {
@@ -115,7 +115,7 @@ extension ShowDetail {
 
 		/// Returns the required primary image from the given object.
 		///
-		/// - Parameter show: The object used to extract the infromation from.
+		/// - Parameter show: The object used to extract the information from.
 		///
 		/// - Returns: the required primary image from the given object.
 		func primaryImage(from show: Show? = nil) -> UIImage? {
@@ -292,7 +292,7 @@ extension ShowDetail {
 		// MARK: - Functions
 		/// Returns the required information from the given object.
 		///
-		/// - Parameter show: The object used to extract the infromation from.
+		/// - Parameter show: The object used to extract the information from.
 		///
 		/// - Returns: the required information from the given object.
 		func information(from show: Show) -> String? {
@@ -349,7 +349,7 @@ extension ShowDetail {
 
 		/// Returns the required primary information from the given object.
 		///
-		/// - Parameter show: The object used to extract the infromation from.
+		/// - Parameter show: The object used to extract the information from.
 		///
 		/// - Returns: the required primary information from the given object.
 		func primaryInformation(from show: Show) -> String? {
@@ -364,7 +364,7 @@ extension ShowDetail {
 
 		/// Returns the required secondary information from the given object.
 		///
-		/// - Parameter show: The object used to extract the infromation from.
+		/// - Parameter show: The object used to extract the information from.
 		///
 		/// - Returns: the required secondary information from the given object.
 		func secondaryInformation(from show: Show) -> String? {
@@ -381,7 +381,7 @@ extension ShowDetail {
 
 		/// Returns the required primary image from the given object.
 		///
-		/// - Parameter show: The object used to extract the infromation from.
+		/// - Parameter show: The object used to extract the information from.
 		///
 		/// - Returns: the required primary image from the given object.
 		func primaryImage(from show: Show) -> UIImage? {
