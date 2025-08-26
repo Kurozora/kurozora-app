@@ -1654,6 +1654,11 @@ struct Trans {
 	/// - Tag: Trans-reminders
 	static let reminders: String = String(localized: "Reminders",
 										  comment: "The string for the word 'Reminders'")
+	/// The string for the word 'remindMe'.
+	///
+	/// - Tag: Trans-remindMe
+	static let remindMe: String = String(localized: "Remind Me",
+										  comment: "The string for the word 'Remind Me'")
 
 	// MARK: - Ratings
 	/// The string for the word 'ratings'.

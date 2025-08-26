@@ -12,7 +12,6 @@ import KurozoraKit
 class UpcomingLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var logoImageView: UIImageView!
-	@IBOutlet weak var reminderButton: KTintedButton!
 
 	// MARK: - Functions
 	override func configure(using show: Show?, rank: Int? = nil, scheduleIsShown: Bool = false) {
