@@ -25,9 +25,12 @@ extension Int {
 	///
 	/// - Returns: A formatted string representing the number with the specified precision and suffix.
 	func kkFormatted(precision: Int = 3) -> String {
+		if self == 0 {
+			return "0"
+		}
+
 		// Clamp index to valid range
-		let index = Swift.max(0, Swift.min(StaticData.shortSuffixes.count - 1,
-							   Int(log(Double(self)) / log(1000))))
+		let index = Swift.max(0, Swift.min(StaticData.shortSuffixes.count - 1, Int(log(Double(self)) / log(1000))))
 
 		let scaledNumber = Double(self) / pow(1000, Double(index))
 
