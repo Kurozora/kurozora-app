@@ -13,7 +13,7 @@ import Alamofire
 enum GamesListFetchType {
 	case show
 	case literature
-	case charcter
+	case character
 	case explore
 	case person
 	case moreByStudio
@@ -177,7 +177,7 @@ class GamesListCollectionViewController: KCollectionViewController {
 				self.nextPageURL = relatedGamesResponse.next
 				self.relatedGames.append(contentsOf: relatedGamesResponse.data)
 				self.relatedGames.removeDuplicates()
-			case .charcter:
+			case .character:
 				guard let characterIdentity = self.characterIdentity else { return }
 				let gameIdentityResponse = try await KService.getGames(forCharacter: characterIdentity, next: self.nextPageURL).value
 

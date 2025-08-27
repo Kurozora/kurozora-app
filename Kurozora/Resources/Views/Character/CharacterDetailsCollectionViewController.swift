@@ -243,7 +243,7 @@ class CharacterDetailsCollectionViewController: KCollectionViewController, Ratin
 		case R.segue.characterDetailsCollectionViewController.showsListSegue.identifier:
 			guard let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController else { return }
 			showsListCollectionViewController.characterIdentity = self.characterIdentity
-			showsListCollectionViewController.showsListFetchType = .charcter
+			showsListCollectionViewController.showsListFetchType = .character
 		case R.segue.characterDetailsCollectionViewController.showDetailsSegue.identifier:
 			guard let showDetailsCollectionViewController = segue.destination as? ShowDetailsCollectionViewController else { return }
 			guard let show = sender as? Show else { return }
@@ -251,7 +251,7 @@ class CharacterDetailsCollectionViewController: KCollectionViewController, Ratin
 		case R.segue.characterDetailsCollectionViewController.literaturesListSegue.identifier:
 			guard let literaturesListCollectionViewController = segue.destination as? LiteraturesListCollectionViewController else { return }
 			literaturesListCollectionViewController.characterIdentity = self.characterIdentity
-			literaturesListCollectionViewController.literaturesListFetchType = .charcter
+			literaturesListCollectionViewController.literaturesListFetchType = .character
 		case R.segue.characterDetailsCollectionViewController.literatureDetailsSegue.identifier:
 			guard let literatureDetailCollectionViewController = segue.destination as? LiteratureDetailsCollectionViewController else { return }
 			guard let literature = sender as? Literature else { return }
@@ -259,7 +259,7 @@ class CharacterDetailsCollectionViewController: KCollectionViewController, Ratin
 		case R.segue.characterDetailsCollectionViewController.gamesListSegue.identifier:
 			guard let gamesListCollectionViewController = segue.destination as? GamesListCollectionViewController else { return }
 			gamesListCollectionViewController.characterIdentity = self.characterIdentity
-			gamesListCollectionViewController.gamesListFetchType = .charcter
+			gamesListCollectionViewController.gamesListFetchType = .character
 		case R.segue.characterDetailsCollectionViewController.gameDetailsSegue.identifier:
 			guard let gameDetailCollectionViewController = segue.destination as? GameDetailsCollectionViewController else { return }
 			guard let game = sender as? Game else { return }
