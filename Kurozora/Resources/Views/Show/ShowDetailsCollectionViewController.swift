@@ -181,6 +181,15 @@ class ShowDetailsCollectionViewController: KCollectionViewController, RatingAler
 		self.navigationController?.navigationBar.shadowImage = nil
 	}
 
+	// MARK: - Gesture
+	override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        if motion == .motionShake, self.show?.attributes.title.lowercased().contains("log horizon") == true {
+            if let url = URL.livingInTheDatabase {
+                UIApplication.shared.kOpen(url)
+            }
+        }
+    }
+
 	// MARK: - Functions
 	override func handleRefreshControl() {
 		Task { [weak self] in

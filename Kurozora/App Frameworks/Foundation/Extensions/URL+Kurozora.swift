@@ -44,6 +44,9 @@ extension URL {
 	/// Kuro-chan's Telegram sticker pack URL.
 	static let telegramStickerURL = URL(string: "https://t.me/addstickers/KuroChanVT")
 
+	/// Log Horizon — Database website URL.
+	static let livingInTheDatabase = URL(string: "https://database.kurozora.app")
+
 	// MARK: - Functions
 	/// The Amazon Music URL for the given ID.
 	///
